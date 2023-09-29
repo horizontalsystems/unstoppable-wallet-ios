@@ -1,10 +1,9 @@
 import SwiftUI
 
 struct UnlockModule {
-    static func appUnlockView(autoDismiss: Bool = false, onUnlock: (() -> Void)? = nil) -> some View {
+    static func appUnlockView(appStart: Bool) -> some View {
         let viewModel = AppUnlockViewModel(
-            autoDismiss: autoDismiss,
-            onUnlock: onUnlock,
+            appStart: appStart,
             passcodeManager: App.shared.passcodeManager,
             biometryManager: App.shared.biometryManager,
             lockoutManager: App.shared.lockoutManager,
@@ -12,7 +11,7 @@ struct UnlockModule {
             blurManager: App.shared.blurManager
         )
 
-        return UnlockView(viewModel: viewModel, autoDismiss: autoDismiss)
+        return UnlockView(viewModel: viewModel)
     }
 
     static func moduleUnlockView(biometryAllowed: Bool = false, onUnlock: @escaping () -> Void) -> some View {

@@ -14,10 +14,7 @@ class LaunchModule {
         case .passcodeNotSet: return NoPasscodeViewController(mode: .noPasscode)
         case .cannotCheckPasscode: return NoPasscodeViewController(mode: .cannotCheckPasscode)
         case .intro: return WelcomeScreenViewController()
-        case .unlock: return UnlockModule.appUnlockView {
-                UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
-            }
-            .toViewController()
+        case .unlock: return UnlockModule.appUnlockView(appStart: true).toViewController()
         case .main: return MainModule.instance()
         }
     }

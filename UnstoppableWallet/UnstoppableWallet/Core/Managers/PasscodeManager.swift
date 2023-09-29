@@ -63,26 +63,36 @@ extension PasscodeManager {
         passcodes.contains(passcode)
     }
 
-    func setLastPasscode() {
+    func setLastPasscode() -> Bool {
         guard !passcodes.isEmpty else {
-            return
+            return false
         }
 
-        currentPasscodeLevel = passcodes.count - 1
-        syncState()
-    }
-
-    func set(currentPasscode: String) {
-        guard let level = passcodes.firstIndex(of: currentPasscode) else {
-            return
-        }
+        let level = passcodes.count - 1
 
         guard currentPasscodeLevel != level else {
-            return
+            return false
         }
 
         currentPasscodeLevel = level
         syncState()
+
+        return true
+    }
+
+    func set(currentPasscode: String) -> Bool {
+        guard let level = passcodes.firstIndex(of: currentPasscode) else {
+            return false
+        }
+
+        guard currentPasscodeLevel != level else {
+            return false
+        }
+
+        currentPasscodeLevel = level
+        syncState()
+
+        return true
     }
 
     func set(passcode: String) throws {

@@ -15,15 +15,12 @@ class ModuleUnlockViewModel: BaseUnlockViewModel {
     }
 
     override func onEnterValid(passcode: String) {
-        super.onEnterValid(passcode: passcode)
-
         onUnlock()
-        finishSubject.send()
+        finishSubject.send(false)
     }
 
-    override func onBiometryUnlock() {
-        super.onBiometryUnlock()
-
+    override func onBiometryUnlock() -> Bool {
         onUnlock()
+        return true
     }
 }
