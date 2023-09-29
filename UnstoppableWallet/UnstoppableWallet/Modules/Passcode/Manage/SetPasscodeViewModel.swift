@@ -1,4 +1,5 @@
 import Combine
+import UIKit
 
 class SetPasscodeViewModel: ObservableObject {
     let passcodeLength = 6
@@ -17,6 +18,7 @@ class SetPasscodeViewModel: ObservableObject {
             }
         }
     }
+
     @Published var shakeTrigger: Int = 0
 
     let passcodeManager: PasscodeManager
@@ -47,6 +49,12 @@ class SetPasscodeViewModel: ObservableObject {
                 syncDescription()
                 errorText = "set_passcode.invalid_confirmation".localized
             }
+        } else if passcodeManager.has(passcode: passcode) {
+            passcode = ""
+            errorText = "set_passcode.already_used".localized
+
+            shakeTrigger += 1
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         } else {
             enteredPasscode = passcode
             passcode = ""
