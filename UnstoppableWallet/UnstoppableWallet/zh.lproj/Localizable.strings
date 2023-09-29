@@ -1131,7 +1131,8 @@
 
 // Set Passcode
 
-"set_passcode.invalid_confirmation" = "Invalid Confirmation";
+"set_passcode.invalid_confirmation" = "Invalid confirmation";
+"set_passcode.already_used" = "This passcode is already being used";
 
 // Unlock
 
