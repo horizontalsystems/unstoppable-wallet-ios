@@ -14,6 +14,7 @@ struct PasscodeView: View {
 
     @Binding var biometryType: BiometryType?
     @Binding var lockoutState: LockoutState
+    @Binding var shakeTrigger: Int
     let randomEnabled: Bool
     var onTapBiometry: (() -> Void)? = nil
 
@@ -33,7 +34,7 @@ struct PasscodeView: View {
         VStack {
             VStack {
                 switch lockoutState {
-                case let .unlocked(attemptsLeft, _):
+                case .unlocked:
                     Text(description)
                         .font(.themeSubhead2)
                         .foregroundColor(.themeGray)
@@ -50,9 +51,9 @@ struct PasscodeView: View {
                                 .frame(width: .margin12, height: .margin12)
                         }
                     }
-                    .modifier(Shake(animatableData: CGFloat(attemptsLeft)))
+                    .modifier(Shake(animatableData: CGFloat(shakeTrigger)))
                     .padding(.vertical, .margin16)
-                    .animation(.linear(duration: 0.3), value: attemptsLeft)
+                    .animation(.linear(duration: 0.3), value: shakeTrigger)
                     .animation(.easeOut(duration: 0.1), value: passcode)
 
                     Text(errorText)
@@ -108,14 +109,14 @@ struct PasscodeView: View {
             .padding(.bottom, .margin32)
         }
     }
-}
 
-struct Shake: GeometryEffect {
-    var amount: CGFloat = 8
-    var shakesPerUnit = 4
-    var animatableData: CGFloat
+    private struct Shake: GeometryEffect {
+        var amount: CGFloat = 8
+        var shakesPerUnit = 4
+        var animatableData: CGFloat
 
-    func effectValue(size _: CGSize) -> ProjectionTransform {
-        ProjectionTransform(CGAffineTransform(translationX: amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)), y: 0))
+        func effectValue(size _: CGSize) -> ProjectionTransform {
+            ProjectionTransform(CGAffineTransform(translationX: amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)), y: 0))
+        }
     }
 }

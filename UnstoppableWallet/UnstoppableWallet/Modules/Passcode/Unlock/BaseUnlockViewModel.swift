@@ -27,6 +27,7 @@ class BaseUnlockViewModel: ObservableObject {
             syncErrorText()
         }
     }
+    @Published var shakeTrigger: Int = 0
 
     let finishSubject = PassthroughSubject<Void, Never>()
     let unlockWithBiometrySubject = PassthroughSubject<Void, Never>()
@@ -89,6 +90,8 @@ class BaseUnlockViewModel: ObservableObject {
         } else {
             passcode = ""
             lockoutManager.didFailUnlock()
+
+            shakeTrigger += 1
             UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
     }
