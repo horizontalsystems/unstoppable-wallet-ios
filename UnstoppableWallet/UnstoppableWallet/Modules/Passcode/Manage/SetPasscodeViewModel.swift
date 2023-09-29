@@ -17,6 +17,7 @@ class SetPasscodeViewModel: ObservableObject {
             }
         }
     }
+    @Published var shakeTrigger: Int = 0
 
     let passcodeManager: PasscodeManager
 

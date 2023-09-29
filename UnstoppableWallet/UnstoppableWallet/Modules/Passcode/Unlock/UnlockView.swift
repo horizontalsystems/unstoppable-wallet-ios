@@ -16,6 +16,7 @@ struct UnlockView: View {
                 passcode: $viewModel.passcode,
                 biometryType: $viewModel.resolvedBiometryType,
                 lockoutState: $viewModel.lockoutState,
+                shakeTrigger: $viewModel.shakeTrigger,
                 randomEnabled: true,
                 onTapBiometry: {
                     unlockWithBiometry()

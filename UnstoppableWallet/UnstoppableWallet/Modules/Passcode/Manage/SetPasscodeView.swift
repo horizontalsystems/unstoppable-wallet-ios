@@ -13,6 +13,7 @@ struct SetPasscodeView: View {
                 passcode: $viewModel.passcode,
                 biometryType: Binding(get: { nil }, set: { _ in }),
                 lockoutState: Binding(get: { .unlocked(attemptsLeft: Int.max, maxAttempts: Int.max) }, set: { _ in }),
+                shakeTrigger: $viewModel.shakeTrigger,
                 randomEnabled: false
             )
         }
