@@ -100,9 +100,9 @@ struct PasscodeView: View {
                     Button(action: {
                         randomized.toggle()
                     }) {
-                        Text(randomized ? "unlock.regular_mode".localized : "unlock.random_mode".localized)
+                        Text("unlock.random".localized)
                     }
-                    .buttonStyle(SecondaryButtonStyle(style: .default))
+                    .buttonStyle(SecondaryButtonStyle(isActive: randomized))
                     .disabled(lockoutState.isLocked)
                 }
             }
