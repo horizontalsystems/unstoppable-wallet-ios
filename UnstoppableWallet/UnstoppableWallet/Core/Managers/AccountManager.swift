@@ -223,7 +223,7 @@ class AccountCachedStorage {
 
     private func syncAccounts() {
         _accounts = _allAccounts.filter { _, account in account.level >= level }
-        _activeAccount = activeAccountStorage.activeAccountId(level: level).flatMap { _accounts[$0] }
+        _activeAccount = activeAccountStorage.activeAccountId(level: level).flatMap { _accounts[$0] } ?? _accounts.first?.value
     }
 
     var allAccounts: [Account] {
