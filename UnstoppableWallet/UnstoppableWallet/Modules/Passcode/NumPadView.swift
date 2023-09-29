@@ -58,7 +58,7 @@ struct NumPadView: View {
             }
             .buttonStyle(NumPadButtonStyle())
             .disabled(disabled)
-            .animation(.easeOut, value: digit)
+            .animation(.easeOut(duration: 0.2), value: digit)
         }
     }
 
@@ -68,10 +68,10 @@ struct NumPadView: View {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .foregroundColor(isEnabled ? .themeLeah : .themeSteel20)
-                .background(configuration.isPressed ? Color.themeSteel20 : Color.clear)
+                .background(configuration.isPressed ? Color.themeSteel20 : Color.themeTyler)
                 .clipShape(Circle())
                 .overlay(Circle().stroke(Color.themeSteel20, lineWidth: .heightOneDp))
-                .animation(.easeOut, value: configuration.isPressed)
+                .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
         }
     }
 }
