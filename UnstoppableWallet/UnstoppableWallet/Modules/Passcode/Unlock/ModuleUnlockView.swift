@@ -6,7 +6,7 @@ struct ModuleUnlockView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
-        UnlockView(viewModel: viewModel, autoDismiss: true)
+        UnlockView(viewModel: viewModel)
             .navigationTitle("unlock.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

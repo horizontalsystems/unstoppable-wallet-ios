@@ -29,7 +29,7 @@ class BaseUnlockViewModel: ObservableObject {
     }
     @Published var shakeTrigger: Int = 0
 
-    let finishSubject = PassthroughSubject<Void, Never>()
+    let finishSubject = PassthroughSubject<Bool, Never>()
     let unlockWithBiometrySubject = PassthroughSubject<Void, Never>()
 
     let passcodeManager: PasscodeManager
@@ -80,7 +80,7 @@ class BaseUnlockViewModel: ObservableObject {
 
     func isValid(passcode _: String) -> Bool { false }
     func onEnterValid(passcode _: String) {}
-    func onBiometryUnlock() {}
+    func onBiometryUnlock() -> Bool { false }
 
     @MainActor
     private func handlePasscodeChanged() {

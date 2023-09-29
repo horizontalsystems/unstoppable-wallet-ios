@@ -1,13 +1,11 @@
 import Combine
 
 class AppUnlockViewModel: BaseUnlockViewModel {
-    private let autoDismiss: Bool
-    private let onUnlock: (() -> Void)?
+    private let appStart: Bool
     private let lockManager: LockManager
 
-    init(autoDismiss: Bool, onUnlock: (() -> Void)?, passcodeManager: PasscodeManager, biometryManager: BiometryManager, lockoutManager: LockoutManager, lockManager: LockManager, blurManager: BlurManager) {
-        self.autoDismiss = autoDismiss
-        self.onUnlock = onUnlock
+    init(appStart: Bool, passcodeManager: PasscodeManager, biometryManager: BiometryManager, lockoutManager: LockoutManager, lockManager: LockManager, blurManager: BlurManager) {
+        self.appStart = appStart
         self.lockManager = lockManager
 
         super.init(passcodeManager: passcodeManager, biometryManager: biometryManager, lockoutManager: lockoutManager, blurManager: blurManager, biometryAllowed: true)
@@ -18,25 +16,19 @@ class AppUnlockViewModel: BaseUnlockViewModel {
     }
 
     override func onEnterValid(passcode: String) {
-        super.onEnterValid(passcode: passcode)
-
-        passcodeManager.set(currentPasscode: passcode)
-        handleUnlock()
+        let levelChanged = passcodeManager.set(currentPasscode: passcode)
+        handleUnlock(levelChanged: levelChanged)
     }
 
-    override func onBiometryUnlock() {
-        super.onBiometryUnlock()
+    override func onBiometryUnlock() -> Bool {
+        let levelChanged = passcodeManager.setLastPasscode()
+        handleUnlock(levelChanged: levelChanged)
 
-        passcodeManager.setLastPasscode()
-        handleUnlock()
+        return !levelChanged
     }
 
-    private func handleUnlock() {
+    private func handleUnlock(levelChanged: Bool) {
         lockManager.onUnlock()
-        onUnlock?()
-
-        if autoDismiss {
-            finishSubject.send()
-        }
+        finishSubject.send(appStart || levelChanged)
     }
 }

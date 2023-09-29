@@ -3,7 +3,6 @@ import SwiftUI
 
 struct UnlockView: View {
     @ObservedObject var viewModel: BaseUnlockViewModel
-    let autoDismiss: Bool
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -29,8 +28,12 @@ struct UnlockView: View {
         .onDisappear {
             viewModel.onDisappear()
         }
-        .onReceive(viewModel.finishSubject) {
-            presentationMode.wrappedValue.dismiss()
+        .onReceive(viewModel.finishSubject) { reloadApp in
+            if reloadApp {
+                UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
+            } else {
+                presentationMode.wrappedValue.dismiss()
+            }
         }
         .onReceive(viewModel.unlockWithBiometrySubject) {
             unlockWithBiometry()
@@ -42,9 +45,9 @@ struct UnlockView: View {
         localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "unlock.biometry_reason".localized) { success, _ in
             if success {
                 DispatchQueue.main.async {
-                    viewModel.onBiometryUnlock()
+                    let shouldDismiss = viewModel.onBiometryUnlock()
 
-                    if autoDismiss {
+                    if shouldDismiss {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
