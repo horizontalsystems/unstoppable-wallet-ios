@@ -162,7 +162,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.binance.connecting" = "Conectando...";
 "restore.binance.get_api_keys" = "Obter chaves API";
 "restore.binance.failed_to_connect" = "Falha ao conectar sua chave de API";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.invalid_qr_code" = "QR Code Inválido";
 
 // Coin Settings
 
@@ -293,12 +293,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Procurando transações...";
-"balance.stopped" = "Stopped";
+"balance.stopped" = "Parado";
 "balance.downloading_sapling" = "Baixando prévias.. %d%%";
 "balance.downloading_blocks" = "Baixando Blocos";
 "balance.scanning_blocks" = "Verificando Blocos";
 "balance.enhancing_transactions" = "Aprimorando Transações";
-"wait_for_synchronization" = "Wait for synchronization";
+"wait_for_synchronization" = "Aguarde a sincronização";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
@@ -324,8 +324,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.locked.info.title" = "TravaTempo";
 "balance.token.locked.info.description" = "O remetente enviou esses fundos com um fechamento de gastos que expirará na data mostrada. \n\nNão se preocupe, o Bitcoin recebido já é seu, mas até que o período de bloqueio expire, você não pode gastá-los na rede Bitcoin.";
 "balance.token.processing" = "Processando";
-"balance.token.processing.info.title" = "Processing amount";
-"balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they will be confirmed, this tokens will be available for spending";
+"balance.token.processing.info.title" = "Processando quantia";
+"balance.token.processing.info.description" = "As transações com esse valor ainda estão sendo sincronizadas. E quando forem confirmadas, esses tokens estarão disponíveis para gastar";
 "balance.token.staked" = "Investido";
 "balance.token.staked.info.title" = "Título Implantado";
 "balance.token.staked.info.description" = "Texto com Descrição Implantada";
@@ -406,7 +406,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.hodler_locktime_off" = "Desligado";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
 "send.fee_info.title" = "Taxa de tarifa";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são mais altas quando muitas transações ocorrem na rede.\n\nA carteira %@ estima a taxa com base na atividade atual do blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período de tempo razoável. \n\nA taxa recomendada mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medido em bytes.\n\nOs usuários podem usar os controles fornecidos para aumentar ou diminuir o valor da taxa. A alteração na taxa altera a taxa total da transação que o usuário pagará.\n\nDefinir uma taxa abaixo do valor recomendado pode fazer com que uma transação seja mantida como pendente por horas ou rejeitada. Quanto menor o valor, mais tempo levará para a transação ser confirmada. Para transações onde a prioridade é importante, recomendamos definir uma taxa de comissão mais elevada.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
 "send.transaction_inputs_outputs_info.description" = "A maioria das transações em Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira %@ implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
@@ -1035,7 +1035,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Personal Support
 
 "settings.personal_support.telegram_username.title" = "Conta";
-"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.telegram_username.placeholder" = "@nomedeusuario";
 "settings.personal_support.description" = "Digite seu nome de conta do Telegram para abrir um chat de suporte pessoal e enviaremos uma mensagem para você.";
 "settings.personal_support.request" = "Solicitar";
 "settings.personal_support.requested" = "Solicitado";
@@ -1079,29 +1079,29 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Security
 
 "settings_security.title" = "Segurança";
-"settings_security.enable_passcode" = "Enable Passcode";
-"settings_security.edit_passcode" = "Edit Passcode";
-"settings_security.disable_passcode" = "Disable Passcode";
-"settings_security.balance_auto_hide" = "Balance Auto Hide";
-"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
-"settings_security.enable_duress_mode" = "Enable Duress Mode";
+"settings_security.enable_passcode" = "Ativar Senha";
+"settings_security.edit_passcode" = "Editar Senha";
+"settings_security.disable_passcode" = "Desativar Senha";
+"settings_security.balance_auto_hide" = "Ocultar Saldo Automaticamente";
+"settings_security.balance_auto_hide.description" = "Oculta automaticamente o saldo cada vez que o aplicativo é aberto, independentemente das preferências anteriores.";
+"settings_security.enable_duress_mode" = "Ativar Modo de Coerção";
 "settings_security.edit_duress_passcode" = "Edit Duress Passcode";
-"settings_security.disable_duress_mode" = "Disable Duress Mode";
-"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
+"settings_security.disable_duress_mode" = "Desativar Modo de Coerção";
+"settings_security.duress_mode.description" = "Um modo especializado projetado para manter as carteiras selecionadas seguras sob coerção.";
 
 // Create Passcode
 
-"create_passcode.title" = "Create Passcode";
-"create_passcode.description" = "Your passcode will be used to unlock your wallet";
-"create_passcode.description.biometry" = "Set a passcode to enable %@";
-"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
-"create_passcode.confirm_passcode" = "Confirm passcode";
+"create_passcode.title" = "Criar senha";
+"create_passcode.description" = "Sua senha será usada para desbloquear sua carteira";
+"create_passcode.description.biometry" = "Defina uma senha para ativar %@";
+"create_passcode.description.duress_mode" = "Defina uma senha para ativar o modo de Coerção";
+"create_passcode.confirm_passcode" = "Confirmar senha";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Duress Passcode";
-"enable_duress_mode.intro.description" = "This mode allows user to setup multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
-"enable_duress_mode.intro.notes" = "Notes";
+"enable_duress_mode.intro.title" = "Senha do Modo Coerção";
+"enable_duress_mode.intro.description" = "Esta modalidade permite ao usuário configurar várias senhas de desbloqueio de aplicativos, onde uma senha desejada mostra apenas carteiras especificadas. Projetado para manter carteiras selecionadas seguras sob coerção ou ameaças.";
+"enable_duress_mode.intro.notes" = "Anotações";
 "enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
 "enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
 "enable_duress_mode.intro.passcode_disabling.description" = "Disabling the passcode in the main mode will automatically reset the Duress Mode.";
@@ -1113,36 +1113,36 @@ Go to Settings - > %@ and allow access to the camera.";
 "enable_duress_mode.select.wallets" = "Carteiras";
 "enable_duress_mode.select.watch_wallets" = "Ver Endereço";
 
-"enable_duress_mode.passcode.title" = "Duress Passcode";
+"enable_duress_mode.passcode.title" = "Senha do Modo Coerção";
 "enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
-"enable_duress_mode.passcode.confirm" = "Confirm passcode";
+"enable_duress_mode.passcode.confirm" = "Confirmar senha";
 
 // Edit Passcode
 
-"edit_passcode.title" = "Edit Passcode";
-"edit_passcode.enter_new_passcode" = "Enter new passcode";
-"edit_passcode.confirm_new_passcode" = "Confirm new passcode";
+"edit_passcode.title" = "Editar Senha";
+"edit_passcode.enter_new_passcode" = "Digite a nova senha";
+"edit_passcode.confirm_new_passcode" = "Confirme a nova senha";
 
 // Edit Duress Passcode
 
 "edit_duress_passcode.title" = "Edit Duress Passcode";
 "edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
-"edit_duress_passcode.confirm_new_passcode" = "Confirm new passcode";
+"edit_duress_passcode.confirm_new_passcode" = "Confirme a nova senha";
 
 // Set Passcode
 
-"set_passcode.invalid_confirmation" = "Invalid confirmation";
-"set_passcode.already_used" = "This passcode is already being used";
+"set_passcode.invalid_confirmation" = "Confirmação inválida";
+"set_passcode.already_used" = "Esta senha já está sendo usada";
 
 // Unlock
 
-"unlock.title" = "Unlock";
-"unlock.passcode" = "Passcode";
-"unlock.biometry_reason" = "Unlock wallet";
-"unlock.attempts_left" = "Attempts left: %@";
-"unlock.disabled_until" = "Disabled until: %@";
-"unlock.regular_mode" = "Regular Mode";
-"unlock.random_mode" = "Random Mode";
+"unlock.title" = "Desbloquear";
+"unlock.passcode" = "Senha";
+"unlock.biometry_reason" = "Desbloquear carteira";
+"unlock.attempts_left" = "Tentativas restantes: %@";
+"unlock.disabled_until" = "Desativar até: %@";
+"unlock.regular_mode" = "Modo normal";
+"unlock.random_mode" = "Modo Aleatório";
 
 "security_settings.delete_alert_button" = "Excluir do telefone";
 
@@ -1159,7 +1159,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "btc_transaction_sort_mode.bip69.description" = "Indexação Lexicográfica";
 
 "blockchain_settings.info.restore_source" = "Restaurar Fonte";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Esta configuração só é relevante ao restaurar uma carteira existente. É um processo de obtenção do histórico de transações de uma determinada criptomoeda para que o aplicativo de carteira seja capaz de exibir transações anteriores e calcular o saldo do usuário. Isso precisa acontecer apenas uma vez quando o usuário restaura carteiras criadas anteriormente.\n\nNeste ponto, existem duas maneiras possíveis para uma carteira móvel como %@ fazer isso:\n\n1. do Servidor API: Existe um servidor predefinido de terceiros que hospeda todo o blockchain e tem todos os dados processados e otimizados para fornecer esses dados de forma rápida. Este método é rápido, mas potencialmente (não necessariamente) menos privado. É também um método centralizado para restaurar uma carteira, pois depende da disponibilidade de um servidor de terceiros. Esta opção é recomendada devido à velocidade de obtenção de dados (5 a 10 minutos).\n\n2. da Blockchain: o aplicativo tenta restaurar diretamente de uma rede de nós da blockchain. Esta é uma forma descentralizada de restaurar o saldo da carteira e transações anteriores. O aplicativo executa ping em muitos nós da rede e solicita dados deles sem abordar alguns nós especificamente. Esta opção é lenta e pode levar facilmente de 2 a 3 horas; o aplicativo precisa estar aberto durante a restauração. Este método de restauração não depende de nenhuma entidade e deve funcionar em todas as condições.";
 "blockchain_settings.info.rpc_source" = "Fonte RPC";
 "blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
@@ -1280,12 +1280,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "contacts.settings.restore_contacts" = "Restaurar contatos";
 "contacts.settings.backup_contacts" = "Backup de contatos";
 
-"contacts.settings.icloud_sync" = "iCloud Sync";
+"contacts.settings.icloud_sync" = "Sincronização com iCloud";
 "contacts.settings.description" = "Sincronize os contatos de pagamento no iCloud para facilitar o backup e o acesso entre vários dispositivos.";
 "contacts.settings.lost_synchronization.description" = "A sincronização do iCloud foi perdida. Por favor, verifique se o armazenamento do iCloud está ativado no seu dispositivo.";
 "contacts.settings.merge_disclaimer" = "Seus contatos de pagamento locais serão mesclados com os armazenados no iCloud.";
 
-"contacts.settings.alert.title" = "iCloud Sync";
+"contacts.settings.alert.title" = "Sincronização com iCloud";
 "contacts.settings.alert.description" = "Por favor, verifique se o armazenamento do iCloud está ativado no seu dispositivo.";
 
 "contacts.settings.alert_error.title" = "erro do iCloud";
@@ -1720,7 +1720,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "tron.send.activation_fee" = "Taxa de ativação";
 "tron.send.resources_consumed" = "Recursos consumidos";
-"tron.send.bandwidth" = "Bandwidth";
+"tron.send.bandwidth" = "Largura de Banda";
 "tron.send.energy" = "Energy";
 "tron.send.fee.info" = "O custo estimado de envio de determinada transação na rede. (Sem excluir Energy, Bandwidth e Taxa de Ativação)";
 "tron.send.resources_consumed.info" = "A bandwidth é a unidade que mede o tamanho dos bytes de transação armazenados no banco de dados blockchain. Quanto maior a transação, mais recursos de largura de banda serão consumidos.\n\nEnergy é a unidade que mede a quantidade de computação necessária pela máquina virtual TRON para realizar operações específicas na rede TRON.\n\nComo as transações de contrato inteligente exigem recursos de computação para executar, cada transação de contrato inteligente requer o pagamento da taxa de energy.";
