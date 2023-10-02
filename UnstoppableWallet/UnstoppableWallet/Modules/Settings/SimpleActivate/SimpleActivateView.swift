@@ -21,9 +21,8 @@ struct SimpleActivateView: View {
                     ListSectionFooter(text: description)
                 }
             }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-                .navigationTitle(title)
+        .navigationTitle(title)
     }
-
 }

@@ -97,6 +97,13 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
+"auto_lock.immediate" = "Immediate";
+"auto_lock.minute1" = "1 minute";
+"auto_lock.minute5" = "5 minutes";
+"auto_lock.minute15" = "15 minutes";
+"auto_lock.minute30" = "30 minutes";
+"auto_lock.hour1" = "1 hour";
+
 // Access Camera
 
 "access_camera.message" = "%@ needs access to your camera to scan the QR code.
@@ -1082,6 +1089,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings_security.enable_passcode" = "Enable Passcode";
 "settings_security.edit_passcode" = "Edit Passcode";
 "settings_security.disable_passcode" = "Disable Passcode";
+"settings_security.auto_lock" = "Auto-Lock";
 "settings_security.balance_auto_hide" = "Balance Auto Hide";
 "settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
 "settings_security.enable_duress_mode" = "Set Duress Mode";

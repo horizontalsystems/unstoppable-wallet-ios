@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ExperimentalFeaturesView: View {
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
@@ -16,9 +15,8 @@ struct ExperimentalFeaturesView: View {
                     }
                 }
             }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-                .navigationTitle("settings.experimental_features.title".localized)
+        .navigationTitle("settings.experimental_features.title".localized)
     }
-
 }

@@ -5,14 +5,19 @@ import StorageKit
 
 class LockManager {
     private let lastExitDateKey = "last_exit_date_key"
+    private let autoLockPeriodKey = "auto-lock-period"
 
     private let passcodeManager: PasscodeManager
     private let localStorage: ILocalStorage
     private let delegate: LockDelegate
 
-    private let lockTimeout: Double = 60
     private(set) var isLocked: Bool
 
+    var autoLockPeriod: AutoLockPeriod {
+        didSet {
+            localStorage.set(value: autoLockPeriod.rawValue, for: autoLockPeriodKey)
+        }
+    }
 
     init(passcodeManager: PasscodeManager, localStorage: ILocalStorage, delegate: LockDelegate) {
         self.passcodeManager = passcodeManager
@@ -20,6 +25,8 @@ class LockManager {
         self.delegate = delegate
 
         isLocked = passcodeManager.isPasscodeSet
+        let autoLockPeriodRaw: String? = localStorage.value(for: autoLockPeriodKey)
+        autoLockPeriod = autoLockPeriodRaw.flatMap { AutoLockPeriod(rawValue: $0) } ?? .minute1
     }
 }
 
@@ -40,7 +47,7 @@ extension LockManager {
         let exitTimestamp: TimeInterval = localStorage.value(for: lastExitDateKey) ?? 0
         let now = Date().timeIntervalSince1970
 
-        guard now - exitTimestamp > lockTimeout else {
+        guard now - exitTimestamp > autoLockPeriod.period else {
             return
         }
 
