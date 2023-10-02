@@ -1084,7 +1084,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings_security.disable_passcode" = "Disable Passcode";
 "settings_security.balance_auto_hide" = "Balance Auto Hide";
 "settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
-"settings_security.enable_duress_mode" = "Enable Duress Mode";
+"settings_security.enable_duress_mode" = "Set Duress Mode";
 "settings_security.edit_duress_passcode" = "Edit Duress Passcode";
 "settings_security.disable_duress_mode" = "Disable Duress Mode";
 "settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
@@ -1095,7 +1095,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "create_passcode.description" = "Your passcode will be used to unlock your wallet";
 "create_passcode.description.biometry" = "Set a passcode to enable %@";
 "create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
-"create_passcode.confirm_passcode" = "Confirm passcode";
+"create_passcode.confirm_passcode" = "Confirm";
 
 // Enable Duress Mode
 
@@ -1115,19 +1115,19 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "enable_duress_mode.passcode.title" = "Duress Passcode";
 "enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
-"enable_duress_mode.passcode.confirm" = "Confirm passcode";
+"enable_duress_mode.passcode.confirm" = "Confirm";
 
 // Edit Passcode
 
 "edit_passcode.title" = "Edit Passcode";
 "edit_passcode.enter_new_passcode" = "Enter new passcode";
-"edit_passcode.confirm_new_passcode" = "Confirm new passcode";
+"edit_passcode.confirm_new_passcode" = "Confirm";
 
 // Edit Duress Passcode
 
 "edit_duress_passcode.title" = "Edit Duress Passcode";
 "edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
-"edit_duress_passcode.confirm_new_passcode" = "Confirm new passcode";
+"edit_duress_passcode.confirm_new_passcode" = "Confirm";
 
 // Set Passcode
 
@@ -1137,7 +1137,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Unlock
 
 "unlock.title" = "Unlock";
-"unlock.passcode" = "Passcode";
+"unlock.passcode" = "Enter Passcode";
 "unlock.biometry_reason" = "Unlock wallet";
 "unlock.attempts_left" = "Attempts left: %@";
 "unlock.disabled_until" = "Disabled until: %@";
