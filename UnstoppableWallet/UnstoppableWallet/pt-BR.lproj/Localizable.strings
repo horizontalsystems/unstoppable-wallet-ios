@@ -1141,8 +1141,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "unlock.biometry_reason" = "Desbloquear carteira";
 "unlock.attempts_left" = "Tentativas restantes: %@";
 "unlock.disabled_until" = "Desativar até: %@";
-"unlock.regular_mode" = "Modo normal";
-"unlock.random_mode" = "Modo Aleatório";
+"unlock.random" = "Random";
 
 "security_settings.delete_alert_button" = "Excluir do telefone";
 
