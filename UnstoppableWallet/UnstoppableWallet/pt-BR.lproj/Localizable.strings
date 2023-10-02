@@ -97,6 +97,13 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
+"auto_lock.immediate" = "Immediate";
+"auto_lock.minute1" = "1 minute";
+"auto_lock.minute5" = "5 minutes";
+"auto_lock.minute15" = "15 minutes";
+"auto_lock.minute30" = "30 minutes";
+"auto_lock.hour1" = "1 hora";
+
 // Access Camera
 
 "access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.
@@ -1082,9 +1089,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings_security.enable_passcode" = "Ativar Senha";
 "settings_security.edit_passcode" = "Editar Senha";
 "settings_security.disable_passcode" = "Desativar Senha";
+"settings_security.auto_lock" = "Auto-Lock";
 "settings_security.balance_auto_hide" = "Ocultar Saldo Automaticamente";
 "settings_security.balance_auto_hide.description" = "Oculta automaticamente o saldo cada vez que o aplicativo é aberto, independentemente das preferências anteriores.";
-"settings_security.enable_duress_mode" = "Ativar Modo de Coação";
+"settings_security.enable_duress_mode" = "Set Duress Mode";
 "settings_security.edit_duress_passcode" = "Editar Senha do Modo Coação";
 "settings_security.disable_duress_mode" = "Desativar Modo de Coação";
 "settings_security.duress_mode.description" = "Um modo especializado projetado para manter as carteiras selecionadas seguras sob coação.";
@@ -1095,7 +1103,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "create_passcode.description" = "Sua senha será usada para desbloquear sua carteira";
 "create_passcode.description.biometry" = "Defina uma senha para ativar %@";
 "create_passcode.description.duress_mode" = "Defina uma senha para ativar o modo de Coação";
-"create_passcode.confirm_passcode" = "Confirmar senha";
+"create_passcode.confirm_passcode" = "Confirmar";
 
 // Enable Duress Mode
 
@@ -1115,19 +1123,19 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "enable_duress_mode.passcode.title" = "Senha do Modo Coação";
 "enable_duress_mode.passcode.description" = "Defina uma senha para o modo de Coação";
-"enable_duress_mode.passcode.confirm" = "Confirmar senha";
+"enable_duress_mode.passcode.confirm" = "Confirmar";
 
 // Edit Passcode
 
 "edit_passcode.title" = "Editar Senha";
 "edit_passcode.enter_new_passcode" = "Digite a nova senha";
-"edit_passcode.confirm_new_passcode" = "Confirme a nova senha";
+"edit_passcode.confirm_new_passcode" = "Confirmar";
 
 // Edit Duress Passcode
 
 "edit_duress_passcode.title" = "Editar Senha do Modo Coação";
 "edit_duress_passcode.enter_new_passcode" = "Defina uma senha para o modo de Coação";
-"edit_duress_passcode.confirm_new_passcode" = "Confirme a nova senha";
+"edit_duress_passcode.confirm_new_passcode" = "Confirmar";
 
 // Set Passcode
 
@@ -1137,7 +1145,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Unlock
 
 "unlock.title" = "Desbloquear";
-"unlock.passcode" = "Senha";
+"unlock.passcode" = "Enter Passcode";
 "unlock.biometry_reason" = "Desbloquear carteira";
 "unlock.attempts_left" = "Tentativas restantes: %@";
 "unlock.disabled_until" = "Desativar até: %@";
