@@ -9,7 +9,6 @@ struct ThemeView<Content: View>: View {
             content
         }
     }
-
 }
 
 struct ScrollableThemeView<Content: View>: View {
@@ -22,7 +21,6 @@ struct ScrollableThemeView<Content: View>: View {
             }
         }
     }
-
 }
 
 struct ThemeNavigationView<Content: View>: View {
@@ -32,7 +30,6 @@ struct ThemeNavigationView<Content: View>: View {
         NavigationView {
             content
         }
-                .accentColor(.themeJacob)
+        .accentColor(.themeJacob)
     }
-
 }

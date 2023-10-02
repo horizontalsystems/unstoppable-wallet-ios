@@ -106,6 +106,7 @@
 		11B3511B03A70BEA48637907 /* MarkdownListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357E9508BF369BDFF7753 /* MarkdownListItemCell.swift */; };
 		11B3511CB3C3FDAF362D8315 /* GuidesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D9767615D8FBF7A314F /* GuidesManager.swift */; };
 		11B3511CD62516A146124350 /* TextDropDownAndSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359C62F476065C11EE049 /* TextDropDownAndSettingsView.swift */; };
+		11B3511DAD3881FDE2419A64 /* AutoLockPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E41142BD3D2FF59BAE7 /* AutoLockPeriod.swift */; };
 		11B3512144B36B8E7D4E4CD8 /* ShortcutInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1C200EC15159154E3F /* ShortcutInputCell.swift */; };
 		11B3512244F96B6AE1399C9C /* NftUid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351924AF4DA7A0BC6D1A1 /* NftUid.swift */; };
 		11B351245348DFCE20EC6D4B /* PlaceholderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E7C8DEDFA0A9B5993B7 /* PlaceholderCell.swift */; };
@@ -727,6 +728,7 @@
 		11B358C72B4E7F70331084AA /* SendEvmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35113CB935A0E54504C1C /* SendEvmViewController.swift */; };
 		11B358CB129212E2A0E455E4 /* MarketAdvancedSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A1CC274EDBF8A67DEA /* MarketAdvancedSearchResultViewController.swift */; };
 		11B358D1687049E5DACEBC96 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
+		11B358D35D2270FD78C6EF82 /* AutoLockPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E41142BD3D2FF59BAE7 /* AutoLockPeriod.swift */; };
 		11B358D913A404C1DA7D4E0E /* CoinInvestorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FF539B93A4C61AD1D00 /* CoinInvestorsViewModel.swift */; };
 		11B358DC6827FC6035BF3225 /* TokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353684493AFDF3711DF2B /* TokenQuery.swift */; };
 		11B358DC90F3372DB98BD4A5 /* CexDepositNetworkSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDED1BC5B541DB6B4B3 /* CexDepositNetworkSelectViewModel.swift */; };
@@ -3340,6 +3342,7 @@
 		11B35E3DD6021EEB699A8EBF /* ReceiveService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveService.swift; sourceTree = "<group>"; };
 		11B35E3F01D5A5CFE5A4E94B /* EvmMethodLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmMethodLabel.swift; sourceTree = "<group>"; };
 		11B35E4058159A4FE60A3F53 /* CoinMarketsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinMarketsService.swift; sourceTree = "<group>"; };
+		11B35E41142BD3D2FF59BAE7 /* AutoLockPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLockPeriod.swift; sourceTree = "<group>"; };
 		11B35E4B97A593E898724335 /* EvmNftRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmNftRecord.swift; sourceTree = "<group>"; };
 		11B35E511F9D2B6C65792324 /* GuidesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidesViewController.swift; sourceTree = "<group>"; };
 		11B35E5C80435645132BCDD2 /* EvmUpdateStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmUpdateStatus.swift; sourceTree = "<group>"; };
@@ -5080,6 +5083,7 @@
 				11B35B617A9CE668EEF4978B /* AmountData.swift */,
 				11B359A35AEB7964A94AFFC0 /* BiometryType.swift */,
 				ABC9A68AFE3CF24D2B88808F /* EnabledWalletCache_v_0_36.swift */,
+				11B35E41142BD3D2FF59BAE7 /* AutoLockPeriod.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -9296,6 +9300,7 @@
 				11B3595AD0AA7108CAC814CC /* DuressModeModule.swift in Sources */,
 				11B356A35A5981DD231E580C /* ListStyle.swift in Sources */,
 				11B357C425D633543FD109C3 /* DuressModeSelectView.swift in Sources */,
+				11B358D35D2270FD78C6EF82 /* AutoLockPeriod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10607,6 +10612,7 @@
 				11B3586F6BFCA16BDFD5921D /* DuressModeModule.swift in Sources */,
 				11B353577381981235B90A82 /* ListStyle.swift in Sources */,
 				11B354DC983042AD922339A6 /* DuressModeSelectView.swift in Sources */,
+				11B3511DAD3881FDE2419A64 /* AutoLockPeriod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

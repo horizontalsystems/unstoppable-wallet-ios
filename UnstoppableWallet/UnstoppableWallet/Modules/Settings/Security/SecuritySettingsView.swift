@@ -55,6 +55,17 @@ struct SecuritySettingsView: View {
                     }
                 }
 
+                ListSection {
+                    NavigationRow(destination: {
+                        AutoLockView(period: $viewModel.autoLockPeriod)
+                    }) {
+                        Image("lock_24").themeIcon()
+                        Text("settings_security.auto_lock".localized).themeBody()
+                        Text(viewModel.autoLockPeriod.title).themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8)
+                        Image.disclosureIcon
+                    }
+                }
+
                 VStack(spacing: 0) {
                     ListSection {
                         ListRow {
@@ -174,6 +185,33 @@ struct SecuritySettingsView: View {
 
         var id: Self {
             self
+        }
+    }
+
+    private struct AutoLockView: View {
+        @Binding var period: AutoLockPeriod
+        @Environment(\.presentationMode) private var presentationMode
+
+        var body: some View {
+            ScrollableThemeView {
+                ListSection {
+                    ForEach(AutoLockPeriod.allCases, id: \.self) { period in
+                        ClickableRow(action: {
+                            self.period = period
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Text(period.title).themeBody()
+
+                            if self.period == period {
+                                Image.checkIcon
+                            }
+                        }
+                    }
+                }
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            }
+            .navigationTitle("settings_security.auto_lock".localized)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

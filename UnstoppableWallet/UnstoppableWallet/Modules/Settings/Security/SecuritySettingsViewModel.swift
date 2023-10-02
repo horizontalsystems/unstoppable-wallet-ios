@@ -12,6 +12,12 @@ class SecuritySettingsViewModel: ObservableObject {
     @Published var isDuressPasscodeSet: Bool
     @Published var biometryType: BiometryType?
 
+    @Published var autoLockPeriod: AutoLockPeriod {
+        didSet {
+            lockManager.autoLockPeriod = autoLockPeriod
+        }
+    }
+
     @Published var isBiometryToggleOn: Bool {
         didSet {
             if isBiometryToggleOn != biometryManager.biometryEnabled, isPasscodeSet {
@@ -36,6 +42,7 @@ class SecuritySettingsViewModel: ObservableObject {
         isPasscodeSet = passcodeManager.isPasscodeSet
         isDuressPasscodeSet = passcodeManager.isDuressPasscodeSet
         biometryType = biometryManager.biometryType
+        autoLockPeriod = lockManager.autoLockPeriod
 
         isBiometryToggleOn = biometryManager.biometryEnabled
         balanceAutoHide = balanceHiddenManager.balanceAutoHide
