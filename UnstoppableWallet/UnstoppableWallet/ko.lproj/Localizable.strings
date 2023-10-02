@@ -1139,8 +1139,7 @@
 "unlock.biometry_reason" = "Unlock wallet";
 "unlock.attempts_left" = "Attempts left: %@";
 "unlock.disabled_until" = "Disabled until: %@";
-"unlock.regular_mode" = "Regular Mode";
-"unlock.random_mode" = "Random Mode";
+"unlock.random" = "Random";
 
 "security_settings.delete_alert_button" = "휴대전화에서 삭제";
 
