@@ -13,6 +13,10 @@ class EditPasscodeViewModel: SetPasscodeViewModel {
         "edit_passcode.confirm_new_passcode".localized
     }
 
+    override func isCurrent(passcode: String) -> Bool {
+        passcodeManager.isValid(passcode: passcode)
+    }
+
     override func onEnter(passcode: String) {
         do {
             try passcodeManager.set(passcode: passcode)

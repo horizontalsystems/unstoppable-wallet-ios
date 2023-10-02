@@ -10,10 +10,10 @@ class BaseUnlockViewModel: ObservableObject {
     @Published var errorText: String = ""
     @Published var passcode: String = "" {
         didSet {
+            let passcode = passcode
             if passcode.count == passcodeLength {
-                Task {
-                    try await Task.sleep(nanoseconds: 200_000_000)
-                    await handlePasscodeChanged()
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) { [weak self] in
+                    self?.handleEntered(passcode: passcode)
                 }
             }
         }
@@ -82,13 +82,12 @@ class BaseUnlockViewModel: ObservableObject {
     func onEnterValid(passcode _: String) {}
     func onBiometryUnlock() -> Bool { false }
 
-    @MainActor
-    private func handlePasscodeChanged() {
+    private func handleEntered(passcode: String) {
         if isValid(passcode: passcode) {
             onEnterValid(passcode: passcode)
             lockoutManager.didUnlock()
         } else {
-            passcode = ""
+            self.passcode = ""
             lockoutManager.didFailUnlock()
 
             shakeTrigger += 1
