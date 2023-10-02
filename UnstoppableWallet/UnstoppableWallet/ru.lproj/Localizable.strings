@@ -1140,8 +1140,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "unlock.biometry_reason" = "Unlock wallet";
 "unlock.attempts_left" = "Attempts left: %@";
 "unlock.disabled_until" = "Disabled until: %@";
-"unlock.regular_mode" = "Regular Mode";
-"unlock.random_mode" = "Random Mode";
+"unlock.random" = "Random";
 
 "security_settings.delete_alert_button" = "Delete from Phone";
 
