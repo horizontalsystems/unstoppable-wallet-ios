@@ -97,6 +97,13 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
+"auto_lock.immediate" = "Immediate";
+"auto_lock.minute1" = "1 minute";
+"auto_lock.minute5" = "5 minutes";
+"auto_lock.minute15" = "15 minutes";
+"auto_lock.minute30" = "30 minutes";
+"auto_lock.hour1" = "1 Stunde";
+
 // Access Camera
 
 "access_camera.message" = "%@ benötigt Zugriff auf Ihre Kamera, um den QR-Code zu scannen.
@@ -1082,9 +1089,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings_security.enable_passcode" = "Enable Passcode";
 "settings_security.edit_passcode" = "Edit Passcode";
 "settings_security.disable_passcode" = "Disable Passcode";
+"settings_security.auto_lock" = "Auto-Lock";
 "settings_security.balance_auto_hide" = "Balance Auto Hide";
 "settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
-"settings_security.enable_duress_mode" = "Enable Duress Mode";
+"settings_security.enable_duress_mode" = "Set Duress Mode";
 "settings_security.edit_duress_passcode" = "Edit Duress Passcode";
 "settings_security.disable_duress_mode" = "Disable Duress Mode";
 "settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
@@ -1095,7 +1103,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "create_passcode.description" = "Your passcode will be used to unlock your wallet";
 "create_passcode.description.biometry" = "Set a passcode to enable %@";
 "create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
-"create_passcode.confirm_passcode" = "Confirm passcode";
+"create_passcode.confirm_passcode" = "Bestätigen";
 
 // Enable Duress Mode
 
@@ -1115,19 +1123,19 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "enable_duress_mode.passcode.title" = "Duress Passcode";
 "enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
-"enable_duress_mode.passcode.confirm" = "Confirm passcode";
+"enable_duress_mode.passcode.confirm" = "Bestätigen";
 
 // Edit Passcode
 
 "edit_passcode.title" = "Edit Passcode";
 "edit_passcode.enter_new_passcode" = "Enter new passcode";
-"edit_passcode.confirm_new_passcode" = "Confirm new passcode";
+"edit_passcode.confirm_new_passcode" = "Bestätigen";
 
 // Edit Duress Passcode
 
 "edit_duress_passcode.title" = "Edit Duress Passcode";
 "edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
-"edit_duress_passcode.confirm_new_passcode" = "Confirm new passcode";
+"edit_duress_passcode.confirm_new_passcode" = "Bestätigen";
 
 // Set Passcode
 
@@ -1137,7 +1145,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Unlock
 
 "unlock.title" = "Unlock";
-"unlock.passcode" = "Passcode";
+"unlock.passcode" = "Enter Passcode";
 "unlock.biometry_reason" = "Unlock wallet";
 "unlock.attempts_left" = "Attempts left: %@";
 "unlock.disabled_until" = "Disabled until: %@";
