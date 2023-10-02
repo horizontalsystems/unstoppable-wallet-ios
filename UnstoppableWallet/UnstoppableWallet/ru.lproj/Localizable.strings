@@ -1,1074 +1,1071 @@
-"button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.continue" = "Continue";
-"button.done" = "Done";
-"button.reset" = "Reset";
-"button.import" = "Import";
-"button.next" = "Next";
-"button.delete" = "Delete";
-"button.share" = "Share";
-"button.paste" = "Paste";
-"button.resend" = "Resend";
-"button.backup" = "Backup";
-"button.copy" = "Copy";
-"button.retry" = "Retry";
-"button.report" = "Report";
-"button.add" = "Add";
-"button.approve" = "Approve";
-"button.revoke" = "Revoke";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
-"button.save" = "Save";
-"button.send" = "Send";
-"button.sign" = "Sign";
-"button.more" = "Show More";
-"button.i_understand" = "I Understand";
-"button.learn_more" = "Learn More";
+"button.ok" = "ОК";
+"button.apply" = "Применить";
+"button.cancel" = "Отменить";
+"button.close" = "Закрыть";
+"button.continue" = "Продолжить";
+"button.done" = "Готово";
+"button.reset" = "Сбросить";
+"button.import" = "Импорт";
+"button.next" = "Далее";
+"button.delete" = "Удалить";
+"button.share" = "Поделиться";
+"button.paste" = "Вставить";
+"button.resend" = "Отправить повторно";
+"button.backup" = "Резервная копия";
+"button.copy" = "Копировать";
+"button.retry" = "Повторить";
+"button.report" = "Пожаловаться";
+"button.add" = "Добавить";
+"button.approve" = "Разрешить";
+"button.revoke" = "Отменить";
+"button.reject" = "Отклонить";
+"button.connect" = "Подключиться";
+"button.save" = "Сохранить";
+"button.send" = "Отправить";
+"button.sign" = "Подписать";
+"button.more" = "Показать больше";
+"button.i_understand" = "Я понимаю";
+"button.learn_more" = "Подробнее";
 
-"alert" = "Alert";
-"alert.copied" = "Copied";
-"alert.saved" = "Saved";
-"alert.saved_to_icloud" = "Saved to iCloud";
-"alert.no_internet" = "No Internet";
-"alert.wrong_amount" = "Wrong Amount";
-"alert.no_fee" = "Wrong Fee";
-"alert.warning" = "Warning";
-"alert.error" = "Error";
-"alert.unknown_error" = "Unknown Error";
-"alert.success_action" = "Done";
-"alert.success" = "Success";
+"alert" = "Предупреждение";
+"alert.copied" = "Скопировано";
+"alert.saved" = "Сохранено";
+"alert.saved_to_icloud" = "Сохранено в iCloud";
+"alert.no_internet" = "Нет интернета";
+"alert.wrong_amount" = "Неправильная сумма";
+"alert.no_fee" = "Неправильная комиссия";
+"alert.warning" = "Внимание";
+"alert.error" = "Ошибка";
+"alert.unknown_error" = "Неизвестная ошибка";
+"alert.success_action" = "Готово";
+"alert.success" = "Успешно";
 
-"alert.added_to_watchlist" = "Added to Watchlist";
-"alert.removed_from_watchlist" = "Removed from Watchlist";
-"alert.added_to_wallet" = "Added to Wallet";
-"alert.removed_from_wallet" = "Removed from Wallet";
-"alert.already_added_to_wallet" = "Already added to Wallet";
-"alert.not_supported_yet" = "Not Supported Yet";
-"alert.created" = "Created";
-"alert.imported" = "Imported";
-"alert.wallet_added" = "Wallet Added";
-"alert.deleted" = "Deleted";
-"alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
-"alert.disconnecting" = "Disconnecting";
-"alert.disconnected" = "Disconnected";
-"alert.enabling" = "Enabling";
-"alert.enabled_coins" = "Enabled %@ more coins";
-"alert.sending" = "Sending";
-"alert.sent" = "Sent";
-"alert.swapping" = "Swapping";
-"alert.swapped" = "Swapped";
-"alert.approving" = "Approving";
-"alert.approved" = "Approved";
-"alert.revoking" = "Revoking";
-"alert.revoked" = "Revoked";
-"alert.cant_recognize" = "Can't Recognize";
+"alert.added_to_watchlist" = "Добавлено в избранное";
+"alert.removed_from_watchlist" = "Удалить из избранного";
+"alert.added_to_wallet" = "Добавлено в кошелек";
+"alert.removed_from_wallet" = "Удалено из кошелька";
+"alert.already_added_to_wallet" = "Уже добавлено в кошелек";
+"alert.not_supported_yet" = "Ещё не поддерживается";
+"alert.copied" = "Скопировано";
+"alert.created" = "Создан";
+"alert.imported" = "Импортировано";
+"alert.wallet_added" = "Кошелек добавлен";
+"alert.deleted" = "Удалено";
+"alert.waiting_for_session" = "Ожидание cессии";
+"alert.try_again" = "Попробовать ещё раз";
+"alert.disconnecting" = "Отсоединение";
+"alert.disconnected" = "Отсоединено";
+"alert.enabling" = "Идет активация";
+"alert.enabled_coins" = "Включено ещё %@ монет";
+"alert.sending" = "Отправка";
+"alert.sent" = "Отправлено";
+"alert.swapping" = "Обмен";
+"alert.swapped" = "Обмен выполнен";
+"alert.approving" = "Подтверждение";
+"alert.approved" = "Разрешено";
+"alert.revoking" = "Отмена";
+"alert.revoked" = "Отменен";
+"alert.cant_recognize" = "Не удалось распознать";
 
-"no_results_found" = "No results found";
-"action.loading" = "loading...";
-"placeholder.search" = "Search";
+"no_results_found" = "Ничего не найдено";
+"action.loading" = "загрузка...";
+"placeholder.search" = "Поиск";
 
-"status" = "Status";
-"connecting" = "Connecting...";
-"online" = "Online";
-"offline" = "Offline";
-"confirm" = "Confirm";
-"connect" = "Connect";
-"price" = "Price";
-"value" = "Value";
-"note" = "Note";
+"status" = "Статус";
+"connecting" = "Подключение...";
+"online" = "Доступен";
+"offline" = "Не доступен";
+"confirm" = "Подтвердить";
+"connect" = "Подключиться";
+"price" = "Цена";
+"value" = "Значение";
+"note" = "Примечание";
 
-"version" = "Version %@";
+"version" = "Версия %@";
 
-"n/a" = "N/A";
+"n/a" = "Нет данных";
 
-"sync_error" = "Sync error. Try again.";
+"sync_error" = "Ошибка синхронизации. Повторите попытку.";
 
-"number.thousand" = "%@K";
-"number.million" = "%@M";
-"number.billion" = "%@B";
-"number.trillion" = "%@T";
-"number.quadrillion" = "%@Q";
+"number.thousand" = "%@ тыс.";
+"number.million" = "%@ млн";
+"number.billion" = "%@ млрд";
+"number.trillion" = "%@ трл";
+"number.quadrillion" = "%@ квадрлн";
 
-"selector.any" = "Any";
+"selector.any" = "Любое";
 
 // Access Camera
 
-"access_camera.message"  = "Listen folks, %@ needs to see through your camera, okay.
-To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
+"access_camera.message" = "%@ требуется доступ к вашей камере для сканирования QR-кода.
 
-"access_camera.settings" = "Settings";
+Перейдите в \"Настройки\" - > %@ и разрешите доступ к камере.";
+"access_camera.settings" = "Настройки";
 
 // Restore
 
-"restore.title" = "Import Wallet";
-"restore.advanced" = "Advanced";
-"restore.import_by" = "Import By";
-"restore.restore_type.mnemonic" = "Recovery Phrase";
-"restore.restore_type.private_key" = "Private Key.";
-"restore.mnemonic.placeholder" = "Give me those magic words! Recovery Phrase, come on!";
-"restore.private_key.placeholder" = "Enter EVM Private Key, BIP32 Root Key or Account Extended Private Key";
-"restore.private_key.invalid_key" = "Invalid Key";
-"restore_error.mnemonic_word_count" = "Listen, we need 12 to 24 words. Not more, not less. Perfect balance. You gave me: %@";
-"restore.checksum_error" = "Invalid checksum";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "You know, we have this tremendous password. It's for your wallet backup, not your Apple thing. It's so good, if you lose it, even I can't get it back for you!";
-"restore.error.empty_passphrase" = "Come on folks, you've got to give me something here! Can't have an empty passphrase.";
-"restore.non_standard_import" = "Something a little different, a bit out of the box, folks.";
-"restore.non_standard_import.description" = "This page, it's special, believe me. For all you with those non-standard wallets. Maybe you've used some fancy foreign words or characters. You know which version I'm talking about, the %@ one. Very specific.";
-"restore.warning.non_recommended.description" = "Looks like this wallet's been to some exotic places with its characters! If your balance looks funny, it's not fake news. Dive in below for the real story.";
-"restore.error.non_standard.description" = "This wallet? It's not your everyday kind of thing. Tap below, and I'll spill the beans.";
+"restore.title" = "Импорт кошелька";
+"restore.advanced" = "Доп. настройки";
+"restore.import_by" = "Через";
+"restore.restore_type.mnemonic" = "Фраза восстановления";
+"restore.restore_type.private_key" = "Приватный ключ";
+"restore.mnemonic.placeholder" = "Введите фразу восстановления";
+"restore.private_key.placeholder" = "Введите приватный ключ EVM, BIP32 Root Key или Account Extended Private Key";
+"restore.private_key.invalid_key" = "Неверный ключ";
+"restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12-24 слова. Вы ввели: %@";
+"restore.checksum_error" = "Неверная контрольная сумма";
+"restore.passphrase" = "Кодовая фраза";
+"restore.input.passphrase" = "Кодовая фраза";
+"restore.passphrase_description" = "Этот пароль используется для шифрования файлов резервной копии вашего кошелька. Он не связан с вашим паролем Apple iCloud. Если вы потеряете или забудете этот пароль, его нельзя будет восстановить или сбросить.";
+"restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
+"restore.non_standard_import" = "Нестандартный импорт";
+"restore.non_standard_import.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей %@ с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях %@ 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
+\n\nЕсли вы являетесь затронутым пользователем, то баланс вашего кошелька будет отображаться как 0 после восстановления такого кошелька в версии 0.29 или выше.Эта страница позволит вам восстановить доступ к вашему нестандартному кошельку. После восстановления рекомендуется создать новый кошелек (который будет соответствовать стандарту) и перевести туда средства.";
+"restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.
+\n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
+"restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 
 // Restore Type
 
-"restore_type.title" = "Import Wallet";
+"restore_type.title" = "Импорт кошелька";
 
-"restore_type.recovery.title" = "from Recovery Phrase";
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.cex.title" = "from Exchange Wallet";
+"restore_type.recovery.title" = "Фраза восстановления";
+"restore_type.cloud.title" = "iCloud";
+"restore_type.cex.title" = "с кошелька биржи";
 
-"restore_type.recovery.description" = "Importing with the mightiest recovery phrase or a super private key!";
-"restore_type.cloud.description" = "Importing from the backup – straight outta your keychain!";
-"restore_type.cex.description" = "Connecting to the wallet on the grand centralized exchange!";
+"restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
+"restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
+"restore_type.cex.description" = "Подключиться к кошельку на централизованной бирже.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Pick your wallet's backup, the one you really wanna bring back!";
-"restore.cloud.empty" = "No backups found";
-"restore.cloud.imported" = "Imported wallets";
+"restore.cloud.title" = "Резерв. копия";
+"restore.cloud.description" = "Выберите резервную копию кошелька, который вы хотите восстановить.";
+"restore.cloud.empty" = "Резервные копии не найдены.";
+"restore.cloud.imported" = "Импортированные кошельки";
 
-"restore.cloud.password.title" = "Enter Password";
-"restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Key in your majestic backup password to get that wallet out of iCloud!";
+"restore.cloud.password.title" = "Введите пароль";
+"restore.cloud.password.placeholder" = "Пароль резервной копии";
+"restore.cloud.password.description" = "Введите пароль резервной копии для импорта вашего кошелька из iCloud.";
 
 // Restore Cex
 
-"restore.cex.title" = "Select CEX";
-"restore.cex.description" = "Choose your centralized exchange, the greatest of them all, believe me!";
+"restore.cex.title" = "Выберите CEX";
+"restore.cex.description" = "Выберите централизованный обмен, к которому вы хотите подключиться.";
 
 // Restore Binance
 
-"restore.binance.description" = "Hand over those API Keys and Secret! Only the best for our exchange!";
-"restore.binance.api_key" = "API Key";
-"restore.binance.secret_key" = "Secret Key";
-"restore.binance.connect" = "Connect";
-"restore.binance.connecting" = "Connecting...";
-"restore.binance.get_api_keys" = "Get API Keys";
-"restore.binance.failed_to_connect" = "Failed to connect your API key";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.description" = "Пожалуйста, предоставьте ключ API и секрет API, чтобы связать вашу биржу.";
+"restore.binance.api_key" = "API ключ";
+"restore.binance.secret_key" = "Секретный ключ";
+"restore.binance.connect" = "Подключиться";
+"restore.binance.connecting" = "Подключение...";
+"restore.binance.get_api_keys" = "Получить API ключ";
+"restore.binance.failed_to_connect" = "Не удалось подключиться к твоему API ключу";
+"restore.binance.invalid_qr_code" = "Недопустимый QR-код";
 
 // Coin Settings
 
-"coin_settings.title" = "Blockchain Settings";
+"coin_settings.title" = "Настройки блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
-"sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.description" = "Choose your address format. Let's make your payments great, just like when you pick the right tie! Always be spot on.";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендованный)";
+"sync_mode.from_blockchain" = "Из блокчейна";
+"blockchain_settings.description" = "Выберите формат адреса для получения средств. При восстановлении существующего кошелька должен быть выбран правильный формат.";
 
 // Coin Platforms
 
-"coin_platforms.native" = "Native";
+"coin_platforms.native" = "Нативный";
 
 // Copy Warning
 
-"copy_warning.title" = "Risk of Copying";
-"copy_warning.description" = "For safety, folks, I'd say don't copy this! I have the best safety tips.";
-"copy_warning.dont_copy" = "Don't Copy";
-"copy_warning.i_will_risk_it" = "I'm feeling brave today!";
+"copy_warning.title" = "Риск копирования";
+"copy_warning.description" = "В качестве меры безопасности мы рекомендуем не использовать действие копирования.";
+"copy_warning.dont_copy" = "Не копировать";
+"copy_warning.i_will_risk_it" = "Я рискую";
 
 // Recovery Phrase
 
-"recovery_phrase.title" = "Recovery Phrase";
-"recovery_phrase.warning" = "Never ever share! Remember, the %@ team won't ask. It's like your personal hair secret.";
-"recovery_phrase.tap_to_show" = "Give it a tap! Unveil the magic words.";
-"recovery_phrase.passphrase" = "Passphrase";
-"recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
-"recovery_phrase.copy_warning.description" = "Stay safe! I wouldn't copy that if I were you. Best recommendation.";
+"recovery_phrase.title" = "Фраза восстановления";
+"recovery_phrase.warning" = "Никогда ни с кем не делитесь вашей фразой восстановления. Команда %@ никогда не запросит вашу фразу восстановления.";
+"recovery_phrase.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
+"recovery_phrase.passphrase" = "Кодовая фраза";
+"recovery_phrase.copy_warning.title" = "Риск копирования фразы восстановления";
+"recovery_phrase.copy_warning.description" = "В целях безопасности мы не рекомендуем использовать действие копирования фразы восстановления.";
 
 // EVM Private Key
 
-"evm_private_key.title" = "EVM Private Key";
-"evm_private_key.tap_to_show" = "Tap to show private key";
+"evm_private_key.title" = "Приватный Ключ EVM";
+"evm_private_key.tap_to_show" = "Нажмите, чтобы показать приватный ключ";
 
 // Extended Key
 
- "extended_key.bip32_root_key" = "BIP32 Root Key";
- "extended_key.account_extended_private_key" = "Account Extended Private Key";
- "extended_key.account_extended_public_key" = "Account Extended Public Key";
- "extended_key.purpose" = "Purpose";
- "extended_key.blockchain" = "Blockchain";
- "extended_key.account" = "Account";
- "extended_key.tap_to_show" = "Tap to show extended private key";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Purpose";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "Account";
+"extended_key.tap_to_show" = "Нажмите, чтобы показать extended private key";
 
 // Backup
 
-"backup.title" = "Recovery Phrase";
-"backup.description" = "Jot these words down, in the right order, just like my best speeches. Keep them safe, maybe next to your tax returns!";
-"backup.tap_to_show" = "Give it a tap to reveal the best recovery phrase!";
-"backup.passphrase" = "Passphrase";
-"backup.verify" = "Verify";
-"backup.verified" = "Verified";
+"backup.title" = "Фраза восстановления";
+"backup.description" = "Напишите эти слова в правильном порядке и храните их в безопасном месте";
+"backup.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
+"backup.passphrase" = "Кодовая фраза";
+"backup.verify" = "Подтвердить";
+"backup.verified" = "Подтверждено";
 
 // Backup Verify Words
 
-"backup_verify_words.title" = "Verify";
-"backup_verify_words.description" = "Pick the two words I'm asking for, from your top-notch recovery phrase";
-"backup_verify_words.incorrect_word" = "Incorrect Word";
+"backup_verify_words.title" = "Подтвердить";
+"backup_verify_words.description" = "Выберите два запрошенные слова из вашей фразы восстановления";
+"backup_verify_words.incorrect_word" = "Неверное слово";
 
 // Backup Verify Passphrase
 
-"backup_verify_passphrase.title" = "Verify";
-"backup_verify_passphrase.description" = "Type in the passphrase. Make sure it's terrific!";
-"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
+"backup_verify_passphrase.title" = "Подтвердить";
+"backup_verify_passphrase.description" = "Введите кодовую фразу";
+"backup_verify_passphrase.incorrect_passphrase" = "Неверная кодовая фраза";
 
 // Backup Required
 
-"backup_required.title" = "Backup Required";
+"backup_required.title" = "Требуется резервная копия";
 
-// **Backup Prompt**
+// Backup Prompt
 
-"backup_prompt.title" = "Manual Backup";
-"backup_prompt.warning" = "You want to make a yuuuge backup of this recovery phrase, trust me. Don't lose out if your phone goes missing, or breaks!";
-"backup_prompt.backup" = "Backup";
-"backup_prompt.backup_manual" = "Manual Backup";
-"backup_prompt.backup_cloud" = "Backup to iCloud!";
-"backup_prompt.later" = "Later";
+"backup_prompt.title" = "Ручное резервное копирование";
+"backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
+"backup_prompt.backup" = "Резервная копия";
+"backup_prompt.backup_manual" = "Ручное резервное копирование";
+"backup_prompt.backup_cloud" = "Резерв. копирование в iCloud";
+"backup_prompt.later" = "Позже";
 
-// **Backup to iCloud**
+// Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud";
-"backup.cloud.description" = "So, iCloud's an Apple thing. They'll keep your stuff, not on your gadgets. You're trusting them, not us. Just so we're clear!";
-"backup.cloud.terms.item.1" = "Listen up! Lose access to iCloud, and you say goodbye to this backup.";
+"backup.cloud.title" = "Резерв. копирование в iCloud";
+"backup.cloud.description" = "Хранилище iCloud является облачным хранилищем, предоставляемым сторонней компанией и доступным через Apple. Важно знать, что ваши данные будут храниться на серверах Apple, а не на ваших личных устройствах. Это означает, что вы доверяете свои данные и передаете безопасность своей информации стороннему сервису.";
 
-"backup.cloud.name.title" = "Backup Name";
-"backup.cloud.name.description" = "Name your backup, maybe after one of my hotels?";
-"backup.cloud.name.empty" = "Give it a name, c'mon!";
-"backup.cloud.name.error.empty" = "A name's what we need!";
-"backup.cloud.name.error.already_exist" = "Been there, named that. Pick another!";
-"backup.cloud.name.placeholder" = "Name";
+"backup.cloud.terms.item.1" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
 
-"backup.cloud.password.title" = "Set Password";
-"backup.cloud.password.description" = "Craft a password that's tremendous! Needs 8 characters and a mix of the alphabet, numbers, and those little symbols.";
-"backup.cloud.password.highlighted_description" = "Remember this one! It's not your Apple password, and it's irreplaceable!";
-"backup.cloud.password.placeholder" = "Password";
-"backup.cloud.password.confirm.placeholder" = "Confirm";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.name.title" = "Имя резервной копии";
+"backup.cloud.name.description" = "Введите имя файла резервной копии.";
+"backup.cloud.name.empty" = "Имя резервной копии не может быть пустым!";
+"backup.cloud.name.error.empty" = "Имя резервной копии не должно быть пустым";
+"backup.cloud.name.error.already_exist" = "Имя резервной копии уже существует!";
+"backup.cloud.name.placeholder" = "Название";
 
-"backup.cloud.password.error.empty_passphrase" = "Hey, we need that passphrase!";
-"backup.cloud.password.error.forbidden_symbols" = "Stick to the basics, folks: A-Z, a-z, 0-9, and those symbols!";
-"backup.cloud.password.error.minimum_requirement" = "Needs 8 characters, at least! Upper, lower, number, and symbol. The total package!";
-"backup.cloud.password.error.invalid_password" = "Not the right password, but keep trying!";
-"backup.cloud.password.error.invalid_backup" = "Whoops! Something's fishy with the backup.";
-"backup.cloud.password.confirm.error.doesnt_match" = "Those passwords aren't buddies yet. Try again!";
-"backup.cloud.not_available" = "iCloud's taking a break!";
-"backup.cloud.cant_create_file" = "Can't ship that file to iCloud!";
-"backup.cloud.cant_delete_file" = "Can't kick it out of iCloud!";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.description" = "Need your green light for iCloud storage!";
+"backup.cloud.password.title" = "Установить пароль";
+"backup.cloud.password.description" = "Установите пароль разблокировки для своей резервной копии. Пароль должен содержать не менее 8 символов и включать как минимум одну строчную букву, заглавную букву, цифру и специальный символ.";
+"backup.cloud.password.highlighted_description" = "Не забудьте этот пароль! Он отличается от вашего пароля для Apple iCloud и не может быть восстановлен или сброшен.";
+"backup.cloud.password.placeholder" = "Пароль";
+"backup.cloud.password.confirm.placeholder" = "Подтвердить";
+"backup.cloud.password.save" = "Сохранить и создать резервную копию";
+
+"backup.cloud.password.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
+"backup.cloud.password.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "Не менее 8 символов, включая одну заглавную букву, одну строчную букву, одну цифру и один символ";
+"backup.cloud.password.error.invalid_password" = "Неверный пароль";
+"backup.cloud.password.error.invalid_backup" = "Резервная копия повреждена";
+"backup.cloud.password.confirm.error.doesnt_match" = "Пароли не совпадают";
+"backup.cloud.not_available" = "iCloud недоступен";
+"backup.cloud.cant_create_file" = "Не удается сохранить файл в iCloud";
+"backup.cloud.cant_delete_file" = "Не удается удалить из iCloud";
+"backup.cloud.no_access.title" = "Доступ к iCloud";
+"backup.cloud.no_access.title" = "Доступ к iCloud";
+"backup.cloud.no_access.description" = "Для создания резервной копии необходимо предоставить доступ к iCloud памяти.";
+
 
 // Errors
 
-"error.send.self_transfer" = "C'mon now, sending to yourself? We don't do that here!";
-"error.send_binance.memo_required" = "The receiver's like 'I need a memo!' Don't leave it empty!";
-"error.send_binance.only_digits_allowed" = "Memo's gotta have digits only! Numbers, always winning!";
-"error.send_z_cash.transparent_address" = "%@ says 'No way!' to payments to a transparent address.";
+"error.send.self_transfer" = "Отправка самому себе невозможна";
+"error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
+"error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
+"error.send_z_cash.transparent_address" = "%@ не поддерживает платежи на публичный адрес";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.withdraw" = "Withdraw";
-"balance.swap" = "Swap";
-"balance.receive" = "Receive";
-"balance.deposit" = "Deposit";
-"balance.address" = "Address";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing" = "Syncing...";
-"balance.searching" = "Searching transactions...";
-"balance.downloading_sapling" = "Downloading Sapling... %d%%";
-"balance.downloading_blocks" = "Downloading Blocks";
-"balance.scanning_blocks" = "Scanning Blocks";
-"balance.enhancing_transactions" = "Enhancing Transactions";
+"balance.title" = "Баланс";
+"balance.tab_bar_item" = "Баланс";
+"balance.send" = "Отправить";
+"balance.withdraw" = "Вывод средств";
+"balance.swap" = "Обменять";
+"balance.receive" = "Получить";
+"balance.deposit" = "Получить";
+"balance.address" = "Адрес";
+"balance.rate_per_coin" = "%@ за %@";
+"balance.syncing" = "Синхронизация...";
+"balance.searching" = "Поиск транзакций...";
+"balance.downloading_sapling" = "Загрузка sapling... %d%%";
+"balance.downloading_blocks" = "Загрузка блоков";
+"balance.scanning_blocks" = "Сканирование блоков";
+"balance.enhancing_transactions" = "Улучшение транзакций";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coin";
-"balance.invalid_api_key" = "Invalid API Key";
-"balance.empty.add_coins" = "Add Coins!";
-"balance.empty.description" = "No coins in this wallet yet. Sad!";
-"balance.watch_empty.description" = "This wallet address is feeling a bit light!";
-"balance.sort_by" = "Sort By";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
-"balance.sort.az" = "Name";
-"balance.sort.price_change" = "Price Change";
+"balance.syncing_percent" = "Синхронизация... %@";
+"balance.synced_through" = "до %@";
+"balance.add_coin" = "Добавить токен";
+"balance.invalid_api_key" = "Недействительный ключ API";
+"balance.empty.add_coins" = "Добавить токены";
+"balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
+"balance.watch_empty.description" = "У кошелька с этим адресом нет баланса";
+"balance.sort_by" = "Сортировать";
+"balance.sort.header" = "Сортировать";
+"balance.sort.valueHighToLow" = "Баланс";
+"balance.sort.az" = "Название";
+"balance.sort.price_change" = "По изменению цены (%)";
 
-"balance_error.change_source" = "Change Source";
-"balance_error.sync_error" = "Sync Error";
-"lost_accounts.warning_title" = "iOS Keychain Error!";
-"lost_accounts.warning_message" = "The encrypted treasure holding your wallet got messed up 'cause you changed your iOS lock screen.";
+"balance_error.change_source" = "Изменить источник";
+"balance_error.sync_error" = "Ошибка синхронизации";
+"lost_accounts.warning_title" = "Ошибка связки ключей iOS";
+"lost_accounts.warning_message" = "Зашифрованные данные вашего кошелька были недавно аннулированы, поскольку ваш экран блокировки iOS был изменен";
 
 // Token Balance Page
-"balance.token.locked" = "On Lockdown";
+"balance.token.locked" = "Заблокировано";
 "balance.token.locked.info.title" = "TimeLock";
-"balance.token.locked.info.description" = "The sender's put a timer on this. The Bitcoins are yours, but you gotta wait a tad to spend them on the Bitcoin network.";
+"balance.token.locked.info.description" = "Эти средства были отправлены с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткойны уже ваши, но до истечения периода блокировки, вы не сможете их потратить в сети Bitcoin.";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Let's talk staking!";
+"balance.token.staked.info.description" = "Staked Description Text";
 "balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Cool Off";
-"balance.token.frozen.info.description" = "Let's chat about why it's so cool.";
+"balance.token.frozen.info.title" = "Frozen title";
+"balance.token.frozen.info.description" = "Frozen Description Text";
 
-// **Account switcher**
+// Account switcher
 
-"switch_account.title" = "Switch Wallets";
-"switch_account.wallets" = "Wallets";
-"switch_account.watch_wallets" = "Watch Wallets";
+"switch_account.title" = "Переключить кошелек";
+"switch_account.wallets" = "Кошельки";
+"switch_account.watch_wallets" = "Просмотр кошелька";
 
-// **Release notes**
+// Release notes
 
-"release_notes.title" = "What's New";
-"release_notes.follow_us" = "Follow Us";
+"release_notes.title" = "Что нового";
+"release_notes.follow_us" = "Мы в соцсетях";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@!";
-"deposit.address" = "Address!";
-"deposit.your_address" = "Your Address!";
-"receive_alert.not_backed_up_description" = "Hold on! You've got to back up %@ before we're winning with %@.";
-"receive_alert.any_coins.not_backed_up_description" = "You've gotta backup %@ before making any yuge coin deals!";
-"deposit.no_adapter.error" = "Can't provide address";
+"deposit.receive_coin" = "Получить %@";
+"deposit.address" = "Адрес";
+"deposit.your_address" = "Ваш адрес";
+"receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед получением %@.";
+"receive_alert.any_coins.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед тем, как вы сможете получить любые монеты.";
+"deposit.no_adapter.error" = "Не удается предоставить адрес";
 
-"deposit.address_format" = "Format";
-"deposit.address_network" = "Network";
-"deposit.qr_code_description" = "Your VIP ticket to deposit %@";
-"deposit.qr_code_description.watch" = "Keep an eye on this %@ address!";
+"deposit.address_format" = "Формат";
+"deposit.address_network" = "Сеть";
+"deposit.qr_code_description" = "Ваш адрес для депозита %@";
+"deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
 "deposit.account" = "Account";
 
-"deposit.not_active" = "Not active";
-"deposit.not_active.title" = "Not Active Address";
-"deposit.not_active.tron_description" = "Just so you know, new accounts on TRON aren't awake yet. To get them going, send over some TRX or TRC-10 tokens. It'll cost you just 1 TRX.";
+"deposit.not_active" = "не активен";
+"deposit.not_active.title" = "Неактивный адрес";
+"deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
 
-"deposit.zcash.restore.description" = "Ever had a little ZEC action before?";
-"deposit.zcash.restore.already_own" = "Of course, I've got some!";
-"deposit.zcash.restore.dont_have" = "Nope, fresh start!";
+"deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
+"deposit.zcash.restore.already_own" = "Да, у меня уже есть";
+"deposit.zcash.restore.dont_have" = "Нет, у меня нет";
 
-"deposit.warning" = "Only send %@ here, or you'll be losing bigly!";
+"deposit.warning" = "Отправка только %@ на этот адрес. Отправка других типов токенов на этот адрес приведет к их окончательной потере.";
 
-"receive_network_select.title" = "Network";
-"receive_network_select.description" = "Choose the best network and grab an address!";
+"receive_network_select.title" = "Сеть";
+"receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
 
-"receive_address_format_select.title" = "Address Format";
-"receive_address_format_select.description" = "Pick a network, get the finest address!";
-"receive_address_format_select.bitcoin.bottom_description" = "For the best deals in Bitcoin, Native SegWit is the way. Any address will do – Taproot, SegWit, Legacy. It's all great!";
-"receive_address_format_select.bitcoin_cash.bottom_description" = "Want the smoothest experience for Bitcoin Cash? Go with the Cash Address.";
+"receive_address_format_select.title" = "Формат адреса";
+"receive_address_format_select.description" = "Выберите формат адреса для получения вашего адреса.";
+"receive_address_format_select.bitcoin.bottom_description" = "Формат Native SegWit предпочтителен в Биткойне для повышения пропускной способности и безопасности. Все форматы адресов (Taproot, SegWit, Legacy) могут использоваться взаимозаменяемо для получения BTC независимо от формата адреса отправителя, что обеспечивает бесперебойные транзакции между различными типами монет.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "Формат Cash Address предпочтителен для получения Bitcoin Cash (BCH) из-за улучшенного пользовательского опыта и совместимости. Однако, оба формата адреса могут использоваться взаимозаменяемо для получения BCH, независимо от формата адреса отправителя.";
 
-"blockchain_type.recommended" = " (recommended)";
+"blockchain_type.recommended" = " (рекомендовано)";
 
 // Send
 
-"send.title" = "Send %@!";
-"send.send" = "Send";
-"send.no_assets" = "Looks like your vault's empty, sad!";
-"send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
-"send.address_or_domain_placeholder" = "Address or Domain";
-"send.fee" = "Fee";
-"send.network_fee" = "Network Fee";
-"send.estimated_fee" = "Estimated Fee";
-"send.max_fee" = "Max Fee";
-"send.duration.hours" = "%d h";
-"send.duration.minutes" = "%d min.";
-"send.available_balance" = "Available Balance";
-"send.max_button" = "Max";
-"send.next_button" = "Next";
-"send.error.invalid" = "Invalid";
-"send.error.address" = "Address!";
+"send.title" = "Отправить %@";
+"send.send" = "Отправить";
+"send.no_assets" = "У вас нет активов для отправки.";
+"send.amount_placeholder" = "Сумма";
+"send.address_placeholder" = "Адрес";
+"send.address_or_domain_placeholder" = "Адрес или домен";
+"send.fee" = "Комиссия";
+"send.network_fee" = "Комиссия сети";
+"send.estimated_fee" = "Предполагаемая комиссия";
+"send.max_fee" = "Макс. комиссия";
+"send.duration.hours" = "%d ч.";
+"send.duration.minutes" = "%d мин.";
+"send.available_balance" = "Доступный баланс";
+"send.max_button" = "Макс.";
+"send.next_button" = "Далее";
+"send.error.invalid" = "Неверно";
+"send.error.address" = "Адрес";
 "send.hodler_locktime" = "TimeLock";
-"send.hodler_locktime_hour" = "1 hour";
-"send.hodler_locktime_month" = "1 month";
-"send.hodler_locktime_half_year" = "6 months";
-"send.hodler_locktime_year" = "1 year";
-"send.hodler_locktime_off" = "Off";
-"send.hodler_error.unsupported_address" = "Time vaulting? Only for top-tier addresses starting with 1...!";
-"send.fee_info.title" = "Fee Rate";
-"send.fee_info.description" = "Everybody pays a bit to keep things moving on the blockchain. Busy days mean higher fees. But hey, we'll suggest the best deal for you!";
-"send.transaction_inputs_outputs_info.title" = "In's and Out's of Transactions";
-"send.transaction_inputs_outputs_info.description" = "Most transactions have two parts: what you send and what you get back. We're smart, making it tricky for anyone trying to snoop.";
-"send.transaction_inputs_outputs_info.shuffle.title" = "1. The Trump Card Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "We mix things up, so it's all unpredictable. Trust me, it's the best!";
-"send.transaction_inputs_outputs_info.deterministic.title" = "2. Classic Play";
-"send.transaction_inputs_outputs_info.deterministic.description" = "We've got standards, like the BIP69. It's a new thing, so not everyone's on board yet.";
+"send.hodler_locktime_hour" = "1 час";
+"send.hodler_locktime_month" = "1 месяц";
+"send.hodler_locktime_half_year" = "6 месяцев";
+"send.hodler_locktime_year" = "1 год";
+"send.hodler_locktime_off" = "Выкл.";
+"send.hodler_error.unsupported_address" = "TimeLock работает только при отправке на платёжные адреса, начинающиеся с 1... (также известных как BIP44 адреса)";
+"send.fee_info.title" = "Комиссия";
+"send.fee_info.description" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Комиссия выше, когда в сети проходит много транзакций.\n\nКошелек %@ оценивает комиссию на основе текущей активности блокчейна и рекомендует оптимальное значение для того, чтобы транзакция была обработана в разумные сроки.\n\nРекомендованная ставка комиссии показана как количество сатоши, которое пользователь должен заплатить за один байт транзакции. Таким образом, общая сумма комиссии зависит от общего размера транзакции, который измеряется в байтах.\n\n\nПользователи могут использовать предусмотренные элементы управления, чтобы увеличить или уменьшить значение ставки комиссии. Изменение ставки комиссии изменяет общую плату за транзакцию, которую заплатит пользователь.\n\n\nУстановка комиссии ниже рекомендуемого значения может привести к тому, что транзакция будет находиться в ожидании в течение нескольких часов или будет отклонена. Чем ниже значение, тем больше времени потребуется для подтверждения транзакции. Для транзакций, где важен приоритет, мы рекомендуем установить более высокую ставку комиссии.";
+"send.transaction_inputs_outputs_info.title" = "Вводы / выводы транзакций";
+"send.transaction_inputs_outputs_info.description" = "Большинство транзакций с биткоином, а также транзакций с подобными криптовалютами, включая Bitcoin Cash, Dash и Litecoin, генерируют два выхода. Один выход - это сумма, которая поступает получателю, а другой - это изменение, которое возвращается отправителю. То, как большинство кошельков строят транзакции, позволяет третьей стороне легко понять, какой из выходов достался получающей стороне, а какой - сумма сдачи, возвращенная отправителю. Поскольку сумма, возвращенная отправителю, впоследствии используется в будущих транзакциях, связь между этими двумя транзакциями становится очевидной.\n\nВ кошельке %@ реализованы меры, чтобы затруднить кому-либо выяснение того, какой вывод куда идет.\n\nДля пользователей %@ доступны два варианта:";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
+"send.transaction_inputs_outputs_info.shuffle.description" = "Порядок выхода транзакций меняется случайным образом в каждой транзакции. Иногда изменение может быть первым выводом, иногда - вторым. Если пользователь доверяет разработчику приложения, то рекомендуем использовать этот вариант.";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Существует общепринятый стандарт упорядочивания выходов транзакций (известный как BIP69). В кошельках с открытым исходным кодом этот стандарт гарантирует, что пользователям кошелька не нужно доверять тому, как разработчики приложения реализуют упорядочивание выходов. Поскольку этот стандарт является новым, не многие кошельки его еще внедрили. В результате на блокчейне можно увидеть, была ли транзакция отправлена из кошелька, использующего этот стандарт, или нет.";
 
-"send.confirmation.you_send" = "You Send";
-"send.confirmation.to" = "To";
-"send.confirmation.contact_name" = "Contact Name";
-"send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.you_send" = "Вы отправляете";
+"send.confirmation.to" = "Кому";
+"send.confirmation.contact_name" = "Имя контакта";
+"send.confirmation.domain" = "Домен";
+"send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
-"send.confirmation.fee" = "Fee";
+"send.confirmation.total" = "Всего";
+"send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.slide_to_send" = "Slide to Send";
-"send.confirmation.sending" = "Sending";
-"send.confirmation.resend_description" = "Let's try ousting that old transaction with a bigger, better fee. Only the best one stays!";
-"send.confirmation.resend" = "Resend";
-"send.confirmation.cancel_description" = "We'll try sneaking a new zero-amount transaction past the old one. Only the top dog will make it!";
-"send.confirmation.cancel" = "Cancel Transaction";
-"send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
-"send.amount_error.balance" = "Not Enough Balance";
-"send.address_error.own_address" = "Why send TRX to yourself? That's just showing off!";
-"send.amount_error.maximum_amount" = "Maximum amount %@";
-"send.amount_error.minimum_amount" = "Minimum amount %@";
-"send.amount_error.min_required_balance" = "Gotta leave some %@ behind for the party!";
-"send.amount_warning.coin_needed_for_fee" = "Keep some %@ around, it's always good for the bill!";
-"send.token.insufficient_fee_alert" = "Heads up! You'll need %@ to cover the %@ transfer on %@.";
+"send.confirmation.slide_to_send" = "Проведите для отправки";
+"send.confirmation.sending" = "Отправка";
+"send.confirmation.resend_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее с более высокой комиссией. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
+"send.confirmation.resend" = "Отправить повторно";
+"send.confirmation.cancel_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее себе как транзакцию с нулевой суммой. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
+"send.confirmation.cancel" = "Отменить транзакцию";
+"send.confirmation.nonce" = "Memo";
+"send.confirmation.method" = "Метод";
+"send.amount_error.balance" = "Недостаточно средств";
+"send.address_error.own_address" = "Невозможно отправить TRX самому себе";
+"send.amount_error.maximum_amount" = "Макс. сумма %@";
+"send.amount_error.minimum_amount" = "Мин. сумма %@";
+"send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
+"send.amount_warning.coin_needed_for_fee" = "Вы можете оставить некоторую сумму в размере %@ на балансе, чтобы оплачивать будущие транзакции.";
+"send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "Your %@ is a bit low for this grand move.";
+"send.fee_settings.amount_error.balance.title" = "Недостаточный баланс";
+"send.fee_settings.amount_error.balance" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 
-"send.fee_settings.stuck_warning.title" = "Could get sticky!";
-"send.fee_settings.stuck_warning" = "Might get tangled up or just flop.";
+"send.fee_settings.stuck_warning.title" = "Внимание! Транзакция может застрять в сети";
+"send.fee_settings.stuck_warning" = "Транзакция может застрять в сети или будет отклонена.";
+"send.fee_settings.fee_error.title" = "Ошибка комиссии";
+"send.fee_settings.too_low" = "Ставка комиссии слишком низкая.";
+"send.fee_settings.fee_rate_unavailable" = "Ставка комиссии недоступна. Пожалуйста, проверьте ставки комиссии вручную";
 
-"send.fee_settings.fee_error.title" = "Fee error";
-"send.fee_settings.too_low" = "Fee Rate is too low";
-"send.fee_settings.fee_rate_unavailable" = "Listen folks, our fee rate's taking a little vacation. Tremendous idea to check them manually. Believe me, I've done it!";
-
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.you_revoke" = "You Revoke";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "Вы разрешаете";
+"approve.confirmation.you_revoke" = "Вы отменяете";
+"approve.confirmation.spender" = "Покупатель";
 
 // Donate
 
-"donate.list.title" = "Donate with";
-"donate.list.get_address" = "Get Address";
-"donate.list.get_address.title" = "Address";
-"donate.title" = "Donate %@!";
-"donate.no_assets" = "Looks like you're a bit short, buddy.";
-"donate.support.description" = "Let's work together to make this app HUGE! The best app ever.";
+"donate.list.title" = "Поддержи нас";
+"donate.list.get_address" = "Получить адрес";
+"donate.list.get_address.title" = "Адреса";
+"donate.title" = "Пожертвовать %@";
+"donate.no_assets" = "У вас нет активов для пожертвования.";
+"donate.support.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coins";
+"choose_coin.title" = "Выберите токены";
 
 // Swap
 
-"swap.title" = "Swap!";
-"swap.no_assets" = "You're empty! Fill it up.";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
-"swap.balance" = "Balance";
-"swap.allowance" = "Allowance";
-"swap.you_get" = "You Get";
-"swap.token" = "Select";
-"swap.advanced_settings" = "Swap Settings";
-"swap.proceed_button" = "Next";
-"swap.approve.title" = "Swap Approve";
-"swap.approve.description" = "Time to grant permission! But don't worry, it doesn't touch your stash. Just a little fee, and you're golden!";
-"swap.approve.amount_error.already_approved" = "Been there, done that! You're set.";
-"swap.approving_button" = "Approving...";
-"swap.revoke_warning" = "Trade or revoke and try again!";
-"swap.revoking_button" = "Revoking...";
-"swap.not_available_button" = "Balance N/A";
-"swap.trade_error.not_found" = "This swap's a no-go!";
-"swap.trade_error.wrap_unwrap_not_allowed" = "No wrapping or unwrapping here! 1Inch is the way to go!";
-"swap.button_error.insufficient_balance" = "Insufficient Balance";
-"swap.switch_provider.title" = "Swap Service";
-"swap.amount_type.coin" = "Coin";
+"swap.title" = "Обменять";
+"swap.no_assets" = "У вас нет активов для обмена.";
+"swap.you_pay" = "Платите";
+"swap.estimated" = "приблизительно";
+"swap.balance" = "Баланс";
+"swap.allowance" = "Разрешение";
+"swap.you_get" = "Получите";
+"swap.token" = "Выбрать";
+"swap.advanced_settings" = "Настройки обмена";
+"swap.proceed_button" = "Далее";
+"swap.approve.title" = "Разрешение обмена";
+"swap.approve.description" = "Вы должны предоставить разрешение на использование смарт-контракта для замены данного токена от вашего имени. Это разрешение устанавливает сумму, которая может быть использована смарт-контрактом. Это не повлияет на ваш баланс, но требует небольшой комиссии для выполнения утвержденной транзакции. \n\nХотя это может быть сделано по требованию перед каждой сделкой, предварительно одобрить более высокую сумму для будущих сделок.";
+"swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
+"swap.approving_button" = "Разрешение...";
+"swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и одобрить новую сумму";
+"swap.revoking_button" = "Отмена...";
+"swap.not_available_button" = "Баланс N/А";
+"swap.trade_error.not_found" = "Невозможно обменять эти токены";
+"swap.trade_error.wrap_unwrap_not_allowed" = "Эта служба не позволяет wrapping/unwrapping. Пожалуйста, попробуйте другой сервис обмена. Рекомендуется 1inch";
+"swap.button_error.insufficient_balance" = "Недостаточный баланс";
+"swap.switch_provider.title" = "Служба обмена";
+"swap.amount_type.coin" = "Монета";
 
-"swap.price" = "Price";
-"swap.buy_price" = "Buy Price";
-"swap.sell_price" = "Sell Price!";
-"swap.price_impact" = "Price Impact";
-"swap.maximum_paid" = "Maximum Amount";
-"swap.minimum_got" = "Guaranteed Amount";
-"swap.estimate_short" = "(est)";
-"swap.minimum_short" = "(min)";
-"swap.maximum_short" = "(max)";
+"swap.price" = "Цена";
+"swap.buy_price" = "Цена покупки";
+"swap.sell_price" = "Цена продажи";
+"swap.price_impact" = "Отклонение от рын. цены";
+"swap.maximum_paid" = "Макс. сумма";
+"swap.minimum_got" = "Гарантированная сумма";
+"swap.estimate_short" = "(прим.)";
+"swap.minimum_short" = "(мин)";
+"swap.maximum_short" = "(макс)";
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "If prices dip more than this, no deal!";
-"swap.advanced_settings.deadline" = "Transaction Deadline";
-"swap.advanced_settings.deadline.footer" = "No dilly-dallying! Time's ticking.";
-"swap.advanced_settings.recipient.footer" = "Where's the money going after the swap?";
-"swap.advanced_settings.deadline_minute" = "%@ min";
-"swap.advanced_settings.recipient_address" = "Recipient Address";
-"swap.advanced_settings.warning.unusual_slippage" = "Watch out! Others might jump the line!";
-"swap.advanced_settings.service_fee_description" = "A small thank you fee for our service. Usually just a tiny 0.3% or 0.6%!";
-"swap.advanced_settings.error.lower_slippage" = "This might flop.";
-"swap.advanced_settings.error.higher_slippage" = "Can't go over %@%%, buddy!";
-"swap.advanced_settings.error.invalid_address" = "Wonky address alert!";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.slippage" = "Допустимость отклонений";
+"swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более чем на этот процент";
+"swap.advanced_settings.deadline" = "Срок транзакции";
+"swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если перевод займет больше указанного срока.";
+"swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
+"swap.advanced_settings.deadline_minute" = "%@ мин";
+"swap.advanced_settings.recipient_address" = "Адрес получателя";
+"swap.advanced_settings.warning.unusual_slippage" = "Ваша транзакция может быть подвержена фронтраннингу.";
+"swap.advanced_settings.service_fee_description" = "Комиссия за услугу обмена на платформе обычно 0.3% или 0.6%";
+"swap.advanced_settings.error.lower_slippage" = "Возможно, ваша транзакция не удалась.";
+"swap.advanced_settings.error.higher_slippage" = "Сопротивление скольжению не может превышать %@%%";
+"swap.advanced_settings.error.invalid_address" = "Неверный адрес";
+"swap.advanced_settings.error.invalid_slippage" = "Неверное отклонение";
+"swap.advanced_settings.error.invalid_deadline" = "Недопустимый срок";
 
-"swap.one_inch.error.cannot_estimate" = "Estimation Error";
-"swap.one_inch.error.cannot_estimate.info" = "Check your stash. Maybe up the wiggle room and try again. Give it another go in 3...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
-"swap.one_inch.error.insufficient_liquidity.info" = "Not enough in the pot. Lower the ante.";
+"swap.one_inch.error.cannot_estimate" = "Ошибка оценки";
+"swap.one_inch.error.cannot_estimate.info" = "Проверьте баланс и убедитесь, что на нем достаточно %@ для покрытия комиссии. Или попробуйте увеличить предел скольжения цены и повторите попытку снова. Следующая попытка через 3 секунды...";
+"swap.one_inch.error.insufficient_liquidity" = "Недостаточно ликвидности";
+"swap.one_inch.error.insufficient_liquidity.info" = "Кажется, для этой сделки не хватает ликвидности. Попробуйте уменьшить сумму сделки.";
 
-"swap.service" = "Service";
-"swap.service.title" = "Service";
+"swap.service" = "Сервис";
+"swap.service.title" = "Сервис";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Swap";
+"swap.approve.subtitle" = "Обменять";
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Slide to Swap";
-"swap.confirmation.swapping" = "Swapping";
-"swap.confirmation.impact_too_high" = "Hold up! %@ says this deal's a dud. Check out %@ instead!";
-"swap.confirmation.impact_warning" = "Watch out! It's a wild ride!";
+"swap.confirmation.slide_to_swap" = "Проведите для обмена";
+"swap.confirmation.swapping" = "Обмен";
+"swap.confirmation.impact_too_high" = "%@ отключил действие \"swap\" для этой сделки, так как вы получаете чрезвычайно невыгодную цену. Это связано с крайне низкой ликвидностью. \nЕсли вы все еще хотите поменять валюту, используйте веб-сайт %@ вместо этого.";
+"swap.confirmation.impact_warning" = "Важно! Вы получаете чрезвычайно неблагоприятную цену. Это связано с крайне низкой ликвидностью.";
 
-"swap.confirmation.minimum_received" = "Minimum Received";
-"swap.confirmation.maximum_sent" = "Maximum Sent";
+"swap.confirmation.minimum_received" = "Получено минимум";
+"swap.confirmation.maximum_sent" = "Максимальная трата";
 
-"swap.dex_info.description" = "This swanky service is by %@, the big shots in decentralized trading on the %@ chain. 100% automated, 100% reliable!";
-"swap.dex_info.header_dex_related" = "%@Related";
-"swap.dex_info.header_allowance" = "Allowance";
-"swap.dex_info.content_allowance" = "How much the exchange can use on your behalf. Gotta get this before the main event.";
-"swap.dex_info.header_price_impact" = "Price Impact";
-"swap.dex_info.content_price_impact" = "How wild the price might get. Bigger swaps, bigger waves.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
-"swap.dex_info.content_swap_fee" = "Our little thank you note. Usually 0.3% or 0.6%.";
-"swap.dex_info.header_guaranteed_amount" = " Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The least you're gonna get after swapping.";
-"swap.dex_info.header_maximum_spend" = "Maximum Spend";
-"swap.dex_info.content_maximum_spend" = "The most you're gonna use in the swap.";
+"swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
-"swap.dex_info.content_transaction_fee" = "What you're paying to use the %@ chain. %@ stuff might be pricier.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
-"swap.dex_info.content_transaction_speed" = "Pay more, go faster. It's that simple.";
+"swap.dex_info.header_dex_related" = "%@";
+"swap.dex_info.header_allowance" = "Разрешение";
+"swap.dex_info.content_allowance" = "Сумма, которую exchange может потратить от имени пользователя при выполнении обмена токенов. Действующая транзакция, устанавливающая достаточный уровень допустимости, необходима для того, чтобы транзакция обмена была осуществлена.";
+"swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
+"swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
+"swap.dex_info.header_swap_fee" = "Комиссия за обмен";
+"swap.dex_info.content_swap_fee" = "Плата за услугу обмена на платформе, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
+"swap.dex_info.header_guaranteed_amount" = "Гарантированная сумма";
+"swap.dex_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
+"swap.dex_info.header_maximum_spend" = "Максимальная трата";
+"swap.dex_info.content_maximum_spend" = "Максимальная сумма, которую получит пользователь в результате обмена.";
 
-"swap.dex_info.link_button" = "%@ Site";
+"swap.dex_info.header_other" = "Другое";
+"swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
+"swap.dex_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне %@. Стоимость транзакций, связанных с %@, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
+"swap.dex_info.header_transaction_speed" = "Скорость транзакции";
+"swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также вено и обратное.";
+
+"swap.dex_info.link_button" = "%@ сайт";
 
 // Market
 
-"market.tab_bar_item" = "Markets!";
-"market.title" = "Best Markets Ever!";
-"market.category.overview" = "The Best View";
-"market.category.posts" = "Real News, Not Fake!";
-"market.category.watchlist" = "My Favorite List";
-"market.total_market_cap" = "The Big Money Cap";
-"market.24h_volume" = "24 Hours of Winning";
-"market.defi_cap" = "Big DeFi Bucks";
-"market.defi_tvl" = "The Biggest Money in DeFi";
+"market.tab_bar_item" = "Рынки";
+"market.title" = "Рынки";
+"market.category.overview" = "Обзор";
+"market.category.posts" = "Новости";
+"market.category.watchlist" = "Избранное";
+"market.total_market_cap" = "Общая капитализация";
+"market.24h_volume" = "Объем торгов (24ч)";
+"market.defi_cap" = "Капитализация DeFi";
+"market.defi_tvl" = "TVL в DeFi";
 
-"market.project_has_no_coin" = "No coin? Sad!";
+"market.project_has_no_coin" = "У этого проекта нет токена";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.top_sectors" = "Top Sectors";
-"market.top.section.header.news" = "News";
-"market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Dilluted MCap";
+"market.top.section.header.see_all" = "Посмотреть всё";
+"market.top.section.header.top_gainers" = "Взлеты";
+"market.top.section.header.top_losers" = "Падения";
+"market.top.section.header.top_sectors" = "Топ секторы";
+"market.top.section.header.news" = "Новости";
+"market.top.volume.title" = "Объём";
+"market.top.market_cap.title" = "Рын. кап.";
+"market.top.diluted_market_cap.title" = "Разводненная рын.кап.";
 
-"market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
+"market.market_field.mcap" = "Рын. кап.";
+"market.market_field.vol" = "Объём";
 
 "market.tvl.market_field.value" = "USD";
-"market.tvl.market_field.diff" = "Percent";
+"market.tvl.market_field.diff" = "Процент";
 
-"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.all" = "Все";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Сортировать";
 
-"market.top.title" = "Top Coins";
-"market.top.description" = "Top Coins, because we only deal with the best!";
+"market.top.title" = "Лучшие токены";
+"market.top.description" = "Топ токенов по рыночной капитализации";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_losers" = "Top Losers";
-"market.top.top_collections" = "Top NFT Collections";
-"market.top.floor_price" = "Floor";
-"market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.highest_cap" = "Наивысшая кап.";
+"market.top.lowest_cap" = "Наименьшая кап.";
+"market.top.highest_volume" = "Наивысший объем";
+"market.top.lowest_volume" = "Наименьший объем";
+"market.top.top_gainers" = "Взлеты";
+"market.top.top_losers" = "Падения";
+"market.top.top_collections" = "Топ NFT коллекции";
+"market.top.floor_price" = "Минимальная цена:";
+"market.top.top_platforms" = "Топ платформы";
+"market.top.protocols" = "Протоколы";
 
-"top_platforms.title" = "Platform Ranks";
-"top_platforms.description" = "The best places to build greatness.";
+"top_platforms.title" = "Рейтинг платформ";
+"top_platforms.description" = "Лучшие ведущие блокчейн-платформы кумулятивного рынка проектов.";
 
-"top_platform.title" = "%@ Ecosystem";
-"top_platform.description" = "Where the money's at on the %@ stage";
+"top_platform.title" = "%@ Экосистема";
+"top_platform.description" = "Капитализация рынка всех протоколов на блокчейне %@";
 
-"market_discovery.title" = "Discovery";
-"market_discovery.filters" = "Filters";
-"market_discovery.browse_categories" = "Browse Categories";
-"market_discovery.top_coins" = "TOP Coins";
-"market_discovery.not_found" = "No results found";
+"market_discovery.title" = "Токены";
+"market_discovery.filters" = "Фильтры";
+"market_discovery.browse_categories" = "Обзор категорий";
+"market_discovery.top_coins" = "Топ токены";
+"market_discovery.not_found" = "Ничего не найдено";
 
-"market_watchlist.empty.caption" = "It's lonely here.";
+"market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
-"market.search.title" = "Search";
-"market.search.empty_text" = "No results found";
+"market.search.title" = "Поиск";
+"market.search.empty_text" = "Ничего не найдено";
 
-"market.advanced_search.title" = "Filters";
-"market.advanced_search.show_results" = "Show Results";
-"market.advanced_search.empty_results" = "Empty Results";
-"market.advanced_search.dex_description" = "This is for the Ethereum (Uniswap) and Binance (Pancake) hotshots.";
-"market.advanced_search.24h" = "24h";
+"market.advanced_search.title" = "Фильтры";
+"market.advanced_search.show_results" = "Показать результаты";
+"market.advanced_search.empty_results" = "Сбросить результаты";
+"market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24ч";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.network_parameters" = "Network Parameters";
-"market.advanced_search.price_parameters" = "Price Parameters!";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.price_period" = "Price Period";
-"market.advanced_search.price_change" = "Price Change";
+"market.advanced_search.market_parameters" = "Параметры рынка";
+"market.advanced_search.network_parameters" = "Параметры сети";
+"market.advanced_search.price_parameters" = "Параметры цены";
+"market.advanced_search.choose_set" = "Выбор набора";
+"market.advanced_search.market_cap" = "Рын. капитализация";
+"market.advanced_search.volume" = "Объем торговли";
+"market.advanced_search.liquidity" = "Ликвидность DEX";
+"market.advanced_search.blockchains" = "Блокчейны";
+"market.advanced_search.price_period" = "Ценовой период";
+"market.advanced_search.price_change" = "По изменению цены (%)";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH!";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB!";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.outperformed_btc" = "Обошел BTC";
+"market.advanced_search.outperformed_eth" = "Обошел ETH";
+"market.advanced_search.outperformed_bnb" = "Обошел BNB";
+"market.advanced_search.price_close_to_ath" = "Цена близка к ATH";
+"market.advanced_search.price_close_to_atl" = "Цена близка к ATL";
 
-"market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reset";
+"market.advanced_search.top" = "Топ %d";
+"market.advanced_search.reset_all" = "Сбросить";
 
-"market.advanced_search.less_5_m" = "< 5M";
-"market.advanced_search.less_10_m" = "< 10M";
-"market.advanced_search.less_50_m" = "< 50M";
-"market.advanced_search.less_500_m" = "< 500M";
-"market.advanced_search.m_5_m_20" = "5M - 20M";
-"market.advanced_search.m_10_m_40" = "10M - 40M";
-"market.advanced_search.m_20_m_100" = "20M - 100M";
-"market.advanced_search.m_40_m_200" = "40M - 200M";
-"market.advanced_search.m_50_m_200" = "50M - 200M";
-"market.advanced_search.m_100_b_1" = "100M - 1B";
-"market.advanced_search.m_200_b_1" = "200M - 1B";
-"market.advanced_search.m_200_b_2" = "200M - 2B";
-"market.advanced_search.m_500_b_2" = "500M - 2B";
-"market.advanced_search.b_1_b_5" = "1B - 5B";
-"market.advanced_search.b_1_b_10" = "1B - 10B";
-"market.advanced_search.b_2_b_10" = "2B - 10B";
-"market.advanced_search.b_10_b_50" = "10B - 50B";
-"market.advanced_search.b_10_b_100" = "10B - 100B";
-"market.advanced_search.b_100_b_500" = "100B - 500B";
-"market.advanced_search.more_5_b" = "> 5B";
-"market.advanced_search.more_10_b" = "> 10B";
-"market.advanced_search.more_50_b" = "> 50B";
-"market.advanced_search.more_500_b" = "> 500B";
+"market.advanced_search.less_5_m" = "< 5млн";
+"market.advanced_search.less_10_m" = "< 10млн";
+"market.advanced_search.less_50_m" = "< 50млн";
+"market.advanced_search.less_500_m" = "< 500млн";
+"market.advanced_search.m_5_m_20" = "5млн - 20млн";
+"market.advanced_search.m_10_m_40" = "10млн - 40млн";
+"market.advanced_search.m_20_m_100" = "20млн - 100млн";
+"market.advanced_search.m_40_m_200" = "40млн - 200млн";
+"market.advanced_search.m_50_m_200" = "50млн - 200млн";
+"market.advanced_search.m_100_b_1" = "100млн - 1млрд";
+"market.advanced_search.m_200_b_1" = "200млн - 1млрд";
+"market.advanced_search.m_200_b_2" = "200млн - 2млрд";
+"market.advanced_search.m_500_b_2" = "500млн - 2млрд";
+"market.advanced_search.b_1_b_5" = "1млрд - 5млрд";
+"market.advanced_search.b_1_b_10" = "1млрд - 10млрд";
+"market.advanced_search.b_2_b_10" = "2млрд - 10млрд";
+"market.advanced_search.b_10_b_50" = "10млрд - 50млрд";
+"market.advanced_search.b_10_b_100" = "10млрд - 100млрд";
+"market.advanced_search.b_100_b_500" = "100млрд - 500млрд";
+"market.advanced_search.more_5_b" = "> 5млрд";
+"market.advanced_search.more_10_b" = "> 10млрд";
+"market.advanced_search.more_50_b" = "> 50млрд";
+"market.advanced_search.more_500_b" = "> 500млрд";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1 день";
+"market.advanced_search.week" = "1 неделя";
+"market.advanced_search.week2" = "2 недели";
+"market.advanced_search.month" = "1 месяц";
+"market.advanced_search.month6" = "6 месяцев";
+"market.advanced_search.year" = "1 Год";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "Результаты";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Every penny, because we're that good.";
+"market.global.total_market_cap.title" = "Полная рын. кап.";
+"market.global.total_market_cap.description" = "Общая рыночная стоимость всех криптовалют";
 
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.volume_24h.description" = "All the moves in 24 hours";
+"market.global.volume_24h.title" = "Объем торгов (24ч)";
+"market.global.volume_24h.description" = "24-часовой объем крипторынка";
 
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.defi_cap.description" = "Where DeFi makes its mark.";
+"market.global.defi_cap.title" = "Капитализация DeFi";
+"market.global.defi_cap.description" = "Общая рыночная стоимость проектов DeFi";
 
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.tvl_in_defi.description" = "Where the real money sleeps.";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filtered by Chain";
-
+"market.global.tvl_in_defi.title" = "TVL в DeFi";
+"market.global.tvl_in_defi.description" = "Всего заблокировано (TVL) в DeFi";
+"market.global.tvl_in_defi.multi_chain" = "Мультичейн";
+"market.global.tvl_in_defi.filter_by_chain" = "Сортировать по блокчейну";
 
 // Coin Page
 
-"coin_page.overview" = "Price";
-"coin_page.analytics" = "Analytics";
-"coin_page.markets" = "Markets";
-"coin_page.tweets" = "Tweets";
+"coin_page.overview" = "Цена";
+"coin_page.analytics" = "Аналитика";
+"coin_page.markets" = "Рынки";
+"coin_page.tweets" = "Твиты";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
-"coin_overview.market_cap" = "Market Cap";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
-"coin_overview.diluted_market_cap" = "Diluted MCap";
-"coin_overview.genesis_date" = "Inception Date";
-"coin_overview.trading_volume" = "Trading Volume";
+"coin_overview.indicators" = "Индикаторы";
+"coin_overview.indicators.show" = "Показать";
+"coin_overview.indicators.hide" = "Скрыть";
+"coin_overview.market_cap" = "Рын. капитализация";
+"coin_overview.circulating_supply" = "В обороте";
+"coin_overview.total_supply" = "Макс.выпуск";
+"coin_overview.diluted_market_cap" = "Разводненная рын.кап.";
+"coin_overview.genesis_date" = "Дата старта";
+"coin_overview.trading_volume" = "Объем торговли";
 
-"coin_overview.roi.hour24" = "1 Day";
-"coin_overview.roi.day7" = "1 Week";
-"coin_overview.roi.day14" = "2 Weeks";
-"coin_overview.roi.day30" = "1 Month";
-"coin_overview.roi.day200" = "6 Month";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.hour24" = "1 день";
+"coin_overview.roi.day7" = "1 неделя";
+"coin_overview.roi.day14" = "2 недели";
+"coin_overview.roi.day30" = "1 месяц";
+"coin_overview.roi.day200" = "6 месяцев";
+"coin_overview.roi.year1" = "1 Год";
 
-"coin_overview.category" = "Category";
+"coin_overview.category" = "Категория";
 
-"coin_overview.blockchains" = "Blockchains";
-"coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Coin Types";
-"coin_overview.show_more" = "Show More";
-"coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.blockchains" = "Блокчейны";
+"coin_overview.bips" = "BIPы";
+"coin_overview.coin_types" = "Типы токенов";
+"coin_overview.show_more" = "Показать больше";
+"coin_overview.show_less" = "Показать меньше";
+"coin_overview.links" = "Ссылки";
 
-"coin_overview.guide" = "Guide";
-"coin_overview.website" = "Website";
-"coin_overview.whitepaper" = "Whitepaper";
+"coin_overview.guide" = "Руководство";
+"coin_overview.website" = "Веб-сайт";
+"coin_overview.whitepaper" = "Тех. описание (whitepaper)";
 
 // Coin Page -> Analytics
 
-"coin_analytics.indicators.summary" = "Summary";
-"coin_analytics.indicators.title" = "Technical Indicators";
-"coin_analytics.indicators.no_data" = "No Data";
-"coin_analytics.indicators.strong_buy" = "Strong Buy";
-"coin_analytics.indicators.buy" = "Buy";
-"coin_analytics.indicators.neutral" = "Neutral";
-"coin_analytics.indicators.sell" = "Sell";
-"coin_analytics.indicators.strong_sell" = "Strong Sell";
-"coin_analytics.period" = "Period";
-"coin_analytics.period.select_title" = "Select Period";
-"coin_analytics.period.1h" = "1 hour";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
-"coin_analytics.period.1w" = "1 week";
+"coin_analytics.indicators.summary" = "Общая оценка";
+"coin_analytics.indicators.title" = "Технические индикаторы";
+"coin_analytics.indicators.no_data" = "Нет данных";
+"coin_analytics.indicators.strong_buy" = "Активно покупать";
+"coin_analytics.indicators.buy" = "Покупать";
+"coin_analytics.indicators.neutral" = "Нейтральный";
+"coin_analytics.indicators.sell" = "Продавать";
+"coin_analytics.indicators.strong_sell" = "Активно продавать";
+"coin_analytics.period" = "Период";
+"coin_analytics.period.select_title" = "Выберите период";
+"coin_analytics.period.1h" = "1 час";
+"coin_analytics.period.4h" = "4 часа";
+"coin_analytics.period.1d" = "1 день";
+"coin_analytics.period.1w" = "1 неделя";
 
-"coin_analytics.details" = "Details";
+"coin_analytics.details" = "Подробности";
 
-"coin_analytics.not_available" = "Analytical data in this project? I've been told they're missing. But we're making everything better!";
+"coin_analytics.not_available" = "В этом проекте нет аналитических данных";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
-"coin_analytics.technical_indicators.info1" = "The Overview: We've got the best overview on asset's technicals. Everybody's talking about it! It tells you straight – Buy, Sell, or just stay Neutral. The best advice, believe me!";
-"coin_analytics.technical_indicators.info2" = "Moving Averages? Everybody loves them. Best trend indicators out there. Shows you average prices, and we've got the best averages.\n\nSimple Moving Average (SMA): Calculates averages like nobody else. Usually based on the top closing prices.\n\nExponential Moving Average (EMA): Super smart! Focuses on the latest prices, reacting faster than anything else. Everyone's talking about it!";
-"coin_analytics.technical_indicators.info3" = "Oscillators: They fluctuate, and they're tremendous. Helps you spot the best deals in the market. The very best!\n\nRelative Strength Index (RSI): Measures everything super fast! Used by the best to spot those overbought and oversold markets.\n\nMoving Average Convergence Divergence (MACD): This is the future! Points out the best times to buy or sell. Super smart, trust me.";
+"coin_analytics.technical_indicators" = "Технические индикаторы";
+"coin_analytics.technical_indicators.info1" = "Общая оценка: Это общий обзор технических средств актива с учетом различных технических показателей и временных рамок. Он обеспечивает консенсусную точку зрения (купить, продать или нейтраль) на основе этих показателей.";
+"coin_analytics.technical_indicators.info2" = "Скользящие средние (MA): Это обычно используемые технические индикаторы, позволяющие сгладить данные о ценах для создания индикатора следующего тренда. Они показывают среднюю цену за определенный период времени. Существует несколько типов MAs:\n\nSimple Moving среднее значение (SMA): Это вычисляет среднее значение выбранного диапазона цен, обычно закрывают цены, по количеству периодов в этом диапазоне.\n\nЭкспоненциальное скользящее среднее (EMA): Это даёт больше веса для последних цен, тем самым реагируя быстрее на последние изменения цен.";
+"coin_analytics.technical_indicators.info3" = "Осцилляторы: Это технические индикаторы, которые колеблются со временем в диапазоне (выше и ниже центральной линии или между заданными уровнями). Они предназначены для идентификации перекупленных и перепродаваемых условий на рынке. Вот несколько распространенных осцилляторов:\n\nИндекс относительной силы (RSI): Это измеряет скорость и изменение движений цен. Обычно он используется для идентификации перекупленных или перепроданных условий.\n\nДвижение среднего сближения (MACD): Используется для выявления потенциальных сигналов на покупку и продажу. Она запускает технические сигналы, когда она пересекает линии сигнала выше (покупать) или ниже (продавать).";
 
-"coin_analytics.cex_volume" = "CEX Volume";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
-"coin_analytics.cex_volume_rank.description" = "We rank tokens better than anyone else, especially based on trading volume. Everyone wants to be on top!";
-"coin_analytics.cex_volume.info1" = "Just look at our trading volume on the top centralized exchanges. Leading the game for 30 days straight!";
-"coin_analytics.cex_volume.info2" = "This chart? It's a masterpiece. Shows the trading volume changes like you've never seen before. Top-notch stuff!";
-"coin_analytics.cex_volume.info3" = "Our token's rank? Always leading based on volume. Best of the best!";
-"coin_analytics.cex_volume.info4" = "List of tokens? Only the winners, ranked by their top trading volumes. We're always on top, 24/7, every month.";
+"coin_analytics.cex_volume" = "Объем CEX";
+"coin_analytics.cex_volume_rank" = "Рейтинг объема CEX";
+"coin_analytics.cex_volume_rank.description" = "Торговый объем токена на централизованных биржах.";
+"coin_analytics.cex_volume.info1" = "Общий объем торгов по токену на ведущих централизованных биржах за 30-дневный период.";
+"coin_analytics.cex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих централизованных биржах за 1 год.";
+"coin_analytics.cex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих централизованных биржах за 30-дневный период.";
+"coin_analytics.cex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах за 24ч/7дн/1мес.";
 
-"coin_analytics.dex_volume" = "DEX Volume";
-"coin_analytics.dex_volume_rank" = "DEX Volume Rank";
-"coin_analytics.dex_volume_rank.description" = "Tokens ranked? We've got the best rankings, especially for decentralized exchanges. Nobody does it better!";
-"coin_analytics.dex_volume.info1" = "The numbers are huge! Unbelievable trading volume for the token on the greatest decentralized exchanges. We're leading for 30 days, and everyone's talking about it!";
-"coin_analytics.dex_volume.info2" = "Ever seen a chart like this? Didn't think so. It shows the incredible variation in daily trading volume. The best chart for the best decentralized exchanges over a whole year!";
-"coin_analytics.dex_volume.info3" = "Where's our token's rank? At the top, of course! All thanks to the amazing trading volume on the finest decentralized exchanges for a whole month!";
-"coin_analytics.dex_volume.info4" = "Our list? Only the best tokens! All ranked by the highest trading volumes. Always updated - every 24 hours, every week, every month!";
-"coin_analytics.dex_volume.tracked_dexes" = "Which DEXes are we tracking? Only the best, most incredible ones out there. Everyone's asking about it!";
+"coin_analytics.dex_volume" = "Объем DEX";
+"coin_analytics.dex_volume_rank" = "Рейтинг объема DEX";
+"coin_analytics.dex_volume_rank.description" = "Торговый объем токена на децентрализованных биржах.";
+"coin_analytics.dex_volume.info1" = "Общий объем торгов по токену на ведущих децентрализованных биржах за 30-дневный период.";
+"coin_analytics.dex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих децентрализованных биржах за 1 год.";
+"coin_analytics.dex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих децентрализованных биржах за 30-дневный период.";
+"coin_analytics.dex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах за 24ч/7дн/1мес.";
+"coin_analytics.dex_volume.tracked_dexes" = "Отслеживаемые DEX биржи:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
-"coin_analytics.dex_liquidity" = "DEX Liquidity";
-"coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
-"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by liquidity? We've got the best numbers for decentralized exchanges. Simply unbeatable!";
-"coin_analytics.dex_liquidity.info1" = "Look at this. Unbelievable amounts of liquidity for our token. Nobody has this kind of presence on decentralized exchanges!";
-"coin_analytics.dex_liquidity.info2" = "Have you seen this chart? Shows our dominance in liquidity. Leading the pack over a whole year!";
-"coin_analytics.dex_liquidity.info3" = "You want a list of top tokens by liquidity? Here it is. And guess who's always on top?";
-"coin_analytics.dex_liquidity.tracked_dexes" = "You're curious about which DEXes we're tracking? Only the absolute best in the business!";
+"coin_analytics.dex_liquidity" = "Ликвидность DEX";
+"coin_analytics.dex_liquidity_rank" = "Рейтинг ликвидности DEX";
+"coin_analytics.dex_liquidity_rank.description" = "Рейтинг токенов основан по доступной ликвидности на децентрализованных биржах.";
+"coin_analytics.dex_liquidity.info1" = "Общая ликвидность, доступная в настоящий момент для токена на ведущих децентрализованных биржах.";
+"coin_analytics.dex_liquidity.info2" = "График, отражающий колебания доступной ликвидности для токена на ведущих децентрализованных биржах за 1 год.";
+"coin_analytics.dex_liquidity.info3" = "Список всех токенов, ранжированных по доступной ликвидности на ведущих децентрализованных биржах.";
+"coin_analytics.dex_liquidity.tracked_dexes" = "Отслеживаемые DEX биржи:";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-//Active Addresses & Info
+"coin_analytics.active_addresses" = "Ежедневные активные адреса";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "Уникальные адреса за 30 дней";
+"coin_analytics.active_addresses_rank" = "Рейтинг активных адресов";
+"coin_analytics.active_addresses_rank.description" = "Список токенов, ранжированных по количеству уникальных адресов транзакций с токеном.";
+"coin_analytics.active_addresses.info1" = "Общее количество уникальных ежедневных активных адресов за 24 часа.";
+"coin_analytics.active_addresses.info2" = "График, показывающий вариацию количества ежедневных активных адресов в течение 1 года.";
+"coin_analytics.active_addresses.info3" = "Общее количество уникальных адресов блокчейна, с которых проводились транзакции с токеном за 30 дней.";
+"coin_analytics.active_addresses.info4" = "Рейтинг токена основан на количестве активных кошельков, используемых для транзакций с токеном за 30-дневный период.";
+"coin_analytics.active_addresses.info5" = "Список всех токенов, ранжированных по ежедневному количеству активных адресов транзакций с токеном с интервалом 24ч. / 7 дн. / 1 мес.";
 
-"coin_analytics.active_addresses" = "Daily Active Addresses";
-"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
-"coin_analytics.active_addresses_rank" = "Active Addresses Rank";
-"coin_analytics.active_addresses_rank.description" = "Rankings? Tokens ranked by unique addresses? We're always on top. No one else even comes close!";
-"coin_analytics.active_addresses.info1" = "The numbers are HUGE. Unbeatable daily unique addresses. 24 hours of dominance!";
-"coin_analytics.active_addresses.info2" = "This chart? Shows our incredible journey over a year. People love using our token. Tremendous growth in daily active addresses. You've got to see it to believe it!";
-"coin_analytics.active_addresses.info3" = "Look at these numbers! Over the past month alone, countless unique blockchain addresses have been transacting with our token. We're hotter than ever!";
-"coin_analytics.active_addresses.info4" = "Rankings? Of course, we're up there. We're ranked based on the sheer number of active wallets transacting with us in just 30 days. Everyone's talking about us!";
-"coin_analytics.active_addresses.info5" = "Who wants a list? We've got the top tokens based on daily activity. Updated regularly - 24 hours, weekly, monthly!";
+"coin_analytics.transaction_count" = "Количество транзакций";
+"coin_analytics.transaction_count_rank" = "Рейтинг кол-ва транзакций";
+"coin_analytics.transaction_count_rank.description" = "Токены ранжируются по количеству транзакций в блокчейне.";
+"coin_analytics.transaction_count.info1" = "Общее количество уникальных транзакций блокчейна с токеном более 30 дней.";
+"coin_analytics.transaction_count.info2" = "График, отражающий колебания количества транзакций за 1 год.";
+"coin_analytics.transaction_count.info3" = "Рейтинг токена основан на количестве транзакций с токеном за 30-дневный период.";
+"coin_analytics.transaction_count.info4" = "Список всех токенов, ранжированных на основе количества транзакций с интервалом 24ч / 7D / 1М.";
+"coin_analytics.transaction_count.info5" = "Общее количество токенов, отправленных через блокчейн за 30-дневный период.";
 
-//Transaction Count & Info
+"coin_analytics.holders" = "Держатели";
+"coin_analytics.holders_rank" = "Рейтинг держателей";
+"coin_analytics.holders_rank.description" = "Рейтинг токенов по уникальным адресам, содержащим их в нескольких блокчейнах.";
+"coin_analytics.holders.info1" = "Общее количество уникальных адресов с токенами в различных блокчейнах.";
+"coin_analytics.holders.info2" = "Топ-10 кошельков с токенами в каждом блокчейне.";
+"coin_analytics.holders.tracked_blockchains" = "Отслеживаемые блокчейны: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
+"coin_analytics.holders.in_top_10_addresses" = "в топ-10 держателей";
+"coin_analytics.holders.count" = "Всего держателей: %@";
+"coin_analytics.holders.see_all" = "Посмотреть всё";
 
-"coin_analytics.transaction_count" = "Transaction Count";
-"coin_analytics.transaction_count_rank" = "Tx Count Rank";
-"coin_analytics.transaction_count_rank.description" = "Tokens ranked by transactions? We're the gold standard!";
-"coin_analytics.transaction_count.info1" = "Count 'em! Massive number of transactions with our token in 30 days!";
-"coin_analytics.transaction_count.info5" = "Look at this! A sheer number of tokens moved across the blockchain in just 30 days. Big league!";
-"coin_analytics.transaction_count.info4" = "Everyone's talking about it! Here's the definitive list of tokens - but remember, the more transactions, the better the token. We're making transactions happen!";
-"coin_analytics.transaction_count.info2" = "Want to see a chart that shows real winning? Look at our transaction count over the past year. It's tremendous growth, folks!";
-"coin_analytics.transaction_count.info3" = "Where do we rank in terms of transactions in the last 30 days? It's at the top. It's always been at the top. No token transacts like us!";
+"coin_analytics.project_tvl" = "Проект TVL";
+"coin_analytics.tvl_ratio" = "Рын.кап / Соотношение TVL ";
+"coin_analytics.project_tvl.info_title" = "Проект TVL (совокупная сумма средств заблокирована)";
+"coin_analytics.project_tvl.info1" = "TVL (или Активы под управлением) в проектных смарт-контрактах.";
+"coin_analytics.project_tvl.info2" = "График, отражающий колебания TVL в проектных смарт-контрактах за период, превышающий 1 год.";
+"coin_analytics.project_tvl.info3" = "Рейтинг токена по текущему TVL.";
+"coin_analytics.project_tvl.info4" = "Список всех токенов, ранжированных по текущему TVL.";
+"coin_analytics.project_tvl.info5" = "Соотношение рыночной капитализации/TVL в рамках проекта.";
 
-//Holders & Info
+"coin_analytics.project_fee" = "Комиссия проекта";
+"coin_analytics.project_fee_rank" = "Рейтинг оплаты за проект";
+"coin_analytics.project_fee_rank.description" = "Токены ранжируются в соответствии с платами, полученными в рамках соответствующих проектов.";
 
-"coin_analytics.holders" = "Holders";
-"coin_analytics.holders_rank" = "Holders Rank";
-"coin_analytics.holders_rank.description" = "Rankings by holders? Our token is held by the best people on multiple blockchains!";
-"coin_analytics.holders.info1" = "The numbers? Only growing! So many unique addresses holding our amazing token across various blockchains.";
-"coin_analytics.holders.info2" = "Top 10 wallets? Everyone's asking! Holding our token on each and every blockchain!";
-"coin_analytics.holders.tracked_blockchains" = "Where are we tracking? Everywhere! Ethereum, Binance Smart Chain, you name it. Leading everywhere!";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
-"coin_analytics.holders.count" = "Total Holders: %@";
-"coin_analytics.holders.see_all" = "See All";
+"coin_analytics.project_revenue" = "Доход от проекта";
+"coin_analytics.project_revenue_rank" = "Рейтинг доходов";
+"coin_analytics.project_revenue_rank.description" = "Токены ранжируются по пассивному доходу владельцев, получаемому через стекинг или сжигание токенов.";
 
-"coin_analytics.project_tvl" = "Project TVL";
-"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
-"coin_analytics.project_tvl.info1" = "Our TVL? Unbelievable! People are locking in their assets with us like never before. Everyone wants to be part of this project!";
-"coin_analytics.project_tvl.info2" = "This chart shows our meteoric rise. Look at the variation in Total-Value-Locked in just one year. We've truly made smart contracts great again!";
-"coin_analytics.project_tvl.info3" = "When it comes to TVL, we're the top pick! Look at our ranking. Everyone's taking notice.";
-"coin_analytics.project_tvl.info4" = "Want to see how we stack up? Here's a list of tokens, and trust me, we're always at the top. Everyone loves our TVL!";
-"coin_analytics.project_tvl.info5" = "The numbers don't lie. Check out our Market Cap to TVL ratio. We're in a league of our own!";
+"coin_analytics.other_data" = "Другие данные";
 
-"coin_analytics.project_fee" = "Project Fee";
-"coin_analytics.project_fee_rank" = "Project Fee Rank";
-"coin_analytics.project_fee_rank.description" = "We're ranking tokens on who's really making money here, folks. Look at these fees! And every project has its own way, its own secret sauce. Some tokens are just better at it than others, believe me!";
+"coin_analytics.reports" = "Отчёты";
 
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.project_revenue_rank" = "Project Revenue Rank";
-"coin_analytics.project_revenue_rank.description" = "Let's rank tokens on who's actually putting money in the pockets of their people! Some of these tokens have brilliant strategies, like staking or even burning their tokens to create value. Not all tokens do it, but the smart ones do, and they're winning bigly for their holders!";
-
-"coin_analytics.other_data" = "Other Data";
-
-"coin_analytics.reports" = "Reports";
-
-"coin_analytics.funding" = "Funding";
-"coin_analytics.funding.lead" = "Lead";
+"coin_analytics.funding" = "Финансирование";
+"coin_analytics.funding.lead" = "Лид";
 
 "coin_analytics.treasuries" = "Treasuries";
-"coin_analytics.treasuries.filters" = "Filters";
-"coin_analytics.treasuries.filter.all" = "All";
-"coin_analytics.treasuries.filter.public" = "Public";
-"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filters" = "Фильтры";
+"coin_analytics.treasuries.filter.all" = "Все";
+"coin_analytics.treasuries.filter.public" = "Публичный";
+"coin_analytics.treasuries.filter.private" = "Приватный";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
-"coin_analytics.audits" = "Audits";
-"coin_analytics.audits.issues" = "Issues";
-"coin_analytics.audits.no_reports" = "No audit reports";
+"coin_analytics.audits" = "Аудиты";
+"coin_analytics.audits.issues" = "Запросы";
+"coin_analytics.audits.no_reports" = "Нет аудиторских отчетов";
 
-"coin_analytics.last_30d" = "last 30d";
-"coin_analytics.current" = "current";
+"coin_analytics.last_30d" = "Последние 30 дн.";
+"coin_analytics.current" = "текущее";
 
-"coin_analytics.overall_score" = "Overall Score";
-"coin_analytics.overall_score.excellent" = "Excellent";
-"coin_analytics.overall_score.good" = "Good";
-"coin_analytics.overall_score.fair" = "Fair";
-"coin_analytics.overall_score.poor" = "Poor";
-"coin_analytics.overall_score.cex_volume" = "When it comes to centralized exchanges, the real measure of a token's greatness is the average daily trading volume over the past week. Believe me, that's where the action is!";
-"coin_analytics.overall_score.dex_volume" = "For the decentralized exchanges, which are absolutely taking off, by the way, the top tokens are the ones with the best average daily trading volume over the last 7 days. Winners keep winning!";
-"coin_analytics.overall_score.dex_liquidity" = "Now, liquidity? It's huge! The best tokens have massive amounts of available liquidity on decentralized exchanges. That's where the power is, folks.";
-"coin_analytics.overall_score.active_addresses" = "Let's talk active addresses. In just the last week, the really special tokens are the ones buzzing with daily activity. That's the mark of true success!";
-"coin_analytics.overall_score.project_tvl" = "TVL, or Total Value Locked, is where the smart money is. The best projects, and I mean the very best, have the most assets under management. That's a sign of trust!";
-"coin_analytics.overall_score.transaction_count" = "Transactions count - it's like the pulse of a token. Over the last week, the champions are the ones with the highest daily transaction. They're doing something right!";
-"coin_analytics.overall_score.holders" = "And holders? They're the foundation! The top-tier tokens have armies of holders, dedicated believers backing their play. That's the real strength!";
+"coin_analytics.overall_score" = "Общий балл";
+"coin_analytics.overall_score.excellent" = "Отлично";
+"coin_analytics.overall_score.good" = "Хорошо";
+"coin_analytics.overall_score.fair" = "Приемлемо";
+"coin_analytics.overall_score.poor" = "Плохо";
+"coin_analytics.overall_score.cex_volume" = "Общий балл основан на средневзвешенном объеме торговли за последние 7 дней на централизованных биржах.";
+"coin_analytics.overall_score.dex_volume" = "Общий балл основан на среднем ежедневном объеме торговли на децентрализованных биржах за последние 7 дней.";
+"coin_analytics.overall_score.dex_liquidity" = "Общий балл основан на общей доступной ликвидности на децентрализованных биржах.";
+"coin_analytics.overall_score.active_addresses" = "Общий балл основан на среднедневных активных адресах за последние 7 дней.";
+"coin_analytics.overall_score.project_tvl" = "Общая балл основан на общей закрытой стоимости (активы, находящиеся в ведении управления) на проекте, представленном данным токеном.";
+"coin_analytics.overall_score.transaction_count" = "Общий счет основан на среднем подсчете ежедневных транзакций за последние 7 дней.";
+"coin_analytics.overall_score.holders" = "Общий балл основан на общем количестве адресов, содержащих соответствующий токен.";
 
-"coin_analytics.rank" = "Rank";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.rank" = "Рейтинг";
+"coin_analytics.30_day_rank" = "Рейтинг на 30д";
+"coin_analytics.30_day_volume" = "Объем за 30д";
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "Нет доступных данных";
 
 // Coin Page -> Tweets
 
-"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
-"coin_tweets.not_available" = "No twitter available";
-"coin_tweets.see_on_twitter" = "See on Twitter";
+"coin_tweets.reference_type.retweeted" = "Ретвитнуто @%@";
+"coin_tweets.reference_type.quoted" = "Цитировано @%@";
+"coin_tweets.reference_type.replied" = "Ответил @%@";
+"coin_tweets.no_tweets_yet" = "Пока нет твитов";
+"coin_tweets.not_available" = "Twitter не доступен";
+"coin_tweets.see_on_twitter" = "Посмотреть в Twitter";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
-"chart_indicators.moving_averages" = "Moving Averages";
-"chart_indicators.oscillators" = "Oscillators";
+"chart_indicators.title" = "Индикаторы";
+"chart_indicators.moving_averages" = "Скользящие средние";
+"chart_indicators.oscillators" = "Осцилляторы";
 
 
-"chart_indicators.settings.period.error" = "Period can’t be more than %d";
+"chart_indicators.settings.period.error" = "Период не может быть больше чем %d";
 
-"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
-"chart_indicators.settings.ma.type_title" = "Type";
-"chart_indicators.settings.ma.period_title" = "Period";
+"chart_indicators.settings.ma.description" = "В EMA, SMA и WMA используются средние значения для технического анализа:\n\nEMA подчеркивает последние цены для более быстрых реакций.\nСредние цены SMA для общего представления тренда.\nЧувствительность и шумовое снижение ВМА путем линейного взвешивания последних данных";
+"chart_indicators.settings.ma.type_title" = "Тип";
+"chart_indicators.settings.ma.period_title" = "Период";
 
 "chart_indicators.settings.rsi.title" = "RSI";
-
-"chart_indicators.settings.rsi.description" = "The Relative Strength Index (RSI)? Tremendous tool! It's like the pulse-checker of the market. When you see it above 70, that's a hot market, maybe too hot. Below 30? It might be a sale! And the best part? It can even show you when prices might take a U-turn. Genius!";
-"chart_indicators.settings.rsi.period_title" = "RSI Length";
+"chart_indicators.settings.rsi.description" = "Индекс относительной силы (RSI) - это колебатель импульса, который измеряет скорость и изменения цен, определяющий перекупленные (более 70) или перепродаваемые (менее 30) рыночные условия. Она также может обнаружить изменения цен через расхождения.";
+"chart_indicators.settings.rsi.period_title" = "Длина RSI";
 
 "chart_indicators.settings.macd.title" = "MACD";
-"chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is absolutely one of the big league players in the indicator world. It watches two EMAs like a hawk and tells you when things are heating up or cooling down. When the MACD line does a little dance with the 9-period EMA, the signal line, it might be showtime!";
+"chart_indicators.settings.macd.description" = "Дивергенция Moving Average Convergence (MACD) — индикатор динамики, который отслеживает отношения между двумя ЭРА ценой безопасности. Это сигнализирует о возможности покупки или продажи, когда линия MACD (12-ти периодная EMA минус 26-ти периодов EMA) пересекает девять периодов EMA, известную как сигнальная линия.";
 "chart_indicators.settings.macd.fast_period_title" = "Fast Length";
-
 "chart_indicators.settings.macd.slow_period_title" = "Slow Length";
 "chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
 
-"chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
+"chart_indicators.settings.macd.slow_fast.error" = "Fast Length должна быть меньше Slow Length";
 
 // Transactions
 
-"transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
+"transactions.title" = "Транзакции";
+"transactions.tab_bar_item" = "Транзакции";
 "transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "All Blockchains";
-"transactions.all_coins" = "All Coins";
-"transactions.choose_coin" = "Choose Coin";
-"transactions.filter_all" = "All";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
-"transactions.pending" = "Pending";
-"transactions.processing" = "Processing";
-"transactions.completed" = "Completed";
-"transactions.failed" = "Failed";
+"transactions.all_blockchains" = "Все блокчейны";
+"transactions.all_coins" = "Все токены";
+"transactions.choose_coin" = "Выберите токен";
+"transactions.filter_all" = "Все";
+"transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
+"transactions.pending" = "В обработке";
+"transactions.processing" = "В процессе";
+"transactions.completed" = "Завершено";
+"transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Receive";
-"transactions.send" = "Send";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
-"transactions.approve" = "Approve";
-"transactions.swap" = "Swap";
-"transactions.contract_call" = "Contract Call";
-"transactions.contract_creation" = "Contract Creation";
-"transactions.external_call" = "External Call";
+"transactions.receive" = "Получить";
+"transactions.send" = "Отправить";
+"transactions.burn" = "Сжечь";
+"transactions.mint" = "Минт";
+"transactions.approve" = "Разрешить";
+"transactions.swap" = "Обменять";
+"transactions.contract_call" = "Вызов контракта";
+"transactions.contract_creation" = "Создание контракта";
+"transactions.external_call" = "Внешний вызов";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
+"transactions.to" = "Кому %@";
+"transactions.from" = "От %@";
 
-"transactions.multiple" = "Multiple";
+"transactions.multiple" = "Множество";
 
-"transactions.value.unlimited" = "unlimited";
+"transactions.value.unlimited" = "безлимитный";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "Сегодня";
+"transactions.yesterday" = "Вчера";
 
-"transactions.types.all" = "All";
-"transactions.types.incoming" = "Received";
-"transactions.types.outgoing" = "Sent";
-"transactions.types.swap" = "Swaps";
-"transactions.types.approve" = "Approvals";
+"transactions.types.all" = "Все";
+"transactions.types.incoming" = "Получено";
+"transactions.types.outgoing" = "Отправлено";
+"transactions.types.swap" = "Обмены";
+"transactions.types.approve" = "Разрешения";
 
-"transactions.unknown_transaction.title" = "Unknown Transaction";
-"transactions.unknown_transaction.description" = "Transaction can not be parsed";
+"transactions.unknown_transaction.title" = "Неизвестная транзакция";
+"transactions.unknown_transaction.description" = "Транзакция не может быть обработана";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction Info";
-"tx_info.date" = "Date";
-"tx_info.title_approval" = "Swap Approval";
-"tx_info.status.pending" = "Pending";
-"tx_info.status.completed" = "Completed";
-"tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
+"tx_info.title" = "Детали транзакции";
+"tx_info.date" = "Дата";
+"tx_info.title_approval" = "Разрешение обмена";
+"tx_info.status.pending" = "В обработке";
+"tx_info.status.completed" = "Завершено";
+"tx_info.status.failed" = "Не удалось";
+"tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID";
-"tx_info.to_hash" = "To";
-"tx_info.spender" = "Spender";
-"tx_info.contact_name" = "Contact Name";
-"tx_info.button_explorer" = "View on %@";
-"tx_info.rate" = "Historical Rate";
-"tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel Transaction";
-"tx_info.transaction.already_in_block" = "Transaction already in block";
-"tx_info.fee" = "Fee";
-"tx_info.fee.estimated" = "Fee (est.)";
-"tx_info.to_self_note" = "This transaction is sent to own address";
-"tx_info.double_spent_note" = "Double Spend Risk!";
-"tx_info.locked_until" = "Locked until %@";
-"tx_info.unlocked_at" = "Unlocked at %@";
-"tx_info.recipient_hash" = "Recipient";
-"tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.to_hash" = "Кому";
+"tx_info.spender" = "Покупатель";
+"tx_info.contact_name" = "Имя контакта";
+"tx_info.button_explorer" = "Посмотреть на %@";
+"tx_info.rate" = "Исторический курс";
+"tx_info.options.speed_up" = "Ускорить";
+"tx_info.options.cancel" = "Отменить транзакцию";
+"tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
+"tx_info.fee" = "Комиссия";
+"tx_info.fee.estimated" = "Комиссия (прим.)";
+"tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
+"tx_info.double_spent_note" = "Риск двойной траты!";
+"tx_info.locked_until" = "Заблокировано до %@";
+"tx_info.unlocked_at" = "Разблокировано %@";
+"tx_info.recipient_hash" = "Получатель";
+"tx_info.raw_transaction" = "Неподтвержденная транзакция";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Service";
-"tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
-"tx_info.you_get" = "You Get";
-"tx_info.you_paid" = "You Paid";
-"tx_info.you_got" = "You Got";
-"tx_info.price" = "Price";
+"tx_info.service" = "Сервис";
+"tx_info.view_on" = "Посмотреть на %@";
+"tx_info.you_pay" = "Платите";
+"tx_info.you_get" = "Получите";
+"tx_info.you_paid" = "Вы заплатили";
+"tx_info.you_got" = "Вы получили";
+"tx_info.price" = "Цена";
 
 // Settings
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.manage_accounts" = "Manage Wallets";
-"settings.blockchain_settings" = "Blockchain Settings";
-"settings.security" = "Security";
-"settings.experimental_features" = "Experimental";
-"settings.personal_support" = "Personal Support";
-"settings.base_currency" = "Base Currency";
-"settings.language" = "Language";
+"settings.title" = "Настройки";
+"settings.tab_bar_item" = "Настройки";
+"settings.manage_accounts" = "Кошельки";
+"settings.blockchain_settings" = "Настройки блокчейна";
+"settings.security" = "Безопасность";
+"settings.experimental_features" = "Экспериментальные функции";
+"settings.personal_support" = "Персональная поддержка";
+"settings.base_currency" = "Базовая валюта";
+"settings.language" = "Язык";
 "settings.faq" = "FAQ";
-"settings.theme" = "Theme";
-"settings.info_subtitle" = "decentralized app";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
-"settings.donate.title" = "Donate";
+"settings.theme" = "Тема";
+"settings.info_subtitle" = "децентрализованное приложение";
+"settings.donate.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
+"settings.donate.title" = "Поддержи нас";
 
 // Settings -> Base Currency
 
-"settings.base_currency.title" = "Base Currency";
-"settings.base_currency.other" = "Other";
-"settings.base_currency.disclaimer" = "Disclaimer";
-"settings.base_currency.disclaimer.description" = "Hey there! So, we get our exchange rates from Coingecko.com, alright? While we aim for accuracy, we can't promise it's 100% spot-on, especially if you pick a base currency other than %@. Just so you know!";
-"settings.base_currency.disclaimer.set" = "Got it!";
+"settings.base_currency.title" = "Базовая валюта";
+"settings.base_currency.other" = "Другое";
+"settings.base_currency.disclaimer" = "Отказ от ответственности";
+"settings.base_currency.disclaimer.description" = "Данные об обменном курсе предоставлены третьим лицом Coingecko.сom\n\n Приложение %@ Wallet не гарантирует, что эти данные всегда верны и соответствуют рыночным. Шанс на несоответствие повышается при выборе базовой валюты, отличающейся от %@.";
+"settings.base_currency.disclaimer.set" = "Установить";
 
 // Settings -> Manage Wallet
 
-"manage_wallets.title" = "Coin Manager";
-"manage_wallets.not_found" = "Hmm, no luck. Maybe try adding the token by hand?";
-"manage_wallets.search_placeholder" = "Whatcha looking for? Name, code, or maybe contract address?";
-"manage_wallets.contract_address" = "Contract Address";
-"manage_wallets.derivation_description" = "Fun fact: there are 4 cool address formats %@ wallets can use. They are BIP44, BIP49, BIP84 (our fav!), and BIP86. But no stress, we got you covered with all of them!";
-"manage_wallets.bitcoin_cash_coin_type_description" = "For Bitcoin Cash, there are 2 formats - TYPE 0 and TYPE 145. We say TYPE 145 is the way to go!";
+"manage_wallets.title" = "Токены";
+"manage_wallets.not_found" = "Ничего не найдено. Попробуйте добавить токен вручную.";
+"manage_wallets.search_placeholder" = "Имя, код или адрес контракта";
+"manage_wallets.contract_address" = "Адрес контракта";
+"manage_wallets.derivation_description" = "Существует 4 распространенных формата адресов %@ кошельков для получения входящих платежей:\n\n- BIP44 (более старый)\n- BIP49\n- BIP84 (рекомендованный)\n- BIP86 (самый новый)\n\nХотя кошелек %@ поддерживает все четыре формата, рекомендуется использовать %@ кошелек, работающий в формате BIP84.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Существует 2 формата адресов, которые кошельки Bitcoin Cash могут использовать для приема входящих платежей:\n\n- TYPE 0 (более старый)\n- TYPE 145 (более новый)\n\nХотя кошелек %@ поддерживает оба формата, рекомендуется использовать кошелек Bitcoin Cash, работающий в формате TYPE 145.";
 
 // Settings -> Personal Support
 
 "settings.personal_support.telegram_username.title" = "Account";
-"settings.personal_support.telegram_username.placeholder" = "@username!";
-"settings.personal_support.description" = "Pop in your Telegram username, and we'll slide into your DMs for some one-on-one chat.";
-"settings.personal_support.request" = "Request";
-"settings.personal_support.requested" = "Requested";
-"settings.personal_support.failed" = "Request failed";
-"settings.personal_support.need_subscription" = "Heads up! This cool feature? It's for the %@ Wallet VIPs. Wanna know more? Check our website!";
-"settings.personal_support.requested.description" = "You've already pinged us! Check your Telegram for our message.";
-"settings.personal_support.requested.open_telegram" = "Open Telegram";
-"settings.personal_support.requested.new_request" = "New Request";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Введите имя аккаунта Telegram, чтобы открыть личный чат поддержки, и мы отправим вам сообщение.";
+"settings.personal_support.request" = "Запрос";
+"settings.personal_support.requested" = "Запрошено";
+"settings.personal_support.failed" = "Ошибка запроса";
+"settings.personal_support.need_subscription" = "Эта функция доступна только для премиум-пользователей %@ Wallet . Дополнительная информация на нашем официальном сайте.";
+"settings.personal_support.requested.description" = "Вы уже запросили приватный чат, найдите его в Telegram";
+"settings.personal_support.requested.open_telegram" = "Открыть Telegram";
+"settings.personal_support.requested.new_request" = "Новый запрос";
 
 // Settings -> Experimental Features
 
-"settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "Below are some fun (but experimental) features. We've played with them, and while we think they're cool, use them at your own risk!";
+"settings.experimental_features.title" = "Экспериментальные функции";
+"settings.experimental_features.description" = "Функции ниже являются экспериментальными. Несмотря на то, что мы детально их протестировали, используя наши собственные криптосредства, мы не можем гарантировать, что они всегда будут работать так, как предусмотрено.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
-"settings.bitcoin_hodling.description" = "So this? It's a cool trick to lock up your Bitcoins till a certain date. But make sure the receiver's using %@ wallet app version 0.10 or newer. It's a fun way to HODL, especially if you're sending to yourself.";
+"settings.bitcoin_hodling.lock_time" = "Активировать";
+"settings.bitcoin_hodling.description" = "Позволяет отправлять биткойны, которые могут быть потрачены только после указанной даты.\n\nПолучатель такой транзакции должен использовать версию 0.10 приложения %@ Wallet или же более новую версию с форматом адреса BIP44 для Bitcoin.\n\nТолько кошелек %@ может правильно распознать и обработать такие транзакции в сети Bitcoin, и позволить получателю тратить эти биткойны по истечении периода блокировки.\n\nЕсли вы HODLer (долгосрочный инвестор), то вы можете использовать эту функцию для удержания своих биткойнов, отправив их себе. \n\nТак как это экспериментальная функция, максимальная сумма транзакции ограничена 0,5 BTC.";
 
 // Settings -> Terms
 
-"terms.title" = "Terms";
-"terms.i_agree" = "I Agree";
+"terms.title" = "Условия использования";
+"terms.i_agree" = "Я принимаю";
 
-"terms.item.1" = "Always backup your wallet recovery phrases. It's your key to the kingdom if things go sideways.";
-"terms.item.2" = "Your wallet recovery phrases are made just for you, right here, and we don't keep them anywhere else.";
-"terms.item.3" = "Heads up! If you switch off the unlock PIN on your phone, all wallets in the app will vanish. You'll need those recovery phrases to get back in.";
-"terms.item.4" = "Messing with your phone's settings or downloading sketchy apps? That might put your coins at risk.";
-"terms.item.5" = "Just so you know, there's always a teeny chance that a bug sneaks into our code, which might make the app act a little funky.";
+"terms.item.1" = "Безопасное резервное копирование фраз для каждого кошелька. Это единственный способ восстановить доступ к средствам, если приложение не работает.";
+"terms.item.2" = "Фразы восстановления кошелька генерируются случайным образом на устройстве во время установки и не хранятся в другом месте.";
+"terms.item.3" = "Отключение PIN-кода разблокировки на смартфоне удаляет все кошельки из приложения. Для восстановления доступа к средствам потребуется восстановление фраз.";
+"terms.item.4" = "Jailbreaking (rooting), использование устаревших ОС и установка приложений из неизвестных источников могут поставить под угрозу безопасность средств.";
+"terms.item.5" = "В процессе работы кода могут возникнуть проблемы с программным обеспечением, что может привести к сбоям приложения.";
 
 // Settings -> Tell Friends
 
@@ -1076,342 +1073,346 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Blockchain Settings";
+"blockchain_settings.title" = "Настройки блокчейна";
 
 // Settings -> Security
 
-"settings_security.title" = "Security";
-"settings_security.passcode" = "Passcode";
-"settings_security.change_pin" = "Edit Passcode";
+"settings_security.title" = "Безопасность";
+"settings_security.passcode" = "Код доступа";
+"settings_security.change_pin" = "Изменить код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"settings_security.blockchain_settings" = "Blockchain Settings";
-"security_settings.delete_alert_button" = "Delete from Phone";
+"settings_security.blockchain_settings" = "Настройки блокчейна";
+"security_settings.delete_alert_button" = "Удалить с телефона";
 
-"btc_blockchain_settings.restore_source" = "Restore Source";
-"btc_blockchain_settings.restore_source.description" = "Where do you wanna pull your wallet's past deeds from?";
-"btc_blockchain_settings.restore_source.alert" = "Just so you know, if you tweak the Restore Source, the wallet's gotta get in sync with the %@ blockchain again.";
+"btc_blockchain_settings.restore_source" = "Источник восстановления";
+"btc_blockchain_settings.restore_source.description" = "Выберите источник данных для восстановления кошелька с транзакциями.";
+"btc_blockchain_settings.restore_source.alert" = "После изменения источника восстановления, кошелек должен будет повторно синхронизироваться с блокчейном %@.";
 
-"btc_restore_mode.recommended" = "Recommended";
-"btc_restore_mode.more_private" = "More Private";
+"btc_restore_mode.recommended" = "Рекомендовано";
+"btc_restore_mode.more_private" = "Более Приватно";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
-"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
 "btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
-"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
+"btc_transaction_sort_mode.bip69.description" = "Лексикографическая индексация";
 
-"blockchain_settings.info.restore_source" = "Restore Source";
-"blockchain_settings.info.restore_source.content" = "Alright, here's the deal. If you're bringing back an old wallet, you've got to know where it's been. %@ can tap into two ways: 1. A super-fast API server (think 5-10 minutes) that's kinda like asking a friend who knows everything. But it’s not as private and leans on that friend always being around. 2. Straight from the blockchain network, which is more private and independent but also a slow poke (could take 2-3 hours).";
-"blockchain_settings.info.rpc_source" = "RPC Source";
-"blockchain_settings.info.rpc_source.content" = "How do we chat with the blockchains when money's moving? With some (like Bitcoin), it's like chatting in a big group. With others (like Ethereum), we gotta use a middleman like Infura.io. No worries about your coins though, just how we connect. We're brainstorming more freestyle ways to link up. Stay tuned!";
+"blockchain_settings.info.restore_source" = "Источник восстановления";
+"blockchain_settings.info.restore_source.content" = "Этот параметр актуален только при восстановлении существующего кошелька. Это процесс получения истории транзакций для данной монеты, чтобы приложение кошелька могло отображать предыдущие транзакции и определять последний баланс. Это должно произойти только один раз при восстановлении пользователем ранее созданного кошелька. \n\nНа данный момент у такого мобильного кошелька, как %@, есть два возможных способа для реализации этого вопроса: \n\n1. С сервера API: существует предопределенный сторонний сервер, на котором размещается вся цепочка блоков, происходит обработка всех данных и их подготовка к быстрому предоставлению. Это быстрый метод, однако он предполагает потенциальное отслеживание IP-адресов и запрашиваемых данных. Этот вариант рекомендуется использовать из-за скорости получения данных (5-10 минут). Он сопряжен с минимальными рисками. Если пользователь восстанавливает данные со своего собственного сервера, то нет никакой угрозы конфиденциальности.\n\n2. Из блокчейна: в этом случае приложение пытается восстановить данные напрямую из p2p-сети узлов блокчейна. Приложение пингует многие из этих узлов и запрашивает у них данные. Потенциально эти узлы могут отслеживать IP-адрес пользователя и сделанные запросы, однако во время восстановления данных приложение может переключаться между узлами. В любое время в сети находится около 10 000 биткойн-узлов. Это медленный вариант обработки данных, она может занять 2-3 часа и приложение должно быть открыто во время их восстановления.";
+"blockchain_settings.info.rpc_source" = "Источник RPC";
+"blockchain_settings.info.rpc_source.content" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. %@ пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. \n\nЭто влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration Required";
-"manage_accounts.migration_recommended" = "Migration Recommended";
-"manage_accounts.backup_required" = "Backup Required";
+"manage_accounts.migration_required" = "Требуется миграция";
+"manage_accounts.migration_recommended" = "Рекомендуется миграция";
+"manage_accounts.backup_required" = "Необходима резерв. копия";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Manage Wallets";
-"settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "Heads up! This will kick the wallet off the device.";
-"settings_manage_keys.delete.confirmation_loose" = "Hey, if you haven't stashed the key for this wallet, you could be saying bye to your bucks.";
-"settings_manage_keys.delete.confirmation_watch" = "Done watching this wallet's every move?";
-"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
+"settings_manage_keys.title" = "Кошельки";
+"settings_manage_keys.delete" = "Удалить";
+"settings_manage_keys.backup" = "Резервная копия";
+"settings_manage_keys.delete.title" = "Удалить кошелек";
+"settings_manage_keys.delete.confirmation_remove" = "Действие удалит этот кошелек с устройства.";
+"settings_manage_keys.delete.confirmation_loose" = "Если вы не сделали резервную копию приватного ключа для этого кошелька, вы потеряете доступ к вашим средствам.";
+"settings_manage_keys.delete.confirmation_watch" = "Вы хотите приостановить просмотр этого адреса кошелька?";
+"settings_manage_keys.delete.confirmation_watch.button" = "Остановить просмотр";
 
 // Settings -> About App
 
-"settings.about_app.title" = "About App";
-"settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" =  "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
-"settings.about_app.whats_new" = "What's New";
-"settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Contact Us";
-"settings.about_app.rate_us" = "Rate Us";
-"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.title" = "О приложении";
+"settings.about_app.app_name" = "%@ кошелек";
+"settings.about_app.description" = "Кошелек %@ создан для тех, кто хочет инвестировать и хранить криптовалюты частным и независимым образом.\n\nЭто одноранговый кошелек, где только пользователь имеет контроль над средствами. Он не собирает никаких данных и обеспечивает независимость пользователя, не привязывая средства пользователя к определенному приложению.\n\nКошелек %@ имеет полностью открытый исходный код, и любой может подтвердить, что приложение работает именно так, как заявлено.";
+"settings.about_app.whats_new" = "Что нового";
+"settings.about_app.website" = "Веб-сайт";
+"settings.about_app.contact" = "Связаться с нами";
+"settings.about_app.rate_us" = "Оценить нас";
+"settings.about_app.tell_friends" = "Рассказать друзьям";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
-"settings.contact.via_email" = "via E-mail";
-"settings.contact.via_telegram" = "via Telegram";
+"settings.contact.title" = "Связаться с нами";
+"settings.contact.via_email" = "по электронной почте";
+"settings.contact.via_telegram" = "через Telegram";
 
 // Settings -> Privacy
 
-
-"settings.privacy" = "Privacy Vibes";
-"settings.privacy.description" = "Just so you know, %@ is like that friend who never spills your secrets. No data collection, no sneaky analytics, nada! We've built this wallet with your privacy front and center.";
-"settings.privacy.statement.user_data_storage" = "Your stuff? It stays right on your device, and that's it.";
-"settings.privacy.statement.data_usage" = "We're not in the biz of snooping or collecting any deets about you.";
-"settings.privacy.statement.data_privacy" = "Sharing your data? Nah, that's not our style.";
-"settings.privacy.statement.user_account" = "And guess what? No user accounts or mysterious databases storing your data out in the wild.";
+"settings.privacy" = "Приватность";
+"settings.privacy.description" = "%@ не собирает данные и не использует инструменты аналитики, которые могут раскрывать любые данные о своих пользователях. Кошелек разработан для обеспечения высокого уровня конфиденциальности для своих пользователей.";
+"settings.privacy.statement.user_data_storage" = "Данные пользователя всегда остаются на устройстве пользователя.";
+"settings.privacy.statement.data_usage" = "Кошелек не собирает никаких данных о пользователях.";
+"settings.privacy.statement.data_privacy" = "Кошелек не передает никаких данных о пользователях.";
+"settings.privacy.statement.user_account" = "Нет учетных записей или баз данных, хранящих данные пользователя в другом месте.";
 
 // Settings -> Appearance
 
-"appearance.title" = "Appearance";
+"appearance.title" = "Оформление";
 
-"appearance.theme" = "Theme";
-"appearance.theme.system" = "System";
-"appearance.theme.dark" = "Dark";
-"appearance.theme.light" = "Light";
+"appearance.theme" = "Тема";
+"appearance.theme.system" = "Системная";
+"appearance.theme.dark" = "Тёмная";
+"appearance.theme.light" = "Светлая";
 
-"appearance.tab_settings" = "Tab Settings";
-"appearance.markets_tab" = "Markets Tab";
-"appearance.launch_screen" = "Launch Screen";
-"appearance.launch_screen.auto" = "Auto";
-"appearance.launch_screen.balance" = "Balance";
-"appearance.launch_screen.market_overview" = "Market Overview";
-"appearance.launch_screen.watchlist" = "Watchlist";
+"appearance.tab_settings" = "Настройки вкладки";
+"appearance.markets_tab" = "Вкладка рынки";
+"appearance.launch_screen" = "Запуск экрана";
+"appearance.launch_screen.auto" = "По умолчанию";
+"appearance.launch_screen.balance" = "Баланс";
+"appearance.launch_screen.market_overview" = "Обзор рынка";
+"appearance.launch_screen.watchlist" = "Избранное";
 
-"appearance.app_icon" = "App Icon";
+"appearance.app_icon" = "Иконка приложения";
 
-"appearance.balance_conversion" = "Balance Conversion";
+"appearance.balance_conversion" = "Конвертация баланса";
 
-"appearance.balance_value" = "Balance Value";
-"appearance.balance_value.coin_value" = "Coin Value";
-"appearance.balance_value.fiat_value" = "Fiat Value";
+"appearance.balance_value" = "Значение баланса";
+"appearance.balance_value.coin_value" = "Токен значение";
+"appearance.balance_value.fiat_value" = "Фиатное значение";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "Автоскрытие баланса";
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
-"contacts.list.search_placeholder" = "Search by name";
-"contacts.list.not_found" = "You do not have an added contact";
-"contacts.list.not_found_search" = "No results found";
-"contacts.add_new_contact" = "Add New Contact";
-"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
-"contacts.update_contact.replace" = "Replace";
-"contacts.list.addresses_count" = "Addresses: %d";
-"contacts.contact.new.title" = "New Contact";
-"contacts.contact.name.placeholder" = "Name";
-"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
-"contacts.contact.add_address" = "Add Address";
-"contacts.contact.delete" = "Delete Contact";
-"contacts.contact.address.blockchains" = "Blockchains";
+"contacts.title" = "Контакты";
+"contacts.list.search_placeholder" = "Поиск по имени";
+"contacts.list.not_found" = "У вас нет добавленных контактов";
+"contacts.list.not_found_search" = "Ничего не найдено";
+"contacts.add_new_contact" = "Добавить новый контакт";
+"contacts.update_contact.already_has_address" = "Выбранный контакт уже имеет адрес на %@. Это действие заменит адрес %@ на %@.";
+"contacts.update_contact.replace" = "Заменить";
+"contacts.list.addresses_count" = "Адреса: %d";
+"contacts.contact.new.title" = "Новый контакт";
+"contacts.contact.name.placeholder" = "Название";
+"contacts.contact.update.error.name_already_exist" = "Имя уже существует";
+"contacts.contact.add_address" = "Добавить адрес";
+"contacts.contact.delete" = "Удалить контакт";
+"contacts.contact.address.blockchains" = "Блокчейны";
 "contacts.contact.address.blockchain" = "Blockchain";
-"contacts.contact.address.delete_address" = "Delete Address";
+"contacts.contact.address.delete_address" = "Удалить адрес";
 
-"contacts.restore.restored" = "Restored";
-"contacts.restore.parsing_error" = "File has wrong data!";
-"contacts.restore.restore_error" = "Failed to restore contacts";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
-"contacts.restore.overwrite_alert.replace" = "Replace";
+"contacts.restore.restored" = "Восстановлено";
+"contacts.restore.parsing_error" = "Файл имеет неправильные данные!";
+"contacts.restore.restore_error" = "Не удалось восстановить контакты";
+"contacts.restore.overwrite_alert.description" = "Это действие перезапишет ваши локальные платежные контакты, а также их копии в iCloud (при наличии таковых).";
+"contacts.restore.overwrite_alert.replace" = "Заменить";
 
-"contacts.add_address.title" = "Add Address";
-"contacts.add_address.create_new" = "Create New Contact";
-"contacts.add_address.add_to_contact" = "Add to Existing Contact";
-"contacts.add_address.exist_address" = "This address is already used for %@";
+"contacts.add_address.title" = "Добавить адрес";
+"contacts.add_address.create_new" = "Создать новый контакт";
+"contacts.add_address.add_to_contact" = "Добавить в существующий контакт";
+"contacts.add_address.exist_address" = "Этот адрес уже используется для %@";
 
-"contacts.contact.delete_alert.title" = "Delete Contact";
-"contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
-"contacts.contact.delete_alert.delete" = "Delete";
+"contacts.contact.delete_alert.title" = "Удалить контакт";
+"contacts.contact.delete_alert.description" = "Вы действительно хотите удалить этот контакт?";
+"contacts.contact.delete_alert.delete" = "Удалить";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
-"contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
-"contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
+"contacts.contact.dismiss_changes.description" = "Вы уверены, что хотите отменить эти изменения?";
+"contacts.contact.dismiss_changes.discard_changes" = "Отменить изменения";
+"contacts.contact.dismiss_changes.keep_editing" = "Продолжить редактирование";
 
-"contacts.add_address.delete_alert.title" = "Delete Address";
-"contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
-"contacts.add_address.delete_alert.delete" = "Delete";
+"contacts.add_address.delete_alert.title" = "Удалить адрес";
+"contacts.add_address.delete_alert.description" = "Вы уверены, что хотите удалить этот адрес?";
+"contacts.add_address.delete_alert.delete" = "Удалить";
 
 // Contacts -> Settings
 
-"contacts.settings.title" = "Settings";
+"contacts.settings.title" = "Настройки";
 
-"contacts.settings.restore_contacts" = "Restore Contacts";
-"contacts.settings.backup_contacts" = "Backup Contacts";
+"contacts.settings.restore_contacts" = "Восстановить контакты";
+"contacts.settings.backup_contacts" = "Резерв. копирование контактов";
 
-"contacts.settings.icloud_sync" = "iCloud Sync";
-"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
-"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"contacts.settings.icloud_sync" = "iCloud синхр.";
+"contacts.settings.description" = "Синхронизируйте платежные контакты с iCloud для легкого резервного копирования и доступа к ним на нескольких устройствах.";
+"contacts.settings.lost_synchronization.description" = "Синхронизация iCloud утеряна. Пожалуйста, проверьте, что iCloud Storage включен на вашем устройстве.";
+"contacts.settings.merge_disclaimer" = "Ваши локальные платежные контакты будут объединены с данными, хранящимися в iCloud.";
 
-"contacts.settings.alert.title" = "iCloud Sync";
-"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"contacts.settings.alert.title" = "iCloud синхр.";
+"contacts.settings.alert.description" = "Пожалуйста, убедитесь, что iCloud хранилище включено на вашем устройстве.";
 
-"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.title" = "Ошибка iCloud";
 
 // Set PIN
 
-"set_pin.title" = "Passcode";
-"set_pin.info" = "Your passcode will be used to unlock your wallet";
-"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
+"set_pin.title" = "Код доступа";
+"set_pin.info" = "Код доступа будет использоваться для разблокировки вашего кошелька";
+"set_pin.wrong_confirmation" = "Код доступа не совпадает. Попробуйте ещё раз";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit Passcode";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.title" = "Изменить код";
+"edit_pin.unlock_info" = "Текущий код";
+"edit_pin.new_pin_info" = "Новый код";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.info" = "Код доступа";
+"unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш код доступа. Пожалуйста, свяжитесь с нами как можно скорее!";
+"unlock_pin.blocked_until" = "Отключено до: %@";
 
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2W";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.month3" = "3M";
-"chart.time_duration.halfyear" = "6M";
-"chart.time_duration.year" = "1Y";
-"chart.time_duration.year2" = "2Y";
-"chart.time_duration.all" = "ALL";
+"chart.time_duration.day" = "24Ч";
+"chart.time_duration.week" = "7Д";
+"chart.time_duration.week2" = "2Н";
+"chart.time_duration.month" = "1М";
+"chart.time_duration.month3" = "3М";
+"chart.time_duration.halfyear" = "6М";
+"chart.time_duration.year" = "1Г";
+"chart.time_duration.year2" = "2Г";
+"chart.time_duration.all" = "ВСЕ";
 
-"chart.market_cap" = "Market Cap";
-"chart.volume" = "Volume (24h)";
-"chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Vol.";
+"chart.market_cap" = "Рын. капитализация";
+"chart.volume" = "Объём (за 24 ч)";
+"chart.circulation" = "В обороте";
+"chart.selected.volume" = "Объём";
 
-"chart.market.header" = "Market";
-"chart.market.market_cap" = "Market Cap";
-"chart.market.volume" = "Volume (24h)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.header" = "Рынок";
+"chart.market.market_cap" = "Рын. капитализация";
+"chart.market.volume" = "Объём (за 24 ч)";
+"chart.market.circulation" = "В обороте";
+"chart.market.total_supply" = "Макс.выпуск";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "Изменения (за 1Н)";
+"chart.performance.month_changes" = "Изменения (за 1М)";
 
-"chart.about.header" = "About";
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.header" = "О Проекте";
+"chart.about.read_more" = "Подробнее";
+"chart.about.read_less" = "Свернуть";
 
 "coin_page.return_of_investments" = "ROI";
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
-"create_wallet.name" = "Name";
-"create_wallet.advanced_setup" = "Advanced";
-"create_wallet.create" = "Create";
-"create_wallet.advanced" = "Advanced";
-"create_wallet.phrase_count" = "Recovery Phrase";
-"create_wallet.12_words" = "12 words (recommended)";
-"create_wallet.n_words" = "%@ words";
-"create_wallet.word_list" = "Word List";
-"create_wallet.passphrase" = "Passphrase";
-"create_wallet.input.passphrase" = "Passphrase";
-"create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Think of passphrases as your wallet's secret handshake. If you ever need to bring back a lost wallet, you'll need the recovery phrase and this passphrase. Plus, with just one mnemonic, you can unlock a bunch of multi-coin wallets with different passphrases. Neat, right?";
-"create_wallet.error.empty_passphrase" = "Oops! Looks like you missed the passphrase. Please fill it in.";
-"create_wallet.error.forbidden_symbols" = "Hold on there, cowboy! Let's stick to the symbols we know and love::A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"create_wallet.error.invalid_confirmation" = "Hmm, your passphrase confirmations aren't matching. Let's try that again.";
+"create_wallet.title" = "Новый кошелек";
+"create_wallet.name" = "Название";
+"create_wallet.advanced_setup" = "Доп. настройки";
+"create_wallet.create" = "Создать";
+"create_wallet.advanced" = "Доп. настройки";
+"create_wallet.phrase_count" = "Фраза восстановления";
+"create_wallet.12_words" = "12 слов (рекомендуется)";
+"create_wallet.n_words" = "%@ слов";
+"create_wallet.word_list" = "Список слов";
+"create_wallet.passphrase" = "Кодовая фраза";
+"create_wallet.input.passphrase" = "Кодовая фраза";
+"create_wallet.input.confirm" = "Подтвердить";
+"create_wallet.passphrase_description" = "Кодовая фраза добавляет дополнительный слой безопасности для кошельков. Чтобы восстановить такой кошелек требуется как мнемоник, так и кодовая фраза.\n\\Кодовая фраза также облегчает пользователям возможность иметь множество мульти-монетных кошельков, используя одну фразу восстановления, но другой пароль.";
+"create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
+"create_wallet.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
+
 // Restore Select
 
-"restore_select.title" = "Choose Blockchains";
+"restore_select.title" = "Выберите блокчейны";
 
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "Heads up! The sender locked these funds for a bit. The lock will lift on the indicated date. \n\nRest assured, those Bitcoins are already in your pocket. You'll just need to wait until the lock";
+"lock_info.text" = "Эти средства были отправлены с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткойны уже ваши, но до истечения периода блокировки, вы не сможете их потратить в сети Bitcoin.";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Double Spend";
-"double_spend_info.header" = "Double Spend Risk! There is another transaction on the blockchain that is trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
-"double_spend_info.this_hash" = "This Tx";
-"double_spend_info.conflicting_hash" = "Conflicting Tx";
+"double_spend_info.title" = "Двойная трата";
+"double_spend_info.header" = "Риск двойной траты! Существует другая транзакция в блокчейне, которая пытается использовать входные данные, используемые в этой транзакции. Только одна транзакция будет принята сетью";
+"double_spend_info.this_hash" = "Эта транзакция";
+"double_spend_info.conflicting_hash" = "Конфликтующая транзакция";
 
 // Relative Date
-"timestamp.days_ago" = "%lud ago";
-"timestamp.hours_ago" = "%luh ago";
-"timestamp.min_ago" = "%lum ago";
+"timestamp.days_ago" = "%luд назад";
+"timestamp.hours_ago" = "%luч назад";
+"timestamp.min_ago" = "%luмин назад";
 
 // Intro
 
-"intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Why cage yourself in? And don’t let any losers do that to you. Be free!";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Skip those silly barriers. Access markets everywhere, like a boss!";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Why broadcast your business? Keep your secrets, just like I do!";
+"intro.unchain_assets.title" = "Непривязанные активы";
+"intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
+"intro.go_borderless.title" = "Избавьтесь от границ";
+"intro.go_borderless.description" = "Преодолейте барьеры и получите доступ к рынкам";
+"intro.stay_private.title" = "Сохраняйте конфиденциальность";
+"intro.stay_private.description" = "Не допускайте утечку личных и финансовых данных";
 
 // Guides
 
-"guides.tab_bar_item" = "Academy";
-"guides.title" = "Academy";
+"guides.tab_bar_item" = "Академия";
+"guides.title" = "Академия";
 
 // Add Token
 
-"add_token.title" = "Add Token";
+"add_token.title" = "Добавить токен";
 "add_token.blockchain" = "Blockchain";
-"add_token.already_added" = "This coin? It's already on the A-list, like me in the world of real estate. No need to add it again, folks!";
-"add_token.invalid_contract_address" = "Invalid contract address";
-"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
-"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
-"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
-"add_token.input_placeholder.contract_address" = "Contract Address";
-"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
-"add_token.coin_name" = "Coin Name";
-"add_token.symbol" = "Symbol";
-"add_token.decimals" = "Decimals";
+"add_token.already_added" = "Этот токен уже есть в списке";
+"add_token.invalid_contract_address" = "Неверный адрес контракта";
+"add_token.invalid_bep2_symbol" = "Неверный символ BEP2";
+"add_token.contract_address_not_found" = "Адрес контракта не найден в %@ блокчейне ";
+"add_token.bep2_symbol_not_found" = "Символ BEP2 не найден";
+"add_token.input_placeholder.contract_address" = "Адрес контракта";
+"add_token.input_placeholder.bep2_symbol" = "Символ BEP2";
+"add_token.coin_name" = "Название токена";
+"add_token.symbol" = "Символ";
+"add_token.decimals" = "Десятичные знаки";
 
 // Wallet Connect
 
 "wallet_connect.title" = "WalletConnect";
-"wallet_connect.error.invalid_url" = "Invalid URL Address";
+"wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
-"wallet_connect.active_account" = "Active Wallet";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
-"wallet_connect.list.pending_requests" = "Pending Requests";
-"wallet_connect.main.unsupported_chains" = "Some of these chains? Very low energy. Not supported!";
-"wallet_connect.connect_description" = "Hit that approve, and you're letting the app see your VIP address. We're doing this, folks, to make security great again and keep the phishers out!";
-"wallet_connect.usage_description" = "You can head over to the browser, but remember - keep this page open. It's the best page!";
-"wallet_connect.no_connection" = "Couldn't make the connection. Probably the system's fault. Try again and let's win this!";
-"wallet_connect.button_reconnect" = "Reconnect";
-"wallet_connect.button_disconnect" = "Disconnect";
-"ethereum_transaction.error.title" = "Error";
-"ethereum_transaction.error.insufficient_balance" = "Hey, we need more %@ to send this. Not enough funds, folks!";
-"ethereum_transaction.error.insufficient_balance_with_fee" = "Your %@ balance? Too low! Can't cover the transaction and the tiny fee!";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "You're offering peanuts for the fee! Too low, it'll be shown the door!";
-"ethereum_transaction.error.nonce_already_in_block" = "This transaction? Already in the block! Done and dusted!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Trying to replace? But your fee? Way too cheap! Up the ante!";
-"ethereum_transaction.error.transaction_underpriced" = "Your fee's too low! It's like trying to buy Mar-a-Lago with pocket change!";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Tips are rolling in higher than the max fee! Remember, the max fee counts those tips too!";
-"ethereum_transaction.error.reverted" = "Can't do the transaction! Here's why: %@";
-"wallet_connect.request_title" = "Contract Call";
-"wallet_connect.button.confirm" = "Confirm";
-"wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.active_account" = "Активный Кошелек";
+"wallet_connect.address" = "Адрес";
+"wallet_connect.network" = "Сеть";
+"wallet_connect.address" = "Адрес";
+"wallet_connect.network" = "Сеть";
+"wallet_connect.list.pending_requests" = "Ожидающие запросы";
+"wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
+"wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
+"wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
+"wallet_connect.usage_description" = "Вы можете перейти в браузер. Не закрывайте эту страницу во время использования браузера.";
+"wallet_connect.no_connection" = "Не удалось установить соединение. Попробуйте переподключиться снова.";
+"wallet_connect.button_reconnect" = "Повторное подключение";
+"wallet_connect.button_disconnect" = "Отсоединить";
+"ethereum_transaction.error.title" = "Ошибка";
+"ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Выбранное значение комиссии слишком низкое и будет отклонено!";
+"ethereum_transaction.error.nonce_already_in_block" = "Транзакция уже в блоке!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Недостаточно комиссии для замены транзакции";
+"ethereum_transaction.error.transaction_underpriced" = "Комиссия недостаточна для отправки транзакции";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Максимальное вознаграждение не может быть меньше чаевых, так как максимальное вознаграждение включает чаевые.";
+"ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
+"wallet_connect.request_title" = "Вызов контракта";
+"wallet_connect.button.confirm" = "Подтвердить";
+"wallet_connect.sign.request_title" = "Запрос на подпись";
+"wallet_connect.sign.domain" = "Домен";
 "wallet_connect.sign.dapp_name" = "dApp";
-"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.message" = "Сообщение для подписи";
 
 "wallet_connect_list.title" = "WalletConnect";
-"wallet_connect.list.empty_view_text" = "No active sessions";
+"wallet_connect.list.empty_view_text" = "Нет активных сессий";
 
-"wallet_connect.list.pairings" = "Pairings";
-"wallet_connect.list.version_text" = "Version %@";
-"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
-"wallet_connect_list.new_connection" = "New Connection";
-"wallet_connect_list.disconnecting" = "Disconnecting";
+"wallet_connect.list.pairings" = "Соединения";
+"wallet_connect.list.version_text" = "Версия %@";
+"wallet_connect.list.v1_bottom_text" = "В первой версии WalletConnect вы должны войти в сессии, чтобы увидеть и подтвердить запрос.";
+"wallet_connect_list.new_connection" = "Новое соединение";
+"wallet_connect_list.disconnecting" = "Отсоединение";
 
-"wallet_connect.no_account.description" = "Before you jump into WalletConnect, you've gotta either build a wallet or bring one in, just like building or buying a beautiful hotel!";
-"wallet_connect.unbackuped_account.description" = "Hey, you've gotta backup %@ before using WalletConnect. Protect it, just like I protect my Twitter account!";
-"wallet_connect.non_supported_account.description" = "That wallet of yours, the %@ type? Not a fan of WalletConnect, sorry folks!";
-"wallet_connect.non_supported_account.switch" = "Switch";
+"wallet_connect.no_account.description" = "Вам нужно создать или импортировать кошелек перед использованием WalletConnect.";
+"wallet_connect.unbackuped_account.description" = "Вам нужно сделать резервную копию %@ перед использованием WalletConnect";
 
-"wallet_connect.pending_requests_title" = "Pending Requests";
-"wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
-"wallet_connect.pending_requests.nonactive_footer" = "To kickstart a request, you gotta turn on the wallet you want. Activate it like you mean it, folks!";
+"wallet_connect.non_supported_account.description" = "Ваш текущий тип кошелька %@ не поддерживает WalletConnect";
+"wallet_connect.non_supported_account.switch" = "Перекл.";
+
+"wallet_connect.pending_requests_title" = "Ожидающие запросы";
+"wallet_connect.paired_dapps.title" = "Соединеные dApp";
+"wallet_connect.paired_dapps.cant_disconnect" = "Не удалось отключить";
+"wallet_connect.paired_dapps.disconnect_all" = "Удалить всё";
+"wallet_connect.pending_requests.nonactive_footer" = "Чтобы открыть запрос, необходимо активировать желаемый кошелек";
 
 // App Status
 
-"app_status.title" = "App Status";
-"app_status.application_status" = "Application status";
-"app_status.linked_wallets" = "Linked Wallets";
-"app_status.version_history" = "Version History";
-"app_status.blockchain_status" = "Blockchain status";
+"app_status.title" = "Статус приложения";
+"app_status.application_status" = "Статус приложения";
+"app_status.linked_wallets" = "Связанные кошельки";
+"app_status.version_history" = "История версий";
+"app_status.blockchain_status" = "Статус блокчейна";
 
 // FAQ
 
@@ -1419,321 +1420,324 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Status Info
 
-"status_info.title" = "Status";
-"status_info.pending.title" = "Pending";
-"status_info.pending.content" = "Your transaction? It's like waiting for an applause at one of my rallies - coming but not here yet. If you paid a good fee, it'll be there in a jiffy. But if you went low-ball, might take longer - days even! And it could be shown the exit door. Remember, updates on the %@ wallet might lag a tad.";
-"status_info.processing.title" = "Getting Things Done";
-"status_info.processing.content" = "Your transaction? It's in the blockchain but not set in stone. For small deals, you can consider it done. But for the big league stuff, you might wanna hold your horses till it's totally completed.";
-"status_info.completed.title" = "Victory!";
-"status_info.confirmed.content" = "It's a done deal! That transaction? Set in stone and it's not going back.";
-"status_info.failed.title" = "Oops!";
-"status_info.failed.content" = "Didn't work out this time - like trying to get a Democrat to agree with me! Some slip-ups might still cost you fees. If another transaction nudged yours out or if it was canceled, no fees, but still an 'Oops'. The %@ app can't tell you why it failed, but you can play detective on block explorers like etherscan.io.";
+"status_info.title" = "Статус";
+"status_info.pending.title" = "В обработке";
+"status_info.pending.content" = "Транзакция еще не подтверждена в блокчейне. Транзакции, отправленные с рекомендованной или более высокой комиссией, обычно обрабатываются в течение  минут. Транзакции, отправленные с низкой комиссией, могут обрабатываться в течение нескольких часов или дней и даже отклоняться. Учтите, что обновление статуса каждой транзакции, отображаемого в интерфейсе кошелька %@, обычно происходит с небольшой задержкой. ";
+"status_info.processing.title" = "В процессе";
+"status_info.processing.content" = "Транзакция уже включена в блокчейн, но пока не обработана. На данном этапе транзакции считаются завершенными для небольших платежей. Что касается завершения обработки более крупных транзакций, стоит дождаться смены статуса.";
+"status_info.completed.title" = "Завершено";
+"status_info.confirmed.content" = "Транзакция завершена и считается постоянной и необратимой.";
+"status_info.failed.title" = "Не удалось";
+"status_info.failed.content" = "Транзакция не была обработана и передача средств не произошла. В зависимости от причины неудачи, некоторые неудачные транзакции могут использовать комиссию за транзакцию. Транзакции, которые были заменены или отменены другой транзакцией, не потребляют транзакционные сборы и также будут показаны как \"не удалось\". Приложение %@ не может показать причину неудачных транзакций, но пользователи могут посмотреть это в etherscan.io.";
 
 // Onboarding
 
-"onboarding.balance.create" = "New Wallet";
-"onboarding.balance.import" = "Import Wallet";
-"onboarding.balance.watch" = "Watch Wallet";
+"onboarding.balance.create" = "Новый кошелек";
+"onboarding.balance.import" = "Импорт кошелька";
+"onboarding.balance.watch" = "Просмотр кошелька";
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ words";
-"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+"manage_accounts.n_words" = "%@ слов";
+"manage_accounts.n_words_with_passphrase" = "%@ слов с кодовой фразой";
 
 // Manage Account
 
-"manage_account.name" = "Name";
-"manage_account.recovery_phrase" = "Recovery Phrase";
-"manage_account.public_keys" = "Public Keys";
-"manage_account.private_keys" = "Private Keys";
-"manage_account.backup_recovery_phrase" = "Manual Backup";
-"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
-"manage_account.manual_backup_required" = "You Need a Personal Backup!";
-"manage_account.manual_backup_required.description" = "Before you throw out the iCloud backup, be smart and write down your recovery phrase. It's like insurance for your wallet!";
-"manage_account.manual_backup_required.button" = "Do the Backup!";
-"manage_account.unlink" = "Cut Ties with Wallet";
-"manage_account.backup.no_backup_yet_description" = "Want to use the wallet? First, pick a way to back it up, just like you'd have a backup plan for a business deal.";
-"manage_account.backup.has_backup_description" = "Always have a personal backup for each wallet. It's just good sense!";
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+"manage_account.name" = "Название";
+"manage_account.recovery_phrase" = "Фраза восстановления";
+"manage_account.public_keys" = "Публичные ключи";
+"manage_account.private_keys" = "Приватные ключи";
+"manage_account.backup_recovery_phrase" = "Ручное резервное копирование";
+"manage_account.cloud_backup_recovery_phrase" = "Резерв. копирование в iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резерв. копию из iCloud";
+"manage_account.manual_backup_required" = "Требуется резервное копирование вручную";
+"manage_account.manual_backup_required.description" = "Чтобы безопасно удалить резервную копию в iCloud, вам необходимо сначала сделать резервную копию фразы восстановления вручную.";
+"manage_account.manual_backup_required.button" = "Сделать резервную копию";
+"manage_account.unlink" = "Отключить кошелек";
+"manage_account.backup.no_backup_yet_description" = "Завершите одну из опций резервного копирования кошелька, чтобы начать использовать кошелек.";
+"manage_account.backup.has_backup_description" = "Рекомендуется создать ручную резервную копию для каждого кошелька.";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Вы уверены, что хотите удалить резервную копию кошелька из iCloud?";
 // Manage Account -> Public Keys
 
-"public_keys.title" = "Public Keys";
-"public_keys.evm_address" = "EVM Address";
-"public_keys.evm_address.description" = "With this, you can peek (just peek!) at wallets on Ethereum, Binance Smart Chain, and those other EVM blockchains. Only the best blockchains!";
-"public_keys.account_extended_public_key" = "The Ultra Public Key for Accounts";
-"public_keys.account_extended_public_key.description" = "This lets you have a little sneak peek (read-only, of course!) at wallets holding the big ones like Bitcoin, and the others like Litecoin, Bitcoin Cash, Dash, and more. It's huge!";
+"public_keys.title" = "Публичные ключи";
+"public_keys.evm_address" = "EVM адрес";
+"public_keys.evm_address.description" = "Позволяет отслеживать кошельки с активами на Ethereum, Binance Smart Chain и других блокчейнах на базе EVM, только для чтения.";
+"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key.description" = "Позволяет осуществлять мониторинг кошельков, содержащих Bitcoin и другие криптовалюты на основе UTXO (например, Litecoin, Bitcoin Cash, Dash и т.д.), только для чтения.";
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Private Keys";
-"private_keys.evm_private_key" = "EVM Private Key";
-"private_keys.evm_private_key.description" = "You've got the golden key! Total power over EVM cryptos like Ethereum and Binance Smart Chain in the wallet. It's like owning the Trump Tower of crypto!";
-"private_keys.bip32_root_key" = "The Ultimate BIP32 Key";
-"private_keys.bip32_root_key.description" = "This key? It's yuge! Complete command over everything in the wallet. It's the Art of the Deal of keys!";
-"private_keys.account_extended_private_key" = "The Super Private Key for Accounts";
-"private_keys.account_extended_private_key.description" = "With this, you're the boss of Bitcoin and those other coins like Litecoin, Bitcoin Cash, Dash, and more in the wallet. It's like being the president of cryptos!";
+"private_keys.title" = "Приватные ключи";
+"private_keys.evm_private_key" = "Приватный Ключ EVM";
+"private_keys.evm_private_key.description" = "Предоставляет полный контроль над криптовалютами на базе EVM, т.е. Ethereum, Binance Smart Chain и т.д. в пределах соответствующего кошелька.";
+"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key.description" = "Предоставляет полный контроль над активами на соответствующем кошельке.";
+"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key.description" = "Предоставляет полный контроль над Bitcoin и другими криптовалютами на базе UTXO, такими как Litecoin, Bitcoin Cash, Dash и т.д. в пределах соответствующего кошелька.";
 
 // Manage Account -> EVM Address
 
-"evm_address.title" = "EVM Address";
+"evm_address.title" = "EVM адрес";
 
 // Birthday Height
 
-"birthday_height.title" = "Birthday Height";
+"birthday_height.title" = "Блок создания";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
-"birthday_input.new_wallet" = "New Wallet";
-"birthday_input.new_wallet.description" = "Doesn't have any transactions";
-"birthday_input.old_wallet" = "Existing Wallet";
-"birthday_input.old_wallet.description" = "Has transactions";
-"birthday_input.input_placeholder" = "%@ (optional)";
+"birthday_input.title" = "Блок создания";
+"birthday_input.description" = "Введите блок создания кошелька для ускорения синхронизации.";
+"birthday_input.new_wallet" = "Новый кошелек";
+"birthday_input.new_wallet.description" = "Нет транзакций";
+"birthday_input.old_wallet" = "Существующий кошелек";
+"birthday_input.old_wallet.description" = "Есть транзакции";
+"birthday_input.input_placeholder" = "%@ (опционально)";
 
-"restore_setting.birthday_height" = "%@ Birthday Height";
-"restore_setting.download.disclaimer" = "The initial synchronization with the blockchain can consume a lot of internet traffic.";
+"restore_setting.birthday_height" = "%@ Блок создания";
+"restore_setting.download.disclaimer" = "Первоначальная синхронизация с блокчейном может потреблять много интернет-трафика.";
 
 // EVM Network
 
-"evm_network.rpc_source" = "RPC Source";
-"evm_network.added" = "Added";
-"evm_network.add_new" = "Add New";
+"evm_network.rpc_source" = "Источник RPC";
+"evm_network.added" = "Добавлен";
+"evm_network.add_new" = "Добавить новый";
 
 // Add RPC Source
 
-"add_evm_sync_source.title" = "Add RPC Source";
-"add_evm_sync_source.name" = "Name";
+"add_evm_sync_source.title" = "Добавить источник RPC";
+"add_evm_sync_source.name" = "Название";
 "add_evm_sync_source.rpc_url" = "RPC URL";
-"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
-"add_evm_sync_source.warning.url_exists" = "This RPC Source URL? It's already in the club. No duplicates, folks!";
-"add_evm_sync_source.error.invalid_url" = "The URL you punched in? Not good! Make sure it starts with https or wss, otherwise it's a no-go. It's basic URL etiquette!";
+"add_evm_sync_source.basic_auth" = "Базовая авторизация (опц.)";
+"add_evm_sync_source.warning.url_exists" = "RPC Источник с таким url уже существует";
+"add_evm_sync_source.error.invalid_url" = "Введенный url неверен. Допустимый url должен иметь одну из следующих схем: http, https, ws, wss";
+
 // Send Settings
 
-"evm_send_settings.nonce" = "Transaction Nonce";
-"evm_send_settings.nonce.info" = "The nonce? Think of it as a unique badge number for your transactions. Usually, it goes up one by one, like my ratings! But hey, if you're a smart cookie, you can use it to swap out a slow transaction with a faster one. Just make sure you're willing to pay top dollar in fees. Because, remember, if two transactions have the same badge number, only the one that's willing to tip the most gets the VIP treatment!";"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
+"evm_send_settings.nonce" = "Nonce транзакции";
+"evm_send_settings.nonce.info" = "Nonce - это уникальное целочисленное значение для транзакции в кошельке пользователя. Обычно оно увеличивается с каждой транзакцией и не нуждается в изменении. Продвинутые пользователи могут установить его равным nonce отложенной транзакции, чтобы отменить и заменить эту транзакцию, при условии, что новая транзакция имеет достаточно большую плату, чтобы старая не была подтверждена вместо нее (например, они могут захотеть ускорить ее подтверждение или полностью изменить параметры транзакции). Когда несколько ожидающих транзакций имеют одинаковый nonce, подтверждается только одна, обычно с наибольшей комиссией.
+";
+"evm_send_settings.nonce.errors.already_in_use" = "Использованый Nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
-"fee_settings" = "Advanced";
-"fee_settings.fee" = "Fee";
-"fee_settings.fee.info" = "Think of blockchains like a fancy club in Manhattan. When it's crowded, you gotta pay a premium to get in. So, when there's a lot of action on the network, fees go up. Big league!";
-"fee_settings.fee_rate" = "Fee Rate";
-"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
-"fee_settings.inputs_outputs" = "Inputs/Outputs";
-"fee_settings.transaction_settings" = "Transaction Settings";
-"fee_settings.transaction_settings.description" = "Want to move your Bitcoin with some mystery, like a billionaire in disguise? Tweak how the transactions are done, and you'll be harder to track!";
-"fee_settings.time_lock" = "Time Lock";
-"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
+"fee_settings" = "Доп. настройки";
+"fee_settings.fee" = "Комиссия";
+"fee_settings.fee.info" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Эти сборы выше, когда в сети происходит много транзакций.";
+"fee_settings.fee_rate" = "Комиссия";
+"fee_settings.fee_rate.description" = "Это рекомендуемое значение для попадания в следующие 2 блока";
+"fee_settings.inputs_outputs" = "Вводы/Выводы";
+"fee_settings.transaction_settings" = "Настройки транзакций";
+"fee_settings.transaction_settings.description" = "Затрудните отслеживание Биткойн-транзакций, изменив их структурирование.";
+"fee_settings.time_lock" = "TimeLock";
+"fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
+";
 
-"fee_settings.network_fee" = "Network Fee";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee" = "Комиссия сети";
+"fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "You know, transactions have their own kind of 'energy', and they call it 'gas'. Think of the Gas Limit as the biggest energy drink you'd need for a transaction. But usually, you'll sip less than what you think.";
+"fee_settings.gas_limit.info" = "Единица сложности транзакций - газ, она варьирует в зависимости от выполняемого смарт-контракта. Лимит газа - это предполагаемый максимальный размер газа, необходимый для выполнения смарт-контракта. Обычно используется меньшее количество газа.";
 
 "fee_settings.gas_price" = "Gas Price";
-"fee_settings.gas_price.info" = "So here's the deal: doing business on the network costs 'gas'. The Gas Price? It's like your bid at an auction - how much you're willing to drop for each gas unit. If the network's buzzing like one of my rallies, prices soar. When it's calm, they dip. And hey, if you're stingy on the gas price, don't be surprised if your transaction hangs around longer than expected!";
+"fee_settings.gas_price.info" = "Комиссия за сетевую транзакцию измеряется в единицах газа. Цена газа – это сумма, которую пользователь готов заплатить за единицу газа. Когда сеть занята, цены на газ повышаются, а во время простоя они наоборот снижаются. Слишком низкая цена газа зачастую является основанием для длительного сохранения отложенного статуса транзакции.";
 
-"fee_settings.base_fee" = "Base Fee";
-"fee_settings.base_fee.info" = "So, every block has a ticket price set by the big network – they call it the base fee rate. Think of it as a fluctuating stock; sometimes up, sometimes down, but never more than 12.5% change. This ticket price changes based on how packed the network is. The number you're seeing? That's the current rate. Very transparent!";
-"fee_settings.max_fee_rate" = "Max Fee Rate";
-"fee_settings.max_fee_rate.info" = "This is your ceiling - the max you're willing to spend per gas unit. It's gotta cover the basic fee and the special priority fee. The number here? It's a clever estimate, but usually, you'll end up spending less. Cut corners on this and you might be waiting a long time, or even get your transaction stuck in limbo!";
-"fee_settings.tips" = "Max Priority Fee";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.base_fee" = "Базовая комиссия";
+"fee_settings.base_fee.info" = "Сетевой протокол определяет базовую стоимость газа для каждого блока, которая называется базовая ставка комиссии. Он варьирует в зависимости от уровня загрузки сети от блока к блоку. В следующем блоке он может увеличиться или уменьшиться не более чем на 12.5%, что делает взимаемый тариф более предсказуемым. Здесь отражена базовая ставка комиссии текущего блока.";
+"fee_settings.max_fee_rate" = "Макс. ставка комиссии";
+"fee_settings.max_fee_rate.info" = "Это максимальная общая цена газа, которую пользователь готов заплатить. Она должна покрывать базовую тарифную ставку сети и максимальный приоритетный тариф. Указанное здесь значение предлагается на основе оценки суммы базовой тарифной ставки следующего блока и максимального приоритетного тарифа, выбранного пользователем. Фактический размер платёжного тарифа обычно меньше. Снижение настройки текущего базового тарифа ограничит оплачиваемую сумму тарифа, но приведет к удлинению периода ожидания подтверждения транзакции или даже к ее подвисанию.";
+"fee_settings.tips" = "Макс. приоритет. комиссия";
+"fee_settings.tips.info" = "Пользователи платят приоритетную комиссию, в целях ускорения процесса подтверждения транзакции. Иногда эти тарифы называются чаевыми. Максимальный размер приоритетного сбора - это максимальная дополнительная цена за газ, которую пользователь готов оплатить поверх базовой ставки комиссии. Приведенная здесь стоимость определяется исходя из прогнозируемых сетевых условий. Фактический размер приоритетного тарифа будет меньше. Обнуление этого тарифа может привести к удлинению периода ожидания подтверждения транзакции ввиду её размещения в конце очереди незавершенных транзакций ото всех пользователей.";
 
-
-"fee_settings.errors.insufficient_balance" = "Insufficient balance";
-"fee_settings.errors.unexpected_error" = "Unexpected Error";
-"fee_settings.errors.insufficient_balance.info" = "Listen, your %@ stash is looking a bit thin for this transaction, especially when we throw in the fee.";
-"fee_settings.errors.low_max_fee" = "Low Fee";
-"fee_settings.errors.low_max_fee.info" = "That fee you set? Way too low for the big league transaction you're trying to do!";
-"fee_settings.errors.nonce_already_in_block" = "Too late, already made the move!";
-"fee_settings.errors.replacement_transaction_underpriced" = "Trying to switch things up? Your fee's still too skimpy!";
-"fee_settings.errors.transaction_underpriced" = "That's a bargain-bin fee!";
-"fee_settings.errors.tips_higher_than_max_fee" = "Your max fee? It's not gonna cut it!";
-"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
-"fee_settings.warning.risk_of_getting_stuck.info" = "This might take a while... or, who knows, might not even happen at all!";
-"fee_settings.warning.overpricing" = "Fee Too High";
-"fee_settings.warning.overpricing.info" = "Your fee is looking more lavish than Mar-a-Lago! Way more than what you need for this.";
+"fee_settings.errors.insufficient_balance" = "Недостаточный баланс";
+"fee_settings.errors.unexpected_error" = "Непредвиденная ошибка";
+"fee_settings.errors.insufficient_balance.info" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
+"fee_settings.errors.low_max_fee" = "Низкая комиссия";
+"fee_settings.errors.low_max_fee.info" = "Установленная сумма комиссии недостаточно для обработки этой транзакции.";
+"fee_settings.errors.nonce_already_in_block" = "Не удается заменить транзакцию";
+"fee_settings.errors.replacement_transaction_underpriced" = "Низкая комиссия на замену транзакции";
+"fee_settings.errors.transaction_underpriced" = "Низкая комиссия за транзакцию";
+"fee_settings.errors.tips_higher_than_max_fee" = "Слишком низкая макс. комиссия";
+"fee_settings.errors.zero_amount.info" = "Невозможно отправить 0 TRX";
+"fee_settings.warning.risk_of_getting_stuck" = "Риски";
+"fee_settings.warning.risk_of_getting_stuck.info" = "Обработка транзакции может отложиться на некоторое время, или транзакцию могут полностью отклонить.";
+"fee_settings.warning.overpricing" = "Слишком высокая комиссия";
+"fee_settings.warning.overpricing.info" = "Установленная комиссия за транзакцию больше чем требуется для обработки этой транзакции.";
 
 // Watch Address
 
-"watch_address.title" = "Watch Wallet";
-"watch_address.watch" = "Next";
-"watch_address.address" = "Address";
-"watch_address.by" = "By";
-"watch_address.watch_by" = "Watch By";
-"watch_address.evm_address" = "EVM Address";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.title" = "Просмотр кошелька";
+"watch_address.watch" = "Далее";
+"watch_address.address" = "Адрес";
+"watch_address.by" = "Из";
+"watch_address.watch_by" = "Смотреть из";
+"watch_address.evm_address" = "EVM адрес";
+"watch_address.tron_address" = "TRON адрес";
 "watch_address.public_key" = "Account xPubKey";
-"watch_address.public_key.placeholder" = "Enter Account Extended Public Key ";
-"watch_address.public_key.invalid_key" = "Invalid Key";
-"watch_address.choose_blockchain" = "Choose Blockchain";
-"watch_address.choose_coin" = "Choose Coin";
+"watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
+"watch_address.public_key.invalid_key" = "Неверный ключ";
+"watch_address.choose_blockchain" = "Выбрать блокчейн";
+"watch_address.choose_coin" = "Выберите токен";
 
 // Nft Collections
 
-"nft_collections.title" = "NFTs";
-"nft_collections.price_mode" = "Price Mode";
-"nft_collections.last_sale" = "Last Sale";
-"nft_collections.average_7d" = "Average 7D";
-"nft_collections.average_30d" = "Average 30D";
-"nft_collections.on_sale" = "On Sale";
-"nft_collections.empty" = "You don’t have any NFTs in your wallet";
+"nft_collections.title" = "NFT";
+"nft_collections.price_mode" = "Режим цены";
+"nft_collections.last_sale" = "Последняя продажа";
+"nft_collections.average_7d" = "Средн. 7Д";
+"nft_collections.average_30d" = "Средн. 30Д";
+"nft_collections.on_sale" = "В продаже";
+"nft_collections.empty" = "В вашем кошельке нет NFT";
 
-"top_nft_collections.title" = "Top NFT Collections";
-"top_nft_collections.description" = "Leading NFT collections by trading volume.";
+"top_nft_collections.title" = "Топ NFT коллекции";
+"top_nft_collections.description" = "Ведущие коллекции NFT по объему торгов.";
 
 // Nft Asset
 
-"nft_asset.tab.overview" = "Overview";
-"nft_asset.tab.activity" = "Activity";
+"nft_asset.tab.overview" = "Обзор";
+"nft_asset.tab.activity" = "Активность";
 
-"nft_asset.last_sale" = "Last Sale";
-"nft_asset.average_7d" = "7 Day Average";
-"nft_asset.average_30d" = "30 Day Average";
-"nft_asset.floor_price" = "Floor Price";
-"nft_asset.on_sale" = "On Sale";
-"nft_asset.on_auction" = "On Auction";
-"nft_asset.until_date" = "until %@";
-"nft_asset.buy_now" = "Buy Now";
-"nft_asset.minimum_bid" = "Minimum Bid";
-"nft_asset.best_offer" = "Best Offer";
-"nft_asset.properties" = "Properties";
-"nft_asset.description" = "Description";
-"nft_asset.details" = "Details";
-"nft_asset.details.contract_address" = "Contract Address";
-"nft_asset.details.token_id" = "Token ID";
-"nft_asset.details.token_standard" = "Token Standard";
+"nft_asset.last_sale" = "Последняя продажа";
+"nft_asset.average_7d" = "Среднее за 7 дней";
+"nft_asset.average_30d" = "Среднее за 30 дней";
+"nft_asset.floor_price" = "Минимальная цена";
+"nft_asset.on_sale" = "В продаже";
+"nft_asset.on_auction" = "На аукционе";
+"nft_asset.until_date" = "до %@";
+"nft_asset.buy_now" = "Купить сейчас";
+"nft_asset.minimum_bid" = "Мин. cтавка";
+"nft_asset.best_offer" = "Лучшее предложение";
+"nft_asset.properties" = "Параметры";
+"nft_asset.description" = "Описание";
+"nft_asset.details" = "Подробности";
+"nft_asset.details.contract_address" = "Адрес контракта";
+"nft_asset.details.token_id" = "ID токена";
+"nft_asset.details.token_standard" = "Стандартный токен";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
-"nft_asset.links.website" = "Website";
-"nft_asset.options.save_to_photos" = "Save to Photos";
-"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
-"nft_asset.save_to_photos.failed" = "Failed to save NFT image";
+"nft_asset.links" = "Ссылки";
+"nft_asset.links.website" = "Веб-сайт";
+"nft_asset.options.save_to_photos" = "Сохранить в фото";
+"nft_asset.options.set_as_watch_face" = "Установить как Watch Face";
+"nft_asset.save_to_photos.failed" = "Не удалось сохранить NFT-изображение";
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
-"nft_collection.tab.assets" = "Items";
-"nft_collection.tab.activity" = "Activity";
+"nft_collection.tab.overview" = "Обзор";
+"nft_collection.tab.assets" = "Элементы";
+"nft_collection.tab.activity" = "Активность";
 
-"nft_collection.overview.description" = "Description";
-"nft_collection.overview.contracts" = "Contracts";
-"nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.description" = "Описание";
+"nft_collection.overview.contracts" = "Контракты";
+"nft_collection.overview.links" = "Ссылки";
+"nft_collection.overview.links.website" = "Веб-сайт";
 
 
-"nft_collection.overview.owners" = "Owners";
-"nft_collection.overview.items" = "Items";
-"nft_collection.overview.24h_volume" = "24h Volume";
-"nft_collection.overview.today_sellers" = "Today's Sellers";
-"nft_collection.overview.floor_price" = "Floor Price";
-"nft_collection.overview.all_time_average" = "All time average";
-"nft_collection.overview.royalty" = "Royalty";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.owners" = "Владельцы";
+"nft_collection.overview.items" = "Элементы";
+"nft_collection.overview.24h_volume" = "Объем торгов (24ч)";
+"nft_collection.overview.today_sellers" = "Продавцы сегодня";
+"nft_collection.overview.floor_price" = "Минимальная цена";
+"nft_collection.overview.all_time_average" = "Среднее за все время";
+"nft_collection.overview.royalty" = "Вознаграждение";
+"nft_collection.overview.inception_date" = "Дата старта";
 
-"nft.activity.contracts" = "Contracts";
-"nft.activity.empty_list" = "No item activity yet";
-"nft.activity.event_types" = "Event Types";
-"nft.activity.event_type.all" = "All Events";
-"nft.activity.event_type.sale" = "Sale";
-"nft.activity.event_type.transfer" = "Transfer";
-"nft.activity.event_type.mint" = "Mint";
-"nft.activity.event_type.list" = "List";
-"nft.activity.event_type.listCancel" = "List Cancel";
-"nft.activity.event_type.offer" = "Offer";
-"nft.activity.event_type.offerCancel" = "Offer Cancel";
+"nft.activity.contracts" = "Контракты";
+"nft.activity.empty_list" = "Нет активности";
+"nft.activity.event_types" = "Типы событий";
+"nft.activity.event_type.all" = "Все события";
+"nft.activity.event_type.sale" = "Продажа";
+"nft.activity.event_type.transfer" = "Перевод";
+"nft.activity.event_type.mint" = "Минт";
+"nft.activity.event_type.list" = "Залистить";
+"nft.activity.event_type.listCancel" = "Убрать из листинга";
+"nft.activity.event_type.offer" = "Предложение";
+"nft.activity.event_type.offerCancel" = "Предложение отменено";
 
 // Subscription Info
 
-"subscription_info.title" = "Premium Features";
-"subscription_info.info1.title" = "Cryptocurrency Analytics";
-"subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info2.title" = "Chart Indicators";
-"subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info3.title" = "Personal Support";
-"subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.get_premium" = "Get Premium";
-"subscription_info.already_have" = "I already have Premium";
+"subscription_info.title" = "Премиум-функции";
+"subscription_info.info1.title" = "Анализ криптовалют";
+"subscription_info.info1.text" = "Найдите выгодные возможности, избегайте мошенничества и максимизируйте свою прибыль в динамичном мире криптовалют.";
+"subscription_info.info2.title" = "Индикаторы";
+"subscription_info.info2.text" = "Найдите выгодные возможности, избегайте мошенничества и максимизируйте свою прибыль в динамичном мире криптовалют.";
+"subscription_info.info3.title" = "Персональная поддержка";
+"subscription_info.info3.text" = "Найдите выгодные возможности, избегайте мошенничества и максимизируйте свою прибыль в динамичном мире криптовалют.";
+"subscription_info.get_premium" = "Получите Премиум";
+"subscription_info.already_have" = "У меня уже есть Премиум";
 
 // Activate Subscription
 
-"activate_subscription.title" = "Activate";
-"activate_subscription.wallet" = "Wallet";
-"activate_subscription.address" = "Address";
-"activate_subscription.message" = "Message to Sign";
-"activate_subscription.sign" = "Sign";
-"activate_subscription.activating" = "Activating...";
-"activate_subscription.failed_to_activate" = "Failed to activate subscription";
-"activate_subscription.activated" = "Activated";
-"activate_subscription.no_subscriptions" = "Your wallet address does not have a subscription to premium features, you need to purchase it to activate the subscription.";
+"activate_subscription.title" = "Активировать";
+"activate_subscription.wallet" = "Кошелек";
+"activate_subscription.address" = "Адрес";
+"activate_subscription.message" = "Сообщение для подписи";
+"activate_subscription.sign" = "Подписать";
+"activate_subscription.activating" = "Активация...";
+"activate_subscription.failed_to_activate" = "Не удалось активировать подписку";
+"activate_subscription.activated" = "Активировано";
+"activate_subscription.no_subscriptions" = "Адрес вашего кошелька не имеет подписки на премиум-функции. Вам нужно его приобрести, чтобы активировать подписку.";
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
-"launch.failed_to_launch.report" = "Report";
+"launch.failed_to_launch" = "Не удалось запустить приложение из-за внутренней ошибки. Пожалуйста, попробуйте перезапустить приложение или сообщите об ошибке нашей службе поддержки.";
+"launch.failed_to_launch.report" = "Пожаловаться";
 
 // Tron
 
-"tron.send.activation_fee" = "Activation Fee";
-"tron.send.resources_consumed" = "Resources Consumed";
+"tron.send.activation_fee" = "Комиссия за активацию";
+"tron.send.resources_consumed" = "Расходуемые ресурсы";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "Think of this as the ticket price for your transaction's grand premiere on the network. And remember, this includes the full experience – the Energy, Bandwidth, and that special Activation fee!";
-"tron.send.resources_consumed.info" = "Picture Bandwidth as the amount of space your transaction takes up in the blockchain’s exclusive club.\n\nNow, Energy? That's the juice that powers the behind-the-scenes magic, especially when the TRON virtual machine starts performing its signature moves.\n\nWhen you call on a smart contract to dazzle with its performance, it needs a bit of Energy to shine. Hence, the energy fee!";
-"tron.send.activation_fee.info" = "Sending some TRX or TRC-10 tokens to a dormant address? Consider it your magic touch to awaken and activate that account!";
-"tron.send.inactive_address" = "Psst... this address is still in slumber mode.";
+"tron.send.fee.info" = "Ориентировочные затраты на отправку данной транзакции по сети (без учёта energy, Bandwidth и комиссии за активацию) предполагаются";
+"tron.send.resources_consumed.info" = "Bandwidth - это единица, которая измеряет размер байт транзакции, хранящихся в базе данных блокчейна. Чем больше транзакция, тем больше bandwidth будет потребляться.\n\nEnergy — это единица, измеряющая количество вычислений, требуемых виртуальной машиной TRON для выполнения конкретных операций в сети TRON.\n\nПоскольку транзакции смарт-контракта требуют выполнения вычислительных ресурсов, каждая сделка по контракту требует оплаты energy комиссии.";
+"tron.send.activation_fee.info" = "Передача токенов TRX или TRC-10 на адрес неактивного аккаунта активирует его.";
+"tron.send.inactive_address" = "Этот адрес не активен";
 
 // Cex Coin Select
 
-"cex_coin_select.title" = "Choose Coin";
-"cex_coin_select.withdraw" = "Withdraw";
-"cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
-"cex_coin_select.search_placeholder" = "Coin Code or Name";
-"cex_coin_select.suspended" = "Suspended";
+"cex_coin_select.title" = "Выберите токен";
+"cex_coin_select.withdraw" = "Вывод средств";
+"cex_coin_select.withdraw.empty" = "У вас нет активов для вывода.";
+"cex_coin_select.search_placeholder" = "Код или имя";
+"cex_coin_select.suspended" = "Приостановлено";
 
 // Cex Deposit Network Select
 
-"cex_deposit_network_select.title" = "Choose Network";
-"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+"cex_deposit_network_select.title" = "Выберите сеть";
+"cex_deposit_network_select.description" = "Выберите сеть и получите адрес для пополнения.";
 
 // Cex Deposit
 
-"cex_deposit.title" = "Deposit %@";
-"cex_deposit.address" = "Address";
+"cex_deposit.title" = "Депозит %@";
+"cex_deposit.address" = "Адрес";
 
-"cex_deposit.network" = "Network";
+"cex_deposit.network" = "Сеть";
 "cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "Min. Amount";
-"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
-"cex_deposit.copy_address" = "Copy";
-"cex_deposit.share_address" = "Share";
-"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
-"cex_deposit.memo_warning.title" = "Important";
-"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+"cex_deposit.min_amount" = "Мин. сумма";
+"cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
+"cex_deposit.copy_address" = "Копировать";
+"cex_deposit.share_address" = "Поделиться";
+"cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
+"cex_deposit.memo_warning.title" = "Важно";
+"cex_deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Network";
-"cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
-"cex_withdraw.fee" = "Fee";
-"cex_withdraw.fee_from_amount" = "Fee from amount";
-"cex_withdraw.error.insufficient_funds" = "Not enough available balance";
-"cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
-"cex_withdraw.error.min_amount_violated" = "The minimum amount you can withdraw is %@";
-"cex_withdraw.address_required" = "Address is required";
+"cex_withdraw.network" = "Сеть";
+"cex_withdraw.network_warning" = "Убедитесь, что сеть совпадает с адресом снятия, а платформа депозита поддерживает его, или активы могут быть потеряны.";
+"cex_withdraw.fee" = "Комиссия";
+"cex_withdraw.fee_from_amount" = "Комиссия от суммы";
+"cex_withdraw.error.insufficient_funds" = "Недостаточно доступных средств";
+"cex_withdraw.error.max_amount_violated" = "Макс.сумма вывода: %@";
+"cex_withdraw.error.min_amount_violated" = "Мин. сумма, которую вы можете вывести - %@";
+"cex_withdraw.address_required" = "Адрес обязателен";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Network";
-"cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
+"cex_withdraw_network_select.title" = "Сеть";
+"cex_withdraw_network_select.description" = "Убедитесь, что сеть совпадает с адресом снятия и платформа депозита поддерживает его.";
 
 // Cex Withdraw Confirm
 
-"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
-"cex_withdraw_confirm.network" = "Network";
-"cex_withdraw_confirm.withdraw" = "Withdraw";
-"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
+"cex_withdraw_confirm.you_withdraw" = "Вывод средств";
+"cex_withdraw_confirm.network" = "Сеть";
+"cex_withdraw_confirm.withdraw" = "Вывод средств";
+"cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
