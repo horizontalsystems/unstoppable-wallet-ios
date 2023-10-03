@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 import ThemeKit
 import ComponentKit
 import SectionsTableView
@@ -146,3 +147,20 @@ extension BottomSheetModule {
     }
 
 }
+
+struct ViewWrapper: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let viewController: UIViewController
+
+    init(_ viewController: UIViewController) {
+        self.viewController = viewController
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        viewController
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
+}
+

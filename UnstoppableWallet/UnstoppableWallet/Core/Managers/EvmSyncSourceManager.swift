@@ -189,11 +189,17 @@ extension EvmSyncSourceManager {
         }
     }
 
-    func customSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
+    func customSyncSources(blockchainType: BlockchainType?) -> [EvmSyncSource] {
         do {
-            let records = try evmSyncSourceStorage.records(blockchainTypeUid: blockchainType.uid)
+            let records: [EvmSyncSourceRecord]
+            if let blockchainType {
+                records = try evmSyncSourceStorage.records(blockchainTypeUid: blockchainType.uid)
+            } else {
+                records = try evmSyncSourceStorage.getAll()
+            }
 
             return records.compactMap { record in
+                let blockchainType = BlockchainType(uid: record.blockchainTypeUid)
                 guard let url = URL(string: record.url), let scheme = url.scheme else {
                     return nil
                 }

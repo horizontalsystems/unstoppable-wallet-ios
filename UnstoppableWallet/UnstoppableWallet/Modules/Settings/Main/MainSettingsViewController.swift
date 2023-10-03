@@ -219,9 +219,20 @@ class MainSettingsViewController: ThemeViewController {
                     image: .local(UIImage(named: "blocks_24")),
                     title: .body("settings.blockchain_settings".localized),
                     accessoryType: .disclosure,
-                    isLast: true,
+                    isLast: false,
                     action: { [weak self] in
                         let viewController = BlockchainSettingsModule.view().toViewController(title: "blockchain_settings.title".localized)
+                        self?.navigationController?.pushViewController(viewController, animated: true)
+                    }
+            ),
+            tableView.universalRow48(
+                    id: "backup-manager",
+                    image: .local(UIImage(named: "icloud_24")),
+                    title: .body("settings.backup_manager".localized),
+                    accessoryType: .disclosure,
+                    isLast: true,
+                    action: { [weak self] in
+                        let viewController = BackupManagerModule.view().toViewController(title: "backup_manager.title".localized)
                         self?.navigationController?.pushViewController(viewController, animated: true)
                     }
             )

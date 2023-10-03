@@ -1,7 +1,30 @@
-import UIKit
+import SwiftUI
 import ThemeKit
 
-struct Caution {
+enum CautionState: Equatable {
+    case none
+    case caution(Caution)
+
+    var caution: Caution? {
+        switch self {
+        case let .caution(caution): return caution
+        default: return nil
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .none: return Color.clear
+        case let .caution(caution):
+            switch caution.type {
+            case .warning: return .themeJacob
+            case .error: return .themeLucian
+            }
+        }
+    }
+}
+
+struct Caution: Equatable {
     let text: String
     let type: CautionType
 }
@@ -24,13 +47,12 @@ enum CautionType: Equatable {
         }
     }
 
-    static func ==(lhs: CautionType, rhs: CautionType) -> Bool {
+    static func == (lhs: CautionType, rhs: CautionType) -> Bool {
         switch (lhs, rhs) {
         case (.error, .error), (.warning, .warning): return true
         default: return false
         }
     }
-
 }
 
 class TitledCaution: Equatable {
@@ -44,12 +66,11 @@ class TitledCaution: Equatable {
         self.type = type
     }
 
-    static func ==(lhs: TitledCaution, rhs: TitledCaution) -> Bool {
+    static func == (lhs: TitledCaution, rhs: TitledCaution) -> Bool {
         lhs.title == rhs.title &&
-        lhs.text == rhs.text &&
-        lhs.type == rhs.type
+                lhs.text == rhs.text &&
+                lhs.type == rhs.type
     }
-
 }
 
 class CancellableTitledCaution: TitledCaution {
@@ -60,5 +81,4 @@ class CancellableTitledCaution: TitledCaution {
 
         super.init(title: title, text: text, type: type)
     }
-
 }

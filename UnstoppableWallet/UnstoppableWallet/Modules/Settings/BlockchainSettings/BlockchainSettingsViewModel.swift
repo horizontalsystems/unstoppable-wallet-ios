@@ -9,8 +9,8 @@ class BlockchainSettingsViewModel: ObservableObject {
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let disposeBag = DisposeBag()
 
-    @Published var btcItems: [BtcItem] = []
     @Published var evmItems: [EvmItem] = []
+    @Published var btcItems: [BtcItem] = []
 
     init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager) {
         self.btcBlockchainManager = btcBlockchainManager
