@@ -55,14 +55,16 @@ struct SecuritySettingsView: View {
                     }
                 }
 
-                ListSection {
-                    NavigationRow(destination: {
-                        AutoLockView(period: $viewModel.autoLockPeriod)
-                    }) {
-                        Image("lock_24").themeIcon()
-                        Text("settings_security.auto_lock".localized).themeBody()
-                        Text(viewModel.autoLockPeriod.title).themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8)
-                        Image.disclosureIcon
+                if viewModel.isPasscodeSet {
+                    ListSection {
+                        NavigationRow(destination: {
+                            AutoLockView(period: $viewModel.autoLockPeriod)
+                        }) {
+                            Image("lock_24").themeIcon()
+                            Text("settings_security.auto_lock".localized).themeBody()
+                            Text(viewModel.autoLockPeriod.title).themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8)
+                            Image.disclosureIcon
+                        }
                     }
                 }
 
