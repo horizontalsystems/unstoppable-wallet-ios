@@ -1,4 +1,5 @@
 import Combine
+import ComponentKit
 
 class CreateDuressPasscodeViewModel: SetPasscodeViewModel {
     private let accountIds: [String]
@@ -32,6 +33,7 @@ class CreateDuressPasscodeViewModel: SetPasscodeViewModel {
             }
 
             finishSubject.send()
+            HudHelper.instance.show(banner: .created)
         } catch {
             print("Create Duress Passcode Error: \(error)")
         }
