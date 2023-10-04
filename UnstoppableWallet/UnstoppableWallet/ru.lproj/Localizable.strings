@@ -1,21 +1,21 @@
-"button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.continue" = "Continue";
-"button.done" = "Done";
-"button.reset" = "Reset";
-"button.import" = "Import";
-"button.next" = "Next";
-"button.delete" = "Delete";
-"button.share" = "Share";
-"button.paste" = "Paste";
-"button.resend" = "Resend";
-"button.backup" = "Backup";
-"button.restore" = "Restore";
-"button.copy" = "Copy";
-"button.retry" = "Retry";
-"button.report" = "Report";
+"button.ok" = "ОК";
+"button.apply" = "Применить";
+"button.cancel" = "Отменить";
+"button.close" = "Закрыть";
+"button.continue" = "Продолжить";
+"button.done" = "Готово";
+"button.reset" = "Сбросить";
+"button.import" = "Импорт";
+"button.next" = "Далее";
+"button.delete" = "Удалить";
+"button.share" = "Поделиться";
+"button.paste" = "Вставить";
+"button.resend" = "Отправить повторно";
+"button.backup" = "Резервная копия";
+"button.restore" = "Восстановить";
+"button.copy" = "Копировать";
+"button.retry" = "Повторить";
+"button.report" = "Пожаловаться";
 "button.add" = "Add";
 "button.approve" = "Approve";
 "button.revoke" = "Revoke";
@@ -38,7 +38,7 @@
 "alert.warning" = "Warning";
 "alert.error" = "Error";
 "alert.unknown_error" = "Unknown Error";
-"alert.success_action" = "Done";
+"alert.success_action" = "Готово";
 "alert.success" = "Success";
 
 "alert.added_to_watchlist" = "Added to Watchlist";
@@ -243,7 +243,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "backup_prompt.title" = "Backup Bonanza";
 "backup_prompt.warning" = "You want to make a yuuuge backup of this recovery phrase, trust me. Don't lose out if your phone goes missing, or breaks!";
-"backup_prompt.backup" = "Backup";
+"backup_prompt.backup" = "Резервная копия";
 "backup_prompt.backup_manual" = "Backup Bonanza";
 "backup_prompt.backup_cloud" = "Backup to iCloud!";
 "backup_prompt.later" = "Not now, but don't wait too long!";
@@ -402,7 +402,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "send.duration.minutes" = "%d quick mins";
 "send.available_balance" = "What's in the kitty?";
 "send.max_button" = "Go Yuge!";
-"send.next_button" = "Next";
+"send.next_button" = "Далее";
 "send.error.invalid" = "No good!";
 "send.error.address" = "Prime Location";
 "send.hodler_locktime" = "Hold On!";
@@ -435,7 +435,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "send.confirmation.slide_to_send" = "Swipe to make it rain!";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.resend_description" = "Let's try ousting that old transaction with a bigger, better fee. Only the best one stays!";
-"send.confirmation.resend" = "Resend";
+"send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "We'll try sneaking a new zero-amount transaction past the old one. Only the top dog will make it!";
 "send.confirmation.cancel" = "Bail on it!";
 "send.confirmation.nonce" = "Secret Sauce";
@@ -489,7 +489,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "swap.you_get" = "The good stuff you get";
 "swap.token" = "Choose";
 "swap.advanced_settings" = "Big brain settings";
-"swap.proceed_button" = "Next";
+"swap.proceed_button" = "Далее";
 "swap.approve.title" = "Give the thumbs up!";
 "swap.approve.description" = "Time to grant permission! But don't worry, it doesn't touch your stash. Just a little fee, and you're golden!";
 "swap.approve.amount_error.already_approved" = "Been there, done that! You're set.";
@@ -661,7 +661,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "market.advanced_search.price_close_to_atl" = "Low, But Not For Long!";
 
 "market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reset";
+"market.advanced_search.reset_all" = "Сбросить";
 
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
@@ -1220,8 +1220,8 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Manage Keys
 
 "settings_manage_keys.title" = "Manage Wallets";
-"settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.delete" = "Удалить";
+"settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.delete.title" = "Ditch the Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "Heads up! This will kick the wallet off the device.";
 "settings_manage_keys.delete.confirmation_loose" = "Hey, if you haven't stashed the key for this wallet, you could be saying bye to your bucks.";
@@ -1311,7 +1311,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "contacts.contact.delete_alert.title" = "Delete Contact";
 "contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
-"contacts.contact.delete_alert.delete" = "Delete";
+"contacts.contact.delete_alert.delete" = "Удалить";
 
 "contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
 "contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
@@ -1319,7 +1319,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "contacts.add_address.delete_alert.title" = "Delete Address";
 "contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
-"contacts.add_address.delete_alert.delete" = "Delete";
+"contacts.add_address.delete_alert.delete" = "Удалить";
 
 // Contacts -> Settings
 
@@ -1649,7 +1649,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Watch Address
 
 "watch_address.title" = "Watch Wallet";
-"watch_address.watch" = "Next";
+"watch_address.watch" = "Далее";
 "watch_address.address" = "Prime Location";
 "watch_address.by" = "By";
 "watch_address.watch_by" = "Watch By";
@@ -1762,7 +1762,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Launch
 
 "launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
-"launch.failed_to_launch.report" = "Report";
+"launch.failed_to_launch.report" = "Пожаловаться";
 
 // Tron
 
@@ -1797,8 +1797,8 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
-"cex_deposit.copy_address" = "Copy";
-"cex_deposit.share_address" = "Share";
+"cex_deposit.copy_address" = "Копировать";
+"cex_deposit.share_address" = "Поделиться";
 "cex_deposit.failed" = "Failed to load deposit address. Please retry.";
 "cex_deposit.memo_warning.title" = "Important";
 "cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
