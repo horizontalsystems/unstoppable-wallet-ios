@@ -12,6 +12,7 @@
 "button.paste" = "Colar";
 "button.resend" = "Enviar novamente";
 "button.backup" = "Backup";
+"button.restore" = "Restore";
 "button.copy" = "Copiar";
 "button.retry" = "Tentar de Novo";
 "button.report" = "Reportar";
@@ -1011,6 +1012,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.tab_bar_item" = "Configurações";
 "settings.manage_accounts" = "Gerenciar carteiras";
 "settings.blockchain_settings" = "Configurações da Blockchain";
+"settings.backup_manager" = "Backup Manager";
 "settings.security" = "Segurança";
 "settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Suporte Pessoal";
@@ -1082,6 +1084,46 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Blockchain Settings
 
 "blockchain_settings.title" = "Configurações da Blockchain";
+
+// Settings -> Backup Manager
+
+"backup_manager.title" = "Backup Manager";
+"backup_manager.restore" = "Restore Backup";
+"backup_manager.create" = "Create New Backup";
+
+"backup_type.title" = "Backup Type";
+"backup_type.description" = "Select where you want to save the backup file.";
+"backup_type.cloud" = "Backup para o iCloud";
+"backup_type.file" = "Backup to Files";
+
+"backup_list.title" = "Backup File";
+"backup_list.description.restore" = "List of contents in the backup file.";
+"backup_list.header.wallets" = "Carteiras";
+"backup_list.header.other" = "Outros";
+"backup_list.other.watch_account.title" = "Ver Endereço";
+"backup_list.other.watch_account.description" = "Endereços: %d";
+"backup_list.other.watchlist.title" = "Lista de observação";
+"backup_list.other.watchlist.description" = "Coins: %d";
+"backup_list.other.contacts.title" = "Contatos";
+"backup_list.other.contacts.description" = "Endereços: %d";
+"backup_list.other.blockchain_settings.title" = "Configurações da Blockchain";
+"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_list.other.app_settings.title" = "App Settings";
+"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+
+"backup.disclaimer.cloud.title" = "Backup para o iCloud";
+"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.checkbox_label" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
+"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+
+"backup.name.title" = "Nome do Backup";
+"backup.name.description" = "Give it a name, folks! This backup file needs an identity. Make it memorable!";
+
+"backup.password.title" = "Fazer Backup da Senha";
+"backup.password.description" = "Here's the deal, folks: You've got to set an unlock password for your backup. It's gotta be strong, okay? We're talking at least 8 symbols, including one lowercase letter, one uppercase letter, a number, and a special character. It's your vault's first line of defense!";
+"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
 
