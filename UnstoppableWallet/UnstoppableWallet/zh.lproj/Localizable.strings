@@ -236,13 +236,10 @@
 "backup_verify_passphrase.description" = "输入密码";
 "backup_verify_passphrase.incorrect_passphrase" = "密码不正确";
 
-// Backup Required
-
-"backup_required.title" = "需要备份";
-
 // Backup Prompt
 
-"backup_prompt.title" = "进行手动备份";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "创建恢复短语和相关密码的备份副本，允许您在手机丢失时恢复钱包， • 盗窃、故障等问题";
 "backup_prompt.backup" = "备份";
 "backup_prompt.backup_manual" = "进行手动备份";
