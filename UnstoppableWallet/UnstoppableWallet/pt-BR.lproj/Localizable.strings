@@ -236,13 +236,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup_verify_passphrase.description" = "Insira a senha";
 "backup_verify_passphrase.incorrect_passphrase" = "Senha incorreta";
 
-// Backup Required
-
-"backup_required.title" = "Backup necessário";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Manual";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "Listen up, folks. You've got to create a backup of that recovery phrase and the password that goes with it. This is your lifeline, in case your phone decides to go rogue – lost, stolen, broken, you name it. Protect your assets, it's the smart play!";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.backup_manual" = "Backup Manual";
