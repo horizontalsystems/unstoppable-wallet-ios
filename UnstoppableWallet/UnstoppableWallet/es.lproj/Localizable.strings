@@ -236,13 +236,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_verify_passphrase.description" = "Introduzca su frase de contraseña";
 "backup_verify_passphrase.incorrect_passphrase" = "Contraseña incorrecta";
 
-// Backup Required
-
-"backup_required.title" = "Se requiere una copia de seg";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Copia de seguridad manual";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "Crear una copia de seguridad de la frase de recuperación y la contraseña asociada que le permitirá recuperar su cartera si su teléfono está perdido, robado, roto, etc.";
 "backup_prompt.backup" = "Copia de seguridad";
 "backup_prompt.backup_manual" = "Copia de seguridad manual";
