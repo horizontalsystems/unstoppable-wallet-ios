@@ -12,6 +12,7 @@
 "button.paste" = "Yapıştır";
 "button.resend" = "Yeniden Gönder";
 "button.backup" = "Yedekle";
+"button.restore" = "Restore";
 "button.copy" = "Kopyala";
 "button.retry" = "Yeniden Dene";
 "button.report" = "Şikayet Et";
@@ -1011,6 +1012,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.manage_accounts" = "Cüzdanları yönet";
 "settings.blockchain_settings" = "Blockchain Ayarları";
+"settings.backup_manager" = "Backup Manager";
 "settings.security" = "Güvenlik";
 "settings.experimental_features" = "Deneysel";
 "settings.personal_support" = "Personal Support";
@@ -1082,6 +1084,46 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> Blockchain Settings
 
 "blockchain_settings.title" = "Blockchain Ayarları";
+
+// Settings -> Backup Manager
+
+"backup_manager.title" = "Backup Manager";
+"backup_manager.restore" = "Restore Backup";
+"backup_manager.create" = "Create New Backup";
+
+"backup_type.title" = "Backup Type";
+"backup_type.description" = "Select where you want to save the backup file.";
+"backup_type.cloud" = "iCloud'a yedekle";
+"backup_type.file" = "Backup to Files";
+
+"backup_list.title" = "Backup File";
+"backup_list.description.restore" = "List of contents in the backup file.";
+"backup_list.header.wallets" = "Cüzdanlar";
+"backup_list.header.other" = "Diğer";
+"backup_list.other.watch_account.title" = "Cüzdan İzle";
+"backup_list.other.watch_account.description" = "Adresler: %d";
+"backup_list.other.watchlist.title" = "İzleme Listesi";
+"backup_list.other.watchlist.description" = "Coins: %d";
+"backup_list.other.contacts.title" = "Kişiler";
+"backup_list.other.contacts.description" = "Adresler: %d";
+"backup_list.other.blockchain_settings.title" = "Blockchain Ayarları";
+"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_list.other.app_settings.title" = "App Settings";
+"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+
+"backup.disclaimer.cloud.title" = "iCloud'a yedekle";
+"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.checkbox_label" = "iCloud'uma erişimi kaybetmenin, ilgili cüzdanın yedeğine erişimi kaybetmeyle sonuçlanacağını anlıyorum.";
+"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+
+"backup.name.title" = "Yedek Adı";
+"backup.name.description" = "Yedekleme dosyası için ad girin.";
+
+"backup.password.title" = "Yedek Şifre";
+"backup.password.description" = "Yedeklemeniz için kilit açma parolasını ayarlayın. En az 8 sembolden oluşmalı ve en az bir küçük harf, büyük harf, sayı ve özel karakter içermelidir.";
+"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
 
