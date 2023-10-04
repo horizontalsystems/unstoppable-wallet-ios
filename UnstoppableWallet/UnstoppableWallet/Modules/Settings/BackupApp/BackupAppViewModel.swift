@@ -85,6 +85,7 @@ class BackupAppViewModel: ObservableObject {
     @Published var passwordButtonDisabled = true
     @Published var passwordButtonProcessing = false
 
+    private var dismissSubject = PassthroughSubject<Void, Never>()
     @Published var sharePresented: URL?
 
     init(accountManager: AccountManager, contactManager: ContactBookManager, cloudBackupManager: CloudBackupManager, favoritesManager: FavoritesManager, evmSyncSourceManager: EvmSyncSourceManager) {
@@ -227,7 +228,7 @@ extension BackupAppViewModel {
 // Backup Name VieeModel
 extension BackupAppViewModel {
     var nextName: String {
-        let name = { (_: String) in [Self.backupNamePrefix, "1"].joined(separator: " ") }
+        let name = { [Self.backupNamePrefix, $0].joined(separator: " ") }
         switch destination {
         case .cloud:
             let exists = cloudBackupManager
@@ -249,7 +250,7 @@ extension BackupAppViewModel {
     func validateName() {
         if name.isEmpty {
             nameCautionState = .caution(.init(text: NameError.empty.localizedDescription, type: .error))
-        } else if (cloudBackupManager.existFilenames + [Self.backupNamePrefix + "2"]).contains(where: { $0.lowercased() == name.lowercased() }) {
+        } else if destination == .cloud, cloudBackupManager.existFilenames.contains(where: { $0.lowercased() == name.lowercased() }) {
             nameCautionState = .caution(.init(text: NameError.alreadyExist.localizedDescription, type: .error))
         } else {
             nameCautionState = .none
@@ -318,6 +319,7 @@ extension BackupAppViewModel {
                     try cloudBackupManager.save(fields: configuration, passphrase: password, name: name)
                     passwordButtonProcessing = false
                     await showSuccess()
+                    dismissSubject.send()
                 } catch {
                     passwordButtonProcessing = false
                     await show(error: error)
@@ -333,6 +335,12 @@ extension BackupAppViewModel {
                 }
             }
         }
+    }
+}
+
+extension BackupAppViewModel {
+    var dismissPublisher: AnyPublisher<Void, Never> {
+        dismissSubject.eraseToAnyPublisher()
     }
 }
 

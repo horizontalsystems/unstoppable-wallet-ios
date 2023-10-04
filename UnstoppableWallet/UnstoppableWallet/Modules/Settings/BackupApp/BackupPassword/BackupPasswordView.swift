@@ -1,6 +1,6 @@
+import ComponentKit
 import SwiftUI
 import ThemeKit
-import ComponentKit
 
 struct BackupPasswordView: View {
     @ObservedObject var viewModel: BackupAppViewModel
@@ -67,7 +67,7 @@ struct BackupPasswordView: View {
                 .animation(.default, value: viewModel.passwordButtonProcessing)
             }
             .sheet(item: $viewModel.sharePresented) { url in
-                let completion: UIActivityViewController.CompletionWithItemsHandler = { type, success, list, error in
+                let completion: UIActivityViewController.CompletionWithItemsHandler = { _, success, _, error in
                     if success {
                         showDone()
                         backupPresented = false
@@ -81,6 +81,9 @@ struct BackupPasswordView: View {
                 } else {
                     ActivityViewController(activityItems: [url], completionWithItemsHandler: completion)
                 }
+            }
+            .onReceive(viewModel.dismissPublisher) {
+                backupPresented = false
             }
             .navigationBarTitle("backup.password.title".localized)
             .navigationBarTitleDisplayMode(.inline)
