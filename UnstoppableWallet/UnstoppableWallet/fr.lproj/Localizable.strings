@@ -12,6 +12,7 @@
 "button.paste" = "Coller";
 "button.resend" = "Réenvoyer";
 "button.backup" = "Sauvegarde";
+"button.restore" = "Restore";
 "button.copy" = "Copier";
 "button.retry" = "Réessayer";
 "button.report" = "Signaler";
@@ -1011,6 +1012,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.tab_bar_item" = "Paramètres";
 "settings.manage_accounts" = "Gérer les portefeuilles";
 "settings.blockchain_settings" = "Paramètres de la Blockchain";
+"settings.backup_manager" = "Backup Manager";
 "settings.security" = "Centre de Sécurité";
 "settings.experimental_features" = "Expérimental";
 "settings.personal_support" = "Assistance Personnelle";
@@ -1082,6 +1084,46 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Settings -> Blockchain Settings
 
 "blockchain_settings.title" = "Paramètres de la Blockchain";
+
+// Settings -> Backup Manager
+
+"backup_manager.title" = "Backup Manager";
+"backup_manager.restore" = "Restore Backup";
+"backup_manager.create" = "Create New Backup";
+
+"backup_type.title" = "Backup Type";
+"backup_type.description" = "Select where you want to save the backup file.";
+"backup_type.cloud" = "Sauvegarder sur iCloud";
+"backup_type.file" = "Backup to Files";
+
+"backup_list.title" = "Backup File";
+"backup_list.description.restore" = "List of contents in the backup file.";
+"backup_list.header.wallets" = "Portefeuilles";
+"backup_list.header.other" = "Autre";
+"backup_list.other.watch_account.title" = "Regarder les portefeuilles";
+"backup_list.other.watch_account.description" = "Adresses : %d";
+"backup_list.other.watchlist.title" = "Liste de suivi";
+"backup_list.other.watchlist.description" = "Coins: %d";
+"backup_list.other.contacts.title" = "Contacts";
+"backup_list.other.contacts.description" = "Adresses : %d";
+"backup_list.other.blockchain_settings.title" = "Paramètres de la Blockchain";
+"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_list.other.app_settings.title" = "App Settings";
+"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+
+"backup.disclaimer.cloud.title" = "Sauvegarder sur iCloud";
+"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.checkbox_label" = "Je comprends que la perte d'accès à mon iCloud entraînera la perte d'accès à la sauvegarde du portefeuille correspondant.";
+"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+
+"backup.name.title" = "Nom de la sauvegarde";
+"backup.name.description" = "Entrez le nom du fichier de sauvegarde.";
+
+"backup.password.title" = "Mot de passe de la sauvegarde";
+"backup.password.description" = "Définissez le mot de passe de déverrouillage de votre sauvegarde. Il doit contenir au moins 8 symboles, y compris une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.";
+"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
 
