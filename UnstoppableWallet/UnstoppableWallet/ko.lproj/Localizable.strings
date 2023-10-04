@@ -234,13 +234,10 @@
 "backup_verify_passphrase.description" = "암호 문구 입력";
 "backup_verify_passphrase.incorrect_passphrase" = "잘못된 암호";
 
-// Backup Required
-
-"backup_required.title" = "백업이 필요합니다";
-
 // Backup Prompt
 
-"backup_prompt.title" = "수동으로 백업합니다";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "휴대전화 분실, 도난, 파손 등의 경우 지갑을 복구할 수 있도록 복구 문구 및 관련 비밀번호의 백업 사본을 만드십시오.";
 "backup_prompt.backup" = "백업";
 "backup_prompt.backup_manual" = "수동으로 백업합니다";
