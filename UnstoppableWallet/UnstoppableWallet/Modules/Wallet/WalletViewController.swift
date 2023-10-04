@@ -230,7 +230,7 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc func onTapCreate() {
-        let viewController = CreateAccountModule.viewController(sourceViewController: self)
+        let viewController = CreateAccountModule.viewController(sourceViewController: self, listener: self)
         present(viewController, animated: true)
     }
 
@@ -490,26 +490,10 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openBackupRequired(account: Account) {
-        let viewController = BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-            title: "backup_required.title".localized,
-            items: [
-                .highlightedDescription(text: "receive_alert.any_coins.not_backed_up_description".localized(account.name)),
-            ],
-            buttons: [
-                .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak self] in
-                    guard let viewController = BackupModule.manualViewController(account: account) else {
-                        return
-                    }
-
-                    self?.present(viewController, animated: true)
-                },
-                .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak self] in
-                    let viewController = BackupModule.cloudViewController(account: account)
-                    self?.present(viewController, animated: true)
-                },
-                .init(style: .transparent, title: "button.cancel".localized),
-            ]
+        let viewController = BottomSheetModule.backupRequiredPrompt(
+            description: "receive_alert.any_coins.not_backed_up_description".localized(account.name),
+            account: account,
+            sourceViewController: self
         )
 
         present(viewController, animated: true)
@@ -601,7 +585,7 @@ class WalletViewController: ThemeViewController {
             return
         }
 
-        let viewController = BottomSheetModule.backupPrompt(account: account, sourceViewController: self)
+        let viewController = BottomSheetModule.backupPromptAfterCreate(account: account, sourceViewController: self)
         present(viewController, animated: true)
     }
 }
