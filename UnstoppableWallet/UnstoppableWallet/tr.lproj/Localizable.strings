@@ -236,13 +236,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup_verify_passphrase.description" = "Parolayı girin";
 "backup_verify_passphrase.incorrect_passphrase" = "Yanlış parola";
 
-// Backup Required
-
-"backup_required.title" = "Yedekleme Gerekli";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Manuel Yedekleme";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdanınızı kurtarmanıza olanak sağlayacak kurtarma ifadesinin ve ilgili parolanın yedek bir kopyasını oluşturun.";
 "backup_prompt.backup" = "Yedekle";
 "backup_prompt.backup_manual" = "Manuel Yedekleme";
