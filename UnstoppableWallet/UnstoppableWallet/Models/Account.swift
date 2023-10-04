@@ -7,14 +7,16 @@ class Account: Identifiable {
     let type: AccountType
     let origin: AccountOrigin
     var backedUp: Bool
+    var fileBackedUp: Bool
 
-    init(id: String, level: Int, name: String, type: AccountType, origin: AccountOrigin, backedUp: Bool) {
+    init(id: String, level: Int, name: String, type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool) {
         self.id = id
         self.level = level
         self.name = name
         self.type = type
         self.origin = origin
         self.backedUp = backedUp
+        self.fileBackedUp = fileBackedUp
     }
 
     var watchAccount: Bool {

@@ -1,12 +1,12 @@
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class RestoreSelectService {
-
     private let accountName: String
     private let accountType: AccountType
     private let isManualBackedUp: Bool
+    private let isFileBackedUp: Bool
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
     private let walletManager: WalletManager
@@ -31,10 +31,11 @@ class RestoreSelectService {
         }
     }
 
-    init(accountName: String, accountType: AccountType, isManualBackedUp: Bool, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, blockchainTokensService: BlockchainTokensService, restoreSettingsService: RestoreSettingsService) {
+    init(accountName: String, accountType: AccountType, isManualBackedUp: Bool, isFileBackedUp: Bool, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, blockchainTokensService: BlockchainTokensService, restoreSettingsService: RestoreSettingsService) {
         self.accountName = accountName
         self.accountType = accountType
         self.isManualBackedUp = isManualBackedUp
+        self.isFileBackedUp = isFileBackedUp
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -83,9 +84,9 @@ class RestoreSelectService {
         let enabled = isEnabled(blockchain: blockchain)
 
         return Item(
-                blockchain: blockchain,
-                enabled: enabled,
-                hasSettings: enabled && hasSettings(blockchain: blockchain)
+            blockchain: blockchain,
+            enabled: enabled,
+            hasSettings: enabled && hasSettings(blockchain: blockchain)
         )
     }
 
@@ -132,11 +133,9 @@ class RestoreSelectService {
             cancelEnableBlockchainRelay.accept(blockchain.type)
         }
     }
-
 }
 
 extension RestoreSelectService {
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -192,7 +191,13 @@ extension RestoreSelectService {
     }
 
     func restore() {
-        let account = accountFactory.account(type: accountType, origin: .restored, backedUp: isManualBackedUp, name: accountName)
+        let account = accountFactory.account(
+            type: accountType,
+            origin: .restored,
+            backedUp: isManualBackedUp,
+            fileBackedUp: isFileBackedUp,
+            name: accountName
+        )
         accountManager.save(account: account)
 
         for (token, settings) in restoreSettingsMap {
@@ -210,15 +215,12 @@ extension RestoreSelectService {
         let wallets = enabledTokens.map { Wallet(token: $0, account: account) }
         walletManager.save(wallets: wallets)
     }
-
 }
 
 extension RestoreSelectService {
-
     struct Item {
         let blockchain: Blockchain
         let enabled: Bool
         let hasSettings: Bool
     }
-
 }

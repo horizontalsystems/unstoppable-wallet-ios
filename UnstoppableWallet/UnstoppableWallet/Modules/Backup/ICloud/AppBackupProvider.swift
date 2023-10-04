@@ -89,6 +89,7 @@ extension AppBackupProvider {
             accountType: account.type,
             wallets: wallets,
             isManualBackedUp: account.backedUp,
+            isFileBackedUp: account.fileBackedUp,
             name: account.name,
             passphrase: passphrase
         )
@@ -171,11 +172,18 @@ extension AppBackupProvider {
                 type: accountType,
                 origin: .restored,
                 backedUp: backup.walletBackup.isManualBackedUp,
+                fileBackedUp: backup.walletBackup.isFileBackedUp,
                 name: backup.name
             )
             accountManager.save(account: account)
         default:
-            let account = accountFactory.account(type: accountType, origin: .restored, backedUp: backup.walletBackup.isManualBackedUp, name: backup.name)
+            let account = accountFactory.account(
+                    type: accountType,
+                    origin: .restored,
+                    backedUp: backup.walletBackup.isManualBackedUp,
+                    fileBackedUp: backup.walletBackup.isFileBackedUp,
+                    name: backup.name
+            )
             accountManager.save(account: account)
 
             let wallets = backup.walletBackup.enabledWallets.map {
@@ -262,7 +270,7 @@ extension AppBackupProvider {
 }
 
 extension AppBackupProvider {
-    static func walletBackup(accountType: AccountType, wallets: [WalletBackup.EnabledWallet], isManualBackedUp: Bool, name: String, passphrase: String) throws -> RestoreCloudModule.RestoredBackup {
+    static func walletBackup(accountType: AccountType, wallets: [WalletBackup.EnabledWallet], isManualBackedUp: Bool, isFileBackedUp: Bool, name: String, passphrase: String) throws -> RestoreCloudModule.RestoredBackup {
         let message = accountType.uniqueId(hashed: false)
         let crypto = try BackupCrypto.instance(data: message, passphrase: passphrase)
 
@@ -272,6 +280,7 @@ extension AppBackupProvider {
             id: accountType.uniqueId().hs.hex,
             type: AccountType.Abstract(accountType),
             isManualBackedUp: isManualBackedUp,
+            isFileBackedUp: isFileBackedUp,
             version: Self.version,
             timestamp: Date().timeIntervalSince1970.rounded()
         )

@@ -4,7 +4,7 @@ import MarketKit
 
 struct RestoreSelectModule {
 
-    static func viewController(accountName: String, accountType: AccountType, isManualBackedUp: Bool = true, returnViewController: UIViewController?) -> UIViewController {
+    static func viewController(accountName: String, accountType: AccountType, isManualBackedUp: Bool = true, isFileBackedUp: Bool = false, returnViewController: UIViewController?) -> UIViewController {
         let (blockchainTokensService, blockchainTokensView) = BlockchainTokensModule.module()
         let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module()
 
@@ -12,6 +12,7 @@ struct RestoreSelectModule {
                 accountName: accountName,
                 accountType: accountType,
                 isManualBackedUp: isManualBackedUp,
+                isFileBackedUp: isFileBackedUp,
                 accountFactory: App.shared.accountFactory,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
