@@ -12,6 +12,7 @@
 "button.paste" = "Paste";
 "button.resend" = "Resend";
 "button.backup" = "Backup";
+"button.restore" = "Restore";
 "button.copy" = "Copy";
 "button.retry" = "Retry";
 "button.report" = "Report";
@@ -1010,6 +1011,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "settings.tab_bar_item" = "Settings";
 "settings.manage_accounts" = "Manage Wallets";
 "settings.blockchain_settings" = "Blockchain Settings";
+"settings.backup_manager" = "Backup Manager";
 "settings.security" = "Security";
 "settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Personal Support";
@@ -1081,6 +1083,46 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Settings -> Blockchain Settings
 
 "blockchain_settings.title" = "Blockchain Settings";
+
+// Settings -> Backup Manager
+
+"backup_manager.title" = "Backup Manager";
+"backup_manager.restore" = "Restore Backup";
+"backup_manager.create" = "Create New Backup";
+
+"backup_type.title" = "Backup Type";
+"backup_type.description" = "Select where you want to save the backup file.";
+"backup_type.cloud" = "Backup to iCloud!";
+"backup_type.file" = "Backup to Files";
+
+"backup_list.title" = "Backup File";
+"backup_list.description.restore" = "List of contents in the backup file.";
+"backup_list.header.wallets" = "Fat Wallets";
+"backup_list.header.other" = "Other stuff";
+"backup_list.other.watch_account.title" = "Wallet Watchlist";
+"backup_list.other.watch_account.description" = "Addresses: %d";
+"backup_list.other.watchlist.title" = "My Favorite List";
+"backup_list.other.watchlist.description" = "Coins: %d";
+"backup_list.other.contacts.title" = "Contacts";
+"backup_list.other.contacts.description" = "Addresses: %d";
+"backup_list.other.blockchain_settings.title" = "Blockchain Settings";
+"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_list.other.app_settings.title" = "App Settings";
+"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+
+"backup.disclaimer.cloud.title" = "Backup to iCloud!";
+"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.checkbox_label" = "Listen up! Lose access to iCloud, and you say goodbye to this backup.";
+"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+
+"backup.name.title" = "What's in a Name?";
+"backup.name.description" = "Name your backup, maybe after one of my hotels?";
+
+"backup.password.title" = "Your fantastic backup password here!";
+"backup.password.description" = "Craft a password that's tremendous! Needs 8 characters and a mix of the alphabet, numbers, and those little symbols.";
+"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
 
