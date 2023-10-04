@@ -236,13 +236,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup_verify_passphrase.description" = "Entrez le mot de passe";
 "backup_verify_passphrase.incorrect_passphrase" = "Phrase de passe incorrecte";
 
-// Backup Required
-
-"backup_required.title" = "Sauvegarde requise";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Sauvegarde manuelle";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "Créez une copie de sauvegarde de la phrase de récupération et du mot de passe qui vous permettra de récupérer votre portefeuille si votre téléphone est perdu, volé, cassé, etc.";
 "backup_prompt.backup" = "Sauvegarde";
 "backup_prompt.backup_manual" = "Sauvegarde manuelle";
