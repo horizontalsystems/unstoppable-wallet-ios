@@ -215,26 +215,10 @@ class WalletTokenBalanceDataSource: NSObject {
     }
 
     private func openBackupRequired(wallet: Wallet) {
-        let viewController = BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-            title: "backup_required.title".localized,
-            items: [
-                .highlightedDescription(text: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name)),
-            ],
-            buttons: [
-                .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak self] in
-                    guard let viewController = BackupModule.manualViewController(account: wallet.account) else {
-                        return
-                    }
-
-                    self?.parentViewController?.present(viewController, animated: true)
-                },
-                .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak self] in
-                    let viewController = BackupModule.cloudViewController(account: wallet.account)
-                    self?.parentViewController?.present(viewController, animated: true)
-                },
-                .init(style: .transparent, title: "button.cancel".localized),
-            ]
+        let viewController = BottomSheetModule.backupRequiredPrompt(
+            description: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name),
+            account: wallet.account,
+            sourceViewController: parentViewController
         )
 
         parentViewController?.present(viewController, animated: true)

@@ -236,13 +236,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup_verify_passphrase.description" = "Enter the passphrase";
 "backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
 
-// Backup Required
-
-"backup_required.title" = "Backup Required";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Manual Backup";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.backup_manual" = "Manual Backup";
