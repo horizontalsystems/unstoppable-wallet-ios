@@ -21,14 +21,16 @@ extension FullBackup: Codable {
         case timestamp
     }
 
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        wallets = (try? container.decode([RestoreCloudModule.RestoredBackup].self, forKey: .wallets)) ?? []
-//        watchlistIds = (try? container.decode([String].self, forKey: .watchlistIds)) ?? []
-//        contacts = try? container.decode([BackupContact].self, forKey: .contacts)
-//        evmSyncSources = try? container.decode(SyncSourceBackup.self, forKey: .evmSyncSources)
-//        settings = try? container.decode(SettingsBackup.self, forKey: .settings)
-//    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        wallets = (try? container.decode([RestoreCloudModule.RestoredBackup].self, forKey: .wallets)) ?? []
+        watchlistIds = (try? container.decode([String].self, forKey: .watchlistIds)) ?? []
+        contacts = try? container.decode(BackupCrypto.self, forKey: .contacts)
+        settings = try? container.decode(SettingsBackup.self, forKey: .settings)
+        version = try container.decode(Int.self, forKey: .version)
+        timestamp = try? container.decode(TimeInterval.self, forKey: .timestamp)
+    }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)

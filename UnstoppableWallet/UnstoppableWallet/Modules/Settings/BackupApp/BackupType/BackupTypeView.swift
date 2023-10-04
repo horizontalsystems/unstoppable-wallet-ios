@@ -5,7 +5,8 @@ struct BackupTypeView: View {
     @ObservedObject var viewModel: BackupAppViewModel
     @Binding var backupPresented: Bool
 
-    @State var navigationPushed = false
+    @State var cloudNavigationPushed = false
+    @State var localNavigationPushed = false
     @State var cloudAlertPresented = false
 
     var body: some View {
@@ -16,11 +17,11 @@ struct BackupTypeView: View {
                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin12, trailing: .margin16))
 
                 ListSection {
-                    navigation(image: "icloud_24", text: "backup_type.cloud".localized, isAvailable: $viewModel.cloudAvailable) {
+                    navigation(image: "icloud_24", text: "backup_type.cloud".localized, isAvailable: $viewModel.cloudAvailable, isActive: $cloudNavigationPushed) {
                         if viewModel.cloudAvailable { viewModel.destination = .cloud } else { cloudAlertPresented = true }
                     }
 
-                    navigation(image: "file_24", text: "backup_type.file".localized) {
+                    navigation(image: "file_24", text: "backup_type.file".localized, isActive: $localNavigationPushed) {
                         viewModel.destination = .local
                     }
                 }
@@ -51,15 +52,15 @@ struct BackupTypeView: View {
         }
     }
 
-    @ViewBuilder func navigation(image: String, text: String, isAvailable: Binding<Bool> = .constant(true), action: @escaping () -> Void = {}) -> some View {
+    @ViewBuilder func navigation(image: String, text: String, isAvailable: Binding<Bool> = .constant(true), isActive: Binding<Bool>, action: @escaping () -> Void = {}) -> some View {
         if isAvailable.wrappedValue {
             NavigationRow(
                 destination: { BackupListView(viewModel: viewModel, backupPresented: $backupPresented) },
-                isActive: $navigationPushed
+                isActive: isActive
             ) {
                 row(image: image, text: text.localized)
             }
-            .onChange(of: navigationPushed) { _ in action() }
+            .onChange(of: isActive.wrappedValue) { _ in action() }
         } else {
             ClickableRow(action: action) {
                 row(image: image, text: text.localized)
