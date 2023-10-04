@@ -12,6 +12,7 @@
 "button.paste" = "粘帖";
 "button.resend" = "重新发送";
 "button.backup" = "备份";
+"button.restore" = "Restore";
 "button.copy" = "复制";
 "button.retry" = "重试";
 "button.report" = "报告";
@@ -1011,6 +1012,7 @@
 "settings.tab_bar_item" = "设置";
 "settings.manage_accounts" = "管理钱包";
 "settings.blockchain_settings" = "区块链设置";
+"settings.backup_manager" = "Backup Manager";
 "settings.security" = "安全中心";
 "settings.experimental_features" = "实验性功能";
 "settings.personal_support" = "个人支持";
@@ -1082,6 +1084,46 @@
 // Settings -> Blockchain Settings
 
 "blockchain_settings.title" = "区块链设置";
+
+// Settings -> Backup Manager
+
+"backup_manager.title" = "Backup Manager";
+"backup_manager.restore" = "Restore Backup";
+"backup_manager.create" = "Create New Backup";
+
+"backup_type.title" = "Backup Type";
+"backup_type.description" = "Select where you want to save the backup file.";
+"backup_type.cloud" = "备份到iCloud";
+"backup_type.file" = "Backup to Files";
+
+"backup_list.title" = "Backup File";
+"backup_list.description.restore" = "List of contents in the backup file.";
+"backup_list.header.wallets" = "钱包";
+"backup_list.header.other" = "其他";
+"backup_list.other.watch_account.title" = "观察地址";
+"backup_list.other.watch_account.description" = "地址： %d";
+"backup_list.other.watchlist.title" = "关注";
+"backup_list.other.watchlist.description" = "Coins: %d";
+"backup_list.other.contacts.title" = "联系人";
+"backup_list.other.contacts.description" = "地址： %d";
+"backup_list.other.blockchain_settings.title" = "区块链设置";
+"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_list.other.app_settings.title" = "App Settings";
+"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+
+"backup.disclaimer.cloud.title" = "备份到iCloud";
+"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.checkbox_label" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
+"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+
+"backup.name.title" = "备份名称";
+"backup.name.description" = "请输入备份文件的名称。";
+
+"backup.password.title" = "备份密码";
+"backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
+"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
 
