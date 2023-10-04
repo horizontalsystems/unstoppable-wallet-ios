@@ -27,6 +27,7 @@ struct RestoreCloudModule {
         let name: String
         let accountType: AccountType
         let isManualBackedUp: Bool
+        let isFileBackedUp: Bool
         let showSelectCoins: Bool
     }
 

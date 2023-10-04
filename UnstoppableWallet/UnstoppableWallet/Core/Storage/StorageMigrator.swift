@@ -784,9 +784,10 @@ class StorageMigrator {
             }
         }
 
-        migrator.registerMigration("Add level to AccountRecord") { db in
+        migrator.registerMigration("Add level and fileBackedUp to AccountRecord") { db in
             try db.alter(table: AccountRecord.databaseTableName) { t in
                 t.add(column: AccountRecord.Columns.level.name, .integer).defaults(to: 0)
+                t.add(column: AccountRecord.Columns.fileBackedUp.name, .boolean).defaults(to: false)
             }
         }
 

@@ -1,10 +1,10 @@
 import Combine
-import SnapKit
-import ThemeKit
-import UIKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
 import UIExtensions
+import UIKit
 
 class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
     private let viewModel: RestoreCloudPassphraseViewModel
@@ -30,7 +30,8 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -68,48 +69,53 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         passphraseCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
         viewModel.$passphraseCaution
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] caution in
-                    self?.passphraseCell.set(cautionType: caution?.type)
-                    self?.passphraseCautionCell.set(caution: caution)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] caution in
+                self?.passphraseCell.set(cautionType: caution?.type)
+                self?.passphraseCautionCell.set(caution: caution)
+            }
+            .store(in: &cancellables)
 
         viewModel.$processing
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] processing in
-                    self?.show(processing: processing)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] processing in
+                self?.show(processing: processing)
+            }
+            .store(in: &cancellables)
 
         viewModel.clearInputsPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.passphraseCell.inputText = nil
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.passphraseCell.inputText = nil
+            }
+            .store(in: &cancellables)
 
         viewModel.showErrorPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.show(error: $0)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.show(error: $0)
+            }
+            .store(in: &cancellables)
 
         viewModel.openSelectCoinsPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] backupAccount in
-                    self?.openSelectCoins(accountName: backupAccount.name, accountType: backupAccount.accountType, isManualBackedUp: backupAccount.isManualBackedUp)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] backupAccount in
+                self?.openSelectCoins(
+                    accountName: backupAccount.name,
+                    accountType: backupAccount.accountType,
+                    isManualBackedUp: backupAccount.isManualBackedUp,
+                    isFileBackedUp: backupAccount.isFileBackedUp
+                )
+            }
+            .store(in: &cancellables)
 
         viewModel.successPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    HudHelper.instance.show(banner: .imported)
-                    (self?.returnViewController ?? self)?.dismiss(animated: true)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                HudHelper.instance.show(banner: .imported)
+                (self?.returnViewController ?? self)?.dismiss(animated: true)
+            }
+            .store(in: &cancellables)
 
         showDefaultPassphrase()
 
@@ -158,61 +164,58 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         HudHelper.instance.show(banner: .error(string: error))
     }
 
-    private func openSelectCoins(accountName: String, accountType: AccountType, isManualBackedUp: Bool) {
+    private func openSelectCoins(accountName: String, accountType: AccountType, isManualBackedUp: Bool, isFileBackedUp: Bool) {
         let viewController = RestoreSelectModule.viewController(
-                accountName: accountName,
-                accountType: accountType,
-                isManualBackedUp: isManualBackedUp,
-                returnViewController: returnViewController
+            accountName: accountName,
+            accountType: accountType,
+            isManualBackedUp: isManualBackedUp,
+            isFileBackedUp: isFileBackedUp,
+            returnViewController: returnViewController
         )
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension RestoreCloudPassphraseViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "description-section",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.descriptionRow(
-                                id: "description",
-                                text: "restore.cloud.password.description".localized,
-                                font: .subhead2,
-                                textColor: .gray,
-                                ignoreBottomMargin: true
-                        )
-                    ]
+                id: "description-section",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.descriptionRow(
+                        id: "description",
+                        text: "restore.cloud.password.description".localized,
+                        font: .subhead2,
+                        textColor: .gray,
+                        ignoreBottomMargin: true
+                    ),
+                ]
             ),
             Section(
-                    id: "passphrase",
-                    footerState: .margin(height: .margin16),
-                    rows: [
-                        StaticRow(
-                                cell: passphraseCell,
-                                id: "passphrase",
-                                height: .heightSingleLineCell
-                        ),
-                        StaticRow(
-                                cell: passphraseCautionCell,
-                                id: "passphrase-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.passphraseCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "passphrase",
+                footerState: .margin(height: .margin16),
+                rows: [
+                    StaticRow(
+                        cell: passphraseCell,
+                        id: "passphrase",
+                        height: .heightSingleLineCell
+                    ),
+                    StaticRow(
+                        cell: passphraseCautionCell,
+                        id: "passphrase-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.passphraseCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
         ]
     }
-
 }
 
 extension RestoreCloudPassphraseViewController: IDynamicHeightCellDelegate {
-
     func onChangeHeight() {
         guard isLoaded else {
             return
@@ -223,5 +226,4 @@ extension RestoreCloudPassphraseViewController: IDynamicHeightCellDelegate {
             self?.tableView.endUpdates()
         }
     }
-
 }

@@ -36,7 +36,7 @@ class RestoreBinanceService {
     private func createAccount() {
         let type: AccountType = .cex(cexAccount: .binance(apiKey: apiKey, secret: secretKey))
         let name = accountFactory.nextAccountName(cex: .binance)
-        let account = accountFactory.account(type: type, origin: .restored, backedUp: true, name: name)
+        let account = accountFactory.account(type: type, origin: .restored, backedUp: true, fileBackedUp: false, name: name)
 
         accountManager.save(account: account)
 

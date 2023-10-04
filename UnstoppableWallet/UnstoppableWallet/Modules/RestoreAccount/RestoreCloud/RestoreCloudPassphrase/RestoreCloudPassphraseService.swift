@@ -24,7 +24,13 @@ class RestoreCloudPassphraseService {
     }
 
     private func createAccount(accountType: AccountType) {
-        let account = accountFactory.account(type: accountType, origin: .restored, backedUp: restoredBackup.walletBackup.isManualBackedUp, name: restoredBackup.name)
+        let account = accountFactory.account(
+            type: accountType,
+            origin: .restored,
+            backedUp: restoredBackup.walletBackup.isManualBackedUp,
+            fileBackedUp: restoredBackup.walletBackup.isFileBackedUp,
+            name: restoredBackup.name
+        )
         accountManager.save(account: account)
 
         let wallets = restoredBackup.walletBackup.enabledWallets.map {
@@ -67,6 +73,7 @@ extension RestoreCloudPassphraseService {
                 name: restoredBackup.name,
                 accountType: accountType,
                 isManualBackedUp: restoredBackup.walletBackup.isManualBackedUp,
+                isFileBackedUp: restoredBackup.walletBackup.isFileBackedUp,
                 showSelectCoins: restoredBackup.walletBackup.enabledWallets.isEmpty
             ))
         }

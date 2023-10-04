@@ -87,7 +87,8 @@ class AccountStorage {
                 name: record.name,
                 type: type,
                 origin: origin,
-                backedUp: record.backedUp
+                backedUp: record.backedUp,
+                fileBackedUp: record.fileBackedUp
         )
     }
 
@@ -132,6 +133,7 @@ class AccountStorage {
                 type: typeName.rawValue,
                 origin: account.origin.rawValue,
                 backedUp: account.backedUp,
+                fileBackedUp: account.fileBackedUp,
                 wordsKey: wordsKey,
                 saltKey: saltKey,
                 dataKey: dataKey,
