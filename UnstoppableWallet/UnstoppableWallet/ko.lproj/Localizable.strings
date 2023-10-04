@@ -12,6 +12,7 @@
 "button.paste" = "불여넣기";
 "button.resend" = "재전송";
 "button.backup" = "백업";
+"button.restore" = "Restore";
 "button.copy" = "복사";
 "button.retry" = "재시도";
 "button.report" = "보고";
@@ -1009,6 +1010,7 @@
 "settings.tab_bar_item" = "설정";
 "settings.manage_accounts" = "지갑 관리하기";
 "settings.blockchain_settings" = "블록 체인 설정";
+"settings.backup_manager" = "Backup Manager";
 "settings.security" = "보안 센터";
 "settings.experimental_features" = "실험";
 "settings.personal_support" = "Personal Support";
@@ -1080,6 +1082,46 @@
 // Settings -> Blockchain Settings
 
 "blockchain_settings.title" = "블록 체인 설정";
+
+// Settings -> Backup Manager
+
+"backup_manager.title" = "Backup Manager";
+"backup_manager.restore" = "Restore Backup";
+"backup_manager.create" = "Create New Backup";
+
+"backup_type.title" = "Backup Type";
+"backup_type.description" = "Select where you want to save the backup file.";
+"backup_type.cloud" = "iCloud에 백업";
+"backup_type.file" = "Backup to Files";
+
+"backup_list.title" = "Backup File";
+"backup_list.description.restore" = "List of contents in the backup file.";
+"backup_list.header.wallets" = "지갑";
+"backup_list.header.other" = "기타";
+"backup_list.other.watch_account.title" = "관찰 주소";
+"backup_list.other.watch_account.description" = "구애: %d";
+"backup_list.other.watchlist.title" = "Watchlist";
+"backup_list.other.watchlist.description" = "Coins: %d";
+"backup_list.other.contacts.title" = "연락처";
+"backup_list.other.contacts.description" = "구애: %d";
+"backup_list.other.blockchain_settings.title" = "블록 체인 설정";
+"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_list.other.app_settings.title" = "App Settings";
+"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+
+"backup.disclaimer.cloud.title" = "iCloud에 백업";
+"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.checkbox_label" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
+"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+
+"backup.name.title" = "백업 이름";
+"backup.name.description" = "백업 파일의 이름을 입력하세요.";
+
+"backup.password.title" = "백업 비밀번호";
+"backup.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
+"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
 
