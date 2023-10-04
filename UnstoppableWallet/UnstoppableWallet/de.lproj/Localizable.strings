@@ -236,13 +236,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_verify_passphrase.description" = "Geben Sie Ihre Passphrase ein";
 "backup_verify_passphrase.incorrect_passphrase" = "Falsches Passwort";
 
-// Backup Required
-
-"backup_required.title" = "Sicherung erforderlich";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Manuelle Sicherung";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
 "backup_prompt.backup" = "Sicherung";
 "backup_prompt.backup_manual" = "Manuelle Sicherung";
