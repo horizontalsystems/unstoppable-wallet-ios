@@ -235,13 +235,10 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "backup_verify_passphrase.description" = "Type in the passphrase. Make sure it's terrific!";
 "backup_verify_passphrase.incorrect_passphrase" = "That's not the right passphrase, but we'll get there!";
 
-// Backup Required
-
-"backup_required.title" = "Backup is a Must, Folks";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Bonanza";
+"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
+"backup_prompt.backup_required" = "Backup Required";
 "backup_prompt.warning" = "You want to make a yuuuge backup of this recovery phrase, trust me. Don't lose out if your phone goes missing, or breaks!";
 "backup_prompt.backup" = "Резервная копия";
 "backup_prompt.backup_manual" = "Backup Bonanza";
