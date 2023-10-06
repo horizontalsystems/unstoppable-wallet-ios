@@ -20,12 +20,13 @@ class MainSettingsService {
     private let currencyKit: CurrencyKit.Kit
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let subscriptionManager: SubscriptionManager
+    private let rateAppManager: RateAppManager
 
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
     init(backupManager: BackupManager, cloudAccountBackupManager: CloudBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager, passcodeManager: PasscodeManager, termsManager: TermsManager,
-         systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, walletConnectSessionManager: WalletConnectSessionManager, subscriptionManager: SubscriptionManager)
+         systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, walletConnectSessionManager: WalletConnectSessionManager, subscriptionManager: SubscriptionManager, rateAppManager: RateAppManager)
     {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.backupManager = backupManager
@@ -38,6 +39,7 @@ class MainSettingsService {
         self.currencyKit = currencyKit
         self.walletConnectSessionManager = walletConnectSessionManager
         self.subscriptionManager = subscriptionManager
+        self.rateAppManager = rateAppManager
 
         subscribe(disposeBag, contactBookManager.iCloudErrorObservable) { [weak self] error in
             if error != nil, self?.contactBookManager.remoteSync ?? false {
@@ -148,6 +150,10 @@ extension MainSettingsService {
 
     var analyticsLink: String {
         AppConfig.analyticsLink
+    }
+
+    func rateApp() {
+        rateAppManager.forceShow()
     }
 }
 

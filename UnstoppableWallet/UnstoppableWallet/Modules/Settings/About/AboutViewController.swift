@@ -1,5 +1,4 @@
 import ComponentKit
-import MessageUI
 import RxCocoa
 import RxSwift
 import SafariServices
@@ -69,48 +68,6 @@ class AboutViewController: ThemeViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
-    }
-
-    private func openTellFriends() {
-        let text = "settings_tell_friends.text".localized + "\n" + AppConfig.appWebPageLink
-        let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: [])
-        present(activityViewController, animated: true, completion: nil)
-    }
-
-    private func handleEmailContact() {
-        let email = AppConfig.reportEmail
-
-        if MFMailComposeViewController.canSendMail() {
-            let controller = MFMailComposeViewController()
-            controller.setToRecipients([email])
-            controller.mailComposeDelegate = self
-
-            present(controller, animated: true)
-        } else {
-            CopyHelper.copyAndNotify(value: email)
-        }
-    }
-
-    private func handleTelegramContact() {
-        navigationController?.pushViewController(PersonalSupportModule.viewController(), animated: true)
-    }
-
-    private func handleContact() {
-        let viewController = BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "at_24")?.withTintColor(.themeJacob)),
-            title: "settings.contact.title".localized,
-            items: [],
-            buttons: [
-                .init(style: .yellow, title: "settings.contact.via_email".localized, actionType: .afterClose) { [weak self] in
-                    self?.handleEmailContact()
-                },
-                .init(style: .gray, title: "settings.contact.via_telegram".localized, actionType: .afterClose) { [weak self] in
-                    self?.handleTelegramContact()
-                },
-            ]
-        )
-
-        present(viewController, animated: true)
     }
 
     private func openTwitter() {
@@ -256,52 +213,6 @@ extension AboutViewController: SectionsDataSource {
                     ),
                 ]
             ),
-            Section(
-                id: "share",
-                footerState: .margin(height: .margin32),
-                rows: [
-                    row(
-                        id: "rate-us",
-                        image: "rate_24",
-                        title: "settings.about_app.rate_us".localized,
-                        isFirst: true,
-                        action: { [weak self] in
-                            self?.viewModel.onTapRateApp()
-                        }
-                    ),
-                    row(
-                        id: "tell-friends",
-                        image: "share_1_24",
-                        title: "settings.about_app.tell_friends".localized,
-                        isLast: true,
-                        action: { [weak self] in
-                            self?.openTellFriends()
-                        }
-                    ),
-                ]
-            ),
-            Section(
-                id: "contact",
-                footerState: .margin(height: .margin32),
-                rows: [
-                    row(
-                        id: "email",
-                        image: "mail_24",
-                        title: "settings.about_app.contact".localized,
-                        isFirst: true,
-                        isLast: true,
-                        action: { [weak self] in
-                            self?.handleContact()
-                        }
-                    ),
-                ]
-            ),
         ]
-    }
-}
-
-extension AboutViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
-        controller.dismiss(animated: true)
     }
 }

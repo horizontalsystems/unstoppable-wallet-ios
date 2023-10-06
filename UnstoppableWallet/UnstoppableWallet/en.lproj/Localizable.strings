@@ -1020,6 +1020,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.info_subtitle" = "decentralized app";
 "settings.donate.description" = "Together, with your support, we can make this app even better!";
 "settings.donate.title" = "Donate";
+"settings.rate_us" = "Rate Us";
+"settings.tell_friends" = "Tell Friends";
+"settings.contact_us" = "Contact Us";
 
 // Settings -> Base Currency
 
@@ -1233,9 +1236,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.about_app.description" =  "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
 "settings.about_app.whats_new" = "What's New";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Contact Us";
-"settings.about_app.rate_us" = "Rate Us";
-"settings.about_app.tell_friends" = "Tell Friends";
 
 // Settings -> About App -> Contact
 

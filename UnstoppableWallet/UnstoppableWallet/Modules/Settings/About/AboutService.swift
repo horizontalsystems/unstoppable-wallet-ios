@@ -3,18 +3,14 @@ import RxSwift
 class AboutService {
     private let termsManager: TermsManager
     private let systemInfoManager: SystemInfoManager
-    private let rateAppManager: RateAppManager
 
-    init(termsManager: TermsManager, systemInfoManager: SystemInfoManager, rateAppManager: RateAppManager) {
+    init(termsManager: TermsManager, systemInfoManager: SystemInfoManager) {
         self.termsManager = termsManager
         self.systemInfoManager = systemInfoManager
-        self.rateAppManager = rateAppManager
     }
-
 }
 
 extension AboutService {
-
     var termsAccepted: Bool {
         termsManager.termsAccepted
     }
@@ -26,9 +22,4 @@ extension AboutService {
     var appVersion: String {
         systemInfoManager.appVersion.description
     }
-
-    func rateApp() {
-        rateAppManager.forceShow()
-    }
-
 }
