@@ -235,7 +235,7 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc func onTapRestore() {
-        let viewController = RestoreTypeModule.viewController(sourceViewController: self)
+        let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self)
         present(viewController, animated: true)
     }
 

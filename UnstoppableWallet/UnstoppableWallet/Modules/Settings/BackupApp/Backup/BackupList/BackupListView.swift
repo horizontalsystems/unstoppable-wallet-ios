@@ -11,10 +11,10 @@ struct BackupListView: View {
             BottomGradientWrapper {
                 VStack(spacing: .margin24) {
                     VStack(spacing: 0) {
-                        ListSectionHeader(text: "backup_list.header.wallets".localized)
+                        ListSectionHeader(text: "backup_app.backup_list.header.wallets".localized)
 
                         ListSection {
-                            ForEach(viewModel.accountItems, id: \.accountId) { (item: BackupAppViewModel.AccountItem) in
+                            ForEach(viewModel.accountItems, id: \.accountId) { (item: BackupAppModule.AccountItem) in
                                 if viewModel.selected[item.id] != nil {
                                     let selected = binding(for: item.accountId)
 
@@ -39,10 +39,10 @@ struct BackupListView: View {
                     }
 
                     VStack(spacing: 0) {
-                        ListSectionHeader(text: "backup_list.header.other".localized)
+                        ListSectionHeader(text: "backup_app.backup_list.header.other".localized)
 
                         ListSection {
-                            ForEach(viewModel.otherItems) { (item: BackupAppViewModel.Item) in
+                            ForEach(viewModel.otherItems) { (item: BackupAppModule.Item) in
                                 ListRow {
                                     VStack(spacing: 1) {
                                         Text(item.title).themeBody()
@@ -68,7 +68,7 @@ struct BackupListView: View {
                     .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
             }
-            .navigationTitle("backup_list.title".localized)
+            .navigationTitle("backup_app.backup_list.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
@@ -88,7 +88,7 @@ struct BackupListView: View {
 
 extension BackupListView {
     struct AccountView: View {
-        var item: BackupAppViewModel.AccountItem
+        var item: BackupAppModule.AccountItem
 
         var body: some View {
             let color: Color? = item.cautionType.map { $0 == .error ? .themeLucian : .themeJacob }

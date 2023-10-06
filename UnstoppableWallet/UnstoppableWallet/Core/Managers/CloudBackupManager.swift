@@ -208,26 +208,30 @@ extension CloudBackupManager {
         try delete(uniqueId: hex)
     }
 
-    func delete(uniqueId: String) throws {
+    func delete(name: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
 
-        guard let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) else {
-            throw BackupError.itemNotFound
-        }
-
-        let fileUrl = iCloudUrl.appendingPathComponent(item.key)
+        let fileUrl = iCloudUrl.appendingPathComponent(name)
         do {
             try fileStorage.deleteFile(url: fileUrl)
 
             // system will automatically updates items but after 1-2 seconds. So we need force update
-            oneWalletItems[item.key] = nil
-            logger?.log(level: .debug, message: "CloudAccountManager.delete \(item.key) successful")
+            oneWalletItems[name] = nil
+            logger?.log(level: .debug, message: "CloudAccountManager.delete \(name) successful")
         } catch {
-            logger?.log(level: .debug, message: "CloudAccountManager.delete \(item.key) unsuccessful because: \(error)")
+            logger?.log(level: .debug, message: "CloudAccountManager.delete \(name) unsuccessful because: \(error)")
             throw error
         }
+    }
+
+    func delete(uniqueId: String) throws {
+        guard let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) else {
+            throw BackupError.itemNotFound
+        }
+
+        try delete(name: item.key)
     }
 }
 

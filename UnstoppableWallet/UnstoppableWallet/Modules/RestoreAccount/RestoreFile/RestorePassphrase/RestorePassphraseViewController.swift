@@ -6,8 +6,8 @@ import ThemeKit
 import UIExtensions
 import UIKit
 
-class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
-    private let viewModel: RestoreCloudPassphraseViewModel
+class RestorePassphraseViewController: KeyboardAwareViewController {
+    private let viewModel: RestorePassphraseViewModel
     private var cancellables = Set<AnyCancellable>()
 
     private weak var returnViewController: UIViewController?
@@ -18,12 +18,12 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
     private let passphraseCautionCell = FormCautionCell()
 
     private let gradientWrapperView = BottomGradientHolder()
-    private let importButton = PrimaryButton()
+    private let nextButton = PrimaryButton()
 
     private var keyboardShown = false
     private var isLoaded = false
 
-    init(viewModel: RestoreCloudPassphraseViewModel, returnViewController: UIViewController?) {
+    init(viewModel: RestorePassphraseViewModel, returnViewController: UIViewController?) {
         self.viewModel = viewModel
         self.returnViewController = returnViewController
 
@@ -54,11 +54,11 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         tableView.sectionDataSource = self
 
         gradientWrapperView.add(to: self)
-        gradientWrapperView.addSubview(importButton)
+        gradientWrapperView.addSubview(nextButton)
 
         show(processing: false)
-        importButton.setTitle("button.import".localized, for: .normal)
-        importButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
+        nextButton.setTitle(viewModel.buttonTitle, for: .normal)
+        nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
 
         passphraseCell.set(textSecure: true)
         passphraseCell.onTextSecurityChange = { [weak self] in self?.passphraseCell.set(textSecure: $0) }
@@ -146,17 +146,17 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         dismiss(animated: true)
     }
 
-    @objc private func onTapCreate() {
-        viewModel.onTapImport()
+    @objc private func onTapNext() {
+        viewModel.onTapNext()
     }
 
     private func show(processing: Bool) {
         if processing {
-            importButton.set(style: .yellow, accessoryType: .spinner)
-            importButton.isEnabled = false
+            nextButton.set(style: .yellow, accessoryType: .spinner)
+            nextButton.isEnabled = false
         } else {
-            importButton.set(style: .yellow)
-            importButton.isEnabled = true
+            nextButton.set(style: .yellow)
+            nextButton.isEnabled = true
         }
     }
 
@@ -176,7 +176,7 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
     }
 }
 
-extension RestoreCloudPassphraseViewController: SectionsDataSource {
+extension RestorePassphraseViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
@@ -215,7 +215,7 @@ extension RestoreCloudPassphraseViewController: SectionsDataSource {
     }
 }
 
-extension RestoreCloudPassphraseViewController: IDynamicHeightCellDelegate {
+extension RestorePassphraseViewController: IDynamicHeightCellDelegate {
     func onChangeHeight() {
         guard isLoaded else {
             return

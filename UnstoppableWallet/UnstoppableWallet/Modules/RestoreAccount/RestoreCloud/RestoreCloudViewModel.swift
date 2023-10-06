@@ -5,20 +5,26 @@ class RestoreCloudViewModel {
     private let service: RestoreCloudService
     private var cancellables = Set<AnyCancellable>()
 
-    @Published private(set) var viewItem: ViewItem = .empty
-    private let restoreSubject = PassthroughSubject<RestoreCloudModule.RestoredBackup, Never>()
+    @Published private(set) var walletViewItem: ViewItem = .empty
+    @Published private(set) var fullBackupViewItem: ViewItem = .empty
+    private let restoreSubject = PassthroughSubject<BackupModule.NamedSource, Never>()
 
     init(service: RestoreCloudService) {
         self.service = service
 
-        service.$items
-                .sink { [weak self] in self?.sync(items: $0) }
+        service.$oneWalletItems
+                .sink { [weak self] in self?.sync(type: .wallet, items: $0) }
                 .store(in: &cancellables)
 
-        sync(items: service.items)
+        service.$fullBackupItems
+                .sink { [weak self] in self?.sync(type: .full, items: $0) }
+                .store(in: &cancellables)
+
+        sync(type: .wallet, items: service.oneWalletItems)
+        sync(type: .full, items: service.fullBackupItems)
     }
 
-    private func sync(items: [RestoreCloudService.Item]) {
+    private func sync(type: BackupModule.Source.Abstract, items: [RestoreCloudService.Item]) {
         var imported = [BackupViewItem]()
         var notImported = [BackupViewItem]()
 
@@ -31,19 +37,22 @@ class RestoreCloudViewModel {
             }
         }
 
-        viewItem = ViewItem(notImported: notImported, imported: imported)
+        switch type {
+        case .wallet: walletViewItem = ViewItem(notImported: notImported, imported: imported)
+        case .full: fullBackupViewItem = ViewItem(notImported: notImported, imported: imported)
+        }
     }
 
     private func viewItem(item: RestoreCloudService.Item) -> BackupViewItem {
-        let description = item.backup.timestamp.map { DateHelper.instance.formatFullTime(from: Date(timeIntervalSince1970: $0)) } ?? "----"
-        return BackupViewItem(uniqueId: item.backup.id, name: item.name, description: description)
+        let description = item.source.timestamp.map { DateHelper.instance.formatFullTime(from: Date(timeIntervalSince1970: $0)) } ?? "----"
+        return BackupViewItem(uniqueId: item.source.id, name: item.name, description: description)
     }
 
 }
 
 extension RestoreCloudViewModel {
 
-    var restorePublisher: AnyPublisher<RestoreCloudModule.RestoredBackup, Never> {
+    var restorePublisher: AnyPublisher<BackupModule.NamedSource, Never> {
         restoreSubject.eraseToAnyPublisher()
     }
 
@@ -56,16 +65,22 @@ extension RestoreCloudViewModel {
     }
 
     func didTap(id: String) {
-        guard let item = service.items.first(where: { item in item.backup.id == id }) else {
-            return
+        if let item = service.oneWalletItems.first(where: { item in item.source.id == id }) {
+            restoreSubject.send(BackupModule.NamedSource(name: item.name, source: item.source))
         }
 
-        restoreSubject.send(RestoreCloudModule.RestoredBackup(name: item.name, walletBackup: item.backup))
+        if let item = service.fullBackupItems.first(where: { item in item.source.id == id}) {
+            restoreSubject.send(BackupModule.NamedSource(name: item.name, source: item.source))
+        }
     }
 
 }
 
 extension RestoreCloudViewModel {
+    enum BackupType {
+        case wallet
+        case full
+    }
 
     struct BackupViewItem {
         let uniqueId: String

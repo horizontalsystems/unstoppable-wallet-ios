@@ -26,7 +26,7 @@ class RestoreTypeViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "restore.title".localized
+        title = viewModel.title
 
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
@@ -66,40 +66,44 @@ class RestoreTypeViewController: ThemeViewController {
         dismiss(animated: true)
     }
 
-    private func row(_ item: RestoreTypeViewModel.RestoreType) -> RowProtocol {
+    private func row(_ type: RestoreTypeModule.RestoreType) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
         let titleFont: UIFont = .headline2
         let valueFont: UIFont = .subhead2
 
+        let icon = viewModel.icon(type: type)
+        let title = viewModel.title(type: type)
+        let description = viewModel.description(type: type)
+
         return CellBuilderNew.row(
                 rootElement: .hStack([
                     .image24 { (component: ImageComponent) -> () in
-                        component.imageView.image = UIImage(named: item.icon)
+                        return component.imageView.image = UIImage(named: icon)
                     },
                     .vStackCentered([
                         .text { (component: TextComponent) -> () in
                             component.font = titleFont
                             component.textColor = .themeLeah
-                            component.text = item.title
+                            component.text = title
                             component.numberOfLines = 0
                         },
                         .margin4,
                         .text { (component: TextComponent) -> () in
                             component.font = valueFont
                             component.textColor = .themeGray
-                            component.text = item.description
+                            component.text = description
                             component.numberOfLines = 0
                         }
                     ])
                 ]),
                 tableView: tableView,
-                id: item.description,
+                id: description,
                 autoDeselect: true,
                 dynamicHeight: { containerWidth in
                     let size = CellBuilderNew.height(
                             containerWidth: containerWidth,
                             backgroundStyle: backgroundStyle,
-                            text: item.title,
+                            text: title,
                             font: titleFont,
                             verticalPadding: .margin24,
                             elements: [.fixed(width: .iconSize24), .multiline]
@@ -107,7 +111,7 @@ class RestoreTypeViewController: ThemeViewController {
                     CellBuilderNew.height(
                             containerWidth: containerWidth,
                             backgroundStyle: backgroundStyle,
-                            text: item.description,
+                            text: description,
                             font: valueFont,
                             verticalPadding: 0,
                             elements: [.fixed(width: .iconSize24), .multiline]
@@ -119,23 +123,19 @@ class RestoreTypeViewController: ThemeViewController {
                     cell.set(backgroundStyle: backgroundStyle, isFirst: true, isLast: true)
                 },
                 action: { [weak self] in
-                    self?.viewModel.onTap(type: item)
+                    self?.viewModel.onTap(type: type)
                 }
         )
     }
 
-    private func show(type: RestoreTypeViewModel.RestoreType) {
-        switch type {
-        case .recoveryOrPrivateKey:
-            let viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController)
-            navigationController?.pushViewController(viewController, animated: true)
-        case .cloudRestore:
-            let viewController = RestoreCloudModule.viewController(returnViewController: returnViewController)
-            navigationController?.pushViewController(viewController, animated: true)
-        case .cex:
-            let viewController = RestoreCexViewController(returnViewController: returnViewController)
-            navigationController?.pushViewController(viewController, animated: true)
+    private func show(type: RestoreTypeModule.RestoreType) {
+        guard let viewController = RestoreTypeModule.destination(
+                restoreType: type,
+                sourceViewController: self,
+                returnViewController: returnViewController) else {
+            return
         }
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func showNotCloudAvailable() {

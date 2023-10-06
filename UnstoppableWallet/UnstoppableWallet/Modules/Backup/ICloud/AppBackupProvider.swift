@@ -243,7 +243,8 @@ extension AppBackupProvider {
         favoritesManager.add(coinUids: backup.watchlistIds)
 
         if let contacts = backup.contacts {
-            try contactManager.restore(crypto: contacts, passphrase: passphrase)
+            let contacts = try ContactBookManager.encode(crypto: contacts, passphrase: passphrase)
+            try contactManager.restore(contacts: contacts)
         }
 
         if let settings = backup.settings {

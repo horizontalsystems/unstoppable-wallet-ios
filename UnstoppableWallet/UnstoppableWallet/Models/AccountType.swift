@@ -295,6 +295,13 @@ extension AccountType {
             case .cex: self = .cex
             }
         }
+
+        var isWatch: Bool {
+            switch self {
+            case .evmAddress, .tronAddress: return true
+            default: return false
+            }
+        }
     }
 
 }

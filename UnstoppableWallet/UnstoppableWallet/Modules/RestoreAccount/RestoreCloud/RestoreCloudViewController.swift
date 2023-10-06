@@ -14,13 +14,15 @@ class RestoreCloudViewController: ThemeViewController {
     private let emptyView = PlaceholderView()
     private let tableView = SectionsTableView(style: .grouped)
 
-    private var viewItem: RestoreCloudViewModel.ViewItem
+    private var walletViewItem: RestoreCloudViewModel.ViewItem
+    private var fullBackupViewItem: RestoreCloudViewModel.ViewItem
 
     init(viewModel: RestoreCloudViewModel, returnViewController: UIViewController?) {
         self.viewModel = viewModel
         self.returnViewController = returnViewController
 
-        viewItem = viewModel.viewItem
+        walletViewItem = viewModel.walletViewItem
+        fullBackupViewItem = viewModel.fullBackupViewItem
 
         super.init()
     }
@@ -54,10 +56,17 @@ class RestoreCloudViewController: ThemeViewController {
         emptyView.image = UIImage(named: "no_internet_48")
         emptyView.text = "restore.cloud.empty".localized
 
-        viewModel.$viewItem
+        viewModel.$walletViewItem
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] viewItem in
-                    self?.sync(viewItem: viewItem)
+                    self?.sync(type: .wallet, viewItem: viewItem)
+                }
+                .store(in: &cancellables)
+
+        viewModel.$fullBackupViewItem
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] viewItem in
+                    self?.sync(type: .full, viewItem: viewItem)
                 }
                 .store(in: &cancellables)
 
@@ -85,8 +94,8 @@ class RestoreCloudViewController: ThemeViewController {
         (returnViewController ?? self)?.dismiss(animated: true)
     }
 
-    private func restore(item: RestoreCloudModule.RestoredBackup) {
-        let viewController = RestoreCloudPassphraseModule.restorePassword(item: item, returnViewController: returnViewController)
+    private func restore(item: BackupModule.NamedSource) {
+        let viewController = RestorePassphraseModule.viewController(item: item, returnViewController: returnViewController)
 
         navigationController?.pushViewController(viewController, animated: true)
     }
@@ -99,8 +108,13 @@ class RestoreCloudViewController: ThemeViewController {
         }
     }
 
-    private func sync(viewItem: RestoreCloudViewModel.ViewItem) {
-        emptyView.isHidden = !viewItem.isEmpty
+    private func sync(type: RestoreCloudViewModel.BackupType, viewItem: RestoreCloudViewModel.ViewItem) {
+        switch type {
+        case .wallet: walletViewItem = viewItem
+        case .full: fullBackupViewItem = viewItem
+        }
+
+        emptyView.isHidden = !walletViewItem.isEmpty || !fullBackupViewItem.isEmpty
         tableView.reload()
     }
 
@@ -160,22 +174,28 @@ class RestoreCloudViewController: ThemeViewController {
 extension RestoreCloudViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        guard !viewItem.isEmpty else {
+        guard !walletViewItem.isEmpty else {
             return []
         }
 
         var sections = [
             descriptionSection,
         ]
-        if !viewItem.notImported.isEmpty {
+        if !walletViewItem.notImported.isEmpty {
             sections.append(
-                    section(id: "not_imported", viewItems: viewModel.viewItem.notImported)
+                    section(id: "not_imported", headerTitle: "restore.cloud.wallets".localized, viewItems: viewModel.walletViewItem.notImported)
             )
         }
 
-        if !viewItem.imported.isEmpty {
+        if !walletViewItem.imported.isEmpty {
             sections.append(
-                section(id: "imported", headerTitle: "restore.cloud.imported".localized, viewItems: viewModel.viewItem.imported)
+                section(id: "imported", headerTitle: "restore.cloud.imported".localized, viewItems: viewModel.walletViewItem.imported)
+            )
+        }
+
+        if !fullBackupViewItem.notImported.isEmpty {
+            sections.append(
+                section(id: "app_backups", headerTitle: "restore.cloud.app_backups".localized, viewItems: viewModel.fullBackupViewItem.notImported)
             )
         }
 

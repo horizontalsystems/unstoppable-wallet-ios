@@ -12,7 +12,7 @@ struct BackupPasswordView: View {
         ThemeView {
             BottomGradientWrapper {
                 VStack(spacing: .margin32) {
-                    Text("backup.password.description".localized)
+                    Text("backup_app.backup.password.description".localized)
                         .themeSubhead2()
                         .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
 
@@ -45,7 +45,7 @@ struct BackupPasswordView: View {
                     }
                     .animation(.default, value: secureLock)
 
-                    HighlightedTextView(text: "backup.password.highlighted_description".localized, style: .warning)
+                    HighlightedTextView(text: "backup_app.backup.password.highlighted_description".localized, style: .warning)
                 }
                 .animation(.default, value: viewModel.passwordCautionState)
                 .animation(.default, value: viewModel.confirmCautionState)
@@ -85,7 +85,7 @@ struct BackupPasswordView: View {
             .onReceive(viewModel.dismissPublisher) {
                 backupPresented = false
             }
-            .navigationBarTitle("backup.password.title".localized)
+            .navigationBarTitle("backup_app.backup.password.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
