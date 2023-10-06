@@ -30,4 +30,10 @@ extension Text {
             .foregroundColor(color)
             .font(.themeCaptionSB)
     }
+
+    func themeHeadline1(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
+        frame(maxWidth: .infinity, alignment: alignment)
+            .foregroundColor(color)
+            .font(.themeHeadline1)
+    }
 }

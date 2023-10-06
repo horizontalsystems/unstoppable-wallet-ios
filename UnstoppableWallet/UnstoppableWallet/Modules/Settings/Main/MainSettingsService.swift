@@ -89,8 +89,8 @@ extension MainSettingsService {
         termsManager.termsAccepted
     }
 
-    var termsAcceptedObservable: Observable<Bool> {
-        termsManager.termsAcceptedObservable
+    var termsAcceptedPublisher: AnyPublisher<Bool, Never> {
+        termsManager.$termsAccepted
     }
 
     var walletConnectSessionCount: Int {

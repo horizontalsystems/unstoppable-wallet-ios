@@ -1,53 +1,33 @@
+import Combine
 import Foundation
-import RxCocoa
-import RxRelay
-import RxSwift
 
-class AboutViewModel {
-    private let service: AboutService
+class AboutViewModel: ObservableObject {
+    private let termsManager: TermsManager
+    private let systemInfoManager: SystemInfoManager
     private let releaseNotesService: ReleaseNotesService
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
-    private let termsAlertRelay: BehaviorRelay<Bool>
-    private let openLinkRelay = PublishRelay<String>()
+    @Published private(set) var termsAlert = false
 
-    init(service: AboutService, releaseNotesService: ReleaseNotesService) {
-        self.service = service
+    init(termsManager: TermsManager, systemInfoManager: SystemInfoManager, releaseNotesService: ReleaseNotesService) {
+        self.termsManager = termsManager
+        self.systemInfoManager = systemInfoManager
         self.releaseNotesService = releaseNotesService
 
-        termsAlertRelay = BehaviorRelay(value: !service.termsAccepted)
+        termsManager.$termsAccepted.sink { [weak self] in self?.syncTermsAlert(termsAccepted: $0) }.store(in: &cancellables)
 
-        service.termsAcceptedObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] accepted in
-                self?.termsAlertRelay.accept(!accepted)
-            })
-            .disposed(by: disposeBag)
-    }
-}
-
-extension AboutViewModel {
-    var openLinkSignal: Signal<String> {
-        openLinkRelay.asSignal()
+        syncTermsAlert(termsAccepted: termsManager.termsAccepted)
     }
 
-    var termsAlertDriver: Driver<Bool> {
-        termsAlertRelay.asDriver()
+    private func syncTermsAlert(termsAccepted: Bool) {
+        termsAlert = !termsAccepted
     }
 
     var appVersion: String {
-        service.appVersion
+        systemInfoManager.appVersion.description
     }
 
     var releaseNotesUrl: URL? {
         releaseNotesService.lastVersionUrl
-    }
-
-    func onTapGithubLink() {
-        openLinkRelay.accept("https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)")
-    }
-
-    func onTapWebPageLink() {
-        openLinkRelay.accept(AppConfig.appWebPageLink)
     }
 }

@@ -355,7 +355,7 @@ class MainSettingsViewController: ThemeViewController {
                 id: "about",
                 height: .heightCell48,
                 action: { [weak self] in
-                    self?.navigationController?.pushViewController(AboutModule.viewController(), animated: true)
+                    self?.navigationController?.pushViewController(AboutModule.view().toViewController(title: "settings.about_app.title".localized), animated: true)
                 }
             ),
         ]
