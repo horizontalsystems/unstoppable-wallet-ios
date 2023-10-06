@@ -67,6 +67,7 @@ class App {
     let evmSyncSourceManager: EvmSyncSourceManager
     let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
+    let binanceKitManager: BinanceKitManager
     let tronAccountManager: TronAccountManager
 
     let restoreSettingsManager: RestoreSettingsManager
@@ -77,7 +78,7 @@ class App {
     var debugLogger: DebugLogger?
     let logger: Logger
 
-    let appStatusManager: AppStatusManager
+    let appVersionStorage: AppVersionStorage
     let appVersionManager: AppVersionManager
 
     let testNetManager: TestNetManager
@@ -196,7 +197,7 @@ class App {
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager, marketKit: marketKit)
         evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
-        let binanceKitManager = BinanceKitManager()
+        binanceKitManager = BinanceKitManager()
         let tronKitManager = TronKitManager(testNetManager: testNetManager)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager)
 
@@ -251,21 +252,7 @@ class App {
         favoritesManager = FavoritesManager(storage: favoriteCoinRecordStorage)
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
-        let appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
-
-        appStatusManager = AppStatusManager(
-            systemInfoManager: systemInfoManager,
-            storage: appVersionStorage,
-            accountManager: accountManager,
-            walletManager: walletManager,
-            adapterManager: adapterManager,
-            logRecordManager: logRecordManager,
-            restoreSettingsManager: restoreSettingsManager,
-            evmBlockchainManager: evmBlockchainManager,
-            binanceKitManager: binanceKitManager,
-            marketKit: marketKit
-        )
-
+        appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)

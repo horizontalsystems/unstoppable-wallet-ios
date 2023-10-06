@@ -24,4 +24,10 @@ extension Text {
             .foregroundColor(color)
             .font(.themeCaption)
     }
+
+    func themeCaptionSB(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
+        frame(maxWidth: .infinity, alignment: alignment)
+            .foregroundColor(color)
+            .font(.themeCaptionSB)
+    }
 }
