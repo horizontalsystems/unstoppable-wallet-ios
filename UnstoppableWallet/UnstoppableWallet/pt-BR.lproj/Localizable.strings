@@ -1146,7 +1146,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Senha do Modo Coação";
+"enable_duress_mode.intro.title" = "Duress Mode";
 "enable_duress_mode.intro.description" = "Esta modalidade permite ao usuário configurar várias senhas de desbloqueio de aplicativos, onde uma senha desejada mostra apenas carteiras especificadas. Projetado para manter carteiras selecionadas seguras sob coação ou ameaças.";
 "enable_duress_mode.intro.notes" = "Anotações";
 "enable_duress_mode.intro.biometrics.description" = "O recurso %@ funcionará para desbloquear o Modo de Coação. Você pode desativar %@ por conveniência.";
