@@ -46,13 +46,11 @@ class MainBadgeService {
             }
             .store(in: &cancellables)
 
-        termsManager.termsAcceptedObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .subscribe(onNext: { [weak self] _ in
+        termsManager.$termsAccepted
+            .sink { [weak self] _ in
                 self?.syncSettingsBadge()
-            })
-            .disposed(by: disposeBag)
+            }
+            .store(in: &cancellables)
 
         walletConnectSessionManager.activePendingRequestsObservable
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))

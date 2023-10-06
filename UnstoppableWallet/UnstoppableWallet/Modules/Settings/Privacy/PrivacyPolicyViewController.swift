@@ -1,7 +1,8 @@
-import UIKit
-import ThemeKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
+import SwiftUI
+import ThemeKit
+import UIKit
 
 class PrivacyPolicyViewController: ThemeViewController {
     private let config: Config
@@ -14,7 +15,8 @@ class PrivacyPolicyViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -52,24 +54,21 @@ class PrivacyPolicyViewController: ThemeViewController {
 
         return [
             Section(
-                    id: "privacy-section",
-                    footerState: .margin(height: .margin32),
-                    rows: infoRows
-            )
+                id: "privacy-section",
+                footerState: .margin(height: .margin32),
+                rows: infoRows
+            ),
         ]
     }
-
 }
 
 extension PrivacyPolicyViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         privacySections
     }
-
 }
-extension PrivacyPolicyViewController {
 
+extension PrivacyPolicyViewController {
     struct Config {
         let title: String
         let description: String
@@ -77,16 +76,27 @@ extension PrivacyPolicyViewController {
 
         static var privacy: Config {
             Config(
-                    title: "settings.privacy".localized,
-                    description: "settings.privacy.description".localized(AppConfig.appName),
-                    viewItems: [
-                        "settings.privacy.statement.user_data_storage".localized,
-                        "settings.privacy.statement.data_usage".localized,
-                        "settings.privacy.statement.data_privacy".localized,
-                        "settings.privacy.statement.user_account".localized
-                    ])
+                title: "settings.privacy".localized,
+                description: "settings.privacy.description".localized(AppConfig.appName),
+                viewItems: [
+                    "settings.privacy.statement.user_data_storage".localized,
+                    "settings.privacy.statement.data_usage".localized,
+                    "settings.privacy.statement.data_privacy".localized,
+                    "settings.privacy.statement.user_account".localized,
+                ]
+            )
         }
+    }
+}
 
+struct PrivacyPolicyView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let config: PrivacyPolicyViewController.Config
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        PrivacyPolicyViewController(config: config)
     }
 
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

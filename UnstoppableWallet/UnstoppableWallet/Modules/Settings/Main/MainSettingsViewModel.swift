@@ -1,9 +1,9 @@
 import Combine
-import WalletConnectV1
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 import ThemeKit
+import WalletConnectV1
 
 class MainSettingsViewModel {
     private let service: MainSettingsService
@@ -13,7 +13,7 @@ class MainSettingsViewModel {
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
     private let iCloudSyncAlertRelay: BehaviorRelay<Bool>
-    private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool,text: String)?>
+    private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool, text: String)?>
     private let baseCurrencyRelay: BehaviorRelay<String>
     private let aboutAlertRelay: BehaviorRelay<Bool>
     private let openWalletConnectRelay = PublishRelay<WalletConnectOpenMode>()
@@ -30,64 +30,61 @@ class MainSettingsViewModel {
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
 
         service.noWalletRequiredActionsObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] noWalletRequiredActions in
-                    self?.manageWalletsAlertRelay.accept(!noWalletRequiredActions)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] noWalletRequiredActions in
+                self?.manageWalletsAlertRelay.accept(!noWalletRequiredActions)
+            })
+            .disposed(by: disposeBag)
 
         service.isPasscodeSetPublisher
-                .sink { [weak self] isPinSet in
-                    self?.securityCenterAlertRelay.accept(!isPinSet)
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] isPinSet in
+                self?.securityCenterAlertRelay.accept(!isPinSet)
+            }
+            .store(in: &cancellables)
 
         service.iCloudAvailableErrorObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] hasError in
-                    self?.iCloudSyncAlertRelay.accept(hasError)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] hasError in
+                self?.iCloudSyncAlertRelay.accept(hasError)
+            })
+            .disposed(by: disposeBag)
 
         service.walletConnectSessionCountObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] count in
-                    self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: count, walletConnectPendingRequestCount: self?.service.walletConnectPendingRequestCount ?? 0))
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] count in
+                self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: count, walletConnectPendingRequestCount: self?.service.walletConnectPendingRequestCount ?? 0))
+            })
+            .disposed(by: disposeBag)
 
         service.walletConnectPendingRequestCountObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] count in
-                    self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: self?.service.walletConnectSessionCount ?? 0, walletConnectPendingRequestCount: count))
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] count in
+                self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: self?.service.walletConnectSessionCount ?? 0, walletConnectPendingRequestCount: count))
+            })
+            .disposed(by: disposeBag)
 
         service.baseCurrencyPublisher
-                .sink { [weak self] currency in
-                    self?.baseCurrencyRelay.accept(currency.code)
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] currency in
+                self?.baseCurrencyRelay.accept(currency.code)
+            }
+            .store(in: &cancellables)
 
-        service.termsAcceptedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] accepted in
-                    self?.aboutAlertRelay.accept(!accepted)
-                })
-                .disposed(by: disposeBag)
+        service.termsAcceptedPublisher
+            .sink { [weak self] accepted in
+                self?.aboutAlertRelay.accept(!accepted)
+            }
+            .store(in: &cancellables)
     }
 
-    private static func convert(walletConnectSessionCount: Int, walletConnectPendingRequestCount: Int) -> (highlighted: Bool,text: String)? {
+    private static func convert(walletConnectSessionCount: Int, walletConnectPendingRequestCount: Int) -> (highlighted: Bool, text: String)? {
         if walletConnectPendingRequestCount != 0 {
             return (highlighted: true, text: "\(walletConnectPendingRequestCount)")
         }
         return walletConnectSessionCount > 0 ? (highlighted: false, text: "\(walletConnectSessionCount)") : nil
     }
-
 }
 
 extension MainSettingsViewModel {
-
     var openWalletConnectSignal: Signal<WalletConnectOpenMode> {
         openWalletConnectRelay.asSignal()
     }
@@ -108,7 +105,7 @@ extension MainSettingsViewModel {
         iCloudSyncAlertRelay.asDriver()
     }
 
-    var walletConnectCountDriver: Driver<(highlighted: Bool,text: String)?> {
+    var walletConnectCountDriver: Driver<(highlighted: Bool, text: String)?> {
         walletConnectCountRelay.asDriver()
     }
 
@@ -138,10 +135,10 @@ extension MainSettingsViewModel {
 
     func onTapWalletConnect() {
         switch service.walletConnectState {
-            case .noAccount: openWalletConnectRelay.accept(.errorDialog(error: .noAccount))
-            case .backedUp: openWalletConnectRelay.accept(.list)
-            case .nonSupportedAccountType(let accountType): openWalletConnectRelay.accept(.errorDialog(error: .nonSupportedAccountType(accountTypeDescription: accountType.description)))
-            case .unBackedUpAccount(let account):  openWalletConnectRelay.accept(.errorDialog(error: .unbackupedAccount(account: account)))
+        case .noAccount: openWalletConnectRelay.accept(.errorDialog(error: .noAccount))
+        case .backedUp: openWalletConnectRelay.accept(.list)
+        case let .nonSupportedAccountType(accountType): openWalletConnectRelay.accept(.errorDialog(error: .nonSupportedAccountType(accountTypeDescription: accountType.description)))
+        case let .unBackedUpAccount(account): openWalletConnectRelay.accept(.errorDialog(error: .unbackupedAccount(account: account)))
         }
     }
 
@@ -155,10 +152,8 @@ extension MainSettingsViewModel {
 }
 
 extension MainSettingsViewModel {
-
     enum WalletConnectOpenMode {
         case list
         case errorDialog(error: WalletConnectAppShowView.WalletConnectOpenError)
     }
-
 }
