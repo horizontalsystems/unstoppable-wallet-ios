@@ -27,16 +27,16 @@ extension BackupAppModule {
             switch self {
             case .cloud:
                 return BackupDestinationDisclaimer(
-                        title: "backup.disclaimer.cloud.title".localized,
-                        highlightedDescription:  "backup.disclaimer.cloud.description".localized,
-                        selectedCheckboxText:  "backup.disclaimer.cloud.checkbox_label".localized,
+                        title: "backup_app.backup.disclaimer.cloud.title".localized,
+                        highlightedDescription:  "backup_app.backup.disclaimer.cloud.description".localized,
+                        selectedCheckboxText:  "backup_app.backup.disclaimer.cloud.checkbox_label".localized,
                         buttonTitle: "button.next".localized
                 )
             case .local:
                 return BackupDestinationDisclaimer(
-                        title: "backup.disclaimer.file.title".localized,
-                        highlightedDescription:  "backup.disclaimer.file.description".localized,
-                        selectedCheckboxText:  "backup.disclaimer.file.checkbox_label".localized,
+                        title: "backup_app.backup.disclaimer.file.title".localized,
+                        highlightedDescription:  "backup_app.backup.disclaimer.file.description".localized,
+                        selectedCheckboxText:  "backup_app.backup.disclaimer.file.checkbox_label".localized,
                         buttonTitle: "button.next".localized
                 )
             }
@@ -48,5 +48,75 @@ extension BackupAppModule {
         let highlightedDescription: String
         let selectedCheckboxText: String
         let buttonTitle: String
+    }
+}
+
+extension BackupAppModule {
+    static func items(watchAccountCount: Int, watchlistCount: Int, contactAddressCount: Int, blockchainSourcesCount: Int) -> [BackupAppModule.Item] {
+        var items = [Item]()
+
+        if watchAccountCount != 0 {
+            items.append(BackupAppModule.Item(
+                    title: "backup_app.backup_list.other.watch_account.title".localized,
+                    description: "backup_app.backup_list.other.watch_account.description".localized(watchAccountCount)
+            ))
+        }
+
+        if watchlistCount != 0 {
+            items.append(BackupAppModule.Item(
+                    title: "backup_app.backup_list.other.watchlist.title".localized,
+                    description: "backup_app.backup_list.other.watchlist.description".localized(watchlistCount)
+            ))
+        }
+
+        if contactAddressCount != 0 {
+            items.append(BackupAppModule.Item(
+                    title: "backup_app.backup_list.other.contacts.title".localized,
+                    description: "backup_app.backup_list.other.contacts.description".localized(contactAddressCount)
+            ))
+        }
+
+        if blockchainSourcesCount != 0 {
+            items.append(BackupAppModule.Item(
+                    title: "backup_app.backup_list.other.blockchain_settings.title".localized,
+                    description: "backup_app.backup_list.other.blockchain_settings.description".localized(blockchainSourcesCount)
+            ))
+        }
+        items.append(BackupAppModule.Item(
+                title: "backup_app.backup_list.other.app_settings.title".localized,
+                description: "backup_app.backup_list.other.app_settings.description".localized
+        ))
+
+        return items
+    }
+
+}
+extension BackupAppModule {
+    struct AccountItem: Comparable, Identifiable {
+        let accountId: String
+        let name: String
+        let description: String
+        let cautionType: CautionType?
+
+        static func < (lhs: AccountItem, rhs: AccountItem) -> Bool {
+            lhs.name < rhs.name
+        }
+
+        static func == (lhs: AccountItem, rhs: AccountItem) -> Bool {
+            lhs.accountId == rhs.accountId
+        }
+
+        var id: String {
+            accountId
+        }
+    }
+
+    struct Item: Identifiable {
+        let title: String
+        let description: String
+
+        var id: String {
+            title
+        }
     }
 }

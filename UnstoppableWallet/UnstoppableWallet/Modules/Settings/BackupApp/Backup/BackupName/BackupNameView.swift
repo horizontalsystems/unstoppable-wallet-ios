@@ -9,7 +9,7 @@ struct BackupNameView: View {
         ThemeView {
             BottomGradientWrapper {
                 VStack(spacing: .margin24) {
-                    Text("backup.name.description".localized)
+                    Text("backup_app.backup.name.description".localized)
                         .themeSubhead2()
                         .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin12, trailing: .margin16))
 
@@ -40,7 +40,7 @@ struct BackupNameView: View {
                     .disabled(viewModel.nameCautionState != .none)
                 }
             }
-            .navigationBarTitle("backup.name.title".localized)
+            .navigationBarTitle("backup_app.backup.name.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {

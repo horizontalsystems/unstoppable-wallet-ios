@@ -31,8 +31,8 @@ class BackupAppViewModel: ObservableObject {
 
     // Configuration ViewModel
     @Published var selected: [String: Bool] = [:]
-    @Published var accountItems: [AccountItem] = []
-    @Published var otherItems: [Item] = []
+    @Published var accountItems: [BackupAppModule.AccountItem] = []
+    @Published var otherItems: [BackupAppModule.Item] = []
     @Published var disclaimerPushed = false {
         didSet {
             // need to reset future fields:
@@ -129,7 +129,7 @@ extension BackupAppViewModel {
             .map { $0.id }
     }
 
-    private func item(account: Account) -> AccountItem {
+    private func item(account: Account) -> BackupAppModule.AccountItem {
         var alertSubtitle: String?
         let hasAlertDescription = !(account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId()))
         if account.nonStandard {
@@ -143,7 +143,7 @@ extension BackupAppViewModel {
         let cautionType: CautionType? = showAlert ? .error : .none
         let description = alertSubtitle ?? account.type.detailedDescription
 
-        return AccountItem(
+        return BackupAppModule.AccountItem(
             accountId: account.id,
             name: account.name,
             description: description,
@@ -151,47 +151,16 @@ extension BackupAppViewModel {
         )
     }
 
-    private func getOtherItems() -> [Item] {
-        var items = [Item]()
-
-        let watchAccountCount = accounts(watch: true).count
-        if watchAccountCount != 0 {
-            items.append(Item(
-                title: "backup_list.other.watch_account.title".localized,
-                description: "backup_list.other.watch_account.description".localized(watchAccountCount)
-            ))
-        }
-
-        let watchlistCount = favoritesManager.allCoinUids.count
-        if watchlistCount != 0 {
-            items.append(Item(
-                title: "backup_list.other.watchlist.title".localized,
-                description: "backup_list.other.watchlist.description".localized(watchlistCount)
-            ))
-        }
-
+    private func getOtherItems() -> [BackupAppModule.Item] {
         let contacts = contactManager.all ?? []
         let contactAddressCount = contacts.reduce(into: 0) { $0 += $1.addresses.count }
-        if contactAddressCount != 0 {
-            items.append(Item(
-                title: "backup_list.other.contacts.title".localized,
-                description: "backup_list.other.contacts.description".localized(contactAddressCount)
-            ))
-        }
 
-        let blockchainSourcesCount = evmSyncSourceManager.customSyncSources(blockchainType: nil).count
-        if blockchainSourcesCount != 0 {
-            items.append(Item(
-                title: "backup_list.other.blockchain_settings.title".localized,
-                description: "backup_list.other.blockchain_settings.description".localized(blockchainSourcesCount)
-            ))
-        }
-        items.append(Item(
-            title: "backup_list.other.app_settings.title".localized,
-            description: "backup_list.other.app_settings.description".localized
-        ))
-
-        return items
+        return BackupAppModule.items(
+                watchAccountCount: accounts(watch: true).count,
+                watchlistCount: favoritesManager.allCoinUids.count,
+                contactAddressCount: contactAddressCount,
+                blockchainSourcesCount: evmSyncSourceManager.customSyncSources(blockchainType: nil).count
+        )
     }
 
     var configuration: [AppBackupProvider.Field] {
@@ -220,7 +189,7 @@ extension BackupAppViewModel {
 }
 
 extension BackupAppViewModel {
-    func toggle(item: AccountItem) {
+    func toggle(item: BackupAppModule.AccountItem) {
         selected[item.accountId]?.toggle()
     }
 }
@@ -345,34 +314,6 @@ extension BackupAppViewModel {
 }
 
 extension BackupAppViewModel {
-    struct AccountItem: Comparable, Identifiable {
-        let accountId: String
-        let name: String
-        let description: String
-        let cautionType: CautionType?
-
-        static func < (lhs: AccountItem, rhs: AccountItem) -> Bool {
-            lhs.name < rhs.name
-        }
-
-        static func == (lhs: AccountItem, rhs: AccountItem) -> Bool {
-            lhs.accountId == rhs.accountId
-        }
-
-        var id: String {
-            accountId
-        }
-    }
-
-    struct Item: Identifiable {
-        let title: String
-        let description: String
-
-        var id: String {
-            title
-        }
-    }
-
     enum NameError: Error, LocalizedError {
         case empty
         case alreadyExist

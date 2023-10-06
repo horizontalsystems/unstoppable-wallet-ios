@@ -2,10 +2,10 @@ import Combine
 import Foundation
 import HsExtensions
 
-class RestoreCloudPassphraseViewModel {
+class RestorePassphraseViewModel {
     private var cancellables = Set<AnyCancellable>()
 
-    private let service: RestoreCloudPassphraseService
+    private let service: RestorePassphraseService
     @Published public var passphraseCaution: Caution?
     @Published public var processing: Bool = false
 
@@ -14,7 +14,7 @@ class RestoreCloudPassphraseViewModel {
     private let openSelectCoinsSubject = PassthroughSubject<RestoreCloudModule.RestoredAccount, Never>()
     private let successSubject = PassthroughSubject<Void, Never>()
 
-    init(service: RestoreCloudPassphraseService) {
+    init(service: RestorePassphraseService) {
         self.service = service
     }
 
@@ -23,11 +23,9 @@ class RestoreCloudPassphraseViewModel {
             passphraseCaution = nil
         }
     }
-
 }
 
-extension RestoreCloudPassphraseViewModel {
-
+extension RestorePassphraseViewModel {
     var clearInputsPublisher: AnyPublisher<Void, Never> {
         clearInputsSubject.eraseToAnyPublisher()
     }
@@ -57,27 +55,29 @@ extension RestoreCloudPassphraseViewModel {
         return validated
     }
 
-    func onTapImport() {
+    func onTapNext() {
         passphraseCaution = nil
 
         processing = true
         Task { [weak self, service] in
             do {
-                let result = try await service.importWallet()
+                let result = try await service.next()
                 self?.processing = false
 
                 switch result {
                 case .success:
                     self?.successSubject.send()
-                case .restoredAccount(let account):
+                case let .restoredAccount(account):
                     if account.showSelectCoins {
                         self?.openSelectCoinsSubject.send(account)
                     } else {
                         self?.successSubject.send()
                     }
+                case let .source(source):
+                    print("Open next source list")
                 }
             } catch {
-                switch (error as? RestoreCloudModule.RestoreError) {
+                switch error as? RestoreCloudModule.RestoreError {
                 case .emptyPassphrase:
                     self?.passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
                 case .simplePassword:
@@ -93,5 +93,13 @@ extension RestoreCloudPassphraseViewModel {
             }
         }
     }
+}
 
+extension RestorePassphraseViewModel {
+    var buttonTitle: String {
+        switch service.restoredBackup.source {
+        case .wallet: return "button.import".localized
+        case .full: return "button.continue".localized
+        }
+    }
 }

@@ -13,13 +13,13 @@ struct BackupManagerView: View {
                     restorePresented = true
                 }) {
                     Image("download_24").themeIcon(color: .themeJacob)
-                    Text("backup_manager.restore".localized).themeBody(color: .themeJacob)
+                    Text("backup_app.backup_manager.restore".localized).themeBody(color: .themeJacob)
                 }
                 ClickableRow(action: {
                     backupPresented = true
                 }) {
                     Image("plus_24").themeIcon(color: .themeJacob)
-                    Text("backup_manager.create".localized).themeBody(color: .themeJacob)
+                    Text("backup_app.backup_manager.create".localized).themeBody(color: .themeJacob)
                 }
             }
             .sheet(isPresented: $restorePresented) {
@@ -28,7 +28,7 @@ struct BackupManagerView: View {
             .sheet(isPresented: $backupPresented) {
                 ThemeNavigationView { BackupAppModule.view(backupPresented: $backupPresented) }
             }
-            .navigationBarTitle("backup_manager.title".localized)
+            .navigationBarTitle("backup_app.backup_manager.title".localized)
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
     }

@@ -12,16 +12,16 @@ struct BackupTypeView: View {
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
-                Text("backup_type.description".localized)
+                Text("backup_app.backup_type.description".localized)
                     .themeSubhead2()
                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin12, trailing: .margin16))
 
                 ListSection {
-                    navigation(image: "icloud_24", text: "backup_type.cloud".localized, isAvailable: $viewModel.cloudAvailable, isActive: $cloudNavigationPushed) {
+                    navigation(image: "icloud_24", text: "backup_app.backup_type.cloud".localized, isAvailable: $viewModel.cloudAvailable, isActive: $cloudNavigationPushed) {
                         if viewModel.cloudAvailable { viewModel.destination = .cloud } else { cloudAlertPresented = true }
                     }
 
-                    navigation(image: "file_24", text: "backup_type.file".localized, isActive: $localNavigationPushed) {
+                    navigation(image: "file_24", text: "backup_app.backup_type.file".localized, isActive: $localNavigationPushed) {
                         viewModel.destination = .local
                     }
                 }
@@ -33,7 +33,7 @@ struct BackupTypeView: View {
                     }
                 }
             }
-            .navigationBarTitle("backup_type.title".localized)
+            .navigationBarTitle("backup_app.backup_type.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {

@@ -112,7 +112,7 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapRestore() {
-        let viewController = RestoreTypeModule.viewController(sourceViewController: self, returnViewController: createAccountListener)
+        let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self, returnViewController: createAccountListener)
         present(viewController, animated: true)
     }
 

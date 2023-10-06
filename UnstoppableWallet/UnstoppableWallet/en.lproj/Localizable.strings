@@ -139,18 +139,22 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "restore_type.recovery.title" = "from Recovery Phrase";
 "restore_type.cloud.title" = "from iCloud";
+"restore_type.file.title" = "from Files";
 "restore_type.cex.title" = "from Exchange Wallet";
 
 "restore_type.recovery.description" = "Import using recovery phrase or private key.";
 "restore_type.cloud.description" = "Import from a backup file in your keychain.";
+"restore_type.file.description" = "Import a backup file from your local folder.";
 "restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
+"restore.cloud.description" = "Select the backup file that you want to restore.";
 "restore.cloud.empty" = "No backups found.";
+"restore.cloud.wallets" = "Wallet backups";
 "restore.cloud.imported" = "Imported wallets";
+"restore.cloud.app_backups" = "App backups";
 
 "restore.cloud.password.title" = "Enter Password";
 "restore.cloud.password.placeholder" = "Backup Password";
@@ -1087,43 +1091,43 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Settings -> Backup Manager
 
-"backup_manager.title" = "Backup Manager";
-"backup_manager.restore" = "Restore Backup";
-"backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.title" = "Backup Manager";
+"backup_app.backup_manager.restore" = "Restore Backup";
+"backup_app.backup_manager.create" = "Create New Backup";
 
-"backup_type.title" = "Backup Type";
-"backup_type.description" = "Select where you want to save the backup file.";
-"backup_type.cloud" = "Backup to iCloud";
-"backup_type.file" = "Backup to Files";
+"backup_app.backup_type.title" = "Backup Type";
+"backup_app.backup_type.description" = "Select where you want to save the backup file.";
+"backup_app.backup_type.cloud" = "Backup to iCloud";
+"backup_app.backup_type.file" = "Backup to Files";
 
-"backup_list.title" = "Backup File";
-"backup_list.description.restore" = "List of contents in the backup file.";
-"backup_list.header.wallets" = "Wallets";
-"backup_list.header.other" = "Other";
-"backup_list.other.watch_account.title" = "Watch Wallets";
-"backup_list.other.watch_account.description" = "Addresses: %d";
-"backup_list.other.watchlist.title" = "Watchlist";
-"backup_list.other.watchlist.description" = "Coins: %d";
-"backup_list.other.contacts.title" = "Contacts";
-"backup_list.other.contacts.description" = "Addresses: %d";
-"backup_list.other.blockchain_settings.title" = "Blockchain Settings";
-"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
-"backup_list.other.app_settings.title" = "App Settings";
-"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_app.backup_list.title" = "Backup File";
+"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.header.wallets" = "Wallets";
+"backup_app.backup_list.header.other" = "Other";
+"backup_app.backup_list.other.watch_account.title" = "Watch Wallets";
+"backup_app.backup_list.other.watch_account.description" = "Addresses: %d";
+"backup_app.backup_list.other.watchlist.title" = "Watchlist";
+"backup_app.backup_list.other.watchlist.description" = "Coins: %d";
+"backup_app.backup_list.other.contacts.title" = "Contacts";
+"backup_app.backup_list.other.contacts.description" = "Addresses: %d";
+"backup_app.backup_list.other.blockchain_settings.title" = "Blockchain Settings";
+"backup_app.backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_app.backup_list.other.app_settings.title" = "App Settings";
+"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
-"backup.disclaimer.cloud.title" = "Backup to iCloud";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
-"backup.disclaimer.cloud.checkbox_label" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
-"backup.disclaimer.file.title" = "Backup to File";
-"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
-"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+"backup_app.backup.disclaimer.cloud.title" = "Backup to iCloud";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup_app.backup.disclaimer.file.title" = "Backup to File";
+"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
 
-"backup.name.title" = "Backup Name";
-"backup.name.description" = "Enter name for the backup file.";
+"backup_app.backup.name.title" = "Backup Name";
+"backup_app.backup.name.description" = "Enter name for the backup file.";
 
-"backup.password.title" = "Backup Password";
-"backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup_app.backup.password.title" = "Backup Password";
+"backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
+"backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
 
