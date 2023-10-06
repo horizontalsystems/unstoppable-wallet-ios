@@ -149,6 +149,9 @@ extension MainSettingsViewModel {
         openLinkRelay.accept(AppConfig.companyWebPageLink)
     }
 
+    func onTapRateApp() {
+        service.rateApp()
+    }
 }
 
 extension MainSettingsViewModel {

@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class AboutViewModel {
     private let service: AboutService
@@ -18,17 +18,15 @@ class AboutViewModel {
         termsAlertRelay = BehaviorRelay(value: !service.termsAccepted)
 
         service.termsAcceptedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] accepted in
-                    self?.termsAlertRelay.accept(!accepted)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] accepted in
+                self?.termsAlertRelay.accept(!accepted)
+            })
+            .disposed(by: disposeBag)
     }
-
 }
 
 extension AboutViewModel {
-
     var openLinkSignal: Signal<String> {
         openLinkRelay.asSignal()
     }
@@ -52,9 +50,4 @@ extension AboutViewModel {
     func onTapWebPageLink() {
         openLinkRelay.accept(AppConfig.appWebPageLink)
     }
-
-    func onTapRateApp() {
-        service.rateApp()
-    }
-
 }
