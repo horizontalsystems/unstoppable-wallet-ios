@@ -286,54 +286,66 @@ extension EvmSyncSourceManager {
 }
 
 extension EvmSyncSourceManager {
-    func backup(passphrase: String) -> SyncSourceBackup {
-        let customSources = ((try? evmSyncSourceStorage.getAll()) ?? [])
-            .map { record in
-                let crypto = record.auth
-                    .flatMap { $0.isEmpty ? nil : $0 }
-                    .flatMap { $0.data(using: .utf8) }
-                    .flatMap { try? BackupCrypto.instance(data: $0, passphrase: passphrase) }
+    var customSources: [EvmSyncSourceRecord] {
+        (try? evmSyncSourceStorage.getAll()) ?? []
+    }
 
-                return CustomSyncSource(
-                    blockchainTypeUid: record.blockchainTypeUid,
-                    url: record.url,
-                    auth: crypto
-                )
-            }
-        let selected = BlockchainType
-            .supported
-            .filter { !$0.allowedProviders.isEmpty }
+    var selectedSources: [SelectedSource] {
+        EvmBlockchainManager
+            .blockchainTypes
             .map { type in
                 SelectedSource(
                     blockchainTypeUid: type.uid,
                     url: syncSource(blockchainType: type).rpcSource.url.absoluteString
                 )
             }
-        return .init(selected: selected, custom: customSources)
     }
+}
 
-    func restore(backup: SyncSourceBackup, passphrase: String? = nil) {
-        var blockchainTypes = Set<BlockchainType>()
-        backup.custom.forEach { source in
-            let auth: String? = source.auth.flatMap {
-                    guard let passphrase else { return nil }
-                    return try? $0.data(passphrase: passphrase)
-                }
+extension EvmSyncSourceManager {
+    func decrypt(sources: [CustomSyncSource], passphrase: String) throws -> [EvmSyncSourceRecord] {
+        try sources.map { source in
+            let auth = try source.auth
+                .flatMap { try $0.decrypt(passphrase: passphrase) }
                 .flatMap { String(data: $0, encoding: .utf8) }
-            let record = EvmSyncSourceRecord(
+
+            return EvmSyncSourceRecord(
                 blockchainTypeUid: source.blockchainTypeUid,
                 url: source.url,
                 auth: auth
             )
+        }
+    }
 
+    func encrypt(sources: [EvmSyncSourceRecord], passphrase: String) throws -> [CustomSyncSource] {
+        try sources.map { source in
+            let crypto = try source.auth
+                .flatMap { $0.isEmpty ? nil : $0 }
+                .flatMap { $0.data(using: .utf8) }
+                .flatMap { try BackupCrypto.encrypt(data: $0, passphrase: passphrase) }
+
+            return CustomSyncSource(
+                blockchainTypeUid: source.blockchainTypeUid,
+                url: source.url,
+                auth: crypto
+            )
+        }
+    }
+}
+
+extension EvmSyncSourceManager {
+    func restore(selected: [SelectedSource], custom: [EvmSyncSourceRecord]) {
+        var blockchainTypes = Set<BlockchainType>()
+        custom.forEach { source in
             blockchainTypes.insert(BlockchainType(uid: source.blockchainTypeUid))
-            try? evmSyncSourceStorage.save(record: record)
+            try? evmSyncSourceStorage.save(record: source)
         }
 
-        backup.selected.forEach { source in
+        selected.forEach { source in
             let blockchainType = BlockchainType(uid: source.blockchainTypeUid)
             if let syncSource = allSyncSources(blockchainType: blockchainType)
-                .first(where: { $0.rpcSource.url.absoluteString == source.url }) {
+                .first(where: { $0.rpcSource.url.absoluteString == source.url })
+            {
                 saveCurrent(syncSource: syncSource, blockchainType: blockchainType)
             }
         }

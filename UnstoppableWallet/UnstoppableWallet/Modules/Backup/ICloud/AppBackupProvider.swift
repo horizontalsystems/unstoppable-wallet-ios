@@ -65,19 +65,9 @@ class AppBackupProvider {
         self.contactManager = contactManager
     }
 
-    private func walletBackups(ids: [String], passphrase: String) -> [RestoreCloudModule.RestoredBackup] {
-        ids.compactMap {
-            accountManager.account(id: $0)
-        }.compactMap {
-            try? walletBackup(account: $0, passphrase: passphrase)
-        }
-    }
-}
-
-extension AppBackupProvider {
-    func walletBackup(account: Account, passphrase: String) throws -> RestoreCloudModule.RestoredBackup {
-        let wallets = App.shared
-            .walletManager
+    // Parts of backups
+    func enabledWallets(account: Account) -> [WalletBackup.EnabledWallet] {
+        walletManager
             .wallets(account: account).map {
                 let settings = restoreSettingsManager
                     .settings(accountId: account.id, blockchainType: $0.token.blockchainType)
@@ -85,108 +75,75 @@ extension AppBackupProvider {
 
                 return WalletBackup.EnabledWallet($0, settings: settings)
             }
-        return try AppBackupProvider.walletBackup(
-            accountType: account.type,
-            wallets: wallets,
-            isManualBackedUp: account.backedUp,
-            isFileBackedUp: account.fileBackedUp,
-            name: account.name,
-            passphrase: passphrase
-        )
     }
 
-    func fullBackup(fields: [Field], passphrase: String) throws -> FullBackup {
-        var wallets = [RestoreCloudModule.RestoredBackup]()
-        var watchlistIds = [String]()
-        var contacts = [BackupContact]()
-        var settings: SettingsBackup?
-        for field in fields {
-            switch field {
-            case let .accounts(ids):
-                wallets.append(contentsOf: walletBackups(ids: ids, passphrase: passphrase))
-            case .watchlist:
-                watchlistIds = favoritesManager.allCoinUids
-            case .contacts:
-                contacts = contactManager.backupContactBook?.contacts ?? []
-            case .settings:
-                let providers: [SettingsBackup.DefaultProvider] = BlockchainType
-                    .supported
-                    .filter { !$0.allowedProviders.isEmpty }
-                    .map {
-                        SettingsBackup.DefaultProvider(
-                            blockchainTypeId: $0.uid,
-                            provider: localStorage.defaultProvider(blockchainType: $0).id
-                        )
-                    }
-                settings = SettingsBackup(
-                    evmSyncSources: evmSyncSourceManager.backup(passphrase: passphrase),
-                    btcModes: btcBlockchainManager.backup,
-                    lockTimeEnabled: localStorage.lockTimeEnabled,
-                    remoteContactsSync: localStorage.remoteContactsSync,
-                    swapProviders: providers,
-                    chartIndicators: chartRepository.backup,
-                    indicatorsShown: localStorage.indicatorsShown,
-                    currentLanguage: languageManager.currentLanguage,
-                    baseCurrency: currencyKit.baseCurrency.code,
-                    mode: themeManager.themeMode,
-                    showMarketTab: launchScreenManager.showMarket,
-                    launchScreen: launchScreenManager.launchScreen,
-                    conversionTokenQueryId: balanceConversionManager.conversionToken?.tokenQuery.id,
-                    balancePrimaryValue: balancePrimaryValueManager.balancePrimaryValue,
-                    balanceAutoHide: balanceHiddenManager.balanceAutoHide,
-                    appIcon: appIconManager.appIcon.title
+    private var swapProviders: [SettingsBackup.DefaultProvider] {
+        EvmBlockchainManager
+            .blockchainTypes
+            .map {
+                SettingsBackup.DefaultProvider(
+                    blockchainTypeId: $0.uid,
+                    provider: localStorage.defaultProvider(blockchainType: $0).id
                 )
             }
-        }
+    }
 
-        guard !wallets.isEmpty ||
-            !watchlistIds.isEmpty ||
-            !contacts.isEmpty ||
-            settings != nil
-        else {
-            throw CodingError.emptyParameters
-        }
-
-        var contactCrypto: BackupCrypto?
-        if !contacts.isEmpty {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(contacts)
-            contactCrypto = try BackupCrypto.instance(data: data, passphrase: passphrase)
-        }
-
-        return FullBackup(
-            id: UUID().uuidString,
-            wallets: wallets,
-            watchlistIds: watchlistIds,
-            contacts: contactCrypto,
-            settings: settings,
-            version: AppBackupProvider.version,
-            timestamp: Date().timeIntervalSince1970.rounded()
+    private func settings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup) -> SettingsBackup {
+        SettingsBackup(
+            evmSyncSources: evmSyncSources,
+            btcModes: btcBlockchainManager.backup,
+            lockTimeEnabled: localStorage.lockTimeEnabled,
+            remoteContactsSync: localStorage.remoteContactsSync,
+            swapProviders: swapProviders,
+            chartIndicators: chartRepository.backup,
+            indicatorsShown: localStorage.indicatorsShown,
+            currentLanguage: languageManager.currentLanguage,
+            baseCurrency: currencyKit.baseCurrency.code,
+            mode: themeManager.themeMode,
+            showMarketTab: launchScreenManager.showMarket,
+            launchScreen: launchScreenManager.launchScreen,
+            conversionTokenQueryId: balanceConversionManager.conversionToken?.tokenQuery.id,
+            balancePrimaryValue: balancePrimaryValueManager.balancePrimaryValue,
+            balanceAutoHide: balanceHiddenManager.balanceAutoHide,
+            appIcon: appIconManager.appIcon.title
         )
     }
 
-    func walletRestore(backup: RestoreCloudModule.RestoredBackup, accountType: AccountType) {
-        switch accountType {
-        case .cex:
-            let account = accountFactory.account(
-                type: accountType,
-                origin: .restored,
-                backedUp: backup.walletBackup.isManualBackedUp,
-                fileBackedUp: backup.walletBackup.isFileBackedUp,
-                name: backup.name
-            )
-            accountManager.save(account: account)
-        default:
-            let account = accountFactory.account(
-                    type: accountType,
-                    origin: .restored,
-                    backedUp: backup.walletBackup.isManualBackedUp,
-                    fileBackedUp: backup.walletBackup.isFileBackedUp,
-                    name: backup.name
-            )
-            accountManager.save(account: account)
+    func encrypt(accountIds: [String], passphrase: String) throws -> [RestoreCloudModule.RestoredBackup] {
+        try accountIds.compactMap {
+            accountManager.account(id: $0)
+        }.compactMap {
+            try Self.encrypt(account: $0, wallets: enabledWallets(account: $0), passphrase: passphrase)
+        }
+    }
 
-            let wallets = backup.walletBackup.enabledWallets.map {
+    func fullBackup(accountIds: [String]) -> RawFullBackup {
+        let accounts = accountIds
+            .compactMap { accountManager.account(id: $0) }
+            .compactMap { RawWalletBackup(account: $0, enabledWallets: enabledWallets(account: $0)) }
+
+        let custom = evmSyncSourceManager.customSources
+        let selected = evmSyncSourceManager.selectedSources
+        let syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: selected, custom: [])
+        return RawFullBackup(
+            accounts: accounts,
+            watchlistIds: favoritesManager.allCoinUids,
+            contacts: contactManager.backupContactBook?.contacts ?? [],
+            settings: settings(evmSyncSources: syncSources),
+            customSyncSources: custom
+        )
+    }
+}
+
+extension AppBackupProvider {
+    func restore(raw: RawWalletBackup) {
+        switch raw.account.type {
+        case .cex:
+            accountManager.save(account: raw.account)
+        default:
+            accountManager.save(account: raw.account)
+
+            let wallets = raw.enabledWallets.map {
                 if !$0.settings.isEmpty {
                     var restoreSettings = [RestoreSettingType: String]()
                     $0.settings.forEach { key, value in
@@ -195,12 +152,12 @@ extension AppBackupProvider {
                         }
                     }
                     if let tokenQuery = TokenQuery(id: $0.tokenQueryId) {
-                        restoreSettingsManager.save(settings: restoreSettings, account: account, blockchainType: tokenQuery.blockchainType)
+                        restoreSettingsManager.save(settings: restoreSettings, account: raw.account, blockchainType: tokenQuery.blockchainType)
                     }
                 }
                 return EnabledWallet(
                     tokenQueryId: $0.tokenQueryId,
-                    accountId: account.id,
+                    accountId: raw.account.id,
                     coinName: $0.coinName,
                     coinCode: $0.coinCode,
                     tokenDecimals: $0.tokenDecimals
@@ -210,83 +167,107 @@ extension AppBackupProvider {
         }
     }
 
-    func fullRestore(backup: FullBackup, passphrase: String) throws {
-        var encryptionError: Error?
-        var encodedWallets = [(RestoreCloudModule.RestoredBackup, AccountType)]()
-        backup.wallets.forEach { wallet in
-            do {
-                let accountType = try wallet
-                    .walletBackup
-                    .crypto
-                    .accountType(type: wallet.walletBackup.type, passphrase: passphrase)
-                encodedWallets.append((wallet, accountType))
-            } catch {
-                encryptionError = error
-            }
+    func restore(raw: RawFullBackup) {
+        raw.accounts.forEach { wallet in
+            restore(raw: wallet)
+        }
+        favoritesManager.add(coinUids: raw.watchlistIds)
+
+        if !raw.contacts.isEmpty {
+            try? contactManager.restore(contacts: raw.contacts)
         }
 
-        if encodedWallets.count != backup.wallets.count {
-            encryptionError = CodingError.invalidPassword
+        evmSyncSourceManager.restore(selected: raw.settings.evmSyncSources.selected, custom: raw.customSyncSources)
+        btcBlockchainManager.restore(backup: raw.settings.btcModes)
+        chartRepository.restore(backup: raw.settings.chartIndicators)
+        localStorage.restore(backup: raw.settings)
+        languageManager.currentLanguage = raw.settings.currentLanguage
+        if let currency = currencyKit.currencies.first(where: { $0.code == raw.settings.baseCurrency }) {
+            currencyKit.baseCurrency = currency
         }
+        themeManager.themeMode = raw.settings.mode
+        launchScreenManager.showMarket = raw.settings.showMarketTab
+        launchScreenManager.launchScreen = raw.settings.launchScreen
 
-        if let encryptionError {
-            throw encryptionError
-        }
-        // restore only if all wallet was encrypted with password
-        encodedWallets.forEach { wallet in
-            walletRestore(
-                backup: wallet.0,
-                accountType: wallet.1
-            )
-        }
-
-        favoritesManager.add(coinUids: backup.watchlistIds)
-
-        if let contacts = backup.contacts {
-            let contacts = try ContactBookManager.encode(crypto: contacts, passphrase: passphrase)
-            try contactManager.restore(contacts: contacts)
-        }
-
-        if let settings = backup.settings {
-            evmSyncSourceManager.restore(backup: settings.evmSyncSources)
-            btcBlockchainManager.restore(backup: settings.btcModes)
-            chartRepository.restore(backup: settings.chartIndicators)
-            localStorage.restore(backup: settings)
-            languageManager.currentLanguage = settings.currentLanguage
-            if let currency = currencyKit.currencies.first(where: { $0.code == settings.baseCurrency }) {
-                currencyKit.baseCurrency = currency
-            }
-            themeManager.themeMode = settings.mode
-            launchScreenManager.showMarket = settings.showMarketTab
-            launchScreenManager.launchScreen = settings.launchScreen
-
-            balanceConversionManager.set(tokenQueryId: settings.conversionTokenQueryId)
-            balanceHiddenManager.set(balanceAutoHide: settings.balanceAutoHide)
-            let appIcon = AppIconManager.allAppIcons.first { $0.title == settings.appIcon } ?? .main
-            if appIconManager.appIcon != appIcon {
-                appIconManager.appIcon = appIcon
-            }
+        balanceConversionManager.set(tokenQueryId: raw.settings.conversionTokenQueryId)
+        balanceHiddenManager.set(balanceAutoHide: raw.settings.balanceAutoHide)
+        let appIcon = AppIconManager.allAppIcons.first { $0.title == raw.settings.appIcon } ?? .main
+        if appIconManager.appIcon != appIcon {
+            appIconManager.appIcon = appIcon
         }
     }
 }
 
 extension AppBackupProvider {
-    static func walletBackup(accountType: AccountType, wallets: [WalletBackup.EnabledWallet], isManualBackedUp: Bool, isFileBackedUp: Bool, name: String, passphrase: String) throws -> RestoreCloudModule.RestoredBackup {
-        let message = accountType.uniqueId(hashed: false)
-        let crypto = try BackupCrypto.instance(data: message, passphrase: passphrase)
+    func decrypt(walletBackup: WalletBackup, name: String, passphrase: String) throws -> RawWalletBackup {
+        let accountType = try AccountType.decrypt(
+            crypto: walletBackup.crypto,
+            type: walletBackup.type,
+            passphrase: passphrase
+        )
+        let account = accountFactory.account(
+            type: accountType,
+            origin: .restored,
+            backedUp: walletBackup.isManualBackedUp,
+            fileBackedUp: walletBackup.isFileBackedUp,
+            name: name
+        )
+
+        return RawWalletBackup(account: account, enabledWallets: walletBackup.enabledWallets)
+    }
+
+    func decrypt(fullBackup: FullBackup, passphrase: String) throws -> RawFullBackup {
+        let wallets = try fullBackup.wallets
+            .map { try decrypt(walletBackup: $0.walletBackup, name: $0.name, passphrase: passphrase) }
+
+        let contacts = try fullBackup.contacts.map { try ContactBookManager.decrypt(crypto: $0, passphrase: passphrase) }
+
+        let customSources = try evmSyncSourceManager.decrypt(sources: fullBackup.settings.evmSyncSources.custom, passphrase: passphrase)
+
+        return RawFullBackup(
+            accounts: wallets,
+            watchlistIds: fullBackup.watchlistIds,
+            contacts: contacts ?? [],
+            settings: fullBackup.settings,
+            customSyncSources: customSources
+        )
+    }
+
+    func encrypt(raw: RawFullBackup, passphrase: String) throws -> FullBackup {
+        let wallets = try raw.accounts.map {
+            try Self.encrypt(account: $0.account, wallets: $0.enabledWallets, passphrase: passphrase)
+        }
+
+        let contacts = try ContactBookManager.encrypt(contacts: raw.contacts, passphrase: passphrase)
+        let custom = try evmSyncSourceManager.encrypt(sources: raw.customSyncSources, passphrase: passphrase)
+
+        return FullBackup(
+            id: UUID().uuidString,
+            wallets: wallets,
+            watchlistIds: raw.watchlistIds,
+            contacts: contacts,
+            settings: settings(evmSyncSources: .init(selected: raw.settings.evmSyncSources.selected, custom: custom)),
+            version: AppBackupProvider.version,
+            timestamp: Date().timeIntervalSince1970.rounded()
+        )
+    }
+
+    static func encrypt(account: Account, wallets: [WalletBackup.EnabledWallet], passphrase: String) throws -> RestoreCloudModule.RestoredBackup {
+        let message = account.type.uniqueId(hashed: false)
+        let crypto = try BackupCrypto.encrypt(data: message, passphrase: passphrase)
 
         let walletBackup = WalletBackup(
             crypto: crypto,
             enabledWallets: wallets,
-            id: accountType.uniqueId().hs.hex,
-            type: AccountType.Abstract(accountType),
-            isManualBackedUp: isManualBackedUp,
-            isFileBackedUp: isFileBackedUp,
+            id: account.type.uniqueId().hs.hex,
+            type: AccountType.Abstract(account.type),
+            isManualBackedUp: account.backedUp,
+            isFileBackedUp: account.fileBackedUp,
             version: Self.version,
             timestamp: Date().timeIntervalSince1970.rounded()
         )
 
-        return .init(name: name, walletBackup: walletBackup)
+        return .init(name: account.name, walletBackup: walletBackup)
     }
 }
 

@@ -35,14 +35,14 @@ extension RestoreFileConfigurationService {
             .filter { $0.walletBackup.type.isWatch }
             .count
 
-        let contacts = fullBackup.contacts.flatMap { try? ContactBookManager.encode(crypto: $0, passphrase: passphrase) }
+        let contacts = fullBackup.contacts.flatMap { try? ContactBookManager.decrypt(crypto: $0, passphrase: passphrase) }
         let contactAddressCount = (contacts ?? []).reduce(into: 0) { $0 += $1.addresses.count }
 
         return BackupAppModule.items(
             watchAccountCount: watchAccountCount,
             watchlistCount: fullBackup.watchlistIds.count,
             contactAddressCount: contactAddressCount,
-            blockchainSourcesCount: fullBackup.settings?.evmSyncSources.custom.count ?? 0
+            blockchainSourcesCount: fullBackup.settings.evmSyncSources.custom.count
         )
     }
 }

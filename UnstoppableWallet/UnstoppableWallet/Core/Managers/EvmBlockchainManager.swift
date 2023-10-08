@@ -3,7 +3,7 @@ import MarketKit
 import HsToolKit
 
 class EvmBlockchainManager {
-    private let blockchainTypes: [BlockchainType] = [
+    static let blockchainTypes: [BlockchainType] = [
         .ethereum,
         .binanceSmartChain,
         .polygon,
@@ -24,7 +24,7 @@ class EvmBlockchainManager {
 
     var allBlockchains: [Blockchain] {
         do {
-            return try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+            return try marketKit.blockchains(uids: EvmBlockchainManager.blockchainTypes.map { $0.uid })
         } catch {
             return []
         }
