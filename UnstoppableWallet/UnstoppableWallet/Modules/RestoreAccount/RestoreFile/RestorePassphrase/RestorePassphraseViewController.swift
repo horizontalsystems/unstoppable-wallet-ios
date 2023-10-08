@@ -99,12 +99,12 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
 
         viewModel.openSelectCoinsPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] backupAccount in
+            .sink { [weak self] account in
                 self?.openSelectCoins(
-                    accountName: backupAccount.name,
-                    accountType: backupAccount.accountType,
-                    isManualBackedUp: backupAccount.isManualBackedUp,
-                    isFileBackedUp: backupAccount.isFileBackedUp
+                    accountName: account.name,
+                    accountType: account.type,
+                    isManualBackedUp: account.backedUp,
+                    isFileBackedUp: account.fileBackedUp
                 )
             }
             .store(in: &cancellables)

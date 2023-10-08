@@ -11,7 +11,7 @@ class RestorePassphraseViewModel {
 
     private let clearInputsSubject = PassthroughSubject<Void, Never>()
     private let showErrorSubject = PassthroughSubject<String, Never>()
-    private let openSelectCoinsSubject = PassthroughSubject<RestoreCloudModule.RestoredAccount, Never>()
+    private let openSelectCoinsSubject = PassthroughSubject<Account, Never>()
     private let successSubject = PassthroughSubject<Void, Never>()
 
     init(service: RestorePassphraseService) {
@@ -34,7 +34,7 @@ extension RestorePassphraseViewModel {
         showErrorSubject.eraseToAnyPublisher()
     }
 
-    var openSelectCoinsPublisher: AnyPublisher<RestoreCloudModule.RestoredAccount, Never> {
+    var openSelectCoinsPublisher: AnyPublisher<Account, Never> {
         openSelectCoinsSubject.eraseToAnyPublisher()
     }
 
@@ -67,14 +67,14 @@ extension RestorePassphraseViewModel {
                 switch result {
                 case .success:
                     self?.successSubject.send()
-                case let .restoredAccount(account):
-                    if account.showSelectCoins {
-                        self?.openSelectCoinsSubject.send(account)
+                case let .restoredAccount(rawBackup):
+                    if rawBackup.enabledWallets.isEmpty {
+                        self?.openSelectCoinsSubject.send(rawBackup.account)
                     } else {
                         self?.successSubject.send()
                     }
-                case let .source(source):
-                    print("Open next source list")
+                case let .restoredFullBackup(rawBackup):
+                    print("Result: \(rawBackup)")
                 }
             } catch {
                 switch error as? RestoreCloudModule.RestoreError {

@@ -31,34 +31,25 @@ extension RestorePassphraseService {
     func next() async throws -> RestoreResult {
         switch restoredBackup.source {
         case let .wallet(walletBackup):
-            let accountType = try walletBackup
-                .crypto
-                .accountType(type: walletBackup.type, passphrase: passphrase)
-            let restoredBackup = RestoreCloudModule.RestoredBackup(name: restoredBackup.name, walletBackup: walletBackup)
-            appBackupProvider.walletRestore(backup: restoredBackup, accountType: accountType)
-            switch accountType {
+            let rawBackup = try appBackupProvider.decrypt(walletBackup: walletBackup, name: restoredBackup.name, passphrase: passphrase)
+            appBackupProvider.restore(raw: rawBackup)
+            switch rawBackup.account.type {
             case .cex:
                 return .success
             default:
-                return .restoredAccount(RestoreCloudModule.RestoredAccount(
-                        name: restoredBackup.name,
-                        accountType: accountType,
-                        isManualBackedUp: walletBackup.isManualBackedUp,
-                        isFileBackedUp: walletBackup.isFileBackedUp,
-                        showSelectCoins: walletBackup.enabledWallets.isEmpty
-                ))
+                return .restoredAccount(rawBackup)
             }
-        case .full:
-            print("Lets try!")
-            return .success
+        case let .full(fullBackup):
+            let rawBackup = try appBackupProvider.decrypt(fullBackup: fullBackup, passphrase: passphrase)
+            return .restoredFullBackup(rawBackup)
         }
     }
 }
 
 extension RestorePassphraseService {
     enum RestoreResult {
-        case restoredAccount(RestoreCloudModule.RestoredAccount)
-        case source(BackupModule.Source)
+        case restoredAccount(RawWalletBackup)
+        case restoredFullBackup(RawFullBackup)
         case success
     }
 }

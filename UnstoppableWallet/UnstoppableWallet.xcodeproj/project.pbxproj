@@ -2080,6 +2080,7 @@
 		ABC9A36297D869E49C152CAB /* SwapRevokeConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1360FE305343B1049CF /* SwapRevokeConfirmationViewController.swift */; };
 		ABC9A36D3A4EEABF6EA6DBA0 /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A104D916039D690E454E /* Shake.swift */; };
 		ABC9A372F53F1F1D59BF8969 /* RestoreFileConfigurationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADA345301F29B947F281 /* RestoreFileConfigurationModule.swift */; };
+		ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A819E6708797C571CA0B /* RawFullBackup.swift */; };
 		ABC9A394D1D0D165160F5F43 /* RestoreFileConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD9A0F91C825D149B289 /* RestoreFileConfigurationService.swift */; };
 		ABC9A395A96C1F7C30F21940 /* WalletConnectPendingRequestsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD3F677671FB57CCD886 /* WalletConnectPendingRequestsService.swift */; };
 		ABC9A3B155B3F6E7E0F2CB07 /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */; };
@@ -2403,6 +2404,7 @@
 		ABC9AEF62C857F322FFA87E4 /* ContactBookAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC8CCF3B57FDFC817356 /* ContactBookAddressService.swift */; };
 		ABC9AF04946C86FA6DBD4225 /* RestorePassphraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE8D5944EB202A471C80 /* RestorePassphraseViewModel.swift */; };
 		ABC9AF1729BA19223BB39E06 /* SendEip721ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7C3BC5FC664BBF14C4F /* SendEip721ViewModel.swift */; };
+		ABC9AF309AAE5C54D2020B23 /* RawFullBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A819E6708797C571CA0B /* RawFullBackup.swift */; };
 		ABC9AF371FBB4BEA654A78B6 /* MetadataMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA2491ADC4E5E089CD42 /* MetadataMonitor.swift */; };
 		ABC9AF4D82ACDFBFBDC2D23C /* MarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A37521CD6E2CC5BA4E68 /* MarketCardView.swift */; };
 		ABC9AF5B0B1D5FE002288AE1 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB0A37663BC3F17C7A81 /* FileStorage.swift */; };
@@ -3882,6 +3884,7 @@
 		ABC9A80143F95E28346C81FE /* SendMemoInputService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMemoInputService.swift; sourceTree = "<group>"; };
 		ABC9A806FD17A129212E3F7C /* NftAssetOverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetOverviewViewController.swift; sourceTree = "<group>"; };
 		ABC9A8080797194017F736AB /* ContactBookContactViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookContactViewModel.swift; sourceTree = "<group>"; };
+		ABC9A819E6708797C571CA0B /* RawFullBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawFullBackup.swift; sourceTree = "<group>"; };
 		ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNftModule.swift; sourceTree = "<group>"; };
 		ABC9A830FE79DBF62FD63CC4 /* ThemeMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeMode.swift; sourceTree = "<group>"; };
 		ABC9A845B2969166028BA5F0 /* WalletConnectAppShowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectAppShowView.swift; sourceTree = "<group>"; };
@@ -7230,6 +7233,7 @@
 				ABC9AECEEB35D57CB0965E79 /* WalletBackup.swift */,
 				ABC9A41F6AA0B65FDA91EB68 /* FullBackup.swift */,
 				ABC9AA7FC181E0E0FB74BEF5 /* SettingsBackup.swift */,
+				ABC9A819E6708797C571CA0B /* RawFullBackup.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -9459,6 +9463,7 @@
 				ABC9A904FCE6BFE793C944AE /* RestoreFileConfigurationModule.swift in Sources */,
 				ABC9A394D1D0D165160F5F43 /* RestoreFileConfigurationService.swift in Sources */,
 				ABC9A481F1C13DBAAD3F632B /* RestoreFileConfigurationViewModel.swift in Sources */,
+				ABC9AF309AAE5C54D2020B23 /* RawFullBackup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10785,6 +10790,7 @@
 				ABC9A372F53F1F1D59BF8969 /* RestoreFileConfigurationModule.swift in Sources */,
 				ABC9A2A327AF3D72F9842DCA /* RestoreFileConfigurationService.swift in Sources */,
 				ABC9A2F6D2A2AAFA31C64BAB /* RestoreFileConfigurationViewModel.swift in Sources */,
+				ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

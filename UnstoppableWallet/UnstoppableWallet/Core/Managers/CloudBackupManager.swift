@@ -76,7 +76,7 @@ class CloudBackupManager {
             let oneWalletItemsV2: [String: RestoreCloudModule.RestoredBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
             let mapped = oneWalletItemsV2.reduce(into: [:]) { $0[$1.value.name] = $1.value.walletBackup }
 
-            oneWalletItems.merge(mapped) { backup, backup2 in backup2 }
+            oneWalletItems.merge(mapped) { _, backup2 in backup2 }
             let fullBackupItems: [String: FullBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
 
             state = .success
@@ -159,8 +159,9 @@ extension CloudBackupManager {
     }
 
     func save(account: Account, passphrase: String, name: String) throws {
-        let backup = try appBackupProvider.walletBackup(
+        let backup = try AppBackupProvider.encrypt(
             account: account,
+            wallets: appBackupProvider.enabledWallets(account: account),
             passphrase: passphrase
         )
 
@@ -173,16 +174,14 @@ extension CloudBackupManager {
         }
     }
 
-    private func data(fields: [AppBackupProvider.Field], passphrase: String) throws -> Data {
-        let backup = try appBackupProvider.fullBackup(
-                fields: fields,
-                passphrase: passphrase
-        )
+    private func data(accountIds: [String], passphrase: String) throws -> Data {
+        let rawBackup = appBackupProvider.fullBackup(accountIds: accountIds)
+        let backup = try appBackupProvider.encrypt(raw: rawBackup, passphrase: passphrase)
         return try JSONEncoder().encode(backup)
     }
 
-    func file(fields: [AppBackupProvider.Field], passphrase: String, name: String) throws -> URL {
-        let data = try data(fields: fields, passphrase: passphrase)
+    func file(accountIds: [String], passphrase: String, name: String) throws -> URL {
+        let data = try data(accountIds: accountIds, passphrase: passphrase)
 
         // save book to temporary file
         guard let temporaryFileUrl = ContactBookManager.localUrl?.appendingPathComponent(name + ".json") else {
@@ -193,9 +192,9 @@ extension CloudBackupManager {
         return temporaryFileUrl
     }
 
-    func save(fields: [AppBackupProvider.Field], passphrase: String, name: String) throws {
+    func save(accountIds: [String], passphrase: String, name: String) throws {
         do {
-            let encoded = try data(fields: fields, passphrase: passphrase)
+            let encoded = try data(accountIds: accountIds, passphrase: passphrase)
             try save(encoded: encoded, name: name)
         } catch {
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")

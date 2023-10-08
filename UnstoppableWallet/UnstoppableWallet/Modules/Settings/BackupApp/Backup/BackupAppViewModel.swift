@@ -162,30 +162,6 @@ extension BackupAppViewModel {
                 blockchainSourcesCount: evmSyncSourceManager.customSyncSources(blockchainType: nil).count
         )
     }
-
-    var configuration: [AppBackupProvider.Field] {
-        var fields = [AppBackupProvider.Field.settings]
-
-        var accountIds = accounts(watch: true).map { $0.id }
-        selected.forEach { id, selected in
-            if selected {
-                accountIds.append(id)
-            }
-        }
-
-        fields.append(.accounts(ids: accountIds))
-
-        let contacts = contactManager.all ?? []
-        if contacts.count != 0 {
-            fields.append(.contacts)
-        }
-
-        if !favoritesManager.allCoinUids.isEmpty {
-            fields.append(.watchlist)
-        }
-
-        return fields
-    }
 }
 
 extension BackupAppViewModel {
@@ -285,7 +261,7 @@ extension BackupAppViewModel {
             case .none: ()
             case .cloud:
                 do {
-                    try cloudBackupManager.save(fields: configuration, passphrase: password, name: name)
+                    try cloudBackupManager.save(accountIds: accountIds, passphrase: password, name: name)
                     passwordButtonProcessing = false
                     await showSuccess()
                     dismissSubject.send()
@@ -295,7 +271,7 @@ extension BackupAppViewModel {
                 }
             case .local:
                 do {
-                    let url = try cloudBackupManager.file(fields: configuration, passphrase: password, name: name)
+                    let url = try cloudBackupManager.file(accountIds: accountIds, passphrase: password, name: name)
                     sharePresented = url
                     passwordButtonProcessing = false
                 } catch {

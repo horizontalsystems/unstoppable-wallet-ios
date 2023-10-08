@@ -431,8 +431,14 @@ extension ContactBookManager {
 }
 
 extension ContactBookManager {
-    static func encode(crypto: BackupCrypto, passphrase: String) throws -> [BackupContact] {
-        let data = try crypto.data(passphrase: passphrase)
+    static func encrypt(contacts: [BackupContact], passphrase: String) throws -> BackupCrypto {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(contacts)
+        return try BackupCrypto.encrypt(data: data, passphrase: passphrase)
+    }
+
+    static func decrypt(crypto: BackupCrypto, passphrase: String) throws -> [BackupContact] {
+        let data = try crypto.decrypt(passphrase: passphrase)
         let decoder = JSONDecoder()
         let contacts = try decoder.decode([BackupContact].self, from: data)
 
