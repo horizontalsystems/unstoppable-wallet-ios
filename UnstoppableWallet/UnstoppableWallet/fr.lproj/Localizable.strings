@@ -1020,6 +1020,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.info_subtitle" = "application décentralisée";
 "settings.donate.description" = "Ensemble, avec votre soutien, nous pouvons encore améliorer cette application!";
 "settings.donate.title" = "Faire un don";
+"settings.rate_us" = "Rate Us";
+"settings.tell_friends" = "Tell Friends";
+"settings.contact_us" = "Contact Us";
 
 // Settings -> Base Currency
 
@@ -1233,13 +1236,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.about_app.description" = "Le portefeuille %@ est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.\n\nC'est un portefeuille non-dépositaire, peer-to-peer où seul l'utilisateur a le contrôle sur les fonds. Il ne collecte aucune donnée et garde l'utilisateur indépendant en ne verrouillant pas les fonds de l'utilisateur sur une application spécifique de portefeuille.\n\nLe portefeuille %@ est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme il le prétend.";
 "settings.about_app.whats_new" = "Nouveautés";
 "settings.about_app.website" = "Site Web";
-"settings.about_app.contact" = "Contactez-nous";
-"settings.about_app.rate_us" = "Evaluez-nous";
-"settings.about_app.tell_friends" = "Partager avec ami";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contactez-nous";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "par e-mail";
 "settings.contact.via_telegram" = "par Telegram";
 
