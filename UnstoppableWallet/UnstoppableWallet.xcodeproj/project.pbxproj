@@ -443,6 +443,7 @@
 		11B3553109794AE192BF7591 /* MarketCategoryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350CAB1C54A2CAA4C76F6 /* MarketCategoryModule.swift */; };
 		11B35531B3F80D06EF040301 /* CoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357B2D07C69579BAEC997 /* CoinType.swift */; };
 		11B355342F86DF79AE7000B9 /* Cex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D6718A1DEB73A0CEC02 /* Cex.swift */; };
+		11B35538EF749777CF7B2E8B /* ChartUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DE812F995B07C8F0B01 /* ChartUiView.swift */; };
 		11B3553AD73FD1179249F277 /* SecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3572105A456CCDD63E94D /* SecondaryButtonStyle.swift */; };
 		11B3553D2E9EEC05401B724A /* CexDepositViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B0A0EC524FBC663BEA5 /* CexDepositViewItemFactory.swift */; };
 		11B3553D410457FB50DEFAE4 /* ManageAccountsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A8342513D5834B2145A /* ManageAccountsViewModel.swift */; };
@@ -567,6 +568,7 @@
 		11B356D9DACA3E988BEDB3B4 /* ActivateSubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DFBFBF34277E7FC3325 /* ActivateSubscriptionViewModel.swift */; };
 		11B356DA0B90ECAB25C520B7 /* CoinTreasury.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35185ECC372A193D00A00 /* CoinTreasury.swift */; };
 		11B356DC58C5312D5034D30E /* RecoveryPhraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BCBAD15E32459826712 /* RecoveryPhraseViewModel.swift */; };
+		11B356DF455592656B742485 /* ChartUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DE812F995B07C8F0B01 /* ChartUiView.swift */; };
 		11B356E555F3ACDA6324FA77 /* AlertItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35163E7C4454BBA9E2E9E /* AlertItemCell.swift */; };
 		11B356E87B4A9AACBFEC7506 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D393EDFE4F015B0DEA /* Address.swift */; };
 		11B356ECE0D41F928FCED96C /* PrimaryButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354E55E901615862E7CD4 /* PrimaryButtonCell.swift */; };
@@ -3363,6 +3365,7 @@
 		11B35DDED1BC5B541DB6B4B3 /* CexDepositNetworkSelectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CexDepositNetworkSelectViewModel.swift; sourceTree = "<group>"; };
 		11B35DE604E9725EB8B67A69 /* RestoreSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectViewController.swift; sourceTree = "<group>"; };
 		11B35DE76BBABD8F0914A0D2 /* NftActivityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftActivityViewModel.swift; sourceTree = "<group>"; };
+		11B35DE812F995B07C8F0B01 /* ChartUiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartUiView.swift; sourceTree = "<group>"; };
 		11B35DF08505C3A7CB1BBBB4 /* MarkdownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownViewController.swift; sourceTree = "<group>"; };
 		11B35DFA83DA24A00D73EA7D /* RestoreSettingRecord_v_0_25.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSettingRecord_v_0_25.swift; sourceTree = "<group>"; };
 		11B35DFBFBF34277E7FC3325 /* ActivateSubscriptionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivateSubscriptionViewModel.swift; sourceTree = "<group>"; };
@@ -7556,6 +7559,7 @@
 				ABC9A9F6635146BEBFB432D1 /* ChartCell.swift */,
 				ABC9A76ACF7C7D6D7D3FA323 /* Components */,
 				ABC9A1CF38A26663C93F47B4 /* MarketCards */,
+				11B35DE812F995B07C8F0B01 /* ChartUiView.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -9469,6 +9473,7 @@
 				ABC9AF309AAE5C54D2020B23 /* RawFullBackup.swift in Sources */,
 				ABC9A67C2D782AD0DFDF0C3C /* RestoreFileConfigurationViewController.swift in Sources */,
 				ABC9ACEB81BCB00435B35F64 /* RestoreFileHelper.swift in Sources */,
+				11B35538EF749777CF7B2E8B /* ChartUiView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10797,6 +10802,7 @@
 				ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */,
 				ABC9A0C5DE01B3C50D4C7FF2 /* RestoreFileConfigurationViewController.swift in Sources */,
 				ABC9A3231731F39ECA5B90ED /* RestoreFileHelper.swift in Sources */,
+				11B356DF455592656B742485 /* ChartUiView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
