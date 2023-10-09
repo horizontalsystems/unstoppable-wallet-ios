@@ -36,9 +36,11 @@
 "alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
 "alert.warning" = "警告";
+"alert.notice" = "Notice";
 "alert.error" = "出错";
 "alert.unknown_error" = "未知错误";
 "alert.success_action" = "完成";
+"alert.restored" = "恢复";
 "alert.success" = "成功";
 
 "alert.added_to_watchlist" = "添加到观察名单";
@@ -139,18 +141,22 @@
 
 "restore_type.recovery.title" = "恢复短语";
 "restore_type.cloud.title" = "来自 iCloud";
+"restore_type.file.title" = "from Files";
 "restore_type.cex.title" = "来自Exchange 钱包";
 
 "restore_type.recovery.description" = "使用恢复短语或私钥导入。";
 "restore_type.cloud.description" = "从您的密钥链备份文件中导入。";
+"restore_type.file.description" = "Import a backup file from your local folder.";
 "restore_type.cex.description" = "在集中交易所上连接到钱包。";
 
 // Restore Cloud
 
 "restore.cloud.title" = "选择备份";
-"restore.cloud.description" = "选择想要恢复的钱包备份副本。";
+"restore.cloud.description" = "Select the backup file that you want to restore.";
 "restore.cloud.empty" = "未找到备份。";
+"restore.cloud.wallets" = "Wallet backups";
 "restore.cloud.imported" = "导入钱包";
+"restore.cloud.app_backups" = "App backups";
 
 "restore.cloud.password.title" = "请输入密码";
 "restore.cloud.password.placeholder" = "备份密码";
@@ -1087,43 +1093,47 @@
 
 // Settings -> Backup Manager
 
-"backup_manager.title" = "Backup Manager";
-"backup_manager.restore" = "Restore Backup";
-"backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.title" = "Backup Manager";
+"backup_app.backup_manager.restore" = "Restore Backup";
+"backup_app.backup_manager.create" = "Create New Backup";
 
-"backup_type.title" = "Backup Type";
-"backup_type.description" = "Select where you want to save the backup file.";
-"backup_type.cloud" = "备份到iCloud";
-"backup_type.file" = "Backup to Files";
+"backup_app.backup_type.title" = "Backup Type";
+"backup_app.backup_type.description" = "Select where you want to save the backup file.";
+"backup_app.backup_type.cloud" = "备份到iCloud";
+"backup_app.backup_type.file" = "Backup to Files";
 
-"backup_list.title" = "Backup File";
-"backup_list.description.restore" = "List of contents in the backup file.";
-"backup_list.header.wallets" = "钱包";
-"backup_list.header.other" = "其他";
-"backup_list.other.watch_account.title" = "观察地址";
-"backup_list.other.watch_account.description" = "地址： %d";
-"backup_list.other.watchlist.title" = "关注";
-"backup_list.other.watchlist.description" = "Coins: %d";
-"backup_list.other.contacts.title" = "联系人";
-"backup_list.other.contacts.description" = "地址： %d";
-"backup_list.other.blockchain_settings.title" = "区块链设置";
-"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
-"backup_list.other.app_settings.title" = "App Settings";
-"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_app.backup_list.title" = "Backup File";
+"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.header.wallets" = "钱包";
+"backup_app.backup_list.header.other" = "其他";
+"backup_app.backup_list.other.watch_account.title" = "观察地址";
+"backup_app.backup_list.other.watch_account.description" = "地址： %d";
+"backup_app.backup_list.other.watchlist.title" = "关注";
+"backup_app.backup_list.other.watchlist.description" = "Coins: %d";
+"backup_app.backup_list.other.contacts.title" = "联系人";
+"backup_app.backup_list.other.contacts.description" = "地址： %d";
+"backup_app.backup_list.other.blockchain_settings.title" = "区块链设置";
+"backup_app.backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_app.backup_list.other.app_settings.title" = "App Settings";
+"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
-"backup.disclaimer.cloud.title" = "备份到iCloud";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
-"backup.disclaimer.cloud.checkbox_label" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
-"backup.disclaimer.file.title" = "Backup to File";
-"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
-"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+"backup_app.backup.disclaimer.cloud.title" = "备份到iCloud";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
+"backup_app.backup.disclaimer.file.title" = "Backup to File";
+"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
 
-"backup.name.title" = "备份名称";
-"backup.name.description" = "请输入备份文件的名称。";
+"backup_app.backup.name.title" = "备份名称";
+"backup_app.backup.name.description" = "请输入备份文件的名称。";
 
-"backup.password.title" = "备份密码";
-"backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
-"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup_app.backup.password.title" = "备份密码";
+"backup_app.backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
+"backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+
+"backup_app.restore.notice.description" = "As a result of this action, wallets and contacts from a backup file will be added to the existing wallets and contacts in the app.";
+"backup_app.restore.notice.merge" = "Merge";
+
 
 // Settings -> Security
 
