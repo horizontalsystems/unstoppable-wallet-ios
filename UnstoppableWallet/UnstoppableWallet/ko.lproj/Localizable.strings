@@ -36,9 +36,11 @@
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
 "alert.warning" = "경고";
+"alert.notice" = "Notice";
 "alert.error" = "오류";
 "alert.unknown_error" = "알수없는 오류";
 "alert.success_action" = "완료";
+"alert.restored" = "복원됨";
 "alert.success" = "성공";
 
 "alert.added_to_watchlist" = "관심목록에 추가되었습니다";
@@ -137,18 +139,22 @@
 
 "restore_type.recovery.title" = "복구 문구에서";
 "restore_type.cloud.title" = "아이클라우드에서";
+"restore_type.file.title" = "from Files";
 "restore_type.cex.title" = "거래소 지갑에서";
 
 "restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
 "restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
+"restore_type.file.description" = "Import a backup file from your local folder.";
 "restore_type.cex.description" = "중앙집중형 거래소의 지갑에 연결하세요.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "백업 선택";
-"restore.cloud.description" = "지갑을 복원하려면 백업 사본을 선택하세요.";
+"restore.cloud.description" = "Select the backup file that you want to restore.";
 "restore.cloud.empty" = "백업이 없습니다.";
+"restore.cloud.wallets" = "Wallet backups";
 "restore.cloud.imported" = "수입 지갑";
+"restore.cloud.app_backups" = "App backups";
 
 "restore.cloud.password.title" = "암호를 입력하세요";
 "restore.cloud.password.placeholder" = "백업 비밀번호";
@@ -1085,43 +1091,47 @@
 
 // Settings -> Backup Manager
 
-"backup_manager.title" = "Backup Manager";
-"backup_manager.restore" = "Restore Backup";
-"backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.title" = "Backup Manager";
+"backup_app.backup_manager.restore" = "Restore Backup";
+"backup_app.backup_manager.create" = "Create New Backup";
 
-"backup_type.title" = "Backup Type";
-"backup_type.description" = "Select where you want to save the backup file.";
-"backup_type.cloud" = "iCloud에 백업";
-"backup_type.file" = "Backup to Files";
+"backup_app.backup_type.title" = "Backup Type";
+"backup_app.backup_type.description" = "Select where you want to save the backup file.";
+"backup_app.backup_type.cloud" = "iCloud에 백업";
+"backup_app.backup_type.file" = "Backup to Files";
 
-"backup_list.title" = "Backup File";
-"backup_list.description.restore" = "List of contents in the backup file.";
-"backup_list.header.wallets" = "지갑";
-"backup_list.header.other" = "기타";
-"backup_list.other.watch_account.title" = "관찰 주소";
-"backup_list.other.watch_account.description" = "구애: %d";
-"backup_list.other.watchlist.title" = "Watchlist";
-"backup_list.other.watchlist.description" = "Coins: %d";
-"backup_list.other.contacts.title" = "연락처";
-"backup_list.other.contacts.description" = "구애: %d";
-"backup_list.other.blockchain_settings.title" = "블록 체인 설정";
-"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
-"backup_list.other.app_settings.title" = "App Settings";
-"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_app.backup_list.title" = "Backup File";
+"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.header.wallets" = "지갑";
+"backup_app.backup_list.header.other" = "기타";
+"backup_app.backup_list.other.watch_account.title" = "관찰 주소";
+"backup_app.backup_list.other.watch_account.description" = "구애: %d";
+"backup_app.backup_list.other.watchlist.title" = "Watchlist";
+"backup_app.backup_list.other.watchlist.description" = "Coins: %d";
+"backup_app.backup_list.other.contacts.title" = "연락처";
+"backup_app.backup_list.other.contacts.description" = "구애: %d";
+"backup_app.backup_list.other.blockchain_settings.title" = "블록 체인 설정";
+"backup_app.backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_app.backup_list.other.app_settings.title" = "App Settings";
+"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
-"backup.disclaimer.cloud.title" = "iCloud에 백업";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
-"backup.disclaimer.cloud.checkbox_label" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
-"backup.disclaimer.file.title" = "Backup to File";
-"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
-"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+"backup_app.backup.disclaimer.cloud.title" = "iCloud에 백업";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
+"backup_app.backup.disclaimer.file.title" = "Backup to File";
+"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
 
-"backup.name.title" = "백업 이름";
-"backup.name.description" = "백업 파일의 이름을 입력하세요.";
+"backup_app.backup.name.title" = "백업 이름";
+"backup_app.backup.name.description" = "백업 파일의 이름을 입력하세요.";
 
-"backup.password.title" = "백업 비밀번호";
-"backup.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
-"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup_app.backup.password.title" = "백업 비밀번호";
+"backup_app.backup.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
+"backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+
+"backup_app.restore.notice.description" = "As a result of this action, wallets and contacts from a backup file will be added to the existing wallets and contacts in the app.";
+"backup_app.restore.notice.merge" = "Merge";
+
 
 // Settings -> Security
 
