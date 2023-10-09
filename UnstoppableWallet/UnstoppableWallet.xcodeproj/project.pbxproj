@@ -2001,6 +2001,7 @@
 		ABC9A0B58626A1E0C4248162 /* SendEip1155Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC6A0B950C0AABD5A93E /* SendEip1155Service.swift */; };
 		ABC9A0B5A5577704AC99F47B /* ChartIndicatorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3AF18834CE9E569C89E /* ChartIndicatorsViewModel.swift */; };
 		ABC9A0BAB439DEB0BC7495C3 /* ContactBookAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A12529DC8DE5D46D9776 /* ContactBookAddressViewModel.swift */; };
+		ABC9A0C5DE01B3C50D4C7FF2 /* RestoreFileConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9CB516D0B925DE22C1E /* RestoreFileConfigurationViewController.swift */; };
 		ABC9A0C6E37779D3F3602EEC /* SendEip1155AvailableBalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB612DE3C8AA3A1EEAC7 /* SendEip1155AvailableBalanceViewModel.swift */; };
 		ABC9A0CE0155F89F12350DFC /* BackupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4D1C7AE5723851A53EB /* BackupListView.swift */; };
 		ABC9A0CEBC41CCE5AB205B3C /* NftAssetOverviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A90781302D793E0773CB /* NftAssetOverviewModule.swift */; };
@@ -2045,7 +2046,6 @@
 		ABC9A295A99F39EFAAF8FCDA /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF26FDCB363793BF66E1 /* Integer.swift */; };
 		ABC9A29A23C043A3FD65AF1C /* SendBinanceFeeWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2C2D1331E91D666AB3E /* SendBinanceFeeWarningViewModel.swift */; };
 		ABC9A2A249A94B271F56EBD0 /* BackupCryptoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD5CB1911A698718213F /* BackupCryptoHelper.swift */; };
-		ABC9A2A327AF3D72F9842DCA /* RestoreFileConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD9A0F91C825D149B289 /* RestoreFileConfigurationService.swift */; };
 		ABC9A2A6C3A1EFDD33D53287 /* WalletTokenBalanceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1833D302B63028A3966 /* WalletTokenBalanceModule.swift */; };
 		ABC9A2A9540003916929DC77 /* ContactBookSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A24CBB826A2D2F88EC61 /* ContactBookSettingsModule.swift */; };
 		ABC9A2AA80535822D8731DA4 /* ContactBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2D87362E00FD9FB5688 /* ContactBookViewController.swift */; };
@@ -2069,6 +2069,7 @@
 		ABC9A3160546BCE6ECD32669 /* IntegerAmountInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6D56EBB7FFAD68CFD66 /* IntegerAmountInputViewModel.swift */; };
 		ABC9A3187D032F44CD4E8986 /* MarketCardTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC7983E4A81E421AB639 /* MarketCardTitleView.swift */; };
 		ABC9A32176DC914BBB4E9BFF /* WalletConnectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A52AC277ED7563F2707F /* WalletConnectListViewModel.swift */; };
+		ABC9A3231731F39ECA5B90ED /* RestoreFileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB61774389A4773BE18C /* RestoreFileHelper.swift */; };
 		ABC9A324BB7E7FF8758A92C3 /* RestoreCloudViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA751C8B09F90F716231 /* RestoreCloudViewController.swift */; };
 		ABC9A32D8EFFA6779886A27A /* ProChartFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAB6BA03FFE92F247FF6 /* ProChartFetcher.swift */; };
 		ABC9A338C63FEB1DF42D3D6E /* WalletTokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A38082BD2EBE1BC8E11E /* WalletTokenService.swift */; };
@@ -2081,7 +2082,6 @@
 		ABC9A36D3A4EEABF6EA6DBA0 /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A104D916039D690E454E /* Shake.swift */; };
 		ABC9A372F53F1F1D59BF8969 /* RestoreFileConfigurationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADA345301F29B947F281 /* RestoreFileConfigurationModule.swift */; };
 		ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A819E6708797C571CA0B /* RawFullBackup.swift */; };
-		ABC9A394D1D0D165160F5F43 /* RestoreFileConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD9A0F91C825D149B289 /* RestoreFileConfigurationService.swift */; };
 		ABC9A395A96C1F7C30F21940 /* WalletConnectPendingRequestsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD3F677671FB57CCD886 /* WalletConnectPendingRequestsService.swift */; };
 		ABC9A3B155B3F6E7E0F2CB07 /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */; };
 		ABC9A3BC9A18F74818EF5C17 /* MetadataMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA2491ADC4E5E089CD42 /* MetadataMonitor.swift */; };
@@ -2157,6 +2157,7 @@
 		ABC9A66D7B34C6547C2469E9 /* BackupTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5CDF9153AECED3DE50C /* BackupTypeView.swift */; };
 		ABC9A66E5775762856F8927D /* NftAssetOverviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A90781302D793E0773CB /* NftAssetOverviewModule.swift */; };
 		ABC9A67A87DFB11102AB607A /* SendBitcoinFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3DC5DA5B7BFDBF72B5D /* SendBitcoinFactory.swift */; };
+		ABC9A67C2D782AD0DFDF0C3C /* RestoreFileConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9CB516D0B925DE22C1E /* RestoreFileConfigurationViewController.swift */; };
 		ABC9A6887B716464A5813EE9 /* BackupCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAEA86EF9D14503A4791 /* BackupCrypto.swift */; };
 		ABC9A69264C2086E4B3B09D2 /* WalletTokenBalanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A352F3EAA38107897CEF /* WalletTokenBalanceService.swift */; };
 		ABC9A69A1A01DBD07CAAC9CD /* ContactBookAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A55B0E99C1DD25839EDB /* ContactBookAddressViewController.swift */; };
@@ -2336,6 +2337,7 @@
 		ABC9ACDFA2F5F3BD9517723D /* NftAssetOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A806FD17A129212E3F7C /* NftAssetOverviewViewController.swift */; };
 		ABC9ACE1EDEA27A054EDC2C4 /* ContactBookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC4A19838CA08603E17B /* ContactBookService.swift */; };
 		ABC9ACE255480B2D6E340611 /* ChartIndicatorsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2F3E5147E0E92258FBB /* ChartIndicatorsService.swift */; };
+		ABC9ACEB81BCB00435B35F64 /* RestoreFileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB61774389A4773BE18C /* RestoreFileHelper.swift */; };
 		ABC9ACEE45E455BA098231EE /* SendMemoInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3C103C1DE359184D944 /* SendMemoInputCell.swift */; };
 		ABC9AD05E7B986179310D6D7 /* SwapInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A56611CF5E7B3F25CD5C /* SwapInputAccessoryView.swift */; };
 		ABC9AD1C8D0CE88A604D5250 /* SendBinanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD0DD32AB4B9BAB79F11 /* SendBinanceFactory.swift */; };
@@ -3910,6 +3912,7 @@
 		ABC9A99184EE1D5D052C52E9 /* ContactBookSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookSettingsViewController.swift; sourceTree = "<group>"; };
 		ABC9A9B35C58F6525F3B2D5C /* FullCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullCoin.swift; sourceTree = "<group>"; };
 		ABC9A9C09ECB9B0CCBAD8C21 /* SendEip1155ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEip1155ViewController.swift; sourceTree = "<group>"; };
+		ABC9A9CB516D0B925DE22C1E /* RestoreFileConfigurationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreFileConfigurationViewController.swift; sourceTree = "<group>"; };
 		ABC9A9E2C039C005650491D2 /* WalletConnectAppShowModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectAppShowModule.swift; sourceTree = "<group>"; };
 		ABC9A9F6635146BEBFB432D1 /* ChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCell.swift; sourceTree = "<group>"; };
 		ABC9AA2491ADC4E5E089CD42 /* MetadataMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataMonitor.swift; sourceTree = "<group>"; };
@@ -3935,6 +3938,7 @@
 		ABC9AB2ED4E48D4FCEDBE769 /* ContactBookContactModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookContactModule.swift; sourceTree = "<group>"; };
 		ABC9AB3EC7A1FB0D6C9F7F89 /* ChartIndicatorsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorsModule.swift; sourceTree = "<group>"; };
 		ABC9AB612DE3C8AA3A1EEAC7 /* SendEip1155AvailableBalanceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEip1155AvailableBalanceViewModel.swift; sourceTree = "<group>"; };
+		ABC9AB61774389A4773BE18C /* RestoreFileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreFileHelper.swift; sourceTree = "<group>"; };
 		ABC9AB61EA3B39D8BDB1EEDE /* AppBackupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBackupProvider.swift; sourceTree = "<group>"; };
 		ABC9AB69D8053840476C26FA /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		ABC9AB785128005F6C2C9F9A /* ProFeaturesStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProFeaturesStorage.swift; sourceTree = "<group>"; };
@@ -3969,7 +3973,6 @@
 		ABC9AD448DC071D8800C6B12 /* WalletTokenBalanceCustomAmountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTokenBalanceCustomAmountCell.swift; sourceTree = "<group>"; };
 		ABC9AD5CB1911A698718213F /* BackupCryptoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCryptoHelper.swift; sourceTree = "<group>"; };
 		ABC9AD8AEA1E3B1198DDECCE /* BackupManagerModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupManagerModule.swift; sourceTree = "<group>"; };
-		ABC9AD9A0F91C825D149B289 /* RestoreFileConfigurationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreFileConfigurationService.swift; sourceTree = "<group>"; };
 		ABC9ADA345301F29B947F281 /* RestoreFileConfigurationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreFileConfigurationModule.swift; sourceTree = "<group>"; };
 		ABC9ADB77831DCB474B24C8A /* SendFeeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeService.swift; sourceTree = "<group>"; };
 		ABC9ADC1A3B17225B6CC0869 /* MarketCategoryMarketCapFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketCategoryMarketCapFetcher.swift; sourceTree = "<group>"; };
@@ -7253,7 +7256,8 @@
 			isa = PBXGroup;
 			children = (
 				ABC9A781F6F6806A9DCE4C9E /* RestorePassphrase */,
-				ABC9A6EF8CB7A0B2D477F2C5 /* BakcupFileConfiguration */,
+				ABC9A6EF8CB7A0B2D477F2C5 /* RestoreFileConfiguration */,
+				ABC9AB61774389A4773BE18C /* RestoreFileHelper.swift */,
 			);
 			path = RestoreFile;
 			sourceTree = "<group>";
@@ -7268,14 +7272,14 @@
 			path = Zcash;
 			sourceTree = "<group>";
 		};
-		ABC9A6EF8CB7A0B2D477F2C5 /* BakcupFileConfiguration */ = {
+		ABC9A6EF8CB7A0B2D477F2C5 /* RestoreFileConfiguration */ = {
 			isa = PBXGroup;
 			children = (
 				ABC9ADA345301F29B947F281 /* RestoreFileConfigurationModule.swift */,
-				ABC9AD9A0F91C825D149B289 /* RestoreFileConfigurationService.swift */,
 				ABC9AF6C15800AF8C37C3516 /* RestoreFileConfigurationViewModel.swift */,
+				ABC9A9CB516D0B925DE22C1E /* RestoreFileConfigurationViewController.swift */,
 			);
-			path = BakcupFileConfiguration;
+			path = RestoreFileConfiguration;
 			sourceTree = "<group>";
 		};
 		ABC9A71A64E11AD3709A1174 /* Workers */ = {
@@ -9461,9 +9465,10 @@
 				ABC9AA016413C37F4CC95080 /* RestorePassphraseViewController.swift in Sources */,
 				ABC9A453F337BA22A5698DCC /* RestorePassphraseModule.swift in Sources */,
 				ABC9A904FCE6BFE793C944AE /* RestoreFileConfigurationModule.swift in Sources */,
-				ABC9A394D1D0D165160F5F43 /* RestoreFileConfigurationService.swift in Sources */,
 				ABC9A481F1C13DBAAD3F632B /* RestoreFileConfigurationViewModel.swift in Sources */,
 				ABC9AF309AAE5C54D2020B23 /* RawFullBackup.swift in Sources */,
+				ABC9A67C2D782AD0DFDF0C3C /* RestoreFileConfigurationViewController.swift in Sources */,
+				ABC9ACEB81BCB00435B35F64 /* RestoreFileHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10788,9 +10793,10 @@
 				ABC9AE2131780654A7139081 /* RestorePassphraseViewController.swift in Sources */,
 				ABC9A414F0F0AEA6E4DD4E9D /* RestorePassphraseModule.swift in Sources */,
 				ABC9A372F53F1F1D59BF8969 /* RestoreFileConfigurationModule.swift in Sources */,
-				ABC9A2A327AF3D72F9842DCA /* RestoreFileConfigurationService.swift in Sources */,
 				ABC9A2F6D2A2AAFA31C64BAB /* RestoreFileConfigurationViewModel.swift in Sources */,
 				ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */,
+				ABC9A0C5DE01B3C50D4C7FF2 /* RestoreFileConfigurationViewController.swift in Sources */,
+				ABC9A3231731F39ECA5B90ED /* RestoreFileHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

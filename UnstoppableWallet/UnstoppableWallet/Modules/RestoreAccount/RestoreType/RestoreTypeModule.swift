@@ -13,15 +13,6 @@ struct RestoreTypeModule {
             return TermsModule.viewController(sourceViewController: sourceViewController, moduleToOpen: module)
         }
     }
-
-    static func destination(restoreType: RestoreType, sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController? {
-        switch restoreType {
-        case .recoveryOrPrivateKey: return RestoreModule.viewController(sourceViewController: sourceViewController, returnViewController: returnViewController)
-        case .cloudRestore: return RestoreCloudModule.viewController(returnViewController: returnViewController)
-        case .fileRestore: return nil
-        case .cex: return RestoreCexViewController(returnViewController: returnViewController)
-        }
-    }
 }
 
 extension RestoreTypeModule {

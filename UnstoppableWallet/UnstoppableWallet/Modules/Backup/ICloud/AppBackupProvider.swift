@@ -136,40 +136,52 @@ class AppBackupProvider {
 }
 
 extension AppBackupProvider {
-    func restore(raw: RawWalletBackup) {
-        switch raw.account.type {
-        case .cex:
-            accountManager.save(account: raw.account)
-        default:
-            accountManager.save(account: raw.account)
+    func restore(raws: [RawWalletBackup]) {
+        let updated = raws.map { raw in
+            let account = accountFactory.account(
+                    type: raw.account.type,
+                    origin: raw.account.origin,
+                    backedUp: raw.account.backedUp,
+                    fileBackedUp: raw.account.fileBackedUp,
+                    name: raw.account.name
+            )
+            return RawWalletBackup(account: account, enabledWallets: raw.enabledWallets)
+        }
 
-            let wallets = raw.enabledWallets.map {
-                if !$0.settings.isEmpty {
-                    var restoreSettings = [RestoreSettingType: String]()
-                    $0.settings.forEach { key, value in
-                        if let key = RestoreSettingType(rawValue: key) {
-                            restoreSettings[key] = value
+        accountManager.save(accounts: updated.map { $0.account })
+
+        updated.forEach { raw in
+            switch raw.account.type {
+            case .cex: ()
+            default:
+                let wallets = raw.enabledWallets.map {
+                    if !$0.settings.isEmpty {
+                        var restoreSettings = [RestoreSettingType: String]()
+                        $0.settings.forEach { key, value in
+                            if let key = RestoreSettingType(rawValue: key) {
+                                restoreSettings[key] = value
+                            }
+                        }
+                        if let tokenQuery = TokenQuery(id: $0.tokenQueryId) {
+                            restoreSettingsManager.save(settings: restoreSettings, account: raw.account, blockchainType: tokenQuery.blockchainType)
                         }
                     }
-                    if let tokenQuery = TokenQuery(id: $0.tokenQueryId) {
-                        restoreSettingsManager.save(settings: restoreSettings, account: raw.account, blockchainType: tokenQuery.blockchainType)
-                    }
+                    return EnabledWallet(
+                            tokenQueryId: $0.tokenQueryId,
+                            accountId: raw.account.id,
+                            coinName: $0.coinName,
+                            coinCode: $0.coinCode,
+                            tokenDecimals: $0.tokenDecimals
+                    )
                 }
-                return EnabledWallet(
-                    tokenQueryId: $0.tokenQueryId,
-                    accountId: raw.account.id,
-                    coinName: $0.coinName,
-                    coinCode: $0.coinCode,
-                    tokenDecimals: $0.tokenDecimals
-                )
+                walletManager.save(enabledWallets: wallets)
             }
-            walletManager.save(enabledWallets: wallets)
         }
     }
 
     func restore(raw: RawFullBackup) {
         raw.accounts.forEach { wallet in
-            restore(raw: wallet)
+            restore(raws: [wallet])
         }
         favoritesManager.add(coinUids: raw.watchlistIds)
 
