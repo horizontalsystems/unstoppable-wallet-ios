@@ -1020,6 +1020,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.info_subtitle" = "decentralized uygulama";
 "settings.donate.description" = "Desteğinizle birlikte bu uygulamayı daha da iyi hale getirebiliriz!";
 "settings.donate.title" = "Bağış yapmak";
+"settings.rate_us" = "Rate Us";
+"settings.tell_friends" = "Tell Friends";
+"settings.contact_us" = "Contact Us";
 
 // Settings -> Base Currency
 
@@ -1233,13 +1236,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.about_app.description" = "%@ cüzdan, kripto para birimlerine özel ve bağımsız bir şekilde yatırım yapmak ve depolamak isteyenler için tasarlanmıştır.\n\nBu, fonlar üzerinde yalnızca kullanıcının kontrolüne sahip olduğu, velayet gerektirmeyen, eşler arası bir cüzdandır. Herhangi bir veri toplamaz ve kullanıcının fonlarını belirli bir cüzdan uygulamasına kilitlemeyerek kullanıcıyı bağımsız tutar.\n\n%@ cüzdan tamamen açık kaynaklıdır ve herkes uygulamanın tam olarak iddia ettiği gibi çalıştığını onaylayabilir.";
 "settings.about_app.whats_new" = "Yenilikler";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Bize Ulaşın";
-"settings.about_app.rate_us" = "Bizi Değerlendirin";
-"settings.about_app.tell_friends" = "Arkadaşlarına bahset";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Bize Ulaşın";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "E-posta yoluyla";
 "settings.contact.via_telegram" = "Telegram aracılığıyla";
 
