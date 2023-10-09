@@ -103,12 +103,13 @@
 "auto_lock.minute5" = "5 минут";
 "auto_lock.minute15" = "15 минут";
 "auto_lock.minute30" = "30 минут";
-"auto_lock.hour1" = "Just an hour";
+"auto_lock.hour1" = "1 час";
 
 // Access Camera
 
-"access_camera.message" = "Listen folks, %@ needs to see through your camera, okay.
-To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
+"access_camera.message" = "%@ требуется доступ к вашей камере для сканирования QR-кода.
+
+Перейдите в \"Настройки\" - > %@ и разрешите доступ к камере.";
 "access_camera.settings" = "Настройки";
 
 // Restore
@@ -117,59 +118,61 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "restore.advanced" = "Доп. настройки";
 "restore.import_by" = "Импорт по";
 "restore.restore_type.mnemonic" = "Фраза восстановления";
-"restore.restore_type.private_key" = "Private Key.";
-"restore.mnemonic.placeholder" = "Give me those magic words! Recovery Phrase, come on!";
+"restore.restore_type.private_key" = "Приватный ключ";
+"restore.mnemonic.placeholder" = "Введите фразу восстановления";
 "restore.private_key.placeholder" = "Введите приватный ключ EVM, BIP32 Root Key или Account Extended Private Key";
-"restore.private_key.invalid_key" = "This key? Not the best. It's wrong!";
-"restore_error.mnemonic_word_count" = "Listen, we need 12 to 24 words. Not more, not less. Perfect balance. You gave me: %@";
-"restore.checksum_error" = "Checksum? Fake news! It's wrong!";
+"restore.private_key.invalid_key" = "Неверный ключ";
+"restore_error.mnemonic_word_count" = "Неверное количество слов. Должно быть от 12 до 24 слов. Вы ввели: %@";
+"restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая фраза";
 "restore.input.passphrase" = "Кодовая фраза";
-"restore.passphrase_description" = "You know, we have this tremendous password. It's for your wallet backup, not your Apple thing. It's so good, if you lose it, even I can't get it back for you!";
-"restore.error.empty_passphrase" = "Come on folks, you've got to give me something here! Can't have an empty passphrase.";
-"restore.non_standard_import" = "Something a little different, a bit out of the box, folks.";
-"restore.non_standard_import.description" = "This page, it's special, believe me. For all you with those non-standard wallets. Maybe you've used some fancy foreign words or characters. You know which version I'm talking about, the %@ one. Very specific.";
-"restore.warning.non_recommended.description" = "Looks like this wallet's been to some exotic places with its characters! If your balance looks funny, it's not fake news. Dive in below for the real story.";
-"restore.error.non_standard.description" = "This wallet? It's not your everyday kind of thing. Tap below, and I'll spill the beans.";
+"restore.passphrase_description" = "Этот пароль используется для шифрования файлов резервной копии вашего кошелька. Он не связан с вашим паролем Apple iCloud. Если вы потеряете или забудете этот пароль, его нельзя будет восстановить или сбросить.";
+"restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
+"restore.non_standard_import" = "Нестандартный импорт";
+"restore.non_standard_import.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей %@ с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях %@ 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
+\n\nЕсли вы являетесь затронутым пользователем, то баланс вашего кошелька будет отображаться как 0 после восстановления такого кошелька в версии 0.29 или выше.Эта страница позволит вам восстановить доступ к вашему нестандартному кошельку. После восстановления рекомендуется создать новый кошелек (который будет соответствовать стандарту) и перевести туда средства.";
+"restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.
+\n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
+"restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 
 // Restore Type
 
 "restore_type.title" = "Импорт кошелька";
 
-"restore_type.recovery.title" = "The Tremendous Recovery Phrase!";
+"restore_type.recovery.title" = "Фраза восстановления";
 "restore_type.cloud.title" = "iCloud";
-"restore_type.cex.title" = "From the Exchange Wallet – The Best!";
+"restore_type.cex.title" = "с кошелька биржи";
 
-"restore_type.recovery.description" = "Importing with the mightiest recovery phrase or a super private key!";
-"restore_type.cloud.description" = "Importing from the backup – straight outta your keychain!";
-"restore_type.cex.description" = "Connecting to the wallet on the grand centralized exchange!";
+"restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
+"restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
+"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Backup? The Best Backup!";
-"restore.cloud.description" = "Pick your wallet's backup, the one you really wanna bring back!";
-"restore.cloud.empty" = "No backups found";
-"restore.cloud.imported" = "Wallets that we've made great again!";
+"restore.cloud.title" = "Выберите резервную копию";
+"restore.cloud.description" = "Выберите резервную копию кошелька, которую вы хотите восстановить.";
+"restore.cloud.empty" = "Резервные копии не найдены.";
+"restore.cloud.imported" = "Импортированные кошельки";
 
-"restore.cloud.password.title" = "Type in the most secret password!";
-"restore.cloud.password.placeholder" = "Your fantastic backup password here!";
-"restore.cloud.password.description" = "Key in your majestic backup password to get that wallet out of iCloud!";
+"restore.cloud.password.title" = "Введите пароль";
+"restore.cloud.password.placeholder" = "Пароль резервной копии";
+"restore.cloud.password.description" = "Введите пароль резервной копии для импорта вашего кошелька из iCloud.";
 
 // Restore Cex
 
-"restore.cex.title" = "Pick Your CEX – The Best CEX!";
-"restore.cex.description" = "Choose your centralized exchange, the greatest of them all, believe me!";
+"restore.cex.title" = "Выберите CEX";
+"restore.cex.description" = "Выберите централизованную биржу, к которой вы хотите подключиться.";
 
 // Restore Binance
 
-"restore.binance.description" = "Hand over those API Keys and Secret! Only the best for our exchange!";
-"restore.binance.api_key" = "The Unbeatable API Key!";
+"restore.binance.description" = "Пожалуйста, предоставьте ключ API и секрет API, чтобы связать вашу биржу.";
+"restore.binance.api_key" = "API ключ";
 "restore.binance.secret_key" = "Секретный ключ";
 "restore.binance.connect" = "Подключиться";
 "restore.binance.connecting" = "Подключение...";
 "restore.binance.get_api_keys" = "Получить API ключ";
-"restore.binance.failed_to_connect" = "Failed to connect your API key";
-"restore.binance.invalid_qr_code" = "That QR Code? Not the best. Try another!";
+"restore.binance.failed_to_connect" = "Не удалось подключиться к твоему API ключу";
+"restore.binance.invalid_qr_code" = "Недопустимый QR-код";
 
 // Coin Settings
 
@@ -177,7 +180,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "Из блокчейна";
-"blockchain_settings.description" = "Choose your address format. Let's make your payments great, just like when you pick the right tie! Always be spot on.";
+"blockchain_settings.description" = "Выберите формат адреса для получения средств. При восстановлении существующего кошелька должен быть выбран правильный формат.";
 
 // Coin Platforms
 
@@ -185,24 +188,24 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Copy Warning
 
-"copy_warning.title" = "Woah! Risky copying ahead.";
-"copy_warning.description" = "For safety, folks, I'd say don't copy this! I have the best safety tips.";
+"copy_warning.title" = "Риск копирования";
+"copy_warning.description" = "В качестве меры безопасности мы рекомендуем не использовать действие копирования.";
 "copy_warning.dont_copy" = "Не копировать";
-"copy_warning.i_will_risk_it" = "I'm feeling brave today!";
+"copy_warning.i_will_risk_it" = "Я рискую";
 
 // Recovery Phrase
 
 "recovery_phrase.title" = "Фраза восстановления";
-"recovery_phrase.warning" = "Never ever share! Remember, the %@ team won't ask. It's like your personal hair secret.";
-"recovery_phrase.tap_to_show" = "Give it a tap! Unveil the magic words.";
+"recovery_phrase.warning" = "Никогда не делитесь этим ключом с кем-либо. Команда поддержки кошелька %@ никогда не будет запрашивать его.";
+"recovery_phrase.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
 "recovery_phrase.passphrase" = "Кодовая фраза";
 "recovery_phrase.copy_warning.title" = "Риск копирования фразы восстановления";
-"recovery_phrase.copy_warning.description" = "Stay safe! I wouldn't copy that if I were you. Best recommendation.";
+"recovery_phrase.copy_warning.description" = "В целях безопасности мы не рекомендуем использовать действие копирования фразы восстановления.";
 
 // EVM Private Key
 
 "evm_private_key.title" = "Приватный Ключ EVM";
-"evm_private_key.tap_to_show" = "Give it a little tap! The big reveal.";
+"evm_private_key.tap_to_show" = "Нажмите, чтобы показать приватный ключ";
 
 // Extended Key
 
@@ -212,120 +215,120 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "extended_key.purpose" = "Purpose";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Account";
-"extended_key.tap_to_show" = "Drumroll, please... Tap to unveil!";
+"extended_key.tap_to_show" = "Нажмите, чтобы показать extended private key";
 
 // Backup
 
 "backup.title" = "Фраза восстановления";
-"backup.description" = "Jot these words down, in the right order, just like my best speeches. Keep them safe, maybe next to your tax returns!";
-"backup.tap_to_show" = "Give it a tap! Unveil the magic words.";
+"backup.description" = "Запишите эти слова в правильном порядке и храните их в безопасном месте";
+"backup.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
 "backup.passphrase" = "Кодовая фраза";
-"backup.verify" = "Double-check";
-"backup.verified" = "Boom! Verified, and you know I love verifying things.";
+"backup.verify" = "Подтвердить";
+"backup.verified" = "Подтверждено";
 
 // Backup Verify Words
 
-"backup_verify_words.title" = "Double-check";
-"backup_verify_words.description" = "Pick the two words I'm asking for, from your top-notch recovery phrase";
-"backup_verify_words.incorrect_word" = "Oops! Not the word we wanted.";
+"backup_verify_words.title" = "Подтвердить";
+"backup_verify_words.description" = "Выберите два запрошенных слова из вашей фразы восстановления кошелька";
+"backup_verify_words.incorrect_word" = "Неверное слово";
 
 // Backup Verify Passphrase
 
-"backup_verify_passphrase.title" = "Double-check";
-"backup_verify_passphrase.description" = "Type in the passphrase. Make sure it's terrific!";
-"backup_verify_passphrase.incorrect_passphrase" = "That's not the right passphrase, but we'll get there!";
+"backup_verify_passphrase.title" = "Подтвердить";
+"backup_verify_passphrase.description" = "Введите кодовую фразу";
+"backup_verify_passphrase.incorrect_passphrase" = "Неверная кодовая фраза";
 
 // Backup Prompt
 
 "backup_prompt.backup_recovery_phrase" = "Резервная копия";
 "backup_prompt.backup_required" = "Необходима резервная копия";
-"backup_prompt.warning" = "You want to make a yuuuge backup of this recovery phrase, trust me. Don't lose out if your phone goes missing, or breaks!";
+"backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
 "backup_prompt.backup" = "Резервная копия";
-"backup_prompt.backup_manual" = "Backup Bonanza";
-"backup_prompt.backup_cloud" = "Backup to iCloud!";
-"backup_prompt.later" = "Not now, but don't wait too long!";
+"backup_prompt.backup_manual" = "Ручное резервное копирование";
+"backup_prompt.backup_cloud" = "Backup to iCloud";
+"backup_prompt.later" = "Позже";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud!";
-"backup.cloud.description" = "So, iCloud's an Apple thing. They'll keep your stuff, not on your gadgets. You're trusting them, not us. Just so we're clear!";
-"backup.cloud.terms.item.1" = "Listen up! Lose access to iCloud, and you say goodbye to this backup.";
+"backup.cloud.title" = "Резерв. копирование в iCloud";
+"backup.cloud.description" = "iCloud - это облачное хранилище, предоставляемое Apple. Важно знать, что ваши данные будут храниться на серверах Apple, а не на ваших личных устройствах. Это означает, что вы доверяете свои данные и передаете безопасность вашей информации стороннему сервису.";
+"backup.cloud.terms.item.1" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
 
-"backup.cloud.name.title" = "What's in a Name?";
-"backup.cloud.name.description" = "Name your backup, maybe after one of my hotels?";
-"backup.cloud.name.empty" = "Give it a name, c'mon!";
-"backup.cloud.name.error.empty" = "A name's what we need!";
-"backup.cloud.name.error.already_exist" = "Been there, named that. Pick another!";
-"backup.cloud.name.placeholder" = "Fabulous Name";
+"backup.cloud.name.title" = "Имя резервной копии";
+"backup.cloud.name.description" = "Введите имя файла резервной копии.";
+"backup.cloud.name.empty" = "Имя резервной копии не может быть пустым!";
+"backup.cloud.name.error.empty" = "Имя резервной копии не должно быть пустым";
+"backup.cloud.name.error.already_exist" = "Имя резервной копии уже существует!";
+"backup.cloud.name.placeholder" = "Название";
 
-"backup.cloud.password.title" = "The Best Password";
-"backup.cloud.password.description" = "Craft a password that's tremendous! Needs 8 characters and a mix of the alphabet, numbers, and those little symbols.";
-"backup.cloud.password.highlighted_description" = "Remember this one! It's not your Apple password, and it's irreplaceable!";
-"backup.cloud.password.placeholder" = "Amazing Password";
+"backup.cloud.password.title" = "Установить пароль";
+"backup.cloud.password.description" = "Установите пароль разблокировки для вашей резервной копии. Пароль должен содержать как минимум 8 символов и включать хотя бы одну строчную букву, заглавную букву, цифру и специальный символ.";
+"backup.cloud.password.highlighted_description" = "Не забудьте этот пароль! Он отличается от вашего пароля для Apple iCloud и не может быть восстановлен или сброшен.";
+"backup.cloud.password.placeholder" = "Пароль";
 "backup.cloud.password.confirm.placeholder" = "Подтвердить";
-"backup.cloud.password.save" = "Seal the Deal & Backup";
+"backup.cloud.password.save" = "Сохранить и создать резервную копию";
 
-"backup.cloud.password.error.empty_passphrase" = "Hey, we need that passphrase!";
-"backup.cloud.password.error.forbidden_symbols" = "Stick to the basics, folks: A-Z, a-z, 0-9, and those symbols!";
-"backup.cloud.password.error.minimum_requirement" = "Needs 8 characters, at least! Upper, lower, number, and symbol. The total package!";
-"backup.cloud.password.error.invalid_password" = "Not the right password, but keep trying!";
-"backup.cloud.password.error.invalid_backup" = "Whoops! Something's fishy with the backup.";
-"backup.cloud.password.confirm.error.doesnt_match" = "Those passwords aren't buddies yet. Try again!";
-"backup.cloud.not_available" = "iCloud's taking a break!";
-"backup.cloud.cant_create_file" = "Can't ship that file to iCloud!";
-"backup.cloud.cant_delete_file" = "Can't kick it out of iCloud!";
-"backup.cloud.no_access.title" = "Knock on iCloud's Door";
-"backup.cloud.no_access.description" = "Need your green light for iCloud storage!";
+"backup.cloud.password.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
+"backup.cloud.password.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "Не менее 8 символов, включая одну заглавную букву, одну строчную букву, одну цифру и один символ";
+"backup.cloud.password.error.invalid_password" = "Неверный пароль";
+"backup.cloud.password.error.invalid_backup" = "Резервная копия повреждена";
+"backup.cloud.password.confirm.error.doesnt_match" = "Пароли не совпадают";
+"backup.cloud.not_available" = "iCloud недоступен";
+"backup.cloud.cant_create_file" = "Не удается сохранить файл в iCloud";
+"backup.cloud.cant_delete_file" = "Не удается удалить из iCloud";
+"backup.cloud.no_access.title" = "Доступ к iCloud";
+"backup.cloud.no_access.description" = "Для создания резервной копии необходимо предоставить доступ к iCloud памяти.";
 
 // Errors
 
-"error.send.self_transfer" = "C'mon now, sending to yourself? We don't do that here!";
-"error.send_binance.memo_required" = "The receiver's like 'I need a memo!' Don't leave it empty!";
-"error.send_binance.only_digits_allowed" = "Memo's gotta have digits only! Numbers, always winning!";
-"error.send_z_cash.transparent_address" = "%@ says 'No way!' to payments to a transparent address.";
+"error.send.self_transfer" = "Отправка самому себе невозможна";
+"error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
+"error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
+"error.send_z_cash.transparent_address" = "%@ не поддерживает платежи на публичный адрес";
 
 // Balance
 
-"balance.title" = "Big League Balance";
-"balance.tab_bar_item" = "Big League Balance";
+"balance.title" = "Баланс";
+"balance.tab_bar_item" = "Баланс";
 "balance.send" = "Отправить";
-"balance.withdraw" = "Pull Out";
-"balance.swap" = "Switcheroo";
-"balance.receive" = "Gimme";
-"balance.deposit" = "Throw In";
-"balance.address" = "Prime Location";
-"balance.rate_per_coin" = "%@ for each %@";
-"balance.syncing" = "Getting in sync...";
-"balance.searching" = "On the hunt for transactions...";
+"balance.withdraw" = "Вывод средств";
+"balance.swap" = "Обмен";
+"balance.receive" = "Получить";
+"balance.deposit" = "Пополнение";
+"balance.address" = "Адрес";
+"balance.rate_per_coin" = "%@ за %@";
+"balance.syncing" = "Идет синхронизация...";
+"balance.searching" = "Поиск транзакций...";
 "balance.stopped" = "Остановлено";
-"balance.downloading_sapling" = "Grabbing Sapling... %d%%";
-"balance.downloading_blocks" = "Fetching those Blocks";
-"balance.scanning_blocks" = "Eyeing those Blocks";
-"balance.enhancing_transactions" = "Sprucing up Transactions";
+"balance.downloading_sapling" = "Загрузка sapling... %d%%";
+"balance.downloading_blocks" = "Загрузка блоков";
+"balance.scanning_blocks" = "Сканирование блоков";
+"balance.enhancing_transactions" = "Улучшение транзакций";
 "wait_for_synchronization" = "Дождитесь синхронизации";
 
-"balance.searching.count" = "%@ big deals";
+"balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Идет синхронизация... %@";
-"balance.synced_through" = "all the way to %@";
-"balance.add_coin" = "Add some Bling";
-"balance.invalid_api_key" = "API Key's a no-go!";
-"balance.empty.add_coins" = "Add Coins!";
-"balance.empty.description" = "No coins in this wallet yet. Sad!";
-"balance.watch_empty.description" = "This wallet address is feeling a bit light!";
-"balance.sort_by" = "Rank 'em";
+"balance.synced_through" = "до %@";
+"balance.add_coin" = "Добавить токен";
+"balance.invalid_api_key" = "Недействительный ключ API";
+"balance.empty.add_coins" = "Добавить токены";
+"balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
+"balance.watch_empty.description" = "У кошелька с этим адресом нет баланса";
+"balance.sort_by" = "Сортировать";
 "balance.sort.header" = "Rank them like";
-"balance.sort.valueHighToLow" = "Big League Balance";
-"balance.sort.az" = "Fabulous Name";
-"balance.sort.price_change" = "Who's Moving Up";
+"balance.sort.valueHighToLow" = "Баланс";
+"balance.sort.az" = "Название";
+"balance.sort.price_change" = "По изменению цены (%)";
 
-"balance_error.change_source" = "Switch it Up!";
-"balance_error.sync_error" = "Whoops, sync hiccup!";
-"lost_accounts.warning_title" = "iOS Keychain Error!";
-"lost_accounts.warning_message" = "The encrypted treasure holding your wallet got messed up 'cause you changed your iOS lock screen.";
+"balance_error.change_source" = "Изменить источник";
+"balance_error.sync_error" = "Ошибка синхронизации";
+"lost_accounts.warning_title" = "Ошибка связки ключей iOS";
+"lost_accounts.warning_message" = "Зашифрованные данные вашего кошелька были недавно аннулированы, поскольку ваш экран блокировки iOS был изменен";
 
 // Token Balance Page
-"balance.token.locked" = "On Lockdown";
-"balance.token.locked.info.title" = "Hold On!";
+"balance.token.locked" = "Заблокировано";
+"balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "The sender's put a timer on this. The Bitcoins are yours, but you gotta wait a tad to spend them on the Bitcoin network.";
 "balance.token.processing" = "В процессе";
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
@@ -351,7 +354,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Deposit
 
 "deposit.receive_coin" = "Receive %@!";
-"deposit.address" = "Prime Location";
+"deposit.address" = "Адрес";
 "deposit.your_address" = "Your Address!";
 "receive_alert.not_backed_up_description" = "Hold on! You've got to back up %@ before we're winning with %@.";
 "receive_alert.any_coins.not_backed_up_description" = "You've gotta backup %@ before making any yuge coin deals!";
@@ -389,7 +392,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "send.send" = "Отправить";
 "send.no_assets" = "Looks like your vault's empty, sad!";
 "send.amount_placeholder" = "How many chips?";
-"send.address_placeholder" = "Prime Location";
+"send.address_placeholder" = "Адрес";
 "send.address_or_domain_placeholder" = "Address or fancy Domain";
 "send.fee" = "Little Charge";
 "send.network_fee" = "Network’s Tiny Fee";
@@ -401,9 +404,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "send.max_button" = "Go Yuge!";
 "send.next_button" = "Далее";
 "send.error.invalid" = "No good!";
-"send.error.address" = "Prime Location";
-"send.hodler_locktime" = "Hold On!";
-"send.hodler_locktime_hour" = "Just an hour";
+"send.error.address" = "Адрес";
+"send.hodler_locktime" = "TimeLock";
+"send.hodler_locktime_hour" = "1 hour";
 "send.hodler_locktime_month" = "1 big month";
 "send.hodler_locktime_half_year" = "Solid 6 months";
 "send.hodler_locktime_year" = "1 winning year";
@@ -422,7 +425,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "send.confirmation.to" = "To the lucky one";
 "send.confirmation.contact_name" = "Who's getting rich?";
 "send.confirmation.domain" = "Fancy Domain";
-"send.confirmation.address" = "Prime Location";
+"send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo" = "Your two cents";
 "send.confirmation.memo_placeholder" = "Your two cents";
@@ -456,7 +459,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
-"send.lock_time" = "Hold On!";
+"send.lock_time" = "TimeLock";
 
 "approve.confirmation.you_approve" = "You just approved, bigly. Everyone's talking about it!";
 "approve.confirmation.you_revoke" = "You revoked it! I've always said, you're the best decision-maker!";
@@ -477,11 +480,11 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Swap
 
-"swap.title" = "Switcheroo";
+"swap.title" = "Обмен";
 "swap.no_assets" = "You're empty! Fill it up.";
 "swap.you_pay" = "What you're giving";
 "swap.estimated" = "around-ish";
-"swap.balance" = "Big League Balance";
+"swap.balance" = "Баланс";
 "swap.allowance" = "Permission slip";
 "swap.you_get" = "The good stuff you get";
 "swap.token" = "Choose";
@@ -537,7 +540,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Switcheroo";
+"swap.approve.subtitle" = "Обмен";
 
 // Swap Confirmation
 
@@ -601,7 +604,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "market.tvl.platform_field.all" = "All of 'em";
 
-"market.sort_by" = "Rank 'em";
+"market.sort_by" = "Сортировать";
 
 "market.top.title" = "Best Coins Ever";
 "market.top.description" = "Top Coins, because we only deal with the best!";
@@ -649,7 +652,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "market.advanced_search.liquidity" = "Liquid Gold";
 "market.advanced_search.blockchains" = "The Chains That Bind";
 "market.advanced_search.price_period" = "Pricey Times";
-"market.advanced_search.price_change" = "Who's Moving Up";
+"market.advanced_search.price_change" = "По изменению цены (%)";
 
 "market.advanced_search.outperformed_btc" = "Beat the Bitcoin!";
 "market.advanced_search.outperformed_eth" = "Outperformed ETH!";
@@ -758,7 +761,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_analytics.indicators.strong_sell" = "Активно продавать";
 "coin_analytics.period" = "Период";
 "coin_analytics.period.select_title" = "Выберите период";
-"coin_analytics.period.1h" = "Just an hour";
+"coin_analytics.period.1h" = "1 hour";
 "coin_analytics.period.4h" = "4 часа";
 "coin_analytics.period.1d" = "1 день";
 "coin_analytics.period.1w" = "1 неделя";
@@ -938,12 +941,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Gimme";
+"transactions.receive" = "Получить";
 "transactions.send" = "Отправить";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
 "transactions.approve" = "Одобрить";
-"transactions.swap" = "Switcheroo";
+"transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов контракта";
 "transactions.contract_creation" = "Создание контракта";
 "transactions.external_call" = "Внешний вызов";
@@ -1021,7 +1024,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "settings.donate.title" = "Поддержи нас";
 "settings.rate_us" = "Оцените нас";
 "settings.tell_friends" = "Расскажите друзьям";
-"settings.contact_us" = "Contact Us";
+"settings.contact_us" = "Свяжитесь с нами";
 
 // Settings -> Base Currency
 
@@ -1057,11 +1060,11 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "settings.experimental_features.title" = "Экспериментальные функции";
 "settings.experimental_features.description" = "Below are some fun (but experimental) features. We've played with them, and while we think they're cool, use them at your own risk!";
-"settings.experimental_features.bitcoin_hodling" = "Hold On!";
+"settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Hold On!";
+"settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Switch it on!";
 "settings.bitcoin_hodling.description" = "So this? It's a cool trick to lock up your Bitcoins till a certain date. But make sure the receiver's using %@ wallet app version 0.10 or newer. It's a fun way to HODL, especially if you're sending to yourself.";
 
@@ -1092,7 +1095,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "backup_type.title" = "Тип резервной копии";
 "backup_type.description" = "Выберите, куда вы хотите сохранить файл резервной копии.";
-"backup_type.cloud" = "Backup to iCloud!";
+"backup_type.cloud" = "Backup to iCloud";
 "backup_type.file" = "Резервное копирование в Файлы";
 
 "backup_list.title" = "Файл резервной копии";
@@ -1110,18 +1113,18 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
 
-"backup.disclaimer.cloud.title" = "Backup to iCloud!";
+"backup.disclaimer.cloud.title" = "Backup to iCloud";
 "backup.disclaimer.cloud.description" = "iCloud - это облачный сервис для хранения данных, предоставляемый компанией Apple. Важно знать, что ваши данные резервной копии будут сохранены на серверах Apple.";
-"backup.disclaimer.cloud.checkbox_label" = "Listen up! Lose access to iCloud, and you say goodbye to this backup.";
+"backup.disclaimer.cloud.checkbox_label" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
 "backup.disclaimer.file.title" = "Резервное копирование в файл";
 "backup.disclaimer.file.description" = "Накопители данных, такие как жесткие диски, USB-накопители, хранилище на смартфонах и др., все подвержены потере из-за физического повреждения, кражи или других непредвиденных обстоятельств.";
 "backup.disclaimer.file.checkbox_label" = "Я понимаю, что кража или повреждение устройства резервного копирования может привести к потере резервной копии для соответствующего кошелька.";
 
-"backup.name.title" = "What's in a Name?";
-"backup.name.description" = "Name your backup, maybe after one of my hotels?";
+"backup.name.title" = "Имя резервной копии";
+"backup.name.description" = "Введите имя файла резервной копии.";
 
-"backup.password.title" = "Your fantastic backup password here!";
-"backup.password.description" = "Craft a password that's tremendous! Needs 8 characters and a mix of the alphabet, numbers, and those little symbols.";
+"backup.password.title" = "Пароль резервной копии";
+"backup.password.description" = "Установите пароль разблокировки для вашей резервной копии. Пароль должен содержать как минимум 8 символов и включать хотя бы одну строчную букву, заглавную букву, цифру и специальный символ.";
 "backup.password.highlighted_description" = "Этот пароль используется для шифрования файла резервной копии вашего кошелька. Его невозможно восстановить или сбросить в случае утери или забвения.";
 
 // Settings -> Security
@@ -1154,7 +1157,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "enable_duress_mode.intro.biometrics.description" = "Функция %@ будет работать для разблокировки режима Duress. Вы можете отключить %@ для удобства.";
 "enable_duress_mode.intro.passcode_disabling" = "Отключение кода доступа";
 "enable_duress_mode.intro.passcode_disabling.description" = "Отключение пароля в основном режиме автоматически сбросит режим Duress.";
-"enable_duress_mode.intro.passcode_change" = "Passcode Change";
+"enable_duress_mode.intro.passcode_change" = "Изменить код доступа";
 "enable_duress_mode.intro.passcode_change.description" = "Изменение пароля в режиме Duress также изменит текущий пароль для этого режима.";
 
 "enable_duress_mode.select.title" = "Выберите кошельки";
@@ -1187,14 +1190,14 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "unlock.title" = "Разблокировать";
 "unlock.passcode" = "Введите код доступа";
-"unlock.biometry_reason" = "Unlock wallet";
+"unlock.biometry_reason" = "Разблокировать кошелек";
 "unlock.attempts_left" = "Осталось попыток: %@";
 "unlock.disabled_until" = "Отключено до: %@";
-"unlock.random" = "Random";
+"unlock.random" = "Случайный";
 
-"security_settings.delete_alert_button" = "Delete from Phone";
+"security_settings.delete_alert_button" = "Удалить с телефона";
 
-"btc_blockchain_settings.restore_source" = "Restore Source";
+"btc_blockchain_settings.restore_source" = "Источник восстановления";
 "btc_blockchain_settings.restore_source.description" = "Where do you wanna pull your wallet's past deeds from?";
 "btc_blockchain_settings.restore_source.alert" = "Just so you know, if you tweak the Restore Source, the wallet's gotta get in sync with the %@ blockchain again.";
 
@@ -1206,7 +1209,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
 "btc_transaction_sort_mode.bip69.description" = "Лексикографическая индексация";
 
-"blockchain_settings.info.restore_source" = "Restore Source";
+"blockchain_settings.info.restore_source" = "Источник восстановления";
 "blockchain_settings.info.restore_source.content" = "Alright, here's the deal. If you're bringing back an old wallet, you've got to know where it's been. %@ can tap into two ways: 1. A super-fast API server (think 5-10 minutes) that's kinda like asking a friend who knows everything. But it’s not as private and leans on that friend always being around. 2. Straight from the blockchain network, which is more private and independent but also a slow poke (could take 2-3 hours).";
 "blockchain_settings.info.rpc_source" = "Chatting with Blockchains";
 "blockchain_settings.info.rpc_source.content" = "How do we chat with the blockchains when money's moving? With some (like Bitcoin), it's like chatting in a big group. With others (like Ethereum), we gotta use a middleman like Infura.io. No worries about your coins though, just how we connect. We're brainstorming more freestyle ways to link up. Stay tuned!";
@@ -1238,7 +1241,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
+"settings.contact.title" = "Свяжитесь с нами";
 "settings.contact.via_email" = "по электронной почте";
 "settings.contact.via_telegram" = "через Telegram";
 
@@ -1264,7 +1267,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "appearance.markets_tab" = "Вкладка рынки";
 "appearance.launch_screen" = "Запуск экрана";
 "appearance.launch_screen.auto" = "По умолчанию";
-"appearance.launch_screen.balance" = "Big League Balance";
+"appearance.launch_screen.balance" = "Баланс";
 "appearance.launch_screen.market_overview" = "Обзор рынка";
 "appearance.launch_screen.watchlist" = "My Favorite List";
 
@@ -1287,7 +1290,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "contacts.update_contact.replace" = "Заменить";
 "contacts.list.addresses_count" = "Адреса: %d";
 "contacts.contact.new.title" = "Новый контакт";
-"contacts.contact.name.placeholder" = "Fabulous Name";
+"contacts.contact.name.placeholder" = "Название";
 "contacts.contact.update.error.name_already_exist" = "Имя уже существует";
 "contacts.contact.add_address" = "Добавить адрес";
 "contacts.contact.delete" = "Удалить контакт";
@@ -1370,7 +1373,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Create Wallet
 
 "create_wallet.title" = "Новый кошелек";
-"create_wallet.name" = "Fabulous Name";
+"create_wallet.name" = "Название";
 "create_wallet.advanced_setup" = "Доп. настройки";
 "create_wallet.create" = "Создать";
 "create_wallet.advanced" = "Доп. настройки";
@@ -1382,7 +1385,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "create_wallet.input.passphrase" = "Кодовая фраза";
 "create_wallet.input.confirm" = "Подтвердить";
 "create_wallet.passphrase_description" = "Think of passphrases as your wallet's secret handshake. If you ever need to bring back a lost wallet, you'll need the recovery phrase and this passphrase. Plus, with just one mnemonic, you can unlock a bunch of multi-coin wallets with different passphrases. Neat, right?";
-"create_wallet.error.empty_passphrase" = "Hey, we need that passphrase!";
+"create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "create_wallet.error.forbidden_symbols" = "Hold on there, cowboy! Let's stick to the symbols we know and love::A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Hmm, your passphrase confirmations aren't matching. Let's try that again.";
 
@@ -1392,7 +1395,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Lock Info
 
-"lock_info.title" = "Hold On!";
+"lock_info.title" = "TimeLock";
 "lock_info.text" = "The sender's put a timer on this. The Bitcoins are yours, but you gotta wait a tad to spend them on the Bitcoin network.";
 
 // Double Spend Info
@@ -1442,7 +1445,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Активный кошелек";
-"wallet_connect.address" = "Prime Location";
+"wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "The Best Network";
 "wallet_connect.list.pending_requests" = "Ожидающие запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
@@ -1526,12 +1529,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Manage Account
 
-"manage_account.name" = "Fabulous Name";
+"manage_account.name" = "Название";
 "manage_account.recovery_phrase" = "Фраза восстановления";
 "manage_account.public_keys" = "Публичные ключи";
 "manage_account.private_keys" = "Приватные ключи";
-"manage_account.backup_recovery_phrase" = "Backup Bonanza";
-"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud!";
+"manage_account.backup_recovery_phrase" = "Ручное резервное копирование";
+"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резерв. копию из iCloud";
 "manage_account.manual_backup_required" = "You Need a Personal Backup!";
 "manage_account.manual_backup_required.description" = "Before you throw out the iCloud backup, be smart and write down your recovery phrase. It's like insurance for your wallet!";
@@ -1589,7 +1592,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Add RPC Source
 
 "add_evm_sync_source.title" = "Добавить источник RPC";
-"add_evm_sync_source.name" = "Fabulous Name";
+"add_evm_sync_source.name" = "Название";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Базовая авторизация (опц.)";
 "add_evm_sync_source.warning.url_exists" = "This RPC Source URL? It's already in the club. No duplicates, folks!";
@@ -1648,14 +1651,14 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "watch_address.title" = "Просмотр кошелька";
 "watch_address.watch" = "Далее";
-"watch_address.address" = "Prime Location";
+"watch_address.address" = "Адрес";
 "watch_address.by" = "Из";
 "watch_address.watch_by" = "Смотреть из";
 "watch_address.evm_address" = "EVM адрес";
 "watch_address.tron_address" = "TRON адрес";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
-"watch_address.public_key.invalid_key" = "This key? Not the best. It's wrong!";
+"watch_address.public_key.invalid_key" = "Неверный ключ";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
 "watch_address.choose_coin" = "Выберите токен";
 
@@ -1683,7 +1686,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "nft_asset.floor_price" = "Минимальная цена";
 "nft_asset.on_sale" = "В продаже";
 "nft_asset.on_auction" = "На аукционе";
-"nft_asset.until_date" = "all the way to %@";
+"nft_asset.until_date" = "до %@";
 "nft_asset.buy_now" = "Купить сейчас";
 "nft_asset.minimum_bid" = "Мин. cтавка";
 "nft_asset.best_offer" = "Лучшее предложение";
@@ -1718,48 +1721,48 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "nft_collection.overview.today_sellers" = "Продавцы сегодня";
 "nft_collection.overview.floor_price" = "Минимальная цена";
 "nft_collection.overview.all_time_average" = "Среднее за все время";
-"nft_collection.overview.royalty" = "Royalty";
+"nft_collection.overview.royalty" = "Вознаграждение";
 "nft_collection.overview.inception_date" = "Дата старта";
 
 "nft.activity.contracts" = "Контракты";
-"nft.activity.empty_list" = "No item activity yet";
-"nft.activity.event_types" = "Event Types";
-"nft.activity.event_type.all" = "All Events";
-"nft.activity.event_type.sale" = "Sale";
-"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.empty_list" = "Нет активности";
+"nft.activity.event_types" = "Типы событий";
+"nft.activity.event_type.all" = "Все события";
+"nft.activity.event_type.sale" = "Продажа";
+"nft.activity.event_type.transfer" = "Перевод";
 "nft.activity.event_type.mint" = "Минт";
-"nft.activity.event_type.list" = "List";
-"nft.activity.event_type.listCancel" = "List Cancel";
-"nft.activity.event_type.offer" = "Offer";
-"nft.activity.event_type.offerCancel" = "Offer Cancel";
+"nft.activity.event_type.list" = "Залистить";
+"nft.activity.event_type.listCancel" = "Убрать из листинга";
+"nft.activity.event_type.offer" = "Предложение";
+"nft.activity.event_type.offerCancel" = "Предложение отменено";
 
 // Subscription Info
 
-"subscription_info.title" = "Premium Features";
-"subscription_info.info1.title" = "Cryptocurrency Analytics";
-"subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info2.title" = "Chart Indicators";
-"subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.title" = "Премиум-функции";
+"subscription_info.info1.title" = "Анализ криптовалют";
+"subscription_info.info1.text" = "Найдите перспективные возможности, избегайте мошенничества и максимизируйте свою прибыль в динамичном мире криптовалют.";
+"subscription_info.info2.title" = "Индикаторы";
+"subscription_info.info2.text" = "Найдите перспективные возможности, избегайте мошенничества и максимизируйте свою прибыль в динамичном мире криптовалют.";
 "subscription_info.info3.title" = "Персональная поддержка";
-"subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.get_premium" = "Get Premium";
-"subscription_info.already_have" = "I already have Premium";
+"subscription_info.info3.text" = "Найдите перспективные возможности, избегайте мошенничества и максимизируйте свою прибыль в динамичном мире криптовалют.";
+"subscription_info.get_premium" = "Получите премиум";
+"subscription_info.already_have" = "У меня уже есть премиум";
 
 // Activate Subscription
 
 "activate_subscription.title" = "Switch it on!";
-"activate_subscription.wallet" = "Wallet";
-"activate_subscription.address" = "Prime Location";
-"activate_subscription.message" = "Message to Sign";
+"activate_subscription.wallet" = "Кошелек";
+"activate_subscription.address" = "Адрес";
+"activate_subscription.message" = "Сообщение для подписи";
 "activate_subscription.sign" = "Подписать";
-"activate_subscription.activating" = "Activating...";
-"activate_subscription.failed_to_activate" = "Failed to activate subscription";
-"activate_subscription.activated" = "Activated";
-"activate_subscription.no_subscriptions" = "Your wallet address does not have a subscription to premium features, you need to purchase it to activate the subscription.";
+"activate_subscription.activating" = "Активация...";
+"activate_subscription.failed_to_activate" = "Не удалось активировать подписку";
+"activate_subscription.activated" = "Активировано";
+"activate_subscription.no_subscriptions" = "Ваш адрес кошелька не имеет подписки на премиум-функции. Вам необходимо ее приобрести, чтобы активировать подписку.";
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch" = "Не удалось запустить приложение из-за внутренней ошибки. Попробуйте перезапустить приложение или сообщите об ошибке нашей службе поддержки.";
 "launch.failed_to_launch.report" = "Пожаловаться";
 
 // Tron
@@ -1776,7 +1779,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Cex Coin Select
 
 "cex_coin_select.title" = "Выберите токен";
-"cex_coin_select.withdraw" = "Pull Out";
+"cex_coin_select.withdraw" = "Вывод средств";
 "cex_coin_select.withdraw.empty" = "У вас нет активов для вывода.";
 "cex_coin_select.search_placeholder" = "Код или имя";
 "cex_coin_select.suspended" = "Приостановлено";
@@ -1789,7 +1792,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Cex Deposit
 
 "cex_deposit.title" = "Депозит %@";
-"cex_deposit.address" = "Prime Location";
+"cex_deposit.address" = "Адрес";
 
 "cex_deposit.network" = "The Best Network";
 "cex_deposit.memo" = "Memo (Tag)";
@@ -1821,5 +1824,5 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "cex_withdraw_confirm.you_withdraw" = "Вывод средств";
 "cex_withdraw_confirm.network" = "The Best Network";
-"cex_withdraw_confirm.withdraw" = "Pull Out";
+"cex_withdraw_confirm.withdraw" = "Вывод средств";
 "cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
