@@ -30,7 +30,6 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -109,6 +108,11 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
             }
             .store(in: &cancellables)
 
+        viewModel.openConfigurationPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.openConfiguration(rawBackup: $0) }
+            .store(in: &cancellables)
+
         viewModel.successPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
@@ -172,6 +176,11 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
             isFileBackedUp: isFileBackedUp,
             returnViewController: returnViewController
         )
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func openConfiguration(rawBackup: RawFullBackup) {
+        let viewController = RestoreFileConfigurationModule.viewController(rawBackup: rawBackup, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

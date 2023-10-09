@@ -1,4 +1,0 @@
-import Foundation
-
-class BackupFileConfigurationViewModel {
-}

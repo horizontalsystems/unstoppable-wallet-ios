@@ -14,6 +14,7 @@ class AdapterManager {
     private let adapterDataReadyRelay = PublishRelay<AdapterData>()
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).adapter_manager", qos: .userInitiated)
+    private let initAdaptersQueue = DispatchQueue(label: "\(AppConfig.label).adapter_manager.init_adapters", qos: .userInitiated)
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
@@ -37,13 +38,18 @@ class AdapterManager {
     }
 
     private func initAdapters(wallets: [Wallet], account: Account?) {
+        initAdaptersQueue.async {
+            self._initAdapters(wallets: wallets, account: account)
+        }
+    }
+
+    private func _initAdapters(wallets: [Wallet], account: Account?) {
         var newAdapterMap = queue.sync { _adapterData.adapterMap }
 
         for wallet in wallets {
             guard newAdapterMap[wallet] == nil else {
                 continue
             }
-
             if let adapter = adapterFactory.adapter(wallet: wallet) {
                 newAdapterMap[wallet] = adapter
                 adapter.start()

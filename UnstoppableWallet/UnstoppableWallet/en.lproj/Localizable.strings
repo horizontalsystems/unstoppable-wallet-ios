@@ -36,9 +36,11 @@
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
 "alert.warning" = "Warning";
+"alert.notice" = "Notice";
 "alert.error" = "Error";
 "alert.unknown_error" = "Unknown Error";
 "alert.success_action" = "Done";
+"alert.restored" = "Restored";
 "alert.success" = "Success";
 
 "alert.added_to_watchlist" = "Added to Watchlist";
@@ -1128,6 +1130,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup_app.backup.password.title" = "Backup Password";
 "backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+
+"backup_app.restore.notice.description" = "As a result of this action, wallets and contacts from a backup file will be added to the existing wallets and contacts in the app.";
+"backup_app.restore.notice.merge" = "Merge";
+
 
 // Settings -> Security
 

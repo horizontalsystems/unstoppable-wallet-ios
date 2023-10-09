@@ -6,7 +6,9 @@ class RestoreTypeViewModel {
     let sourceType: BackupModule.Source.Abstract
 
     private let showCloudNotAvailableSubject = PassthroughSubject<Void, Never>()
+    private let showWrongFileSubject = PassthroughSubject<Void, Never>()
     private let showModuleSubject = PassthroughSubject<RestoreTypeModule.RestoreType, Never>()
+    private let showRestoreBackupSubject = PassthroughSubject<BackupModule.NamedSource, Never>()
 
     init(cloudAccountBackupManager: CloudBackupManager, sourceType: BackupModule.Source.Abstract) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
@@ -19,8 +21,16 @@ extension RestoreTypeViewModel {
         showCloudNotAvailableSubject.eraseToAnyPublisher()
     }
 
+    var showWrongFilePublisher: AnyPublisher<Void, Never> {
+        showWrongFileSubject.eraseToAnyPublisher()
+    }
+
     var showModulePublisher: AnyPublisher<RestoreTypeModule.RestoreType, Never> {
         showModuleSubject.eraseToAnyPublisher()
+    }
+
+    var showRestoreBackupPublisher: AnyPublisher<BackupModule.NamedSource, Never> {
+        showRestoreBackupSubject.eraseToAnyPublisher()
     }
 
     func onTap(type: RestoreTypeModule.RestoreType) {
@@ -32,6 +42,15 @@ extension RestoreTypeViewModel {
             } else {
                 showCloudNotAvailableSubject.send(())
             }
+        }
+    }
+
+    func didPick(url: URL) {
+        do {
+            let namedSource = try RestoreFileHelper.parse(url: url)
+            showRestoreBackupSubject.send(namedSource)
+        } catch {
+            showWrongFileSubject.send()
         }
     }
 }
@@ -55,7 +74,7 @@ extension RestoreTypeViewModel {
         switch type {
         case .recoveryOrPrivateKey: return "restore_type.recovery.title".localized
         case .cloudRestore: return "restore_type.cloud.title".localized
-        case .fileRestore: return "restore_type.cloud.title".localized
+        case .fileRestore: return "restore_type.file.title".localized
         case .cex: return "restore_type.cex.title".localized
         }
     }

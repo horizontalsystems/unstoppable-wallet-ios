@@ -128,6 +128,17 @@ extension AccountManager {
         set(activeAccountId: account.id)
     }
 
+    func save(accounts: [Account]) {
+        accounts.forEach { account in
+            storage.save(account: account)
+        }
+
+        accountsRelay.accept(storage.accounts)
+        if let first = accounts.first {
+            set(activeAccountId: first.id)
+        }
+    }
+
     func delete(account: Account) {
         storage.delete(account: account)
 
