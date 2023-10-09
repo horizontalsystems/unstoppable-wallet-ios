@@ -36,9 +36,11 @@
 "alert.wrong_amount" = "Неправильная сумма";
 "alert.no_fee" = "Неверная комиссия";
 "alert.warning" = "Внимание";
+"alert.notice" = "Notice";
 "alert.error" = "Ошибка";
 "alert.unknown_error" = "Неизвестная ошибка";
 "alert.success_action" = "Готово";
+"alert.restored" = "Восстановлено";
 "alert.success" = "Успешно";
 
 "alert.added_to_watchlist" = "Добавлено в избранное";
@@ -141,18 +143,22 @@
 
 "restore_type.recovery.title" = "Фраза восстановления";
 "restore_type.cloud.title" = "iCloud";
+"restore_type.file.title" = "from Files";
 "restore_type.cex.title" = "с кошелька биржи";
 
 "restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
 "restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
+"restore_type.file.description" = "Import a backup file from your local folder.";
 "restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Выберите резервную копию";
-"restore.cloud.description" = "Выберите резервную копию кошелька, которую вы хотите восстановить.";
+"restore.cloud.description" = "Select the backup file that you want to restore.";
 "restore.cloud.empty" = "Резервные копии не найдены.";
+"restore.cloud.wallets" = "Wallet backups";
 "restore.cloud.imported" = "Импортированные кошельки";
+"restore.cloud.app_backups" = "App backups";
 
 "restore.cloud.password.title" = "Введите пароль";
 "restore.cloud.password.placeholder" = "Пароль резервной копии";
@@ -329,91 +335,91 @@
 // Token Balance Page
 "balance.token.locked" = "Заблокировано";
 "balance.token.locked.info.title" = "TimeLock";
-"balance.token.locked.info.description" = "The sender's put a timer on this. The Bitcoins are yours, but you gotta wait a tad to spend them on the Bitcoin network.";
+"balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
 "balance.token.processing" = "В процессе";
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
-"balance.token.staked" = "All In";
-"balance.token.staked.info.title" = "In The Game";
-"balance.token.staked.info.description" = "Let's talk staking!";
-"balance.token.frozen" = "Chilled";
-"balance.token.frozen.info.title" = "Cool Off";
-"balance.token.frozen.info.description" = "Let's chat about why it's so cool.";
+"balance.token.staked" = "Staked";
+"balance.token.staked.info.title" = "Staked title";
+"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.frozen" = "Frozen";
+"balance.token.frozen.info.title" = "Frozen title";
+"balance.token.frozen.info.description" = "Frozen Description Text";
 
 // Account switcher
 
-"switch_account.title" = "Switch Wallets";
-"switch_account.wallets" = "Fat Wallets";
-"switch_account.watch_wallets" = "Wallet Watchlist";
+"switch_account.title" = "Переключить кошелек";
+"switch_account.wallets" = "Кошельки";
+"switch_account.watch_wallets" = "Просмотр кошелька";
 
 // Release notes
 
-"release_notes.title" = "The Latest & Greatest";
-"release_notes.follow_us" = "Join the Trump Unstoppable Train";
+"release_notes.title" = "Что нового";
+"release_notes.follow_us" = "Мы в соцсетях";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@!";
+"deposit.receive_coin" = "Получить %@";
 "deposit.address" = "Адрес";
-"deposit.your_address" = "Your Address!";
-"receive_alert.not_backed_up_description" = "Hold on! You've got to back up %@ before we're winning with %@.";
-"receive_alert.any_coins.not_backed_up_description" = "You've gotta backup %@ before making any yuge coin deals!";
-"deposit.no_adapter.error" = "Whoops! Can't get that address right now.";
+"deposit.your_address" = "Ваш адрес";
+"receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед получением %@.";
+"receive_alert.any_coins.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед тем, как вы сможете получить любые монеты.";
+"deposit.no_adapter.error" = "Не удается предоставить адрес";
 
-"deposit.address_format" = "Flashy Format";
-"deposit.address_network" = "The Best Network";
-"deposit.qr_code_description" = "Your VIP ticket to deposit %@";
-"deposit.qr_code_description.watch" = "Keep an eye on this %@ address!";
+"deposit.address_format" = "Формат";
+"deposit.address_network" = "Сеть";
+"deposit.qr_code_description" = "Ваш адрес для депозита %@";
+"deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
 "deposit.account" = "Account";
 
-"deposit.not_active" = "Taking a nap";
-"deposit.not_active.title" = "Sleepy Address";
-"deposit.not_active.tron_description" = "Just so you know, new accounts on TRON aren't awake yet. To get them going, send over some TRX or TRC-10 tokens. It'll cost you just 1 TRX.";
+"deposit.not_active" = "Не активен";
+"deposit.not_active.title" = "Неактивный адрес";
+"deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
 
-"deposit.zcash.restore.description" = "Ever had a little ZEC action before?";
-"deposit.zcash.restore.already_own" = "Of course, I've got some!";
-"deposit.zcash.restore.dont_have" = "Nope, fresh start!";
+"deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
+"deposit.zcash.restore.already_own" = "Да, у меня уже есть";
+"deposit.zcash.restore.dont_have" = "Нет, у меня нет";
 
-"deposit.warning" = "Only send %@ here, or you'll be losing bigly!";
+"deposit.warning" = "Отправка только %@ на этот адрес. Отправка других типов токенов на этот адрес приведет к их окончательной потере.";
 
-"receive_network_select.title" = "The Best Network";
-"receive_network_select.description" = "Choose the best network and grab an address!";
+"receive_network_select.title" = "Сеть";
+"receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
 
-"receive_address_format_select.title" = "Prestige Address Format";
-"receive_address_format_select.description" = "Pick a network, get the finest address!";
-"receive_address_format_select.bitcoin.bottom_description" = "For the best deals in Bitcoin, Native SegWit is the way. Any address will do – Taproot, SegWit, Legacy. It's all great!";
-"receive_address_format_select.bitcoin_cash.bottom_description" = "Want the smoothest experience for Bitcoin Cash? Go with the Cash Address.";
+"receive_address_format_select.title" = "Формат адреса";
+"receive_address_format_select.description" = "Выберите формат адреса для получения вашего адреса.";
+"receive_address_format_select.bitcoin.bottom_description" = "Формат Native SegWit предпочтителен в Биткойне для повышения пропускной способности и безопасности. Все форматы адресов (Taproot, SegWit, Legacy) могут использоваться взаимозаменяемо для получения BTC независимо от формата адреса отправителя, что обеспечивает бесперебойные транзакции между различными типами монет.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "Формат Cash Address предпочтителен для получения Bitcoin Cash (BCH) из-за улучшенного пользовательского опыта и совместимости. Однако, оба формата адреса могут использоваться взаимозаменяемо для получения BCH, независимо от формата адреса отправителя.";
 
-"blockchain_type.recommended" = " (Total winner)";
+"blockchain_type.recommended" = " (рекомендовано)";
 
 // Send
 
-"send.title" = "Send %@!";
+"send.title" = "Отправить %@";
 "send.send" = "Отправить";
-"send.no_assets" = "Looks like your vault's empty, sad!";
-"send.amount_placeholder" = "How many chips?";
+"send.no_assets" = "У вас нет активов для отправки.";
+"send.amount_placeholder" = "Сумма";
 "send.address_placeholder" = "Адрес";
-"send.address_or_domain_placeholder" = "Address or fancy Domain";
-"send.fee" = "Little Charge";
-"send.network_fee" = "Network’s Tiny Fee";
-"send.estimated_fee" = "Ballpark Fee";
-"send.max_fee" = "Maximum Fee";
-"send.duration.hours" = "%d h";
-"send.duration.minutes" = "%d quick mins";
-"send.available_balance" = "What's in the kitty?";
-"send.max_button" = "Go Yuge!";
+"send.address_or_domain_placeholder" = "Адрес или домен";
+"send.fee" = "Комиссия";
+"send.network_fee" = "Комиссия сети";
+"send.estimated_fee" = "Предполагаемая комиссия";
+"send.max_fee" = "Макс. комиссия";
+"send.duration.hours" = "%d ч.";
+"send.duration.minutes" = "%d мин.";
+"send.available_balance" = "Доступный баланс";
+"send.max_button" = "Макс.";
 "send.next_button" = "Далее";
-"send.error.invalid" = "No good!";
+"send.error.invalid" = "Неверно";
 "send.error.address" = "Адрес";
 "send.hodler_locktime" = "TimeLock";
-"send.hodler_locktime_hour" = "1 hour";
-"send.hodler_locktime_month" = "1 big month";
-"send.hodler_locktime_half_year" = "Solid 6 months";
-"send.hodler_locktime_year" = "1 winning year";
-"send.hodler_locktime_off" = "Shut it!";
-"send.hodler_error.unsupported_address" = "Time vaulting? Only for top-tier addresses starting with 1...!";
-"send.fee_info.title" = "The Fee Game";
-"send.fee_info.description" = "Everybody pays a bit to keep things moving on the blockchain. Busy days mean higher fees. But hey, we'll suggest the best deal for you!";
+"send.hodler_locktime_hour" = "1 час";
+"send.hodler_locktime_month" = "1 месяц";
+"send.hodler_locktime_half_year" = "6 месяцев";
+"send.hodler_locktime_year" = "1 год";
+"send.hodler_locktime_off" = "Выкл.";
+"send.hodler_error.unsupported_address" = "TimeLock работает только при отправке на платёжные адреса, начинающиеся с 1... (также известных как BIP44 адреса)";
+"send.fee_info.title" = "Комиссия";
+"send.fee_info.description" = "Блокчейны требуют от пользователей уплачивать сетевые комиссии при отправке транзакций. Комиссии выше, когда в сети происходит больше транзакций.\n\nКошелек %@ оценивает комиссию на основе текущей активности блокчейна и рекомендует оптимальное значение, чтобы транзакция была обработана в разумное время.\n\nРекомендуемая ставка комиссии показана как количество сатоши, которое пользователь должен заплатить за один байт транзакции. Таким образом, общая комиссия зависит от общего размера транзакции, который измеряется в байтах.\n\nПользователи могут использовать предоставленные элементы управления для увеличения или уменьшения значения ставки комиссии. Изменение ставки комиссии влияет на общую комиссию за транзакцию, которую пользователь заплатит.\n\nУстановка ставки комиссии ниже рекомендуемого значения может привести к тому, что транзакция будет ожидать обработки в течение часов или будет отклонена. Чем ниже значение, тем дольше будет проходить подтверждение транзакции. Для транзакций, где важен приоритет, рекомендуется установить более высокую ставку комиссии.";
 "send.transaction_inputs_outputs_info.title" = "In's and Out's of Transactions";
 "send.transaction_inputs_outputs_info.description" = "Most transactions have two parts: what you send and what you get back. We're smart, making it tricky for anyone trying to snoop.";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. The Trump Card Shuffle";
@@ -430,7 +436,7 @@
 "send.confirmation.memo" = "Your two cents";
 "send.confirmation.memo_placeholder" = "Your two cents";
 "send.confirmation.total" = "The whole enchilada";
-"send.confirmation.fee" = "Little Charge";
+"send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.slide_to_send" = "Swipe to make it rain!";
 "send.confirmation.sending" = "Отправка";
@@ -761,7 +767,7 @@
 "coin_analytics.indicators.strong_sell" = "Активно продавать";
 "coin_analytics.period" = "Период";
 "coin_analytics.period.select_title" = "Выберите период";
-"coin_analytics.period.1h" = "1 hour";
+"coin_analytics.period.1h" = "1 час";
 "coin_analytics.period.4h" = "4 часа";
 "coin_analytics.period.1d" = "1 день";
 "coin_analytics.period.1w" = "1 неделя";
@@ -988,7 +994,7 @@
 "tx_info.options.speed_up" = "Ускорить";
 "tx_info.options.cancel" = "Bail on it!";
 "tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
-"tx_info.fee" = "Little Charge";
+"tx_info.fee" = "Комиссия";
 "tx_info.fee.estimated" = "Комиссия (прим.)";
 "tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
 "tx_info.double_spent_note" = "Риск двойной траты!";
@@ -1089,43 +1095,47 @@
 
 // Settings -> Backup Manager
 
-"backup_manager.title" = "Менеджер резерв. копирования";
-"backup_manager.restore" = "Восстановить резервную копию";
-"backup_manager.create" = "Создать новую резерв. копию";
+"backup_app.backup_manager.title" = "Менеджер резерв. копирования";
+"backup_app.backup_manager.restore" = "Restore Backup";
+"backup_app.backup_manager.create" = "Create New Backup";
 
-"backup_type.title" = "Тип резервной копии";
-"backup_type.description" = "Выберите, куда вы хотите сохранить файл резервной копии.";
-"backup_type.cloud" = "Backup to iCloud";
-"backup_type.file" = "Резервное копирование в Файлы";
+"backup_app.backup_type.title" = "Backup Type";
+"backup_app.backup_type.description" = "Select where you want to save the backup file.";
+"backup_app.backup_type.cloud" = "Backup to iCloud";
+"backup_app.backup_type.file" = "Backup to Files";
 
-"backup_list.title" = "Файл резервной копии";
-"backup_list.description.restore" = "Список содержимого в файле резервной копии.";
-"backup_list.header.wallets" = "Fat Wallets";
-"backup_list.header.other" = "Other stuff";
-"backup_list.other.watch_account.title" = "Wallet Watchlist";
-"backup_list.other.watch_account.description" = "Адреса: %d";
-"backup_list.other.watchlist.title" = "My Favorite List";
-"backup_list.other.watchlist.description" = "Монеты: %d";
-"backup_list.other.contacts.title" = "Контакты";
-"backup_list.other.contacts.description" = "Адреса: %d";
-"backup_list.other.blockchain_settings.title" = "Настройки блокчейна";
-"backup_list.other.blockchain_settings.description" = "Пользовательские RPC: %d";
-"backup_list.other.app_settings.title" = "Настройки приложения";
-"backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
+"backup_app.backup_list.title" = "Backup File";
+"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.header.wallets" = "Кошельки";
+"backup_app.backup_list.header.other" = "Other stuff";
+"backup_app.backup_list.other.watch_account.title" = "Просмотр кошелька";
+"backup_app.backup_list.other.watch_account.description" = "Адреса: %d";
+"backup_app.backup_list.other.watchlist.title" = "My Favorite List";
+"backup_app.backup_list.other.watchlist.description" = "Coins: %d";
+"backup_app.backup_list.other.contacts.title" = "Контакты";
+"backup_app.backup_list.other.contacts.description" = "Адреса: %d";
+"backup_app.backup_list.other.blockchain_settings.title" = "Настройки блокчейна";
+"backup_app.backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_app.backup_list.other.app_settings.title" = "App Settings";
+"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
-"backup.disclaimer.cloud.title" = "Backup to iCloud";
-"backup.disclaimer.cloud.description" = "iCloud - это облачный сервис для хранения данных, предоставляемый компанией Apple. Важно знать, что ваши данные резервной копии будут сохранены на серверах Apple.";
-"backup.disclaimer.cloud.checkbox_label" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
-"backup.disclaimer.file.title" = "Резервное копирование в файл";
-"backup.disclaimer.file.description" = "Накопители данных, такие как жесткие диски, USB-накопители, хранилище на смартфонах и др., все подвержены потере из-за физического повреждения, кражи или других непредвиденных обстоятельств.";
-"backup.disclaimer.file.checkbox_label" = "Я понимаю, что кража или повреждение устройства резервного копирования может привести к потере резервной копии для соответствующего кошелька.";
+"backup_app.backup.disclaimer.cloud.title" = "Backup to iCloud";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
+"backup_app.backup.disclaimer.file.title" = "Backup to File";
+"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
 
-"backup.name.title" = "Имя резервной копии";
-"backup.name.description" = "Введите имя файла резервной копии.";
+"backup_app.backup.name.title" = "Имя резервной копии";
+"backup_app.backup.name.description" = "Введите имя файла резервной копии.";
 
-"backup.password.title" = "Пароль резервной копии";
-"backup.password.description" = "Установите пароль разблокировки для вашей резервной копии. Пароль должен содержать как минимум 8 символов и включать хотя бы одну строчную букву, заглавную букву, цифру и специальный символ.";
-"backup.password.highlighted_description" = "Этот пароль используется для шифрования файла резервной копии вашего кошелька. Его невозможно восстановить или сбросить в случае утери или забвения.";
+"backup_app.backup.password.title" = "Пароль резервной копии";
+"backup_app.backup.password.description" = "Установите пароль разблокировки для вашей резервной копии. Пароль должен содержать как минимум 8 символов и включать хотя бы одну строчную букву, заглавную букву, цифру и специальный символ.";
+"backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+
+"backup_app.restore.notice.description" = "As a result of this action, wallets and contacts from a backup file will be added to the existing wallets and contacts in the app.";
+"backup_app.restore.notice.merge" = "Merge";
+
 
 // Settings -> Security
 
@@ -1162,8 +1172,8 @@
 
 "enable_duress_mode.select.title" = "Выберите кошельки";
 "enable_duress_mode.select.description" = "Выберите кошельки, которые будут отображаться в режиме Duress.";
-"enable_duress_mode.select.wallets" = "Fat Wallets";
-"enable_duress_mode.select.watch_wallets" = "Wallet Watchlist";
+"enable_duress_mode.select.wallets" = "Кошельки";
+"enable_duress_mode.select.watch_wallets" = "Просмотр кошелька";
 
 "enable_duress_mode.passcode.title" = "Duress код";
 "enable_duress_mode.passcode.description" = "Установите код для режима Duress";
@@ -1236,7 +1246,7 @@
 "settings.about_app.title" = "О приложении";
 "settings.about_app.app_name" = "%@ кошелек";
 "settings.about_app.description" = "Кошелек %@ создан для тех, кто ищет возможность инвестировать и хранить криптовалюты в частном и независимом режиме.\n\nЭто некастодиальный кошелек с принципом равноправия, в котором только пользователь имеет полный контроль над своими средствами. Он не собирает никаких данных и сохраняет независимость пользователя, не привязывая средства пользователя к конкретному приложению кошелька.\n\nКошелек %@ полностью открытого исходного кода, и любой может подтвердить, что приложение работает именно так, как утверждается.";
-"settings.about_app.whats_new" = "The Latest & Greatest";
+"settings.about_app.whats_new" = "Что нового";
 "settings.about_app.website" = "Веб-сайт";
 
 // Settings -> About App -> Contact
@@ -1396,7 +1406,7 @@
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "The sender's put a timer on this. The Bitcoins are yours, but you gotta wait a tad to spend them on the Bitcoin network.";
+"lock_info.text" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
 
 // Double Spend Info
 
@@ -1446,7 +1456,7 @@
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Активный кошелек";
 "wallet_connect.address" = "Адрес";
-"wallet_connect.network" = "The Best Network";
+"wallet_connect.network" = "Сеть";
 "wallet_connect.list.pending_requests" = "Ожидающие запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Some of these chains? Very low energy. Not supported!";
@@ -1606,9 +1616,9 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
 "fee_settings" = "Доп. настройки";
-"fee_settings.fee" = "Little Charge";
+"fee_settings.fee" = "Комиссия";
 "fee_settings.fee.info" = "Think of blockchains like a fancy club in Manhattan. When it's crowded, you gotta pay a premium to get in. So, when there's a lot of action on the network, fees go up. Big league!";
-"fee_settings.fee_rate" = "The Fee Game";
+"fee_settings.fee_rate" = "Комиссия";
 "fee_settings.fee_rate.description" = "Это рекомендуемое значение для попадания в следующие 2 блока";
 "fee_settings.inputs_outputs" = "Вводы/Выводы";
 "fee_settings.transaction_settings" = "Настройки транзакций";
@@ -1617,7 +1627,7 @@
 "fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
 ";
 
-"fee_settings.network_fee" = "Network’s Tiny Fee";
+"fee_settings.network_fee" = "Комиссия сети";
 "fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "You know, transactions have their own kind of 'energy', and they call it 'gas'. Think of the Gas Limit as the biggest energy drink you'd need for a transaction. But usually, you'll sip less than what you think.";
@@ -1794,7 +1804,7 @@
 "cex_deposit.title" = "Депозит %@";
 "cex_deposit.address" = "Адрес";
 
-"cex_deposit.network" = "The Best Network";
+"cex_deposit.network" = "Сеть";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Мин. сумма";
 "cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
@@ -1806,9 +1816,9 @@
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "The Best Network";
+"cex_withdraw.network" = "Сеть";
 "cex_withdraw.network_warning" = "Убедитесь, что сеть совпадает с адресом снятия, а платформа депозита поддерживает его, или активы могут быть потеряны.";
-"cex_withdraw.fee" = "Little Charge";
+"cex_withdraw.fee" = "Комиссия";
 "cex_withdraw.fee_from_amount" = "Комиссия от суммы";
 "cex_withdraw.error.insufficient_funds" = "Недостаточно доступных средств";
 "cex_withdraw.error.max_amount_violated" = "Макс.сумма вывода: %@";
@@ -1817,12 +1827,12 @@
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "The Best Network";
+"cex_withdraw_network_select.title" = "Сеть";
 "cex_withdraw_network_select.description" = "Убедитесь, что сеть совпадает с адресом снятия и платформа депозита поддерживает его.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Вывод средств";
-"cex_withdraw_confirm.network" = "The Best Network";
+"cex_withdraw_confirm.network" = "Сеть";
 "cex_withdraw_confirm.withdraw" = "Вывод средств";
 "cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
