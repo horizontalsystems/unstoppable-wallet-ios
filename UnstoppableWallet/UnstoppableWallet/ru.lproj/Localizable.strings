@@ -17,18 +17,18 @@
 "button.retry" = "Повторить";
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
-"button.approve" = "Approve";
-"button.revoke" = "Revoke";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
-"button.save" = "Save";
+"button.approve" = "Одобрить";
+"button.revoke" = "Отменить";
+"button.reject" = "Отклонить";
+"button.connect" = "Подключиться";
+"button.save" = "Сохранить";
 "button.send" = "Отправить";
 "button.sign" = "Подписать";
 "button.more" = "Показать больше";
 "button.i_understand" = "Я понимаю";
 "button.learn_more" = "Подробнее";
 
-"alert" = "Alert";
+"alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
 "alert.saved" = "Сохранено";
 "alert.saved_to_icloud" = "Сохранено в iCloud";
@@ -56,30 +56,30 @@
 "alert.disconnecting" = "Отсоединение";
 "alert.disconnected" = "Отсоединено";
 "alert.enabling" = "Идет активация";
-"alert.enabled_coins" = "Enabled %@ more coins";
-"alert.sending" = "Sending";
-"alert.sent" = "Sent";
-"alert.swapping" = "Swapping";
-"alert.swapped" = "Swapped";
-"alert.approving" = "Approving";
-"alert.approved" = "Approved";
-"alert.revoking" = "Revoking";
-"alert.revoked" = "Revoked";
-"alert.cant_recognize" = "Can't Recognize";
+"alert.enabled_coins" = "Включено ещё %@ монет";
+"alert.sending" = "Отправка";
+"alert.sent" = "Отправлено";
+"alert.swapping" = "Обмен";
+"alert.swapped" = "Обмен выполнен";
+"alert.approving" = "Разрешение";
+"alert.approved" = "Разрешено";
+"alert.revoking" = "Отмена";
+"alert.revoked" = "Отменен";
+"alert.cant_recognize" = "Не удалось распознать";
 
-"no_results_found" = "No results found";
-"action.loading" = "loading...";
-"placeholder.search" = "Search";
+"no_results_found" = "Ничего не найдено";
+"action.loading" = "загрузка...";
+"placeholder.search" = "Поиск";
 
-"status" = "Status";
-"connecting" = "Connecting...";
+"status" = "Статус";
+"connecting" = "Подключение...";
 "online" = "Доступен";
 "offline" = "Не доступен";
 "confirm" = "Подтвердить";
-"connect" = "Connect";
-"price" = "Price";
-"value" = "Value";
-"note" = "Note";
+"connect" = "Подключиться";
+"price" = "Цена";
+"value" = "Значение";
+"note" = "Примечание";
 
 "version" = "Версия %@";
 
@@ -93,12 +93,12 @@
 "number.trillion" = "%@ трл";
 "number.quadrillion" = "%@ квадрлн";
 
-"selector.any" = "Any";
+"selector.any" = "Любое";
 
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Immediate";
+"auto_lock.immediate" = "Немедленно";
 "auto_lock.minute1" = "1 минута";
 "auto_lock.minute5" = "5 минут";
 "auto_lock.minute15" = "15 минут";
@@ -115,7 +115,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "restore.title" = "Импорт кошелька";
 "restore.advanced" = "Доп. настройки";
-"restore.import_by" = "Import By";
+"restore.import_by" = "Импорт по";
 "restore.restore_type.mnemonic" = "Фраза восстановления";
 "restore.restore_type.private_key" = "Private Key.";
 "restore.mnemonic.placeholder" = "Give me those magic words! Recovery Phrase, come on!";
@@ -164,30 +164,30 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "restore.binance.description" = "Hand over those API Keys and Secret! Only the best for our exchange!";
 "restore.binance.api_key" = "The Unbeatable API Key!";
-"restore.binance.secret_key" = "Secret Key";
-"restore.binance.connect" = "Connect";
-"restore.binance.connecting" = "Connecting...";
-"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.secret_key" = "Секретный ключ";
+"restore.binance.connect" = "Подключиться";
+"restore.binance.connecting" = "Подключение...";
+"restore.binance.get_api_keys" = "Получить API ключ";
 "restore.binance.failed_to_connect" = "Failed to connect your API key";
 "restore.binance.invalid_qr_code" = "That QR Code? Not the best. Try another!";
 
 // Coin Settings
 
-"coin_settings.title" = "Blockchain Settings";
+"coin_settings.title" = "Настройки блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
-"sync_mode.from_blockchain" = "From Blockchain";
+"sync_mode.from_blockchain" = "Из блокчейна";
 "blockchain_settings.description" = "Choose your address format. Let's make your payments great, just like when you pick the right tie! Always be spot on.";
 
 // Coin Platforms
 
-"coin_platforms.native" = "Native";
+"coin_platforms.native" = "Нативный";
 
 // Copy Warning
 
 "copy_warning.title" = "Woah! Risky copying ahead.";
 "copy_warning.description" = "For safety, folks, I'd say don't copy this! I have the best safety tips.";
-"copy_warning.dont_copy" = "Don't Copy";
+"copy_warning.dont_copy" = "Не копировать";
 "copy_warning.i_will_risk_it" = "I'm feeling brave today!";
 
 // Recovery Phrase
@@ -196,12 +196,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "recovery_phrase.warning" = "Never ever share! Remember, the %@ team won't ask. It's like your personal hair secret.";
 "recovery_phrase.tap_to_show" = "Give it a tap! Unveil the magic words.";
 "recovery_phrase.passphrase" = "Кодовая фраза";
-"recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
+"recovery_phrase.copy_warning.title" = "Риск копирования фразы восстановления";
 "recovery_phrase.copy_warning.description" = "Stay safe! I wouldn't copy that if I were you. Best recommendation.";
 
 // EVM Private Key
 
-"evm_private_key.title" = "EVM Private Key";
+"evm_private_key.title" = "Приватный Ключ EVM";
 "evm_private_key.tap_to_show" = "Give it a little tap! The big reveal.";
 
 // Extended Key
@@ -327,9 +327,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "balance.token.locked" = "On Lockdown";
 "balance.token.locked.info.title" = "Hold On!";
 "balance.token.locked.info.description" = "The sender's put a timer on this. The Bitcoins are yours, but you gotta wait a tad to spend them on the Bitcoin network.";
-"balance.token.processing" = "Processing";
-"balance.token.processing.info.title" = "Processing amount";
-"balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they will be confirmed, this tokens will be available for spending";
+"balance.token.processing" = "В процессе";
+"balance.token.processing.info.title" = "Обрабатываемая сумма";
+"balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
 "balance.token.staked" = "All In";
 "balance.token.staked.info.title" = "In The Game";
 "balance.token.staked.info.description" = "Let's talk staking!";
@@ -430,7 +430,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "send.confirmation.fee" = "Little Charge";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.slide_to_send" = "Swipe to make it rain!";
-"send.confirmation.sending" = "Sending";
+"send.confirmation.sending" = "Отправка";
 "send.confirmation.resend_description" = "Let's try ousting that old transaction with a bigger, better fee. Only the best one stays!";
 "send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "We'll try sneaking a new zero-amount transaction past the old one. Only the top dog will make it!";
@@ -500,7 +500,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "swap.switch_provider.title" = "Who's the dealer?";
 "swap.amount_type.coin" = "Shiny Coin";
 
-"swap.price" = "Price";
+"swap.price" = "Цена";
 "swap.buy_price" = "What it'll cost ya";
 "swap.sell_price" = "Sell Price!";
 "swap.price_impact" = "Price rollercoaster";
@@ -512,28 +512,28 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "Slippage Tolerance";
+"swap.advanced_settings.slippage" = "Допустимое отклонение";
 "swap.advanced_settings.slippage.footer" = "If prices dip more than this, no deal!";
-"swap.advanced_settings.deadline" = "Transaction Deadline";
+"swap.advanced_settings.deadline" = "Срок выполнения транзакции";
 "swap.advanced_settings.deadline.footer" = "No dilly-dallying! Time's ticking.";
 "swap.advanced_settings.recipient.footer" = "Where's the money going after the swap?";
 "swap.advanced_settings.deadline_minute" = "Hurry up, %@ min!";
-"swap.advanced_settings.recipient_address" = "Recipient Address";
+"swap.advanced_settings.recipient_address" = "Адрес получателя";
 "swap.advanced_settings.warning.unusual_slippage" = "Watch out! Others might jump the line!";
 "swap.advanced_settings.service_fee_description" = "A small thank you fee for our service. Usually just a tiny 0.3% or 0.6%!";
 "swap.advanced_settings.error.lower_slippage" = "This might flop.";
 "swap.advanced_settings.error.higher_slippage" = "Can't go over %@%%, buddy!";
 "swap.advanced_settings.error.invalid_address" = "Wonky address alert!";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.error.invalid_slippage" = "Недействительное отклонение";
+"swap.advanced_settings.error.invalid_deadline" = "Недействительный срок выполнения";
 
 "swap.one_inch.error.cannot_estimate" = "Math's a bit tricky.";
 "swap.one_inch.error.cannot_estimate.info" = "Check your stash. Maybe up the wiggle room and try again. Give it another go in 3...";
 "swap.one_inch.error.insufficient_liquidity" = "Pool's a bit shallow!";
 "swap.one_inch.error.insufficient_liquidity.info" = "Not enough in the pot. Lower the ante.";
 
-"swap.service" = "Service";
-"swap.service.title" = "Service";
+"swap.service" = "Сервис";
+"swap.service.title" = "Сервис";
 
 // Swap Approving
 
@@ -542,7 +542,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Swap Confirmation
 
 "swap.confirmation.slide_to_swap" = "Slide to the deal!";
-"swap.confirmation.swapping" = "Swapping";
+"swap.confirmation.swapping" = "Обмен";
 "swap.confirmation.impact_too_high" = "Hold up! %@ says this deal's a dud. Check out %@ instead!";
 "swap.confirmation.impact_warning" = "Watch out! It's a wild ride!";
 
@@ -627,12 +627,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Обзор категорий";
 "market_discovery.top_coins" = "Топ токены";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "Ничего не найдено";
 
 "market_watchlist.empty.caption" = "It's lonely here.";
 
-"market.search.title" = "Search";
-"market.search.empty_text" = "No results found";
+"market.search.title" = "Поиск";
+"market.search.empty_text" = "Ничего не найдено";
 
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Show Me The Gold";
@@ -686,12 +686,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "market.advanced_search.day" = "1 день";
 "market.advanced_search.week" = "1 неделя";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.week2" = "2 недели";
+"market.advanced_search.month" = "1 месяц";
+"market.advanced_search.month6" = "6 месяцев";
+"market.advanced_search.year" = "1 год";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "Результаты";
 
 "market.global.total_market_cap.title" = "All the Money";
 "market.global.total_market_cap.description" = "Every penny, because we're that good.";
@@ -709,70 +709,70 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Coin Page
 
-"coin_page.overview" = "Price";
-"coin_page.analytics" = "Analytics";
+"coin_page.overview" = "Цена";
+"coin_page.analytics" = "Аналитика";
 "coin_page.markets" = "Markets!";
-"coin_page.tweets" = "Tweets";
+"coin_page.tweets" = "Твиты";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
+"coin_overview.indicators" = "Индикаторы";
+"coin_overview.indicators.show" = "Показать";
+"coin_overview.indicators.hide" = "Скрыть";
 "coin_overview.market_cap" = "How Big's the Hat?";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.circulating_supply" = "В обороте";
+"coin_overview.total_supply" = "Макс.выпуск";
 "coin_overview.diluted_market_cap" = "Dilluted MCap";
-"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.genesis_date" = "Дата старта";
 "coin_overview.trading_volume" = "Making Waves";
 
 "coin_overview.roi.hour24" = "1 день";
 "coin_overview.roi.day7" = "1 неделя";
-"coin_overview.roi.day14" = "2 Weeks";
-"coin_overview.roi.day30" = "1 Month";
-"coin_overview.roi.day200" = "6 Month";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.day14" = "2 недели";
+"coin_overview.roi.day30" = "1 месяц";
+"coin_overview.roi.day200" = "6 месяцев";
+"coin_overview.roi.year1" = "1 год";
 
-"coin_overview.category" = "Category";
+"coin_overview.category" = "Категория";
 
 "coin_overview.blockchains" = "The Chains That Bind";
-"coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Coin Types";
+"coin_overview.bips" = "BIPы";
+"coin_overview.coin_types" = "Типы токенов";
 "coin_overview.show_more" = "Показать больше";
-"coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.show_less" = "Показать меньше";
+"coin_overview.links" = "Ссылки";
 
-"coin_overview.guide" = "Guide";
-"coin_overview.website" = "Website";
-"coin_overview.whitepaper" = "Whitepaper";
+"coin_overview.guide" = "Руководство";
+"coin_overview.website" = "Веб-сайт";
+"coin_overview.whitepaper" = "Тех. описание (whitepaper)";
 
 // Coin Page -> Analytics
 
-"coin_analytics.indicators.summary" = "Summary";
-"coin_analytics.indicators.title" = "Technical Indicators";
-"coin_analytics.indicators.no_data" = "No Data";
+"coin_analytics.indicators.summary" = "Общая оценка";
+"coin_analytics.indicators.title" = "Технические индикаторы";
+"coin_analytics.indicators.no_data" = "Нет данных";
 "coin_analytics.indicators.strong_buy" = "Strong Buy";
-"coin_analytics.indicators.buy" = "Buy";
-"coin_analytics.indicators.neutral" = "Neutral";
-"coin_analytics.indicators.sell" = "Sell";
-"coin_analytics.indicators.strong_sell" = "Strong Sell";
-"coin_analytics.period" = "Period";
-"coin_analytics.period.select_title" = "Select Period";
+"coin_analytics.indicators.buy" = "Покупать";
+"coin_analytics.indicators.neutral" = "Нейтральный";
+"coin_analytics.indicators.sell" = "Продавать";
+"coin_analytics.indicators.strong_sell" = "Активно продавать";
+"coin_analytics.period" = "Период";
+"coin_analytics.period.select_title" = "Выберите период";
 "coin_analytics.period.1h" = "Just an hour";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
-"coin_analytics.period.1w" = "1 week";
+"coin_analytics.period.4h" = "4 часа";
+"coin_analytics.period.1d" = "1 день";
+"coin_analytics.period.1w" = "1 неделя";
 
-"coin_analytics.details" = "Details";
+"coin_analytics.details" = "Подробности";
 
 "coin_analytics.not_available" = "Analytical data in this project? I've been told they're missing. But we're making everything better!";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators" = "Технические индикаторы";
 "coin_analytics.technical_indicators.info1" = "The Overview: We've got the best overview on asset's technicals. Everybody's talking about it! It tells you straight – Buy, Sell, or just stay Neutral. The best advice, believe me!";
 "coin_analytics.technical_indicators.info2" = "Moving Averages? Everybody loves them. Best trend indicators out there. Shows you average prices, and we've got the best averages.\n\nSimple Moving Average (SMA): Calculates averages like nobody else. Usually based on the top closing prices.\n\nExponential Moving Average (EMA): Super smart! Focuses on the latest prices, reacting faster than anything else. Everyone's talking about it!";
 "coin_analytics.technical_indicators.info3" = "Oscillators: They fluctuate, and they're tremendous. Helps you spot the best deals in the market. The very best!\n\nRelative Strength Index (RSI): Measures everything super fast! Used by the best to spot those overbought and oversold markets.\n\nMoving Average Convergence Divergence (MACD): This is the future! Points out the best times to buy or sell. Super smart, trust me.";
 
-"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.cex_volume" = "Объем CEX";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank - we're always number one!";
 "coin_analytics.cex_volume_rank.description" = "We rank tokens better than anyone else, especially based on trading volume. Everyone wants to be on top!";
 "coin_analytics.cex_volume.info1" = "Just look at our trading volume on the top centralized exchanges. Leading the game for 30 days straight!";
@@ -780,8 +780,8 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_analytics.cex_volume.info3" = "Our token's rank? Always leading based on volume. Best of the best!";
 "coin_analytics.cex_volume.info4" = "List of tokens? Only the winners, ranked by their top trading volumes. We're always on top, 24/7, every month.";
 
-"coin_analytics.dex_volume" = "DEX Volume";
-"coin_analytics.dex_volume_rank" = "DEX Volume Rank";
+"coin_analytics.dex_volume" = "Объем DEX";
+"coin_analytics.dex_volume_rank" = "Рейтинг объема DEX";
 "coin_analytics.dex_volume_rank.description" = "Tokens ranked? We've got the best rankings, especially for decentralized exchanges. Nobody does it better!";
 "coin_analytics.dex_volume.info1" = "The numbers are huge! Unbelievable trading volume for the token on the greatest decentralized exchanges. We're leading for 30 days, and everyone's talking about it!";
 "coin_analytics.dex_volume.info2" = "Ever seen a chart like this? Didn't think so. It shows the incredible variation in daily trading volume. The best chart for the best decentralized exchanges over a whole year!";
@@ -792,7 +792,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
 "coin_analytics.dex_liquidity" = "Liquid Gold";
-"coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
+"coin_analytics.dex_liquidity_rank" = "Рейтинг ликвидности DEX";
 "coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by liquidity? We've got the best numbers for decentralized exchanges. Simply unbeatable!";
 "coin_analytics.dex_liquidity.info1" = "Look at this. Unbelievable amounts of liquidity for our token. Nobody has this kind of presence on decentralized exchanges!";
 "coin_analytics.dex_liquidity.info2" = "Have you seen this chart? Shows our dominance in liquidity. Leading the pack over a whole year!";
@@ -900,7 +900,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "Индикаторы";
 "chart_indicators.moving_averages" = "Скользящие средние";
 "chart_indicators.oscillators" = "Осцилляторы";
 
@@ -908,12 +908,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "chart_indicators.settings.period.error" = "Период не может быть больше чем %d";
 
 "chart_indicators.settings.ma.description" = "В EMA, SMA и WMA используются средние значения для технического анализа:\n\nEMA подчеркивает последние цены для более быстрых реакций.\nСредние цены SMA для общего представления тренда.\nЧувствительность и шумовое снижение ВМА путем линейного взвешивания последних данных";
-"chart_indicators.settings.ma.type_title" = "Type";
-"chart_indicators.settings.ma.period_title" = "Period";
+"chart_indicators.settings.ma.type_title" = "Тип";
+"chart_indicators.settings.ma.period_title" = "Период";
 
 "chart_indicators.settings.rsi.title" = "RSI";
 "chart_indicators.settings.rsi.description" = "The Relative Strength Index (RSI)? Tremendous tool! It's like the pulse-checker of the market. When you see it above 70, that's a hot market, maybe too hot. Below 30? It might be a sale! And the best part? It can even show you when prices might take a U-turn. Genius!";
-"chart_indicators.settings.rsi.period_title" = "RSI Length";
+"chart_indicators.settings.rsi.period_title" = "Длина RSI";
 
 "chart_indicators.settings.macd.title" = "MACD";
 "chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is absolutely one of the big league players in the indicator world. It watches two EMAs like a hawk and tells you when things are heating up or cooling down. When the MACD line does a little dance with the 9-period EMA, the signal line, it might be showtime!";
@@ -921,94 +921,94 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "chart_indicators.settings.macd.slow_period_title" = "Slow Length";
 "chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
 
-"chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
+"chart_indicators.settings.macd.slow_fast.error" = "Fast Length должна быть меньше Slow Length";
 
 // Transactions
 
-"transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
+"transactions.title" = "Транзакции";
+"transactions.tab_bar_item" = "Транзакции";
 "transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "All Blockchains";
-"transactions.all_coins" = "All Coins";
-"transactions.choose_coin" = "Choose Coin";
+"transactions.all_blockchains" = "Все блокчейны";
+"transactions.all_coins" = "Все токены";
+"transactions.choose_coin" = "Выберите токен";
 "transactions.filter_all" = "All of 'em";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
-"transactions.pending" = "Pending";
-"transactions.processing" = "Processing";
-"transactions.completed" = "Completed";
-"transactions.failed" = "Failed";
+"transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
+"transactions.pending" = "В обработке";
+"transactions.processing" = "В процессе";
+"transactions.completed" = "Завершено";
+"transactions.failed" = "Не удалось";
 
 "transactions.receive" = "Gimme";
 "transactions.send" = "Отправить";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
-"transactions.approve" = "Approve";
+"transactions.burn" = "Сжечь";
+"transactions.mint" = "Минт";
+"transactions.approve" = "Одобрить";
 "transactions.swap" = "Switcheroo";
-"transactions.contract_call" = "Contract Call";
-"transactions.contract_creation" = "Contract Creation";
-"transactions.external_call" = "External Call";
+"transactions.contract_call" = "Вызов контракта";
+"transactions.contract_creation" = "Создание контракта";
+"transactions.external_call" = "Внешний вызов";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
+"transactions.to" = "Кому %@";
+"transactions.from" = "От %@";
 
-"transactions.multiple" = "Multiple";
+"transactions.multiple" = "Множество";
 
-"transactions.value.unlimited" = "unlimited";
+"transactions.value.unlimited" = "безлимитный";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "Сегодня";
+"transactions.yesterday" = "Вчера";
 
 "transactions.types.all" = "All of 'em";
-"transactions.types.incoming" = "Received";
-"transactions.types.outgoing" = "Sent";
-"transactions.types.swap" = "Swaps";
-"transactions.types.approve" = "Approvals";
+"transactions.types.incoming" = "Получено";
+"transactions.types.outgoing" = "Отправлено";
+"transactions.types.swap" = "Обмены";
+"transactions.types.approve" = "Разрешения";
 
-"transactions.unknown_transaction.title" = "Unknown Transaction";
-"transactions.unknown_transaction.description" = "Transaction can not be parsed";
+"transactions.unknown_transaction.title" = "Неизвестная транзакция";
+"transactions.unknown_transaction.description" = "Транзакция не может быть обработана";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction Info";
-"tx_info.date" = "Date";
-"tx_info.title_approval" = "Swap Approval";
-"tx_info.status.pending" = "Pending";
-"tx_info.status.completed" = "Completed";
-"tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
+"tx_info.title" = "Детали транзакции";
+"tx_info.date" = "Дата";
+"tx_info.title_approval" = "Разрешение обмена";
+"tx_info.status.pending" = "В обработке";
+"tx_info.status.completed" = "Завершено";
+"tx_info.status.failed" = "Не удалось";
+"tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "To the lucky one";
 "tx_info.spender" = "This spender, very talented person, believe me!";
 "tx_info.contact_name" = "Who's getting rich?";
-"tx_info.button_explorer" = "View on %@";
-"tx_info.rate" = "Historical Rate";
-"tx_info.options.speed_up" = "Speed Up";
+"tx_info.button_explorer" = "Просмотреть на %@";
+"tx_info.rate" = "Исторический курс";
+"tx_info.options.speed_up" = "Ускорить";
 "tx_info.options.cancel" = "Bail on it!";
-"tx_info.transaction.already_in_block" = "Transaction already in block";
+"tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
 "tx_info.fee" = "Little Charge";
-"tx_info.fee.estimated" = "Fee (est.)";
-"tx_info.to_self_note" = "This transaction is sent to own address";
-"tx_info.double_spent_note" = "Double Spend Risk!";
-"tx_info.locked_until" = "Locked until %@";
-"tx_info.unlocked_at" = "Unlocked at %@";
-"tx_info.recipient_hash" = "Recipient";
-"tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.fee.estimated" = "Комиссия (прим.)";
+"tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
+"tx_info.double_spent_note" = "Риск двойной траты!";
+"tx_info.locked_until" = "Заблокировано до %@";
+"tx_info.unlocked_at" = "Разблокировано %@";
+"tx_info.recipient_hash" = "Получатель";
+"tx_info.raw_transaction" = "Неподтвержденная транзакция";
 "tx_info.memo" = "Your two cents";
-"tx_info.service" = "Service";
-"tx_info.view_on" = "View on %@";
+"tx_info.service" = "Сервис";
+"tx_info.view_on" = "Просмотреть на %@";
 "tx_info.you_pay" = "What you're giving";
 "tx_info.you_get" = "The good stuff you get";
-"tx_info.you_paid" = "You Paid";
+"tx_info.you_paid" = "Вы заплатили";
 "tx_info.you_got" = "Вы получили";
-"tx_info.price" = "Price";
+"tx_info.price" = "Цена";
 
 // Settings
 
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.manage_accounts" = "Кошельки";
-"settings.blockchain_settings" = "Blockchain Settings";
-"settings.backup_manager" = "Backup Manager";
+"settings.blockchain_settings" = "Настройки блокчейна";
+"settings.backup_manager" = "Менеджер резерв. копирования";
 "settings.security" = "Безопасность";
 "settings.experimental_features" = "Экспериментальные функции";
 "settings.personal_support" = "Персональная поддержка";
@@ -1019,8 +1019,8 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "settings.info_subtitle" = "децентрализованное приложение";
 "settings.donate.description" = "Let's work together to make this app HUGE! The best app ever.";
 "settings.donate.title" = "Поддержи нас";
-"settings.rate_us" = "Rate Us";
-"settings.tell_friends" = "Tell Friends";
+"settings.rate_us" = "Оцените нас";
+"settings.tell_friends" = "Расскажите друзьям";
 "settings.contact_us" = "Contact Us";
 
 // Settings -> Base Currency
@@ -1082,114 +1082,114 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Blockchain Settings";
+"blockchain_settings.title" = "Настройки блокчейна";
 
 // Settings -> Backup Manager
 
-"backup_manager.title" = "Backup Manager";
+"backup_manager.title" = "Менеджер резерв. копирования";
 "backup_manager.restore" = "Восстановить резервную копию";
 "backup_manager.create" = "Создать новую резерв. копию";
 
 "backup_type.title" = "Тип резервной копии";
-"backup_type.description" = "Select where you want to save the backup file.";
+"backup_type.description" = "Выберите, куда вы хотите сохранить файл резервной копии.";
 "backup_type.cloud" = "Backup to iCloud!";
-"backup_type.file" = "Backup to Files";
+"backup_type.file" = "Резервное копирование в Файлы";
 
-"backup_list.title" = "Backup File";
-"backup_list.description.restore" = "List of contents in the backup file.";
+"backup_list.title" = "Файл резервной копии";
+"backup_list.description.restore" = "Список содержимого в файле резервной копии.";
 "backup_list.header.wallets" = "Fat Wallets";
 "backup_list.header.other" = "Other stuff";
 "backup_list.other.watch_account.title" = "Wallet Watchlist";
 "backup_list.other.watch_account.description" = "Адреса: %d";
 "backup_list.other.watchlist.title" = "My Favorite List";
-"backup_list.other.watchlist.description" = "Coins: %d";
+"backup_list.other.watchlist.description" = "Монеты: %d";
 "backup_list.other.contacts.title" = "Контакты";
 "backup_list.other.contacts.description" = "Адреса: %d";
-"backup_list.other.blockchain_settings.title" = "Blockchain Settings";
-"backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
+"backup_list.other.blockchain_settings.title" = "Настройки блокчейна";
+"backup_list.other.blockchain_settings.description" = "Пользовательские RPC: %d";
 "backup_list.other.app_settings.title" = "Настройки приложения";
-"backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
 
 "backup.disclaimer.cloud.title" = "Backup to iCloud!";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.description" = "iCloud - это облачный сервис для хранения данных, предоставляемый компанией Apple. Важно знать, что ваши данные резервной копии будут сохранены на серверах Apple.";
 "backup.disclaimer.cloud.checkbox_label" = "Listen up! Lose access to iCloud, and you say goodbye to this backup.";
-"backup.disclaimer.file.title" = "Backup to File";
-"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
-"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+"backup.disclaimer.file.title" = "Резервное копирование в файл";
+"backup.disclaimer.file.description" = "Накопители данных, такие как жесткие диски, USB-накопители, хранилище на смартфонах и др., все подвержены потере из-за физического повреждения, кражи или других непредвиденных обстоятельств.";
+"backup.disclaimer.file.checkbox_label" = "Я понимаю, что кража или повреждение устройства резервного копирования может привести к потере резервной копии для соответствующего кошелька.";
 
 "backup.name.title" = "What's in a Name?";
 "backup.name.description" = "Name your backup, maybe after one of my hotels?";
 
 "backup.password.title" = "Your fantastic backup password here!";
 "backup.password.description" = "Craft a password that's tremendous! Needs 8 characters and a mix of the alphabet, numbers, and those little symbols.";
-"backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup.password.highlighted_description" = "Этот пароль используется для шифрования файла резервной копии вашего кошелька. Его невозможно восстановить или сбросить в случае утери или забвения.";
 
 // Settings -> Security
 
 "settings_security.title" = "Безопасность";
-"settings_security.enable_passcode" = "Enable Passcode";
-"settings_security.edit_passcode" = "Edit Passcode";
-"settings_security.disable_passcode" = "Disable Passcode";
+"settings_security.enable_passcode" = "Включить код доступа";
+"settings_security.edit_passcode" = "Изменить код";
+"settings_security.disable_passcode" = "Отключить код доступа";
 "settings_security.auto_lock" = "Автоблокировка";
 "settings_security.balance_auto_hide" = "Автоскрытие баланса";
 "settings_security.balance_auto_hide.description" = "Автоматически скрывает баланс при открытии приложения, независимо от предыдущих настроек.";
-"settings_security.enable_duress_mode" = "Set Duress Mode";
-"settings_security.edit_duress_passcode" = "Edit Duress Passcode";
-"settings_security.disable_duress_mode" = "Disable Duress Mode";
-"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
+"settings_security.enable_duress_mode" = "Установить режим Duress";
+"settings_security.edit_duress_passcode" = "Изменить Duress код";
+"settings_security.disable_duress_mode" = "Отключить режим Duress";
+"settings_security.duress_mode.description" = "Специализированный режим, разработанный для обеспечения безопасности выбранных кошельков в условиях принуждения.";
 
 // Create Passcode
 
-"create_passcode.title" = "Create Passcode";
-"create_passcode.description" = "Your passcode will be used to unlock your wallet";
-"create_passcode.description.biometry" = "Set a passcode to enable %@";
-"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.title" = "Создать код доступа";
+"create_passcode.description" = "Ваш пароль будет использоваться для разблокировки вашего кошелька";
+"create_passcode.description.biometry" = "Установите код доступа для включения %@";
+"create_passcode.description.duress_mode" = "Установите код для включения режима Duress";
 "create_passcode.confirm_passcode" = "Подтвердить";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Duress Mode";
-"enable_duress_mode.intro.description" = "This mode allows user to setup multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
+"enable_duress_mode.intro.title" = "Режим Duress";
+"enable_duress_mode.intro.description" = "Этот режим позволяет пользователю установить несколько паролей для разблокировки приложения, при этом заданный пароль отображает только определенные кошельки. Создан для обеспечения безопасности выбранных кошельков в случае принуждения или угроз.";
 "enable_duress_mode.intro.notes" = "Примечания";
-"enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
-"enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
-"enable_duress_mode.intro.passcode_disabling.description" = "Disabling the passcode in the main mode will automatically reset the Duress Mode.";
+"enable_duress_mode.intro.biometrics.description" = "Функция %@ будет работать для разблокировки режима Duress. Вы можете отключить %@ для удобства.";
+"enable_duress_mode.intro.passcode_disabling" = "Отключение кода доступа";
+"enable_duress_mode.intro.passcode_disabling.description" = "Отключение пароля в основном режиме автоматически сбросит режим Duress.";
 "enable_duress_mode.intro.passcode_change" = "Passcode Change";
-"enable_duress_mode.intro.passcode_change.description" = "Changing the passcode in the Duress Mode will also change the current passcode code for that mode.";
+"enable_duress_mode.intro.passcode_change.description" = "Изменение пароля в режиме Duress также изменит текущий пароль для этого режима.";
 
-"enable_duress_mode.select.title" = "Select Wallets";
-"enable_duress_mode.select.description" = "Select the wallets that will be displayed in Duress Mode.";
+"enable_duress_mode.select.title" = "Выберите кошельки";
+"enable_duress_mode.select.description" = "Выберите кошельки, которые будут отображаться в режиме Duress.";
 "enable_duress_mode.select.wallets" = "Fat Wallets";
 "enable_duress_mode.select.watch_wallets" = "Wallet Watchlist";
 
-"enable_duress_mode.passcode.title" = "Duress Passcode";
-"enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
+"enable_duress_mode.passcode.title" = "Duress код";
+"enable_duress_mode.passcode.description" = "Установите код для режима Duress";
 "enable_duress_mode.passcode.confirm" = "Подтвердить";
 
 // Edit Passcode
 
-"edit_passcode.title" = "Edit Passcode";
-"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.title" = "Изменить код";
+"edit_passcode.enter_new_passcode" = "Введите новый код";
 "edit_passcode.confirm_new_passcode" = "Подтвердить";
 
 // Edit Duress Passcode
 
-"edit_duress_passcode.title" = "Edit Duress Passcode";
-"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.title" = "Изменить Duress код";
+"edit_duress_passcode.enter_new_passcode" = "Введите новый код для режима Duress";
 "edit_duress_passcode.confirm_new_passcode" = "Подтвердить";
 
 // Set Passcode
 
-"set_passcode.invalid_confirmation" = "Invalid confirmation";
-"set_passcode.already_used" = "This passcode is already being used";
+"set_passcode.invalid_confirmation" = "Недействительное подтверждение";
+"set_passcode.already_used" = "Этот пароль уже используется";
 
 // Unlock
 
-"unlock.title" = "Unlock";
-"unlock.passcode" = "Enter Passcode";
+"unlock.title" = "Разблокировать";
+"unlock.passcode" = "Введите код доступа";
 "unlock.biometry_reason" = "Unlock wallet";
-"unlock.attempts_left" = "Attempts left: %@";
-"unlock.disabled_until" = "Disabled until: %@";
+"unlock.attempts_left" = "Осталось попыток: %@";
+"unlock.disabled_until" = "Отключено до: %@";
 "unlock.random" = "Random";
 
 "security_settings.delete_alert_button" = "Delete from Phone";
@@ -1202,9 +1202,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "btc_restore_mode.more_private" = "On the Down Low";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
-"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
 "btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
-"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
+"btc_transaction_sort_mode.bip69.description" = "Лексикографическая индексация";
 
 "blockchain_settings.info.restore_source" = "Restore Source";
 "blockchain_settings.info.restore_source.content" = "Alright, here's the deal. If you're bringing back an old wallet, you've got to know where it's been. %@ can tap into two ways: 1. A super-fast API server (think 5-10 minutes) that's kinda like asking a friend who knows everything. But it’s not as private and leans on that friend always being around. 2. Straight from the blockchain network, which is more private and independent but also a slow poke (could take 2-3 hours).";
@@ -1232,9 +1232,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "settings.about_app.title" = "О приложении";
 "settings.about_app.app_name" = "%@ кошелек";
-"settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.description" = "Кошелек %@ создан для тех, кто ищет возможность инвестировать и хранить криптовалюты в частном и независимом режиме.\n\nЭто некастодиальный кошелек с принципом равноправия, в котором только пользователь имеет полный контроль над своими средствами. Он не собирает никаких данных и сохраняет независимость пользователя, не привязывая средства пользователя к конкретному приложению кошелька.\n\nКошелек %@ полностью открытого исходного кода, и любой может подтвердить, что приложение работает именно так, как утверждается.";
 "settings.about_app.whats_new" = "The Latest & Greatest";
-"settings.about_app.website" = "Website";
+"settings.about_app.website" = "Веб-сайт";
 
 // Settings -> About App -> Contact
 
@@ -1281,103 +1281,103 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "contacts.title" = "Контакты";
 "contacts.list.search_placeholder" = "Поиск по имени";
 "contacts.list.not_found" = "У вас нет добавленных контактов";
-"contacts.list.not_found_search" = "No results found";
+"contacts.list.not_found_search" = "Ничего не найдено";
 "contacts.add_new_contact" = "Добавить новый контакт";
 "contacts.update_contact.already_has_address" = "Выбранный контакт уже имеет адрес на %@. Это действие заменит адрес %@ на %@.";
 "contacts.update_contact.replace" = "Заменить";
 "contacts.list.addresses_count" = "Адреса: %d";
 "contacts.contact.new.title" = "Новый контакт";
 "contacts.contact.name.placeholder" = "Fabulous Name";
-"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
-"contacts.contact.add_address" = "Add Address";
-"contacts.contact.delete" = "Delete Contact";
+"contacts.contact.update.error.name_already_exist" = "Имя уже существует";
+"contacts.contact.add_address" = "Добавить адрес";
+"contacts.contact.delete" = "Удалить контакт";
 "contacts.contact.address.blockchains" = "The Chains That Bind";
 "contacts.contact.address.blockchain" = "Blockchain";
-"contacts.contact.address.delete_address" = "Delete Address";
+"contacts.contact.address.delete_address" = "Удалить адрес";
 
-"contacts.restore.restored" = "Restored";
-"contacts.restore.parsing_error" = "File has wrong data!";
-"contacts.restore.restore_error" = "Failed to restore contacts";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
+"contacts.restore.restored" = "Восстановлено";
+"contacts.restore.parsing_error" = "Файл содержит неверные данные!";
+"contacts.restore.restore_error" = "Не удалось восстановить контакты";
+"contacts.restore.overwrite_alert.description" = "Это действие перезапишет ваши локальные контакты для платежей, а также копию в iCloud (если таковая имеется).";
 "contacts.restore.overwrite_alert.replace" = "Заменить";
 
-"contacts.add_address.title" = "Add Address";
-"contacts.add_address.create_new" = "Create New Contact";
-"contacts.add_address.add_to_contact" = "Add to Existing Contact";
-"contacts.add_address.exist_address" = "This address is already used for %@";
+"contacts.add_address.title" = "Добавить адрес";
+"contacts.add_address.create_new" = "Создать новый контакт";
+"contacts.add_address.add_to_contact" = "Добавить в существующий контакт";
+"contacts.add_address.exist_address" = "Этот адрес уже используется для %@";
 
-"contacts.contact.delete_alert.title" = "Delete Contact";
-"contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
+"contacts.contact.delete_alert.title" = "Удалить контакт";
+"contacts.contact.delete_alert.description" = "Вы действительно хотите удалить этот контакт?";
 "contacts.contact.delete_alert.delete" = "Удалить";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
-"contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
-"contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
+"contacts.contact.dismiss_changes.description" = "Вы уверены, что хотите отменить эти изменения?";
+"contacts.contact.dismiss_changes.discard_changes" = "Отменить изменения";
+"contacts.contact.dismiss_changes.keep_editing" = "Продолжить редактирование";
 
-"contacts.add_address.delete_alert.title" = "Delete Address";
-"contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
+"contacts.add_address.delete_alert.title" = "Удалить адрес";
+"contacts.add_address.delete_alert.description" = "Вы уверены, что хотите удалить этот адрес?";
 "contacts.add_address.delete_alert.delete" = "Удалить";
 
 // Contacts -> Settings
 
 "contacts.settings.title" = "Настройки";
 
-"contacts.settings.restore_contacts" = "Restore Contacts";
-"contacts.settings.backup_contacts" = "Backup Contacts";
+"contacts.settings.restore_contacts" = "Восстановить контакты";
+"contacts.settings.backup_contacts" = "Резерв. копирование контактов";
 
-"contacts.settings.icloud_sync" = "iCloud Sync";
-"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
-"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"contacts.settings.icloud_sync" = "iCloud синхр.";
+"contacts.settings.description" = "Синхронизируйте контакты с iCloud для удобного резервного копирования и доступа с разных устройств.";
+"contacts.settings.lost_synchronization.description" = "Синхронизация iCloud утеряна. Пожалуйста, проверьте, что iCloud Storage включен на вашем устройстве.";
+"contacts.settings.merge_disclaimer" = "Ваши локальные платежные контакты будут объединены с данными, хранящимися в iCloud.";
 
-"contacts.settings.alert.title" = "iCloud Sync";
-"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"contacts.settings.alert.title" = "iCloud синхр.";
+"contacts.settings.alert.description" = "Пожалуйста, убедитесь, что iCloud хранилище включено на вашем устройстве.";
 
-"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.title" = "Ошибка iCloud";
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2W";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.month3" = "3M";
-"chart.time_duration.halfyear" = "6M";
-"chart.time_duration.year" = "1Y";
-"chart.time_duration.year2" = "2Y";
-"chart.time_duration.all" = "ALL";
+"chart.time_duration.day" = "24ч";
+"chart.time_duration.week" = "7Д";
+"chart.time_duration.week2" = "2Н";
+"chart.time_duration.month" = "1М";
+"chart.time_duration.month3" = "3М";
+"chart.time_duration.halfyear" = "6М";
+"chart.time_duration.year" = "1Г";
+"chart.time_duration.year2" = "2Г";
+"chart.time_duration.all" = "ВСЕ";
 
 "chart.market_cap" = "How Big's the Hat?";
-"chart.volume" = "Volume (24h)";
-"chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Vol.";
+"chart.volume" = "Объём (за 24 ч)";
+"chart.circulation" = "В обороте";
+"chart.selected.volume" = "Объём";
 
-"chart.market.header" = "Market";
+"chart.market.header" = "Рынок";
 "chart.market.market_cap" = "How Big's the Hat?";
-"chart.market.volume" = "Volume (24h)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.volume" = "Объём (за 24 ч)";
+"chart.market.circulation" = "В обороте";
+"chart.market.total_supply" = "Макс.выпуск";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "Изменения (за 1Н)";
+"chart.performance.month_changes" = "Изменения (за 1М)";
 
-"chart.about.header" = "About";
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.header" = "О проекте";
+"chart.about.read_more" = "Читать далее";
+"chart.about.read_less" = "Скрыть";
 
 "coin_page.return_of_investments" = "ROI";
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
+"create_wallet.title" = "Новый кошелек";
 "create_wallet.name" = "Fabulous Name";
 "create_wallet.advanced_setup" = "Доп. настройки";
-"create_wallet.create" = "Create";
+"create_wallet.create" = "Создать";
 "create_wallet.advanced" = "Доп. настройки";
 "create_wallet.phrase_count" = "Фраза восстановления";
-"create_wallet.12_words" = "12 words (recommended)";
-"create_wallet.n_words" = "%@ words";
-"create_wallet.word_list" = "Word List";
+"create_wallet.12_words" = "12 слов (рекомендуется)";
+"create_wallet.n_words" = "%@ слов";
+"create_wallet.word_list" = "Список слов";
 "create_wallet.passphrase" = "Кодовая фраза";
 "create_wallet.input.passphrase" = "Кодовая фраза";
 "create_wallet.input.confirm" = "Подтвердить";
@@ -1388,7 +1388,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Restore Select
 
-"restore_select.title" = "Choose Blockchains";
+"restore_select.title" = "Выберите блокчейны";
 
 // Lock Info
 
@@ -1397,15 +1397,15 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Double Spend";
-"double_spend_info.header" = "Double Spend Risk! There is another transaction on the blockchain that is trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
-"double_spend_info.this_hash" = "This Tx";
-"double_spend_info.conflicting_hash" = "Conflicting Tx";
+"double_spend_info.title" = "Двойная трата";
+"double_spend_info.header" = "Риск двойной траты! Существует другая транзакция в блокчейне, которая пытается использовать входные данные, используемые в этой транзакции. Только одна транзакция будет принята сетью";
+"double_spend_info.this_hash" = "Эта транзакция";
+"double_spend_info.conflicting_hash" = "Конфликтующая транзакция";
 
 // Relative Date
-"timestamp.days_ago" = "%lud ago";
-"timestamp.hours_ago" = "%luh ago";
-"timestamp.min_ago" = "%lum ago";
+"timestamp.days_ago" = "%luд назад";
+"timestamp.hours_ago" = "%luч назад";
+"timestamp.min_ago" = "%luмин назад";
 
 // Intro
 
@@ -1418,40 +1418,40 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Guides
 
-"guides.tab_bar_item" = "Academy";
-"guides.title" = "Academy";
+"guides.tab_bar_item" = "Академия";
+"guides.title" = "Академия";
 
 // Add Token
 
-"add_token.title" = "Add Token";
+"add_token.title" = "Добавить токен";
 "add_token.blockchain" = "Blockchain";
 "add_token.already_added" = "This coin? It's already on the A-list, like me in the world of real estate. No need to add it again, folks!";
-"add_token.invalid_contract_address" = "Invalid contract address";
-"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
-"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
-"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.invalid_contract_address" = "Недействительный адрес контракта";
+"add_token.invalid_bep2_symbol" = "Неверный символ BEP2";
+"add_token.contract_address_not_found" = "Адрес контракта не найден в %@ блокчейне";
+"add_token.bep2_symbol_not_found" = "Символ BEP2 не найден";
 "add_token.input_placeholder.contract_address" = "The Contract's Address";
-"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
-"add_token.coin_name" = "Coin Name";
-"add_token.symbol" = "Symbol";
-"add_token.decimals" = "Decimals";
+"add_token.input_placeholder.bep2_symbol" = "Символ BEP2";
+"add_token.coin_name" = "Название токена";
+"add_token.symbol" = "Символ";
+"add_token.decimals" = "Десятичные знаки";
 
 // Wallet Connect
 
 "wallet_connect.title" = "WalletConnect";
-"wallet_connect.error.invalid_url" = "Invalid URL Address";
+"wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Активный кошелек";
 "wallet_connect.address" = "Prime Location";
 "wallet_connect.network" = "The Best Network";
-"wallet_connect.list.pending_requests" = "Pending Requests";
-"wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
+"wallet_connect.list.pending_requests" = "Ожидающие запросы";
+"wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Some of these chains? Very low energy. Not supported!";
 "wallet_connect.connect_description" = "Hit that approve, and you're letting the app see your VIP address. We're doing this, folks, to make security great again and keep the phishers out!";
 "wallet_connect.usage_description" = "You can head over to the browser, but remember - keep this page open. It's the best page!";
 "wallet_connect.no_connection" = "Couldn't make the connection. Probably the system's fault. Try again and let's win this!";
-"wallet_connect.button_reconnect" = "Reconnect";
-"wallet_connect.button_disconnect" = "Disconnect";
+"wallet_connect.button_reconnect" = "Повторное подключение";
+"wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.title" = "Ошибка";
 "ethereum_transaction.error.insufficient_balance" = "Hey, we need more %@ to send this. Not enough funds, folks!";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Your %@ balance? Too low! Can't cover the transaction and the tiny fee!";
@@ -1461,20 +1461,20 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "ethereum_transaction.error.transaction_underpriced" = "Your fee's too low! It's like trying to buy Mar-a-Lago with pocket change!";
 "ethereum_transaction.error.tips_higher_than_max_fee" = "Tips are rolling in higher than the max fee! Remember, the max fee counts those tips too!";
 "ethereum_transaction.error.reverted" = "Can't do the transaction! Here's why: %@";
-"wallet_connect.request_title" = "Contract Call";
+"wallet_connect.request_title" = "Вызов контракта";
 "wallet_connect.button.confirm" = "Подтвердить";
-"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.request_title" = "Запрос на подпись";
 "wallet_connect.sign.domain" = "Fancy Domain";
 "wallet_connect.sign.dapp_name" = "dApp";
-"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.message" = "Сообщение для подписи";
 
 "wallet_connect_list.title" = "WalletConnect";
-"wallet_connect.list.empty_view_text" = "No active sessions";
+"wallet_connect.list.empty_view_text" = "Нет активных сессий";
 
-"wallet_connect.list.pairings" = "Pairings";
+"wallet_connect.list.pairings" = "Соединения";
 "wallet_connect.list.version_text" = "Версия %@";
-"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
-"wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect.list.v1_bottom_text" = "В первой версии WalletConnect вы должны войти в сессии, чтобы увидеть и подтвердить запрос.";
+"wallet_connect_list.new_connection" = "Новое соединение";
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
 "wallet_connect.no_account.description" = "Before you jump into WalletConnect, you've gotta either build a wallet or bring one in, just like building or buying a beautiful hotel!";
@@ -1483,19 +1483,19 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "wallet_connect.non_supported_account.description" = "That wallet of yours, the %@ type? Not a fan of WalletConnect, sorry folks!";
 "wallet_connect.non_supported_account.switch" = "Перекл.";
 
-"wallet_connect.pending_requests_title" = "Pending Requests";
-"wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
+"wallet_connect.pending_requests_title" = "Ожидающие запросы";
+"wallet_connect.paired_dapps.title" = "Соединеные dApp";
+"wallet_connect.paired_dapps.cant_disconnect" = "Не удалось отключить";
+"wallet_connect.paired_dapps.disconnect_all" = "Удалить всё";
 "wallet_connect.pending_requests.nonactive_footer" = "To kickstart a request, you gotta turn on the wallet you want. Activate it like you mean it, folks!";
 
 // App Status
 
-"app_status.title" = "App Status";
-"app_status.application_status" = "Application status";
-"app_status.linked_wallets" = "Linked Wallets";
-"app_status.version_history" = "Version History";
-"app_status.blockchain_status" = "Blockchain status";
+"app_status.title" = "Статус приложения";
+"app_status.application_status" = "Статус приложения";
+"app_status.linked_wallets" = "Связанные кошельки";
+"app_status.version_history" = "История версий";
+"app_status.blockchain_status" = "Статус блокчейна";
 
 // FAQ
 
@@ -1503,21 +1503,21 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Status Info
 
-"status_info.title" = "Status";
-"status_info.pending.title" = "Pending";
+"status_info.title" = "Статус";
+"status_info.pending.title" = "В обработке";
 "status_info.pending.content" = "Your transaction? It's like waiting for an applause at one of my rallies - coming but not here yet. If you paid a good fee, it'll be there in a jiffy. But if you went low-ball, might take longer - days even! And it could be shown the exit door. Remember, updates on the %@ wallet might lag a tad.";
-"status_info.processing.title" = "Processing";
+"status_info.processing.title" = "В процессе";
 "status_info.processing.content" = "Your transaction? It's in the blockchain but not set in stone. For small deals, you can consider it done. But for the big league stuff, you might wanna hold your horses till it's totally completed.";
-"status_info.completed.title" = "Completed";
+"status_info.completed.title" = "Завершено";
 "status_info.confirmed.content" = "It's a done deal! That transaction? Set in stone and it's not going back.";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "Не удалось";
 "status_info.failed.content" = "Didn't work out this time - like trying to get a Democrat to agree with me! Some slip-ups might still cost you fees. If another transaction nudged yours out or if it was canceled, no fees, but still an 'Oops'. The %@ app can't tell you why it failed, but you can play detective on block explorers like etherscan.io.";
 
 // Onboarding
 
-"onboarding.balance.create" = "New Wallet";
+"onboarding.balance.create" = "Новый кошелек";
 "onboarding.balance.import" = "Импорт кошелька";
-"onboarding.balance.watch" = "Watch Wallet";
+"onboarding.balance.watch" = "Просмотр кошелька";
 
 // Manage Accounts
 
@@ -1544,7 +1544,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Публичные ключи";
-"public_keys.evm_address" = "EVM Address";
+"public_keys.evm_address" = "EVM адрес";
 "public_keys.evm_address.description" = "With this, you can peek (just peek!) at wallets on Ethereum, Binance Smart Chain, and those other EVM blockchains. Only the best blockchains!";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "This lets you have a little sneak peek (read-only, of course!) at wallets holding the big ones like Bitcoin, and the others like Litecoin, Bitcoin Cash, Dash, and more. It's huge!";
@@ -1552,7 +1552,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Приватные ключи";
-"private_keys.evm_private_key" = "EVM Private Key";
+"private_keys.evm_private_key" = "Приватный Ключ EVM";
 "private_keys.evm_private_key.description" = "You've got the golden key! Total power over EVM cryptos like Ethereum and Binance Smart Chain in the wallet. It's like owning the Trump Tower of crypto!";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "This key? It's yuge! Complete command over everything in the wallet. It's the Art of the Deal of keys!";
@@ -1561,72 +1561,73 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Manage Account -> EVM Address
 
-"evm_address.title" = "EVM Address";
+"evm_address.title" = "EVM адрес";
 
 // Birthday Height
 
-"birthday_height.title" = "Birthday Height";
+"birthday_height.title" = "Блок создания";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
-"birthday_input.new_wallet" = "New Wallet";
-"birthday_input.new_wallet.description" = "Doesn't have any transactions";
-"birthday_input.old_wallet" = "Existing Wallet";
-"birthday_input.old_wallet.description" = "Has transactions";
-"birthday_input.input_placeholder" = "%@ (optional)";
+"birthday_input.title" = "Блок создания";
+"birthday_input.description" = "Введите блок создания кошелька для ускорения синхронизации.";
+"birthday_input.new_wallet" = "Новый кошелек";
+"birthday_input.new_wallet.description" = "Нет транзакций";
+"birthday_input.old_wallet" = "Существующий кошелек";
+"birthday_input.old_wallet.description" = "Есть транзакции";
+"birthday_input.input_placeholder" = "%@ (опционально)";
 
-"restore_setting.birthday_height" = "%@ Birthday Height";
-"restore_setting.download.disclaimer" = "The initial synchronization with the blockchain can consume a lot of internet traffic.";
+"restore_setting.birthday_height" = "%@ Блок создания";
+"restore_setting.download.disclaimer" = "Первоначальная синхронизация с блокчейном может потреблять много интернет-трафика.";
 
 // EVM Network
 
 "evm_network.rpc_source" = "Chatting with Blockchains";
-"evm_network.added" = "Added";
-"evm_network.add_new" = "Add New";
+"evm_network.added" = "Добавлен";
+"evm_network.add_new" = "Добавить новый";
 
 // Add RPC Source
 
-"add_evm_sync_source.title" = "Add RPC Source";
+"add_evm_sync_source.title" = "Добавить источник RPC";
 "add_evm_sync_source.name" = "Fabulous Name";
 "add_evm_sync_source.rpc_url" = "RPC URL";
-"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
+"add_evm_sync_source.basic_auth" = "Базовая авторизация (опц.)";
 "add_evm_sync_source.warning.url_exists" = "This RPC Source URL? It's already in the club. No duplicates, folks!";
 "add_evm_sync_source.error.invalid_url" = "The URL you punched in? Not good! Make sure it starts with https or wss, otherwise it's a no-go. It's basic URL etiquette!";
 
 // Send Settings
 
-"evm_send_settings.nonce" = "Transaction Nonce";
+"evm_send_settings.nonce" = "Nonce транзакции";
 "evm_send_settings.nonce.info" = "The nonce? Think of it as a unique badge number for your transactions. Usually, it goes up one by one, like my ratings! But hey, if you're a smart cookie, you can use it to swap out a slow transaction with a faster one. Just make sure you're willing to pay top dollar in fees. Because, remember, if two transactions have the same badge number, only the one that's willing to tip the most gets the VIP treatment!";
-"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
+"evm_send_settings.nonce.errors.already_in_use" = "Использованый Nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
 "fee_settings" = "Доп. настройки";
 "fee_settings.fee" = "Little Charge";
 "fee_settings.fee.info" = "Think of blockchains like a fancy club in Manhattan. When it's crowded, you gotta pay a premium to get in. So, when there's a lot of action on the network, fees go up. Big league!";
 "fee_settings.fee_rate" = "The Fee Game";
-"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
-"fee_settings.inputs_outputs" = "Inputs/Outputs";
-"fee_settings.transaction_settings" = "Transaction Settings";
+"fee_settings.fee_rate.description" = "Это рекомендуемое значение для попадания в следующие 2 блока";
+"fee_settings.inputs_outputs" = "Вводы/Выводы";
+"fee_settings.transaction_settings" = "Настройки транзакций";
 "fee_settings.transaction_settings.description" = "Want to move your Bitcoin with some mystery, like a billionaire in disguise? Tweak how the transactions are done, and you'll be harder to track!";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
+"fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
+";
 
 "fee_settings.network_fee" = "Network’s Tiny Fee";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "You know, transactions have their own kind of 'energy', and they call it 'gas'. Think of the Gas Limit as the biggest energy drink you'd need for a transaction. But usually, you'll sip less than what you think.";
 
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "So here's the deal: doing business on the network costs 'gas'. The Gas Price? It's like your bid at an auction - how much you're willing to drop for each gas unit. If the network's buzzing like one of my rallies, prices soar. When it's calm, they dip. And hey, if you're stingy on the gas price, don't be surprised if your transaction hangs around longer than expected!";
 
-"fee_settings.base_fee" = "Base Fee";
+"fee_settings.base_fee" = "Базовая комиссия";
 "fee_settings.base_fee.info" = "So, every block has a ticket price set by the big network – they call it the base fee rate. Think of it as a fluctuating stock; sometimes up, sometimes down, but never more than 12.5% change. This ticket price changes based on how packed the network is. The number you're seeing? That's the current rate. Very transparent!";
 "fee_settings.max_fee_rate" = "Top Dollar Rate";
 "fee_settings.max_fee_rate.info" = "This is your ceiling - the max you're willing to spend per gas unit. It's gotta cover the basic fee and the special priority fee. The number here? It's a clever estimate, but usually, you'll end up spending less. Cut corners on this and you might be waiting a long time, or even get your transaction stuck in limbo!";
 "fee_settings.tips" = "The Big Tipper's Fee";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips.info" = "Пользователи платят приоритетную комиссию, в целях ускорения процесса подтверждения транзакции. Иногда эти тарифы называются чаевыми. Максимальный размер приоритетного сбора - это максимальная дополнительная цена за газ, которую пользователь готов оплатить поверх базовой ставки комиссии. Приведенная здесь стоимость определяется исходя из прогнозируемых сетевых условий. Фактический размер приоритетного тарифа будет меньше. Обнуление этого тарифа может привести к удлинению периода ожидания подтверждения транзакции ввиду её размещения в конце очереди незавершенных транзакций ото всех пользователей.";
 
 "fee_settings.errors.insufficient_balance" = "Insufficient Balance";
 "fee_settings.errors.unexpected_error" = "Whoops, something went Trump-sized wrong!";
@@ -1645,88 +1646,88 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Watch Address
 
-"watch_address.title" = "Watch Wallet";
+"watch_address.title" = "Просмотр кошелька";
 "watch_address.watch" = "Далее";
 "watch_address.address" = "Prime Location";
-"watch_address.by" = "By";
-"watch_address.watch_by" = "Watch By";
-"watch_address.evm_address" = "EVM Address";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.by" = "Из";
+"watch_address.watch_by" = "Смотреть из";
+"watch_address.evm_address" = "EVM адрес";
+"watch_address.tron_address" = "TRON адрес";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
 "watch_address.public_key.invalid_key" = "This key? Not the best. It's wrong!";
-"watch_address.choose_blockchain" = "Choose Blockchain";
-"watch_address.choose_coin" = "Choose Coin";
+"watch_address.choose_blockchain" = "Выбрать блокчейн";
+"watch_address.choose_coin" = "Выберите токен";
 
 // Nft Collections
 
-"nft_collections.title" = "NFTs";
-"nft_collections.price_mode" = "Price Mode";
-"nft_collections.last_sale" = "Last Sale";
-"nft_collections.average_7d" = "Average 7D";
-"nft_collections.average_30d" = "Average 30D";
-"nft_collections.on_sale" = "On Sale";
-"nft_collections.empty" = "You don’t have any NFTs in your wallet";
+"nft_collections.title" = "NFT";
+"nft_collections.price_mode" = "Режим цены";
+"nft_collections.last_sale" = "Последняя продажа";
+"nft_collections.average_7d" = "Средн. 7Д";
+"nft_collections.average_30d" = "Средн. 30Д";
+"nft_collections.on_sale" = "В продаже";
+"nft_collections.empty" = "В вашем кошельке нет NFT";
 
 "top_nft_collections.title" = "Top Art Stash";
-"top_nft_collections.description" = "Leading NFT collections by trading volume.";
+"top_nft_collections.description" = "Популярные коллекции NFT по объему торгов.";
 
 // Nft Asset
 
 "nft_asset.tab.overview" = "The Best View";
-"nft_asset.tab.activity" = "Activity";
+"nft_asset.tab.activity" = "Активность";
 
-"nft_asset.last_sale" = "Last Sale";
-"nft_asset.average_7d" = "7 Day Average";
-"nft_asset.average_30d" = "30 Day Average";
-"nft_asset.floor_price" = "Floor Price";
-"nft_asset.on_sale" = "On Sale";
-"nft_asset.on_auction" = "On Auction";
+"nft_asset.last_sale" = "Последняя продажа";
+"nft_asset.average_7d" = "Среднее за 7 дней";
+"nft_asset.average_30d" = "Среднее за 30 дней";
+"nft_asset.floor_price" = "Минимальная цена";
+"nft_asset.on_sale" = "В продаже";
+"nft_asset.on_auction" = "На аукционе";
 "nft_asset.until_date" = "all the way to %@";
-"nft_asset.buy_now" = "Buy Now";
-"nft_asset.minimum_bid" = "Minimum Bid";
-"nft_asset.best_offer" = "Best Offer";
-"nft_asset.properties" = "Properties";
-"nft_asset.description" = "Description";
-"nft_asset.details" = "Details";
+"nft_asset.buy_now" = "Купить сейчас";
+"nft_asset.minimum_bid" = "Мин. cтавка";
+"nft_asset.best_offer" = "Лучшее предложение";
+"nft_asset.properties" = "Параметры";
+"nft_asset.description" = "Описание";
+"nft_asset.details" = "Подробности";
 "nft_asset.details.contract_address" = "The Contract's Address";
-"nft_asset.details.token_id" = "Token ID";
-"nft_asset.details.token_standard" = "Token Standard";
+"nft_asset.details.token_id" = "ID токена";
+"nft_asset.details.token_standard" = "Стандарт Токена";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
-"nft_asset.links.website" = "Website";
-"nft_asset.options.save_to_photos" = "Save to Photos";
-"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
-"nft_asset.save_to_photos.failed" = "Failed to save NFT image";
+"nft_asset.links" = "Ссылки";
+"nft_asset.links.website" = "Веб-сайт";
+"nft_asset.options.save_to_photos" = "Сохранить в фото";
+"nft_asset.options.set_as_watch_face" = "Установить как Watch Face";
+"nft_asset.save_to_photos.failed" = "Не удалось сохранить NFT-изображение";
 
 // Nft Collection
 
 "nft_collection.tab.overview" = "The Best View";
-"nft_collection.tab.assets" = "Items";
-"nft_collection.tab.activity" = "Activity";
+"nft_collection.tab.assets" = "Элементы";
+"nft_collection.tab.activity" = "Активность";
 
-"nft_collection.overview.description" = "Description";
-"nft_collection.overview.contracts" = "Contracts";
-"nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.description" = "Описание";
+"nft_collection.overview.contracts" = "Контракты";
+"nft_collection.overview.links" = "Ссылки";
+"nft_collection.overview.links.website" = "Веб-сайт";
 
 
-"nft_collection.overview.owners" = "Owners";
-"nft_collection.overview.items" = "Items";
+"nft_collection.overview.owners" = "Владельцы";
+"nft_collection.overview.items" = "Элементы";
 "nft_collection.overview.24h_volume" = "24 Hours of Winning";
-"nft_collection.overview.today_sellers" = "Today's Sellers";
-"nft_collection.overview.floor_price" = "Floor Price";
-"nft_collection.overview.all_time_average" = "All time average";
+"nft_collection.overview.today_sellers" = "Продавцы сегодня";
+"nft_collection.overview.floor_price" = "Минимальная цена";
+"nft_collection.overview.all_time_average" = "Среднее за все время";
 "nft_collection.overview.royalty" = "Royalty";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "Дата старта";
 
-"nft.activity.contracts" = "Contracts";
+"nft.activity.contracts" = "Контракты";
 "nft.activity.empty_list" = "No item activity yet";
 "nft.activity.event_types" = "Event Types";
 "nft.activity.event_type.all" = "All Events";
 "nft.activity.event_type.sale" = "Sale";
 "nft.activity.event_type.transfer" = "Transfer";
-"nft.activity.event_type.mint" = "Mint";
+"nft.activity.event_type.mint" = "Минт";
 "nft.activity.event_type.list" = "List";
 "nft.activity.event_type.listCancel" = "List Cancel";
 "nft.activity.event_type.offer" = "Offer";
@@ -1763,8 +1764,8 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Tron
 
-"tron.send.activation_fee" = "Activation Fee";
-"tron.send.resources_consumed" = "Resources Consumed";
+"tron.send.activation_fee" = "Комиссия за активацию";
+"tron.send.resources_consumed" = "Расходуемые ресурсы";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
 "tron.send.fee.info" = "Think of this as the ticket price for your transaction's grand premiere on the network. And remember, this includes the full experience – the Energy, Bandwidth, and that special Activation fee!";
@@ -1774,51 +1775,51 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Cex Coin Select
 
-"cex_coin_select.title" = "Choose Coin";
+"cex_coin_select.title" = "Выберите токен";
 "cex_coin_select.withdraw" = "Pull Out";
-"cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
-"cex_coin_select.search_placeholder" = "Coin Code or Name";
-"cex_coin_select.suspended" = "Suspended";
+"cex_coin_select.withdraw.empty" = "У вас нет активов для вывода.";
+"cex_coin_select.search_placeholder" = "Код или имя";
+"cex_coin_select.suspended" = "Приостановлено";
 
 // Cex Deposit Network Select
 
-"cex_deposit_network_select.title" = "Choose Network";
-"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+"cex_deposit_network_select.title" = "Выберите сеть";
+"cex_deposit_network_select.description" = "Выберите сеть и получите адрес для пополнения.";
 
 // Cex Deposit
 
-"cex_deposit.title" = "Deposit %@";
+"cex_deposit.title" = "Депозит %@";
 "cex_deposit.address" = "Prime Location";
 
 "cex_deposit.network" = "The Best Network";
 "cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "Min. Amount";
-"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.min_amount" = "Мин. сумма";
+"cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
 "cex_deposit.copy_address" = "Копировать";
 "cex_deposit.share_address" = "Поделиться";
-"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
-"cex_deposit.memo_warning.title" = "Important";
-"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+"cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
+"cex_deposit.memo_warning.title" = "Важно";
+"cex_deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
 
 // Cex Widthdraw
 
 "cex_withdraw.network" = "The Best Network";
-"cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
+"cex_withdraw.network_warning" = "Убедитесь, что сеть совпадает с адресом снятия, а платформа депозита поддерживает его, или активы могут быть потеряны.";
 "cex_withdraw.fee" = "Little Charge";
-"cex_withdraw.fee_from_amount" = "Fee from amount";
-"cex_withdraw.error.insufficient_funds" = "Not enough available balance";
-"cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
-"cex_withdraw.error.min_amount_violated" = "The minimum amount you can withdraw is %@";
-"cex_withdraw.address_required" = "Address is required";
+"cex_withdraw.fee_from_amount" = "Комиссия от суммы";
+"cex_withdraw.error.insufficient_funds" = "Недостаточно доступных средств";
+"cex_withdraw.error.max_amount_violated" = "Макс.сумма вывода: %@";
+"cex_withdraw.error.min_amount_violated" = "Мин. сумма, которую вы можете вывести - %@";
+"cex_withdraw.address_required" = "Адрес обязателен";
 
 // Cex Withdraw Network Select
 
 "cex_withdraw_network_select.title" = "The Best Network";
-"cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
+"cex_withdraw_network_select.description" = "Убедитесь, что сеть совпадает с адресом снятия и платформа депозита поддерживает его.";
 
 // Cex Withdraw Confirm
 
-"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.you_withdraw" = "Вывод средств";
 "cex_withdraw_confirm.network" = "The Best Network";
 "cex_withdraw_confirm.withdraw" = "Pull Out";
-"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
+"cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
