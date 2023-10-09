@@ -1018,6 +1018,9 @@
 "settings.info_subtitle" = "분산형 앱";
 "settings.donate.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
 "settings.donate.title" = "후원하기";
+"settings.rate_us" = "Rate Us";
+"settings.tell_friends" = "Tell Friends";
+"settings.contact_us" = "Contact Us";
 
 // Settings -> Base Currency
 
@@ -1231,13 +1234,10 @@
 "settings.about_app.description" = "%@ 지갑은 암호화폐를 개인적이고 독립적인 방식으로 투자하고 보관하려는 사람들을 위해 만들어졌습니다. \n\n이 지갑은 사용자만이 자금에 대한 통제를 갖는 비보관형 P2P 지갑입니다. 데이터를 수집하지 않으며 사용자의 자금을 특정 지갑 앱에 잠그지 않아 독립성을 유지합니다. \n\n%@ 지갑은 완전한 오픈소스이며 누구든지 앱이 주장하는 대로 정확하게 작동하는지 확인할 수 있습니다.";
 "settings.about_app.whats_new" = "새로운 기능";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "문의하기";
-"settings.about_app.rate_us" = "앱 평가";
-"settings.about_app.tell_friends" = "친구에게 추천하기";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "문의하기";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "이메일로";
 "settings.contact.via_telegram" = "텔레그램을 통해";
 
