@@ -1020,6 +1020,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.info_subtitle" = "decentralized";
 "settings.donate.description" = "Gemeinsam können wir mit Ihrer Unterstützung diese App noch besser machen!";
 "settings.donate.title" = "Spenden";
+"settings.rate_us" = "Rate Us";
+"settings.tell_friends" = "Tell Friends";
+"settings.contact_us" = "Contact Us";
 
 // Settings -> Base Currency
 
@@ -1233,13 +1236,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.about_app.description" = "Die Brieftasche %@ wurde für diejenigen gebaut, die Kryptowährungen auf private und unabhängige Weise investieren und speichern möchten.\n\nEs handelt sich um eine nicht-Custodial, Peer-to-Peer-Wallet, bei der nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem er das Guthaben des Benutzers nicht an eine bestimmte Wallet-App sperrt.\n\nDie %@ Brieftasche ist vollständig Open-Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.";
 "settings.about_app.whats_new" = "Das ist neu";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Kontaktiere uns";
-"settings.about_app.rate_us" = "Bewerten Sie uns";
-"settings.about_app.tell_friends" = "Freunden erzählen";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Kontaktiere uns";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "per e-Mail";
 "settings.contact.via_telegram" = "per Telegram";
 
