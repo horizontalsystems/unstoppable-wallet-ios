@@ -1020,6 +1020,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.info_subtitle" = "app descentralizada";
 "settings.donate.description" = "¡Junto con tu apoyo, podemos hacer esta aplicación aún mejor!";
 "settings.donate.title" = "Donar";
+"settings.rate_us" = "Rate Us";
+"settings.tell_friends" = "Tell Friends";
+"settings.contact_us" = "Contact Us";
 
 // Settings -> Base Currency
 
@@ -1233,13 +1236,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.about_app.description" = "La billetera %@ está diseñada para aquellos que buscan invertir y almacenar criptomonedas de manera privada e independiente.\n\nEs una billetera no custodial y peer-to-peer donde solo el usuario tiene control sobre los fondos. No recopila datos y mantiene al usuario independiente al no bloquear los fondos del usuario en una aplicación de billetera específica.\n\nLa billetera %@ es completamente de código abierto y cualquier persona puede confirmar que la aplicación funciona exactamente como dice.";
 "settings.about_app.whats_new" = "Qué novedades hay";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Contáctenos";
-"settings.about_app.rate_us" = "Califícanos";
-"settings.about_app.tell_friends" = "Recomendar a un amigo";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contáctenos";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "vía E-mail";
 "settings.contact.via_telegram" = "vía Telegram";
 
