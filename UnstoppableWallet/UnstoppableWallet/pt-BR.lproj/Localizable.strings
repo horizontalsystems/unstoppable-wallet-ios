@@ -1020,6 +1020,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.info_subtitle" = "aplicativo descentralizado";
 "settings.donate.description" = "Juntos, com o seu apoio, podemos fazer este aplicativo ainda melhor!";
 "settings.donate.title" = "Doar";
+"settings.rate_us" = "Rate Us";
+"settings.tell_friends" = "Tell Friends";
+"settings.contact_us" = "Contact Us";
 
 // Settings -> Base Currency
 
@@ -1233,13 +1236,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.about_app.description" = "A carteira %@ foi construída para aqueles que buscam investir e armazenar criptomoedas de forma privada e independente.\n\nÉ uma carteira não-custódia, peer-to-peer onde apenas o usuário tem controle sobre os fundos. Não coleta nenhum dado e mantém o usuário independente ao não bloquear os fundos do usuário para um aplicativo específico de carteira.\n\nA carteira %@ é totalmente de código aberto e qualquer um pode confirmar que o aplicativo funciona exatamente como afirma.";
 "settings.about_app.whats_new" = "O que há de novo";
 "settings.about_app.website" = "Site";
-"settings.about_app.contact" = "Fale Conosco";
-"settings.about_app.rate_us" = "Avalie-Nos";
-"settings.about_app.tell_friends" = "Indique para amigos";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Fale Conosco";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "via E-mail";
 "settings.contact.via_telegram" = "via Telegram";
 
