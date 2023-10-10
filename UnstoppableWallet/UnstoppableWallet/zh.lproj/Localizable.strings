@@ -740,8 +740,8 @@
 "coin_overview.roi.day200" = "6月";
 "coin_overview.roi.year1" = "1 年";
 
-"coin_overview.category" = "分类";
-
+"coin_overview.overview" = "行情";
+"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
 "coin_overview.blockchains" = "区块链";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "代币平台选择";
@@ -1372,7 +1372,6 @@
 "chart.performance.week_changes" = "变更（1周）";
 "chart.performance.month_changes" = "变更（1月）";
 
-"chart.about.header" = "关于";
 "chart.about.read_more" = "查看更多";
 "chart.about.read_less" = "关闭";
 
