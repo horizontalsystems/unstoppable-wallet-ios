@@ -3,7 +3,7 @@ import SwiftUI
 struct SecondaryCircleButtonStyle: ButtonStyle {
     let style: Style
 
-    @Environment(\.isEnabled) var isEnabled
+    @Environment(\.isEnabled) private var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
