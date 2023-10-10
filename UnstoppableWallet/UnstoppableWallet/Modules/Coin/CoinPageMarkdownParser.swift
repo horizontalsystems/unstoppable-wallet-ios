@@ -1,20 +1,19 @@
-import UIKit
 import Down
+import UIKit
 
 class CoinPageMarkdownParser {
-
     let fonts = StaticFontCollection(
-            heading1: .title2,
-            heading2: .title3,
-            heading3: .subhead1,
-            body: .subhead2
+        heading1: .title3,
+        heading2: .headline2,
+        heading3: .subhead1,
+        body: .subhead2
     )
 
     let colors = StaticColorCollection(
-            heading1: .themeLeah,
-            heading2: .themeJacob,
-            heading3: .themeBran,
-            body: .themeGray
+        heading1: .themeLeah,
+        heading2: .themeLeah,
+        heading3: .themeBran,
+        body: .themeGray
     )
 
     let paragraphStyles: StaticParagraphStyleCollection = {
@@ -42,14 +41,13 @@ class CoinPageMarkdownParser {
         let listItemOptions = ListItemOptions(maxPrefixDigits: 1, spacingAfterPrefix: .margin8, spacingAbove: .margin12, spacingBelow: .margin12)
 
         let configuration = DownStylerConfiguration(
-                fonts: fonts,
-                colors: colors,
-                paragraphStyles: paragraphStyles,
-                listItemOptions: listItemOptions
+            fonts: fonts,
+            colors: colors,
+            paragraphStyles: paragraphStyles,
+            listItemOptions: listItemOptions
         )
 
         let styler = DownStyler(configuration: configuration)
         return try down.toAttributedString(styler: styler)
     }
-
 }
