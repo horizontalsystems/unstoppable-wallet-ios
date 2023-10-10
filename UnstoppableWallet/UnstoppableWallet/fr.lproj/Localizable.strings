@@ -152,11 +152,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Restore Cloud
 
 "restore.cloud.title" = "Choisir la sauvegarde";
-"restore.cloud.description" = "Select the backup file that you want to restore.";
+"restore.cloud.description" = "Sélectionnez le fichier de sauvegarde que vous souhaitez restaurer.";
 "restore.cloud.empty" = "Aucune sauvegarde trouvée.";
-"restore.cloud.wallets" = "Wallet backups";
+"restore.cloud.wallets" = "Sauvegardes du portefeuille";
 "restore.cloud.imported" = "Importer le portefeuille";
-"restore.cloud.app_backups" = "App backups";
+"restore.cloud.app_backups" = "Sauvegardes de l'application";
 
 "restore.cloud.password.title" = "Entrez le mot de passe";
 "restore.cloud.password.placeholder" = "Mot de passe de la sauvegarde";
@@ -244,8 +244,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
-"backup_prompt.backup_required" = "Backup Required";
+"backup_prompt.backup_recovery_phrase" = "Sauvegarder le portefeuille";
+"backup_prompt.backup_required" = "Sauvegarde requise";
 "backup_prompt.warning" = "Créez une copie de sauvegarde de la phrase de récupération et du mot de passe qui vous permettra de récupérer votre portefeuille si votre téléphone est perdu, volé, cassé, etc.";
 "backup_prompt.backup" = "Sauvegarde";
 "backup_prompt.backup_manual" = "Sauvegarde manuelle";
@@ -304,12 +304,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
 "balance.searching" = "Recherche des transactions…...";
-"balance.stopped" = "Stopped";
+"balance.stopped" = "Arrêté";
 "balance.downloading_sapling" = "Téléchargement de la pousse... %d%%";
 "balance.downloading_blocks" = "Téléchargement des blocs";
 "balance.scanning_blocks" = "Blocs de numérisation";
 "balance.enhancing_transactions" = "Amélioration des transactions";
-"wait_for_synchronization" = "Wait for synchronization";
+"wait_for_synchronization" = "Attendez la synchronisation";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
@@ -335,7 +335,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "L'expéditeur a envoyé ces fonds avec un délai prédéfini qui se terminera à la date indiquée.\n\nPas de soucis, les Bitcoins reçues sont déjà à vous mais vous devez attendre l'expiration de la période de verrouillage pour les dépenser sur le réseau Bitcoin.";
 "balance.token.processing" = "Traitement en cours";
-"balance.token.processing.info.title" = "Processing amount";
+"balance.token.processing.info.title" = "Montant en cours de traitement";
 "balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they will be confirmed, this tokens will be available for spending";
 "balance.token.staked" = "Stakée";
 "balance.token.staked.info.title" = "Titre de la consommation";
@@ -417,13 +417,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.hodler_locktime_off" = "Désactivé";
 "send.hodler_error.unsupported_address" = "Time lock ne fonctionne qu'avec les adresses P2PKH (commençant par 1)";
 "send.fee_info.title" = "Taux de frais";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "Les blockchains exigent que les utilisateurs paient des frais de réseau lorsqu'ils envoient des transactions. Les frais sont plus élevés lorsque de nombreuses transactions ont lieu sur le réseau.\n\nLe portefeuille %@ estime les frais en fonction de l'activité actuelle de la blockchain et recommande la valeur optimale pour que la transaction soit traitée dans un délai raisonnable.\n\nLe taux de frais recommandé est affiché en tant que montant de satoshis que l'utilisateur doit payer pour un octet unique de la transaction. Ainsi, les frais totaux dépendent de la taille totale de la transaction, mesurée en octets.\n\nLes utilisateurs peuvent utiliser les commandes fournies pour augmenter ou diminuer la valeur du taux de frais. Le changement du taux de frais modifie les frais totaux que l'utilisateur paiera pour la transaction.\n\nLe fait de définir un taux de frais inférieur à la valeur recommandée peut entraîner le blocage d'une transaction pendant des heures ou son rejet. Plus la valeur est basse, plus la confirmation de la transaction prendra de temps. Pour les transactions où la priorité est importante, nous recommandons de définir un taux de frais plus élevé.";
 "send.transaction_inputs_outputs_info.title" = "Entrées / Sorties de transaction";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.description" = "La plupart des transactions Bitcoin, ainsi que des transactions dans des cryptomonnaies similaires telles que Bitcoin Cash, Dash et Litecoin, génèrent deux sorties. Une sortie est le montant qui va au destinataire et l'autre est la sortie de change qui est renvoyée à l'expéditeur. La manière dont la plupart des portefeuilles construisent les transactions facilite la compréhension par un tiers de la sortie allant au destinataire et de celle qui est renvoyée à l'expéditeur. Comme la sortie renvoyée à l'expéditeur est utilisée ultérieurement dans des transactions futures, une connexion entre ces deux transactions devient apparente.\n\nLe portefeuille %@ met en œuvre des mesures pour rendre plus difficile à quelqu'un de déterminer quelle sortie va où.\n\nIl existe deux options disponibles pour les utilisateurs de %@ :";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "L'ordre des sorties de transaction est aléatoire à chaque transaction. Parfois, le changement peut être la première sortie, parfois la deuxième. Si un utilisateur fait confiance au développeur de l'application, alors considérez cela comme une option recommandée.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Déterministe";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Il existe une norme communément acceptée pour l'ordonnancement des sorties de transaction, connue sous le nom de BIP69 (Bitcoin Improvement Proposal 69). Dans les portefeuilles open source, cette norme garantit que les utilisateurs de portefeuille n'ont pas besoin de faire confiance à la manière dont les développeurs de l'application implémentent l'ordonnancement des sorties. Comme cette norme est relativement récente, peu de portefeuilles l'ont encore mise en œuvre. Par conséquent, il est quelque peu possible de déterminer sur la blockchain si une transaction a été envoyée depuis un portefeuille qui utilise cette norme ou non.";
 
 "send.confirmation.you_send" = "Vous envoyez";
 "send.confirmation.to" = "À";
@@ -782,17 +782,17 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Rang de volume CEX";
 "coin_analytics.cex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges centralisés.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
+"coin_analytics.cex_volume.info1" = "Volume total des échanges pour le jeton sur les principales plateformes d'échange centralisées au cours d'une période de 30 jours.";
+"coin_analytics.cex_volume.info2" = "Graphique montrant la variation du volume quotidien de trading du jeton sur les principales plateformes d'échange centralisées sur une période d'un an.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume.info4" = "Liste de tous les jetons classés en fonction du volume de négociation sur les bourses centralisées au cours des intervalles de 24H, 7D et 1M";
 
 "coin_analytics.dex_volume" = "Volume DEX";
 "coin_analytics.dex_volume_rank" = "Rang de volume DEX";
 "coin_analytics.dex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges décentralisés.";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
-"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
+"coin_analytics.dex_volume.info2" = "Votre demande a été traduite en français comme demandé. Si vous avez besoin d'autres traductions ou d'informations supplémentaires, n'hésitez pas à demander.";
+"coin_analytics.dex_volume.info3" = "Classement du jeton en fonction du volume de négociation sur les principales bourses décentralisées au cours d'une période de 30 jours.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
 "coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Binance-Smart-Chain : PancakeSwap";
@@ -1141,67 +1141,67 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings_security.enable_passcode" = "Enable Passcode";
 "settings_security.edit_passcode" = "Edit Passcode";
 "settings_security.disable_passcode" = "Disable Passcode";
-"settings_security.auto_lock" = "Auto-Lock";
-"settings_security.balance_auto_hide" = "Balance Auto Hide";
-"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
-"settings_security.enable_duress_mode" = "Set Duress Mode";
-"settings_security.edit_duress_passcode" = "Edit Duress Passcode";
-"settings_security.disable_duress_mode" = "Disable Duress Mode";
-"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
+"settings_security.auto_lock" = "Verrouillage automatique";
+"settings_security.balance_auto_hide" = "Masquage automatique du solde";
+"settings_security.balance_auto_hide.description" = "Masque automatiquement le solde à chaque ouverture de l'application, indépendamment des préférences précédentes.";
+"settings_security.enable_duress_mode" = "Activer le Mode Duress";
+"settings_security.edit_duress_passcode" = "Modifier le code de détresse";
+"settings_security.disable_duress_mode" = "Désactiver le mode Duress";
+"settings_security.duress_mode.description" = "Un mode spécialisé conçu pour protéger les portefeuilles sélectionnés en cas de contrainte.";
 
 // Create Passcode
 
-"create_passcode.title" = "Create Passcode";
-"create_passcode.description" = "Your passcode will be used to unlock your wallet";
-"create_passcode.description.biometry" = "Set a passcode to enable %@";
-"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.title" = "Créer un code d'accès";
+"create_passcode.description" = "Votre code secret sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
+"create_passcode.description.biometry" = "Définir un code d'accès pour activer %@";
+"create_passcode.description.duress_mode" = "Définir un mot de passe pour activer le mode Duress";
 "create_passcode.confirm_passcode" = "Confirmer";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Duress Mode";
-"enable_duress_mode.intro.description" = "This mode allows user to setup multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
+"enable_duress_mode.intro.title" = "Mode de Duress";
+"enable_duress_mode.intro.description" = "Ce mode permet à l'utilisateur de configurer plusieurs codes d'accès d'application de déverrouillage où un code d'accès désiré n'affiche que les portefeuilles spécifiés. Conçu pour garder les portefeuilles sélectionnés en sécurité sous la contrainte ou les menaces.";
 "enable_duress_mode.intro.notes" = "Notes";
-"enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
-"enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
-"enable_duress_mode.intro.passcode_disabling.description" = "Disabling the passcode in the main mode will automatically reset the Duress Mode.";
-"enable_duress_mode.intro.passcode_change" = "Passcode Change";
-"enable_duress_mode.intro.passcode_change.description" = "Changing the passcode in the Duress Mode will also change the current passcode code for that mode.";
+"enable_duress_mode.intro.biometrics.description" = "La fonction %@ fonctionnera pour déverrouiller le mode Duresse. Vous pouvez désactiver %@ pour plus de commodité.";
+"enable_duress_mode.intro.passcode_disabling" = "Désactivation du code d'accès";
+"enable_duress_mode.intro.passcode_disabling.description" = "La désactivation du mot de passe en mode principal réinitialisera automatiquement le Mode Duresse.";
+"enable_duress_mode.intro.passcode_change" = "Changement de mot de passe";
+"enable_duress_mode.intro.passcode_change.description" = "La modification du code d'accès en mode Duress modifiera également le code d'accès actuel pour ce mode.";
 
-"enable_duress_mode.select.title" = "Select Wallets";
-"enable_duress_mode.select.description" = "Select the wallets that will be displayed in Duress Mode.";
+"enable_duress_mode.select.title" = "Sélectionnez les portefeuilles";
+"enable_duress_mode.select.description" = "Sélectionnez les portefeuilles qui seront affichés en mode Duresse.";
 "enable_duress_mode.select.wallets" = "Portefeuilles";
 "enable_duress_mode.select.watch_wallets" = "Regarder les portefeuilles";
 
-"enable_duress_mode.passcode.title" = "Duress Passcode";
-"enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
+"enable_duress_mode.passcode.title" = "Code Duress";
+"enable_duress_mode.passcode.description" = "Définir un code d'accès pour le mode Duress";
 "enable_duress_mode.passcode.confirm" = "Confirmer";
 
 // Edit Passcode
 
 "edit_passcode.title" = "Edit Passcode";
-"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.enter_new_passcode" = "Entrez le nouveau code d'accès";
 "edit_passcode.confirm_new_passcode" = "Confirmer";
 
 // Edit Duress Passcode
 
-"edit_duress_passcode.title" = "Edit Duress Passcode";
-"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.title" = "Modifier le code de détresse";
+"edit_duress_passcode.enter_new_passcode" = "Entrez le nouveau mot de passe pour le mode Duress";
 "edit_duress_passcode.confirm_new_passcode" = "Confirmer";
 
 // Set Passcode
 
-"set_passcode.invalid_confirmation" = "Invalid confirmation";
-"set_passcode.already_used" = "This passcode is already being used";
+"set_passcode.invalid_confirmation" = "Confirmation invalide";
+"set_passcode.already_used" = "Ce mot de passe est déjà utilisé";
 
 // Unlock
 
-"unlock.title" = "Unlock";
-"unlock.passcode" = "Enter Passcode";
-"unlock.biometry_reason" = "Unlock wallet";
-"unlock.attempts_left" = "Attempts left: %@";
-"unlock.disabled_until" = "Disabled until: %@";
-"unlock.random" = "Random";
+"unlock.title" = "Déverrouiller";
+"unlock.passcode" = "Entrez le code d'accès";
+"unlock.biometry_reason" = "Déverrouiller le portefeuille";
+"unlock.attempts_left" = "Tentatives restantes : %@";
+"unlock.disabled_until" = "Désactivé jusqu'à: %@";
+"unlock.random" = "Aléatoire";
 
 "security_settings.delete_alert_button" = "Supprimer de l'appareil";
 
@@ -1218,9 +1218,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "btc_transaction_sort_mode.bip69.description" = "Indexation lexicographique";
 
 "blockchain_settings.info.restore_source" = "Restorer la source";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Ce paramètre n'est pertinent que lors de la restauration d'un portefeuille existant. Il s'agit d'un processus visant à obtenir l'historique des transactions pour une cryptomonnaie donnée, afin que l'application de portefeuille puisse afficher les transactions passées et calculer le solde de l'utilisateur. Cela doit se produire une seule fois lorsque l'utilisateur restaure des portefeuilles précédemment créés.\n\nÀ ce stade, il existe deux façons potentielles pour une application de portefeuille mobile comme %@ de le faire :\n\nDepuis le serveur API : Il existe un serveur tiers prédéfini qui héberge l'ensemble de la blockchain et dispose de toutes les données traitées et optimisées pour fournir ces données rapidement. Cette méthode est rapide mais potentiellement (pas nécessairement) moins privée. C'est également une méthode centralisée pour restaurer un portefeuille car elle dépend de la disponibilité d'un serveur tiers. Cette option est recommandée en raison de sa rapidité à obtenir des données (5 à 10 minutes).\n\nDepuis la blockchain : L'application tente de restaurer directement à partir d'un réseau de nœuds de blockchain. Il s'agit d'une manière décentralisée de restaurer le solde du portefeuille et les transactions passées. L'application envoie des requêtes à de nombreux nœuds du réseau sans spécifiquement adresser certaines nœuds. Cette option est lente et peut facilement prendre 2 à 3 heures, l'application doit rester ouverte pendant la restauration. Cette méthode de restauration ne dépend d'aucune entité et devrait fonctionner dans toutes les conditions.";
 "blockchain_settings.info.rpc_source" = "Source RPC";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "Ce paramètre contrôle la manière dont cette application interagit avec les blockchains lors de l'envoi ou de la réception de transactions.\n\nDans le cas de Bitcoin, Bitcoin Cash, Litecoin et Dash, la communication avec les nœuds du réseau blockchain est entièrement pair à pair. %@ envoie des requêtes à de nombreux nœuds et communique avec l'un d'entre eux. À chaque connexion, l'application se connecte à un nœud différent.\n\nDans le cas d'Ethereum, de Binance Smart Chain et d'autres blockchains EVM, il n'existe aucune autre alternative pour les portefeuilles mobiles que d'interagir avec les blockchains respectifs que via des fournisseurs de services RPC tiers (comme Infura.io) ou des nœuds personnels. Cela signifie essentiellement que votre communication avec cette blockchain n'est pas décentralisée. Cela n'affecte en rien vos fonds, seulement la capacité à se connecter au réseau blockchain.\n\nSoyez assuré que nous avons cela à l'œil et essaierons bientôt de fournir une manière décentralisée de synchroniser. Patience.";
 
 // Manage Accounts
 
