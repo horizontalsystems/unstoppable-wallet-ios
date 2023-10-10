@@ -740,8 +740,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_overview.roi.day200" = "6 Meses";
 "coin_overview.roi.year1" = "1 Ano";
 
-"coin_overview.category" = "Categoria";
-
+"coin_overview.overview" = "Visão geral";
+"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Tipos de moeda";
@@ -1372,7 +1372,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart.performance.week_changes" = "Alterações (1S)";
 "chart.performance.month_changes" = "Alterações (1M)";
 
-"chart.about.header" = "Sobre";
 "chart.about.read_more" = "Ler Mais";
 "chart.about.read_less" = "Ler Menos";
 
