@@ -219,6 +219,10 @@ class ChartUiView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: UIView.noIntrinsicMetric, height: totalHeight)
+    }
+
     var totalHeight: CGFloat {
         .heightDoubleLineCell
             + configuration.mainHeight
