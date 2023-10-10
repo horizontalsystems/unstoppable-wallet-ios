@@ -147,7 +147,7 @@
 "restore_type.recovery.description" = "使用恢复短语或私钥导入。";
 "restore_type.cloud.description" = "从您的密钥链备份文件中导入。";
 "restore_type.file.description" = "Import a backup file from your local folder.";
-"restore_type.cex.description" = "在集中交易所上连接到钱包。";
+"restore_type.cex.description" = "Connect to a wallet on a centralized exchange.";
 
 // Restore Cloud
 
@@ -262,11 +262,11 @@
 "backup.cloud.name.description" = "请输入备份文件的名称。";
 "backup.cloud.name.empty" = "备份名称不能为空！";
 "backup.cloud.name.error.empty" = "备份名称不能为空";
-"backup.cloud.name.error.already_exist" = "备份名称已经存在！";
+"backup.cloud.name.error.already_exist" = "Backup name already exists!";
 "backup.cloud.name.placeholder" = "名称";
 
 "backup.cloud.password.title" = "设置密码";
-"backup.cloud.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
+"backup.cloud.password.description" = "Set the unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number, and a special character.";
 "backup.cloud.password.highlighted_description" = "请不要忘记这个密码！它与您的 Apple iCloud 密码不同，无法恢复或重置。";
 "backup.cloud.password.placeholder" = "密码";
 "backup.cloud.password.confirm.placeholder" = "确认";
@@ -336,7 +336,7 @@
 "balance.token.locked.info.description" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
 "balance.token.processing" = "正在处理";
 "balance.token.processing.info.title" = "Processing amount";
-"balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they will be confirmed, this tokens will be available for spending";
+"balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they are confirmed, these tokens will be available for spending";
 "balance.token.staked" = "已关注";
 "balance.token.staked.info.title" = "关注的标题";
 "balance.token.staked.info.description" = "相关的描述文本";
@@ -417,7 +417,7 @@
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 "send.fee_info.title" = "费率";
-"send.fee_info.description" = "区块链要求用户在发送交易时支付网络费用。当网络上发生大量交易时，费用更高。\n\n %@ 钱包基于当前区块链活动估计费用，并建议最佳值，以便在合理的时间内处理交易。\n\n建议的费用率显示为satoshi用户需要支付交易的单个字节。 因此，总费用取决于以字节衡量的交易的总规模。\n\n用户可以使用提供的控制来增加或降低收费率。 费率的变化改变了用户要支付的交易的总费用。\n\n设置收费率低于推荐值可能导致交易被搁置或被拒绝。 金额越低，交易确认所需的时间越长。 对于优先级重要的交易，我们建议设置更高的收费率。";
+"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within a reasonable amount of time.\n\nThe recommended fee rate is shown as the amount of satoshi the user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting a higher fee rate.";
 "send.transaction_inputs_outputs_info.title" = "交易输入 / 输出";
 "send.transaction_inputs_outputs_info.description" = "大多数比特币交易以及包括比特币现金、达什和利特币在内的加密货币交易都产生了两个输出。 一个产出是给接收者的金额，另一个是退还给发送者的更改输出。 大多数钱包构建交易的方式使第三方很容易理解哪个产出转给了接收方，哪一个是将变更金额退还给发送者。 由于后来在未来交易中使用退还给发送人的产出，因此这两项交易之间的联系变得很明显。\n\n %@ 钱包实现了一些措施，使得某人更难于了解哪个输出到哪里。\n\n %@ 用户有两个选项：";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -438,9 +438,9 @@
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
-"send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
+"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.resend" = "重新发送";
-"send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
+"send.confirmation.cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new 0 amount transaction to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.cancel" = "取消交易";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
@@ -784,7 +784,7 @@
 "coin_analytics.cex_volume_rank.description" = "对中心化交易所的代币按交易量排名的代币。";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over a 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "DEX交易量";
@@ -814,16 +814,16 @@
 "coin_analytics.active_addresses_rank.description" = "按与代币交易的唯一地址的数量排名的代币。";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank is based on the number of active wallets transacting with the token 30-day period.";
 "coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "交易数";
 "coin_analytics.transaction_count_rank" = "Tx计数排名";
-"coin_analytics.transaction_count_rank.description" = "按区块链上交易的数量排名的代币。";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
+"coin_analytics.transaction_count_rank.description" = "Tokens are ranked by a number of transactions on a blockchain.";
+"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with tokens over a 30-day period.";
 "coin_analytics.transaction_count.info2" = "显示1年周期的交易计数变化的图表。";
-"coin_analytics.transaction_count.info3" = "基于30天周期与代币交易的数量的代币排名。";
+"coin_analytics.transaction_count.info3" = "Token's rank is based on the number of transactions within the token 30-day period.";
 "coin_analytics.transaction_count.info4" = "基于24时 / 7天 / 1月间隔的交易数量排名的所有代币的列表。";
 "coin_analytics.transaction_count.info5" = "30天周期内在区块链上传输的代币总数。";
 
@@ -840,19 +840,19 @@
 "coin_analytics.project_tvl" = "项目TVL";
 "coin_analytics.tvl_ratio" = "市值 / TVL比率";
 "coin_analytics.project_tvl.info_title" = "项目TVL（锁定总价值）";
-"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
+"coin_analytics.project_tvl.info1" = "Total-value-locked (or Assets Under Management) in the project's smart contracts.";
 "coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "基于当前锁定总价值的代币排名。";
+"coin_analytics.project_tvl.info3" = "Token's rank is based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info4" = "基于当前锁定总价值排名的所有代币的列表。";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
 "coin_analytics.project_fee" = "项目费用";
 "coin_analytics.project_fee_rank" = "项目收费等级";
-"coin_analytics.project_fee_rank.description" = "按各项目产生的费用排列的代币。收取费用的方式因项目而异。";
+"coin_analytics.project_fee_rank.description" = "Tokens are ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
 
 "coin_analytics.project_revenue" = "项目收入";
 "coin_analytics.project_revenue_rank" = "项目收入排名";
-"coin_analytics.project_revenue_rank.description" = "按通过如质押或代币销毁等机制为持有者生成的收入排名的代币。";
+"coin_analytics.project_revenue_rank.description" = "Tokens are ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
 
 "coin_analytics.other_data" = "其它数据";
 
@@ -882,11 +882,11 @@
 "coin_analytics.overall_score.poor" = "差的";
 "coin_analytics.overall_score.cex_volume" = "总的分数是根据过去7天中央交易所的平均每日交易量计算的。";
 "coin_analytics.overall_score.dex_volume" = "总的分数是根据过去7天分散交易所的平均每日交易量计算的。";
-"coin_analytics.overall_score.dex_liquidity" = "总分数是根据分散交易所的可动用流动资金总额计算的。";
+"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total available liquidity on decentralized exchanges.";
 "coin_analytics.overall_score.active_addresses" = "总得分是根据过去7天中每日平均活动地址计算的。";
 "coin_analytics.overall_score.project_tvl" = "总体分数是根据给定令牌所代表的项目的总值锁定(管理中的资产)计算的。";
 "coin_analytics.overall_score.transaction_count" = "总的分数是根据过去7天的平均每日交易数计算的。";
-"coin_analytics.overall_score.holders" = "总的分数是根据持有相应代币的地址总数计算的。";
+"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding the respective token.";
 
 "coin_analytics.rank" = "排名";
 "coin_analytics.30_day_rank" = "30天排名";
@@ -1035,7 +1035,7 @@
 "settings.base_currency.title" = "基本货币";
 "settings.base_currency.other" = "其他";
 "settings.base_currency.disclaimer" = "声明";
-"settings.base_currency.disclaimer.description" = "汇率数据由第三方服务提供- Coingecko.com。 \n\n %@ 钱包应用程序无法保证这些值总是正确的并匹配市场数据。 如果您选择除 %@以外的任何基本货币，出现不一致的可能性就更高。";
+"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third-party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.set" = "设置";
 
 // Settings -> Manage Wallet
@@ -1045,7 +1045,7 @@
 "manage_wallets.search_placeholder" = "姓名、代码或合同地址";
 "manage_wallets.contract_address" = "智能合约地址";
 "manage_wallets.derivation_description" = "有四种常见的地址格式 %@ 钱包可以用来接收收到的付款:\n\n- BIP44 (旧版)\n- BIP49\n- BIP84 (推荐)\n- BIP86 (新版)\n\n而 %@ 钱包支持所有4 它建议使用一个 %@ 钱包以BIP84 格式操作。";
-"manage_wallets.bitcoin_cash_coin_type_description" = "有2种地址格式的比特币现金钱包可以用来接收收到的付款：\n\n- TYPE 0 (旧)\n- TYPE 145 (更新)\n\n虽然 %@ 钱包支持它们，它建议使用TYPE 145 格式的比特币现金钱包。";
+"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends using a Bitcoin Cash wallet operating in TYPE 145 format.";
 
 // Settings -> Personal Support
 
@@ -1124,16 +1124,25 @@
 "backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
 "backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
 
+"backup.disclaimer.cloud.title" = "备份到iCloud";
+"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.checkbox_label" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
+"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives, storage on smartphones, etc. are all vulnerable to loss due to physical damage, theft, or other unforeseen circumstances.";
+"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in the loss of a backup to a respective wallet.";
 "backup_app.backup.name.title" = "备份名称";
 "backup_app.backup.name.description" = "请输入备份文件的名称。";
 
 "backup_app.backup.password.title" = "备份密码";
-"backup_app.backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
+"backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 "backup_app.restore.notice.description" = "As a result of this action, wallets and contacts from a backup file will be added to the existing wallets and contacts in the app.";
 "backup_app.restore.notice.merge" = "Merge";
 
+"backup.password.title" = "备份密码";
+"backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
+"backup.password.highlighted_description" = "This password is used to encrypt the backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
 
@@ -1160,7 +1169,7 @@
 // Enable Duress Mode
 
 "enable_duress_mode.intro.title" = "Duress Mode";
-"enable_duress_mode.intro.description" = "This mode allows user to setup multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
+"enable_duress_mode.intro.description" = "This mode allows users to set up multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
 "enable_duress_mode.intro.notes" = "Notes";
 "enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
 "enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
@@ -1467,7 +1476,7 @@
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
 "ethereum_transaction.error.nonce_already_in_block" = "交易已在区块中!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "费用不足以替换交易";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee is not enough to replace the transaction";
 "ethereum_transaction.error.transaction_underpriced" = "费用不足以发送交易";
 "ethereum_transaction.error.tips_higher_than_max_fee" = "最大费用不能低于小费，因为最大费用包含了小费。";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
@@ -1497,7 +1506,7 @@
 "wallet_connect.paired_dapps.title" = "已配对dApp";
 "wallet_connect.paired_dapps.cant_disconnect" = "无法断开连接";
 "wallet_connect.paired_dapps.disconnect_all" = "全部刪除";
-"wallet_connect.pending_requests.nonactive_footer" = "若要打开请求，您必须激活所需钱包";
+"wallet_connect.pending_requests.nonactive_footer" = "To open a request you must activate the desired wallet";
 
 // App Status
 
@@ -1515,7 +1524,7 @@
 
 "status_info.title" = "状态";
 "status_info.pending.title" = "待处理";
-"status_info.pending.content" = "此交易尚未在区块链上确认。 通过推荐或更高的收费设置发送的交易通常在几分钟内处理。 低收费的交易可能会持续几个小时甚至几天，甚至可能会被拒绝。 请注意，一个在 %@ 钱包接口中的单独交易状态通常在短时间内更新。";
+"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that the status of an individual transaction in %@ wallet interface is typically updated with a short delay.";
 "status_info.processing.title" = "正在处理";
 "status_info.processing.content" = "交易已包括在区块链中，但尚未达到永久终结状态。此时，可以安全地考虑以较小金额完成的交易。对于大额支付，建议等待直至交易状态变为已完成。";
 "status_info.completed.title" = "已完成";
@@ -1555,19 +1564,19 @@
 
 "public_keys.title" = "公钥";
 "public_keys.evm_address" = "EVM 地址";
-"public_keys.evm_address.description" = "允许只读监视持有Etherum、 Binance Smart Chain和其他基于 EVM 的区块链的钱包。";
+"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM-based blockchains.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "允许只读监视持有比特币和其他基于 UTXO 的加密钱包(即Liteco、 比特币现金、 破折号等)。";
+"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO-based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "私钥";
 "private_keys.evm_private_key" = "EVM 私钥";
-"private_keys.evm_private_key.description" = "授予对基于加密货币的EVM的完全控制，即在相应钱包内的以太坊、币安智能链等。";
+"private_keys.evm_private_key.description" = "Grants full control over EVM-based crypto i.e. Ethereum, Binance Smart Chain, etc within the respective wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "授予对相应钱包上的资产的完全控制。";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "授予对比特币和基于加密货币的其他未花费交易输出（UTXO）的完全控制，即在相应钱包内的莱特币、比特币现金、达世币等。";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within the respective wallet.";
 
 // Manage Account -> EVM Address
 
@@ -1602,8 +1611,8 @@
 "add_evm_sync_source.name" = "名称";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "基本认证(可选)";
-"add_evm_sync_source.warning.url_exists" = "此网址的 RPC 源已存在";
-"add_evm_sync_source.error.invalid_url" = "输入的URL无效。有效网址必须具有以下方案之一： http，https，ws，wss";
+"add_evm_sync_source.warning.url_exists" = "RPC Source with this URL already exists";
+"add_evm_sync_source.error.invalid_url" = "The entered URL is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Send Settings
 
@@ -1632,11 +1641,11 @@
 "fee_settings.gas_price.info" = "网上交易费用将按燃料单位计量。燃料价格是用户愿意按单位消费的金额。 当网络忙碌时，燃料价格就高，空闲时价格就低。 燃料价格不足常常是交易被长期搁置的一个原因。";
 
 "fee_settings.base_fee" = "基础费用";
-"fee_settings.base_fee.info" = "网络协议将决定每一个区块的每一燃料（gas）的基础价格，称为基础费率。它根据不同区块的网络利用水平而变化。它可能会在下一个区块中增加或减少不多于12.5%，使得费用更具有可预测性。这里显示的值为当前区块的基础费率。";
+"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called the base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
 "fee_settings.max_fee_rate" = "最大费率";
 "fee_settings.max_fee_rate.info" = "这是用户愿意支付的每一燃料（gas）的最高总价。它必须涵盖网络的基础费率和最高优先费率。这里显示的值是基于下一个区块的基础费率加上用户选择的最大优先费率的估计值。实际支付的费率通常会较低。如果将此设置为低于当前的基础费率，将限制所支付的费用，但会导致更长的交易确认等待时间，甚至导致交易被冻结。";
 "fee_settings.tips" = "最高优先费用";
-"fee_settings.tips.info" = "用户支付优先费用以激励交易更快地得到确认。这些费用有时被称为小费。最高优先费率是用户在基础费率基础上愿意支付的每一燃料（gas）的最高额外价格。这里显示的值是基于预测的网络条件的建议值。实际的优先费用通常会更低。将此设置为零可能会导致交易确认的等待时间很长，因为它被放置在所有用户的待定交易队列的末尾。";
+"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for the transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
 "fee_settings.errors.insufficient_balance" = "余额不足";
 "fee_settings.errors.unexpected_error" = "异常错误";
@@ -1768,7 +1777,7 @@
 
 // Launch
 
-"launch.failed_to_launch" = "由于内部错误，应用程序无法启动。请尝试重新启动应用程序或向我们的支持团队报告错误。";
+"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting the app or report the error to our support team.";
 "launch.failed_to_launch.report" = "报告";
 
 // Tron
@@ -1777,7 +1786,7 @@
 "tron.send.resources_consumed" = "消耗的资源";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "估算在网络上发送特定交易所需的成本，包括能源、带宽和激活费";
+"tron.send.fee.info" = "The estimated cost of sending a given transaction on the network. (Without excluding Energy, Bandwidth, and Activating Fee)";
 "tron.send.resources_consumed.info" = "Bandwidth 是衡量存储在区块链数据库中的交易字节大小的单位。 交易越大，消耗的带宽资源就越多。\n\nEnergy 是衡量波场虚拟机在波场网络上执行特定操作所需计算量的单位。\n\n自智能合约 交易需要计算资源来执行，每笔智能合约交易都需要支付 energy费用。";
 "tron.send.activation_fee.info" = "正在将TRX或 TRC-10令牌传输到一个非活动帐户地址将激活帐户。";
 "tron.send.inactive_address" = "此地址未激活";
