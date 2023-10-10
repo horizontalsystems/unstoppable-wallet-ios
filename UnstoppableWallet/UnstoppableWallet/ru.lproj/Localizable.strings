@@ -36,7 +36,7 @@
 "alert.wrong_amount" = "Неправильная сумма";
 "alert.no_fee" = "Неверная комиссия";
 "alert.warning" = "Внимание";
-"alert.notice" = "Notice";
+"alert.notice" = "Уведомление";
 "alert.error" = "Ошибка";
 "alert.unknown_error" = "Неизвестная ошибка";
 "alert.success_action" = "Готово";
@@ -148,17 +148,17 @@
 
 "restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
 "restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
-"restore_type.file.description" = "Import a backup file from your local folder.";
-"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
+"restore_type.file.description" = "Импортируйте файл резервной копии из локальной папки.";
+"restore_type.cex.description" = "Подключиться к кошельку на централизованной бирже.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Выберите резервную копию";
-"restore.cloud.description" = "Select the backup file that you want to restore.";
+"restore.cloud.description" = "Выберите файл резервной копии, который вы хотите восстановить.";
 "restore.cloud.empty" = "Резервные копии не найдены.";
-"restore.cloud.wallets" = "Wallet backups";
+"restore.cloud.wallets" = "Резервные копии кошелька";
 "restore.cloud.imported" = "Импортированные кошельки";
-"restore.cloud.app_backups" = "App backups";
+"restore.cloud.app_backups" = "Резервные копии приложений";
 
 "restore.cloud.password.title" = "Введите пароль";
 "restore.cloud.password.placeholder" = "Пароль резервной копии";
@@ -171,7 +171,7 @@
 
 // Restore Binance
 
-"restore.binance.description" = "Пожалуйста, предоставьте ключ API и секрет API, чтобы связать вашу биржу.";
+"restore.binance.description" = "Пожалуйста, предоставьте API ключ и секрет API, чтобы связать вашу биржу.";
 "restore.binance.api_key" = "API ключ";
 "restore.binance.secret_key" = "Секретный ключ";
 "restore.binance.connect" = "Подключиться";
@@ -186,7 +186,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "Из блокчейна";
-"blockchain_settings.description" = "Выберите формат адреса для получения средств. При восстановлении существующего кошелька должен быть выбран правильный формат.";
+"blockchain_settings.description" = "Выберите формат адреса для получения средств. Правильный формат должен быть выбран при восстановлении существующего кошелька.";
 
 // Coin Platforms
 
@@ -210,7 +210,7 @@
 
 // EVM Private Key
 
-"evm_private_key.title" = "Приватный Ключ EVM";
+"evm_private_key.title" = "Приватный ключ EVM";
 "evm_private_key.tap_to_show" = "Нажмите, чтобы показать приватный ключ";
 
 // Extended Key
@@ -420,9 +420,9 @@
 "send.hodler_error.unsupported_address" = "TimeLock работает только при отправке на платёжные адреса, начинающиеся с 1... (также известных как BIP44 адреса)";
 "send.fee_info.title" = "Комиссия";
 "send.fee_info.description" = "Блокчейны требуют от пользователей уплачивать сетевые комиссии при отправке транзакций. Комиссии выше, когда в сети происходит больше транзакций.\n\nКошелек %@ оценивает комиссию на основе текущей активности блокчейна и рекомендует оптимальное значение, чтобы транзакция была обработана в разумное время.\n\nРекомендуемая ставка комиссии показана как количество сатоши, которое пользователь должен заплатить за один байт транзакции. Таким образом, общая комиссия зависит от общего размера транзакции, который измеряется в байтах.\n\nПользователи могут использовать предоставленные элементы управления для увеличения или уменьшения значения ставки комиссии. Изменение ставки комиссии влияет на общую комиссию за транзакцию, которую пользователь заплатит.\n\nУстановка ставки комиссии ниже рекомендуемого значения может привести к тому, что транзакция будет ожидать обработки в течение часов или будет отклонена. Чем ниже значение, тем дольше будет проходить подтверждение транзакции. Для транзакций, где важен приоритет, рекомендуется установить более высокую ставку комиссии.";
-"send.transaction_inputs_outputs_info.title" = "In's and Out's of Transactions";
-"send.transaction_inputs_outputs_info.description" = "Most transactions have two parts: what you send and what you get back. We're smart, making it tricky for anyone trying to snoop.";
-"send.transaction_inputs_outputs_info.shuffle.title" = "1. The Trump Card Shuffle";
+"send.transaction_inputs_outputs_info.title" = "Вводы / выводы транзакций";
+"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "We mix things up, so it's all unpredictable. Trust me, it's the best!";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Classic Play";
 "send.transaction_inputs_outputs_info.deterministic.description" = "We've got standards, like the BIP69. It's a new thing, so not everyone's on board yet.";
@@ -1565,7 +1565,7 @@
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Приватные ключи";
-"private_keys.evm_private_key" = "Приватный Ключ EVM";
+"private_keys.evm_private_key" = "Приватный ключ EVM";
 "private_keys.evm_private_key.description" = "You've got the golden key! Total power over EVM cryptos like Ethereum and Binance Smart Chain in the wallet. It's like owning the Trump Tower of crypto!";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "This key? It's yuge! Complete command over everything in the wallet. It's the Art of the Deal of keys!";
