@@ -12,7 +12,7 @@
 "button.paste" = "Coller";
 "button.resend" = "Réenvoyer";
 "button.backup" = "Sauvegarde";
-"button.restore" = "Restore";
+"button.restore" = "Restaurer";
 "button.copy" = "Copier";
 "button.retry" = "Réessayer";
 "button.report" = "Signaler";
@@ -36,7 +36,7 @@
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
 "alert.warning" = "Attention";
-"alert.notice" = "Notice";
+"alert.notice" = "Remarque";
 "alert.error" = "Erreur";
 "alert.unknown_error" = "Erreur inconnue";
 "alert.success_action" = "Fait";
@@ -100,11 +100,11 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Immediate";
+"auto_lock.immediate" = "Immédiat";
 "auto_lock.minute1" = "1 minute";
-"auto_lock.minute5" = "5 minutes";
-"auto_lock.minute15" = "15 minutes";
-"auto_lock.minute30" = "30 minutes";
+"auto_lock.minute5" = "5 minutes";
+"auto_lock.minute15" = "15 minutes";
+"auto_lock.minute30" = "30 minutes";
 "auto_lock.hour1" = "1 heure";
 
 // Access Camera
@@ -141,12 +141,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "restore_type.recovery.title" = "Voir la phase de récupération";
 "restore_type.cloud.title" = "depuis iCloud";
-"restore_type.file.title" = "from Files";
+"restore_type.file.title" = "à partir des fichiers";
 "restore_type.cex.title" = "depuis Exchange Wallet";
 
 "restore_type.recovery.description" = "Importer à l'aide de la phrase de récupération ou de la clé privée.";
 "restore_type.cloud.description" = "Importer un fichier de sauvegarde dans votre trousseau de clés.";
-"restore_type.file.description" = "Import a backup file from your local folder.";
+"restore_type.file.description" = "Importez un fichier de sauvegarde depuis votre dossier local.";
 "restore_type.cex.description" = "Connectez-vous à un portefeuille en échange centralisé.";
 
 // Restore Cloud
@@ -170,7 +170,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Restore Binance
 
 "restore.binance.description" = "Veuillez fournir les clés API et API Secret pour lier votre échange.";
-"restore.binance.api_key" = "API Key";
+"restore.binance.api_key" = "Clé API";
 "restore.binance.secret_key" = "Clé secrète";
 "restore.binance.connect" = "Connecter";
 "restore.binance.connecting" = "Connexion en cours...";
@@ -740,8 +740,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_overview.roi.day200" = "6 Mois";
 "coin_overview.roi.year1" = "1 An";
 
-"coin_overview.category" = "Catégorie";
-
+"coin_overview.overview" = "Synthèse";
+"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Types de pièces";
@@ -1098,7 +1098,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup_app.backup_manager.create" = "Create New Backup";
 
 "backup_app.backup_type.title" = "Backup Type";
-"backup_app.backup_type.description" = "Select where you want to save the backup file.";
+"backup_app.backup_type.description" = "Sélectionnez l'emplacement où vous souhaitez sauvegarder le fichier de sauvegarde.";
 "backup_app.backup_type.cloud" = "Sauvegarder sur iCloud";
 "backup_app.backup_type.file" = "Backup to Files";
 
@@ -1372,7 +1372,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "chart.performance.week_changes" = "Changes (1S)";
 "chart.performance.month_changes" = "Changements (1 m)";
 
-"chart.about.header" = "À propos";
 "chart.about.read_more" = "Plus d'infos";
 "chart.about.read_less" = "Moins d’infos";
 
@@ -1633,9 +1632,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "fee_settings.gas_price.info" = "Les frais pour effectuer des transactions sur le réseau sont mesurés en unités de gas. Le prix du gas est le montant qu'un utilisateur est prêt à dépenser par unité de gas. Le prix du gas est élevé lorsque le réseau est encombré, et faible lorsqu'il est inactif. Souvent, une transaction reste en suspens pendant une période prolongée si le montant du gas est insuffisant.";
 
 "fee_settings.base_fee" = "Frais de base";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.base_fee.info" = "Le protocole réseau détermine le prix de base par unité de gaz pour chaque bloc, appelé taux de frais de base. Il varie en fonction du niveau d'utilisation du réseau de bloc en bloc. Il peut augmenter ou diminuer de pas plus de 12,5 % dans le bloc suivant, rendant les frais plus prévisibles. La valeur affichée ici est le taux de frais de base du bloc actuel.";
 "fee_settings.max_fee_rate" = "Taux de frais max";
-"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.max_fee_rate.info" = "Ceci est le prix total maximal par unité de gaz que l'utilisateur est prêt à payer. Il doit couvrir le taux de frais de base du réseau et le taux de frais prioritaire maximal. La valeur affichée ici est suggérée en fonction d'une estimation du taux de frais de base du bloc suivant plus le taux de frais prioritaire maximal choisi par l'utilisateur. Le taux de frais réellement payé sera généralement inférieur. Définir une valeur inférieure au taux de frais de base actuel limitera les frais payés, mais entraînera des délais d'attente plus longs pour la confirmation de la transaction, voire une transaction bloquée.";
 "fee_settings.tips" = "Frais de priorité max";
 "fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.
 ";
