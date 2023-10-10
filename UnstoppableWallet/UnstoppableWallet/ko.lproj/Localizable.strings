@@ -738,8 +738,8 @@
 "coin_overview.roi.day200" = "6 Month";
 "coin_overview.roi.year1" = "1 Year";
 
-"coin_overview.category" = "Category";
-
+"coin_overview.overview" = "Overview";
+"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Coin Types";
@@ -1370,7 +1370,6 @@
 "chart.performance.week_changes" = "Changes (1W)";
 "chart.performance.month_changes" = "Changes (1M)";
 
-"chart.about.header" = "에 대해";
 "chart.about.read_more" = "Read More";
 "chart.about.read_less" = "Read Less";
 
