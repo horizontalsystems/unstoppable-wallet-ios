@@ -140,7 +140,6 @@
 // Restore Type
 
 "restore_type.title" = "Импорт кошелька";
-
 "restore_type.recovery.title" = "Фраза восстановления";
 "restore_type.cloud.title" = "iCloud";
 "restore_type.file.title" = "из файлов";
@@ -1099,23 +1098,20 @@
 "backup_app.backup_manager.restore" = "Восстановить резервную копию";
 "backup_app.backup_manager.create" = "Создать новую резерв. копию";
 
-"backup_app.backup_type.title" = "Тип резервной копии";
-"backup_app.backup_type.description" = "Выберите, куда вы хотите сохранить файл резервной копии.";
-"backup_app.backup_type.cloud" = "Резерв. копирование в iCloud";
-"backup_app.backup_type.file" = "Резерв. копирование в Файлы";
+"backup_app.backup_type.title" = "Save Backup";
+"backup_app.backup_type.cloud" = "to iCloud";
+"backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
+"backup_app.backup_type.file" = "to Files";
+"backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
 
 "backup_app.backup_list.title" = "Файл резервной копии";
 "backup_app.backup_list.description.restore" = "Список содержимого в файле резервной копии.";
 "backup_app.backup_list.header.wallets" = "Кошельки";
 "backup_app.backup_list.header.other" = "Other stuff";
 "backup_app.backup_list.other.watch_account.title" = "Просмотр кошелька";
-"backup_app.backup_list.other.watch_account.description" = "Адреса: %d";
 "backup_app.backup_list.other.watchlist.title" = "Избранное";
-"backup_app.backup_list.other.watchlist.description" = "Монеты: %d";
 "backup_app.backup_list.other.contacts.title" = "Контакты";
-"backup_app.backup_list.other.contacts.description" = "Адреса: %d";
 "backup_app.backup_list.other.blockchain_settings.title" = "Настройки блокчейна";
-"backup_app.backup_list.other.blockchain_settings.description" = "Пользовательские RPC: %d";
 "backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
 
@@ -1139,8 +1135,10 @@
 "backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup_app.backup.password.highlighted_description" = "Этот пароль используется для шифрования файла резервной копии вашего кошелька. Его невозможно восстановить или сбросить в случае утери или забвения.";
 
-"backup_app.restore.notice.description" = "В результате этого действия кошельки и контакты из файла резервной копии будут добавлены к уже существующим кошелькам и контактам в приложении.";
-"backup_app.restore.notice.merge" = "Объединить";
+"backup_app.restore_type.title" = "Восстановить";
+
+"backup_app.restore.notice.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one)";
+"backup_app.restore.notice.merge" = "Заменить";
 
 "backup.password.title" = "Пароль резервной копии";
 "backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
