@@ -97,7 +97,7 @@ extension ContactBookSettingsService {
     }
 
     func replace(contacts: [BackupContact]) throws {
-        try contactManager.restore(contacts: contacts)
+        try contactManager.restore(contacts: contacts, mergePolitics: .replace)
     }
 
     func createBackupFile() throws -> URL {

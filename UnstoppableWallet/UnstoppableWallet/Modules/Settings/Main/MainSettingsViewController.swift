@@ -234,7 +234,7 @@ class MainSettingsViewController: ThemeViewController {
                 accessoryType: .disclosure,
                 isLast: true,
                 action: { [weak self] in
-                    let viewController = BackupManagerModule.view().toViewController(title: "backup_manager.title".localized)
+                    let viewController = BackupManagerModule.viewController()
                     self?.navigationController?.pushViewController(viewController, animated: true)
                 }
             ),

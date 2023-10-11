@@ -4,7 +4,7 @@ import ThemeKit
 
 struct BackupDisclaimerView: View {
     @ObservedObject var viewModel: BackupAppViewModel
-    @Binding var backupPresented: Bool
+    var onDismiss: (() -> Void)?
 
     @State var isOn: Bool = true
 
@@ -30,22 +30,23 @@ struct BackupDisclaimerView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             } bottomContent: {
                 NavigationLink(
-                    destination: BackupNameView(viewModel: viewModel, backupPresented: $backupPresented),
+                    destination: BackupNameView(viewModel: viewModel, onDismiss: onDismiss),
                     isActive: $viewModel.namePushed
                 ) {
                     Button(action: { viewModel.namePushed = true }) {
                         Text("button.next".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                    .disabled(!isOn)
+                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                        .disabled(!isOn)
                 }
             }
         }
         .navigationBarTitle(backupDisclaimer.title)
+
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.cancel".localized) {
-                    backupPresented = false
+                    onDismiss?()
                 }
             }
         }

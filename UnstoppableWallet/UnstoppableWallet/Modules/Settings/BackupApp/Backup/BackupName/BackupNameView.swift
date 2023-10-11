@@ -3,7 +3,7 @@ import ThemeKit
 
 struct BackupNameView: View {
     @ObservedObject var viewModel: BackupAppViewModel
-    @Binding var backupPresented: Bool
+    var onDismiss: (() -> Void)?
 
     var body: some View {
         ThemeView {
@@ -28,7 +28,7 @@ struct BackupNameView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             } bottomContent: {
                 NavigationLink(
-                    destination: BackupPasswordView(viewModel: viewModel, backupPresented: $backupPresented),
+                    destination: BackupPasswordView(viewModel: viewModel, onDismiss: onDismiss),
                     isActive: $viewModel.passwordPushed
                 ) {
                     Button(action: {
@@ -40,11 +40,11 @@ struct BackupNameView: View {
                     .disabled(viewModel.nameCautionState != .none)
                 }
             }
-            .navigationBarTitle("backup_app.backup.name.title".localized)
+            .navigationTitle("backup_app.backup.name.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
-                    backupPresented = false
+                    onDismiss?()
                 }
             }
         }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct BackupAppModule {
-    static func view(backupPresented: Binding<Bool>) -> some View {
+    static func view(onDismiss: (() -> ())?) -> some View {
         let viewModel = BackupAppViewModel(
                 accountManager: App.shared.accountManager,
                 contactManager: App.shared.contactManager,
@@ -10,7 +10,7 @@ struct BackupAppModule {
                 evmSyncSourceManager: App.shared.evmSyncSourceManager
         )
 
-        return BackupTypeView(viewModel: viewModel, backupPresented: backupPresented)
+        return BackupTypeView(viewModel: viewModel, onDismiss: onDismiss)
     }
 }
 
@@ -58,28 +58,28 @@ extension BackupAppModule {
         if watchAccountCount != 0 {
             items.append(BackupAppModule.Item(
                     title: "backup_app.backup_list.other.watch_account.title".localized,
-                    description: "backup_app.backup_list.other.watch_account.description".localized(watchAccountCount)
+                    value: watchAccountCount.description
             ))
         }
 
         if watchlistCount != 0 {
             items.append(BackupAppModule.Item(
                     title: "backup_app.backup_list.other.watchlist.title".localized,
-                    description: "backup_app.backup_list.other.watchlist.description".localized(watchlistCount)
+                    value: watchlistCount.description
             ))
         }
 
         if contactAddressCount != 0 {
             items.append(BackupAppModule.Item(
                     title: "backup_app.backup_list.other.contacts.title".localized,
-                    description: "backup_app.backup_list.other.contacts.description".localized(contactAddressCount)
+                    value: contactAddressCount.description
             ))
         }
 
         if blockchainSourcesCount != 0 {
             items.append(BackupAppModule.Item(
                     title: "backup_app.backup_list.other.blockchain_settings.title".localized,
-                    description: "backup_app.backup_list.other.blockchain_settings.description".localized(blockchainSourcesCount)
+                    value: blockchainSourcesCount.description
             ))
         }
         items.append(BackupAppModule.Item(
@@ -113,7 +113,14 @@ extension BackupAppModule {
 
     struct Item: Identifiable {
         let title: String
-        let description: String
+        let value: String?
+        let description: String?
+
+        init(title: String, value: String? = nil, description: String? = nil) {
+            self.title = title
+            self.value = value
+            self.description = description
+        }
 
         var id: String {
             title
