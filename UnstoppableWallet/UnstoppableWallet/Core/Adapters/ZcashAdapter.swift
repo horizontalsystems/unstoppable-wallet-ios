@@ -65,15 +65,6 @@ class ZcashAdapter {
 
     private(set) var syncing: Bool = true
 
-    private func defaultFee(network: ZcashNetwork, height: Int? = nil) -> Zatoshi {
-        network.constants.defaultFee(for: height ?? BlockHeight.max)
-    }
-
-    private func defaultFeeDecimal(network: ZcashNetwork, height: Int? = nil) -> Decimal {
-        // todo update fee settings
-        fee// defaultFee(network: network, height: height).decimalValue.decimalValue
-    }
-
     init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
         logger = App.shared.logger.scoped(with: "ZCashKit") // HsToolKit.Logger(minLogLevel: .debug) //
 
@@ -84,23 +75,28 @@ class ZcashAdapter {
         network = ZcashNetworkBuilder.network(for: .mainnet)
 
         // todo: update fee settings
-        fee = Zatoshi(10_000).decimalValue.decimalValue//network.constants.defaultFee().decimalValue.decimalValue
+        fee = network.constants.defaultFee().decimalValue.decimalValue
 
         token = wallet.token
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
 
+        var existingMode: WalletInitMode?
+        if let dbUrl = try? Self.spendParamsURL(uniqueId: uniqueId),
+           Self.exist(url: dbUrl) {
+            existingMode = .existingWallet
+        }
         switch wallet.account.origin {
         case .created:
             birthday = Self.newBirthdayHeight(network: network)
-            initMode = .newWallet
+            initMode = existingMode ?? .newWallet
         case .restored:
             if let height = restoreSettings.birthdayHeight {
                 birthday = max(height, network.constants.saplingActivationHeight)
             } else {
                 birthday = network.constants.saplingActivationHeight
             }
-            initMode = .restoreWallet
+            initMode = existingMode ?? .restoreWallet
         }
 
         let seedData = [UInt8](seed)
@@ -360,7 +356,7 @@ class ZcashAdapter {
                 blockHeight: transaction.minedHeight,
                 confirmationsThreshold: ZcashSDK.defaultRewindDistance,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                fee: defaultFeeDecimal(network: network, height: transaction.minedHeight),
+                fee: transaction.fee?.decimalValue.decimalValue,
                 failed: transaction.failed,
                 lockInfo: nil,
                 conflictingHash: nil,
@@ -379,7 +375,7 @@ class ZcashAdapter {
                 blockHeight: transaction.minedHeight,
                 confirmationsThreshold: ZcashSDK.defaultRewindDistance,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                fee: defaultFeeDecimal(network: network, height: transaction.minedHeight),
+                fee: transaction.fee?.decimalValue.decimalValue,
                 failed: transaction.failed,
                 lockInfo: nil,
                 conflictingHash: nil,
@@ -529,6 +525,16 @@ extension ZcashAdapter {
         try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
 
         return url
+    }
+
+    private static func exist(url: URL) -> Bool {
+        let fileManager = FileManager.default
+
+        do {
+            return try fileManager.fileExists(coordinatingAccessAt: url).exists
+        } catch {
+            return false
+        }
     }
 
     private static func fsBlockDbRootURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
