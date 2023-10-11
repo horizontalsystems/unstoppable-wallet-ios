@@ -138,7 +138,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Restore Type
 
 "restore_type.title" = "Importer le porte-monnaie";
-
 "restore_type.recovery.title" = "Voir la phase de récupération";
 "restore_type.cloud.title" = "depuis iCloud";
 "restore_type.file.title" = "à partir des fichiers";
@@ -1097,23 +1096,20 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup_app.backup_manager.restore" = "Restaurer la sauvegarde";
 "backup_app.backup_manager.create" = "Créer une nouvelle sauvegarde";
 
-"backup_app.backup_type.title" = "Type de sauvegarde";
-"backup_app.backup_type.description" = "Sélectionnez l'emplacement où vous souhaitez sauvegarder le fichier de sauvegarde.";
-"backup_app.backup_type.cloud" = "Sauvegarder sur iCloud";
-"backup_app.backup_type.file" = "Sauvegarder dans les fichiers";
+"backup_app.backup_type.title" = "Save Backup";
+"backup_app.backup_type.cloud" = "to iCloud";
+"backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
+"backup_app.backup_type.file" = "to Files";
+"backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
 
 "backup_app.backup_list.title" = "Fichier de sauvegarde";
 "backup_app.backup_list.description.restore" = "Liste des contenus dans le fichier de sauvegarde.";
 "backup_app.backup_list.header.wallets" = "Portefeuilles";
 "backup_app.backup_list.header.other" = "Autre";
 "backup_app.backup_list.other.watch_account.title" = "Regarder les portefeuilles";
-"backup_app.backup_list.other.watch_account.description" = "Adresses : %d";
 "backup_app.backup_list.other.watchlist.title" = "Liste de suivi";
-"backup_app.backup_list.other.watchlist.description" = "Pièces : %d";
 "backup_app.backup_list.other.contacts.title" = "Contacts";
-"backup_app.backup_list.other.contacts.description" = "Adresses : %d";
 "backup_app.backup_list.other.blockchain_settings.title" = "Paramètres de la Blockchain";
-"backup_app.backup_list.other.blockchain_settings.description" = "RPC personnalisés : %d";
 "backup_app.backup_list.other.app_settings.title" = "Paramètres de l'application";
 "backup_app.backup_list.other.app_settings.description" = "Langue, Devise, Apparence ...";
 
@@ -1137,8 +1133,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup_app.backup.password.highlighted_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Si vous le perdez ou l'oubliez, il ne pourra pas être récupéré ou réinitialisé.";
 
-"backup_app.restore.notice.description" = "Grâce à cette action, les portefeuilles et les contacts d'un fichier de sauvegarde seront ajoutés aux portefeuilles et contacts existants dans l'application.";
-"backup_app.restore.notice.merge" = "Fusionner";
+"backup_app.restore_type.title" = "Restaurer";
+
+"backup_app.restore.notice.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one)";
+"backup_app.restore.notice.merge" = "Remplacer";
 
 "backup.password.title" = "Mot de passe de la sauvegarde";
 "backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
