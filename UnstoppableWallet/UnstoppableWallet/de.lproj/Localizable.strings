@@ -138,7 +138,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Restore Type
 
 "restore_type.title" = "Wallet importieren";
-
 "restore_type.recovery.title" = "von Wiederherstellungsphrase";
 "restore_type.cloud.title" = "von iCloud";
 "restore_type.file.title" = "from Files";
@@ -1097,23 +1096,20 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup_manager.restore" = "Restore Backup";
 "backup_app.backup_manager.create" = "Create New Backup";
 
-"backup_app.backup_type.title" = "Backup Type";
-"backup_app.backup_type.description" = "Select where you want to save the backup file.";
-"backup_app.backup_type.cloud" = "Sicherung in iCloud";
-"backup_app.backup_type.file" = "Backup to Files";
+"backup_app.backup_type.title" = "Save Backup";
+"backup_app.backup_type.cloud" = "to iCloud";
+"backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
+"backup_app.backup_type.file" = "to Files";
+"backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
 
 "backup_app.backup_list.title" = "Backup File";
 "backup_app.backup_list.description.restore" = "List of contents in the backup file.";
 "backup_app.backup_list.header.wallets" = "Wallets";
 "backup_app.backup_list.header.other" = "Andere";
 "backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
-"backup_app.backup_list.other.watch_account.description" = "Adresse: %d";
 "backup_app.backup_list.other.watchlist.title" = "Merkliste";
-"backup_app.backup_list.other.watchlist.description" = "Coins: %d";
 "backup_app.backup_list.other.contacts.title" = "Kontakte";
-"backup_app.backup_list.other.contacts.description" = "Adresse: %d";
 "backup_app.backup_list.other.blockchain_settings.title" = "Blockchain Einstellungen";
-"backup_app.backup_list.other.blockchain_settings.description" = "Custom RPCs: %d";
 "backup_app.backup_list.other.app_settings.title" = "App Settings";
 "backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
@@ -1137,8 +1133,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
-"backup_app.restore.notice.description" = "As a result of this action, wallets and contacts from a backup file will be added to the existing wallets and contacts in the app.";
-"backup_app.restore.notice.merge" = "Merge";
+"backup_app.restore_type.title" = "Wiederherstellen";
+
+"backup_app.restore.notice.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one)";
+"backup_app.restore.notice.merge" = "Ersetzen";
 
 "backup.password.title" = "Passwort sichern";
 "backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
