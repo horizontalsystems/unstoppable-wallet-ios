@@ -71,18 +71,17 @@ class BackupAppViewModel: ObservableObject {
     @Published var passwordCautionState: CautionState = .none
     @Published var password: String = AppConfig.defaultPassphrase {
         didSet {
-            validatePasswords()
+            clearCautions()
         }
     }
 
     @Published var confirmCautionState: CautionState = .none
     @Published var confirm: String = AppConfig.defaultPassphrase {
         didSet {
-            validatePasswords()
+            clearCautions()
         }
     }
 
-    @Published var passwordButtonDisabled = true
     @Published var passwordButtonProcessing = false
 
     private var dismissSubject = PassthroughSubject<Void, Never>()
@@ -111,8 +110,6 @@ class BackupAppViewModel: ObservableObject {
         otherItems = getOtherItems()
         selected = accountIds.reduce(into: [:]) { $0[$1] = true }
         name = nextName
-
-        validatePasswords()
     }
 }
 
@@ -153,14 +150,23 @@ extension BackupAppViewModel {
 
     private func getOtherItems() -> [BackupAppModule.Item] {
         let contacts = contactManager.all ?? []
-        let contactAddressCount = contacts.reduce(into: 0) { $0 += $1.addresses.count }
 
         return BackupAppModule.items(
                 watchAccountCount: accounts(watch: true).count,
                 watchlistCount: favoritesManager.allCoinUids.count,
-                contactAddressCount: contactAddressCount,
+                contactAddressCount: contacts.count,
                 blockchainSourcesCount: evmSyncSourceManager.customSyncSources(blockchainType: nil).count
         )
+    }
+
+    private func clearCautions() {
+        if passwordCautionState != .none {
+            passwordCautionState = .none
+        }
+
+        if confirmCautionState != .none {
+            confirmCautionState = .none
+        }
     }
 }
 
@@ -170,25 +176,17 @@ extension BackupAppViewModel {
     }
 }
 
-// Backup Name VieeModel
+// Backup Name ViewModel
 extension BackupAppViewModel {
     var nextName: String {
-        let name = { [Self.backupNamePrefix, $0].joined(separator: " ") }
         switch destination {
         case .cloud:
-            let exists = cloudBackupManager
-                .existFilenames
-                .filter { $0.hasPrefix(Self.backupNamePrefix) }
-                .sorted()
-            for i in 1 ..< exists.count + 1 {
-                let newName = name(i.description)
-                if !exists.contains(where: { $0.lowercased() == newName.lowercased() }) {
-                    return newName
-                }
-            }
-            return name((exists.count + 1).description)
+            return RestoreFileHelper.resolve(
+                    name: Self.backupNamePrefix,
+                    elements: cloudBackupManager.existFilenames
+            )
         default:
-            return name("1")
+            return Self.backupNamePrefix
         }
     }
 
@@ -204,43 +202,30 @@ extension BackupAppViewModel {
 
     func validatePasswords() {
         var buttonDisabled = false
-        if password.isEmpty {
-            buttonDisabled = true
-            confirmCautionState = .none
-        } else {
-            do {
-                try BackupCrypto.validate(passphrase: password)
-                passwordCautionState = .none
-            } catch {
-                passwordCautionState = .caution(.init(text: error.localizedDescription, type: .error))
-                buttonDisabled = true
-            }
+        clearCautions()
+
+        do {
+            try BackupCrypto.validate(passphrase: password)
+            passwordCautionState = .none
+        } catch {
+            passwordCautionState = .caution(.init(text: error.localizedDescription, type: .error))
         }
 
-        if confirm.isEmpty {
-            buttonDisabled = true
-            confirmCautionState = .none
-        } else {
-            do {
-                try BackupCrypto.validate(passphrase: confirm)
-                if password != confirm {
-                    buttonDisabled = true
-                    confirmCautionState = .caution(
-                        .init(
-                            text: "backup.cloud.password.confirm.error.doesnt_match".localized,
-                            type: .error
-                        )
+        do {
+            try BackupCrypto.validate(passphrase: confirm)
+            if password != confirm {
+                confirmCautionState = .caution(
+                    .init(
+                        text: "backup.cloud.password.confirm.error.doesnt_match".localized,
+                        type: .error
                     )
-                } else {
-                    confirmCautionState = .none
-                }
-            } catch {
-                confirmCautionState = .caution(.init(text: error.localizedDescription, type: .error))
-                buttonDisabled = true
+                )
+            } else {
+                confirmCautionState = .none
             }
+        } catch {
+            confirmCautionState = .caution(.init(text: error.localizedDescription, type: .error))
         }
-
-        passwordButtonDisabled = buttonDisabled
     }
 
     @MainActor
@@ -254,14 +239,19 @@ extension BackupAppViewModel {
     }
 
     func onTapSave() {
+        validatePasswords()
+        guard passwordCautionState == .none && confirmCautionState == .none else {
+            return
+        }
         passwordButtonProcessing = true
 
+        let selectedIds = accountIds.filter { (selected[$0] ?? false) }
         Task {
             switch destination {
             case .none: ()
             case .cloud:
                 do {
-                    try cloudBackupManager.save(accountIds: accountIds, passphrase: password, name: name)
+                    try cloudBackupManager.save(accountIds: selectedIds, passphrase: password, name: name)
                     passwordButtonProcessing = false
                     await showSuccess()
                     dismissSubject.send()
@@ -271,7 +261,7 @@ extension BackupAppViewModel {
                 }
             case .local:
                 do {
-                    let url = try cloudBackupManager.file(accountIds: accountIds, passphrase: password, name: name)
+                    let url = try cloudBackupManager.file(accountIds: selectedIds, passphrase: password, name: name)
                     sharePresented = url
                     passwordButtonProcessing = false
                 } catch {

@@ -411,17 +411,24 @@ extension ContactBookManager {
         return contacts
     }
 
-    func restore(contacts: [BackupContact]) throws {
+    func restore(contacts: [BackupContact], mergePolitics: MergePolitics) throws {
         guard let localUrl else {
             state = .failed(ContactBookManager.StorageError.localUrlNotAvailable)
             return
         }
 
-        let newContactBook = helper.contactBook(contacts: contacts, lastVersion: state.data?.version)
+        let resolved: ContactBook
 
-        try save(url: localUrl, newContactBook)
+        switch mergePolitics {
+        case .replace:
+            resolved = helper.contactBook(contacts: contacts, lastVersion: state.data?.version)
+        case .insert:
+            resolved = helper.insert(contacts: contacts, book: state.data)
+        }
+
+        try save(url: localUrl, resolved)
         if remoteSync {
-            try? saveToICloud(book: newContactBook)
+            try? saveToICloud(book: resolved)
         }
     }
 
@@ -447,6 +454,10 @@ extension ContactBookManager {
 }
 
 extension ContactBookManager {
+    enum MergePolitics {
+        case replace, insert
+    }
+
     enum StorageError: Error {
         case cloudUrlNotAvailable
         case localUrlNotAvailable

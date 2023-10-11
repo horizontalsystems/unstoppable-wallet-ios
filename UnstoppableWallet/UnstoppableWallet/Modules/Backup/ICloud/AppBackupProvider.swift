@@ -186,7 +186,7 @@ extension AppBackupProvider {
         favoritesManager.add(coinUids: raw.watchlistIds)
 
         if !raw.contacts.isEmpty {
-            try? contactManager.restore(contacts: raw.contacts)
+            try? contactManager.restore(contacts: raw.contacts, mergePolitics: .replace)
         }
 
         evmSyncSourceManager.restore(selected: raw.settings.evmSyncSources.selected, custom: raw.customSyncSources)

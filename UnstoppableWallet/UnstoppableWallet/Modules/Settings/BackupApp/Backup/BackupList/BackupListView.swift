@@ -4,7 +4,7 @@ import ThemeKit
 
 struct BackupListView: View {
     @ObservedObject var viewModel: BackupAppViewModel
-    @Binding var backupPresented: Bool
+    var onDismiss: (() -> Void)?
 
     var body: some View {
         ThemeView {
@@ -45,9 +45,17 @@ struct BackupListView: View {
                             ForEach(viewModel.otherItems) { (item: BackupAppModule.Item) in
                                 ListRow {
                                     VStack(spacing: 1) {
-                                        Text(item.title).themeBody()
+                                        HStack {
+                                            Text(item.title).themeBody()
 
-                                        Text(item.description).themeSubhead2()
+                                            if let value = item.value {
+                                                Text(value).themeSubhead1(alignment: .trailing)
+                                            }
+                                        }
+
+                                        if let description = item.description {
+                                            Text(description).themeSubhead2()
+                                        }
                                     }
                                 }
                             }
@@ -57,7 +65,7 @@ struct BackupListView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             } bottomContent: {
                 NavigationLink(
-                    destination: BackupDisclaimerView(viewModel: viewModel, backupPresented: $backupPresented),
+                    destination: BackupDisclaimerView(viewModel: viewModel, onDismiss: onDismiss),
                     isActive: $viewModel.disclaimerPushed
                 ) {
                     Button(action: {
@@ -72,7 +80,7 @@ struct BackupListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
-                    backupPresented = false
+                    onDismiss?()
                 }
             }
         }

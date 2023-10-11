@@ -82,7 +82,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
                     .highlightedDescription(text: "backup_app.restore.notice.description".localized),
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "backup_app.restore.notice.merge".localized, actionType: .afterClose) { [weak self] in
+                    .init(style: .red, title: "backup_app.restore.notice.merge".localized, actionType: .afterClose) { [weak self] in
                         self?.viewModel.onTapRestore()
                     },
                     .init(style: .transparent, title: "button.cancel".localized, actionType: .afterClose),
@@ -105,13 +105,23 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
     }
 
     private func row(item: BackupAppModule.Item, rowInfo: RowInfo) -> RowProtocol {
-        tableView.universalRow62(
-            id: item.title,
-            title: .body(item.title),
-            description: .subhead2(item.description),
-            isFirst: rowInfo.isFirst,
-            isLast: rowInfo.isLast
-        )
+        if let description = item.description {
+            return tableView.universalRow62(
+                    id: item.title,
+                    title: .body(item.title),
+                    description: .subhead2(description),
+                    isFirst: rowInfo.isFirst,
+                    isLast: rowInfo.isLast
+            )
+        } else {
+            return tableView.universalRow48(
+                    id: item.title,
+                    title: .body(item.title),
+                    value: .subhead1(item.value, color: .themeGray),
+                    isFirst: rowInfo.isFirst,
+                    isLast: rowInfo.isLast
+            )
+        }
     }
 
     private var descriptionSection: SectionProtocol {

@@ -46,7 +46,7 @@ extension RestoreFileConfigurationViewModel {
     }
 
     var otherItems: [BackupAppModule.Item] {
-        let contactAddressCount = rawBackup.contacts.reduce(into: 0) { $0 += $1.addresses.count }
+        let contactAddressCount = rawBackup.contacts.count
         let watchAccounts = rawBackup
             .accounts
             .filter { $0.account.watchAccount }

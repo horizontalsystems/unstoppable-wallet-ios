@@ -4,7 +4,7 @@ import ThemeKit
 
 struct BackupPasswordView: View {
     @ObservedObject var viewModel: BackupAppViewModel
-    @Binding var backupPresented: Bool
+    var onDismiss: (() -> ())?
 
     @State var secureLock = true
 
@@ -63,14 +63,14 @@ struct BackupPasswordView: View {
                     }
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(viewModel.passwordButtonDisabled || viewModel.passwordButtonProcessing)
+                .disabled(viewModel.passwordButtonProcessing)
                 .animation(.default, value: viewModel.passwordButtonProcessing)
             }
             .sheet(item: $viewModel.sharePresented) { url in
                 let completion: UIActivityViewController.CompletionWithItemsHandler = { _, success, _, error in
                     if success {
+                        onDismiss?()
                         showDone()
-                        backupPresented = false
                     }
                     if let error {
                         show(error: error)
@@ -83,21 +83,17 @@ struct BackupPasswordView: View {
                 }
             }
             .onReceive(viewModel.dismissPublisher) {
-                backupPresented = false
+                onDismiss?()
             }
             .navigationBarTitle("backup_app.backup.password.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
-                    backupPresented = false
+                    onDismiss?()
                 }
+                .disabled(viewModel.passwordButtonProcessing)
             }
         }
-    }
-
-    @MainActor
-    private func showSuccess() {
-        HudHelper.instance.show(banner: .savedToCloud)
     }
 
     @MainActor
