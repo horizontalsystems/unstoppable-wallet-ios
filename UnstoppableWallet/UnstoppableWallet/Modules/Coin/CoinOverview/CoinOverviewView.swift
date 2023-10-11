@@ -8,6 +8,7 @@ struct CoinOverviewView: View {
     let chartIndicatorRepository: IChartIndicatorsRepository
     let chartPointFetcher: IChartPointFetcher
 
+    @State private var hasAppeared = false
     @State private var chartIndicatorsShown = false
 
     var body: some View {
@@ -109,6 +110,9 @@ struct CoinOverviewView: View {
             }
         }
         .onAppear {
+            guard !hasAppeared else { return }
+            hasAppeared = true
+
             viewModel.sync()
         }
         .sheet(isPresented: $chartIndicatorsShown) {
