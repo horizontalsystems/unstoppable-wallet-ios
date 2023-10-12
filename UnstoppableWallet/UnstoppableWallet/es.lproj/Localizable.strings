@@ -12,7 +12,7 @@
 "button.paste" = "Pegar";
 "button.resend" = "Reenviar";
 "button.backup" = "Copia de seguridad";
-"button.restore" = "Restore";
+"button.restore" = "Restaurar";
 "button.copy" = "Copiar";
 "button.retry" = "Reintentar";
 "button.report" = "Reportar";
@@ -1109,7 +1109,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_app.backup_list.other.watch_account.title" = "Ver Monedero";
 "backup_app.backup_list.other.watchlist.title" = "Lista de Seguimiento";
 "backup_app.backup_list.other.contacts.title" = "Contactos";
-"backup_app.backup_list.other.blockchain_settings.title" = "Configuración de Blockchain";
+"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
 "backup_app.backup_list.other.app_settings.title" = "App Settings";
 "backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
@@ -1133,7 +1133,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
-"backup_app.restore_type.title" = "Restore";
+"backup_app.restore_type.title" = "Restaurar";
 
 "backup_app.restore.notice.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one)";
 "backup_app.restore.notice.merge" = "Reemplazar";
