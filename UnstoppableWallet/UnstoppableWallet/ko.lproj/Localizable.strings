@@ -1107,7 +1107,7 @@
 "backup_app.backup_list.other.watch_account.title" = "관찰 주소";
 "backup_app.backup_list.other.watchlist.title" = "Watchlist";
 "backup_app.backup_list.other.contacts.title" = "연락처";
-"backup_app.backup_list.other.blockchain_settings.title" = "블록 체인 설정";
+"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
 "backup_app.backup_list.other.app_settings.title" = "App Settings";
 "backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
