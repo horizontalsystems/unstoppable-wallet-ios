@@ -109,7 +109,6 @@ class MainViewController: ThemeTabBarController {
             return
         }
 
-        viewModel.onReleaseNotesShown()
         let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, presented: true, closeHandler: { [weak self] in
             self?.viewModel.handleNextAlert()
         })
