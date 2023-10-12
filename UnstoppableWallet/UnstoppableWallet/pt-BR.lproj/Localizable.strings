@@ -12,7 +12,7 @@
 "button.paste" = "Colar";
 "button.resend" = "Enviar novamente";
 "button.backup" = "Backup";
-"button.restore" = "Restore";
+"button.restore" = "Restaurar";
 "button.copy" = "Copiar";
 "button.retry" = "Tentar de Novo";
 "button.report" = "Reportar";
@@ -1034,7 +1034,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.base_currency.title" = "Moeda base";
 "settings.base_currency.other" = "Outros";
 "settings.base_currency.disclaimer" = "Aviso Legal";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third-party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Os dados da taxa de câmbio são fornecidos por um serviço de terceiros - Coingecko.com. \n\nO aplicativo de carteira %@ não garante que esses valores sejam sempre corretos e que correspondam aos dados do mercado. A chance de inconsistência é maior se você selecionar qualquer moeda base que não seja %@.";
 "settings.base_currency.disclaimer.set" = "Definir";
 
 // Settings -> Manage Wallet
@@ -1044,7 +1044,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "manage_wallets.search_placeholder" = "Nome, código ou endereço do contrato";
 "manage_wallets.contract_address" = "Endereço do Contrato";
 "manage_wallets.derivation_description" = "Existem 4 formatos de endereço que %@ carteiras podem usar para receber pagamentos recebidos:\n\n- BIP44 (mais antigo)\n- BIP49\n- BIP84 (recomendado)\n- BIP86 (mais recente)\n\nEnquanto a Carteira %@ suporta todos os 4, ele recomenda usar uma carteira %@ operando no formato BIP84.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends using a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Existem 2 formatos de endereço, Bitcoin Cash carteiras podem usar para receber pagamentos recebidos:\n\n- TYPE 0 (mais antigo)\n- TYPE 145 (mais recente)\n\nEnquanto a carteira %@ suporta ambos eles recomenda o uso de uma carteira Bitcoin Cash operando no formato TYPE 145.";
 
 // Settings -> Personal Support
 
@@ -1117,29 +1117,29 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
 "backup_app.backup.disclaimer.file.title" = "Backup to File";
-"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
-"backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+"backup_app.backup.disclaimer.file.description" = "Dispositivos de armazenamento, ou seja, discos rígidos, discos USB, armazenamento em smartphone, etc. são todos vulneráveis a perdas devido a danos físicos, roubo ou outras circunstâncias imprevistas.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "Eu entendo que o roubo ou dano de um dispositivo de backup resultará na perda de um backup de uma respectiva carteira.";
 
 "backup.disclaimer.cloud.title" = "Backup para o iCloud";
 "backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
 "backup.disclaimer.cloud.checkbox_label" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
 "backup.disclaimer.file.title" = "Backup to File";
-"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives, storage on smartphones, etc. are all vulnerable to loss due to physical damage, theft, or other unforeseen circumstances.";
-"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in the loss of a backup to a respective wallet.";
+"backup.disclaimer.file.description" = "Dispositivos de armazenamento, ou seja, discos rígidos, discos USB, armazenamento em smartphone, etc. são todos vulneráveis a perdas devido a danos físicos, roubo ou outras circunstâncias imprevistas.";
+"backup.disclaimer.file.checkbox_label" = "Eu entendo que o roubo ou dano de um dispositivo de backup resultará na perda de um backup de uma respectiva carteira.";
 "backup_app.backup.name.title" = "Nome do Backup";
 "backup_app.backup.name.description" = "Give it a name, folks! This backup file needs an identity. Make it memorable!";
 
 "backup_app.backup.password.title" = "Fazer Backup da Senha";
-"backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup_app.backup.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
+"backup_app.backup.password.highlighted_description" = "Esta senha é usada para criptografar o arquivo de backup da sua carteira. Ela não pode ser recuperada ou redefinida se for perdida ou esquecida.";
 
-"backup_app.restore_type.title" = "Restore";
+"backup_app.restore_type.title" = "Restaurar";
 
-"backup_app.restore.notice.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one)";
+"backup_app.restore.notice.description" = "Esta ação substituirá seus contatos de pagamento locais, bem como sua cópia do iCloud (se houver uma)";
 "backup_app.restore.notice.merge" = "Substituir";
 
 "backup.password.title" = "Fazer Backup da Senha";
-"backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
+"backup.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
 "backup.password.highlighted_description" = "This password is used to encrypt the backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
 // Settings -> Security
