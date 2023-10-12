@@ -1109,7 +1109,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
 "backup_app.backup_list.other.watchlist.title" = "Merkliste";
 "backup_app.backup_list.other.contacts.title" = "Kontakte";
-"backup_app.backup_list.other.blockchain_settings.title" = "Blockchain Einstellungen";
+"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
 "backup_app.backup_list.other.app_settings.title" = "App-Einstellungen";
 "backup_app.backup_list.other.app_settings.description" = "Sprache, Währung, Erscheinung ...";
 
