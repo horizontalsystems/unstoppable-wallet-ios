@@ -150,28 +150,32 @@ extension AppBackupProvider {
 
         accountManager.save(accounts: updated.map { $0.account })
 
-        updated.forEach { raw in
+        updated.forEach { (raw: RawWalletBackup) in
             switch raw.account.type {
             case .cex: ()
             default:
-                let wallets = raw.enabledWallets.map {
-                    if !$0.settings.isEmpty {
+                let wallets = raw.enabledWallets.compactMap { (wallet: WalletBackup.EnabledWallet) -> EnabledWallet? in
+                    guard let tokenQuery = TokenQuery(id: wallet.tokenQueryId),
+                        BlockchainType.supported.contains(tokenQuery.blockchainType) else {
+                        return nil
+                    }
+
+                    if !wallet.settings.isEmpty {
                         var restoreSettings = [RestoreSettingType: String]()
-                        $0.settings.forEach { key, value in
+                        wallet.settings.forEach { key, value in
                             if let key = RestoreSettingType(rawValue: key) {
                                 restoreSettings[key] = value
                             }
                         }
-                        if let tokenQuery = TokenQuery(id: $0.tokenQueryId) {
-                            restoreSettingsManager.save(settings: restoreSettings, account: raw.account, blockchainType: tokenQuery.blockchainType)
-                        }
+                        restoreSettingsManager.save(settings: restoreSettings, account: raw.account, blockchainType: tokenQuery.blockchainType)
                     }
+
                     return EnabledWallet(
-                            tokenQueryId: $0.tokenQueryId,
+                            tokenQueryId: wallet.tokenQueryId,
                             accountId: raw.account.id,
-                            coinName: $0.coinName,
-                            coinCode: $0.coinCode,
-                            tokenDecimals: $0.tokenDecimals
+                            coinName: wallet.coinName,
+                            coinCode: wallet.coinCode,
+                            tokenDecimals: wallet.tokenDecimals
                     )
                 }
                 walletManager.save(enabledWallets: wallets)
@@ -197,9 +201,11 @@ extension AppBackupProvider {
         if let currency = currencyKit.currencies.first(where: { $0.code == raw.settings.baseCurrency }) {
             currencyKit.baseCurrency = currency
         }
+
         themeManager.themeMode = raw.settings.mode
         launchScreenManager.showMarket = raw.settings.showMarketTab
         launchScreenManager.launchScreen = raw.settings.launchScreen
+        balancePrimaryValueManager.balancePrimaryValue = raw.settings.balancePrimaryValue
 
         balanceConversionManager.set(tokenQueryId: raw.settings.conversionTokenQueryId)
         balanceHiddenManager.set(balanceAutoHide: raw.settings.balanceAutoHide)

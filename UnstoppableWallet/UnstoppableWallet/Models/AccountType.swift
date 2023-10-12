@@ -41,9 +41,9 @@ enum AccountType {
         case let .evmPrivateKey(data):
             privateData = data
         case let .evmAddress(address):
-            privateData = address.raw
+            privateData = address.hex.hs.data
         case let .tronAddress(address):
-            privateData = address.raw
+            privateData = address.hex.hs.data
         case let .hdExtendedKey(key):
             privateData = key.serialized
         case let .cex(cexAccount):
@@ -259,13 +259,9 @@ extension AccountType {
                 return nil
             }
         case .evmAddress:
-            return AccountType.evmAddress(address: EvmKit.Address(raw: uniqueId))
+            return (try? EvmKit.Address(hex: string)).map { AccountType.evmAddress(address: $0) }
         case .tronAddress:
-            do {
-                return try AccountType.tronAddress(address: TronKit.Address(raw: uniqueId))
-            } catch {
-                return nil
-            }
+            return (try? TronKit.Address(address: string)).map { AccountType.tronAddress(address: $0) }
         case .cex:
             guard let cexAccount = CexAccount.decode(uniqueId: string) else {
                 return nil

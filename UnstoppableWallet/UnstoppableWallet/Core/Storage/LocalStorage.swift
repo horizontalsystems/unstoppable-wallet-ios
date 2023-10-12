@@ -103,7 +103,7 @@ extension LocalStorage {
 extension LocalStorage {
     func restore(backup: SettingsBackup) {
         lockTimeEnabled = backup.lockTimeEnabled
-        remoteContactsSync = backup.remoteContactsSync
+        remoteContactsSync = backup.remoteContactsSync ?? false
         indicatorsShown = backup.indicatorsShown
         backup.swapProviders.forEach { provider in
             let blockchainType = BlockchainType(uid: provider.blockchainTypeId)

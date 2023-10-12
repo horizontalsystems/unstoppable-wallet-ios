@@ -36,9 +36,9 @@ struct BackupDisclaimerView: View {
                     Button(action: { viewModel.namePushed = true }) {
                         Text("button.next".localized)
                     }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                        .disabled(!isOn)
                 }
+                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .disabled(!isOn)
             }
         }
         .navigationBarTitle(backupDisclaimer.title)
