@@ -1109,7 +1109,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup_app.backup_list.other.watch_account.title" = "Regarder les portefeuilles";
 "backup_app.backup_list.other.watchlist.title" = "Liste de suivi";
 "backup_app.backup_list.other.contacts.title" = "Contacts";
-"backup_app.backup_list.other.blockchain_settings.title" = "Paramètres de la Blockchain";
+"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
 "backup_app.backup_list.other.app_settings.title" = "Paramètres de l'application";
 "backup_app.backup_list.other.app_settings.description" = "Langue, Devise, Apparence ...";
 
