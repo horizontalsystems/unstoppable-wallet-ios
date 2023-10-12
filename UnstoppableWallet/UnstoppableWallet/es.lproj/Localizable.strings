@@ -36,7 +36,7 @@
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
 "alert.warning" = "Aviso";
-"alert.notice" = "Notice";
+"alert.notice" = "Aviso";
 "alert.error" = "Erreur";
 "alert.unknown_error" = "Error Desconocido";
 "alert.success_action" = "Listo";
@@ -100,11 +100,11 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Immediate";
-"auto_lock.minute1" = "1 minute";
-"auto_lock.minute5" = "5 minutes";
-"auto_lock.minute15" = "15 minutes";
-"auto_lock.minute30" = "30 minutes";
+"auto_lock.immediate" = "Inmediato";
+"auto_lock.minute1" = "1 minuto";
+"auto_lock.minute5" = "5 minutos";
+"auto_lock.minute15" = "15 minutos";
+"auto_lock.minute30" = "30 minutos";
 "auto_lock.hour1" = "1 hora";
 
 // Access Camera
@@ -140,22 +140,22 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore_type.title" = "Importar monedero";
 "restore_type.recovery.title" = "de Frase de Recuperación";
 "restore_type.cloud.title" = "desde iCloud";
-"restore_type.file.title" = "from Files";
+"restore_type.file.title" = "del archivo";
 "restore_type.cex.title" = "de Exchange Wallet";
 
 "restore_type.recovery.description" = "Importe utilizando la frase de recuperación o la clave privada.";
 "restore_type.cloud.description" = "Importar desde un archivo de copia de seguridad en su llavero.";
-"restore_type.file.description" = "Import a backup file from your local folder.";
-"restore_type.cex.description" = "Connect to a wallet on a centralized exchange.";
+"restore_type.file.description" = "Importar un archivo de copia de seguridad de su carpeta local.";
+"restore_type.cex.description" = "Conectar a una cartera en un intercambio centralizado.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Seleccionar copia de seguridad";
-"restore.cloud.description" = "Select the backup file that you want to restore.";
+"restore.cloud.description" = "Seleccione el archivo de copia de seguridad que desea restaurar.";
 "restore.cloud.empty" = "No se encontraron copias de seguridad.";
-"restore.cloud.wallets" = "Wallet backups";
+"restore.cloud.wallets" = "Copia de seguridad de la cartera";
 "restore.cloud.imported" = "Carteras importadas";
-"restore.cloud.app_backups" = "App backups";
+"restore.cloud.app_backups" = "Copias de seguridad de aplicaciones";
 
 "restore.cloud.password.title" = "Introduzca contraseña";
 "restore.cloud.password.placeholder" = "Copiar contraseña";
@@ -243,8 +243,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
-"backup_prompt.backup_required" = "Backup Required";
+"backup_prompt.backup_recovery_phrase" = "Backup del Monedero";
+"backup_prompt.backup_required" = "Se requiere una copia de seg";
 "backup_prompt.warning" = "Crear una copia de seguridad de la frase de recuperación y la contraseña asociada que le permitirá recuperar su cartera si su teléfono está perdido, robado, roto, etc.";
 "backup_prompt.backup" = "Copia de seguridad";
 "backup_prompt.backup_manual" = "Copia de seguridad manual";
@@ -261,11 +261,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup.cloud.name.description" = "Introduzca el nombre del archivo de copia de seguridad.";
 "backup.cloud.name.empty" = "¡El nombre de la copia de seguridad no puede estar vacío!";
 "backup.cloud.name.error.empty" = "El nombre de la copia de seguridad no debe estar vacío";
-"backup.cloud.name.error.already_exist" = "Backup name already exists!";
+"backup.cloud.name.error.already_exist" = "¡El nombre de la copia de seguridad ya existe!";
 "backup.cloud.name.placeholder" = "Nombre";
 
 "backup.cloud.password.title" = "Establecer contraseña";
-"backup.cloud.password.description" = "Set the unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number, and a special character.";
+"backup.cloud.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
 "backup.cloud.password.highlighted_description" = "¡No olvides esta contraseña! Es independiente de tu contraseña de iCloud de Apple, y no se puede recuperar o restablecer.";
 "backup.cloud.password.placeholder" = "Contraseña";
 "backup.cloud.password.confirm.placeholder" = "Confirmar";
@@ -308,7 +308,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.downloading_blocks" = "Descargando bloques";
 "balance.scanning_blocks" = "Bloques de escaneo";
 "balance.enhancing_transactions" = "Mejorar las transacciones";
-"wait_for_synchronization" = "Wait for synchronization";
+"wait_for_synchronization" = "Esperando sincronización";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
@@ -334,8 +334,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.locked.info.title" = "Timelock";
 "balance.token.locked.info.description" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
 "balance.token.processing" = "Procesando";
-"balance.token.processing.info.title" = "Processing amount";
-"balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they are confirmed, these tokens will be available for spending";
+"balance.token.processing.info.title" = "Detenido";
+"balance.token.processing.info.description" = "Transacciones con esta cantidad todavía sincronizadas. Y cuando se confirmen, estos tokens estarán disponibles para gastos";
 "balance.token.staked" = "Llevado";
 "balance.token.staked.info.title" = "Título tomado";
 "balance.token.staked.info.description" = "Texto de descripción tomada";
@@ -819,10 +819,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "coin_analytics.transaction_count" = "Número de transacciones";
 "coin_analytics.transaction_count_rank" = "Rango de conteo Tx";
-"coin_analytics.transaction_count_rank.description" = "Tokens are ranked by a number of transactions on a blockchain.";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with tokens over a 30-day period.";
+"coin_analytics.transaction_count_rank.description" = "Tokens clasificados por el número de transacciones en una cadena de bloques.";
+"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
-"coin_analytics.transaction_count.info3" = "Token's rank is based on the number of transactions within the token 30-day period.";
+"coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
 "coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
@@ -839,9 +839,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.project_tvl" = "Proyecto TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
 "coin_analytics.project_tvl.info_title" = "Proyecto TVL (Valor Total bloqueado)";
-"coin_analytics.project_tvl.info1" = "Total-value-locked (or Assets Under Management) in the project's smart contracts.";
+"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
 "coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank is based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
@@ -881,11 +881,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.overall_score.poor" = "Pobre";
 "coin_analytics.overall_score.cex_volume" = "El puntaje general se basa en el volumen diario promedio de las operaciones centralizadas en los últimos 7 días.";
 "coin_analytics.overall_score.dex_volume" = "El puntaje general se basa en el volumen diario promedio de las operaciones de los mercados descentralizados en los últimos 7 días.";
-"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total available liquidity on decentralized exchanges.";
+"coin_analytics.overall_score.dex_liquidity" = "La puntuación general se basa en la liquidez total disponible en los intercambios descentralizados.";
 "coin_analytics.overall_score.active_addresses" = "La puntuación general se basa en la media diaria de las direcciones activas en los últimos 7 días.";
 "coin_analytics.overall_score.project_tvl" = "La puntuación general se basa en el valor total bloqueado (activos bajo administración) en el proyecto representado por el token dado.";
 "coin_analytics.overall_score.transaction_count" = "La puntuación general se basa en el promedio diario de las transacciones durante los últimos 7 días.";
-"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding the respective token.";
+"coin_analytics.overall_score.holders" = "La puntuación general se basa en el número total de direcciones que mantienen sus respectivos token.";
 
 "coin_analytics.rank" = "Puesto";
 "coin_analytics.30_day_rank" = "Rango de 30 días";
@@ -1025,9 +1025,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.info_subtitle" = "app descentralizada";
 "settings.donate.description" = "¡Junto con tu apoyo, podemos hacer esta aplicación aún mejor!";
 "settings.donate.title" = "Donar";
-"settings.rate_us" = "Rate Us";
-"settings.tell_friends" = "Tell Friends";
-"settings.contact_us" = "Contact Us";
+"settings.rate_us" = "Califícanos";
+"settings.tell_friends" = "Recomendar a un amigo";
+"settings.contact_us" = "Contáctenos";
 
 // Settings -> Base Currency
 
@@ -1117,30 +1117,30 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
 "backup_app.backup.disclaimer.file.title" = "Backup to File";
-"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
-"backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+"backup_app.backup.disclaimer.file.description" = "Los dispositivos de almacenamiento, como los discos duros, los discos USB y el almacenamiento en smartphones, son todos vulnerables a pérdidas debido a daños físicos, robos u otras circunstancias imprevisibles.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de copia de seguridad resultará en la pérdida de una copia de seguridad a una cartera respectiva.";
 
 "backup.disclaimer.cloud.title" = "Copia de seguridad en iCloud";
 "backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
 "backup.disclaimer.cloud.checkbox_label" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
 "backup.disclaimer.file.title" = "Backup to File";
-"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives, storage on smartphones, etc. are all vulnerable to loss due to physical damage, theft, or other unforeseen circumstances.";
-"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in the loss of a backup to a respective wallet.";
+"backup.disclaimer.file.description" = "Los dispositivos de almacenamiento, como los discos duros, los discos USB y el almacenamiento en smartphones, son todos vulnerables a pérdidas debido a daños físicos, robos u otras circunstancias imprevisibles.";
+"backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de copia de seguridad resultará en la pérdida de una copia de seguridad a una cartera respectiva.";
 "backup_app.backup.name.title" = "Nombre de copia de seguridad";
 "backup_app.backup.name.description" = "Introduzca el nombre del archivo de copia de seguridad.";
 
 "backup_app.backup.password.title" = "Copiar contraseña";
-"backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup_app.backup.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
+"backup_app.backup.password.highlighted_description" = "Esta contraseña se utiliza para cifrar el archivo de copia de seguridad de su cartera. No se puede recuperar o reiniciar si se pierde u olvida.";
 
 "backup_app.restore_type.title" = "Restaurar";
 
-"backup_app.restore.notice.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one)";
+"backup_app.restore.notice.description" = "Esta acción sobrescribirá sus contactos de pago locales, así como su copia de iCloud (si hay una)";
 "backup_app.restore.notice.merge" = "Reemplazar";
 
 "backup.password.title" = "Copiar contraseña";
-"backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup.password.highlighted_description" = "This password is used to encrypt the backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
+"backup.password.highlighted_description" = "Esta contraseña se utiliza para cifrar el archivo de copia de seguridad de su cartera. No se puede recuperar o reiniciar si se pierde u olvida.";
 
 // Settings -> Security
 
@@ -1159,7 +1159,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Create Passcode
 
 "create_passcode.title" = "Create Passcode";
-"create_passcode.description" = "Your passcode will be used to unlock your wallet";
+"create_passcode.description" = "Su código servirá para abrir su monedero y enviar dinero";
 "create_passcode.description.biometry" = "Set a passcode to enable %@";
 "create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
 "create_passcode.confirm_passcode" = "Confirmar";
@@ -1206,8 +1206,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "unlock.title" = "Unlock";
 "unlock.passcode" = "Enter Passcode";
 "unlock.biometry_reason" = "Unlock wallet";
-"unlock.attempts_left" = "Attempts left: %@";
-"unlock.disabled_until" = "Disabled until: %@";
+"unlock.attempts_left" = "Intentos restantes: %@";
+"unlock.disabled_until" = "Inhabilitado hasta: %@";
 "unlock.random" = "Random";
 
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
@@ -1256,7 +1256,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
+"settings.contact.title" = "Contáctenos";
 "settings.contact.via_email" = "vía E-mail";
 "settings.contact.via_telegram" = "vía Telegram";
 
@@ -1474,7 +1474,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de %@ es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "El valor de la comisión seleccionada es demasiado bajo y será rechazado!";
 "ethereum_transaction.error.nonce_already_in_block" = "La transacción ya está en bloque!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee is not enough to replace the transaction";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Cuota no suficiente para reemplazar la transacción";
 "ethereum_transaction.error.transaction_underpriced" = "Cuota no suficiente para enviar la transacción";
 "ethereum_transaction.error.tips_higher_than_max_fee" = "La tarifa máxima no puede ser inferior a los consejos, ya que la tarifa máxima incluye los consejos.";
 "ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
@@ -1504,7 +1504,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
 "wallet_connect.paired_dapps.cant_disconnect" = "No se puede desconectar";
 "wallet_connect.paired_dapps.disconnect_all" = "Borrar todo";
-"wallet_connect.pending_requests.nonactive_footer" = "To open a request you must activate the desired wallet";
+"wallet_connect.pending_requests.nonactive_footer" = "Para abrir una solicitud debe activar la cartera deseada";
 
 // App Status
 
@@ -1522,7 +1522,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "status_info.title" = "Estado";
 "status_info.pending.title" = "Pendiente";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that the status of an individual transaction in %@ wallet interface is typically updated with a short delay.";
+"status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Las transacciones enviadas con valores de comisión recomendados o más altos, generalmente se procesan dentro de  minutos. Las transacciones enviadas con una tarifa baja pueden permanecer pendientes por unas pocas horas o incluso días, y hasta pueden ser rechazadas por completo. Además, tenga en cuenta que el estado de una transacción individual que se muestra en la interfaz de %@ wallet generalmente se actualiza con un breve retraso.";
 "status_info.processing.title" = "Procesando";
 "status_info.processing.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
 "status_info.completed.title" = "Finalizado";
@@ -1562,19 +1562,19 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "public_keys.title" = "Claves públicas";
 "public_keys.evm_address" = "Dirección EVM";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM-based blockchains.";
+"public_keys.evm_address.description" = "Permite el monitoreo de sólo lectura de carteras que poseen activos en Ethereum, Binance Smart Chain y otros blockchains basados en EVM.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO-based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "Permite el monitoreo de sólo lectura de carteras con cripto de Bitcoin y otros basados en UTXO (es decir, Litecoin, Bitcoin Cash, Dash, etc.).";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Claves privadas";
 "private_keys.evm_private_key" = "Clave Privada EVM";
-"private_keys.evm_private_key.description" = "Grants full control over EVM-based crypto i.e. Ethereum, Binance Smart Chain, etc within the respective wallet.";
+"private_keys.evm_private_key.description" = "Otorga un control total sobre criptomonedas basadas en Ethereum, Binance Smart Chain, etc dentro de cada monedero correspondiente.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "Otorga total control sobre los activos de la respectiva cartera.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within the respective wallet.";
+"private_keys.account_extended_private_key.description" = "Otorga control total sobre Bitcoin y otras criptomonedas basadas en UTXO, es decir, Litecoin, Bitcoin Cash, Dash, etc. dentro de su respectiva cartera.";
 
 // Manage Account -> EVM Address
 
@@ -1609,8 +1609,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "add_evm_sync_source.name" = "Nombre";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Auth Básica (opcional)";
-"add_evm_sync_source.warning.url_exists" = "RPC Source with this URL already exists";
-"add_evm_sync_source.error.invalid_url" = "The entered URL is invalid. Valid url must have one of the following schemes: https, wss";
+"add_evm_sync_source.warning.url_exists" = "La fuente RPC con esta url ya existe";
+"add_evm_sync_source.error.invalid_url" = "La url introducida no es válida. La url válida debe tener uno de los siguientes esquemas: http, https, ws, wss";
 
 // Send Settings
 
@@ -1639,7 +1639,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.gas_price.info" = "La tarifa por transacción en la red se mide en unidades de gas. El prrecio del gas es la cantidad que un usuario está dispuesto a gastar por unidad de gas. Cuando la red se encuentra ocupada, los precios del gas son altos y bajos cuando está inactiva. Un precio insuficiente del gas es a menudo una razón para que una transacción permanezca pendiente durante un período prolongado.";
 
 "fee_settings.base_fee" = "Tarifa Base";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called the base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.base_fee.info" = "El protocolo de red determina el precio base por gas para cada bloque, llamada tarifa base. Varía en función del nivel de utilización de la red de bloque a bloque. Puede aumentar o disminuir no más del 12,5% en el próximo bloque, haciendo que las comisiones sean más predecibles. El valor que se muestra aquí es la tarifa base del bloque actual.";
 "fee_settings.max_fee_rate" = "Tarifa máxima";
 "fee_settings.max_fee_rate.info" = "Este es el precio total máximo por gas que el usuario está dispuesto a pagar. Debe cubrir la tarifa base de la red y la tarifa máxima de prioridad. El valor mostrado aquí se sugiere basado en una estimación de la tasa de comisión base del próximo bloque más la tasa de prioridad máxima elegida por el usuario. La tarifa real pagada normalmente será más baja. Establecer esto más bajo que la tarifa base actual limitará la comisión pagada, pero resultará en tiempos de espera más largos para que la transacción sea confirmada, o incluso en una transacción estancada.";
 "fee_settings.tips" = "Tarifa Máxima de prioridad";
@@ -1775,7 +1775,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting the app or report the error to our support team.";
+"launch.failed_to_launch" = "Error al iniciar la aplicación debido a un error interno. Por favor, intenta reiniciar la aplicación o reporta el error a nuestro equipo de soporte.";
 "launch.failed_to_launch.report" = "Reportar";
 
 // Tron
@@ -1784,7 +1784,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tron.send.resources_consumed" = "Recursos consumidos";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "The estimated cost of sending a given transaction on the network. (Without excluding Energy, Bandwidth, and Activating Fee)";
+"tron.send.fee.info" = "El coste estimado del envío de una transacción en la red. (sin excluir Energía, Ancho de Banda y Tarifa Activa)";
 "tron.send.resources_consumed.info" = "El bandwidth es la unidad que mide el tamaño de los bytes de transacción almacenados en la base de datos de la cadena de bloques. Cuanto más grande sea la transacción, más recursos de ancho de banda se consumirán.\n\nEnerge es la unidad que mide la cantidad de computación requerida por la máquina virtual TRON para realizar operaciones específicas en la red TRON.\n\nDado que las transacciones de contratos inteligentes requieren recursos informáticos para ejecutarse, cada transacción de contrato inteligente debe pagar la tarifa de energy.";
 "tron.send.activation_fee.info" = "Transferir tokens TRX o TRC-10 a una dirección de cuenta inactiva activará la cuenta.";
 "tron.send.inactive_address" = "Esta dirección no está activa";
