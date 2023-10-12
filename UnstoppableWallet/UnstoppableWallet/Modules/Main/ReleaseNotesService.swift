@@ -12,16 +12,12 @@ class ReleaseNotesService {
     }
 
     var releaseNotesUrl: URL? {
-        let version = appVersionManager.newVersion?.releaseNotesVersion
+        let version = appVersionManager.checkVersionUpdate()?.releaseNotesVersion
 
         if let version {
             return URL(string: Self.releaseUrl + version)
         }
         return nil
-    }
-
-    func updateStoredVersion() {
-        appVersionManager.updateStoredVersion()
     }
 
     var lastVersionUrl: URL? {
