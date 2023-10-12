@@ -42,6 +42,7 @@ extension RestoreFileConfigurationViewModel {
         rawBackup
             .accounts
             .filter { !$0.account.watchAccount }
+            .sorted { wallet, wallet2 in wallet.account.name.lowercased() < wallet2.account.name.lowercased() }
             .map { item(account: $0.account) }
     }
 

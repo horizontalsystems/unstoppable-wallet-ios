@@ -119,6 +119,7 @@ extension BackupAppViewModel {
         accountManager
             .accounts
             .filter { $0.watchAccount == watch }
+            .sorted { account, account2 in account.name.lowercased() < account2.name.lowercased() }
     }
 
     private var accountIds: [String] {
@@ -201,7 +202,6 @@ extension BackupAppViewModel {
     }
 
     func validatePasswords() {
-        var buttonDisabled = false
         clearCautions()
 
         do {
@@ -245,7 +245,7 @@ extension BackupAppViewModel {
         }
         passwordButtonProcessing = true
 
-        let selectedIds = accountIds.filter { (selected[$0] ?? false) }
+        let selectedIds = accountIds.filter { (selected[$0] ?? false) } + accounts(watch: true).map { $0.id }
         Task {
             switch destination {
             case .none: ()

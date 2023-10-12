@@ -1109,7 +1109,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup_app.backup_list.other.watch_account.title" = "Watch Wallets";
 "backup_app.backup_list.other.watchlist.title" = "Watchlist";
 "backup_app.backup_list.other.contacts.title" = "Contacts";
-"backup_app.backup_list.other.blockchain_settings.title" = "Blockchain Settings";
+"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
 "backup_app.backup_list.other.app_settings.title" = "App Settings";
 "backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 

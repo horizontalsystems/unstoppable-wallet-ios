@@ -8,7 +8,7 @@ struct SettingsBackup: Codable {
     let btcModes: [BtcBlockchainManager.BtcRestoreModeBackup]
 
     let lockTimeEnabled: Bool
-    let remoteContactsSync: Bool
+    let remoteContactsSync: Bool?
     let swapProviders: [DefaultProvider]
     let chartIndicators: ChartIndicatorsRepository.BackupIndicators
     let indicatorsShown: Bool

@@ -24,7 +24,12 @@ extension FullBackup: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
-        wallets = (try? container.decode([RestoreCloudModule.RestoredBackup].self, forKey: .wallets)) ?? []
+        do {
+            wallets = (try container.decode([FailableDecodable<RestoreCloudModule.RestoredBackup>].self, forKey: .wallets))
+                .compactMap { $0.base }
+        } catch {
+            wallets = []
+        }
         watchlistIds = (try? container.decode([String].self, forKey: .watchlistIds)) ?? []
         contacts = try? container.decode(BackupCrypto.self, forKey: .contacts)
         settings = try container.decode(SettingsBackup.self, forKey: .settings)
@@ -41,5 +46,15 @@ extension FullBackup: Codable {
         try container.encode(settings, forKey: .settings)
         try container.encode(version, forKey: .version)
         try? container.encode(timestamp, forKey: .timestamp)
+    }
+}
+
+struct FailableDecodable<Base : Decodable> : Decodable {
+
+    let base: Base?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        base = try? container.decode(Base.self)
     }
 }
