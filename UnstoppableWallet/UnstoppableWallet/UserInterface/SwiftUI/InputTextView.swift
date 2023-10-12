@@ -75,7 +75,7 @@ struct InputTextView: View {
 }
 
 extension InputTextView {
-    @ViewBuilder func secure(_ secured: Binding<Bool>) -> some View {
+    func secure(_ secured: Binding<Bool>) -> some View {
         var selfView = self
         selfView._secured = secured
 

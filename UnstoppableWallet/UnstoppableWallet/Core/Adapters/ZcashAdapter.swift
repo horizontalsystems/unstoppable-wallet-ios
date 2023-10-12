@@ -606,7 +606,12 @@ extension ZcashAdapter: IAdapter {
     }
 
     var statusInfo: [(String, Any)] {
-        []
+        [
+            ("Last Block Info", lastBlockHeight),
+            ("Sync State", state.description),
+            ("Birthday Height", birthday.description),
+            ("Init Mode", initMode.description),
+        ]
     }
 
     var debugInfo: String {
@@ -799,8 +804,6 @@ enum ZCashAdapterState: Equatable {
     case syncing(progress: Int?, lastBlockDate: Date?)
     case downloadingSapling(progress: Int)
     case downloadingBlocks(progress: Float, lastBlock: Int)
-    case scanningBlocks(number: Int, lastBlock: Int)
-    case enhancingTransactions(number: Int, count: Int)
     case notSynced(error: Error)
 
     public static func == (lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
@@ -811,8 +814,6 @@ enum ZCashAdapterState: Equatable {
         case let (.syncing(lProgress, lLastBlockDate), .syncing(rProgress, rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
         case let (.downloadingSapling(lProgress), .downloadingSapling(rProgress)): return lProgress == rProgress
         case let (.downloadingBlocks(lNumber, lLast), .downloadingBlocks(rNumber, rLast)): return lNumber == rNumber && lLast == rLast
-        case let (.scanningBlocks(lNumber, lLast), .scanningBlocks(rNumber, rLast)): return lNumber == rNumber && lLast == rLast
-        case let (.enhancingTransactions(lNumber, lCount), .enhancingTransactions(rNumber, rCount)): return lNumber == rNumber && lCount == rCount
         case (.notSynced, .notSynced): return true
         default: return false
         }
@@ -829,12 +830,21 @@ enum ZCashAdapterState: Equatable {
         case let .downloadingBlocks(progress, _):
             let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), showSign: false)
             return .customSyncing(main: "balance.downloading_blocks".localized, secondary: percentValue, progress: Int(progress * 100))
-        case let .scanningBlocks(number, lastBlock):
-            return .customSyncing(main: "Scanning Blocks", secondary: "\(number)/\(lastBlock)", progress: nil)
-        case let .enhancingTransactions(number, count):
-            let progress: String? = count == 0 ? nil : "\(number)/\(count)"
-            return .customSyncing(main: "Enhancing Transactions", secondary: progress, progress: nil)
         case let .notSynced(error): return .notSynced(error: error)
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .idle: return "Idle"
+        case .preparing: return "Preparing..."
+        case .synced: return "Synced"
+        case let .syncing(progress, lastDate): return "Syncing: progress = \(progress?.description ?? "N/A"), lastBlockDate: \(lastDate?.description ?? "N/A")"
+        case let .downloadingSapling(progress): return "downloadingSapling: progress = \(progress)"
+        case let .downloadingBlocks(progress, _):
+            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), showSign: false)
+            return "Downloading Blocks: \(percentValue?.description ?? "N/A") : \(Int(progress * 100))"
+        case let .notSynced(error): return "Not synced \(error.localizedDescription)"
         }
     }
 
@@ -845,24 +855,20 @@ enum ZCashAdapterState: Equatable {
         }
     }
 
-    var isScanning: Bool {
-        switch self {
-        case .scanningBlocks: return true
-        default: return false
-        }
-    }
-
     var isPrepairing: Bool {
         switch self {
         case .preparing: return true
         default: return false
         }
     }
+}
 
-    var lastProcessedBlockHeight: Int? {
+extension WalletInitMode {
+    var description: String {
         switch self {
-        case let .downloadingBlocks(_, last), let .scanningBlocks(_, last): return last
-        default: return nil
+        case .newWallet: return "New Wallet"
+        case .existingWallet: return "Existing Wallet"
+        case .restoreWallet: return "Restored Wallet"
         }
     }
 }

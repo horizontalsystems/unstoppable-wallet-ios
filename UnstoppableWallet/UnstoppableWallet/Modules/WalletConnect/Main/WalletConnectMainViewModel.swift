@@ -77,12 +77,7 @@ class WalletConnectMainViewModel {
         reconnectButtonRelay.accept(stateForReconnectButton ? (connectionState == .disconnected ? .enabled : .hidden) : .hidden)
         closeVisibleRelay.accept(state == .ready)
 
-        var address: String?
-        var network: String?
-        var networkEditable = false
-        var blockchains: [BlockchainViewItem]?
-
-        blockchains = allowedBlockchains
+        let blockchains = allowedBlockchains
                 .map { item in
                     BlockchainViewItem(
                             chainId: item.chainId,
@@ -96,9 +91,9 @@ class WalletConnectMainViewModel {
                 dAppMeta: service.appMetaItem.map { dAppMetaViewItem(appMetaItem: $0) },
                 status: status(connectionState: connectionState),
                 activeAccountName: service.activeAccountName,
-                address: address,
-                network: network,
-                networkEditable: networkEditable,
+                address: nil,
+                network: nil,
+                networkEditable: false,
                 blockchains: blockchains,
                 hint: service.hint
         )
