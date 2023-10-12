@@ -36,7 +36,7 @@
 "alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
 "alert.warning" = "Uyarı";
-"alert.notice" = "Notice";
+"alert.notice" = "Bildirim";
 "alert.error" = "Hata";
 "alert.unknown_error" = "Bilinmeyen Hata";
 "alert.success_action" = "Bitti";
@@ -100,11 +100,11 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Immediate";
-"auto_lock.minute1" = "1 minute";
-"auto_lock.minute5" = "5 minutes";
-"auto_lock.minute15" = "15 minutes";
-"auto_lock.minute30" = "30 minutes";
+"auto_lock.immediate" = "Hemen";
+"auto_lock.minute1" = "1 dakika";
+"auto_lock.minute5" = "5 dakika";
+"auto_lock.minute15" = "15 dakika";
+"auto_lock.minute30" = "30 dakika";
 "auto_lock.hour1" = "1 saat";
 
 // Access Camera
@@ -140,12 +140,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "restore_type.title" = "Cuzdan Yükle";
 "restore_type.recovery.title" = "Kurtarma İfadesinden";
 "restore_type.cloud.title" = "iCloud'dan";
-"restore_type.file.title" = "from Files";
+"restore_type.file.title" = "Dosyadan";
 "restore_type.cex.title" = "Exchange Wallet'tan";
 
 "restore_type.recovery.description" = "Kurtarma ifadesini veya özel anahtarı kullanarak içe aktarın.";
 "restore_type.cloud.description" = "Anahtar zincirinizdeki bir yedek dosyadan içe aktarın.";
-"restore_type.file.description" = "Import a backup file from your local folder.";
+"restore_type.file.description" = "Yerel klasörünüzden bir yedek dosyası içe aktarın.";
 "restore_type.cex.description" = "Merkezi borsada bir cüzdana bağlanın.";
 
 // Restore Cloud
@@ -153,9 +153,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "restore.cloud.title" = "Yedekleme Seç";
 "restore.cloud.description" = "Geri yüklemek istediğiniz yedekleme dosyasını seçin";
 "restore.cloud.empty" = "Yedek bulunamadı.";
-"restore.cloud.wallets" = "Wallet backups";
+"restore.cloud.wallets" = "Cüzdan Yedekleri";
 "restore.cloud.imported" = "Ithal cüzdanlar";
-"restore.cloud.app_backups" = "App backups";
+"restore.cloud.app_backups" = "Uygulama Yedekleri";
 
 "restore.cloud.password.title" = "Parolanı Gir";
 "restore.cloud.password.placeholder" = "Yedek Şifre";
@@ -303,12 +303,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
 "balance.searching" = "İşlemler aranıyor ...";
-"balance.stopped" = "Stopped";
+"balance.stopped" = "Durduruldu";
 "balance.downloading_sapling" = "Sapling indiriliyor... %d%%";
 "balance.downloading_blocks" = "Blokları İndirme";
 "balance.scanning_blocks" = "Tarama Blokları";
 "balance.enhancing_transactions" = "İşlemleri Geliştirme";
-"wait_for_synchronization" = "Wait for synchronization";
+"wait_for_synchronization" = "Senkronizasyonu bekleyin";
 
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
@@ -334,8 +334,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
 "balance.token.processing" = "İşleniyor";
-"balance.token.processing.info.title" = "Processing amount";
-"balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they are confirmed, these tokens will be available for spending";
+"balance.token.processing.info.title" = "İşlem Sayısı";
+"balance.token.processing.info.description" = "Bu tutardaki işlemler hâlâ senkronize ediliyor. Ve onaylandığında, bu tokenler harcama için kullanılabilir";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
@@ -740,7 +740,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_overview.roi.year1" = "1 Year";
 
 "coin_overview.overview" = "Overview";
-"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
+"coin_overview.description_warning" = "Bu, verilen kripto para birimi için sağlanan referans materyale dayanarak yapay zeka tarafından oluşturulmuş bir açıklamadır. Hatalar içerebilir.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Coin Types";
@@ -1014,10 +1014,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.manage_accounts" = "Cüzdanları yönet";
 "settings.blockchain_settings" = "Blockchain Ayarları";
-"settings.backup_manager" = "Backup Manager";
+"settings.backup_manager" = "Yedekleme yöneticisi";
 "settings.security" = "Güvenlik";
 "settings.experimental_features" = "Deneysel";
-"settings.personal_support" = "Personal Support";
+"settings.personal_support" = "Kişisel Destek
+
+
+
+";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.faq" = "FAQ";
@@ -1052,8 +1056,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.personal_support.telegram_username.placeholder" = "@username";
 "settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
 "settings.personal_support.request" = "İstek";
-"settings.personal_support.requested" = "Requested";
-"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.requested" = "Talep Edildi";
+"settings.personal_support.failed" = "Talep Başarısız oldu";
 "settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
 "settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
 "settings.personal_support.requested.open_telegram" = "Abrir Telegram";
@@ -1092,38 +1096,38 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Backup Manager";
-"backup_app.backup_manager.restore" = "Restore Backup";
-"backup_app.backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.title" = "Yedekleme yöneticisi";
+"backup_app.backup_manager.restore" = "Yedeği Geri Yükle";
+"backup_app.backup_manager.create" = "Yeni Yedek Oluştur";
 
-"backup_app.backup_type.title" = "Save Backup";
-"backup_app.backup_type.cloud" = "to iCloud";
-"backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
-"backup_app.backup_type.file" = "to Files";
-"backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
+"backup_app.backup_type.title" = "Yedeği kaydet";
+"backup_app.backup_type.cloud" = "iCloud'a";
+"backup_app.backup_type.cloud.description" = "Anahtar zincirinizde bir yedek kopya dosyasını kaydetme.";
+"backup_app.backup_type.file" = "Dosyalara";
+"backup_app.backup_type.file.description" = "Bir yedek kopya dosyasını yerel klasörünüze kaydetme.";
 
-"backup_app.backup_list.title" = "Backup File";
-"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.title" = "Yedek Dosyası";
+"backup_app.backup_list.description.restore" = "Yedek dosyasındaki içeriklerin listesi.";
 "backup_app.backup_list.header.wallets" = "Cüzdanlar";
 "backup_app.backup_list.header.other" = "Diğer";
 "backup_app.backup_list.other.watch_account.title" = "Cüzdan İzle";
 "backup_app.backup_list.other.watchlist.title" = "İzleme Listesi";
 "backup_app.backup_list.other.contacts.title" = "Kişiler";
-"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
-"backup_app.backup_list.other.app_settings.title" = "App Settings";
-"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_app.backup_list.other.blockchain_settings.title" = "Özel RPC";
+"backup_app.backup_list.other.app_settings.title" = "Uygulama Ayarları";
+"backup_app.backup_list.other.app_settings.description" = "Dil, Para Birimi, Görünüm ...";
 
 "backup_app.backup.disclaimer.cloud.title" = "iCloud'a yedekle";
-"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud, Apple tarafından sağlanan bir bulut depolama hizmetidir. Yedek verilerinizin Apple'ın sunucularında saklanacağını bilmek önemlidir.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "iCloud'uma erişimi kaybetmenin, ilgili cüzdanın yedeğine erişimi kaybetmeyle sonuçlanacağını anlıyorum.";
-"backup_app.backup.disclaimer.file.title" = "Backup to File";
-"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup_app.backup.disclaimer.file.title" = "Dosyaya yedekle";
+"backup_app.backup.disclaimer.file.description" = "Depolama cihazları, yani sabit sürücüler, USB sürücüler , akıllı telefondaki depolama vb. fiziksel hasar, hırsızlık veya diğer öngörülemeyen durumlar nedeniyle kayba karşı savunmasızdır.";
 "backup_app.backup.disclaimer.file.checkbox_label" = "Bir yedekleme cihazının çalınmasının veya hasar görmesinin, ilgili cüzdanın yedeğinin kaybolmasına neden olacağını anlıyorum.";
 
 "backup.disclaimer.cloud.title" = "iCloud'a yedekle";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.description" = "iCloud, Apple tarafından sağlanan bir bulut depolama hizmetidir. Yedek verilerinizin Apple'ın sunucularında saklanacağını bilmek önemlidir.";
 "backup.disclaimer.cloud.checkbox_label" = "iCloud'uma erişimi kaybetmenin, ilgili cüzdanın yedeğine erişimi kaybetmeyle sonuçlanacağını anlıyorum.";
-"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.title" = "Dosyaya yedekle";
 "backup.disclaimer.file.description" = "Depolama cihazları, yani sabit sürücüler, USB sürücüler , akıllı telefondaki depolama vb. fiziksel hasar, hırsızlık veya diğer öngörülemeyen durumlar nedeniyle kayba karşı savunmasızdır.";
 "backup.disclaimer.file.checkbox_label" = "Bir yedekleme cihazının çalınmasının veya hasar görmesinin, ilgili cüzdanın yedeğinin kaybolmasına neden olacağını anlıyorum.";
 "backup_app.backup.name.title" = "Yedek Adı";
@@ -1145,70 +1149,70 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> Security
 
 "settings_security.title" = "Güvenlik";
-"settings_security.enable_passcode" = "Enable Passcode";
-"settings_security.edit_passcode" = "Edit Passcode";
-"settings_security.disable_passcode" = "Disable Passcode";
-"settings_security.auto_lock" = "Auto-Lock";
-"settings_security.balance_auto_hide" = "Balance Auto Hide";
-"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
-"settings_security.enable_duress_mode" = "Set Duress Mode";
-"settings_security.edit_duress_passcode" = "Edit Duress Passcode";
-"settings_security.disable_duress_mode" = "Disable Duress Mode";
-"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
+"settings_security.enable_passcode" = "Giriş kodunu etkinleştir";
+"settings_security.edit_passcode" = "Kod Değiştir";
+"settings_security.disable_passcode" = "Şifre Kodunu Devre Dışı Bırak";
+"settings_security.auto_lock" = "Otomatik kilit";
+"settings_security.balance_auto_hide" = "Denge Otomatik Gizleme";
+"settings_security.balance_auto_hide.description" = "Uygulama her açıldığında, önceki tercihlere bakılmaksızın bakiyeyi otomatik olarak gizler.";
+"settings_security.enable_duress_mode" = "Baskı Modunu Ayarla";
+"settings_security.edit_duress_passcode" = "Duress Şifresini Düzenle";
+"settings_security.disable_duress_mode" = "Baskı Modunu Devre Dışı Bırak";
+"settings_security.duress_mode.description" = "Seçilen cüzdanları zorlama altında güvende tutmak için tasarlanmış özel bir mod.";
 
 // Create Passcode
 
-"create_passcode.title" = "Create Passcode";
-"create_passcode.description" = "Your passcode will be used to unlock your wallet";
-"create_passcode.description.biometry" = "Set a passcode to enable %@";
-"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.title" = "Şifre Kodu Oluştur";
+"create_passcode.description" = "Şifre, programı açmak ve para göndermek için kullanılacak";
+"create_passcode.description.biometry" = "%@ etkinleştirmek için bir şifre kodu ayarlayın";
+"create_passcode.description.duress_mode" = "Duress Modunu etkinleştirmek için bir şifre kodu ayarlayın";
 "create_passcode.confirm_passcode" = "Onayla";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Duress Mode";
-"enable_duress_mode.intro.description" = "This mode allows users to set up multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
-"enable_duress_mode.intro.notes" = "Notes";
-"enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
-"enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
-"enable_duress_mode.intro.passcode_disabling.description" = "Disabling the passcode in the main mode will automatically reset the Duress Mode.";
-"enable_duress_mode.intro.passcode_change" = "Passcode Change";
-"enable_duress_mode.intro.passcode_change.description" = "Changing the passcode in the Duress Mode will also change the current passcode code for that mode.";
+"enable_duress_mode.intro.title" = "Duress Modu";
+"enable_duress_mode.intro.description" = "Bu mod, kullanıcıların sadece belirtilen cüzdanları gösteren istenen şifre kodlarıyla birden fazla uygulama kilidini ayarlamalarına olanak tanır. Seçilen cüzdanları zorlama veya tehditler altında güvende tutmak için tasarlanmıştır.";
+"enable_duress_mode.intro.notes" = "Notlar";
+"enable_duress_mode.intro.biometrics.description" = "%@ özelliği Duress Modunu kilidini açmak için çalışacaktır. Kolaylık için %@ özelliğini devre dışı bırakabilirsiniz.";
+"enable_duress_mode.intro.passcode_disabling" = "Şifre Kodu Devre Dışı Bırakma";
+"enable_duress_mode.intro.passcode_disabling.description" = "Ana modda şifre kodunu devre dışı bırakmak, Duress Modunu otomatik olarak sıfırlar.";
+"enable_duress_mode.intro.passcode_change" = "Şifre Kodu Değiştirme";
+"enable_duress_mode.intro.passcode_change.description" = "Duress Modunda şifre kodunu değiştirmek, o mod için mevcut şifre kodunu da değiştirir.";
 
-"enable_duress_mode.select.title" = "Select Wallets";
-"enable_duress_mode.select.description" = "Select the wallets that will be displayed in Duress Mode.";
+"enable_duress_mode.select.title" = "Cüzdanları Seçin";
+"enable_duress_mode.select.description" = "Duress Modunda gösterilecek cüzdanları seçin.";
 "enable_duress_mode.select.wallets" = "Cüzdanlar";
 "enable_duress_mode.select.watch_wallets" = "Cüzdan İzle";
 
-"enable_duress_mode.passcode.title" = "Duress Passcode";
-"enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
+"enable_duress_mode.passcode.title" = "Duress Şifre Kodu";
+"enable_duress_mode.passcode.description" = "Duress Modu için bir şifre kodu ayarlayın";
 "enable_duress_mode.passcode.confirm" = "Onayla";
 
 // Edit Passcode
 
-"edit_passcode.title" = "Edit Passcode";
-"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.title" = "Kod Değiştir";
+"edit_passcode.enter_new_passcode" = "Yeni Şifreyi Girin";
 "edit_passcode.confirm_new_passcode" = "Onayla";
 
 // Edit Duress Passcode
 
-"edit_duress_passcode.title" = "Edit Duress Passcode";
-"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.title" = "Duress Şifresini Düzenle";
+"edit_duress_passcode.enter_new_passcode" = "Duress Modu için yeni şifreyi girin";
 "edit_duress_passcode.confirm_new_passcode" = "Onayla";
 
 // Set Passcode
 
-"set_passcode.invalid_confirmation" = "Invalid confirmation";
-"set_passcode.already_used" = "This passcode is already being used";
+"set_passcode.invalid_confirmation" = "Geçersiz onay kodu";
+"set_passcode.already_used" = "Bu şifre zaten kullanılıyor";
 
 // Unlock
 
-"unlock.title" = "Unlock";
-"unlock.passcode" = "Enter Passcode";
-"unlock.biometry_reason" = "Unlock wallet";
+"unlock.title" = "Kilidi Aç";
+"unlock.passcode" = "Şifre Girin";
+"unlock.biometry_reason" = "Cüzdanı aç";
 "unlock.attempts_left" = "%@ deneme kaldı";
 "unlock.disabled_until" = "Engellendi: %@";
-"unlock.random" = "Random";
+"unlock.random" = "Rastgele";
 
 "security_settings.delete_alert_button" = "Cihazdan sil";
 
@@ -1756,7 +1760,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info2.title" = "Chart Indicators";
 "subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info3.title" = "Personal Support";
+"subscription_info.info3.title" = "Kişisel Destek
+
+
+
+";
 "subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.get_premium" = "Get Premium";
 "subscription_info.already_have" = "I already have Premium";
