@@ -60,7 +60,7 @@ class RestoreCloudService {
         }
 
         self.fullBackupItems = items.sorted { (item1: Item, item2: Item) in
-            if item1.source.timestamp == nil, item2.source == nil {
+            if item1.source.timestamp == nil, item2.source.timestamp == nil {
                 return item1.name > item2.name
             }
             return (item1.source.timestamp ?? 0) > (item2.source.timestamp ?? 0)

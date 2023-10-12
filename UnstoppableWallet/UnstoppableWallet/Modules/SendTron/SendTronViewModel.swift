@@ -119,7 +119,6 @@ extension SendTronService.AddressError: LocalizedError {
     var errorDescription: String? {
         switch self {
             case .ownAddress: return "send.address_error.own_address".localized
-            default: return "\(self)"
         }
     }
 
