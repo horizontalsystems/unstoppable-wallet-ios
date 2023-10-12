@@ -12,6 +12,7 @@
 "button.paste" = "Colar";
 "button.resend" = "Enviar novamente";
 "button.backup" = "Backup";
+"button.restore" = "Restaurar";
 "button.copy" = "Copiar";
 "button.retry" = "Tentar de Novo";
 "button.report" = "Reportar";
@@ -35,9 +36,11 @@
 "alert.wrong_amount" = "Quantia Errada";
 "alert.no_fee" = "Taxa Errada";
 "alert.warning" = "Aviso";
+"alert.notice" = "Aviso";
 "alert.error" = "Erro";
 "alert.unknown_error" = "Erro Desconhecido";
 "alert.success_action" = "Concluído";
+"alert.restored" = "Restaurado";
 "alert.success" = "Sucesso or Completado";
 
 "alert.added_to_watchlist" = "Adicionado à Lista";
@@ -46,7 +49,6 @@
 "alert.removed_from_wallet" = "Removido da Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copiado";
 "alert.created" = "Criado";
 "alert.imported" = "Importado";
 "alert.wallet_added" = "Carteira Adicionada";
@@ -95,6 +97,16 @@
 
 "selector.any" = "Qualquer";
 
+"face_id" = "Face ID";
+"touch_id" = "Touch ID";
+
+"auto_lock.immediate" = "Imediato";
+"auto_lock.minute1" = "1 minuto";
+"auto_lock.minute5" = "5 Minutos";
+"auto_lock.minute15" = "15 Minutos";
+"auto_lock.minute30" = "30 Minutos";
+"auto_lock.hour1" = "1 hora";
+
 // Access Camera
 
 "access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.
@@ -126,21 +138,24 @@ Go to Settings - > %@ and allow access to the camera.";
 // Restore Type
 
 "restore_type.title" = "Importar carteira";
-
 "restore_type.recovery.title" = "da Frase de Recuperação";
 "restore_type.cloud.title" = "do iCloud";
+"restore_type.file.title" = "de Arquivos";
 "restore_type.cex.title" = "da Exchange Wallet";
 
 "restore_type.recovery.description" = "Import like a pro! Recovery phrase or private key, you choose. It's your call, folks!";
 "restore_type.cloud.description" = "Import straight from your keychain, folks. It's like having the keys to the kingdom right at your fingertips!";
-"restore_type.cex.description" = "Let's make a connection, folks! Connect to that wallet on the centralized exchange and get ready to win big!";
+"restore_type.file.description" = "Importar um arquivo de backup da sua pasta local.";
+"restore_type.cex.description" = "Conecte a uma carteira em uma troca centralizada.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Selecionar Backup";
-"restore.cloud.description" = "Time to choose, folks! Pick the backup wallet you want to bring back. It's all about making the right choice!";
+"restore.cloud.description" = "Selecione o arquivo de backup que você deseja restaurar.";
 "restore.cloud.empty" = "Can you believe it, folks? No backups found. It's a clean slate, a fresh start!";
+"restore.cloud.wallets" = "Backups da Carteira";
 "restore.cloud.imported" = "Carteiras importadas";
+"restore.cloud.app_backups" = "Backups do Aplicativo";
 
 "restore.cloud.password.title" = "Digite a senha";
 "restore.cloud.password.placeholder" = "Fazer Backup da Senha";
@@ -160,7 +175,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.binance.connecting" = "Conectando...";
 "restore.binance.get_api_keys" = "Obter chaves API";
 "restore.binance.failed_to_connect" = "Falha ao conectar sua chave de API";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.invalid_qr_code" = "QR Code Inválido";
 
 // Coin Settings
 
@@ -226,13 +241,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup_verify_passphrase.description" = "Insira a senha";
 "backup_verify_passphrase.incorrect_passphrase" = "Senha incorreta";
 
-// Backup Required
-
-"backup_required.title" = "Backup necessário";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Manual";
+"backup_prompt.backup_recovery_phrase" = "Carteira de Backup";
+"backup_prompt.backup_required" = "Backup necessário";
 "backup_prompt.warning" = "Listen up, folks. You've got to create a backup of that recovery phrase and the password that goes with it. This is your lifeline, in case your phone decides to go rogue – lost, stolen, broken, you name it. Protect your assets, it's the smart play!";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.backup_manual" = "Backup Manual";
@@ -243,18 +255,17 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "backup.cloud.title" = "Backup para o iCloud";
 "backup.cloud.description" = "Let's get this straight, folks. iCloud storage, it's from Apple, okay? But here's the deal: when you use it, your data, it's not hanging out on your own gadgets. Nope, it's on Apple's servers. So, you're putting your trust, your data's security, in the hands of a third-party service. That's the real story here.";
-
 "backup.cloud.terms.item.1" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
 
 "backup.cloud.name.title" = "Nome do Backup";
 "backup.cloud.name.description" = "Give it a name, folks! This backup file needs an identity. Make it memorable!";
 "backup.cloud.name.empty" = "Whoops, folks! You can't leave that backup name hanging empty. Fill it up with something good!";
 "backup.cloud.name.error.empty" = "Remember, folks, that backup name, it can't be an empty slate. Give it some character!";
-"backup.cloud.name.error.already_exist" = "Well, folks, looks like you're not the only one with that backup name. It's already in the club!";
+"backup.cloud.name.error.already_exist" = "O nome do backup já existe!";
 "backup.cloud.name.placeholder" = "Nome";
 
 "backup.cloud.password.title" = "Definir Senha";
-"backup.cloud.password.description" = "Here's the deal, folks: You've got to set an unlock password for your backup. It's gotta be strong, okay? We're talking at least 8 symbols, including one lowercase letter, one uppercase letter, a number, and a special character. It's your vault's first line of defense!";
+"backup.cloud.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
 "backup.cloud.password.highlighted_description" = "Não esqueça esta senha! Ela é separada da sua senha do iCloud da Apple e não pode ser recuperada ou redefinida.";
 "backup.cloud.password.placeholder" = "Senha";
 "backup.cloud.password.confirm.placeholder" = "Confirmar";
@@ -270,9 +281,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup.cloud.cant_create_file" = "Não é possível salvar o arquivo no iCloud";
 "backup.cloud.cant_delete_file" = "Não é possível excluir do iCloud";
 "backup.cloud.no_access.title" = "Acessar o iCloud";
-"backup.cloud.no_access.title" = "Acessar o iCloud";
 "backup.cloud.no_access.description" = "Para criar um backup, você precisa fornecer acesso ao armazenamento iCloud.";
-
 
 // Errors
 
@@ -294,10 +303,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Procurando transações...";
+"balance.stopped" = "Parado";
 "balance.downloading_sapling" = "Baixando prévias.. %d%%";
 "balance.downloading_blocks" = "Baixando Blocos";
 "balance.scanning_blocks" = "Verificando Blocos";
 "balance.enhancing_transactions" = "Aprimorando Transações";
+"wait_for_synchronization" = "Aguarde a sincronização";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
@@ -322,6 +333,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.locked" = "Bloqueado";
 "balance.token.locked.info.title" = "TravaTempo";
 "balance.token.locked.info.description" = "O remetente enviou esses fundos com um fechamento de gastos que expirará na data mostrada. \n\nNão se preocupe, o Bitcoin recebido já é seu, mas até que o período de bloqueio expire, você não pode gastá-los na rede Bitcoin.";
+"balance.token.processing" = "Processando";
+"balance.token.processing.info.title" = "Processando quantia";
+"balance.token.processing.info.description" = "As transações com esse valor ainda estão sendo sincronizadas. E quando forem confirmadas, esses tokens estarão disponíveis para gastar";
 "balance.token.staked" = "Investido";
 "balance.token.staked.info.title" = "Título Implantado";
 "balance.token.staked.info.description" = "Texto com Descrição Implantada";
@@ -402,7 +416,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.hodler_locktime_off" = "Desligado";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
 "send.fee_info.title" = "Taxa de tarifa";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são mais altas quando muitas transações ocorrem na rede.\n\nA carteira %@ estima a taxa com base na atividade atual do blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período de tempo razoável. \n\nA taxa recomendada mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medido em bytes.\n\nOs usuários podem usar os controles fornecidos para aumentar ou diminuir o valor da taxa. A alteração na taxa altera a taxa total da transação que o usuário pagará.\n\nDefinir uma taxa abaixo do valor recomendado pode fazer com que uma transação seja mantida como pendente por horas ou rejeitada. Quanto menor o valor, mais tempo levará para a transação ser confirmada. Para transações onde a prioridade é importante, recomendamos definir uma taxa de comissão mais elevada.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
 "send.transaction_inputs_outputs_info.description" = "A maioria das transações em Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira %@ implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
@@ -542,7 +556,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.confirmation.maximum_sent" = "Gastos máximos";
 
 "swap.dex_info.description" = "Este serviço de troca é fornecido por %@, um protocolo descentralizado de troca de tokens construído na blockchain %@. \n\n%@ É totalmente automatizado e gerenciado por contratos inteligentes que facilitam a troca de tokens de uma forma confiável sem qualquer meio de trapaça.";
-
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Preço";
 "swap.dex_info.content_allowance" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";
@@ -726,8 +739,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_overview.roi.day200" = "6 Meses";
 "coin_overview.roi.year1" = "1 Ano";
 
-"coin_overview.category" = "Categoria";
-
+"coin_overview.overview" = "Visão geral";
+"coin_overview.description_warning" = "Esta é uma descrição gerada por IA com base no material de referência fornecido para a criptomoeda em questão. Pode conter erros.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Tipos de moeda";
@@ -826,7 +839,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.project_tvl" = "Projeto TVL";
 "coin_analytics.tvl_ratio" = "Proporção de Capital de M. / TVB";
 "coin_analytics.project_tvl.info_title" = "Projeto TVB (Total de Valor Bloqueado)";
-"coin_analytics.project_tvl.info1" = "Valor-Total-Bloqueado (ou Ativos Sob Gerenciamento) nos contratos inteligentes do projeto.";
+"coin_analytics.project_tvl.info1" = "Valor-Total-Bloqueado (ou ativos sob gestão) nos contratos inteligentes do projeto.";
 "coin_analytics.project_tvl.info2" = "Gráfico mostrando a variação Valor-Total-Bloqueado nos contratos inteligentes do projeto durante o período de 1 ano.";
 "coin_analytics.project_tvl.info3" = "Classificação do token com base no Valor-Total-Bloqueado atual.";
 "coin_analytics.project_tvl.info4" = "Lista de todos os tokens classificados com base no Valor-Total-Bloqueado atual.";
@@ -1001,6 +1014,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.tab_bar_item" = "Configurações";
 "settings.manage_accounts" = "Gerenciar carteiras";
 "settings.blockchain_settings" = "Configurações da Blockchain";
+"settings.backup_manager" = "Gerenciador de Backup";
 "settings.security" = "Segurança";
 "settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Suporte Pessoal";
@@ -1011,6 +1025,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.info_subtitle" = "aplicativo descentralizado";
 "settings.donate.description" = "Juntos, com o seu apoio, podemos fazer este aplicativo ainda melhor!";
 "settings.donate.title" = "Doar";
+"settings.rate_us" = "Avalie-Nos";
+"settings.tell_friends" = "Indique para amigos";
+"settings.contact_us" = "Fale Conosco";
 
 // Settings -> Base Currency
 
@@ -1032,7 +1049,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Personal Support
 
 "settings.personal_support.telegram_username.title" = "Conta";
-"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.telegram_username.placeholder" = "@nomedeusuario";
 "settings.personal_support.description" = "Digite seu nome de conta do Telegram para abrir um chat de suporte pessoal e enviaremos uma mensagem para você.";
 "settings.personal_support.request" = "Solicitar";
 "settings.personal_support.requested" = "Solicitado";
@@ -1073,14 +1090,126 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "blockchain_settings.title" = "Configurações da Blockchain";
 
+// Settings -> Backup Manager
+
+"backup_app.backup_manager.title" = "Gerenciador de Backup";
+"backup_app.backup_manager.restore" = "Restaurar Backup";
+"backup_app.backup_manager.create" = "Criar Novo Backup";
+
+"backup_app.backup_type.title" = "Salvar Backup";
+"backup_app.backup_type.cloud" = "para o iCloud";
+"backup_app.backup_type.cloud.description" = "Salvar um arquivo de cópia de segurança no chaveiro.";
+"backup_app.backup_type.file" = "para Arquivos";
+"backup_app.backup_type.file.description" = "Salvando um arquivo de cópia de segurança em sua pasta local.";
+
+"backup_app.backup_list.title" = "Arquivo de backup";
+"backup_app.backup_list.description.restore" = "Lista de conteúdo do arquivo de backup.";
+"backup_app.backup_list.header.wallets" = "Carteiras";
+"backup_app.backup_list.header.other" = "Outros";
+"backup_app.backup_list.other.watch_account.title" = "Ver Endereço";
+"backup_app.backup_list.other.watchlist.title" = "Lista de observação";
+"backup_app.backup_list.other.contacts.title" = "Contatos";
+"backup_app.backup_list.other.blockchain_settings.title" = "RPC Personalizado";
+"backup_app.backup_list.other.app_settings.title" = "Configurações do Aplicativo";
+"backup_app.backup_list.other.app_settings.description" = "Linguagem, Moeda, Aparência ...";
+
+"backup_app.backup.disclaimer.cloud.title" = "Backup para o iCloud";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud é um serviço de armazenamento na nuvem fornecido pela Apple. É importante saber que seus dados de backup serão armazenados nos servidores da Apple.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
+"backup_app.backup.disclaimer.file.title" = "Backup em arquivo";
+"backup_app.backup.disclaimer.file.description" = "Dispositivos de armazenamento, ou seja, discos rígidos, discos USB, armazenamento em smartphone, etc. são todos vulneráveis a perdas devido a danos físicos, roubo ou outras circunstâncias imprevistas.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "Eu entendo que o roubo ou dano de um dispositivo de backup resultará na perda de um backup de uma respectiva carteira.";
+
+"backup.disclaimer.cloud.title" = "Backup para o iCloud";
+"backup.disclaimer.cloud.description" = "iCloud é um serviço de armazenamento na nuvem fornecido pela Apple. É importante saber que seus dados de backup serão armazenados nos servidores da Apple.";
+"backup.disclaimer.cloud.checkbox_label" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
+"backup.disclaimer.file.title" = "Backup em arquivo";
+"backup.disclaimer.file.description" = "Dispositivos de armazenamento, ou seja, discos rígidos, discos USB, armazenamento em smartphone, etc. são todos vulneráveis a perdas devido a danos físicos, roubo ou outras circunstâncias imprevistas.";
+"backup.disclaimer.file.checkbox_label" = "Eu entendo que o roubo ou dano de um dispositivo de backup resultará na perda de um backup de uma respectiva carteira.";
+"backup_app.backup.name.title" = "Nome do Backup";
+"backup_app.backup.name.description" = "Give it a name, folks! This backup file needs an identity. Make it memorable!";
+
+"backup_app.backup.password.title" = "Fazer Backup da Senha";
+"backup_app.backup.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
+"backup_app.backup.password.highlighted_description" = "Esta senha é usada para criptografar o arquivo de backup da sua carteira. Ela não pode ser recuperada ou redefinida se for perdida ou esquecida.";
+
+"backup_app.restore_type.title" = "Restaurar";
+
+"backup_app.restore.notice.description" = "Esta ação substituirá seus contatos de pagamento locais, bem como sua cópia do iCloud (se houver uma)";
+"backup_app.restore.notice.merge" = "Substituir";
+
+"backup.password.title" = "Fazer Backup da Senha";
+"backup.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
+"backup.password.highlighted_description" = "Esta senha é usada para criptografar o arquivo de backup da sua carteira. Ela não pode ser recuperada ou redefinida se for perdida ou esquecida.";
+
 // Settings -> Security
 
 "settings_security.title" = "Segurança";
-"settings_security.passcode" = "Senha";
-"settings_security.change_pin" = "Editar senha";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
-"settings_security.blockchain_settings" = "Configurações da Blockchain";
+"settings_security.enable_passcode" = "Ativar Senha";
+"settings_security.edit_passcode" = "Editar Senha";
+"settings_security.disable_passcode" = "Desativar Senha";
+"settings_security.auto_lock" = "Auto-Bloqueio";
+"settings_security.balance_auto_hide" = "Ocultar Saldo Automaticamente";
+"settings_security.balance_auto_hide.description" = "Oculta automaticamente o saldo cada vez que o aplicativo é aberto, independentemente das preferências anteriores.";
+"settings_security.enable_duress_mode" = "Definir modo de dureza";
+"settings_security.edit_duress_passcode" = "Editar Senha do Modo Coação";
+"settings_security.disable_duress_mode" = "Desativar Modo de Coação";
+"settings_security.duress_mode.description" = "Um modo especializado projetado para manter as carteiras selecionadas seguras sob coação.";
+
+// Create Passcode
+
+"create_passcode.title" = "Criar senha";
+"create_passcode.description" = "Sua senha será usada para desbloquear sua carteira";
+"create_passcode.description.biometry" = "Defina uma senha para ativar %@";
+"create_passcode.description.duress_mode" = "Defina uma senha para ativar o modo de Coação";
+"create_passcode.confirm_passcode" = "Confirmar";
+
+// Enable Duress Mode
+
+"enable_duress_mode.intro.title" = "Modo de dureza";
+"enable_duress_mode.intro.description" = "Esta modalidade permite ao usuário configurar várias senhas de desbloqueio de aplicativos, onde uma senha desejada mostra apenas carteiras especificadas. Projetado para manter carteiras selecionadas seguras sob coação ou ameaças.";
+"enable_duress_mode.intro.notes" = "Anotações";
+"enable_duress_mode.intro.biometrics.description" = "O recurso %@ funcionará para desbloquear o Modo de Coação. Você pode desativar %@ por conveniência.";
+"enable_duress_mode.intro.passcode_disabling" = "Desabilitação da Senha";
+"enable_duress_mode.intro.passcode_disabling.description" = "Desativar a senha no modo principal redefinirá automaticamente o Modo de Coação.";
+"enable_duress_mode.intro.passcode_change" = "Alteração de Senha";
+"enable_duress_mode.intro.passcode_change.description" = "Alterar a senha no Modo de Coação também irá alterar a senha atual para esse modo.";
+
+"enable_duress_mode.select.title" = "Escolher Carteiras";
+"enable_duress_mode.select.description" = "Selecione as carteiras que serão exibidas no Modo de Coação.";
+"enable_duress_mode.select.wallets" = "Carteiras";
+"enable_duress_mode.select.watch_wallets" = "Ver Endereço";
+
+"enable_duress_mode.passcode.title" = "Senha do Modo Coação";
+"enable_duress_mode.passcode.description" = "Defina uma senha para o modo de Coação";
+"enable_duress_mode.passcode.confirm" = "Confirmar";
+
+// Edit Passcode
+
+"edit_passcode.title" = "Editar Senha";
+"edit_passcode.enter_new_passcode" = "Digite a nova senha";
+"edit_passcode.confirm_new_passcode" = "Confirmar";
+
+// Edit Duress Passcode
+
+"edit_duress_passcode.title" = "Editar Senha do Modo Coação";
+"edit_duress_passcode.enter_new_passcode" = "Defina uma senha para o modo de Coação";
+"edit_duress_passcode.confirm_new_passcode" = "Confirmar";
+
+// Set Passcode
+
+"set_passcode.invalid_confirmation" = "Confirmação inválida";
+"set_passcode.already_used" = "Esta senha já está sendo usada";
+
+// Unlock
+
+"unlock.title" = "Desbloquear";
+"unlock.passcode" = "Insira a senha";
+"unlock.biometry_reason" = "Desbloquear carteira";
+"unlock.attempts_left" = "Tentativas restantes: %@";
+"unlock.disabled_until" = "Desativar até: %@";
+"unlock.random" = "Aleatório";
+
 "security_settings.delete_alert_button" = "Excluir do telefone";
 
 "btc_blockchain_settings.restore_source" = "Restaurar Fonte";
@@ -1096,9 +1225,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "btc_transaction_sort_mode.bip69.description" = "Indexação Lexicográfica";
 
 "blockchain_settings.info.restore_source" = "Restaurar Fonte";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Esta configuração só é relevante ao restaurar uma carteira existente. É um processo de obtenção do histórico de transações de uma determinada criptomoeda para que o aplicativo de carteira seja capaz de exibir transações anteriores e calcular o saldo do usuário. Isso precisa acontecer apenas uma vez quando o usuário restaura carteiras criadas anteriormente.\n\nNeste ponto, existem duas maneiras possíveis para uma carteira móvel como %@ fazer isso:\n\n1. do Servidor API: Existe um servidor predefinido de terceiros que hospeda todo o blockchain e tem todos os dados processados e otimizados para fornecer esses dados de forma rápida. Este método é rápido, mas potencialmente (não necessariamente) menos privado. É também um método centralizado para restaurar uma carteira, pois depende da disponibilidade de um servidor de terceiros. Esta opção é recomendada devido à velocidade de obtenção de dados (5 a 10 minutos).\n\n2. da Blockchain: o aplicativo tenta restaurar diretamente de uma rede de nós da blockchain. Esta é uma forma descentralizada de restaurar o saldo da carteira e transações anteriores. O aplicativo executa ping em muitos nós da rede e solicita dados deles sem abordar alguns nós especificamente. Esta opção é lenta e pode levar facilmente de 2 a 3 horas; o aplicativo precisa estar aberto durante a restauração. Este método de restauração não depende de nenhuma entidade e deve funcionar em todas as condições.";
 "blockchain_settings.info.rpc_source" = "Fonte RPC";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "Esta configuração controla como este aplicativo interage com blockchains ao enviar ou receber transações.\n\nNo caso de Bitcoin, Bitcoin Cash, Litecoin e Dash, a comunicação com os nós da rede blockchain é totalmente peer-to-peer. %@ executa ping em vários nós e se comunica com um deles. Cada vez que o aplicativo se conecta a um nó diferente.\n\nNo caso de Ethereum, Binance Smart Chain e outros blockchains EVM, não há alternativas para carteiras móveis interagirem com os respectivos blockchains, a não ser por meio de provedores de serviços RPC terceirizados ( ou seja, Infura.io) ou nós pessoais. Isso significa essencialmente que sua comunicação com esse blockchain não é descentralizada. Isso não afeta seus fundos de forma alguma, apenas a capacidade de se conectar à rede blockchain.\n\nFique tranquilo, estamos mantendo isso no radar e em breve tentaremos fornecer uma forma descentralizada de sincronização. Paciência.";
 
 // Manage Accounts
 
@@ -1124,9 +1253,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.about_app.description" = "A carteira %@ foi construída para aqueles que buscam investir e armazenar criptomoedas de forma privada e independente.\n\nÉ uma carteira não-custódia, peer-to-peer onde apenas o usuário tem controle sobre os fundos. Não coleta nenhum dado e mantém o usuário independente ao não bloquear os fundos do usuário para um aplicativo específico de carteira.\n\nA carteira %@ é totalmente de código aberto e qualquer um pode confirmar que o aplicativo funciona exatamente como afirma.";
 "settings.about_app.whats_new" = "O que há de novo";
 "settings.about_app.website" = "Site";
-"settings.about_app.contact" = "Fale Conosco";
-"settings.about_app.rate_us" = "Avalie-Nos";
-"settings.about_app.tell_friends" = "Indique para amigos";
 
 // Settings -> About App -> Contact
 
@@ -1167,8 +1293,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.balance_value" = "Valor Patrimonial";
 "appearance.balance_value.coin_value" = "Valor da Moeda";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
-
-"appearance.balance_auto_hide" = "Ocultar Saldo Automaticamente";
 
 // Settings -> Contacts
 
@@ -1219,34 +1343,15 @@ Go to Settings - > %@ and allow access to the camera.";
 "contacts.settings.restore_contacts" = "Restaurar contatos";
 "contacts.settings.backup_contacts" = "Backup de contatos";
 
-"contacts.settings.icloud_sync" = "iCloud Sync";
+"contacts.settings.icloud_sync" = "Sincronização com iCloud";
 "contacts.settings.description" = "Sincronize os contatos de pagamento no iCloud para facilitar o backup e o acesso entre vários dispositivos.";
 "contacts.settings.lost_synchronization.description" = "A sincronização do iCloud foi perdida. Por favor, verifique se o armazenamento do iCloud está ativado no seu dispositivo.";
 "contacts.settings.merge_disclaimer" = "Seus contatos de pagamento locais serão mesclados com os armazenados no iCloud.";
 
-"contacts.settings.alert.title" = "iCloud Sync";
+"contacts.settings.alert.title" = "Sincronização com iCloud";
 "contacts.settings.alert.description" = "Por favor, verifique se o armazenamento do iCloud está ativado no seu dispositivo.";
 
 "contacts.settings.alert_error.title" = "erro do iCloud";
-
-// Set PIN
-
-"set_pin.title" = "Senha";
-"set_pin.info" = "Sua senha será usada para desbloquear sua carteira";
-"set_pin.wrong_confirmation" = "Senhas não conferem. Tente novamente";
-
-// Edit PIN
-
-"edit_pin.title" = "Editar senha";
-"edit_pin.unlock_info" = "Senha Atual";
-"edit_pin.new_pin_info" = "Nova Senha";
-
-// Unlock PIN
-
-"unlock_pin.info" = "Senha";
-"unlock_pin.cant_save_pin" = "Opa! Não podemos salvar a sua senha, por favor, entre em contato conosco assim que possível!";
-"unlock_pin.blocked_until" = "Desativar até: %@";
-
 
 // Key Types
 
@@ -1274,7 +1379,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart.performance.week_changes" = "Alterações (1S)";
 "chart.performance.month_changes" = "Alterações (1M)";
 
-"chart.about.header" = "Sobre";
 "chart.about.read_more" = "Ler Mais";
 "chart.about.read_less" = "Ler Menos";
 
@@ -1355,8 +1459,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.error.invalid_url" = "Endereço URL Inválido";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Carteira ativa";
-"wallet_connect.address" = "Endereço";
-"wallet_connect.network" = "Rede";
 "wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Rede";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
@@ -1541,7 +1643,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "fee_settings.max_fee_rate" = "Taxa Máxima";
 "fee_settings.max_fee_rate.info" = "Este é o preço total máximo por gas que o usuário está disposto a pagar. Ela deve cobrir a taxa base da rede e a taxa máxima de prioridade. O valor mostrado aqui é sugerido com base em uma estimativa da taxa base do próximo bloco mais a taxa máxima de prioridade escolhida pelo usuário. A taxa real paga normalmente será menor. Definir isso mais baixo que a taxa base atual irá limitar a taxa paga, mas resultará em períodos de espera mais longos para que a transação seja confirmada, ou até mesmo em uma transação travada.";
 "fee_settings.tips" = "Taxa de prioridade máxima";
-"fee_settings.tips.info" = "Os usuários pagam taxas de prioridade para incentivar uma transação a ser confirmada mais rapidamente. Às vezes são chamados de tips. A taxa máxima de prioridade é o preço adicional máximo por gas que o usuário está disposto a pagar acima da taxa base. O valor mostrado aqui é sugerido com base nas condições previstas de rede. A taxa de prioridade real normalmente será menor. Definir como zero pode resultar em um longo tempo de espera para que a transação seja confirmada, como é colocado no final da fila de transações pendentes de todos os usuários.";
+"fee_settings.tips.info" = "Os usuários pagam taxas de prioridade para incentivar uma transação a ser confirmada mais rapidamente. Às vezes são chamados de dicas. A taxa máxima de prioridade é o preço adicional máximo por gás que o usuário está disposto a pagar acima da taxa base. O valor mostrado aqui é sugerido com base nas condições previstas de rede. A taxa de prioridade real normalmente será menor. Definir como zero pode resultar em um longo tempo de espera para que a transação seja confirmada, como é colocado no final da fila de transações pendentes de todos os usuários.";
 
 "fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
 "fee_settings.errors.unexpected_error" = "Erro inesperado";
@@ -1567,7 +1669,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "watch_address.watch_by" = "Assistir Por";
 "watch_address.evm_address" = "Endereço EVM";
 "watch_address.tron_address" = "Endereço TRON";
-"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key" = "xPubKey da Conta";
 "watch_address.public_key.placeholder" = "Insira a chave pública estendida da conta ";
 "watch_address.public_key.invalid_key" = "Chave Inválida";
 "watch_address.choose_blockchain" = "Escolha Blockchain";
@@ -1680,7 +1782,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "tron.send.activation_fee" = "Taxa de ativação";
 "tron.send.resources_consumed" = "Recursos consumidos";
-"tron.send.bandwidth" = "Bandwidth";
+"tron.send.bandwidth" = "Largura de Banda";
 "tron.send.energy" = "Energy";
 "tron.send.fee.info" = "O custo estimado de envio de determinada transação na rede. (Sem excluir Energy, Bandwidth e Taxa de Ativação)";
 "tron.send.resources_consumed.info" = "A bandwidth é a unidade que mede o tamanho dos bytes de transação armazenados no banco de dados blockchain. Quanto maior a transação, mais recursos de largura de banda serão consumidos.\n\nEnergy é a unidade que mede a quantidade de computação necessária pela máquina virtual TRON para realizar operações específicas na rede TRON.\n\nComo as transações de contrato inteligente exigem recursos de computação para executar, cada transação de contrato inteligente requer o pagamento da taxa de energy.";

@@ -12,6 +12,7 @@
 "button.paste" = "Pegar";
 "button.resend" = "Reenviar";
 "button.backup" = "Copia de seguridad";
+"button.restore" = "Restaurar";
 "button.copy" = "Copiar";
 "button.retry" = "Reintentar";
 "button.report" = "Reportar";
@@ -35,9 +36,11 @@
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
 "alert.warning" = "Aviso";
+"alert.notice" = "Aviso";
 "alert.error" = "Erreur";
 "alert.unknown_error" = "Error Desconocido";
 "alert.success_action" = "Listo";
+"alert.restored" = "Restaurado";
 "alert.success" = "Completado";
 
 "alert.added_to_watchlist" = "Añadido a tu Lista de Seguimiento";
@@ -46,7 +49,6 @@
 "alert.removed_from_wallet" = "Eliminado del monedero";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copiado";
 "alert.created" = "Creado";
 "alert.imported" = "Restaurado ";
 "alert.wallet_added" = "Cartera añadida";
@@ -95,6 +97,16 @@
 
 "selector.any" = "Cualquier";
 
+"face_id" = "Face ID";
+"touch_id" = "Touch ID";
+
+"auto_lock.immediate" = "Inmediato";
+"auto_lock.minute1" = "1 minuto";
+"auto_lock.minute5" = "5 minutos";
+"auto_lock.minute15" = "15 minutos";
+"auto_lock.minute30" = "30 minutos";
+"auto_lock.hour1" = "1 hora";
+
 // Access Camera
 
 "access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.
@@ -126,21 +138,24 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Restore Type
 
 "restore_type.title" = "Importar monedero";
-
 "restore_type.recovery.title" = "de Frase de Recuperación";
 "restore_type.cloud.title" = "desde iCloud";
+"restore_type.file.title" = "del archivo";
 "restore_type.cex.title" = "de Exchange Wallet";
 
 "restore_type.recovery.description" = "Importe utilizando la frase de recuperación o la clave privada.";
 "restore_type.cloud.description" = "Importar desde un archivo de copia de seguridad en su llavero.";
+"restore_type.file.description" = "Importar un archivo de copia de seguridad de su carpeta local.";
 "restore_type.cex.description" = "Conectar a una cartera en un intercambio centralizado.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Seleccionar copia de seguridad";
-"restore.cloud.description" = "Seleccione la copia de seguridad de la billetera que desea restaurar.";
+"restore.cloud.description" = "Seleccione el archivo de copia de seguridad que desea restaurar.";
 "restore.cloud.empty" = "No se encontraron copias de seguridad.";
+"restore.cloud.wallets" = "Copia de seguridad de la cartera";
 "restore.cloud.imported" = "Carteras importadas";
+"restore.cloud.app_backups" = "Copias de seguridad de aplicaciones";
 
 "restore.cloud.password.title" = "Introduzca contraseña";
 "restore.cloud.password.placeholder" = "Copiar contraseña";
@@ -226,13 +241,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_verify_passphrase.description" = "Introduzca su frase de contraseña";
 "backup_verify_passphrase.incorrect_passphrase" = "Contraseña incorrecta";
 
-// Backup Required
-
-"backup_required.title" = "Se requiere una copia de seg";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Copia de seguridad manual";
+"backup_prompt.backup_recovery_phrase" = "Backup del Monedero";
+"backup_prompt.backup_required" = "Se requiere una copia de seg";
 "backup_prompt.warning" = "Crear una copia de seguridad de la frase de recuperación y la contraseña asociada que le permitirá recuperar su cartera si su teléfono está perdido, robado, roto, etc.";
 "backup_prompt.backup" = "Copia de seguridad";
 "backup_prompt.backup_manual" = "Copia de seguridad manual";
@@ -243,7 +255,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "backup.cloud.title" = "Copia de seguridad en iCloud";
 "backup.cloud.description" = "El almacenamiento en iCloud es un servicio de almacenamiento en la nube de terceros proporcionado por Apple. Es importante tener en cuenta que sus datos se almacenarán en los servidores de Apple, no en sus dispositivos personales. Por lo tanto, está confiando sus datos y entregando la seguridad de su información a un servicio de terceros.";
-
 "backup.cloud.terms.item.1" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
 
 "backup.cloud.name.title" = "Nombre de copia de seguridad";
@@ -270,9 +281,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup.cloud.cant_create_file" = "No se puede guardar el archivo en iCloud";
 "backup.cloud.cant_delete_file" = "No se puede eliminar de iCloud";
 "backup.cloud.no_access.title" = "Acceder a iCloud";
-"backup.cloud.no_access.title" = "Acceder a iCloud";
 "backup.cloud.no_access.description" = "Para crear una copia de seguridad, necesita proporcionar acceso al almacenamiento de iCloud.";
-
 
 // Errors
 
@@ -294,10 +303,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Buscando transacciones…";
+"balance.stopped" = "Detenido";
 "balance.downloading_sapling" = "Descargando Sapling... %d%%";
 "balance.downloading_blocks" = "Descargando bloques";
 "balance.scanning_blocks" = "Bloques de escaneo";
 "balance.enhancing_transactions" = "Mejorar las transacciones";
+"wait_for_synchronization" = "Esperando sincronización";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
@@ -322,6 +333,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.locked" = "Bloqueado";
 "balance.token.locked.info.title" = "Timelock";
 "balance.token.locked.info.description" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
+"balance.token.processing" = "Procesando";
+"balance.token.processing.info.title" = "Detenido";
+"balance.token.processing.info.description" = "Transacciones con esta cantidad todavía sincronizadas. Y cuando se confirmen, estos tokens estarán disponibles para gastos";
 "balance.token.staked" = "Llevado";
 "balance.token.staked.info.title" = "Título tomado";
 "balance.token.staked.info.description" = "Texto de descripción tomada";
@@ -402,13 +416,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.hodler_locktime_off" = "Apagado";
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
 "send.fee_info.title" = "Tasa de comisión";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "Las blockchains requieren que los usuarios paguen tarifas de red al enviar transacciones. Estas tarifas son más altas cuando hay muchas transacciones ocurriendo en la red.\n\nLa billetera %@ estima la tarifa basada en la actividad actual de la blockchain y recomienda el valor óptimo para que la transacción sea procesada en un tiempo razonable.\n\nLa tarifa recomendada se muestra en la cantidad de satoshis que el usuario debe pagar por cada byte de la transacción. Por lo tanto, la tarifa total depende del tamaño total de la transacción, que se mide en bytes.\n\nLos usuarios pueden utilizar los controles proporcionados para aumentar o disminuir el valor de la tarifa. El cambio en la tarifa afecta el monto total de la tarifa que el usuario pagará por la transacción.\n\nEstablecer una tarifa por debajo del valor recomendado puede resultar en que la transacción quede pendiente durante horas o sea rechazada. Cuanto menor sea el valor, más tiempo llevará confirmar la transacción. Para transacciones donde la prioridad es importante, recomendamos establecer una tarifa más alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / salidas de transacciones";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.description" = "La mayoría de las transacciones de Bitcoin, así como las transacciones en criptomonedas similares como Bitcoin Cash, Dash y Litecoin, generan dos salidas. Una salida es la cantidad que va al receptor y la otra es la salida de cambio que se devuelve al remitente. La forma en que la mayoría de las billeteras construyen las transacciones facilita que un tercero comprenda cuál de las salidas fue para el destinatario y cuál fue la cantidad de cambio devuelta al remitente. Dado que la salida devuelta al remitente se utiliza posteriormente en transacciones futuras, se hace evidente una conexión entre estas dos transacciones.\n\nLa billetera %@ implementa medidas para dificultar que alguien descubra cuál es la salida correspondiente a cada parte.\n\nExisten dos opciones disponibles para los usuarios de %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, considere esta una opción recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Hay un estándar comúnmente acordado para ordenar salidas de transacciones (conocido como BIP69). En las carteras de código abierto, ese estándar asegura que los usuarios de cartera no necesitan confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Como este estándar es nuevo, no muchas billeteras lo han implementado todavía. Como resultado, es algo posible ver en el blockchain si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
 
 "send.confirmation.you_send" = "Usted envía";
 "send.confirmation.to" = "Para";
@@ -542,7 +556,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
 
 "swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
-
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Permiso de acceso";
 "swap.dex_info.content_allowance" = "La cantidad que un intercambio puede gastar en nombre del usuario al ejecutar swaps de token. Se requiere un permiso suficiente para establecer una transacción anterior antes de que pueda tener lugar una transacción de intercambio real.";
@@ -726,8 +739,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_overview.roi.day200" = "6 Months";
 "coin_overview.roi.year1" = "1 Año";
 
-"coin_overview.category" = "Categoría";
-
+"coin_overview.overview" = "Información General";
+"coin_overview.description_warning" = "Esta es una descripción generada por IA basada en el material de referencia proporcionado para la criptomoneda dada. Puede contener errores.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Tipo de moneda";
@@ -800,7 +813,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.active_addresses_rank.description" = "Tokens clasificados por el número de direcciones únicas que transaccionan con el token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
 "coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
@@ -1001,6 +1014,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.tab_bar_item" = "Ajustes";
 "settings.manage_accounts" = "Gestionar monederos";
 "settings.blockchain_settings" = "Configuración de Blockchain";
+"settings.backup_manager" = "Gestor de copias de seguridad";
 "settings.security" = "Seguridad";
 "settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Soporte personal";
@@ -1011,6 +1025,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.info_subtitle" = "app descentralizada";
 "settings.donate.description" = "¡Junto con tu apoyo, podemos hacer esta aplicación aún mejor!";
 "settings.donate.title" = "Donar";
+"settings.rate_us" = "Califícanos";
+"settings.tell_friends" = "Recomendar a un amigo";
+"settings.contact_us" = "Contáctenos";
 
 // Settings -> Base Currency
 
@@ -1073,14 +1090,126 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "blockchain_settings.title" = "Configuración de Blockchain";
 
+// Settings -> Backup Manager
+
+"backup_app.backup_manager.title" = "Gestor de copias de seguridad";
+"backup_app.backup_manager.restore" = "Restaurar copia de seguridad";
+"backup_app.backup_manager.create" = "Crear nueva copia de seguridad";
+
+"backup_app.backup_type.title" = "Guardar copia de seguridad";
+"backup_app.backup_type.cloud" = "A iCloud";
+"backup_app.backup_type.cloud.description" = "Guardando un archivo de copia de seguridad en el llavero.";
+"backup_app.backup_type.file" = "a archivos";
+"backup_app.backup_type.file.description" = "Guardando un archivo de copia de seguridad en su carpeta local.";
+
+"backup_app.backup_list.title" = "Copia de seguridad";
+"backup_app.backup_list.description.restore" = "Lista de contenidos en el archivo de copia de seguridad.";
+"backup_app.backup_list.header.wallets" = "Monederos";
+"backup_app.backup_list.header.other" = "Otro";
+"backup_app.backup_list.other.watch_account.title" = "Ver Monedero";
+"backup_app.backup_list.other.watchlist.title" = "Lista de Seguimiento";
+"backup_app.backup_list.other.contacts.title" = "Contactos";
+"backup_app.backup_list.other.blockchain_settings.title" = "RPC personalizado";
+"backup_app.backup_list.other.app_settings.title" = "Ajustes de app";
+"backup_app.backup_list.other.app_settings.description" = "Idioma, moneda, Apariencia ...";
+
+"backup_app.backup.disclaimer.cloud.title" = "Copia de seguridad en iCloud";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud es un servicio de almacenamiento en la nube proporcionado por Apple. Es importante saber que los datos de la copia de seguridad se almacenarán en los servidores de Apple.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
+"backup_app.backup.disclaimer.file.title" = "Copia de seguridad en archivo";
+"backup_app.backup.disclaimer.file.description" = "Los dispositivos de almacenamiento, como los discos duros, los discos USB y el almacenamiento en smartphones, son todos vulnerables a pérdidas debido a daños físicos, robos u otras circunstancias imprevisibles.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de copia de seguridad resultará en la pérdida de una copia de seguridad a una cartera respectiva.";
+
+"backup.disclaimer.cloud.title" = "Copia de seguridad en iCloud";
+"backup.disclaimer.cloud.description" = "iCloud es un servicio de almacenamiento en la nube proporcionado por Apple. Es importante saber que los datos de la copia de seguridad se almacenarán en los servidores de Apple.";
+"backup.disclaimer.cloud.checkbox_label" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
+"backup.disclaimer.file.title" = "Copia de seguridad en archivo";
+"backup.disclaimer.file.description" = "Los dispositivos de almacenamiento, como los discos duros, los discos USB y el almacenamiento en smartphones, son todos vulnerables a pérdidas debido a daños físicos, robos u otras circunstancias imprevisibles.";
+"backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de copia de seguridad resultará en la pérdida de una copia de seguridad a una cartera respectiva.";
+"backup_app.backup.name.title" = "Nombre de copia de seguridad";
+"backup_app.backup.name.description" = "Introduzca el nombre del archivo de copia de seguridad.";
+
+"backup_app.backup.password.title" = "Copiar contraseña";
+"backup_app.backup.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
+"backup_app.backup.password.highlighted_description" = "Esta contraseña se utiliza para cifrar el archivo de copia de seguridad de su cartera. No se puede recuperar o reiniciar si se pierde u olvida.";
+
+"backup_app.restore_type.title" = "Restaurar";
+
+"backup_app.restore.notice.description" = "Esta acción sobrescribirá sus contactos de pago locales, así como su copia de iCloud (si hay una)";
+"backup_app.restore.notice.merge" = "Reemplazar";
+
+"backup.password.title" = "Copiar contraseña";
+"backup.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
+"backup.password.highlighted_description" = "Esta contraseña se utiliza para cifrar el archivo de copia de seguridad de su cartera. No se puede recuperar o reiniciar si se pierde u olvida.";
+
 // Settings -> Security
 
 "settings_security.title" = "Seguridad";
-"settings_security.passcode" = "Código de acceso";
-"settings_security.change_pin" = "Editar el código ";
-"settings_security.touch_id" = "Identificación táctil";
-"settings_security.face_id" = "Identificación de caras";
-"settings_security.blockchain_settings" = "Configuración de Blockchain";
+"settings_security.enable_passcode" = "Activar contraseña";
+"settings_security.edit_passcode" = "Editar el código";
+"settings_security.disable_passcode" = "Desactivar bloqueo con código";
+"settings_security.auto_lock" = "Bloqueo automático";
+"settings_security.balance_auto_hide" = "Saldo Auto Ocultar";
+"settings_security.balance_auto_hide.description" = "Oculta automáticamente el balance cada vez que se abre la aplicación, independientemente de las preferencias anteriores.";
+"settings_security.enable_duress_mode" = "Establecer modo de Duración";
+"settings_security.edit_duress_passcode" = "Editar contraseña de Duración";
+"settings_security.disable_duress_mode" = "Desactivar modo Duración";
+"settings_security.duress_mode.description" = "Un modo especializado diseñado para mantener las billeteras seleccionadas a salvo bajo coacción.";
+
+// Create Passcode
+
+"create_passcode.title" = "Crear contraseña";
+"create_passcode.description" = "Su código servirá para abrir su monedero y enviar dinero";
+"create_passcode.description.biometry" = "Establecer un código de acceso para habilitar %@";
+"create_passcode.description.duress_mode" = "Establecer un código de acceso para activar el modo Duración";
+"create_passcode.confirm_passcode" = "Confirmar";
+
+// Enable Duress Mode
+
+"enable_duress_mode.intro.title" = "Modo Duración";
+"enable_duress_mode.intro.description" = "Este modo permite a los usuarios configurar múltiples códigos de acceso de la aplicación de desbloqueo donde un código de acceso deseado sólo muestra las carteras especificadas. Diseñado para mantener seguros las carteras seleccionadas bajo coerción o amenazas.";
+"enable_duress_mode.intro.notes" = "Notas";
+"enable_duress_mode.intro.biometrics.description" = "La función %@ funcionará para desbloquear el Modo Duración. Puede desactivar %@ para mayor comodidad.";
+"enable_duress_mode.intro.passcode_disabling" = "Desactivando contraseña";
+"enable_duress_mode.intro.passcode_disabling.description" = "Deshabilitar el código de acceso en el modo principal restablecerá automáticamente el modo Duración.";
+"enable_duress_mode.intro.passcode_change" = "Cambiar contraseña";
+"enable_duress_mode.intro.passcode_change.description" = "Cambiar el código de acceso en el modo Duress también cambiará el código de acceso actual para ese modo.";
+
+"enable_duress_mode.select.title" = "Seleccionar carteras";
+"enable_duress_mode.select.description" = "Seleccione las carteras que se mostrarán en Modo Duración.";
+"enable_duress_mode.select.wallets" = "Monederos";
+"enable_duress_mode.select.watch_wallets" = "Ver Monedero";
+
+"enable_duress_mode.passcode.title" = "Durar contraseña";
+"enable_duress_mode.passcode.description" = "Establecer un código de acceso para el modo Duress";
+"enable_duress_mode.passcode.confirm" = "Confirmar";
+
+// Edit Passcode
+
+"edit_passcode.title" = "Editar el código";
+"edit_passcode.enter_new_passcode" = "Introducir nueva contraseña";
+"edit_passcode.confirm_new_passcode" = "Confirmar";
+
+// Edit Duress Passcode
+
+"edit_duress_passcode.title" = "Editar contraseña de Duración";
+"edit_duress_passcode.enter_new_passcode" = "Introduzca una nueva contraseña para el modo Duress";
+"edit_duress_passcode.confirm_new_passcode" = "Confirmar";
+
+// Set Passcode
+
+"set_passcode.invalid_confirmation" = "Confirmación no válida";
+"set_passcode.already_used" = "Este código de acceso ya está siendo usado";
+
+// Unlock
+
+"unlock.title" = "Desbloquear";
+"unlock.passcode" = "Introducir código";
+"unlock.biometry_reason" = "Desbloquear cartera";
+"unlock.attempts_left" = "Intentos restantes: %@";
+"unlock.disabled_until" = "Inhabilitado hasta: %@";
+"unlock.random" = "Aleatorio";
+
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
 
 "btc_blockchain_settings.restore_source" = "Restaurar Fuente";
@@ -1124,9 +1253,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.about_app.description" = "La billetera %@ está diseñada para aquellos que buscan invertir y almacenar criptomonedas de manera privada e independiente.\n\nEs una billetera no custodial y peer-to-peer donde solo el usuario tiene control sobre los fondos. No recopila datos y mantiene al usuario independiente al no bloquear los fondos del usuario en una aplicación de billetera específica.\n\nLa billetera %@ es completamente de código abierto y cualquier persona puede confirmar que la aplicación funciona exactamente como dice.";
 "settings.about_app.whats_new" = "Qué novedades hay";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Contáctenos";
-"settings.about_app.rate_us" = "Califícanos";
-"settings.about_app.tell_friends" = "Recomendar a un amigo";
 
 // Settings -> About App -> Contact
 
@@ -1167,8 +1293,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.balance_value" = "Valor de Saldo";
 "appearance.balance_value.coin_value" = "Valor de la moneda";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
-
-"appearance.balance_auto_hide" = "Saldo Auto Ocultar";
 
 // Settings -> Contacts
 
@@ -1229,25 +1353,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "contacts.settings.alert_error.title" = "Error de iCloud";
 
-// Set PIN
-
-"set_pin.title" = "Código de acceso";
-"set_pin.info" = "Su código servirá para abrir su monedero y enviar dinero";
-"set_pin.wrong_confirmation" = "El código de acceso no coincide. Inténtelo de nuevo";
-
-// Edit PIN
-
-"edit_pin.title" = "Editar el código ";
-"edit_pin.unlock_info" = "Código actual";
-"edit_pin.new_pin_info" = "Nuevo código de acceso";
-
-// Unlock PIN
-
-"unlock_pin.info" = "Código de acceso";
-"unlock_pin.cant_save_pin" = "¡Ups! ¡No podemos guardar su código, póngase en contacto con nosotros lo antes posible!";
-"unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
-
-
 // Key Types
 
 "chart.time_duration.day" = "24H";
@@ -1274,7 +1379,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "chart.performance.week_changes" = "Cambios (1 Semana)";
 "chart.performance.month_changes" = "Cambios (1 Mes)";
 
-"chart.about.header" = "Acerca de";
 "chart.about.read_more" = "Leer más";
 "chart.about.read_less" = "Leer menos";
 
@@ -1355,8 +1459,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.error.invalid_url" = "Dirección URL inválida";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active su cartera";
-"wallet_connect.address" = "Dirección";
-"wallet_connect.network" = "La red";
 "wallet_connect.address" = "Dirección";
 "wallet_connect.network" = "La red";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";

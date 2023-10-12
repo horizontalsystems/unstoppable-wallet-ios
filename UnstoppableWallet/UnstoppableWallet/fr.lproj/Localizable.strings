@@ -12,6 +12,7 @@
 "button.paste" = "Coller";
 "button.resend" = "Réenvoyer";
 "button.backup" = "Sauvegarde";
+"button.restore" = "Restaurer";
 "button.copy" = "Copier";
 "button.retry" = "Réessayer";
 "button.report" = "Signaler";
@@ -35,9 +36,11 @@
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
 "alert.warning" = "Attention";
+"alert.notice" = "Remarque";
 "alert.error" = "Erreur";
 "alert.unknown_error" = "Erreur inconnue";
 "alert.success_action" = "Fait";
+"alert.restored" = "Restauré";
 "alert.success" = "Effectué";
 
 "alert.added_to_watchlist" = "Ajouter à la liste de suivi";
@@ -46,7 +49,6 @@
 "alert.removed_from_wallet" = "Supprimé du portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copié";
 "alert.created" = "Établi";
 "alert.imported" = "Importé";
 "alert.wallet_added" = "Portefeuille ajouté";
@@ -95,6 +97,16 @@
 
 "selector.any" = "N'importe lequel";
 
+"face_id" = "Face ID";
+"touch_id" = "Touch ID";
+
+"auto_lock.immediate" = "Immédiat";
+"auto_lock.minute1" = "1 minute";
+"auto_lock.minute5" = "5 minutes";
+"auto_lock.minute15" = "15 minutes";
+"auto_lock.minute30" = "30 minutes";
+"auto_lock.hour1" = "1 heure";
+
 // Access Camera
 
 "access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.
@@ -126,21 +138,24 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Restore Type
 
 "restore_type.title" = "Importer le porte-monnaie";
-
 "restore_type.recovery.title" = "Voir la phase de récupération";
 "restore_type.cloud.title" = "depuis iCloud";
+"restore_type.file.title" = "à partir des fichiers";
 "restore_type.cex.title" = "depuis Exchange Wallet";
 
 "restore_type.recovery.description" = "Importer à l'aide de la phrase de récupération ou de la clé privée.";
 "restore_type.cloud.description" = "Importer un fichier de sauvegarde dans votre trousseau de clés.";
+"restore_type.file.description" = "Importez un fichier de sauvegarde depuis votre dossier local.";
 "restore_type.cex.description" = "Connectez-vous à un portefeuille en échange centralisé.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Choisir la sauvegarde";
-"restore.cloud.description" = "Sélectionnez la copie de sauvegarde du portefeuille que vous souhaitez restaurer.";
+"restore.cloud.description" = "Sélectionnez le fichier de sauvegarde que vous souhaitez restaurer.";
 "restore.cloud.empty" = "Aucune sauvegarde trouvée.";
+"restore.cloud.wallets" = "Sauvegardes du portefeuille";
 "restore.cloud.imported" = "Importer le portefeuille";
+"restore.cloud.app_backups" = "Sauvegardes de l'application";
 
 "restore.cloud.password.title" = "Entrez le mot de passe";
 "restore.cloud.password.placeholder" = "Mot de passe de la sauvegarde";
@@ -154,7 +169,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Restore Binance
 
 "restore.binance.description" = "Veuillez fournir les clés API et API Secret pour lier votre échange.";
-"restore.binance.api_key" = "API Key";
+"restore.binance.api_key" = "Clé API";
 "restore.binance.secret_key" = "Clé secrète";
 "restore.binance.connect" = "Connecter";
 "restore.binance.connecting" = "Connexion en cours...";
@@ -226,13 +241,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup_verify_passphrase.description" = "Entrez le mot de passe";
 "backup_verify_passphrase.incorrect_passphrase" = "Phrase de passe incorrecte";
 
-// Backup Required
-
-"backup_required.title" = "Sauvegarde requise";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Sauvegarde manuelle";
+"backup_prompt.backup_recovery_phrase" = "Sauvegarder le portefeuille";
+"backup_prompt.backup_required" = "Sauvegarde requise";
 "backup_prompt.warning" = "Créez une copie de sauvegarde de la phrase de récupération et du mot de passe qui vous permettra de récupérer votre portefeuille si votre téléphone est perdu, volé, cassé, etc.";
 "backup_prompt.backup" = "Sauvegarde";
 "backup_prompt.backup_manual" = "Sauvegarde manuelle";
@@ -243,7 +255,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "backup.cloud.title" = "Sauvegarder sur iCloud";
 "backup.cloud.description" = "Le stockage iCloud est un service tiers de stockage cloud fourni par Apple. Il est important de savoir que vos données seront stockées sur les serveurs d'Apple, pas sur vos appareils personnels. Cela signifie que vous confiez vos données et que vous transmettez la sécurité de vos informations à un service tiers.";
-
 "backup.cloud.terms.item.1" = "Je comprends que la perte d'accès à mon iCloud entraînera la perte d'accès à la sauvegarde du portefeuille correspondant.";
 
 "backup.cloud.name.title" = "Nom de la sauvegarde";
@@ -270,9 +281,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup.cloud.cant_create_file" = "Impossible de sauvegarder le fichier sur iCloud";
 "backup.cloud.cant_delete_file" = "Impossible de supprimer de iCloud";
 "backup.cloud.no_access.title" = "Accéder à iCloud";
-"backup.cloud.no_access.title" = "Accéder à iCloud";
 "backup.cloud.no_access.description" = "Pour créer une sauvegarde, vous devez fournir un accès au stockage iCloud.";
-
 
 // Errors
 
@@ -294,10 +303,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
 "balance.searching" = "Recherche des transactions…...";
+"balance.stopped" = "Arrêté";
 "balance.downloading_sapling" = "Téléchargement de la pousse... %d%%";
 "balance.downloading_blocks" = "Téléchargement des blocs";
 "balance.scanning_blocks" = "Blocs de numérisation";
 "balance.enhancing_transactions" = "Amélioration des transactions";
+"wait_for_synchronization" = "Attendez la synchronisation";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
@@ -322,6 +333,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.locked" = "Verrouillé";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "L'expéditeur a envoyé ces fonds avec un délai prédéfini qui se terminera à la date indiquée.\n\nPas de soucis, les Bitcoins reçues sont déjà à vous mais vous devez attendre l'expiration de la période de verrouillage pour les dépenser sur le réseau Bitcoin.";
+"balance.token.processing" = "Traitement en cours";
+"balance.token.processing.info.title" = "Montant en cours de traitement";
+"balance.token.processing.info.description" = "Les transactions avec ce montant sont toujours en cours de synchronisation. Une fois qu'elles seront confirmées, ces jetons seront disponibles pour être dépensés";
 "balance.token.staked" = "Stakée";
 "balance.token.staked.info.title" = "Titre de la consommation";
 "balance.token.staked.info.description" = "Texte de description de prise";
@@ -402,13 +416,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.hodler_locktime_off" = "Désactivé";
 "send.hodler_error.unsupported_address" = "Time lock ne fonctionne qu'avec les adresses P2PKH (commençant par 1)";
 "send.fee_info.title" = "Taux de frais";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "Les blockchains exigent que les utilisateurs paient des frais de réseau lorsqu'ils envoient des transactions. Les frais sont plus élevés lorsque de nombreuses transactions ont lieu sur le réseau.\n\nLe portefeuille %@ estime les frais en fonction de l'activité actuelle de la blockchain et recommande la valeur optimale pour que la transaction soit traitée dans un délai raisonnable.\n\nLe taux de frais recommandé est affiché en tant que montant de satoshis que l'utilisateur doit payer pour un octet unique de la transaction. Ainsi, les frais totaux dépendent de la taille totale de la transaction, mesurée en octets.\n\nLes utilisateurs peuvent utiliser les commandes fournies pour augmenter ou diminuer la valeur du taux de frais. Le changement du taux de frais modifie les frais totaux que l'utilisateur paiera pour la transaction.\n\nLe fait de définir un taux de frais inférieur à la valeur recommandée peut entraîner le blocage d'une transaction pendant des heures ou son rejet. Plus la valeur est basse, plus la confirmation de la transaction prendra de temps. Pour les transactions où la priorité est importante, nous recommandons de définir un taux de frais plus élevé.";
 "send.transaction_inputs_outputs_info.title" = "Entrées / Sorties de transaction";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.description" = "La plupart des transactions Bitcoin, ainsi que des transactions dans des cryptomonnaies similaires telles que Bitcoin Cash, Dash et Litecoin, génèrent deux sorties. Une sortie est le montant qui va au destinataire et l'autre est la sortie de change qui est renvoyée à l'expéditeur. La manière dont la plupart des portefeuilles construisent les transactions facilite la compréhension par un tiers de la sortie allant au destinataire et de celle qui est renvoyée à l'expéditeur. Comme la sortie renvoyée à l'expéditeur est utilisée ultérieurement dans des transactions futures, une connexion entre ces deux transactions devient apparente.\n\nLe portefeuille %@ met en œuvre des mesures pour rendre plus difficile à quelqu'un de déterminer quelle sortie va où.\n\nIl existe deux options disponibles pour les utilisateurs de %@ :";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "L'ordre des sorties de transaction est aléatoire à chaque transaction. Parfois, le changement peut être la première sortie, parfois la deuxième. Si un utilisateur fait confiance au développeur de l'application, alors considérez cela comme une option recommandée.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Déterministe";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Il existe une norme communément acceptée pour l'ordonnancement des sorties de transaction, connue sous le nom de BIP69 (Bitcoin Improvement Proposal 69). Dans les portefeuilles open source, cette norme garantit que les utilisateurs de portefeuille n'ont pas besoin de faire confiance à la manière dont les développeurs de l'application implémentent l'ordonnancement des sorties. Comme cette norme est relativement récente, peu de portefeuilles l'ont encore mise en œuvre. Par conséquent, il est quelque peu possible de déterminer sur la blockchain si une transaction a été envoyée depuis un portefeuille qui utilise cette norme ou non.";
 
 "send.confirmation.you_send" = "Vous envoyez";
 "send.confirmation.to" = "À";
@@ -542,7 +556,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.confirmation.maximum_sent" = "Dépense maximale";
 
 "swap.dex_info.description" = "Ce service d'échange est assuré par %@, un protocole d'échange de tokens décentralisé construit sur la blockchain %@.\n\n%@ est entièrement automatisé et géré par des contrats intelligents qui facilitent les échanges de tokens de manière fiable sans aucune possibilité de tricher.";
-
 "swap.dex_info.header_dex_related" = "Relatif à %@";
 "swap.dex_info.header_allowance" = "Allocation";
 "swap.dex_info.content_allowance" = "Le montant qu\'un échange peut dépenser pour le compte de l\'utilisateur lors de l\'exécution de swaps de jetons. Une provision suffisante est requise avant de pouvoir effectuer une opération d\'échange réelle.";
@@ -726,8 +739,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_overview.roi.day200" = "6 Mois";
 "coin_overview.roi.year1" = "1 An";
 
-"coin_overview.category" = "Catégorie";
-
+"coin_overview.overview" = "Synthèse";
+"coin_overview.description_warning" = "Ceci est une description générée par intelligence artificielle basée sur le matériel de référence fourni pour la cryptomonnaie donnée. Elle peut contenir des erreurs.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Types de pièces";
@@ -768,29 +781,29 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Rang de volume CEX";
 "coin_analytics.cex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges centralisés.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
+"coin_analytics.cex_volume.info1" = "Volume total des échanges pour le jeton sur les principales plateformes d'échange centralisées au cours d'une période de 30 jours.";
+"coin_analytics.cex_volume.info2" = "Graphique montrant la variation du volume quotidien de trading du jeton sur les principales plateformes d'échange centralisées sur une période d'un an.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume.info4" = "Liste de tous les jetons classés en fonction du volume de négociation sur les bourses centralisées au cours des intervalles de 24H, 7D et 1M";
 
 "coin_analytics.dex_volume" = "Volume DEX";
 "coin_analytics.dex_volume_rank" = "Rang de volume DEX";
 "coin_analytics.dex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges décentralisés.";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
-"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
-"coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_volume.info2" = "Votre demande a été traduite en français comme demandé. Si vous avez besoin d'autres traductions ou d'informations supplémentaires, n'hésitez pas à demander.";
+"coin_analytics.dex_volume.info3" = "Classement du jeton en fonction du volume de négociation sur les principales bourses décentralisées au cours d'une période de 30 jours.";
+"coin_analytics.dex_volume.info4" = "Liste de tous les jetons classés en fonction du volume de négociation sur les bourses décentralisées sur des intervalles de 24H / 7D / 1M.";
+"coin_analytics.dex_volume.tracked_dexes" = "DEXes qui sont suivis :";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Binance-Smart-Chain : PancakeSwap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
 "coin_analytics.dex_liquidity" = "Liquidité DEX";
 "coin_analytics.dex_liquidity_rank" = "Classement de liquidité DEX";
 "coin_analytics.dex_liquidity_rank.description" = "Les tokens classés par liquidité disponible sur les exchanges décentralisés.";
-"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_liquidity.info1" = "Total de liquidités actuellement disponibles pour le jeton sur les principales bourses décentralisées.";
+"coin_analytics.dex_liquidity.info2" = "Graphique montrant une variation de la liquidité disponible pour le jeton sur les principales bourses décentralisées sur une période de 1 an.";
+"coin_analytics.dex_liquidity.info3" = "Liste de tous les jetons classés en fonction de la liquidité disponible pour le jeton sur les principaux échanges décentralisés.";
+"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes qui sont suivis :";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
@@ -800,24 +813,24 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.active_addresses_rank.description" = "Tokens classés par nombre d'adresses uniques effectuant des transactions avec le token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info3" = "Nombre total d'adresses blockchain uniques transitant avec un jeton sur une période de 30 jours.";
+"coin_analytics.active_addresses.info4" = "Le rang du jeton est basé sur le nombre de portefeuilles actifs opérant avec le jeton de période de 30 jours.";
+"coin_analytics.active_addresses.info5" = "Liste de tous les jetons classés en fonction du nombre d'adresses actives quotidiennes transitant avec le jeton sur les intervalles 24h / 7D / 1M.";
 
 "coin_analytics.transaction_count" = "Nombre de transactions";
 "coin_analytics.transaction_count_rank" = "Classement par nombre de tr.";
 "coin_analytics.transaction_count_rank.description" = "Tokens classés en fonction du nombre de transactions sur une blockchain.";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
-"coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
-"coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
-"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
-"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
+"coin_analytics.transaction_count.info1" = "Nombre total de transactions blockchain uniques sur une période de 30 jours.";
+"coin_analytics.transaction_count.info2" = "Graphique montrant la variation du nombre de transactions sur une période de 1 an.";
+"coin_analytics.transaction_count.info3" = "Rang du jeton basé sur le nombre de transactions avec le jeton de période de 30 jours.";
+"coin_analytics.transaction_count.info4" = "Liste de tous les jetons classés en fonction du nombre de transactions avec le jeton sur les intervalles 24h / 7D / 1M.";
+"coin_analytics.transaction_count.info5" = "Le nombre total de jetons transférés sur la blockchain sur la période de 30 jours.";
 
 "coin_analytics.holders" = "Porteurs";
 "coin_analytics.holders_rank" = "Classement des porteurs";
 "coin_analytics.holders_rank.description" = "Classement des jetons selon les adresses uniques qui les détiennent sur plusieurs chaînes de blocs.";
-"coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
-"coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
+"coin_analytics.holders.info1" = "Nombre total d'adresses uniques détenant le jeton sur différentes blockchains.";
+"coin_analytics.holders.info2" = "Top 10 des portefeuilles détenant le jeton sur chaque blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "dans les 10 premiers détenteurs";
 "coin_analytics.holders.count" = "Nombre total de détenteurs : %@";
@@ -826,11 +839,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.project_tvl" = "Project TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
 "coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
-"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info1" = "Total-Value-Locked (ou Acsets Under Management) dans les contrats intelligents du projet.";
+"coin_analytics.project_tvl.info2" = "Graphique montrant la variation valeur totale verrouillée dans les contrats intelligents du projet sur une période de 1 an.";
+"coin_analytics.project_tvl.info3" = "Rang du token en fonction de la valeur totale verrouillée actuelle.";
+"coin_analytics.project_tvl.info4" = "Liste de tous les tokens classés en fonction de la valeur totale verrouillée.";
+"coin_analytics.project_tvl.info5" = "Rapport entre la capitalisation du marché et la TVL du projet.";
 
 "coin_analytics.project_fee" = "Frais de projet";
 "coin_analytics.project_fee_rank" = "Rang des frais du projet";
@@ -838,7 +851,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "coin_analytics.project_revenue" = "Revenus du projet";
 "coin_analytics.project_revenue_rank" = "Classement en fonction des revenus du projet";
-"coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue_rank.description" = "Tokens classés en fonction des revenus générés pour les détenteurs via des mécanismes i.e. staking ou token burns.";
 
 "coin_analytics.other_data" = "Autres données";
 
@@ -1001,6 +1014,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.tab_bar_item" = "Paramètres";
 "settings.manage_accounts" = "Gérer les portefeuilles";
 "settings.blockchain_settings" = "Paramètres de la Blockchain";
+"settings.backup_manager" = "Gestionnaire de sauvegarde";
 "settings.security" = "Centre de Sécurité";
 "settings.experimental_features" = "Expérimental";
 "settings.personal_support" = "Assistance Personnelle";
@@ -1011,6 +1025,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.info_subtitle" = "application décentralisée";
 "settings.donate.description" = "Ensemble, avec votre soutien, nous pouvons encore améliorer cette application!";
 "settings.donate.title" = "Faire un don";
+"settings.rate_us" = "Evaluez-nous";
+"settings.tell_friends" = "Partager avec ami";
+"settings.contact_us" = "Contactez-nous";
 
 // Settings -> Base Currency
 
@@ -1073,14 +1090,126 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "blockchain_settings.title" = "Paramètres de la Blockchain";
 
+// Settings -> Backup Manager
+
+"backup_app.backup_manager.title" = "Gestionnaire de sauvegarde";
+"backup_app.backup_manager.restore" = "Restaurer la sauvegarde";
+"backup_app.backup_manager.create" = "Créer une nouvelle sauvegarde";
+
+"backup_app.backup_type.title" = "Enregistrer la sauvegarde";
+"backup_app.backup_type.cloud" = "vers iCloud";
+"backup_app.backup_type.cloud.description" = "Sauvegarde d'un fichier de sauvegarde dans votre trousse.";
+"backup_app.backup_type.file" = "Vers Fichier";
+"backup_app.backup_type.file.description" = "Sauvegarde d'un fichier de copie de sauvegarde dans votre dossier local.";
+
+"backup_app.backup_list.title" = "Fichier de sauvegarde";
+"backup_app.backup_list.description.restore" = "Liste des contenus dans le fichier de sauvegarde.";
+"backup_app.backup_list.header.wallets" = "Portefeuilles";
+"backup_app.backup_list.header.other" = "Autre";
+"backup_app.backup_list.other.watch_account.title" = "Regarder les portefeuilles";
+"backup_app.backup_list.other.watchlist.title" = "Liste de suivi";
+"backup_app.backup_list.other.contacts.title" = "Contacts";
+"backup_app.backup_list.other.blockchain_settings.title" = "RPC personnalisé";
+"backup_app.backup_list.other.app_settings.title" = "Paramètres de l'application";
+"backup_app.backup_list.other.app_settings.description" = "Langue, Devise, Apparence ...";
+
+"backup_app.backup.disclaimer.cloud.title" = "Sauvegarder sur iCloud";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud est un service de stockage cloud fourni par Apple. Il est important de savoir que vos données de sauvegarde seront stockées sur les serveurs d'Apple.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "Je comprends que la perte d'accès à mon iCloud entraînera la perte d'accès à la sauvegarde du portefeuille correspondant.";
+"backup_app.backup.disclaimer.file.title" = "Sauvegarder dans un fichier";
+"backup_app.backup.disclaimer.file.description" = "Les dispositifs de stockage tels que les disques durs, les disques USB et le stockage sur smartphone sont tous vulnérables aux pertes dues à des dommages physiques, des vols ou d'autres circonstances imprévues.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "Je comprends que la perte ou l'endommagement d'un périphérique de sauvegarde entraînera la perte des données de sauvegarde correspondantes.";
+
+"backup.disclaimer.cloud.title" = "Sauvegarder sur iCloud";
+"backup.disclaimer.cloud.description" = "iCloud est un service de stockage cloud fourni par Apple. Il est important de savoir que vos données de sauvegarde seront stockées sur les serveurs d'Apple.";
+"backup.disclaimer.cloud.checkbox_label" = "Je comprends que la perte d'accès à mon iCloud entraînera la perte d'accès à la sauvegarde du portefeuille correspondant.";
+"backup.disclaimer.file.title" = "Sauvegarder dans un fichier";
+"backup.disclaimer.file.description" = "Les dispositifs de stockage tels que les disques durs, les disques USB et le stockage sur smartphone sont tous vulnérables aux pertes dues à des dommages physiques, des vols ou d'autres circonstances imprévues.";
+"backup.disclaimer.file.checkbox_label" = "Je comprends que la perte ou l'endommagement d'un périphérique de sauvegarde entraînera la perte des données de sauvegarde correspondantes.";
+"backup_app.backup.name.title" = "Nom de la sauvegarde";
+"backup_app.backup.name.description" = "Entrez le nom du fichier de sauvegarde.";
+
+"backup_app.backup.password.title" = "Mot de passe de la sauvegarde";
+"backup_app.backup.password.description" = "Définissez le mot de passe de déverrouillage de votre sauvegarde. Il doit contenir au moins 8 symboles, y compris une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.";
+"backup_app.backup.password.highlighted_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Si vous le perdez ou l'oubliez, il ne pourra pas être récupéré ou réinitialisé.";
+
+"backup_app.restore_type.title" = "Restaurer";
+
+"backup_app.restore.notice.description" = "Cette action écrasera vos contacts de paiement locaux ainsi que la copie iCloud (s'il y en a une)";
+"backup_app.restore.notice.merge" = "Remplacer";
+
+"backup.password.title" = "Mot de passe de la sauvegarde";
+"backup.password.description" = "Définissez le mot de passe de déverrouillage de votre sauvegarde. Il doit contenir au moins 8 symboles, y compris une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.";
+"backup.password.highlighted_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Si vous le perdez ou l'oubliez, il ne pourra pas être récupéré ou réinitialisé.";
+
 // Settings -> Security
 
 "settings_security.title" = "Centre de Sécurité";
-"settings_security.passcode" = "Code";
-"settings_security.change_pin" = "Modifier le code ";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
-"settings_security.blockchain_settings" = "Paramètres de la Blockchain";
+"settings_security.enable_passcode" = "Activer le code d'accès";
+"settings_security.edit_passcode" = "Modifier le code";
+"settings_security.disable_passcode" = "Désactiver le code d'accès";
+"settings_security.auto_lock" = "Verrouillage automatique";
+"settings_security.balance_auto_hide" = "Masquage automatique du solde";
+"settings_security.balance_auto_hide.description" = "Masque automatiquement le solde à chaque ouverture de l'application, indépendamment des préférences précédentes.";
+"settings_security.enable_duress_mode" = "Activer le Mode Duress";
+"settings_security.edit_duress_passcode" = "Modifier le code de détresse";
+"settings_security.disable_duress_mode" = "Désactiver le mode Duress";
+"settings_security.duress_mode.description" = "Un mode spécialisé conçu pour protéger les portefeuilles sélectionnés en cas de contrainte.";
+
+// Create Passcode
+
+"create_passcode.title" = "Créer un code d'accès";
+"create_passcode.description" = "Votre code secret sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
+"create_passcode.description.biometry" = "Définir un code d'accès pour activer %@";
+"create_passcode.description.duress_mode" = "Définir un mot de passe pour activer le mode Duress";
+"create_passcode.confirm_passcode" = "Confirmer";
+
+// Enable Duress Mode
+
+"enable_duress_mode.intro.title" = "Mode de Duress";
+"enable_duress_mode.intro.description" = "Ce mode permet à l'utilisateur de configurer plusieurs codes d'accès d'application de déverrouillage où un code d'accès désiré n'affiche que les portefeuilles spécifiés. Conçu pour garder les portefeuilles sélectionnés en sécurité sous la contrainte ou les menaces.";
+"enable_duress_mode.intro.notes" = "Notes";
+"enable_duress_mode.intro.biometrics.description" = "La fonction %@ fonctionnera pour déverrouiller le mode Duresse. Vous pouvez désactiver %@ pour plus de commodité.";
+"enable_duress_mode.intro.passcode_disabling" = "Désactivation du code d'accès";
+"enable_duress_mode.intro.passcode_disabling.description" = "La désactivation du mot de passe en mode principal réinitialisera automatiquement le Mode Duresse.";
+"enable_duress_mode.intro.passcode_change" = "Changement de mot de passe";
+"enable_duress_mode.intro.passcode_change.description" = "La modification du code d'accès en mode Duress modifiera également le code d'accès actuel pour ce mode.";
+
+"enable_duress_mode.select.title" = "Sélectionnez les portefeuilles";
+"enable_duress_mode.select.description" = "Sélectionnez les portefeuilles qui seront affichés en mode Duresse.";
+"enable_duress_mode.select.wallets" = "Portefeuilles";
+"enable_duress_mode.select.watch_wallets" = "Regarder les portefeuilles";
+
+"enable_duress_mode.passcode.title" = "Code Duress";
+"enable_duress_mode.passcode.description" = "Définir un code d'accès pour le mode Duress";
+"enable_duress_mode.passcode.confirm" = "Confirmer";
+
+// Edit Passcode
+
+"edit_passcode.title" = "Modifier le code";
+"edit_passcode.enter_new_passcode" = "Entrez le nouveau code d'accès";
+"edit_passcode.confirm_new_passcode" = "Confirmer";
+
+// Edit Duress Passcode
+
+"edit_duress_passcode.title" = "Modifier le code de détresse";
+"edit_duress_passcode.enter_new_passcode" = "Entrez le nouveau mot de passe pour le mode Duress";
+"edit_duress_passcode.confirm_new_passcode" = "Confirmer";
+
+// Set Passcode
+
+"set_passcode.invalid_confirmation" = "Confirmation invalide";
+"set_passcode.already_used" = "Ce mot de passe est déjà utilisé";
+
+// Unlock
+
+"unlock.title" = "Déverrouiller";
+"unlock.passcode" = "Entrez le code d'accès";
+"unlock.biometry_reason" = "Déverrouiller le portefeuille";
+"unlock.attempts_left" = "Tentatives restantes : %@";
+"unlock.disabled_until" = "Désactivé jusqu'à: %@";
+"unlock.random" = "Aléatoire";
+
 "security_settings.delete_alert_button" = "Supprimer de l'appareil";
 
 "btc_blockchain_settings.restore_source" = "Restorer la source";
@@ -1096,9 +1225,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "btc_transaction_sort_mode.bip69.description" = "Indexation lexicographique";
 
 "blockchain_settings.info.restore_source" = "Restorer la source";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Ce paramètre n'est pertinent que lors de la restauration d'un portefeuille existant. Il s'agit d'un processus visant à obtenir l'historique des transactions pour une cryptomonnaie donnée, afin que l'application de portefeuille puisse afficher les transactions passées et calculer le solde de l'utilisateur. Cela doit se produire une seule fois lorsque l'utilisateur restaure des portefeuilles précédemment créés.\n\nÀ ce stade, il existe deux façons potentielles pour une application de portefeuille mobile comme %@ de le faire :\n\nDepuis le serveur API : Il existe un serveur tiers prédéfini qui héberge l'ensemble de la blockchain et dispose de toutes les données traitées et optimisées pour fournir ces données rapidement. Cette méthode est rapide mais potentiellement (pas nécessairement) moins privée. C'est également une méthode centralisée pour restaurer un portefeuille car elle dépend de la disponibilité d'un serveur tiers. Cette option est recommandée en raison de sa rapidité à obtenir des données (5 à 10 minutes).\n\nDepuis la blockchain : L'application tente de restaurer directement à partir d'un réseau de nœuds de blockchain. Il s'agit d'une manière décentralisée de restaurer le solde du portefeuille et les transactions passées. L'application envoie des requêtes à de nombreux nœuds du réseau sans spécifiquement adresser certaines nœuds. Cette option est lente et peut facilement prendre 2 à 3 heures, l'application doit rester ouverte pendant la restauration. Cette méthode de restauration ne dépend d'aucune entité et devrait fonctionner dans toutes les conditions.";
 "blockchain_settings.info.rpc_source" = "Source RPC";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "Ce paramètre contrôle la manière dont cette application interagit avec les blockchains lors de l'envoi ou de la réception de transactions.\n\nDans le cas de Bitcoin, Bitcoin Cash, Litecoin et Dash, la communication avec les nœuds du réseau blockchain est entièrement pair à pair. %@ envoie des requêtes à de nombreux nœuds et communique avec l'un d'entre eux. À chaque connexion, l'application se connecte à un nœud différent.\n\nDans le cas d'Ethereum, de Binance Smart Chain et d'autres blockchains EVM, il n'existe aucune autre alternative pour les portefeuilles mobiles que d'interagir avec les blockchains respectifs que via des fournisseurs de services RPC tiers (comme Infura.io) ou des nœuds personnels. Cela signifie essentiellement que votre communication avec cette blockchain n'est pas décentralisée. Cela n'affecte en rien vos fonds, seulement la capacité à se connecter au réseau blockchain.\n\nSoyez assuré que nous avons cela à l'œil et essaierons bientôt de fournir une manière décentralisée de synchroniser. Patience.";
 
 // Manage Accounts
 
@@ -1124,9 +1253,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.about_app.description" = "Le portefeuille %@ est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.\n\nC'est un portefeuille non-dépositaire, peer-to-peer où seul l'utilisateur a le contrôle sur les fonds. Il ne collecte aucune donnée et garde l'utilisateur indépendant en ne verrouillant pas les fonds de l'utilisateur sur une application spécifique de portefeuille.\n\nLe portefeuille %@ est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme il le prétend.";
 "settings.about_app.whats_new" = "Nouveautés";
 "settings.about_app.website" = "Site Web";
-"settings.about_app.contact" = "Contactez-nous";
-"settings.about_app.rate_us" = "Evaluez-nous";
-"settings.about_app.tell_friends" = "Partager avec ami";
 
 // Settings -> About App -> Contact
 
@@ -1167,8 +1293,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "appearance.balance_value" = "Valeur du solde";
 "appearance.balance_value.coin_value" = "Valeur de la pièce";
 "appearance.balance_value.fiat_value" = "Valeur Fiat";
-
-"appearance.balance_auto_hide" = "Masquer le Solde Automatiquement";
 
 // Settings -> Contacts
 
@@ -1229,25 +1353,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "contacts.settings.alert_error.title" = "Erreur iCloud";
 
-// Set PIN
-
-"set_pin.title" = "Code";
-"set_pin.info" = "Votre code sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
-"set_pin.wrong_confirmation" = "Le Code ne correspond pas. Réessayez";
-
-// Edit PIN
-
-"edit_pin.title" = "Modifier le code ";
-"edit_pin.unlock_info" = "Le code actuel";
-"edit_pin.new_pin_info" = "Le code nouveu";
-
-// Unlock PIN
-
-"unlock_pin.info" = "Code";
-"unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre code, veuillez nous contacter au plus vite!";
-"unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
-
-
 // Key Types
 
 "chart.time_duration.day" = "24 h";
@@ -1274,7 +1379,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "chart.performance.week_changes" = "Changes (1S)";
 "chart.performance.month_changes" = "Changements (1 m)";
 
-"chart.about.header" = "À propos";
 "chart.about.read_more" = "Plus d'infos";
 "chart.about.read_less" = "Moins d’infos";
 
@@ -1355,8 +1459,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Activer le portefeuille";
-"wallet_connect.address" = "Adresses";
-"wallet_connect.network" = "Réseau";
 "wallet_connect.address" = "Adresses";
 "wallet_connect.network" = "Réseau";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
@@ -1537,12 +1639,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "fee_settings.gas_price.info" = "Les frais pour effectuer des transactions sur le réseau sont mesurés en unités de gas. Le prix du gas est le montant qu'un utilisateur est prêt à dépenser par unité de gas. Le prix du gas est élevé lorsque le réseau est encombré, et faible lorsqu'il est inactif. Souvent, une transaction reste en suspens pendant une période prolongée si le montant du gas est insuffisant.";
 
 "fee_settings.base_fee" = "Frais de base";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.base_fee.info" = "Le protocole réseau détermine le prix de base par unité de gaz pour chaque bloc, appelé taux de frais de base. Il varie en fonction du niveau d'utilisation du réseau de bloc en bloc. Il peut augmenter ou diminuer de pas plus de 12,5 % dans le bloc suivant, rendant les frais plus prévisibles. La valeur affichée ici est le taux de frais de base du bloc actuel.";
 "fee_settings.max_fee_rate" = "Taux de frais max";
-"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.max_fee_rate.info" = "Ceci est le prix total maximal par unité de gaz que l'utilisateur est prêt à payer. Il doit couvrir le taux de frais de base du réseau et le taux de frais prioritaire maximal. La valeur affichée ici est suggérée en fonction d'une estimation du taux de frais de base du bloc suivant plus le taux de frais prioritaire maximal choisi par l'utilisateur. Le taux de frais réellement payé sera généralement inférieur. Définir une valeur inférieure au taux de frais de base actuel limitera les frais payés, mais entraînera des délais d'attente plus longs pour la confirmation de la transaction, voire une transaction bloquée.";
 "fee_settings.tips" = "Frais de priorité max";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.
-";
+"fee_settings.tips.info" = "Les utilisateurs paient des frais de priorité pour encourager une transaction à être confirmée plus rapidement. Ils sont parfois appelés conseils. Le taux de frais de priorité max est le prix supplémentaire maximum par gaz que l'utilisateur est prêt à payer en plus du taux de frais de base. La valeur montrée ici est suggérée en fonction des conditions de réseau prévues. Les frais de priorité réels seront normalement inférieurs. Le fait de le définir à zéro peut entraîner un long délai d'attente pour la confirmation de la transaction, car il est placé à la fin de la file d'attente des transactions en attente de tous les utilisateurs.";
 
 "fee_settings.errors.insufficient_balance" = "Solde insuffisant";
 "fee_settings.errors.unexpected_error" = "Erreur inattendue";
