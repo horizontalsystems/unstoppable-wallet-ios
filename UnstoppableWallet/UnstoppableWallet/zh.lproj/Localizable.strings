@@ -1109,7 +1109,7 @@
 "backup_app.backup_list.other.watch_account.title" = "观察地址";
 "backup_app.backup_list.other.watchlist.title" = "关注";
 "backup_app.backup_list.other.contacts.title" = "联系人";
-"backup_app.backup_list.other.blockchain_settings.title" = "区块链设置";
+"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
 "backup_app.backup_list.other.app_settings.title" = "App Settings";
 "backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
