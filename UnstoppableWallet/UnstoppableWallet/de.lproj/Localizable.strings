@@ -335,7 +335,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.locked.info.description" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
 "balance.token.processing" = "Verarbeite";
 "balance.token.processing.info.title" = "Bearbeitungsbetrag";
-"balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they are confirmed, these tokens will be available for spending";
+"balance.token.processing.info.description" = "Transaktionen mit diesem Betrag werden noch synchronisiert. Und wenn sie bestätigt werden, stehen diese Token für Ausgaben zur Verfügung";
 "balance.token.staked" = "Absteckung";
 "balance.token.staked.info.title" = "Absteckter Titel";
 "balance.token.staked.info.description" = "Absteckungstext";
@@ -416,7 +416,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.hodler_locktime_off" = "Aus";
 "send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
 "send.fee_info.title" = "Gebührenrate";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within a reasonable amount of time.\n\nThe recommended fee rate is shown as the amount of satoshi the user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting a higher fee rate.";
+"send.fee_info.description" = "Blockchains verlangen, dass Nutzer Netzwerkgebühren beim Versenden von Transaktionen bezahlen. Die Gebühren sind höher, wenn viele Transaktionen im Netzwerk stattfinden.\n\nDie %@ Brieftasche schätzt die Gebühr basierend auf der aktuellen Blockchain Aktivität und empfiehlt den optimalen Wert, damit die Transaktion innerhalb einer angemessenen Zeit bearbeitet werden kann.\n\nDie empfohlene Gebührenrate, die als Betrag des satoshi Benutzers angezeigt wird, um für ein einziges Byte der Transaktion zu bezahlen. Daher hängt die Gesamtgebühr von der Gesamtgröße der Transaktion ab, die in Bytes gemessen wird.\n\nBenutzer können die zur Verfügung gestellten Steuerelemente verwenden, um den Gebührenwert zu erhöhen oder zu senken. Die Änderung des Gebührensatzes ändert die Gesamtgebühr für die Transaktion, die der Nutzer zu zahlen hat.\n\nSetzen der Gebühr unter dem empfohlenen Wert kann dazu führen, dass eine Transaktion stundenlang als ausstehend gehalten oder abgelehnt wird. Je niedriger der Wert, desto länger dauert die Bestätigung der Transaktion. Für Transaktionen, bei denen Priorität wichtig ist, empfehlen wir, höhere Gebührensätze festzulegen.";
 "send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
 "send.transaction_inputs_outputs_info.description" = "Die meisten Bitcoin-Transaktionen sowie Transaktionen in Kryptowährungen wie Bitcoin-Cash, Dash, und Litecoin erzeugen zwei Ausgänge. Die eine Ausgabe ist der Betrag, der an den Empfänger geht, die andere ist die Umstellausgabe, die an den Absender zurückgegeben wird. Die Art und Weise, wie die meisten Brieftaschen Transaktionen erstellen, macht es für einen Dritten leicht zu verstehen, welche der Ausgaben an den Empfänger gingen und welcher der Änderungsbetrag an den Absender zurückgegeben wurde. Da die an den Absender zurückgegebene Ausgabe später bei zukünftigen Transaktionen verwendet wird, zeigt sich eine Verbindung zwischen diesen beiden Transaktionen.\n\nDie Brieftasche %@ implementiert Maßnahmen, um es jemandem zu erschweren, herauszufinden, welche Ausgabe wohin geht.\n\nEs gibt zwei Optionen für %@ Benutzer:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -437,9 +437,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.slide_to_send" = "Zum Senden wischen";
 "send.confirmation.sending" = "Wird gesendet";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch erneutes Senden mit einer höheren Gebühr ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.resend" = "Nochmal senden";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new 0 amount transaction to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.cancel_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch eine neue Transaktion mit einem Betrag von 0 an sich selbst ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue Transaktion gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.cancel" = "Transaktion abbrechen";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Methode";
@@ -1014,7 +1014,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.manage_accounts" = "Wallets verwalten";
 "settings.blockchain_settings" = "Blockchain Einstellungen";
-"settings.backup_manager" = "Backup Manager";
+"settings.backup_manager" = "Backup-Manager";
 "settings.security" = "Sicherheit";
 "settings.experimental_features" = "Experimentell";
 "settings.personal_support" = "Persönlicher Support";
@@ -1034,7 +1034,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.base_currency.title" = "Währung";
 "settings.base_currency.other" = "Andere";
 "settings.base_currency.disclaimer" = "Haftungsausschluss";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third-party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Die Wechselkursdaten werden von einem Drittanbieter-Service - Coingecko.com bereitgestellt. \n\nDie %@ Wallet-App garantiert nicht, dass diese Werte immer korrekt sind und den Marktdaten entsprechen. Die Wahrscheinlichkeit für Inkonsistenz ist höher, wenn du eine andere Basiswährung als %@ wählst.";
 "settings.base_currency.disclaimer.set" = "Übernehmen";
 
 // Settings -> Manage Wallet
@@ -1044,7 +1044,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "manage_wallets.search_placeholder" = "Name, Code oder Vertragsadresse";
 "manage_wallets.contract_address" = "Vertragsadresse";
 "manage_wallets.derivation_description" = "Es gibt 4 gängige Adressformate %@ Brieftaschen zum Empfang eingehender Zahlungen:\n\n- BIP44 (ältes)\n- BIP49\n- BIP84 (empfohlen)\n- BIP86 (neueste)\n\nWährend %@ alle 4 unterstützt empfiehlt es, eine %@ Brieftasche im BIP84-Format zu verwenden.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends using a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Wallets zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend %@ Brieftasche beide unterstützt, empfiehlt es sich, ein Bitcoin Cash Wallet im TYPE 145 Format zu verwenden.";
 
 // Settings -> Personal Support
 
@@ -1054,7 +1054,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.personal_support.request" = "Anforderung";
 "settings.personal_support.requested" = "Angefragt";
 "settings.personal_support.failed" = "Anfrage fehlgeschlagen";
-"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
+"settings.personal_support.need_subscription" = "This feature is only for %@ Wallet premium users. More info on our official site.";
 "settings.personal_support.requested.description" = "Sie haben bereits einen privaten Chat angefordert, finden Sie ihn auf Telegram";
 "settings.personal_support.requested.open_telegram" = "Telegram öffnen";
 "settings.personal_support.requested.new_request" = "Neue Zahlungsaufforderung";
@@ -1092,119 +1092,119 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Backup Manager";
-"backup_app.backup_manager.restore" = "Restore Backup";
-"backup_app.backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.title" = "Backup-Manager";
+"backup_app.backup_manager.restore" = "Backup wiederherstellen";
+"backup_app.backup_manager.create" = "Neue Sicherung erstellen";
 
-"backup_app.backup_type.title" = "Save Backup";
+"backup_app.backup_type.title" = "Backup speichern";
 "backup_app.backup_type.cloud" = "nach iCloud";
-"backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
+"backup_app.backup_type.cloud.description" = "Speichern einer Sicherungskopierdatei in Ihrem Schlüsselbund.";
 "backup_app.backup_type.file" = "in Dateien";
-"backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
+"backup_app.backup_type.file.description" = "Speichern einer Sicherungskopierdatei in Ihrem lokalen Ordner.";
 
-"backup_app.backup_list.title" = "Backup File";
-"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.title" = "Backup-Datei";
+"backup_app.backup_list.description.restore" = "Liste der Inhalte in der Backup-Datei.";
 "backup_app.backup_list.header.wallets" = "Wallets";
 "backup_app.backup_list.header.other" = "Andere";
 "backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
 "backup_app.backup_list.other.watchlist.title" = "Merkliste";
 "backup_app.backup_list.other.contacts.title" = "Kontakte";
 "backup_app.backup_list.other.blockchain_settings.title" = "Blockchain Einstellungen";
-"backup_app.backup_list.other.app_settings.title" = "App Settings";
-"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_app.backup_list.other.app_settings.title" = "App-Einstellungen";
+"backup_app.backup_list.other.app_settings.description" = "Sprache, Währung, Erscheinung ...";
 
 "backup_app.backup.disclaimer.cloud.title" = "Sicherung in iCloud";
-"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud ist ein von Apple bereitgestellter Cloud-Speicherdienst. Es ist wichtig zu wissen, dass Ihre Backup-Daten auf Apples Servern gespeichert werden.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
-"backup_app.backup.disclaimer.file.title" = "Backup to File";
-"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup_app.backup.disclaimer.file.title" = "In Datei sichern";
+"backup_app.backup.disclaimer.file.description" = "Speichergeräte wie Festplatten, USB-Laufwerke und Smartphone-Speicher sind alle anfällig für Datenverlust aufgrund von physischen Schäden, Diebstahl oder anderen unvorhergesehenen Umständen.";
 "backup_app.backup.disclaimer.file.checkbox_label" = "Ich verstehe, dass ein Diebstahl oder eine Beschädigung eines Sicherungsgeräts zum Verlust des Sicherungskopfes an eine entsprechende Brieftasche führen wird.";
 
 "backup.disclaimer.cloud.title" = "Sicherung in iCloud";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.description" = "iCloud ist ein von Apple bereitgestellter Cloud-Speicherdienst. Es ist wichtig zu wissen, dass Ihre Backup-Daten auf Apples Servern gespeichert werden.";
 "backup.disclaimer.cloud.checkbox_label" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
-"backup.disclaimer.file.title" = "Backup to File";
-"backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives, storage on smartphones, etc. are all vulnerable to loss due to physical damage, theft, or other unforeseen circumstances.";
-"backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in the loss of a backup to a respective wallet.";
+"backup.disclaimer.file.title" = "In Datei sichern";
+"backup.disclaimer.file.description" = "Speichergeräte wie Festplatten, USB-Laufwerke und Smartphone-Speicher sind alle anfällig für Datenverlust aufgrund von physischen Schäden, Diebstahl oder anderen unvorhergesehenen Umständen.";
+"backup.disclaimer.file.checkbox_label" = "Ich verstehe, dass ein Diebstahl oder eine Beschädigung eines Sicherungsgeräts zum Verlust des Sicherungskopfes an eine entsprechende Brieftasche führen wird.";
 "backup_app.backup.name.title" = "Sicherungsname";
 "backup_app.backup.name.description" = "Geben Sie den Namen für die Backup-Datei ein.";
 
 "backup_app.backup.password.title" = "Passwort sichern";
-"backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup_app.backup.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
+"backup_app.backup.password.highlighted_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Brieftasche zu verschlüsseln. Wenn es verloren geht oder vergessen wird, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
 
 "backup_app.restore_type.title" = "Wiederherstellen";
 
-"backup_app.restore.notice.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one)";
+"backup_app.restore.notice.description" = "Diese Aktion wird Ihre lokalen Zahlungskontakte sowie die iCloud-Kopie (falls vorhanden) überschreiben.";
 "backup_app.restore.notice.merge" = "Ersetzen";
 
 "backup.password.title" = "Passwort sichern";
-"backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup.password.highlighted_description" = "This password is used to encrypt the backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
+"backup.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
+"backup.password.highlighted_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Brieftasche zu verschlüsseln. Wenn es verloren geht oder vergessen wird, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
 
 // Settings -> Security
 
 "settings_security.title" = "Sicherheit";
-"settings_security.enable_passcode" = "Enable Passcode";
-"settings_security.edit_passcode" = "Edit Passcode";
-"settings_security.disable_passcode" = "Disable Passcode";
-"settings_security.auto_lock" = "Auto-Lock";
-"settings_security.balance_auto_hide" = "Balance Auto Hide";
-"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
-"settings_security.enable_duress_mode" = "Set Duress Mode";
-"settings_security.edit_duress_passcode" = "Edit Duress Passcode";
+"settings_security.enable_passcode" = "Code aktivieren";
+"settings_security.edit_passcode" = "Code bearbeiten";
+"settings_security.disable_passcode" = "Code deaktivieren";
+"settings_security.auto_lock" = "Auto-Sperren";
+"settings_security.balance_auto_hide" = "Auto-Ausblenden ausgleichen";
+"settings_security.balance_auto_hide.description" = "Bei jedem Öffnen der App wird der Saldo automatisch ausgeblendet, unabhängig von den vorherigen Einstellungen.";
+"settings_security.enable_duress_mode" = "Duress Modus setzen";
+"settings_security.edit_duress_passcode" = "Duress Code bearbeiten";
 "settings_security.disable_duress_mode" = "Duress Modus deaktivieren";
-"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
+"settings_security.duress_mode.description" = "Ein spezialisierter Modus, der entworfen wurde, um ausgewählte Brieftaschen unter Zwang zu schützen.";
 
 // Create Passcode
 
-"create_passcode.title" = "Create Passcode";
-"create_passcode.description" = "Your passcode will be used to unlock your wallet";
-"create_passcode.description.biometry" = "Set a passcode to enable %@";
-"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.title" = "Code erstellen";
+"create_passcode.description" = "Dein Code wird verwendet werden, um deinen Wallet zu entsperren und Geld schicken";
+"create_passcode.description.biometry" = "Code für %@ aktivieren";
+"create_passcode.description.duress_mode" = "Code zum Aktivieren des Duress Modus festlegen";
 "create_passcode.confirm_passcode" = "Bestätigen";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Duress Mode";
-"enable_duress_mode.intro.description" = "This mode allows users to set up multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
-"enable_duress_mode.intro.notes" = "Notes";
-"enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
-"enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
-"enable_duress_mode.intro.passcode_disabling.description" = "Disabling the passcode in the main mode will automatically reset the Duress Mode.";
-"enable_duress_mode.intro.passcode_change" = "Passcode Change";
-"enable_duress_mode.intro.passcode_change.description" = "Changing the passcode in the Duress Mode will also change the current passcode code for that mode.";
+"enable_duress_mode.intro.title" = "Duress-Modus";
+"enable_duress_mode.intro.description" = "In diesem Modus können Benutzer mehrere Entsperr-App-Passcodes einrichten, bei denen ein gewünschter Passcode nur bestimmte Wallets anzeigt. Entwickelt um ausgewählte Brieftaschen vor Zwang oder Bedrohungen zu schützen.";
+"enable_duress_mode.intro.notes" = "Notizen";
+"enable_duress_mode.intro.biometrics.description" = "Die %@ Funktion wird den Duress Modus entsperren. Sie können %@ für Bequemlichkeit deaktivieren.";
+"enable_duress_mode.intro.passcode_disabling" = "Code deaktivieren";
+"enable_duress_mode.intro.passcode_disabling.description" = "Das Deaktivieren des Code im Hauptmodus wird den Duress Modus automatisch zurücksetzen.";
+"enable_duress_mode.intro.passcode_change" = "Codeänderung";
+"enable_duress_mode.intro.passcode_change.description" = "Das Ändern des Code im Duress Modus ändert auch den aktuellen Code für diesen Modus.";
 
-"enable_duress_mode.select.title" = "Select Wallets";
-"enable_duress_mode.select.description" = "Select the wallets that will be displayed in Duress Mode.";
+"enable_duress_mode.select.title" = "Wallets auswählen";
+"enable_duress_mode.select.description" = "Wählen Sie die Wallets, die im Duress Modus angezeigt werden.";
 "enable_duress_mode.select.wallets" = "Wallets";
 "enable_duress_mode.select.watch_wallets" = "Watch-Adresse";
 
-"enable_duress_mode.passcode.title" = "Duress Passcode";
-"enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
+"enable_duress_mode.passcode.title" = "Duress Code";
+"enable_duress_mode.passcode.description" = "Code für Duress Modus festlegen";
 "enable_duress_mode.passcode.confirm" = "Bestätigen";
 
 // Edit Passcode
 
-"edit_passcode.title" = "Edit Passcode";
-"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.title" = "Code bearbeiten";
+"edit_passcode.enter_new_passcode" = "Neues Code eingeben";
 "edit_passcode.confirm_new_passcode" = "Bestätigen";
 
 // Edit Duress Passcode
 
-"edit_duress_passcode.title" = "Edit Duress Passcode";
-"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.title" = "Duress Code bearbeiten";
+"edit_duress_passcode.enter_new_passcode" = "Neues Code für Duress Modus eingeben";
 "edit_duress_passcode.confirm_new_passcode" = "Bestätigen";
 
 // Set Passcode
 
-"set_passcode.invalid_confirmation" = "Invalid confirmation";
-"set_passcode.already_used" = "This passcode is already being used";
+"set_passcode.invalid_confirmation" = "Ungültige Bestätigung";
+"set_passcode.already_used" = "Dieser Code wird bereits verwendet";
 
 // Unlock
 
-"unlock.title" = "Unlock";
-"unlock.passcode" = "Enter Passcode";
+"unlock.title" = "Entsperren";
+"unlock.passcode" = "Code eingeben";
 "unlock.biometry_reason" = "Wallet entsperren";
 "unlock.attempts_left" = "Verbleibende Versuche: %@";
 "unlock.disabled_until" = "Deaktiviert bis: %@ ";
@@ -1474,7 +1474,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle %@-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Der gewählte Gebührenwert ist zu niedrig und wird abgelehnt!";
 "ethereum_transaction.error.nonce_already_in_block" = "Transaktion bereits im Block!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee is not enough to replace the transaction";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Gebühr reicht nicht aus, um die Transaktion zu ersetzen";
 "ethereum_transaction.error.transaction_underpriced" = "Gebühr nicht ausreichend, um die Transaktion zu ersetzen";
 "ethereum_transaction.error.tips_higher_than_max_fee" = "Maximale Gebühr kann nicht niedriger sein als die Tipps, da die Max-Gebühr die Tipps enthält.";
 "ethereum_transaction.error.reverted" = "Die Transaktion kann nicht ausgeführt werden: %@";
@@ -1504,7 +1504,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
 "wallet_connect.paired_dapps.cant_disconnect" = "Kann nicht trennen";
 "wallet_connect.paired_dapps.disconnect_all" = "Alle löschen";
-"wallet_connect.pending_requests.nonactive_footer" = "To open a request you must activate the desired wallet";
+"wallet_connect.pending_requests.nonactive_footer" = "Um eine Anfrage zu öffnen, müssen Sie die gewünschte Wallet aktivieren";
 
 // App Status
 
@@ -1522,7 +1522,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "In Bearbeitung";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that the status of an individual transaction in %@ wallet interface is typically updated with a short delay.";
+"status_info.pending.content" = "Die Transaktion wurde noch nicht in der Blockchain bestätigt. Transaktionen, die mit einer empfohlenen oder höheren Gebühreneinstellung gesendet werden, werden in der Regel innerhalb weniger Minuten abgewickelt. Transaktionen, die mit einer geringen Gebühr gesendet werden, können für einige Stunden oder sogar Tage ausstehend bleiben und sogar abgelehnt werden. Beachten Sie, dass der Status einer individuellen Transaktion in %@ Wallet-Schnittstelle typischerweise mit einer kurzen Verzögerung aktualisiert wird.";
 "status_info.processing.title" = "Verarbeite";
 "status_info.processing.content" = "Die Transaktion wurde bereits in die Blockchain aufgenommen, ist aber noch nicht endgültig abgeschlossen. Zu diesem Zeitpunkt kann die Transaktion für kleinere Zahlungen als abgeschlossen betrachtet werden. Bei größeren Zahlungen wird empfohlen, zu warten, bis der Transaktionsstatus auf abgeschlossen wechselt.";
 "status_info.completed.title" = "Abgeschlossen";
@@ -1562,19 +1562,19 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "public_keys.title" = "Öffentliche Schlüssel";
 "public_keys.evm_address" = "EVM-Adresse";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM-based blockchains.";
+"public_keys.evm_address.description" = "Ermöglicht die bloße Überwachung von Brieftaschen mit Assets auf Ethereum, Binance Smart Chain und anderen EVM-basierten Blockchains.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO-based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "Ermöglicht die schreibgeschützte Überwachung von Brieftaschen mit Bitcoin und anderen auf UTXO basierenden Verschlüsselungen (z.B. Litecoin, Bitcoin Cash, Dash, etc.).";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Private Schlüssel";
 "private_keys.evm_private_key" = "EVM privater Schlüssel";
-"private_keys.evm_private_key.description" = "Grants full control over EVM-based crypto i.e. Ethereum, Binance Smart Chain, etc within the respective wallet.";
+"private_keys.evm_private_key.description" = "Gewährt volle Kontrolle über EVM-basierte Kryptos, d.h. Ethereum, Binance Smart Chain etc innerhalb der jeweiligen Wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "Gewährt die volle Kontrolle über die Vermögenswerte auf der jeweiligen Brieftasche.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within the respective wallet.";
+"private_keys.account_extended_private_key.description" = "Gewährt volle Kontrolle über Bitcoin und andere auf UTXO basierende Kryptos, z.B. Litecoin, Bitcoin Cash, Dash, etc. innerhalb der jeweiligen Wallet.";
 
 // Manage Account -> EVM Address
 
@@ -1609,8 +1609,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "add_evm_sync_source.name" = "Name";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Einfacher Auth (optional)";
-"add_evm_sync_source.warning.url_exists" = "RPC Source with this URL already exists";
-"add_evm_sync_source.error.invalid_url" = "The entered URL is invalid. Valid url must have one of the following schemes: https, wss";
+"add_evm_sync_source.warning.url_exists" = "RPC-Quelle mit dieser URL existiert bereits";
+"add_evm_sync_source.error.invalid_url" = "Die eingegebene URL ist ungültig. Gültige URL muss eines der folgenden Schemata haben: http, https, ws, wss";
 
 // Send Settings
 
@@ -1639,11 +1639,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "fee_settings.gas_price.info" = "Die Gebühr für Transaktionen im Netzwerk wird in Gaseinheiten gemessen. Der Gaspreis ist der Betrag, den ein Nutzer für eine Einheit Gas auszugeben bereit ist. Wenn das Netzwerk ausgelastet ist, sind die Gaspreise hoch, und niedrig, wenn es nicht genutzt wird. Ein unzureichender Gaspreis ist oft ein Grund dafür, dass eine Transaktion über einen längeren Zeitraum aussteht.";
 
 "fee_settings.base_fee" = "Basisgebühr";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called the base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.base_fee.info" = "Das Netzwerkprotokoll bestimmt den Basispreis pro Gas für jeden Block, sogenannte Basisgebühren. Sie variiert je nach Netzwerkauslastung von Block zu Block. Sie kann im nächsten Block um nicht mehr als 12,5% steigen oder sinken, was die Gebühren berechenbarer macht. Der hier angezeigte Wert ist die Basisgebühr des aktuellen Blocks.";
 "fee_settings.max_fee_rate" = "Max Gebührenrate";
 "fee_settings.max_fee_rate.info" = "Dies ist der maximale Gesamtpreis pro Gas, den der Nutzer zu zahlen bereit ist. Es muss den Basistarif des Netzwerks und den maximalen Prioritätstarif abdecken. Der hier angezeigte Wert wird anhand einer Schätzung der Basisgebühr des nächsten Blocks plus der vom Nutzer gewählten Maximalgebührengebühr vorgeschlagen. Der tatsächlich gezahlte Gebührensatz ist normalerweise niedriger. Wenn diese Einstellung niedriger als die aktuelle Basisgebühr ist, wird die gezahlte Gebühr begrenzt aber führt zu längeren Wartezeiten für die Bestätigung der Transaktion oder sogar zu einer festgefahrenen Transaktion.";
 "fee_settings.tips" = "Max Prioritätsgebühr";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for the transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips.info" = "Benutzer zahlen Prioritätsgebühren, um eine Transaktion schneller zu bestätigen. Sie werden manchmal als Tipps bezeichnet. Die maximale Prioritätsgebühr ist der maximale Zusatzpreis pro Gas, den der Nutzer zusätzlich zur Basisgebühr zahlen möchte. Der hier angezeigte Wert wird basierend auf vorausgesagten Netzwerkbedingungen vorgeschlagen. Die tatsächliche Prioritätsgebühr wird normalerweise niedriger sein. Die Einstellung auf Null kann zu einer langen Wartezeit führen, bis die Transaktion bestätigt wird, , da er am Ende der Warteschlange aller Benutzer platziert ist.";
 
 "fee_settings.errors.insufficient_balance" = "Unzureichendes Guthaben";
 "fee_settings.errors.unexpected_error" = "Unerwarteter Fehler";
@@ -1775,7 +1775,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting the app or report the error to our support team.";
+"launch.failed_to_launch" = "Anwendung konnte aufgrund eines internen Fehlers nicht gestartet werden. Bitte versuchen Sie die App neu zu starten oder melden Sie den Fehler an unser Support-Team.";
 "launch.failed_to_launch.report" = "Melden";
 
 // Tron
@@ -1784,7 +1784,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tron.send.resources_consumed" = "Verbrauchte Ressourcen";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "The estimated cost of sending a given transaction on the network. (Without excluding Energy, Bandwidth, and Activating Fee)";
+"tron.send.fee.info" = "Die geschätzten Kosten für den Versand einer Transaktion im Netzwerk (ohne Energie-, Bandbreiten- und Aktivierungsgebühren)";
 "tron.send.resources_consumed.info" = "Bandwidth ist die Einheit, die die Größe der in der Blockchain-Datenbank gespeicherten Transaktionsbytes misst. Je größer die Transaktion, desto mehr Ressourcen werden verbraucht.\n\nEnergie ist die Einheit, die die Anzahl der Berechnungen misst, die von der virtuellen TRON-Maschine benötigt werden, um bestimmte Operationen im TRON-Netzwerk durchzuführen.\n\nDa intelligente Vertragsabschlüsse die Verwendung von Rechnerressourcen erfordern, muss für jeden Smart Contract eine Energiegebühr bezahlt werden.";
 "tron.send.activation_fee.info" = "Die Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren.";
 "tron.send.inactive_address" = "Diese Adresse ist nicht aktiv";
