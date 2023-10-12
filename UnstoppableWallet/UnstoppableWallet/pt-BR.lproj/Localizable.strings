@@ -36,7 +36,7 @@
 "alert.wrong_amount" = "Quantia Errada";
 "alert.no_fee" = "Taxa Errada";
 "alert.warning" = "Aviso";
-"alert.notice" = "Notice";
+"alert.notice" = "Aviso";
 "alert.error" = "Erro";
 "alert.unknown_error" = "Erro Desconhecido";
 "alert.success_action" = "Concluído";
@@ -100,11 +100,11 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Immediate";
-"auto_lock.minute1" = "1 minute";
-"auto_lock.minute5" = "5 minutes";
-"auto_lock.minute15" = "15 minutes";
-"auto_lock.minute30" = "30 minutes";
+"auto_lock.immediate" = "Imediato";
+"auto_lock.minute1" = "1 minuto";
+"auto_lock.minute5" = "5 Minutos";
+"auto_lock.minute15" = "15 Minutos";
+"auto_lock.minute30" = "30 Minutos";
 "auto_lock.hour1" = "1 hora";
 
 // Access Camera
@@ -140,22 +140,22 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore_type.title" = "Importar carteira";
 "restore_type.recovery.title" = "da Frase de Recuperação";
 "restore_type.cloud.title" = "do iCloud";
-"restore_type.file.title" = "from Files";
+"restore_type.file.title" = "de Arquivos";
 "restore_type.cex.title" = "da Exchange Wallet";
 
 "restore_type.recovery.description" = "Import like a pro! Recovery phrase or private key, you choose. It's your call, folks!";
 "restore_type.cloud.description" = "Import straight from your keychain, folks. It's like having the keys to the kingdom right at your fingertips!";
-"restore_type.file.description" = "Import a backup file from your local folder.";
-"restore_type.cex.description" = "Connect to a wallet on a centralized exchange.";
+"restore_type.file.description" = "Importar um arquivo de backup da sua pasta local.";
+"restore_type.cex.description" = "Conecte a uma carteira em uma troca centralizada.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Selecionar Backup";
-"restore.cloud.description" = "Select the backup file that you want to restore.";
+"restore.cloud.description" = "Selecione o arquivo de backup que você deseja restaurar.";
 "restore.cloud.empty" = "Can you believe it, folks? No backups found. It's a clean slate, a fresh start!";
-"restore.cloud.wallets" = "Wallet backups";
+"restore.cloud.wallets" = "Backups da Carteira";
 "restore.cloud.imported" = "Carteiras importadas";
-"restore.cloud.app_backups" = "App backups";
+"restore.cloud.app_backups" = "Backups do Aplicativo";
 
 "restore.cloud.password.title" = "Digite a senha";
 "restore.cloud.password.placeholder" = "Fazer Backup da Senha";
@@ -243,8 +243,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
-"backup_prompt.backup_required" = "Backup Required";
+"backup_prompt.backup_recovery_phrase" = "Carteira de Backup";
+"backup_prompt.backup_required" = "Backup necessário";
 "backup_prompt.warning" = "Listen up, folks. You've got to create a backup of that recovery phrase and the password that goes with it. This is your lifeline, in case your phone decides to go rogue – lost, stolen, broken, you name it. Protect your assets, it's the smart play!";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.backup_manual" = "Backup Manual";
@@ -261,7 +261,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup.cloud.name.description" = "Give it a name, folks! This backup file needs an identity. Make it memorable!";
 "backup.cloud.name.empty" = "Whoops, folks! You can't leave that backup name hanging empty. Fill it up with something good!";
 "backup.cloud.name.error.empty" = "Remember, folks, that backup name, it can't be an empty slate. Give it some character!";
-"backup.cloud.name.error.already_exist" = "Backup name already exists!";
+"backup.cloud.name.error.already_exist" = "O nome do backup já existe!";
 "backup.cloud.name.placeholder" = "Nome";
 
 "backup.cloud.password.title" = "Definir Senha";
@@ -740,7 +740,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_overview.roi.year1" = "1 Ano";
 
 "coin_overview.overview" = "Visão geral";
-"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
+"coin_overview.description_warning" = "Esta é uma descrição gerada por IA com base no material de referência fornecido para a criptomoeda em questão. Pode conter erros.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Tipos de moeda";
@@ -1014,7 +1014,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.tab_bar_item" = "Configurações";
 "settings.manage_accounts" = "Gerenciar carteiras";
 "settings.blockchain_settings" = "Configurações da Blockchain";
-"settings.backup_manager" = "Backup Manager";
+"settings.backup_manager" = "Gerenciador de Backup";
 "settings.security" = "Segurança";
 "settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Suporte Pessoal";
@@ -1025,9 +1025,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.info_subtitle" = "aplicativo descentralizado";
 "settings.donate.description" = "Juntos, com o seu apoio, podemos fazer este aplicativo ainda melhor!";
 "settings.donate.title" = "Doar";
-"settings.rate_us" = "Rate Us";
-"settings.tell_friends" = "Tell Friends";
-"settings.contact_us" = "Contact Us";
+"settings.rate_us" = "Avalie-Nos";
+"settings.tell_friends" = "Indique para amigos";
+"settings.contact_us" = "Fale Conosco";
 
 // Settings -> Base Currency
 
@@ -1092,38 +1092,38 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Backup Manager";
-"backup_app.backup_manager.restore" = "Restore Backup";
-"backup_app.backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.title" = "Gerenciador de Backup";
+"backup_app.backup_manager.restore" = "Restaurar Backup";
+"backup_app.backup_manager.create" = "Criar Novo Backup";
 
-"backup_app.backup_type.title" = "Save Backup";
-"backup_app.backup_type.cloud" = "to iCloud";
-"backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
-"backup_app.backup_type.file" = "to Files";
-"backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
+"backup_app.backup_type.title" = "Salvar Backup";
+"backup_app.backup_type.cloud" = "para o iCloud";
+"backup_app.backup_type.cloud.description" = "Salvar um arquivo de cópia de segurança no chaveiro.";
+"backup_app.backup_type.file" = "para Arquivos";
+"backup_app.backup_type.file.description" = "Salvando um arquivo de cópia de segurança em sua pasta local.";
 
-"backup_app.backup_list.title" = "Backup File";
-"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.title" = "Arquivo de backup";
+"backup_app.backup_list.description.restore" = "Lista de conteúdo do arquivo de backup.";
 "backup_app.backup_list.header.wallets" = "Carteiras";
 "backup_app.backup_list.header.other" = "Outros";
 "backup_app.backup_list.other.watch_account.title" = "Ver Endereço";
 "backup_app.backup_list.other.watchlist.title" = "Lista de observação";
 "backup_app.backup_list.other.contacts.title" = "Contatos";
-"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
-"backup_app.backup_list.other.app_settings.title" = "App Settings";
-"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_app.backup_list.other.blockchain_settings.title" = "RPC Personalizado";
+"backup_app.backup_list.other.app_settings.title" = "Configurações do Aplicativo";
+"backup_app.backup_list.other.app_settings.description" = "Linguagem, Moeda, Aparência ...";
 
 "backup_app.backup.disclaimer.cloud.title" = "Backup para o iCloud";
-"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud é um serviço de armazenamento na nuvem fornecido pela Apple. É importante saber que seus dados de backup serão armazenados nos servidores da Apple.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
-"backup_app.backup.disclaimer.file.title" = "Backup to File";
+"backup_app.backup.disclaimer.file.title" = "Backup em arquivo";
 "backup_app.backup.disclaimer.file.description" = "Dispositivos de armazenamento, ou seja, discos rígidos, discos USB, armazenamento em smartphone, etc. são todos vulneráveis a perdas devido a danos físicos, roubo ou outras circunstâncias imprevistas.";
 "backup_app.backup.disclaimer.file.checkbox_label" = "Eu entendo que o roubo ou dano de um dispositivo de backup resultará na perda de um backup de uma respectiva carteira.";
 
 "backup.disclaimer.cloud.title" = "Backup para o iCloud";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.description" = "iCloud é um serviço de armazenamento na nuvem fornecido pela Apple. É importante saber que seus dados de backup serão armazenados nos servidores da Apple.";
 "backup.disclaimer.cloud.checkbox_label" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
-"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.title" = "Backup em arquivo";
 "backup.disclaimer.file.description" = "Dispositivos de armazenamento, ou seja, discos rígidos, discos USB, armazenamento em smartphone, etc. são todos vulneráveis a perdas devido a danos físicos, roubo ou outras circunstâncias imprevistas.";
 "backup.disclaimer.file.checkbox_label" = "Eu entendo que o roubo ou dano de um dispositivo de backup resultará na perda de um backup de uma respectiva carteira.";
 "backup_app.backup.name.title" = "Nome do Backup";
@@ -1148,10 +1148,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings_security.enable_passcode" = "Ativar Senha";
 "settings_security.edit_passcode" = "Editar Senha";
 "settings_security.disable_passcode" = "Desativar Senha";
-"settings_security.auto_lock" = "Auto-Lock";
+"settings_security.auto_lock" = "Auto-Bloqueio";
 "settings_security.balance_auto_hide" = "Ocultar Saldo Automaticamente";
 "settings_security.balance_auto_hide.description" = "Oculta automaticamente o saldo cada vez que o aplicativo é aberto, independentemente das preferências anteriores.";
-"settings_security.enable_duress_mode" = "Set Duress Mode";
+"settings_security.enable_duress_mode" = "Definir modo de dureza";
 "settings_security.edit_duress_passcode" = "Editar Senha do Modo Coação";
 "settings_security.disable_duress_mode" = "Desativar Modo de Coação";
 "settings_security.duress_mode.description" = "Um modo especializado projetado para manter as carteiras selecionadas seguras sob coação.";
@@ -1166,8 +1166,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Duress Mode";
-"enable_duress_mode.intro.description" = "This mode allows users to set up multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
+"enable_duress_mode.intro.title" = "Modo de dureza";
+"enable_duress_mode.intro.description" = "Esta modalidade permite ao usuário configurar várias senhas de desbloqueio de aplicativos, onde uma senha desejada mostra apenas carteiras especificadas. Projetado para manter carteiras selecionadas seguras sob coação ou ameaças.";
 "enable_duress_mode.intro.notes" = "Anotações";
 "enable_duress_mode.intro.biometrics.description" = "O recurso %@ funcionará para desbloquear o Modo de Coação. Você pode desativar %@ por conveniência.";
 "enable_duress_mode.intro.passcode_disabling" = "Desabilitação da Senha";
@@ -1204,11 +1204,11 @@ Go to Settings - > %@ and allow access to the camera.";
 // Unlock
 
 "unlock.title" = "Desbloquear";
-"unlock.passcode" = "Enter Passcode";
+"unlock.passcode" = "Insira a senha";
 "unlock.biometry_reason" = "Desbloquear carteira";
 "unlock.attempts_left" = "Tentativas restantes: %@";
 "unlock.disabled_until" = "Desativar até: %@";
-"unlock.random" = "Random";
+"unlock.random" = "Aleatório";
 
 "security_settings.delete_alert_button" = "Excluir do telefone";
 
@@ -1256,7 +1256,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
+"settings.contact.title" = "Fale Conosco";
 "settings.contact.via_email" = "via E-mail";
 "settings.contact.via_telegram" = "via Telegram";
 
@@ -1474,7 +1474,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "O valor da taxa selecionada é muito baixo e será rejeitado!";
 "ethereum_transaction.error.nonce_already_in_block" = "A transação já foi confirmada!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee is not enough to replace the transaction";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Taxa insuficiente para substituir a transação";
 "ethereum_transaction.error.transaction_underpriced" = "Taxa insuficiente para realizar transação";
 "ethereum_transaction.error.tips_higher_than_max_fee" = "Taxa máxima não pode ser inferior à dica, porque a taxa máxima inclui as dicas.";
 "ethereum_transaction.error.reverted" = "A transação não pode ser executada: %@";
@@ -1504,7 +1504,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.paired_dapps.title" = "dApps pareados";
 "wallet_connect.paired_dapps.cant_disconnect" = "Não foi possível desconectar";
 "wallet_connect.paired_dapps.disconnect_all" = "Excluir Tudo";
-"wallet_connect.pending_requests.nonactive_footer" = "To open a request you must activate the desired wallet";
+"wallet_connect.pending_requests.nonactive_footer" = "Para abrir um pedido você deve ativar a carteira desejada";
 
 // App Status
 
@@ -1522,7 +1522,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Pendente";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that the status of an individual transaction in %@ wallet interface is typically updated with a short delay.";
+"status_info.pending.content" = "A transação ainda não foi confirmada no blockchain. As transações enviadas com uma configuração de taxas recomendada ou maior são geralmente processadas dentro de alguns minutos. Transações enviadas com uma taxa baixa podem permanecer pendentes por algumas horas ou até mesmo dias, e podem até mesmo ser rejeitadas. Note que o status de uma transação individual na interface de carteira %@ tipicamente atualizado com um curto atraso.";
 "status_info.processing.title" = "Processando";
 "status_info.processing.content" = "A transação já foi incluída na blockchain, mas ainda não atingiu a finalidade permanente. Neste ponto, é seguro considerar a transação como concluída para pagamentos menores. Para pagamentos maiores, é recomendado esperar até que o status da transação seja alterado.";
 "status_info.completed.title" = "Concluído";
