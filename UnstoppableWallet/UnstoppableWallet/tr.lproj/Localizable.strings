@@ -1109,7 +1109,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup_app.backup_list.other.watch_account.title" = "Cüzdan İzle";
 "backup_app.backup_list.other.watchlist.title" = "İzleme Listesi";
 "backup_app.backup_list.other.contacts.title" = "Kişiler";
-"backup_app.backup_list.other.blockchain_settings.title" = "Blockchain Ayarları";
+"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
 "backup_app.backup_list.other.app_settings.title" = "App Settings";
 "backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
 
