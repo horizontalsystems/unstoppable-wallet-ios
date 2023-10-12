@@ -303,7 +303,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Buscando transacciones…";
-"balance.stopped" = "Stopped";
+"balance.stopped" = "Detenido";
 "balance.downloading_sapling" = "Descargando Sapling... %d%%";
 "balance.downloading_blocks" = "Descargando bloques";
 "balance.scanning_blocks" = "Bloques de escaneo";
@@ -416,13 +416,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.hodler_locktime_off" = "Apagado";
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
 "send.fee_info.title" = "Tasa de comisión";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within a reasonable amount of time.\n\nThe recommended fee rate is shown as the amount of satoshi the user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting a higher fee rate.";
+"send.fee_info.description" = "Las blockchains requieren que los usuarios paguen tarifas de red al enviar transacciones. Estas tarifas son más altas cuando hay muchas transacciones ocurriendo en la red.\n\nLa billetera %@ estima la tarifa basada en la actividad actual de la blockchain y recomienda el valor óptimo para que la transacción sea procesada en un tiempo razonable.\n\nLa tarifa recomendada se muestra en la cantidad de satoshis que el usuario debe pagar por cada byte de la transacción. Por lo tanto, la tarifa total depende del tamaño total de la transacción, que se mide en bytes.\n\nLos usuarios pueden utilizar los controles proporcionados para aumentar o disminuir el valor de la tarifa. El cambio en la tarifa afecta el monto total de la tarifa que el usuario pagará por la transacción.\n\nEstablecer una tarifa por debajo del valor recomendado puede resultar en que la transacción quede pendiente durante horas o sea rechazada. Cuanto menor sea el valor, más tiempo llevará confirmar la transacción. Para transacciones donde la prioridad es importante, recomendamos establecer una tarifa más alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / salidas de transacciones";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.description" = "La mayoría de las transacciones de Bitcoin, así como las transacciones en criptomonedas similares como Bitcoin Cash, Dash y Litecoin, generan dos salidas. Una salida es la cantidad que va al receptor y la otra es la salida de cambio que se devuelve al remitente. La forma en que la mayoría de las billeteras construyen las transacciones facilita que un tercero comprenda cuál de las salidas fue para el destinatario y cuál fue la cantidad de cambio devuelta al remitente. Dado que la salida devuelta al remitente se utiliza posteriormente en transacciones futuras, se hace evidente una conexión entre estas dos transacciones.\n\nLa billetera %@ implementa medidas para dificultar que alguien descubra cuál es la salida correspondiente a cada parte.\n\nExisten dos opciones disponibles para los usuarios de %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, considere esta una opción recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Hay un estándar comúnmente acordado para ordenar salidas de transacciones (conocido como BIP69). En las carteras de código abierto, ese estándar asegura que los usuarios de cartera no necesitan confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Como este estándar es nuevo, no muchas billeteras lo han implementado todavía. Como resultado, es algo posible ver en el blockchain si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
 
 "send.confirmation.you_send" = "Usted envía";
 "send.confirmation.to" = "Para";
@@ -437,9 +437,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
 "send.confirmation.sending" = "Enviar";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.resend" = "Reenviar";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new 0 amount transaction to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.cancel" = "Cancelar la transacción";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Método";
@@ -740,7 +740,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_overview.roi.year1" = "1 Año";
 
 "coin_overview.overview" = "Información General";
-"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
+"coin_overview.description_warning" = "Esta es una descripción generada por IA basada en el material de referencia proporcionado para la criptomoneda dada. Puede contener errores.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Tipo de moneda";
@@ -783,7 +783,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over a 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "Volumen DEX";
@@ -814,7 +814,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank is based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
 "coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "Número de transacciones";
@@ -847,11 +847,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "coin_analytics.project_fee" = "Tarifa del proyecto";
 "coin_analytics.project_fee_rank" = "Rango de tarifa del proyecto";
-"coin_analytics.project_fee_rank.description" = "Tokens are ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee_rank.description" = "Las fichas se clasifican de acuerdo a las tarifas generadas por los proyectos respectivos. La forma en que se cobran los honorarios varía de un proyecto a otro.";
 
 "coin_analytics.project_revenue" = "Ingresos del Proyecto";
 "coin_analytics.project_revenue_rank" = "Rango de Ingresos del Proyecto";
-"coin_analytics.project_revenue_rank.description" = "Tokens are ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue_rank.description" = "Las fichas clasificadas por los ingresos generados para los titulares a través de mecanismos como estocar o quemar fichas.";
 
 "coin_analytics.other_data" = "Otros Datos";
 
@@ -1014,7 +1014,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.tab_bar_item" = "Ajustes";
 "settings.manage_accounts" = "Gestionar monederos";
 "settings.blockchain_settings" = "Configuración de Blockchain";
-"settings.backup_manager" = "Backup Manager";
+"settings.backup_manager" = "Gestor de copias de seguridad";
 "settings.security" = "Seguridad";
 "settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Soporte personal";
@@ -1034,7 +1034,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.base_currency.title" = "Moneda principal";
 "settings.base_currency.other" = "Otro";
 "settings.base_currency.disclaimer" = "Descargo de responsabilidad";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third-party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Los datos del tipo de cambio proporcionados por un servicio de terceros Coingecko. om\n\nLa aplicación %@ Walleta no garantiza que estos valores sean siempre correctos y coincidan con los datos del mercado. La probabilidad de una inconsistencia es mayor si usted selecciona cualquier moneda base que no sea %@.";
 "settings.base_currency.disclaimer.set" = "Fijar";
 
 // Settings -> Manage Wallet
@@ -1044,7 +1044,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
 "manage_wallets.contract_address" = "Dirección del contrato";
 "manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes %@ monederos pueden usar para recibir pagos entrantes:\n\n- BIP44 (más antiguo)\n- BIP49\n- BIP84 (recomendado)\n- BIP86 (más reciente)\n\nMientras que %@ monedero soporta los 4, recomienda utilizar una cartera %@ que opere en formato BIP84.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends using a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección de monederos Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n- TYPE 0 (más antiguo)\n- TYPE 145 (más reciente)\n\nMientras que el monedero %@ soporta ambos se recomienda usar un monedero Bitcoin Cash que opere en formato TYPE 145.";
 
 // Settings -> Personal Support
 
@@ -1092,38 +1092,38 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Backup Manager";
-"backup_app.backup_manager.restore" = "Restore Backup";
-"backup_app.backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.title" = "Gestor de copias de seguridad";
+"backup_app.backup_manager.restore" = "Restaurar copia de seguridad";
+"backup_app.backup_manager.create" = "Crear nueva copia de seguridad";
 
-"backup_app.backup_type.title" = "Save Backup";
-"backup_app.backup_type.cloud" = "to iCloud";
-"backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
-"backup_app.backup_type.file" = "to Files";
-"backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
+"backup_app.backup_type.title" = "Guardar copia de seguridad";
+"backup_app.backup_type.cloud" = "A iCloud";
+"backup_app.backup_type.cloud.description" = "Guardando un archivo de copia de seguridad en el llavero.";
+"backup_app.backup_type.file" = "a archivos";
+"backup_app.backup_type.file.description" = "Guardando un archivo de copia de seguridad en su carpeta local.";
 
-"backup_app.backup_list.title" = "Backup File";
-"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.title" = "Copia de seguridad";
+"backup_app.backup_list.description.restore" = "Lista de contenidos en el archivo de copia de seguridad.";
 "backup_app.backup_list.header.wallets" = "Monederos";
 "backup_app.backup_list.header.other" = "Otro";
 "backup_app.backup_list.other.watch_account.title" = "Ver Monedero";
 "backup_app.backup_list.other.watchlist.title" = "Lista de Seguimiento";
 "backup_app.backup_list.other.contacts.title" = "Contactos";
-"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
-"backup_app.backup_list.other.app_settings.title" = "App Settings";
-"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_app.backup_list.other.blockchain_settings.title" = "RPC personalizado";
+"backup_app.backup_list.other.app_settings.title" = "Ajustes de app";
+"backup_app.backup_list.other.app_settings.description" = "Idioma, moneda, Apariencia ...";
 
 "backup_app.backup.disclaimer.cloud.title" = "Copia de seguridad en iCloud";
-"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud es un servicio de almacenamiento en la nube proporcionado por Apple. Es importante saber que los datos de la copia de seguridad se almacenarán en los servidores de Apple.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
-"backup_app.backup.disclaimer.file.title" = "Backup to File";
+"backup_app.backup.disclaimer.file.title" = "Copia de seguridad en archivo";
 "backup_app.backup.disclaimer.file.description" = "Los dispositivos de almacenamiento, como los discos duros, los discos USB y el almacenamiento en smartphones, son todos vulnerables a pérdidas debido a daños físicos, robos u otras circunstancias imprevisibles.";
 "backup_app.backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de copia de seguridad resultará en la pérdida de una copia de seguridad a una cartera respectiva.";
 
 "backup.disclaimer.cloud.title" = "Copia de seguridad en iCloud";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.description" = "iCloud es un servicio de almacenamiento en la nube proporcionado por Apple. Es importante saber que los datos de la copia de seguridad se almacenarán en los servidores de Apple.";
 "backup.disclaimer.cloud.checkbox_label" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
-"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.title" = "Copia de seguridad en archivo";
 "backup.disclaimer.file.description" = "Los dispositivos de almacenamiento, como los discos duros, los discos USB y el almacenamiento en smartphones, son todos vulnerables a pérdidas debido a daños físicos, robos u otras circunstancias imprevisibles.";
 "backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de copia de seguridad resultará en la pérdida de una copia de seguridad a una cartera respectiva.";
 "backup_app.backup.name.title" = "Nombre de copia de seguridad";
@@ -1145,70 +1145,70 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Settings -> Security
 
 "settings_security.title" = "Seguridad";
-"settings_security.enable_passcode" = "Enable Passcode";
-"settings_security.edit_passcode" = "Edit Passcode";
-"settings_security.disable_passcode" = "Disable Passcode";
-"settings_security.auto_lock" = "Auto-Lock";
-"settings_security.balance_auto_hide" = "Balance Auto Hide";
-"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
-"settings_security.enable_duress_mode" = "Set Duress Mode";
-"settings_security.edit_duress_passcode" = "Edit Duress Passcode";
-"settings_security.disable_duress_mode" = "Disable Duress Mode";
-"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
+"settings_security.enable_passcode" = "Activar contraseña";
+"settings_security.edit_passcode" = "Editar el código";
+"settings_security.disable_passcode" = "Desactivar bloqueo con código";
+"settings_security.auto_lock" = "Bloqueo automático";
+"settings_security.balance_auto_hide" = "Saldo Auto Ocultar";
+"settings_security.balance_auto_hide.description" = "Oculta automáticamente el balance cada vez que se abre la aplicación, independientemente de las preferencias anteriores.";
+"settings_security.enable_duress_mode" = "Establecer modo de Duración";
+"settings_security.edit_duress_passcode" = "Editar contraseña de Duración";
+"settings_security.disable_duress_mode" = "Desactivar modo Duración";
+"settings_security.duress_mode.description" = "Un modo especializado diseñado para mantener las billeteras seleccionadas a salvo bajo coacción.";
 
 // Create Passcode
 
-"create_passcode.title" = "Create Passcode";
+"create_passcode.title" = "Crear contraseña";
 "create_passcode.description" = "Su código servirá para abrir su monedero y enviar dinero";
-"create_passcode.description.biometry" = "Set a passcode to enable %@";
-"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.description.biometry" = "Establecer un código de acceso para habilitar %@";
+"create_passcode.description.duress_mode" = "Establecer un código de acceso para activar el modo Duración";
 "create_passcode.confirm_passcode" = "Confirmar";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Duress Mode";
-"enable_duress_mode.intro.description" = "This mode allows users to set up multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
-"enable_duress_mode.intro.notes" = "Notes";
-"enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
-"enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
-"enable_duress_mode.intro.passcode_disabling.description" = "Disabling the passcode in the main mode will automatically reset the Duress Mode.";
-"enable_duress_mode.intro.passcode_change" = "Passcode Change";
-"enable_duress_mode.intro.passcode_change.description" = "Changing the passcode in the Duress Mode will also change the current passcode code for that mode.";
+"enable_duress_mode.intro.title" = "Modo Duración";
+"enable_duress_mode.intro.description" = "Este modo permite a los usuarios configurar múltiples códigos de acceso de la aplicación de desbloqueo donde un código de acceso deseado sólo muestra las carteras especificadas. Diseñado para mantener seguros las carteras seleccionadas bajo coerción o amenazas.";
+"enable_duress_mode.intro.notes" = "Notas";
+"enable_duress_mode.intro.biometrics.description" = "La función %@ funcionará para desbloquear el Modo Duración. Puede desactivar %@ para mayor comodidad.";
+"enable_duress_mode.intro.passcode_disabling" = "Desactivando contraseña";
+"enable_duress_mode.intro.passcode_disabling.description" = "Deshabilitar el código de acceso en el modo principal restablecerá automáticamente el modo Duración.";
+"enable_duress_mode.intro.passcode_change" = "Cambiar contraseña";
+"enable_duress_mode.intro.passcode_change.description" = "Cambiar el código de acceso en el modo Duress también cambiará el código de acceso actual para ese modo.";
 
-"enable_duress_mode.select.title" = "Select Wallets";
-"enable_duress_mode.select.description" = "Select the wallets that will be displayed in Duress Mode.";
+"enable_duress_mode.select.title" = "Seleccionar carteras";
+"enable_duress_mode.select.description" = "Seleccione las carteras que se mostrarán en Modo Duración.";
 "enable_duress_mode.select.wallets" = "Monederos";
 "enable_duress_mode.select.watch_wallets" = "Ver Monedero";
 
-"enable_duress_mode.passcode.title" = "Duress Passcode";
-"enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
+"enable_duress_mode.passcode.title" = "Durar contraseña";
+"enable_duress_mode.passcode.description" = "Establecer un código de acceso para el modo Duress";
 "enable_duress_mode.passcode.confirm" = "Confirmar";
 
 // Edit Passcode
 
-"edit_passcode.title" = "Edit Passcode";
-"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.title" = "Editar el código";
+"edit_passcode.enter_new_passcode" = "Introducir nueva contraseña";
 "edit_passcode.confirm_new_passcode" = "Confirmar";
 
 // Edit Duress Passcode
 
-"edit_duress_passcode.title" = "Edit Duress Passcode";
-"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.title" = "Editar contraseña de Duración";
+"edit_duress_passcode.enter_new_passcode" = "Introduzca una nueva contraseña para el modo Duress";
 "edit_duress_passcode.confirm_new_passcode" = "Confirmar";
 
 // Set Passcode
 
-"set_passcode.invalid_confirmation" = "Invalid confirmation";
-"set_passcode.already_used" = "This passcode is already being used";
+"set_passcode.invalid_confirmation" = "Confirmación no válida";
+"set_passcode.already_used" = "Este código de acceso ya está siendo usado";
 
 // Unlock
 
-"unlock.title" = "Unlock";
-"unlock.passcode" = "Enter Passcode";
-"unlock.biometry_reason" = "Unlock wallet";
+"unlock.title" = "Desbloquear";
+"unlock.passcode" = "Introducir código";
+"unlock.biometry_reason" = "Desbloquear cartera";
 "unlock.attempts_left" = "Intentos restantes: %@";
 "unlock.disabled_until" = "Inhabilitado hasta: %@";
-"unlock.random" = "Random";
+"unlock.random" = "Aleatorio";
 
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
 
@@ -1643,7 +1643,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.max_fee_rate" = "Tarifa máxima";
 "fee_settings.max_fee_rate.info" = "Este es el precio total máximo por gas que el usuario está dispuesto a pagar. Debe cubrir la tarifa base de la red y la tarifa máxima de prioridad. El valor mostrado aquí se sugiere basado en una estimación de la tasa de comisión base del próximo bloque más la tasa de prioridad máxima elegida por el usuario. La tarifa real pagada normalmente será más baja. Establecer esto más bajo que la tarifa base actual limitará la comisión pagada, pero resultará en tiempos de espera más largos para que la transacción sea confirmada, o incluso en una transacción estancada.";
 "fee_settings.tips" = "Tarifa Máxima de prioridad";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for the transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
 "fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
 "fee_settings.errors.unexpected_error" = "Error inesperado";
