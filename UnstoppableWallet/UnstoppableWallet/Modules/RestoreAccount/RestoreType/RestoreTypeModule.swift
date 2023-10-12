@@ -1,10 +1,9 @@
-import UIKit
 import ThemeKit
+import UIKit
 
 struct RestoreTypeModule {
-
-    static func viewController(sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
-        let viewModel = RestoreTypeViewModel(cloudAccountBackupManager: App.shared.cloudBackupManager)
+    static func viewController(type: BackupModule.Source.Abstract, sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
+        let viewModel = RestoreTypeViewModel(cloudAccountBackupManager: App.shared.cloudBackupManager, sourceType: type)
         let viewController = RestoreTypeViewController(viewModel: viewModel, returnViewController: returnViewController)
         let module = ThemeNavigationController(rootViewController: viewController)
 
@@ -14,5 +13,13 @@ struct RestoreTypeModule {
             return TermsModule.viewController(sourceViewController: sourceViewController, moduleToOpen: module)
         }
     }
+}
 
+extension RestoreTypeModule {
+    enum RestoreType: CaseIterable {
+        case recoveryOrPrivateKey
+        case cloudRestore
+        case fileRestore
+        case cex
+    }
 }

@@ -140,8 +140,8 @@ class BitcoinBaseAdapter {
     }
 
     private func balanceData(balanceInfo: BalanceInfo) -> BalanceData {
-        BalanceData(
-                balance: Decimal(balanceInfo.spendable) / coinRate,
+        LockedBalanceData(
+                available: Decimal(balanceInfo.spendable) / coinRate,
                 locked: Decimal(balanceInfo.unspendable) / coinRate
         )
     }
@@ -389,6 +389,6 @@ class DepositAddress {
     let address: String
 
     init(_ receiveAddress: String) {
-        self.address = receiveAddress
+        address = receiveAddress
     }
 }

@@ -103,8 +103,11 @@ class WalletTokenListDataSource: NSObject {
 
         if let tableView {
             updateIndexes.forEach {
-                if let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: $0, section: 0)),
-                   let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenCell {
+                let indexPath = IndexPath(row: $0, section: 0)
+                let originalIndexPath = delegate?
+                    .originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+
+                if let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenCell {
                     let hideTopSeparator = originalIndexPath.row == 0 && originalIndexPath.section != 0
                     bind(cell: cell, index: $0, hideTopSeparator: hideTopSeparator, animated: true)
                 }
@@ -163,7 +166,7 @@ extension WalletTokenListDataSource: ISectionDataSource {
         }
 
         subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
-        subscribe(disposeBag, viewModel.showSyncingSignal) { HudHelper.instance.show(banner: .attention(string: "Wait for synchronization")) }
+        subscribe(disposeBag, viewModel.showSyncingSignal) { HudHelper.instance.show(banner: .attention(string: "wait_for_synchronization".localized)) }
         subscribe(disposeBag, viewModel.selectWalletSignal) { [weak self] in self?.onSelect(wallet: $0) }
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
 

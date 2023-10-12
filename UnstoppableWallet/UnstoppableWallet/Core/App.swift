@@ -2,11 +2,10 @@ import CurrencyKit
 import Foundation
 import GRDB
 import HsToolKit
+import LanguageKit
 import MarketKit
-import PinKit
 import StorageKit
 import ThemeKit
-import LanguageKit
 
 class App {
     static var instance: App?
@@ -20,7 +19,13 @@ class App {
     }
 
     let keychainKit: IKeychainKit
-    let pinKit: PinKit.Kit
+
+    let passcodeManager: PasscodeManager
+    let biometryManager: BiometryManager
+    let lockManager: LockManager
+    let lockoutManager: LockoutManager
+
+    let blurManager: BlurManager
 
     let currencyKit: CurrencyKit.Kit
 
@@ -62,6 +67,7 @@ class App {
     let evmSyncSourceManager: EvmSyncSourceManager
     let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
+    let binanceKitManager: BinanceKitManager
     let tronAccountManager: TronAccountManager
 
     let restoreSettingsManager: RestoreSettingsManager
@@ -72,7 +78,7 @@ class App {
     var debugLogger: DebugLogger?
     let logger: Logger
 
-    let appStatusManager: AppStatusManager
+    let appVersionStorage: AppVersionStorage
     let appVersionManager: AppVersionManager
 
     let testNetManager: TestNetManager
@@ -81,7 +87,7 @@ class App {
     let kitCleaner: KitCleaner
 
     let keychainKitDelegate: KeychainKitDelegate
-    let pinKitDelegate: PinKitDelegate
+    let lockDelegate = LockDelegate()
 
     let rateAppManager: RateAppManager
     let guidesManager: GuidesManager
@@ -152,11 +158,17 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager()
 
+        biometryManager = BiometryManager(localStorage: StorageKit.LocalStorage.default)
+        passcodeManager = PasscodeManager(biometryManager: biometryManager, secureStorage: keychainKit.secureStorage)
+        lockManager = LockManager(passcodeManager: passcodeManager, localStorage: StorageKit.LocalStorage.default, delegate: lockDelegate)
+        lockoutManager = LockoutManager(secureStorage: keychainKit.secureStorage)
+
+        blurManager = BlurManager(lockManager: lockManager)
+
         let accountRecordStorage = AccountRecordStorage(dbPool: dbPool)
         let accountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: accountRecordStorage)
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
-        let accountCachedStorage = AccountCachedStorage(accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
-        accountManager = AccountManager(storage: accountCachedStorage)
+        accountManager = AccountManager(passcodeManager: passcodeManager, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
         accountFactory = AccountFactory(accountManager: accountManager)
 
@@ -185,7 +197,7 @@ class App {
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager, marketKit: marketKit)
         evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
-        let binanceKitManager = BinanceKitManager()
+        binanceKitManager = BinanceKitManager()
         let tronKitManager = TronKitManager(testNetManager: testNetManager)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager)
 
@@ -239,32 +251,12 @@ class App {
         let favoriteCoinRecordStorage = FavoriteCoinRecordStorage(dbPool: dbPool)
         favoritesManager = FavoritesManager(storage: favoriteCoinRecordStorage)
 
-        pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
-        let blurManager = BlurManager(pinKit: pinKit)
-
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
-        let appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
-
-        appStatusManager = AppStatusManager(
-            systemInfoManager: systemInfoManager,
-            storage: appVersionStorage,
-            accountManager: accountManager,
-            walletManager: walletManager,
-            adapterManager: adapterManager,
-            logRecordManager: logRecordManager,
-            restoreSettingsManager: restoreSettingsManager,
-            evmBlockchainManager: evmBlockchainManager,
-            binanceKitManager: binanceKitManager,
-            marketKit: marketKit
-        )
-
+        appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
         keychainKit.set(delegate: keychainKitDelegate)
-
-        pinKitDelegate = PinKitDelegate()
-        pinKit.set(delegate: pinKitDelegate)
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
@@ -308,36 +300,36 @@ class App {
 
         let chartRepository = ChartIndicatorsRepository(localStorage: localStorage, subscriptionManager: subscriptionManager)
         appBackupProvider = AppBackupProvider(
-                accountManager: accountManager,
-                accountFactory: accountFactory,
-                walletManager: walletManager,
-                favoritesManager: favoritesManager,
-                evmSyncSourceManager: evmSyncSourceManager,
-                btcBlockchainManager: btcBlockchainManager,
-                restoreSettingsManager: restoreSettingsManager,
-                chartRepository: chartRepository,
-                localStorage: localStorage,
-                languageManager: LanguageManager.shared,
-                currencyKit: currencyKit,
-                themeManager: themeManager,
-                launchScreenManager: launchScreenManager,
-                appIconManager: appIconManager,
-                balancePrimaryValueManager: balancePrimaryValueManager,
-                balanceConversionManager: balanceConversionManager,
-                balanceHiddenManager: balanceHiddenManager,
-                contactManager: contactManager
+            accountManager: accountManager,
+            accountFactory: accountFactory,
+            walletManager: walletManager,
+            favoritesManager: favoritesManager,
+            evmSyncSourceManager: evmSyncSourceManager,
+            btcBlockchainManager: btcBlockchainManager,
+            restoreSettingsManager: restoreSettingsManager,
+            chartRepository: chartRepository,
+            localStorage: localStorage,
+            languageManager: LanguageManager.shared,
+            currencyKit: currencyKit,
+            themeManager: themeManager,
+            launchScreenManager: launchScreenManager,
+            appIconManager: appIconManager,
+            balancePrimaryValueManager: balancePrimaryValueManager,
+            balanceConversionManager: balanceConversionManager,
+            balanceHiddenManager: balanceHiddenManager,
+            contactManager: contactManager
         )
         cloudBackupManager = CloudBackupManager(
-                ubiquityContainerIdentifier: AppConfig.sharedCloudContainer,
-                appBackupProvider: appBackupProvider,
-                logger: logger
+            ubiquityContainerIdentifier: AppConfig.sharedCloudContainer,
+            appBackupProvider: appBackupProvider,
+            logger: logger
         )
 
         appManager = AppManager(
             accountManager: accountManager,
             walletManager: walletManager,
             adapterManager: adapterManager,
-            pinKit: pinKit,
+            lockManager: lockManager,
             keychainKit: keychainKit,
             blurManager: blurManager,
             kitCleaner: kitCleaner,

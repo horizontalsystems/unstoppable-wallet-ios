@@ -16,6 +16,7 @@ extension HudHelper {
         case saved
         case savedToCloud
         case done
+        case restored
         case created
         case imported
         case walletAdded
@@ -51,6 +52,7 @@ extension HudHelper {
             case .saved: image = UIImage(named: "download_24")
             case .savedToCloud: image = UIImage(named: "icloud_24")
             case .done: image = UIImage(named: "circle_check_24")
+            case .restored: image = UIImage(named: "download_24")
             case .created: image = UIImage(named: "add_to_wallet_24")
             case .imported: image = UIImage(named: "add_to_wallet_2_24")
             case .walletAdded: image = UIImage(named: "binocule_24")
@@ -74,7 +76,7 @@ extension HudHelper {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
             case .removedFromWallet, .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
-            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .created, .imported, .walletAdded, .enabled, .success: return .themeRemus
+            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
@@ -91,6 +93,7 @@ extension HudHelper {
             case .saved: return "alert.saved".localized
             case .savedToCloud: return "alert.saved_to_icloud".localized
             case .done: return "alert.success_action".localized
+            case .restored: return "alert.restored".localized
             case .created: return "alert.created".localized
             case .imported: return "alert.imported".localized
             case .walletAdded: return "alert.wallet_added".localized
@@ -117,7 +120,7 @@ extension HudHelper {
 
         var showingTime: TimeInterval? {
             switch self {
-            case .waitingForSession, .disconnectingWalletConnect, .enabling: return nil
+            case .waitingForSession, .disconnectingWalletConnect, .sending, .enabling: return nil
             default: return 2
             }
         }

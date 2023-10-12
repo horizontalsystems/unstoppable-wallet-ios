@@ -125,26 +125,10 @@ extension WalletConnectAppShowView {
                 ]
             )
         case let .unbackupedAccount(account):
-            viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "backup_required.title".localized,
-                items: [
-                    .highlightedDescription(text: "wallet_connect.unbackuped_account.description".localized(account.name)),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "backup_prompt.backup".localized, actionType: .afterClose) { [weak sourceViewController] in
-                        guard let viewController = BackupModule.manualViewController(account: account) else {
-                            return
-                        }
-
-                        sourceViewController?.present(viewController, animated: true)
-                    },
-                    .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak sourceViewController] in
-                        let viewController = BackupModule.cloudViewController(account: account)
-                        sourceViewController?.present(viewController, animated: true)
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized),
-                ]
+            viewController = BottomSheetModule.backupRequiredPrompt(
+                description: "wallet_connect.unbackuped_account.description".localized(account.name),
+                account: account,
+                sourceViewController: sourceViewController
             )
         }
 

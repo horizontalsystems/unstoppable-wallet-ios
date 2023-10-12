@@ -51,7 +51,7 @@ class CoinSelectService {
                 return nil
             }
 
-            return (token: wallet.token, balance: adapter.balanceData.balance)
+            return (token: wallet.token, balance: adapter.balanceData.available)
         }
 
         return balanceCoins.map { token, balance -> Item in

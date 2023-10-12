@@ -59,7 +59,7 @@ extension Eip20Adapter: IBalanceAdapter {
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
         eip20Kit.balanceObservable.map { [weak self] in
-            self?.balanceData(balance: $0) ?? BalanceData(balance: 0)
+            self?.balanceData(balance: $0) ?? BalanceData(available: 0)
         }
     }
 

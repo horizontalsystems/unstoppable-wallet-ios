@@ -76,7 +76,7 @@ class SendEvmService {
             throw AmountError.invalidDecimal
         }
 
-        guard amount <= adapter.balanceData.balance else {
+        guard amount <= adapter.balanceData.available else {
             throw AmountError.insufficientBalance
         }
 
@@ -100,7 +100,7 @@ extension SendEvmService {
 extension SendEvmService: IAvailableBalanceService {
 
     var availableBalance: DataStatus<Decimal> {
-        .completed(adapter.balanceData.balance)
+        .completed(adapter.balanceData.available)
     }
 
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
@@ -120,7 +120,7 @@ extension SendEvmService: IAmountInputService {
     }
 
     var balance: Decimal? {
-        adapter.balanceData.balance
+        adapter.balanceData.available
     }
 
     var amountObservable: Observable<Decimal> {
@@ -132,7 +132,7 @@ extension SendEvmService: IAmountInputService {
     }
 
     var balanceObservable: Observable<Decimal?> {
-        .just(adapter.balanceData.balance)
+        .just(adapter.balanceData.available)
     }
 
     func onChange(amount: Decimal) {
@@ -141,7 +141,7 @@ extension SendEvmService: IAmountInputService {
                 evmAmount = try validEvmAmount(amount: amount)
 
                 var amountWarning: AmountWarning? = nil
-                if amount.isEqual(to: adapter.balanceData.balance) {
+                if amount.isEqual(to: adapter.balanceData.available) {
                     switch sendToken.type {
                     case .native: amountWarning = AmountWarning.coinNeededForFee
                     default: ()

@@ -4,7 +4,7 @@ struct HorizontalDivider: View {
     private let color: Color
     private let height: CGFloat
 
-    init(color: Color = .themeSteel10, height: CGFloat = 1) {
+    init(color: Color = .themeSteel10, height: CGFloat = .heightOneDp) {
         self.color = color
         self.height = height
     }
@@ -12,5 +12,4 @@ struct HorizontalDivider: View {
     var body: some View {
         color.frame(height: height)
     }
-
 }

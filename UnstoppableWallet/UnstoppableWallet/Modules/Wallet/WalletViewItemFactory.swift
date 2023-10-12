@@ -9,6 +9,7 @@ class WalletViewItemFactory {
 
     private func topViewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool) -> BalanceTopViewItem {
         let state = item.state
+        let sendEnabled = state.spendAllowed(beforeSync: item.balanceData.sendBeforeSync)
 
         return BalanceTopViewItem(
                 isMainNet: item.isMainNet,
@@ -19,6 +20,7 @@ class WalletViewItemFactory {
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),
+                sendEnabled: sendEnabled,
                 primaryValue: balanceHidden ? nil : primaryValue(item: item, balancePrimaryValue: balancePrimaryValue),
                 secondaryInfo: secondaryInfo(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
         )
@@ -29,6 +31,12 @@ class WalletViewItemFactory {
             return .syncing(progress: progress, syncedUntil: lastBlockDate.map { DateHelper.instance.formatSyncedThroughDate(from: $0) })
         } else if case let .customSyncing(main, secondary, _) = item.state {
             return .customSyncing(main: main, secondary: secondary)
+        } else if case .stopped = item.state {
+            return .amount(viewItem: BalanceSecondaryAmountViewItem(
+                    descriptionValue: (text: "balance.stopped".localized, dimmed: false),
+                    secondaryValue: nil,
+                    diff: nil
+            ))
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
                     descriptionValue: rateValue(rateItem: item.priceItem),
@@ -61,7 +69,7 @@ class WalletViewItemFactory {
 
     private func indefiniteSearchCircle(state: AdapterState) -> Bool {
         switch state {
-        case .customSyncing: return true
+        case .customSyncing(_, _, let progress): return progress == nil
         default: return false
         }
     }

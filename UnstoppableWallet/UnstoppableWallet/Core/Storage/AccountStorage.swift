@@ -83,10 +83,12 @@ class AccountStorage {
 
         return Account(
                 id: id,
+                level: record.level,
                 name: record.name,
                 type: type,
                 origin: origin,
-                backedUp: record.backedUp
+                backedUp: record.backedUp,
+                fileBackedUp: record.fileBackedUp
         )
     }
 
@@ -126,10 +128,12 @@ class AccountStorage {
 
         return AccountRecord(
                 id: id,
+                level: account.level,
                 name: account.name,
                 type: typeName.rawValue,
                 origin: account.origin.rawValue,
                 backedUp: account.backedUp,
+                fileBackedUp: account.fileBackedUp,
                 wordsKey: wordsKey,
                 saltKey: saltKey,
                 dataKey: dataKey,

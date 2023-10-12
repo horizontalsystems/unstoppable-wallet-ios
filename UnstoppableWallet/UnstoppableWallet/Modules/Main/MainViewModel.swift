@@ -120,10 +120,6 @@ extension MainViewModel {
         service.setMainShownOnce()
     }
 
-    func onReleaseNotesShown() {
-        releaseNotesService.updateStoredVersion()
-    }
-
     func onSuccessJailbreakAlert() {
         jailbreakService.setAlertShown()
     }

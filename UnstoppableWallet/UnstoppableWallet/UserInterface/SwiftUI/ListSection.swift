@@ -1,15 +1,18 @@
 import SwiftUI
 
 struct ListSection<Content: View>: View {
+    @Environment(\.listStyle) var listStyle
+
     @ViewBuilder let content: Content
 
     var body: some View {
         VStack(spacing: 0) {
             _VariadicView.Tree(Layout()) {
-                        content
-                    }
-                    .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
-                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+                content
+            }
+            .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(listStyle.backgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: .cornerRadius12).stroke(listStyle.borderColor, lineWidth: .heightOneDp))
         }
     }
 
@@ -29,5 +32,4 @@ struct ListSection<Content: View>: View {
             }
         }
     }
-
 }

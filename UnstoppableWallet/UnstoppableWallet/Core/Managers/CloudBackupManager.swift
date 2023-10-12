@@ -71,7 +71,12 @@ class CloudBackupManager {
 
         do {
             forceDownloadContainerFiles(url: url)
-            let oneWalletItems: [String: WalletBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
+
+            var oneWalletItems: [String: WalletBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
+            let oneWalletItemsV2: [String: RestoreCloudModule.RestoredBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
+            let mapped = oneWalletItemsV2.reduce(into: [:]) { $0[$1.value.name] = $1.value.walletBackup }
+
+            oneWalletItems.merge(mapped) { _, backup2 in backup2 }
             let fullBackupItems: [String: FullBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
 
             state = .success
@@ -154,8 +159,9 @@ extension CloudBackupManager {
     }
 
     func save(account: Account, passphrase: String, name: String) throws {
-        let backup = try appBackupProvider.walletBackup(
+        let backup = try AppBackupProvider.encrypt(
             account: account,
+            wallets: appBackupProvider.enabledWallets(account: account),
             passphrase: passphrase
         )
 
@@ -168,16 +174,27 @@ extension CloudBackupManager {
         }
     }
 
-    func save(fields: [AppBackupProvider.Field], passphrase: String, name: String) throws {
-        let backup = try appBackupProvider.fullBackup(
-                fields: fields,
-                passphrase: passphrase
-        )
+    private func data(accountIds: [String], passphrase: String) throws -> Data {
+        let rawBackup = appBackupProvider.fullBackup(accountIds: accountIds)
+        let backup = try appBackupProvider.encrypt(raw: rawBackup, passphrase: passphrase)
+        return try JSONEncoder().encode(backup)
+    }
 
+    func file(accountIds: [String], passphrase: String, name: String) throws -> URL {
+        let data = try data(accountIds: accountIds, passphrase: passphrase)
+
+        // save book to temporary file
+        guard let temporaryFileUrl = ContactBookManager.localUrl?.appendingPathComponent(name + ".json") else {
+            throw FileStorage.StorageError.cantCreateFile
+        }
+
+        try data.write(to: temporaryFileUrl)
+        return temporaryFileUrl
+    }
+
+    func save(accountIds: [String], passphrase: String, name: String) throws {
         do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(backup)
-            let encoded = try JSONEncoder().encode(backup)
+            let encoded = try data(accountIds: accountIds, passphrase: passphrase)
             try save(encoded: encoded, name: name)
         } catch {
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")
@@ -190,26 +207,30 @@ extension CloudBackupManager {
         try delete(uniqueId: hex)
     }
 
-    func delete(uniqueId: String) throws {
+    func delete(name: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
 
-        guard let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) else {
-            throw BackupError.itemNotFound
-        }
-
-        let fileUrl = iCloudUrl.appendingPathComponent(item.key)
+        let fileUrl = iCloudUrl.appendingPathComponent(name)
         do {
             try fileStorage.deleteFile(url: fileUrl)
 
             // system will automatically updates items but after 1-2 seconds. So we need force update
-            oneWalletItems[item.key] = nil
-            logger?.log(level: .debug, message: "CloudAccountManager.delete \(item.key) successful")
+            oneWalletItems[name] = nil
+            logger?.log(level: .debug, message: "CloudAccountManager.delete \(name) successful")
         } catch {
-            logger?.log(level: .debug, message: "CloudAccountManager.delete \(item.key) unsuccessful because: \(error)")
+            logger?.log(level: .debug, message: "CloudAccountManager.delete \(name) unsuccessful because: \(error)")
             throw error
         }
+    }
+
+    func delete(uniqueId: String) throws {
+        guard let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) else {
+            throw BackupError.itemNotFound
+        }
+
+        try delete(name: item.key)
     }
 }
 

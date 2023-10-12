@@ -1,14 +1,14 @@
-import Foundation
-import RxSwift
-import MarketKit
-import HsToolKit
-import EvmKit
-import Eip20Kit
-import UniswapKit
-import OneInchKit
-import HsExtensions
-import Combine
 import BigInt
+import Combine
+import Eip20Kit
+import EvmKit
+import Foundation
+import HsExtensions
+import HsToolKit
+import MarketKit
+import OneInchKit
+import RxSwift
+import UniswapKit
 
 class EvmAccountManager {
     private let blockchainType: BlockchainType
@@ -82,20 +82,20 @@ class EvmAccountManager {
 
             case let decoration as SwapDecoration:
                 switch decoration.tokenOut {
-                case .eip20Coin(let address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: decoration.tokenOut.tokenInfo))
+                case let .eip20Coin(address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: decoration.tokenOut.tokenInfo))
                 default: ()
                 }
 
             case let decoration as OneInchSwapDecoration:
                 switch decoration.tokenOut {
-                case .eip20Coin(let address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: decoration.tokenOut.tokenInfo))
+                case let .eip20Coin(address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: decoration.tokenOut.tokenInfo))
                 default: ()
                 }
 
             case let decoration as OneInchUnoswapDecoration:
                 if let tokenOut = decoration.tokenOut {
                     switch tokenOut {
-                    case .eip20Coin(let address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: tokenOut.tokenInfo))
+                    case let .eip20Coin(address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: tokenOut.tokenInfo))
                     default: ()
                     }
                 }
@@ -103,7 +103,7 @@ class EvmAccountManager {
             case let decoration as OneInchUnknownSwapDecoration:
                 if let tokenOut = decoration.tokenAmountOut?.token {
                     switch tokenOut {
-                    case .eip20Coin(let address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: tokenOut.tokenInfo))
+                    case let .eip20Coin(address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: tokenOut.tokenInfo))
                     default: ()
                     }
                 }
@@ -145,26 +145,26 @@ class EvmAccountManager {
 
         do {
             let queries = (foundTokens.map { $0.tokenType } + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
-            let tokens = try marketKit.tokens(queries: queries)
+            let tokens = try queries.chunks(500).map { try marketKit.tokens(queries: $0) }.flatMap { $0 }
 
             var tokenInfos = [TokenInfo]()
 
             for foundToken in foundTokens {
                 if let token = tokens.first(where: { $0.type == foundToken.tokenType }) {
                     let tokenInfo = TokenInfo(
-                            type: foundToken.tokenType,
-                            coinName: token.coin.name,
-                            coinCode: token.coin.code,
-                            tokenDecimals: token.decimals
+                        type: foundToken.tokenType,
+                        coinName: token.coin.name,
+                        coinCode: token.coin.code,
+                        tokenDecimals: token.decimals
                     )
 
                     tokenInfos.append(tokenInfo)
                 } else if let tokenInfo = foundToken.tokenInfo {
                     let tokenInfo = TokenInfo(
-                            type: foundToken.tokenType,
-                            coinName: tokenInfo.tokenName,
-                            coinCode: tokenInfo.tokenSymbol,
-                            tokenDecimals: tokenInfo.tokenDecimal
+                        type: foundToken.tokenType,
+                        coinName: tokenInfo.tokenName,
+                        coinCode: tokenInfo.tokenSymbol,
+                        tokenDecimals: tokenInfo.tokenDecimal
                     )
 
                     tokenInfos.append(tokenInfo)
@@ -174,10 +174,10 @@ class EvmAccountManager {
             for tokenType in suspiciousTokenTypes {
                 if let token = tokens.first(where: { $0.type == tokenType }) {
                     let tokenInfo = TokenInfo(
-                            type: tokenType,
-                            coinName: token.coin.name,
-                            coinCode: token.coin.code,
-                            tokenDecimals: token.decimals
+                        type: tokenType,
+                        coinName: token.coin.name,
+                        coinCode: token.coin.code,
+                        tokenDecimals: token.decimals
                     )
 
                     tokenInfos.append(tokenInfo)
@@ -247,21 +247,19 @@ class EvmAccountManager {
 
         let enabledWallets = infos.map { info in
             EnabledWallet(
-                    tokenQueryId: TokenQuery(blockchainType: blockchainType, tokenType: info.type).id,
-                    accountId: account.id,
-                    coinName: info.coinName,
-                    coinCode: info.coinCode,
-                    tokenDecimals: info.tokenDecimals
+                tokenQueryId: TokenQuery(blockchainType: blockchainType, tokenType: info.type).id,
+                accountId: account.id,
+                coinName: info.coinName,
+                coinCode: info.coinCode,
+                tokenDecimals: info.tokenDecimals
             )
         }
 
         walletManager.save(enabledWallets: enabledWallets)
     }
-
 }
 
 extension EvmAccountManager {
-
     struct TokenInfo {
         let type: TokenType
         let coinName: String
@@ -282,9 +280,8 @@ extension EvmAccountManager {
             hasher.combine(tokenType)
         }
 
-        static func ==(lhs: FoundToken, rhs: FoundToken) -> Bool {
+        static func == (lhs: FoundToken, rhs: FoundToken) -> Bool {
             lhs.tokenType == rhs.tokenType
         }
     }
-
 }

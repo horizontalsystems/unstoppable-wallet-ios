@@ -5,6 +5,7 @@ class WalletBackup: Codable {
     let id: String
     let type: AccountType.Abstract
     let isManualBackedUp: Bool
+    let isFileBackedUp: Bool
     let version: Int
     let timestamp: TimeInterval?
     let enabledWallets: [EnabledWallet]
@@ -15,16 +16,18 @@ class WalletBackup: Codable {
         case id
         case type
         case isManualBackedUp = "manual_backup"
+        case isFileBackedUp = "file_backup"
         case version
         case timestamp
     }
 
-    init(crypto: BackupCrypto, enabledWallets: [EnabledWallet], id: String, type: AccountType.Abstract, isManualBackedUp: Bool, version: Int, timestamp: TimeInterval) {
+    init(crypto: BackupCrypto, enabledWallets: [EnabledWallet], id: String, type: AccountType.Abstract, isManualBackedUp: Bool, isFileBackedUp: Bool, version: Int, timestamp: TimeInterval) {
         self.crypto = crypto
         self.enabledWallets = enabledWallets
         self.id = id
         self.type = type
         self.isManualBackedUp = isManualBackedUp
+        self.isFileBackedUp = isFileBackedUp
         self.version = version
         self.timestamp = timestamp
     }
@@ -37,6 +40,8 @@ class WalletBackup: Codable {
         type = try container.decode(AccountType.Abstract.self, forKey: .type)
         let isManualBackedUp = try? container.decode(Bool.self, forKey: .isManualBackedUp)
         self.isManualBackedUp = isManualBackedUp ?? false
+        let isFileBackedUp = try? container.decode(Bool.self, forKey: .isFileBackedUp)
+        self.isFileBackedUp = isFileBackedUp ?? false
         version = try container.decode(Int.self, forKey: .version)
         timestamp = try? container.decode(TimeInterval.self, forKey: .timestamp)
     }
@@ -48,6 +53,7 @@ class WalletBackup: Codable {
         try container.encode(id, forKey: .id)
         try container.encode(type, forKey: .type)
         try container.encode(isManualBackedUp, forKey: .isManualBackedUp)
+        try container.encode(isFileBackedUp, forKey: .isFileBackedUp)
         try container.encode(version, forKey: .version)
         try container.encode(timestamp, forKey: .timestamp)
     }

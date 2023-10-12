@@ -4,11 +4,11 @@ import CurrencyKit
 import ThemeKit
 
 struct SettingsBackup: Codable {
-    let evmSyncSources: EvmSyncSourceManager.SyncSourceBackup
+    var evmSyncSources: EvmSyncSourceManager.SyncSourceBackup
     let btcModes: [BtcBlockchainManager.BtcRestoreModeBackup]
 
     let lockTimeEnabled: Bool
-    let remoteContactsSync: Bool
+    let remoteContactsSync: Bool?
     let swapProviders: [DefaultProvider]
     let chartIndicators: ChartIndicatorsRepository.BackupIndicators
     let indicatorsShown: Bool

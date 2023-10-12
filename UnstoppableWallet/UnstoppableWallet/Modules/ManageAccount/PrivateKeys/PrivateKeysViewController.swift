@@ -1,11 +1,10 @@
-import UIKit
-import RxSwift
+import ComponentKit
 import RxCocoa
+import RxSwift
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import SectionsTableView
-import ComponentKit
-import PinKit
+import UIKit
 
 class PrivateKeysViewController: ThemeViewController {
     private let viewModel: PrivateKeysViewModel
@@ -19,7 +18,8 @@ class PrivateKeysViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -58,16 +58,10 @@ class PrivateKeysViewController: ThemeViewController {
     }
 
     private func openUnlock() {
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: .margin48, right: 0)
-        let viewController = App.shared.pinKit.unlockPinModule(
-                biometryUnlockMode: .auto,
-                insets: insets,
-                cancellable: true,
-                autoDismiss: true,
-                onUnlock: { [weak self] in
-                    self?.viewModel.onUnlock()
-                }
-        )
+        let viewController = UnlockModule.moduleUnlockView { [weak self] in
+            self?.viewModel.onUnlock()
+        }.toNavigationViewController()
+
         present(viewController, animated: true)
     }
 
@@ -88,80 +82,77 @@ class PrivateKeysViewController: ThemeViewController {
         let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPrivateKey, accountType: accountType)
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension PrivateKeysViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
-                    id: "margin",
-                    headerState: .margin(height: .margin12)
-            )
+                id: "margin",
+                headerState: .margin(height: .margin12)
+            ),
         ]
 
         if viewModel.showEvmPrivateKey {
             sections.append(
-                    Section(
+                Section(
+                    id: "evm-private-key",
+                    footerState: tableView.sectionFooter(text: "private_keys.evm_private_key.description".localized),
+                    rows: [
+                        tableView.universalRow48(
                             id: "evm-private-key",
-                            footerState: tableView.sectionFooter(text: "private_keys.evm_private_key.description".localized),
-                            rows: [
-                                tableView.universalRow48(
-                                        id: "evm-private-key",
-                                        title: .body("private_keys.evm_private_key".localized),
-                                        accessoryType: .disclosure,
-                                        isFirst: true,
-                                        isLast: true
-                                ) { [weak self] in
-                                    self?.viewModel.onTapEvmPrivateKey()
-                                }
-                            ]
-                    )
+                            title: .body("private_keys.evm_private_key".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.viewModel.onTapEvmPrivateKey()
+                        },
+                    ]
+                )
             )
         }
 
         if viewModel.showBip32RootKey {
             sections.append(
-                    Section(
+                Section(
+                    id: "bip32-root-key",
+                    footerState: tableView.sectionFooter(text: "private_keys.bip32_root_key.description".localized),
+                    rows: [
+                        tableView.universalRow48(
                             id: "bip32-root-key",
-                            footerState: tableView.sectionFooter(text: "private_keys.bip32_root_key.description".localized),
-                            rows: [
-                                tableView.universalRow48(
-                                        id: "bip32-root-key",
-                                        title: .body("private_keys.bip32_root_key".localized),
-                                        accessoryType: .disclosure,
-                                        isFirst: true,
-                                        isLast: true
-                                ) { [weak self] in
-                                    self?.viewModel.onTapBip32RootKey()
-                                }
-                            ]
-                    )
+                            title: .body("private_keys.bip32_root_key".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.viewModel.onTapBip32RootKey()
+                        },
+                    ]
+                )
             )
         }
 
         if viewModel.showAccountExtendedPrivateKey {
             sections.append(
-                    Section(
+                Section(
+                    id: "account-extended-private-key",
+                    footerState: tableView.sectionFooter(text: "private_keys.account_extended_private_key.description".localized),
+                    rows: [
+                        tableView.universalRow48(
                             id: "account-extended-private-key",
-                            footerState: tableView.sectionFooter(text: "private_keys.account_extended_private_key.description".localized),
-                            rows: [
-                                tableView.universalRow48(
-                                        id: "account-extended-private-key",
-                                        title: .body("private_keys.account_extended_private_key".localized),
-                                        accessoryType: .disclosure,
-                                        isFirst: true,
-                                        isLast: true
-                                ) { [weak self] in
-                                    self?.viewModel.onTapAccountExtendedPrivateKey()
-                                }
-                            ]
-                    )
+                            title: .body("private_keys.account_extended_private_key".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.viewModel.onTapAccountExtendedPrivateKey()
+                        },
+                    ]
+                )
             )
         }
 
         return sections
     }
-
 }

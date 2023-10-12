@@ -1,6 +1,5 @@
 import Combine
 import Foundation
-import PinKit
 import RxSwift
 import WalletConnectSign
 
@@ -10,16 +9,16 @@ class WalletConnectAppShowService {
     private let walletConnectManager: WalletConnectSessionManager
     private let cloudAccountBackupManager: CloudBackupManager
     private let accountManager: AccountManager
-    private let pinKit: PinKit.Kit
+    private let lockManager: LockManager
 
     private let showSessionProposalSubject = PassthroughSubject<WalletConnectSign.Session.Proposal, Never>()
     private let showSessionRequestSubject = PassthroughSubject<WalletConnectRequest, Never>()
 
-    init(walletConnectManager: WalletConnectSessionManager, cloudAccountBackupManager: CloudBackupManager, accountManager: AccountManager, pinKit: PinKit.Kit) {
+    init(walletConnectManager: WalletConnectSessionManager, cloudAccountBackupManager: CloudBackupManager, accountManager: AccountManager, lockManager: LockManager) {
         self.walletConnectManager = walletConnectManager
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.accountManager = accountManager
-        self.pinKit = pinKit
+        self.lockManager = lockManager
 
         subscribe(disposeBag, walletConnectManager.service.receiveProposalObservable) { [weak self] in self?.receive(proposal: $0) }
         subscribe(disposeBag, walletConnectManager.sessionRequestReceivedObservable) { [weak self] in self?.receive(request: $0) }
@@ -30,7 +29,7 @@ class WalletConnectAppShowService {
     }
 
     private func receive(request: WalletConnectRequest) {
-        if !pinKit.isLocked {
+        if !lockManager.isLocked {
             showSessionRequestSubject.send(request)
         }
     }

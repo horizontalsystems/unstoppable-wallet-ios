@@ -1,105 +1,86 @@
 import Combine
-import ComponentKit
-import PinKit
-import SwiftUI
 
 class SecuritySettingsViewModel: ObservableObject {
-    private let pinKit: PinKit.Kit
+    private let passcodeManager: PasscodeManager
+    private let biometryManager: BiometryManager
+    private let lockManager: LockManager
+    private let balanceHiddenManager: BalanceHiddenManager
     private var cancellables = Set<AnyCancellable>()
 
-    @Published var passcodeEnabled: Bool = false {
+    @Published var currentPasscodeLevel: Int
+    @Published var isPasscodeSet: Bool
+    @Published var isDuressPasscodeSet: Bool
+    @Published var biometryType: BiometryType?
+
+    @Published var autoLockPeriod: AutoLockPeriod {
         didSet {
-            passcodeSwitchOn = passcodeEnabled
+            lockManager.autoLockPeriod = autoLockPeriod
         }
     }
 
-    @Published var passcodeSwitchOn: Bool = false {
+    @Published var isBiometryToggleOn: Bool {
         didSet {
-            guard oldValue != passcodeSwitchOn else {
-                return
-            }
-
-            if passcodeSwitchOn {
-                if !passcodeEnabled {
-                    setPasscodePresented = true
-                }
-            } else {
-                if passcodeEnabled {
-                    unlockPasscodePresented = true
-                }
+            if isBiometryToggleOn != biometryManager.biometryEnabled, isPasscodeSet {
+                set(biometryEnabled: isBiometryToggleOn)
             }
         }
     }
 
-    @Published var setPasscodePresented: Bool = false
-    @Published var unlockPasscodePresented: Bool = false
-
-    @Published var biometryEnabled: Bool = false {
+    @Published var balanceAutoHide: Bool {
         didSet {
-            if pinKit.biometryEnabled != biometryEnabled {
-                pinKit.biometryEnabled = biometryEnabled
-            }
+            balanceHiddenManager.set(balanceAutoHide: balanceAutoHide)
         }
     }
 
-    @Published var biometryAvailable: Bool = true
+    init(passcodeManager: PasscodeManager, biometryManager: BiometryManager, lockManager: LockManager, balanceHiddenManager: BalanceHiddenManager) {
+        self.passcodeManager = passcodeManager
+        self.biometryManager = biometryManager
+        self.lockManager = lockManager
+        self.balanceHiddenManager = balanceHiddenManager
 
-    var biometryTitle: String = ""
-    var biometryIconName: String = ""
+        currentPasscodeLevel = passcodeManager.currentPasscodeLevel
+        isPasscodeSet = passcodeManager.isPasscodeSet
+        isDuressPasscodeSet = passcodeManager.isDuressPasscodeSet
+        biometryType = biometryManager.biometryType
+        autoLockPeriod = lockManager.autoLockPeriod
 
-    init(pinKit: PinKit.Kit) {
-        self.pinKit = pinKit
+        isBiometryToggleOn = biometryManager.biometryEnabled
+        balanceAutoHide = balanceHiddenManager.balanceAutoHide
 
-        pinKit.isPinSetPublisher
-            .sink { [weak self] _ in self?.sync() }
+        passcodeManager.$currentPasscodeLevel
+            .sink { [weak self] in self?.currentPasscodeLevel = $0 }
             .store(in: &cancellables)
-
-        pinKit.biometryTypePublisher
-            .sink { [weak self] _ in self?.sync() }
+        passcodeManager.$isPasscodeSet
+            .sink { [weak self] in self?.isPasscodeSet = $0 }
             .store(in: &cancellables)
-
-        sync()
+        passcodeManager.$isDuressPasscodeSet
+            .sink { [weak self] in self?.isDuressPasscodeSet = $0 }
+            .store(in: &cancellables)
+        biometryManager.$biometryType
+            .sink { [weak self] in self?.biometryType = $0 }
+            .store(in: &cancellables)
+        biometryManager.$biometryEnabled
+            .sink { [weak self] in self?.isBiometryToggleOn = $0 }
+            .store(in: &cancellables)
     }
 
-    private func sync() {
-        passcodeEnabled = pinKit.isPinSet
-        biometryEnabled = pinKit.biometryEnabled
-
-        switch pinKit.biometryType {
-            case .faceId:
-                biometryAvailable = true
-                biometryTitle = "settings_security.face_id".localized
-                biometryIconName = "face_id_24"
-            case .touchId:
-                biometryAvailable = true
-                biometryTitle = "settings_security.touch_id".localized
-                biometryIconName = "touch_id_2_24"
-            default:
-                biometryAvailable = false
-                biometryTitle = ""
-                biometryIconName = ""
-        }
-    }
-}
-
-extension SecuritySettingsViewModel {
-    func onUnlock() {
+    func removePasscode() {
         do {
-            try pinKit.clear()
+            try passcodeManager.removePasscode()
         } catch {
-            HudHelper.instance.show(banner: .error(string: error.smartDescription))
+            print("Remove Passcode Error: \(error)")
         }
     }
 
-    func cancelSetPasscode() {
-        if !passcodeEnabled {
-            passcodeSwitchOn = false
+    func removeDuressPasscode() {
+        do {
+            try passcodeManager.removeDuressPasscode()
+        } catch {
+            print("Remove Duress Passcode Error: \(error)")
         }
     }
 
-    func cancelUnlock() {
-        if passcodeEnabled {
-            passcodeSwitchOn = true
-        }
+    func set(biometryEnabled: Bool) {
+        biometryManager.biometryEnabled = biometryEnabled
     }
 }

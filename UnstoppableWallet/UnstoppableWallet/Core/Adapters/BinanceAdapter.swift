@@ -51,7 +51,7 @@ class BinanceAdapter {
     }
 
     private func balanceInfo(balance: Decimal) -> BalanceData {
-        BalanceData(balance: balance)
+        BalanceData(available: balance)
     }
 
 }
@@ -114,7 +114,7 @@ extension BinanceAdapter: IBalanceAdapter {
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
         asset.balanceObservable.map { [weak self] in
-            self?.balanceInfo(balance: $0) ?? BalanceData(balance: 0)
+            self?.balanceInfo(balance: $0) ?? BalanceData(available: 0)
         }
     }
 

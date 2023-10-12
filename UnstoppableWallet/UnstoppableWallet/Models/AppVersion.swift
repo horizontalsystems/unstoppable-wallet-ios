@@ -13,30 +13,12 @@ struct AppVersion: Codable {
         Int(version.components(separatedBy: ".")[1]) ?? 0
     }
 
-    private var patch: Int? {
-        Int(version.components(separatedBy: ".")[2])
+    func change(_ old: AppVersion) -> Change {
+        if version == old.version, build == old.build { return .none }
+        if major > old.major || (major == old.major && minor > old.minor) { return .version }
+        if version == old.version, build ?? "0" > old.build ?? "0" { return .build }
+        return .downgrade
     }
-
-}
-
-extension AppVersion: Comparable {
-
-    public static func <(lhs: AppVersion, rhs: AppVersion) -> Bool {
-        if lhs.major < rhs.major {
-            return true
-        }
-
-        if lhs.major == rhs.major && lhs.minor < rhs.minor {
-            return true
-        }
-
-        return false
-    }
-
-    public static func ==(lhs: AppVersion, rhs: AppVersion) -> Bool {
-        lhs.version == rhs.version
-    }
-
 }
 
 extension AppVersion: CustomStringConvertible {
@@ -55,4 +37,13 @@ extension AppVersion: CustomStringConvertible {
         return version + " (\(build))"
     }
 
+}
+
+extension AppVersion {
+    enum Change {
+        case none
+        case version
+        case build
+        case downgrade
+    }
 }

@@ -83,15 +83,11 @@ extension BackupCloudPassphraseViewModel {
         } catch {
             switch error {
             case BackupCrypto.ValidationError.emptyPassphrase:
-                passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
+                passphraseCaution = Caution(text: error.localizedDescription, type: .error)
             case BackupCrypto.ValidationError.simplePassword:
-                passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error)
+                passphraseCaution = Caution(text: error.localizedDescription, type: .error)
             case BackupCloudPassphraseService.CreateError.invalidConfirmation:
                 passphraseConfirmationCaution = Caution(text: "backup.cloud.password.confirm.error.doesnt_match".localized, type: .error)
-            case BackupCloudPassphraseService.CreateError.urlNotAvailable:
-                showErrorSubject.send("backup.cloud.not_available".localized)
-            case BackupCloudPassphraseService.CreateError.cantSaveFile:
-                showErrorSubject.send("backup.cloud.cant_create_file".localized)
             default:
                 showErrorSubject.send(error.smartDescription)
             }
@@ -100,3 +96,32 @@ extension BackupCloudPassphraseViewModel {
     }
 
 }
+
+extension BackupCrypto.ValidationError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .emptyPassphrase: return "backup.cloud.password.error.empty_passphrase".localized
+        case .simplePassword: return "backup.cloud.password.error.minimum_requirement".localized
+        }
+    }
+}
+
+extension BackupCloudPassphraseService.CreateError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .urlNotAvailable: return "backup.cloud.not_available".localized
+        case .cantSaveFile: return "backup.cloud.cant_create_file".localized
+        case .invalidConfirmation: return "invalid confirmation".localized
+        }
+    }
+}
+
+extension CloudBackupManager.BackupError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .urlNotAvailable: return "backup.cloud.not_available".localized
+        case .itemNotFound: return nil
+        }
+    }
+}
+

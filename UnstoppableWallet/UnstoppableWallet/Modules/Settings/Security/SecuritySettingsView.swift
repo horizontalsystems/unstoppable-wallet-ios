@@ -1,109 +1,219 @@
-import PinKit
 import SwiftUI
 
 struct SecuritySettingsView: View {
     @ObservedObject var viewModel: SecuritySettingsViewModel
-    @State var editPasscodePresented: Bool = false
+
+    @State var createPasscodeReason: CreatePasscodeModule.CreatePasscodeReason?
+    @State var unlockReason: UnlockReason?
+
+    @State var editPasscodePresented = false
+    @State var createDuressPasscodePresented = false
+    @State var editDuressPasscodePresented = false
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin32) {
                 ListSection {
-                    ListRow {
-                        Image("dialpad_alt_2_24")
-                        Text("settings_security.passcode".localized).themeBody()
-                        Spacer()
-
-                        if !viewModel.passcodeEnabled {
-                            Image("warning_2_20")
-                                .renderingMode(.template)
-                                .foregroundColor(.themeLucian)
+                    if viewModel.isPasscodeSet {
+                        ClickableRow(action: {
+                            unlockReason = .changePasscode
+                        }) {
+                            Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
+                            Text("settings_security.edit_passcode".localized).themeBody(color: .themeJacob)
                         }
 
-                        Toggle(isOn: $viewModel.passcodeSwitchOn) {}
-                            .labelsHidden()
-                    }
-                    .sheet(isPresented: $viewModel.setPasscodePresented, onDismiss: { viewModel.cancelSetPasscode() }) {
-                        SetPinView(
-                            cancelAction: { viewModel.cancelSetPasscode() }
-                        ).edgesIgnoringSafeArea(.all)
-                    }
-                    .sheet(isPresented: $viewModel.unlockPasscodePresented, onDismiss: { viewModel.cancelUnlock() }) {
-                        UnlockPinView(
-                            unlockAction: { viewModel.onUnlock() },
-                            cancelAction: { viewModel.cancelUnlock() }
-                        ).edgesIgnoringSafeArea(.all)
-                    }
-
-                    if viewModel.passcodeEnabled {
-                        ClickableRow(action: { editPasscodePresented = true }) {
-                            Text("settings_security.change_pin".localized).themeBody()
-                            Image.disclosureIcon
+                        ClickableRow(action: {
+                            unlockReason = .disablePasscode
+                        }) {
+                            Image("trash_24").themeIcon(color: .themeLucian)
+                            Text("settings_security.disable_passcode".localized).themeBody(color: .themeLucian)
                         }
-                        .sheet(isPresented: $editPasscodePresented) {
-                            EditPinView().edgesIgnoringSafeArea(.all)
+                    } else {
+                        ClickableRow(action: {
+                            createPasscodeReason = .regular
+                        }) {
+                            Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
+                            Text("settings_security.enable_passcode".localized).themeBody(color: .themeJacob)
+                            Image("warning_2_20").themeIcon(color: .themeLucian)
                         }
                     }
                 }
 
-                if viewModel.passcodeEnabled && viewModel.biometryAvailable {
+                if viewModel.isPasscodeSet {
+                    ListSection {
+                        NavigationRow(destination: {
+                            AutoLockView(period: $viewModel.autoLockPeriod)
+                        }) {
+                            Image("lock_24").themeIcon()
+                            Text("settings_security.auto_lock".localized).themeBody()
+                            Text(viewModel.autoLockPeriod.title).themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8)
+                            Image.disclosureIcon
+                        }
+                    }
+                }
+
+                if let biometryType = viewModel.biometryType {
                     ListSection {
                         ListRow {
-                            Image(viewModel.biometryIconName)
-                            Toggle(isOn: $viewModel.biometryEnabled) {
-                                Text(viewModel.biometryTitle).themeBody()
+                            Image(biometryType.iconName)
+                            Toggle(isOn: $viewModel.isBiometryToggleOn) {
+                                Text(biometryType.title).themeBody()
+                            }
+                            .onChange(of: viewModel.isBiometryToggleOn) { isOn in
+                                if !viewModel.isPasscodeSet, isOn {
+                                    createPasscodeReason = .biometry(type: biometryType)
+                                }
                             }
                         }
                     }
                 }
+
+                VStack(spacing: 0) {
+                    ListSection {
+                        ListRow {
+                            Image("eye_off_24").themeIcon()
+                            Toggle(isOn: $viewModel.balanceAutoHide) {
+                                Text("settings_security.balance_auto_hide".localized).themeBody()
+                            }
+                        }
+                    }
+
+                    ListSectionFooter(text: "settings_security.balance_auto_hide.description".localized)
+                }
+
+                VStack(spacing: 0) {
+                    ListSection {
+                        if viewModel.isDuressPasscodeSet {
+                            ClickableRow(action: {
+                                unlockReason = .changeDuressPasscode
+                            }) {
+                                Image("switch_wallet_24").themeIcon(color: .themeJacob)
+                                Text("settings_security.edit_duress_passcode".localized).themeBody(color: .themeJacob)
+                            }
+
+                            ClickableRow(action: {
+                                unlockReason = .disableDuressMode
+                            }) {
+                                Image("trash_24").themeIcon(color: .themeLucian)
+                                Text("settings_security.disable_duress_mode".localized).themeBody(color: .themeLucian)
+                            }
+                        } else {
+                            ClickableRow(action: {
+                                if viewModel.isPasscodeSet {
+                                    unlockReason = .enableDuressMode
+                                } else {
+                                    createPasscodeReason = .duress
+                                }
+                            }) {
+                                Image("switch_wallet_24").themeIcon(color: .themeJacob)
+                                Text("settings_security.enable_duress_mode".localized).themeBody(color: .themeJacob)
+                            }
+                        }
+                    }
+
+                    ListSectionFooter(text: "settings_security.duress_mode.description".localized)
+                }
+            }
+            .sheet(item: $createPasscodeReason) { reason in
+                ThemeNavigationView {
+                    CreatePasscodeModule.createPasscodeView(
+                        reason: reason,
+                        showParentSheet: Binding(get: { createPasscodeReason != nil }, set: { if !$0 { createPasscodeReason = nil } }),
+                        onCreate: {
+                            switch reason {
+                            case .biometry:
+                                viewModel.set(biometryEnabled: true)
+                            case .duress:
+                                DispatchQueue.main.async {
+                                    createDuressPasscodePresented = true
+                                }
+                            default: ()
+                            }
+                        },
+                        onCancel: {
+                            switch reason {
+                            case .biometry: viewModel.isBiometryToggleOn = false
+                            default: ()
+                            }
+                        }
+                    )
+                }
+                .interactiveDismiss(canDismissSheet: false)
+            }
+            .sheet(item: $unlockReason) { reason in
+                ThemeNavigationView {
+                    UnlockModule.moduleUnlockView {
+                        switch reason {
+                        case .changePasscode:
+                            DispatchQueue.main.async {
+                                editPasscodePresented = true
+                            }
+                        case .disablePasscode:
+                            viewModel.removePasscode()
+                        case .enableDuressMode:
+                            DispatchQueue.main.async {
+                                createDuressPasscodePresented = true
+                            }
+                        case .changeDuressPasscode:
+                            DispatchQueue.main.async {
+                                editDuressPasscodePresented = true
+                            }
+                        case .disableDuressMode:
+                            viewModel.removeDuressPasscode()
+                        }
+                    }
+                }
+            }
+            .sheet(isPresented: $editPasscodePresented) {
+                ThemeNavigationView { EditPasscodeModule.editPasscodeView(showParentSheet: $editPasscodePresented) }
+            }
+            .sheet(isPresented: $createDuressPasscodePresented) {
+                ThemeNavigationView { DuressModeModule.view(showParentSheet: $createDuressPasscodePresented) }
+            }
+            .sheet(isPresented: $editDuressPasscodePresented) {
+                ThemeNavigationView { EditPasscodeModule.editDuressPasscodeView(showParentSheet: $editDuressPasscodePresented) }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-    }
-}
-
-struct SetPinView: UIViewControllerRepresentable, ISetPinDelegate {
-    typealias UIViewControllerType = UIViewController
-
-    let cancelAction: () -> ()
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        App.shared.pinKit.setPinModule(delegate: self)
+        .navigationTitle("settings_security.title".localized)
     }
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+    enum UnlockReason: Identifiable {
+        case changePasscode
+        case disablePasscode
+        case enableDuressMode
+        case changeDuressPasscode
+        case disableDuressMode
 
-    func didCancelSetPin() {
-        cancelAction()
-    }
-}
-
-struct EditPinView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        return App.shared.pinKit.editPinModule
+        var id: Self {
+            self
+        }
     }
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-}
+    private struct AutoLockView: View {
+        @Binding var period: AutoLockPeriod
+        @Environment(\.presentationMode) private var presentationMode
 
-struct UnlockPinView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
+        var body: some View {
+            ScrollableThemeView {
+                ListSection {
+                    ForEach(AutoLockPeriod.allCases, id: \.self) { period in
+                        ClickableRow(action: {
+                            self.period = period
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Text(period.title).themeBody()
 
-    let unlockAction: () -> ()
-    let cancelAction: () -> ()
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        return App.shared.pinKit.unlockPinModule(
-            biometryUnlockMode: .disabled,
-            insets: .zero,
-            cancellable: true,
-            autoDismiss: true,
-            onUnlock: unlockAction,
-            onCancelUnlock: cancelAction
-        )
+                            if self.period == period {
+                                Image.checkIcon
+                            }
+                        }
+                    }
+                }
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            }
+            .navigationTitle("settings_security.auto_lock".localized)
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }

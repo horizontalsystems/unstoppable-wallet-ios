@@ -50,7 +50,7 @@ class BackupCrypto: Codable {
 }
 
 extension BackupCrypto {
-    func data(passphrase: String) throws -> Data {
+    func decrypt(passphrase: String) throws -> Data {
         try Self.validate(passphrase: passphrase)
         // Validation data
         guard let data = Data(base64Encoded: cipherText) else {
@@ -76,16 +76,6 @@ extension BackupCrypto {
                 kdf: kdfParams
         )
     }
-
-    func accountType(type: AccountType.Abstract, passphrase: String) throws -> AccountType {
-        let data = try data(passphrase: passphrase)
-
-        guard let accountType = AccountType.decode(uniqueId: data, type: type) else {
-            throw RestoreCloudModule.RestoreError.invalidBackup
-        }
-
-        return accountType
-    }
 }
 
 extension BackupCrypto {
@@ -104,7 +94,7 @@ extension BackupCrypto {
         }
     }
 
-    static func instance(data: Data, passphrase: String, kdf: KdfParams = .defaultBackup) throws -> BackupCrypto {
+    static func encrypt(data: Data, passphrase: String, kdf: KdfParams = .defaultBackup) throws -> BackupCrypto {
         let iv = BackupCryptoHelper.generateInitialVector().hs.hex
 
         let cipherText = try BackupCryptoHelper.AES128(

@@ -23,10 +23,16 @@ struct RestoreCloudModule {
         }
     }
 
+    struct DecryptedRestoredBackup {
+        let name: String
+        let walletBackup: WalletBackup
+    }
+
     struct RestoredAccount {
         let name: String
         let accountType: AccountType
         let isManualBackedUp: Bool
+        let isFileBackedUp: Bool
         let showSelectCoins: Bool
     }
 

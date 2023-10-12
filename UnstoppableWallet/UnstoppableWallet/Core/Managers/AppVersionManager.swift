@@ -1,45 +1,42 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 
 class AppVersionManager {
     private let systemInfoManager: SystemInfoManager
     private let storage: AppVersionStorage
 
-    var newVersion: AppVersion? {
+    func checkVersionUpdate() -> AppVersion? {
         let currentVersion = systemInfoManager.appVersion
 
-        guard let lastVersion = storage.appVersions.last, currentVersion > lastVersion else {
+        // first start
+        guard let lastVersion = storage.appVersions.last else {
+            storage.save(appVersions: [currentVersion])
             return nil
         }
 
-        return currentVersion
-    }
-
-    func updateStoredVersion() {
-        let currentVersion = systemInfoManager.appVersion
-
-        guard let lastVersion = storage.appVersions.last else {
+        switch currentVersion.change(lastVersion) {
+        // show release
+        case .version:
             storage.save(appVersions: [currentVersion])
-            return
+            return currentVersion
+        // just update db
+        case .build, .downgrade:
+            storage.save(appVersions: [currentVersion])
+        case .none: ()
         }
 
-        if lastVersion.version != currentVersion.version || lastVersion.build != currentVersion.build {
-            storage.save(appVersions: [currentVersion])
-        }
+        return nil
     }
 
     init(systemInfoManager: SystemInfoManager, storage: AppVersionStorage) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
     }
-
 }
 
 extension AppVersionManager {
-
     var currentVersion: AppVersion {
         systemInfoManager.appVersion
     }
-
 }

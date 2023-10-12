@@ -100,16 +100,6 @@ struct AppearanceView: View {
                     }
                 }
 
-                ListSection {
-                    ListRow {
-                        Image("eye_off_24").themeIcon()
-                        Toggle(isOn: $viewModel.balanceAutoHide) {
-                            Text("appearance.balance_auto_hide".localized).themeBody()
-                        }
-                    }
-                }
-                .padding(.top, .margin8)
-
                 VStack(spacing: 0) {
                     ListSectionHeader(text: "appearance.app_icon".localized)
                     ListSection {
