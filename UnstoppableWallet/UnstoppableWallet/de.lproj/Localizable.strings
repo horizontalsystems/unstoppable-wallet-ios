@@ -36,7 +36,7 @@
 "alert.wrong_amount" = "Falscher Betrag";
 "alert.no_fee" = "Falsche Gebühr";
 "alert.warning" = "Warnung";
-"alert.notice" = "Notice";
+"alert.notice" = "Hinweis";
 "alert.error" = "Fehler";
 "alert.unknown_error" = "Unbekannter Fehler";
 "alert.success_action" = "Fertig";
@@ -69,7 +69,7 @@
 "alert.revoked" = "Widerrufen";
 "alert.cant_recognize" = "Kann nicht erkennen";
 
-"no_results_found" = "No results found";
+"no_results_found" = "Keine Ergebnisse gefunden";
 "action.loading" = "wird geladen ...";
 "placeholder.search" = "Suche";
 
@@ -100,11 +100,11 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Immediate";
-"auto_lock.minute1" = "1 minute";
-"auto_lock.minute5" = "5 minutes";
-"auto_lock.minute15" = "15 minutes";
-"auto_lock.minute30" = "30 minutes";
+"auto_lock.immediate" = "Sofort";
+"auto_lock.minute1" = "1 Minute";
+"auto_lock.minute5" = "5 Minuten";
+"auto_lock.minute15" = "15 Minuten";
+"auto_lock.minute30" = "30 Minuten";
 "auto_lock.hour1" = "1 Stunde";
 
 // Access Camera
@@ -140,22 +140,22 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "restore_type.title" = "Wallet importieren";
 "restore_type.recovery.title" = "von Wiederherstellungsphrase";
 "restore_type.cloud.title" = "von iCloud";
-"restore_type.file.title" = "from Files";
+"restore_type.file.title" = "aus Dateien";
 "restore_type.cex.title" = "von Exchange Wallet";
 
 "restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
 "restore_type.cloud.description" = "Importieren Sie aus einer Sicherungsdatei in Ihrem Schlüsselbund.";
-"restore_type.file.description" = "Import a backup file from your local folder.";
-"restore_type.cex.description" = "Connect to a wallet on a centralized exchange.";
+"restore_type.file.description" = "Importieren Sie eine Sicherungsdatei aus Ihrem lokalen Ordner.";
+"restore_type.cex.description" = "Verbinden Sie sich mit einer Brieftasche bei zentralisiertem Austausch.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Sicherung auswählen";
-"restore.cloud.description" = "Select the backup file that you want to restore.";
+"restore.cloud.description" = "Wählen Sie die Sicherungsdatei, die Sie wiederherstellen möchten.";
 "restore.cloud.empty" = "Keine Sicherungen gefunden.";
-"restore.cloud.wallets" = "Wallet backups";
+"restore.cloud.wallets" = "Wallet-Sicherungen";
 "restore.cloud.imported" = "Importierte Wallet";
-"restore.cloud.app_backups" = "App backups";
+"restore.cloud.app_backups" = "App Sicherungen";
 
 "restore.cloud.password.title" = "Passwort eingeben";
 "restore.cloud.password.placeholder" = "Passwort sichern";
@@ -243,8 +243,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
-"backup_prompt.backup_required" = "Backup Required";
+"backup_prompt.backup_recovery_phrase" = "Wiederherstellungsphrase sichern";
+"backup_prompt.backup_required" = "Sicherung erforderlich";
 "backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
 "backup_prompt.backup" = "Sicherung";
 "backup_prompt.backup_manual" = "Manuelle Sicherung";
@@ -261,11 +261,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup.cloud.name.description" = "Geben Sie den Namen für die Backup-Datei ein.";
 "backup.cloud.name.empty" = "Sicherungsname darf nicht leer sein!";
 "backup.cloud.name.error.empty" = "Sicherungsname darf nicht leer sein";
-"backup.cloud.name.error.already_exist" = "Backup name already exists!";
+"backup.cloud.name.error.already_exist" = "Sicherungsname existiert bereits!";
 "backup.cloud.name.placeholder" = "Name";
 
 "backup.cloud.password.title" = "Passwort festlegen";
-"backup.cloud.password.description" = "Set the unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number, and a special character.";
+"backup.cloud.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
 "backup.cloud.password.highlighted_description" = "Vergessen Sie dieses Passwort nicht! Es ist getrennt von Ihrem Apple iCloud-Passwort und kann nicht wiederhergestellt oder zurückgesetzt werden.";
 "backup.cloud.password.placeholder" = "Passwort";
 "backup.cloud.password.confirm.placeholder" = "Bestätigen";
@@ -303,12 +303,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.syncing" = "Synchronisieren...";
 "balance.searching" = "Transaktionen werden gesucht...";
-"balance.stopped" = "Stopped";
+"balance.stopped" = "Stoppen";
 "balance.downloading_sapling" = "Setze herunterladen... %d%%";
 "balance.downloading_blocks" = "Blöcke herunterladen";
 "balance.scanning_blocks" = "Scanne Blöcke";
 "balance.enhancing_transactions" = "Transaktionen verbessern";
-"wait_for_synchronization" = "Wait for synchronization";
+"wait_for_synchronization" = "Warten auf Synchronisation";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisieren... %@";
@@ -334,7 +334,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
 "balance.token.processing" = "Verarbeite";
-"balance.token.processing.info.title" = "Processing amount";
+"balance.token.processing.info.title" = "Bearbeitungsbetrag";
 "balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they are confirmed, these tokens will be available for spending";
 "balance.token.staked" = "Absteckung";
 "balance.token.staked.info.title" = "Absteckter Titel";
@@ -633,12 +633,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "Keine Ergebnisse gefunden";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
 "market.search.title" = "Suche";
-"market.search.empty_text" = "No results found";
+"market.search.empty_text" = "Keine Ergebnisse gefunden";
 
 "market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Ergebnisse anzeigen";
@@ -1017,7 +1017,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.backup_manager" = "Backup Manager";
 "settings.security" = "Sicherheit";
 "settings.experimental_features" = "Experimentell";
-"settings.personal_support" = "Personal Support";
+"settings.personal_support" = "Persönlicher Support";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.faq" = "FAQ";
@@ -1025,9 +1025,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.info_subtitle" = "decentralized";
 "settings.donate.description" = "Gemeinsam können wir mit Ihrer Unterstützung diese App noch besser machen!";
 "settings.donate.title" = "Spenden";
-"settings.rate_us" = "Rate Us";
-"settings.tell_friends" = "Tell Friends";
-"settings.contact_us" = "Contact Us";
+"settings.rate_us" = "Bewerten Sie uns";
+"settings.tell_friends" = "Freunden erzählen";
+"settings.contact_us" = "Kontaktiere uns";
 
 // Settings -> Base Currency
 
@@ -1097,9 +1097,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup_manager.create" = "Create New Backup";
 
 "backup_app.backup_type.title" = "Save Backup";
-"backup_app.backup_type.cloud" = "to iCloud";
+"backup_app.backup_type.cloud" = "nach iCloud";
 "backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
-"backup_app.backup_type.file" = "to Files";
+"backup_app.backup_type.file" = "in Dateien";
 "backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
 
 "backup_app.backup_list.title" = "Backup File";
@@ -1118,7 +1118,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
 "backup_app.backup.disclaimer.file.title" = "Backup to File";
 "backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
-"backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "Ich verstehe, dass ein Diebstahl oder eine Beschädigung eines Sicherungsgeräts zum Verlust des Sicherungskopfes an eine entsprechende Brieftasche führen wird.";
 
 "backup.disclaimer.cloud.title" = "Sicherung in iCloud";
 "backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
@@ -1153,7 +1153,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
 "settings_security.enable_duress_mode" = "Set Duress Mode";
 "settings_security.edit_duress_passcode" = "Edit Duress Passcode";
-"settings_security.disable_duress_mode" = "Disable Duress Mode";
+"settings_security.disable_duress_mode" = "Duress Modus deaktivieren";
 "settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
 
 // Create Passcode
@@ -1205,10 +1205,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "unlock.title" = "Unlock";
 "unlock.passcode" = "Enter Passcode";
-"unlock.biometry_reason" = "Unlock wallet";
-"unlock.attempts_left" = "Attempts left: %@";
-"unlock.disabled_until" = "Disabled until: %@";
-"unlock.random" = "Random";
+"unlock.biometry_reason" = "Wallet entsperren";
+"unlock.attempts_left" = "Verbleibende Versuche: %@";
+"unlock.disabled_until" = "Deaktiviert bis: %@ ";
+"unlock.random" = "Zufällig";
 
 "security_settings.delete_alert_button" = "Von Telefon löschen";
 
@@ -1256,7 +1256,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
+"settings.contact.title" = "Kontaktiere uns";
 "settings.contact.via_email" = "per e-Mail";
 "settings.contact.via_telegram" = "per Telegram";
 
@@ -1299,7 +1299,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "contacts.title" = "Kontakte";
 "contacts.list.search_placeholder" = "Nach Namen suchen";
 "contacts.list.not_found" = "Sie haben keinen neuen Kontakt";
-"contacts.list.not_found_search" = "No results found";
+"contacts.list.not_found_search" = "Keine Ergebnisse gefunden";
 "contacts.add_new_contact" = "Neuer Kontakt";
 "contacts.update_contact.already_has_address" = "Der ausgewählte Kontakt hat bereits eine Adresse auf %@. Diese Aktion wird die Adresse %@ durch %@ ersetzen.";
 "contacts.update_contact.replace" = "Ersetzen";
@@ -1756,7 +1756,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info2.title" = "Chart Indicators";
 "subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info3.title" = "Personal Support";
+"subscription_info.info3.title" = "Persönlicher Support";
 "subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.get_premium" = "Premium erhalten";
 "subscription_info.already_have" = "Ich habe bereits Premium";
