@@ -36,7 +36,7 @@
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
 "alert.warning" = "경고";
-"alert.notice" = "Notice";
+"alert.notice" = "공지사항";
 "alert.error" = "오류";
 "alert.unknown_error" = "알수없는 오류";
 "alert.success_action" = "완료";
@@ -100,11 +100,11 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Immediate";
-"auto_lock.minute1" = "1 minute";
-"auto_lock.minute5" = "5 minutes";
-"auto_lock.minute15" = "15 minutes";
-"auto_lock.minute30" = "30 minutes";
+"auto_lock.immediate" = "즉시";
+"auto_lock.minute1" = "1분";
+"auto_lock.minute5" = "5분";
+"auto_lock.minute15" = "15분";
+"auto_lock.minute30" = "30분";
 "auto_lock.hour1" = "1시간";
 
 // Access Camera
@@ -138,22 +138,22 @@
 "restore_type.title" = "다음에서 복원하기";
 "restore_type.recovery.title" = "복구 문구에서";
 "restore_type.cloud.title" = "아이클라우드에서";
-"restore_type.file.title" = "from Files";
+"restore_type.file.title" = "파일에서";
 "restore_type.cex.title" = "거래소 지갑에서";
 
 "restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
 "restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
-"restore_type.file.description" = "Import a backup file from your local folder.";
-"restore_type.cex.description" = "Connect to a wallet on a centralized exchange.";
+"restore_type.file.description" = "로컬 폴더에서 백업 파일을 가져오십시오.";
+"restore_type.cex.description" = "중앙집중형 거래소의 지갑에 연결하세요.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "백업 선택";
-"restore.cloud.description" = "Select the backup file that you want to restore.";
+"restore.cloud.description" = "복원하려는 백업 파일을 선택하세요.";
 "restore.cloud.empty" = "백업이 없습니다.";
-"restore.cloud.wallets" = "Wallet backups";
+"restore.cloud.wallets" = "지갑 백업";
 "restore.cloud.imported" = "수입 지갑";
-"restore.cloud.app_backups" = "App backups";
+"restore.cloud.app_backups" = "앱 백업";
 
 "restore.cloud.password.title" = "암호를 입력하세요";
 "restore.cloud.password.placeholder" = "백업 비밀번호";
@@ -241,8 +241,8 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
-"backup_prompt.backup_required" = "Backup Required";
+"backup_prompt.backup_recovery_phrase" = "백업용 지갑";
+"backup_prompt.backup_required" = "백업이 필요합니다";
 "backup_prompt.warning" = "휴대전화 분실, 도난, 파손 등의 경우 지갑을 복구할 수 있도록 복구 문구 및 관련 비밀번호의 백업 사본을 만드십시오.";
 "backup_prompt.backup" = "백업";
 "backup_prompt.backup_manual" = "수동으로 백업합니다";
@@ -259,11 +259,11 @@
 "backup.cloud.name.description" = "백업 파일의 이름을 입력하세요.";
 "backup.cloud.name.empty" = "백업 이름은 비워둘 수 없습니다!";
 "backup.cloud.name.error.empty" = "백업 이름은 비워둘 수 없습니다";
-"backup.cloud.name.error.already_exist" = "Backup name already exists!";
+"backup.cloud.name.error.already_exist" = "백업 이름이 이미 존재합니다!";
 "backup.cloud.name.placeholder" = "이름";
 
 "backup.cloud.password.title" = "암호를 설정하세요.";
-"backup.cloud.password.description" = "Set the unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number, and a special character.";
+"backup.cloud.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
 "backup.cloud.password.highlighted_description" = "이 비밀번호를 잊지 마세요! Apple iCloud 암호와는 별개이며 복구하거나 재설정할 수 없습니다.";
 "backup.cloud.password.placeholder" = "비밀번호";
 "backup.cloud.password.confirm.placeholder" = "확인";
@@ -301,12 +301,12 @@
 "balance.rate_per_coin" = "%@ 당 %@";
 "balance.syncing" = "동기화 중입니다...";
 "balance.searching" = "거래 검색 중...";
-"balance.stopped" = "Stopped";
+"balance.stopped" = "은행 정지";
 "balance.downloading_sapling" = "묘목 다운로드 중... %d%%";
 "balance.downloading_blocks" = "블록 다운로드";
 "balance.scanning_blocks" = "스캐닝 블록";
 "balance.enhancing_transactions" = "거래 향상";
-"wait_for_synchronization" = "Wait for synchronization";
+"wait_for_synchronization" = "동기화 대기 중";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "동기화 중... %@";
@@ -332,7 +332,7 @@
 "balance.token.locked.info.title" = "시간 자물쇠";
 "balance.token.locked.info.description" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
 "balance.token.processing" = "처리 중";
-"balance.token.processing.info.title" = "Processing amount";
+"balance.token.processing.info.title" = "처리 중인 금액";
 "balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they are confirmed, these tokens will be available for spending";
 "balance.token.staked" = "판돈";
 "balance.token.staked.info.title" = "스테이크 타이틀";
@@ -435,9 +435,9 @@
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.resend" = "재전송";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new 0 amount transaction to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.cancel" = "트랜잭션 취소";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "메소드";
@@ -738,7 +738,7 @@
 "coin_overview.roi.year1" = "1 Year";
 
 "coin_overview.overview" = "Overview";
-"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
+"coin_overview.description_warning" = "이것은 주어진 암호화폐에 대한 참고 자료를 기반으로 한 AI 생성된 설명입니다. 오류가 포함될 수 있습니다.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Coin Types";
@@ -781,7 +781,7 @@
 "coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over a 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "DEX Volume";
@@ -811,14 +811,14 @@
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank is based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
 "coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "트랜잭션 수";
 "coin_analytics.transaction_count_rank" = "Tx Count Rank";
 "coin_analytics.transaction_count_rank.description" = "Tokens are ranked by a number of transactions on a blockchain.";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with tokens over a 30-day period.";
+"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
 "coin_analytics.transaction_count.info3" = "Token's rank is based on the number of transactions within the token 30-day period.";
 "coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
@@ -1012,10 +1012,10 @@
 "settings.tab_bar_item" = "설정";
 "settings.manage_accounts" = "지갑 관리하기";
 "settings.blockchain_settings" = "블록 체인 설정";
-"settings.backup_manager" = "Backup Manager";
+"settings.backup_manager" = "백업 관리자";
 "settings.security" = "보안 센터";
 "settings.experimental_features" = "실험";
-"settings.personal_support" = "Personal Support";
+"settings.personal_support" = "개인 지원";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
 "settings.faq" = "FAQ";
@@ -1023,7 +1023,7 @@
 "settings.info_subtitle" = "분산형 앱";
 "settings.donate.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
 "settings.donate.title" = "후원하기";
-"settings.rate_us" = "Rate Us";
+"settings.rate_us" = "앱 평가";
 "settings.tell_friends" = "친구에게 추천하기";
 "settings.contact_us" = "문의하기";
 
@@ -1090,38 +1090,38 @@
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Backup Manager";
-"backup_app.backup_manager.restore" = "Restore Backup";
-"backup_app.backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.title" = "백업 관리자";
+"backup_app.backup_manager.restore" = "백업 복원";
+"backup_app.backup_manager.create" = "새로운 백업 생성";
 
-"backup_app.backup_type.title" = "Save Backup";
-"backup_app.backup_type.cloud" = "to iCloud";
-"backup_app.backup_type.cloud.description" = "Saving a backup copy file in the your keychain.";
-"backup_app.backup_type.file" = "to Files";
-"backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
+"backup_app.backup_type.title" = "백업 저장";
+"backup_app.backup_type.cloud" = "iCloud로";
+"backup_app.backup_type.cloud.description" = "백업 복사 파일을 키체인에 저장합니다.";
+"backup_app.backup_type.file" = "파일로 저장";
+"backup_app.backup_type.file.description" = "백업 복사 파일을 로컬 폴더에 저장합니다.";
 
-"backup_app.backup_list.title" = "Backup File";
-"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
+"backup_app.backup_list.title" = "백업 파일";
+"backup_app.backup_list.description.restore" = "백업 파일의 내용 목록";
 "backup_app.backup_list.header.wallets" = "지갑";
 "backup_app.backup_list.header.other" = "기타";
 "backup_app.backup_list.other.watch_account.title" = "관찰 주소";
 "backup_app.backup_list.other.watchlist.title" = "Watchlist";
 "backup_app.backup_list.other.contacts.title" = "연락처";
-"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
-"backup_app.backup_list.other.app_settings.title" = "App Settings";
-"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+"backup_app.backup_list.other.blockchain_settings.title" = "사용자 지정 RPC";
+"backup_app.backup_list.other.app_settings.title" = "앱 설정";
+"backup_app.backup_list.other.app_settings.description" = "언어, 통화, 외관...";
 
 "backup_app.backup.disclaimer.cloud.title" = "iCloud에 백업";
-"backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud는 Apple에서 제공하는 클라우드 저장소 서비스입니다. 귀하의 백";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
-"backup_app.backup.disclaimer.file.title" = "Backup to File";
-"backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
+"backup_app.backup.disclaimer.file.title" = "파일로 백업";
+"backup_app.backup.disclaimer.file.description" = "하드 드라이브, USB 드라이브, 스마트폰 저장소 등의 저장 장치는 물리적인 손상, 도난 또는 예기치 않은 사건으로 인해 모두 손실의 위험이 있습니다.";
 "backup_app.backup.disclaimer.file.checkbox_label" = "백업 장치의 도난 또는 손상은 해당 지갑의 백업을 손실할 수 있음을 이해합니다.";
 
 "backup.disclaimer.cloud.title" = "iCloud에 백업";
-"backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
+"backup.disclaimer.cloud.description" = "iCloud는 Apple에서 제공하는 클라우드 저장소 서비스입니다. 귀하의 백";
 "backup.disclaimer.cloud.checkbox_label" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
-"backup.disclaimer.file.title" = "Backup to File";
+"backup.disclaimer.file.title" = "파일로 백업";
 "backup.disclaimer.file.description" = "하드 드라이브, USB 드라이브, 스마트폰 저장소 등의 저장 장치는 물리적인 손상, 도난 또는 예기치 않은 사건으로 인해 모두 손실의 위험이 있습니다.";
 "backup.disclaimer.file.checkbox_label" = "백업 장치의 도난 또는 손상은 해당 지갑의 백업을 손실할 수 있음을 이해합니다.";
 "backup_app.backup.name.title" = "백업 이름";
@@ -1143,70 +1143,70 @@
 // Settings -> Security
 
 "settings_security.title" = "보안 센터";
-"settings_security.enable_passcode" = "Enable Passcode";
-"settings_security.edit_passcode" = "Edit Passcode";
-"settings_security.disable_passcode" = "Disable Passcode";
-"settings_security.auto_lock" = "Auto-Lock";
-"settings_security.balance_auto_hide" = "Balance Auto Hide";
-"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
-"settings_security.enable_duress_mode" = "Set Duress Mode";
-"settings_security.edit_duress_passcode" = "Edit Duress Passcode";
-"settings_security.disable_duress_mode" = "Disable Duress Mode";
-"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
+"settings_security.enable_passcode" = "비밀번호 활성화";
+"settings_security.edit_passcode" = "비밀번호 변경";
+"settings_security.disable_passcode" = "비밀번호 비활성화";
+"settings_security.auto_lock" = "자동 잠금";
+"settings_security.balance_auto_hide" = "밸런스 자동 숨기기";
+"settings_security.balance_auto_hide.description" = "앱이 열릴 때마다 잔고를 자동으로 숨깁니다. 이전 설정에 관계없이 적용됩니다.";
+"settings_security.enable_duress_mode" = "긴급 상황 모드 설정";
+"settings_security.edit_duress_passcode" = "긴급 상황 비밀번호 편집";
+"settings_security.disable_duress_mode" = "긴급 상황 모드 비활성화";
+"settings_security.duress_mode.description" = "강요 상황에서 선택한 지갑을 안전하게 보관하기 위해 디자인된 특별한 모드입니다.";
 
 // Create Passcode
 
-"create_passcode.title" = "Create Passcode";
-"create_passcode.description" = "Your passcode will be used to unlock your wallet";
-"create_passcode.description.biometry" = "Set a passcode to enable %@";
-"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.title" = "비밀번호 만들기";
+"create_passcode.description" = "너의 비밀번호는 너의 지갑을 열어주고 돈을 보내는데 사용될 것입니다.";
+"create_passcode.description.biometry" = "%@을(를) 활성화하려면 비밀번호를 설정하세요.";
+"create_passcode.description.duress_mode" = "긴급 상황 모드를 활성화하려면 비밀번호를 설정하세요.";
 "create_passcode.confirm_passcode" = "확인";
 
 // Enable Duress Mode
 
-"enable_duress_mode.intro.title" = "Duress Mode";
-"enable_duress_mode.intro.description" = "This mode allows users to set up multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
-"enable_duress_mode.intro.notes" = "Notes";
-"enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
-"enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
-"enable_duress_mode.intro.passcode_disabling.description" = "Disabling the passcode in the main mode will automatically reset the Duress Mode.";
-"enable_duress_mode.intro.passcode_change" = "Passcode Change";
-"enable_duress_mode.intro.passcode_change.description" = "Changing the passcode in the Duress Mode will also change the current passcode code for that mode.";
+"enable_duress_mode.intro.title" = "긴급 상황 모드";
+"enable_duress_mode.intro.description" = "이 모드는 사용자가 여러 언락 앱 비밀번호를 설정하도록 허용하며, 원하는 비밀번호는 지정된 지갑만 표시합니다. 강요나 위협에도 선택한 지갑을 안전하게 보관하기 위해 디자인되었습니다.";
+"enable_duress_mode.intro.notes" = "메모";
+"enable_duress_mode.intro.biometrics.description" = "%@ 기능은 긴급 상황 모드를 해제하는 데 사용됩니다. 편의를 위해 %@을(를) 비활성화할 수 있습니다.";
+"enable_duress_mode.intro.passcode_disabling" = "비밀번호 비활성화";
+"enable_duress_mode.intro.passcode_disabling.description" = "기본 모드에서 비밀번호를 비활성화하면 긴급 상황 모드가 자동으로 재설정됩니다.";
+"enable_duress_mode.intro.passcode_change" = "비밀번호 변경";
+"enable_duress_mode.intro.passcode_change.description" = "긴급 상황 모드에서 비밀번호를 변경하면 해당 모드의 현재 비밀번호도 변경됩니다.";
 
-"enable_duress_mode.select.title" = "Select Wallets";
-"enable_duress_mode.select.description" = "Select the wallets that will be displayed in Duress Mode.";
+"enable_duress_mode.select.title" = "지갑 선택";
+"enable_duress_mode.select.description" = "긴급 상황 모드에서 표시할 지갑을 선택하세요.";
 "enable_duress_mode.select.wallets" = "지갑";
 "enable_duress_mode.select.watch_wallets" = "관찰 주소";
 
-"enable_duress_mode.passcode.title" = "Duress Passcode";
-"enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
+"enable_duress_mode.passcode.title" = "긴급 상황 비밀번호";
+"enable_duress_mode.passcode.description" = "긴급 상황 모드용 비밀번호를 설정하세요";
 "enable_duress_mode.passcode.confirm" = "확인";
 
 // Edit Passcode
 
-"edit_passcode.title" = "Edit Passcode";
-"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.title" = "비밀번호 변경";
+"edit_passcode.enter_new_passcode" = "새 비밀번호를 입력하세요";
 "edit_passcode.confirm_new_passcode" = "확인";
 
 // Edit Duress Passcode
 
-"edit_duress_passcode.title" = "Edit Duress Passcode";
-"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.title" = "긴급 상황 비밀번호 편집";
+"edit_duress_passcode.enter_new_passcode" = "긴급 상황 모드용 새 비밀번호를 입력하세요";
 "edit_duress_passcode.confirm_new_passcode" = "확인";
 
 // Set Passcode
 
-"set_passcode.invalid_confirmation" = "Invalid confirmation";
-"set_passcode.already_used" = "This passcode is already being used";
+"set_passcode.invalid_confirmation" = "유효하지 않은 확인입니다";
+"set_passcode.already_used" = "이 비밀번호는 이미 사용 중입니다.";
 
 // Unlock
 
-"unlock.title" = "Unlock";
-"unlock.passcode" = "Enter Passcode";
-"unlock.biometry_reason" = "Unlock wallet";
-"unlock.attempts_left" = "Attempts left: %@";
-"unlock.disabled_until" = "Disabled until: %@";
-"unlock.random" = "Random";
+"unlock.title" = "잠금 해제";
+"unlock.passcode" = "비밀번호 입력";
+"unlock.biometry_reason" = "지갑 잠금 해제";
+"unlock.attempts_left" = "남은 시도 횟수: %@";
+"unlock.disabled_until" = "비활성화될 때까지: %@";
+"unlock.random" = "랜덤";
 
 "security_settings.delete_alert_button" = "휴대전화에서 삭제";
 
@@ -1572,7 +1572,7 @@
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "각 지갑의 자산에 대한 모든 권한을 부여합니다.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within the respective wallet.";
+"private_keys.account_extended_private_key.description" = "각 지갑 내에서 비트코인 및 기타 UTXO 기반 암호화, 즉 라이트코인, 비트코인 캐시, 대시 등을 완벽하게 제어할 수 있습니다.";
 
 // Manage Account -> EVM Address
 
@@ -1607,8 +1607,8 @@
 "add_evm_sync_source.name" = "이름";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "기본 인증(선택 사항)";
-"add_evm_sync_source.warning.url_exists" = "RPC Source with this URL already exists";
-"add_evm_sync_source.error.invalid_url" = "The entered URL is invalid. Valid url must have one of the following schemes: https, wss";
+"add_evm_sync_source.warning.url_exists" = "이 URL이 있는 RPC 소스가 이미 존재합니다.";
+"add_evm_sync_source.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 http, https, ws, wss 스키마 중 하나여야 합니다.";
 
 // Send Settings
 
@@ -1637,11 +1637,11 @@
 "fee_settings.gas_price.info" = "네트워크 거래 수수료는 가스 단위로 측정됩니다. 가스 가격은 사용자가 가스 단위당 지출할 의향이 있는 금액입니다. 네트워크가 사용 중일 때는 가스 가격이 높고 유휴 상태일 때는 가스 가격이 낮습니다. 가스 가격이 충분하지 않아 거래가 장기간 보류 상태로 남아 있는 경우가 많습니다.";
 
 "fee_settings.base_fee" = "기본 수수료";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called the base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
 "fee_settings.max_fee_rate" = "최대 수수료율";
 "fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
 "fee_settings.tips" = "최대 우선 가스비";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for the transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
 "fee_settings.errors.insufficient_balance" = "잔액이 부족합니다";
 "fee_settings.errors.unexpected_error" = "예기치 못한 오류";
@@ -1754,7 +1754,7 @@
 "subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info2.title" = "Chart Indicators";
 "subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info3.title" = "Personal Support";
+"subscription_info.info3.title" = "개인 지원";
 "subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.get_premium" = "Get Premium";
 "subscription_info.already_have" = "I already have Premium";
@@ -1773,7 +1773,7 @@
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting the app or report the error to our support team.";
+"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
 "launch.failed_to_launch.report" = "보고";
 
 // Tron
@@ -1782,7 +1782,7 @@
 "tron.send.resources_consumed" = "소모된 자원";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "The estimated cost of sending a given transaction on the network. (Without excluding Energy, Bandwidth, and Activating Fee)";
+"tron.send.fee.info" = "네트워크에서 거래하는 데 드는 예상 비용입니다. (energy, bandwidth 및 활성화 수수료 제외)";
 "tron.send.resources_consumed.info" = "Bandwidth 은 블록체인 데이터베이스에 저장된 트랜잭션 바이트 크기를 측정하는 단위입니다. 거래가 클수록 대역폭 자원이 더 많이 사용됩니다.\n\nEnergy 는 TRON 가상 머신이 TRON 네트워크에서 특정 작업을 수행하기 위해 필요한 계산 양을 측정하는 단위입니다. \n\n스마트 계약 트랜잭션은 실행에 계산 자원이 필요하기 때문에 각 스마트 계약 트랜잭션에는 energy 수수료를 지불해야합니다.";
 "tron.send.activation_fee.info" = "TRX나 TRC-10 토큰을 비활성화된 계정 주소로 이전하면 해당 계정이 활성화됩니다.";
 "tron.send.inactive_address" = "이 주소는 활성화되어 있지 않습니다";
