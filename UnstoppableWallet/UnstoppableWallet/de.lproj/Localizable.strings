@@ -185,7 +185,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "sync_mode.from_blockchain" = "Von Blockchain";
 "blockchain_settings.description" = "Wählen Sie das Adressformat für den Empfang von Zahlungen. Ein korrektes Format sollte bei der Wiederherstellung einer bestehenden Brieftasche gewählt werden.";
 
-
 // Coin Platforms
 
 "coin_platforms.native" = "Nativ";
@@ -205,7 +204,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "recovery_phrase.passphrase" = "Passwort";
 "recovery_phrase.copy_warning.title" = "Risiko der Wiederherstellungs-Phrase-Kopie";
 "recovery_phrase.copy_warning.description" = "Als Sicherheitsmaßnahme empfehlen wir, Kopiermaßnahmen nicht auf Wiederherstellungs-Phrase zu verwenden.";
-
 
 // EVM Private Key
 
@@ -273,7 +271,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup.cloud.password.confirm.placeholder" = "Bestätigen";
 "backup.cloud.password.save" = "Speichern und sichern";
 
-"backup.cloud.password.error.empty_passphrase" = "Passphrase darf nicht leer sein";
+"backup.cloud.password.error.empty_passphrase" = "Password cannot be empty";
 "backup.cloud.password.error.forbidden_symbols" = "Bitte verwende nur unterstützte Symbole: <![CDATA[A-Z a-z 0-9 \' \" ` & / ? ! : ; . , ~ * $ = + - [ ](){} <> \\ _ # @ | % ]]>";
 "backup.cloud.password.error.minimum_requirement" = "Das Passwort muss mindestens 8 Zeichen enthalten, darunter ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Symbol.";
 "backup.cloud.password.error.invalid_password" = "Falsches Passwort";
@@ -323,7 +321,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.sort_by" = "Sortieren nach";
 "balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
-
 "balance.sort.az" = "Name";
 "balance.sort.price_change" = "Preisänderung";
 
@@ -342,7 +339,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.staked" = "Absteckung";
 "balance.token.staked.info.title" = "Absteckter Titel";
 "balance.token.staked.info.description" = "Absteckungstext";
-
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "gefrorener Titel";
 "balance.token.frozen.info.description" = "gefrorener Beschreibungstext";
@@ -1781,7 +1777,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "launch.failed_to_launch" = "Anwendung konnte aufgrund eines internen Fehlers nicht gestartet werden. Bitte versuchen Sie die App neu zu starten oder melden Sie den Fehler an unser Support-Team.";
 "launch.failed_to_launch.report" = "Melden";
-
 
 // Tron
 
