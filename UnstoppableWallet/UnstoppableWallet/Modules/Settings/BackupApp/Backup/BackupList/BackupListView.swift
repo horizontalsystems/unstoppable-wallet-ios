@@ -10,28 +10,30 @@ struct BackupListView: View {
         ThemeView {
             BottomGradientWrapper {
                 VStack(spacing: .margin24) {
-                    VStack(spacing: 0) {
-                        ListSectionHeader(text: "backup_app.backup_list.header.wallets".localized)
+                    if !viewModel.accountItems.isEmpty {
+                        VStack(spacing: 0) {
+                            ListSectionHeader(text: "backup_app.backup_list.header.wallets".localized)
 
-                        ListSection {
-                            ForEach(viewModel.accountItems, id: \.accountId) { (item: BackupAppModule.AccountItem) in
-                                if viewModel.selected[item.id] != nil {
-                                    let selected = binding(for: item.accountId)
+                            ListSection {
+                                ForEach(viewModel.accountItems, id: \.accountId) { (item: BackupAppModule.AccountItem) in
+                                    if viewModel.selected[item.id] != nil {
+                                        let selected = binding(for: item.accountId)
 
-                                    ClickableRow(action: {
-                                        viewModel.toggle(item: item)
-                                    }) {
-                                        HStack {
-                                            AccountView(item: item)
+                                        ClickableRow(action: {
+                                            viewModel.toggle(item: item)
+                                        }) {
+                                            HStack {
+                                                AccountView(item: item)
 
-                                            Toggle(isOn: selected) {}
-                                                .labelsHidden()
-                                                .toggleStyle(CheckboxStyle())
+                                                Toggle(isOn: selected) {}
+                                                    .labelsHidden()
+                                                    .toggleStyle(CheckboxStyle())
+                                            }
                                         }
-                                    }
-                                } else {
-                                    ListRow {
-                                        AccountView(item: item)
+                                    } else {
+                                        ListRow {
+                                            AccountView(item: item)
+                                        }
                                     }
                                 }
                             }

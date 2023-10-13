@@ -52,6 +52,13 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
         restoreButton.addTarget(self, action: #selector(onTapRestore), for: .touchUpInside)
         restoreButton.set(style: .yellow)
 
+        viewModel.showMergeAlertPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.showMergeAlert()
+            }
+            .store(in: &cancellables)
+
         viewModel.finishedPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] success in
@@ -75,6 +82,10 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
     }
 
     @objc private func onTapRestore() {
+        viewModel.onTapRestore()
+    }
+
+    private func showMergeAlert() {
         let viewController = BottomSheetModule.viewController(
                 image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
                 title: "alert.notice".localized,
@@ -83,7 +94,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
                 ],
                 buttons: [
                     .init(style: .red, title: "backup_app.restore.notice.merge".localized, actionType: .afterClose) { [weak self] in
-                        self?.viewModel.onTapRestore()
+                        self?.viewModel.restore()
                     },
                     .init(style: .transparent, title: "button.cancel".localized, actionType: .afterClose),
                 ]

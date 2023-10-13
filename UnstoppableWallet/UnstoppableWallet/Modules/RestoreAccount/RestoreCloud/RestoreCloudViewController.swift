@@ -174,13 +174,12 @@ class RestoreCloudViewController: ThemeViewController {
 extension RestoreCloudViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        guard !walletViewItem.isEmpty else {
+        guard !walletViewItem.isEmpty || !fullBackupViewItem.isEmpty else {
             return []
         }
 
-        var sections = [
-            descriptionSection,
-        ]
+        var sections = [ descriptionSection ]
+
         if !walletViewItem.notImported.isEmpty {
             sections.append(
                     section(id: "not_imported", headerTitle: "restore.cloud.wallets".localized, viewItems: viewModel.walletViewItem.notImported)
