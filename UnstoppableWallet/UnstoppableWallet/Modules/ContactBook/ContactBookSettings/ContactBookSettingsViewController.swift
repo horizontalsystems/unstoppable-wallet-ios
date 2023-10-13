@@ -152,13 +152,9 @@ class ContactBookSettingsViewController: ThemeViewController {
 
     private func onTapRestore() {
         let documentPicker: UIDocumentPickerViewController
-        if #available(iOS 14.0, *) {
-            let types = UTType.types(tag: "json", tagClass: UTTagClass.filenameExtension, conformingTo: nil)
-            documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: types)
-        } else {
-            documentPicker = UIDocumentPickerViewController(documentTypes: ["*.json"], in: .import)
-        }
+        let types = UTType.types(tag: "json", tagClass: UTTagClass.filenameExtension, conformingTo: nil)
 
+        documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: types)
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
         present(documentPicker, animated: true, completion: nil)

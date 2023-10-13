@@ -42,9 +42,7 @@ class CoinTreasuriesViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear

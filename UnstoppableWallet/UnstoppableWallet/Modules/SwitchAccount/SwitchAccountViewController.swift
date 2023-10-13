@@ -44,9 +44,7 @@ class SwitchAccountViewController: ThemeActionSheetController {
             maker.bottom.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.sectionDataSource = self
 
         tableView.buildSections()

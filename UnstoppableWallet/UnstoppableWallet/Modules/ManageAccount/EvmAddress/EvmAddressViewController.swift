@@ -32,9 +32,7 @@ class EvmAddressViewController: ThemeViewController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionDataSource = self

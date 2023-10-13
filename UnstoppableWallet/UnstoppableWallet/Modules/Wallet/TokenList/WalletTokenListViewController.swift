@@ -43,9 +43,7 @@ class WalletTokenListViewController: ThemeSearchViewController {
         }
 
         tableView.backgroundColor = .clear
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.tableFooterView = UIView(frame: .zero)
