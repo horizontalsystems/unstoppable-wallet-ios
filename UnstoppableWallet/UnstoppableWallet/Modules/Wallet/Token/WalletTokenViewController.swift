@@ -36,9 +36,7 @@ class WalletTokenViewController: ThemeViewController {
         }
 
         tableView.backgroundColor = .clear
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
