@@ -6,7 +6,7 @@ struct BackupDisclaimerView: View {
     @ObservedObject var viewModel: BackupAppViewModel
     var onDismiss: (() -> Void)?
 
-    @State var isOn: Bool = true
+    @State var isOn: Bool = false
 
     var body: some View {
         let backupDisclaimer = (viewModel.destination ?? .local).backupDisclaimer

@@ -4,13 +4,16 @@ import Combine
 class RestoreFileConfigurationViewModel {
     private let cloudBackupManager: CloudBackupManager
     private let appBackupProvider: AppBackupProvider
+    private let contactBookManager: ContactBookManager
     private let rawBackup: RawFullBackup
 
+    private let showMergeAlertSubject = PassthroughSubject<Void, Never>()
     private let finishedSubject = PassthroughSubject<Bool, Never>()
 
-    init(cloudBackupManager: CloudBackupManager, appBackupProvider: AppBackupProvider, rawBackup: RawFullBackup) {
+    init(cloudBackupManager: CloudBackupManager, appBackupProvider: AppBackupProvider, contactBookManager: ContactBookManager, rawBackup: RawFullBackup) {
         self.cloudBackupManager = cloudBackupManager
         self.appBackupProvider = appBackupProvider
+        self.contactBookManager = contactBookManager
         self.rawBackup = rawBackup
     }
 
@@ -61,8 +64,20 @@ extension RestoreFileConfigurationViewModel {
     }
 
     func onTapRestore() {
+        if contactBookManager.state.data?.contacts.isEmpty ?? true {
+            restore()
+        } else {
+            showMergeAlertSubject.send()
+        }
+    }
+
+    func restore() {
         appBackupProvider.restore(raw: rawBackup)
         finishedSubject.send(true)
+    }
+
+    var showMergeAlertPublisher: AnyPublisher<Void, Never> {
+        showMergeAlertSubject.eraseToAnyPublisher()
     }
 
     var finishedPublisher: AnyPublisher<Bool, Never> {

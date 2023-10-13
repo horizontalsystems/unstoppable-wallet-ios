@@ -5,6 +5,7 @@ class RestoreFileConfigurationModule {
         let viewModel = RestoreFileConfigurationViewModel(
             cloudBackupManager: App.shared.cloudBackupManager,
             appBackupProvider: App.shared.appBackupProvider,
+            contactBookManager: App.shared.contactManager,
             rawBackup: rawBackup
         )
 
