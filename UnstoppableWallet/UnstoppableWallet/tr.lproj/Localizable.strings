@@ -271,7 +271,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup.cloud.password.confirm.placeholder" = "Onayla";
 "backup.cloud.password.save" = "Kaydet ve Yedekle";
 
-"backup.cloud.password.error.empty_passphrase" = "Parola boş olamaz";
+"backup.cloud.password.error.empty_passphrase" = "Password cannot be empty";
 "backup.cloud.password.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "Bir büyük harf, bir küçük harf, bir rakam ve bir sembol dahil olmak üzere en az 8 karakter";
 "backup.cloud.password.error.invalid_password" = "Yanlış parola";
