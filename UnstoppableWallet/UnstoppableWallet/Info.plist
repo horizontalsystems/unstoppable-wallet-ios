@@ -35,10 +35,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>DefaultWords</key>
-	<string>${default_words}</string>
 	<key>DefaultPassphrase</key>
 	<string>${default_passphrase}</string>
+	<key>DefaultWords</key>
+	<string>${default_words}</string>
 	<key>DefiYieldApiKey</key>
 	<string>$(defiyield_api_key)</string>
 	<key>EtherscanApiKey</key>
@@ -49,8 +49,6 @@
 	<string>${gnosisscan_api_key}</string>
 	<key>HsProviderApiKey</key>
 	<string>$(hs_provider_api_key)</string>
-	<key>TronGridApiKey</key>
-	<string>${trongrid_api_key}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>InfuraProjectId</key>
@@ -75,18 +73,51 @@
 	<string>We need access to local network to discover blockchain nodes</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need access to photo library to save NFT images</string>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.io.horizontalsystems.bank-wallet.shared</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>$(PRODUCT_NAME)</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+		<key>iCloud.io.horizontalsystems.bank-wallet.shared.dev</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>$(PRODUCT_NAME)</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+	</dict>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>SingleCoinPriceIntent</string>
+	</array>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
+	<key>OpenSeaApiKey</key>
+	<string>${open_sea_api_key}</string>
 	<key>OptimismEtherscanApiKey</key>
 	<string>${optimism_etherscan_api_key}</string>
 	<key>PolygonscanApiKey</key>
 	<string>${polygonscan_api_key}</string>
+	<key>PrivateCloudContainerId</key>
+	<string>${private_cloud_container_id}</string>
+	<key>SharedCloudContainerId</key>
+	<string>${shared_cloud_container_id}</string>
 	<key>ShowBuildNumber</key>
 	<string>${ShowBuildNumber}</string>
 	<key>ShowTestNetSwitcher</key>
 	<string>${ShowTestNetSwitcher}</string>
 	<key>SnowtraceApiKey</key>
 	<string>${snowtrace_api_key}</string>
+	<key>TronGridApiKey</key>
+	<string>${trongrid_api_key}</string>
 	<key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
 	<key>UIApplicationSceneManifest</key>
@@ -112,36 +143,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSUbiquitousContainers</key>
-	<dict>
-		<key>iCloud.io.horizontalsystems.bank-wallet.shared.dev</key>
-		<dict>
-			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
-			<true/>
-			<key>NSUbiquitousContainerName</key>
-			<string>$(PRODUCT_NAME)</string>
-			<key>NSUbiquitousContainerSupportedFolderLevels</key>
-			<string>Any</string>
-		</dict>
-		<key>iCloud.io.horizontalsystems.bank-wallet.shared</key>
-		<dict>
-			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
-			<true/>
-			<key>NSUbiquitousContainerName</key>
-			<string>$(PRODUCT_NAME)</string>
-			<key>NSUbiquitousContainerSupportedFolderLevels</key>
-			<string>Any</string>
-		</dict>
-	</dict>
-	<key>SharedCloudContainerId</key>
-	<string>${shared_cloud_container_id}</string>
-	<key>PrivateCloudContainerId</key>
-	<string>${private_cloud_container_id}</string>
-	<key>WallectConnectV2ProjectKey</key>
-	<string>${wallet_connect_v2_project_key}</string>
-	<key>OpenSeaApiKey</key>
-	<string>${open_sea_api_key}</string>
     <key>UnstoppableDomainsApiKey</key>
     <string>${unstoppable_domains_api_key}</string>
+    <key>WallectConnectV2ProjectKey</key>
+	<string>${wallet_connect_v2_project_key}</string>
 </dict>
 </plist>

@@ -145,16 +145,6 @@ def apply_prod_xcconfig
   update_prod_xcconfig('unstoppable_domains_api_key', XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY)
 end
 
-def force_update_devices(type, username)
-  match(
-    type: type,
-    username: username,
-    team_id: "HC4MCAXJ66",
-    app_identifier: "io.horizontalsystems.bank-wallet,io.horizontalsystems.bank-wallet.dev",
-    force_for_new_devices: true
-  )
-end
-
 platform :ios do
 
   lane :dev do
@@ -258,19 +248,19 @@ platform :ios do
     match(
       type: "development",
       readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
     )
 
     match(
       type: "adhoc",
       readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
     )
 
     match(
       type: "appstore",
       readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"]
     )
   end
 
@@ -279,21 +269,21 @@ platform :ios do
       type: "development",
       username: options[:username],
       team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
     )
 
     match(
       type: "adhoc",
       username: options[:username],
       team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
     )
 
     match(
       type: "appstore",
       username: options[:username],
       team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"]
     )
   end
 
