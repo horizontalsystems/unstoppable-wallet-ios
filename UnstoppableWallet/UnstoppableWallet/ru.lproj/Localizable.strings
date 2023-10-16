@@ -1016,7 +1016,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.manage_accounts" = "Кошельки";
 "settings.blockchain_settings" = "Настройки блокчейна";
-"settings.backup_manager" = "Менеджер резерв. копирования";
+"settings.backup_manager" = "Резерв. копирования";
 "settings.security" = "Безопасность";
 "settings.experimental_features" = "Экспериментальные функции";
 "settings.personal_support" = "Персональная поддержка";
@@ -1094,7 +1094,7 @@
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Менеджер резерв. копирования";
+"backup_app.backup_manager.title" = "Резерв. копирования";
 "backup_app.backup_manager.restore" = "Восстановить резервную копию";
 "backup_app.backup_manager.create" = "Создать новую резерв. копию";
 
@@ -1150,12 +1150,12 @@
 "settings_security.enable_passcode" = "Включить код доступа";
 "settings_security.edit_passcode" = "Изменить код";
 "settings_security.disable_passcode" = "Отключить код доступа";
-"settings_security.auto_lock" = "Автоблокировка";
+"settings_security.auto_lock" = "Блокировка";
 "settings_security.balance_auto_hide" = "Автоскрытие баланса";
 "settings_security.balance_auto_hide.description" = "Автоматически скрывает баланс при открытии приложения, независимо от предыдущих настроек.";
 "settings_security.enable_duress_mode" = "Установить режим Duress";
 "settings_security.edit_duress_passcode" = "Изменить Duress код";
-"settings_security.disable_duress_mode" = "Отключить режим Duress";
+"settings_security.disable_duress_mode" = "Disable Duress Passcode";
 "settings_security.duress_mode.description" = "Специализированный режим, разработанный для обеспечения безопасности выбранных кошельков в условиях принуждения.";
 
 // Create Passcode
