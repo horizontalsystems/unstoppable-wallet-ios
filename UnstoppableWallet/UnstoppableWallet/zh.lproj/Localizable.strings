@@ -1153,7 +1153,7 @@
 "settings_security.balance_auto_hide.description" = "每次打开应用程序时自动隐藏平衡，不管先前的偏好设置。";
 "settings_security.enable_duress_mode" = "设置压力模式";
 "settings_security.edit_duress_passcode" = "编辑货币密码";
-"settings_security.disable_duress_mode" = "Disable Duress Passcode";
+"settings_security.disable_duress_mode" = "禁用冒险密码";
 "settings_security.duress_mode.description" = "专用模式用于在胁迫下使选定的钱包安全。";
 
 // Create Passcode
