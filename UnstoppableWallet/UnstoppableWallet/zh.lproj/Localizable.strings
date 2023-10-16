@@ -271,7 +271,7 @@
 "backup.cloud.password.confirm.placeholder" = "确认";
 "backup.cloud.password.save" = "保存并备份";
 
-"backup.cloud.password.error.empty_passphrase" = "Password cannot be empty";
+"backup.cloud.password.error.empty_passphrase" = "密码不能为空";
 "backup.cloud.password.error.forbidden_symbols" = "请只使用支持的符号：A-Z a-z 0-9 ' \" & / ? , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "密码需要至少8个字符，包括一个大写字母、一个小写字母、一个数字和一个符号。";
 "backup.cloud.password.error.invalid_password" = "密码错误";
