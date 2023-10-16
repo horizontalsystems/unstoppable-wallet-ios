@@ -5,7 +5,7 @@ class AddressResolutionProvider {
     private let resolution: Resolution?
 
     init() {
-        resolution = try? Resolution()
+        resolution = try? Resolution(apiKey: AppConfig.unstoppableDomainsApiKey ?? "")
     }
 
     func isValid(domain: String) -> Single<Bool> {

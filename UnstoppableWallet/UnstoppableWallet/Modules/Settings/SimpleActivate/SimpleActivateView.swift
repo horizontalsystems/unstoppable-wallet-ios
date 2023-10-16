@@ -16,6 +16,7 @@ struct SimpleActivateView: View {
                             Toggle(isOn: $viewModel.activated) {
                                 Text(toggleText).themeBody()
                             }
+                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                         }
                     }
                     ListSectionFooter(text: description)

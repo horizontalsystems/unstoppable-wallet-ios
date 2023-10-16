@@ -55,6 +55,7 @@ struct InputTextView: View {
                 text: text,
                 onCommit: { commit() }
             )
+            .accentColor(.themeYellow)
         } else {
             TextField(
                 placeholder,
@@ -62,6 +63,7 @@ struct InputTextView: View {
                 onEditingChanged: { editingChanged($0) },
                 onCommit: { commit() }
             )
+            .accentColor(.themeYellow)
         }
     }
 
