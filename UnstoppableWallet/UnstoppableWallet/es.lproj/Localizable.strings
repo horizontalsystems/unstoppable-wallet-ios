@@ -271,7 +271,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup.cloud.password.confirm.placeholder" = "Confirmar";
 "backup.cloud.password.save" = "Guardar y hacer una copia de seguridad";
 
-"backup.cloud.password.error.empty_passphrase" = "Password cannot be empty";
+"backup.cloud.password.error.empty_passphrase" = "La contraseña no puede estar vacía";
 "backup.cloud.password.error.forbidden_symbols" = "Utilice solo símbolos admitidos: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "Al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un símbolo";
 "backup.cloud.password.error.invalid_password" = "Contraseña incorrecta";
