@@ -59,6 +59,7 @@ struct SecuritySettingsView: View {
                             Toggle(isOn: $viewModel.isBiometryToggleOn) {
                                 Text(biometryType.title).themeBody()
                             }
+                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                             .onChange(of: viewModel.isBiometryToggleOn) { isOn in
                                 if !viewModel.isPasscodeSet, isOn {
                                     createPasscodeReason = .biometry(type: biometryType)
@@ -75,6 +76,7 @@ struct SecuritySettingsView: View {
                             Toggle(isOn: $viewModel.balanceAutoHide) {
                                 Text("settings_security.balance_auto_hide".localized).themeBody()
                             }
+                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                         }
                     }
 

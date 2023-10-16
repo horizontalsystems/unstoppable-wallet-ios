@@ -34,6 +34,7 @@ struct AppearanceView: View {
                             Toggle(isOn: $viewModel.showMarketTab.animation()) {
                                 Text("appearance.markets_tab".localized).themeBody()
                             }
+                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                         }
                     }
                 }

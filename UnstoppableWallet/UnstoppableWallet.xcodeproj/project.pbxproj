@@ -11384,7 +11384,7 @@
 			repositoryURL = "https://github.com/unstoppabledomains/resolution-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.2.1;
+				minimumVersion = 6.1.0;
 			};
 		};
 		D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */ = {
