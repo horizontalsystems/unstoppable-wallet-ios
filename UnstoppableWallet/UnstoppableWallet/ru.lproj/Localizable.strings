@@ -1155,7 +1155,7 @@
 "settings_security.balance_auto_hide.description" = "Автоматически скрывает баланс при открытии приложения, независимо от предыдущих настроек.";
 "settings_security.enable_duress_mode" = "Установить режим Duress";
 "settings_security.edit_duress_passcode" = "Изменить Duress код";
-"settings_security.disable_duress_mode" = "Disable Duress Passcode";
+"settings_security.disable_duress_mode" = "Отключить Duress код";
 "settings_security.duress_mode.description" = "Специализированный режим, разработанный для обеспечения безопасности выбранных кошельков в условиях принуждения.";
 
 // Create Passcode
