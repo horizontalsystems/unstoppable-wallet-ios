@@ -1153,7 +1153,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings_security.balance_auto_hide.description" = "Oculta automáticamente el balance cada vez que se abre la aplicación, independientemente de las preferencias anteriores.";
 "settings_security.enable_duress_mode" = "Establecer modo de Duración";
 "settings_security.edit_duress_passcode" = "Editar contraseña de Duración";
-"settings_security.disable_duress_mode" = "Disable Duress Passcode";
+"settings_security.disable_duress_mode" = "Desactivar Duress Passcode";
 "settings_security.duress_mode.description" = "Un modo especializado diseñado para mantener las billeteras seleccionadas a salvo bajo coacción.";
 
 // Create Passcode
