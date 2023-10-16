@@ -1153,7 +1153,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
 "settings_security.enable_duress_mode" = "Set Duress Mode";
 "settings_security.edit_duress_passcode" = "Edit Duress Passcode";
-"settings_security.disable_duress_mode" = "Disable Duress Mode";
+"settings_security.disable_duress_mode" = "Disable Duress Passcode";
 "settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
 
 // Create Passcode
