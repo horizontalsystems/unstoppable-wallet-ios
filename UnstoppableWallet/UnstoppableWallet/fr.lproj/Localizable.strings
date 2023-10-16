@@ -271,7 +271,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup.cloud.password.confirm.placeholder" = "Confirmer";
 "backup.cloud.password.save" = "Enregistrez une copie de sauvegarde";
 
-"backup.cloud.password.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
+"backup.cloud.password.error.empty_passphrase" = "Le mot de passe ne peut pas être vide";
 "backup.cloud.password.error.forbidden_symbols" = "Veuillez utiliser uniquement les symboles pris en charge : A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "Votre mot de passe doit contenir au moins 8 caractères, y compris une lettre majuscule, une lettre minuscule, un chiffre et un symbole";
 "backup.cloud.password.error.invalid_password" = "Mot de passe incorrect";
