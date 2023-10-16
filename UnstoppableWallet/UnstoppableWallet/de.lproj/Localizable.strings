@@ -271,7 +271,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup.cloud.password.confirm.placeholder" = "Bestätigen";
 "backup.cloud.password.save" = "Speichern und sichern";
 
-"backup.cloud.password.error.empty_passphrase" = "Password cannot be empty";
+"backup.cloud.password.error.empty_passphrase" = "Passwort darf nicht leer sein";
 "backup.cloud.password.error.forbidden_symbols" = "Bitte verwende nur unterstützte Symbole: <![CDATA[A-Z a-z 0-9 \' \" ` & / ? ! : ; . , ~ * $ = + - [ ](){} <> \\ _ # @ | % ]]>";
 "backup.cloud.password.error.minimum_requirement" = "Das Passwort muss mindestens 8 Zeichen enthalten, darunter ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Symbol.";
 "backup.cloud.password.error.invalid_password" = "Falsches Passwort";
