@@ -273,7 +273,7 @@
 "backup.cloud.password.confirm.placeholder" = "Подтвердить";
 "backup.cloud.password.save" = "Сохранить и создать резервную копию";
 
-"backup.cloud.password.error.empty_passphrase" = "Password cannot be empty";
+"backup.cloud.password.error.empty_passphrase" = "Пароль не может быть пустым";
 "backup.cloud.password.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "Не менее 8 символов, включая одну заглавную букву, одну строчную букву, одну цифру и один символ";
 "backup.cloud.password.error.invalid_password" = "Неверный пароль";
