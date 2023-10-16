@@ -1153,7 +1153,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings_security.balance_auto_hide.description" = "Masque automatiquement le solde à chaque ouverture de l'application, indépendamment des préférences précédentes.";
 "settings_security.enable_duress_mode" = "Activer le Mode Duress";
 "settings_security.edit_duress_passcode" = "Modifier le code de détresse";
-"settings_security.disable_duress_mode" = "Disable Duress Passcode";
+"settings_security.disable_duress_mode" = "Désactiver le mot de passe de détresse";
 "settings_security.duress_mode.description" = "Un mode spécialisé conçu pour protéger les portefeuilles sélectionnés en cas de contrainte.";
 
 // Create Passcode
