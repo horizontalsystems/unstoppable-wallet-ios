@@ -1157,7 +1157,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings_security.balance_auto_hide.description" = "Uygulama her açıldığında, önceki tercihlere bakılmaksızın bakiyeyi otomatik olarak gizler.";
 "settings_security.enable_duress_mode" = "Baskı Modunu Ayarla";
 "settings_security.edit_duress_passcode" = "Duress Şifresini Düzenle";
-"settings_security.disable_duress_mode" = "Baskı Modunu Devre Dışı Bırak";
+"settings_security.disable_duress_mode" = "Disable Duress Passcode";
 "settings_security.duress_mode.description" = "Seçilen cüzdanları zorlama altında güvende tutmak için tasarlanmış özel bir mod.";
 
 // Create Passcode
