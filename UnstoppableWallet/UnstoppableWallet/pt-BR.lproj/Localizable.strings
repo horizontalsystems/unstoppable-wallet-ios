@@ -1153,7 +1153,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings_security.balance_auto_hide.description" = "Oculta automaticamente o saldo cada vez que o aplicativo é aberto, independentemente das preferências anteriores.";
 "settings_security.enable_duress_mode" = "Definir modo de dureza";
 "settings_security.edit_duress_passcode" = "Editar Senha do Modo Coação";
-"settings_security.disable_duress_mode" = "Disable Duress Passcode";
+"settings_security.disable_duress_mode" = "Desabilitar senha de cobrança";
 "settings_security.duress_mode.description" = "Um modo especializado projetado para manter as carteiras selecionadas seguras sob coação.";
 
 // Create Passcode
