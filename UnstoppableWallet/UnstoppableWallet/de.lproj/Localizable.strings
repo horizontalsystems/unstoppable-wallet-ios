@@ -1153,7 +1153,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings_security.balance_auto_hide.description" = "Bei jedem Öffnen der App wird der Saldo automatisch ausgeblendet, unabhängig von den vorherigen Einstellungen.";
 "settings_security.enable_duress_mode" = "Duress Modus setzen";
 "settings_security.edit_duress_passcode" = "Duress Code bearbeiten";
-"settings_security.disable_duress_mode" = "Duress Modus deaktivieren";
+"settings_security.disable_duress_mode" = "Disable Duress Passcode";
 "settings_security.duress_mode.description" = "Ein spezialisierter Modus, der entworfen wurde, um ausgewählte Brieftaschen unter Zwang zu schützen.";
 
 // Create Passcode
