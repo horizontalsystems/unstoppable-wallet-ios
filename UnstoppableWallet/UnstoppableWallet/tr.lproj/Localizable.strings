@@ -271,7 +271,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup.cloud.password.confirm.placeholder" = "Onayla";
 "backup.cloud.password.save" = "Kaydet ve Yedekle";
 
-"backup.cloud.password.error.empty_passphrase" = "Parola boş olamaz";
+"backup.cloud.password.error.empty_passphrase" = "Parola boş bırakılamaz";
 "backup.cloud.password.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "Bir büyük harf, bir küçük harf, bir rakam ve bir sembol dahil olmak üzere en az 8 karakter";
 "backup.cloud.password.error.invalid_password" = "Yanlış parola";
@@ -1157,7 +1157,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings_security.balance_auto_hide.description" = "Uygulama her açıldığında, önceki tercihlere bakılmaksızın bakiyeyi otomatik olarak gizler.";
 "settings_security.enable_duress_mode" = "Baskı Modunu Ayarla";
 "settings_security.edit_duress_passcode" = "Duress Şifresini Düzenle";
-"settings_security.disable_duress_mode" = "Baskı Modunu Devre Dışı Bırak";
+"settings_security.disable_duress_mode" = "Zorlama Şifresini Devre Dışı Bırak";
 "settings_security.duress_mode.description" = "Seçilen cüzdanları zorlama altında güvende tutmak için tasarlanmış özel bir mod.";
 
 // Create Passcode

@@ -269,7 +269,7 @@
 "backup.cloud.password.confirm.placeholder" = "확인";
 "backup.cloud.password.save" = "저장 및 백업";
 
-"backup.cloud.password.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
+"backup.cloud.password.error.empty_passphrase" = "비밀번호는 필수 정보입니다.";
 "backup.cloud.password.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "대문자 1개, 소문자 1개, 숫자 1개, 기호 1개를 포함하여 8자 이상";
 "backup.cloud.password.error.invalid_password" = "잘못된 비밀번호";
@@ -1151,7 +1151,7 @@
 "settings_security.balance_auto_hide.description" = "앱이 열릴 때마다 잔고를 자동으로 숨깁니다. 이전 설정에 관계없이 적용됩니다.";
 "settings_security.enable_duress_mode" = "긴급 상황 모드 설정";
 "settings_security.edit_duress_passcode" = "긴급 상황 비밀번호 편집";
-"settings_security.disable_duress_mode" = "긴급 상황 모드 비활성화";
+"settings_security.disable_duress_mode" = "협박 비밀번호를 비활성화합니다.";
 "settings_security.duress_mode.description" = "강요 상황에서 선택한 지갑을 안전하게 보관하기 위해 디자인된 특별한 모드입니다.";
 
 // Create Passcode
