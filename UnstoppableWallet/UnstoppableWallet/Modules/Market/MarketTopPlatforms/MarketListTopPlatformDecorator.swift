@@ -1,5 +1,4 @@
 import Foundation
-import CurrencyKit
 import MarketKit
 import ComponentKit
 

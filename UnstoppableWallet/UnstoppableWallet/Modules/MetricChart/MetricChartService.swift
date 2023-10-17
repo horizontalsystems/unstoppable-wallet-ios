@@ -1,7 +1,6 @@
 import Combine
 import UIKit
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 class MetricChartService {

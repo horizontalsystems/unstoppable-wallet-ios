@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 import ThemeKit
-import CurrencyKit
 import MarketKit
 import ComponentKit
 import StorageKit

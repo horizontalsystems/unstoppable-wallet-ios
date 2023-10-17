@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
-import CurrencyKit
 import MarketKit
 import Chart
 

@@ -1,4 +1,3 @@
-import CurrencyKit
 import EvmKit
 import MarketKit
 import RxSwift
@@ -7,7 +6,7 @@ class TransactionInfoService {
     private let disposeBag = DisposeBag()
 
     private let adapter: ITransactionsAdapter
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let rateService: HistoricalRateService
     private let nftMetadataService: NftMetadataService
 
@@ -17,10 +16,10 @@ class TransactionInfoService {
 
     private let transactionInfoItemSubject = PublishSubject<Item>()
 
-    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyKit: CurrencyKit.Kit, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
+    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyManager: CurrencyManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
         self.transactionRecord = transactionRecord
         self.adapter = adapter
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.rateService = rateService
         self.nftMetadataService = nftMetadataService
 

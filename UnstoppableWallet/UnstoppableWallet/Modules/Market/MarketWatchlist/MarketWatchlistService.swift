@@ -2,7 +2,6 @@ import Combine
 import RxSwift
 import RxRelay
 import MarketKit
-import CurrencyKit
 import StorageKit
 import HsExtensions
 
@@ -13,7 +12,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     private let keyMarketField = "market-watchlist-market-field"
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let favoritesManager: FavoritesManager
     private let appManager: IAppManager
     private let storage: StorageKit.ILocalStorage
@@ -32,9 +31,9 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
 
     private var coinUids = [String]()
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager, appManager: IAppManager, storage: StorageKit.ILocalStorage) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, favoritesManager: FavoritesManager, appManager: IAppManager, storage: StorageKit.ILocalStorage) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.favoritesManager = favoritesManager
         self.appManager = appManager
         self.storage = storage
@@ -106,7 +105,7 @@ extension MarketWatchlistService: IMarketListService {
     }
 
     func load() {
-        currencyKit.baseCurrencyUpdatedPublisher
+        currencyManager.baseCurrencyUpdatedPublisher
                 .sink { [weak self] _ in
                     self?.syncMarketInfos()
                 }
@@ -143,7 +142,7 @@ extension MarketWatchlistService: IMarketListDecoratorService {
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var priceChangeType: MarketModule.PriceChangeType {

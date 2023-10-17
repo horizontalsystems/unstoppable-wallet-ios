@@ -1,7 +1,6 @@
 import Foundation
 import RxSwift
 import RxRelay
-import CurrencyKit
 import MarketKit
 import HsExtensions
 
@@ -31,7 +30,7 @@ class MarketAdvancedSearchService {
     private let allTimeDeltaPercent: Decimal = 10
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
 
     private var internalState: State = .loading {
         didSet {
@@ -171,14 +170,14 @@ class MarketAdvancedSearchService {
     }
 
     var currencyCode: String {
-        currencyKit.baseCurrency.code
+        currencyManager.baseCurrency.code
     }
 
     let allBlockchains: [Blockchain]
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
 
         do {
             let blockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
@@ -195,9 +194,9 @@ class MarketAdvancedSearchService {
 
         internalState = .loading
 
-        Task { [weak self, marketKit, coinListCount, currencyKit] in
+        Task { [weak self, marketKit, coinListCount, currencyManager] in
             do {
-                let marketInfos = try await marketKit.advancedMarketInfos(top: coinListCount.rawValue, currencyCode: currencyKit.baseCurrency.code)
+                let marketInfos = try await marketKit.advancedMarketInfos(top: coinListCount.rawValue, currencyCode: currencyManager.baseCurrency.code)
                 self?.internalState = .loaded(marketInfos: marketInfos)
             } catch {
                 self?.internalState = .failed(error: error)

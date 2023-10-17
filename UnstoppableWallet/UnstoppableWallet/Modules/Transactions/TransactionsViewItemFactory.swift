@@ -1,5 +1,4 @@
 import UIKit
-import CurrencyKit
 import MarketKit
 import ComponentKit
 

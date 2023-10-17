@@ -56,7 +56,7 @@ extension OneInchModule: ISwapProvider {
                 switchService: AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default, useLocalStorage: false),
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
-                currencyKit: App.shared.currencyKit,
+                currencyManager: App.shared.currencyManager,
                 viewItemHelper: SwapViewItemHelper()
         )
 

@@ -2,7 +2,6 @@ import Foundation
 import Combine
 import RxSwift
 import RxRelay
-import CurrencyKit
 import MarketKit
 
 class MarketOverviewTopCoinsService {

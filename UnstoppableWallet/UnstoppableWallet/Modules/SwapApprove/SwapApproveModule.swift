@@ -13,7 +13,7 @@ struct SwapApproveModule {
 
         let coinService = CoinService(
                 token: data.token,
-                currencyKit: App.shared.currencyKit,
+                currencyManager: App.shared.currencyManager,
                 marketKit: App.shared.marketKit
         )
 

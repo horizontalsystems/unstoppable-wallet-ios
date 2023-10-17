@@ -1,5 +1,4 @@
 import Combine
-import CurrencyKit
 import LanguageKit
 import RxRelay
 import RxSwift
@@ -17,7 +16,7 @@ class MainSettingsService {
     private let passcodeManager: PasscodeManager
     private let termsManager: TermsManager
     private let systemInfoManager: SystemInfoManager
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let subscriptionManager: SubscriptionManager
     private let rateAppManager: RateAppManager
@@ -26,7 +25,7 @@ class MainSettingsService {
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
     init(backupManager: BackupManager, cloudAccountBackupManager: CloudBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager, passcodeManager: PasscodeManager, termsManager: TermsManager,
-         systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, walletConnectSessionManager: WalletConnectSessionManager, subscriptionManager: SubscriptionManager, rateAppManager: RateAppManager)
+         systemInfoManager: SystemInfoManager, currencyManager: CurrencyManager, walletConnectSessionManager: WalletConnectSessionManager, subscriptionManager: SubscriptionManager, rateAppManager: RateAppManager)
     {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.backupManager = backupManager
@@ -36,7 +35,7 @@ class MainSettingsService {
         self.passcodeManager = passcodeManager
         self.termsManager = termsManager
         self.systemInfoManager = systemInfoManager
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.walletConnectSessionManager = walletConnectSessionManager
         self.subscriptionManager = subscriptionManager
         self.rateAppManager = rateAppManager
@@ -114,11 +113,11 @@ extension MainSettingsService {
     }
 
     var baseCurrency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var baseCurrencyPublisher: AnyPublisher<Currency, Never> {
-        currencyKit.baseCurrencyUpdatedPublisher
+        currencyManager.baseCurrencyUpdatedPublisher
     }
 
     var appVersion: String {

@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 import UniswapKit
-import CurrencyKit
 import EvmKit
 
 class OneInchViewModel {
@@ -12,7 +11,7 @@ class OneInchViewModel {
     public let service: OneInchService
     public let tradeService: OneInchTradeService
     public let switchService: AmountTypeSwitchService
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
 
@@ -35,13 +34,13 @@ class OneInchViewModel {
     private var openRevokeRelay = PublishRelay<SwapAllowanceService.ApproveData>()
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    init(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyKit: CurrencyKit.Kit, viewItemHelper: SwapViewItemHelper) {
+    init(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyManager: CurrencyManager, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.switchService = switchService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.viewItemHelper = viewItemHelper
 
         subscribeToService()
@@ -211,7 +210,7 @@ class OneInchViewModel {
 extension OneInchViewModel {
 
     var amountTypeSelectorItems: [String] {
-        ["swap.amount_type.coin".localized, currencyKit.baseCurrency.code]
+        ["swap.amount_type.coin".localized, currencyManager.baseCurrency.code]
     }
 
     var amountTypeIndexDriver: Driver<Int> {

@@ -6,8 +6,8 @@ class SwapInputModule {
         let fromCoinCardService = SwapFromCoinCardService(service: service, tradeService: tradeService)
         let toCoinCardService = SwapToCoinCardService(service: service, tradeService: tradeService)
 
-        let fromFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let toFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let fromFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let toFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fromFiatService.toggleAvailableObservable)
         switchService.add(toggleAllowedObservable: toFiatService.toggleAvailableObservable)
 
@@ -38,8 +38,8 @@ class SwapInputModule {
         let fromCoinCardService = SwapV3FromCoinCardService(service: service, tradeService: tradeService)
         let toCoinCardService = SwapV3ToCoinCardService(service: service, tradeService: tradeService)
 
-        let fromFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let toFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let fromFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let toFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fromFiatService.toggleAvailableObservable)
         switchService.add(toggleAllowedObservable: toFiatService.toggleAvailableObservable)
 
@@ -70,8 +70,8 @@ class SwapInputModule {
         let fromCoinCardService = SwapFromCoinCardOneInchService(service: service, tradeService: tradeService)
         let toCoinCardService = SwapToCoinCardOneInchService(service: service, tradeService: tradeService)
 
-        let fromFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let toFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let fromFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let toFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fromFiatService.toggleAvailableObservable)
         switchService.add(toggleAllowedObservable: toFiatService.toggleAvailableObservable)
 

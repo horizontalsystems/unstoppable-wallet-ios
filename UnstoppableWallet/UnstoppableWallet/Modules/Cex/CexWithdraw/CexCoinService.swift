@@ -1,17 +1,16 @@
 import Foundation
-import CurrencyKit
 import BigInt
 import MarketKit
 import HsExtensions
 
 class CexCoinService {
     let cexAsset: CexAsset
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
 
-    init(cexAsset: CexAsset, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+    init(cexAsset: CexAsset, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
         self.cexAsset = cexAsset
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.marketKit = marketKit
     }
 
@@ -24,7 +23,7 @@ extension CexCoinService: ICoinService {
             return nil
         }
 
-        let baseCurrency = currencyKit.baseCurrency
+        let baseCurrency = currencyManager.baseCurrency
 
         return marketKit.coinPrice(coinUid: coin.uid, currencyCode: baseCurrency.code).map { coinPrice in
             CurrencyValue(currency: baseCurrency, value: coinPrice.value)

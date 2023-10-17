@@ -2,7 +2,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import MarketKit
-import CurrencyKit
 import LanguageKit
 import HsExtensions
 
@@ -11,7 +10,7 @@ class CoinOverviewService {
 
     private let coinUid: String
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let languageManager: LanguageManager
     private let accountManager: AccountManager
     private let walletManager: WalletManager
@@ -23,10 +22,10 @@ class CoinOverviewService {
         }
     }
 
-    init(coinUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager) {
+    init(coinUid: String, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager) {
         self.coinUid = coinUid
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.languageManager = languageManager
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -114,7 +113,7 @@ extension CoinOverviewService {
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     func sync() {
@@ -122,9 +121,9 @@ extension CoinOverviewService {
 
         state = .loading
 
-        Task { [weak self, marketKit, coinUid, currencyKit, languageManager] in
+        Task { [weak self, marketKit, coinUid, currencyManager, languageManager] in
             do {
-                let info = try await marketKit.marketInfoOverview(coinUid: coinUid, currencyCode: currencyKit.baseCurrency.code, languageCode: languageManager.currentLanguage)
+                let info = try await marketKit.marketInfoOverview(coinUid: coinUid, currencyCode: currencyManager.baseCurrency.code, languageCode: languageManager.currentLanguage)
                 self?.sync(info: info)
             } catch {
                 self?.state = .failed(error)

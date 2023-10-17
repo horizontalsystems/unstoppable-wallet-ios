@@ -1,14 +1,13 @@
 import MarketKit
-import CurrencyKit
 
 class TopPlatformMarketCapFetcher {
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let topPlatform: TopPlatform
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, topPlatform: TopPlatform) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, topPlatform: TopPlatform) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.topPlatform = topPlatform
     }
 
@@ -17,7 +16,7 @@ class TopPlatformMarketCapFetcher {
 extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
 
     var valueType: MetricChartModule.ValueType {
-        .compactCurrencyValue(currencyKit.baseCurrency)
+        .compactCurrencyValue(currencyManager.baseCurrency)
     }
 
     var intervals: [HsTimePeriod] {
@@ -25,7 +24,7 @@ extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
     }
 
     func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData {
-        let points = try await marketKit.topPlatformMarketCapChart(platform: topPlatform.blockchain.uid, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
+        let points = try await marketKit.topPlatformMarketCapChart(platform: topPlatform.blockchain.uid, currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)
 
         let items = points.map { point -> MetricChartModule.Item in
             MetricChartModule.Item(value: point.marketCap, timestamp: point.timestamp)

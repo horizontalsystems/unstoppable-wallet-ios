@@ -87,7 +87,7 @@ struct SendEvmConfirmationModule {
         guard let coinServiceFactory = EvmCoinServiceFactory(
                 blockchainType: evmKitWrapper.blockchainType,
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit,
+                currencyManager: App.shared.currencyManager,
                 coinManager: App.shared.coinManager
         ) else {
             return nil
@@ -126,7 +126,7 @@ struct SendEvmConfirmationModule {
         guard let coinServiceFactory = EvmCoinServiceFactory(
                 blockchainType: evmKitWrapper.blockchainType,
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit,
+                currencyManager: App.shared.currencyManager,
                 coinManager: App.shared.coinManager
         ) else {
             throw CreateModuleError.cantCreateFeeRateProvider

@@ -1,7 +1,7 @@
 struct MarketOverviewModule {
 
     static func viewController(presentDelegate: IPresentDelegate) -> MarketOverviewViewController {
-        let service = MarketOverviewService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
+        let service = MarketOverviewService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, appManager: App.shared.appManager)
 
         let globalService = MarketOverviewGlobalService(baseService: service)
         let globalViewModel = MarketOverviewGlobalViewModel(service: globalService)

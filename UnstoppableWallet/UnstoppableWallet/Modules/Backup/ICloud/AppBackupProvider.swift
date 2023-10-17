@@ -1,4 +1,3 @@
-import CurrencyKit
 import Foundation
 import LanguageKit
 import MarketKit
@@ -17,7 +16,7 @@ class AppBackupProvider {
     private let chartRepository: ChartIndicatorsRepository
     private let localStorage: LocalStorage
     private let languageManager: LanguageManager
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let themeManager: ThemeManager
     private let launchScreenManager: LaunchScreenManager
     private let appIconManager: AppIconManager
@@ -36,7 +35,7 @@ class AppBackupProvider {
          chartRepository: ChartIndicatorsRepository,
          localStorage: LocalStorage,
          languageManager: LanguageManager,
-         currencyKit: CurrencyKit.Kit,
+         currencyManager: CurrencyManager,
          themeManager: ThemeManager,
          launchScreenManager: LaunchScreenManager,
          appIconManager: AppIconManager,
@@ -55,7 +54,7 @@ class AppBackupProvider {
         self.chartRepository = chartRepository
         self.localStorage = localStorage
         self.languageManager = languageManager
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.themeManager = themeManager
         self.launchScreenManager = launchScreenManager
         self.appIconManager = appIconManager
@@ -98,7 +97,7 @@ class AppBackupProvider {
             chartIndicators: chartRepository.backup,
             indicatorsShown: localStorage.indicatorsShown,
             currentLanguage: languageManager.currentLanguage,
-            baseCurrency: currencyKit.baseCurrency.code,
+            baseCurrency: currencyManager.baseCurrency.code,
             mode: themeManager.themeMode,
             showMarketTab: launchScreenManager.showMarket,
             launchScreen: launchScreenManager.launchScreen,
@@ -198,8 +197,8 @@ extension AppBackupProvider {
         chartRepository.restore(backup: raw.settings.chartIndicators)
         localStorage.restore(backup: raw.settings)
         languageManager.currentLanguage = raw.settings.currentLanguage
-        if let currency = currencyKit.currencies.first(where: { $0.code == raw.settings.baseCurrency }) {
-            currencyKit.baseCurrency = currency
+        if let currency = currencyManager.currencies.first(where: { $0.code == raw.settings.baseCurrency }) {
+            currencyManager.baseCurrency = currency
         }
 
         themeManager.themeMode = raw.settings.mode

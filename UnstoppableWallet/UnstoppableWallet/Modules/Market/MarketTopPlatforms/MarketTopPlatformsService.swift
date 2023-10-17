@@ -2,7 +2,6 @@ import Foundation
 import Combine
 import RxSwift
 import RxRelay
-import CurrencyKit
 import MarketKit
 import HsExtensions
 
@@ -10,7 +9,7 @@ class MarketTopPlatformsService {
     typealias Item = TopPlatform
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private var disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
@@ -22,12 +21,12 @@ class MarketTopPlatformsService {
 
     @PostPublished private(set) var state: MarketListServiceState<TopPlatform> = .loading
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager, timePeriod: HsTimePeriod) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, appManager: IAppManager, timePeriod: HsTimePeriod) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.timePeriod = timePeriod
 
-        currencyKit.baseCurrencyUpdatedPublisher
+        currencyManager.baseCurrencyUpdatedPublisher
                 .sink { [weak self] _ in
                     self?.sync()
                 }
@@ -100,7 +99,7 @@ extension MarketTopPlatformsService: IMarketListService {
 extension MarketTopPlatformsService: IMarketListTopPlatformDecoratorService {
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
 }

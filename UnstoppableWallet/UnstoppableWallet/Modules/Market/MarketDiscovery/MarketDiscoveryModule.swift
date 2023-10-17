@@ -1,11 +1,10 @@
 import UIKit
-import CurrencyKit
 import MarketKit
 
 struct MarketDiscoveryModule {
 
     static func viewController() -> UIViewController {
-        let categoryService = MarketDiscoveryCategoryService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, reachabilityManager: App.shared.reachabilityManager)
+        let categoryService = MarketDiscoveryCategoryService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, reachabilityManager: App.shared.reachabilityManager)
         let filterService = MarketDiscoveryFilterService(marketKit: App.shared.marketKit, favoritesManager: App.shared.favoritesManager)
 
         let headerViewModel = MarketSingleSortHeaderViewModel(service: categoryService, decorator: categoryService)

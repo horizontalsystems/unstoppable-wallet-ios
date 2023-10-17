@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 import RxSwift
-import CurrencyKit
 import HsExtensions
 
 class WalletTokenBalanceService {

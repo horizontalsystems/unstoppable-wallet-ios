@@ -1,5 +1,4 @@
 import UIKit
-import CurrencyKit
 import MarketKit
 
 struct TransactionInfoModule {
@@ -8,10 +7,10 @@ struct TransactionInfoModule {
         guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
             return nil
         }
-        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
-        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyKit: App.shared.currencyKit, rateService: rateService, nftMetadataService: nftMetadataService)
+        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyManager: App.shared.currencyManager, rateService: rateService, nftMetadataService: nftMetadataService)
         let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: transactionRecord.source.blockchainType)
         let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: transactionRecord.source.blockchainType.resendable)
         let viewModel = TransactionInfoViewModel(service: service, factory: factory, contactLabelService: contactLabelService)

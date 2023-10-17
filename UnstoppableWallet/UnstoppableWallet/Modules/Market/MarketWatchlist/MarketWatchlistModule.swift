@@ -6,7 +6,7 @@ struct MarketWatchlistModule {
     static func viewController() -> MarketWatchlistViewController {
         let service = MarketWatchlistService(
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit,
+                currencyManager: App.shared.currencyManager,
                 favoritesManager: App.shared.favoritesManager,
                 appManager: App.shared.appManager,
                 storage: StorageKit.LocalStorage.default

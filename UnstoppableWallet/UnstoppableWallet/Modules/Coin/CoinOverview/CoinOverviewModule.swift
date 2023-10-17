@@ -11,7 +11,7 @@ struct CoinOverviewModule {
         )
         let chartService = CoinChartService(
             marketKit: App.shared.marketKit,
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             localStorage: App.shared.localStorage,
             indicatorRepository: repository,
             coinUid: coinUid
@@ -22,7 +22,7 @@ struct CoinOverviewModule {
         let viewModel = CoinOverviewViewModelNew(
             coinUid: coinUid,
             marketKit: App.shared.marketKit,
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             languageManager: LanguageManager.shared,
             accountManager: App.shared.accountManager,
             walletManager: App.shared.walletManager
@@ -40,7 +40,7 @@ struct CoinOverviewModule {
         let service = CoinOverviewService(
             coinUid: coinUid,
             marketKit: App.shared.marketKit,
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             languageManager: LanguageManager.shared,
             accountManager: App.shared.accountManager,
             walletManager: App.shared.walletManager
@@ -53,7 +53,7 @@ struct CoinOverviewModule {
 
         let chartService = CoinChartService(
             marketKit: App.shared.marketKit,
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             localStorage: App.shared.localStorage,
             indicatorRepository: repository,
             coinUid: coinUid

@@ -2,14 +2,13 @@ import Combine
 import RxSwift
 import RxRelay
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
     typealias Item = DefiItem
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let disposeBag = DisposeBag()
     private var tasks = Set<AnyTask>()
 
@@ -23,9 +22,9 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
 
     let initialMarketFieldIndex: Int = 1
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
 
         syncMarketInfos()
     }
@@ -103,7 +102,7 @@ extension MarketGlobalDefiMetricService: IMarketListCoinUidService {
 extension MarketGlobalDefiMetricService: IMarketListDecoratorService {
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var priceChangeType: MarketModule.PriceChangeType {

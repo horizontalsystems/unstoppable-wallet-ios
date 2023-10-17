@@ -19,7 +19,7 @@ struct CexWithdrawConfirmModule {
 
         let handler = cexAccount.withdrawHandler
         let service = CexWithdrawConfirmService(sendData: sendData, handler: handler)
-        let coinService = CexCoinService(cexAsset: sendData.cexAsset, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinService = CexCoinService(cexAsset: sendData.cexAsset, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         let viewModel = CexWithdrawConfirmViewModel(service: service, coinService: coinService, contactLabelService: contactLabelService)
         return CexWithdrawConfirmViewController(viewModel: viewModel, handler: handler)
     }

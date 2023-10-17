@@ -38,8 +38,8 @@ class SendModule {
         }
 
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
-        let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
 
         // Amount
         let amountInputService = SendBitcoinAmountInputService(token: token)
@@ -62,7 +62,7 @@ class SendModule {
 
         // Fee
         let feeRateService = FeeRateService(provider: feeRateProvider)
-        let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: token)
         let inputOutputOrderService = InputOutputOrderService(blockchainType: adapter.blockchainType, blockchainManager: App.shared.btcBlockchainManager, itemsList: TransactionDataSortMode.allCases)
 
@@ -162,8 +162,8 @@ class SendModule {
         let feeToken = App.shared.feeCoinProvider.feeToken(token: token) ?? token
 
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
-        let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
 
         // Amount
         let amountInputService = SendBitcoinAmountInputService(token: token)
@@ -180,7 +180,7 @@ class SendModule {
         let memoService = SendMemoInputService(maxSymbols: 120)
 
         // Fee
-        let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: feeToken)
 
         let service = SendBinanceService(
@@ -253,8 +253,8 @@ class SendModule {
 
     private static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendZcashAdapter) -> UIViewController? {
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
-        let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
 
         // Amount
         let amountInputService = SendBitcoinAmountInputService(token: token)
@@ -271,7 +271,7 @@ class SendModule {
         let memoService = SendMemoInputService(maxSymbols: 120)
 
         // Fee
-        let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: token)
 
         let service = SendZcashService(

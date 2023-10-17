@@ -1,4 +1,3 @@
-import CurrencyKit
 import SDWebImageSwiftUI
 import SwiftUI
 

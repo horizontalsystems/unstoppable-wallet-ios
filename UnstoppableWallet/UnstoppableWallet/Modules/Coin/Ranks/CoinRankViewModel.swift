@@ -4,7 +4,6 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import MarketKit
-import CurrencyKit
 
 class CoinRankViewModel {
     private let timePeriods: [HsTimePeriod] = [.day1, .week1, .month1]

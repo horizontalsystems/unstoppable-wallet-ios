@@ -1,5 +1,4 @@
 import Combine
-import CurrencyKit
 import Foundation
 import HsExtensions
 import LanguageKit
@@ -10,7 +9,7 @@ class CoinOverviewViewModelNew: ObservableObject {
 
     private let coinUid: String
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let languageManager: LanguageManager
     private let accountManager: AccountManager
     private let walletManager: WalletManager
@@ -20,15 +19,15 @@ class CoinOverviewViewModelNew: ObservableObject {
 
     @Published private(set) var state: DataStatus<Item> = .loading
 
-    init(coinUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager) {
+    init(coinUid: String, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager) {
         self.coinUid = coinUid
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.languageManager = languageManager
         self.accountManager = accountManager
         self.walletManager = walletManager
 
-        currency = currencyKit.baseCurrency
+        currency = currencyManager.baseCurrency
     }
 
     private func handleSuccess(info: MarketInfoOverview) {
@@ -121,9 +120,9 @@ extension CoinOverviewViewModelNew {
 
         state = .loading
 
-        Task { [weak self, marketKit, coinUid, currencyKit, languageManager] in
+        Task { [weak self, marketKit, coinUid, currencyManager, languageManager] in
             do {
-                let info = try await marketKit.marketInfoOverview(coinUid: coinUid, currencyCode: currencyKit.baseCurrency.code, languageCode: languageManager.currentLanguage)
+                let info = try await marketKit.marketInfoOverview(coinUid: coinUid, currencyCode: currencyManager.baseCurrency.code, languageCode: languageManager.currentLanguage)
                 self?.handleSuccess(info: info)
             } catch {
                 self?.handleFailure(error: error)

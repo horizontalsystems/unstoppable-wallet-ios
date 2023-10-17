@@ -14,7 +14,7 @@ struct CoinSelectModule {
                 marketKit: App.shared.marketKit,
                 walletManager: App.shared.walletManager,
                 adapterManager: App.shared.adapterManager,
-                currencyKit: App.shared.currencyKit
+                currencyManager: App.shared.currencyManager
         )
         let viewModel = CoinSelectViewModel(service: service)
 

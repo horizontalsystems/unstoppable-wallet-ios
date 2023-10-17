@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 import UniswapKit
-import CurrencyKit
 import EvmKit
 
 class UniswapViewModel {
@@ -11,7 +10,7 @@ class UniswapViewModel {
     public let service: UniswapService
     public let tradeService: UniswapTradeService
     public let switchService: AmountTypeSwitchService
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
 
@@ -39,13 +38,13 @@ class UniswapViewModel {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).swap_view_model")
 
-    init(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyKit: CurrencyKit.Kit, viewItemHelper: SwapViewItemHelper) {
+    init(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyManager: CurrencyManager, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.switchService = switchService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.viewItemHelper = viewItemHelper
 
         subscribeToService()
@@ -235,7 +234,7 @@ class UniswapViewModel {
 extension UniswapViewModel {
 
     var amountTypeSelectorItems: [String] {
-        ["swap.amount_type.coin".localized, currencyKit.baseCurrency.code]
+        ["swap.amount_type.coin".localized, currencyManager.baseCurrency.code]
     }
 
     var amountTypeIndexDriver: Driver<Int> {

@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 import RxCocoa
-import CurrencyKit
 import Chart
 
 struct ChartModule {

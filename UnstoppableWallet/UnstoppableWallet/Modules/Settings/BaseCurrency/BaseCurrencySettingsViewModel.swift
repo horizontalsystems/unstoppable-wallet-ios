@@ -2,7 +2,6 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
-import CurrencyKit
 
 class BaseCurrencySettingsViewModel {
     private let service: BaseCurrencySettingsService
@@ -28,7 +27,7 @@ class BaseCurrencySettingsViewModel {
 
     private func viewItem(currency: Currency, selected: Bool) -> ViewItem {
         ViewItem(
-                icon: CurrencyKit.Kit.currencyIcon(code: currency.code),
+                icon: UIImage(named: currency.code),
                 code: currency.code,
                 symbol: currency.symbol,
                 selected: selected

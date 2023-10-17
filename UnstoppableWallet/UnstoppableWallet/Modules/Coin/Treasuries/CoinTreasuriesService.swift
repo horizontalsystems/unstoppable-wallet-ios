@@ -1,13 +1,12 @@
 import RxSwift
 import RxRelay
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 class CoinTreasuriesService {
     private let coin: Coin
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private var tasks = Set<AnyTask>()
 
     private var internalState: DataStatus<[CoinTreasury]> = .loading {
@@ -39,10 +38,10 @@ class CoinTreasuriesService {
         }
     }
 
-    init(coin: Coin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(coin: Coin, marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.coin = coin
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
 
         syncTreasuries()
     }
@@ -78,9 +77,9 @@ class CoinTreasuriesService {
             internalState = .loading
         }
 
-        Task { [weak self, marketKit, coin, currencyKit] in
+        Task { [weak self, marketKit, coin, currencyManager] in
             do {
-                let treasuries  = try await marketKit.treasuries(coinUid: coin.uid, currencyCode: currencyKit.baseCurrency.code)
+                let treasuries  = try await marketKit.treasuries(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code)
                 self?.internalState = .completed(treasuries)
             } catch {
                 self?.internalState = .failed(error)
@@ -113,7 +112,7 @@ extension CoinTreasuriesService {
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var coinCode: String {

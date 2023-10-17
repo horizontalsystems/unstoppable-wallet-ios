@@ -1,4 +1,3 @@
-import CurrencyKit
 
 protocol ISendConfirmationViewItemNew {}
 

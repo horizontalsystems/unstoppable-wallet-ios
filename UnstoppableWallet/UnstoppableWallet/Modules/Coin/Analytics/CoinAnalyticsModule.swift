@@ -12,12 +12,12 @@ struct CoinAnalyticsModule {
         let service = CoinAnalyticsService(
             fullCoin: fullCoin,
             marketKit: App.shared.marketKit,
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             subscriptionManager: App.shared.subscriptionManager
         )
         let technicalIndicatorService = TechnicalIndicatorService(
             coinUid: fullCoin.coin.uid,
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )
         let coinIndicatorViewItemFactory = CoinIndicatorViewItemFactory()
