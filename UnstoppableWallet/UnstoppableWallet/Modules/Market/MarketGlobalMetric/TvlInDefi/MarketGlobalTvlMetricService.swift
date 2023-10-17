@@ -1,14 +1,13 @@
 import Foundation
 import Combine
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 class MarketGlobalTvlMetricService {
     typealias Item = DefiCoin
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
 
     private var tasks = Set<AnyTask>()
     private var cancellables = Set<AnyCancellable>()
@@ -51,9 +50,9 @@ class MarketGlobalTvlMetricService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
 
         syncDefiCoins()
     }
@@ -123,7 +122,7 @@ class MarketGlobalTvlMetricService {
 extension MarketGlobalTvlMetricService {
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
 }

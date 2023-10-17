@@ -9,7 +9,7 @@ struct WalletTokenBalanceModule {
 
         let coinPriceService = WalletCoinPriceService(
                 tag: "wallet-token-balance",
-                currencyKit: App.shared.currencyKit,
+                currencyManager: App.shared.currencyManager,
                 marketKit: App.shared.marketKit
         )
 

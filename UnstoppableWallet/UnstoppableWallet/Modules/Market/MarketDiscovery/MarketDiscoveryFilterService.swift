@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import RxRelay
 import MarketKit
-import CurrencyKit
 
 class MarketDiscoveryFilterService {
     private let marketKit: MarketKit.Kit

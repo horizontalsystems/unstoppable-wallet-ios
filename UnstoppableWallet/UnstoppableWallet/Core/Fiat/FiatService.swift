@@ -1,6 +1,5 @@
 import Foundation
 import Combine
-import CurrencyKit
 import RxSwift
 import RxRelay
 import MarketKit
@@ -11,7 +10,7 @@ class FiatService {
     private var queue = DispatchQueue(label: "\(AppConfig.label).fiat-service", qos: .userInitiated)
 
     private let switchService: AmountTypeSwitchService
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
 
     private var coinValueKind: CoinValue.Kind?
@@ -47,14 +46,14 @@ class FiatService {
     private var toggleAvailableRelay = BehaviorRelay<Bool>(value: false)
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var coinAmountLocked = false
 
-    init(switchService: AmountTypeSwitchService, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+    init(switchService: AmountTypeSwitchService, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
         self.switchService = switchService
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.marketKit = marketKit
 
         subscribe(disposeBag, switchService.amountTypeObservable) { [weak self] in self?.sync(amountType: $0) }

@@ -3,7 +3,6 @@ import UIKit
 import Chart
 import LanguageKit
 import MarketKit
-import CurrencyKit
 
 protocol IMetricChartFetcher {
     var valueType: MetricChartModule.ValueType { get }

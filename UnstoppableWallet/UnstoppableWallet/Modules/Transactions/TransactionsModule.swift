@@ -1,12 +1,11 @@
 import UIKit
 import RxSwift
-import CurrencyKit
 import MarketKit
 
 struct TransactionsModule {
 
     static func viewController() -> UIViewController {
-        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
         let service = TransactionsService(
@@ -25,7 +24,7 @@ struct TransactionsModule {
     }
 
     static func dataSource(token: Token) -> TransactionsTableViewDataSource {
-        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
         let service = TokenTransactionsService(

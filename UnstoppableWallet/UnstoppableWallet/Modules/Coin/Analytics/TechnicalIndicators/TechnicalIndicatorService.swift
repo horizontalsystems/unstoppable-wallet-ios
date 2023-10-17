@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 import Chart
-import CurrencyKit
 import HsExtensions
 import MarketKit
 
@@ -15,7 +14,7 @@ class TechnicalIndicatorService {
     private var tasks = Set<AnyTask>()
 
     private let coinUid: String
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
 
     let allPeriods: [HsPointTimePeriod] = [.hour1, .hour4, .day1, .week1]
@@ -27,16 +26,16 @@ class TechnicalIndicatorService {
 
     @PostPublished private(set) var state: DataStatus<[SectionItem]> = .loading
 
-    init(coinUid: String, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+    init(coinUid: String, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
         self.coinUid = coinUid
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.marketKit = marketKit
 
         fetch()
     }
 
     func fetch() {
-        let currency = currencyKit.baseCurrency
+        let currency = currencyManager.baseCurrency
 
         tasks.forEach { task in task.cancel() }
         tasks = Set()

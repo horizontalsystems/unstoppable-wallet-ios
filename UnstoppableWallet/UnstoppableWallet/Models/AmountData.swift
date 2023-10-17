@@ -1,6 +1,5 @@
 import UIKit
 import RxSwift
-import CurrencyKit
 import HsToolKit
 import MarketKit
 

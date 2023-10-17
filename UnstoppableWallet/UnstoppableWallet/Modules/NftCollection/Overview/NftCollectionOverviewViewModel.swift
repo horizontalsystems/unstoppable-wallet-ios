@@ -1,5 +1,4 @@
 import Chart
-import CurrencyKit
 import Foundation
 import MarketKit
 import RxCocoa

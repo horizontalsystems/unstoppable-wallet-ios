@@ -1,12 +1,11 @@
 import Foundation
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 class CoinMarketsService: IMarketSingleSortHeaderService {
     private let coin: Coin
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: State = .loading
@@ -17,10 +16,10 @@ class CoinMarketsService: IMarketSingleSortHeaderService {
         }
     }
 
-    init(coin: Coin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(coin: Coin, marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.coin = coin
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
     }
 
     private func syncTickers() {
@@ -61,7 +60,7 @@ class CoinMarketsService: IMarketSingleSortHeaderService {
 extension CoinMarketsService {
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var price: Decimal? {

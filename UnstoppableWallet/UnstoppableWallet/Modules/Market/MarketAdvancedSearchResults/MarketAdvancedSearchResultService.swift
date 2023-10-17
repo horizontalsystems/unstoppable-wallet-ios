@@ -2,14 +2,13 @@ import Combine
 import RxSwift
 import RxRelay
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
     typealias Item = MarketInfo
 
     private let marketInfos: [MarketInfo]
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     let priceChangeType: MarketModule.PriceChangeType
 
     @PostPublished private(set) var state: MarketListServiceState<MarketInfo> = .loading
@@ -20,9 +19,9 @@ class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
         }
     }
 
-    init(marketInfos: [MarketInfo], currencyKit: CurrencyKit.Kit, priceChangeType: MarketModule.PriceChangeType) {
+    init(marketInfos: [MarketInfo], currencyManager: CurrencyManager, priceChangeType: MarketModule.PriceChangeType) {
         self.marketInfos = marketInfos
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.priceChangeType = priceChangeType
 
         syncState()
@@ -64,7 +63,7 @@ extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     func onUpdate(marketFieldIndex: Int) {

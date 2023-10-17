@@ -4,7 +4,6 @@ import ActionSheet
 import ThemeKit
 import HUD
 import ComponentKit
-import CurrencyKit
 import RxSwift
 
 class TransactionsViewController: ThemeViewController {

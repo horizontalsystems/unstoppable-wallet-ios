@@ -29,11 +29,11 @@ class SendEvmModule {
         let service = SendEvmService(token: token, mode: mode, adapter: adapter, addressService: addressService)
 
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
 
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
-        let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
 
         let viewModel = SendEvmViewModel(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)

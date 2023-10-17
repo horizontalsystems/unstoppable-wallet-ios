@@ -7,7 +7,7 @@ struct CoinRankModule {
         let service = CoinRankService(
                 type: type,
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit
+                currencyManager: App.shared.currencyManager
         )
 
         let viewModel = CoinRankViewModel(service: service)

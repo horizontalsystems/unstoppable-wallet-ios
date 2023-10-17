@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 import Chart
-import CurrencyKit
 import LanguageKit
 import MarketKit
 

@@ -8,10 +8,10 @@ struct TopPlatformModule {
 
     static func viewController(topPlatform: TopPlatform) -> UIViewController {
         let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit)
-        let listService = MarketFilteredListService(currencyKit: App.shared.currencyKit, provider: service)
+        let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service)
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, favoritesManager: App.shared.favoritesManager)
 
-        let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, topPlatform: topPlatform)
+        let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, topPlatform: topPlatform)
         let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .day1)
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, factory: factory)

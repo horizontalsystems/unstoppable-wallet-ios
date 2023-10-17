@@ -5,7 +5,6 @@ import RxRelay
 import RxCocoa
 import MarketKit
 import Chart
-import CurrencyKit
 import HUD
 
 class MetricChartViewModel {

@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 import MarketKit
-import CurrencyKit
 
 class MarketAdvancedSearchViewModel {
     private let disposeBag = DisposeBag()

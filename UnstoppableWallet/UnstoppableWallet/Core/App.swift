@@ -1,4 +1,3 @@
-import CurrencyKit
 import Foundation
 import GRDB
 import HsToolKit
@@ -27,7 +26,7 @@ class App {
 
     let blurManager: BlurManager
 
-    let currencyKit: CurrencyKit.Kit
+    let currencyManager: CurrencyManager
 
     let marketKit: MarketKit.Kit
 
@@ -130,7 +129,7 @@ class App {
         let logRecordStorage = LogRecordStorage(dbPool: dbPool)
         logRecordManager = LogRecordManager(storage: logRecordStorage)
 
-        currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default)
+        currencyManager = CurrencyManager(localStorage: StorageKit.LocalStorage.default)
 
         marketKit = try MarketKit.Kit.instance(
             hsApiBaseUrl: AppConfig.marketApiUrl,
@@ -310,7 +309,7 @@ class App {
             chartRepository: chartRepository,
             localStorage: localStorage,
             languageManager: LanguageManager.shared,
-            currencyKit: currencyKit,
+            currencyManager: currencyManager,
             themeManager: themeManager,
             launchScreenManager: launchScreenManager,
             appIconManager: appIconManager,

@@ -1,4 +1,3 @@
-import CurrencyKit
 import MarketKit
 
 class MarketListDefiDecorator {

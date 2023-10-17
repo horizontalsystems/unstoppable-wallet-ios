@@ -3,7 +3,6 @@ import RxSwift
 import RxCocoa
 import HsExtensions
 import Combine
-import CurrencyKit
 import BigInt
 
 class CexWithdrawViewModel {

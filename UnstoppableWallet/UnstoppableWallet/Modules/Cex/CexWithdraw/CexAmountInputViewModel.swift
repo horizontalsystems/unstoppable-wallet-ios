@@ -1,7 +1,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import CurrencyKit
 import MarketKit
 
 protocol ICexAmountInputService: IAmountInputService {

@@ -1,6 +1,5 @@
 import Foundation
 import Combine
-import CurrencyKit
 import MarketKit
 
 protocol IWalletCoinPriceServiceDelegate: AnyObject {
@@ -12,7 +11,7 @@ class WalletCoinPriceService {
     weak var delegate: IWalletCoinPriceServiceDelegate?
 
     private let tag: String
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
     private var cancellables = Set<AnyCancellable>()
     private var coinPriceCancellables = Set<AnyCancellable>()
@@ -22,14 +21,14 @@ class WalletCoinPriceService {
     private var feeCoinUids = Set<String>()
     private var conversionCoinUids = Set<String>()
 
-    init(tag: String, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+    init(tag: String, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
         self.tag = tag
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.marketKit = marketKit
 
-        currency = currencyKit.baseCurrency
+        currency = currencyManager.baseCurrency
 
-        currencyKit.baseCurrencyUpdatedPublisher
+        currencyManager.baseCurrencyUpdatedPublisher
                 .sink { [weak self] currency in
                     self?.onUpdate(baseCurrency: currency)
                 }
@@ -46,7 +45,7 @@ class WalletCoinPriceService {
         coinPriceCancellables = Set()
 
         if !coinUids.isEmpty {
-            marketKit.coinPriceMapPublisher(tag: tag, coinUids: Array(coinUids), currencyCode: currencyKit.baseCurrency.code)
+            marketKit.coinPriceMapPublisher(tag: tag, coinUids: Array(coinUids), currencyCode: currencyManager.baseCurrency.code)
                     .sink { [weak self] in
                         self?.onUpdate(coinPriceMap: $0)
                     }
@@ -54,13 +53,13 @@ class WalletCoinPriceService {
         }
 
         if !feeCoinUids.isEmpty {
-            marketKit.coinPriceMapPublisher(tag: "fee:\(tag)", coinUids: Array(feeCoinUids), currencyCode: currencyKit.baseCurrency.code)
+            marketKit.coinPriceMapPublisher(tag: "fee:\(tag)", coinUids: Array(feeCoinUids), currencyCode: currencyManager.baseCurrency.code)
                     .sink { _ in }
                     .store(in: &coinPriceCancellables)
         }
 
         if !conversionCoinUids.isEmpty {
-            marketKit.coinPriceMapPublisher(tag: "conversion:\(tag)", coinUids: Array(conversionCoinUids), currencyCode: currencyKit.baseCurrency.code)
+            marketKit.coinPriceMapPublisher(tag: "conversion:\(tag)", coinUids: Array(conversionCoinUids), currencyCode: currencyManager.baseCurrency.code)
                     .sink { _ in }
                     .store(in: &coinPriceCancellables)
         }
@@ -72,7 +71,7 @@ class WalletCoinPriceService {
     }
 
     private func item(coinPrice: CoinPrice) -> Item {
-        let currency = currencyKit.baseCurrency
+        let currency = currencyManager.baseCurrency
 
         return Item(
                 price: CurrencyValue(currency: currency, value: coinPrice.value),

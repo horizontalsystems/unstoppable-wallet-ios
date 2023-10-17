@@ -4,7 +4,6 @@ import RxRelay
 import RxCocoa
 import MarketKit
 import Chart
-import CurrencyKit
 import HUD
 import Combine
 

@@ -1,24 +1,23 @@
 import Combine
 import EvmKit
 import MarketKit
-import CurrencyKit
 import HsToolKit
 import HsExtensions
 
 class CoinAnalyticsService {
     private let fullCoin: FullCoin
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let subscriptionManager: SubscriptionManager
     private var tasks = Set<AnyTask>()
     private var cancellables = Set<AnyCancellable>()
 
     @PostPublished private(set) var state: State = .loading
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, subscriptionManager: SubscriptionManager) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, subscriptionManager: SubscriptionManager) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.subscriptionManager = subscriptionManager
 
         subscriptionManager.$isAuthenticated
@@ -46,7 +45,7 @@ class CoinAnalyticsService {
 extension CoinAnalyticsService {
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var coin: Coin {

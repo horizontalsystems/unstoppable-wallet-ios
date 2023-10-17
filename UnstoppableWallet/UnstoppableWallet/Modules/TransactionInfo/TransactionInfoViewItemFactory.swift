@@ -1,6 +1,5 @@
 import Foundation
 import MarketKit
-import CurrencyKit
 import EvmKit
 
 class TransactionInfoViewItemFactory {

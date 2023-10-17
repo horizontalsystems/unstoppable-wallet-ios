@@ -3,7 +3,6 @@ import Combine
 import RxSwift
 import RxRelay
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 class HistoricalRateService {
@@ -19,11 +18,11 @@ class HistoricalRateService {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).transactions-historical-rate-service-queue", qos: .userInitiated)
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.marketKit = marketKit
-        currency = currencyKit.baseCurrency
+        currency = currencyManager.baseCurrency
 
-        currencyKit.baseCurrencyUpdatedPublisher
+        currencyManager.baseCurrencyUpdatedPublisher
                 .sink { [weak self] currency in
                     self?.handleUpdated(currency: currency)
                 }

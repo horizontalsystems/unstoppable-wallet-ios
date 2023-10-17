@@ -39,7 +39,7 @@ struct CoinCardModule {
     static func fromCell(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapFromCoinCardService(service: service, tradeService: tradeService)
 
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
@@ -56,7 +56,7 @@ struct CoinCardModule {
     static func toCell(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapToCoinCardService(service: service, tradeService: tradeService)
 
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
@@ -74,7 +74,7 @@ struct CoinCardModule {
     static func fromCell(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapFromCoinCardOneInchService(service: service, tradeService: tradeService)
 
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
@@ -91,7 +91,7 @@ struct CoinCardModule {
     static func toCell(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapToCoinCardOneInchService(service: service, tradeService: tradeService)
 
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)

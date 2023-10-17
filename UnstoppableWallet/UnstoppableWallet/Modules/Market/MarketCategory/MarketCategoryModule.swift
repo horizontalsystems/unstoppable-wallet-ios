@@ -13,10 +13,10 @@ struct MarketCategoryModule {
                 languageManager: LanguageManager.shared
         )
 
-        let listService = MarketFilteredListService(currencyKit: App.shared.currencyKit, provider: service)
+        let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service)
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, favoritesManager: App.shared.favoritesManager)
 
-        let marketCapFetcher = MarketCategoryMarketCapFetcher(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit, category: category.uid)
+        let marketCapFetcher = MarketCategoryMarketCapFetcher(currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, category: category.uid)
         let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .day1)
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, factory: factory)

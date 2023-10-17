@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import RxRelay
 import MarketKit
-import CurrencyKit
 import HsToolKit
 import HsExtensions
 
@@ -12,14 +11,14 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
     private var tasks = Set<AnyTask>()
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
 
     private var categories = [CoinCategory]()
 
     @PostPublished private(set) var state: State = .loading
 
     public var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     public var timePeriod: HsTimePeriod = MarketDiscoveryCategoryService.allowedTimePeriods[0] {
@@ -56,9 +55,9 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
         return [.topCoins] + items
     }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, reachabilityManager: IReachabilityManager) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, reachabilityManager: IReachabilityManager) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
 
         reachabilityManager.reachabilityObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -77,9 +76,9 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
 
         tasks = Set()
 
-        Task { [weak self, marketKit, currencyKit] in
+        Task { [weak self, marketKit, currencyManager] in
             do {
-                let categories = try await marketKit.coinCategories(currencyCode: currencyKit.baseCurrency.code)
+                let categories = try await marketKit.coinCategories(currencyCode: currencyManager.baseCurrency.code)
                 self?.sync(categories: categories)
             } catch {
                 self?.sync(error: error)

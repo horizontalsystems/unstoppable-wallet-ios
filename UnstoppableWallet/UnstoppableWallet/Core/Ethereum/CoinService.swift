@@ -1,5 +1,4 @@
 import Foundation
-import CurrencyKit
 import BigInt
 import MarketKit
 import HsExtensions
@@ -16,12 +15,12 @@ protocol ICoinService {
 
 class CoinService {
     let token: Token
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
 
-    init(token: Token, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+    init(token: Token, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
         self.token = token
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.marketKit = marketKit
     }
 
@@ -30,7 +29,7 @@ class CoinService {
 extension CoinService: ICoinService {
 
     var rate: CurrencyValue? {
-        let baseCurrency = currencyKit.baseCurrency
+        let baseCurrency = currencyManager.baseCurrency
 
         return marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: baseCurrency.code).map { coinPrice in
             CurrencyValue(currency: baseCurrency, value: coinPrice.value)

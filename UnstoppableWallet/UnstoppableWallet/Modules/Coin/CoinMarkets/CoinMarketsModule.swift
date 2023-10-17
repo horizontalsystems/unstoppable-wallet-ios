@@ -11,7 +11,7 @@ struct CoinMarketsModule {
         let service = CoinMarketsService(
             coin: coin,
             marketKit: App.shared.marketKit,
-            currencyKit: App.shared.currencyKit
+            currencyManager: App.shared.currencyManager
         )
 
         let viewModel = CoinMarketsViewModel(service: service)

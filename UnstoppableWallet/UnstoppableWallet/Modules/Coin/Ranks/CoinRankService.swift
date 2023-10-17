@@ -1,12 +1,11 @@
 import Foundation
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 class CoinRankService {
     let type: CoinRankModule.RankType
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: State = .loading
@@ -25,10 +24,10 @@ class CoinRankService {
 
     private var internalItems: [InternalItem]?
 
-    init(type: CoinRankModule.RankType, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(type: CoinRankModule.RankType, marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.type = type
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
 
         sync()
     }
@@ -38,9 +37,9 @@ class CoinRankService {
 
         state = .loading
 
-        Task { [weak self, marketKit, currencyKit, type] in
+        Task { [weak self, marketKit, currencyManager, type] in
             do {
-                let currencyCode = currencyKit.baseCurrency.code
+                let currencyCode = currencyManager.baseCurrency.code
                 let values: [Value]
 
                 switch type {
@@ -123,7 +122,7 @@ class CoinRankService {
 extension CoinRankService {
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
 }

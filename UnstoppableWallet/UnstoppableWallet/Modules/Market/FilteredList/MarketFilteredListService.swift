@@ -2,7 +2,6 @@ import Combine
 import RxSwift
 import RxRelay
 import MarketKit
-import CurrencyKit
 import HsExtensions
 
 protocol IMarketFilteredListProvider {
@@ -10,7 +9,7 @@ protocol IMarketFilteredListProvider {
 }
 
 class MarketFilteredListService: IMarketMultiSortHeaderService {
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let provider: IMarketFilteredListProvider
     private var tasks = Set<AnyTask>()
 
@@ -22,8 +21,8 @@ class MarketFilteredListService: IMarketMultiSortHeaderService {
         }
     }
 
-    init(currencyKit: CurrencyKit.Kit, provider: IMarketFilteredListProvider) {
-        self.currencyKit = currencyKit
+    init(currencyManager: CurrencyManager, provider: IMarketFilteredListProvider) {
+        self.currencyManager = currencyManager
         self.provider = provider
 
         syncMarketInfos()
@@ -91,7 +90,7 @@ extension MarketFilteredListService: IMarketListDecoratorService {
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var priceChangeType: MarketModule.PriceChangeType {
