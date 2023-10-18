@@ -16,7 +16,7 @@ class TransactionInfoViewItemFactory {
         self.contactLabelService = contactLabelService
     }
 
-    private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType) -> TransactionInfoModule.ViewItem {
+    private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         let iconUrl = transactionValue.coin?.imageUrl
         let iconPlaceholderImageName = source.blockchainType.placeholderImageName(tokenProtocol: transactionValue.tokenProtocol)
 
@@ -24,8 +24,8 @@ class TransactionInfoViewItemFactory {
             return .amount(
                     iconUrl: iconUrl,
                     iconPlaceholderImageName: iconPlaceholderImageName,
-                    coinAmount: "∞ \(transactionValue.coinCode)",
-                    currencyAmount: "transactions.value.unlimited".localized,
+                    coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : "∞ \(transactionValue.coinCode)",
+                    currencyAmount: balanceHidden ? BalanceHiddenManager.placeholder : "transactions.value.unlimited".localized,
                     type: type,
                     coinUid: transactionValue.coin?.uid
             )
@@ -39,19 +39,19 @@ class TransactionInfoViewItemFactory {
             return .amount(
                     iconUrl: iconUrl,
                     iconPlaceholderImageName: iconPlaceholderImageName,
-                    coinAmount: transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
-                    currencyAmount: currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                    coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
+                    currencyAmount: balanceHidden ? BalanceHiddenManager.placeholder : currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                     type: type,
                     coinUid: transactionValue.coin?.uid
             )
         }
     }
 
-    private func nftAmount(source: TransactionSource, transactionValue: TransactionValue, type: AmountType, metadata: NftAssetBriefMetadata?) -> TransactionInfoModule.ViewItem {
+    private func nftAmount(source: TransactionSource, transactionValue: TransactionValue, type: AmountType, metadata: NftAssetBriefMetadata?, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         .nftAmount(
                 iconUrl: metadata?.previewImageUrl,
                 iconPlaceholderImageName: "placeholder_nft_32",
-                nftAmount: transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
+                nftAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
                 type: type,
                 providerCollectionUid: metadata?.providerCollectionUid,
                 nftUid: metadata?.nftUid
@@ -127,7 +127,7 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false) -> [TransactionInfoModule.ViewItem] {
+    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
         let burn = to == zeroAddress
         let subTitle: String
         let amountViewItem: TransactionInfoModule.ViewItem
@@ -143,7 +143,8 @@ class TransactionInfoViewItemFactory {
                     source: source,
                     transactionValue: transactionValue,
                     type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing),
-                    metadata: nftMetadata[nftUid]
+                    metadata: nftMetadata[nftUid],
+                    balanceHidden: balanceHidden
             )
         default:
             subTitle = fullName(transactionValue: transactionValue)
@@ -154,7 +155,8 @@ class TransactionInfoViewItemFactory {
                     source: source,
                     transactionValue: transactionValue,
                     rate: rate,
-                    type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing)
+                    type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing),
+                    balanceHidden: balanceHidden
             )
 
             rateViewItem = .rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code))
@@ -191,7 +193,7 @@ class TransactionInfoViewItemFactory {
         return condition ? trueType : (falseType ?? trueType)
     }
 
-    private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> [TransactionInfoModule.ViewItem] {
+    private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
         let mint = from == zeroAddress
         let subTitle: String
         let amountViewItem: TransactionInfoModule.ViewItem
@@ -207,7 +209,8 @@ class TransactionInfoViewItemFactory {
                     source: source,
                     transactionValue: transactionValue,
                     type: type(value: transactionValue, .incoming),
-                    metadata: nftMetadata[nftUid]
+                    metadata: nftMetadata[nftUid],
+                    balanceHidden: balanceHidden
             )
 
         default:
@@ -219,7 +222,8 @@ class TransactionInfoViewItemFactory {
                     source: source,
                     transactionValue: transactionValue,
                     rate: rate,
-                    type: type(value: transactionValue, .incoming)
+                    type: type(value: transactionValue, .incoming),
+                    balanceHidden: balanceHidden
             )
 
             rateViewItem = .rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code))
@@ -267,7 +271,7 @@ class TransactionInfoViewItemFactory {
         return viewItems
     }
 
-    func items(item: TransactionInfoService.Item) -> [[TransactionInfoModule.ViewItem]] {
+    func items(item: TransactionInfoService.Item, balanceHidden: Bool) -> [[TransactionInfoModule.ViewItem]] {
         func _rate(_ value: TransactionValue) -> CurrencyValue? {
             value.coin.flatMap { item.rates[$0] }
         }
@@ -285,14 +289,14 @@ class TransactionInfoViewItemFactory {
             ])
 
         case let record as EvmOutgoingTransactionRecord:
-            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf))
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden))
 
             if record.sentToSelf {
                 sections.append([.sentToSelf])
             }
 
         case let record as EvmIncomingTransactionRecord:
-            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
+            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden))
 
         case let record as ApproveTransactionRecord:
             let transactionValue = record.value
@@ -300,7 +304,7 @@ class TransactionInfoViewItemFactory {
 
             var viewItems: [TransactionInfoModule.ViewItem] = [
                 .actionTitle(iconName: "check_2_24", iconDimmed: true, title: "transactions.approve".localized, subTitle: transactionValue.fullName),
-                amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral),
+                amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
             ]
             let contactData = contactLabelService.contactData(for: record.spender)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
@@ -316,13 +320,13 @@ class TransactionInfoViewItemFactory {
         case let record as SwapTransactionRecord:
             sections.append([
                 .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: record.valueIn.fullName),
-                amount(source: record.source, transactionValue: record.valueIn, rate: _rate(record.valueIn), type: type(value: record.valueIn, .outgoing))
+                amount(source: record.source, transactionValue: record.valueIn, rate: _rate(record.valueIn), type: type(value: record.valueIn, .outgoing), balanceHidden: balanceHidden)
             ])
 
             if let valueOut = record.valueOut {
                 var viewItems: [TransactionInfoModule.ViewItem] = [
                     .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.fullName),
-                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, condition: record.recipient == nil, .incoming, .outgoing))
+                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, condition: record.recipient == nil, .incoming, .outgoing), balanceHidden: balanceHidden)
                 ]
 
                 if let recipient = record.recipient {
@@ -369,14 +373,14 @@ class TransactionInfoViewItemFactory {
             if let valueIn = record.valueIn {
                 sections.append([
                     .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: valueIn.fullName),
-                    amount(source: record.source, transactionValue: valueIn, rate: _rate(valueIn), type: type(value: valueIn, .outgoing))
+                    amount(source: record.source, transactionValue: valueIn, rate: _rate(valueIn), type: type(value: valueIn, .outgoing), balanceHidden: balanceHidden)
                 ])
             }
 
             if let valueOut = record.valueOut {
                 sections.append([
                     .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.fullName),
-                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, .incoming))
+                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, .incoming), balanceHidden: balanceHidden)
                 ])
             }
 
@@ -402,27 +406,27 @@ class TransactionInfoViewItemFactory {
             ])
 
             for event in record.outgoingEvents {
-                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden))
             }
 
             for event in record.incomingEvents {
-                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden))
             }
 
         case let record as ExternalContractCallTransactionRecord:
             for event in record.outgoingEvents {
-                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden))
             }
 
             for event in record.incomingEvents {
-                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden))
             }
 
         case let record as TronIncomingTransactionRecord:
-            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
+            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden))
 
         case let record as TronOutgoingTransactionRecord:
-            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf))
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden))
 
             if record.sentToSelf {
                 sections.append([.sentToSelf])
@@ -434,7 +438,7 @@ class TransactionInfoViewItemFactory {
 
             var viewItems: [TransactionInfoModule.ViewItem] = [
                 .actionTitle(iconName: "check_2_24", iconDimmed: true, title: "transactions.approve".localized, subTitle: transactionValue.fullName),
-                amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral),
+                amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
             ]
             let contactData = contactLabelService.contactData(for: record.spender)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
@@ -453,20 +457,20 @@ class TransactionInfoViewItemFactory {
             ])
 
             for event in record.outgoingEvents {
-                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden))
             }
 
             for event in record.incomingEvents {
-                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden))
             }
 
         case let record as TronExternalContractCallTransactionRecord:
             for event in record.outgoingEvents {
-                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden))
             }
 
             for event in record.incomingEvents {
-                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden))
             }
 
         case let record as TronTransactionRecord:
@@ -475,7 +479,7 @@ class TransactionInfoViewItemFactory {
             ])
 
         case let record as BitcoinIncomingTransactionRecord:
-            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
+            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden))
 
             let additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
             if !additionalViewItems.isEmpty {
@@ -483,7 +487,7 @@ class TransactionInfoViewItemFactory {
             }
 
         case let record as BitcoinOutgoingTransactionRecord:
-            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden))
 
             var additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
 
@@ -500,14 +504,14 @@ class TransactionInfoViewItemFactory {
             }
 
         case let record as BinanceChainIncomingTransactionRecord:
-            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
+            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden))
 
             if let memo = record.memo, !memo.isEmpty {
                 sections.append([.memo(text: memo)])
             }
 
         case let record as BinanceChainOutgoingTransactionRecord:
-            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden))
 
             var additionalViewItems = [TransactionInfoModule.ViewItem]()
 

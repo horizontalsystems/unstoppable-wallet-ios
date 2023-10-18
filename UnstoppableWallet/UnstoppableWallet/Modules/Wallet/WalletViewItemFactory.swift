@@ -169,11 +169,11 @@ extension WalletViewItemFactory {
     }
 
     func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, account: Account?) -> WalletModule.HeaderViewItem {
-        let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
+        let amount = balanceHidden ? BalanceHiddenManager.placeholder : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
 
         let convertedValue: String
         if balanceHidden {
-            convertedValue = "*****"
+            convertedValue = BalanceHiddenManager.placeholder
         } else if let value = totalItem.convertedValue, let formattedValue = ValueFormatter.instance.formatShort(coinValue: value) {
             convertedValue = "≈ \(formattedValue)"
         } else {

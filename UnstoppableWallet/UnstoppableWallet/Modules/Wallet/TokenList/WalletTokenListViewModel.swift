@@ -11,6 +11,8 @@ protocol IWalletTokenListService {
     var stateUpdatedPublisher: AnyPublisher<WalletTokenListService.State, Never> { get }
 
     var isReachable: Bool { get }
+    var balanceHiddenObservable: Observable<Bool> { get }
+    var balanceHidden: Bool { get }
     var balancePrimaryValueObservable: Observable<BalancePrimaryValue> { get }
     var balancePrimaryValue: BalancePrimaryValue { get }
     var itemUpdatedObservable: Observable<WalletTokenListService.Item> { get }
@@ -46,7 +48,8 @@ class WalletTokenListViewModel {
         self.emptyText = emptyText
 
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
-        subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
+        subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdate() }
+        subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdate() }
 
         service.stateUpdatedPublisher
                 .sink { [weak self] in self?.sync(serviceState: $0) }
@@ -79,7 +82,7 @@ class WalletTokenListViewModel {
         }
     }
 
-    private func onUpdateBalancePrimaryValue() {
+    private func onUpdate() {
         sync(serviceState: service.state)
     }
 
@@ -108,7 +111,8 @@ class WalletTokenListViewModel {
         }
         return factory.viewItem(
                 item: item,
-                balancePrimaryValue: service.balancePrimaryValue
+                balancePrimaryValue: service.balancePrimaryValue,
+                balanceHidden: service.balanceHidden
         )
     }
 

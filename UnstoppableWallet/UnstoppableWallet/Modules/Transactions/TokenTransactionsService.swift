@@ -9,7 +9,7 @@ class TokenTransactionsService: BaseTransactionsService {
     init(token: Token, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
         self.token = token
 
-        super.init(rateService: rateService, nftMetadataService: nftMetadataService)
+        super.init(rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: App.shared.balanceHiddenManager)
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.sync() }
 

@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 
 protocol IWalletAdapterServiceDelegate: AnyObject {
     func didPrepareAdapters()
@@ -57,7 +57,6 @@ class WalletAdapterService {
             }
         }
     }
-
 }
 
 extension WalletAdapterService {
@@ -77,5 +76,4 @@ extension WalletAdapterService {
     func refresh() {
         adapterManager.refresh()
     }
-
 }
