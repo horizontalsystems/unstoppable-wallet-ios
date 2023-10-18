@@ -1,10 +1,6 @@
 default_platform(:ios)
 
 APP_ID = ENV["APP_ID"]
-APP_IDENTIFIER_DEV = ENV["APP_IDENTIFIER_DEV"]
-APP_IDENTIFIER_RELEASE = ENV["APP_IDENTIFIER_RELEASE"]
-PROVISIONING_PROFILE_SPECIFIER_DEV = ENV["PROVISIONING_PROFILE_SPECIFIER_DEV"]
-PROVISIONING_PROFILE_SPECIFIER_APPSTORE = ENV["PROVISIONING_PROFILE_SPECIFIER_APPSTORE"]
 TEMP_KEYCHAIN_USER = ENV["TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 APPLE_ISSUER_ID = ENV["APPLE_ISSUER_ID"]
@@ -159,7 +155,7 @@ platform :ios do
 
     match(
       type: 'adhoc',
-      app_identifier: "#{APP_IDENTIFIER_DEV}",
+      app_identifier: ["io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.dev.intent"],
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
       readonly: true,
       keychain_name: keychain_name,
@@ -175,7 +171,9 @@ platform :ios do
       export_options: {
         compileBitcode: false,
         provisioningProfiles: {
-            APP_ID => PROVISIONING_PROFILE_SPECIFIER_DEV
+            "io.horizontalsystems.bank-wallet.dev" => "match AdHoc io.horizontalsystems.bank-wallet.dev",
+            "io.horizontalsystems.bank-wallet.dev.widget" => "match AdHoc io.horizontalsystems.bank-wallet.dev.widget",
+            "io.horizontalsystems.bank-wallet.dev.intent" => "match AdHoc io.horizontalsystems.bank-wallet.dev.intent"
         },
         iCloudContainerEnvironment: "Development"
       }
@@ -205,7 +203,7 @@ platform :ios do
 
     match(
       type: 'appstore',
-      app_identifier: "#{APP_IDENTIFIER_RELEASE}",
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"],
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
       readonly: true,
       keychain_name: keychain_name,
@@ -221,7 +219,9 @@ platform :ios do
       export_options: {
         compileBitcode: false,
         provisioningProfiles: {
-            APP_ID => PROVISIONING_PROFILE_SPECIFIER_APPSTORE
+            "io.horizontalsystems.bank-wallet" => "match AppStore io.horizontalsystems.bank-wallet",
+            "io.horizontalsystems.bank-wallet.widget" => "match AppStore io.horizontalsystems.bank-wallet.widget",
+            "io.horizontalsystems.bank-wallet.intent" => "match AppStore io.horizontalsystems.bank-wallet.intent"
         },
         iCloudContainerEnvironment: "Production"
       }
@@ -229,7 +229,7 @@ platform :ios do
 
     pilot(
       apple_id: "#{APP_ID}",
-      app_identifier: "#{APP_IDENTIFIER_RELEASE}",
+      app_identifier: "io.horizontalsystems.bank-wallet",
       skip_waiting_for_build_processing: true,
       skip_submission: true,
       distribute_external: false,
