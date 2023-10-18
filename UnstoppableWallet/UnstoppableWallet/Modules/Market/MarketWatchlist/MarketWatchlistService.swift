@@ -105,7 +105,7 @@ extension MarketWatchlistService: IMarketListService {
     }
 
     func load() {
-        currencyManager.baseCurrencyUpdatedPublisher
+        currencyManager.$baseCurrency
                 .sink { [weak self] _ in
                     self?.syncMarketInfos()
                 }

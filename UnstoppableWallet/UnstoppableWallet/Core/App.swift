@@ -129,7 +129,7 @@ class App {
         let logRecordStorage = LogRecordStorage(dbPool: dbPool)
         logRecordManager = LogRecordManager(storage: logRecordStorage)
 
-        currencyManager = CurrencyManager(localStorage: StorageKit.LocalStorage.default)
+        currencyManager = CurrencyManager(storage: SharedLocalStorage())
 
         marketKit = try MarketKit.Kit.instance(
             hsApiBaseUrl: AppConfig.marketApiUrl,

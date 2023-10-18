@@ -28,7 +28,7 @@ class WalletCoinPriceService {
 
         currency = currencyManager.baseCurrency
 
-        currencyManager.baseCurrencyUpdatedPublisher
+        currencyManager.$baseCurrency
                 .sink { [weak self] currency in
                     self?.onUpdate(baseCurrency: currency)
                 }

@@ -26,7 +26,7 @@ class MarketTopPlatformsService {
         self.currencyManager = currencyManager
         self.timePeriod = timePeriod
 
-        currencyManager.baseCurrencyUpdatedPublisher
+        currencyManager.$baseCurrency
                 .sink { [weak self] _ in
                     self?.sync()
                 }

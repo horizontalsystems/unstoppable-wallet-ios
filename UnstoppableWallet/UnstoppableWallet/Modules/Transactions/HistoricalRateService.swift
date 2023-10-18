@@ -22,7 +22,7 @@ class HistoricalRateService {
         self.marketKit = marketKit
         currency = currencyManager.baseCurrency
 
-        currencyManager.baseCurrencyUpdatedPublisher
+        currencyManager.$baseCurrency
                 .sink { [weak self] currency in
                     self?.handleUpdated(currency: currency)
                 }

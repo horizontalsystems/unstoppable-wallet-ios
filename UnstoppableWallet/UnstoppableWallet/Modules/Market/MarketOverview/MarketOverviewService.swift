@@ -52,7 +52,7 @@ extension MarketOverviewService {
     }
 
     func load() {
-        currencyManager.baseCurrencyUpdatedPublisher
+        currencyManager.$baseCurrency
                 .sink { [weak self] _ in
                     self?.syncState()
                 }

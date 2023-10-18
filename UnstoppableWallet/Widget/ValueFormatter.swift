@@ -1,10 +1,18 @@
 import Foundation
 
 enum ValueFormatter {
-    private static let percentFormatter: NumberFormatter = {
+    private static let rawFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.roundingMode = .halfUp
+        formatter.minimumFractionDigits = 0
+        return formatter
+    }()
+
+    private static let currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 0
         formatter.minimumFractionDigits = 0
         return formatter
     }()
@@ -72,15 +80,43 @@ enum ValueFormatter {
         return string
     }
 
+    private static func formattedCurrency(value: Decimal, digits: Int, code: String, symbol: String) -> String? {
+        currencyFormatter.currencyCode = code
+        currencyFormatter.currencySymbol = symbol
+        currencyFormatter.internationalCurrencySymbol = symbol
+
+        guard let pattern = currencyFormatter.string(from: 1 as NSDecimalNumber) else {
+            return nil
+        }
+
+        rawFormatter.maximumFractionDigits = digits
+
+        guard let string = rawFormatter.string(from: value as NSDecimalNumber) else {
+            return nil
+        }
+
+        return pattern.replacingOccurrences(of: "1", with: decorated(string: string))
+    }
+
     static func format(percentValue: Decimal, showSign: Bool = true) -> String? {
         let (transformedValue, digits) = transformedFull(value: percentValue, maxDigits: 2)
 
-        percentFormatter.maximumFractionDigits = digits
+        rawFormatter.maximumFractionDigits = digits
 
-        guard let string = percentFormatter.string(from: transformedValue as NSDecimalNumber) else {
+        guard let string = rawFormatter.string(from: transformedValue as NSDecimalNumber) else {
             return nil
         }
 
         return decorated(string: string, signValue: showSign ? percentValue : nil) + "%"
+    }
+
+    static func format(currency: Currency, value: Decimal, showSign: Bool = false) -> String? {
+        let (transformedValue, digits) = transformedFull(value: value, maxDigits: 18)
+
+        guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol) else {
+            return nil
+        }
+
+        return decorated(string: string, signValue: showSign ? value : nil)
     }
 }
