@@ -1,4 +1,3 @@
-import CurrencyKit
 import MarketKit
 import RxCocoa
 import RxSwift
