@@ -117,7 +117,7 @@ extension MainSettingsService {
     }
 
     var baseCurrencyPublisher: AnyPublisher<Currency, Never> {
-        currencyManager.baseCurrencyUpdatedPublisher
+        currencyManager.$baseCurrency
     }
 
     var appVersion: String {

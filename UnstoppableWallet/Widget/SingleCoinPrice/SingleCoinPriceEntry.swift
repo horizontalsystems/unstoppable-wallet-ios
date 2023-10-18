@@ -8,6 +8,7 @@ struct SingleCoinPriceEntry: TimelineEntry {
     let coinIcon: Image?
     let coinCode: String
     let price: Decimal
+    let currency: Currency
     let priceChange: Decimal
     let chartPoints: [ChartPoint]?
 
