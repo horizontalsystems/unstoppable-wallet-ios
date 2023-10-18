@@ -7,6 +7,9 @@ class NoAccountWalletTokenListService: IWalletTokenListService {
     let reachabilityManager: IReachabilityManager
     let balancePrimaryValueManager: BalancePrimaryValueManager
 
+    let balanceHiddenObservable: Observable<Bool> = Observable.just(false)
+    let balanceHidden: Bool = false
+
     var state: WalletTokenListService.State = .noAccount
     var stateUpdatedPublisher: AnyPublisher<WalletTokenListService.State, Never> {
         Just(state).eraseToAnyPublisher()

@@ -8,6 +8,7 @@ class BaseTransactionsService {
 
     private let rateService: HistoricalRateService
     private let nftMetadataService: NftMetadataService
+    private let balanceHiddenManager: BalanceHiddenManager
     private let poolGroupFactory = PoolGroupFactory()
 
     let disposeBag = DisposeBag()
@@ -53,9 +54,10 @@ class BaseTransactionsService {
 
     let queue = DispatchQueue(label: "\(AppConfig.label).base-transactions-service")
 
-    init(rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
+    init(rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
         self.rateService = rateService
         self.nftMetadataService = nftMetadataService
+        self.balanceHiddenManager = balanceHiddenManager
 
         subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
@@ -310,6 +312,14 @@ extension BaseTransactionsService {
 
     var canResetObservable: Observable<Bool> {
         canResetRelay.asObservable()
+    }
+
+    var balanceHiddenObservable: Observable<Bool> {
+        balanceHiddenManager.balanceHiddenObservable
+    }
+
+    var balanceHidden: Bool {
+        balanceHiddenManager.balanceHidden
     }
 
     var itemData: ItemData {

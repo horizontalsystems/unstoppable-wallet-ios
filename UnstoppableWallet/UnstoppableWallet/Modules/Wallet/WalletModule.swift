@@ -78,6 +78,7 @@ struct WalletModule {
             cacheManager: App.shared.enabledWalletCacheManager,
             reachabilityManager: App.shared.reachabilityManager,
             balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            balanceHiddenManager: App.shared.balanceHiddenManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
             account: account
@@ -133,6 +134,7 @@ struct WalletModule {
             cacheManager: App.shared.enabledWalletCacheManager,
             reachabilityManager: App.shared.reachabilityManager,
             balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            balanceHiddenManager: App.shared.balanceHiddenManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
             account: account
@@ -188,6 +190,7 @@ struct WalletModule {
                 cacheManager: App.shared.enabledWalletCacheManager,
                 reachabilityManager: App.shared.reachabilityManager,
                 balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                balanceHiddenManager: App.shared.balanceHiddenManager,
                 appManager: App.shared.appManager,
                 feeCoinProvider: App.shared.feeCoinProvider,
                 account: account

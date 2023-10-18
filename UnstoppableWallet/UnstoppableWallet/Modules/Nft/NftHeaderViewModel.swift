@@ -22,11 +22,11 @@ class NftHeaderViewModel {
         let viewItem: ViewItem? = totalItem.flatMap { totalItem in
             let balanceHidden = service.balanceHidden
 
-            let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
+            let amount = balanceHidden ? BalanceHiddenManager.placeholder : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
 
             let convertedValue: String
             if balanceHidden {
-                convertedValue = "*****"
+                convertedValue = BalanceHiddenManager.placeholder
             } else if let value = totalItem.convertedValue, let formattedValue = ValueFormatter.instance.formatShort(coinValue: value) {
                 convertedValue = "≈ \(formattedValue)"
             } else {

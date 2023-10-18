@@ -165,7 +165,7 @@ class TransactionsViewItemFactory {
         return (primaryValue, secondaryValue)
     }
 
-    func viewItem(item: TransactionsService.Item) -> TransactionsViewModel.ViewItem {
+    func viewItem(item: TransactionsService.Item, balanceHidden: Bool) -> TransactionsViewModel.ViewItem {
         var iconType: TransactionsViewModel.IconType
         let title: String
         let subTitle: String
@@ -414,6 +414,11 @@ class TransactionsViewItemFactory {
 
         case .completed:
             progress = nil
+        }
+
+        if balanceHidden {
+            primaryValue = TransactionsViewModel.Value(text: BalanceHiddenManager.placeholder, type: primaryValue?.type ?? .neutral)
+            secondaryValue = TransactionsViewModel.Value(text: BalanceHiddenManager.placeholder, type: secondaryValue?.type ?? .neutral)
         }
 
         return TransactionsViewModel.ViewItem(

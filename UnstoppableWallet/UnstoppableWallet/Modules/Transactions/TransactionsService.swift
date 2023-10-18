@@ -22,10 +22,10 @@ class TransactionsService: BaseTransactionsService {
 
     private(set) var allBlockchains = [Blockchain]()
 
-    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
+    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
         self.walletManager = walletManager
 
-        super.init(rateService: rateService, nftMetadataService: nftMetadataService)
+        super.init(rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: balanceHiddenManager)
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.syncWallets() }
 

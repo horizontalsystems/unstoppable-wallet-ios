@@ -12,7 +12,8 @@ struct TransactionsModule {
                 walletManager: App.shared.walletManager,
                 adapterManager: App.shared.transactionAdapterManager,
                 rateService: rateService,
-                nftMetadataService: nftMetadataService
+                nftMetadataService: nftMetadataService,
+                balanceHiddenManager: App.shared.balanceHiddenManager
         )
 
         let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)

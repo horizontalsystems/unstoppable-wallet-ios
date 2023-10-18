@@ -31,6 +31,7 @@ class BaseTransactionsViewModel {
         subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.sync(syncing: $0) }
         subscribe(disposeBag, service.canResetObservable) { [weak self] in self?.sync(canReset: $0) }
         subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncViewItems() }
+        subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.reSyncViewItems() }
 
         _sync(itemData: service.itemData)
         _sync(syncing: service.syncing)
@@ -60,7 +61,7 @@ class BaseTransactionsViewModel {
     }
 
     private func _sync(itemData: TransactionsService.ItemData) {
-        let viewItems = itemData.items.map { factory.viewItem(item: $0) }
+        let viewItems = itemData.items.map { factory.viewItem(item: $0, balanceHidden: service.balanceHidden) }
         sectionViewItems = sectionViewItems(viewItems: viewItems)
 
         _reportViewData(allLoaded: itemData.allLoaded)
@@ -76,7 +77,7 @@ class BaseTransactionsViewModel {
     private func _syncUpdated(item: TransactionsService.Item) {
         for (sectionIndex, section) in sectionViewItems.enumerated() {
             if let rowIndex = section.viewItems.firstIndex(where: { $0.uid == item.record.uid }) {
-                let viewItem = factory.viewItem(item: item)
+                let viewItem = factory.viewItem(item: item, balanceHidden: service.balanceHidden)
                 sectionViewItems[sectionIndex].viewItems[rowIndex] = viewItem
                 _reportViewData(updateInfo: UpdateInfo(sectionIndex: sectionIndex, index: rowIndex))
             }

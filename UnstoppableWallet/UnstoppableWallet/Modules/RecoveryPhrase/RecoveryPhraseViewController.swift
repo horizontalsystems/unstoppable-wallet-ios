@@ -122,7 +122,7 @@ extension RecoveryPhraseViewController: SectionsDataSource {
                         },
                         .secondaryButton { component in
                             component.button.set(style: .default)
-                            component.button.setTitle(visible ? passphrase : "*****", for: .normal)
+                            component.button.setTitle(visible ? passphrase : BalanceHiddenManager.placeholder, for: .normal)
                             component.onTap = {
                                 CopyHelper.copyAndNotify(value: passphrase)
                             }
