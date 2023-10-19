@@ -11,9 +11,9 @@ struct SingleCoinPriceProvider: IntentTimelineProvider {
             coinUid: fallbackCoinUid,
             coinIcon: nil,
             coinCode: "BTC",
-            price: 30000,
-            currency: Currency(code: "USD", symbol: "$", decimal: 2),
-            priceChange: 2.45,
+            price: "$30000",
+            priceChange: "2.45",
+            priceChangeType: .unknown,
             chartPoints: placeholderChartPoints()
         )
     }
@@ -39,17 +39,17 @@ struct SingleCoinPriceProvider: IntentTimelineProvider {
     }
 
     private func fetch(coinUid: String) async throws -> SingleCoinPriceEntry {
-        let currencyManager = CurrencyManager(storage: SharedLocalStorage())
+        let currency = CurrencyManager(storage: SharedLocalStorage()).baseCurrency
         let apiProvider = ApiProvider(baseUrl: "https://api-dev.blocksdecoded.com")
 
-        let coin = try await apiProvider.coinWithPrice(uid: coinUid, currencyCode: currencyManager.baseCurrency.code)
+        let coin = try await apiProvider.coinWithPrice(uid: coinUid, currencyCode: currency.code)
 
         let iconUrl = "https://cdn.blocksdecoded.com/coin-icons/32px/\(coin.uid)@3x.png"
         let coinIcon = URL(string: iconUrl).flatMap { try? Data(contentsOf: $0) }.flatMap { UIImage(data: $0) }.map { Image(uiImage: $0) }
 
         var chartPoints: [SingleCoinPriceEntry.ChartPoint]?
 
-        if let points = try? await apiProvider.coinPriceChart(coinUid: coinUid, currencyCode: currencyManager.baseCurrency.code) {
+        if let points = try? await apiProvider.coinPriceChart(coinUid: coinUid, currencyCode: currency.code) {
             chartPoints = points
                 .sorted { point, point2 in
                     point.timestamp < point2.timestamp
@@ -67,9 +67,9 @@ struct SingleCoinPriceProvider: IntentTimelineProvider {
             coinUid: coin.uid,
             coinIcon: coinIcon,
             coinCode: coin.code,
-            price: coin.price,
-            currency: currencyManager.baseCurrency,
-            priceChange: coin.priceChange24h,
+            price: coin.price.flatMap { ValueFormatter.format(currency: currency, value: $0) } ?? "n/a",
+            priceChange: coin.priceChange24h.flatMap { ValueFormatter.format(percentValue: $0) } ?? "n/a",
+            priceChangeType: coin.priceChange24h.map { $0 >= 0 ? .up : .down } ?? .unknown,
             chartPoints: chartPoints
         )
     }

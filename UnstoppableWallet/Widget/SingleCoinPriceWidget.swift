@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import ThemeKit
 import WidgetKit
 
 struct SingleCoinPriceWidget: Widget {
@@ -17,10 +16,10 @@ struct SingleCoinPriceWidget: Widget {
                     .containerBackground(.fill.tertiary, for: .widget)
             } else {
                 SingleCoinPriceView(entry: entry)
-                    .padding()
                     .background()
             }
         }
+        .contentMarginsDisabled()
         .configurationDisplayName("Coin Price")
         .description("Displays price for certain coin.")
         .supportedFamilies([
