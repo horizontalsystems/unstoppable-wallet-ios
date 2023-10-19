@@ -8,9 +8,9 @@ struct SingleCoinPriceProvider: IntentTimelineProvider {
     func placeholder(in _: Context) -> SingleCoinPriceEntry {
         SingleCoinPriceEntry(
             date: Date(),
-            coinUid: fallbackCoinUid,
-            coinIcon: nil,
-            coinCode: "BTC",
+            uid: fallbackCoinUid,
+            icon: nil,
+            code: "BTC",
             price: "$30000",
             priceChange: "2.45",
             priceChangeType: .unknown,
@@ -44,9 +44,6 @@ struct SingleCoinPriceProvider: IntentTimelineProvider {
 
         let coin = try await apiProvider.coinWithPrice(uid: coinUid, currencyCode: currency.code)
 
-        let iconUrl = "https://cdn.blocksdecoded.com/coin-icons/32px/\(coin.uid)@3x.png"
-        let coinIcon = URL(string: iconUrl).flatMap { try? Data(contentsOf: $0) }.flatMap { UIImage(data: $0) }.map { Image(uiImage: $0) }
-
         var chartPoints: [SingleCoinPriceEntry.ChartPoint]?
 
         if let points = try? await apiProvider.coinPriceChart(coinUid: coinUid, currencyCode: currency.code) {
@@ -64,12 +61,12 @@ struct SingleCoinPriceProvider: IntentTimelineProvider {
 
         return SingleCoinPriceEntry(
             date: Date(),
-            coinUid: coin.uid,
-            coinIcon: coinIcon,
-            coinCode: coin.code,
-            price: coin.price.flatMap { ValueFormatter.format(currency: currency, value: $0) } ?? "n/a",
-            priceChange: coin.priceChange24h.flatMap { ValueFormatter.format(percentValue: $0) } ?? "n/a",
-            priceChangeType: coin.priceChange24h.map { $0 >= 0 ? .up : .down } ?? .unknown,
+            uid: coin.uid,
+            icon: coin.image,
+            code: coin.code,
+            price: coin.formattedPrice(currency: currency),
+            priceChange: coin.formattedPriceChange,
+            priceChangeType: coin.priceChangeType,
             chartPoints: chartPoints
         )
     }

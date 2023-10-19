@@ -2,12 +2,12 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
-struct TopCoinsWidget: Widget {
+struct WatchlistWidget: Widget {
     var body: some WidgetConfiguration {
         IntentConfiguration(
-            kind: AppWidgetConstants.topCoinsWidgetKind,
+            kind: AppWidgetConstants.watchlistWidgetKind,
             intent: CoinPriceListIntent.self,
-            provider: CoinPriceListProvider(mode: .topCoins)
+            provider: CoinPriceListProvider(mode: .watchlist)
         ) { entry in
             if #available(iOS 17.0, *) {
                 CoinPriceListView(entry: entry)
@@ -18,8 +18,9 @@ struct TopCoinsWidget: Widget {
             }
         }
         .contentMarginsDisabled()
-        .configurationDisplayName("Top Coins")
-        .description("Displays price for top coins.")
+        .configurationDisplayName("Watchlist")
+        .description("Displays price coins in watchlist.")
+
         .supportedFamilies([
             .systemSmall,
             .systemMedium,

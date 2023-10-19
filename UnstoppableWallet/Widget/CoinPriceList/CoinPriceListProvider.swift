@@ -3,6 +3,8 @@ import SwiftUI
 import WidgetKit
 
 struct CoinPriceListProvider: IntentTimelineProvider {
+    let mode: CoinPriceListMode
+
     func placeholder(in context: Context) -> CoinPriceListEntry {
         let count: Int
 
@@ -13,8 +15,9 @@ struct CoinPriceListProvider: IntentTimelineProvider {
 
         return CoinPriceListEntry(
             date: Date(),
-            title: "Top Coins",
+            mode: mode,
             sortType: "Highest Cap",
+            maxItemCount: count,
             items: (1 ... count).map { index in
                 CoinPriceListEntry.Item(
                     uid: "coin\(index)",
@@ -48,7 +51,8 @@ struct CoinPriceListProvider: IntentTimelineProvider {
     }
 
     private func fetch(sortType: SortType, family: WidgetFamily) async throws -> CoinPriceListEntry {
-        let currency = CurrencyManager(storage: SharedLocalStorage()).baseCurrency
+        let storage = SharedLocalStorage()
+        let currency = CurrencyManager(storage: storage).baseCurrency
         let apiProvider = ApiProvider(baseUrl: "https://api-dev.blocksdecoded.com")
 
         let listType: ApiProvider.ListType
@@ -71,24 +75,35 @@ struct CoinPriceListProvider: IntentTimelineProvider {
         default: limit = 6
         }
 
-        let coins = try await apiProvider.listCoins(type: listType, order: listOrder, limit: limit, currencyCode: currency.code)
+        let coins: [Coin]
+
+        switch mode {
+        case .topCoins:
+            coins = try await apiProvider.listCoins(type: listType, order: listOrder, limit: limit, currencyCode: currency.code)
+        case .watchlist:
+            let coinUids: [String]? = storage.value(for: AppWidgetConstants.keyFavoriteCoinUids)
+
+            if let coinUids, !coinUids.isEmpty {
+                coins = try await apiProvider.listCoins(uids: coinUids, type: listType, order: listOrder, limit: limit, currencyCode: currency.code)
+            } else {
+                coins = []
+            }
+        }
 
         return CoinPriceListEntry(
             date: Date(),
-            title: "Top Coins",
+            mode: mode,
             sortType: title(sortType: sortType),
+            maxItemCount: limit,
             items: coins.map { coin in
-                let iconUrl = "https://cdn.blocksdecoded.com/coin-icons/32px/\(coin.uid)@3x.png"
-                let coinIcon = URL(string: iconUrl).flatMap { try? Data(contentsOf: $0) }.flatMap { UIImage(data: $0) }.map { Image(uiImage: $0) }
-
-                return CoinPriceListEntry.Item(
+                CoinPriceListEntry.Item(
                     uid: coin.uid,
-                    icon: coinIcon,
+                    icon: coin.image,
                     code: coin.code,
                     name: coin.name,
-                    price: coin.price.flatMap { ValueFormatter.format(currency: currency, value: $0) } ?? "n/a",
-                    priceChange: coin.priceChange24h.flatMap { ValueFormatter.format(percentValue: $0) } ?? "n/a",
-                    priceChangeType: coin.priceChange24h.map { $0 >= 0 ? .up : .down } ?? .unknown
+                    price: coin.formattedPrice(currency: currency),
+                    priceChange: coin.formattedPriceChange,
+                    priceChangeType: coin.priceChangeType
                 )
             }
         )

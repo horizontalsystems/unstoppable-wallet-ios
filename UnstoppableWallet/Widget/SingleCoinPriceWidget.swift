@@ -3,11 +3,9 @@ import SwiftUI
 import WidgetKit
 
 struct SingleCoinPriceWidget: Widget {
-    let kind: String = "io.horizontalsystems.unstoppable.SingleCoinPriceWidget"
-
     var body: some WidgetConfiguration {
         IntentConfiguration(
-            kind: kind,
+            kind: AppWidgetConstants.singleCoinPriceWidgetKind,
             intent: SingleCoinPriceIntent.self,
             provider: SingleCoinPriceProvider()
         ) { entry in

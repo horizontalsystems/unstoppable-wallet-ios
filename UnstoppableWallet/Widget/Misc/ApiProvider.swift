@@ -36,12 +36,16 @@ class ApiProvider {
         return try await networkManager.fetch(url: "\(baseUrl)/v1/coins", method: .get, parameters: parameters, headers: headers)
     }
 
-    func listCoins(type: ListType, order: ListOrder, limit: Int, currencyCode: String) async throws -> [Coin] {
-        let parameters: Parameters = [
+    func listCoins(uids: [String]? = nil, type: ListType, order: ListOrder, limit: Int, currencyCode: String) async throws -> [Coin] {
+        var parameters: Parameters = [
             "order": order.rawValue,
             "limit": limit,
             "currency": currencyCode.lowercased(),
         ]
+
+        if let uids {
+            parameters["uids"] = uids.joined(separator: ",")
+        }
 
         return try await networkManager.fetch(url: "\(baseUrl)/v1/coins/top-movers-by/\(type.rawValue)", method: .get, parameters: parameters, headers: headers)
     }

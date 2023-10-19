@@ -4,9 +4,9 @@ import WidgetKit
 
 struct SingleCoinPriceEntry: TimelineEntry {
     let date: Date
-    let coinUid: String
-    let coinIcon: Image?
-    let coinCode: String
+    let uid: String
+    let icon: Image?
+    let code: String
     let price: String
     let priceChange: String
     let priceChangeType: PriceChangeType

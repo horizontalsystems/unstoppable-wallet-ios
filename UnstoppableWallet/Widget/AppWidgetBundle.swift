@@ -6,5 +6,6 @@ struct AppWidgetBundle: WidgetBundle {
     var body: some Widget {
         SingleCoinPriceWidget()
         TopCoinsWidget()
+        WatchlistWidget()
     }
 }
