@@ -3,18 +3,36 @@ import SwiftUI
 enum ListStyle {
     case lawrence
     case bordered
+    case transparent
+}
 
-    var backgroundColor: Color {
-        switch self {
-        case .lawrence: return .themeLawrence
-        case .bordered: return .clear
+struct ListStyleModifier: ViewModifier {
+    let listStyle: ListStyle
+
+    func body(content: Content) -> some View {
+        switch listStyle {
+        case .lawrence:
+            content
+                .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
+                .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+        case .bordered:
+            content
+                .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+                .overlay(RoundedRectangle(cornerRadius: .cornerRadius12).stroke(Color.themeSteel20, lineWidth: .heightOneDp))
+        case .transparent:
+            content
         }
     }
+}
 
-    var borderColor: Color {
-        switch self {
-        case .lawrence: return .clear
-        case .bordered: return .themeSteel20
+struct ListStyleButtonModifier: ViewModifier {
+    let listStyle: ListStyle
+    let isPressed: Bool
+
+    func body(content: Content) -> some View {
+        switch listStyle {
+        case .lawrence: content.background(isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
+        case .bordered, .transparent: content.background(isPressed ? Color.themeLawrencePressed : Color.clear)
         }
     }
 }

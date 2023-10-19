@@ -96,6 +96,7 @@
 	</dict>
 	<key>NSUserActivityTypes</key>
 	<array>
+		<string>CoinPriceListIntent</string>
 		<string>SingleCoinPriceIntent</string>
 	</array>
 	<key>OfficeMode</key>

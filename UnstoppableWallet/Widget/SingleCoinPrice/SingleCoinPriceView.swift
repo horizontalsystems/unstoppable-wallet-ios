@@ -49,21 +49,18 @@ struct SingleCoinPriceView: View {
             }
 
             VStack(alignment: .leading, spacing: 1) {
-                if let formattedValue = ValueFormatter.format(percentValue: entry.priceChange) {
-                    Text(formattedValue)
-                        .font(.themeSubhead2)
-                        .foregroundColor(entry.priceChange >= 0 ? .themeRemus : .themeLucian)
-                }
+                Text(entry.priceChange)
+                    .font(.themeSubhead2)
+                    .foregroundColor(entry.priceChangeType.color)
 
-                if let formattedValue = ValueFormatter.format(currency: entry.currency, value: entry.price) {
-                    Text(formattedValue)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .frame(height: 26)
-                        .minimumScaleFactor(0.5)
-                        .font(.themeHeadline1)
-                        .foregroundColor(.themeLeah)
-                }
+                Text(entry.price)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(height: 26)
+                    .minimumScaleFactor(0.5)
+                    .font(.themeHeadline1)
+                    .foregroundColor(.themeLeah)
             }
         }
+        .padding(.margin16)
     }
 }

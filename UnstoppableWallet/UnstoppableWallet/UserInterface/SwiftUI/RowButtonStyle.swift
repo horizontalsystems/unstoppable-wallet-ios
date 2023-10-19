@@ -5,6 +5,6 @@ struct RowButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .background(configuration.isPressed ? Color.themeLawrencePressed : listStyle.backgroundColor)
+            .modifier(ListStyleButtonModifier(listStyle: listStyle, isPressed: configuration.isPressed))
     }
 }

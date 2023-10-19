@@ -12,6 +12,7 @@
 			<array/>
 			<key>IntentsSupported</key>
 			<array>
+				<string>CoinPriceListIntent</string>
 				<string>SingleCoinPriceIntent</string>
 			</array>
 		</dict>

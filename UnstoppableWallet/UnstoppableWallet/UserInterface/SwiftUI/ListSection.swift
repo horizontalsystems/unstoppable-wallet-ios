@@ -10,9 +10,7 @@ struct ListSection<Content: View>: View {
             _VariadicView.Tree(Layout()) {
                 content
             }
-            .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(listStyle.backgroundColor))
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: .cornerRadius12).stroke(listStyle.borderColor, lineWidth: .heightOneDp))
+            .modifier(ListStyleModifier(listStyle: listStyle))
         }
     }
 
