@@ -1,7 +1,7 @@
 import Foundation
 import ObjectMapper
 
-class BackupContact: ImmutableMappable, Hashable, Equatable {
+class BackupContact: Codable, ImmutableMappable, Hashable, Equatable {
     let uid: String
     let name: String
     let addresses: [ContactAddress]
@@ -19,12 +19,12 @@ class BackupContact: ImmutableMappable, Hashable, Equatable {
     }
 
     func mapping(map: Map) {
-        uid         >>> map["uid"]
-        name        >>> map["name"]
-        addresses   >>> map["addresses"]
+        uid >>> map["uid"]
+        name >>> map["name"]
+        addresses >>> map["addresses"]
     }
 
-    static func ==(lhs: BackupContact, rhs: BackupContact) -> Bool {
+    static func == (lhs: BackupContact, rhs: BackupContact) -> Bool {
         lhs.uid == rhs.uid
     }
 
@@ -33,17 +33,15 @@ class BackupContact: ImmutableMappable, Hashable, Equatable {
     }
 
     func address(blockchainUid: String) -> ContactAddress? {
-        addresses.first { $0.blockchainUid == blockchainUid  }
+        addresses.first { $0.blockchainUid == blockchainUid }
     }
-
 }
 
-class BackupContactBook {
+class BackupContactBook: Codable {
     static let empty = BackupContactBook(contacts: [])
     let contacts: [BackupContact]
 
     init(contacts: [BackupContact]) {
         self.contacts = contacts
     }
-
 }

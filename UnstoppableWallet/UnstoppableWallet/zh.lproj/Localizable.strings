@@ -12,6 +12,7 @@
 "button.paste" = "粘帖";
 "button.resend" = "重新发送";
 "button.backup" = "备份";
+"button.restore" = "恢复";
 "button.copy" = "复制";
 "button.retry" = "重试";
 "button.report" = "报告";
@@ -35,9 +36,11 @@
 "alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
 "alert.warning" = "警告";
+"alert.notice" = "通知";
 "alert.error" = "出错";
 "alert.unknown_error" = "未知错误";
 "alert.success_action" = "完成";
+"alert.restored" = "恢复";
 "alert.success" = "成功";
 
 "alert.added_to_watchlist" = "添加到观察名单";
@@ -46,7 +49,6 @@
 "alert.removed_from_wallet" = "已从钱包删除";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "已复制";
 "alert.created" = "已创建";
 "alert.imported" = "已恢复";
 "alert.wallet_added" = "钱包已添加";
@@ -95,6 +97,16 @@
 
 "selector.any" = "任何";
 
+"face_id" = "Face ID";
+"touch_id" = "Touch ID";
+
+"auto_lock.immediate" = "即时的";
+"auto_lock.minute1" = "1 分钟";
+"auto_lock.minute5" = "5 分钟";
+"auto_lock.minute15" = "15 分钟";
+"auto_lock.minute30" = "30 分钟";
+"auto_lock.hour1" = "1 小时";
+
 // Access Camera
 
 "access_camera.message" = "%@ 需要访问您的相机以扫描二维码。
@@ -126,21 +138,24 @@
 // Restore Type
 
 "restore_type.title" = "恢复自";
-
 "restore_type.recovery.title" = "恢复短语";
 "restore_type.cloud.title" = "来自 iCloud";
+"restore_type.file.title" = "从文件";
 "restore_type.cex.title" = "来自Exchange 钱包";
 
 "restore_type.recovery.description" = "使用恢复短语或私钥导入。";
 "restore_type.cloud.description" = "从您的密钥链备份文件中导入。";
+"restore_type.file.description" = "从本地文件夹导入备份文件。";
 "restore_type.cex.description" = "在集中交易所上连接到钱包。";
 
 // Restore Cloud
 
 "restore.cloud.title" = "选择备份";
-"restore.cloud.description" = "选择想要恢复的钱包备份副本。";
+"restore.cloud.description" = "选择您想要恢复的备份文件。";
 "restore.cloud.empty" = "未找到备份。";
+"restore.cloud.wallets" = "钱包备份";
 "restore.cloud.imported" = "导入钱包";
+"restore.cloud.app_backups" = "应用备份";
 
 "restore.cloud.password.title" = "请输入密码";
 "restore.cloud.password.placeholder" = "备份密码";
@@ -226,13 +241,10 @@
 "backup_verify_passphrase.description" = "输入密码";
 "backup_verify_passphrase.incorrect_passphrase" = "密码不正确";
 
-// Backup Required
-
-"backup_required.title" = "需要备份";
-
 // Backup Prompt
 
-"backup_prompt.title" = "进行手动备份";
+"backup_prompt.backup_recovery_phrase" = "备份钱包";
+"backup_prompt.backup_required" = "需要备份";
 "backup_prompt.warning" = "创建恢复短语和相关密码的备份副本，允许您在手机丢失时恢复钱包， • 盗窃、故障等问题";
 "backup_prompt.backup" = "备份";
 "backup_prompt.backup_manual" = "进行手动备份";
@@ -243,7 +255,6 @@
 
 "backup.cloud.title" = "备份到iCloud";
 "backup.cloud.description" = "iCloud 存储是 Apple 提供的第三方云存储服务。请注意，您的数据将存储在 Apple 的服务器上，而不是您的个人设备上。这意味着您正在委托您的数据并将信息的安全性移交给第三方服务。";
-
 "backup.cloud.terms.item.1" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
 
 "backup.cloud.name.title" = "备份名称";
@@ -270,9 +281,7 @@
 "backup.cloud.cant_create_file" = "无法将文件保存到iCloud。";
 "backup.cloud.cant_delete_file" = "无法从 iCloud 删除";
 "backup.cloud.no_access.title" = "访问 iCloud";
-"backup.cloud.no_access.title" = "访问 iCloud";
 "backup.cloud.no_access.description" = "要创建备份，您需要提供访问 iCloud 存储。";
-
 
 // Errors
 
@@ -294,10 +303,12 @@
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
 "balance.searching" = "正在搜索交易…...";
+"balance.stopped" = "已停止";
 "balance.downloading_sapling" = "正在下载保存... %d%%";
 "balance.downloading_blocks" = "正在下载块";
 "balance.scanning_blocks" = "扫描块";
 "balance.enhancing_transactions" = "加强交易";
+"wait_for_synchronization" = "等待同步";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
@@ -322,6 +333,9 @@
 "balance.token.locked" = "锁住";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
+"balance.token.processing" = "正在处理";
+"balance.token.processing.info.title" = "处理金额";
+"balance.token.processing.info.description" = "此金额的交易仍然在同步。当它们被确认时，这些代币将用于支出";
 "balance.token.staked" = "已关注";
 "balance.token.staked.info.title" = "关注的标题";
 "balance.token.staked.info.description" = "相关的描述文本";
@@ -542,7 +556,6 @@
 "swap.confirmation.maximum_sent" = "最大支出";
 
 "swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
-
 "swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
 "swap.dex_info.content_allowance" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
@@ -726,8 +739,8 @@
 "coin_overview.roi.day200" = "6月";
 "coin_overview.roi.year1" = "1 年";
 
-"coin_overview.category" = "分类";
-
+"coin_overview.overview" = "行情";
+"coin_overview.description_warning" = "这是一个基于给定的加密货币所提供的参考材料生成的 AI 描述。它可能包含错误。";
 "coin_overview.blockchains" = "区块链";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "代币平台选择";
@@ -770,7 +783,7 @@
 "coin_analytics.cex_volume_rank.description" = "对中心化交易所的代币按交易量排名的代币。";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over a 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "DEX交易量";
@@ -800,16 +813,16 @@
 "coin_analytics.active_addresses_rank.description" = "按与代币交易的唯一地址的数量排名的代币。";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank is based on the number of active wallets transacting with the token during a 30-day period.";
 "coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "交易数";
 "coin_analytics.transaction_count_rank" = "Tx计数排名";
-"coin_analytics.transaction_count_rank.description" = "按区块链上交易的数量排名的代币。";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
+"coin_analytics.transaction_count_rank.description" = "Tokens are ranked by a number of transactions on a blockchain.";
+"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with tokens over a 30-day period.";
 "coin_analytics.transaction_count.info2" = "显示1年周期的交易计数变化的图表。";
-"coin_analytics.transaction_count.info3" = "基于30天周期与代币交易的数量的代币排名。";
+"coin_analytics.transaction_count.info3" = "Token's rank is based on the number of transactions within the token 30-day period.";
 "coin_analytics.transaction_count.info4" = "基于24时 / 7天 / 1月间隔的交易数量排名的所有代币的列表。";
 "coin_analytics.transaction_count.info5" = "30天周期内在区块链上传输的代币总数。";
 
@@ -826,19 +839,19 @@
 "coin_analytics.project_tvl" = "项目TVL";
 "coin_analytics.tvl_ratio" = "市值 / TVL比率";
 "coin_analytics.project_tvl.info_title" = "项目TVL（锁定总价值）";
-"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
+"coin_analytics.project_tvl.info1" = "Total-value-locked (or Assets Under Management) in the project's smart contracts.";
 "coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "基于当前锁定总价值的代币排名。";
+"coin_analytics.project_tvl.info3" = "Token's rank is based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info4" = "基于当前锁定总价值排名的所有代币的列表。";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
 "coin_analytics.project_fee" = "项目费用";
 "coin_analytics.project_fee_rank" = "项目收费等级";
-"coin_analytics.project_fee_rank.description" = "按各项目产生的费用排列的代币。收取费用的方式因项目而异。";
+"coin_analytics.project_fee_rank.description" = "Tokens are ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
 
 "coin_analytics.project_revenue" = "项目收入";
 "coin_analytics.project_revenue_rank" = "项目收入排名";
-"coin_analytics.project_revenue_rank.description" = "按通过如质押或代币销毁等机制为持有者生成的收入排名的代币。";
+"coin_analytics.project_revenue_rank.description" = "Tokens are ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
 
 "coin_analytics.other_data" = "其它数据";
 
@@ -868,7 +881,7 @@
 "coin_analytics.overall_score.poor" = "差的";
 "coin_analytics.overall_score.cex_volume" = "总的分数是根据过去7天中央交易所的平均每日交易量计算的。";
 "coin_analytics.overall_score.dex_volume" = "总的分数是根据过去7天分散交易所的平均每日交易量计算的。";
-"coin_analytics.overall_score.dex_liquidity" = "总分数是根据分散交易所的可动用流动资金总额计算的。";
+"coin_analytics.overall_score.dex_liquidity" = "总分数是根据分散交易所的可用流动资金总额计算的。";
 "coin_analytics.overall_score.active_addresses" = "总得分是根据过去7天中每日平均活动地址计算的。";
 "coin_analytics.overall_score.project_tvl" = "总体分数是根据给定令牌所代表的项目的总值锁定(管理中的资产)计算的。";
 "coin_analytics.overall_score.transaction_count" = "总的分数是根据过去7天的平均每日交易数计算的。";
@@ -1001,6 +1014,7 @@
 "settings.tab_bar_item" = "设置";
 "settings.manage_accounts" = "管理钱包";
 "settings.blockchain_settings" = "区块链设置";
+"settings.backup_manager" = "备份管理器";
 "settings.security" = "安全中心";
 "settings.experimental_features" = "实验性功能";
 "settings.personal_support" = "个人支持";
@@ -1011,6 +1025,9 @@
 "settings.info_subtitle" = "分布式应用程序";
 "settings.donate.description" = "在你的支持下，我们可以使这个应用更好！";
 "settings.donate.title" = "捐助";
+"settings.rate_us" = "评价我们";
+"settings.tell_friends" = "分享给好友";
+"settings.contact_us" = "联系我们";
 
 // Settings -> Base Currency
 
@@ -1073,14 +1090,126 @@
 
 "blockchain_settings.title" = "区块链设置";
 
+// Settings -> Backup Manager
+
+"backup_app.backup_manager.title" = "备份管理器";
+"backup_app.backup_manager.restore" = "还原备份";
+"backup_app.backup_manager.create" = "创建新备份";
+
+"backup_app.backup_type.title" = "保存备份";
+"backup_app.backup_type.cloud" = "到 iCloud";
+"backup_app.backup_type.cloud.description" = "在您的密钥链中保存备份拷贝文件。";
+"backup_app.backup_type.file" = "到文件";
+"backup_app.backup_type.file.description" = "保存备份文件到您的本地文件夹。";
+
+"backup_app.backup_list.title" = "备份文件";
+"backup_app.backup_list.description.restore" = "备份文件中的内容列表。";
+"backup_app.backup_list.header.wallets" = "钱包";
+"backup_app.backup_list.header.other" = "其他";
+"backup_app.backup_list.other.watch_account.title" = "观察地址";
+"backup_app.backup_list.other.watchlist.title" = "关注";
+"backup_app.backup_list.other.contacts.title" = "联系人";
+"backup_app.backup_list.other.blockchain_settings.title" = "自定义 RPC";
+"backup_app.backup_list.other.app_settings.title" = "应用设置";
+"backup_app.backup_list.other.app_settings.description" = "语言、 货币、 外观...";
+
+"backup_app.backup.disclaimer.cloud.title" = "备份到iCloud";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud 是苹果提供的云存储服务。知道您的备份数据将保存在苹果服务器上是很重要的。";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
+"backup_app.backup.disclaimer.file.title" = "备份至文件";
+"backup_app.backup.disclaimer.file.description" = "存储设备包括硬盘驱动器、USB驱动器以及智能手机上的存储等。由于有形损害、盗窃或其他无法预见的情况，所有人都容易遭受损失。";
+"backup_app.backup.disclaimer.file.checkbox_label" = "我的理解是，备份设备被盗或损坏将导致备份丢失，进而导致钱包丢失。";
+
+"backup.disclaimer.cloud.title" = "备份到iCloud";
+"backup.disclaimer.cloud.description" = "iCloud 是苹果提供的云存储服务。知道您的备份数据将保存在苹果服务器上是很重要的。";
+"backup.disclaimer.cloud.checkbox_label" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
+"backup.disclaimer.file.title" = "备份至文件";
+"backup.disclaimer.file.description" = "存储设备包括硬盘驱动器、USB驱动器以及智能手机上的存储等。由于有形损害、盗窃或其他无法预见的情况，所有人都容易遭受损失。";
+"backup.disclaimer.file.checkbox_label" = "我的理解是，备份设备被盗或损坏将导致备份丢失，进而导致钱包丢失。";
+"backup_app.backup.name.title" = "备份名称";
+"backup_app.backup.name.description" = "请输入备份文件的名称。";
+
+"backup_app.backup.password.title" = "备份密码";
+"backup_app.backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
+"backup_app.backup.password.highlighted_description" = "此密码用于加密您的钱包备份文件。一旦丢失或遗忘，将无法恢复或重置。";
+
+"backup_app.restore_type.title" = "恢复自";
+
+"backup_app.restore.notice.description" = "此操作将覆盖您的本地付款联系人以及它的 iCloud 副本（如有）。";
+"backup_app.restore.notice.merge" = "替换";
+
+"backup.password.title" = "备份密码";
+"backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
+"backup.password.highlighted_description" = "此密码用于加密您的钱包备份文件。一旦丢失或遗忘，将无法恢复或重置。";
+
 // Settings -> Security
 
 "settings_security.title" = "安全中心";
-"settings_security.passcode" = "密码";
-"settings_security.change_pin" = "编辑密码";
-"settings_security.touch_id" = "指纹识别";
-"settings_security.face_id" = "面部识别";
-"settings_security.blockchain_settings" = "区块链设置";
+"settings_security.enable_passcode" = "启用密码";
+"settings_security.edit_passcode" = "编辑密码";
+"settings_security.disable_passcode" = "禁用密码";
+"settings_security.auto_lock" = "自动锁定";
+"settings_security.balance_auto_hide" = "自动隐藏余额";
+"settings_security.balance_auto_hide.description" = "每次打开应用程序时自动隐藏平衡，不管先前的偏好设置。";
+"settings_security.enable_duress_mode" = "设置压力模式";
+"settings_security.edit_duress_passcode" = "编辑货币密码";
+"settings_security.disable_duress_mode" = "禁用冒险密码";
+"settings_security.duress_mode.description" = "专用模式用于在胁迫下使选定的钱包安全。";
+
+// Create Passcode
+
+"create_passcode.title" = "创建密码";
+"create_passcode.description" = "您的密码将用于解锁钱包和发送资金";
+"create_passcode.description.biometry" = "设置密码以启用 %@";
+"create_passcode.description.duress_mode" = "设置密码以启用压力模式";
+"create_passcode.confirm_passcode" = "确认";
+
+// Enable Duress Mode
+
+"enable_duress_mode.intro.title" = "服用模式";
+"enable_duress_mode.intro.description" = "此模式允许用户设置多个解锁应用密码，当需要的密码只显示指定的钱包。 设计用来使选定的钱包在胁迫或威胁下安全。";
+"enable_duress_mode.intro.notes" = "注";
+"enable_duress_mode.intro.biometrics.description" = "%@ 功能可以解锁时尚模式。您可以为方便而禁用 %@。";
+"enable_duress_mode.intro.passcode_disabling" = "密码已禁用";
+"enable_duress_mode.intro.passcode_disabling.description" = "在主模式下禁用密码将自动重置压力模式。";
+"enable_duress_mode.intro.passcode_change" = "密码更改";
+"enable_duress_mode.intro.passcode_change.description" = "更改时尚模式中的密码也会更改当前模式下的密码。";
+
+"enable_duress_mode.select.title" = "选择钱包";
+"enable_duress_mode.select.description" = "选择将显示在时尚模式中的钱包。";
+"enable_duress_mode.select.wallets" = "钱包";
+"enable_duress_mode.select.watch_wallets" = "观察地址";
+
+"enable_duress_mode.passcode.title" = "密码错误";
+"enable_duress_mode.passcode.description" = "设置口令模式密码";
+"enable_duress_mode.passcode.confirm" = "确认";
+
+// Edit Passcode
+
+"edit_passcode.title" = "编辑密码";
+"edit_passcode.enter_new_passcode" = "输入新密码";
+"edit_passcode.confirm_new_passcode" = "确认";
+
+// Edit Duress Passcode
+
+"edit_duress_passcode.title" = "编辑货币密码";
+"edit_duress_passcode.enter_new_passcode" = "输入新的密码来复位模式";
+"edit_duress_passcode.confirm_new_passcode" = "确认";
+
+// Set Passcode
+
+"set_passcode.invalid_confirmation" = "无效确认";
+"set_passcode.already_used" = "此密码已被使用";
+
+// Unlock
+
+"unlock.title" = "解锁​​​​";
+"unlock.passcode" = "输入密码";
+"unlock.biometry_reason" = "解锁钱包";
+"unlock.attempts_left" = "剩余尝试次数: %@";
+"unlock.disabled_until" = "禁用至: %@";
+"unlock.random" = "随机";
+
 "security_settings.delete_alert_button" = "从手机中删除";
 
 "btc_blockchain_settings.restore_source" = "恢复参数";
@@ -1124,9 +1253,6 @@
 "settings.about_app.description" = "%@ 钱包是为那些寻求投资和以私人和独立方式存储加密货币的人建造的。\n\n它是一个非保管的、对等的钱包，在那里只有用户能够控制资金。 它不收集任何数据，并且通过不将用户的资金锁定到特定的钱包应用程序来保持用户独立。\n\n %@ 钱包完全开源，任何人都可以确认应用程序的工作完全如其所声称的那样正常。";
 "settings.about_app.whats_new" = "新增内容";
 "settings.about_app.website" = "网站";
-"settings.about_app.contact" = "联系我们";
-"settings.about_app.rate_us" = "评价我们";
-"settings.about_app.tell_friends" = "分享给好友";
 
 // Settings -> About App -> Contact
 
@@ -1167,8 +1293,6 @@
 "appearance.balance_value" = "余额值";
 "appearance.balance_value.coin_value" = "币值";
 "appearance.balance_value.fiat_value" = "纤维值";
-
-"appearance.balance_auto_hide" = "自动隐藏余额";
 
 // Settings -> Contacts
 
@@ -1229,25 +1353,6 @@
 
 "contacts.settings.alert_error.title" = "iCloud错误";
 
-// Set PIN
-
-"set_pin.title" = "密码";
-"set_pin.info" = "您的密码将用于解锁钱包和发送资金";
-"set_pin.wrong_confirmation" = "密码不匹配。请重试。";
-
-// Edit PIN
-
-"edit_pin.title" = "编辑密码";
-"edit_pin.unlock_info" = "当前密码";
-"edit_pin.new_pin_info" = "新密码";
-
-// Unlock PIN
-
-"unlock_pin.info" = "密码";
-"unlock_pin.cant_save_pin" = "哎哟！我们无法保存您的密码，请尽快与我们联系，谢谢。";
-"unlock_pin.blocked_until" = "禁用至: %@";
-
-
 // Key Types
 
 "chart.time_duration.day" = "24小时";
@@ -1274,7 +1379,6 @@
 "chart.performance.week_changes" = "变更（1周）";
 "chart.performance.month_changes" = "变更（1月）";
 
-"chart.about.header" = "关于";
 "chart.about.read_more" = "查看更多";
 "chart.about.read_less" = "关闭";
 
@@ -1355,8 +1459,6 @@
 "wallet_connect.error.invalid_url" = "无效的URL地址";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "激活钱包";
-"wallet_connect.address" = "地址";
-"wallet_connect.network" = "網絡";
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "網絡";
 "wallet_connect.list.pending_requests" = "待处理请求";

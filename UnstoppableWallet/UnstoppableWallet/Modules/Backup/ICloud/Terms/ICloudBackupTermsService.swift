@@ -6,11 +6,11 @@ class ICloudBackupTermsService {
     let account: Account
     let termCount = 1
 
-    private let cloudAccountBackupManager: CloudAccountBackupManager
+    private let cloudAccountBackupManager: CloudBackupManager
 
     @PostPublished private(set) var state: State = .selectedTerms(Set())
 
-    init(cloudAccountBackupManager: CloudAccountBackupManager, account: Account) {
+    init(cloudAccountBackupManager: CloudBackupManager, account: Account) {
         self.account = account
         self.cloudAccountBackupManager = cloudAccountBackupManager
     }

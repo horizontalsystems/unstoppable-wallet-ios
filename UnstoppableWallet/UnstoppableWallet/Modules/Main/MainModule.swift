@@ -15,13 +15,14 @@ struct MainModule {
             accountManager: App.shared.accountManager,
             walletManager: App.shared.walletManager,
             appManager: App.shared.appManager,
-            pinKit: App.shared.pinKit,
+            passcodeManager: App.shared.passcodeManager,
+            lockManager: App.shared.lockManager,
             presetTab: presetTab
         )
         let badgeService = MainBadgeService(
             backupManager: App.shared.backupManager,
             accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
-            pinKit: App.shared.pinKit,
+            passcodeManager: App.shared.passcodeManager,
             termsManager: App.shared.termsManager,
             walletConnectSessionManager: App.shared.walletConnectSessionManager,
             contactBookManager: App.shared.contactManager
@@ -50,7 +51,7 @@ struct MainModule {
         let deepLinkHandler = WalletConnectAppShowModule.handler(parentViewController: viewController)
         eventHandler.append(handler: deepLinkHandler)
 
-        App.shared.pinKitDelegate.viewController = viewController
+        App.shared.lockDelegate.viewController = viewController
 
         return viewController
     }

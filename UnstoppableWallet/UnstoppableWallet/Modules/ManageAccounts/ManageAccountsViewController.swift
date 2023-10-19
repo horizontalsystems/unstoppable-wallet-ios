@@ -1,10 +1,10 @@
-import UIKit
-import ThemeKit
+import ComponentKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import SnapKit
-import RxSwift
-import RxCocoa
-import ComponentKit
+import ThemeKit
+import UIKit
 
 class ManageAccountsViewController: ThemeViewController {
     private let viewModel: ManageAccountsViewModel
@@ -30,7 +30,8 @@ class ManageAccountsViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -55,26 +56,26 @@ class ManageAccountsViewController: ThemeViewController {
 
         createCell.set(backgroundStyle: .lawrence, isFirst: true)
         CellBuilderNew.buildStatic(cell: createCell, rootElement: .hStack([
-            .image24 { (component: ImageComponent) -> () in
+            .image24 { (component: ImageComponent) in
                 component.imageView.image = UIImage(named: "plus_24")?.withTintColor(.themeJacob)
             },
-            .text { (component: TextComponent) -> () in
+            .text { (component: TextComponent) in
                 component.font = .body
                 component.textColor = .themeJacob
                 component.text = "onboarding.balance.create".localized
-            }
+            },
         ]))
 
         restoreCell.set(backgroundStyle: .lawrence)
         CellBuilderNew.buildStatic(cell: restoreCell, rootElement: .hStack([
-            .image24 { (component: ImageComponent) -> () in
+            .image24 { (component: ImageComponent) in
                 component.imageView.image = UIImage(named: "download_24")?.withTintColor(.themeJacob)
             },
-            .text { (component: TextComponent) -> () in
+            .text { (component: TextComponent) in
                 component.font = .body
                 component.textColor = .themeJacob
                 component.text = "onboarding.balance.import".localized
-            }
+            },
         ]))
 
         watchCell.set(backgroundStyle: .lawrence, isLast: true)
@@ -111,7 +112,7 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapRestore() {
-        let viewController = RestoreTypeModule.viewController(sourceViewController: self, returnViewController: createAccountListener)
+        let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self, returnViewController: createAccountListener)
         present(viewController, animated: true)
     }
 
@@ -140,134 +141,127 @@ class ManageAccountsViewController: ThemeViewController {
 
         tableView.reload(animated: true)
     }
-
 }
 
 extension ManageAccountsViewController {
-
     func handleDismiss() {
         if viewModel.shouldClose {
             dismiss(animated: true)
         }
     }
-
 }
 
 extension ManageAccountsViewController: ICreateAccountListener {
-
     func handleCreateAccount() {
         dismiss(animated: true) { [weak self] in
             guard let account = self?.viewModel.lastCreatedAccount else {
                 return
             }
 
-            let viewController = BottomSheetModule.backupPrompt(account: account, sourceViewController: self)
+            let viewController = BottomSheetModule.backupPromptAfterCreate(account: account, sourceViewController: self)
             self?.present(viewController, animated: true)
         }
     }
-
 }
 
 extension ManageAccountsViewController: SectionsDataSource {
-
-    private func row(viewItem: ManageAccountsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func row(viewItem: ManageAccountsViewModel.ViewItem, index _: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image24 { component in
-                        component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
-                    },
-                    .vStackCentered([
-                        .text { component in
-                            component.font = .body
-                            component.textColor = .themeLeah
-                            component.text = viewItem.title
-                        },
-                        .margin(1),
-                        .text { component in
-                            component.font = .subhead2
-                            component.textColor = viewItem.isSubtitleWarning ? .themeLucian : .themeGray
-                            component.text = viewItem.subtitle
-                        }
-                    ]),
-                    .image20 { component in
-                        component.isHidden = !viewItem.watchAccount
-                        component.imageView.image = UIImage(named: "binocule_20")?.withTintColor(.themeGray)
-                    },
-                    .secondaryCircleButton { [weak self] component in
-                        component.button.set(
-                                image: viewItem.alert ? UIImage(named: "warning_2_20") : UIImage(named: "more_2_20"),
-                                style: viewItem.alert ? .red : .default
-                        )
-                        component.onTap = {
-                            self?.onTapEdit(accountId: viewItem.accountId)
-                        }
-                    }
-                ]),
-                tableView: tableView,
-                id: viewItem.accountId,
-                hash: "\(viewItem.title)-\(viewItem.subtitle)-\(viewItem.selected)-\(viewItem.alert)-\(viewItem.watchAccount)-\(isFirst)-\(isLast)",
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            rootElement: .hStack([
+                .image24 { component in
+                    component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
                 },
-                action: { [weak self] in
-                    self?.viewModel.onSelect(accountId: viewItem.accountId)
-                }
+                .vStackCentered([
+                    .text { component in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = viewItem.title
+                    },
+                    .margin(1),
+                    .text { component in
+                        component.font = .subhead2
+                        component.textColor = viewItem.isSubtitleWarning ? .themeLucian : .themeGray
+                        component.text = viewItem.subtitle
+                    },
+                ]),
+                .image20 { component in
+                    component.isHidden = !viewItem.watchAccount
+                    component.imageView.image = UIImage(named: "binocule_20")?.withTintColor(.themeGray)
+                },
+                .secondaryCircleButton { [weak self] component in
+                    component.button.set(
+                        image: viewItem.alert ? UIImage(named: "warning_2_20") : UIImage(named: "more_2_20"),
+                        style: viewItem.alert ? .red : .default
+                    )
+                    component.onTap = {
+                        self?.onTapEdit(accountId: viewItem.accountId)
+                    }
+                },
+            ]),
+            tableView: tableView,
+            id: viewItem.accountId,
+            hash: "\(viewItem.title)-\(viewItem.subtitle)-\(viewItem.selected)-\(viewItem.alert)-\(viewItem.watchAccount)-\(isFirst)-\(isLast)",
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            },
+            action: { [weak self] in
+                self?.viewModel.onSelect(accountId: viewItem.accountId)
+            }
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "regular-view-items",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: viewState.regularViewItems.isEmpty ? 0 : .margin32),
-                    rows: viewState.regularViewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewState.regularViewItems.count - 1)
-                    }
+                id: "regular-view-items",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: viewState.regularViewItems.isEmpty ? 0 : .margin32),
+                rows: viewState.regularViewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewState.regularViewItems.count - 1)
+                }
             ),
             Section(
-                    id: "watch-view-items",
-                    footerState: .margin(height: viewState.watchViewItems.isEmpty ? 0 : .margin32),
-                    rows: viewState.watchViewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewState.watchViewItems.count - 1)
-                    }
+                id: "watch-view-items",
+                footerState: .margin(height: viewState.watchViewItems.isEmpty ? 0 : .margin32),
+                rows: viewState.watchViewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewState.watchViewItems.count - 1)
+                }
             ),
             Section(
-                    id: "actions",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: createCell,
-                                id: "create",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onTapCreate()
-                                }
-                        ),
-                        StaticRow(
-                                cell: restoreCell,
-                                id: "restore",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onTapRestore()
-                                }
-                        ),
-                        StaticRow(
-                                cell: watchCell,
-                                id: "watch",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onTapWatch()
-                                }
-                        )
-                    ]
-            )
+                id: "actions",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: createCell,
+                        id: "create",
+                        height: .heightCell48,
+                        autoDeselect: true,
+                        action: { [weak self] in
+                            self?.onTapCreate()
+                        }
+                    ),
+                    StaticRow(
+                        cell: restoreCell,
+                        id: "restore",
+                        height: .heightCell48,
+                        autoDeselect: true,
+                        action: { [weak self] in
+                            self?.onTapRestore()
+                        }
+                    ),
+                    StaticRow(
+                        cell: watchCell,
+                        id: "watch",
+                        height: .heightCell48,
+                        autoDeselect: true,
+                        action: { [weak self] in
+                            self?.onTapWatch()
+                        }
+                    ),
+                ]
+            ),
         ]
     }
-
 }

@@ -6,8 +6,9 @@ import MarketKit
 import Chart
 import CurrencyKit
 import HUD
+import Combine
 
-class CoinChartViewModel {
+class CoinChartViewModel: ObservableObject {
     private let service: CoinChartService
     private let factory: CoinChartFactory
     private let disposeBag = DisposeBag()
@@ -24,6 +25,8 @@ class CoinChartViewModel {
     private let indicatorsShownRelay = BehaviorRelay<Bool>(value: true)
     private let openSettingsRelay = PublishRelay<()>()
 
+    @Published private(set) var indicatorsShown: Bool
+
     var intervals: [String] {
         service.validIntervals.map { $0.title } + ["chart.time_duration.all".localized]
     }
@@ -31,6 +34,8 @@ class CoinChartViewModel {
     init(service: CoinChartService, factory: CoinChartFactory) {
         self.service = service
         self.factory = factory
+
+        indicatorsShown = service.indicatorsShown
 
         subscribe(scheduler, disposeBag, service.intervalsUpdatedObservable) { [weak self] in self?.syncIntervalsUpdate() }
         subscribe(scheduler, disposeBag, service.periodTypeObservable) { [weak self] in self?.sync(periodType: $0) }
@@ -48,6 +53,7 @@ class CoinChartViewModel {
 
     private func updateIndicatorsShown() {
         indicatorsShownRelay.accept(service.indicatorsShown)
+        indicatorsShown = service.indicatorsShown
     }
 
     private func index(periodType: HsPeriodType) -> Int {

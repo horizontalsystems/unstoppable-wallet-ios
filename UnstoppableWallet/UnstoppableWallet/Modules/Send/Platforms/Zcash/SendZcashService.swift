@@ -59,7 +59,7 @@ class SendZcashService {
 
     private func syncState() {
         let address = addressService.state.address?.raw
-        let addressType = address.map { try? adapter.validate(address: $0) }
+        let addressType = address.map { try? adapter.validate(address: $0, checkSendToSelf: true) }
         isMemoAvailable = addressType.map { $0 == .shielded } ?? false
 
         guard amountCautionService.amountCaution == nil,

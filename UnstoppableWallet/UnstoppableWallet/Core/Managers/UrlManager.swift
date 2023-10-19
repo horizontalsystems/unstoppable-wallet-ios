@@ -1,5 +1,6 @@
-import UIKit
 import SafariServices
+import SwiftUI
+import UIKit
 
 class UrlManager {
     private let inApp: Bool
@@ -51,5 +52,16 @@ class UrlManager {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
+}
 
+struct SFSafariView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let url: URL
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration())
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

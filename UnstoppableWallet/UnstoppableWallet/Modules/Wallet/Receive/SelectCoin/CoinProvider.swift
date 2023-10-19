@@ -60,8 +60,6 @@ extension CoinProvider {
         } catch {
             return []
         }
-
-        return predefined
     }
 
 }

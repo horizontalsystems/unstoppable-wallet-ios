@@ -4,7 +4,7 @@ import Combine
 
 class ManageAccountsService {
     private let accountManager: AccountManager
-    private let cloudBackupManager: CloudAccountBackupManager
+    private let cloudBackupManager: CloudBackupManager
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
@@ -15,14 +15,14 @@ class ManageAccountsService {
         }
     }
 
-    init(accountManager: AccountManager, cloudBackupManager: CloudAccountBackupManager) {
+    init(accountManager: AccountManager, cloudBackupManager: CloudBackupManager) {
         self.accountManager = accountManager
         self.cloudBackupManager = cloudBackupManager
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] _ in self?.syncItems() }
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.syncItems() }
 
-        cloudBackupManager.$items
+        cloudBackupManager.$oneWalletItems
                 .sink { [weak self] _ in
                     self?.syncItems()
                 }

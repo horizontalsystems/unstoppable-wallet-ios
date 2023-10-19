@@ -37,7 +37,7 @@ class WalletService {
     private let balancePrimaryValueManager: BalancePrimaryValueManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let balanceConversionManager: BalanceConversionManager
-    private let cloudAccountBackupManager: CloudAccountBackupManager
+    private let cloudAccountBackupManager: CloudBackupManager
     private let rateAppManager: RateAppManager
     private let feeCoinProvider: FeeCoinProvider
     private let localStorage: StorageKit.ILocalStorage
@@ -85,7 +85,7 @@ class WalletService {
     init(elementServiceFactory: WalletElementServiceFactory, coinPriceService: WalletCoinPriceService, accountManager: AccountManager,
          cacheManager: EnabledWalletCacheManager, accountRestoreWarningManager: AccountRestoreWarningManager, reachabilityManager: IReachabilityManager,
          balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager,
-         cloudAccountBackupManager: CloudAccountBackupManager, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider,
+         cloudAccountBackupManager: CloudBackupManager, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider,
          localStorage: StorageKit.ILocalStorage
     ) {
         self.elementServiceFactory = elementServiceFactory
@@ -285,7 +285,7 @@ class WalletService {
     }
 
     private var fallbackBalanceData: BalanceData {
-        BalanceData(balance: 0)
+        BalanceData(available: 0)
     }
 
     private var fallbackAdapterState: AdapterState {

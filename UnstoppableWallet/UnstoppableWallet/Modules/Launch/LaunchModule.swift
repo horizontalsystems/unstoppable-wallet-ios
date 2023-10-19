@@ -1,29 +1,26 @@
-import UIKit
 import StorageKit
+import UIKit
 
 class LaunchModule {
-
     static func viewController() -> UIViewController {
         let service = LaunchService(
-                accountManager: App.shared.accountManager,
-                pinKit: App.shared.pinKit,
-                keychainKit: App.shared.keychainKit,
-                localStorage: App.shared.localStorage
+            accountManager: App.shared.accountManager,
+            passcodeManager: App.shared.passcodeManager,
+            keychainKit: App.shared.keychainKit,
+            localStorage: App.shared.localStorage
         )
 
         switch service.launchMode {
         case .passcodeNotSet: return NoPasscodeViewController(mode: .noPasscode)
         case .cannotCheckPasscode: return NoPasscodeViewController(mode: .cannotCheckPasscode)
         case .intro: return WelcomeScreenViewController()
-        case .unlock: return LockScreenModule.viewController(pinKit: App.shared.pinKit, appStart: true)
+        case .unlock: return UnlockModule.appUnlockView(appStart: true).toViewController()
         case .main: return MainModule.instance()
         }
     }
-
 }
 
 extension LaunchModule {
-
     enum LaunchMode {
         case passcodeNotSet
         case cannotCheckPasscode
@@ -31,5 +28,4 @@ extension LaunchModule {
         case unlock
         case main
     }
-
 }

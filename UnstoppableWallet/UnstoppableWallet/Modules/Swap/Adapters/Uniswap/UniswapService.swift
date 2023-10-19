@@ -173,7 +173,7 @@ class UniswapService {
     }
 
     private func balance(token: MarketKit.Token) -> Decimal? {
-        (adapterManager.adapter(for: token) as? IBalanceAdapter)?.balanceData.balance
+        (adapterManager.adapter(for: token) as? IBalanceAdapter)?.balanceData.available
     }
 
 }

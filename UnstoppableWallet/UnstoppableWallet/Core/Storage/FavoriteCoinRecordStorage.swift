@@ -24,10 +24,17 @@ extension FavoriteCoinRecordStorage {
     }
 
     func save(favoriteCoinRecords: [FavoriteCoinRecord]) {
-        _ = try! dbPool.write { db in
+        _ = try? dbPool.write { db in
             for record in favoriteCoinRecords {
                 try record.insert(db)
             }
+        }
+    }
+
+    func deleteAll() {
+        _ = try! dbPool.write { db in
+            try FavoriteCoinRecord
+                    .deleteAll(db)
         }
     }
 

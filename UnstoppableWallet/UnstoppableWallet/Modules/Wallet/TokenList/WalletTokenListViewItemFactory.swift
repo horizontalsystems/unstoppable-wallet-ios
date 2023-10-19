@@ -9,6 +9,7 @@ class WalletTokenListViewItemFactory {
 
     private func topViewItem(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue) -> BalanceTopViewItem {
         let state = item.state
+        let sendEnabled = state.spendAllowed(beforeSync: item.balanceData.sendBeforeSync)
 
         return BalanceTopViewItem(
                 isMainNet: item.isMainNet,
@@ -19,6 +20,7 @@ class WalletTokenListViewItemFactory {
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),
+                sendEnabled: sendEnabled,
                 primaryValue: primaryValue(item: item, balancePrimaryValue: balancePrimaryValue),
                 secondaryInfo: secondaryInfo(item: item, balancePrimaryValue: balancePrimaryValue)
         )
@@ -29,6 +31,12 @@ class WalletTokenListViewItemFactory {
             return .syncing(progress: progress, syncedUntil: lastBlockDate.map { DateHelper.instance.formatSyncedThroughDate(from: $0) })
         } else if case let .customSyncing(main, secondary, _) = item.state {
             return .customSyncing(main: main, secondary: secondary)
+        } else if case .stopped = item.state {
+            return .amount(viewItem: BalanceSecondaryAmountViewItem(
+                    descriptionValue: (text: "balance.stopped".localized, dimmed: false),
+                    secondaryValue: nil,
+                    diff: nil
+            ))
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
                     descriptionValue: (text: item.element.coin?.name, dimmed: false),

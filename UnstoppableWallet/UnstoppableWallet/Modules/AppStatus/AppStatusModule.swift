@@ -1,14 +1,19 @@
-protocol IAppStatusView: AnyObject {
-    func set(logs: [(String, Any)])
-}
+import SwiftUI
 
-protocol IAppStatusViewDelegate {
-    func viewDidLoad()
-    func onCopy(text: String)
-}
+struct AppStatusModule {
+    static func view() -> some View {
+        let viewModel = AppStatusViewModel(
+            systemInfoManager: App.shared.systemInfoManager,
+            appVersionStorage: App.shared.appVersionStorage,
+            accountManager: App.shared.accountManager,
+            walletManager: App.shared.walletManager,
+            adapterManager: App.shared.adapterManager,
+            logRecordManager: App.shared.logRecordManager,
+            evmBlockchainManager: App.shared.evmBlockchainManager,
+            binanceKitManager: App.shared.binanceKitManager,
+            marketKit: App.shared.marketKit
+        )
 
-protocol IAppStatusInteractor {
-    var status: [(String, Any)] { get }
-
-    func copyToClipboard(string: String)
+        return AppStatusView(viewModel: viewModel)
+    }
 }

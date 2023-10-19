@@ -1,6 +1,6 @@
 import Foundation
-import StorageKit
 import MarketKit
+import StorageKit
 
 class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"
@@ -25,11 +25,9 @@ class LocalStorage {
     init(storage: StorageKit.ILocalStorage) {
         self.storage = storage
     }
-
 }
 
 extension LocalStorage {
-
     var debugLog: String? {
         get { storage.value(for: debugLogKey) }
         set { storage.set(value: newValue, for: debugLogKey) }
@@ -100,5 +98,18 @@ extension LocalStorage {
         get { storage.value(for: keyTelegramSupportRequested) ?? false }
         set { storage.set(value: newValue, for: keyTelegramSupportRequested) }
     }
+}
 
+extension LocalStorage {
+    func restore(backup: SettingsBackup) {
+        lockTimeEnabled = backup.lockTimeEnabled
+        remoteContactsSync = backup.remoteContactsSync ?? false
+        indicatorsShown = backup.indicatorsShown
+        backup.swapProviders.forEach { provider in
+            let blockchainType = BlockchainType(uid: provider.blockchainTypeId)
+            if let dexProvider = SwapModule.Dex.Provider(rawValue: provider.provider) {
+                return setDefaultProvider(blockchainType: blockchainType, provider: dexProvider)
+            }
+        }
+    }
 }

@@ -47,22 +47,22 @@ class TransactionsTableViewDataSource: NSObject {
             self.allLoaded = allLoaded
         }
 
-        guard loaded else {
+        guard let tableView, loaded else {
             return
         }
 
         if let updateInfo = viewData.updateInfo {
 //            print("Update Item: \(updateInfo.sectionIndex)-\(updateInfo.index)")
             let indexPath = IndexPath(row: updateInfo.index, section: updateInfo.sectionIndex)
+            let originalIndexPath = delegate?
+                .originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
 
-            if let tableView,
-               let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath),
-               let cell = tableView.cellForRow(at: originalIndexPath) as? BaseThemeCell {
+            if let cell = tableView.cellForRow(at: originalIndexPath) as? BaseThemeCell {
                 cell.bind(rootElement: rootElement(viewItem: sectionViewItems[updateInfo.sectionIndex].viewItems[updateInfo.index]))
             }
         } else {
 //            print("RELOAD TABLE VIEW")
-            tableView?.reloadData()
+            tableView.reloadData()
         }
     }
 

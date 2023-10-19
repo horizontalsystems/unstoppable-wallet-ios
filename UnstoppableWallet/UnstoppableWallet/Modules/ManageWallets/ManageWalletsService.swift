@@ -243,7 +243,7 @@ extension ManageWalletsService {
         for restoreSettingType in blockchainType.restoreSettingTypes {
             switch restoreSettingType {
             case .birthdayHeight:
-                let settings = restoreSettingsService.settings(account: account, blockchainType: blockchainType)
+                let settings = restoreSettingsService.settings(accountId: account.id, blockchainType: blockchainType)
                 if let birthdayHeight = settings.birthdayHeight {
                     return InfoItem(token: token, type: .birthdayHeight(height: birthdayHeight))
                 }

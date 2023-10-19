@@ -82,6 +82,11 @@ class WalletViewModel {
             case .invalidApiKey: state = .invalidApiKey
             }
         }
+
+        switch service.state {
+        case let .loaded(items): qrScanVisible = !service.watchAccount && !items.isEmpty
+        default: qrScanVisible = false
+        }
     }
 
     private func sync(activeAccount: Account?) {

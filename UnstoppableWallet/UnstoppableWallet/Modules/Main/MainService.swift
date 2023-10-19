@@ -1,8 +1,7 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 import StorageKit
-import PinKit
 
 class MainService {
     private let keyTabIndex = "main-tab-index"
@@ -11,7 +10,8 @@ class MainService {
     private let storage: StorageKit.ILocalStorage
     private let launchScreenManager: LaunchScreenManager
     private let accountManager: AccountManager
-    private let pinKit: PinKit.Kit
+    private let passcodeManager: PasscodeManager
+    private let lockManager: LockManager
     private let presetTab: MainModule.Tab?
     private let disposeBag = DisposeBag()
 
@@ -33,17 +33,18 @@ class MainService {
         }
     }
 
-    private let handleAlertsRelay = PublishRelay<()>()
+    private let handleAlertsRelay = PublishRelay<Void>()
     private let showMarketRelay = PublishRelay<Bool>()
 
     private var isColdStart: Bool = true
 
-    init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, appManager: IAppManager, pinKit: PinKit.Kit, presetTab: MainModule.Tab?) {
+    init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, appManager: IAppManager, passcodeManager: PasscodeManager, lockManager: LockManager, presetTab: MainModule.Tab?) {
         self.localStorage = localStorage
         self.storage = storage
         self.launchScreenManager = launchScreenManager
         self.accountManager = accountManager
-        self.pinKit = pinKit
+        self.passcodeManager = passcodeManager
+        self.lockManager = lockManager
         self.presetTab = presetTab
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
@@ -68,20 +69,18 @@ class MainService {
     }
 
     private func didBecomeActive() {
-        if !pinKit.isPinSet, isColdStart {  // If pin not set, in first time we don't need to handleAlerts. (ViewController handle it from didAppear)
+        if !passcodeManager.isPasscodeSet, isColdStart { // If passcode not set, in first time we don't need to handleAlerts. (ViewController handle it from didAppear)
             isColdStart = false
             return
         }
 
-        if !pinKit.isLocked {   // If pin locked, after input it ViewController will handle alerts form didAppear
+        if !lockManager.isLocked { // If passcode locked, after input it ViewController will handle alerts form didAppear
             handleAlertsRelay.accept(())
         }
     }
-
 }
 
 extension MainService {
-
     var hasAccountsObservable: Observable<Bool> {
         hasAccountsRelay.asObservable()
     }
@@ -94,7 +93,7 @@ extension MainService {
         launchScreenManager.showMarket
     }
 
-    var handleAlertsObservable: Observable<()> {
+    var handleAlertsObservable: Observable<Void> {
         handleAlertsRelay.asObservable()
     }
 
@@ -137,5 +136,4 @@ extension MainService {
     var activeAccount: Account? {
         accountManager.activeAccount
     }
-
 }

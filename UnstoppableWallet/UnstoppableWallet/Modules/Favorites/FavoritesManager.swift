@@ -32,6 +32,10 @@ extension FavoritesManager {
         coinUidsUpdatedRelay.accept(())
     }
 
+    func removeAll() {
+        storage.deleteAll()
+    }
+
     func remove(coinUid: String) {
         storage.deleteFavoriteCoinRecord(coinUid: coinUid)
         coinUidsUpdatedRelay.accept(())

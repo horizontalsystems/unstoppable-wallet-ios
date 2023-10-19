@@ -7,13 +7,11 @@ class RestoreSettingsManager {
     init(storage: RestoreSettingsStorage) {
         self.storage = storage
     }
-
 }
 
 extension RestoreSettingsManager {
-
-    func settings(account: Account, blockchainType: BlockchainType) -> RestoreSettings {
-        let records = storage.restoreSettings(accountId: account.id, blockchainUid: blockchainType.uid)
+    func settings(accountId: String, blockchainType: BlockchainType) -> RestoreSettings {
+        let records = storage.restoreSettings(accountId: accountId, blockchainUid: blockchainType.uid)
 
         var settings = RestoreSettings()
 
@@ -46,11 +44,11 @@ extension RestoreSettingsManager {
 
         storage.save(restoreSettingRecords: records)
     }
-
 }
 
 enum RestoreSettingType: String {
-    case birthdayHeight
+    case birthdayHeight = "birthday_height"
+
     func createdAccountValue(blockchainType: BlockchainType) -> String? {
         switch self {
         case .birthdayHeight:
@@ -71,9 +69,7 @@ enum RestoreSettingType: String {
 typealias RestoreSettings = [RestoreSettingType: String]
 
 extension RestoreSettings {
-
     var birthdayHeight: Int? {
         self[.birthdayHeight].flatMap { Int($0) }
     }
-
 }

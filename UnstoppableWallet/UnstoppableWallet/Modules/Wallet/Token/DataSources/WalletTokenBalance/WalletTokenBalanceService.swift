@@ -9,7 +9,7 @@ class WalletTokenBalanceService {
 
     private let coinPriceService: WalletCoinPriceService
     private let elementService: IWalletElementService
-    private let cloudAccountBackupManager: CloudAccountBackupManager
+    private let cloudAccountBackupManager: CloudBackupManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let reachabilityManager: IReachabilityManager
 
@@ -23,7 +23,7 @@ class WalletTokenBalanceService {
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-token-balance-service", qos: .userInitiated)
 
     init(coinPriceService: WalletCoinPriceService, elementService: IWalletElementService,
-         appManager: IAppManager, cloudAccountBackupManager: CloudAccountBackupManager,
+         appManager: IAppManager, cloudAccountBackupManager: CloudBackupManager,
          balanceHiddenManager: BalanceHiddenManager, reachabilityManager: IReachabilityManager,
          account: Account, element: WalletModule.Element) {
         self.coinPriceService = coinPriceService
@@ -78,7 +78,7 @@ class WalletTokenBalanceService {
     }
 
     private var fallbackBalanceData: BalanceData {
-        BalanceData(balance: 0)
+        BalanceData(available: 0)
     }
 
     private var fallbackAdapterState: AdapterState {

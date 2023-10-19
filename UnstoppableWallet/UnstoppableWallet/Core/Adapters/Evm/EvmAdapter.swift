@@ -57,7 +57,7 @@ extension EvmAdapter: IBalanceAdapter {
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
         evmKit.accountStateObservable.map { [weak self] in
-            self?.balanceData(balance: $0.balance) ?? BalanceData(balance: 0)
+            self?.balanceData(balance: $0.balance) ?? BalanceData(available: 0)
         }
     }
 

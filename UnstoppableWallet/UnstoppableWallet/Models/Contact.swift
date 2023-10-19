@@ -1,9 +1,14 @@
 import Foundation
 import ObjectMapper
 
-class ContactAddress: ImmutableMappable, Hashable, Equatable {
+class ContactAddress: Codable, ImmutableMappable, Hashable, Equatable {
     let blockchainUid: String
     let address: String
+
+    enum CodingKeys: String, CodingKey {
+        case blockchainUid = "blockchain_uid"
+        case address
+    }
 
     init(blockchainUid: String, address: String) {
         self.blockchainUid = blockchainUid
@@ -11,13 +16,13 @@ class ContactAddress: ImmutableMappable, Hashable, Equatable {
     }
 
     required init(map: Map) throws {
-        blockchainUid = try map.value("blockchain_uid")
-        address = try map.value("address")
+        blockchainUid = try map.value(CodingKeys.blockchainUid.rawValue)
+        address = try map.value(CodingKeys.address.rawValue)
     }
 
     func mapping(map: Map) {
-        blockchainUid >>> map["blockchain_uid"]
-        address       >>> map["address"]
+        blockchainUid >>> map[CodingKeys.blockchainUid.rawValue]
+        address >>> map[CodingKeys.address.rawValue]
     }
 
     func hash(into hasher: inout Hasher) {
@@ -25,22 +30,19 @@ class ContactAddress: ImmutableMappable, Hashable, Equatable {
         hasher.combine(address.lowercased())
     }
 
-    static func ==(lhs: ContactAddress, rhs: ContactAddress) -> Bool {
+    static func == (lhs: ContactAddress, rhs: ContactAddress) -> Bool {
         lhs.address.lowercased() == rhs.address.lowercased() &&
-        lhs.blockchainUid == rhs.blockchainUid
+            lhs.blockchainUid == rhs.blockchainUid
     }
-
 }
 
 extension Array where Element == ContactAddress {
-
-    static func ==(lhs: [ContactAddress], rhs: [ContactAddress]) -> Bool {
+    static func == (lhs: [ContactAddress], rhs: [ContactAddress]) -> Bool {
         Set(lhs) == Set(rhs)
     }
-
 }
 
-class Contact: ImmutableMappable, Hashable, Equatable {
+class Contact: Codable, ImmutableMappable, Hashable, Equatable {
     let uid: String
     let modifiedAt: TimeInterval
     let name: String
@@ -61,13 +63,13 @@ class Contact: ImmutableMappable, Hashable, Equatable {
     }
 
     func mapping(map: Map) {
-        uid              >>> map["uid"]
-        modifiedAt       >>> map["modified_at"]
-        name             >>> map["name"]
-        addresses        >>> map["addresses"]
+        uid >>> map["uid"]
+        modifiedAt >>> map["modified_at"]
+        name >>> map["name"]
+        addresses >>> map["addresses"]
     }
 
-    static func ==(lhs: Contact, rhs: Contact) -> Bool {
+    static func == (lhs: Contact, rhs: Contact) -> Bool {
         lhs.uid == rhs.uid
     }
 
@@ -76,12 +78,11 @@ class Contact: ImmutableMappable, Hashable, Equatable {
     }
 
     func address(blockchainUid: String) -> ContactAddress? {
-        addresses.first { $0.blockchainUid == blockchainUid  }
+        addresses.first { $0.blockchainUid == blockchainUid }
     }
-
 }
 
-class DeletedContact: ImmutableMappable, Hashable, Equatable {
+class DeletedContact: Codable, ImmutableMappable, Hashable, Equatable {
     let uid: String
     let deletedAt: TimeInterval
 
@@ -96,21 +97,20 @@ class DeletedContact: ImmutableMappable, Hashable, Equatable {
     }
 
     func mapping(map: Map) {
-        uid            >>> map["uid"]
-        deletedAt      >>> map["deleted_at"]
+        uid >>> map["uid"]
+        deletedAt >>> map["deleted_at"]
     }
 
-    static func ==(lhs: DeletedContact, rhs: DeletedContact) -> Bool {
+    static func == (lhs: DeletedContact, rhs: DeletedContact) -> Bool {
         lhs.uid == rhs.uid
     }
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(uid)
     }
-
 }
 
-class ContactBook: ImmutableMappable {
+class ContactBook: Codable, ImmutableMappable {
     static let empty = ContactBook(contacts: [], deletedContacts: [])
     let version: Int
     let contacts: [Contact]
@@ -129,9 +129,8 @@ class ContactBook: ImmutableMappable {
     }
 
     func mapping(map: Map) {
-        version         >>> map["version"]
-        contacts        >>> map["contacts"]
-        deleted         >>> map["deleted"]
+        version >>> map["version"]
+        contacts >>> map["contacts"]
+        deleted >>> map["deleted"]
     }
-
 }

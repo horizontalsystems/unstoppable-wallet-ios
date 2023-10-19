@@ -1,12 +1,12 @@
-import UIKit
-import RxSwift
-import ThemeKit
-import SectionsTableView
-import SnapKit
-import HUD
 import Chart
 import ComponentKit
 import Down
+import HUD
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class CoinOverviewViewController: ThemeViewController {
     private let viewModel: CoinOverviewViewModel
@@ -44,15 +44,15 @@ class CoinOverviewViewController: ThemeViewController {
 
         chartCell = ChartCell(viewModel: chartViewModel, configuration: .coinChart)
         chartRow = StaticRow(
-                cell: chartCell,
-                id: "chartView",
-                height: chartCell.cellHeight
+            cell: chartCell,
+            id: "chartView",
+            height: chartCell.cellHeight
         )
 
         chartConfigurationRow = StaticRow(
-                cell: chartConfigurationCell,
-                id: "chartConfiguration",
-                height: .heightCell48
+            cell: chartConfigurationCell,
+            id: "chartConfiguration",
+            height: .heightCell48
         )
 
         super.init()
@@ -60,7 +60,8 @@ class CoinOverviewViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -161,32 +162,32 @@ class CoinOverviewViewController: ThemeViewController {
 
     private func syncChartConfigurationCell() {
         CellBuilderNew.buildStatic(
-                cell: chartConfigurationCell,
-                rootElement: .hStack([
-                    .textElement(text: .body("coin_overview.indicators".localized)),
-                    .secondaryButton { [weak self] component in
-                        component.isHidden = false
-                        component.button.set(style: .default)
-                        let title = (self?.chartIndicatorShown ?? false) ? "coin_overview.indicators.hide".localized : "coin_overview.indicators.show".localized
-                        component.button.setTitle(title, for: .normal)
-                        component.onTap = {
-                            self?.chartViewModel.onToggleIndicators()
-                        }
-                    },
-                    .margin(8),
-                    .secondaryCircleButton { component in
-                        component.isHidden = false
-                        component.button.set(image: UIImage(named: "setting_20"))
-                        component.button.isEnabled = true
-                        component.onTap = { [weak self] in
-                            self?.chartViewModel.onTapChartSettings()
-                        }
-                    },
-                    .image24 { component in
-                        component.isHidden = true
-                        component.imageView.image = UIImage(named: "lock_24")
+            cell: chartConfigurationCell,
+            rootElement: .hStack([
+                .textElement(text: .body("coin_overview.indicators".localized)),
+                .secondaryButton { [weak self] component in
+                    component.isHidden = false
+                    component.button.set(style: .default)
+                    let title = (self?.chartIndicatorShown ?? false) ? "coin_overview.indicators.hide".localized : "coin_overview.indicators.show".localized
+                    component.button.setTitle(title, for: .normal)
+                    component.onTap = {
+                        self?.chartViewModel.onToggleIndicators()
                     }
-                ])
+                },
+                .margin(8),
+                .secondaryCircleButton { component in
+                    component.isHidden = false
+                    component.button.set(image: UIImage(named: "setting_20"))
+                    component.button.isEnabled = true
+                    component.onTap = { [weak self] in
+                        self?.chartViewModel.onTapChartSettings()
+                    }
+                },
+                .image24 { component in
+                    component.isHidden = true
+                    component.imageView.image = UIImage(named: "lock_24")
+                },
+            ])
         )
     }
 
@@ -200,67 +201,92 @@ class CoinOverviewViewController: ThemeViewController {
     private func openChartSettings() {
         parentNavigationController?.present(chartRouter.viewController(), animated: true)
     }
-
 }
 
 extension CoinOverviewViewController {
-
-    private func linkRow(id: String, image: String, title: String, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
+    private func linkRow(id: String, image: String, title: String, isFirst: Bool, isLast: Bool, action: @escaping () -> Void) -> RowProtocol {
         tableView.universalRow48(
-                id: id,
-                image: .local(UIImage(named: image)?.withTintColor(.themeGray)),
-                title: .body(title),
-                accessoryType: .disclosure,
-                autoDeselect: true,
-                isFirst: isFirst,
-                isLast: isLast,
-                action: action
+            id: id,
+            image: .local(UIImage(named: image)?.withTintColor(.themeGray)),
+            title: .body(title),
+            accessoryType: .disclosure,
+            autoDeselect: true,
+            isFirst: isFirst,
+            isLast: isLast,
+            action: action
         )
     }
 
     private func coinInfoSection(viewItem: CoinOverviewViewModel.CoinViewItem) -> SectionProtocol {
         Section(
-                id: "coin-info",
-                rows: [
-                    tableView.universalRow56(
-                            id: "coin-info",
-                            image: .url(viewItem.imageUrl, placeholder: viewItem.imagePlaceholderName),
-                            title: .body(viewItem.name, color: .themeGray),
-                            value: .subhead1(viewItem.marketCapRank, color: .themeGray),
-                            backgroundStyle: .transparent,
-                            isFirst: true,
-                            isLast: false
-                    )
-                ]
+            id: "coin-info",
+            rows: [
+                tableView.universalRow56(
+                    id: "coin-info",
+                    image: .url(viewItem.imageUrl, placeholder: viewItem.imagePlaceholderName),
+                    title: .body(viewItem.name, color: .themeGray),
+                    value: .subhead1(viewItem.marketCapRank, color: .themeGray),
+                    backgroundStyle: .transparent,
+                    isFirst: true,
+                    isLast: false
+                ),
+            ]
         )
     }
 
     private var chartSection: SectionProtocol {
         Section(
-                id: "chart",
-                rows: [chartRow]
+            id: "chart",
+            rows: [chartRow]
         )
     }
 
-    private func descriptionSection(description: String) -> SectionProtocol {
-        var rows: [RowProtocol] = [
-            tableView.subtitleRow(text: "chart.about.header".localized)
-        ]
+    private func descriptionSection(description: String) -> SectionProtocol? {
+        guard let attributedText = try? markdownParser.attributedString(from: description) else {
+            return nil
+        }
 
-        descriptionTextCell.contentText = try? markdownParser.attributedString(from: description)
-        rows.append(
-                StaticRow(
-                        cell: descriptionTextCell,
-                        id: "about_cell",
-                        dynamicHeight: { [weak self] containerWidth in
-                            self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
-                        }
-                ))
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let layoutMargins = UIEdgeInsets(top: .margin12, left: .margin16, bottom: .margin12, right: .margin16)
+
+        let descriptionWarning = "coin_overview.description_warning".localized
+        let descriptionWarningFont: UIFont = .subhead2
+        let descriptionWarningPadding: CGFloat = .margin24
 
         return Section(
-                id: "description",
-                headerState: .margin(height: .margin12),
-                rows: rows
+            id: "description",
+            headerState: .margin(height: .margin12),
+            rows: [
+                tableView.subtitleRow(text: "coin_overview.overview".localized),
+                CellBuilderNew.row(
+                    rootElement: .vStack([
+                        .text { component in
+                            component.attributedText = attributedText
+                            component.numberOfLines = 0
+                        },
+                        .margin(descriptionWarningPadding),
+                        .text { component in
+                            component.font = descriptionWarningFont
+                            component.textColor = .themeJacob
+                            component.numberOfLines = 0
+                            component.text = descriptionWarning
+                        },
+                    ]),
+                    layoutMargins: layoutMargins,
+                    tableView: tableView,
+                    id: "description",
+                    dynamicHeight: { containerWidth in
+                        let textWidth = containerWidth - BaseThemeCell.margin(backgroundStyle: backgroundStyle).width - layoutMargins.width
+                        return attributedText.height(containerWidth: textWidth)
+                            + descriptionWarningPadding
+                            + descriptionWarning.height(forContainerWidth: textWidth, font: descriptionWarningFont)
+                            + layoutMargins.height
+                    },
+                    bind: { cell in
+                        cell.set(backgroundStyle: backgroundStyle, isFirst: true, isLast: true)
+                    }
+                ),
+            ]
         )
     }
 
@@ -271,35 +297,35 @@ extension CoinOverviewViewController {
             let isLast = links.isEmpty
 
             let guideRow = linkRow(
-                    id: "guide",
-                    image: "academy_1_24",
-                    title: "coin_overview.guide".localized,
-                    isFirst: true,
-                    isLast: isLast,
-                    action: { [weak self] in
-                        let module = MarkdownModule.viewController(url: guideUrl)
-                        self?.parentNavigationController?.pushViewController(module, animated: true)
-                    }
+                id: "guide",
+                image: "academy_1_24",
+                title: "coin_overview.guide".localized,
+                isFirst: true,
+                isLast: isLast,
+                action: { [weak self] in
+                    let module = MarkdownModule.viewController(url: guideUrl)
+                    self?.parentNavigationController?.pushViewController(module, animated: true)
+                }
             )
 
             guideRows.append(guideRow)
         }
 
         return Section(
-                id: "links",
-                headerState: .margin(height: .margin12),
-                rows: [tableView.subtitleRow(text: "coin_overview.links".localized)] + guideRows + links.enumerated().map { index, link in
-                    linkRow(
-                            id: link.title,
-                            image: link.iconName,
-                            title: link.title,
-                            isFirst: guideRows.isEmpty && index == 0,
-                            isLast: index == links.count - 1,
-                            action: { [weak self] in
-                                self?.openLink(url: link.url)
-                            }
-                    )
-                }
+            id: "links",
+            headerState: .margin(height: .margin12),
+            rows: [tableView.subtitleRow(text: "coin_overview.links".localized)] + guideRows + links.enumerated().map { index, link in
+                linkRow(
+                    id: link.title,
+                    image: link.iconName,
+                    title: link.title,
+                    isFirst: guideRows.isEmpty && index == 0,
+                    isLast: index == links.count - 1,
+                    action: { [weak self] in
+                        self?.openLink(url: link.url)
+                    }
+                )
+            }
         )
     }
 
@@ -318,63 +344,42 @@ extension CoinOverviewViewController {
 
     private func poweredBySection(text: String) -> SectionProtocol {
         Section(
-                id: "powered-by",
-                headerState: .margin(height: .margin32),
-                rows: [
-                    Row<BrandFooterCell>(
-                            id: "powered-by",
-                            dynamicHeight: { containerWidth in
-                                BrandFooterCell.height(containerWidth: containerWidth, title: text)
-                            },
-                            bind: { cell, _ in
-                                cell.title = text
-                            }
-                    )
-                ]
+            id: "powered-by",
+            headerState: .margin(height: .margin32),
+            rows: [
+                Row<BrandFooterCell>(
+                    id: "powered-by",
+                    dynamicHeight: { containerWidth in
+                        BrandFooterCell.height(containerWidth: containerWidth, title: text)
+                    },
+                    bind: { cell, _ in
+                        cell.title = text
+                    }
+                ),
+            ]
         )
     }
 
     private func performanceSection(viewItems: [[CoinOverviewViewModel.PerformanceViewItem]]) -> SectionProtocol {
         Section(
-                id: "return_of_investments_section",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    Row<PerformanceTableViewCell>(
-                            id: "return_of_investments_cell",
-                            dynamicHeight: { _ in
-                                PerformanceTableViewCell.height(viewItems: viewItems)
-                            },
-                            bind: { cell, _ in
-                                cell.bind(viewItems: viewItems)
-                            }
-                    )
-                ]
-        )
-    }
-
-    private func categoriesSection(categories: [String]) -> SectionProtocol {
-        let text = categories.joined(separator: ", ")
-
-        return Section(
-                id: "categories",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    tableView.subtitleRow(text: "coin_overview.category".localized),
-                    Row<TextCell>(
-                            id: "categories",
-                            dynamicHeight: { width in
-                                TextCell.height(containerWidth: width, text: text)
-                            },
-                            bind: { cell, _ in
-                                cell.contentText = text
-                            }
-                    )
-                ]
+            id: "return_of_investments_section",
+            headerState: .margin(height: .margin12),
+            rows: [
+                Row<PerformanceTableViewCell>(
+                    id: "return_of_investments_cell",
+                    dynamicHeight: { _ in
+                        PerformanceTableViewCell.height(viewItems: viewItems)
+                    },
+                    bind: { cell, _ in
+                        cell.bind(viewItems: viewItems)
+                    }
+                ),
+            ]
         )
     }
 
     private func typeRow(viewItem: CoinOverviewViewModel.TypeViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        var action: (() -> ())?
+        var action: (() -> Void)?
 
         if let reference = viewItem.reference {
             action = {
@@ -383,116 +388,116 @@ extension CoinOverviewViewController {
         }
 
         return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .imageElement(image: .url(viewItem.iconUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
-                    .vStackCentered([
-                        .textElement(text: .body(viewItem.title)),
-                        .margin(1),
-                        .textElement(text: .subhead2(viewItem.subtitle), parameters: .truncatingMiddle)
-                    ]),
-                    .secondaryCircleButton { [weak self] component in
-                        component.isHidden = !viewItem.showAdd
-                        component.button.set(image: UIImage(named: "add_to_wallet_2_20"))
-                        component.onTap = {
-                            self?.viewModel.onTapAddToWallet(index: index)
-                        }
-                    },
-                    .secondaryCircleButton { [weak self] component in
-                        component.isHidden = !viewItem.showAdded
-                        component.button.set(image: UIImage(named: "filled_wallet_20"))
-                        component.button.isSelected = true
-                        component.onTap = {
-                            self?.viewModel.onTapAddedToWallet(index: index)
-                        }
-                    },
-                    .secondaryCircleButton { [weak self] component in
-                        if let explorerUrl = viewItem.explorerUrl {
-                            component.isHidden = false
-                            component.button.set(image: UIImage(named: "globe_20"))
-                            component.onTap = {
-                                self?.urlManager.open(url: explorerUrl, from: self?.parentNavigationController)
-                            }
-                        } else {
-                            component.isHidden = true
-                        }
-                    }
+            rootElement: .hStack([
+                .imageElement(image: .url(viewItem.iconUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
+                .vStackCentered([
+                    .textElement(text: .body(viewItem.title)),
+                    .margin(1),
+                    .textElement(text: .subhead2(viewItem.subtitle), parameters: .truncatingMiddle),
                 ]),
-                tableView: tableView,
-                id: "type-\(index)",
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                .secondaryCircleButton { [weak self] component in
+                    component.isHidden = !viewItem.showAdd
+                    component.button.set(image: UIImage(named: "add_to_wallet_2_20"))
+                    component.onTap = {
+                        self?.viewModel.onTapAddToWallet(index: index)
+                    }
                 },
-                action: action
+                .secondaryCircleButton { [weak self] component in
+                    component.isHidden = !viewItem.showAdded
+                    component.button.set(image: UIImage(named: "filled_wallet_20"))
+                    component.button.isSelected = true
+                    component.onTap = {
+                        self?.viewModel.onTapAddedToWallet(index: index)
+                    }
+                },
+                .secondaryCircleButton { [weak self] component in
+                    if let explorerUrl = viewItem.explorerUrl {
+                        component.isHidden = false
+                        component.button.set(image: UIImage(named: "globe_20"))
+                        component.onTap = {
+                            self?.urlManager.open(url: explorerUrl, from: self?.parentNavigationController)
+                        }
+                    } else {
+                        component.isHidden = true
+                    }
+                },
+            ]),
+            tableView: tableView,
+            id: "type-\(index)",
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            },
+            action: action
         )
     }
 
     private func typesSection(typesViewItem: CoinOverviewViewModel.TypesViewItem) -> SectionProtocol {
         var rows: [RowProtocol] = [
-            tableView.subtitleRow(text: typesViewItem.title)
+            tableView.subtitleRow(text: typesViewItem.title),
         ]
 
         for (index, viewItem) in typesViewItem.viewItems.enumerated() {
             rows.append(
-                    typeRow(
-                            viewItem: viewItem,
-                            index: index,
-                            isFirst: index == 0,
-                            isLast: typesViewItem.action != nil ? false : index == typesViewItem.viewItems.count - 1
-                    )
+                typeRow(
+                    viewItem: viewItem,
+                    index: index,
+                    isFirst: index == 0,
+                    isLast: typesViewItem.action != nil ? false : index == typesViewItem.viewItems.count - 1
+                )
             )
         }
 
         if let action = typesViewItem.action {
             rows.append(
-                    CellBuilderNew.row(
-                            rootElement: .textElement(text: .body(action.title), parameters: .centerAlignment),
-                            tableView: tableView,
-                            id: "action",
-                            hash: "\(action.rawValue)",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isLast: true)
-                            },
-                            action: { [weak self] in
-                                self?.viewModel.onTap(typesAction: action)
-                            }
-                    )
+                CellBuilderNew.row(
+                    rootElement: .textElement(text: .body(action.title), parameters: .centerAlignment),
+                    tableView: tableView,
+                    id: "action",
+                    hash: "\(action.rawValue)",
+                    height: .heightCell48,
+                    autoDeselect: true,
+                    bind: { cell in
+                        cell.set(backgroundStyle: .lawrence, isLast: true)
+                    },
+                    action: { [weak self] in
+                        self?.viewModel.onTap(typesAction: action)
+                    }
+                )
             )
         }
 
         return Section(
-                id: "types",
-                headerState: .margin(height: .margin12),
-                rows: rows
+            id: "types",
+            headerState: .margin(height: .margin12),
+            rows: rows
         )
     }
 
     private func marketRow(id: String, title: String, badge: String?, text: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .textElement(text: .subhead2(title), parameters: .highHugging),
-                    .margin8,
-                    .badge { (component: BadgeComponent) in
-                        component.badgeView.set(style: .small)
+            rootElement: .hStack([
+                .textElement(text: .subhead2(title), parameters: .highHugging),
+                .margin8,
+                .badge { (component: BadgeComponent) in
+                    component.badgeView.set(style: .small)
 
-                        if let badge = badge {
-                            component.badgeView.text = badge
-                            component.isHidden = false
-                        } else {
-                            component.isHidden = true
-                        }
-                    },
-                    .textElement(text: .subhead1(text), parameters: .rightAlignment)
-                ]),
-                tableView: tableView,
-                id: id,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                }
+                    if let badge = badge {
+                        component.badgeView.text = badge
+                        component.isHidden = false
+                    } else {
+                        component.isHidden = true
+                    }
+                },
+                .textElement(text: .subhead1(text), parameters: .rightAlignment),
+            ]),
+            tableView: tableView,
+            id: id,
+            height: .heightCell48,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            }
         )
     }
 
@@ -515,7 +520,7 @@ extension CoinOverviewViewController {
             },
             viewItem.genesisDate.map {
                 (id: "genesis_date", title: "coin_overview.genesis_date".localized, badge: nil, text: $0)
-            }
+            },
         ].compactMap {
             $0
         }
@@ -526,27 +531,24 @@ extension CoinOverviewViewController {
 
         let rows = datas.enumerated().map { index, tuple in
             marketRow(
-                    id: tuple.id,
-                    title: tuple.title,
-                    badge: tuple.badge,
-                    text: tuple.text,
-                    isFirst: index == 0,
-                    isLast: index == datas.count - 1
+                id: tuple.id,
+                title: tuple.title,
+                badge: tuple.badge,
+                text: tuple.text,
+                isFirst: index == 0,
+                isLast: index == datas.count - 1
             )
         }
 
-
         return Section(
-                id: "market_info_section",
-                headerState: .margin(height: .margin12),
-                rows: rows
+            id: "market_info_section",
+            headerState: .margin(height: .margin12),
+            rows: rows
         )
     }
-
 }
 
 extension CoinOverviewViewController: SectionsDataSource {
-
     public func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
@@ -554,13 +556,13 @@ extension CoinOverviewViewController: SectionsDataSource {
             sections.append(coinInfoSection(viewItem: viewItem.coinViewItem))
             sections.append(chartSection)
             sections.append(
-                    Section(
-                            id: "chart-configuration",
-                            headerState: .margin(height: .margin12),
-                            rows: [
-                                chartConfigurationRow
-                            ]
-                    )
+                Section(
+                    id: "chart-configuration",
+                    headerState: .margin(height: .margin12),
+                    rows: [
+                        chartConfigurationRow,
+                    ]
+                )
             )
 
             if let marketInfoSection = marketInfoSection(viewItem: viewItem) {
@@ -573,12 +575,8 @@ extension CoinOverviewViewController: SectionsDataSource {
                 sections.append(typesSection(typesViewItem: types))
             }
 
-            if let categories = viewItem.categories {
-                sections.append(categoriesSection(categories: categories))
-            }
-
-            if !viewItem.description.isEmpty {
-                sections.append(descriptionSection(description: viewItem.description))
+            if !viewItem.description.isEmpty, let descriptionSection = descriptionSection(description: viewItem.description) {
+                sections.append(descriptionSection)
             }
 
             if viewItem.guideUrl != nil || !viewItem.links.isEmpty {
@@ -590,5 +588,4 @@ extension CoinOverviewViewController: SectionsDataSource {
 
         return sections
     }
-
 }

@@ -12,6 +12,7 @@
 "button.paste" = "Einsetzen";
 "button.resend" = "Nochmal senden";
 "button.backup" = "Sicherung";
+"button.restore" = "Wiederherstellen";
 "button.copy" = "Kopieren";
 "button.retry" = "Wiederholen";
 "button.report" = "Melden";
@@ -35,9 +36,11 @@
 "alert.wrong_amount" = "Falscher Betrag";
 "alert.no_fee" = "Falsche Gebühr";
 "alert.warning" = "Warnung";
+"alert.notice" = "Hinweis";
 "alert.error" = "Fehler";
 "alert.unknown_error" = "Unbekannter Fehler";
 "alert.success_action" = "Fertig";
+"alert.restored" = "Wiederhergestellt";
 "alert.success" = "Erfolgreich";
 
 "alert.added_to_watchlist" = "Zur Merkliste hinzugefügt";
@@ -46,7 +49,6 @@
 "alert.removed_from_wallet" = "Aus Wallet entfernt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Kopiert";
 "alert.created" = "Erstellt";
 "alert.imported" = "Wiederherstellen";
 "alert.wallet_added" = "Wallet hinzugefügt";
@@ -67,7 +69,7 @@
 "alert.revoked" = "Widerrufen";
 "alert.cant_recognize" = "Kann nicht erkennen";
 
-"no_results_found" = "No results found";
+"no_results_found" = "Keine Ergebnisse gefunden";
 "action.loading" = "wird geladen ...";
 "placeholder.search" = "Suche";
 
@@ -94,6 +96,16 @@
 "number.quadrillion" = "%@Q";
 
 "selector.any" = "Beliebig";
+
+"face_id" = "Face ID";
+"touch_id" = "Touch ID";
+
+"auto_lock.immediate" = "Sofort";
+"auto_lock.minute1" = "1 Minute";
+"auto_lock.minute5" = "5 Minuten";
+"auto_lock.minute15" = "15 Minuten";
+"auto_lock.minute30" = "30 Minuten";
+"auto_lock.hour1" = "1 Stunde";
 
 // Access Camera
 
@@ -126,21 +138,24 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Restore Type
 
 "restore_type.title" = "Wallet importieren";
-
 "restore_type.recovery.title" = "von Wiederherstellungsphrase";
 "restore_type.cloud.title" = "von iCloud";
+"restore_type.file.title" = "aus Dateien";
 "restore_type.cex.title" = "von Exchange Wallet";
 
 "restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
 "restore_type.cloud.description" = "Importieren Sie aus einer Sicherungsdatei in Ihrem Schlüsselbund.";
+"restore_type.file.description" = "Importieren Sie eine Sicherungsdatei aus Ihrem lokalen Ordner.";
 "restore_type.cex.description" = "Verbinden Sie sich mit einer Brieftasche bei zentralisiertem Austausch.";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Sicherung auswählen";
-"restore.cloud.description" = "Wählen Sie die Sicherungskopie der Wallet aus, die Sie wiederherstellen möchten.";
+"restore.cloud.description" = "Wählen Sie die Sicherungsdatei, die Sie wiederherstellen möchten.";
 "restore.cloud.empty" = "Keine Sicherungen gefunden.";
+"restore.cloud.wallets" = "Wallet-Sicherungen";
 "restore.cloud.imported" = "Importierte Wallet";
+"restore.cloud.app_backups" = "App Sicherungen";
 
 "restore.cloud.password.title" = "Passwort eingeben";
 "restore.cloud.password.placeholder" = "Passwort sichern";
@@ -226,13 +241,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_verify_passphrase.description" = "Geben Sie Ihre Passphrase ein";
 "backup_verify_passphrase.incorrect_passphrase" = "Falsches Passwort";
 
-// Backup Required
-
-"backup_required.title" = "Sicherung erforderlich";
-
 // Backup Prompt
 
-"backup_prompt.title" = "Manuelle Sicherung";
+"backup_prompt.backup_recovery_phrase" = "Wiederherstellungsphrase sichern";
+"backup_prompt.backup_required" = "Sicherung erforderlich";
 "backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
 "backup_prompt.backup" = "Sicherung";
 "backup_prompt.backup_manual" = "Manuelle Sicherung";
@@ -243,7 +255,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "backup.cloud.title" = "Sicherung in iCloud";
 "backup.cloud.description" = "iCloud-Speicher ist ein von Apple bereitgestellter Cloud-Speicherdienst. Es ist wichtig zu wissen, dass Ihre Daten auf Apple-Servern gespeichert werden und nicht auf Ihren persönlichen Geräten. Das bedeutet, dass Sie Ihre Daten anvertrauen und die Sicherheit Ihrer Daten einem Drittanbieter überlassen.";
-
 "backup.cloud.terms.item.1" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
 
 "backup.cloud.name.title" = "Sicherungsname";
@@ -260,7 +271,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup.cloud.password.confirm.placeholder" = "Bestätigen";
 "backup.cloud.password.save" = "Speichern und sichern";
 
-"backup.cloud.password.error.empty_passphrase" = "Passphrase darf nicht leer sein";
+"backup.cloud.password.error.empty_passphrase" = "Passwort darf nicht leer sein";
 "backup.cloud.password.error.forbidden_symbols" = "Bitte verwende nur unterstützte Symbole: <![CDATA[A-Z a-z 0-9 \' \" ` & / ? ! : ; . , ~ * $ = + - [ ](){} <> \\ _ # @ | % ]]>";
 "backup.cloud.password.error.minimum_requirement" = "Das Passwort muss mindestens 8 Zeichen enthalten, darunter ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Symbol.";
 "backup.cloud.password.error.invalid_password" = "Falsches Passwort";
@@ -270,9 +281,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup.cloud.cant_create_file" = "Die Datei kann nicht in iCloud gespeichert werden";
 "backup.cloud.cant_delete_file" = "Kann nicht von iCloud gelöscht werden";
 "backup.cloud.no_access.title" = "Zugriff auf iCloud";
-"backup.cloud.no_access.title" = "Zugriff auf iCloud";
 "backup.cloud.no_access.description" = "Um ein Backup zu erstellen, müssen Sie Zugriff auf iCloud-Speicher gewähren.";
-
 
 // Errors
 
@@ -294,10 +303,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.syncing" = "Synchronisieren...";
 "balance.searching" = "Transaktionen werden gesucht...";
+"balance.stopped" = "Stoppen";
 "balance.downloading_sapling" = "Setze herunterladen... %d%%";
 "balance.downloading_blocks" = "Blöcke herunterladen";
 "balance.scanning_blocks" = "Scanne Blöcke";
 "balance.enhancing_transactions" = "Transaktionen verbessern";
+"wait_for_synchronization" = "Warten auf Synchronisation";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisieren... %@";
@@ -322,6 +333,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.locked" = "Locked";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
+"balance.token.processing" = "Verarbeite";
+"balance.token.processing.info.title" = "Bearbeitungsbetrag";
+"balance.token.processing.info.description" = "Transaktionen mit diesem Betrag werden noch synchronisiert. Und wenn sie bestätigt werden, stehen diese Token für Ausgaben zur Verfügung";
 "balance.token.staked" = "Absteckung";
 "balance.token.staked.info.title" = "Absteckter Titel";
 "balance.token.staked.info.description" = "Absteckungstext";
@@ -542,7 +556,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.confirmation.maximum_sent" = "Maximale Ausgaben";
 
 "swap.dex_info.description" = "Dieser Tauschdienst wird von %@ betrieben, einem dezentralen Token-Tauschprotokoll, das auf der %@ Blockchain basiert.\n\n%@ ist vollständig automatisiert und wird von intelligenten Verträgen verwaltet, die den Token-Tausch in einer zuverlässigen Art und Weise ermöglichen, ohne dass Betrug betrieben werden kann.";
-
 "swap.dex_info.header_dex_related" = "%@ zugehörige";
 "swap.dex_info.header_allowance" = "Vergütung";
 "swap.dex_info.content_allowance" = "Der Betrag, den ein Austausch im Namen des Benutzers ausgeben kann, wenn Token Swaps ausgeführt werden. Bevor eine tatsächliche Swap-Transaktion durchgeführt werden kann, ist eine vorherige Transaktion erforderlich, die ausreichende Zertifikate festlegt.";
@@ -620,12 +633,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "Keine Ergebnisse gefunden";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
 "market.search.title" = "Suche";
-"market.search.empty_text" = "No results found";
+"market.search.empty_text" = "Keine Ergebnisse gefunden";
 
 "market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Ergebnisse anzeigen";
@@ -726,8 +739,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_overview.roi.day200" = "6 Month";
 "coin_overview.roi.year1" = "1 Year";
 
-"coin_overview.category" = "Category";
-
+"coin_overview.overview" = "Overview";
+"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Coin Type";
@@ -770,7 +783,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over a 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "DEX Volume";
@@ -800,16 +813,16 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank is based on the number of active wallets transacting with the token 30-day period.";
 "coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "Transaction Count";
 "coin_analytics.transaction_count_rank" = "Tx Count Rank";
-"coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
+"coin_analytics.transaction_count_rank.description" = "Tokens are ranked by a number of transactions on a blockchain.";
+"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with tokens over a 30-day period.";
 "coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
-"coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
+"coin_analytics.transaction_count.info3" = "Token's rank is based on the number of transactions within the token 30-day period.";
 "coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
@@ -826,19 +839,19 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.project_tvl" = "Project TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
 "coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
-"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
+"coin_analytics.project_tvl.info1" = "Total-value-locked (or Assets Under Management) in the project's smart contracts.";
 "coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info3" = "Token's rank is based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
 "coin_analytics.project_fee" = "Project Fee";
 "coin_analytics.project_fee_rank" = "Project Fee Rank";
-"coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee_rank.description" = "Tokens are ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
 
 "coin_analytics.project_revenue" = "Project Revenue";
 "coin_analytics.project_revenue_rank" = "Project Revenue Rank";
-"coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue_rank.description" = "Tokens are ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
 
 "coin_analytics.other_data" = "Other Data";
 
@@ -868,11 +881,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.overall_score.poor" = "Poor";
 "coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
 "coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total avilable liquidity on decentralized exchanges.";
+"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total available liquidity on decentralized exchanges.";
 "coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
 "coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
 "coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
-"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding respective token.";
+"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding the respective token.";
 
 "coin_analytics.rank" = "Rank";
 "coin_analytics.30_day_rank" = "30-Day Rank";
@@ -1001,9 +1014,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.manage_accounts" = "Wallets verwalten";
 "settings.blockchain_settings" = "Blockchain Einstellungen";
+"settings.backup_manager" = "Backup-Manager";
 "settings.security" = "Sicherheit";
 "settings.experimental_features" = "Experimentell";
-"settings.personal_support" = "Personal Support";
+"settings.personal_support" = "Persönlicher Support";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.faq" = "FAQ";
@@ -1011,13 +1025,16 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.info_subtitle" = "decentralized";
 "settings.donate.description" = "Gemeinsam können wir mit Ihrer Unterstützung diese App noch besser machen!";
 "settings.donate.title" = "Spenden";
+"settings.rate_us" = "Bewerten Sie uns";
+"settings.tell_friends" = "Freunden erzählen";
+"settings.contact_us" = "Kontaktiere uns";
 
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "Währung";
 "settings.base_currency.other" = "Andere";
 "settings.base_currency.disclaimer" = "Haftungsausschluss";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Die Wechselkursdaten werden von einem Drittanbieter-Service - Coingecko.com bereitgestellt. \n\nDie %@ Wallet-App garantiert nicht, dass diese Werte immer korrekt sind und den Marktdaten entsprechen. Die Wahrscheinlichkeit für Inkonsistenz ist höher, wenn du eine andere Basiswährung als %@ wählst.";
 "settings.base_currency.disclaimer.set" = "Übernehmen";
 
 // Settings -> Manage Wallet
@@ -1027,7 +1044,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "manage_wallets.search_placeholder" = "Name, Code oder Vertragsadresse";
 "manage_wallets.contract_address" = "Vertragsadresse";
 "manage_wallets.derivation_description" = "Es gibt 4 gängige Adressformate %@ Brieftaschen zum Empfang eingehender Zahlungen:\n\n- BIP44 (ältes)\n- BIP49\n- BIP84 (empfohlen)\n- BIP86 (neueste)\n\nWährend %@ alle 4 unterstützt empfiehlt es, eine %@ Brieftasche im BIP84-Format zu verwenden.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Brieftaschen zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend %@ Brieftasche beide unterstützt, empfiehlt es sich, eine Bitcoin Cash Brieftasche im TYPE 145 Format zu verwenden.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Wallets zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend %@ Brieftasche beide unterstützt, empfiehlt es sich, ein Bitcoin Cash Wallet im TYPE 145 Format zu verwenden.";
 
 // Settings -> Personal Support
 
@@ -1037,7 +1054,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.personal_support.request" = "Anforderung";
 "settings.personal_support.requested" = "Angefragt";
 "settings.personal_support.failed" = "Anfrage fehlgeschlagen";
-"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
+"settings.personal_support.need_subscription" = "This feature is only for %@ Wallet premium users. More info on our official site.";
 "settings.personal_support.requested.description" = "Sie haben bereits einen privaten Chat angefordert, finden Sie ihn auf Telegram";
 "settings.personal_support.requested.open_telegram" = "Telegram öffnen";
 "settings.personal_support.requested.new_request" = "Neue Zahlungsaufforderung";
@@ -1073,14 +1090,126 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "blockchain_settings.title" = "Blockchain Einstellungen";
 
+// Settings -> Backup Manager
+
+"backup_app.backup_manager.title" = "Backup-Manager";
+"backup_app.backup_manager.restore" = "Backup wiederherstellen";
+"backup_app.backup_manager.create" = "Neue Sicherung erstellen";
+
+"backup_app.backup_type.title" = "Backup speichern";
+"backup_app.backup_type.cloud" = "nach iCloud";
+"backup_app.backup_type.cloud.description" = "Speichern einer Sicherungskopierdatei in Ihrem Schlüsselbund.";
+"backup_app.backup_type.file" = "in Dateien";
+"backup_app.backup_type.file.description" = "Speichern einer Sicherungskopierdatei in Ihrem lokalen Ordner.";
+
+"backup_app.backup_list.title" = "Backup-Datei";
+"backup_app.backup_list.description.restore" = "Liste der Inhalte in der Backup-Datei.";
+"backup_app.backup_list.header.wallets" = "Wallets";
+"backup_app.backup_list.header.other" = "Andere";
+"backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
+"backup_app.backup_list.other.watchlist.title" = "Merkliste";
+"backup_app.backup_list.other.contacts.title" = "Kontakte";
+"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
+"backup_app.backup_list.other.app_settings.title" = "App-Einstellungen";
+"backup_app.backup_list.other.app_settings.description" = "Sprache, Währung, Erscheinung ...";
+
+"backup_app.backup.disclaimer.cloud.title" = "Sicherung in iCloud";
+"backup_app.backup.disclaimer.cloud.description" = "iCloud ist ein von Apple bereitgestellter Cloud-Speicherdienst. Es ist wichtig zu wissen, dass Ihre Backup-Daten auf Apples Servern gespeichert werden.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
+"backup_app.backup.disclaimer.file.title" = "In Datei sichern";
+"backup_app.backup.disclaimer.file.description" = "Speichergeräte wie Festplatten, USB-Laufwerke und Smartphone-Speicher sind alle anfällig für Datenverlust aufgrund von physischen Schäden, Diebstahl oder anderen unvorhergesehenen Umständen.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "Ich verstehe, dass ein Diebstahl oder eine Beschädigung eines Sicherungsgeräts zum Verlust des Sicherungskopfes an eine entsprechende Brieftasche führen wird.";
+
+"backup.disclaimer.cloud.title" = "Sicherung in iCloud";
+"backup.disclaimer.cloud.description" = "iCloud ist ein von Apple bereitgestellter Cloud-Speicherdienst. Es ist wichtig zu wissen, dass Ihre Backup-Daten auf Apples Servern gespeichert werden.";
+"backup.disclaimer.cloud.checkbox_label" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
+"backup.disclaimer.file.title" = "In Datei sichern";
+"backup.disclaimer.file.description" = "Speichergeräte wie Festplatten, USB-Laufwerke und Smartphone-Speicher sind alle anfällig für Datenverlust aufgrund von physischen Schäden, Diebstahl oder anderen unvorhergesehenen Umständen.";
+"backup.disclaimer.file.checkbox_label" = "Ich verstehe, dass ein Diebstahl oder eine Beschädigung eines Sicherungsgeräts zum Verlust des Sicherungskopfes an eine entsprechende Brieftasche führen wird.";
+"backup_app.backup.name.title" = "Sicherungsname";
+"backup_app.backup.name.description" = "Geben Sie den Namen für die Backup-Datei ein.";
+
+"backup_app.backup.password.title" = "Passwort sichern";
+"backup_app.backup.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
+"backup_app.backup.password.highlighted_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Brieftasche zu verschlüsseln. Wenn es verloren geht oder vergessen wird, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
+
+"backup_app.restore_type.title" = "Wiederherstellen";
+
+"backup_app.restore.notice.description" = "Diese Aktion wird Ihre lokalen Zahlungskontakte sowie die iCloud-Kopie (falls vorhanden) überschreiben.";
+"backup_app.restore.notice.merge" = "Ersetzen";
+
+"backup.password.title" = "Passwort sichern";
+"backup.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
+"backup.password.highlighted_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Brieftasche zu verschlüsseln. Wenn es verloren geht oder vergessen wird, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
+
 // Settings -> Security
 
 "settings_security.title" = "Sicherheit";
-"settings_security.passcode" = "Code";
-"settings_security.change_pin" = "Code bearbeiten";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
-"settings_security.blockchain_settings" = "Blockchain Einstellungen";
+"settings_security.enable_passcode" = "Code aktivieren";
+"settings_security.edit_passcode" = "Code bearbeiten";
+"settings_security.disable_passcode" = "Code deaktivieren";
+"settings_security.auto_lock" = "Auto-Sperren";
+"settings_security.balance_auto_hide" = "Auto-Ausblenden ausgleichen";
+"settings_security.balance_auto_hide.description" = "Bei jedem Öffnen der App wird der Saldo automatisch ausgeblendet, unabhängig von den vorherigen Einstellungen.";
+"settings_security.enable_duress_mode" = "Duress Modus setzen";
+"settings_security.edit_duress_passcode" = "Duress Code bearbeiten";
+"settings_security.disable_duress_mode" = "Duress Code deaktivieren";
+"settings_security.duress_mode.description" = "Ein spezialisierter Modus, der entworfen wurde, um ausgewählte Brieftaschen unter Zwang zu schützen.";
+
+// Create Passcode
+
+"create_passcode.title" = "Code erstellen";
+"create_passcode.description" = "Dein Code wird verwendet werden, um deinen Wallet zu entsperren und Geld schicken";
+"create_passcode.description.biometry" = "Code für %@ aktivieren";
+"create_passcode.description.duress_mode" = "Code zum Aktivieren des Duress Modus festlegen";
+"create_passcode.confirm_passcode" = "Bestätigen";
+
+// Enable Duress Mode
+
+"enable_duress_mode.intro.title" = "Duress-Modus";
+"enable_duress_mode.intro.description" = "In diesem Modus können Benutzer mehrere Entsperr-App-Passcodes einrichten, bei denen ein gewünschter Passcode nur bestimmte Wallets anzeigt. Entwickelt um ausgewählte Brieftaschen vor Zwang oder Bedrohungen zu schützen.";
+"enable_duress_mode.intro.notes" = "Notizen";
+"enable_duress_mode.intro.biometrics.description" = "Die %@ Funktion wird den Duress Modus entsperren. Sie können %@ für Bequemlichkeit deaktivieren.";
+"enable_duress_mode.intro.passcode_disabling" = "Code deaktivieren";
+"enable_duress_mode.intro.passcode_disabling.description" = "Das Deaktivieren des Code im Hauptmodus wird den Duress Modus automatisch zurücksetzen.";
+"enable_duress_mode.intro.passcode_change" = "Codeänderung";
+"enable_duress_mode.intro.passcode_change.description" = "Das Ändern des Code im Duress Modus ändert auch den aktuellen Code für diesen Modus.";
+
+"enable_duress_mode.select.title" = "Wallets auswählen";
+"enable_duress_mode.select.description" = "Wählen Sie die Wallets, die im Duress Modus angezeigt werden.";
+"enable_duress_mode.select.wallets" = "Wallets";
+"enable_duress_mode.select.watch_wallets" = "Watch-Adresse";
+
+"enable_duress_mode.passcode.title" = "Duress Code";
+"enable_duress_mode.passcode.description" = "Code für Duress Modus festlegen";
+"enable_duress_mode.passcode.confirm" = "Bestätigen";
+
+// Edit Passcode
+
+"edit_passcode.title" = "Code bearbeiten";
+"edit_passcode.enter_new_passcode" = "Neues Code eingeben";
+"edit_passcode.confirm_new_passcode" = "Bestätigen";
+
+// Edit Duress Passcode
+
+"edit_duress_passcode.title" = "Duress Code bearbeiten";
+"edit_duress_passcode.enter_new_passcode" = "Neues Code für Duress Modus eingeben";
+"edit_duress_passcode.confirm_new_passcode" = "Bestätigen";
+
+// Set Passcode
+
+"set_passcode.invalid_confirmation" = "Ungültige Bestätigung";
+"set_passcode.already_used" = "Dieser Code wird bereits verwendet";
+
+// Unlock
+
+"unlock.title" = "Entsperren";
+"unlock.passcode" = "Code eingeben";
+"unlock.biometry_reason" = "Wallet entsperren";
+"unlock.attempts_left" = "Verbleibende Versuche: %@";
+"unlock.disabled_until" = "Deaktiviert bis: %@ ";
+"unlock.random" = "Zufällig";
+
 "security_settings.delete_alert_button" = "Von Telefon löschen";
 
 "btc_blockchain_settings.restore_source" = "Parameter wiederherstellen";
@@ -1124,9 +1253,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.about_app.description" = "Die Brieftasche %@ wurde für diejenigen gebaut, die Kryptowährungen auf private und unabhängige Weise investieren und speichern möchten.\n\nEs handelt sich um eine nicht-Custodial, Peer-to-Peer-Wallet, bei der nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem er das Guthaben des Benutzers nicht an eine bestimmte Wallet-App sperrt.\n\nDie %@ Brieftasche ist vollständig Open-Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.";
 "settings.about_app.whats_new" = "Das ist neu";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Kontaktiere uns";
-"settings.about_app.rate_us" = "Bewerten Sie uns";
-"settings.about_app.tell_friends" = "Freunden erzählen";
 
 // Settings -> About App -> Contact
 
@@ -1168,14 +1294,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "appearance.balance_value.coin_value" = "Coin Value";
 "appearance.balance_value.fiat_value" = "Fiat Value";
 
-"appearance.balance_auto_hide" = "Auto-Ausblenden ausgleichen";
-
 // Settings -> Contacts
 
 "contacts.title" = "Kontakte";
 "contacts.list.search_placeholder" = "Nach Namen suchen";
 "contacts.list.not_found" = "Sie haben keinen neuen Kontakt";
-"contacts.list.not_found_search" = "No results found";
+"contacts.list.not_found_search" = "Keine Ergebnisse gefunden";
 "contacts.add_new_contact" = "Neuer Kontakt";
 "contacts.update_contact.already_has_address" = "Der ausgewählte Kontakt hat bereits eine Adresse auf %@. Diese Aktion wird die Adresse %@ durch %@ ersetzen.";
 "contacts.update_contact.replace" = "Ersetzen";
@@ -1229,25 +1353,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "contacts.settings.alert_error.title" = "iCloud Fehler";
 
-// Set PIN
-
-"set_pin.title" = "Code";
-"set_pin.info" = "Dein Code ist notwendig, um deinen Wallet zu entsperren und Geld zu schicken";
-"set_pin.wrong_confirmation" = "Der eingegebene Code scheint nicht richtig zu sein. Bitte versuchen Sie es erneut.";
-
-// Edit PIN
-
-"edit_pin.title" = "Code bearbeiten";
-"edit_pin.unlock_info" = "Aktuelle Code ";
-"edit_pin.new_pin_info" = "Neue Code";
-
-// Unlock PIN
-
-"unlock_pin.info" = "Code";
-"unlock_pin.cant_save_pin" = "Hoppla! Wir können den Code nicht speichern - bitte kontaktieren Sie uns so schnell wie möglich.";
-"unlock_pin.blocked_until" = "Deaktiviert bis: %@ ";
-
-
 // Key Types
 
 "chart.time_duration.day" = "24Std";
@@ -1274,7 +1379,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "chart.performance.week_changes" = "Changes (1W)";
 "chart.performance.month_changes" = "Changes (1M)";
 
-"chart.about.header" = "About";
 "chart.about.read_more" = "Read More";
 "chart.about.read_less" = "Read Less";
 
@@ -1357,8 +1461,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "wallet_connect.active_account" = "Aktive Wallet";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Netzwerk";
-"wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Netzwerk";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
@@ -1372,7 +1474,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle %@-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Der gewählte Gebührenwert ist zu niedrig und wird abgelehnt!";
 "ethereum_transaction.error.nonce_already_in_block" = "Transaktion bereits im Block!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Gebühr nicht ausreichend, um die Transaktion zu ersetzen";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Gebühr reicht nicht aus, um die Transaktion zu ersetzen";
 "ethereum_transaction.error.transaction_underpriced" = "Gebühr nicht ausreichend, um die Transaktion zu ersetzen";
 "ethereum_transaction.error.tips_higher_than_max_fee" = "Maximale Gebühr kann nicht niedriger sein als die Tipps, da die Max-Gebühr die Tipps enthält.";
 "ethereum_transaction.error.reverted" = "Die Transaktion kann nicht ausgeführt werden: %@";
@@ -1654,7 +1756,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info2.title" = "Chart Indicators";
 "subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info3.title" = "Personal Support";
+"subscription_info.info3.title" = "Persönlicher Support";
 "subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.get_premium" = "Premium erhalten";
 "subscription_info.already_have" = "Ich habe bereits Premium";

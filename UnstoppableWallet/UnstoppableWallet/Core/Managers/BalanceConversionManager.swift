@@ -66,4 +66,11 @@ extension BalanceConversionManager {
     func set(conversionToken: Token?) {
         self.conversionToken = conversionToken
     }
+
+    func set(tokenQueryId: String?) {
+        conversionToken = tokenQueryId
+            .flatMap { TokenQuery(id: $0) }
+            .flatMap { try? marketKit.token(query: $0) } ??
+            conversionTokens.first
+    }
 }

@@ -1,8 +1,11 @@
-import RxSwift
+import Combine
 import RxRelay
+import RxSwift
 
 class AccountManager {
+    private let passcodeManager: PasscodeManager
     private let storage: AccountCachedStorage
+    private var cancellables = Set<AnyCancellable>()
 
     private let activeAccountRelay = PublishRelay<Account?>()
     private let accountsRelay = PublishRelay<[Account]>()
@@ -12,8 +15,44 @@ class AccountManager {
 
     private var lastCreatedAccount: Account?
 
-    init(storage: AccountCachedStorage) {
-        self.storage = storage
+    init(passcodeManager: PasscodeManager, accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
+        self.passcodeManager = passcodeManager
+
+        storage = AccountCachedStorage(level: passcodeManager.currentPasscodeLevel, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
+
+        passcodeManager.$currentPasscodeLevel
+            .sink { [weak self] level in
+                self?.handle(level: level)
+            }
+            .store(in: &cancellables)
+
+        passcodeManager.$isDuressPasscodeSet
+            .sink { [weak self] isSet in
+                if !isSet {
+                    self?.handleDisableDuress()
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    private func handle(level: Int) {
+        storage.set(level: level)
+
+        accountsRelay.accept(storage.accounts)
+        activeAccountRelay.accept(storage.activeAccount)
+    }
+
+    private func handleDisableDuress() {
+        let currentLevel = passcodeManager.currentPasscodeLevel
+
+        for account in storage.accounts {
+            if account.level > currentLevel {
+                account.level = currentLevel
+                storage.save(account: account)
+            }
+        }
+
+        accountsRelay.accept(storage.accounts)
     }
 
     private func clearAccounts(ids: [String]) {
@@ -21,7 +60,7 @@ class AccountManager {
             storage.delete(accountId: $0)
         }
 
-        if storage.accounts.isEmpty {
+        if storage.allAccounts.isEmpty {
             accountsLostRelay.accept(true)
         }
     }
@@ -29,7 +68,6 @@ class AccountManager {
 }
 
 extension AccountManager {
-
     var activeAccountObservable: Observable<Account?> {
         activeAccountRelay.asObservable()
     }
@@ -48,6 +86,10 @@ extension AccountManager {
 
     var accountsLostObservable: Observable<Bool> {
         accountsLostRelay.asObservable()
+    }
+
+    var currentLevel: Int {
+        passcodeManager.currentPasscodeLevel
     }
 
     var activeAccount: Account? {
@@ -84,6 +126,17 @@ extension AccountManager {
         accountsRelay.accept(storage.accounts)
 
         set(activeAccountId: account.id)
+    }
+
+    func save(accounts: [Account]) {
+        accounts.forEach { account in
+            storage.save(account: account)
+        }
+
+        accountsRelay.accept(storage.accounts)
+        if let first = accounts.first {
+            set(activeAccountId: first.id)
+        }
     }
 
     func delete(account: Account) {
@@ -145,21 +198,47 @@ extension AccountManager {
         return account
     }
 
+    func setDuress(accountIds: [String]) {
+        let currentLevel = passcodeManager.currentPasscodeLevel
+
+        for account in storage.accounts {
+            if accountIds.contains(account.id) {
+                account.level = currentLevel + 1
+                storage.save(account: account)
+            }
+        }
+
+        accountsRelay.accept(storage.accounts)
+    }
 }
 
 class AccountCachedStorage {
     private let accountStorage: AccountStorage
     private let activeAccountStorage: ActiveAccountStorage
 
-    private var _accounts: [String: Account]
+    private var _allAccounts: [String: Account]
+
+    private var level: Int
+    private var _accounts = [String: Account]()
     private var _activeAccount: Account?
 
-    init(accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
+    init(level: Int, accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
+        self.level = level
         self.accountStorage = accountStorage
         self.activeAccountStorage = activeAccountStorage
 
-        _accounts = accountStorage.allAccounts.reduce(into: [String: Account]()) { $0[$1.id] = $1 }
-        _activeAccount = activeAccountStorage.activeAccountId.flatMap { _accounts[$0] }
+        _allAccounts = accountStorage.allAccounts.reduce(into: [String: Account]()) { $0[$1.id] = $1 }
+
+        syncAccounts()
+    }
+
+    private func syncAccounts() {
+        _accounts = _allAccounts.filter { _, account in account.level >= level }
+        _activeAccount = activeAccountStorage.activeAccountId(level: level).flatMap { _accounts[$0] } ?? _accounts.first?.value
+    }
+
+    var allAccounts: [Account] {
+        Array(_allAccounts.values)
     }
 
     var accounts: [Account] {
@@ -174,33 +253,46 @@ class AccountCachedStorage {
         accountStorage.lostAccountIds
     }
 
+    func set(level: Int) {
+        self.level = level
+        syncAccounts()
+    }
+
     func account(id: String) -> Account? {
-        _accounts[id]
+        _allAccounts[id]
     }
 
     func set(activeAccountId: String?) {
-        activeAccountStorage.activeAccountId = activeAccountId
+        activeAccountStorage.save(activeAccountId: activeAccountId, level: level)
         _activeAccount = activeAccountId.flatMap { _accounts[$0] }
     }
 
     func save(account: Account) {
         accountStorage.save(account: account)
-        _accounts[account.id] = account
+        _allAccounts[account.id] = account
+
+        if account.level >= level {
+            _accounts[account.id] = account
+        } else {
+            _accounts.removeValue(forKey: account.id)
+        }
     }
 
     func delete(account: Account) {
         accountStorage.delete(account: account)
+        _allAccounts.removeValue(forKey: account.id)
         _accounts.removeValue(forKey: account.id)
     }
 
     func delete(accountId: String) {
         accountStorage.delete(accountId: accountId)
+        _allAccounts.removeValue(forKey: accountId)
         _accounts.removeValue(forKey: accountId)
     }
 
     func clear() {
         accountStorage.clear()
+        _allAccounts = [:]
         _accounts = [:]
     }
-
 }

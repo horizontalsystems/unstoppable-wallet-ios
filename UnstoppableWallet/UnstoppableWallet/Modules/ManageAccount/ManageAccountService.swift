@@ -1,8 +1,7 @@
-import RxSwift
-import RxRelay
-import MarketKit
-import PinKit
 import Combine
+import MarketKit
+import RxRelay
+import RxSwift
 
 class ManageAccountService {
     private let accountRelay = PublishRelay<Account>()
@@ -13,8 +12,8 @@ class ManageAccountService {
     }
 
     private let accountManager: AccountManager
-    private let cloudBackupManager: CloudAccountBackupManager
-    private let pinKit: PinKit.Kit
+    private let cloudBackupManager: CloudBackupManager
+    private let passcodeManager: PasscodeManager
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
@@ -25,12 +24,12 @@ class ManageAccountService {
         }
     }
 
-    private let accountDeletedRelay = PublishRelay<()>()
-    private let cloudBackedUpRelay = PublishRelay<()>()
+    private let accountDeletedRelay = PublishRelay<Void>()
+    private let cloudBackedUpRelay = PublishRelay<Void>()
 
     private var newName: String
 
-    init?(accountId: String, accountManager: AccountManager, cloudBackupManager: CloudAccountBackupManager, pinKit: PinKit.Kit) {
+    init?(accountId: String, accountManager: AccountManager, cloudBackupManager: CloudBackupManager, passcodeManager: PasscodeManager) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }
@@ -38,25 +37,24 @@ class ManageAccountService {
         self.account = account
         self.accountManager = accountManager
         self.cloudBackupManager = cloudBackupManager
-
-        self.pinKit = pinKit
+        self.passcodeManager = passcodeManager
 
         newName = account.name
 
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in self?.handleUpdated(account: $0) }
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDeleted(account: $0) }
 
-        cloudBackupManager.$items
-                .sink { [weak self] _ in
-                    self?.cloudBackedUpRelay.accept(())
-                }
-                .store(in: &cancellables)
+        cloudBackupManager.$oneWalletItems
+            .sink { [weak self] _ in
+                self?.cloudBackedUpRelay.accept(())
+            }
+            .store(in: &cancellables)
 
         syncState()
     }
 
     private func syncState() {
-        if !newName.isEmpty && account.name != newName {
+        if !newName.isEmpty, account.name != newName {
             state = .canSave
         } else {
             state = .cannotSave
@@ -74,11 +72,9 @@ class ManageAccountService {
             accountDeletedRelay.accept(())
         }
     }
-
 }
 
 extension ManageAccountService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -87,11 +83,11 @@ extension ManageAccountService {
         accountRelay.asObservable()
     }
 
-    var accountDeletedObservable: Observable<()> {
+    var accountDeletedObservable: Observable<Void> {
         accountDeletedRelay.asObservable()
     }
 
-    var cloudBackedUpObservable: Observable<()> {
+    var cloudBackedUpObservable: Observable<Void> {
         cloudBackedUpRelay.asObservable()
     }
 
@@ -99,8 +95,8 @@ extension ManageAccountService {
         cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())
     }
 
-    var isPinSet: Bool {
-        pinKit.isPinSet
+    var isPasscodeSet: Bool {
+        passcodeManager.isPasscodeSet
     }
 
     func set(name: String) {
@@ -116,14 +112,11 @@ extension ManageAccountService {
     func deleteCloudBackup() throws {
         try cloudBackupManager.delete(uniqueId: account.type.uniqueId())
     }
-
 }
 
 extension ManageAccountService {
-
     enum State {
         case cannotSave
         case canSave
     }
-
 }

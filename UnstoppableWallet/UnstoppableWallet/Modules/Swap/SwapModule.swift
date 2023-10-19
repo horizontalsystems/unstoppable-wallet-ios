@@ -181,6 +181,17 @@ extension SwapModule.Dex {
         case pancakeV3 = "PancakeSwap V3"
         case quickSwap = "QuickSwap"
 
+        var id: String {
+            switch self {
+            case .uniswap: return "uniswap"
+            case .uniswapV3: return "uniswap_v3"
+            case .oneInch: return "oneinch"
+            case .pancake: return "pancake"
+            case .pancakeV3: return "pancake_v3"
+            case .quickSwap: return "quickswap"
+            }
+        }
+
         var allowedBlockchainTypes: [BlockchainType] {
             switch self {
             case .uniswap: return [.ethereum]

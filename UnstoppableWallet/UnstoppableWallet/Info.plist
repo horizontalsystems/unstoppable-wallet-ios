@@ -141,5 +141,7 @@
 	<string>${wallet_connect_v2_project_key}</string>
 	<key>OpenSeaApiKey</key>
 	<string>${open_sea_api_key}</string>
+    <key>UnstoppableDomainsApiKey</key>
+    <string>${unstoppable_domains_api_key}</string>
 </dict>
 </plist>

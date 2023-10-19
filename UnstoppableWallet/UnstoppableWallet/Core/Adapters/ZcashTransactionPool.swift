@@ -1,13 +1,12 @@
 import Foundation
-import ZcashLightClientKit
 import RxSwift
+import ZcashLightClientKit
 
 class ZcashTransactionPool {
     private var confirmedTransactions = Set<ZcashTransactionWrapper>()
     private var pendingTransactions = Set<ZcashTransactionWrapper>()
     private let synchronizer: Synchronizer
     private let receiveAddress: SaplingAddress
-
 
     init(receiveAddress: SaplingAddress, synchronizer: Synchronizer) {
         self.receiveAddress = receiveAddress
@@ -45,8 +44,16 @@ class ZcashTransactionPool {
 
     private func transactionWithAdditional(tx: ZcashTransaction.Overview, lastBlockHeight: Int) async throws -> ZcashTransactionWrapper? {
         let memos: [Memo] = (try? await synchronizer.getMemos(for: tx)) ?? []
+        let firstMemo = memos
+            .compactMap { $0.toString() }
+            .first
+
         let recipients = await synchronizer.getRecipients(for: tx)
-        return ZcashTransactionWrapper(tx: tx, memo: memos.first, recipient: recipients.first, lastBlockHeight: lastBlockHeight)
+        let firstAddress = recipients
+            .filter { $0.hasAddress }
+            .first
+
+        return ZcashTransactionWrapper(tx: tx, memo: firstMemo, recipient: firstAddress, lastBlockHeight: lastBlockHeight)
     }
 
     private func sync(own: inout Set<ZcashTransactionWrapper>, incoming: [ZcashTransactionWrapper]) {
@@ -55,15 +62,15 @@ class ZcashTransactionPool {
 
     func initTransactions() async {
         let overviews = await synchronizer.transactions
-        let pending = await synchronizer.pendingTransactions
+//        let pending = await synchronizer.pendingTransactions
 
-        pendingTransactions = await Set(zcashTransactions(pending, lastBlockHeight: 0))
+//        pendingTransactions = await Set(zcashTransactions(pending, lastBlockHeight: 0))
         confirmedTransactions = Set(await zcashTransactions(overviews, lastBlockHeight: 0))
     }
 
     func sync(transactions: [ZcashTransaction.Overview], lastBlockHeight: Int) async -> [ZcashTransactionWrapper] {
         let txs = await zcashTransactions(transactions, lastBlockHeight: lastBlockHeight)
-        // todo: sync pending and confirmed but How?
+        // TODO: sync pending and confirmed but How?
         sync(own: &confirmedTransactions, incoming: txs)
         return txs
     }
@@ -71,11 +78,9 @@ class ZcashTransactionPool {
     func transaction(by hash: String) -> ZcashTransactionWrapper? {
         transactions(filter: .all).first { $0.transactionHash == hash }
     }
-
 }
 
 extension ZcashTransactionPool {
-
     var all: [ZcashTransactionWrapper] {
         transactions(filter: .all)
     }
@@ -88,9 +93,17 @@ extension ZcashTransactionPool {
         }
 
         if let index = transactions.firstIndex(where: { $0.transactionHash == transaction.transactionHash }) {
-            return Single.just((Array(transactions.suffix(from: index + 1).prefix(limit))))
+            return Single.just(Array(transactions.suffix(from: index + 1).prefix(limit)))
         }
         return Single.just([])
     }
+}
 
+extension TransactionRecipient {
+    var hasAddress: Bool {
+        switch self {
+        case .address: return true
+        case .internalAccount: return false
+        }
+    }
 }
