@@ -4,8 +4,9 @@ import WidgetKit
 
 struct CoinPriceListEntry: TimelineEntry {
     let date: Date
-    let title: String
+    let mode: CoinPriceListMode
     let sortType: String
+    let maxItemCount: Int
     let items: [Item]
 
     struct Item {

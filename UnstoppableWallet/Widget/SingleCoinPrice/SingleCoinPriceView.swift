@@ -7,7 +7,7 @@ struct SingleCoinPriceView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: .margin8) {
             HStack(spacing: .margin8) {
-                if let coinIcon = entry.coinIcon {
+                if let coinIcon = entry.icon {
                     coinIcon
                         .resizable()
                         .scaledToFit()
@@ -18,7 +18,7 @@ struct SingleCoinPriceView: View {
                         .frame(width: .iconSize32, height: .iconSize32)
                 }
 
-                Text(entry.coinCode.uppercased())
+                Text(entry.code.uppercased())
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(.themeLeah)
                     .font(.themeSubhead1)

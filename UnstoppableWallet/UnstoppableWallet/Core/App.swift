@@ -129,7 +129,8 @@ class App {
         let logRecordStorage = LogRecordStorage(dbPool: dbPool)
         logRecordManager = LogRecordManager(storage: logRecordStorage)
 
-        currencyManager = CurrencyManager(storage: SharedLocalStorage())
+        let sharedLocalStorage = SharedLocalStorage()
+        currencyManager = CurrencyManager(storage: sharedLocalStorage)
 
         marketKit = try MarketKit.Kit.instance(
             hsApiBaseUrl: AppConfig.marketApiUrl,
@@ -248,7 +249,7 @@ class App {
         feeRateProviderFactory = FeeRateProviderFactory()
 
         let favoriteCoinRecordStorage = FavoriteCoinRecordStorage(dbPool: dbPool)
-        favoritesManager = FavoritesManager(storage: favoriteCoinRecordStorage)
+        favoritesManager = FavoritesManager(storage: favoriteCoinRecordStorage, sharedStorage: sharedLocalStorage)
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
