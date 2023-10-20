@@ -1133,7 +1133,7 @@
 "backup_app.backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
 "backup_app.backup.password.highlighted_description" = "此密码用于加密您的钱包备份文件。一旦丢失或遗忘，将无法恢复或重置。";
 
-"backup_app.restore_type.title" = "恢复自";
+"backup_app.restore_type.title" = "恢复";
 
 "backup_app.restore.notice.description" = "此操作将覆盖您的本地付款联系人以及它的 iCloud 副本（如有）。";
 "backup_app.restore.notice.merge" = "替换";
