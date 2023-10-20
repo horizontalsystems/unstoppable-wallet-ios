@@ -18,8 +18,8 @@ struct TopCoinsWidget: Widget {
             }
         }
         .contentMarginsDisabled()
-        .configurationDisplayName("Top Coins")
-        .description("Displays price for top coins.")
+        .configurationDisplayName("top_coins.title")
+        .description("top_coins.description")
         .supportedFamilies([
             .systemSmall,
             .systemMedium,

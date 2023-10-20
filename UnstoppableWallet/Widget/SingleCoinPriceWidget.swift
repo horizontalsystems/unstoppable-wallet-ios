@@ -18,8 +18,8 @@ struct SingleCoinPriceWidget: Widget {
             }
         }
         .contentMarginsDisabled()
-        .configurationDisplayName("Coin Price")
-        .description("Displays price for certain coin.")
+        .configurationDisplayName("single_coin_price.title")
+        .description("single_coin_price.description")
         .supportedFamilies([
             .systemSmall,
         ])

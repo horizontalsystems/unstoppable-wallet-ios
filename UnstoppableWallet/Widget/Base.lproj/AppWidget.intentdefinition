@@ -102,7 +102,7 @@
 	<array>
 		<dict>
 			<key>INIntentCategory</key>
-			<string>generic</string>
+			<string>information</string>
 			<key>INIntentDescriptionID</key>
 			<string>OkcYOj</string>
 			<key>INIntentEligibleForWidgets</key>
@@ -176,7 +176,7 @@
 			<key>INIntentType</key>
 			<string>Custom</string>
 			<key>INIntentVerb</key>
-			<string>Do</string>
+			<string>View</string>
 		</dict>
 		<dict>
 			<key>INIntentCategory</key>

@@ -1,11 +1,13 @@
+import SwiftUI
+
 enum CoinPriceListMode {
     case topCoins
     case watchlist
 
-    var title: String {
+    var title: LocalizedStringKey {
         switch self {
-        case .topCoins: return "Top Coins"
-        case .watchlist: return "Watchlist"
+        case .topCoins: return "top_coins.title"
+        case .watchlist: return "watchlist.title"
         }
     }
 

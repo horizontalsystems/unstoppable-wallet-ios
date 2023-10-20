@@ -18,8 +18,8 @@ struct WatchlistWidget: Widget {
             }
         }
         .contentMarginsDisabled()
-        .configurationDisplayName("Watchlist")
-        .description("Displays price coins in watchlist.")
+        .configurationDisplayName("watchlist.title")
+        .description("watchlist.description")
 
         .supportedFamilies([
             .systemSmall,

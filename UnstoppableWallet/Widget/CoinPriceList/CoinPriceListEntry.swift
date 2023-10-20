@@ -5,7 +5,7 @@ import WidgetKit
 struct CoinPriceListEntry: TimelineEntry {
     let date: Date
     let mode: CoinPriceListMode
-    let sortType: String
+    let sortType: SortType
     let maxItemCount: Int
     let items: [Item]
 

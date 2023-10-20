@@ -144,9 +144,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-    <key>UnstoppableDomainsApiKey</key>
-    <string>${unstoppable_domains_api_key}</string>
-    <key>WallectConnectV2ProjectKey</key>
+	<key>UnstoppableDomainsApiKey</key>
+	<string>${unstoppable_domains_api_key}</string>
+	<key>WallectConnectV2ProjectKey</key>
 	<string>${wallet_connect_v2_project_key}</string>
 </dict>
 </plist>

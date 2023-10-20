@@ -31,8 +31,8 @@ struct SingleCoinPriceView: View {
                     Chart {
                         ForEach(chartPoints) { point in
                             LineMark(
-                                x: .value("Date", point.date),
-                                y: .value("Price", point.value)
+                                x: .value(String("Date"), point.date),
+                                y: .value(String("Price"), point.value)
                             )
                         }
                     }

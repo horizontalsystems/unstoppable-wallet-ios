@@ -1,0 +1,143 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "single_coin_price.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Displays price for certain coin"
+          }
+        }
+      }
+    },
+    "single_coin_price.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coin Price"
+          }
+        }
+      }
+    },
+    "sort_type.highest_cap" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Highest Cap"
+          }
+        }
+      }
+    },
+    "sort_type.highest_volume" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Highest Volume"
+          }
+        }
+      }
+    },
+    "sort_type.lowest_cap" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lowest Cap"
+          }
+        }
+      }
+    },
+    "sort_type.lowest_volume" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lowest Volume"
+          }
+        }
+      }
+    },
+    "sort_type.top_gainers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Gainers"
+          }
+        }
+      }
+    },
+    "sort_type.top_losers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Losers"
+          }
+        }
+      }
+    },
+    "top_coins.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Displays price for top coins"
+          }
+        }
+      }
+    },
+    "top_coins.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Coins"
+          }
+        }
+      }
+    },
+    "watchlist.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Displays price coins in watchlist"
+          }
+        }
+      }
+    },
+    "watchlist.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your watchlist is empty"
+          }
+        }
+      }
+    },
+    "watchlist.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Watchlist"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
