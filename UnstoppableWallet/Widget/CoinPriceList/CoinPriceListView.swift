@@ -44,12 +44,12 @@ struct CoinPriceListView: View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
                 Text(entry.mode.title)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.themeSubhead1)
                     .foregroundColor(.themeLeah)
 
-                Text(entry.sortType)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                Spacer()
+
+                Text(title(sortType: entry.sortType))
                     .font(.themeSubhead2)
                     .foregroundColor(.themeGray)
             }
@@ -82,7 +82,7 @@ struct CoinPriceListView: View {
                     EmptyView()
                 }
 
-                Text("Your watchlist is empty.")
+                Text("watchlist.empty")
                     .multilineTextAlignment(.center)
                     .font(.themeSubhead2)
                     .foregroundColor(.themeGray)
@@ -117,21 +117,22 @@ struct CoinPriceListView: View {
             VStack(spacing: 1) {
                 HStack(spacing: .margin16) {
                     Text(item.code.uppercased())
-                        .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.themeSubhead1)
                         .foregroundColor(.themeLeah)
 
+                    Spacer()
+
                     Text(item.price)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
                         .font(.themeSubhead1)
                         .foregroundColor(.themeLeah)
                 }
 
                 HStack(spacing: .margin16) {
                     Text(item.name)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.themeSubhead2)
                         .foregroundColor(.themeGray)
+
+                    Spacer()
 
                     Text(item.priceChange)
                         .font(.themeSubhead2)
@@ -151,6 +152,17 @@ struct CoinPriceListView: View {
             Circle()
                 .fill(Color.themeGray)
                 .frame(width: .iconSize32, height: .iconSize32)
+        }
+    }
+
+    private func title(sortType: SortType) -> LocalizedStringKey {
+        switch sortType {
+        case .highestCap, .unknown: return "sort_type.highest_cap"
+        case .lowestCap: return "sort_type.lowest_cap"
+        case .highestVolume: return "sort_type.highest_volume"
+        case .lowestVolume: return "sort_type.lowest_volume"
+        case .topGainers: return "sort_type.top_gainers"
+        case .topLosers: return "sort_type.top_losers"
         }
     }
 }

@@ -16,7 +16,7 @@ struct CoinPriceListProvider: IntentTimelineProvider {
         return CoinPriceListEntry(
             date: Date(),
             mode: mode,
-            sortType: "Highest Cap",
+            sortType: .highestCap,
             maxItemCount: count,
             items: (1 ... count).map { index in
                 CoinPriceListEntry.Item(
@@ -93,7 +93,7 @@ struct CoinPriceListProvider: IntentTimelineProvider {
         return CoinPriceListEntry(
             date: Date(),
             mode: mode,
-            sortType: title(sortType: sortType),
+            sortType: sortType,
             maxItemCount: limit,
             items: coins.map { coin in
                 CoinPriceListEntry.Item(
@@ -107,16 +107,5 @@ struct CoinPriceListProvider: IntentTimelineProvider {
                 )
             }
         )
-    }
-
-    private func title(sortType: SortType) -> String {
-        switch sortType {
-        case .highestCap, .unknown: return "Highest Cap"
-        case .lowestCap: return "Lowest Cap"
-        case .highestVolume: return "Highest Volume"
-        case .lowestVolume: return "Lowest Volume"
-        case .topGainers: return "Top Gainers"
-        case .topLosers: return "Top Losers"
-        }
     }
 }
