@@ -657,7 +657,7 @@
 "market.advanced_search.liquidity" = "Ликвидность DEX";
 "market.advanced_search.blockchains" = "Блокчейны";
 "market.advanced_search.price_period" = "Ценовой период";
-"market.advanced_search.price_change" = "Изменение цены";
+"market.advanced_search.price_change" = "По изменению цены (%)";
 
 "market.advanced_search.outperformed_btc" = "Обошел BTC";
 "market.advanced_search.outperformed_eth" = "Обошел ETH";
@@ -704,7 +704,7 @@
 "market.global.total_market_cap.title" = "Полная рын. кап.";
 "market.global.total_market_cap.description" = "Общая рыночная стоимость всех криптовалют";
 
-"market.global.volume_24h.title" = "Объем Торгов (24ч)";
+"market.global.volume_24h.title" = "Объем торгов (24ч)";
 "market.global.volume_24h.description" = "24-часовой объем крипторынка";
 
 "market.global.defi_cap.title" = "Капитализация DeFi";
@@ -1115,7 +1115,7 @@
 "backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
 
-"backup_app.backup.disclaimer.cloud.title" = "Резерв. копирование /nв iCloud";
+"backup_app.backup.disclaimer.cloud.title" = "Резерв. копирование в iCloud";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud - это облачный сервис для хранения данных, предоставляемый компанией Apple. Важно знать, что ваши данные резервной копии будут сохранены на серверах Apple.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
 "backup_app.backup.disclaimer.file.title" = "Резерв. копирование в файл";
