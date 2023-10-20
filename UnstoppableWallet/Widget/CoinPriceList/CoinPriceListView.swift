@@ -93,10 +93,13 @@ struct CoinPriceListView: View {
             GeometryReader { proxy in
                 ListSection {
                     ForEach(entry.items, id: \.uid) { item in
-                        rowBuilder(item)
-                            .padding(.horizontal, .margin16)
-                            .frame(maxHeight: .infinity)
-                            .frame(maxHeight: proxy.size.height / CGFloat(entry.maxItemCount))
+                        Link(destination: URL(string: "unstoppable.money://coin/\(item.uid)")!) {
+                            rowBuilder(item)
+                                .padding(.horizontal, .margin16)
+                                .frame(maxHeight: .infinity)
+                                .frame(maxHeight: proxy.size.height / CGFloat(entry.maxItemCount))
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
 
                     if entry.items.count < entry.maxItemCount {
