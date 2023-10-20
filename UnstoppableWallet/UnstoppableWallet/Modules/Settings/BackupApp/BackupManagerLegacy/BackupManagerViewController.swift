@@ -5,9 +5,13 @@ import ThemeKit
 import UIKit
 
 class BackupManagerViewController: ThemeViewController {
+    private let viewModel: BackupManagerViewModel
     private let tableView = SectionsTableView(style: .grouped)
 
-    override init() {
+    private var cancellables = Set<AnyCancellable>()
+
+    init(viewModel: BackupManagerViewModel) {
+        self.viewModel = viewModel
         super.init()
 
         hidesBottomBarWhenPushed = true
@@ -34,6 +38,18 @@ class BackupManagerViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
+        viewModel
+            .openUnlockPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] event in self?.onUnlock() })
+            .store(in: &cancellables)
+
+        viewModel
+            .openBackupPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] event in self?.onCreate() })
+            .store(in: &cancellables)
+
         tableView.buildSections()
     }
 
@@ -47,13 +63,21 @@ class BackupManagerViewController: ThemeViewController {
         present(viewController, animated: true)
     }
 
+    private func onUnlock() {
+        let viewController = UnlockModule.moduleUnlockView { [weak self] in
+                self?.viewModel.unlock()
+            }.toNavigationViewController()
+
+        present(viewController, animated: true)
+    }
+
     private func onCreate() {
         let viewController = BackupAppModule
             .view { [weak self] in
                 self?.presentedViewController?.dismiss(animated: true)
             }.toNavigationViewController()
 
-        present(viewController, animated: true)
+        self.present(viewController, animated: true)
     }
 }
 
@@ -85,7 +109,7 @@ extension BackupManagerViewController: SectionsDataSource {
                         isFirst: false,
                         isLast: true
                     ) { [weak self] in
-                        self?.onCreate()
+                        self?.viewModel.onTapBackup()
                     },
                 ]
             ),

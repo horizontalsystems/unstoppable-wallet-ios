@@ -1,5 +1,7 @@
-import Foundation
 import CommonCrypto
+import ComponentKit
+import CryptoSwift
+import Foundation
 import HsCryptoKit
 import HsExtensions
 import Scrypt
@@ -24,18 +26,18 @@ class BackupCryptoHelper {
         key.withUnsafeBytes { key in
             _ = try? iv.withUnsafeBytes { iv in
                 let status = CCCryptorCreateWithMode(
-                        option,
-                        CCMode(kCCModeCTR),
-                        CCAlgorithm(kCCAlgorithmAES),
-                        CCPadding(ccNoPadding),
-                        iv.baseAddress!,
-                        key.baseAddress!,
-                        key.count,
-                        nil,
-                        0,
-                        0,
-                        0,
-                        cryptorPointer
+                    option,
+                    CCMode(kCCModeCTR),
+                    CCAlgorithm(kCCAlgorithmAES),
+                    CCPadding(ccNoPadding),
+                    iv.baseAddress!,
+                    key.baseAddress!,
+                    key.count,
+                    nil,
+                    0,
+                    0,
+                    0,
+                    cryptorPointer
                 )
                 guard status == kCCSuccess else {
                     throw CodingError.cryptError
@@ -55,29 +57,53 @@ class BackupCryptoHelper {
 
         return Data(resultData)
     }
-
 }
 
 extension BackupCryptoHelper {
-
     public static func generateInitialVector(len: Int = 16) -> Data {
-        Data(Array(0..<len).map { _ in UInt8.random(in: UInt8.min...UInt8.max) })
+        Data(Array(0 ..< len).map { _ in UInt8.random(in: UInt8.min ... UInt8.max) })
     }
 
-    public static func scrypt(pass: Data, kdf: KdfParams) throws -> Data {
-        try Data(Scrypt.scrypt(password: pass.bytes, salt: kdf.salt.bytes, length: kdf.dklen, N: kdf.n, r: kdf.r, p: kdf.p))
+    public static func makeScrypt(pass: Data, salt: Data, dkLen: Int, N: UInt64, r: UInt32, p: UInt32) throws -> Data {
+        let result: [UInt8]
+        #if DEBUG
+            result = try scrypt(
+                password: pass.bytes,
+                salt: salt.bytes,
+                length: dkLen,
+                N: N,
+                r: r,
+                p: p
+            )
+        #else
+            let scryptVar = try Scrypt(
+                password: pass.bytes,
+                salt: salt.bytes,
+                dkLen: dkLen,
+                N: Int(N),
+                r: Int(r),
+                p: Int(p)
+            )
+            result = try scryptVar.calculate()
+        #endif
+        return Data(result)
     }
 
     public static func AES128(operation: Operation, ivHex: String, pass: String, message: Data, kdf: KdfParams) throws -> Data {
         do {
-            let key = try BackupCryptoHelper.scrypt(
-                    pass: pass.hs.data,
-                    kdf: kdf)
+            let key = try BackupCryptoHelper.makeScrypt(
+                pass: pass.hs.data,
+                salt: kdf.salt.hs.data,
+                dkLen: kdf.dklen,
+                N: kdf.n,
+                r: kdf.r,
+                p: kdf.p
+            )
             let ivData = try ivData(hex: ivHex)
 
             return try cryptCTR(iv: ivData, key: key, data: message, option: operation.ccValue)
         } catch {
-            if error is ScryptError {
+            if error is PKCS5.PBKDF2.Error || error is ScryptError {
                 throw CodingError.cantCreateScryptKey(error)
             }
             throw error
@@ -85,9 +111,14 @@ extension BackupCryptoHelper {
     }
 
     public static func mac(pass: String, message: Data, kdf: KdfParams) throws -> Data {
-        let key = try BackupCryptoHelper.scrypt(
+        let key = try BackupCryptoHelper.makeScrypt(
                 pass: pass.hs.data,
-                kdf: kdf)
+                salt: kdf.salt.hs.data,
+                dkLen: kdf.dklen,
+                N: kdf.n,
+                r: kdf.r,
+                p: kdf.p
+        )
         let startIndex = kdf.dklen / 2
         let lastHalfKey = key.suffix(from: startIndex)
         let data = lastHalfKey + message
@@ -99,11 +130,9 @@ extension BackupCryptoHelper {
         let sha3 = try mac(pass: pass, message: message, kdf: kdf)
         return macHex == sha3.hs.hex
     }
-
 }
 
 extension BackupCryptoHelper {
-
     enum Operation {
         case encrypt
         case decrypt
@@ -122,5 +151,4 @@ extension BackupCryptoHelper {
         case ivDataError
         case cryptError
     }
-
 }

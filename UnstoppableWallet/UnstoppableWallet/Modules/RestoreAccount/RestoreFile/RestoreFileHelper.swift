@@ -9,6 +9,10 @@ struct RestoreFileHelper {
             return .init(name: filename, source: .wallet(oneWallet))
         }
 
+        if let oneWalletV2 = try? JSONDecoder().decode(RestoreCloudModule.RestoredBackup.self, from: data) {
+            return .init(name: oneWalletV2.name, source: .wallet(oneWalletV2.walletBackup))
+        }
+
         if let fullBackup = try? JSONDecoder().decode(FullBackup.self, from: data) {
             return .init(name: filename, source: .full(fullBackup))
         }
