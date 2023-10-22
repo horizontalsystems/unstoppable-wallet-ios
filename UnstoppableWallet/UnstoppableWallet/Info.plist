@@ -143,5 +143,7 @@
 	<string>${open_sea_api_key}</string>
     <key>UnstoppableDomainsApiKey</key>
     <string>${unstoppable_domains_api_key}</string>
+    <key>oneInchApiKey</key>
+    <string>${one_inch_api_key}</string>
 </dict>
 </plist>
