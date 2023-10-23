@@ -62,5 +62,6 @@ struct SingleCoinPriceView: View {
             }
         }
         .padding(.margin16)
+        .widgetURL(URL(string: "unstoppable.money://coin/\(entry.uid)")!)
     }
 }
