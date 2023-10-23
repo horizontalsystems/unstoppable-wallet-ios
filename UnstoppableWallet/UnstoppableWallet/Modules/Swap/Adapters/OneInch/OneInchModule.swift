@@ -13,7 +13,8 @@ class OneInchModule {
             return nil
         }
 
-        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKit) else {
+        guard let apiKey = AppConfig.oneInchApiKey,
+              let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKit, apiKey: apiKey) else {
             return nil
         }
 

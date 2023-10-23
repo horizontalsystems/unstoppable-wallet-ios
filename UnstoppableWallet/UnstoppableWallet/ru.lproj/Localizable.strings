@@ -321,10 +321,10 @@
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
 "balance.watch_empty.description" = "У кошелька с этим адресом нет баланса";
 "balance.sort_by" = "Сортировать";
-"balance.sort.header" = "Rank them like";
-"balance.sort.valueHighToLow" = "Баланс";
-"balance.sort.az" = "Название";
-"balance.sort.price_change" = "По изменению цены (%)";
+"balance.sort.header" = "Сортировать";
+"balance.sort.valueHighToLow" = "по балансу";
+"balance.sort.az" = "по названию";
+"balance.sort.price_change" = "по изменению цены (%)";
 
 "balance_error.change_source" = "Изменить источник";
 "balance_error.sync_error" = "Ошибка синхронизации";
@@ -514,31 +514,31 @@
 "swap.price_impact" = "Отклонение от рын. цены";
 "swap.maximum_paid" = "Макс. сумма";
 "swap.minimum_got" = "Гарантированная сумма";
-"swap.estimate_short" = "(ballpark)";
-"swap.minimum_short" = "(low end)";
-"swap.maximum_short" = "(high end)";
+"swap.estimate_short" = "(прим)";
+"swap.minimum_short" = "(мин)";
+"swap.maximum_short" = "(макс)";
 
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Допустимое отклонение";
-"swap.advanced_settings.slippage.footer" = "If prices dip more than this, no deal!";
+"swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более чем на этот процент";
 "swap.advanced_settings.deadline" = "Срок выполнения транзакции";
-"swap.advanced_settings.deadline.footer" = "No dilly-dallying! Time's ticking.";
-"swap.advanced_settings.recipient.footer" = "Where's the money going after the swap?";
-"swap.advanced_settings.deadline_minute" = "Hurry up, %@ min!";
+"swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если она останется в ожидании дольше этого времени.";
+"swap.advanced_settings.recipient.footer" = "После операции обмена сумма бдует переведена на указанный адрес";
+"swap.advanced_settings.deadline_minute" = "%@ мин!";
 "swap.advanced_settings.recipient_address" = "Адрес получателя";
-"swap.advanced_settings.warning.unusual_slippage" = "Watch out! Others might jump the line!";
-"swap.advanced_settings.service_fee_description" = "A small thank you fee for our service. Usually just a tiny 0.3% or 0.6%!";
-"swap.advanced_settings.error.lower_slippage" = "This might flop.";
-"swap.advanced_settings.error.higher_slippage" = "Can't go over %@%%, buddy!";
-"swap.advanced_settings.error.invalid_address" = "Wonky address alert!";
+"swap.advanced_settings.warning.unusual_slippage" = "Вашу транзакцию могут вытеснить (frontrun).";
+"swap.advanced_settings.service_fee_description" = "Комиссия за услугу обмена на платформе обычно 0.3% или 0.6%!";
+"swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не выполнится успешно.";
+"swap.advanced_settings.error.higher_slippage" = "Допустимая величина проскальзывания не может быть больше %@%%.";
+"swap.advanced_settings.error.invalid_address" = "Неверный адрес";
 "swap.advanced_settings.error.invalid_slippage" = "Недействительное отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недействительный срок выполнения";
 
-"swap.one_inch.error.cannot_estimate" = "Math's a bit tricky.";
-"swap.one_inch.error.cannot_estimate.info" = "Check your stash. Maybe up the wiggle room and try again. Give it another go in 3...";
-"swap.one_inch.error.insufficient_liquidity" = "Pool's a bit shallow!";
-"swap.one_inch.error.insufficient_liquidity.info" = "Not enough in the pot. Lower the ante.";
+"swap.one_inch.error.cannot_estimate" = "Ошибка оценки";
+"swap.one_inch.error.cannot_estimate.info" = "Проверьте баланс, чтобы убедиться, что у вас достаточно %@ для покрытия комиссии. Или попробуйте увеличить сумму допустимого проскальзывания и повторите попытку. Автоматическая попытка через 3 секунды...";
+"swap.one_inch.error.insufficient_liquidity" = "Недостаточная ликвидность";
+"swap.one_inch.error.insufficient_liquidity.info" = "Вероятно, нет достаточной ликвидности для выполнения этой сделки. Попробуйте уменьшить сумму.";
 
 "swap.service" = "Сервис";
 "swap.service.title" = "Сервис";
@@ -549,87 +549,87 @@
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Slide to the deal!";
+"swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
-"swap.confirmation.impact_too_high" = "Hold up! %@ says this deal's a dud. Check out %@ instead!";
-"swap.confirmation.impact_warning" = "Watch out! It's a wild ride!";
+"swap.confirmation.impact_too_high" = "%@ отключил действие обмена для этой сделки, потому что вы получаете крайне невыгодную цену. Это связано с крайне низкой ликвидностью.Если вы все равно хотите выполнить обмен, используйте вместо этого веб-сайт %@.";
+"swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
 
-"swap.confirmation.minimum_received" = "You'll at least get";
-"swap.confirmation.maximum_sent" = "At most you'll send";
+"swap.confirmation.minimum_received" = "Получено минимум";
+"swap.confirmation.maximum_sent" = "Максимальная трата";
 
-"swap.dex_info.description" = "This swanky service is by %@, the big shots in decentralized trading on the %@ chain. 100% automated, 100% reliable!";
-"swap.dex_info.header_dex_related" = "%@Related";
+"swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
+"swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Разрешение";
-"swap.dex_info.content_allowance" = "How much the exchange can use on your behalf. Gotta get this before the main event.";
+"swap.dex_info.content_allowance" = "Сумма, которую exchange может потратить от имени пользователя при выполнении обмена токенов. Действующая транзакция, устанавливающая достаточный уровень допустимости, необходима для того, чтобы транзакция обмена была осуществлена.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
-"swap.dex_info.content_price_impact" = "How wild the price might get. Bigger swaps, bigger waves.";
-"swap.dex_info.header_swap_fee" = "Thank you fee";
-"swap.dex_info.content_swap_fee" = "Our little thank you note. Usually 0.3% or 0.6%.";
+"swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
+"swap.dex_info.header_swap_fee" = "Комиссия за обмен";
+"swap.dex_info.content_swap_fee" = "Плата за услугу обмена на платформе, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
 "swap.dex_info.header_guaranteed_amount" = "Гарантированная сумма";
-"swap.dex_info.content_guaranteed_amount" = "The least you're gonna get after swapping.";
-"swap.dex_info.header_maximum_spend" = "Max Spend";
-"swap.dex_info.content_maximum_spend" = "The most you're gonna use in the swap.";
+"swap.dex_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
+"swap.dex_info.header_maximum_spend" = "Максимальная трата";
+"swap.dex_info.content_maximum_spend" = "Максимальная сумма, которую получит пользователь в результате обмена.";
 
-"swap.dex_info.header_other" = "Other stuff";
-"swap.dex_info.header_transaction_fee" = "The cost of doing business";
-"swap.dex_info.content_transaction_fee" = "What you're paying to use the %@ chain. %@ stuff might be pricier.";
-"swap.dex_info.header_transaction_speed" = "How fast it goes";
-"swap.dex_info.content_transaction_speed" = "Pay more, go faster. It's that simple.";
+"swap.dex_info.header_other" = "Другое";
+"swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
+"swap.dex_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне %@. Стоимость транзакций, связанных с %@, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
+"swap.dex_info.header_transaction_speed" = "Скорость транзакции";
+"swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также верно и обратное.";
 
-"swap.dex_info.link_button" = "Check out %@";
+"swap.dex_info.link_button" = "%@ Сайт";
 
 // Market
 
 "market.tab_bar_item" = "Рынки";
 "market.title" = "Рынки";
 "market.category.overview" = "Обзор";
-"market.category.posts" = "Real News, Not Fake!";
+"market.category.posts" = "Новости";
 "market.category.watchlist" = "Избранное";
-"market.total_market_cap" = "The Big Money Cap";
+"market.total_market_cap" = "Общая капитализация";
 "market.24h_volume" = "Объем торгов (24ч)";
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
-"market.project_has_no_coin" = "No coin? Sad!";
+"market.project_has_no_coin" = "У этого проекта нет токена";
 
-"market.top.section.header.see_all" = "See Everything!";
-"market.top.section.header.top_gainers" = "Total Winners";
-"market.top.section.header.top_losers" = "Not Winning… Yet!";
-"market.top.section.header.top_sectors" = "Top of the Tops";
-"market.top.section.header.news" = "Real News, Not Fake!";
-"market.top.volume.title" = "Volume? Huge!";
-"market.top.market_cap.title" = "Massive MCap";
+"market.top.section.header.see_all" = "Посмотреть всё";
+"market.top.section.header.top_gainers" = "Взлеты";
+"market.top.section.header.top_losers" = "Падения";
+"market.top.section.header.top_sectors" = "Топ секторы";
+"market.top.section.header.news" = "Новости";
+"market.top.volume.title" = "Объем";
+"market.top.market_cap.title" = "Цена";
 "market.top.diluted_market_cap.title" = "Dilluted MCap";
 
-"market.market_field.mcap" = "Massive MCap";
-"market.market_field.vol" = "Volume? Huge!";
+"market.market_field.mcap" = "Рын. кап";
+"market.market_field.vol" = "Объем";
 
-"market.tvl.market_field.value" = "Big Bucks";
-"market.tvl.market_field.diff" = "Up or Down?";
+"market.tvl.market_field.value" = "USD";
+"market.tvl.market_field.diff" = "Процент";
 
-"market.tvl.platform_field.all" = "All of 'em";
+"market.tvl.platform_field.all" = "Все";
 
 "market.sort_by" = "Сортировать";
 
-"market.top.title" = "Best Coins Ever";
-"market.top.description" = "Top Coins, because we only deal with the best!";
+"market.top.title" = "Лучшие токены";
+"market.top.description" = "Топ токенов по рыночной капитализации";
 
-"market.top.highest_cap" = "The Richest Cap";
-"market.top.lowest_cap" = "Room for Growth Cap";
-"market.top.highest_volume" = "Lots of Noise";
-"market.top.lowest_volume" = "Quiet Winners";
-"market.top.top_gainers" = "Total Winners";
-"market.top.top_losers" = "Not Winning… Yet!";
-"market.top.top_collections" = "Top Art Stash";
-"market.top.floor_price" = "Floor";
-"market.top.top_platforms" = "Best Stages";
-"market.top.protocols" = "The Rules";
+"market.top.highest_cap" = "Наивысшая кап.";
+"market.top.lowest_cap" = "Наименьшая кап.";
+"market.top.highest_volume" = "Наивысший объем";
+"market.top.lowest_volume" = "Наименьший объем";
+"market.top.top_gainers" = "Взлеты";
+"market.top.top_losers" = "Падения";
+"market.top.top_collections" = "Топ NFT коллекции";
+"market.top.floor_price" = "Цена";
+"market.top.top_platforms" = "Топ платформаы";
+"market.top.protocols" = "Протоколы";
 
-"top_platforms.title" = "Platform Ranks";
-"top_platforms.description" = "The best places to build greatness.";
+"top_platforms.title" = "Рейтинг платформ";
+"top_platforms.description" = "Лучшие ведущие блокчейн-платформы кумулятивного рынка проектов";
 
 "top_platform.title" = "%@ Экосистема";
-"top_platform.description" = "Where the money's at on the %@ stage";
+"top_platform.description" = "Капитализация рынка всех протоколов на блокчейне %@ ";
 
 "market_discovery.title" = "Токены";
 "market_discovery.filters" = "Фильтры";
@@ -637,7 +637,7 @@
 "market_discovery.top_coins" = "Топ токены";
 "market_discovery.not_found" = "Ничего не найдено";
 
-"market_watchlist.empty.caption" = "It's lonely here.";
+"market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
 "market.search.title" = "Поиск";
 "market.search.empty_text" = "Ничего не найдено";

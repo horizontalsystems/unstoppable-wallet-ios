@@ -58,12 +58,12 @@ extension BackupCrypto {
         }
 
         // validation passphrase
-        let isValid = (try? BackupCryptoHelper.isValid(
+        let isValid = try BackupCryptoHelper.isValid(
                 macHex: mac,
                 pass: passphrase,
                 message: cipherText.hs.data,
                 kdf: kdfParams
-        )) ?? false
+        )
         guard isValid else {
             throw RestoreCloudModule.RestoreError.invalidPassword
         }

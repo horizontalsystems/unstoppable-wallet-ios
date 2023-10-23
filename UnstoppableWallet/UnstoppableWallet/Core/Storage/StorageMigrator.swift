@@ -658,8 +658,9 @@ class StorageMigrator {
             }
 
             for old in oldWallets {
-                let record = EnabledWallet(
+                let record = EnabledWallet_v_0_34(
                         tokenQueryId: tokenQuery(coinTypeId: old.coinId).id,
+                        coinSettingsId: old.coinSettingsId,
                         accountId: old.accountId,
                         coinName: old.coinName,
                         coinCode: old.coinCode,
@@ -780,7 +781,7 @@ class StorageMigrator {
                 t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
                 t.column(EnabledWalletCache.Columns.balances.name, .text).notNull()
 
-                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache_v_0_36.Columns.accountId.name], onConflict: .replace)
+                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
             }
         }
 

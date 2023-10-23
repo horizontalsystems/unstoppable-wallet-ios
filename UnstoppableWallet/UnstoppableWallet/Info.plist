@@ -101,6 +101,8 @@
 	</array>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
+    <key>oneInchApiKey</key>
+    <string>${one_inch_api_key}</string>
 	<key>OpenSeaApiKey</key>
 	<string>${open_sea_api_key}</string>
 	<key>OptimismEtherscanApiKey</key>
