@@ -43,6 +43,7 @@ class CoinPageViewController: ThemeViewController {
         title = viewModel.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tabsView)
         tabsView.snp.makeConstraints { maker in
