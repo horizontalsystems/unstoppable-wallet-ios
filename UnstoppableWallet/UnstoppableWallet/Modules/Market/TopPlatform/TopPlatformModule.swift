@@ -2,7 +2,6 @@ import UIKit
 import ThemeKit
 import MarketKit
 import Chart
-import LanguageKit
 
 struct TopPlatformModule {
 

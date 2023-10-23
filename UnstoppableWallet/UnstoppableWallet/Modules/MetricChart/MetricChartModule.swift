@@ -1,7 +1,6 @@
 import Combine
 import UIKit
 import Chart
-import LanguageKit
 import MarketKit
 
 protocol IMetricChartFetcher {

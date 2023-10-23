@@ -2,7 +2,6 @@ import RxSwift
 import RxRelay
 import MarketKit
 import HdWalletKit
-import LanguageKit
 
 class CreateAccountService {
     private let accountFactory: AccountFactory

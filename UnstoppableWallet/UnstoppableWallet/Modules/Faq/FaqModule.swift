@@ -1,6 +1,5 @@
 import Foundation
 import UIKit
-import LanguageKit
 
 struct FaqModule {
 

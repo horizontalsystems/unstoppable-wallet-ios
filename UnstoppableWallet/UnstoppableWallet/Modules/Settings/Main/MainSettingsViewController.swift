@@ -299,7 +299,7 @@ class MainSettingsViewController: ThemeViewController {
                 id: "language",
                 height: .heightCell48,
                 action: { [weak self] in
-                    let module = LanguageSettingsRouter.module { MainModule.instance(presetTab: .settings) }
+                    let module = LanguageSettingsModule.view().toViewController(title: "settings.language".localized)
                     self?.navigationController?.pushViewController(module, animated: true)
                 }
             ),

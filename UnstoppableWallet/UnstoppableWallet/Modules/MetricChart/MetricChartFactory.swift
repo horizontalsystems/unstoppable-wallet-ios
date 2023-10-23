@@ -1,6 +1,5 @@
 import Foundation
 import MarketKit
-import LanguageKit
 import Chart
 
 class MetricChartFactory {

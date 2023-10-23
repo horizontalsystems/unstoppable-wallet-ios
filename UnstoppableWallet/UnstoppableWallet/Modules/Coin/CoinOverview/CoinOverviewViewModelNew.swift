@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 import HsExtensions
-import LanguageKit
 import MarketKit
 
 class CoinOverviewViewModelNew: ObservableObject {

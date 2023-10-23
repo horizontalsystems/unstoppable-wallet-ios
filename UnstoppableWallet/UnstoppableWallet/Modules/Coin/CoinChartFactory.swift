@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 import Chart
-import LanguageKit
 import MarketKit
 
 class CoinChartFactory {
