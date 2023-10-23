@@ -28,11 +28,11 @@ class EvmMethodLabel: Record, ImmutableMappable {
         super.init()
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         methodId = row[Columns.methodId]
         label = row[Columns.label]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {

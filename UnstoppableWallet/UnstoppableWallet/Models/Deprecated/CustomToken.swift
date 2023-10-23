@@ -17,13 +17,13 @@ class CustomToken: Record {
         case coinName, coinCode, coinTypeId, decimals
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         coinName = row[Columns.coinName]
         coinCode = row[Columns.coinCode]
         coinTypeId = row[Columns.coinTypeId]
         decimals = row[Columns.decimals]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
