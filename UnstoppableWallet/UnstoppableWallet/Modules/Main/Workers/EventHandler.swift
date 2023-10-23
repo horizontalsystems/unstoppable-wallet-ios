@@ -31,6 +31,7 @@ extension EventHandler: IEventHandler {
         for handler in eventHandlers {
             do {
                 try await handler.handle(event: event, eventType: eventType)
+                return
             } catch {
                 lastError = error
             }
@@ -50,9 +51,9 @@ extension EventHandler: IEventHandler {
 extension EventHandler {
     struct EventType: OptionSet {
         let rawValue: UInt8
-        static let all: EventType = [.walletConnectDeepLink, .walletConnectUri, .address]
+        static let all: EventType = [.deepLink, .walletConnectUri, .address]
 
-        static let walletConnectDeepLink = EventType(rawValue: 1 << 0)
+        static let deepLink = EventType(rawValue: 1 << 0)
         static let walletConnectUri = EventType(rawValue: 1 << 1)
         static let address = EventType(rawValue: 1 << 2)
     }
