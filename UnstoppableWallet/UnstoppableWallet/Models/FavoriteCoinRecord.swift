@@ -18,10 +18,10 @@ class FavoriteCoinRecord: Record {
         case coinUid
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         coinUid = row[Columns.coinUid]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {

@@ -19,11 +19,11 @@ class SyncerState: Record {
         "syncerStates"
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         key = row[Columns.key]
         value = row[Columns.value]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {

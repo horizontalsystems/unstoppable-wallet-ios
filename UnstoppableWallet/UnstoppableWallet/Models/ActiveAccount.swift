@@ -19,11 +19,11 @@ class ActiveAccount: Record {
         case level, accountId
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         level = row[Columns.level]
         accountId = row[Columns.accountId]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
