@@ -143,7 +143,7 @@ extension WalletConnectAppShowView {
 }
 
 extension WalletConnectAppShowView: IEventHandler {
-    var eventType: EventHandler.EventType { [.walletConnectDeepLink, .walletConnectUri] }
+    var eventType: EventHandler.EventType { [.deepLink, .walletConnectUri] }
 
     func handle(event: Any, eventType _: EventHandler.EventType) async throws {
         var uri: String?

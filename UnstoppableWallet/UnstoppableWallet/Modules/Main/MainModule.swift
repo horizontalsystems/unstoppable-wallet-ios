@@ -49,7 +49,9 @@ struct MainModule {
         let viewController = MainViewController(viewModel: viewModel)
 
         let deepLinkHandler = WalletConnectAppShowModule.handler(parentViewController: viewController)
+        let widgetCoinHandler = WidgetCoinAppShowModule.handler(parentViewController: viewController)
         eventHandler.append(handler: deepLinkHandler)
+        eventHandler.append(handler: widgetCoinHandler)
 
         App.shared.lockDelegate.viewController = viewController
 
