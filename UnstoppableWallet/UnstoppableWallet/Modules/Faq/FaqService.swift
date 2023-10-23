@@ -1,7 +1,6 @@
 import Foundation
 import RxSwift
 import HsToolKit
-import LanguageKit
 
 class FaqService {
     private let repository: FaqRepository

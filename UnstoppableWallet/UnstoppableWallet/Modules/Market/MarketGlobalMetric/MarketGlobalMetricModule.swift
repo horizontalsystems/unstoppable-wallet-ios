@@ -1,7 +1,6 @@
 import UIKit
 import ThemeKit
 import Chart
-import LanguageKit
 
 struct MarketGlobalMetricModule {
 

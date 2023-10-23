@@ -2,7 +2,6 @@ import Foundation
 import HdWalletKit
 import RxSwift
 import RxRelay
-import LanguageKit
 
 class RestoreMnemonicService {
     private let languageManager: LanguageManager
