@@ -72,7 +72,7 @@ class WalletViewModel {
         case .loading: state = .loading
         case let .loaded(items):
             if items.isEmpty, !service.cexAccount {
-                state = service.watchAccount ? .watchEmpty : .empty
+                state = .empty
             } else {
                 state = .list(viewItems: items.map { _viewItem(item: $0) })
             }
@@ -94,7 +94,7 @@ class WalletViewModel {
         nftVisible = activeAccount?.type.supportsNft ?? false
 
         controlViewItem = activeAccount.map {
-            ControlViewItem(watchVisible: $0.watchAccount, coinManagerVisible: !$0.cexAccount && !$0.watchAccount)
+            ControlViewItem(watchVisible: $0.watchAccount, coinManagerVisible: !$0.cexAccount)
         }
 
         if let account = activeAccount {
@@ -202,7 +202,7 @@ extension WalletViewModel {
     }
 
     var swipeActionsEnabled: Bool {
-        !service.watchAccount && !service.cexAccount
+        !service.cexAccount
     }
 
     var lastCreatedAccount: Account? {

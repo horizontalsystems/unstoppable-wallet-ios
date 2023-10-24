@@ -25,7 +25,6 @@ class WalletViewController: ThemeViewController {
     private let spinner = HUDActivityView.create(with: .medium24)
 
     private let emptyView = PlaceholderView()
-    private let watchEmptyView = PlaceholderView()
     private let failedView = PlaceholderView()
     private let invalidApiKeyView = PlaceholderView()
 
@@ -132,14 +131,6 @@ class WalletViewController: ThemeViewController {
             target: self,
             action: #selector(onTapAddCoin)
         )
-
-        view.addSubview(watchEmptyView)
-        watchEmptyView.snp.makeConstraints { maker in
-            maker.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        watchEmptyView.image = UIImage(named: "empty_wallet_48")
-        watchEmptyView.text = "balance.watch_empty.description".localized
 
         view.addSubview(failedView)
         failedView.snp.makeConstraints { maker in
@@ -320,11 +311,6 @@ class WalletViewController: ThemeViewController {
         }
 
         switch state {
-        case .watchEmpty: watchEmptyView.isHidden = false
-        default: watchEmptyView.isHidden = true
-        }
-
-        switch state {
         case .syncFailed: failedView.isHidden = false
         default: failedView.isHidden = true
         }
@@ -354,7 +340,7 @@ class WalletViewController: ThemeViewController {
         self.sortBy = sortBy
 
         if isLoaded, let headerView = tableView.headerView(forSection: 1) as? WalletHeaderView {
-            headerView.bind(sortBy: sortBy)
+            headerView.set(sortByTitle: sortBy)
         }
     }
 
@@ -362,7 +348,7 @@ class WalletViewController: ThemeViewController {
         self.controlViewItem = controlViewItem
 
         if isLoaded, let controlViewItem, let headerView = tableView.headerView(forSection: 1) as? WalletHeaderView {
-            headerView.bind(controlViewItem: controlViewItem)
+            headerView.set(controlViewItem: controlViewItem)
         }
     }
 
@@ -643,13 +629,14 @@ extension WalletViewController: UITableViewDelegate {
 
     func tableView(_: UITableView, willDisplayHeaderView view: UIView, forSection _: Int) {
         if let headerView = view as? WalletHeaderView {
-            headerView.bind(sortBy: sortBy)
+            headerView.set(sortByTitle: sortBy)
+
             if let controlViewItem {
-                headerView.bind(controlViewItem: controlViewItem)
+                headerView.set(controlViewItem: controlViewItem)
             }
 
             headerView.onTapSortBy = { [weak self] in self?.openSortType() }
-            headerView.onTapAddCoin = { [weak self] in self?.openManageWallets() }
+            headerView.onTapSettings = { [weak self] in self?.openManageWallets() }
         }
     }
 
