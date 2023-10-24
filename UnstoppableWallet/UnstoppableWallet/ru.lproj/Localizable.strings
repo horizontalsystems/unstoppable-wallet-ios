@@ -17,7 +17,7 @@
 "button.retry" = "Повторить";
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
-"button.approve" = "Одобрить";
+"button.approve" = "Разрешить";
 "button.revoke" = "Отменить";
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
@@ -496,10 +496,10 @@
 "swap.advanced_settings" = "Настройки обмена";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Разрешение обмена";
-"swap.approve.description" = "Вы должны предоставить разрешение смарт-контракту для обмена заданным токеном от вашего имени. Это разрешение устанавливает сумму, которую может использовать смарт-контракт. Это не влияет на ваш баланс, но требует небольшой комиссии для выполнения транзакции на подтверждение.\n\nХотя это можно сделать по мере необходимости перед каждой сделкой, более дешево предварительно одобрить большую сумму для будущих сделок.";
+"swap.approve.description" = "Вы должны предоставить разрешение смарт-контракту для обмена заданным токеном от вашего имени. Это разрешение устанавливает сумму, которую может использовать смарт-контракт. Это не влияет на ваш баланс, но требует небольшой комиссии для выполнения транзакции на подтверждение.\n\nХотя это можно сделать по мере необходимости перед каждой сделкой, более дешево предварительно разрешить большую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
 "swap.approving_button" = "Разрешение...";
-"swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и одобрить новую сумму";
+"swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и разрешить новую сумму";
 "swap.revoking_button" = "Отмена...";
 "swap.not_available_button" = "Баланс N/А";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
@@ -939,7 +939,7 @@
 "transactions.all_blockchains" = "Все блокчейны";
 "transactions.all_coins" = "Все токены";
 "transactions.choose_coin" = "Выберите токен";
-"transactions.filter_all" = "All of 'em";
+"transactions.filter_all" = "Все";
 "transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
 "transactions.processing" = "В процессе";
@@ -950,7 +950,7 @@
 "transactions.send" = "Отправить";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
-"transactions.approve" = "Одобрить";
+"transactions.approve" = "Разрешить";
 "transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов контракта";
 "transactions.contract_creation" = "Создание контракта";
@@ -1688,7 +1688,7 @@
 "nft_collections.on_sale" = "В продаже";
 "nft_collections.empty" = "В вашем кошельке нет NFT";
 
-"top_nft_collections.title" = "Top Art Stash";
+"top_nft_collections.title" = "Топ NFT коллекции";
 "top_nft_collections.description" = "Популярные коллекции NFT по объему торгов.";
 
 // Nft Asset
