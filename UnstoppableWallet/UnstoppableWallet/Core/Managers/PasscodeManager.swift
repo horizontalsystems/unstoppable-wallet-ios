@@ -1,13 +1,12 @@
 import Combine
 import HsExtensions
-import StorageKit
 
 class PasscodeManager {
     private let separator = "|"
     private let passcodeKey = "pin_keychain_key"
 
     private let biometryManager: BiometryManager
-    private let secureStorage: ISecureStorage
+    private let keychainStorage: KeychainStorage
 
     private var passcodes = [String]()
 
@@ -15,11 +14,11 @@ class PasscodeManager {
     @DistinctPublished private(set) var isPasscodeSet = false
     @DistinctPublished private(set) var isDuressPasscodeSet = false
 
-    init(biometryManager: BiometryManager, secureStorage: ISecureStorage) {
+    init(biometryManager: BiometryManager, keychainStorage: KeychainStorage) {
         self.biometryManager = biometryManager
-        self.secureStorage = secureStorage
+        self.keychainStorage = keychainStorage
 
-        if let rawPasscodes: String = secureStorage.value(for: passcodeKey), !rawPasscodes.isEmpty {
+        if let rawPasscodes: String = keychainStorage.value(for: passcodeKey), !rawPasscodes.isEmpty {
             passcodes = rawPasscodes.components(separatedBy: separator)
         } else {
             passcodes = [""]
@@ -40,7 +39,7 @@ class PasscodeManager {
     }
 
     private func save(passcodes: [String]) throws {
-        try secureStorage.set(value: passcodes.joined(separator: separator), for: passcodeKey)
+        try keychainStorage.set(value: passcodes.joined(separator: separator), for: passcodeKey)
     }
 }
 

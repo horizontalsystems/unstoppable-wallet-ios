@@ -1,5 +1,4 @@
 import UIKit
-import StorageKit
 
 struct MarketWatchlistModule {
 
@@ -9,7 +8,7 @@ struct MarketWatchlistModule {
                 currencyManager: App.shared.currencyManager,
                 favoritesManager: App.shared.favoritesManager,
                 appManager: App.shared.appManager,
-                storage: StorageKit.LocalStorage.default
+                userDefaultsStorage: App.shared.userDefaultsStorage
         )
         let watchlistToggleService = MarketWatchlistToggleService(
                 coinUidService: service,

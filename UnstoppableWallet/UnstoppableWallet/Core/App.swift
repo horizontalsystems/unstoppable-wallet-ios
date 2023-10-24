@@ -2,7 +2,6 @@ import Foundation
 import GRDB
 import HsToolKit
 import MarketKit
-import StorageKit
 import ThemeKit
 
 class App {
@@ -16,7 +15,11 @@ class App {
         instance!
     }
 
-    let keychainKit: IKeychainKit
+    let userDefaultsStorage: UserDefaultsStorage
+    let localStorage: LocalStorage
+    let keychainStorage: KeychainStorage
+
+    let keychainManager: KeychainManager
 
     let passcodeManager: PasscodeManager
     let biometryManager: BiometryManager
@@ -29,7 +32,6 @@ class App {
 
     let marketKit: MarketKit.Kit
 
-    let localStorage: LocalStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: SystemInfoManager
@@ -50,6 +52,8 @@ class App {
     let walletManager: WalletManager
     let adapterManager: AdapterManager
     let transactionAdapterManager: TransactionAdapterManager
+
+    let passcodeLockManager: PasscodeLockManager
 
     let nftMetadataManager: NftMetadataManager
     let nftAdapterManager: NftAdapterManager
@@ -84,7 +88,6 @@ class App {
 
     let kitCleaner: KitCleaner
 
-    let keychainKitDelegate: KeychainKitDelegate
     let lockDelegate = LockDelegate()
 
     let rateAppManager: RateAppManager
@@ -116,7 +119,11 @@ class App {
     let appEventHandler = EventHandler()
 
     init() throws {
-        localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
+        userDefaultsStorage = UserDefaultsStorage()
+        localStorage = LocalStorage(userDefaultsStorage: userDefaultsStorage)
+        keychainStorage = KeychainStorage(service: "io.horizontalsystems.bank.dev")
+
+        keychainManager = KeychainManager(storage: keychainStorage, userDefaultsStorage: userDefaultsStorage)
 
         let databaseURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -145,8 +152,6 @@ class App {
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
         networkManager = NetworkManager(logger: logger)
 
-        keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev")
-
         themeManager = ThemeManager.shared
         systemInfoManager = SystemInfoManager()
 
@@ -157,18 +162,18 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager()
 
-        biometryManager = BiometryManager(localStorage: StorageKit.LocalStorage.default)
-        passcodeManager = PasscodeManager(biometryManager: biometryManager, secureStorage: keychainKit.secureStorage)
-        lockManager = LockManager(passcodeManager: passcodeManager, localStorage: StorageKit.LocalStorage.default, delegate: lockDelegate)
-        lockoutManager = LockoutManager(secureStorage: keychainKit.secureStorage)
+        biometryManager = BiometryManager(userDefaultsStorage: userDefaultsStorage)
+        passcodeManager = PasscodeManager(biometryManager: biometryManager, keychainStorage: keychainStorage)
+        lockManager = LockManager(passcodeManager: passcodeManager, userDefaultsStorage: userDefaultsStorage, delegate: lockDelegate)
+        lockoutManager = LockoutManager(keychainStorage: keychainStorage)
 
         blurManager = BlurManager(lockManager: lockManager)
 
         let accountRecordStorage = AccountRecordStorage(dbPool: dbPool)
-        let accountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: accountRecordStorage)
+        let accountStorage = AccountStorage(keychainStorage: keychainStorage, storage: accountRecordStorage)
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
         accountManager = AccountManager(passcodeManager: passcodeManager, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
-        accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
+        accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, userDefaultsStorage: userDefaultsStorage)
         accountFactory = AccountFactory(accountManager: accountManager)
 
         backupManager = BackupManager(accountManager: accountManager)
@@ -181,11 +186,13 @@ class App {
 
         coinManager = CoinManager(marketKit: marketKit, walletManager: walletManager)
 
+        passcodeLockManager = PasscodeLockManager(accountManager: accountManager, walletManager: walletManager)
+
         let blockchainSettingRecordStorage = try BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
         btcBlockchainManager = BtcBlockchainManager(marketKit: marketKit, storage: blockchainSettingsStorage)
 
-        testNetManager = TestNetManager(localStorage: StorageKit.LocalStorage.default)
+        testNetManager = TestNetManager(userDefaultsStorage: userDefaultsStorage)
 
         let evmSyncSourceStorage = EvmSyncSourceStorage(dbPool: dbPool)
         evmSyncSourceManager = EvmSyncSourceManager(testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, evmSyncSourceStorage: evmSyncSourceStorage)
@@ -254,13 +261,10 @@ class App {
         appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 
-        keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
-        keychainKit.set(delegate: keychainKitDelegate)
-
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
         guidesManager = GuidesManager(networkManager: networkManager)
-        termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
+        termsManager = TermsManager(userDefaultsStorage: userDefaultsStorage)
 
         walletConnectManager = WalletConnectManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager)
 
@@ -284,15 +288,15 @@ class App {
         walletConnectSessionManager = WalletConnectSessionManager(service: walletConnectService, storage: walletConnectSessionStorage, accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, currentDateProvider: CurrentDateProvider())
 
         deepLinkManager = DeepLinkManager()
-        launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)
+        launchScreenManager = LaunchScreenManager(userDefaultsStorage: userDefaultsStorage)
 
-        balancePrimaryValueManager = BalancePrimaryValueManager(localStorage: StorageKit.LocalStorage.default)
-        balanceHiddenManager = BalanceHiddenManager(localStorage: StorageKit.LocalStorage.default)
-        balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
+        balancePrimaryValueManager = BalancePrimaryValueManager(userDefaultsStorage: userDefaultsStorage)
+        balanceHiddenManager = BalanceHiddenManager(userDefaultsStorage: userDefaultsStorage)
+        balanceConversionManager = BalanceConversionManager(marketKit: marketKit, userDefaultsStorage: userDefaultsStorage)
 
         contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: AppConfig.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
 
-        subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default, marketKit: marketKit)
+        subscriptionManager = SubscriptionManager(userDefaultsStorage: userDefaultsStorage, marketKit: marketKit)
 
         let cexAssetRecordStorage = CexAssetRecordStorage(dbPool: dbPool)
         cexAssetManager = CexAssetManager(accountManager: accountManager, marketKit: marketKit, storage: cexAssetRecordStorage)
@@ -329,7 +333,8 @@ class App {
             walletManager: walletManager,
             adapterManager: adapterManager,
             lockManager: lockManager,
-            keychainKit: keychainKit,
+            keychainManager: keychainManager,
+            passcodeLockManager: passcodeLockManager,
             blurManager: blurManager,
             kitCleaner: kitCleaner,
             debugLogger: debugLogger,

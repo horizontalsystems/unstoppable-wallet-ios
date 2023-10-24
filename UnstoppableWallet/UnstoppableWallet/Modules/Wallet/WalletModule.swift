@@ -1,6 +1,5 @@
 import MarketKit
 import RxSwift
-import StorageKit
 import ThemeKit
 import UIKit
 
@@ -32,13 +31,13 @@ struct WalletModule {
             rateAppManager: App.shared.rateAppManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
-            localStorage: StorageKit.LocalStorage.default
+            userDefaultsStorage: App.shared.userDefaultsStorage
         )
 
         coinPriceService.delegate = service
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-            localStorage: StorageKit.LocalStorage.default,
+            userDefaultsStorage: App.shared.userDefaultsStorage,
             languageManager: LanguageManager.shared
         )
 

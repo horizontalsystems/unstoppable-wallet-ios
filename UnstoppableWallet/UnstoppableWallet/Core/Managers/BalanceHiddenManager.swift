@@ -1,13 +1,12 @@
 import RxSwift
 import RxRelay
-import StorageKit
 
 class BalanceHiddenManager {
     static let placeholder = "*****"
     private let keyBalanceHidden = "wallet-balance-hidden"
     private let keyBalanceAutoHide = "wallet-balance-auto-hide"
 
-    private let localStorage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
 
     private let balanceHiddenRelay = PublishRelay<Bool>()
     private(set) var balanceHidden: Bool {
@@ -18,19 +17,19 @@ class BalanceHiddenManager {
 
     private(set) var balanceAutoHide: Bool
 
-    init(localStorage: StorageKit.ILocalStorage) {
-        self.localStorage = localStorage
+    init(userDefaultsStorage: UserDefaultsStorage) {
+        self.userDefaultsStorage = userDefaultsStorage
 
-        if let balanceHidden: Bool = localStorage.value(for: keyBalanceHidden) {
+        if let balanceHidden: Bool = userDefaultsStorage.value(for: keyBalanceHidden) {
             self.balanceHidden = balanceHidden
-        } else if let balanceHidden: Bool = localStorage.value(for: "balance_hidden") {
+        } else if let balanceHidden: Bool = userDefaultsStorage.value(for: "balance_hidden") {
             // todo: temp solution for restoring from version 0.22
             self.balanceHidden = balanceHidden
         } else {
             balanceHidden = false
         }
 
-        balanceAutoHide = localStorage.value(for: keyBalanceAutoHide) ?? false
+        balanceAutoHide = userDefaultsStorage.value(for: keyBalanceAutoHide) ?? false
 
         if balanceAutoHide {
             set(balanceHidden: true)
@@ -39,7 +38,7 @@ class BalanceHiddenManager {
 
     private func set(balanceHidden: Bool) {
         self.balanceHidden = balanceHidden
-        localStorage.set(value: balanceHidden, for: keyBalanceHidden)
+        userDefaultsStorage.set(value: balanceHidden, for: keyBalanceHidden)
     }
 
 }
@@ -56,7 +55,7 @@ extension BalanceHiddenManager {
 
     func set(balanceAutoHide: Bool) {
         self.balanceAutoHide = balanceAutoHide
-        localStorage.set(value: balanceAutoHide, for: keyBalanceAutoHide)
+        userDefaultsStorage.set(value: balanceAutoHide, for: keyBalanceAutoHide)
 
         if balanceAutoHide {
             set(balanceHidden: true)

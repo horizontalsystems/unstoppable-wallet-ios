@@ -1,13 +1,11 @@
-import StorageKit
-
 class MarketService {
     private let keyTabIndex = "market-tab-index"
 
-    private let storage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let launchScreenManager: LaunchScreenManager
 
-    init(storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager) {
-        self.storage = storage
+    init(userDefaultsStorage: UserDefaultsStorage, launchScreenManager: LaunchScreenManager) {
+        self.userDefaultsStorage = userDefaultsStorage
         self.launchScreenManager = launchScreenManager
     }
 
@@ -18,7 +16,7 @@ extension MarketService {
     var initialTab: MarketModule.Tab {
         switch launchScreenManager.launchScreen {
         case .auto:
-            if let storedIndex: Int = storage.value(for: keyTabIndex), let storedTab = MarketModule.Tab(rawValue: storedIndex) {
+            if let storedIndex: Int = userDefaultsStorage.value(for: keyTabIndex), let storedTab = MarketModule.Tab(rawValue: storedIndex) {
                 return storedTab
             }
 
@@ -31,7 +29,7 @@ extension MarketService {
     }
 
     func set(tab: MarketModule.Tab) {
-        storage.set(value: tab.rawValue, for: keyTabIndex)
+        userDefaultsStorage.set(value: tab.rawValue, for: keyTabIndex)
     }
 
 }

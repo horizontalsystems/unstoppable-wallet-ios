@@ -1,4 +1,3 @@
-import StorageKit
 import ThemeKit
 import UIKit
 
@@ -10,7 +9,7 @@ struct MainModule {
     static func instance(presetTab: Tab? = nil) -> UIViewController {
         let service = MainService(
             localStorage: App.shared.localStorage,
-            storage: StorageKit.LocalStorage.default,
+            userDefaultsStorage: App.shared.userDefaultsStorage,
             launchScreenManager: App.shared.launchScreenManager,
             accountManager: App.shared.accountManager,
             walletManager: App.shared.walletManager,

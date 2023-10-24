@@ -1,14 +1,13 @@
 import Foundation
 import RxSwift
-import StorageKit
 
 class AccountRestoreWarningManager {
     private let accountManager: AccountManager
-    private let localStorage: ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
 
-    init(accountManager: AccountManager, localStorage: ILocalStorage) {
+    init(accountManager: AccountManager, userDefaultsStorage: UserDefaultsStorage) {
         self.accountManager = accountManager
-        self.localStorage = localStorage
+        self.userDefaultsStorage = userDefaultsStorage
     }
 
 }
@@ -32,22 +31,22 @@ extension AccountRestoreWarningManager {
     }
 
     func removeIgnoreWarning(account: Account) {
-        localStorage.set(value: nil as Bool?, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
+        userDefaultsStorage.set(value: nil as Bool?, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
     }
 
     func setIgnoreWarning(account: Account) {
-        localStorage.set(value: true, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
+        userDefaultsStorage.set(value: true, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
     }
 
 }
 
 class AccountRestoreWarningFactory {
     static let keyAccountWarningPrefix = "wallet-ignore-non-recommended"
-    private let localStorage: ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let languageManager: LanguageManager
 
-    init(localStorage: ILocalStorage, languageManager: LanguageManager) {
-        self.localStorage = localStorage
+    init(userDefaultsStorage: UserDefaultsStorage, languageManager: LanguageManager) {
+        self.userDefaultsStorage = userDefaultsStorage
         self.languageManager = languageManager
     }
 
@@ -55,7 +54,7 @@ class AccountRestoreWarningFactory {
         if account.nonStandard {
             return CancellableTitledCaution(title: "note".localized, text: "restore.error.non_standard.description".localized, type: .error, cancellable: false)
         } else if account.nonRecommended {
-            if canIgnoreActiveAccountWarning, localStorage.value(for: Self.keyAccountWarningPrefix + account.id) ?? false {
+            if canIgnoreActiveAccountWarning, userDefaultsStorage.value(for: Self.keyAccountWarningPrefix + account.id) ?? false {
                 return nil
             }
 

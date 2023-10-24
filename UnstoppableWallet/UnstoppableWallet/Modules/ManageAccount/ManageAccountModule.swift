@@ -1,4 +1,3 @@
-import StorageKit
 import ThemeKit
 import UIKit
 
@@ -14,7 +13,7 @@ struct ManageAccountModule {
         }
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-            localStorage: StorageKit.LocalStorage.default,
+            userDefaultsStorage: App.shared.userDefaultsStorage,
             languageManager: LanguageManager.shared
         )
         let viewModel = ManageAccountViewModel(

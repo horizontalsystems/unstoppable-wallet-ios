@@ -4,7 +4,6 @@ import RxSwift
 import RxRelay
 import HsToolKit
 import HsExtensions
-import StorageKit
 
 class WalletTokenListService: IWalletTokenListService {
     private let elementService: IWalletElementService

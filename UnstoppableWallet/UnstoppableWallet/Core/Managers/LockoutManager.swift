@@ -1,34 +1,33 @@
 import Foundation
 import HsExtensions
-import StorageKit
 
 class LockoutManager {
     private let unlockAttemptsKey = "unlock_attempts_keychain_key"
     private let lockTimestampKey = "lock_timestamp_keychain_key"
     private let maxAttempts = 5
 
-    private var secureStorage: ISecureStorage
+    private var keychainStorage: KeychainStorage
     private var timer: Timer?
 
     @PostPublished private(set) var lockoutState: LockoutState = .unlocked(attemptsLeft: 0, maxAttempts: 0)
 
     private var unlockAttempts: Int {
         didSet {
-            try? secureStorage.set(value: unlockAttempts, for: unlockAttemptsKey)
+            try? keychainStorage.set(value: unlockAttempts, for: unlockAttemptsKey)
         }
     }
 
     private var lockTimestamp: TimeInterval {
         didSet {
-            try? secureStorage.set(value: lockTimestamp, for: lockTimestampKey)
+            try? keychainStorage.set(value: lockTimestamp, for: lockTimestampKey)
         }
     }
 
-    init(secureStorage: ISecureStorage) {
-        self.secureStorage = secureStorage
+    init(keychainStorage: KeychainStorage) {
+        self.keychainStorage = keychainStorage
 
-        unlockAttempts = secureStorage.value(for: unlockAttemptsKey) ?? 0
-        lockTimestamp = secureStorage.value(for: lockTimestampKey) ?? Self.uptime
+        unlockAttempts = keychainStorage.value(for: unlockAttemptsKey) ?? 0
+        lockTimestamp = keychainStorage.value(for: lockTimestampKey) ?? Self.uptime
 
         syncState()
     }

@@ -1,6 +1,5 @@
 import OneInchKit
 import EvmKit
-import StorageKit
 
 class OneInchModule {
     private let tradeService: OneInchTradeService
@@ -54,7 +53,7 @@ extension OneInchModule: ISwapProvider {
         let viewModel = OneInchViewModel(
                 service: service,
                 tradeService: tradeService,
-                switchService: AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default, useLocalStorage: false),
+                switchService: AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage, useLocalStorage: false),
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
                 currencyManager: App.shared.currencyManager,
