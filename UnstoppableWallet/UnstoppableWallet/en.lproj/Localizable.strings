@@ -109,10 +109,9 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ needs access to your camera to scan the QR code.
-
-Go to Settings - > %@ and allow access to the camera.";
-"access_camera.settings" = "Settings";
+"access_camera.message" = "Access to your camera for this app was denied, you can go to settings and allow access";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.settings" = "Go To Settings";
 
 // Restore
 
