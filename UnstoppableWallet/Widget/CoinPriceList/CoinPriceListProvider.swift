@@ -53,7 +53,7 @@ struct CoinPriceListProvider: IntentTimelineProvider {
     private func fetch(sortType: SortType, family: WidgetFamily) async throws -> CoinPriceListEntry {
         let storage = SharedLocalStorage()
         let currency = CurrencyManager(storage: storage).baseCurrency
-        let apiProvider = ApiProvider(baseUrl: "https://api-dev.blocksdecoded.com")
+        let apiProvider = ApiProvider()
 
         let listType: ApiProvider.ListType
         let listOrder: ApiProvider.ListOrder

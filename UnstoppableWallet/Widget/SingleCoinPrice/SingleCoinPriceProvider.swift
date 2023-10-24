@@ -40,7 +40,7 @@ struct SingleCoinPriceProvider: IntentTimelineProvider {
 
     private func fetch(coinUid: String) async throws -> SingleCoinPriceEntry {
         let currency = CurrencyManager(storage: SharedLocalStorage()).baseCurrency
-        let apiProvider = ApiProvider(baseUrl: "https://api-dev.blocksdecoded.com")
+        let apiProvider = ApiProvider()
 
         let coin = try await apiProvider.coinWithPrice(uid: coinUid, currencyCode: currency.code)
 
