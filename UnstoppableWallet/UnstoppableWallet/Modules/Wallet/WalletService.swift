@@ -46,13 +46,7 @@ class WalletService {
         didSet {
             switch internalState {
             case .loaded(let items):
-                let hideZeroBalances = activeAccount?.type.hideZeroBalances ?? false
-
-                if hideZeroBalances {
-                    state = .loaded(items: items.filter { $0.balanceData.balanceTotal != 0 || ($0.element.wallet?.token.type.isNative ?? false) })
-                } else {
-                    state = .loaded(items: items)
-                }
+                state = .loaded(items: items)
             default:
                 state = internalState
             }
@@ -158,13 +152,11 @@ class WalletService {
         case .loaded(let elements):
             let cacheContainer = activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
             let priceItemMap = coinPriceService.itemMap(coinUids: elements.compactMap { $0.priceCoinUid })
-            let watchAccount = watchAccount
 
             let items: [Item] = elements.map { element in
                 let item = Item(
                         element: element,
                         isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
-                        watchAccount: watchAccount,
                         balanceData: elementService.balanceData(element: element) ?? _cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
                         state: elementService.state(element: element)  ?? fallbackAdapterState
                 )
@@ -554,15 +546,13 @@ extension WalletService {
     class Item {
         let element: WalletModule.Element
         var isMainNet: Bool
-        var watchAccount: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
 
-        init(element: WalletModule.Element, isMainNet: Bool, watchAccount: Bool, balanceData: BalanceData, state: AdapterState) {
+        init(element: WalletModule.Element, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
             self.element = element
             self.isMainNet = isMainNet
-            self.watchAccount = watchAccount
             self.balanceData = balanceData
             self.state = state
         }

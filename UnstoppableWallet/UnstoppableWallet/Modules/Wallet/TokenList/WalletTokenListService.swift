@@ -24,15 +24,7 @@ class WalletTokenListService: IWalletTokenListService {
         didSet {
             switch internalState {
             case .loaded(let items):
-                let hideZeroBalances = account.type.hideZeroBalances
-
-                if hideZeroBalances {
-                    state = .loaded(items: items.filter {
-                        $0.balanceData.balanceTotal != 0 || ($0.element.wallet?.token.type.isNative ?? false)
-                    })
-                } else {
-                    state = .loaded(items: items)
-                }
+                state = .loaded(items: items)
             default:
                 state = internalState
             }
@@ -84,14 +76,12 @@ class WalletTokenListService: IWalletTokenListService {
             let priceItemMap = coinPriceService.itemMap(coinUids: elements.compactMap {
                 $0.priceCoinUid
             })
-            let watchAccount = account.watchAccount
 
             let items: [Item] = elements.filter { elementFilter?($0) ?? true }
                     .map { element in
                         let item = Item(
                                 element: element,
                                 isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
-                                watchAccount: watchAccount,
                                 balanceData: elementService.balanceData(element: element) ?? _cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
                                 state: elementService.state(element: element) ?? fallbackAdapterState
                         )
@@ -341,15 +331,13 @@ extension WalletTokenListService {
     class Item {
         let element: WalletModule.Element
         var isMainNet: Bool
-        var watchAccount: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
 
-        init(element: WalletModule.Element, isMainNet: Bool, watchAccount: Bool, balanceData: BalanceData, state: AdapterState) {
+        init(element: WalletModule.Element, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
             self.element = element
             self.isMainNet = isMainNet
-            self.watchAccount = watchAccount
             self.balanceData = balanceData
             self.state = state
         }
