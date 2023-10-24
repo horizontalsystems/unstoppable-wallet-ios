@@ -1,15 +1,14 @@
 import Foundation
-import StorageKit
 import EvmKit
 import TronKit
 import HdWalletKit
 
 class AccountStorage {
-    private let secureStorage: ISecureStorage
+    private let keychainStorage: KeychainStorage
     private let storage: AccountRecordStorage
 
-    init(secureStorage: ISecureStorage, storage: AccountRecordStorage) {
-        self.secureStorage = secureStorage
+    init(keychainStorage: KeychainStorage, storage: AccountRecordStorage) {
+        self.keychainStorage = keychainStorage
         self.storage = storage
     }
 
@@ -146,18 +145,18 @@ class AccountStorage {
 
         switch account.type {
         case .mnemonic:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
         case .evmPrivateKey:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .evmPrivateKey, keyName: .data))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .evmPrivateKey, keyName: .data))
         case .evmAddress:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .evmAddress, keyName: .data))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .evmAddress, keyName: .data))
         case .tronAddress:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .tronAddress, keyName: .data))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .tronAddress, keyName: .data))
         case .hdExtendedKey:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
         case .cex:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .cex, keyName: .data))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .cex, keyName: .data))
         }
     }
 
@@ -171,13 +170,13 @@ class AccountStorage {
 
     private func store<T: LosslessStringConvertible>(_ value: T, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        try secureStorage.set(value: value, for: key)
+        try keychainStorage.set(value: value, for: key)
         return key
     }
 
     private func store(data: Data, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        try secureStorage.set(value: data, for: key)
+        try keychainStorage.set(value: data, for: key)
         return key
     }
 
@@ -188,12 +187,12 @@ class AccountStorage {
 
     private func recover<T: LosslessStringConvertible>(id: String, typeName: TypeName, keyName: KeyName) -> T? {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        return secureStorage.value(for: key)
+        return keychainStorage.value(for: key)
     }
 
     private func recoverData(id: String, typeName: TypeName, keyName: KeyName) -> Data? {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        return secureStorage.value(for: key)
+        return keychainStorage.value(for: key)
     }
 
 }

@@ -4,7 +4,6 @@ import ThemeKit
 import TronKit
 import MarketKit
 import HsExtensions
-import StorageKit
 
 struct SendTronConfirmationModule {
 
@@ -18,7 +17,7 @@ struct SendTronConfirmationModule {
             return nil
         }
 
-        let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
+        let switchService = AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage)
         let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: coinServiceFactory.baseCoinService.token)
         let feeViewModel = SendFeeViewModel(service: feeService)

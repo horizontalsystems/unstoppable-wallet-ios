@@ -1,7 +1,6 @@
 import Foundation
 import UniswapKit
 import EvmKit
-import StorageKit
 
 class UniswapModule {
     private let tradeService: UniswapTradeService
@@ -53,7 +52,7 @@ extension UniswapModule: ISwapProvider {
         let viewModel = UniswapViewModel(
                 service: service,
                 tradeService: tradeService,
-                switchService: AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default, useLocalStorage: false),
+                switchService: AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage, useLocalStorage: false),
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
                 currencyManager: App.shared.currencyManager,

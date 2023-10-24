@@ -1,4 +1,3 @@
-import StorageKit
 import UIKit
 
 class LaunchModule {
@@ -6,7 +5,7 @@ class LaunchModule {
         let service = LaunchService(
             accountManager: App.shared.accountManager,
             passcodeManager: App.shared.passcodeManager,
-            keychainKit: App.shared.keychainKit,
+            passcodeLockManager: App.shared.passcodeLockManager,
             localStorage: App.shared.localStorage
         )
 

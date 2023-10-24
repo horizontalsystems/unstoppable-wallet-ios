@@ -1,25 +1,24 @@
 import Combine
 import HsExtensions
 import LocalAuthentication
-import StorageKit
 
 class BiometryManager {
     private let biometricOnKey = "biometric_on_key"
 
-    private let localStorage: ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private var tasks = Set<AnyTask>()
 
     @PostPublished var biometryType: BiometryType?
     @PostPublished var biometryEnabled: Bool {
         didSet {
-            localStorage.set(value: biometryEnabled, for: biometricOnKey)
+            userDefaultsStorage.set(value: biometryEnabled, for: biometricOnKey)
         }
     }
 
-    init(localStorage: ILocalStorage) {
-        self.localStorage = localStorage
+    init(userDefaultsStorage: UserDefaultsStorage) {
+        self.userDefaultsStorage = userDefaultsStorage
 
-        biometryEnabled = localStorage.value(for: biometricOnKey) ?? false
+        biometryEnabled = userDefaultsStorage.value(for: biometricOnKey) ?? false
 
         refreshBiometry()
     }

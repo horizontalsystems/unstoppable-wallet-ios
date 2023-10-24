@@ -1,5 +1,4 @@
 import ComponentKit
-import ScanQrKit
 import SnapKit
 import ThemeKit
 import UIKit

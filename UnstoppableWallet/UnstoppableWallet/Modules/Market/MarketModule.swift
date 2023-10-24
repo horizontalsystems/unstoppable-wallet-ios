@@ -3,7 +3,6 @@ import UIKit
 import ThemeKit
 import MarketKit
 import ComponentKit
-import StorageKit
 import SectionsTableView
 import Kingfisher
 
@@ -29,7 +28,7 @@ enum RowActionType {
 struct MarketModule {
 
     static func viewController() -> UIViewController {
-        let service = MarketService(storage: StorageKit.LocalStorage.default, launchScreenManager: App.shared.launchScreenManager)
+        let service = MarketService(userDefaultsStorage: App.shared.userDefaultsStorage, launchScreenManager: App.shared.launchScreenManager)
         let viewModel = MarketViewModel(service: service)
         return MarketViewController(viewModel: viewModel)
     }

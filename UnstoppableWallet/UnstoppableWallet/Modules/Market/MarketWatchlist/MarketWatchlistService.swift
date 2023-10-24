@@ -2,7 +2,6 @@ import Combine
 import RxSwift
 import RxRelay
 import MarketKit
-import StorageKit
 import HsExtensions
 
 class MarketWatchlistService: IMarketMultiSortHeaderService {
@@ -15,7 +14,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     private let currencyManager: CurrencyManager
     private let favoritesManager: FavoritesManager
     private let appManager: IAppManager
-    private let storage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
@@ -25,20 +24,20 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     var sortingField: MarketModule.SortingField {
         didSet {
             syncIfPossible()
-            storage.set(value: sortingField.rawValue, for: keySortingField)
+            userDefaultsStorage.set(value: sortingField.rawValue, for: keySortingField)
         }
     }
 
     private var coinUids = [String]()
 
-    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, favoritesManager: FavoritesManager, appManager: IAppManager, storage: StorageKit.ILocalStorage) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, favoritesManager: FavoritesManager, appManager: IAppManager, userDefaultsStorage: UserDefaultsStorage) {
         self.marketKit = marketKit
         self.currencyManager = currencyManager
         self.favoritesManager = favoritesManager
         self.appManager = appManager
-        self.storage = storage
+        self.userDefaultsStorage = userDefaultsStorage
 
-        if let rawValue: Int = storage.value(for: keySortingField), let sortingField = MarketModule.SortingField(rawValue: rawValue) {
+        if let rawValue: Int = userDefaultsStorage.value(for: keySortingField), let sortingField = MarketModule.SortingField(rawValue: rawValue) {
             self.sortingField = sortingField
         } else {
             sortingField = .highestCap
@@ -138,7 +137,7 @@ extension MarketWatchlistService: IMarketListCoinUidService {
 extension MarketWatchlistService: IMarketListDecoratorService {
 
     var initialMarketFieldIndex: Int {
-        storage.value(for: keyMarketField) ?? 0
+        userDefaultsStorage.value(for: keyMarketField) ?? 0
     }
 
     var currency: Currency {
@@ -154,7 +153,7 @@ extension MarketWatchlistService: IMarketListDecoratorService {
             state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }
 
-        storage.set(value: marketFieldIndex, for: keyMarketField)
+        userDefaultsStorage.set(value: marketFieldIndex, for: keyMarketField)
     }
 
 }

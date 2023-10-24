@@ -1,13 +1,12 @@
 import Foundation
 import HsExtensions
-import StorageKit
 import MarketKit
 import HsToolKit
 
 class SubscriptionManager {
     private let keyAuthToken = "subscription-auth-token"
 
-    private let localStorage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let marketKit: MarketKit.Kit
 
     private var authToken: String? {
@@ -18,8 +17,8 @@ class SubscriptionManager {
 
     @DistinctPublished private(set) var isAuthenticated: Bool
 
-    init(localStorage: StorageKit.ILocalStorage, marketKit: MarketKit.Kit) {
-        self.localStorage = localStorage
+    init(userDefaultsStorage: UserDefaultsStorage, marketKit: MarketKit.Kit) {
+        self.userDefaultsStorage = userDefaultsStorage
         self.marketKit = marketKit
 
 //        authToken = localStorage.value(for: keyAuthToken)
@@ -33,7 +32,7 @@ class SubscriptionManager {
     private func invalidateAuthToken() {
         marketKit.set(proAuthToken: nil)
         authToken = nil
-        localStorage.set(value: authToken, for: keyAuthToken)
+        userDefaultsStorage.set(value: authToken, for: keyAuthToken)
     }
 
 }

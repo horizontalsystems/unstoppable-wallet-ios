@@ -4,7 +4,6 @@ import RxSwift
 import RxRelay
 import HsToolKit
 import HsExtensions
-import StorageKit
 
 protocol IWalletElementService: AnyObject {
     var delegate: IWalletElementServiceDelegate? { get set }
@@ -39,7 +38,7 @@ class WalletService {
     private let cloudAccountBackupManager: CloudBackupManager
     private let rateAppManager: RateAppManager
     private let feeCoinProvider: FeeCoinProvider
-    private let localStorage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
 
@@ -74,7 +73,7 @@ class WalletService {
         didSet {
             sortTypeRelay.accept(sortType)
             handleUpdateSortType()
-            localStorage.set(value: sortType.rawValue, for: keySortType)
+            userDefaultsStorage.set(value: sortType.rawValue, for: keySortType)
         }
     }
 
@@ -85,7 +84,7 @@ class WalletService {
          cacheManager: EnabledWalletCacheManager, accountRestoreWarningManager: AccountRestoreWarningManager, reachabilityManager: IReachabilityManager,
          balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager,
          cloudAccountBackupManager: CloudBackupManager, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider,
-         localStorage: StorageKit.ILocalStorage
+         userDefaultsStorage: UserDefaultsStorage
     ) {
         self.elementServiceFactory = elementServiceFactory
         self.coinPriceService = coinPriceService
@@ -99,11 +98,11 @@ class WalletService {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.rateAppManager = rateAppManager
         self.feeCoinProvider = feeCoinProvider
-        self.localStorage = localStorage
+        self.userDefaultsStorage = userDefaultsStorage
 
-        if let rawValue: String = localStorage.value(for: keySortType), let sortType = WalletModule.SortType(rawValue: rawValue) {
+        if let rawValue: String = userDefaultsStorage.value(for: keySortType), let sortType = WalletModule.SortType(rawValue: rawValue) {
             self.sortType = sortType
-        } else if let rawValue: Int = localStorage.value(for: "balance_sort_key"), rawValue < WalletModule.SortType.allCases.count {
+        } else if let rawValue: Int = userDefaultsStorage.value(for: "balance_sort_key"), rawValue < WalletModule.SortType.allCases.count {
             // todo: temp solution for restoring from version 0.22
             sortType = WalletModule.SortType.allCases[rawValue]
         } else {
