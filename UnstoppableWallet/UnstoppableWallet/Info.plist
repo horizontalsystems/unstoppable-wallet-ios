@@ -87,7 +87,9 @@
 	<string>${ShowTestNetSwitcher}</string>
 	<key>SnowtraceApiKey</key>
 	<string>${snowtrace_api_key}</string>
-	<key>TwitterBearerToken</key>
+    <key>SwapEnabled</key>
+    <string>${swap_enabled}</string>
+    <key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
