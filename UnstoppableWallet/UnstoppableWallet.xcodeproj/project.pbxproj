@@ -451,6 +451,7 @@
 		11B354F237E59C24ED8F3759 /* TokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353684493AFDF3711DF2B /* TokenQuery.swift */; };
 		11B354FA6B9C8A5DBD4D4BA9 /* RestoreCexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352F290F176ED7A0379FD /* RestoreCexViewController.swift */; };
 		11B354FA6F6BF59F64560590 /* CoinTreasuriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522CBA84677E00D44983 /* CoinTreasuriesViewModel.swift */; };
+		11B354FA80BD8C5512B5ACFE /* WidgetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CBAB0A2DA60C3E9A22B /* WidgetConfig.swift */; };
 		11B354FE5CD0F5658C7CCC69 /* RestoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A64E88BD68714D4D07 /* RestoreViewController.swift */; };
 		11B354FF8C01ADB837FBAC82 /* RecoveryPhraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3558ACECAA1C886FA82C0 /* RecoveryPhraseViewController.swift */; };
 		11B35501FF8D70198E9B369D /* WalletConnectSendEthereumTransactionRequestModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C9F5EFAF496CF05E563 /* WalletConnectSendEthereumTransactionRequestModule.swift */; };
@@ -613,6 +614,7 @@
 		11B356F4F8D8486B00A2AA47 /* MainBadgeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C13937F82D36C823205 /* MainBadgeService.swift */; };
 		11B356F5D16C4E630CE980E8 /* CoinMarketsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B7D66631DD5D91D0773 /* CoinMarketsModule.swift */; };
 		11B356FB8054678ED5FB5E45 /* FormCautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3568F6FAF721301DEC188 /* FormCautionView.swift */; };
+		11B356FD5BC2244A8CCC3178 /* WidgetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CBAB0A2DA60C3E9A22B /* WidgetConfig.swift */; };
 		11B356FF5E5CC9AA34B89C86 /* HeaderAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352C35227943125FF2008 /* HeaderAmountView.swift */; };
 		11B35700253CCD66C4CCE354 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3558D624AF040E9D102DF /* Extensions.swift */; };
 		11B3570D6396DD2F73973E73 /* EvmAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A296048CDD27A26FE9E /* EvmAccountManager.swift */; };
@@ -1045,6 +1047,7 @@
 		11B35BD606EA19E8CCAC89A6 /* TransactionsCoinSelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D885FDB31F5A920A98A /* TransactionsCoinSelectService.swift */; };
 		11B35BDBD856C645045553D2 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3572B7C2F16CD51F37FF0 /* UIImage.swift */; };
 		11B35BDC20A4965D1793B97A /* NftActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DE76BBABD8F0914A0D2 /* NftActivityViewModel.swift */; };
+		11B35BE346FCE9B2BE4096A8 /* WidgetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CBAB0A2DA60C3E9A22B /* WidgetConfig.swift */; };
 		11B35BE5E6974F580927CAFA /* RestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3596ECFEECF17ADB3BAEF /* RestoreService.swift */; };
 		11B35BEB439509EACB41AB06 /* AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */; };
 		11B35BEB44EE680693F9EB2C /* FaqRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358D98E1FBA6909D352DA /* FaqRepository.swift */; };
@@ -1233,6 +1236,7 @@
 		11B35E001107369BB1153649 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B56BE1EA9891306D6EB /* CreateAccountViewModel.swift */; };
 		11B35E04C504E2C268F53B66 /* CreateDuressPasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3501625BDD3F7D9BEA2F5 /* CreateDuressPasscodeViewModel.swift */; };
 		11B35E051C3D3534E88BEB3D /* CreatePasscodeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352951AD68524C33022C0 /* CreatePasscodeModule.swift */; };
+		11B35E06567092F14CEAE114 /* WidgetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CBAB0A2DA60C3E9A22B /* WidgetConfig.swift */; };
 		11B35E075BBD2BBCF2F650D4 /* EvmAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353885F7A93DF25F5023B /* EvmAddressViewController.swift */; };
 		11B35E08C957B79CF373E9FB /* BackupVerifyWordsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35785DD2AF78CEBD800F5 /* BackupVerifyWordsModule.swift */; };
 		11B35E09BB62E1B486F213D2 /* WalletTokenListViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C6E5282F55B88042F8D /* WalletTokenListViewItemFactory.swift */; };
@@ -3524,6 +3528,7 @@
 		11B35CAE2327342F9CEC6AC9 /* SingleSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSelectorViewController.swift; sourceTree = "<group>"; };
 		11B35CB288AF5A54B99A51E4 /* RestoreMnemonicHintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreMnemonicHintView.swift; sourceTree = "<group>"; };
 		11B35CB98A27269A510F40EE /* SyncMode_v_0_24.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncMode_v_0_24.swift; sourceTree = "<group>"; };
+		11B35CBAB0A2DA60C3E9A22B /* WidgetConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetConfig.swift; sourceTree = "<group>"; };
 		11B35CBBFEC11CAE6FDBCFFA /* ManageWalletsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsModule.swift; sourceTree = "<group>"; };
 		11B35CC832C2C96FA9E7B60B /* ReservoirNftProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservoirNftProvider.swift; sourceTree = "<group>"; };
 		11B35CD5EBBB403D46BDEF0B /* WalletConnectRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectRequest.swift; sourceTree = "<group>"; };
@@ -5504,6 +5509,7 @@
 				11B357A5569EAC7D20CD40B2 /* ValueFormatter.swift */,
 				11B3558D624AF040E9D102DF /* Extensions.swift */,
 				11B35ADBD038830223A8375D /* CoinPriceListMode.swift */,
+				11B35CBAB0A2DA60C3E9A22B /* WidgetConfig.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -11413,6 +11419,7 @@
 				11B35287E46AFFBC47162F67 /* Extensions.swift in Sources */,
 				11B35DA145308F888592A7CF /* CoinPriceListMode.swift in Sources */,
 				11B3541E8CB5F0F743E9CDF3 /* AppWidgetConstants.swift in Sources */,
+				11B354FA80BD8C5512B5ACFE /* WidgetConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11423,6 +11430,7 @@
 				D3948F1D2ADA88D900FAE566 /* IntentHandler.swift in Sources */,
 				11B358C289DE4AE5EB5547BC /* ApiProvider.swift in Sources */,
 				D350DDB72AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
+				11B35E06567092F14CEAE114 /* WidgetConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11453,6 +11461,7 @@
 				11B35700253CCD66C4CCE354 /* Extensions.swift in Sources */,
 				11B359F926F72DF79E9245E3 /* CoinPriceListMode.swift in Sources */,
 				11B35B2E335C24608DE32B0A /* AppWidgetConstants.swift in Sources */,
+				11B35BE346FCE9B2BE4096A8 /* WidgetConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11464,6 +11473,7 @@
 				11B35685AC079B7BC7D1A534 /* ApiProvider.swift in Sources */,
 				D350DDB42AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
 				ABC9A23C735BD2271B6A262A /* RestoreManagerViewModel.swift in Sources */,
+				11B356FD5BC2244A8CCC3178 /* WidgetConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11769,6 +11779,7 @@
 		};
 		D3948F012ADA846900FAE566 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -11776,7 +11787,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/WidgetDev.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -11784,14 +11794,12 @@
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.widget";
@@ -11803,13 +11811,13 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		D3948F022ADA846900FAE566 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -11817,21 +11825,18 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/WidgetDev.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -11841,18 +11846,17 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		D3948F232ADA88DA00FAE566 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -11860,14 +11864,12 @@
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.intent";
@@ -11880,32 +11882,29 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		D3948F242ADA88DA00FAE566 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.intent";
 				PRODUCT_MODULE_NAME = IntentExtension;
@@ -11916,13 +11915,13 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		D3BA258F2ADFAD7C002B13EA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -11930,7 +11929,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/WidgetProd.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -11938,14 +11936,12 @@
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.widget";
@@ -11957,13 +11953,13 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		D3BA25902ADFAD7C002B13EA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -11971,21 +11967,18 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/WidgetProd.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -11995,18 +11988,17 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		D3BA25A32ADFAF23002B13EA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -12014,14 +12006,12 @@
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.intent";
@@ -12034,32 +12024,29 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		D3BA25A42ADFAF23002B13EA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.intent";
 				PRODUCT_MODULE_NAME = IntentExtension;
@@ -12070,7 +12057,6 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

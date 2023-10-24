@@ -2,7 +2,7 @@ import Intents
 
 class IntentHandler: INExtension, SingleCoinPriceIntentHandling {
     func provideSelectedCoinOptionsCollection(for _: SingleCoinPriceIntent) async throws -> INObjectCollection<WidgetCoin> {
-        let provider = ApiProvider(baseUrl: "https://api-dev.blocksdecoded.com")
+        let provider = ApiProvider()
 
         let coins = try await provider.topCoins(limit: 100)
 

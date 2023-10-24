@@ -8,20 +8,21 @@ class ApiProvider {
     private let networkManager = NetworkManager()
     private let headers: HTTPHeaders
 
-    init(baseUrl: String) {
-        self.baseUrl = baseUrl
+    init() {
+        baseUrl = WidgetConfig.marketApiUrl
 
         var headers = HTTPHeaders()
+        headers.add(name: "widget", value: "true")
         headers.add(name: "app_platform", value: "ios")
-        //        headers.add(name: "app_version", value: appVersion)
+        headers.add(name: "app_version", value: WidgetConfig.appVersion)
 
-        //        if let appId {
-        //            headers.add(name: "app_id", value: appId)
-        //        }
+        if let appId = WidgetConfig.appId {
+            headers.add(name: "app_id", value: appId)
+        }
 
-        //        if let apiKey {
-        //            headers.add(name: "apikey", value: apiKey)
-        //        }
+        if let apiKey = WidgetConfig.hsProviderApiKey {
+            headers.add(name: "apikey", value: apiKey)
+        }
 
         self.headers = headers
     }
