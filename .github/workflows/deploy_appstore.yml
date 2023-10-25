@@ -2,7 +2,7 @@ name: Deploy Production to TestFlight
 
 on:
   push:
-    branches: [ master, staging ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -56,7 +56,6 @@ jobs:
           APPLE_ISSUER_ID: ${{ secrets.APPLE_ISSUER_ID }}
           APPLE_KEY_CONTENT: ${{ secrets.APPLE_KEY_CONTENT }}
 
-          XCCONFIG_PROD_SWAP_ENABLED: false
           XCCONFIG_PROD_INFURA_PROJECT_ID: ${{ secrets.XCCONFIG_PROD_INFURA_PROJECT_ID }}
           XCCONFIG_PROD_INFURA_PROJECT_SECRET: ${{ secrets.XCCONFIG_PROD_INFURA_PROJECT_SECRET }}
           XCCONFIG_PROD_ETHERSCAN_API_KEY: ${{ secrets.XCCONFIG_PROD_ETHERSCAN_API_KEY }}
