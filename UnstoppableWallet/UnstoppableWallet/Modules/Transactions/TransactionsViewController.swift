@@ -1,10 +1,10 @@
-import UIKit
-import SnapKit
 import ActionSheet
-import ThemeKit
-import HUD
 import ComponentKit
+import HUD
 import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class TransactionsViewController: ThemeViewController {
     private let viewModel: TransactionsViewModel
@@ -30,7 +30,8 @@ class TransactionsViewController: ThemeViewController {
         dataSource.viewController = self
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -39,6 +40,14 @@ class TransactionsViewController: ThemeViewController {
 
         title = "transactions.title".localized
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.reset".localized, style: .plain, target: self, action: #selector(onTapReset))
+
+        let holder = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        holder.addSubview(syncSpinner)
+
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "manage_2_24"), style: .plain, target: self, action: #selector(onTapScamFilter)),
+            UIBarButtonItem(customView: holder),
+        ]
 
         view.addSubview(tableView)
 
@@ -70,11 +79,6 @@ class TransactionsViewController: ThemeViewController {
             maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
 
-        let holder = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        holder.addSubview(syncSpinner)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: holder)
-
         tableView.snp.makeConstraints { maker in
             maker.top.equalTo(headerView.snp.bottom)
             maker.leading.trailing.bottom.equalToSuperview()
@@ -95,6 +99,11 @@ class TransactionsViewController: ThemeViewController {
         viewModel.onTapReset()
     }
 
+    @objc private func onTapScamFilter() {
+        let viewController = ScamFilterModule.view().toNavigationViewController()
+        present(viewController, animated: true)
+    }
+
     private func sync(syncing: Bool) {
         syncSpinner.isHidden = !syncing
 
@@ -104,5 +113,4 @@ class TransactionsViewController: ThemeViewController {
             syncSpinner.stopAnimating()
         }
     }
-
 }

@@ -1,10 +1,10 @@
-import UIKit
 import ActionSheet
-import ThemeKit
-import SectionsTableView
 import ComponentKit
 import RxSwift
 import SafariServices
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class TransactionInfoViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
@@ -31,7 +31,8 @@ class TransactionInfoViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -110,7 +111,7 @@ class TransactionInfoViewController: ThemeViewController {
             hash = "pending"
             value = "transactions.pending".localized
             spinnerProgress = 0.2
-        case .processing(let progress):
+        case let .processing(progress):
             hash = "processing-\(progress)"
             value = "transactions.processing".localized
             spinnerProgress = progress * 0.8 + 0.2
@@ -125,33 +126,33 @@ class TransactionInfoViewController: ThemeViewController {
         }
 
         return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .secondaryButton { [weak self] component in
-                        component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
-                        component.button.setTitle("status".localized, for: .normal)
-                        component.onTap = {
-                            self?.openStatusInfo()
-                        }
-                    },
-                    .textElement(text: .subhead1(value), parameters: .rightAlignment),
-                    .margin8,
-                    .imageElement(image: .local(icon), size: .image20),
-                    .determiniteSpinner20 { (component: DeterminiteSpinnerComponent) -> () in
-                        if let progress = spinnerProgress {
-                            component.isHidden = false
-                            component.set(progress: progress)
-                        } else {
-                            component.isHidden = true
-                        }
+            rootElement: .hStack([
+                .secondaryButton { [weak self] component in
+                    component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                    component.button.setTitle("status".localized, for: .normal)
+                    component.onTap = {
+                        self?.openStatusInfo()
                     }
-                ]),
-                tableView: tableView,
-                id: "status",
-                hash: hash,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                }
+                },
+                .textElement(text: .subhead1(value), parameters: .rightAlignment),
+                .margin8,
+                .imageElement(image: .local(icon), size: .image20),
+                .determiniteSpinner20 { (component: DeterminiteSpinnerComponent) in
+                    if let progress = spinnerProgress {
+                        component.isHidden = false
+                        component.set(progress: progress)
+                    } else {
+                        component.isHidden = true
+                    }
+                },
+            ]),
+            tableView: tableView,
+            id: "status",
+            hash: hash,
+            height: .heightCell48,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+            }
         )
     }
 
@@ -159,10 +160,10 @@ class TransactionInfoViewController: ThemeViewController {
         let image: UIImage?
         let title: String
         let color: UIColor
-        let action: () -> ()
+        let action: () -> Void
 
         switch option {
-        case .resend(let type):
+        case let .resend(type):
             switch type {
             case .speedUp:
                 image = UIImage(named: "arrow_medium_2_up_24")
@@ -180,23 +181,23 @@ class TransactionInfoViewController: ThemeViewController {
         }
 
         return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .imageElement(image: .local(image?.withTintColor(color)), size: .image24),
-                    .textElement(text: .body(title, color: color))
-                ]),
-                tableView: tableView,
-                id: "option-\(rowInfo.index)",
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                },
-                action: action
+            rootElement: .hStack([
+                .imageElement(image: .local(image?.withTintColor(color)), size: .image24),
+                .textElement(text: .body(title, color: color)),
+            ]),
+            tableView: tableView,
+            id: "option-\(rowInfo.index)",
+            height: .heightCell48,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+            },
+            action: action
         )
     }
 
     private func fromRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
-        var onAddToContact: (() -> ())? = nil
+        var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
             onAddToContact = { [weak self] in
                 ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
@@ -206,7 +207,7 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func toRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
-        var onAddToContact: (() -> ())? = nil
+        var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
             onAddToContact = { [weak self] in
                 ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
@@ -216,7 +217,7 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func spenderRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
-        var onAddToContact: (() -> ())? = nil
+        var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
             onAddToContact = { [weak self] in
                 ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
@@ -226,7 +227,7 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func recipientRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
-        var onAddToContact: (() -> ())? = nil
+        var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
             onAddToContact = { [weak self] in
                 ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
@@ -237,31 +238,31 @@ class TransactionInfoViewController: ThemeViewController {
 
     private func idRow(rowInfo: RowInfo, value: String) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .textElement(text: .subhead2("tx_info.transaction_id".localized)),
-                    .secondaryButton { (component: SecondaryButtonComponent) -> () in
-                        component.button.set(style: .default)
-                        component.button.setTitle(value.shortened, for: .normal)
-                        component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-                        component.onTap = {
-                            CopyHelper.copyAndNotify(value: value)
-                        }
-                    },
-                    .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) -> () in
-                        component.button.set(image: UIImage(named: "share_1_20"))
-                        component.onTap = {
-                            let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
-                            self?.present(activityViewController, animated: true)
-                        }
+            rootElement: .hStack([
+                .textElement(text: .subhead2("tx_info.transaction_id".localized)),
+                .secondaryButton { (component: SecondaryButtonComponent) in
+                    component.button.set(style: .default)
+                    component.button.setTitle(value.shortened, for: .normal)
+                    component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+                    component.onTap = {
+                        CopyHelper.copyAndNotify(value: value)
                     }
-                ]),
-                tableView: tableView,
-                id: "transaction_id",
-                hash: value,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                }
+                },
+                .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) in
+                    component.button.set(image: UIImage(named: "share_1_20"))
+                    component.onTap = {
+                        let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
+                        self?.present(activityViewController, animated: true)
+                    }
+                },
+            ]),
+            tableView: tableView,
+            id: "transaction_id",
+            hash: value,
+            height: .heightCell48,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+            }
         )
     }
 
@@ -271,84 +272,84 @@ class TransactionInfoViewController: ThemeViewController {
         let valueFont: UIFont = .subhead1I
 
         return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { (component: TextComponent) -> () in
-                        component.font = titleFont
-                        component.textColor = .themeGray
-                        component.text = title
-                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                    },
-                    .text { (component: TextComponent) -> () in
-                        component.font = valueFont
-                        component.textColor = .themeLeah
-                        component.text = value
-                        component.textAlignment = .right
-                        component.numberOfLines = 0
-                    }
-                ]),
-                tableView: tableView,
-                id: id,
-                dynamicHeight: { containerWidth in
-                    CellBuilderNew.height(
-                            containerWidth: containerWidth,
-                            backgroundStyle: backgroundStyle,
-                            text: value,
-                            font: valueFont,
-                            elements: [.fixed(width: TextComponent.width(font: titleFont, text: title)), .multiline]
-                    )
+            rootElement: .hStack([
+                .text { (component: TextComponent) in
+                    component.font = titleFont
+                    component.textColor = .themeGray
+                    component.text = title
+                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
                 },
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                }
+                .text { (component: TextComponent) in
+                    component.font = valueFont
+                    component.textColor = .themeLeah
+                    component.text = value
+                    component.textAlignment = .right
+                    component.numberOfLines = 0
+                },
+            ]),
+            tableView: tableView,
+            id: id,
+            dynamicHeight: { containerWidth in
+                CellBuilderNew.height(
+                    containerWidth: containerWidth,
+                    backgroundStyle: backgroundStyle,
+                    text: value,
+                    font: valueFont,
+                    elements: [.fixed(width: TextComponent.width(font: titleFont, text: title)), .multiline]
+                )
+            },
+            bind: { cell in
+                cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+            }
         )
     }
 
-    private func warningRow(rowInfo: RowInfo, id: String, image: UIImage?, text: String, onTap: @escaping () -> ()) -> RowProtocol {
+    private func warningRow(rowInfo: RowInfo, id: String, image: UIImage?, text: String, onTap: @escaping () -> Void) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
         let textFont: UIFont = .subhead2
 
         return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image24 { (component: ImageComponent) -> () in
-                        component.imageView.image = image?.withTintColor(.themeGray)
-                    },
-                    .text { (component: TextComponent) -> () in
-                        component.font = textFont
-                        component.textColor = .themeGray
-                        component.text = text
-                        component.numberOfLines = 0
-                    },
-                    .image20 { (component: ImageComponent) -> () in
-                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
-                    }
-                ]),
-                tableView: tableView,
-                id: id,
-                autoDeselect: true,
-                dynamicHeight: { containerWidth in
-                    CellBuilderNew.height(
-                            containerWidth: containerWidth,
-                            backgroundStyle: backgroundStyle,
-                            text: text,
-                            font: textFont,
-                            elements: [.fixed(width: .iconSize20), .multiline, .fixed(width: .iconSize20)]
-                    )
+            rootElement: .hStack([
+                .image24 { (component: ImageComponent) in
+                    component.imageView.image = image?.withTintColor(.themeGray)
                 },
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                .text { (component: TextComponent) in
+                    component.font = textFont
+                    component.textColor = .themeGray
+                    component.text = text
+                    component.numberOfLines = 0
                 },
-                action: {
-                    onTap()
-                }
+                .image20 { (component: ImageComponent) in
+                    component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
+                },
+            ]),
+            tableView: tableView,
+            id: id,
+            autoDeselect: true,
+            dynamicHeight: { containerWidth in
+                CellBuilderNew.height(
+                    containerWidth: containerWidth,
+                    backgroundStyle: backgroundStyle,
+                    text: text,
+                    font: textFont,
+                    elements: [.fixed(width: .iconSize20), .multiline, .fixed(width: .iconSize20)]
+                )
+            },
+            bind: { cell in
+                cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+            },
+            action: {
+                onTap()
+            }
         )
     }
 
     private func doubleSpendRow(rowInfo: RowInfo, txHash: String, conflictingTxHash: String) -> RowProtocol {
         warningRow(
-                rowInfo: rowInfo,
-                id: "double_spend",
-                image: UIImage(named: "double_send_24"),
-                text: "tx_info.double_spent_note".localized
+            rowInfo: rowInfo,
+            id: "double_spend",
+            image: UIImage(named: "double_send_24"),
+            text: "tx_info.double_spent_note".localized
         ) { [weak self] in
             let viewController = DoubleSpendInfoViewController(transactionHash: txHash, conflictingTransactionHash: conflictingTxHash)
             self?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
@@ -374,79 +375,88 @@ class TransactionInfoViewController: ThemeViewController {
         let textFont: UIFont = .subhead2
 
         return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image24 { (component: ImageComponent) -> () in
-                        component.imageView.image = image?.withTintColor(.themeGray)
-                    },
-                    .text { (component: TextComponent) -> () in
-                        component.font = textFont
-                        component.textColor = .themeGray
-                        component.text = text
-                        component.numberOfLines = 0
-                    }
-                ]),
-                tableView: tableView,
-                id: id,
-                dynamicHeight: { containerWidth in
-                    CellBuilderNew.height(
-                            containerWidth: containerWidth,
-                            backgroundStyle: backgroundStyle,
-                            text: text,
-                            font: textFont,
-                            elements: [.fixed(width: .iconSize20), .multiline]
-                    )
+            rootElement: .hStack([
+                .image24 { (component: ImageComponent) in
+                    component.imageView.image = image?.withTintColor(.themeGray)
                 },
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                }
+                .text { (component: TextComponent) in
+                    component.font = textFont
+                    component.textColor = .themeGray
+                    component.text = text
+                    component.numberOfLines = 0
+                },
+            ]),
+            tableView: tableView,
+            id: id,
+            dynamicHeight: { containerWidth in
+                CellBuilderNew.height(
+                    containerWidth: containerWidth,
+                    backgroundStyle: backgroundStyle,
+                    text: text,
+                    font: textFont,
+                    elements: [.fixed(width: .iconSize20), .multiline]
+                )
+            },
+            bind: { cell in
+                cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+            }
         )
     }
 
     private func sentToSelfRow(rowInfo: RowInfo) -> RowProtocol {
         noteRow(
-                rowInfo: rowInfo,
-                id: "sent_to_self",
-                image: UIImage(named: "arrow_return_24"),
-                text: "tx_info.to_self_note".localized
+            rowInfo: rowInfo,
+            id: "sent_to_self",
+            image: UIImage(named: "arrow_return_24"),
+            text: "tx_info.to_self_note".localized
         )
     }
 
     private func rawTransactionRow(rowInfo: RowInfo) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .textElement(text: .subhead2("tx_info.raw_transaction".localized)),
-                    .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) -> () in
-                        component.button.set(image: UIImage(named: "copy_20"))
-                        component.onTap = {
-                            if let value = self?.viewModel.rawTransaction {
-                                CopyHelper.copyAndNotify(value: value)
-                            }
+            rootElement: .hStack([
+                .textElement(text: .subhead2("tx_info.raw_transaction".localized)),
+                .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) in
+                    component.button.set(image: UIImage(named: "copy_20"))
+                    component.onTap = {
+                        if let value = self?.viewModel.rawTransaction {
+                            CopyHelper.copyAndNotify(value: value)
                         }
                     }
-                ]),
-                tableView: tableView,
-                id: "raw_transaction",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                }
+                },
+            ]),
+            tableView: tableView,
+            id: "raw_transaction",
+            height: .heightCell48,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+            }
         )
     }
 
     private func explorerRow(rowInfo: RowInfo, title: String, url: String?) -> RowProtocol {
         tableView.universalRow48(
-                id: "explorer",
-                image: .local(UIImage(named: "globe_24")?.withTintColor(.themeGray)),
-                title: .body(title),
-                accessoryType: .disclosure,
-                autoDeselect: true,
-                isFirst: rowInfo.isFirst,
-                isLast: rowInfo.isLast,
-                action: { [weak self] in
-                    if let url = url {
-                        self?.urlManager.open(url: url, from: self)
-                    }
+            id: "explorer",
+            image: .local(UIImage(named: "globe_24")?.withTintColor(.themeGray)),
+            title: .body(title),
+            accessoryType: .disclosure,
+            autoDeselect: true,
+            isFirst: rowInfo.isFirst,
+            isLast: rowInfo.isLast,
+            action: { [weak self] in
+                if let url = url {
+                    self?.urlManager.open(url: url, from: self)
                 }
+            }
+        )
+    }
+
+    private func warningRow(rowInfo: RowInfo, text: String) -> RowProtocol {
+        tableView.highlightedDescriptionRow(
+            id: "warning-\(rowInfo.index)",
+            text: text,
+            ignoreBottomMargin: true,
+            topVerticalMargin: 0
         )
     }
 
@@ -455,7 +465,7 @@ class TransactionInfoViewController: ThemeViewController {
         case let .actionTitle(iconName, iconDimmed, title, subTitle):
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type, coinUid):
-            var action: (() -> ())?
+            var action: (() -> Void)?
 
             if let coinUid = coinUid {
                 action = { [weak self] in
@@ -465,7 +475,7 @@ class TransactionInfoViewController: ThemeViewController {
 
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type, action: action)
         case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type, providerCollectionUid, nftUid):
-            var onTapOpenNft: (() -> ())?
+            var onTapOpenNft: (() -> Void)?
 
             if let providerCollectionUid = providerCollectionUid, let nftUid = nftUid {
                 onTapOpenNft = { [weak self] in
@@ -512,24 +522,23 @@ class TransactionInfoViewController: ThemeViewController {
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.service".localized, value: value)
         case let .explorer(title, url):
             return explorerRow(rowInfo: rowInfo, title: title, url: url)
+        case let .warning(text):
+            return warningRow(rowInfo: rowInfo, text: text)
         }
     }
-
 }
 
 extension TransactionInfoViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         viewItems.enumerated().map { (index: Int, sectionViewItems: [TransactionInfoModule.ViewItem]) -> SectionProtocol in
             Section(
-                    id: "section_\(index)",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
-                    rows: sectionViewItems.enumerated().map { (index, viewItem) in
-                        row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItems.count - 1))
-                    }
+                id: "section_\(index)",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
+                rows: sectionViewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItems.count - 1))
+                }
             )
         }
     }
-
 }

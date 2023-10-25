@@ -1,19 +1,19 @@
-import UIKit
-import RxSwift
 import MarketKit
+import RxSwift
+import UIKit
 
 struct TransactionsModule {
-
     static func viewController() -> UIViewController {
         let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
         let service = TransactionsService(
-                walletManager: App.shared.walletManager,
-                adapterManager: App.shared.transactionAdapterManager,
-                rateService: rateService,
-                nftMetadataService: nftMetadataService,
-                balanceHiddenManager: App.shared.balanceHiddenManager
+            walletManager: App.shared.walletManager,
+            adapterManager: App.shared.transactionAdapterManager,
+            rateService: rateService,
+            nftMetadataService: nftMetadataService,
+            balanceHiddenManager: App.shared.balanceHiddenManager,
+            scamFilterManager: App.shared.scamFilterManager
         )
 
         let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)
@@ -29,10 +29,10 @@ struct TransactionsModule {
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
         let service = TokenTransactionsService(
-                token: token,
-                adapterManager: App.shared.transactionAdapterManager,
-                rateService: rateService,
-                nftMetadataService: nftMetadataService
+            token: token,
+            adapterManager: App.shared.transactionAdapterManager,
+            rateService: rateService,
+            nftMetadataService: nftMetadataService
         )
 
         let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)
@@ -41,7 +41,6 @@ struct TransactionsModule {
 
         return TransactionsTableViewDataSource(viewModel: viewModel)
     }
-
 }
 
 struct TransactionItem: Comparable {
@@ -49,11 +48,11 @@ struct TransactionItem: Comparable {
     var status: TransactionStatus
     var lockState: TransactionLockState?
 
-    static func <(lhs: TransactionItem, rhs: TransactionItem) -> Bool {
+    static func < (lhs: TransactionItem, rhs: TransactionItem) -> Bool {
         lhs.record < rhs.record
     }
 
-    static func ==(lhs: TransactionItem, rhs: TransactionItem) -> Bool {
+    static func == (lhs: TransactionItem, rhs: TransactionItem) -> Bool {
         lhs.record == rhs.record
     }
 }
