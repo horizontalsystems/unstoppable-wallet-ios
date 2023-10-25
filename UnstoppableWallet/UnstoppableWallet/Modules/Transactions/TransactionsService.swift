@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class TransactionsService: BaseTransactionsService {
     private let walletManager: WalletManager
@@ -22,10 +22,10 @@ class TransactionsService: BaseTransactionsService {
 
     private(set) var allBlockchains = [Blockchain]()
 
-    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
+    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager, scamFilterManager: ScamFilterManager) {
         self.walletManager = walletManager
 
-        super.init(rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: balanceHiddenManager)
+        super.init(rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: balanceHiddenManager, scamFilterManager: scamFilterManager)
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.syncWallets() }
 
@@ -76,11 +76,9 @@ class TransactionsService: BaseTransactionsService {
         blockchain = nil
         token = nil
     }
-
 }
 
 extension TransactionsService {
-
     var blockchainObservable: Observable<Blockchain?> {
         blockchainRelay.asObservable()
     }
@@ -120,5 +118,4 @@ extension TransactionsService {
             self._syncPoolGroup()
         }
     }
-
 }

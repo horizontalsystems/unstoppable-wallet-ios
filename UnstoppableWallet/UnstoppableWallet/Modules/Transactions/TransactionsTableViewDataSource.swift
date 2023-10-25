@@ -154,7 +154,7 @@ class TransactionsTableViewDataSource: NSObject {
                     }
                 ])
             ])
-        ])
+        ], { component in component.alpha = viewItem.spam ? 0.25 : 1 })
     }
 
 }

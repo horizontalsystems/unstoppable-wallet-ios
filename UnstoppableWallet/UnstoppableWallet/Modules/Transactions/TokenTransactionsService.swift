@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class TokenTransactionsService: BaseTransactionsService {
     private let token: Token
@@ -9,7 +9,12 @@ class TokenTransactionsService: BaseTransactionsService {
     init(token: Token, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
         self.token = token
 
-        super.init(rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: App.shared.balanceHiddenManager)
+        super.init(
+            rateService: rateService,
+            nftMetadataService: nftMetadataService,
+            balanceHiddenManager: App.shared.balanceHiddenManager,
+            scamFilterManager: App.shared.scamFilterManager
+        )
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.sync() }
 
@@ -30,5 +35,4 @@ class TokenTransactionsService: BaseTransactionsService {
     override var _poolGroupType: PoolGroupFactory.PoolGroupType {
         .token(token: token)
     }
-
 }

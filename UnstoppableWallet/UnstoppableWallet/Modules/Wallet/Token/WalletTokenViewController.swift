@@ -1,8 +1,8 @@
 import Combine
-import UIKit
 import ComponentKit
 import MarketKit
 import ThemeKit
+import UIKit
 
 class WalletTokenViewController: ThemeViewController {
     private let viewModel: WalletTokenViewModel
@@ -21,7 +21,8 @@ class WalletTokenViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -29,6 +30,7 @@ class WalletTokenViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = viewModel.title.localized
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "manage_2_24"), style: .plain, target: self, action: #selector(onTapScamFilter))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -57,4 +59,8 @@ class WalletTokenViewController: ThemeViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
+    @objc private func onTapScamFilter() {
+        let viewController = ScamFilterModule.view().toNavigationViewController()
+        present(viewController, animated: true)
+    }
 }

@@ -1,11 +1,11 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 
 class NonSpamPoolProvider {
-    private let poolProvider: PoolProvider
+    private let poolProvider: IPoolProvider
 
-    init(poolProvider: PoolProvider) {
+    init(poolProvider: IPoolProvider) {
         self.poolProvider = poolProvider
     }
 
@@ -14,22 +14,20 @@ class NonSpamPoolProvider {
         let extendedLimit = limit
 
         return poolProvider.recordsSingle(from: from, limit: extendedLimit)
-                .flatMap { [weak self] newTransactions in
-                    let allTransactions = transactions + newTransactions
-                    let nonSpamTransactions = allTransactions.filter { !$0.spam }
+            .flatMap { [weak self] newTransactions in
+                let allTransactions = transactions + newTransactions
+                let nonSpamTransactions = allTransactions.filter { !$0.spam }
 
-                    if nonSpamTransactions.count >= limit || newTransactions.count < extendedLimit {
-                        return Single.just(Array(nonSpamTransactions.prefix(limit)))
-                    } else {
-                        return self?.single(from: allTransactions.last, limit: limit, transactions: allTransactions) ?? Single.just([])
-                    }
+                if nonSpamTransactions.count >= limit || newTransactions.count < extendedLimit {
+                    return Single.just(Array(nonSpamTransactions.prefix(limit)))
+                } else {
+                    return self?.single(from: allTransactions.last, limit: limit, transactions: allTransactions) ?? Single.just([])
                 }
+            }
     }
-
 }
 
-extension NonSpamPoolProvider {
-
+extension NonSpamPoolProvider: IPoolProvider {
     var syncing: Bool {
         poolProvider.syncing
     }
@@ -48,13 +46,12 @@ extension NonSpamPoolProvider {
 
     func recordsObservable() -> Observable<[TransactionRecord]> {
         poolProvider.recordsObservable()
-                .map { transactions in
-                    transactions.filter { !$0.spam }
-                }
+            .map { transactions in
+                transactions.filter { !$0.spam }
+            }
     }
 
     func lastBlockUpdatedObservable() -> Observable<Void> {
         poolProvider.lastBlockUpdatedObservable()
     }
-
 }

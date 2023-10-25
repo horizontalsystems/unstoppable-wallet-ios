@@ -223,6 +223,7 @@ extension BaseTransactionsViewModel {
         let secondaryValue: Value?
         let sentToSelf: Bool
         let locked: Bool?
+        let spam: Bool
     }
 
     enum IconType {

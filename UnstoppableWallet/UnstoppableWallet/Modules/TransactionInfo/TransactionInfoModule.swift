@@ -50,6 +50,7 @@ extension TransactionInfoModule {
         case memo(text: String)
         case service(value: String)
         case explorer(title: String, url: String?)
+        case warning(text: String)
     }
 
 }

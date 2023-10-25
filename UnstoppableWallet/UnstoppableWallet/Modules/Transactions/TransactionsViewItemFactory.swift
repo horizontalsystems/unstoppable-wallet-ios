@@ -432,7 +432,8 @@ class TransactionsViewItemFactory {
                 primaryValue: primaryValue,
                 secondaryValue: secondaryValue,
                 sentToSelf: sentToSelf,
-                locked: locked
+                locked: locked,
+                spam: item.record.spam
         )
     }
 

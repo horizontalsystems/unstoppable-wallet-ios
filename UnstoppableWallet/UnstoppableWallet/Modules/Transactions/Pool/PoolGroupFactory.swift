@@ -90,9 +90,12 @@ class PoolGroupFactory {
 
 extension PoolGroupFactory {
 
-    func poolGroup(type: PoolGroupType, filter: TransactionTypeFilter) -> PoolGroup {
+    func poolGroup(type: PoolGroupType, filter: TransactionTypeFilter, scamFilterEnabled: Bool) -> PoolGroup {
         let providers = providers(poolGroupType: type, filter: filter)
-        return PoolGroup(pools: providers.map { Pool(provider: NonSpamPoolProvider(poolProvider: $0)) })
+        let pools = providers.map { poolProvider in
+            scamFilterEnabled ? Pool(provider: NonSpamPoolProvider(poolProvider: poolProvider)) : Pool(provider: poolProvider)
+        }
+        return PoolGroup(pools: pools)
     }
 
 }

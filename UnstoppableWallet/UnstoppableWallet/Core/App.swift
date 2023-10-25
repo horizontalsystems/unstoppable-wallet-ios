@@ -105,6 +105,8 @@ class App {
     let balanceHiddenManager: BalanceHiddenManager
     let balanceConversionManager: BalanceConversionManager
 
+    let scamFilterManager: ScamFilterManager
+
     let appIconManager = AppIconManager()
 
     let subscriptionManager: SubscriptionManager
@@ -293,6 +295,8 @@ class App {
         balancePrimaryValueManager = BalancePrimaryValueManager(userDefaultsStorage: userDefaultsStorage)
         balanceHiddenManager = BalanceHiddenManager(userDefaultsStorage: userDefaultsStorage)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, userDefaultsStorage: userDefaultsStorage)
+
+        scamFilterManager = ScamFilterManager(userDefaultsStorage: userDefaultsStorage)
 
         contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: AppConfig.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
 
