@@ -153,4 +153,8 @@ struct AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "OpenSeaApiKey") as? String) ?? ""
     }
 
+    static var swapEnabled: Bool {
+        Bundle.main.object(forInfoDictionaryKey: "SwapEnabled") as? String == "true"
+    }
+
 }
