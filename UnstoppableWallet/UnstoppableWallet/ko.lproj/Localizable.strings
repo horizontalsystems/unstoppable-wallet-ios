@@ -110,6 +110,7 @@
 // Access Camera
 
 "access_camera.message" = "%@이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> %@으로 가서 카메라 접근을 허용해 주세요.";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "설정";
 
 // Restore
@@ -315,7 +316,6 @@
 "balance.invalid_api_key" = "유효하지 않은 API 키";
 "balance.empty.add_coins" = "코인 추가";
 "balance.empty.description" = "이 지갑에 코인을 넣지 않았습니다.";
-"balance.watch_empty.description" = "이 지갑 주소에는 잔액이 없습니다";
 "balance.sort_by" = "정렬 기준";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
@@ -1005,6 +1005,7 @@
 "tx_info.you_paid" = "지불한 금액";
 "tx_info.you_got" = "받았던 금액";
 "tx_info.price" = "금액";
+"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
 
 // Settings
 
@@ -1837,3 +1838,15 @@
 "cex_withdraw_confirm.network" = "회로망";
 "cex_withdraw_confirm.withdraw" = "빼다";
 "cex_withdraw_confirm.withdraw_failed" = "출금 실패";
+
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
+"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+
+// Scam Filter
+
+"scam_filter.title" = "Scam Filter";
+"scam_filter.enabled" = "Enabled";
+"scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
