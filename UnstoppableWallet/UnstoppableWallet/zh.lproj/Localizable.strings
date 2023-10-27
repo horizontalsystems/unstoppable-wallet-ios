@@ -112,6 +112,7 @@
 "access_camera.message" = "%@ 需要访问您的相机以扫描二维码。
 
 前往设置 - > %@ 并允许访问相机。";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "设置";
 
 // Restore
@@ -317,7 +318,6 @@
 "balance.invalid_api_key" = "无效的 API 密钥";
 "balance.empty.add_coins" = "添加代币";
 "balance.empty.description" = "您还没有添加任何代币到此钱包中。";
-"balance.watch_empty.description" = "此钱包地址没有任何余额";
 "balance.sort_by" = "排序方式为";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
@@ -1007,6 +1007,7 @@
 "tx_info.you_paid" = "您已支付";
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
+"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
 
 // Settings
 
@@ -1133,7 +1134,7 @@
 "backup_app.backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
 "backup_app.backup.password.highlighted_description" = "此密码用于加密您的钱包备份文件。一旦丢失或遗忘，将无法恢复或重置。";
 
-"backup_app.restore_type.title" = "恢复自";
+"backup_app.restore_type.title" = "恢复";
 
 "backup_app.restore.notice.description" = "此操作将覆盖您的本地付款联系人以及它的 iCloud 副本（如有）。";
 "backup_app.restore.notice.merge" = "替换";
@@ -1839,3 +1840,15 @@
 "cex_withdraw_confirm.network" = "網絡";
 "cex_withdraw_confirm.withdraw" = "提取";
 "cex_withdraw_confirm.withdraw_failed" = "提取失败";
+
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
+"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+
+// Scam Filter
+
+"scam_filter.title" = "Scam Filter";
+"scam_filter.enabled" = "Enabled";
+"scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
