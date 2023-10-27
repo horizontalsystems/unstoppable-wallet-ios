@@ -112,6 +112,7 @@
 "access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.
 
 Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "Paramètres";
 
 // Restore
@@ -317,7 +318,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.invalid_api_key" = "Clé API invalide";
 "balance.empty.add_coins" = "Ajouter les pièces";
 "balance.empty.description" = "Vous n'avez ajouté aucune pièce à ce portefeuille.";
-"balance.watch_empty.description" = "Cette adresse de portefeuille n'a pas de solde";
 "balance.sort_by" = "Trier par";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Solde";
@@ -1007,6 +1007,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "tx_info.you_paid" = "Vous avez payé";
 "tx_info.you_got" = "Vous avez reçu";
 "tx_info.price" = "Prix";
+"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
 
 // Settings
 
@@ -1839,3 +1840,15 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "cex_withdraw_confirm.network" = "Réseau";
 "cex_withdraw_confirm.withdraw" = "Retraits";
 "cex_withdraw_confirm.withdraw_failed" = "Échec du retrait";
+
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
+"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+
+// Scam Filter
+
+"scam_filter.title" = "Scam Filter";
+"scam_filter.enabled" = "Enabled";
+"scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
