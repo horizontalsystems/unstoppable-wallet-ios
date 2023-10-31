@@ -183,7 +183,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_settings.title" = "Blockchain Ayarları";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (önerilen)";
-"sync_mode.from_blockchain" = "Blockchain çıkışlı";
+"sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "Ödemeleri almak için adres biçimini seçin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
 
 // Coin Platforms
@@ -1218,11 +1218,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "security_settings.delete_alert_button" = "Cihazdan sil";
 
 "btc_blockchain_settings.restore_source" = "Geri Yükleme Ayarları";
-"btc_blockchain_settings.restore_source.description" = "İşlemler yapılmış cüzdanı geri yüklemek için veri kaynağını seçin.";
+"btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 "btc_blockchain_settings.restore_source.alert" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.";
 
-"btc_restore_mode.recommended" = "Tavsiye Edilen";
-"btc_restore_mode.more_private" = "Daha Gizli";
+"btc_restore_mode.fast" = "Fast, Private, Centralized";
+"btc_restore_mode.slow" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "Karıştır";
 "btc_transaction_sort_mode.shuffle.description" = "Rastgele Dizinleme";
