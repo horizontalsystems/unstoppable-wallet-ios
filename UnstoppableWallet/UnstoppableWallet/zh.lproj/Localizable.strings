@@ -1603,6 +1603,7 @@
 "evm_network.rpc_source" = "RPC 源";
 "evm_network.added" = "已添加";
 "evm_network.add_new" = "添加新的";
+"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 
 // Add RPC Source
 
