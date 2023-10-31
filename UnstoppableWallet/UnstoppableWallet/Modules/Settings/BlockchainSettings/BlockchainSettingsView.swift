@@ -18,7 +18,7 @@ struct BlockchainSettingsView: View {
                         }) {
                             ItemView(
                                 blockchain: item.blockchain,
-                                value: item.restoreMode.title
+                                value: item.title
                             )
                         }
                     }

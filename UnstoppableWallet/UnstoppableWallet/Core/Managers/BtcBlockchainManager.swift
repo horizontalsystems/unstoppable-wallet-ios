@@ -49,13 +49,20 @@ extension BtcBlockchainManager {
         storage.btcRestoreMode(blockchainType: blockchainType) ?? .api
     }
 
+    func apiSyncMode(blockchainType: BlockchainType) -> BitcoinCore.SyncMode {
+        switch blockchainType {
+            case .bitcoin, .bitcoinCash: return .blockchair(key: AppConfig.blockchairApiKey)
+            default: return .api
+        }
+    }
+
     func syncMode(blockchainType: BlockchainType, accountOrigin: AccountOrigin) -> BitcoinCore.SyncMode {
         if accountOrigin == .created {
-            return .newWallet
+            return apiSyncMode(blockchainType: blockchainType)
         }
 
         switch restoreMode(blockchainType: blockchainType) {
-        case .api: return .api
+        case .api: return apiSyncMode(blockchainType: blockchainType)
         case .blockchain: return .full
         }
     }
