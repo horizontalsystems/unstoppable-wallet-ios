@@ -1607,6 +1607,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "evm_network.rpc_source" = "RPC Kaynak";
 "evm_network.added" = "Eklendi";
 "evm_network.add_new" = "Yeni ekle";
+"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 
 // Add RPC Source
 
