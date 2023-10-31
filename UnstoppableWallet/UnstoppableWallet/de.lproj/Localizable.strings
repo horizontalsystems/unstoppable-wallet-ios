@@ -1603,6 +1603,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "evm_network.rpc_source" = "RPC-Quelle";
 "evm_network.added" = "Hinzugefügt";
 "evm_network.add_new" = "Neu hinzufügen";
+"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 
 // Add RPC Source
 
