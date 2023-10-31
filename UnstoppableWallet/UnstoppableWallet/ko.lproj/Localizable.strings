@@ -1601,6 +1601,7 @@
 "evm_network.rpc_source" = "RPC 소스";
 "evm_network.added" = "추가됨";
 "evm_network.add_new" = "신규로 추가";
+"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 
 // Add RPC Source
 
