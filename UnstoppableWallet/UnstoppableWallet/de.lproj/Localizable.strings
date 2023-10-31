@@ -183,7 +183,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_settings.title" = "Blockchain Einstellungen";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (empfohlen)";
-"sync_mode.from_blockchain" = "Von Blockchain";
+"sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "Wählen Sie das Adressformat für den Empfang von Zahlungen. Ein korrektes Format sollte bei der Wiederherstellung einer bestehenden Brieftasche gewählt werden.";
 
 // Coin Platforms
@@ -1214,11 +1214,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "security_settings.delete_alert_button" = "Von Telefon löschen";
 
 "btc_blockchain_settings.restore_source" = "Parameter wiederherstellen";
-"btc_blockchain_settings.restore_source.description" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
+"btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 "btc_blockchain_settings.restore_source.alert" = "Nach dem Ändern der Quelle wiederherstellen muss sich die Wallet mit der %@ Blockchain synchronisieren.";
 
-"btc_restore_mode.recommended" = "Empfohlen";
-"btc_restore_mode.more_private" = "Mehr Privat";
+"btc_restore_mode.fast" = "Fast, Private, Centralized";
+"btc_restore_mode.slow" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "Zufällig";
 "btc_transaction_sort_mode.shuffle.description" = "Zufällige Indizierung";
