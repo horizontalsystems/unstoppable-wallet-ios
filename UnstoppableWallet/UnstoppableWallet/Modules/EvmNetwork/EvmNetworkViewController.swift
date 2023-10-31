@@ -31,6 +31,7 @@ class EvmNetworkViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = viewModel.title
+        navigationItem.largeTitleDisplayMode = .always
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapDone))
@@ -118,14 +119,16 @@ extension EvmNetworkViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
-                    id: "default",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: customViewItems.isEmpty ? .margin32 : .margin24),
+                    id: "description",
+                    footerState: .margin(height: .margin24),
                     rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "evm_network.rpc_source".localized) { [weak self] in
-                            self?.openRpcSourceInfo()
-                        }
-                    ] + defaultViewItems.enumerated().map { index, viewItem in
+                        tableView.descriptionRow(id: "description-row", text: "evm_network.description".localized, font: .subhead2, textColor: .themeGray)
+                    ]
+            ),
+            Section(
+                    id: "default",
+                    footerState: .margin(height: customViewItems.isEmpty ? .margin32 : .margin24),
+                    rows: defaultViewItems.enumerated().map { index, viewItem in
                         row(
                                 id: "default-\(index)",
                                 viewItem: viewItem,
