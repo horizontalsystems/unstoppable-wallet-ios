@@ -157,4 +157,8 @@ struct AppConfig {
         Bundle.main.object(forInfoDictionaryKey: "SwapEnabled") as? String == "true"
     }
 
+    static var blockchairApiKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "BlockchairApiKey") as? String) ?? ""
+    }
+
 }

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BlockchairApiKey</key>
+	<string>${blockchair_api_key}</string>
 	<key>ArbiscanApiKey</key>
 	<string>${arbiscan_api_key}</string>
 	<key>BscscanApiKey</key>
@@ -101,8 +103,8 @@
 	</array>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
-    <key>oneInchApiKey</key>
-    <string>${one_inch_api_key}</string>
+	<key>oneInchApiKey</key>
+	<string>${one_inch_api_key}</string>
 	<key>OpenSeaApiKey</key>
 	<string>${open_sea_api_key}</string>
 	<key>OptimismEtherscanApiKey</key>
@@ -119,11 +121,11 @@
 	<string>${ShowTestNetSwitcher}</string>
 	<key>SnowtraceApiKey</key>
 	<string>${snowtrace_api_key}</string>
-    <key>SwapEnabled</key>
-    <string>${swap_enabled}</string>
+	<key>SwapEnabled</key>
+	<string>${swap_enabled}</string>
 	<key>TronGridApiKey</key>
 	<string>${trongrid_api_key}</string>
-    <key>TwitterBearerToken</key>
+	<key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

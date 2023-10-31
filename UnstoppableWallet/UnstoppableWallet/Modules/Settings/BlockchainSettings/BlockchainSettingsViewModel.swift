@@ -2,6 +2,7 @@ import Combine
 import MarketKit
 import RxRelay
 import RxSwift
+import BitcoinCore
 
 class BlockchainSettingsViewModel: ObservableObject {
     private let btcBlockchainManager: BtcBlockchainManager
@@ -10,7 +11,7 @@ class BlockchainSettingsViewModel: ObservableObject {
     private let disposeBag = DisposeBag()
 
     @Published var evmItems: [EvmItem] = []
-    @Published var btcItems: [BtcItem] = []
+    @Published var btcItems: [BtcSyncModeItem] = []
 
     init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager) {
         self.btcBlockchainManager = btcBlockchainManager
@@ -28,7 +29,8 @@ class BlockchainSettingsViewModel: ObservableObject {
         btcItems = btcBlockchainManager.allBlockchains
             .map { blockchain in
                 let restoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
-                return BtcItem(blockchain: blockchain, restoreMode: restoreMode)
+                let syncMode = btcBlockchainManager.apiSyncMode(blockchainType: blockchain.type)
+                return BtcSyncModeItem(blockchain: blockchain, restoreMode: restoreMode, syncMode: syncMode)
             }
             .sorted { $0.blockchain.type.order < $1.blockchain.type.order }
     }
@@ -44,13 +46,22 @@ class BlockchainSettingsViewModel: ObservableObject {
 }
 
 extension BlockchainSettingsViewModel {
-    struct BtcItem {
-        let blockchain: Blockchain
-        let restoreMode: BtcRestoreMode
-    }
-
     struct EvmItem {
         let blockchain: Blockchain
         let syncSource: EvmSyncSource
+    }
+}
+
+struct BtcSyncModeItem {
+    let blockchain: Blockchain
+    let restoreMode: BtcRestoreMode
+    let syncMode: BitcoinCore.SyncMode
+
+    var title: String {
+        switch (restoreMode, syncMode) {
+            case (.api, .api): return "API"
+            case (.api, .blockchair): return "Blockchair API"
+            default: return "sync_mode.from_blockchain".localized(blockchain.name)
+        }
     }
 }
