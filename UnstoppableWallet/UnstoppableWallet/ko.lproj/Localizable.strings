@@ -181,7 +181,7 @@
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
-"sync_mode.from_blockchain" = "블록체인으로 부터";
+"sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "지불을 받기 위한 주소 형식을 선택하십시오. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
 
 // Coin Platforms
@@ -1212,11 +1212,11 @@
 "security_settings.delete_alert_button" = "휴대전화에서 삭제";
 
 "btc_blockchain_settings.restore_source" = "매개 변수 복원";
-"btc_blockchain_settings.restore_source.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
+"btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 "btc_blockchain_settings.restore_source.alert" = "복원 소스를 변경한 후 지갑은 %@ 블록체인과 자체적으로 다시 동기화해야 합니다.";
 
-"btc_restore_mode.recommended" = "권장";
-"btc_restore_mode.more_private" = "더 개인";
+"btc_restore_mode.fast" = "Fast, Private, Centralized";
+"btc_restore_mode.slow" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "셔플";
 "btc_transaction_sort_mode.shuffle.description" = "랜덤 인덱싱";
