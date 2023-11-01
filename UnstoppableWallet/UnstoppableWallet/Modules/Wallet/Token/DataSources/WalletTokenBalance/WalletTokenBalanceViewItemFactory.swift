@@ -25,7 +25,7 @@ class WalletTokenBalanceViewItemFactory {
                 buttons[.send] = sendButtonState
                 buttons[.receive] = .enabled
 
-                if wallet.token.swappable {
+                if AppConfig.swapEnabled, wallet.token.swappable {
                     buttons[.swap] = sendButtonState
                 }
             }

@@ -162,6 +162,7 @@ extension ManageAccountViewModel {
         switch unlockRequest {
         case .recoveryPhrase: openRecoveryPhraseRelay.accept(service.account)
         case .backup: openBackupRelay.accept(service.account)
+        case .backupToCloud: openCloudBackupRelay.accept(service.account)
         case .backupAndDeleteCloud: openBackupAndDeleteCloudRelay.accept(service.account)
         }
     }
@@ -207,7 +208,12 @@ extension ManageAccountViewModel {
     }
 
     func onTapCloudBackup() {
-        openCloudBackupRelay.accept(service.account)
+        if service.isPasscodeSet {
+            unlockRequest = .backupToCloud
+            openUnlockRelay.accept(())
+        } else {
+            openCloudBackupRelay.accept(service.account)
+        }
     }
 
     func onTapBackup() {
@@ -228,6 +234,7 @@ extension ManageAccountViewModel {
     enum UnlockRequest {
         case recoveryPhrase
         case backup
+        case backupToCloud
         case backupAndDeleteCloud
     }
 

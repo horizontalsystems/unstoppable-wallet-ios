@@ -87,7 +87,9 @@
 	<string>${ShowTestNetSwitcher}</string>
 	<key>SnowtraceApiKey</key>
 	<string>${snowtrace_api_key}</string>
-	<key>TwitterBearerToken</key>
+    <key>SwapEnabled</key>
+    <string>${swap_enabled}</string>
+    <key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -143,5 +145,7 @@
 	<string>${open_sea_api_key}</string>
     <key>UnstoppableDomainsApiKey</key>
     <string>${unstoppable_domains_api_key}</string>
+    <key>oneInchApiKey</key>
+    <string>${one_inch_api_key}</string>
 </dict>
 </plist>

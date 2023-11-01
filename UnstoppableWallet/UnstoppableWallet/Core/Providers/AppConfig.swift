@@ -129,6 +129,10 @@ struct AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "UnstoppableDomainsApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    static var oneInchApiKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "oneInchApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var defaultWords: String {
         Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String ?? ""
     }
@@ -147,6 +151,10 @@ struct AppConfig {
 
     static var openSeaApiKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "OpenSeaApiKey") as? String) ?? ""
+    }
+
+    static var swapEnabled: Bool {
+        Bundle.main.object(forInfoDictionaryKey: "SwapEnabled") as? String == "true"
     }
 
 }

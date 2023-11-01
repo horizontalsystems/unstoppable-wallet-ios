@@ -30,7 +30,9 @@ XCCONFIG_DEV_WALLET_CONNECT_V2_PROJECT_KEY = ENV["XCCONFIG_DEV_WALLET_CONNECT_V2
 XCCONFIG_DEV_OPEN_SEA_API_KEY = ENV["XCCONFIG_DEV_OPEN_SEA_API_KEY"]
 XCCONFIG_DEV_TRONGRID_API_KEY = ENV["XCCONFIG_DEV_TRONGRID_API_KEY"]
 XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY = ENV["XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY"]
+XCCONFIG_DEV_ONE_INCH_API_KEY = ENV["XCCONFIG_DEV_ONE_INCH_API_KEY"]
 
+XCCONFIG_PROD_SWAP_ENABLED = ENV["XCCONFIG_PROD_SWAP_ENABLED"]
 XCCONFIG_PROD_INFURA_PROJECT_ID = ENV["XCCONFIG_PROD_INFURA_PROJECT_ID"]
 XCCONFIG_PROD_INFURA_PROJECT_SECRET = ENV["XCCONFIG_PROD_INFURA_PROJECT_SECRET"]
 XCCONFIG_PROD_ETHERSCAN_API_KEY = ENV["XCCONFIG_PROD_ETHERSCAN_API_KEY"]
@@ -48,6 +50,7 @@ XCCONFIG_PROD_WALLET_CONNECT_V2_PROJECT_KEY = ENV["XCCONFIG_PROD_WALLET_CONNECT_
 XCCONFIG_PROD_OPEN_SEA_API_KEY = ENV["XCCONFIG_PROD_OPEN_SEA_API_KEY"]
 XCCONFIG_PROD_TRONGRID_API_KEY = ENV["XCCONFIG_PROD_TRONGRID_API_KEY"]
 XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY = ENV["XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY"]
+XCCONFIG_PROD_ONE_INCH_API_KEY = ENV["XCCONFIG_PROD_ONE_INCH_API_KEY"]
 
 def delete_temp_keychain(name)
   delete_keychain(
@@ -95,12 +98,17 @@ def update_prod_xcconfig(name, new_value)
   )
 end
 
-def prepare_environment
+def prepare_environment(for_testers)
   sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig")
   sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.xcconfig")
 
+  build_number = ENV['BUILD_NUMBER']
+  if for_testers
+    build_number += '.1'
+  end
+
   increment_build_number(
-    build_number: ENV['BUILD_NUMBER'],
+    build_number: build_number,
     xcodeproj: "./UnstoppableWallet/UnstoppableWallet.xcodeproj"
   )
 end
@@ -123,9 +131,11 @@ def apply_dev_xcconfig
   update_dev_xcconfig('open_sea_api_key', XCCONFIG_DEV_OPEN_SEA_API_KEY)
   update_dev_xcconfig('trongrid_api_key', XCCONFIG_DEV_TRONGRID_API_KEY)
   update_dev_xcconfig('unstoppable_domains_api_key', XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY)
+  update_dev_xcconfig('one_inch_api_key', XCCONFIG_DEV_ONE_INCH_API_KEY)
 end
 
-def apply_prod_xcconfig
+def apply_prod_xcconfig(swap_enabled)
+  update_prod_xcconfig('swap_enabled', swap_enabled)
   update_prod_xcconfig('infura_project_id', XCCONFIG_PROD_INFURA_PROJECT_ID)
   update_prod_xcconfig('infura_project_secret', XCCONFIG_PROD_INFURA_PROJECT_SECRET)
   update_prod_xcconfig('etherscan_api_key', XCCONFIG_PROD_ETHERSCAN_API_KEY)
@@ -143,6 +153,7 @@ def apply_prod_xcconfig
   update_prod_xcconfig('open_sea_api_key', XCCONFIG_PROD_OPEN_SEA_API_KEY)
   update_prod_xcconfig('trongrid_api_key', XCCONFIG_PROD_TRONGRID_API_KEY)
   update_prod_xcconfig('unstoppable_domains_api_key', XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY)
+  update_prod_xcconfig('one_inch_api_key', XCCONFIG_PROD_ONE_INCH_API_KEY)
 end
 
 def force_update_devices(type, username)
@@ -155,6 +166,31 @@ def force_update_devices(type, username)
   )
 end
 
+def deploy_production
+  gym(
+    workspace: "UnstoppableWallet/UnstoppableWallet.xcworkspace",
+    scheme: "Production",
+    export_method: "app-store",
+    clean: true,
+    export_options: {
+      compileBitcode: false,
+      provisioningProfiles: {
+          APP_ID => PROVISIONING_PROFILE_SPECIFIER_APPSTORE
+      },
+      iCloudContainerEnvironment: "Production"
+    }
+  )
+
+  pilot(
+    apple_id: "#{APP_ID}",
+    app_identifier: "#{APP_IDENTIFIER_RELEASE}",
+    skip_waiting_for_build_processing: true,
+    skip_submission: true,
+    distribute_external: false,
+    notify_external_testers: false
+  )
+end
+
 platform :ios do
 
   lane :dev do
@@ -164,7 +200,7 @@ platform :ios do
 
     api_key = app_store_api_key
 
-    prepare_environment
+    prepare_environment(false)
     apply_dev_xcconfig
 
     match(
@@ -210,8 +246,8 @@ platform :ios do
 
     api_key = app_store_api_key
 
-    prepare_environment
-    apply_prod_xcconfig
+    prepare_environment(false)
+    apply_prod_xcconfig('false')
 
     match(
       type: 'appstore',
@@ -223,28 +259,12 @@ platform :ios do
       api_key: api_key
     )
 
-    gym(
-      workspace: "UnstoppableWallet/UnstoppableWallet.xcworkspace",
-      scheme: "Production",
-      export_method: "app-store",
-      clean: true,
-      export_options: {
-        compileBitcode: false,
-        provisioningProfiles: {
-            APP_ID => PROVISIONING_PROFILE_SPECIFIER_APPSTORE
-        },
-        iCloudContainerEnvironment: "Production"
-      }
-    )
+    deploy_production
 
-    pilot(
-      apple_id: "#{APP_ID}",
-      app_identifier: "#{APP_IDENTIFIER_RELEASE}",
-      skip_waiting_for_build_processing: true,
-      skip_submission: true,
-      distribute_external: false,
-      notify_external_testers: false
-    )
+    prepare_environment(true)
+    apply_prod_xcconfig('true')
+
+    deploy_production
 
     delete_temp_keychain(keychain_name)
   end
