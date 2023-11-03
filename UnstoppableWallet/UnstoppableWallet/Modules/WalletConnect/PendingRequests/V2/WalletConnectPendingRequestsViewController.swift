@@ -1,11 +1,12 @@
-import UIKit
+import ComponentKit
+import RxSwift
 import SectionsTableView
 import ThemeKit
-import RxSwift
-import ComponentKit
+import UIKit
 
 class WalletConnectPendingRequestsViewController: ThemeViewController {
     private let viewModel: WalletConnectPendingRequestsViewModel
+    private let requestViewFactory: IWalletConnectRequestViewFactory
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -13,15 +14,16 @@ class WalletConnectPendingRequestsViewController: ThemeViewController {
 
     private var viewItems = [WalletConnectPendingRequestsViewModel.SectionViewItem]()
 
-    init(viewModel: WalletConnectPendingRequestsViewModel) {
+    init(viewModel: WalletConnectPendingRequestsViewModel, requestViewFactory: IWalletConnectRequestViewFactory) {
         self.viewModel = viewModel
-
+        self.requestViewFactory = requestViewFactory
         super.init()
 
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -76,41 +78,45 @@ class WalletConnectPendingRequestsViewController: ThemeViewController {
     }
 
     private func showPending(request: WalletConnectRequest) {
-        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectSessionManager.service, request: request) else {
+        let result = requestViewFactory.viewController(request: request)
+        switch result {
+        case let .unsuccessful(error):
+            print("Can't create view")
             return
+        case let .controller(controller):
+            guard let controller else { return }
+            present(ThemeNavigationController(rootViewController: controller), animated: true)
         }
-
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
-    private func accountCell(id: String, title: String, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
+    private func accountCell(id: String, title: String, selected: Bool, action: @escaping () -> Void) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image24 { (component: ImageComponent) -> () in
-                        if selected {
-                            component.imageView.image = UIImage(named: "circle_radioon_24")?.withRenderingMode(.alwaysTemplate)
-                            component.imageView.tintColor = .themeJacob
-                        } else {
-                            component.imageView.image = UIImage(named: "circle_radiooff_24")?.withRenderingMode(.alwaysTemplate)
-                            component.imageView.tintColor = .themeGray
-                        }
-                    },
-                    .textElement(text: .body(title)),
-                    .secondaryButton { (component: SecondaryButtonComponent) -> () in
-                        component.isHidden = !selected
-                        component.button.set(style: .default)
-                        component.button.setTitle("Switch", for: .normal)
-                        component.onTap = action
+            rootElement: .hStack([
+                .image24 { (component: ImageComponent) in
+                    if selected {
+                        component.imageView.image = UIImage(named: "circle_radioon_24")?.withRenderingMode(.alwaysTemplate)
+                        component.imageView.tintColor = .themeJacob
+                    } else {
+                        component.imageView.image = UIImage(named: "circle_radiooff_24")?.withRenderingMode(.alwaysTemplate)
+                        component.imageView.tintColor = .themeGray
                     }
-                ]),
-                tableView: tableView,
-                id: "account-\(selected)-\(title)-cell",
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
                 },
-                action: !selected ? { [weak self] in self?.onSelect(accountId: id) } : nil
+                .textElement(text: .body(title)),
+                .secondaryButton { (component: SecondaryButtonComponent) in
+                    component.isHidden = !selected
+                    component.button.set(style: .default)
+                    component.button.setTitle("Switch", for: .normal)
+                    component.onTap = action
+                },
+            ]),
+            tableView: tableView,
+            id: "account-\(selected)-\(title)-cell",
+            height: .heightCell48,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+            },
+            action: !selected ? { [weak self] in self?.onSelect(accountId: id) } : nil
         )
     }
 
@@ -120,11 +126,11 @@ class WalletConnectPendingRequestsViewController: ThemeViewController {
                 footerState: sectionViewItem.selected ? .margin(height: .margin32) : tableView.sectionFooter(text: "wallet_connect.pending_requests.nonactive_footer".localized),
                 rows: [
                     accountCell(
-                            id: sectionViewItem.id,
-                            title: sectionViewItem.title,
-                            selected: sectionViewItem.selected,
-                            action: { [weak self] in self?.onSelect(accountId: sectionViewItem.id) }
-                    )
+                        id: sectionViewItem.id,
+                        title: sectionViewItem.title,
+                        selected: sectionViewItem.selected,
+                        action: { [weak self] in self?.onSelect(accountId: sectionViewItem.id) }
+                    ),
                 ] + sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     let selected = sectionViewItem.selected
 
@@ -144,8 +150,8 @@ class WalletConnectPendingRequestsViewController: ThemeViewController {
                                 component.textColor = selected ? .themeGray : .themeGray50
                                 component.lineBreakMode = .byTruncatingMiddle
                                 component.text = viewItem.subtitle
-                            }
-                        ])
+                            },
+                        ]),
                     ]
 
                     var tappable = false
@@ -168,30 +174,26 @@ class WalletConnectPendingRequestsViewController: ThemeViewController {
                     }
 
                     return CellBuilderNew.row(
-                            rootElement: .hStack(elements),
-                            tableView: tableView,
-                            id: "item_\(index)",
-                            height: .heightDoubleLineCell,
-                            autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: index == sectionViewItem.viewItems.count - 1)
-                            },
-                            action: tappable ? { [weak self] in self?.onSelect(requestId: viewItem.id) } : nil
+                        rootElement: .hStack(elements),
+                        tableView: tableView,
+                        id: "item_\(index)",
+                        height: .heightDoubleLineCell,
+                        autoDeselect: true,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: index == sectionViewItem.viewItems.count - 1)
+                        },
+                        action: tappable ? { [weak self] in self?.onSelect(requestId: viewItem.id) } : nil
                     )
-                }
-        )
+                })
     }
 
     private func onTapReject(viewItem: WalletConnectPendingRequestsViewModel.ViewItem) {
         viewModel.onReject(id: viewItem.id)
     }
-
 }
 
 extension WalletConnectPendingRequestsViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         viewItems.map { section(sectionViewItem: $0) }
     }
-
 }

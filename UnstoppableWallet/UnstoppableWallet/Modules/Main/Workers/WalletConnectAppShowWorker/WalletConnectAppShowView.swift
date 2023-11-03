@@ -8,6 +8,8 @@ class WalletConnectAppShowView {
     private let timeOut = 5
 
     private let viewModel: WalletConnectAppShowViewModel
+    private let requestViewFactory: IWalletConnectRequestViewFactory
+
     private var cancellables = Set<AnyCancellable>()
     private var timerCancellable: AnyCancellable?
     private var isWaitingHandlerCancellable: AnyCancellable?
@@ -16,8 +18,9 @@ class WalletConnectAppShowView {
 
     weak var parentViewController: UIViewController?
 
-    init(viewModel: WalletConnectAppShowViewModel) {
+    init(viewModel: WalletConnectAppShowViewModel, requestViewFactory: IWalletConnectRequestViewFactory) {
         self.viewModel = viewModel
+        self.requestViewFactory = requestViewFactory
 
         viewModel.showSessionRequestPublisher
             .receive(on: DispatchQueue.main)
@@ -86,11 +89,16 @@ class WalletConnectAppShowView {
     }
 
     private func handle(request: WalletConnectRequest) {
-        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectSessionManager.service, request: request) else {
+        let result = requestViewFactory.viewController(request: request)
+        switch result {
+        case let .unsuccessful(error):
+            print("Can't create view")
             return
+        case let .controller(controller):
+            guard let controller else { return }
+            let navigationController = ThemeNavigationController(rootViewController: controller)
+            parentViewController?.visibleController.present(navigationController, animated: true)
         }
-
-        parentViewController?.visibleController.present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 }
 

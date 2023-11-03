@@ -23,7 +23,6 @@ struct SocketFactory: WebSocketFactory {
 class WalletConnectService {
     private let logger: Logger?
     private let connectionService: WalletConnectSocketConnectionService
-    private let sessionRequestFilterManager: SessionRequestFilterManager
 
     private let receiveProposalSubject = PublishSubject<WalletConnectSign.Session.Proposal>()
     private let receiveSessionRelay = PublishRelay<WalletConnectSign.Session>()
@@ -43,9 +42,8 @@ class WalletConnectService {
 
     private var publishers = [AnyCancellable]()
 
-    init(connectionService: WalletConnectSocketConnectionService, sessionRequestFilterManager: SessionRequestFilterManager, info: WalletConnectClientInfo, logger: Logger? = nil) {
+    init(connectionService: WalletConnectSocketConnectionService, info: WalletConnectClientInfo, logger: Logger? = nil) {
         self.connectionService = connectionService
-        self.sessionRequestFilterManager = sessionRequestFilterManager
         self.logger = logger
         let metadata = WalletConnectSign.AppMetadata(
                 name: info.name,
@@ -122,10 +120,6 @@ extension WalletConnectService {
 
     public func didReceive(sessionRequest: Request) {
         logger?.debug("WC v2 SignClient did receive session request: \(sessionRequest.method) : session: \(sessionRequest.topic)")
-
-        if sessionRequestFilterManager.handle(request: sessionRequest) {
-            return
-        }
 
         sessionRequestReceivedRelay.accept(sessionRequest)
         pendingRequestsUpdatedRelay.accept(())
