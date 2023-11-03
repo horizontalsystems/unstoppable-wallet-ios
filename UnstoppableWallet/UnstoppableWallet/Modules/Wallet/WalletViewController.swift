@@ -24,7 +24,6 @@ class WalletViewController: ThemeViewController {
 
     private let spinner = HUDActivityView.create(with: .medium24)
 
-    private let emptyView = PlaceholderView()
     private let failedView = PlaceholderView()
     private let invalidApiKeyView = PlaceholderView()
 
@@ -32,9 +31,6 @@ class WalletViewController: ThemeViewController {
     private var headerViewItem: WalletModule.HeaderViewItem?
 
     private var warningViewItem: CancellableTitledCaution?
-    private var viewItemsOffset: Int {
-        warningViewItem != nil ? 1 : 0
-    }
 
     private var sortBy: String?
     private var controlViewItem: WalletViewModel.ControlViewItem?
@@ -81,6 +77,7 @@ class WalletViewController: ThemeViewController {
         tableView.registerCell(forClass: WalletHeaderCell.self)
         tableView.registerCell(forClass: BalanceCell.self)
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
+        tableView.registerCell(forClass: PlaceholderCell.self)
         tableView.registerHeaderFooter(forClass: WalletHeaderView.self)
         tableView.registerHeaderFooter(forClass: SectionColorHeader.self)
 
@@ -117,20 +114,6 @@ class WalletViewController: ThemeViewController {
             make.center.equalToSuperview()
         }
         spinner.startAnimating()
-
-        view.addSubview(emptyView)
-        emptyView.snp.makeConstraints { maker in
-            maker.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        emptyView.image = UIImage(named: "add_to_wallet_2_48")
-        emptyView.text = "balance.empty.description".localized
-        emptyView.addPrimaryButton(
-            style: .yellow,
-            title: "balance.empty.add_coins".localized,
-            target: self,
-            action: #selector(onTapAddCoin)
-        )
 
         view.addSubview(failedView)
         failedView.snp.makeConstraints { maker in
@@ -265,10 +248,6 @@ class WalletViewController: ThemeViewController {
         // todo
     }
 
-    @objc private func onTapAddCoin() {
-        openManageWallets()
-    }
-
     private func sync(nftVisible _: Bool) {
 //        navigationItem.rightBarButtonItem = nftVisible ? UIBarButtonItem(image: UIImage(named: "nft_24"), style: .plain, target: self, action: #selector(onTapNft)) : nil
     }
@@ -303,11 +282,6 @@ class WalletViewController: ThemeViewController {
             tableView.isHidden = false
         default:
             tableView.isHidden = true
-        }
-
-        switch state {
-        case .empty: emptyView.isHidden = false
-        default: emptyView.isHidden = true
         }
 
         switch state {
@@ -353,12 +327,12 @@ class WalletViewController: ThemeViewController {
     }
 
     private func sync(warning: CancellableTitledCaution?) {
-        let needToRemove = warning == nil && warningViewItem != nil
+        let warningWasVisible = warningVisible
         warningViewItem = warning
         if isLoaded {
-            if needToRemove {
+            if warningWasVisible, !warningVisible {
                 tableView.beginUpdates()
-                tableView.deleteRows(at: [IndexPath(row: 0, section: 1)], with: .fade)
+                tableView.deleteRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
                 tableView.endUpdates()
             } else {
                 tableView.reloadData()
@@ -422,7 +396,7 @@ class WalletViewController: ThemeViewController {
         }
 
         updateIndexes.forEach {
-            if let cell = tableView.cellForRow(at: IndexPath(row: $0 + viewItemsOffset, section: 1)) as? BalanceCell {
+            if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 1)) as? BalanceCell {
                 bind(cell: cell, viewItem: viewItems[$0])
             }
         }
@@ -513,7 +487,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func handleRemove(indexPath: IndexPath) {
-        let index = indexPath.row - viewItemsOffset
+        let index = indexPath.row
 
         guard index < viewItems.count else {
             return
@@ -524,7 +498,11 @@ class WalletViewController: ThemeViewController {
         viewItems.remove(at: index)
 
         tableView.beginUpdates()
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        if viewItems.isEmpty {
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
         tableView.endUpdates()
 
         viewModel.onDisable(element: element)
@@ -572,6 +550,10 @@ class WalletViewController: ThemeViewController {
         let viewController = BottomSheetModule.backupPromptAfterCreate(account: account, sourceViewController: self)
         present(viewController, animated: true)
     }
+
+    private var warningVisible: Bool {
+        warningViewItem != nil
+    }
 }
 
 extension WalletViewController: UITableViewDataSource {
@@ -581,25 +563,30 @@ extension WalletViewController: UITableViewDataSource {
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return 1
-        default: return viewItemsOffset + viewItems.count
+        case 0: return 1 + (warningVisible ? 1 : 0)
+        default: return viewItems.isEmpty ? 1 : viewItems.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletHeaderCell.self), for: indexPath)
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletHeaderCell.self), for: indexPath)
 
-            if let headerCell = cell as? WalletHeaderCell {
-                bindHeaderActions(cell: headerCell)
-            }
+                if let headerCell = cell as? WalletHeaderCell {
+                    bindHeaderActions(cell: headerCell)
+                }
 
-            return cell
-        default:
-            if warningViewItem != nil, indexPath.row == 0 {
+                return cell
+            } else {
                 return tableView.dequeueReusableCell(withIdentifier: String(describing: TitledHighlightedDescriptionCell.self), for: indexPath)
             }
+        default:
+            if viewItems.isEmpty {
+                return tableView.dequeueReusableCell(withIdentifier: String(describing: PlaceholderCell.self), for: indexPath)
+            }
+
             return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
         }
     }
@@ -612,7 +599,7 @@ extension WalletViewController: UITableViewDelegate {
             if let cell = cell as? WalletHeaderCell {
                 bind(headerCell: cell)
             }
-        default:
+
             if let cell = cell as? TitledHighlightedDescriptionCell, let warningViewItem = warningViewItem {
                 cell.set(backgroundStyle: .transparent, isFirst: true)
                 cell.topOffset = .margin12
@@ -620,9 +607,15 @@ extension WalletViewController: UITableViewDelegate {
                 cell.onBackgroundButton = { [weak self] in self?.onOpenWarning() }
                 cell.onCloseButton = warningViewItem.cancellable ? { [weak self] in self?.onCloseWarning() } : nil
             }
-
+        default:
             if let cell = cell as? BalanceCell {
-                bind(cell: cell, viewItem: viewItems[indexPath.row - viewItemsOffset])
+                bind(cell: cell, viewItem: viewItems[indexPath.row])
+            }
+
+            if let cell = cell as? PlaceholderCell {
+                cell.set(backgroundStyle: .transparent, isFirst: true)
+                cell.icon = UIImage(named: "add_to_wallet_2_48")
+                cell.text = "balance.empty.description".localized
             }
         }
     }
@@ -641,13 +634,32 @@ extension WalletViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let headerHeight = {
+            WalletHeaderCell.height(viewItem: self.headerViewItem)
+        }
+
+        let warningHeight = {
+            TitledHighlightedDescriptionCell.height(containerWidth: tableView.width, text: self.warningViewItem?.text ?? "") + .margin32
+        }
+
         switch indexPath.section {
         case 0:
-            return WalletHeaderCell.height(viewItem: headerViewItem)
-        default:
-            if warningViewItem != nil, indexPath.row == 0 {
-                return TitledHighlightedDescriptionCell.height(containerWidth: tableView.width, text: warningViewItem?.text ?? "") + .margin32
+            if indexPath.row == 0 {
+                return headerHeight()
+            } else {
+                return warningHeight()
             }
+        default:
+            if viewItems.isEmpty {
+                var contentHeight: CGFloat = headerHeight() + WalletHeaderView.height
+
+                if warningVisible {
+                    contentHeight += warningHeight()
+                }
+
+                return max(200, tableView.height - tableView.safeAreaInsets.height - contentHeight)
+            }
+
             return BalanceCell.height()
         }
     }
@@ -655,7 +667,7 @@ extension WalletViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0: return 0
-        default: return viewItems.isEmpty ? 0 : WalletHeaderView.height
+        default: return WalletHeaderView.height
         }
     }
 
@@ -669,7 +681,7 @@ extension WalletViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0: return nil
-        default: return viewItems.isEmpty ? nil : tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: WalletHeaderView.self))
+        default: return tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: WalletHeaderView.self))
         }
     }
 
@@ -682,10 +694,11 @@ extension WalletViewController: UITableViewDelegate {
         case 0:
             () // do nothing
         default:
-            if warningViewItem != nil, indexPath.row == 0 {
+            if viewItems.isEmpty {
                 return
             }
-            viewModel.onTap(element: viewItems[indexPath.item - viewItemsOffset].element)
+
+            viewModel.onTap(element: viewItems[indexPath.item].element)
         }
     }
 
@@ -694,7 +707,7 @@ extension WalletViewController: UITableViewDelegate {
         case 0:
             return nil
         default:
-            if warningViewItem != nil, indexPath.row == 0 {
+            if viewItems.isEmpty {
                 return nil
             }
 

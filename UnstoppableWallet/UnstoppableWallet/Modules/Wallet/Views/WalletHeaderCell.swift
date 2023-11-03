@@ -27,16 +27,6 @@ class WalletHeaderCell: UITableViewCell {
             make.top.equalTo(amountView.snp.bottom)
             make.height.equalTo(BalanceButtonsView.height)
         }
-
-        let separatorView = UIView()
-        contentView.addSubview(separatorView)
-        separatorView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(CGFloat.heightOneDp)
-        }
-
-        separatorView.backgroundColor = .themeSteel20
     }
 
     required init?(coder aDecoder: NSCoder) {

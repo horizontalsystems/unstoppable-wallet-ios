@@ -21,6 +21,16 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         backgroundView = UIView()
         backgroundView?.backgroundColor = .themeNavigationBarBackground
 
+        let separatorView = UIView()
+        contentView.addSubview(separatorView)
+        separatorView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        separatorView.backgroundColor = .themeSteel20
+
         addSubview(sortByButton)
         sortByButton.snp.makeConstraints { maker in
             maker.leading.centerY.equalToSuperview()
