@@ -6,6 +6,7 @@ class WalletConnectPendingRequestsService {
 
     private let sessionManager: WalletConnectSessionManager
     private let accountManager: AccountManager
+    private let requestHandler: IWalletConnectRequestHandler
     private let evmBlockchainManager: EvmBlockchainManager
     private let signService: IWalletConnectSignService
 
@@ -20,9 +21,10 @@ class WalletConnectPendingRequestsService {
 
     private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(sessionManager: WalletConnectSessionManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
+    init(sessionManager: WalletConnectSessionManager, accountManager: AccountManager, requestHandler: IWalletConnectRequestHandler, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
         self.sessionManager = sessionManager
         self.accountManager = accountManager
+        self.requestHandler = requestHandler
         self.evmBlockchainManager = evmBlockchainManager
         self.signService = signService
 
@@ -106,25 +108,17 @@ extension WalletConnectPendingRequestsService {
         guard let request = sessionManager.pendingRequests().first(where: { $0.id.intValue == requestId }) else {
             return
         }
-        let session = sessionManager.sessions.first { $0.topic == request.topic }
-
-        guard let chainId = Int(request.chainId.reference),
-              let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
-              let account = accountManager.activeAccount,
-              let address = try? WalletConnectManager.evmAddress(
-                      account: account,
-                      chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
-              ) else {
+        guard let session = sessionManager.sessions.first(where: { $0.topic == request.topic }) else {
             return
         }
-
-        let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
-
-        guard let wcRequest = try? WalletConnectRequestMapper.map(dAppName: session?.peer.name, chain: chain, request: request) else {
-            return
+        let result = requestHandler.handle(session: session, request: request)
+        switch result {
+        case let .unsuccessful(error):
+            print("Cant select request because: \(error)")
+        case .handled: ()
+        case let .request(request):
+            showPendingRequestRelay.accept(request)
         }
-
-        showPendingRequestRelay.accept(wcRequest)
     }
 
     func select(accountId: String) {

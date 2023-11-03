@@ -12,18 +12,18 @@ class WalletConnectSessionManager {
     private let storage: WalletConnectSessionStorage
     private let accountManager: AccountManager
     private let currentDateProvider: CurrentDateProvider
-    private let evmBlockchainManager: EvmBlockchainManager
+    private let requestHandler: IWalletConnectRequestHandler
 
     private let sessionsRelay = BehaviorRelay<[WalletConnectSign.Session]>(value: [])
     private let activePendingRequestsRelay = BehaviorRelay<[WalletConnectSign.Request]>(value: [])
     private let pairingsRelay = BehaviorRelay<[WalletConnectPairing.Pairing]>(value: [])
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectService, storage: WalletConnectSessionStorage, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, currentDateProvider: CurrentDateProvider) {
+    init(service: WalletConnectService, storage: WalletConnectSessionStorage, accountManager: AccountManager, requestHandler: IWalletConnectRequestHandler, currentDateProvider: CurrentDateProvider) {
         self.service = service
         self.storage = storage
         self.accountManager = accountManager
-        self.evmBlockchainManager = evmBlockchainManager
+        self.requestHandler = requestHandler
         self.currentDateProvider = currentDateProvider
 
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in
@@ -95,25 +95,17 @@ class WalletConnectSessionManager {
         }
         let activeSessions = storage.sessions(accountId: account.id)
 
-        guard let chainId = Int(request.chainId.reference),
-              let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
-              let address = try? WalletConnectManager.evmAddress(
-                  account: account,
-                  chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
-              )
-        else {
-            return
-        }
-
-        let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
         guard activeSessions.first(where: { session in session.topic == request.topic }) != nil,
-              let session = allSessions.first(where: { session in session.topic == request.topic }),
-              let request = try? WalletConnectRequestMapper.map(dAppName: session.peer.name, chain: chain, request: request)
-        else {
+              let session = allSessions.first(where: { session in session.topic == request.topic }) else {
             return
         }
 
-        sessionRequestReceivedRelay.accept(request)
+        let request = requestHandler.handle(session: session, request: request)
+        switch request {
+        case .request(let request): sessionRequestReceivedRelay.accept(request)
+        case .handled: ()
+        case .unsuccessful(error: let error): print("Error while parsing request: \(error)")
+        }
     }
 
     private func sessions(accountId: String, sessions: [WalletConnectSign.Session]?) -> [WalletConnectSign.Session] {
@@ -135,12 +127,6 @@ class WalletConnectSessionManager {
 
     private func syncPairings() {
         pairingsRelay.accept(service.pairings)
-    }
-
-    private func isChainIdsEnabled(chainIds: [Int]) -> Bool {
-        chainIds.allSatisfy { id in
-            evmBlockchainManager.blockchain(chainId: id) != nil
-        }
     }
 
     private func requests(accountId: String? = nil) -> [WalletConnectSign.Request] {
@@ -169,9 +155,7 @@ extension WalletConnectSessionManager {
     }
 
     public var allSessions: [WalletConnectSign.Session] {
-        service.activeSessions.filter { session in
-            isChainIdsEnabled(chainIds: session.chainIds)
-        }
+        service.activeSessions
     }
 
     public var sessionsObservable: Observable<[WalletConnectSign.Session]> {

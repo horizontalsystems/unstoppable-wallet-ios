@@ -32,7 +32,6 @@ class App {
 
     let marketKit: MarketKit.Kit
 
-
     let themeManager: ThemeManager
     let systemInfoManager: SystemInfoManager
 
@@ -94,6 +93,7 @@ class App {
     let guidesManager: GuidesManager
     let termsManager: TermsManager
 
+    let walletConnectRequestHandler: WalletConnectRequestChain
     let walletConnectSocketConnectionService: WalletConnectSocketConnectionService
     let walletConnectSessionManager: WalletConnectSessionManager
     let walletConnectManager: WalletConnectManager
@@ -268,6 +268,11 @@ class App {
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(userDefaultsStorage: userDefaultsStorage)
 
+        walletConnectRequestHandler = WalletConnectRequestChain.instance(
+            evmBlockchainManager: evmBlockchainManager,
+            accountManager: accountManager
+        )
+
         walletConnectManager = WalletConnectManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager)
 
         let walletClientInfo = WalletConnectClientInfo(
@@ -282,12 +287,17 @@ class App {
         walletConnectSocketConnectionService = WalletConnectSocketConnectionService(reachabilityManager: reachabilityManager, logger: logger)
         let walletConnectService = WalletConnectService(
             connectionService: walletConnectSocketConnectionService,
-            sessionRequestFilterManager: SessionRequestFilterManager(),
             info: walletClientInfo,
             logger: logger
         )
         let walletConnectSessionStorage = WalletConnectSessionStorage(dbPool: dbPool)
-        walletConnectSessionManager = WalletConnectSessionManager(service: walletConnectService, storage: walletConnectSessionStorage, accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, currentDateProvider: CurrentDateProvider())
+        walletConnectSessionManager = WalletConnectSessionManager(
+            service: walletConnectService,
+            storage: walletConnectSessionStorage,
+            accountManager: accountManager,
+            requestHandler: walletConnectRequestHandler,
+            currentDateProvider: CurrentDateProvider()
+        )
 
         deepLinkManager = DeepLinkManager()
         launchScreenManager = LaunchScreenManager(userDefaultsStorage: userDefaultsStorage)

@@ -10,7 +10,10 @@ class WalletConnectAppShowModule {
         )
         let walletConnectWorkerViewModel = WalletConnectAppShowViewModel(service: walletConnectWorkerService)
 
-        let viewController = WalletConnectAppShowView(viewModel: walletConnectWorkerViewModel)
+        let viewController = WalletConnectAppShowView(
+            viewModel: walletConnectWorkerViewModel,
+            requestViewFactory: App.shared.walletConnectRequestHandler
+        )
         viewController.parentViewController = parentViewController
 
         return viewController

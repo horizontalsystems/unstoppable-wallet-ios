@@ -1,32 +1,36 @@
-import UIKit
 import EvmKit
 import MarketKit
+import UIKit
 
 struct WalletConnectSendEthereumTransactionRequestModule {
-
-    static func viewController(signService: IWalletConnectSignService, request: WalletConnectSendEthereumTransactionRequest) -> UIViewController? {
-        guard let account = App.shared.accountManager.activeAccount,
-              let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account) else {
+    static func viewController(request: WalletConnectRequest) -> UIViewController? {
+        guard let payload = request.payload as? WCSendEthereumTransactionPayload,
+              let account = App.shared.accountManager.activeAccount,
+              let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account)
+        else {
             return nil
         }
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
-                blockchainType: evmKitWrapper.blockchainType,
-                marketKit: App.shared.marketKit,
-                currencyManager: App.shared.currencyManager,
-                coinManager: App.shared.coinManager
+            blockchainType: evmKitWrapper.blockchainType,
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager,
+            coinManager: App.shared.coinManager
         ) else {
             return nil
         }
 
-        let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: signService)
-        let info = SendEvmData.DAppInfo(name: request.dAppName, chainName: request.chain.chainName, address: request.chain.address)
+        let signService = App.shared.walletConnectSessionManager.service
+        guard let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: signService) else {
+            return nil
+        }
+        let info = SendEvmData.DAppInfo(name: request.payload.dAppName, chainName: request.chain.chainName, address: request.chain.address)
         let additionalInfo: SendEvmData.AdditionInfo = .otherDApp(info: info)
         let sendEvmData = SendEvmData(transactionData: service.transactionData, additionalInfo: additionalInfo, warnings: [])
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
-                evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendEvmData, coinServiceFactory: coinServiceFactory,
-                gasPrice: service.gasPrice, predefinedGasLimit: request.transaction.gasLimit
+            evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendEvmData, coinServiceFactory: coinServiceFactory,
+            gasPrice: service.gasPrice, predefinedGasLimit: payload.transaction.gasLimit
         ) else {
             return nil
         }
@@ -38,5 +42,4 @@ struct WalletConnectSendEthereumTransactionRequestModule {
 
         return WalletConnectRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
-
 }

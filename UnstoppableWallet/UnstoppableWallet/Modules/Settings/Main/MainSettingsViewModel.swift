@@ -3,7 +3,6 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import ThemeKit
-import WalletConnectV1
 
 class MainSettingsViewModel {
     private let service: MainSettingsService

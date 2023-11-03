@@ -80,10 +80,9 @@ class WalletConnectMainViewModel {
         let blockchains = allowedBlockchains
                 .map { item in
                     BlockchainViewItem(
-                            chainId: item.chainId,
-                            chainTitle: item.blockchain.name,
-                            address: item.address.shortened,
-                            selected: item.selected
+                        chainId: item.chainId,
+                        chainTitle: item.blockchain.name,
+                        address: item.address.shortened
                     )
                 }
 
@@ -91,9 +90,6 @@ class WalletConnectMainViewModel {
                 dAppMeta: service.appMetaItem.map { dAppMetaViewItem(appMetaItem: $0) },
                 status: status(connectionState: connectionState),
                 activeAccountName: service.activeAccountName,
-                address: nil,
-                network: nil,
-                networkEditable: false,
                 blockchains: blockchains,
                 hint: service.hint
         )
@@ -168,25 +164,6 @@ extension WalletConnectMainViewModel {
         finishRelay.asSignal()
     }
 
-    var blockchainSelectorViewItems: [BlockchainSelectorViewItem] {
-        service.allowedBlockchains.map { item in
-            BlockchainSelectorViewItem(
-                    chainId: item.chainId,
-                    title: item.blockchain.name,
-                    imageUrl: item.blockchain.type.imageUrl,
-                    selected: item.selected
-            )
-        }
-    }
-
-    func onSelect(chainId: Int) {
-        service.select(chainId: chainId)
-    }
-
-    func onToggle(chainId: Int) {
-        service.toggle(chainId: chainId)
-    }
-
     func cancel() {
         if service.connectionState == .connected && service.state == .waitingForApproveSession {
             service.rejectSession()
@@ -224,11 +201,6 @@ extension WalletConnectMainViewModel {
         let status: Status?
         let activeAccountName: String?
 
-        // v1
-        let address: String?
-        let network: String?
-        let networkEditable: Bool
-
         // v2
         let blockchains: [BlockchainViewItem]?
 
@@ -245,7 +217,6 @@ extension WalletConnectMainViewModel {
         let chainId: Int
         let chainTitle: String?
         let address: String
-        let selected: Bool
     }
 
     struct BlockchainSelectorViewItem {

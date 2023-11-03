@@ -7,12 +7,16 @@ struct WalletConnectPendingRequestsModule {
         let service = WalletConnectPendingRequestsService(
                 sessionManager: App.shared.walletConnectSessionManager,
                 accountManager: App.shared.accountManager,
+                requestHandler: App.shared.walletConnectRequestHandler,
                 evmBlockchainManager: App.shared.evmBlockchainManager,
                 signService: App.shared.walletConnectSessionManager.service
         )
 
         let viewModel = WalletConnectPendingRequestsViewModel(service: service)
-        return WalletConnectPendingRequestsViewController(viewModel: viewModel)
+        return WalletConnectPendingRequestsViewController(
+                viewModel: viewModel,
+                requestViewFactory: App.shared.walletConnectRequestHandler
+        )
     }
 
 }
