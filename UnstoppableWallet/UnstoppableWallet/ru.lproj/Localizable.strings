@@ -316,11 +316,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Идет синхронизация... %@";
 "balance.synced_through" = "до %@";
-"balance.add_coin" = "Добавить токен";
 "balance.invalid_api_key" = "Недействительный ключ API";
-"balance.empty.add_coins" = "Добавить токены";
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
-"balance.sort_by" = "Сортировать";
 "balance.sort.header" = "Сортировать";
 "balance.sort.valueHighToLow" = "Баланс";
 "balance.sort.az" = "Название";
