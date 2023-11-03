@@ -314,11 +314,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直到 %@";
-"balance.add_coin" = "添加代币";
 "balance.invalid_api_key" = "无效的 API 密钥";
-"balance.empty.add_coins" = "添加代币";
 "balance.empty.description" = "您还没有添加任何代币到此钱包中。";
-"balance.sort_by" = "排序方式为";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
