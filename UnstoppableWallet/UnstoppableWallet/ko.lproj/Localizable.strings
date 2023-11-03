@@ -312,11 +312,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
-"balance.add_coin" = "코인 추가";
 "balance.invalid_api_key" = "유효하지 않은 API 키";
-"balance.empty.add_coins" = "코인 추가";
 "balance.empty.description" = "이 지갑에 코인을 넣지 않았습니다.";
-"balance.sort_by" = "정렬 기준";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
