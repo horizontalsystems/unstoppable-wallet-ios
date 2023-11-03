@@ -12175,7 +12175,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.1.0;
+				version = 2.1.1;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */ = {
@@ -12279,7 +12279,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.1.0;
+				version = 2.1.1;
 			};
 		};
 		D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit.Swift" */ = {
