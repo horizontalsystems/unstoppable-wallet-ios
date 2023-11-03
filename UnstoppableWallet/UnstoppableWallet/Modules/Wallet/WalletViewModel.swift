@@ -71,11 +71,7 @@ class WalletViewModel {
         case .noAccount: state = .noAccount
         case .loading: state = .loading
         case let .loaded(items):
-            if items.isEmpty, !service.cexAccount {
-                state = .empty
-            } else {
-                state = .list(viewItems: items.map { _viewItem(item: $0) })
-            }
+            state = .list(viewItems: items.map { _viewItem(item: $0) })
         case let .failed(reason):
             switch reason {
             case .syncFailed: state = .syncFailed
@@ -84,7 +80,7 @@ class WalletViewModel {
         }
 
         switch service.state {
-        case let .loaded(items): qrScanVisible = !service.watchAccount && !items.isEmpty
+        case .loaded: qrScanVisible = !service.watchAccount
         default: qrScanVisible = false
         }
     }
@@ -305,8 +301,6 @@ extension WalletViewModel {
     enum State: CustomStringConvertible {
         case list(viewItems: [BalanceViewItem])
         case noAccount
-        case empty
-        case watchEmpty
         case loading
         case syncFailed
         case invalidApiKey
@@ -315,8 +309,6 @@ extension WalletViewModel {
             switch self {
             case let .list(viewItems): return "list: \(viewItems.count) view items"
             case .noAccount: return "noAccount"
-            case .empty: return "empty"
-            case .watchEmpty: return "watchEmpty"
             case .loading: return "loading"
             case .syncFailed: return "syncFailed"
             case .invalidApiKey: return "invalidApiKey"
