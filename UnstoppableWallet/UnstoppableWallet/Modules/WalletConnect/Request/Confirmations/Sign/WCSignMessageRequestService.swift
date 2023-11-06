@@ -1,7 +1,7 @@
 import EvmKit
 import Foundation
 
-class WalletConnectSignMessageRequestService {
+class WCSignMessageRequestService {
     private let request: WalletConnectRequest
     private let signService: IWalletConnectSignService
     private let signer: Signer
@@ -12,13 +12,19 @@ class WalletConnectSignMessageRequestService {
         self.signer = signer
     }
 
-    private func sign(message: Data, isLegacy: Bool = false) throws -> Data {
-        try signer.signed(message: message, isLegacy: isLegacy)
-    }
-}
+    private var domain: String? {
+        switch request.payload {
+        case let payload as WCSignTypedDataPayload:
+            if let eip712TypedData = try? EIP712TypedData.parseFrom(rawJson: payload.data), let domain = eip712TypedData.domain.objectValue, let domainString = domain["name"]?.stringValue {
+                return domainString
+            }
+        default: ()
+        }
 
-extension WalletConnectSignMessageRequestService {
-    var message: String {
+        return nil
+    }
+
+    private var message: String? {
         switch request.payload {
         case let payload as WCSignPayload:
             return String(data: payload.data, encoding: .utf8) ?? payload.data.hs.hexString
@@ -39,24 +45,33 @@ extension WalletConnectSignMessageRequestService {
         }
     }
 
-    var domain: String? {
-        switch request.payload {
-        case let payload as WCSignTypedDataPayload:
-            if let eip712TypedData = try? EIP712TypedData.parseFrom(rawJson: payload.data), let domain = eip712TypedData.domain.objectValue, let domainString = domain["name"]?.stringValue {
-                return domainString
-            }
-        default: ()
+    private func sign(message: Data, isLegacy: Bool = false) throws -> Data {
+        try signer.signed(message: message, isLegacy: isLegacy)
+    }
+
+}
+
+extension WCSignMessageRequestService {
+    var sections: [Section] {
+        var sections = [Section]()
+
+        if let domain = domain {
+            sections.append(Section(header: nil, items: [.domain(domain)]))
         }
 
-        return nil
-    }
+        var infoItems: [Item] = [
+            .dApp(name: request.payload.dAppName)
+        ]
+        if let name = request.chain.chainName, let address = request.chain.address {
+            infoItems.append(.blockchain(name: name, address: address))
+        }
+        sections.append(Section(header: nil, items: infoItems))
 
-    var dAppName: String? {
-        request.payload.dAppName
-    }
+        if let message = message {
+            sections.append(Section(header: .signMessage, items: [.message(message)]))
+        }
 
-    var chain: WalletConnectRequest.Chain {
-        request.chain
+        return sections
     }
 
     func sign() throws {
@@ -79,5 +94,23 @@ extension WalletConnectSignMessageRequestService {
 
     func reject() {
         signService.rejectRequest(id: request.id)
+    }
+}
+
+extension WCSignMessageRequestService {
+    enum Item {
+        case domain(String)
+        case dApp(name: String)
+        case blockchain(name: String, address: String)
+        case message(String)
+    }
+
+    enum Header {
+        case signMessage
+    }
+
+    struct Section {
+        let header: Header?
+        let items: [Item]
     }
 }

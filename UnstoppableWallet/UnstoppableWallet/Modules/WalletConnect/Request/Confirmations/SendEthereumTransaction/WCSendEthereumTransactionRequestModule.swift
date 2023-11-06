@@ -2,7 +2,7 @@ import EvmKit
 import MarketKit
 import UIKit
 
-struct WalletConnectSendEthereumTransactionRequestModule {
+struct WCSendEthereumTransactionRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {
         guard let payload = request.payload as? WCSendEthereumTransactionPayload,
               let account = App.shared.accountManager.activeAccount,
@@ -21,7 +21,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
         }
 
         let signService = App.shared.walletConnectSessionManager.service
-        guard let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: signService) else {
+        guard let service = WCSendEthereumTransactionRequestService(request: request, baseService: signService) else {
             return nil
         }
         let info = SendEvmData.DAppInfo(name: request.payload.dAppName, chainName: request.chain.chainName, address: request.chain.address)
@@ -38,7 +38,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
         let sendService = SendEvmTransactionService(sendData: sendEvmData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
         let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
         let transactionViewModel = SendEvmTransactionViewModel(service: sendService, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
-        let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service)
+        let viewModel = WCSendEthereumTransactionRequestViewModel(service: service)
 
         return WalletConnectRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }

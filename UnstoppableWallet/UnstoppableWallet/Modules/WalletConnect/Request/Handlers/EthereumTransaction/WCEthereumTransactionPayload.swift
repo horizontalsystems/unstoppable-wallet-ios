@@ -31,13 +31,13 @@ class WCEthereumTransactionPayload: WCRequestPayload {
 class WCSendEthereumTransactionPayload: WCEthereumTransactionPayload {
     override class var method: String { "eth_sendTransaction" }
     override class func module(request: WalletConnectRequest) -> UIViewController? {
-        WalletConnectSendEthereumTransactionRequestModule.viewController(request: request)
+        WCSendEthereumTransactionRequestModule.viewController(request: request)
     }
 }
 
 class WCSignEthereumTransactionPayload: WCEthereumTransactionPayload {
     override class var method: String { "eth_signTransaction" }
     override class func module(request: WalletConnectRequest) -> UIViewController? {
-        WalletConnectSignMessageRequestModule.viewController(request: request)
+        WCSignMessageRequestModule.viewController(request: request)
     }
 }

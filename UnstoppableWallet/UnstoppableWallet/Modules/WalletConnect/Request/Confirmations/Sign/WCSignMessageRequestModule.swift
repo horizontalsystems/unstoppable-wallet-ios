@@ -1,7 +1,7 @@
 import EvmKit
 import UIKit
 
-struct WalletConnectSignMessageRequestModule {
+struct WCSignMessageRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount,
               let evmWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account),
@@ -11,9 +11,9 @@ struct WalletConnectSignMessageRequestModule {
         }
 
         let signService = App.shared.walletConnectSessionManager.service
-        let service = WalletConnectSignMessageRequestService(request: request, signService: signService, signer: signer)
-        let viewModel = WalletConnectSignMessageRequestViewModel(service: service)
+        let service = WCSignMessageRequestService(request: request, signService: signService, signer: signer)
+        let viewModel = WCSignMessageRequestViewModel(service: service)
 
-        return WalletConnectSignMessageRequestViewController(viewModel: viewModel)
+        return WCSignMessageRequestViewController(viewModel: viewModel)
     }
 }
