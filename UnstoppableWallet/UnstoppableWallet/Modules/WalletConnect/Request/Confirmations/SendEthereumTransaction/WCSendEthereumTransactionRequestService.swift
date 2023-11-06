@@ -1,7 +1,7 @@
 import Foundation
 import EvmKit
 
-class WalletConnectSendEthereumTransactionRequestService {
+class WCSendEthereumTransactionRequestService {
     private let request: WalletConnectRequest
     private let payload: WCSendEthereumTransactionPayload
     private let signService: IWalletConnectSignService
@@ -17,7 +17,7 @@ class WalletConnectSendEthereumTransactionRequestService {
 
 }
 
-extension WalletConnectSendEthereumTransactionRequestService {
+extension WCSendEthereumTransactionRequestService {
 
     var transactionData: TransactionData {
         TransactionData(
