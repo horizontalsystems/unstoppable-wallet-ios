@@ -6,12 +6,12 @@ import RxCocoa
 import ComponentKit
 
 class WalletConnectRequestViewController: SendEvmTransactionViewController {
-    private let viewModel: WalletConnectSendEthereumTransactionRequestViewModel
+    private let viewModel: WCSendEthereumTransactionRequestViewModel
 
     private let approveButton = PrimaryButton()
     private let rejectButton = PrimaryButton()
 
-    init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, transactionViewModel: SendEvmTransactionViewModel, settingsViewModel: EvmSendSettingsViewModel) {
+    init(viewModel: WCSendEthereumTransactionRequestViewModel, transactionViewModel: SendEvmTransactionViewModel, settingsViewModel: EvmSendSettingsViewModel) {
         self.viewModel = viewModel
 
         super.init(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)

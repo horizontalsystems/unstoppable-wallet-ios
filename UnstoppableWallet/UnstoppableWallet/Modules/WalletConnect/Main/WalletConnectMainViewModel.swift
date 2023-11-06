@@ -1,9 +1,9 @@
+import EvmKit
 import Foundation
-import UIKit
-import RxSwift
 import RxCocoa
 import RxRelay
-import EvmKit
+import RxSwift
+import UIKit
 
 class WalletConnectMainViewModel {
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).wallet_connect_main")
@@ -12,9 +12,9 @@ class WalletConnectMainViewModel {
     private let disposeBag = DisposeBag()
 
     private let showErrorRelay = PublishRelay<String>()
-    private let showSuccessRelay = PublishRelay<()>()
-    private let showDisconnectRelay = PublishRelay<()>()
-    private let showTimeOutAttentionRelay = PublishRelay<()>()
+    private let showSuccessRelay = PublishRelay<Void>()
+    private let showDisconnectRelay = PublishRelay<Void>()
+    private let showTimeOutAttentionRelay = PublishRelay<Void>()
     private let connectingRelay = BehaviorRelay<Bool>(value: false)
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let connectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
@@ -46,9 +46,9 @@ class WalletConnectMainViewModel {
 
     private func dAppMetaViewItem(appMetaItem: WalletConnectMainModule.AppMetaItem) -> DAppMetaViewItem {
         DAppMetaViewItem(
-                name: appMetaItem.name,
-                url: appMetaItem.url,
-                icon: appMetaItem.icons.last
+            name: appMetaItem.name,
+            url: appMetaItem.url,
+            icon: appMetaItem.icons.last
         )
     }
 
@@ -78,20 +78,20 @@ class WalletConnectMainViewModel {
         closeVisibleRelay.accept(state == .ready)
 
         let blockchains = allowedBlockchains
-                .map { item in
-                    BlockchainViewItem(
-                        chainId: item.chainId,
-                        chainTitle: item.blockchain.name,
-                        address: item.address.shortened
-                    )
-                }
+            .map { item in
+                BlockchainViewItem(
+                    chainId: item.chainId,
+                    chainTitle: item.blockchain.name,
+                    address: item.address.shortened
+                )
+            }
 
         let viewItem = ViewItem(
-                dAppMeta: service.appMetaItem.map { dAppMetaViewItem(appMetaItem: $0) },
-                status: status(connectionState: connectionState),
-                activeAccountName: service.activeAccountName,
-                blockchains: blockchains,
-                hint: service.hint
+            dAppMeta: service.appMetaItem.map { dAppMetaViewItem(appMetaItem: $0) },
+            status: status(connectionState: connectionState),
+            activeAccountName: service.activeAccountName,
+            blockchains: blockchains,
+            hint: service.hint
         )
 
         viewItemRelay.accept(viewItem)
@@ -111,24 +111,22 @@ class WalletConnectMainViewModel {
             return .offline
         }
     }
-
 }
 
 extension WalletConnectMainViewModel {
-
     var showErrorSignal: Signal<String> {
         showErrorRelay.asSignal()
     }
 
-    var showSuccessSignal: Signal<()> {
+    var showSuccessSignal: Signal<Void> {
         showSuccessRelay.asSignal()
     }
 
-    var showDisconnectSignal: Signal<()> {
+    var showDisconnectSignal: Signal<Void> {
         showDisconnectRelay.asSignal()
     }
 
-    var showTimeOutAttentionSignal: Signal<()> {
+    var showTimeOutAttentionSignal: Signal<Void> {
         showTimeOutAttentionRelay.asSignal()
     }
 
@@ -165,7 +163,7 @@ extension WalletConnectMainViewModel {
     }
 
     func cancel() {
-        if service.connectionState == .connected && service.state == .waitingForApproveSession {
+        if service.connectionState == .connected, service.state == .waitingForApproveSession {
             service.rejectSession()
         } else {
             finishRelay.accept(())
@@ -191,11 +189,9 @@ extension WalletConnectMainViewModel {
     func close() {
         finishRelay.accept(())
     }
-
 }
 
 extension WalletConnectMainViewModel {
-
     struct ViewItem {
         let dAppMeta: DAppMetaViewItem?
         let status: Status?
@@ -247,11 +243,9 @@ extension WalletConnectMainViewModel {
             }
         }
     }
-
 }
 
 extension WalletConnectMainModule.SessionError: LocalizedError {
-
     public var errorDescription: String? {
         switch self {
         case .noAnySupportedChainId: return "wallet_connect.main.no_any_supported_chains".localized
@@ -259,5 +253,14 @@ extension WalletConnectMainModule.SessionError: LocalizedError {
         default: return nil
         }
     }
+}
 
+extension ProposalValidator.ValidateError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .unsupportedReference(namespace: namespace, reference: reference): return "Unsupported \(namespace) blockchain with chainId: \(reference)".localized
+        case let .unsupportedMethod(method: method): return "Unsupported method: \(method)".localized
+        case let .unsupportedEvent(event: event): return "Unsupported event: \(event)".localized
+        }
+    }
 }

@@ -19,7 +19,7 @@ class WCSignMessagePayload: WCRequestPayload {
     }
 
     class func module(request: WalletConnectRequest) -> UIViewController? {
-        WalletConnectSignMessageRequestModule.viewController(request: request)
+        WCSignMessageRequestModule.viewController(request: request)
     }
 }
 

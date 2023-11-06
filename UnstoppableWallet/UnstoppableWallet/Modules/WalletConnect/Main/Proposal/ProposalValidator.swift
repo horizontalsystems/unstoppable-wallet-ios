@@ -7,7 +7,7 @@ class ProposalValidator {
             if let chains = namespace.chains {
                 try chains.forEach { blockchain in
                     if !set.items.contains(where: { $0.equal(blockchain: blockchain) }) {
-                        throw ValidateError.unsupported(
+                        throw ValidateError.unsupportedReference(
                             namespace: blockchain.namespace,
                             reference: blockchain.reference
                         )
@@ -17,13 +17,13 @@ class ProposalValidator {
 
             try namespace.methods.forEach { method in
                 if !set.methods.contains(method) {
-                    throw ValidateError.unsupported(method: method)
+                    throw ValidateError.unsupportedMethod(method)
                 }
             }
 
             try namespace.events.forEach { event in
                 if !set.events.contains(event) {
-                    throw ValidateError.unsupported(event: event)
+                    throw ValidateError.unsupportedEvent(event)
                 }
             }
         }
@@ -32,8 +32,8 @@ class ProposalValidator {
 
 extension ProposalValidator {
     enum ValidateError: Error {
-        case unsupported(namespace: String, reference: String)
-        case unsupported(method: String)
-        case unsupported(event: String)
+        case unsupportedReference(namespace: String, reference: String)
+        case unsupportedMethod(String)
+        case unsupportedEvent(String)
     }
 }
