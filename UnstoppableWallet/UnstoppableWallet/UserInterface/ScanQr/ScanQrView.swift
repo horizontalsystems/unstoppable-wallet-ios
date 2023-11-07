@@ -69,13 +69,21 @@ class ScanQrView: UIView {
     private func initialSetup() {
         scanQueue.async { () in
             do {
-                guard let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
-                    self.failed()
-                    return
+                let captureDevice: AVCaptureDevice
+
+                if let device = AVCaptureDevice.default(.builtInTripleCamera, for: .video, position: .back) {
+                    captureDevice = device
+                } else if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
+                    captureDevice = device
+                } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+                    captureDevice = device
+                } else {
+                    throw DeviceError.noBackCamera
                 }
+
                 let videoInput: AVCaptureDeviceInput
 
-                videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+                videoInput = try AVCaptureDeviceInput(device: captureDevice)
                 guard self.captureSession.canAddInput(videoInput) else {
                     self.failed()
                     return
@@ -169,5 +177,11 @@ extension ScanQrView: AVCaptureMetadataOutputObjectsDelegate {
         {
             delegate?.didScan(string: stringValue)
         }
+    }
+}
+
+extension ScanQrView {
+    enum DeviceError: Error {
+        case noBackCamera
     }
 }
