@@ -5,7 +5,7 @@ import RxSwift
 import RxCocoa
 import ComponentKit
 
-class WalletConnectRequestViewController: SendEvmTransactionViewController {
+class WCSendEthereumTransactionRequestViewController: SendEvmTransactionViewController {
     private let viewModel: WCSendEthereumTransactionRequestViewModel
 
     private let approveButton = PrimaryButton()

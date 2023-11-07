@@ -153,6 +153,7 @@ extension WalletConnectPendingRequestsService {
         case personalSign
         case ethSignTypedData
         case ethSendTransaction
+        case ethSignTransaction
         case unsupported
 
         init(_ string: String) {
@@ -161,6 +162,7 @@ extension WalletConnectPendingRequestsService {
             case "personal_sign": self = .personalSign
             case "eth_signTypedData": self = .ethSignTypedData
             case "eth_sendTransaction": self = .ethSendTransaction
+            case "eth_signTransaction": self = .ethSignTransaction
             default: self = .unsupported
             }
         }
