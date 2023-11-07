@@ -78,6 +78,7 @@ extension WalletConnectMainPendingRequestService.RequestMethod {
         case .personalSign: return "Personal Sign Request"
         case .ethSignTypedData: return "Typed Sign Request"
         case .ethSendTransaction: return "Approve Transaction"
+        case .ethSignTransaction: return "Sign Transaction"
         case .unsupported: return "Unsupported"
         }
     }

@@ -38,6 +38,6 @@ class WCSendEthereumTransactionPayload: WCEthereumTransactionPayload {
 class WCSignEthereumTransactionPayload: WCEthereumTransactionPayload {
     override class var method: String { "eth_signTransaction" }
     override class func module(request: WalletConnectRequest) -> UIViewController? {
-        WCSignMessageRequestModule.viewController(request: request)
+        WCSignEthereumTransactionRequestModule.viewController(request: request)
     }
 }
