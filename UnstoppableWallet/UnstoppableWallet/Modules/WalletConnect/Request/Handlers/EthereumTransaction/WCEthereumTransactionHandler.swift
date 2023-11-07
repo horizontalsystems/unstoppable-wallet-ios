@@ -29,7 +29,7 @@ extension WCEthereumTransactionHandler: IWalletConnectRequestHandler {
 
 extension WCEthereumTransactionHandler: IWalletConnectRequestViewFactory {
     func viewController(request: WalletConnectRequest) -> WalletConnectRequestChain.ViewFactoryResult {
-        guard request.payload is WCEthereumTransactionPayload else {
+        guard request.payload is Payload else {
             return .unsuccessful(error: WalletConnectRequestChain.ViewFactoryError.cantRecognizeHandler)
         }
 

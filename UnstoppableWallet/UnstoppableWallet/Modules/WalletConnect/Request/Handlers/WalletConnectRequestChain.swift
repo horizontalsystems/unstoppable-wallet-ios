@@ -99,7 +99,7 @@ extension WalletConnectRequestChain {
         let signTypedDataV4Handler = WCSignMessageHandler<WCSignTypedDataV4Payload>(requestFactory: factory)
 
         let sendEthereumHandler = WCEthereumTransactionHandler<WCSendEthereumTransactionPayload>(requestFactory: factory)
-//        let signEthereumHandler = WCEthereumTransactionHandler<WCSignEthereumTransactionPayload>(requestFactory: factory)
+        let signEthereumHandler = WCEthereumTransactionHandler<WCSignEthereumTransactionPayload>(requestFactory: factory)
 
         let addChainHandler = WCWalletHandler<WCWalletAddChainPayload>(requestFactory: factory)
         let switchChainHandler = WCWalletHandler<WCSwitchChainPayload>(requestFactory: factory)
@@ -109,7 +109,7 @@ extension WalletConnectRequestChain {
         chain.append(handler: signTypedDataHandler)
         chain.append(handler: signTypedDataV4Handler)
         chain.append(handler: sendEthereumHandler)
-//        chain.append(handler: signEthereumHandler)
+        chain.append(handler: signEthereumHandler)
         chain.append(handler: addChainHandler)
         chain.append(handler: switchChainHandler)
 
