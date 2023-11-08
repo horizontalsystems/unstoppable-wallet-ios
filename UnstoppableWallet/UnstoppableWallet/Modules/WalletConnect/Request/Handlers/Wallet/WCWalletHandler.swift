@@ -22,6 +22,10 @@ class WCWalletHandler<Payload: WCWalletPayload>: WalletConnectRequestHandler {
             try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: response)
         }
     }
+
+    func name(by method: String) -> String? {
+        method == Payload.method ? Payload.name : nil
+    }
 }
 
 extension WCWalletHandler: IWalletConnectRequestHandler {
