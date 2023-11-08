@@ -3,6 +3,7 @@ import WalletConnectSign
 
 class WCWalletPayload: WCRequestPayload {
     class var method: String { "" }
+    class var name: String { "" }
     override var method: String { Self.method }
 
     let chainId: Int
@@ -25,8 +26,10 @@ class WCWalletPayload: WCRequestPayload {
 
 class WCWalletAddChainPayload: WCWalletPayload {
     override class var method: String { "wallet_addEthereumChain" }
+    override class var name: String { "Add EVM Chain Request" }
 }
 
 class WCSwitchChainPayload: WCWalletPayload {
     override class var method: String { "wallet_switchEthereumChain" }
+    override class var name: String { "Switch EVM Chain Request" }
 }

@@ -5,6 +5,7 @@ import UIKit
 protocol IWalletConnectRequestHandler {
     func handle(session: Session, request: Request) -> WalletConnectRequestChain.RequestResult
     var supportedMethods: [String] { get }
+    func name(by method: String) -> String?
 }
 
 protocol IWalletConnectRequestViewFactory {
@@ -32,6 +33,15 @@ extension WalletConnectRequestChain: IWalletConnectRequestHandler {
         }
 
         return .unsuccessful(error: lastError)
+    }
+
+    func name(by method: String) -> String? {
+        for handler in handlers {
+            if let name = handler.name(by: method) {
+                return name
+            }
+        }
+        return nil
     }
 
     var supportedMethods: [String] { handlers.reduce(into: []) { $0.append(contentsOf: $1.supportedMethods) } }
