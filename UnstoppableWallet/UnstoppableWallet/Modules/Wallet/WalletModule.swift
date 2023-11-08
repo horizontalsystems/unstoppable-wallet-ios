@@ -51,7 +51,7 @@ struct WalletModule {
         return WalletViewController(viewModel: viewModel)
     }
 
-    static func sendTokenListViewController() -> UIViewController? {
+    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, prefilledAddress: String? = nil) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil
         }
@@ -66,7 +66,8 @@ struct WalletModule {
         let elementService = WalletBlockchainElementService(
             account: account,
             adapterService: adapterService,
-            walletManager: App.shared.walletManager
+            walletManager: App.shared.walletManager,
+            allowedBlockchainTypes: allowedBlockchainTypes
         )
         adapterService.delegate = elementService
 
@@ -98,8 +99,12 @@ struct WalletModule {
 
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
         dataSource.viewController = viewController
+        var mode: SendBaseService.Mode = .send
+        if let prefilledAddress {
+            mode = .prefilled(address: prefilledAddress)
+        }
         dataSource.onSelectWallet = { [weak viewController] wallet in
-            if let module = SendModule.controller(wallet: wallet) {
+            if let module = SendModule.controller(wallet: wallet, mode: mode) {
                 viewController?.navigationController?.pushViewController(module, animated: true)
             }
         }

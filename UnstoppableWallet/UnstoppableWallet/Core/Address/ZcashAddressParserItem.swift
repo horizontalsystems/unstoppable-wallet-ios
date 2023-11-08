@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import MarketKit
 
 class ZcashAddressParserItem {
     private let parserType: ParserType
@@ -27,6 +28,7 @@ class ZcashAddressParserItem {
 }
 
 extension ZcashAddressParserItem: IAddressParserItem {
+    var blockchainType: BlockchainType { .zcash }
 
     func handle(address: String) -> Single<Address> {
         validate(address: address, checkSendToSelf: true)
@@ -35,6 +37,7 @@ extension ZcashAddressParserItem: IAddressParserItem {
     func isValid(address: String) -> Single<Bool> {
         validate(address: address, checkSendToSelf: false)
                 .map { _ in true }
+                .catchErrorJustReturn(false)
     }
 
 }

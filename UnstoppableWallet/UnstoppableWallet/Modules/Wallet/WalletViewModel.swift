@@ -23,7 +23,7 @@ class WalletViewModel {
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
     private let playHapticRelay = PublishRelay<Void>()
     private let scrollToTopRelay = PublishRelay<Void>()
-    private let disableQrScannerRelay = PublishRelay<Bool>()
+    private let qrScanningRelay = PublishRelay<Bool>()
 
     @PostPublished private(set) var state: State = .list(viewItems: [])
     @PostPublished private(set) var headerViewItem: WalletModule.HeaderViewItem?
@@ -185,7 +185,7 @@ extension WalletViewModel {
     }
 
     var disableQrScannerSignal: Signal<Bool> {
-        disableQrScannerRelay.asSignal()
+        qrScanningRelay.asSignal()
     }
 
     var sortTypeViewItems: [AlertViewItem] {
@@ -286,13 +286,15 @@ extension WalletViewModel {
     func process(scanned: String) {
         Task { [weak self, eventHandler] in
             defer {
-                self?.disableQrScannerRelay.accept(false)
+                self?.qrScanningRelay.accept(false)
             }
 
             do {
-                self?.disableQrScannerRelay.accept(true)
-                try await eventHandler.handle(event: scanned, eventType: .walletConnectUri)
-            } catch {}
+                self?.qrScanningRelay.accept(true)
+                try await eventHandler.handle(event: scanned.trimmingCharacters(in: .whitespacesAndNewlines), eventType: [.walletConnectUri, .address])
+            } catch {
+
+            }
         }
     }
 }

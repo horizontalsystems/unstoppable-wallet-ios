@@ -147,7 +147,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
         subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
         subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
-        subscribe(disposeBag, viewModel.disableQrScannerSignal) { [weak self] in self?.qrScanner(disable: $0) }
+        subscribe(disposeBag, viewModel.disableQrScannerSignal) { [weak self] in self?.qrScanning(disable: $0) }
 
         viewModel.$state
             .receive(on: DispatchQueue.main)
@@ -482,7 +482,7 @@ class WalletViewController: ThemeViewController {
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
 
-    private func qrScanner(disable: Bool) {
+    private func qrScanning(disable: Bool) {
         navigationItem.rightBarButtonItem?.isEnabled = !disable
     }
 

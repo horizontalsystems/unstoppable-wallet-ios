@@ -1,10 +1,12 @@
-import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import EvmKit
+import Foundation
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IAddressParserItem: AnyObject {
+    var blockchainType: BlockchainType { get }
     func handle(address: String) -> Single<Address>
     func isValid(address: String) -> Single<Bool>
 }
@@ -19,12 +21,12 @@ class AddressParserChain {
         }
 
         let singles: [Single<HandlerState>] = validHandlers
-                .map { handler in
-                    handler
-                        .handle(address: address)
-                        .map { HandlerState(address: $0, error: nil) }
-                        .catchError { Single.just(HandlerState(address: nil, error: $0)) }
-        }
+            .map { handler in
+                handler
+                    .handle(address: address)
+                    .map { HandlerState(address: $0, error: nil) }
+                    .catchError { Single.just(HandlerState(address: nil, error: $0)) }
+            }
 
         return Single
             .zip(singles)
@@ -39,45 +41,35 @@ class AddressParserChain {
                 return Single.just(nil)
             }
     }
-
 }
 
 extension AddressParserChain {
+    @discardableResult func append(handlers: [IAddressParserItem]) -> Self {
+        self.handlers.append(contentsOf: handlers)
+        return self
+    }
 
     @discardableResult func append(handler: IAddressParserItem) -> Self {
         handlers.append(handler)
         return self
     }
 
-    func handle(address: String?) -> Single<Address?> {
-        guard !(address ?? "").isEmpty, let address = address else {
-            return Single.just(nil)
+    func handlers(address: String) -> Single<[IAddressParserItem]> {
+        let singles = handlers.map { handler -> Single<IAddressParserItem?> in
+            handler.isValid(address: address).map { $0 ? handler : nil }
         }
 
-        let validHandlers: [Single<IAddressParserItem?>] = handlers
-                .map { handler in
-                    handler.isValid(address: address)
-                            .map { [weak handler] isValid in
-                                if isValid {
-                                    return handler
-                                }
-                                return nil
-                            }
-                            .catchErrorJustReturn(nil)
-                }
-
-        return Single
-                .zip(validHandlers)
-                .flatMap { (handlers: [IAddressParserItem?]) -> Single<Address?> in
-                    let validHandlers: [IAddressParserItem] = handlers.compactMap { $0 }
-                    return Self.process(address: address, validHandlers: validHandlers)
-                }
+        return Single.zip(singles) { handlers in
+            return handlers.compactMap { $0 }
+        }
     }
 
+    func handle(address: String) -> Single<Address?> {
+        handlers(address: address).flatMap { Self.process(address: address, validHandlers: $0) }
+    }
 }
 
 extension AddressParserChain {
-
     private struct HandlerState {
         let address: Address?
         let error: Error?
@@ -87,5 +79,4 @@ extension AddressParserChain {
         case validationError
         case fetchError(Error)
     }
-
 }

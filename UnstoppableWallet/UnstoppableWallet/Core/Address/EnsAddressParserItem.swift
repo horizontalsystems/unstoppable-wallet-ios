@@ -28,14 +28,16 @@ class EnsAddressParserItem {
 }
 
 extension EnsAddressParserItem: IAddressParserItem {
+    var blockchainType: BlockchainType { rawAddressParserItem.blockchainType }
 
     func handle(address: String) -> Single<Address> {
-        provider.address(domain: address)
+        let blockchainType = blockchainType
+        return provider.address(domain: address)
                 .flatMap { [weak self] resolvedAddress in
                     let address = Address(raw: resolvedAddress.hex, domain: address)
                     return self?.rawAddressHandle(address: address) ?? Single.just(address)
                 }.catchError { _ in
-                    .error(AddressService.AddressError.invalidAddress(blockchainName: nil))
+                    .error(AddressService.AddressError.invalidAddress(blockchainName: blockchainType.uid))
                 }
     }
 

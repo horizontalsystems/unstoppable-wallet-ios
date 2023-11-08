@@ -10,6 +10,7 @@ extension SendBaseService {
 
     enum Mode {
         case send
+        case prefilled(address: String)
         case predefined(address: String)
     }
 

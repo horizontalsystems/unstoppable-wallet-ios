@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import BitcoinCore
 import BinanceChainKit
+import MarketKit
 
 class BinanceAddressParserItem {
     private let parserType: ParserType
@@ -29,6 +30,7 @@ class BinanceAddressParserItem {
 }
 
 extension BinanceAddressParserItem: IAddressParserItem {
+    var blockchainType: BlockchainType { .binanceChain }
 
     func handle(address: String) -> Single<Address> {
         validate(address: address)
