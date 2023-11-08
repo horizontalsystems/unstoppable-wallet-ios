@@ -18,24 +18,22 @@ extension AddressAppShowModule: IEventHandler {
             return
         }
 
-        var uri: String?
+        var address: String?
         switch event {
         case let event as String:
-            uri = event
+            address = event
         default: ()
         }
 
-        guard let uri else {
+        guard let address else {
             throw EventHandler.HandleError.noSuitableHandler
         }
-
-        let uriParser = AddressParserFactory.parser(blockchainType: <#T##BlockchainType?##MarketKit.BlockchainType?#>)
 
         let disposeBag = DisposeBag()
         let chain = AddressParserFactory.parserChain(blockchainType: nil, withEns: false)
         let types = try await withCheckedThrowingContinuation { continuation in
             chain
-                .handlers(address: uri)
+                .handlers(address: address)
                 .subscribe(onSuccess: { items in
                     continuation.resume(returning: items.map { $0.blockchainType })
                 }, onError: { error in
@@ -48,7 +46,7 @@ extension AddressAppShowModule: IEventHandler {
             throw EventHandler.HandleError.noSuitableHandler
         }
 
-        guard let viewController = WalletModule.sendTokenListViewController(allowedBlockchainTypes: types, prefilledAddress: uri) else {
+        guard let viewController = WalletModule.sendTokenListViewController(allowedBlockchainTypes: types, prefilledAddress: address) else {
             return
         }
 
