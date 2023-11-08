@@ -36,6 +36,7 @@ class SendBitcoinService {
         self.mode = mode
 
         switch mode {
+        case .prefilled(let address): addressService.set(text: address)
         case .predefined(let address): addressService.set(text: address)
         case .send: ()
         }

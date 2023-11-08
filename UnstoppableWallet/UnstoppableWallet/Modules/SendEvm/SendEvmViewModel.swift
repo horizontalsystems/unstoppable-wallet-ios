@@ -49,14 +49,14 @@ extension SendEvmViewModel {
 
     var title: String {
         switch service.mode {
-        case .send: return "send.title".localized(token.coin.code)
+        case .send, .prefilled: return "send.title".localized(token.coin.code)
         case .predefined: return "donate.title".localized(token.coin.code)
         }
     }
 
     var showAddress: Bool {
         switch service.mode {
-        case .send: return true
+        case .send, .prefilled: return true
         case .predefined: return false
         }
     }

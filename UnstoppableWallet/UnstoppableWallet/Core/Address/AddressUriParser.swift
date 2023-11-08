@@ -2,7 +2,8 @@ import Foundation
 
 class AddressUriParser {
     fileprivate static let parameterVersion = "version"
-    fileprivate static let parameterAmount = "amount"
+    fileprivate static let parameterAmount = "amount"   // BIP21 uses amount field
+    fileprivate static let parameterValue = "value"     // EIP67 uses value field
     fileprivate static let parameterLabel = "label"
     fileprivate static let parameterMessage = "message"
 
@@ -61,6 +62,7 @@ class AddressUriParser {
                 switch parts[0] {
                 case AddressUriParser.parameterVersion: version = parts[1]
                 case AddressUriParser.parameterAmount: amount = Double(parts[1]) ?? nil
+                case AddressUriParser.parameterValue: amount = Double(parts[1]) ?? nil
                 case AddressUriParser.parameterLabel: label = parts[1].removingPercentEncoding
                 case AddressUriParser.parameterMessage: message = parts[1].removingPercentEncoding
                 default: parameters[parts[0]] = parts[1].removingPercentEncoding

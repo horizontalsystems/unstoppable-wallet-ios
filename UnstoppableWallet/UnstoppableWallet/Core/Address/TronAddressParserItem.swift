@@ -1,7 +1,9 @@
 import RxSwift
 import TronKit
+import MarketKit
 
 class TronAddressParser: IAddressParserItem {
+    var blockchainType: BlockchainType { .tron }
 
     func handle(address: String) -> Single<Address> {
         do {

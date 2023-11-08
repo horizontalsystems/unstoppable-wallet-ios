@@ -45,7 +45,7 @@ class SendModule {
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
-        let bitcoinParserItem = BitcoinAddressParserItem(parserType: .adapter(adapter))
+        let bitcoinParserItem = BitcoinAddressParserItem(blockchainType: token.blockchainType, parserType: .adapter(adapter))
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: token.coin.code, token: token)
         let addressParserChain = AddressParserChain()
                 .append(handler: bitcoinParserItem)

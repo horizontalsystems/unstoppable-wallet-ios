@@ -46,6 +46,7 @@ class UdnAddressParserItem {
 }
 
 extension UdnAddressParserItem: IAddressParserItem {
+    var blockchainType: BlockchainType { rawAddressParserItem.blockchainType }
 
     func handle(address: String) -> Single<Address> {
         var singles = [Single<Result<String, Error>>]()

@@ -13,7 +13,7 @@ extension WidgetCoinAppShowModule: IEventHandler {
     @MainActor
     func handle(event: Any, eventType: EventHandler.EventType) async throws {
         guard eventType.contains(.deepLink) else {
-            return
+            throw EventHandler.HandleError.noSuitableHandler
         }
 
         var uid: String?

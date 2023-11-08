@@ -1,7 +1,13 @@
 import RxSwift
 import EvmKit
+import MarketKit
 
 class EvmAddressParser: IAddressParserItem {
+    let blockchainType: BlockchainType
+
+    init(blockchainType: BlockchainType = .ethereum) {
+        self.blockchainType = blockchainType
+    }
 
     func handle(address: String) -> Single<Address> {
         do {
