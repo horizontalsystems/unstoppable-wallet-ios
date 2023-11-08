@@ -4,6 +4,7 @@ import WalletConnectSign
 
 class WCSignMessagePayload: WCRequestPayload {
     class var method: String { "" }
+    class var name: String { "" }
     override var method: String { Self.method }
 
     override init(dAppName: String, data: Data) {
@@ -25,6 +26,7 @@ class WCSignMessagePayload: WCRequestPayload {
 
 class WCSignPayload: WCSignMessagePayload {
     override class var method: String { "eth_sign" }
+    override class var name: String { "Sign Request" }
 
     override class func data(from anyCodable: AnyCodable) throws -> Data {
         let strings = try anyCodable.get([String].self)
@@ -37,6 +39,7 @@ class WCSignPayload: WCSignMessagePayload {
 
 class WCPersonalSignPayload: WCSignMessagePayload {
     override class var method: String { "personal_sign" }
+    override class var name: String { "Personal Sign Request" }
 
     override class func data(from anyCodable: AnyCodable) throws -> Data {
         let strings = try anyCodable.get([String].self)
@@ -49,6 +52,7 @@ class WCPersonalSignPayload: WCSignMessagePayload {
 
 class WCSignTypedDataPayload: WCSignMessagePayload {
     override class var method: String { "eth_signTypedData" }
+    override class var name: String { "Typed Sign Request" }
 
     override class func data(from anyCodable: AnyCodable) throws -> Data {
         let strings = try anyCodable.get([String].self)
@@ -61,4 +65,5 @@ class WCSignTypedDataPayload: WCSignMessagePayload {
 
 class WCSignTypedDataV4Payload: WCSignTypedDataPayload {
     override class var method: String { "eth_signTypedData_v4" }
+    override class var name: String { "Typed Sign v4 Request" }
 }

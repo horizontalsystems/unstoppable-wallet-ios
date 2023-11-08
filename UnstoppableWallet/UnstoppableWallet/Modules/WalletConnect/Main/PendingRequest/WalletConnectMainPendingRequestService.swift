@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 import WalletConnectSign
 
 class WalletConnectMainPendingRequestService {
@@ -49,23 +49,21 @@ class WalletConnectMainPendingRequestService {
         }
 
         items = sessionManager.pendingRequests()
-                .filter { $0.topic == session.topic }
-                .map { request in
-                    Item(
-                            id: request.id.intValue,
-                            sessionName: session.peer.name,
-                            sessionImageUrl: session.peer.icons.first,
-                            method: RequestMethod(request.method),
-                            chainId: request.chainId.reference
-                    )
-                }
-                .sorted { $0.id > $1.id }
+            .filter { $0.topic == session.topic }
+            .map { request in
+                Item(
+                    id: request.id.intValue,
+                    sessionName: session.peer.name,
+                    sessionImageUrl: session.peer.icons.first,
+                    methodName: requestHandler.name(by: request.method),
+                    chainId: request.chainId.reference
+                )
+            }
+            .sorted { $0.id > $1.id }
     }
-
 }
 
 extension WalletConnectMainPendingRequestService {
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -77,7 +75,8 @@ extension WalletConnectMainPendingRequestService {
     func blockchain(chainId: String?) -> String? {
         guard let chainId = chainId,
               let id = Int(chainId),
-              let blockchain = evmBlockchainManager.blockchain(chainId: id) else {
+              let blockchain = evmBlockchainManager.blockchain(chainId: id)
+        else {
             return nil
         }
 
@@ -105,37 +104,14 @@ extension WalletConnectMainPendingRequestService {
     func onReject(id: Int) {
         signService.rejectRequest(id: id)
     }
-
 }
 
 extension WalletConnectMainPendingRequestService {
-
     struct Item {
         let id: Int
         let sessionName: String
         let sessionImageUrl: String?
-        let method: RequestMethod
+        let methodName: String?
         let chainId: String?
     }
-
-    enum RequestMethod {
-        case ethSign
-        case personalSign
-        case ethSignTypedData
-        case ethSendTransaction
-        case ethSignTransaction
-        case unsupported
-
-        init(_ string: String) {
-            switch string {
-            case "eth_sign": self = .ethSign
-            case "personal_sign": self = .personalSign
-            case "eth_signTypedData": self = .ethSignTypedData
-            case "eth_sendTransaction": self = .ethSendTransaction
-            case "eth_signTransaction": self = .ethSignTransaction
-            default: self = .unsupported
-            }
-        }
-    }
-
 }

@@ -27,6 +27,10 @@ extension WCSignMessageHandler: IWalletConnectRequestHandler {
             return .unsuccessful(error: error)
         }
     }
+
+    func name(by method: String) -> String? {
+        method == Payload.method ? Payload.name : nil
+    }
 }
 
 extension WCSignMessageHandler: IWalletConnectRequestViewFactory {
