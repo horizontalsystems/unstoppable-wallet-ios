@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ListSection<Content: View>: View {
-    @Environment(\.listStyle) var listStyle
+    @Environment(\.themeListStyle) var listStyle
 
     @ViewBuilder let content: Content
 
@@ -10,7 +10,7 @@ struct ListSection<Content: View>: View {
             _VariadicView.Tree(Layout()) {
                 content
             }
-            .modifier(ListStyleModifier(listStyle: listStyle))
+            .modifier(ThemeListStyleModifier(themeListStyle: listStyle))
         }
     }
 

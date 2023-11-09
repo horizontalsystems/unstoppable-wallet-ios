@@ -1,16 +1,16 @@
 import SwiftUI
 
-enum ListStyle {
+enum ThemeListStyle {
     case lawrence
     case bordered
     case transparent
 }
 
-struct ListStyleModifier: ViewModifier {
-    let listStyle: ListStyle
+struct ThemeListStyleModifier: ViewModifier {
+    let themeListStyle: ThemeListStyle
 
     func body(content: Content) -> some View {
-        switch listStyle {
+        switch themeListStyle {
         case .lawrence:
             content
                 .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
@@ -25,31 +25,31 @@ struct ListStyleModifier: ViewModifier {
     }
 }
 
-struct ListStyleButtonModifier: ViewModifier {
-    let listStyle: ListStyle
+struct ThemeListStyleButtonModifier: ViewModifier {
+    let themeListStyle: ThemeListStyle
     let isPressed: Bool
 
     func body(content: Content) -> some View {
-        switch listStyle {
+        switch themeListStyle {
         case .lawrence: content.background(isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
-        case .bordered, .transparent: content.background(isPressed ? Color.themeLawrencePressed : Color.clear)
+        case .bordered, .transparent: content.background(isPressed ? Color.themeLawrencePressed : Color.themeTyler)
         }
     }
 }
 
-struct ListStyleKey: EnvironmentKey {
-    static let defaultValue = ListStyle.lawrence
+struct ThemeListStyleKey: EnvironmentKey {
+    static let defaultValue = ThemeListStyle.lawrence
 }
 
 extension EnvironmentValues {
-    var listStyle: ListStyle {
-        get { self[ListStyleKey.self] }
-        set { self[ListStyleKey.self] = newValue }
+    var themeListStyle: ThemeListStyle {
+        get { self[ThemeListStyleKey.self] }
+        set { self[ThemeListStyleKey.self] = newValue }
     }
 }
 
 extension View {
-    func listStyle(_ listStyle: ListStyle) -> some View {
-        environment(\.listStyle, listStyle)
+    func themeListStyle(_ themeListStyle: ThemeListStyle) -> some View {
+        environment(\.themeListStyle, themeListStyle)
     }
 }
