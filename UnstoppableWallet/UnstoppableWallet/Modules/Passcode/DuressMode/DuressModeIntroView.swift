@@ -34,7 +34,7 @@ struct DuressModeIntroView: View {
                                 description: "enable_duress_mode.intro.passcode_change.description".localized
                             )
                         }
-                        .listStyle(.bordered)
+                        .themeListStyle(.bordered)
                     }
                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }

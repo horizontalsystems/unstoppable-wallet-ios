@@ -32,7 +32,7 @@ struct CoinPageModule {
         let viewModel = CoinPageViewModel(service: service)
 
         let overviewController = CoinOverviewModule.viewController(coinUid: coinUid)
-        let marketsController = CoinMarketsModule.viewController(coin: fullCoin.coin)
+        let marketsController = CoinMarketsModule.view(coin: fullCoin.coin).toViewController()
         let analyticsController = CoinAnalyticsModule.viewController(fullCoin: fullCoin)
 //        let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin)
 

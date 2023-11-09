@@ -1,34 +1,14 @@
 import MarketKit
 import SwiftUI
-import UIKit
 
 struct CoinMarketsModule {
     static func view(coin: Coin) -> some View {
-        CoinMarketsView(coin: coin)
-    }
-
-    static func viewController(coin: Coin) -> CoinMarketsViewController {
-        let service = CoinMarketsService(
+        let viewModel = CoinMarketsViewModel(
             coin: coin,
             marketKit: App.shared.marketKit,
             currencyManager: App.shared.currencyManager
         )
 
-        let viewModel = CoinMarketsViewModel(service: service)
-        let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: viewModel)
-
-        return CoinMarketsViewController(viewModel: viewModel, headerViewModel: headerViewModel, urlManager: UrlManager(inApp: false))
+        return CoinMarketsView(viewModel: viewModel)
     }
-}
-
-struct CoinMarketsView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    let coin: Coin
-
-    func makeUIViewController(context _: Context) -> UIViewController {
-        CoinMarketsModule.viewController(coin: coin)
-    }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
