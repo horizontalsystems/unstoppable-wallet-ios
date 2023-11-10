@@ -889,6 +889,7 @@
 // Coin Page -> Markets
 
 "coin_markets.empty" = "No data available";
+"coin_markets.verified" = "확인";
 
 // Coin Page -> Tweets
 
