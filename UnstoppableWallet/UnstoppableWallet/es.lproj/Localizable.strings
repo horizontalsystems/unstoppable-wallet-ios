@@ -891,6 +891,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Coin Page -> Markets
 
 "coin_markets.empty" = "No hay datos disponibles";
+"coin_markets.verified" = "Verificado";
 
 // Coin Page -> Tweets
 
