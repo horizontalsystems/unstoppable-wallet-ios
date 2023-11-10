@@ -893,6 +893,7 @@
 // Coin Page -> Markets
 
 "coin_markets.empty" = "Нет доступных данных";
+"coin_markets.verified" = "Подтверждено";
 
 // Coin Page -> Tweets
 
