@@ -86,11 +86,15 @@ struct CoinMarketsView: View {
             .frame(width: .iconSize32, height: .iconSize32)
 
         VStack(spacing: 1) {
-            HStack(spacing: .margin16) {
+            HStack(spacing: .margin8) {
                 Text(viewItem.market)
                     .font(.themeBody)
                     .foregroundColor(.themeLeah)
                     .lineLimit(1)
+
+                if viewItem.verified {
+                    BadgeViewNew(text: "coin_markets.verified".localized)
+                }
 
                 Spacer()
 
@@ -102,7 +106,7 @@ struct CoinMarketsView: View {
                 }
             }
 
-            HStack(spacing: .margin16) {
+            HStack(spacing: .margin8) {
                 Text(viewItem.pair)
                     .font(.themeSubhead2)
                     .foregroundColor(.themeGray)
