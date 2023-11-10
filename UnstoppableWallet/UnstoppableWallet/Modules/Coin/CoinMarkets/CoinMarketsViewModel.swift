@@ -83,7 +83,8 @@ class CoinMarketsViewModel: ObservableObject {
             pair: "\(coin.code) / \(ticker.target)",
             rate: ValueFormatter.instance.formatShort(value: ticker.rate, decimalCount: 8, symbol: ticker.target),
             volume: volume(value: ticker.volume, price: price),
-            tradeUrl: ticker.tradeUrl
+            tradeUrl: ticker.tradeUrl,
+            verified: ticker.verified
         )
     }
 
@@ -147,6 +148,7 @@ extension CoinMarketsViewModel {
         let rate: String?
         let volume: String?
         let tradeUrl: String?
+        let verified: Bool
 
         func hash(into hasher: inout Hasher) {
             hasher.combine(market)
