@@ -891,6 +891,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Coin Page -> Markets
 
 "coin_markets.empty" = "No data available";
+"coin_markets.filter.all" = "Hepsi";
+"coin_markets.filter.verified" = "Onaylandı";
 "coin_markets.verified" = "Onaylandı";
 
 // Coin Page -> Tweets
