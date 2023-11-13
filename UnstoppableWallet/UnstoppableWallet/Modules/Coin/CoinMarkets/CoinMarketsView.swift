@@ -35,11 +35,11 @@ struct CoinMarketsView: View {
         VStack(spacing: 0) {
             HStack {
                 Button(action: {
-                    viewModel.sortDirectionAscending.toggle()
+                    viewModel.switchFilterType()
                 }) {
-                    Image(viewModel.sortDirectionAscending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20").renderingMode(.template)
+                    Text(viewModel.filterTypeInfo.text)
                 }
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+                .buttonStyle(SelectorButtonStyle(count: viewModel.filterTypeInfo.count, selectedIndex: viewModel.filterTypeInfo.selectedIndex))
 
                 Spacer()
 
@@ -68,7 +68,7 @@ struct CoinMarketsView: View {
                     }
                 }
                 .themeListStyle(.transparent)
-                .onChange(of: viewModel.sortDirectionAscending) { _ in
+                .onChange(of: viewModel.filterTypeInfo) { _ in
                     withAnimation {
                         proxy.scrollTo(viewItems.first!)
                     }
