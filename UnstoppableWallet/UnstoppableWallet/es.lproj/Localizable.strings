@@ -1,4 +1,4 @@
-"button.ok" = "Aceptar";
+"button.ok" = "OK";
 "button.apply" = "Aplicar";
 "button.cancel" = "Cancelar";
 "button.close" = "Cerrar";
@@ -43,12 +43,12 @@
 "alert.restored" = "Restaurado";
 "alert.success" = "Completado";
 
-"alert.added_to_watchlist" = "Añadido a tu Lista de Seguimiento";
-"alert.removed_from_watchlist" = "Eliminado de la Lista de Seguimiento";
-"alert.added_to_wallet" = "Agregar a Wallet";
-"alert.removed_from_wallet" = "Eliminado del monedero";
-"alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
-"alert.not_supported_yet" = "Aún no compatible";
+"alert.added_to_watchlist" = "Añadido a la lista de seguimiento";
+"alert.removed_from_watchlist" = "Eliminado de la lista de seguimiento";
+"alert.added_to_wallet" = "Añadido a la cartera";
+"alert.removed_from_wallet" = "Eliminado de la cartera";
+"alert.already_added_to_wallet" = "Ya añadido a la cartera";
+"alert.not_supported_yet" = "Aún no soportado";
 "alert.created" = "Creado";
 "alert.imported" = "Restaurado ";
 "alert.wallet_added" = "Cartera añadida";
@@ -117,7 +117,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Restore
 
-"restore.title" = "Importar monedero";
+"restore.title" = "Importar Cartera";
 "restore.advanced" = "Avanzado";
 "restore.import_by" = "Importar por";
 "restore.restore_type.mnemonic" = "Frase de Recuperación";
@@ -138,7 +138,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Restore Type
 
-"restore_type.title" = "Importar monedero";
+"restore_type.title" = "Importar Cartera";
 "restore_type.recovery.title" = "de Frase de Recuperación";
 "restore_type.cloud.title" = "desde iCloud";
 "restore_type.file.title" = "del archivo";
@@ -154,7 +154,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore.cloud.title" = "Seleccionar copia de seguridad";
 "restore.cloud.description" = "Seleccione el archivo de copia de seguridad que desea restaurar.";
 "restore.cloud.empty" = "No se encontraron copias de seguridad.";
-"restore.cloud.wallets" = "Copia de seguridad de la cartera";
+"restore.cloud.wallets" = "Copias de seguridad de la cartera";
 "restore.cloud.imported" = "Carteras importadas";
 "restore.cloud.app_backups" = "Copias de seguridad de aplicaciones";
 
@@ -343,8 +343,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Account switcher
 
 "switch_account.title" = "Cambiar monedero";
-"switch_account.wallets" = "Monederos";
-"switch_account.watch_wallets" = "Ver Monedero";
+"switch_account.wallets" = "Carteras";
+"switch_account.watch_wallets" = "Ver carteras";
 
 // Release notes
 
@@ -779,9 +779,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.cex_volume_rank" = "Rango de Volumen CEX";
 "coin_analytics.cex_volume_rank.description" = "Tokens clasificados por volumen de comercio del token en exchanges centralizados.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
+"coin_analytics.cex_volume.info2" = "Gráfico que muestra la variación en el volumen diario de comercio del token en los principales exchanges centralizados durante un período de 1 año.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume.info4" = "Lista de todos los tokens clasificados según el volumen de comercio en exchanges centralizados en intervalos de 24H / 7D / 1M.";
 
 "coin_analytics.dex_volume" = "Volumen DEX";
 "coin_analytics.dex_volume_rank" = "Rango de Volumen DEX";
@@ -797,9 +797,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.dex_liquidity" = "Liquidez DEX";
 "coin_analytics.dex_liquidity_rank" = "Rango de liquidez DEX";
 "coin_analytics.dex_liquidity_rank.description" = "Tokens clasificados por liquidez disponible en los intercambios descentralizados.";
-"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
+"coin_analytics.dex_liquidity.info1" = "Liquidez total actualmente disponible para el token en los principales exchanges descentralizados.";
+"coin_analytics.dex_liquidity.info2" = "Gráfico que muestra la variación en la liquidez disponible para el token en los principales exchanges descentralizados durante un período de 1 año.";
+"coin_analytics.dex_liquidity.info3" = "Lista de todos los tokens clasificados según la liquidez disponible del token en los principales exchanges descentralizados.";
 "coin_analytics.dex_liquidity.tracked_dexes" = "DEXes que están siendo seguidos:";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
@@ -809,25 +809,25 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.active_addresses_rank" = "Rango de direcciones activas";
 "coin_analytics.active_addresses_rank.description" = "Tokens clasificados por el número de direcciones únicas que transaccionan con el token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
+"coin_analytics.active_addresses.info2" = "Gráfico que muestra la variación en el recuento diario de direcciones activas durante un período de 1 año.";
+"coin_analytics.active_addresses.info3" = "Número total de direcciones únicas de blockchain que realizan transacciones con el token durante un período de 30 días.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info5" = "Lista de todos los tokens clasificados según el número de direcciones activas diarias que realizan transacciones con el token en intervalos de 24h / 7D / 1M.";
 
 "coin_analytics.transaction_count" = "Número de transacciones";
 "coin_analytics.transaction_count_rank" = "Rango de conteo Tx";
 "coin_analytics.transaction_count_rank.description" = "Tokens clasificados por el número de transacciones en una cadena de bloques.";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
-"coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
+"coin_analytics.transaction_count.info2" = "Gráfico que muestra la variación en el número de transacciones durante un período de 1 año.";
 "coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
-"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
-"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
+"coin_analytics.transaction_count.info4" = "Lista de todos los tokens clasificados según el número de transacciones con el token en intervalos de 24h / 7D / 1M.";
+"coin_analytics.transaction_count.info5" = "El número total de tokens transferidos a través de la blockchain durante el período de 30 días.";
 
 "coin_analytics.holders" = "Titulares";
-"coin_analytics.holders_rank" = "Holders Rank";
-"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
-"coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
-"coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
+"coin_analytics.holders_rank" = "Rango de tenedores";
+"coin_analytics.holders_rank.description" = "Clasificación de tokens por direcciones únicas que los poseen en múltiples blockchains.";
+"coin_analytics.holders.info1" = "Número total de direcciones únicas que poseen el token en varios blockchains.";
+"coin_analytics.holders.info2" = "Los 10 principales monederos que poseen el token en cada blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Blockchains seguidos: Ethereum, Binance Smart Chain, Optismo, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polígono";
 "coin_analytics.holders.in_top_10_addresses" = "en los 10 mejores poseedores";
 "coin_analytics.holders.count" = "Total de tenedores: %@";
@@ -837,10 +837,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
 "coin_analytics.project_tvl.info_title" = "Proyecto TVL (Valor Total bloqueado)";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
+"coin_analytics.project_tvl.info2" = "Gráfico que muestra la variación del Valor Total Bloqueado en los contratos inteligentes del proyecto durante un período de 1 año.";
 "coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info4" = "Lista de todos los tokens clasificados en base al Valor Total Bloqueado actual.";
+"coin_analytics.project_tvl.info5" = "Relación entre la capitalización de mercado y el TVL (Total Value Locked) del proyecto.";
 
 "coin_analytics.project_fee" = "Tarifa del proyecto";
 "coin_analytics.project_fee_rank" = "Rango de tarifa del proyecto";
@@ -1005,7 +1005,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.you_paid" = "Has pagado";
 "tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
-"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
+"tx_info.scam_warning" = "Esta transacción es sospechosa y podría ser una estafa. Por favor, no copies ninguna dirección de esta transacción.";
 
 // Settings
 
@@ -1042,8 +1042,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir el token manualmente.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
 "manage_wallets.contract_address" = "Dirección del contrato";
-"manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes %@ monederos pueden usar para recibir pagos entrantes:\n\n- BIP44 (más antiguo)\n- BIP49\n- BIP84 (recomendado)\n- BIP86 (más reciente)\n\nMientras que %@ monedero soporta los 4, recomienda utilizar una cartera %@ que opere en formato BIP84.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección de monederos Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n- TYPE 0 (más antiguo)\n- TYPE 145 (más reciente)\n\nMientras que el monedero %@ soporta ambos se recomienda usar un monedero Bitcoin Cash que opere en formato TYPE 145.";
+"manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes que las carteras %@ pueden usar para recibir pagos entrantes:\n\n-BIP44 (el más antiguo)\n-BIP49\n-BIP84 (recomendado)\n-BIP86 (el más nuevo)\n\nAunque la cartera %@ admite los 4 formatos, se recomienda usar una cartera %@ operando en formato BIP84.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección que las carteras de Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n-TYPE 0 (más antiguo)\n-TYPE 145 (más nuevo)
+\n\nAunque la cartera %@ admite ambos formatos, se recomienda usar una cartera de Bitcoin Cash operando en el formato TYPE 145.";
 
 // Settings -> Personal Support
 
@@ -1103,9 +1104,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "backup_app.backup_list.title" = "Copia de seguridad";
 "backup_app.backup_list.description.restore" = "Lista de contenidos en el archivo de copia de seguridad.";
-"backup_app.backup_list.header.wallets" = "Monederos";
+"backup_app.backup_list.header.wallets" = "Carteras";
 "backup_app.backup_list.header.other" = "Otro";
-"backup_app.backup_list.other.watch_account.title" = "Ver Monedero";
+"backup_app.backup_list.other.watch_account.title" = "Ver carteras";
 "backup_app.backup_list.other.watchlist.title" = "Lista de Seguimiento";
 "backup_app.backup_list.other.contacts.title" = "Contactos";
 "backup_app.backup_list.other.blockchain_settings.title" = "RPC personalizado";
@@ -1176,8 +1177,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "enable_duress_mode.select.title" = "Seleccionar carteras";
 "enable_duress_mode.select.description" = "Seleccione las carteras que se mostrarán en Modo Duración.";
-"enable_duress_mode.select.wallets" = "Monederos";
-"enable_duress_mode.select.watch_wallets" = "Ver Monedero";
+"enable_duress_mode.select.wallets" = "Carteras";
+"enable_duress_mode.select.watch_wallets" = "Ver carteras";
 
 "enable_duress_mode.passcode.title" = "Durar contraseña";
 "enable_duress_mode.passcode.description" = "Establecer un código de acceso para el modo Duress";
@@ -1212,11 +1213,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
 
 "btc_blockchain_settings.restore_source" = "Restaurar Fuente";
-"btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"btc_blockchain_settings.restore_source.description" = "Elige la fuente que la aplicación Unstoppable debería usar para sincronizar la(s) cartera(s).";
 "btc_blockchain_settings.restore_source.alert" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.";
 
-"btc_restore_mode.fast" = "Fast, Private, Centralized";
-"btc_restore_mode.slow" = "Slow, Private, Decentralized";
+"btc_restore_mode.fast" = "Rápido, Privado, Centralizado";
+"btc_restore_mode.slow" = "Lento, Privado, Descentralizado";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Indexación aleatoria";
@@ -1391,7 +1392,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Create Wallet
 
-"create_wallet.title" = "Nuevo Monedero";
+"create_wallet.title" = "Cartera nueva";
 "create_wallet.name" = "Nombre";
 "create_wallet.advanced_setup" = "Avanzado";
 "create_wallet.create" = "Crear";
@@ -1460,7 +1461,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Wallet Connect
 
-"wallet_connect.title" = "Walletconnect";
+"wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "Dirección URL inválida";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active su cartera";
@@ -1490,16 +1491,16 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Mensaje a firmar";
 
-"wallet_connect_list.title" = "Walletconnect";
+"wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "No hay sesiones activas";
 
 "wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "Versión %@";
-"wallet_connect.list.v1_bottom_text" = "En la primera versión de WalletConnect, usted debe entrar en las sesiones para ver y confirmar la solicitud";
+"wallet_connect.list.v1_bottom_text" = "En la primera versión de WalletConnect, debes ir a las sesiones para ver y confirmar la solicitud";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
 "wallet_connect_list.disconnecting" = "Desconectando";
 
-"wallet_connect.no_account.description" = "Necesita crear o importar una cartera antes de poder usar WalletConnect.";
+"wallet_connect.no_account.description" = "Necesitas crear o importar una cartera antes de poder usar WalletConnect.";
 "wallet_connect.unbackuped_account.description" = "Necesitas hacer una copia de seguridad de %@ antes de poder usar WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "El tipo de cartera actual %@ no es compatible con WalletConnect";
@@ -1537,8 +1538,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Onboarding
 
-"onboarding.balance.create" = "Nuevo Monedero";
-"onboarding.balance.import" = "Importar monedero";
+"onboarding.balance.create" = "Cartera nueva";
+"onboarding.balance.import" = "Importar Cartera";
 "onboarding.balance.watch" = "Ver Monedero";
 
 // Manage Accounts
@@ -1593,7 +1594,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "birthday_input.title" = "Altura de Cumpleaños";
 "birthday_input.description" = "Introduzca la altura del cumpleaños del monedero para una sincronización más rápida.";
-"birthday_input.new_wallet" = "Nuevo Monedero";
+"birthday_input.new_wallet" = "Cartera nueva";
 "birthday_input.new_wallet.description" = "No tiene ninguna transacción";
 "birthday_input.old_wallet" = "Cartera existente";
 "birthday_input.old_wallet.description" = "Tiene transacciones";
@@ -1607,7 +1608,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "evm_network.rpc_source" = "Fuente RPC";
 "evm_network.added" = "Añadido";
 "evm_network.add_new" = "Añadir Nuevo";
-"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"evm_network.description" = "Elige la fuente que la aplicación Unstoppable debería usar para sincronizar la(s) cartera(s).";
 
 // Add RPC Source
 
@@ -1849,11 +1850,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // No Passcode
 
 "no_passcode.info_text" = "Esta aplicación requiere que el teléfono tenga habilitado el código de acceso (bloqueo de pantalla).\n\nPuede activarlo en la configuración de OS.\n\nTenga en cuenta que cuando deshabilite el PIN a nivel del sistema operativo, las medidas de seguridad en el almacenamiento seguro de su teléfono harán que los datos previamente almacenados sean inválidos. Necesitará Restaurar las claves de su cartera para volver a acceder a ella.";
-"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
-"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+"cannot_check_passcode.info_text" = "No se puede verificar el estado del código de acceso (bloqueo de pantalla). Por favor, reinicia la aplicación.";
+"jailbreak.info_text" = "El equipo de Unstoppable recomienda ejecutar la aplicación solo en teléfonos no rooteados (no jailbreak).\n\nTenga en cuenta que cuando usa un dispositivo rooteado, la aplicación ya no puede garantizar la seguridad de su criptomoneda contra software malicioso.";
 
 // Scam Filter
 
 "scam_filter.title" = "Filtro de Scam";
 "scam_filter.enabled" = "Activado";
-"scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
+"scam_filter.description" = "El Filtro de Estafa detecta transacciones sospechosas y las oculta de la lista de Transacciones. Se aplican los siguientes filtros para la detección:\n\n-monedas que no están listadas en nuestra lista de Mercado\n\n-transacciones con valor cero\n\n-transacciones con una cantidad muy pequeña de moneda estable";
