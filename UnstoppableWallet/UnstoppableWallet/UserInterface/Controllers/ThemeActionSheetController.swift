@@ -1,5 +1,4 @@
 import UIKit
-import ActionSheet
 
 class ThemeActionSheetController: UIViewController {
     public weak var actionSheetView: ActionSheetView?

@@ -5,7 +5,6 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import ComponentKit
-import ActionSheet
 
 class SwitchAccountViewController: ThemeActionSheetController {
     private let viewModel: SwitchAccountViewModel

@@ -5,8 +5,6 @@ struct ActionSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
     @Binding private var item: Item?
     @Binding private var isPresented: Bool
 
-    private var heightSubject = CurrentValueSubject<CGFloat, Never>(UIScreen.main.bounds.height)
-
     private let configuration: ActionSheetConfiguration
     private let onDismiss: (() -> Void)?
     private let contentView: (Item) -> ContentView
@@ -19,9 +17,9 @@ struct ActionSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
          @ViewBuilder contentView: @escaping (Item) -> ContentView)
     {
         _item = item
-        self._isPresented = Binding<Bool>(get: {
+        _isPresented = Binding<Bool>(get: {
             item.wrappedValue != nil
-        }, set: { newValue in
+        }, set: { _ in
             item.wrappedValue = nil
         })
 
@@ -47,20 +45,9 @@ struct ActionSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
         }
 
         if let item {
-            let content = contentView(item)
-                .overlay {
-                    GeometryReader { proxy in
-                        Color.clear.preference(key: InnerHeightPreferenceKey.self, value: proxy.size.height + proxy.safeAreaInsets.bottom)
-                    }
-                }
-                .onPreferenceChange(InnerHeightPreferenceKey.self) {
-                    heightSubject.send($0)
-                }
-
-            let hostingViewController = UIHostingController(rootView: content)
+            let hostingViewController = UIHostingController(rootView: contentView(item))
             let bottomSheetViewController = ActionSheetControllerSwiftUI(
                 isPresented: $isPresented,
-                heightSubject: heightSubject,
                 content: hostingViewController,
                 configuration: ActionSheetConfiguration(style: .sheet)
             )
@@ -76,8 +63,6 @@ struct ActionSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
 
 struct EmptyActionSheetModifier<ContentView: View>: ViewModifier {
     @Binding private var isPresented: Bool
-
-    private var heightSubject = CurrentValueSubject<CGFloat, Never>(UIScreen.main.bounds.height)
 
     private let configuration: ActionSheetConfiguration
     private let onDismiss: (() -> Void)?
@@ -113,22 +98,11 @@ struct EmptyActionSheetModifier<ContentView: View>: ViewModifier {
         }
 
         if isPresented {
-            let content = contentView()
-                    .overlay {
-                        GeometryReader { proxy in
-                            Color.clear.preference(key: InnerHeightPreferenceKey.self, value: proxy.size.height + proxy.safeAreaInsets.bottom)
-                        }
-                    }
-                    .onPreferenceChange(InnerHeightPreferenceKey.self) {
-                        heightSubject.send($0)
-                    }
-
-            let hostingViewController = UIHostingController(rootView: content)
+            let hostingViewController = UIHostingController(rootView: contentView())
             let bottomSheetViewController = ActionSheetControllerSwiftUI(
-                    isPresented: $isPresented,
-                    heightSubject: heightSubject,
-                    content: hostingViewController,
-                    configuration: ActionSheetConfiguration(style: .sheet)
+                isPresented: $isPresented,
+                content: hostingViewController,
+                configuration: ActionSheetConfiguration(style: .sheet)
             )
 
             self.bottomSheetViewController = bottomSheetViewController
@@ -142,11 +116,11 @@ struct EmptyActionSheetModifier<ContentView: View>: ViewModifier {
 
 public extension View {
     func bottomSheet<Content>(
-            isPresented: Binding<Bool>,
-            configuration: ActionSheetConfiguration = .init(style: .sheet),
-            onDismiss: (() -> Void)? = nil,
-            @ViewBuilder content: @escaping () -> Content) -> some View where Content: View {
-
+        isPresented: Binding<Bool>,
+        configuration: ActionSheetConfiguration = .init(style: .sheet),
+        onDismiss: (() -> Void)? = nil,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View where Content: View {
         modifier(
             EmptyActionSheetModifier(
                 isPresented: isPresented,
@@ -158,11 +132,11 @@ public extension View {
     }
 
     func bottomSheet<Item, Content>(
-            item: Binding<Item?>,
-            configuration: ActionSheetConfiguration = .init(style: .sheet),
-            onDismiss: (() -> Void)? = nil,
-            @ViewBuilder content: @escaping (Item) -> Content) -> some View where Item: Identifiable, Content: View {
-
+        item: Binding<Item?>,
+        configuration: ActionSheetConfiguration = .init(style: .sheet),
+        onDismiss: (() -> Void)? = nil,
+        @ViewBuilder content: @escaping (Item) -> Content
+    ) -> some View where Item: Identifiable, Content: View {
         modifier(
             ActionSheetModifier(
                 item: item,
