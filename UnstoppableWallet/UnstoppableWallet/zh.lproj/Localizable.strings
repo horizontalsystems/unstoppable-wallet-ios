@@ -891,6 +891,8 @@
 // Coin Page -> Markets
 
 "coin_markets.empty" = "没有可用数据";
+"coin_markets.filter.all" = "所有";
+"coin_markets.filter.verified" = "已验证";
 "coin_markets.verified" = "已验证";
 
 // Coin Page -> Tweets
