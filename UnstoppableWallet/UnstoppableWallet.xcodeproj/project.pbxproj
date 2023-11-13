@@ -2953,8 +2953,6 @@
 		D3E1D00D2990DA0400C68F00 /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D3E1D00C2990DA0400C68F00 /* Hodler */; };
 		D3E323C82AE7B8E400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C72AE7B8E400F73914 /* KeychainAccess */; };
 		D3E323CA2AE7B8F400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C92AE7B8F400F73914 /* KeychainAccess */; };
-		D3E6756E2AA9A21300F2BF60 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D3E6756D2AA9A21300F2BF60 /* SDWebImageSwiftUI */; };
-		D3E675702AA9A24900F2BF60 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D3E6756F2AA9A24900F2BF60 /* SDWebImageSwiftUI */; };
 		D3F7D6412A94D53500477BB1 /* BaseTransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B106BD8E4DBD67B7700 /* BaseTransactionsService.swift */; };
 /* End PBXBuildFile section */
 
@@ -4525,7 +4523,6 @@
 				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
 				D3C187E2290FD00E00FE1900 /* ComponentKit in Frameworks */,
 				D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */,
-				D3E675702AA9A24900F2BF60 /* SDWebImageSwiftUI in Frameworks */,
 				D3604E9628F03DC00066C366 /* ModuleKit in Frameworks */,
 				D3C187E6290FD00E00FE1900 /* LanguageKit in Frameworks */,
 			);
@@ -4544,7 +4541,6 @@
 				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */,
-				D3E6756E2AA9A21300F2BF60 /* SDWebImageSwiftUI in Frameworks */,
 				D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */,
 				6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */,
 				D3604E4D28F02AB40066C366 /* NftKit in Frameworks */,
@@ -8597,7 +8593,6 @@
 				D3AF5A9229FFD87500C1399E /* RxSwift */,
 				D023D2642A24B9DC004F65B0 /* TronKit */,
 				D0EC34DC2A4450D200BB308B /* HCaptcha */,
-				D3E6756F2AA9A24900F2BF60 /* SDWebImageSwiftUI */,
 				D3E323C72AE7B8E400F73914 /* KeychainAccess */,
 				6B55E33C2AF26D7A00616B60 /* Starscream */,
 			);
@@ -8659,7 +8654,6 @@
 				D3AF5A8C29FFD85800C1399E /* RxSwift */,
 				D023D2622A249E59004F65B0 /* TronKit */,
 				D0EC34DA2A4450B100BB308B /* HCaptcha */,
-				D3E6756D2AA9A21300F2BF60 /* SDWebImageSwiftUI */,
 				D3E323C92AE7B8F400F73914 /* KeychainAccess */,
 				6B55E33A2AF26D6400616B60 /* Starscream */,
 			);
@@ -8830,7 +8824,6 @@
 				D023D2612A249E59004F65B0 /* XCRemoteSwiftPackageReference "TronKit.Swift" */,
 				D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */,
 				6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */,
-				D3E6756C2AA9A21300F2BF60 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				D3E323C62AE7B8E400F73914 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				6B55E3392AF26D6400616B60 /* XCRemoteSwiftPackageReference "Starscream" */,
 			);
@@ -12780,14 +12773,6 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		D3E6756C2AA9A21300F2BF60 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -13220,16 +13205,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3E323C62AE7B8E400F73914 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
-		};
-		D3E6756D2AA9A21300F2BF60 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3E6756C2AA9A21300F2BF60 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
-		D3E6756F2AA9A24900F2BF60 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3E6756C2AA9A21300F2BF60 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

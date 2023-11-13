@@ -1,4 +1,4 @@
-import SDWebImageSwiftUI
+import Kingfisher
 import SwiftUI
 
 struct CoinOverviewView: View {
@@ -27,10 +27,11 @@ struct CoinOverviewView: View {
                     ScrollView {
                         VStack(spacing: 0) {
                             HStack(spacing: .margin16) {
-                                WebImage(url: URL(string: coin.imageUrl))
-                                    .placeholder(Image("placeholder_circle_32"))
+                                KFImage.url(URL(string: coin.imageUrl))
                                     .resizable()
-                                    .scaledToFit()
+                                    .placeholder {
+                                        Circle().fill(Color.themeSteel20)
+                                    }
                                     .frame(width: .iconSize32, height: .iconSize32)
 
                                 Text(coin.name).themeBody()

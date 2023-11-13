@@ -1,4 +1,4 @@
-import SDWebImageSwiftUI
+import Kingfisher
 import SwiftUI
 
 struct CoinMarketsView: View {
@@ -78,10 +78,11 @@ struct CoinMarketsView: View {
     }
 
     @ViewBuilder private func listItemContent(viewItem: CoinMarketsViewModel.ViewItem) -> some View {
-        WebImage(url: viewItem.marketImageUrl.flatMap { URL(string: $0) })
+        KFImage.url(viewItem.marketImageUrl.flatMap { URL(string: $0) })
             .resizable()
-            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeGray) }
-            .scaledToFit()
+            .placeholder {
+                RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeSteel20)
+            }
             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
             .frame(width: .iconSize32, height: .iconSize32)
 
