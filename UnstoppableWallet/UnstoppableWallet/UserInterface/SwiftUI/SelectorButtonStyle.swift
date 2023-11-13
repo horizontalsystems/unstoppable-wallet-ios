@@ -35,7 +35,7 @@ struct SelectorButtonStyle: ButtonStyle {
     }
 }
 
-struct SelectorButtonInfo {
+struct SelectorButtonInfo: Equatable {
     let text: String
     let count: Int
     let selectedIndex: Int

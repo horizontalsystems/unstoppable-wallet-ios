@@ -7,15 +7,16 @@ class CoinMarketsViewModel: ObservableObject {
     private let coin: Coin
     private let marketKit: MarketKit.Kit
     private let currency: Currency
-    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     private var tickers: [MarketTicker]?
 
     @Published private(set) var state: State = .loading
 
-    @Published var sortDirectionAscending: Bool = false {
+    private var filterType: FilterType = .all {
         didSet {
+            syncFilterTypeInfo()
+
             DispatchQueue.global().async { [weak self] in
                 self?.syncState()
             }
@@ -32,6 +33,7 @@ class CoinMarketsViewModel: ObservableObject {
         }
     }
 
+    @Published var filterTypeInfo = SelectorButtonInfo(text: "", count: 0, selectedIndex: 0)
     @Published var volumeTypeInfo = SelectorButtonInfo(text: "", count: 0, selectedIndex: 0)
 
     init(coin: Coin, marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
@@ -40,6 +42,7 @@ class CoinMarketsViewModel: ObservableObject {
         currency = currencyManager.baseCurrency
 
         syncVolumeTypeInfo()
+        syncFilterTypeInfo()
     }
 
     private func syncTickers() {
@@ -67,7 +70,16 @@ class CoinMarketsViewModel: ObservableObject {
             return
         }
 
-        let sortedTickers = sortDirectionAscending ? tickers.sorted { $0.volume < $1.volume } : tickers.sorted { $0.volume > $1.volume }
+        let filteredTickers: [MarketTicker]
+
+        switch filterType {
+        case .all:
+            filteredTickers = tickers
+        case .verified:
+            filteredTickers = tickers.filter { $0.verified }
+        }
+
+        let sortedTickers = filteredTickers.sorted { $0.volume > $1.volume }
         let price = marketKit.coinPrice(coinUid: coin.uid, currencyCode: currency.code)?.value
         let viewItems = sortedTickers.map { viewItem(ticker: $0, price: price) }
 
@@ -100,6 +112,17 @@ class CoinMarketsViewModel: ObservableObject {
         }
     }
 
+    private func syncFilterTypeInfo() {
+        let text: String
+
+        switch filterType {
+        case .all: text = "coin_markets.filter.all".localized
+        case .verified: text = "coin_markets.filter.verified".localized
+        }
+
+        filterTypeInfo = SelectorButtonInfo(text: text, count: FilterType.allCases.count, selectedIndex: FilterType.allCases.firstIndex(of: filterType) ?? 0)
+    }
+
     private func syncVolumeTypeInfo() {
         let text: String
 
@@ -121,6 +144,13 @@ extension CoinMarketsViewModel {
         syncTickers()
     }
 
+    func switchFilterType() {
+        let allCases = FilterType.allCases
+        let currentIndex = allCases.firstIndex(of: filterType) ?? 0
+        let newIndex = (currentIndex + 1) % allCases.count
+        filterType = allCases[newIndex]
+    }
+
     func switchVolumeType() {
         let allCases = VolumeType.allCases
         let currentIndex = allCases.firstIndex(of: volumeType) ?? 0
@@ -134,6 +164,11 @@ extension CoinMarketsViewModel {
         case loading
         case loaded(viewItems: [ViewItem])
         case failed(error: String)
+    }
+
+    private enum FilterType: CaseIterable {
+        case all
+        case verified
     }
 
     private enum VolumeType: CaseIterable {
