@@ -97,7 +97,7 @@
 
 "selector.any" = "Cualquier";
 
-"face_id" = "Face ID";
+"face_id" = "ID de rostro";
 "touch_id" = "Touch ID";
 
 "auto_lock.immediate" = "Inmediato";
@@ -112,7 +112,7 @@
 "access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.
 
 Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
-"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.not_supported" = "Su dispositivo no es compatible con el escaneo de un código de un artículo. Por favor, use un dispositivo con cámara.";
 "access_camera.settings" = "Ajustes";
 
 // Restore
@@ -176,7 +176,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore.binance.connecting" = "Conectando...";
 "restore.binance.get_api_keys" = "Obtener claves API";
 "restore.binance.failed_to_connect" = "Error al conectar tu Clave API";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.invalid_qr_code" = "Código QR no válido";
 
 // Coin Settings
 
@@ -580,7 +580,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.category.overview" = "Información General";
 "market.category.posts" = "Noticias";
 "market.category.watchlist" = "Lista de Seguimiento";
-"market.total_market_cap" = "Total M.Cap";
+"market.total_market_cap" = "Cap. de mdo. total.";
 "market.24h_volume" = "Volumen de 24 horas";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL en DeFi";
@@ -606,7 +606,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "market.sort_by" = "Ordenar por";
 
-"market.top.title" = "Top Coins";
+"market.top.title" = "Monedas Top";
 "market.top.description" = "Mejores monedas por rango de límite de mercado";
 
 "market.top.highest_cap" = "Capitalización Mayor";
@@ -747,7 +747,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "coin_overview.guide" = "Instructivos";
 "coin_overview.website" = "Website";
-"coin_overview.whitepaper" = "Whitepaper";
+"coin_overview.whitepaper" = "Libro blanco";
 
 // Coin Page -> Analytics
 
@@ -777,7 +777,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "coin_analytics.cex_volume" = "Volumen CEX";
 "coin_analytics.cex_volume_rank" = "Rango de Volumen CEX";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
+"coin_analytics.cex_volume_rank.description" = "Tokens clasificados por volumen de comercio del token en exchanges centralizados.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
@@ -1224,9 +1224,15 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "btc_transaction_sort_mode.bip69.description" = "Indexación Lexicográfica";
 
 "blockchain_settings.info.restore_source" = "Restaurar Fuente";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Esta configuración solo es relevante al restaurar una cartera existente. Consiste en obtener el historial de transacciones de una criptomoneda específica para que la aplicación de la cartera pueda mostrar transacciones pasadas y calcular el saldo del usuario. Este proceso solo necesita realizarse una vez cuando el usuario restaura carteras previamente creadas.\n\nEn este punto, existen dos formas potenciales para que una cartera móvil como %@ pueda realizar esto:\n\n1. Desde el Servidor API: Utilizando un servidor de terceros predefinido que almacena toda la cadena de bloques y cuenta con datos procesados y optimizados para proporcionar rápidamente dichos datos. Este método es rápido pero potencialmente (no necesariamente) menos privado. También depende de la disponibilidad de un servidor de terceros, por lo que se considera una opción centralizada para restaurar una cartera. Se recomienda esta opción debido a su velocidad para obtener datos (5-10 minutos).\n\n2. Desde la Blockchain: La aplicación intenta restaurar directamente desde una red de nodos de la blockchain. Esta es una forma descentralizada de restaurar el saldo de la cartera y las transacciones pasadas. La aplicación solicita datos a varios nodos de la red sin dirigirse específicamente a uno en particular. Este método es más lento y puede tardar fácilmente 2-3 horas, por lo que la aplicación debe permanecer abierta durante la restauración. No depende de ninguna entidad y debería funcionar en todas las condiciones.";
 "blockchain_settings.info.rpc_source" = "Fuente RPC";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "Esta configuración controla cómo esta aplicación interactúa con blockchains al enviar o recibir transacciones.
+
+\n\nEn el caso de Bitcoin, Bitcoin Cash, Litecoin y Dash, la comunicación con los nodos de la red blockchain es completamente peer-to-peer. %@ sondea muchos nodos y se comunica con uno de ellos. Cada vez, la aplicación se conecta a un nodo diferente.
+
+\n\nEn el caso de Ethereum, Binance Smart Chain y otras blockchains EVM, no hay alternativas para que las carteras móviles interactúen con las respectivas blockchains aparte de a través de proveedores de servicios RPC de terceros (es decir infura.io) o nodos personales. Eso significa esencialmente que su comunicación con esa blockchain no es descentralizada. Esto no afecta sus fondos de ninguna manera, solo la capacidad de conectarse a la red blockchain.
+
+\n\nTengan la seguridad de que estamos manteniendo esto en el radar y pronto intentaremos proporcionar una forma descentralizada de sincronización. Paciencia.";
 
 // Manage Accounts
 
@@ -1842,12 +1848,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "Esta aplicación requiere que el teléfono tenga habilitado el código de acceso (bloqueo de pantalla).\n\nPuede activarlo en la configuración de OS.\n\nTenga en cuenta que cuando deshabilite el PIN a nivel del sistema operativo, las medidas de seguridad en el almacenamiento seguro de su teléfono harán que los datos previamente almacenados sean inválidos. Necesitará Restaurar las claves de su cartera para volver a acceder a ella.";
 "cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
 "jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
 
 // Scam Filter
 
-"scam_filter.title" = "Scam Filter";
-"scam_filter.enabled" = "Enabled";
+"scam_filter.title" = "Filtro de Scam";
+"scam_filter.enabled" = "Activado";
 "scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
