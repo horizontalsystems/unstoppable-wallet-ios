@@ -9,10 +9,7 @@ import UIKit
 public class ActionSheetControllerSwiftUI: UIViewController, IDeinitDelegate, UIAdaptivePresentationControllerDelegate {
     @Binding private var isPresented: Bool
 
-    private var heightSubject: CurrentValueSubject<CGFloat, Never>
-
     private var disposeBag = DisposeBag()
-    private var cancellables = Set<AnyCancellable>()
     public var onDeinit: (() -> Void)?
 
     private let content: UIViewController
@@ -33,12 +30,11 @@ public class ActionSheetControllerSwiftUI: UIViewController, IDeinitDelegate, UI
         fatalError()
     }
 
-    public init(isPresented: Binding<Bool>, heightSubject: CurrentValueSubject<CGFloat, Never>, content: UIViewController, configuration: ActionSheetConfiguration) {
+    public init(isPresented: Binding<Bool>, content: UIViewController, configuration: ActionSheetConfiguration) {
         self.content = content
 
         _isPresented = isPresented
         self.configuration = configuration
-        self.heightSubject = heightSubject
 
         super.init(nibName: nil, bundle: nil)
 
@@ -53,7 +49,8 @@ public class ActionSheetControllerSwiftUI: UIViewController, IDeinitDelegate, UI
             self,
             selector: #selector(keyboardNotification(notification:)),
             name: UIResponder.keyboardWillChangeFrameNotification,
-            object: nil)
+            object: nil
+        )
     }
 
     override public var shouldAutomaticallyForwardAppearanceMethods: Bool {
@@ -74,13 +71,6 @@ public class ActionSheetControllerSwiftUI: UIViewController, IDeinitDelegate, UI
                 self?.dismiss(animated: true)
             }
         }
-
-        heightSubject
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] _ in
-                    self?.setContentViewPosition(animated: true)
-                }
-                .store(in: &cancellables)
 
         // add and setup content as child view controller
         addChildController()
@@ -199,15 +189,14 @@ extension ActionSheetControllerSwiftUI {
 
         content.view.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(configuration.sideMargin)
-            if configuration.style == .sheet {      // content controller from bottom of superview
+            if configuration.style == .sheet { // content controller from bottom of superview
                 maker.top.equalToSuperview()
                 maker.bottom.equalToSuperview().inset(configuration.sideMargin + keyboardHeightRelay.value).priority(.required)
-            } else {                                // content controller by center of superview
+            } else { // content controller by center of superview
                 maker.centerX.equalToSuperview()
                 maker.centerY.equalToSuperview().priority(.low)
                 maker.bottom.lessThanOrEqualTo(view.snp.bottom).inset(keyboardHeightRelay.value + 16)
             }
-            maker.height.equalTo(heightSubject.value)
         }
         if let superview = view.superview {
             if animated, didAppear {
@@ -237,12 +226,12 @@ extension ActionSheetControllerSwiftUI: ActionSheetView {
     }
 }
 
-extension ActionSheetControllerSwiftUI {
-    public override var childForStatusBarStyle: UIViewController? {
+public extension ActionSheetControllerSwiftUI {
+    override var childForStatusBarStyle: UIViewController? {
         content
     }
 
-    public override var childForStatusBarHidden: UIViewController? {
+    override var childForStatusBarHidden: UIViewController? {
         content
     }
 }

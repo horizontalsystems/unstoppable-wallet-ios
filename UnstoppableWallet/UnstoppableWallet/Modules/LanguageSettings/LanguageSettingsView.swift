@@ -17,21 +17,19 @@ struct LanguageSettingsView: View {
                             UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance(presetTab: .settings))
                         }
                     }) {
-                        HStack(spacing: .margin16) {
-                            Image(language)
+                        Image(language)
 
-                            VStack(spacing: 1) {
-                                if let displayName = viewModel.displayName(language: language) {
-                                    Text(displayName).themeBody()
-                                }
-                                if let nativeDisplayName = viewModel.nativeDisplayName(language: language) {
-                                    Text(nativeDisplayName).themeSubhead2()
-                                }
+                        VStack(spacing: 1) {
+                            if let displayName = viewModel.displayName(language: language) {
+                                Text(displayName).themeBody()
                             }
+                            if let nativeDisplayName = viewModel.nativeDisplayName(language: language) {
+                                Text(nativeDisplayName).themeSubhead2()
+                            }
+                        }
 
-                            if viewModel.currentLanguage == language {
-                                Image.checkIcon
-                            }
+                        if viewModel.currentLanguage == language {
+                            Image.checkIcon
                         }
                     }
                 }
