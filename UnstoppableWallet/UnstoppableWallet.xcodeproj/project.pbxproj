@@ -2273,7 +2273,6 @@
 		ABC9A556361B2644555659D8 /* SendConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA7F2ECF212EF8B70470 /* SendConfirmationViewController.swift */; };
 		ABC9A55A98D2FB37A3351FF1 /* WalletTokenBalanceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A099EB5948C650A265EA /* WalletTokenBalanceDataSource.swift */; };
 		ABC9A55FD66CB6374F2D520D /* SendZcashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8B3C65C9F0285483160 /* SendZcashViewController.swift */; };
-		ABC9A5791BC422EC1560139F /* ActionSheetControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7F8CF6A4F7EE62BB2CF /* ActionSheetControllerSwiftUI.swift */; };
 		ABC9A57DE6436FB8795F50E4 /* ContactBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2D87362E00FD9FB5688 /* ContactBookViewController.swift */; };
 		ABC9A57EB423CAD56190F36B /* ChartIndicatorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACE2CCBDF21572F5600C /* ChartIndicatorSettingsViewModel.swift */; };
 		ABC9A59B465A9C59F93DFB96 /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9F6635146BEBFB432D1 /* ChartCell.swift */; };
@@ -2575,7 +2574,6 @@
 		ABC9AF1729BA19223BB39E06 /* SendEip721ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7C3BC5FC664BBF14C4F /* SendEip721ViewModel.swift */; };
 		ABC9AF231709386971D1A7AA /* WCSignMessageRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0576B804ABA38EF9843 /* WCSignMessageRequestViewModel.swift */; };
 		ABC9AF2C595E6CC96FB8AF4A /* DismissPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA526C8BADA56269C4E0 /* DismissPanGestureRecognizer.swift */; };
-		ABC9AF2D644266893B21054D /* ActionSheetControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7F8CF6A4F7EE62BB2CF /* ActionSheetControllerSwiftUI.swift */; };
 		ABC9AF309AAE5C54D2020B23 /* RawFullBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A819E6708797C571CA0B /* RawFullBackup.swift */; };
 		ABC9AF371FBB4BEA654A78B6 /* MetadataMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA2491ADC4E5E089CD42 /* MetadataMonitor.swift */; };
 		ABC9AF4D82ACDFBFBDC2D23C /* MarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A37521CD6E2CC5BA4E68 /* MarketCardView.swift */; };
@@ -4200,7 +4198,6 @@
 		ABC9A7C3BC5FC664BBF14C4F /* SendEip721ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEip721ViewModel.swift; sourceTree = "<group>"; };
 		ABC9A7D665A025E95697C757 /* AccountRestoreWarningManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountRestoreWarningManager.swift; sourceTree = "<group>"; };
 		ABC9A7D6C9D12C1F1F3A1218 /* SendBitcoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinViewController.swift; sourceTree = "<group>"; };
-		ABC9A7F8CF6A4F7EE62BB2CF /* ActionSheetControllerSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetControllerSwiftUI.swift; sourceTree = "<group>"; };
 		ABC9A7FA830E64B8DCA1A69A /* InputTextRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextRow.swift; sourceTree = "<group>"; };
 		ABC9A7FC41B9F98871246E0E /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		ABC9A80143F95E28346C81FE /* SendMemoInputService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMemoInputService.swift; sourceTree = "<group>"; };
@@ -7887,7 +7884,6 @@
 				ABC9ACC91C29905F8E7A2046 /* ActionSheetTapView.swift */,
 				ABC9ABC58788FAD9FC701881 /* ActionSheetConfiguration.swift */,
 				ABC9A6BBC41C034CB0DB3648 /* ActionSheetControllerNew.swift */,
-				ABC9A7F8CF6A4F7EE62BB2CF /* ActionSheetControllerSwiftUI.swift */,
 				ABC9A270E322D569DBA774B4 /* ActionSheetModifier.swift */,
 			);
 			path = ActionSheetNew;
@@ -10289,7 +10285,6 @@
 				ABC9A14877872E0FC7C9D0D2 /* ActionSheetTapView.swift in Sources */,
 				ABC9AFFAC86660ECAD968B2C /* ActionSheetConfiguration.swift in Sources */,
 				ABC9A5EBD9EAC91EB97C199C /* ActionSheetControllerNew.swift in Sources */,
-				ABC9AF2D644266893B21054D /* ActionSheetControllerSwiftUI.swift in Sources */,
 				ABC9AD1A3EA8558E90F69397 /* ActionSheetModifier.swift in Sources */,
 				11B35BFCE745A340714F1DE7 /* BadgeViewNew.swift in Sources */,
 				11B3523804E0F4F1DA8A1D9E /* BaseCurrencySettingsViewModel.swift in Sources */,
@@ -11681,7 +11676,6 @@
 				ABC9A3103BC1D3CC7E9D80BD /* ActionSheetTapView.swift in Sources */,
 				ABC9A331A15BAB3C3B88D808 /* ActionSheetConfiguration.swift in Sources */,
 				ABC9AE558CE5912B5C15B6EB /* ActionSheetControllerNew.swift in Sources */,
-				ABC9A5791BC422EC1560139F /* ActionSheetControllerSwiftUI.swift in Sources */,
 				ABC9A0E706D269375195A2F4 /* ActionSheetModifier.swift in Sources */,
 				11B3537EE13B3EFB2E979821 /* BadgeViewNew.swift in Sources */,
 				11B35955EE2F47EFAFCBCE9F /* BaseCurrencySettingsViewModel.swift in Sources */,
