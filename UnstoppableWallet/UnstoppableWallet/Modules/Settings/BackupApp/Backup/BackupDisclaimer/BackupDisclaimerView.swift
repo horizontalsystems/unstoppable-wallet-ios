@@ -1,4 +1,3 @@
-import SDWebImageSwiftUI
 import SwiftUI
 import ThemeKit
 

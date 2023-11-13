@@ -1,4 +1,4 @@
-import SDWebImageSwiftUI
+import Kingfisher
 import SwiftUI
 
 struct BtcBlockchainSettingsView: View {
@@ -21,11 +21,12 @@ struct BtcBlockchainSettingsView: View {
                                     viewModel.selectedRestoreMode = restoreMode.restoreMode
                                 }) {
                                     switch restoreMode.icon {
-                                        case .local(let name): Image(name)
-                                        case .remote(let url): WebImage(url: URL(string: url))
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: .iconSize32, height: .iconSize32)
+                                    case let .local(name):
+                                        Image(name)
+                                    case let .remote(url):
+                                        KFImage.url(URL(string: url))
+                                            .resizable()
+                                            .frame(width: .iconSize32, height: .iconSize32)
                                     }
 
                                     VStack(spacing: 1) {
@@ -59,9 +60,8 @@ struct BtcBlockchainSettingsView: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                WebImage(url: URL(string: viewModel.iconUrl))
+                KFImage.url(URL(string: viewModel.iconUrl))
                     .resizable()
-                    .scaledToFit()
                     .frame(width: .iconSize24, height: .iconSize24)
             }
 
