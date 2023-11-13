@@ -891,6 +891,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Coin Page -> Markets
 
 "coin_markets.empty" = "Aucune donnée disponible";
+"coin_markets.filter.all" = "Tout";
+"coin_markets.filter.verified" = "Vérifié";
 "coin_markets.verified" = "Vérifié";
 
 // Coin Page -> Tweets
