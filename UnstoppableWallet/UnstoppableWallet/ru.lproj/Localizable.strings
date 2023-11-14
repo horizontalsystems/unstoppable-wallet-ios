@@ -112,7 +112,7 @@
 "access_camera.message" = "%@ требуется доступ к вашей камере для сканирования QR-кода.
 
 Перейдите в \"Настройки\" - > %@ и разрешите доступ к камере.";
-"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.not_supported" = "Ваше устройство не поддерживает сканирование кода с предмета. Пожалуйста, используйте устройство с камерой.";
 "access_camera.settings" = "Настройки";
 
 // Restore
@@ -1009,7 +1009,7 @@
 "tx_info.you_paid" = "Вы заплатили";
 "tx_info.you_got" = "Вы получили";
 "tx_info.price" = "Цена";
-"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
+"tx_info.scam_warning" = "Эта транзакция подозрительна и может быть мошенничеством. Пожалуйста, не копируйте никакие адреса из этой транзакции.";
 
 // Settings
 
@@ -1216,11 +1216,11 @@
 "security_settings.delete_alert_button" = "Удалить с телефона";
 
 "btc_blockchain_settings.restore_source" = "Источник восстановления";
-"btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"btc_blockchain_settings.restore_source.description" = "Выберите источник, который приложение Unstoppable должно использовать для синхронизации кошелька(ов).";
 "btc_blockchain_settings.restore_source.alert" = "После изменения источника восстановления, кошелек должен будет повторно синхронизироваться с блокчейном %@.";
 
-"btc_restore_mode.fast" = "Fast, Private, Centralized";
-"btc_restore_mode.slow" = "Slow, Private, Decentralized";
+"btc_restore_mode.fast" = "Быстрый, Конфиденциальный, Централизованный";
+"btc_restore_mode.slow" = "Медленный, Конфиденциальный, Децентрализованный";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
@@ -1605,7 +1605,7 @@
 "evm_network.rpc_source" = "Источник RPC";
 "evm_network.added" = "Добавлен";
 "evm_network.add_new" = "Добавить новый";
-"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"evm_network.description" = "Выберите источник, который приложение Unstoppable должно использовать для синхронизации кошелька(ов).";
 
 // Add RPC Source
 
@@ -1847,12 +1847,12 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
-"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
-"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+"no_passcode.info_text" = "Это приложение требует, чтобы на телефоне был включен пароль (блокировка экрана).\n\nВы можете включить его в настройках iOS.\n\nОбратите внимание, что если вы отключили PIN-код на уровне операционной системы, меры безопасности для безопасного хранения данных на вашем телефоне сделали ранее сохраненные данные недействительными. Вам нужно будет восстановить ключи вашего кошелька, чтобы вернуться к вашему кошельку.";
+"cannot_check_passcode.info_text" = "Невозможно проверить состояние кода доступа (блокировки экрана). Пожалуйста, перезапустите приложение.";
+"jailbreak.info_text" = "Команда Unstoppable рекомендует использовать приложение только на не рутированных (не взломанных) телефонах.\n\nОбратите внимание, что при использовании рутированного устройства приложение уже не может гарантировать безопасность ваших криптовалют от вредоносного программного обеспечения.";
 
 // Scam Filter
 
-"scam_filter.title" = "Scam Filter";
-"scam_filter.enabled" = "Enabled";
-"scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
+"scam_filter.title" = "Фильтр мошенничества";
+"scam_filter.enabled" = "Вкл.";
+"scam_filter.description" = "Фильтр мошенничества обнаруживает подозрительные транзакции и скрывает их из списка Транзакций. Для обнаружения применяются следующие фильтры:\n\n-монеты, которые не перечислены в нашем списке Рынка\n\n-транзакции с нулевой стоимостью\n\n-транзакции с очень малым количеством стабильной монеты";
