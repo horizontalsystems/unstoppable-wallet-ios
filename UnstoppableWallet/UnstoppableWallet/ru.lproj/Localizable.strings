@@ -185,6 +185,7 @@
 "coin_settings.title" = "Настройки блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "Выберите формат адреса для получения средств. Правильный формат должен быть выбран при восстановлении существующего кошелька.";
 
@@ -1219,8 +1220,9 @@
 "btc_blockchain_settings.restore_source.description" = "Выберите источник, который приложение Unstoppable должно использовать для синхронизации кошелька(ов).";
 "btc_blockchain_settings.restore_source.alert" = "После изменения источника восстановления, кошелек должен будет повторно синхронизироваться с блокчейном %@.";
 
-"btc_restore_mode.fast" = "Быстрый, Конфиденциальный, Централизованный";
-"btc_restore_mode.slow" = "Медленный, Конфиденциальный, Децентрализованный";
+"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
