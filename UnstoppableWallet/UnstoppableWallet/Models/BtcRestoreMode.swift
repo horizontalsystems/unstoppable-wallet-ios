@@ -1,5 +1,6 @@
 enum BtcRestoreMode: String, CaseIterable, Identifiable, Codable {
-    case api
+    case blockchair
+    case hybrid
     case blockchain
 
     var id: Self {

@@ -1,5 +1,5 @@
-import MarketKit
 import BitcoinCore
+import MarketKit
 
 class BtcBlockchainSettingsService {
     let blockchain: Blockchain
@@ -12,19 +12,15 @@ class BtcBlockchainSettingsService {
         self.blockchain = blockchain
         self.btcBlockchainManager = btcBlockchainManager
 
-        restoreModes = BtcRestoreMode.allCases.map { restoreMode in
-            let syncMode = btcBlockchainManager.apiSyncMode(blockchainType: blockchain.type)
-            return BtcSyncModeItem(blockchain: blockchain, restoreMode: restoreMode, syncMode: syncMode)
-        }
+        restoreModes = BtcRestoreMode.allCases
+            .filter { blockchain.type.supports(restoreMode: $0) }
+            .map { BtcSyncModeItem(blockchain: blockchain, restoreMode: $0) }
         currentRestoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
     }
-
 }
 
 extension BtcBlockchainSettingsService {
-
     func save(restoreMode: BtcRestoreMode) {
         btcBlockchainManager.save(restoreMode: restoreMode, blockchainType: blockchain.type)
     }
-
 }
