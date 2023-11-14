@@ -112,7 +112,7 @@
 "access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.
 
 Go to Settings - > %@ and allow access to the camera.";
-"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.not_supported" = "Seu dispositivo não suporta a leitura de um código de um item. Por favor, use um dispositivo com câmera.";
 "access_camera.settings" = "Configurações";
 
 // Restore
@@ -1007,7 +1007,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "tx_info.you_paid" = "Você Paga";
 "tx_info.you_got" = "Você Tem";
 "tx_info.price" = "Preço";
-"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
+"tx_info.scam_warning" = "Esta transação é suspeita e pode ser um golpe. Por favor, não copie nenhum endereço desta transação.";
 
 // Settings
 
@@ -1214,11 +1214,11 @@ Go to Settings - > %@ and allow access to the camera.";
 "security_settings.delete_alert_button" = "Excluir do telefone";
 
 "btc_blockchain_settings.restore_source" = "Restaurar Fonte";
-"btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"btc_blockchain_settings.restore_source.description" = "Escolha a fonte que o aplicativo Unstoppable deve usar para sincronizar a(s) carteira(s).";
 "btc_blockchain_settings.restore_source.alert" = "Após mudar a Restauração, a carteira terá que ressincronizar-se com a blockchain %@.";
 
-"btc_restore_mode.fast" = "Fast, Private, Centralized";
-"btc_restore_mode.slow" = "Slow, Private, Decentralized";
+"btc_restore_mode.fast" = "Rápido, Privado, Centralizado";
+"btc_restore_mode.slow" = "Lento, Privado, Descentralizado";
 
 "btc_transaction_sort_mode.shuffle" = "Embaralhar";
 "btc_transaction_sort_mode.shuffle.description" = "Indexação aleatória";
@@ -1603,7 +1603,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "evm_network.rpc_source" = "Fonte RPC";
 "evm_network.added" = "Adicionado";
 "evm_network.add_new" = "Adicionar novo";
-"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"evm_network.description" = "Escolha a fonte que o aplicativo Unstoppable deve usar para sincronizar a(s) carteira(s).";
 
 // Add RPC Source
 
@@ -1844,12 +1844,12 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
-"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
-"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+"no_passcode.info_text" = "Este aplicativo requer que o telefone tenha o código de acesso (bloqueio de tela) ativado.\n\nVocê pode ativá-lo nas configurações do iOS.\n\nObserve que, ao desativar o PIN no nível do sistema operacional, as medidas de segurança no armazenamento seguro do seu telefone tornaram os dados anteriormente armazenados inválidos. Será necessário Restaurar as chaves da sua carteira para voltar a acessar sua carteira.";
+"cannot_check_passcode.info_text" = "Não é possível verificar o estado do código de acesso (bloqueio de tela). Por favor, reinicie o aplicativo.";
+"jailbreak.info_text" = "A equipe do Unstoppable recomenda usar o aplicativo apenas em telefones não-rooted (não desbloqueados).\n\nObserve que, ao usar um dispositivo com root, o aplicativo não pode mais garantir a segurança da sua criptomoeda contra softwares maliciosos.";
 
 // Scam Filter
 
-"scam_filter.title" = "Scam Filter";
-"scam_filter.enabled" = "Enabled";
-"scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
+"scam_filter.title" = "Filtro de Golpes";
+"scam_filter.enabled" = "Ativado";
+"scam_filter.description" = "O Filtro de Golpes detecta transações suspeitas e as oculta da lista de Transações. Os seguintes filtros são aplicados para detecção:\n\n-moedas que não estão listadas na nossa lista de Mercado\n\n-transações com valor zero\n\n-transações com quantidade muito pequena de moeda estável";
