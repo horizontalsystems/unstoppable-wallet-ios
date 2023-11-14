@@ -244,7 +244,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Backup del Monedero";
+"backup_prompt.backup_recovery_phrase" = "Frase de Recuperación de Respaldo";
 "backup_prompt.backup_required" = "Se requiere una copia de seg";
 "backup_prompt.warning" = "Crear una copia de seguridad de la frase de recuperación y la contraseña asociada que le permitirá recuperar su cartera si su teléfono está perdido, robado, roto, etc.";
 "backup_prompt.backup" = "Copia de seguridad";
@@ -1040,7 +1040,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Settings -> Manage Wallet
 
-"manage_wallets.title" = "Monederos";
+"manage_wallets.title" = "Carteras";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir el token manualmente.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
 "manage_wallets.contract_address" = "Dirección del contrato";
@@ -1252,7 +1252,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "settings.about_app.title" = "Sobre la App";
 "settings.about_app.app_name" = "Cartera %@";
-"settings.about_app.description" = "La billetera %@ está diseñada para aquellos que buscan invertir y almacenar criptomonedas de manera privada e independiente.\n\nEs una billetera no custodial y peer-to-peer donde solo el usuario tiene control sobre los fondos. No recopila datos y mantiene al usuario independiente al no bloquear los fondos del usuario en una aplicación de billetera específica.\n\nLa billetera %@ es completamente de código abierto y cualquier persona puede confirmar que la aplicación funciona exactamente como dice.";
+"settings.about_app.description" = "La cartera %@ está diseñada para aquellos que buscan invertir y almacenar criptomonedas de manera privada e independiente.\n\nEs una cartera no custodial y peer-to-peer donde solo el usuario tiene control sobre los fondos. No recopila ningún dato y mantiene al usuario independiente al no bloquear los fondos del usuario en una aplicación de cartera específica.\n\nLa cartera %@ es completamente de código abierto y cualquiera puede confirmar que la aplicación funciona exactamente como afirma.";
 "settings.about_app.whats_new" = "Qué novedades hay";
 "settings.about_app.website" = "Website";
 
@@ -1265,7 +1265,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privacidad";
-"settings.privacy.description" = "%@ no recopila ningún dato o utiliza herramientas de análisis que puedan exponer cualquier dato sobre sus usuarios. La cartera está diseñada para asegurar un alto nivel de privacidad para sus usuarios.";
+"settings.privacy.description" = "%@ no recopila ningún dato ni utiliza herramientas de análisis que puedan exponer cualquier dato sobre sus usuarios. La cartera está diseñada para garantizar un alto nivel de privacidad para sus usuarios.";
 "settings.privacy.statement.user_data_storage" = "Los datos del usuario siempre permanecen en el dispositivo del usuario.";
 "settings.privacy.statement.data_usage" = "La cartera no recopila ningún dato sobre los usuarios.";
 "settings.privacy.statement.data_privacy" = "La cartera no recopila ningún dato sobre los usuarios.";
@@ -1536,7 +1536,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "onboarding.balance.create" = "Cartera nueva";
 "onboarding.balance.import" = "Importar Cartera";
-"onboarding.balance.watch" = "Ver Monedero";
+"onboarding.balance.watch" = "Ver carteras";
 
 // Manage Accounts
 
@@ -1572,7 +1572,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "private_keys.title" = "Claves privadas";
 "private_keys.evm_private_key" = "Clave Privada EVM";
-"private_keys.evm_private_key.description" = "Otorga un control total sobre criptomonedas basadas en Ethereum, Binance Smart Chain, etc dentro de cada monedero correspondiente.";
+"private_keys.evm_private_key.description" = "Otorga control total sobre criptomonedas basadas en EVM, es decir, Ethereum, Binance Smart Chain, etc., dentro de la cartera respectiva.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "Otorga total control sobre los activos de la respectiva cartera.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
@@ -1589,7 +1589,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Birthday Input
 
 "birthday_input.title" = "Altura de Cumpleaños";
-"birthday_input.description" = "Introduzca la altura del cumpleaños del monedero para una sincronización más rápida.";
+"birthday_input.description" = "Ingresa la altura de nacimiento de la cartera para una sincronización más rápida.";
 "birthday_input.new_wallet" = "Cartera nueva";
 "birthday_input.new_wallet.description" = "No tiene ninguna transacción";
 "birthday_input.old_wallet" = "Cartera existente";
@@ -1618,7 +1618,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Send Settings
 
 "evm_send_settings.nonce" = "Transacción Nonce";
-"evm_send_settings.nonce.info" = "El nonce es un valor entero único para una transacción dentro de la cartera del usuario. Normalmente se incrementa con cada transacción enviada y no necesita cambiar. Los usuarios avanzados pueden configurarlo igual a un nonce de una transacción pendiente para cancelar y reemplazar esa transacción, mientras la nueva transacción tenga una comisión lo suficientemente alta como para evitar que la antigua sea confirmada (por ejemplo, pueden querer acelerar su confirmación, o cambiar completamente los parámetros de transacción). Cuando múltiples transacciones pendientes tienen la misma nunca, sólo una se confirma, típicamente la que tiene la comisión más alta.";
+"evm_send_settings.nonce.info" = "El nonce es un valor entero único para una transacción dentro de la cartera del usuario. Normalmente incrementa con cada transacción enviada y no necesita ser cambiado. Los usuarios avanzados pueden configurarlo igual al nonce de una transacción pendiente para cancelar y reemplazar esa transacción, siempre y cuando la nueva transacción tenga una comisión suficientemente más alta para evitar que la antigua sea confirmada en su lugar (por ejemplo, pueden querer acelerar su confirmación o cambiar los parámetros de la transacción por completo). Cuando múltiples transacciones pendientes tienen el mismo nonce, solo se confirma una, típicamente la que tiene la comisión más alta.";
 "evm_send_settings.nonce.errors.already_in_use" = "Usado Nonce";
 "evm_send_settings.nonce.errors.already_in_use.info" = "Una transacción ejecutada con este nonce ya existe.";
 
@@ -1665,7 +1665,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Watch Address
 
-"watch_address.title" = "Ver Monedero";
+"watch_address.title" = "Ver carteras";
 "watch_address.watch" = "Siguiente";
 "watch_address.address" = "Dirección";
 "watch_address.by" = "Por";
@@ -1845,7 +1845,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // No Passcode
 
-"no_passcode.info_text" = "Esta aplicación requiere que el teléfono tenga habilitado el código de acceso (bloqueo de pantalla).\n\nPuede activarlo en la configuración de OS.\n\nTenga en cuenta que cuando deshabilite el PIN a nivel del sistema operativo, las medidas de seguridad en el almacenamiento seguro de su teléfono harán que los datos previamente almacenados sean inválidos. Necesitará Restaurar las claves de su cartera para volver a acceder a ella.";
+"no_passcode.info_text" = "Esta aplicación requiere que el teléfono tenga habilitado el código de acceso (bloqueo de pantalla).\n\nPuedes activarlo en los ajustes de iOS.\n\nTen en cuenta que cuando desactivas el PIN a nivel del sistema operativo, las medidas de seguridad en el almacenamiento seguro de tu teléfono invalidan los datos almacenados previamente. Necesitarás Restaurar las claves de tu cartera para volver a acceder a tu cartera.";
 "cannot_check_passcode.info_text" = "No se puede verificar el estado del código de acceso (bloqueo de pantalla). Por favor, reinicia la aplicación.";
 "jailbreak.info_text" = "El equipo de Unstoppable recomienda ejecutar la aplicación solo en teléfonos no rooteados (no jailbreak).\n\nTenga en cuenta que cuando usa un dispositivo rooteado, la aplicación ya no puede garantizar la seguridad de su criptomoneda contra software malicioso.";
 
