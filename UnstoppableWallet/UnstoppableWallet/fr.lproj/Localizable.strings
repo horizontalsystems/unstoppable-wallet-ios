@@ -112,7 +112,7 @@
 "access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.
 
 Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
-"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.not_supported" = "Votre appareil ne prend pas en charge la numérisation d'un code depuis un article. Veuillez utiliser un appareil doté d'une caméra.";
 "access_camera.settings" = "Paramètres";
 
 // Restore
@@ -183,7 +183,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_settings.title" = "Paramètres de la Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommendé)";
-"sync_mode.from_blockchain" = "%@ Blockchain";
+"sync_mode.from_blockchain" = "Blockchain %@";
 "blockchain_settings.description" = "Sélectionnez le format d'adresse pour la réception des paiements. Un format correct doit être choisi lors de la restauration d'un portefeuille existant.";
 
 // Coin Platforms
@@ -1007,7 +1007,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "tx_info.you_paid" = "Vous avez payé";
 "tx_info.you_got" = "Vous avez reçu";
 "tx_info.price" = "Prix";
-"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
+"tx_info.scam_warning" = "Cette transaction est suspecte et peut être une arnaque. Veuillez ne copier aucune adresse de cette transaction.";
 
 // Settings
 
@@ -1214,11 +1214,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "security_settings.delete_alert_button" = "Supprimer de l'appareil";
 
 "btc_blockchain_settings.restore_source" = "Restorer la source";
-"btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"btc_blockchain_settings.restore_source.description" = "Choisissez la source que l'application Unstoppable doit utiliser pour synchroniser le(s) portefeuille(s).";
 "btc_blockchain_settings.restore_source.alert" = "Une fois la source de restauration modifiée, le portefeuille devra être resynchronisé avec la blockchain %@.";
 
-"btc_restore_mode.fast" = "Fast, Private, Centralized";
-"btc_restore_mode.slow" = "Slow, Private, Decentralized";
+"btc_restore_mode.fast" = "Rapide, Privé, Centralisé";
+"btc_restore_mode.slow" = "Lentement, privé, décentralisé";
 
 "btc_transaction_sort_mode.shuffle" = "Mélanger";
 "btc_transaction_sort_mode.shuffle.description" = "Indexation aléatoire";
@@ -1603,7 +1603,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "evm_network.rpc_source" = "Source RPC";
 "evm_network.added" = "Ajouté";
 "evm_network.add_new" = "Ajouter un Nouveau";
-"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"evm_network.description" = "Choisissez la source que l'application Unstoppable doit utiliser pour synchroniser le(s) portefeuille(s).";
 
 // Add RPC Source
 
@@ -1844,12 +1844,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
-"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
-"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+"no_passcode.info_text" = "Cette application nécessite que le passcode (verrou d'écran) soit activé.\n\nVous pouvez l'activer dans les paramètres iOS.\n\nVeuillez noter que lorsque vous avez désactivé le code PIN au niveau de l'OS, les mesures de sécurité dans le stockage sûr de votre portable ont rendu les données précédemment stockées invalides. Vous devrez restaurer vos clés de porte-monnaies pour revenir à votre porte-monnaie.";
+"cannot_check_passcode.info_text" = "Impossible de vérifier l'état du code d'accès (verrouillage d'écran). Veuillez redémarrer l'application.";
+"jailbreak.info_text" = "L'équipe Unstoppable recommande d'utiliser l'application uniquement sur des téléphones non rootés (non jailbreakés).\n\nVeuillez noter que lorsque vous utilisez un appareil rooté, l'application ne peut plus garantir la sécurité de votre cryptomonnaie contre les logiciels malveillants.";
 
 // Scam Filter
 
-"scam_filter.title" = "Scam Filter";
-"scam_filter.enabled" = "Enabled";
-"scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
+"scam_filter.title" = "Filtre Anti-Arnaque";
+"scam_filter.enabled" = "Activé";
+"scam_filter.description" = "Le Filtre Anti-Arnaque détecte les transactions suspectes et les masque de la liste des Transactions. Les filtres suivants sont appliqués pour la détection :\n\n-les pièces qui ne sont pas répertoriées dans notre liste de Marché\n\n-les transactions d'une valeur nulle\n\n-les transactions avec un montant très faible en monnaie stable";
