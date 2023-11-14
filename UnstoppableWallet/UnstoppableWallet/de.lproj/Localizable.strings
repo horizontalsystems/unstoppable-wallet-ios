@@ -46,7 +46,7 @@
 "alert.added_to_watchlist" = "Zur Merkliste hinzugefügt";
 "alert.removed_from_watchlist" = "Aus Merkliste entfernt";
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
-"alert.removed_from_wallet" = "Aus Wallet entfernt";
+"alert.removed_from_wallet" = "Aus dem Wallet entfernt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
 "alert.created" = "Erstellt";
@@ -129,10 +129,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "restore.checksum_error" = "Ungültige Prüfsumme";
 "restore.passphrase" = "Passwort";
 "restore.input.passphrase" = "Passwort";
-"restore.passphrase_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Wallet zu verschlüsseln. Es hat nichts mit Ihrem Apple iCloud-Passwort zu tun. Wenn Sie es vergessen oder verlieren, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
+"restore.passphrase_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihres Wallets zu verschlüsseln. Es steht in keinem Zusammenhang mit Ihrem Apple iCloud-Passwort. Es kann nicht wiederhergestellt oder zurückgesetzt werden, wenn es verloren geht oder vergessen wird.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
-"restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Importmechanismus für Benutzer von %@ die eine nicht standardmäßige Wallet haben. Solche Brieftaschen könnten in %@ Version 0 erstellt worden sein. 7 - 0.28 unter Verwendung einer nicht-englischen Wiederherstellungsphrase und/oder eines Sonderzeichens in der Brieftasche Passphrase (d.h. diakritisches Symbol).\n\nWenn Sie ein betroffener Benutzer sind, wird Ihr Wallet-Guthaben nach dem Import in Version 0.29 oder höher 0 angezeigt. Auf dieser Seite können Sie den Zugriff auf Ihre nicht standardmäßige Brieftasche wiederherstellen. Sobald Sie importiert haben, empfehlen wir Ihnen eine neue Wallet zu erstellen (die standardkonform ist) und Geld dorthin zu verschieben.";
+"restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Importmechanismus für %@ Nutzer, die ein nicht standardmäßiges Wallet besitzen. Solche Wallets könnten in der Version 0.27 - 0.28 von %@ erstellt worden sein, unter Verwendung einer nicht-englischen Wiederherstellungsphrase und/oder eines speziellen Zeichens in der Wallet-Passphrase (z.B. diakritisches Zeichen).\n\nWenn Sie ein betroffener Nutzer sind, wird Ihr Wallet-Saldo nach dem Import eines solchen Wallets in Version 0.29 oder höher als 0 angezeigt. Diese Seite ermöglicht es Ihnen, den Zugang zu Ihrem nicht standardmäßigen Wallet wiederherzustellen. Nach dem Import wird empfohlen, ein neues Wallet (das den Standards entspricht) zu erstellen und die Gelder dorthin zu übertragen.";
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
 "restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
 
@@ -344,7 +344,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "switch_account.title" = "Wallet wechseln";
 "switch_account.wallets" = "Wallets";
-"switch_account.watch_wallets" = "Watch-Adresse";
+"switch_account.watch_wallets" = "Beobachtungswallets";
 
 // Release notes
 
@@ -1044,8 +1044,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "manage_wallets.not_found" = "Keine Ergebnisse gefunden. Versuchen Sie, Token manuell hinzuzufügen.";
 "manage_wallets.search_placeholder" = "Name, Code oder Vertragsadresse";
 "manage_wallets.contract_address" = "Vertragsadresse";
-"manage_wallets.derivation_description" = "Es gibt 4 gängige Adressformate %@ Brieftaschen zum Empfang eingehender Zahlungen:\n\n- BIP44 (ältes)\n- BIP49\n- BIP84 (empfohlen)\n- BIP86 (neueste)\n\nWährend %@ alle 4 unterstützt empfiehlt es, eine %@ Brieftasche im BIP84-Format zu verwenden.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Wallets zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend %@ Brieftasche beide unterstützt, empfiehlt es sich, ein Bitcoin Cash Wallet im TYPE 145 Format zu verwenden.";
+"manage_wallets.derivation_description" = "Es gibt 4 gängige Adressformate, die %@ Wallets zur Entgegennahme eingehender Zahlungen verwenden können:\n\n-BIP44 (das älteste)\n-BIP49\n-BIP84 (empfohlen)\n-BIP86 (das neueste)\n\nObwohl das %@ Wallet alle 4 unterstützt, wird empfohlen, ein %@ Wallet im BIP84-Format zu verwenden.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate, die Bitcoin Cash Wallets zur Entgegennahme eingehender Zahlungen nutzen können:\n\n-TYP 0 (älter)
+\n-TYP 145 (neuer)
+\n\nObwohl das %@ Wallet beide unterstützt, wird empfohlen, ein Bitcoin Cash Wallet im TYP 145 Format zu verwenden.";
 
 // Settings -> Personal Support
 
@@ -1070,7 +1072,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Aktivieren";
-"settings.bitcoin_hodling.description" = "Dadurch können Sie Bitcoins senden, die bis zu einem bestimmten Datum nicht ausgegeben werden können. \n\nDer Empfänger solcher Transaktionen sollte die %@ Wallet-App Version 0 verwenden. 0 oder neuer, mit dem BIP44 Adressformat für Bitcoin. \n\nNur die %@ Brieftasche kann solche Transaktionen im Bitcoin-Netzwerk korrekt identifizieren sowie den Empfänger in die Lage zu versetzen, diese Bitcoins nach Ablauf der Sperrfrist auszugeben. \n\nWenn Sie ein HODLer sind Sie können diese Funktion nutzen, um sich selbst zu erzwingen, Ihre Bitcoins zu hodlen, indem Sie solche Transaktionen an sich senden.";
+"settings.bitcoin_hodling.description" = "Dies ermöglicht Ihnen das Senden von Bitcoins, die bis zu einem bestimmten Datum nicht ausgegeben werden können.\n\nDer Empfänger solcher Transaktionen sollte die %@ Wallet-App Version 0.10 oder neuer verwenden, mit dem BIP44-Adressformat für Bitcoin.\n\nNur das %@ Wallet kann solche Transaktionen im Bitcoin-Netzwerk korrekt identifizieren und dem Empfänger ermöglichen, diese Bitcoins nach Ablauf der Sperrfrist auszugeben.\n\nWenn Sie ein HODLer sind, können Sie diese Funktion nutzen, um sich selbst zum Halten Ihrer Bitcoins zu zwingen, indem Sie solche Transaktionen an sich selbst senden.";
 
 // Settings -> Terms
 
@@ -1107,7 +1109,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup_list.description.restore" = "Liste der Inhalte in der Backup-Datei.";
 "backup_app.backup_list.header.wallets" = "Wallets";
 "backup_app.backup_list.header.other" = "Andere";
-"backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
+"backup_app.backup_list.other.watch_account.title" = "Beobachtungswallets";
 "backup_app.backup_list.other.watchlist.title" = "Merkliste";
 "backup_app.backup_list.other.contacts.title" = "Kontakte";
 "backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
@@ -1179,7 +1181,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "enable_duress_mode.select.title" = "Wallets auswählen";
 "enable_duress_mode.select.description" = "Wählen Sie die Wallets, die im Duress Modus angezeigt werden.";
 "enable_duress_mode.select.wallets" = "Wallets";
-"enable_duress_mode.select.watch_wallets" = "Watch-Adresse";
+"enable_duress_mode.select.watch_wallets" = "Beobachtungswallets";
 
 "enable_duress_mode.passcode.title" = "Duress Code";
 "enable_duress_mode.passcode.description" = "Code für Duress Modus festlegen";
@@ -1226,9 +1228,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "btc_transaction_sort_mode.bip69.description" = "Lexikographische Indizierung";
 
 "blockchain_settings.info.restore_source" = "Parameter wiederherstellen";
-"blockchain_settings.info.restore_source.content" = "Diese Einstellung ist nur relevant, wenn eine bestehende Brieftasche wiederhergestellt wird. Es ist ein Prozess, die Transaktionsgeschichte für eine bestimmte Kryptowährung abzurufen, so dass die Wallet-App in der Lage ist, vergangene Transaktionen anzuzeigen und den Kontostand des Benutzers zu berechnen. Dies muss nur einmal passieren, wenn der Benutzer die zuvor erstellten Wallets wiederherstellt.\n\nan diesem Punkt es gibt zwei mögliche Wege für eine mobile Brieftasche wie %@ , dies zu tun:\n\n1. vom API-Server: Es gibt einen vordefinierten Server von Dritten, der die gesamte Blockchain beherbergt und alle Daten verarbeitet und optimiert hat, um diese Daten schnell zur Verfügung zu stellen. Diese Methode ist schnell, aber möglicherweise (nicht notwendig) weniger privat. Es ist auch eine zentralisierte Methode, um eine Brieftasche wiederherzustellen, da sie von der Verfügbarkeit eines Drittanbieter-Servers abhängt. Diese Option wird aufgrund der Geschwindigkeit des Abrufs von Daten (5-10 Minuten) empfohlen.\n\n2. von Blockchain: Die App versucht direkt aus einem Netzwerk von Blockchain-Knoten wiederherzustellen. Dies ist ein dezentralisierter Weg, um das Gleichgewicht der Brieftasche und der vergangenen Transaktionen wiederherzustellen. Die App pingt viele Netzwerkknoten und fordert Daten von ihnen an, ohne einige Knoten speziell anzusprechen. Diese Option ist langsam und kann leicht 2-3 Stunden dauern. Die App muss während der Wiederherstellung geöffnet sein. Diese Wiederherstellungsmethode hängt nicht von einer Entität ab und sollte unter allen Bedingungen funktionieren.";
+"blockchain_settings.info.restore_source.content" = "Diese Einstellung ist nur relevant, wenn ein bestehendes Wallet wiederhergestellt wird. Es handelt sich um einen Prozess zum Abrufen der Transaktionshistorie für eine bestimmte Kryptowährung, sodass die Wallet-App vergangene Transaktionen anzeigen und das Guthaben des Benutzers berechnen kann. Dies muss nur einmal geschehen, wenn der Benutzer zuvor erstellte Wallets wiederherstellt.\n\nZu diesem Zeitpunkt gibt es zwei mögliche Wege für ein mobiles Wallet wie %@, dies zu tun:
+\n\nVom API-Server: Es gibt einen vordefinierten Drittanbieter-Server, der die gesamte Blockchain hostet und alle Daten verarbeitet und optimiert hat, um diese Daten schnell bereitzustellen. Diese Methode ist schnell, aber potenziell (nicht notwendigerweise) weniger privat. Es ist auch eine zentralisierte Methode zur Wiederherstellung eines Wallets, da sie von der Verfügbarkeit eines Drittanbieter-Servers abhängt. Diese Option wird aufgrund ihrer Schnelligkeit beim Datenabruf (5-10 Minuten) empfohlen.\n\nVon der Blockchain: Die App versucht, direkt von einem Netzwerk von Blockchain-Knoten wiederherzustellen. Dies ist eine dezentralisierte Methode, um das Wallet-Guthaben und vergangene Transaktionen wiederherzustellen. Die App kontaktiert viele Netzwerkknoten und fordert Daten von ihnen an, ohne bestimmte Knoten spezifisch anzusprechen. Diese Option ist langsam und kann leicht 2-3 Stunden dauern, die App muss geöffnet sein, während die Wiederherstellung stattfindet. Diese Wiederherstellungsmethode hängt von keiner Entität ab und sollte unter allen Bedingungen funktionieren.";
 "blockchain_settings.info.rpc_source" = "RPC-Quelle";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer.%@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "Diese Einstellung steuert, wie diese App mit Blockchains interagiert, wenn Transaktionen gesendet oder empfangen werden.\n\nIm Falle von Bitcoin, Bitcoin Cash, Litecoin und Dash erfolgt die Kommunikation mit den Blockchain-Netzwerkknoten vollständig Peer-to-Peer. %@ kontaktiert viele Knoten und kommuniziert mit einem davon. Jedes Mal verbindet sich die App mit einem anderen Knoten.\n\nIm Falle von Ethereum, Binance Smart Chain und anderen EVM-Blockchains gibt es für mobile Wallets keine Alternativen, um mit den entsprechenden Blockchains zu interagieren, außer über Drittanbieter-RPC-Dienstleister (z. B. Infura.io) oder persönliche Knoten. Das bedeutet im Wesentlichen, dass Ihre Kommunikation mit dieser Blockchain nicht dezentralisiert ist. Dies hat keinen Einfluss auf Ihre Geldmittel, sondern nur auf die Fähigkeit, sich mit dem Blockchain-Netzwerk zu verbinden.\n\nSeien Sie versichert, wir behalten dies im Auge und werden bald versuchen, eine dezentralisierte Möglichkeit zur Synchronisierung zu bieten. Geduld.";
 
 // Manage Accounts
 
@@ -1251,7 +1254,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "settings.about_app.title" = "Über die App";
 "settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" = "Die Brieftasche %@ wurde für diejenigen gebaut, die Kryptowährungen auf private und unabhängige Weise investieren und speichern möchten.\n\nEs handelt sich um eine nicht-Custodial, Peer-to-Peer-Wallet, bei der nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem er das Guthaben des Benutzers nicht an eine bestimmte Wallet-App sperrt.\n\nDie %@ Brieftasche ist vollständig Open-Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.";
+"settings.about_app.description" = "Das %@ Wallet ist für diejenigen konzipiert, die Kryptowährungen privat und unabhängig investieren und speichern möchten.\n\nEs handelt sich um ein nicht-verwahrendes, Peer-to-Peer Wallet, bei dem nur der Benutzer die Kontrolle über die Mittel hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem es die Gelder des Benutzers nicht an eine spezifische Wallet-App bindet.\n\nDas %@ Wallet ist vollständig Open-Source, und jeder kann bestätigen, dass die App genau so funktioniert, wie sie behauptet.";
 "settings.about_app.whats_new" = "Das ist neu";
 "settings.about_app.website" = "Website";
 
@@ -1399,7 +1402,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "create_wallet.passphrase" = "Passwort";
 "create_wallet.input.passphrase" = "Passwort";
 "create_wallet.input.confirm" = "Bestätigen";
-"create_wallet.passphrase_description" = "Passphrases fügen eine zusätzliche Sicherheitsschicht für Brieftaschen hinzu. Um eine solche Brieftasche wiederherzustellen, benötigt ein Benutzer sowohl mnemonische als auch eine Passphrase.\n\nPassphrasen erleichtern es Benutzern auch, mehrere Multicoin-Wallets mit einem einzigen mnemonischen, aber anderen Passwort zu haben.";
+"create_wallet.passphrase_description" = "Passphrasen fügen eine zusätzliche Sicherheitsebene für Wallets hinzu. Um ein solches Wallet wiederherzustellen, benötigt der Benutzer sowohl eine Wiederherstellungsphrase als auch eine Passphrase.\n\nPassphrasen erleichtern es den Benutzern auch, mehrere Multi-Coin-Wallets mit einem einzigen Mnemonic, aber verschiedenen Passwörtern zu haben.";
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
 "create_wallet.error.forbidden_symbols" = "Bitte verwenden Sie nur unterstützte Symbole: A-Z a-z 0-9 '  \"  ` &  /  ?  !  :  ;  .  , ~  *  $  =  +  -  [ ]  ( )  { }  < >  \\  _  #  @  |  %";
 "create_wallet.error.invalid_confirmation" = "Passphrase-Bestätigung stimmt nicht überein";
@@ -1491,12 +1494,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "Version %@";
-"wallet_connect.list.v1_bottom_text" = "In der ersten Version von WalletConnect müssen Sie die Sitzungen aufrufen, um die Anfrage zu sehen und zu bestätigen";
+"wallet_connect.list.v1_bottom_text" = "In der ersten Version von WalletConnect müssen Sie in die Sitzungen gehen, um die Anfrage zu sehen und zu bestätigen";
 "wallet_connect_list.new_connection" = "Neue Verbindung";
 "wallet_connect_list.disconnecting" = "Verbindung wird getrennt";
 
 "wallet_connect.no_account.description" = "Sie müssen eine Wallet erstellen oder importieren bevor Sie WalletConnect verwenden können.";
-"wallet_connect.unbackuped_account.description" = "Sie müssen %@ sichern bevor Sie WalletConnect verwenden können";
+"wallet_connect.unbackuped_account.description" = "Sie müssen %@ sichern, bevor Sie WalletConnect verwenden können";
 
 "wallet_connect.non_supported_account.description" = "Ihr aktueller Wallet-Typ %@ unterstützt WalletConnect nicht";
 "wallet_connect.non_supported_account.switch" = "Wechseln";
@@ -1511,7 +1514,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "app_status.title" = "App-Status";
 "app_status.application_status" = "Antragsstatus";
-"app_status.linked_wallets" = "Verknüpfte Wallets";
+"app_status.linked_wallets" = "Verbundene Wallets";
 "app_status.version_history" = "Versionsverlauf";
 "app_status.blockchain_status" = "Blockchain-Status";
 
