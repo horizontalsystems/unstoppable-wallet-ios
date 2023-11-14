@@ -112,7 +112,7 @@
 "access_camera.message" = "%@ benötigt Zugriff auf Ihre Kamera, um den QR-Code zu scannen.
 
 Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
-"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.not_supported" = "Ihr Gerät unterstützt das Scannen eines Codes von einem Artikel nicht. Verwenden Sie bitte ein Gerät mit einer Kamera.";
 "access_camera.settings" = "Einstellungen";
 
 // Restore
@@ -183,6 +183,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_settings.title" = "Blockchain Einstellungen";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (empfohlen)";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "Wählen Sie das Adressformat für den Empfang von Zahlungen. Ein korrektes Format sollte bei der Wiederherstellung einer bestehenden Brieftasche gewählt werden.";
 
@@ -590,7 +591,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.top.section.header.see_all" = "Alle anzeigen";
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.top_sectors" = "Top Sectors";
+"market.top.section.header.top_sectors" = "Top-Sektoren";
 "market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
@@ -624,41 +625,41 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "top_platforms.description" = "Leading blockchain platforms by the cumulative market of projects built on top.";
 
 "top_platform.title" = "%@ Ecosystem";
-"top_platform.description" = "Market cap of all protocols on the %@ chain";
+"top_platform.description" = "\"Marktkapitalisierung aller Protokolle auf der %@ Kette";
 
 "market_discovery.title" = "Discovey";
 "market_discovery.filters" = "Filters";
-"market_discovery.browse_categories" = "Browse Categories";
+"market_discovery.browse_categories" = "Kategorien durchsuchen";
 "market_discovery.top_coins" = "TOP Coins";
 "market_discovery.not_found" = "Keine Ergebnisse gefunden";
 
-"market_watchlist.empty.caption" = "Your watchlist is empty.";
+"market_watchlist.empty.caption" = "Ihre Beobachtungsliste ist leer.";
 
 "market.search.title" = "Suche";
 "market.search.empty_text" = "Keine Ergebnisse gefunden";
 
 "market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Ergebnisse anzeigen";
-"market.advanced_search.empty_results" = "Empty Results";
-"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.empty_results" = "Leere Ergebnisse";
+"market.advanced_search.dex_description" = "Diese Einstellung gilt für Token, die auf Ethereum (Uniswap DEX) und Binance Smart Chain (Pancake DEX) gehandelt werden.";
 "market.advanced_search.24h" = "24 Std";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.network_parameters" = "Network Parameters";
-"market.advanced_search.price_parameters" = "Price Parameters";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.market_parameters" = "Marktparameter";
+"market.advanced_search.network_parameters" = "Netzwerkparameter";
+"market.advanced_search.price_parameters" = "Preisparameter";
+"market.advanced_search.choose_set" = "Satz auswählen";
+"market.advanced_search.market_cap" = "Marktkappe";
+"market.advanced_search.volume" = "Handelsvolumen";
+"market.advanced_search.liquidity" = "DEX-Liquidität";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.price_period" = "Price Period";
+"market.advanced_search.price_period" = "Preiszeitraum";
 "market.advanced_search.price_change" = "Preisänderung";
 
 "market.advanced_search.outperformed_btc" = "Übertraf BTC";
 "market.advanced_search.outperformed_eth" = "Übertraf ETH";
 "market.advanced_search.outperformed_bnb" = "Übertraf BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.price_close_to_ath" = "Preis nahe an ATH";
+"market.advanced_search.price_close_to_atl" = "Preis nahe zum ATL";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Zurücksetzen";
@@ -694,40 +695,40 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "Ergebnisse";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.title" = "Gesamtmarktzahl";
+"market.global.total_market_cap.description" = "Gesamtmarktwert aller Kryptowährungen";
 
 "market.global.volume_24h.title" = "24h Volume";
-"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+"market.global.volume_24h.description" = "Das 24h Handelsvolumen des Krypto-Marktes";
 
 "market.global.defi_cap.title" = "DeFi Cap";
-"market.global.defi_cap.description" = "Total market value of DeFi projects";
+"market.global.defi_cap.description" = "Gesamter Marktwert von DeFi-Projekten";
 
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.description" = "Gesamtwert gesperrt (TVL) in DeFi";
+"market.global.tvl_in_defi.multi_chain" = "Mehrkettig";
+"market.global.tvl_in_defi.filter_by_chain" = "Filtern nach Kette";
 
 // Coin Page
 
 "coin_page.overview" = "Preis";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "Analytik";
 "coin_page.markets" = "Markets";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
-"coin_overview.market_cap" = "Market Cap";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.indicators" = "Indikatoren";
+"coin_overview.indicators.show" = "Anzeigen";
+"coin_overview.indicators.hide" = "Verstecken";
+"coin_overview.market_cap" = "Marktkappe";
+"coin_overview.circulating_supply" = "Im Kreis";
+"coin_overview.total_supply" = "Gesamtmenge";
 "coin_overview.diluted_market_cap" = "Diluted MCap";
 "coin_overview.genesis_date" = "Startdatum";
-"coin_overview.trading_volume" = "Trading Volume";
+"coin_overview.trading_volume" = "Handelsvolumen";
 
 "coin_overview.roi.hour24" = "1 Day";
 "coin_overview.roi.day7" = "1Week";
@@ -794,24 +795,24 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
-"coin_analytics.dex_liquidity" = "DEX Liquidity";
+"coin_analytics.dex_liquidity" = "DEX-Liquidität";
 "coin_analytics.dex_liquidity_rank" = "DEX Liquiditätsrang";
 "coin_analytics.dex_liquidity_rank.description" = "Token, sortiert nach verfügbarer Liquidität auf dezentralen Börsen.";
 "coin_analytics.dex_liquidity.info1" = "Gesamte derzeit verfügbare Liquidität für den Token an führenden dezentralen Börsen.";
 "coin_analytics.dex_liquidity.info2" = "Diagramm, das die Schwankungen in der verfügbaren Liquidität für den Token an führenden dezentralen Börsen über einen Zeitraum von 1 Jahr zeigt.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
+"coin_analytics.dex_liquidity.info3" = "Liste aller Tokens basierend auf der verfügbaren Liquidität für das Token an führenden dezentralen Börsen.";
 "coin_analytics.dex_liquidity.tracked_dexes" = "Verfolgte DEXes (Dezentrale Börsen):";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Daily Active Addresses";
-"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
-"coin_analytics.active_addresses_rank" = "Active Addresses Rank";
-"coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
+"coin_analytics.active_addresses" = "Täglich aktive Adressen";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Tage Einzigartige Adressen";
+"coin_analytics.active_addresses_rank" = "Aktive Adressen Rang";
+"coin_analytics.active_addresses_rank.description" = "Token, die nach der Anzahl der eindeutigen Adressen eingestuft werden, die mit dem Token Transaktionen tätigen.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank is based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info2" = "Diagramm, das die Schwankungen in der Anzahl der täglich aktiven Adressen über einen Zeitraum von einem Jahr zeigt.";
+"coin_analytics.active_addresses.info3" = "Gesamtzahl der eindeutigen Blockchain-Adressen, die über einen Zeitraum von 30 Tagen mit einem Token handeln.";
+"coin_analytics.active_addresses.info4" = "Die Rangfolge des Tokens basiert auf der Anzahl der aktiven Wallets, die in einem Zeitraum von 30 Tagen mit dem Token handeln.";
 "coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "Transaction Count";
@@ -827,7 +828,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.holders_rank" = "Holders Rank";
 "coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
-"coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
+"coin_analytics.holders.info2" = "Die Top 10 Wallets, die den Token auf jeder Blockchain halten.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
 "coin_analytics.holders.count" = "Total Holders: %@";
@@ -871,11 +872,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.last_30d" = "last 30d";
 "coin_analytics.current" = "current";
 
-"coin_analytics.overall_score" = "Overall Score";
-"coin_analytics.overall_score.excellent" = "Excellent";
-"coin_analytics.overall_score.good" = "Good";
-"coin_analytics.overall_score.fair" = "Fair";
-"coin_analytics.overall_score.poor" = "Poor";
+"coin_analytics.overall_score" = "Gesamtpunktzahl";
+"coin_analytics.overall_score.excellent" = "Ausgezeichnet";
+"coin_analytics.overall_score.good" = "Gut";
+"coin_analytics.overall_score.fair" = "Faire";
+"coin_analytics.overall_score.poor" = "Arm";
 "coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
 "coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
 "coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total available liquidity on decentralized exchanges.";
@@ -884,7 +885,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
 "coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding the respective token.";
 
-"coin_analytics.rank" = "Rank";
+"coin_analytics.rank" = "Rang";
 "coin_analytics.30_day_rank" = "30-Day Rank";
 "coin_analytics.30_day_volume" = "30-Day Volume";
 
@@ -900,13 +901,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_tweets.reference_type.retweeted" = "Retweeted @%@";
 "coin_tweets.reference_type.quoted" = "Quoted @%@";
 "coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
+"coin_tweets.no_tweets_yet" = "Noch keine Tweets";
 "coin_tweets.not_available" = "No twitter available";
-"coin_tweets.see_on_twitter" = "See on Twitter";
+"coin_tweets.see_on_twitter" = "Auf Twitter ansehen";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "Indikatoren";
 "chart_indicators.moving_averages" = "Moving Averages";
 "chart_indicators.oscillators" = "Oscillators";
 
@@ -1216,11 +1217,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "security_settings.delete_alert_button" = "Von Telefon löschen";
 
 "btc_blockchain_settings.restore_source" = "Parameter wiederherstellen";
-"btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"btc_blockchain_settings.restore_source.description" = "Wählen Sie die Quelle, die die Unstoppable-App für die Synchronisierung von Wallet(s) verwenden soll.";
 "btc_blockchain_settings.restore_source.alert" = "Nach dem Ändern der Quelle wiederherstellen muss sich die Wallet mit der %@ Blockchain synchronisieren.";
 
-"btc_restore_mode.fast" = "Fast, Private, Centralized";
-"btc_restore_mode.slow" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "Zufällig";
 "btc_transaction_sort_mode.shuffle.description" = "Zufällige Indizierung";
@@ -1367,24 +1369,24 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2J";
-"chart.time_duration.all" = "ALL";
+"chart.time_duration.all" = "ALLE";
 
-"chart.market_cap" = "Market Cap";
+"chart.market_cap" = "Marktkappe";
 "chart.volume" = "Lautstärke(24 St.)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "Im Kreis";
 "chart.selected.volume" = "Vol.";
 
 "chart.market.header" = "Market";
-"chart.market.market_cap" = "Market Cap";
+"chart.market.market_cap" = "Marktkappe";
 "chart.market.volume" = "Lautstärke(24 St.)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "Im Kreis";
+"chart.market.total_supply" = "Gesamtmenge";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "Änderungen (1W)";
+"chart.performance.month_changes" = "Änderungen (1M)";
 
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.read_more" = "Lesen Sie mehr";
+"chart.about.read_less" = "Weniger lesen";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -1606,7 +1608,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "evm_network.rpc_source" = "RPC-Quelle";
 "evm_network.added" = "Hinzugefügt";
 "evm_network.add_new" = "Neu hinzufügen";
-"evm_network.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
+"evm_network.description" = "Wählen Sie die Quelle, die die Unstoppable-App für die Synchronisierung von Wallet(s) verwenden soll.";
 
 // Add RPC Source
 
@@ -1847,7 +1849,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "Diese App erfordert, dass das Telefon den Passcode (Bildschirmsperre) aktiviert hat.\n\nSie können dies in den iOS-Einstellungen aktivieren.\n\nBitte beachten Sie, dass wenn Sie die PIN auf der Betriebssystemebene deaktiviert haben, die Sicherheitsmaßnahmen im sicheren Speicher Ihres Telefons die zuvor gespeicherten Daten ungültig gemacht haben. Sie müssen Ihre Wallet-Schlüssel wiederherstellen, um zu Ihrer Wallet zurückzukehren.";
 "cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
 "jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
 
