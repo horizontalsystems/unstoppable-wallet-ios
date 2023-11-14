@@ -4,7 +4,7 @@
 "button.close" = "Cerrar";
 "button.continue" = "Continuar";
 "button.done" = "Listo";
-"button.reset" = "Reiniciar";
+"button.reset" = "Restablecer";
 "button.import" = "Importar";
 "button.next" = "Siguiente";
 "button.delete" = "Eliminar";
@@ -415,11 +415,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.fee_info.title" = "Tasa de comisión";
 "send.fee_info.description" = "Las cadenas de bloques requieren que los usuarios paguen tarifas de red al enviar transacciones. Las tarifas son más altas cuando hay muchas transacciones ocurriendo en la red.\n\nLa cartera %@ estima la tarifa basándose en la actividad actual de la cadena de bloques y recomienda el valor óptimo para que la transacción sea procesada en un tiempo razonable.\n\nLa tarifa recomendada se muestra como la cantidad de satoshis que el usuario necesita pagar por un solo byte de la transacción. Por lo tanto, la tarifa total depende del tamaño total de la transacción, que se mide en bytes.\n\nLos usuarios pueden usar los controles proporcionados para aumentar o disminuir el valor de la tarifa. El cambio en la tarifa modifica la tarifa total que el usuario pagará por la transacción.\n\nEstablecer una tarifa por debajo del valor recomendado puede resultar en que la transacción se mantenga en espera durante horas o sea rechazada. Cuanto más bajo sea el valor, más tiempo tardará en confirmarse la transacción. Para transacciones donde la prioridad es importante, recomendamos establecer una tarifa más alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / salidas de transacciones";
-"send.transaction_inputs_outputs_info.description" = "La mayoría de las transacciones de Bitcoin, así como las transacciones en criptomonedas similares como Bitcoin Cash, Dash y Litecoin, generan dos salidas. Una salida es la cantidad que va al receptor y la otra es la salida de cambio que se devuelve al remitente. La forma en que la mayoría de las billeteras construyen las transacciones facilita que un tercero comprenda cuál de las salidas fue para el destinatario y cuál fue la cantidad de cambio devuelta al remitente. Dado que la salida devuelta al remitente se utiliza posteriormente en transacciones futuras, se hace evidente una conexión entre estas dos transacciones.\n\nLa billetera %@ implementa medidas para dificultar que alguien descubra cuál es la salida correspondiente a cada parte.\n\nExisten dos opciones disponibles para los usuarios de %@:";
+"send.transaction_inputs_outputs_info.description" = "La mayoría de las transacciones de Bitcoin, así como las transacciones en criptomonedas similares, incluyendo Bitcoin Cash, Dash y Litecoin, generan dos salidas. Una salida es la cantidad que va al receptor y la otra es la salida de cambio que se devuelve al emisor. La forma en que la mayoría de las carteras construyen transacciones facilita a un tercero entender cuál de las salidas fue para el receptor y cuál fue el cambio devuelto al emisor. Dado que la salida devuelta al emisor se utiliza posteriormente en transacciones futuras, se hace evidente una conexión entre estas dos transacciones.\n\nLa cartera %@ implementa medidas para dificultar que alguien averigüe a dónde va cada salida.\n\nHay dos opciones disponibles para los usuarios de %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, considere esta una opción recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "Hay un estándar comúnmente acordado para ordenar salidas de transacciones (conocido como BIP69). En las carteras de código abierto, ese estándar asegura que los usuarios de cartera no necesitan confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Como este estándar es nuevo, no muchas billeteras lo han implementado todavía. Como resultado, es algo posible ver en el blockchain si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Existe un estándar comúnmente acordado para ordenar las salidas de las transacciones (conocido como BIP69). En carteras de código abierto, ese estándar asegura que los usuarios de la cartera no necesiten confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Dado que este estándar es nuevo, todavía no muchos monederos lo han implementado. Como resultado, es algo posible ver en la cadena de bloques si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
 
 "send.confirmation.you_send" = "Usted envía";
 "send.confirmation.to" = "Para";
@@ -661,7 +661,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.advanced_search.price_close_to_atl" = "Precio cercano a ATL";
 
 "market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reiniciar";
+"market.advanced_search.reset_all" = "Restablecer";
 
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
@@ -1013,7 +1013,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "settings.title" = "Ajustes";
 "settings.tab_bar_item" = "Ajustes";
-"settings.manage_accounts" = "Gestionar monederos";
+"settings.manage_accounts" = "Gestionar Carteras";
 "settings.blockchain_settings" = "Configuración de Blockchain";
 "settings.backup_manager" = "Gestor de copias de seguridad";
 "settings.security" = "Seguridad";
@@ -1071,16 +1071,16 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "settings.bitcoin_hodling.title" = "Timelock";
 "settings.bitcoin_hodling.lock_time" = "Activar";
-"settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero %@.\n\nSólo el monedero %@ puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
+"settings.bitcoin_hodling.description" = "Esto te permite enviar bitcoins que no se pueden gastar hasta una fecha específica. \n\nEl receptor de dichas transacciones debe usar la aplicación de cartera %@ en la versión 0.10 o más reciente, con el formato de dirección BIP44 para Bitcoin. \n\nSolo la cartera %@ puede identificar correctamente dichas transacciones en la red de Bitcoin, así como permitir que el receptor gaste esos bitcoins después de que expire el período de bloqueo. \n\nSi eres un HODLer, puedes usar esta función para obligarte a ti mismo a mantener tus bitcoins enviando dichas transacciones a ti mismo.";
 
 // Settings -> Terms
 
 "terms.title" = "Términos";
 "terms.i_agree" = "Acepto";
 
-"terms.item.1" = "Copia de seguridad frases de recuperación para cada cartera. Es la única manera de recuperar el acceso a los fondos si la aplicación no funciona correctamente.";
-"terms.item.2" = "Las frases de recuperación del monedero se generan aleatoriamente en el dispositivo durante la instalación y no se almacenan en ningún otro lugar.";
-"terms.item.3" = "Desactivar el PIN de desbloqueo (código) en el smartphone elimina todas las carteras de la aplicación. Se necesitarán frases de recuperación para restaurar el acceso a los fondos.";
+"terms.item.1" = "Realiza una copia de seguridad segura de las frases de recuperación para cada cartera. Es la única manera de recuperar el acceso a los fondos si la aplicación falla.";
+"terms.item.2" = "Las frases de recuperación de la cartera se generan aleatoriamente en el dispositivo durante la configuración y no se almacenan en ningún otro lugar.";
+"terms.item.3" = "Deshabilitar el PIN (código) de desbloqueo en el smartphone elimina todas las carteras de la aplicación. Se necesitarán las frases de recuperación para restaurar el acceso a los fondos.";
 "terms.item.4" = "Rompiendo carcelarios (rooting), usando un sistema operativo obsoleto e instalando aplicaciones de fuentes desconocidas pueden poner en peligro la seguridad de los fondos.";
 "terms.item.5" = "Puede haber problemas de software no descubiertos en el código que permite que esta aplicación funcione mal.";
 
@@ -1120,20 +1120,20 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
 "backup_app.backup.disclaimer.file.title" = "Copia de seguridad en archivo";
 "backup_app.backup.disclaimer.file.description" = "Los dispositivos de almacenamiento, como los discos duros, los discos USB y el almacenamiento en smartphones, son todos vulnerables a pérdidas debido a daños físicos, robos u otras circunstancias imprevisibles.";
-"backup_app.backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de copia de seguridad resultará en la pérdida de una copia de seguridad a una cartera respectiva.";
+"backup_app.backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de respaldo resultará en la pérdida de una copia de seguridad de la respectiva cartera.";
 
 "backup.disclaimer.cloud.title" = "Copia de seguridad en iCloud";
 "backup.disclaimer.cloud.description" = "iCloud es un servicio de almacenamiento en la nube proporcionado por Apple. Es importante saber que los datos de la copia de seguridad se almacenarán en los servidores de Apple.";
 "backup.disclaimer.cloud.checkbox_label" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
 "backup.disclaimer.file.title" = "Copia de seguridad en archivo";
 "backup.disclaimer.file.description" = "Los dispositivos de almacenamiento, como los discos duros, los discos USB y el almacenamiento en smartphones, son todos vulnerables a pérdidas debido a daños físicos, robos u otras circunstancias imprevisibles.";
-"backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de copia de seguridad resultará en la pérdida de una copia de seguridad a una cartera respectiva.";
+"backup.disclaimer.file.checkbox_label" = "Entiendo que el robo o daño de un dispositivo de respaldo resultará en la pérdida de una copia de seguridad de la respectiva cartera.";
 "backup_app.backup.name.title" = "Nombre de copia de seguridad";
 "backup_app.backup.name.description" = "Introduzca el nombre del archivo de copia de seguridad.";
 
 "backup_app.backup.password.title" = "Copiar contraseña";
 "backup_app.backup.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
-"backup_app.backup.password.highlighted_description" = "Esta contraseña se utiliza para cifrar el archivo de copia de seguridad de su cartera. No se puede recuperar o reiniciar si se pierde u olvida.";
+"backup_app.backup.password.highlighted_description" = "Esta contraseña se utiliza para encriptar el archivo de respaldo de tu cartera. No se puede recuperar ni restablecer si se pierde o se olvida.";
 
 "backup_app.restore_type.title" = "Restaurar";
 
@@ -1156,12 +1156,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings_security.enable_duress_mode" = "Establecer modo de Duración";
 "settings_security.edit_duress_passcode" = "Editar contraseña de Duración";
 "settings_security.disable_duress_mode" = "Desactivar Duress Passcode";
-"settings_security.duress_mode.description" = "Un modo especializado diseñado para mantener las billeteras seleccionadas a salvo bajo coacción.";
+"settings_security.duress_mode.description" = "Un modo especializado diseñado para mantener seguras las carteras seleccionadas bajo coacción.";
 
 // Create Passcode
 
 "create_passcode.title" = "Crear contraseña";
-"create_passcode.description" = "Su código servirá para abrir su monedero y enviar dinero";
+"create_passcode.description" = "Tu código de acceso se utilizará para desbloquear tu cartera";
 "create_passcode.description.biometry" = "Establecer un código de acceso para habilitar %@";
 "create_passcode.description.duress_mode" = "Establecer un código de acceso para activar el modo Duración";
 "create_passcode.confirm_passcode" = "Confirmar";
@@ -1169,7 +1169,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Enable Duress Mode
 
 "enable_duress_mode.intro.title" = "Modo Duración";
-"enable_duress_mode.intro.description" = "Este modo permite a los usuarios configurar múltiples códigos de acceso de la aplicación de desbloqueo donde un código de acceso deseado sólo muestra las carteras especificadas. Diseñado para mantener seguros las carteras seleccionadas bajo coerción o amenazas.";
+"enable_duress_mode.intro.description" = "Este modo permite a los usuarios configurar múltiples códigos de desbloqueo para la aplicación, donde un código deseado muestra solo las carteras especificadas. Diseñado para mantener seguras las carteras seleccionadas bajo coacción o amenazas.";
 "enable_duress_mode.intro.notes" = "Notas";
 "enable_duress_mode.intro.biometrics.description" = "La función %@ funcionará para desbloquear el Modo Duración. Puede desactivar %@ para mayor comodidad.";
 "enable_duress_mode.intro.passcode_disabling" = "Desactivando contraseña";
@@ -1177,7 +1177,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "enable_duress_mode.intro.passcode_change" = "Cambiar contraseña";
 "enable_duress_mode.intro.passcode_change.description" = "Cambiar el código de acceso en el modo Duress también cambiará el código de acceso actual para ese modo.";
 
-"enable_duress_mode.select.title" = "Seleccionar carteras";
+"enable_duress_mode.select.title" = "Seleccionar Carteras";
 "enable_duress_mode.select.description" = "Seleccione las carteras que se mostrarán en Modo Duración.";
 "enable_duress_mode.select.wallets" = "Carteras";
 "enable_duress_mode.select.watch_wallets" = "Ver carteras";
@@ -1207,7 +1207,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "unlock.title" = "Desbloquear";
 "unlock.passcode" = "Introducir código";
-"unlock.biometry_reason" = "Desbloquear cartera";
+"unlock.biometry_reason" = "Desbloquear Cartera";
 "unlock.attempts_left" = "Intentos restantes: %@";
 "unlock.disabled_until" = "Inhabilitado hasta: %@";
 "unlock.random" = "Aleatorio";
@@ -1216,7 +1216,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "btc_blockchain_settings.restore_source" = "Restaurar Fuente";
 "btc_blockchain_settings.restore_source.description" = "Elige la fuente que la aplicación Unstoppable debería usar para sincronizar la(s) cartera(s).";
-"btc_blockchain_settings.restore_source.alert" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.";
+"btc_blockchain_settings.restore_source.alert" = "Después de cambiar la Fuente de Restauración, la cartera tendrá que resincronizarse con la cadena de bloques %@.";
 
 "btc_restore_mode.fast" = "Rápido, Privado, Centralizado";
 "btc_restore_mode.slow" = "Lento, Privado, Descentralizado";
@@ -1227,15 +1227,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "btc_transaction_sort_mode.bip69.description" = "Indexación Lexicográfica";
 
 "blockchain_settings.info.restore_source" = "Restaurar Fuente";
-"blockchain_settings.info.restore_source.content" = "Esta configuración solo es relevante al restaurar una cartera existente. Consiste en obtener el historial de transacciones de una criptomoneda específica para que la aplicación de la cartera pueda mostrar transacciones pasadas y calcular el saldo del usuario. Este proceso solo necesita realizarse una vez cuando el usuario restaura carteras previamente creadas.\n\nEn este punto, existen dos formas potenciales para que una cartera móvil como %@ pueda realizar esto:\n\n1. Desde el Servidor API: Utilizando un servidor de terceros predefinido que almacena toda la cadena de bloques y cuenta con datos procesados y optimizados para proporcionar rápidamente dichos datos. Este método es rápido pero potencialmente (no necesariamente) menos privado. También depende de la disponibilidad de un servidor de terceros, por lo que se considera una opción centralizada para restaurar una cartera. Se recomienda esta opción debido a su velocidad para obtener datos (5-10 minutos).\n\n2. Desde la Blockchain: La aplicación intenta restaurar directamente desde una red de nodos de la blockchain. Esta es una forma descentralizada de restaurar el saldo de la cartera y las transacciones pasadas. La aplicación solicita datos a varios nodos de la red sin dirigirse específicamente a uno en particular. Este método es más lento y puede tardar fácilmente 2-3 horas, por lo que la aplicación debe permanecer abierta durante la restauración. No depende de ninguna entidad y debería funcionar en todas las condiciones.";
+"blockchain_settings.info.restore_source.content" = "Esta configuración solo es relevante al restaurar una cartera existente. Es un proceso de obtención del historial de transacciones para una criptomoneda dada, de modo que la aplicación de la cartera pueda mostrar transacciones pasadas y calcular el saldo del usuario. Esto solo necesita suceder una vez cuando el usuario restaura carteras previamente creadas.\n\nEn este punto, hay dos formas potenciales para que una cartera móvil como %@ haga esto:\n\n1. desde el Servidor API: Hay un servidor de terceros predefinido que almacena toda la cadena de bloques y tiene todos los datos procesados y optimizados para proporcionar esos datos de manera rápida. Este método es rápido, pero potencialmente (no necesariamente) menos privado. También es un método centralizado para restaurar una cartera, ya que depende de la disponibilidad de un servidor de terceros. Esta opción se recomienda debido a su velocidad para obtener datos (5-10 minutos).\n\n2. desde Blockchain: La aplicación intenta restaurar directamente desde una red de nodos de la cadena de bloques. Esta es una forma descentralizada de restaurar el saldo de la cartera y las transacciones pasadas. La aplicación consulta a muchos de los nodos de la red y solicita datos de ellos sin dirigirse a algunos nodos específicamente. Esta opción es lenta y fácilmente puede tomar 2-3 horas; la aplicación necesita estar abierta mientras se realiza la restauración. Este método de restauración no depende de ninguna entidad y debería funcionar en todas las condiciones.";
 "blockchain_settings.info.rpc_source" = "Fuente RPC";
-"blockchain_settings.info.rpc_source.content" = "Esta configuración controla cómo esta aplicación interactúa con blockchains al enviar o recibir transacciones.
-
-\n\nEn el caso de Bitcoin, Bitcoin Cash, Litecoin y Dash, la comunicación con los nodos de la red blockchain es completamente peer-to-peer. %@ sondea muchos nodos y se comunica con uno de ellos. Cada vez, la aplicación se conecta a un nodo diferente.
-
-\n\nEn el caso de Ethereum, Binance Smart Chain y otras blockchains EVM, no hay alternativas para que las carteras móviles interactúen con las respectivas blockchains aparte de a través de proveedores de servicios RPC de terceros (es decir infura.io) o nodos personales. Eso significa esencialmente que su comunicación con esa blockchain no es descentralizada. Esto no afecta sus fondos de ninguna manera, solo la capacidad de conectarse a la red blockchain.
-
-\n\nTengan la seguridad de que estamos manteniendo esto en el radar y pronto intentaremos proporcionar una forma descentralizada de sincronización. Paciencia.";
+"blockchain_settings.info.rpc_source.content" = "Esta configuración controla cómo esta aplicación interactúa con las cadenas de bloques al enviar o recibir transacciones.\n\nEn el caso de Bitcoin, Bitcoin Cash, Litecoin y Dash, la comunicación con los nodos de la red de la cadena de bloques es completamente peer-to-peer. %@ consulta a muchos nodos y se comunica con uno de ellos. Cada vez, la aplicación se conecta a un nodo diferente.\n\nEn el caso de Ethereum, Binance Smart Chain y otras cadenas de bloques EVM, no hay alternativas para que las carteras móviles interactúen con las respectivas cadenas de bloques aparte de a través de proveedores de servicios RPC de terceros (es decir, Infura.io) o nodos personales. Eso significa esencialmente que tu comunicación con esa cadena de bloques no es descentralizada. Esto no afecta tus fondos de ninguna manera, solo la capacidad de conectarse a la red de la cadena de bloques.\n\nDescansa tranquilo, estamos manteniendo esto en el radar y pronto intentaremos proporcionar una manera descentralizada de sincronizar. Paciencia.";
 
 // Manage Accounts
 
@@ -1245,19 +1239,19 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Gestionar monederos";
+"settings_manage_keys.title" = "Gestionar Carteras";
 "settings_manage_keys.delete" = "Eliminar";
 "settings_manage_keys.backup" = "Copia de seguridad";
-"settings_manage_keys.delete.title" = "Eliminar Monedero";
-"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos de este dispositivo.";
-"settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"settings_manage_keys.delete.confirmation_watch" = "¿Quieres dejar de ver esta dirección de billetera?";
+"settings_manage_keys.delete.title" = "Eliminar cartera";
+"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará esta cartera del dispositivo.";
+"settings_manage_keys.delete.confirmation_loose" = "Si no hiciste una copia de seguridad de la clave privada de esta cartera, perderás el acceso a tus fondos.";
+"settings_manage_keys.delete.confirmation_watch" = "¿Quieres dejar de monitorear esta dirección de cartera?";
 "settings_manage_keys.delete.confirmation_watch.button" = "Dejar de ver";
 
 // Settings -> About App
 
 "settings.about_app.title" = "Sobre la App";
-"settings.about_app.app_name" = "%@ Monedero";
+"settings.about_app.app_name" = "Cartera %@";
 "settings.about_app.description" = "La billetera %@ está diseñada para aquellos que buscan invertir y almacenar criptomonedas de manera privada e independiente.\n\nEs una billetera no custodial y peer-to-peer donde solo el usuario tiene control sobre los fondos. No recopila datos y mantiene al usuario independiente al no bloquear los fondos del usuario en una aplicación de billetera específica.\n\nLa billetera %@ es completamente de código abierto y cualquier persona puede confirmar que la aplicación funciona exactamente como dice.";
 "settings.about_app.whats_new" = "Qué novedades hay";
 "settings.about_app.website" = "Website";
@@ -1499,7 +1493,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "Versión %@";
 "wallet_connect.list.v1_bottom_text" = "En la primera versión de WalletConnect, debes ir a las sesiones para ver y confirmar la solicitud";
-"wallet_connect_list.new_connection" = "Nueva Conexión";
+"wallet_connect_list.new_connection" = "Nueva conexión";
 "wallet_connect_list.disconnecting" = "Desconectando";
 
 "wallet_connect.no_account.description" = "Necesitas crear o importar una cartera antes de poder usar WalletConnect.";
