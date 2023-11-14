@@ -183,6 +183,7 @@
 "coin_settings.title" = "区块链设置";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "遗留问题";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "选择接收付款的地址格式。恢复现有钱包时应选择正确的格式。";
 
@@ -1217,8 +1218,9 @@
 "btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 "btc_blockchain_settings.restore_source.alert" = "更改恢复源后，钱包必须将自身与 %@ 区块链重新同步。";
 
-"btc_restore_mode.fast" = "Fast, Private, Centralized";
-"btc_restore_mode.slow" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "随机排序";
 "btc_transaction_sort_mode.shuffle.description" = "随机索引";
