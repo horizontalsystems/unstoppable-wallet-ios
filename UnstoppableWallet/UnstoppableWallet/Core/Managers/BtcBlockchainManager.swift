@@ -9,7 +9,7 @@ class BtcBlockchainManager {
         .bitcoinCash,
         .ecash,
         .litecoin,
-        .dash,
+        .dash
     ]
 
     private let marketKit: MarketKit.Kit
@@ -30,6 +30,10 @@ class BtcBlockchainManager {
             allBlockchains = []
         }
     }
+
+    private func fastestSyncMode(blockchainType: BlockchainType) -> BtcRestoreMode {
+        blockchainType.supports(restoreMode: .blockchair) ? .blockchair : .hybrid
+    }
 }
 
 extension BtcBlockchainManager {
@@ -46,23 +50,17 @@ extension BtcBlockchainManager {
     }
 
     func restoreMode(blockchainType: BlockchainType) -> BtcRestoreMode {
-        storage.btcRestoreMode(blockchainType: blockchainType) ?? .api
-    }
-
-    func apiSyncMode(blockchainType: BlockchainType) -> BitcoinCore.SyncMode {
-        switch blockchainType {
-            case .bitcoin, .bitcoinCash: return .blockchair(key: AppConfig.blockchairApiKey)
-            default: return .api
-        }
+        storage.btcRestoreMode(blockchainType: blockchainType) ?? fastestSyncMode(blockchainType: blockchainType)
     }
 
     func syncMode(blockchainType: BlockchainType, accountOrigin: AccountOrigin) -> BitcoinCore.SyncMode {
-        if accountOrigin == .created {
-            return apiSyncMode(blockchainType: blockchainType)
-        }
+        let _restoreMode = accountOrigin == .created
+            ? fastestSyncMode(blockchainType: blockchainType)
+            : restoreMode(blockchainType: blockchainType)
 
-        switch restoreMode(blockchainType: blockchainType) {
-        case .api: return apiSyncMode(blockchainType: blockchainType)
+        switch _restoreMode {
+        case .blockchair: return .blockchair(key: AppConfig.blockchairApiKey)
+        case .hybrid: return .api
         case .blockchain: return .full
         }
     }

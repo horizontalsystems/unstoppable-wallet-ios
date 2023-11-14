@@ -186,6 +186,17 @@ extension BlockchainType {
         }
     }
 
+    func supports(restoreMode: BtcRestoreMode) -> Bool {
+        guard case .blockchair = restoreMode else {
+            return true
+        }
+
+        switch self {
+            case .bitcoin, .bitcoinCash: return true
+            default: return false
+        }
+    }
+
 }
 
 extension BlockchainType: Comparable {

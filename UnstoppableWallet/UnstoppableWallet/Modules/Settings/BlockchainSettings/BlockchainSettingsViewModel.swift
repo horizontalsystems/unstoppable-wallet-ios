@@ -1,8 +1,8 @@
+import BitcoinCore
 import Combine
 import MarketKit
 import RxRelay
 import RxSwift
-import BitcoinCore
 
 class BlockchainSettingsViewModel: ObservableObject {
     private let btcBlockchainManager: BtcBlockchainManager
@@ -29,8 +29,7 @@ class BlockchainSettingsViewModel: ObservableObject {
         btcItems = btcBlockchainManager.allBlockchains
             .map { blockchain in
                 let restoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
-                let syncMode = btcBlockchainManager.apiSyncMode(blockchainType: blockchain.type)
-                return BtcSyncModeItem(blockchain: blockchain, restoreMode: restoreMode, syncMode: syncMode)
+                return BtcSyncModeItem(blockchain: blockchain, restoreMode: restoreMode)
             }
             .sorted { $0.blockchain.type.order < $1.blockchain.type.order }
     }
@@ -55,13 +54,12 @@ extension BlockchainSettingsViewModel {
 struct BtcSyncModeItem {
     let blockchain: Blockchain
     let restoreMode: BtcRestoreMode
-    let syncMode: BitcoinCore.SyncMode
 
     var title: String {
-        switch (restoreMode, syncMode) {
-            case (.api, .api): return "API"
-            case (.api, .blockchair): return "Blockchair API"
-            default: return "sync_mode.from_blockchain".localized(blockchain.name)
+        switch restoreMode {
+            case .blockchair: return "Blockchair API"
+            case .hybrid: return "sync_mode.hybrid".localized
+            case .blockchain: return "sync_mode.from_blockchain".localized(blockchain.name)
         }
     }
 }
