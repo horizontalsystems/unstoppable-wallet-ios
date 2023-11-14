@@ -813,49 +813,49 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.active_addresses.info2" = "Diagramm, das die Schwankungen in der Anzahl der täglich aktiven Adressen über einen Zeitraum von einem Jahr zeigt.";
 "coin_analytics.active_addresses.info3" = "Gesamtzahl der eindeutigen Blockchain-Adressen, die über einen Zeitraum von 30 Tagen mit einem Token handeln.";
 "coin_analytics.active_addresses.info4" = "Die Rangfolge des Tokens basiert auf der Anzahl der aktiven Wallets, die in einem Zeitraum von 30 Tagen mit dem Token handeln.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info5" = "Liste aller Tokens basierend auf der Anzahl täglicher aktiver Adressen, die mit dem Token über 24h / 7D / 1M Intervalle handeln.";
 
-"coin_analytics.transaction_count" = "Transaction Count";
-"coin_analytics.transaction_count_rank" = "Tx Count Rank";
-"coin_analytics.transaction_count_rank.description" = "Tokens are ranked by a number of transactions on a blockchain.";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with tokens over a 30-day period.";
-"coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
-"coin_analytics.transaction_count.info3" = "Token's rank is based on the number of transactions within the token 30-day period.";
-"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
-"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
+"coin_analytics.transaction_count" = "Transaktionsanzahl";
+"coin_analytics.transaction_count_rank" = "Rang nach Transaktionsanzahl";
+"coin_analytics.transaction_count_rank.description" = "Token werden nach der Anzahl von Transaktionen auf einer Blockchain eingestuft.";
+"coin_analytics.transaction_count.info1" = "Gesamtzahl der einzigartigen Blockchain-Transaktionen mit Token über einen Zeitraum von 30 Tagen.";
+"coin_analytics.transaction_count.info2" = "Diagramm, das die Schwankungen in der Anzahl der Transaktionen über einen Zeitraum von einem Jahr zeigt.";
+"coin_analytics.transaction_count.info3" = "Der Rang des Tokens basiert auf der Anzahl der Transaktionen innerhalb des 30-Tage-Zeitraums des Tokens.";
+"coin_analytics.transaction_count.info4" = "Liste aller Token, sortiert nach der Anzahl der Transaktionen mit dem Token über Intervalle von 24 Stunden, 7 Tagen und einem Monat.";
+"coin_analytics.transaction_count.info5" = "Die Gesamtzahl der Token, die über die Blockchain über den Zeitraum von 30 Tagen übertragen wurden.";
 
-"coin_analytics.holders" = "Holders";
-"coin_analytics.holders_rank" = "Holders Rank";
-"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
-"coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
+"coin_analytics.holders" = "Halter";
+"coin_analytics.holders_rank" = "Halter Rang";
+"coin_analytics.holders_rank.description" = "Ranking von Token nach einzigartigen Adressen, die diese auf mehreren Blockchains halten.";
+"coin_analytics.holders.info1" = "Gesamtzahl der einzigartigen Adressen, die den Token auf verschiedenen Blockchains halten.";
 "coin_analytics.holders.info2" = "Die Top 10 Wallets, die den Token auf jeder Blockchain halten.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
-"coin_analytics.holders.count" = "Total Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "in den Top 10 Haltern";
+"coin_analytics.holders.count" = "Gesamteinhaber: %@";
 "coin_analytics.holders.see_all" = "Alle anzeigen";
 
-"coin_analytics.project_tvl" = "Project TVL";
+"coin_analytics.project_tvl" = "Projekt TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
-"coin_analytics.project_tvl.info1" = "Total-value-locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank is based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info_title" = "Projekt TVL (Gesamtwert gesperrt)";
+"coin_analytics.project_tvl.info1" = "Überwachte Blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon.";
+"coin_analytics.project_tvl.info2" = "Diagramm mit Variation Total-Value-gesperrt in intelligenten Verträgen über 1 Jahr.";
+"coin_analytics.project_tvl.info3" = "Tokens Rang basiert auf dem aktuellen Total-Wert-gesperrt.";
+"coin_analytics.project_tvl.info4" = "Liste aller Token basierend auf dem aktuellen Total-Wert gesperrt.";
+"coin_analytics.project_tvl.info5" = "Market Cap / TVL Verhältnis für das Projekt.";
 
-"coin_analytics.project_fee" = "Project Fee";
-"coin_analytics.project_fee_rank" = "Project Fee Rank";
-"coin_analytics.project_fee_rank.description" = "Tokens are ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee" = "Projektgebühr";
+"coin_analytics.project_fee_rank" = "Projektgebührenrang";
+"coin_analytics.project_fee_rank.description" = "Token werden nach den von den jeweiligen Projekten generierten Gebühren eingestuft. Die Art und Weise, wie Gebühren gesammelt werden, variiert von Projekt zu Projekt.";
 
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.project_revenue_rank" = "Project Revenue Rank";
-"coin_analytics.project_revenue_rank.description" = "Tokens are ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue" = "Projekteinnahmen";
+"coin_analytics.project_revenue_rank" = "Projekt-Umsatzrang";
+"coin_analytics.project_revenue_rank.description" = "Token werden nach Einnahmen klassifiziert, die über Mechanismen wie Stapel- oder Tokenbrennen für Inhaber generiert werden.";
 
-"coin_analytics.other_data" = "Other Data";
+"coin_analytics.other_data" = "Andere Daten";
 
-"coin_analytics.reports" = "Reports";
+"coin_analytics.reports" = "Berichte";
 
-"coin_analytics.funding" = "Funding";
+"coin_analytics.funding" = "Finanzierung";
 "coin_analytics.funding.lead" = "Lead";
 
 "coin_analytics.treasuries" = "Treasuries";
@@ -877,21 +877,21 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.overall_score.good" = "Gut";
 "coin_analytics.overall_score.fair" = "Faire";
 "coin_analytics.overall_score.poor" = "Arm";
-"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total available liquidity on decentralized exchanges.";
-"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
-"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
-"coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
-"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding the respective token.";
+"coin_analytics.overall_score.cex_volume" = "Die Gesamtbewertung basiert auf dem durchschnittlichen täglichen Handelsvolumen an zentralisierten Börsen in den letzten 7 Tagen.";
+"coin_analytics.overall_score.dex_volume" = "Die Gesamtpunktzahl basiert auf dem durchschnittlichen täglichen Handelsvolumen an dezentralen Börsen in den letzten 7 Tagen.";
+"coin_analytics.overall_score.dex_liquidity" = "Die Gesamtzahl basiert auf der verfügbaren Liquidität bei dezentralen Börsen.";
+"coin_analytics.overall_score.active_addresses" = "Die Gesamtpunktzahl basiert auf den durchschnittlichen täglichen aktiven Adressen der letzten 7 Tage.";
+"coin_analytics.overall_score.project_tvl" = "Die Gesamtpunktzahl basiert auf dem gesperrten Gesamtwert (verwaltete Assets) auf dem Projekt, das durch den angegebenen Token repräsentiert wird.";
+"coin_analytics.overall_score.transaction_count" = "Die Gesamtpunktzahl basiert auf der durchschnittlichen täglichen Transaktionsanzahl der letzten 7 Tage.";
+"coin_analytics.overall_score.holders" = "Die Gesamtpunktzahl richtet sich nach der Gesamtzahl der Adressen mit dem jeweiligen Token.";
 
 "coin_analytics.rank" = "Rang";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.30_day_rank" = "30-Tage Rang";
+"coin_analytics.30_day_volume" = "30-Tage Lautstärke";
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "Keine Daten verfügbar";
 "coin_markets.filter.all" = "Alle";
 "coin_markets.filter.verified" = "Verifiziert";
 "coin_markets.verified" = "Verifiziert";
@@ -899,36 +899,36 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Coin Page -> Tweets
 
 "coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
+"coin_tweets.reference_type.quoted" = "Zitiert @%@";
+"coin_tweets.reference_type.replied" = "Auf @%@ geantwortet";
 "coin_tweets.no_tweets_yet" = "Noch keine Tweets";
-"coin_tweets.not_available" = "No twitter available";
+"coin_tweets.not_available" = "Kein Twitter verfügbar";
 "coin_tweets.see_on_twitter" = "Auf Twitter ansehen";
 
 // Coin Page -> Indicators
 
 "chart_indicators.title" = "Indikatoren";
-"chart_indicators.moving_averages" = "Moving Averages";
-"chart_indicators.oscillators" = "Oscillators";
+"chart_indicators.moving_averages" = "Gleitende Durchschnitte";
+"chart_indicators.oscillators" = "Oszillatoren";
 
 
-"chart_indicators.settings.period.error" = "Period can’t be more than %d";
+"chart_indicators.settings.period.error" = "Zeitraum kann nicht mehr als %d sein";
 
-"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
-"chart_indicators.settings.ma.type_title" = "Type";
+"chart_indicators.settings.ma.description" = "Die EMA, SMA und WMA sind bewegliche Durchschnittswerte, die in der technischen Analyse verwendet werden:\n\nEMA betont die aktuellen Preise für schnellere Reaktionen.\nSMA ermittelt die durchschnittlichen Preisdaten für eine allgemeine Trendansicht.\nWMA ausgewogen Empfindlichkeit und Rauschreduzierung durch lineares Gewichten der letzten Daten";
+"chart_indicators.settings.ma.type_title" = "Typ";
 "chart_indicators.settings.ma.period_title" = "Zeitraum";
 
 "chart_indicators.settings.rsi.title" = "RSI";
-"chart_indicators.settings.rsi.description" = "The Relative Strength Index (RSI) is a momentum oscillator that measures price speed and change, identifying overbought (above 70) or oversold (below 30) market conditions. It can also detect price reversals through divergences.";
+"chart_indicators.settings.rsi.description" = "Der Relative Strength Index (RSI) ist ein Momentum-Oszillator, der die Geschwindigkeit und Veränderung des Preises misst und überkaufte (über 70) oder überverkaufte (unter 30) Marktbedingungen identifiziert. Er kann auch Preisumkehrungen durch Divergenzen erkennen.";
 "chart_indicators.settings.rsi.period_title" = "RSI Length";
 
 "chart_indicators.settings.macd.title" = "MACD";
-"chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is a momentum indicator that tracks the relationship between two EMAs of a security's price. It signals buying or selling opportunities when the MACD line (12-period EMA minus 26-period EMA) crosses the 9-period EMA, known as the signal line.";
-"chart_indicators.settings.macd.fast_period_title" = "Fast Length";
-"chart_indicators.settings.macd.slow_period_title" = "Slow Length";
-"chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
+"chart_indicators.settings.macd.description" = "Der Moving Average Convergence Divergence (MACD) ist ein Momentum-Indikator, der das Verhältnis zwischen zwei EMAs (Exponentiell Gleitenden Durchschnitten) des Preises eines Wertpapiers verfolgt. Er signalisiert Kauf- oder Verkaufsmöglichkeiten, wenn die MACD-Linie (12-Perioden-EMA minus 26-Perioden-EMA) den 9-Perioden-EMA, bekannt als Signal-Linie, kreuzt.";
+"chart_indicators.settings.macd.fast_period_title" = "Schnelle Länge";
+"chart_indicators.settings.macd.slow_period_title" = "Langsame Länge";
+"chart_indicators.settings.macd.signal_period_title" = "Signal glättet";
 
-"chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
+"chart_indicators.settings.macd.slow_fast.error" = "Schnelle Länge muss kleiner als Langsame Länge sein";
 
 // Transactions
 
@@ -978,7 +978,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "tx_info.title" = "Transaktionsdaten";
 "tx_info.date" = "Datum";
-"tx_info.title_approval" = "Swap Approval";
+"tx_info.title_approval" = "Swap-Genehmigung";
 "tx_info.status.pending" = "In Bearbeitung";
 "tx_info.status.completed" = "Abgeschlossen";
 "tx_info.status.failed" = "Fehlgeschlagen";
@@ -1008,7 +1008,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tx_info.you_paid" = "Du hast gezahlt";
 "tx_info.you_got" = "Du bekommst";
 "tx_info.price" = "Preis";
-"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
+"tx_info.scam_warning" = "Diese Transaktion ist verdächtig und könnte ein Betrug sein. Bitte kopieren Sie keine Adressen aus dieser Transaktion.";
 
 // Settings
 
@@ -1220,9 +1220,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "btc_blockchain_settings.restore_source.description" = "Wählen Sie die Quelle, die die Unstoppable-App für die Synchronisierung von Wallet(s) verwenden soll.";
 "btc_blockchain_settings.restore_source.alert" = "Nach dem Ändern der Quelle wiederherstellen muss sich die Wallet mit der %@ Blockchain synchronisieren.";
 
-"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.blockchair" = "Schnell, privat, zentralisiert";
 "btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchain" = "Langsam, privat, dezentralisiert";
 
 "btc_transaction_sort_mode.shuffle" = "Zufällig";
 "btc_transaction_sort_mode.shuffle.description" = "Zufällige Indizierung";
@@ -1297,8 +1297,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "appearance.balance_conversion" = "Saldokonvertierung";
 
 "appearance.balance_value" = "Saldo Wert";
-"appearance.balance_value.coin_value" = "Coin Value";
-"appearance.balance_value.fiat_value" = "Fiat Value";
+"appearance.balance_value.coin_value" = "Münzwert";
+"appearance.balance_value.fiat_value" = "Fiat-Wert";
 
 // Settings -> Contacts
 
@@ -1455,7 +1455,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "add_token.bep2_symbol_not_found" = "BEP2-Symbol nicht gefunden";
 "add_token.input_placeholder.contract_address" = "Vertragsadresse";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
-"add_token.coin_name" = "Coin Name";
+"add_token.coin_name" = "Münzname";
 "add_token.symbol" = "Symbol";
 "add_token.decimals" = "Dezimalen";
 
@@ -1749,7 +1749,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "nft.activity.event_types" = "Ereignistypen";
 "nft.activity.event_type.all" = "Alle Ereignisse";
 "nft.activity.event_type.sale" = "Sale";
-"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.transfer" = "Überweisung";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Liste";
 "nft.activity.event_type.listCancel" = "Liste abbrechen";
@@ -1759,12 +1759,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Subscription Info
 
 "subscription_info.title" = "Premium-Funktionen";
-"subscription_info.info1.title" = "Cryptocurrency Analytics";
-"subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info2.title" = "Chart Indicators";
-"subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.info1.title" = "Analyse der Kryptowährung";
+"subscription_info.info1.text" = "Erkennen Sie lukrative Chancen, vermeiden Sie Betrügereien und maximieren Sie Ihre Gewinne in der dynamischen Welt der Kryptowährung.";
+"subscription_info.info2.title" = "Diagrammindikatoren";
+"subscription_info.info2.text" = "Erkennen Sie lukrative Chancen, vermeiden Sie Betrügereien und maximieren Sie Ihre Gewinne in der dynamischen Welt der Kryptowährung.";
 "subscription_info.info3.title" = "Persönlicher Support";
-"subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.info3.text" = "Erkennen Sie lukrative Chancen, vermeiden Sie Betrügereien und maximieren Sie Ihre Gewinne in der dynamischen Welt der Kryptowährung.";
 "subscription_info.get_premium" = "Premium erhalten";
 "subscription_info.already_have" = "Ich habe bereits Premium";
 
@@ -1773,10 +1773,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "activate_subscription.title" = "Aktivieren";
 "activate_subscription.wallet" = "Wallet";
 "activate_subscription.address" = "Adresse";
-"activate_subscription.message" = "Message to Sign";
+"activate_subscription.message" = "zu signierende Nachricht";
 "activate_subscription.sign" = "Signieren";
-"activate_subscription.activating" = "Activating...";
-"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+"activate_subscription.activating" = "Aktivieren...";
+"activate_subscription.failed_to_activate" = "Fehler beim Aktivieren des Abonnements";
 "activate_subscription.activated" = "Aktiviert";
 "activate_subscription.no_subscriptions" = "Ihre Wallet-Adresse hat kein Abonnement für Premium-Funktionen, Sie müssen sie kaufen, um das Abonnement zu aktivieren.";
 
@@ -1790,7 +1790,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tron.send.activation_fee" = "Aktivierungsgebühr";
 "tron.send.resources_consumed" = "Verbrauchte Ressourcen";
 "tron.send.bandwidth" = "Bandwidth";
-"tron.send.energy" = "Energy";
+"tron.send.energy" = "Energie";
 "tron.send.fee.info" = "Die geschätzten Kosten für den Versand einer Transaktion im Netzwerk (ohne Energie-, Bandbreiten- und Aktivierungsgebühren)";
 "tron.send.resources_consumed.info" = "Bandwidth ist die Einheit, die die Größe der in der Blockchain-Datenbank gespeicherten Transaktionsbytes misst. Je größer die Transaktion, desto mehr Ressourcen werden verbraucht.\n\nEnergie ist die Einheit, die die Anzahl der Berechnungen misst, die von der virtuellen TRON-Maschine benötigt werden, um bestimmte Operationen im TRON-Netzwerk durchzuführen.\n\nDa intelligente Vertragsabschlüsse die Verwendung von Rechnerressourcen erfordern, muss für jeden Smart Contract eine Energiegebühr bezahlt werden.";
 "tron.send.activation_fee.info" = "Die Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren.";
@@ -1816,7 +1816,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "cex_deposit.network" = "Netzwerk";
 "cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "Min. Amount";
+"cex_deposit.min_amount" = "Min. Betrag";
 "cex_deposit.warning_memo" = "Memo (Tag) ist erforderlich, sonst verlieren Sie Ihre Münzen.";
 "cex_deposit.copy_address" = "Kopieren";
 "cex_deposit.share_address" = "Teilen";
@@ -1850,11 +1850,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // No Passcode
 
 "no_passcode.info_text" = "Diese App erfordert, dass das Telefon den Passcode (Bildschirmsperre) aktiviert hat.\n\nSie können dies in den iOS-Einstellungen aktivieren.\n\nBitte beachten Sie, dass wenn Sie die PIN auf der Betriebssystemebene deaktiviert haben, die Sicherheitsmaßnahmen im sicheren Speicher Ihres Telefons die zuvor gespeicherten Daten ungültig gemacht haben. Sie müssen Ihre Wallet-Schlüssel wiederherstellen, um zu Ihrer Wallet zurückzukehren.";
-"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
-"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+"cannot_check_passcode.info_text" = "Nicht möglich, den Status des Passcodes (Bildschirmsperre) zu überprüfen. Bitte starten Sie die Anwendung neu.";
+"jailbreak.info_text" = "Das Unstoppable-Team empfiehlt, die App nur auf nicht gerooteten (nicht jailbroken) Mobiltelefonen auszuführen.\n\nBitte beachten Sie, wenn Sie ein gerootetes Gerät verwenden, kann die App die Sicherheit Ihrer Kryptowährung vor bösartiger Software nicht mehr garantieren.";
 
 // Scam Filter
 
-"scam_filter.title" = "Scam Filter";
-"scam_filter.enabled" = "Enabled";
-"scam_filter.description" = "Scam Filter detects suspicious transactions and hides them from Transactions list. The following filters are applied for detection:\n\n- coins that are not listed in our Market list\n\n- transactions with zero value\n\n- transactions with very small stable coin amount";
+"scam_filter.title" = "Scamfilter";
+"scam_filter.enabled" = "Aktiviert";
+"scam_filter.description" = "Der Betrugsfilter erkennt verdächtige Transaktionen und verbirgt sie in der Transaktionsliste. Folgende Filter werden zur Erkennung angewendet:\n\n-Coins, die nicht in unserer Markliste aufgeführt sind\n\n-Transaktionen mit Nullwert\n\n-Transaktionen mit sehr geringem Stable-Coin-Betrag";
