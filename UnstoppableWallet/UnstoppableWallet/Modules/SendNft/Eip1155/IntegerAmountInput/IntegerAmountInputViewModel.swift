@@ -24,7 +24,13 @@ class IntegerAmountInputViewModel {
     private var amountRelay = BehaviorRelay<String?>(value: nil)
     private var isMaxEnabledRelay = BehaviorRelay<Bool>(value: false)
 
-    let publishAmountRelay = PublishRelay<Decimal>()
+
+    var amountDisposeBag = DisposeBag()
+    var publishAmountRelay: BehaviorRelay<Decimal>? {
+        didSet {
+            registerAmountRelay()
+        }
+    }
 
     init(service: IIntegerAmountInputService, isMaxSupported: Bool = true) {
         self.service = service
@@ -32,7 +38,6 @@ class IntegerAmountInputViewModel {
 
         subscribe(disposeBag, service.amountObservable) { [weak self] in self?.sync(amount: $0) }
         subscribe(disposeBag, service.balanceObservable) { [weak self] in self?.sync(balance: $0) }
-        subscribe(disposeBag, publishAmountRelay.asObservable()) { [weak self] in self?.sync(publishedAmount: $0) }
 
         sync(amount: service.amount)
         sync(balance: service.balance)
@@ -58,6 +63,17 @@ class IntegerAmountInputViewModel {
     private func sync(balance: Int?) {
         queue.async { [weak self] in
             self?.updateMaxEnabled()
+        }
+    }
+
+    private func registerAmountRelay() {
+        guard let publishAmountRelay else {
+            return
+        }
+
+        amountDisposeBag = DisposeBag()
+        subscribe(amountDisposeBag, publishAmountRelay.asObservable()) { [weak self] amount in
+            self?.sync(publishedAmount: amount)
         }
     }
 

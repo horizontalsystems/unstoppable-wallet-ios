@@ -9,17 +9,30 @@ import MarketKit
 import ZcashLightClientKit
 
 class AddressParserFactory {
+    static let uriBlockchainTypes: [BlockchainType] = [
+            .bitcoin,
+            .bitcoinCash,
+            .ecash,
+            .litecoin,
+            .dash,
+            .zcash,
+            .ethereum,
+            .binanceChain,
+            .tron,
+    ]
+
     static func parser(blockchainType: BlockchainType?) -> AddressUriParser {
         switch blockchainType {
-        case .bitcoin: return AddressUriParser(validScheme: "bitcoin", removeScheme: true)
-        case .litecoin: return AddressUriParser(validScheme: "litecoin", removeScheme: true)
-        case .bitcoinCash: return AddressUriParser(validScheme: "bitcoincash", removeScheme: false)
-        case .ecash: return AddressUriParser(validScheme: "ecash", removeScheme: false)
-        case .dash: return AddressUriParser(validScheme: "dash", removeScheme: true)
-        case .ethereum: return AddressUriParser(validScheme: "ethereum", removeScheme: true)
-        case .binanceChain: return AddressUriParser(validScheme: "binance", removeScheme: true)
-        case .zcash: return AddressUriParser(validScheme: "zcash", removeScheme: true)
-        default: return AddressUriParser(validScheme: nil, removeScheme: false)
+        case .bitcoin: return AddressUriParser(blockchainType: blockchainType, validScheme: "bitcoin", removeScheme: true)
+        case .bitcoinCash: return AddressUriParser(blockchainType: blockchainType, validScheme: "bitcoincash", removeScheme: false)
+        case .ecash: return AddressUriParser(blockchainType: blockchainType, validScheme: "ecash", removeScheme: false)
+        case .litecoin: return AddressUriParser(blockchainType: blockchainType, validScheme: "litecoin", removeScheme: true)
+        case .dash: return AddressUriParser(blockchainType: blockchainType, validScheme: "dash", removeScheme: true)
+        case .zcash: return AddressUriParser(blockchainType: blockchainType, validScheme: "zcash", removeScheme: true)
+        case .ethereum: return AddressUriParser(blockchainType: blockchainType, validScheme: "ethereum", removeScheme: true)
+        case .binanceChain: return AddressUriParser(blockchainType: blockchainType, validScheme: "binance", removeScheme: true)
+        case .tron: return AddressUriParser(blockchainType: blockchainType, validScheme: "tron", removeScheme: true)
+        default: return AddressUriParser(blockchainType: blockchainType, validScheme: nil, removeScheme: false)
         }
     }
 

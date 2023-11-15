@@ -1,3 +1,5 @@
+import Foundation
+
 struct SendBaseService {}
 
 extension SendBaseService {
@@ -10,7 +12,7 @@ extension SendBaseService {
 
     enum Mode {
         case send
-        case prefilled(address: String)
+        case prefilled(address: String, amount: Decimal?)
         case predefined(address: String)
     }
 

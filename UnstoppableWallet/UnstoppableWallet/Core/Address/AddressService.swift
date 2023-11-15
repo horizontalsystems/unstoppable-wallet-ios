@@ -4,7 +4,7 @@ import RxCocoa
 import MarketKit
 
 protocol IAmountPublishService: AnyObject {
-    var publishAmountRelay: PublishRelay<Decimal> { get }
+    var publishAmountRelay: BehaviorRelay<Decimal>? { get set }
 }
 
 class AddressService {
@@ -32,7 +32,13 @@ class AddressService {
 
     private var text: String = ""
 
-    weak var amountPublishService: IAmountPublishService?
+    let publishAmountRelay = BehaviorRelay<Decimal>(value: 0)
+
+    weak var amountPublishService: IAmountPublishService? {
+        didSet {
+            amountPublishService?.publishAmountRelay = publishAmountRelay
+        }
+    }
     weak var customErrorService: IErrorService? {
         didSet {
             register(customErrorService: customErrorService)
@@ -156,15 +162,16 @@ extension AddressService {
     }
 
     func handleFetched(text: String) -> String {
-        let addressData = addressUriParser.parse(paymentAddress: text.trimmingCharacters(in: .whitespaces))
-
-        if let amount = addressData.amount {
-            amountPublishService?.publishAmountRelay.accept(Decimal(amount))
+        let result = addressUriParser.parse(paymentAddress: text.trimmingCharacters(in: .whitespaces))
+        switch result {
+        case .noUri, .wrongUri: return text
+        case .data(let data):
+            if let amount = data.amount {
+                publishAmountRelay.accept(Decimal(amount))
+            }
+            set(text: data.address)
+            return data.address
         }
-
-        set(text: addressData.address)
-
-        return addressData.address
     }
 
     func change(blockchainType: BlockchainType) {

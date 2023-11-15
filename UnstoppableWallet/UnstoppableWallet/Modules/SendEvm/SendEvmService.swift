@@ -1,10 +1,10 @@
-import Foundation
-import MarketKit
-import RxSwift
-import RxRelay
-import EvmKit
 import BigInt
+import EvmKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class SendEvmService {
     let sendToken: Token
@@ -38,7 +38,9 @@ class SendEvmService {
         self.addressService = addressService
 
         switch mode {
-        case .prefilled(let address): addressService.set(text: address)
+        case .prefilled(let address, let amount):
+            addressService.set(text: address)
+            if let amount { addressService.publishAmountRelay.accept(amount) }
         case .predefined(let address): addressService.set(text: address)
         case .send: ()
         }
@@ -48,9 +50,9 @@ class SendEvmService {
 
     private func sync(addressState: AddressService.State) {
         switch addressState {
-        case .success(let address):
+        case let .success(address):
             do {
-                addressData = AddressData(evmAddress: try EvmKit.Address(hex: address.raw), domain: address.domain)
+                addressData = try AddressData(evmAddress: EvmKit.Address(hex: address.raw), domain: address.domain)
             } catch {
                 addressData = nil
             }
@@ -83,11 +85,9 @@ class SendEvmService {
 
         return evmAmount
     }
-
 }
 
 extension SendEvmService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -95,11 +95,9 @@ extension SendEvmService {
     var amountCautionObservable: Observable<(error: Error?, warning: AmountWarning?)> {
         amountCautionRelay.asObservable()
     }
-
 }
 
 extension SendEvmService: IAvailableBalanceService {
-
     var availableBalance: DataStatus<Decimal> {
         .completed(adapter.balanceData.available)
     }
@@ -107,11 +105,9 @@ extension SendEvmService: IAvailableBalanceService {
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
         Observable.just(availableBalance)
     }
-
 }
 
 extension SendEvmService: IAmountInputService {
-
     var amount: Decimal {
         0
     }
@@ -161,11 +157,9 @@ extension SendEvmService: IAmountInputService {
 
         syncState()
     }
-
 }
 
 extension SendEvmService {
-
     enum State {
         case ready(sendData: SendEvmData)
         case notReady
@@ -184,5 +178,4 @@ extension SendEvmService {
         let evmAddress: EvmKit.Address
         let domain: String?
     }
-
 }

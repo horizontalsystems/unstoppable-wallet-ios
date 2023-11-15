@@ -56,7 +56,13 @@ open class AmountInputViewModel {
     private var amountWarningRelay = BehaviorRelay<String?>(value: nil)
 
     var coinDecimals: Int
-    let publishAmountRelay = PublishRelay<Decimal>()
+
+    var amountDisposeBag = DisposeBag()
+    var publishAmountRelay: BehaviorRelay<Decimal>? {
+        didSet {
+            registerAmountRelay()
+        }
+    }
 
     init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: AmountDecimalParser, coinDecimals: Int = AmountInputViewModel.fallbackCoinDecimals, isMaxSupported: Bool = true) {
         self.service = service
@@ -75,7 +81,6 @@ open class AmountInputViewModel {
         subscribe(disposeBag, fiatService.primaryInfoObservable) { [weak self] in self?.sync(primaryInfo: $0) }
         subscribe(disposeBag, fiatService.secondaryAmountInfoObservable) { [weak self] in self?.syncSecondary(amountInfo: $0) }
         subscribe(disposeBag, switchService.toggleAvailableObservable) { [weak self] in self?.switchEnabledRelay.accept($0) }
-        subscribe(disposeBag, publishAmountRelay.asObservable()) { [weak self] in self?.fiatService.set(coinAmount: $0, notify: true) }
 
         sync(amount: service.amount)
         sync(token: service.token)
@@ -107,6 +112,17 @@ open class AmountInputViewModel {
 
             self?.fiatService.set(token: token)
             self?.updateMaxEnabled()
+        }
+    }
+
+    private func registerAmountRelay() {
+        guard let publishAmountRelay else {
+            return
+        }
+
+        amountDisposeBag = DisposeBag()
+        subscribe(amountDisposeBag, publishAmountRelay.asObservable()) { [weak self] amount in
+            self?.fiatService.set(coinAmount: amount, notify: true)
         }
     }
 
