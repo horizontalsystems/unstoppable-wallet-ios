@@ -26,7 +26,7 @@
 "button.sign" = "kaydol";
 "button.more" = "Daha Fazlası";
 "button.i_understand" = "Anlıyorum";
-"button.learn_more" = "Learn More";
+"button.learn_more" = "Daha fazla bilgi edin";
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
@@ -46,7 +46,7 @@
 "alert.added_to_watchlist" = "Added To Watchlist";
 "alert.removed_from_watchlist" = "İzleme Listesinden Kaldır";
 "alert.added_to_wallet" = "Cüzdana Eklendi";
-"alert.removed_from_wallet" = "Removed from Wallet";
+"alert.removed_from_wallet" = "Cüzdandan Kaldırıldı";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
 "alert.created" = "Oluşturuldu";
@@ -69,7 +69,7 @@
 "alert.revoked" = "İptal et";
 "alert.cant_recognize" = "Tanıyamıyorum";
 
-"no_results_found" = "No results found";
+"no_results_found" = "Sonuç bulunamadı";
 "action.loading" = "yükleniyor...";
 "placeholder.search" = "Ara";
 
@@ -112,7 +112,7 @@
 "access_camera.message" = "%@, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.
 
 Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
-"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.not_supported" = "Cihazınız bir öğeden kod tarımını desteklemiyor. Bir kameraya sahip bir cihaz kullanın lütfen.";
 "access_camera.settings" = "Ayarlar";
 
 // Restore
@@ -631,12 +631,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "Sonuç bulunamadı";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
 "market.search.title" = "Ara";
-"market.search.empty_text" = "No results found";
+"market.search.empty_text" = "Sonuç bulunamadı";
 
 "market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Show Results";
@@ -688,72 +688,72 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.more_50_b" = "> 50B";
 "market.advanced_search.more_500_b" = "> 500B";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1 Gün";
+"market.advanced_search.week" = "1 Hafta";
+"market.advanced_search.week2" = "2 Hafta";
+"market.advanced_search.month" = "1 Ay";
+"market.advanced_search.month6" = "6 Ay";
+"market.advanced_search.year" = "1 Yıl";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "Sonuçlar";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.title" = "Toplam Piyasa Değeri";
+"market.global.total_market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
 
 "market.global.volume_24h.title" = "24h Volume";
-"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+"market.global.volume_24h.description" = "Kripto piyasa 24 saatlik işlem hacmi";
 
 "market.global.defi_cap.title" = "DeFi Cap";
-"market.global.defi_cap.description" = "Total market value of DeFi projects";
+"market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
 
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.global.tvl_in_defi.description" = "DeFi'deki Toplam Kilit Değer (TVL)";
 "market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.filter_by_chain" = "Zincir ile filtrele";
 
 // Coin Page
 
 "coin_page.overview" = "Fiyat";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "Analitik";
 "coin_page.markets" = "Markets";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
+"coin_overview.indicators" = "Göstergeler";
+"coin_overview.indicators.show" = "Göster";
+"coin_overview.indicators.hide" = "Gizle";
 "coin_overview.market_cap" = "Market Cap";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.circulating_supply" = "Dolaşımda";
+"coin_overview.total_supply" = "Toplam arz";
 "coin_overview.diluted_market_cap" = "Seyreltilmiş P. Değeri";
-"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.genesis_date" = "Başlangıç ​​tarihi";
 "coin_overview.trading_volume" = "Trading Volume";
 
-"coin_overview.roi.hour24" = "1 Day";
-"coin_overview.roi.day7" = "1 Week";
-"coin_overview.roi.day14" = "2 Weeks";
-"coin_overview.roi.day30" = "1 Month";
-"coin_overview.roi.day200" = "6 Month";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.hour24" = "1 Gün";
+"coin_overview.roi.day7" = "1 Hafta";
+"coin_overview.roi.day14" = "2 Hafta";
+"coin_overview.roi.day30" = "1 Ay";
+"coin_overview.roi.day200" = "6 Ay";
+"coin_overview.roi.year1" = "1 Yıl";
 
 "coin_overview.overview" = "Overview";
 "coin_overview.description_warning" = "Bu, verilen kripto para birimi için sağlanan referans materyale dayanarak yapay zeka tarafından oluşturulmuş bir açıklamadır. Hatalar içerebilir.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Coin Types";
+"coin_overview.coin_types" = "Coin çeşitleri";
 "coin_overview.show_more" = "Daha Fazlası";
-"coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.show_less" = "Az göster";
+"coin_overview.links" = "Bağlantılar";
 
-"coin_overview.guide" = "Guide";
+"coin_overview.guide" = "Kılavuzu";
 "coin_overview.website" = "Website";
 "coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
 
-"coin_analytics.indicators.summary" = "Summary";
-"coin_analytics.indicators.title" = "Technical Indicators";
+"coin_analytics.indicators.summary" = "Kısa özet";
+"coin_analytics.indicators.title" = "Teknik Göstergeleri";
 "coin_analytics.indicators.no_data" = "No Data";
 "coin_analytics.indicators.strong_buy" = "Strong Buy";
 "coin_analytics.indicators.buy" = "Buy";
@@ -771,7 +771,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "coin_analytics.not_available" = "This project has no analytical data";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators" = "Teknik Göstergeleri";
 "coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
 "coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
 "coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
@@ -907,7 +907,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "Göstergeler";
 "chart_indicators.moving_averages" = "Moving Averages";
 "chart_indicators.oscillators" = "Oscillators";
 
@@ -1302,7 +1302,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "contacts.title" = "Kişiler";
 "contacts.list.search_placeholder" = "İsme göre ara";
 "contacts.list.not_found" = "Eklenmiş bir kişiniz yok";
-"contacts.list.not_found_search" = "No results found";
+"contacts.list.not_found_search" = "Sonuç bulunamadı";
 "contacts.add_new_contact" = "Yeni Kişi Ekle";
 "contacts.update_contact.already_has_address" = "Seçilen kişinin zaten %@ üzerinde bir adresi var. Bu eylem, %@ adresini %@ ile değiştirecek.";
 "contacts.update_contact.replace" = "Değiştir";
@@ -1370,14 +1370,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "Birim(24 saat)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "Dolaşımda";
 "chart.selected.volume" = "Hacim.";
 
 "chart.market.header" = "Market";
 "chart.market.market_cap" = "Market Cap";
 "chart.market.volume" = "Birim(24 saat)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "Dolaşımda";
+"chart.market.total_supply" = "Toplam arz";
 
 "chart.performance.week_changes" = "Changes (1W)";
 "chart.performance.month_changes" = "Changes (1M)";
@@ -1714,7 +1714,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "nft_asset.details.token_id" = "Token Kimliği";
 "nft_asset.details.token_standard" = "Token Standardı";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
+"nft_asset.links" = "Bağlantılar";
 "nft_asset.links.website" = "Website";
 "nft_asset.options.save_to_photos" = "Fotoğraflara Kaydet";
 "nft_asset.options.set_as_watch_face" = "İzleme Yüzü olarak ayarla";
@@ -1728,7 +1728,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "nft_collection.overview.description" = "Açıklama";
 "nft_collection.overview.contracts" = "Kişiler";
-"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links" = "Bağlantılar";
 "nft_collection.overview.links.website" = "Website";
 
 
@@ -1739,7 +1739,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "nft_collection.overview.floor_price" = "Taban Fiyatı";
 "nft_collection.overview.all_time_average" = "Tüm Zamanların Ortalaması";
 "nft_collection.overview.royalty" = "Royalty";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "Başlangıç ​​tarihi";
 
 "nft.activity.contracts" = "Kişiler";
 "nft.activity.empty_list" = "Henüz öğe etkinliği yok";
