@@ -5,6 +5,7 @@ import RxSwift
 
 class TokenTransactionsService: BaseTransactionsService {
     private let token: Token
+    private let disposeBag = DisposeBag()
 
     init(token: Token, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
         self.token = token
@@ -12,8 +13,7 @@ class TokenTransactionsService: BaseTransactionsService {
         super.init(
             rateService: rateService,
             nftMetadataService: nftMetadataService,
-            balanceHiddenManager: App.shared.balanceHiddenManager,
-            scamFilterManager: App.shared.scamFilterManager
+            balanceHiddenManager: App.shared.balanceHiddenManager
         )
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.sync() }
@@ -28,7 +28,6 @@ class TokenTransactionsService: BaseTransactionsService {
     }
 
     private func _sync() {
-        _syncCanReset()
         _syncPoolGroup()
     }
 
