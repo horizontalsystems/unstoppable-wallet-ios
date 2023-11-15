@@ -183,7 +183,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_settings.title" = "Configuración de Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Dirección de caja (recomendado)";
-"sync_mode.hybrid" = "Hybrid";
+"sync_mode.hybrid" = "Híbrido";
 "sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "Seleccione el formato de dirección para recibir pagos. Debe elegirse un formato correcto cuando se restaure una cartera existente.";
 
@@ -934,10 +934,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "transactions.title" = "Transacciones";
 "transactions.tab_bar_item" = "Transacciones";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Todos los bloqueos";
-"transactions.all_coins" = "Todas";
-"transactions.choose_coin" = "Elegir moneda";
 "transactions.filter_all" = "Todo";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
@@ -1219,9 +1215,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "btc_blockchain_settings.restore_source.description" = "Elige la fuente que la aplicación Unstoppable debería usar para sincronizar la(s) cartera(s).";
 "btc_blockchain_settings.restore_source.alert" = "Después de cambiar la Fuente de Restauración, la cartera tendrá que resincronizarse con la cadena de bloques %@.";
 
-"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.blockchair" = "Rápido, Privado, Centralizado";
 "btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchain" = "Lento, Privado, Descentralizado";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Indexación aleatoria";
@@ -1851,8 +1847,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "cannot_check_passcode.info_text" = "No se puede verificar el estado del código de acceso (bloqueo de pantalla). Por favor, reinicia la aplicación.";
 "jailbreak.info_text" = "El equipo de Unstoppable recomienda ejecutar la aplicación solo en teléfonos no rooteados (no jailbreak).\n\nTenga en cuenta que cuando usa un dispositivo rooteado, la aplicación ya no puede garantizar la seguridad de su criptomoneda contra software malicioso.";
 
-// Scam Filter
+// Transaction Filter
 
-"scam_filter.title" = "Filtro de Scam";
-"scam_filter.enabled" = "Activado";
-"scam_filter.description" = "El Filtro de Estafa detecta transacciones sospechosas y las oculta de la lista de Transacciones. Se aplican los siguientes filtros para la detección:\n\n-monedas que no están listadas en nuestra lista de Mercado\n\n-transacciones con valor cero\n\n-transacciones con una cantidad muy pequeña de moneda estable";
+"transaction_filter.title" = "Filter";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.coin" = "Moneda";
+"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
+"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
