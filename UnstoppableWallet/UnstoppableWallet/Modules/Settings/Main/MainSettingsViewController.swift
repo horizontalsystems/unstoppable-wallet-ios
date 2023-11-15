@@ -482,9 +482,9 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
-            Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
+            Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "feedback", headerState: .margin(height: .margin32), rows: feedbackRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
