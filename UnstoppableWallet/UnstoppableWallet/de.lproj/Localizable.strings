@@ -829,7 +829,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.holders_rank.description" = "Ranking von Token nach einzigartigen Adressen, die diese auf mehreren Blockchains halten.";
 "coin_analytics.holders.info1" = "Gesamtzahl der einzigartigen Adressen, die den Token auf verschiedenen Blockchains halten.";
 "coin_analytics.holders.info2" = "Die Top 10 Wallets, die den Token auf jeder Blockchain halten.";
-"coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
+"coin_analytics.holders.tracked_blockchains" = "Verfolgte Blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "in den Top 10 Haltern";
 "coin_analytics.holders.count" = "Gesamteinhaber: %@";
 "coin_analytics.holders.see_all" = "Alle anzeigen";
@@ -861,16 +861,16 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.treasuries.filters" = "Filters";
 "coin_analytics.treasuries.filter.all" = "Alle";
-"coin_analytics.treasuries.filter.public" = "Public";
-"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.public" = "Öffentlich";
+"coin_analytics.treasuries.filter.private" = "Privat";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
-"coin_analytics.audits" = "Audits";
-"coin_analytics.audits.issues" = "Issues";
-"coin_analytics.audits.no_reports" = "No audit reports";
+"coin_analytics.audits" = "Prüfungen";
+"coin_analytics.audits.issues" = "Probleme";
+"coin_analytics.audits.no_reports" = "Keine Audit-Berichte";
 
-"coin_analytics.last_30d" = "last 30d";
-"coin_analytics.current" = "current";
+"coin_analytics.last_30d" = "letzte 30d";
+"coin_analytics.current" = "aktuell";
 
 "coin_analytics.overall_score" = "Gesamtpunktzahl";
 "coin_analytics.overall_score.excellent" = "Ausgezeichnet";
@@ -934,10 +934,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Alle Blockchains";
-"transactions.all_coins" = "Alle Coins";
-"transactions.choose_coin" = "Coins auswählen";
 "transactions.filter_all" = "Alle";
 "transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
@@ -1853,8 +1849,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "cannot_check_passcode.info_text" = "Nicht möglich, den Status des Passcodes (Bildschirmsperre) zu überprüfen. Bitte starten Sie die Anwendung neu.";
 "jailbreak.info_text" = "Das Unstoppable-Team empfiehlt, die App nur auf nicht gerooteten (nicht jailbroken) Mobiltelefonen auszuführen.\n\nBitte beachten Sie, wenn Sie ein gerootetes Gerät verwenden, kann die App die Sicherheit Ihrer Kryptowährung vor bösartiger Software nicht mehr garantieren.";
 
-// Scam Filter
+// Transaction Filter
 
-"scam_filter.title" = "Scamfilter";
-"scam_filter.enabled" = "Aktiviert";
-"scam_filter.description" = "Der Betrugsfilter erkennt verdächtige Transaktionen und verbirgt sie in der Transaktionsliste. Folgende Filter werden zur Erkennung angewendet:\n\n-Coins, die nicht in unserer Markliste aufgeführt sind\n\n-Transaktionen mit Nullwert\n\n-Transaktionen mit sehr geringem Stable-Coin-Betrag";
+"transaction_filter.title" = "Filter";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.coin" = "Coin";
+"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
+"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
