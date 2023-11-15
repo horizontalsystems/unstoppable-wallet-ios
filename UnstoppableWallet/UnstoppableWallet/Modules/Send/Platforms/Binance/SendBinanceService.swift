@@ -34,7 +34,9 @@ class SendBinanceService {
         self.mode = mode
 
         switch mode {
-        case .prefilled(let address): addressService.set(text: address)
+        case .prefilled(let address, let amount):
+            addressService.set(text: address)
+            if let amount { addressService.publishAmountRelay.accept(amount) }
         case .predefined(let address): addressService.set(text: address)
         case .send: ()
         }
