@@ -185,7 +185,7 @@
 "coin_settings.title" = "Настройки блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
-"sync_mode.hybrid" = "Hybrid";
+"sync_mode.hybrid" = "Гибрид";
 "sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "Выберите формат адреса для получения средств. Правильный формат должен быть выбран при восстановлении существующего кошелька.";
 
@@ -936,10 +936,6 @@
 
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Все блокчейны";
-"transactions.all_coins" = "Все токены";
-"transactions.choose_coin" = "Выберите токен";
 "transactions.filter_all" = "Все";
 "transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
@@ -1220,9 +1216,9 @@
 "btc_blockchain_settings.restore_source.description" = "Выберите источник, который приложение Unstoppable должно использовать для синхронизации кошелька(ов).";
 "btc_blockchain_settings.restore_source.alert" = "После изменения источника восстановления, кошелек должен будет повторно синхронизироваться с блокчейном %@.";
 
-"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchair" = "Быстрый, Конфиденциальный, Централизованный";
+"btc_restore_mode.hybrid" = "API + Блокчейн";
+"btc_restore_mode.blockchain" = "Медленный, Конфиденциальный, Децентрализованный";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
@@ -1853,8 +1849,12 @@
 "cannot_check_passcode.info_text" = "Невозможно проверить состояние кода доступа (блокировки экрана). Пожалуйста, перезапустите приложение.";
 "jailbreak.info_text" = "Команда Unstoppable рекомендует использовать приложение только на не рутированных (не взломанных) телефонах.\n\nОбратите внимание, что при использовании рутированного устройства приложение уже не может гарантировать безопасность ваших криптовалют от вредоносного программного обеспечения.";
 
-// Scam Filter
+// Transaction Filter
 
-"scam_filter.title" = "Фильтр мошенничества";
-"scam_filter.enabled" = "Вкл.";
-"scam_filter.description" = "Фильтр мошенничества обнаруживает подозрительные транзакции и скрывает их из списка Транзакций. Для обнаружения применяются следующие фильтры:\n\n-монеты, которые не перечислены в нашем списке Рынка\n\n-транзакции с нулевой стоимостью\n\n-транзакции с очень малым количеством стабильной монеты";
+"transaction_filter.title" = "Filter";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.coin" = "Монета";
+"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
+"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
