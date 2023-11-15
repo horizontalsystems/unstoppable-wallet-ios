@@ -10,12 +10,11 @@ class BaseTransactionsService {
     private let rateService: HistoricalRateService
     private let nftMetadataService: NftMetadataService
     private let balanceHiddenManager: BalanceHiddenManager
-    private let scamFilterManager: ScamFilterManager
     private let poolGroupFactory = PoolGroupFactory()
 
     private var cancellables = Set<AnyCancellable>()
 
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     private var poolGroupDisposeBag = DisposeBag()
 
     private var poolGroup = PoolGroup(pools: [])
@@ -40,8 +39,6 @@ class BaseTransactionsService {
         }
     }
 
-    private let canResetRelay = PublishRelay<Bool>()
-
     private var lastRequestedCount = BaseTransactionsService.pageLimit
     private var loading = false {
         didSet {
@@ -60,29 +57,26 @@ class BaseTransactionsService {
 
     let queue = DispatchQueue(label: "\(AppConfig.label).base-transactions-service")
 
-    init(rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager, scamFilterManager: ScamFilterManager) {
+    init(rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
         self.rateService = rateService
         self.nftMetadataService = nftMetadataService
         self.balanceHiddenManager = balanceHiddenManager
-        self.scamFilterManager = scamFilterManager
 
         subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
-
-        scamFilterManager.$scamFilterEnabled.sink { [weak self] _ in self?.handleScamFilterEnabledChanged() }.store(in: &cancellables)
-    }
-
-    var _canReset: Bool {
-        typeFilter != .all
     }
 
     var _poolGroupType: PoolGroupFactory.PoolGroupType {
         fatalError("Should be overridden in child service")
     }
 
+    var scamFilterEnabled: Bool {
+        true
+    }
+
     func _syncPoolGroup() {
-        poolGroup = poolGroupFactory.poolGroup(type: _poolGroupType, filter: typeFilter, scamFilterEnabled: scamFilterManager.scamFilterEnabled)
+        poolGroup = poolGroupFactory.poolGroup(type: _poolGroupType, filter: typeFilter, scamFilterEnabled: scamFilterEnabled)
         _initPoolGroup()
     }
 
@@ -266,10 +260,6 @@ class BaseTransactionsService {
         itemDataRelay.accept(itemData)
     }
 
-    func _syncCanReset() {
-        canResetRelay.accept(_canReset)
-    }
-
     private func _syncSyncing() {
         syncing = loading || poolGroupSyncing
     }
@@ -293,16 +283,6 @@ class BaseTransactionsService {
             }
         }
     }
-
-    func _resetFilters() {
-        typeFilter = .all
-    }
-
-    private func handleScamFilterEnabledChanged() {
-        queue.async {
-            self._syncPoolGroup()
-        }
-    }
 }
 
 extension BaseTransactionsService {
@@ -322,10 +302,6 @@ extension BaseTransactionsService {
         syncingRelay.asObservable()
     }
 
-    var canResetObservable: Observable<Bool> {
-        canResetRelay.asObservable()
-    }
-
     var balanceHiddenObservable: Observable<Bool> {
         balanceHiddenManager.balanceHiddenObservable
     }
@@ -338,12 +314,6 @@ extension BaseTransactionsService {
         ItemData(items: items, allLoaded: lastRequestedCount > items.count)
     }
 
-    var canReset: Bool {
-        queue.sync {
-            _canReset
-        }
-    }
-
     func set(typeFilter: TransactionTypeFilter) {
         queue.async {
             guard self.typeFilter != typeFilter else {
@@ -352,23 +322,7 @@ extension BaseTransactionsService {
 
             self.typeFilter = typeFilter
 
-            self._syncCanReset()
-
             //            print("SYNC POOL GROUP: set type filter")
-            self._syncPoolGroup()
-        }
-    }
-
-    func reset() {
-        queue.async {
-            guard self._canReset else {
-                return
-            }
-
-            self._resetFilters()
-            self._syncCanReset()
-
-            //            print("SYNC POOL GROUP: reset")
             self._syncPoolGroup()
         }
     }

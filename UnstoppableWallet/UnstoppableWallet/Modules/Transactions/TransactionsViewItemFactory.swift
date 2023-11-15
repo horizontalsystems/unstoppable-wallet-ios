@@ -37,7 +37,7 @@ class TransactionsViewItemFactory {
         ValueFormatter.instance.formatShort(currencyValue: currencyValue) ?? ""
     }
 
-    private func type(value: TransactionValue, condition: Bool = true, _ trueType: TransactionsViewModel.ValueType, _ falseType: TransactionsViewModel.ValueType? = nil) -> TransactionsViewModel.ValueType {
+    private func type(value: TransactionValue, condition: Bool = true, _ trueType: BaseTransactionsViewModel.ValueType, _ falseType: BaseTransactionsViewModel.ValueType? = nil) -> BaseTransactionsViewModel.ValueType {
         guard !value.zeroValue else {
             return .neutral
         }
@@ -45,17 +45,17 @@ class TransactionsViewItemFactory {
         return condition ? trueType : (falseType ?? trueType)
     }
 
-    private func singleValueSecondaryValue(value: TransactionValue, currencyValue: CurrencyValue?, nftMetadata: [NftUid: NftAssetBriefMetadata]) -> TransactionsViewModel.Value? {
+    private func singleValueSecondaryValue(value: TransactionValue, currencyValue: CurrencyValue?, nftMetadata: [NftUid: NftAssetBriefMetadata]) -> BaseTransactionsViewModel.Value? {
         switch value {
         case let .nftValue(nftUid, _, tokenName, _):
             let text = nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
-            return TransactionsViewModel.Value(text: text, type: .secondary)
+            return BaseTransactionsViewModel.Value(text: text, type: .secondary)
         default:
-            return currencyValue.map { TransactionsViewModel.Value(text: currencyString(from: $0), type: .secondary) }
+            return currencyValue.map { BaseTransactionsViewModel.Value(text: currencyString(from: $0), type: .secondary) }
         }
     }
 
-    private func singleValueIconType(source: TransactionSource, value: TransactionValue, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> TransactionsViewModel.IconType {
+    private func singleValueIconType(source: TransactionSource, value: TransactionValue, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> BaseTransactionsViewModel.IconType {
         switch value {
         case let .nftValue(nftUid, _, _, _):
             return .icon(
@@ -70,7 +70,7 @@ class TransactionsViewItemFactory {
         }
     }
 
-    private func doubleValueIconType(source: TransactionSource, primaryValue: TransactionValue?, secondaryValue: TransactionValue?, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> TransactionsViewModel.IconType {
+    private func doubleValueIconType(source: TransactionSource, primaryValue: TransactionValue?, secondaryValue: TransactionValue?, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> BaseTransactionsViewModel.IconType {
         let frontType: TransactionImageComponent.ImageType
         let frontUrl: String?
         let frontPlaceholder: String
@@ -115,7 +115,7 @@ class TransactionsViewItemFactory {
         return .doubleIcon(frontType: frontType, frontUrl: frontUrl, frontPlaceholder: frontPlaceholder, backType: backType, backUrl: backUrl, backPlaceholder: backPlaceholder)
     }
 
-    private func iconType(source: TransactionSource, incomingValues: [TransactionValue], outgoingValues: [TransactionValue], nftMetadata: [NftUid: NftAssetBriefMetadata]) -> TransactionsViewModel.IconType {
+    private func iconType(source: TransactionSource, incomingValues: [TransactionValue], outgoingValues: [TransactionValue], nftMetadata: [NftUid: NftAssetBriefMetadata]) -> BaseTransactionsViewModel.IconType {
         if incomingValues.count == 1, outgoingValues.isEmpty {
             return singleValueIconType(source: source, value: incomingValues[0], nftMetadata: nftMetadata)
         } else if incomingValues.isEmpty, outgoingValues.count == 1 {
@@ -127,50 +127,50 @@ class TransactionsViewItemFactory {
         }
     }
 
-    private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?, nftMetadata: [NftUid: NftAssetBriefMetadata]) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {
-        var primaryValue: TransactionsViewModel.Value?
-        var secondaryValue: TransactionsViewModel.Value?
+    private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?, nftMetadata: [NftUid: NftAssetBriefMetadata]) -> (BaseTransactionsViewModel.Value?, BaseTransactionsViewModel.Value?) {
+        var primaryValue: BaseTransactionsViewModel.Value?
+        var secondaryValue: BaseTransactionsViewModel.Value?
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
             let incomingValue = incomingValues[0]
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValue), type: type(value: incomingValue, .incoming))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: incomingValue), type: type(value: incomingValue, .incoming))
             secondaryValue = singleValueSecondaryValue(value: incomingValue, currencyValue: currencyValue, nftMetadata: nftMetadata)
         } else if incomingValues.isEmpty, outgoingValues.count == 1 {
             let outgoingValue = outgoingValues[0]
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValue), type: type(value: outgoingValue, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: outgoingValue), type: type(value: outgoingValue, .outgoing))
             secondaryValue = singleValueSecondaryValue(value: outgoingValue, currencyValue: currencyValue, nftMetadata: nftMetadata)
         } else if !incomingValues.isEmpty, outgoingValues.isEmpty {
             let coinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
-            primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .incoming)
-            secondaryValue = TransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
+            primaryValue = BaseTransactionsViewModel.Value(text: coinCodes, type: .incoming)
+            secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
         } else if incomingValues.isEmpty, !outgoingValues.isEmpty {
             let coinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
-            primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .outgoing)
-            secondaryValue = TransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
+            primaryValue = BaseTransactionsViewModel.Value(text: coinCodes, type: .outgoing)
+            secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
         } else {
             if incomingValues.count == 1 {
-                primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: type(value: incomingValues[0], .incoming))
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: type(value: incomingValues[0], .incoming))
             } else {
                 let incomingCoinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
-                primaryValue = TransactionsViewModel.Value(text: incomingCoinCodes, type: .incoming)
+                primaryValue = BaseTransactionsViewModel.Value(text: incomingCoinCodes, type: .incoming)
             }
             if outgoingValues.count == 1 {
-                secondaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type:  type(value: outgoingValues[0], .outgoing))
+                secondaryValue = BaseTransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type:  type(value: outgoingValues[0], .outgoing))
             } else {
                 let outgoingCoinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
-                secondaryValue = TransactionsViewModel.Value(text: outgoingCoinCodes, type: .outgoing)
+                secondaryValue = BaseTransactionsViewModel.Value(text: outgoingCoinCodes, type: .outgoing)
             }
         }
 
         return (primaryValue, secondaryValue)
     }
 
-    func viewItem(item: TransactionsService.Item, balanceHidden: Bool) -> TransactionsViewModel.ViewItem {
-        var iconType: TransactionsViewModel.IconType
+    func viewItem(item: TransactionsService.Item, balanceHidden: Bool) -> BaseTransactionsViewModel.ViewItem {
+        var iconType: BaseTransactionsViewModel.IconType
         let title: String
         let subTitle: String
-        var primaryValue: TransactionsViewModel.Value?
-        var secondaryValue: TransactionsViewModel.Value?
+        var primaryValue: BaseTransactionsViewModel.Value?
+        var secondaryValue: BaseTransactionsViewModel.Value?
         var sentToSelf = false
         var locked: Bool?
 
@@ -180,10 +180,10 @@ class TransactionsViewItemFactory {
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
 
             if let currencyValue = item.currencyValue {
-                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
         case let record as EvmOutgoingTransactionRecord:
@@ -191,7 +191,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
             secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
 
             sentToSelf = record.sentToSelf
@@ -202,10 +202,10 @@ class TransactionsViewItemFactory {
             subTitle = mapped(address: record.exchangeAddress, blockchainType: item.record.source.blockchainType)
 
             if let valueOut = record.valueOut {
-                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, condition: record.recipient != nil, .secondary, .incoming))
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, condition: record.recipient != nil, .secondary, .incoming))
             }
 
-            secondaryValue = TransactionsViewModel.Value(text: coinString(from: record.valueIn), type: type(value: record.valueIn, .outgoing))
+            secondaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.valueIn), type: type(value: record.valueIn, .outgoing))
 
         case let record as UnknownSwapTransactionRecord:
             iconType = doubleValueIconType(source: record.source, primaryValue: record.valueOut, secondaryValue: record.valueIn)
@@ -213,10 +213,10 @@ class TransactionsViewItemFactory {
             subTitle = mapped(address: record.exchangeAddress, blockchainType: item.record.source.blockchainType)
 
             if let valueOut = record.valueOut {
-                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, .incoming))
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, .incoming))
             }
             if let valueIn = record.valueIn {
-                secondaryValue = TransactionsViewModel.Value(text: coinString(from: valueIn), type: type(value: valueIn, .outgoing))
+                secondaryValue = BaseTransactionsViewModel.Value(text: coinString(from: valueIn), type: type(value: valueIn, .outgoing))
             }
 
         case let record as ApproveTransactionRecord:
@@ -225,13 +225,13 @@ class TransactionsViewItemFactory {
             subTitle = mapped(address: record.spender, blockchainType: item.record.source.blockchainType)
 
             if record.value.isMaxValue {
-                primaryValue = TransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
-                secondaryValue = TransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
+                primaryValue = BaseTransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
+                secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
             } else {
-                primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: false), type: .neutral)
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: false), type: .neutral)
 
                 if let currencyValue = item.currencyValue {
-                    secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                 }
             }
 
@@ -274,9 +274,9 @@ class TransactionsViewItemFactory {
             title = "transactions.receive".localized
             subTitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
             if let currencyValue = item.currencyValue {
-                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
             if let lockState = item.transactionItem.lockState {
@@ -288,10 +288,10 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle =  record.to.flatMap { "transactions.to".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
 
             if let currencyValue = item.currencyValue {
-                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
             sentToSelf = record.sentToSelf
@@ -304,9 +304,9 @@ class TransactionsViewItemFactory {
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
             if let currencyValue = item.currencyValue {
-                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
         case let record as BinanceChainOutgoingTransactionRecord:
@@ -314,10 +314,10 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
 
             if let currencyValue = item.currencyValue {
-                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
             sentToSelf = record.sentToSelf
@@ -327,10 +327,10 @@ class TransactionsViewItemFactory {
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
 
             if let currencyValue = item.currencyValue {
-                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
         case let record as TronOutgoingTransactionRecord:
@@ -338,7 +338,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
             secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
 
             sentToSelf = record.sentToSelf
@@ -349,13 +349,13 @@ class TransactionsViewItemFactory {
             subTitle = mapped(address: record.spender, blockchainType: item.record.source.blockchainType)
 
             if record.value.isMaxValue {
-                primaryValue = TransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
-                secondaryValue = TransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
+                primaryValue = BaseTransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
+                secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
             } else {
-                primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: false), type: .neutral)
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: false), type: .neutral)
 
                 if let currencyValue = item.currencyValue {
-                    secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                 }
             }
 
@@ -417,11 +417,11 @@ class TransactionsViewItemFactory {
         }
 
         if balanceHidden {
-            primaryValue = TransactionsViewModel.Value(text: BalanceHiddenManager.placeholder, type: primaryValue?.type ?? .neutral)
-            secondaryValue = TransactionsViewModel.Value(text: BalanceHiddenManager.placeholder, type: secondaryValue?.type ?? .neutral)
+            primaryValue = BaseTransactionsViewModel.Value(text: BalanceHiddenManager.placeholder, type: primaryValue?.type ?? .neutral)
+            secondaryValue = BaseTransactionsViewModel.Value(text: BalanceHiddenManager.placeholder, type: secondaryValue?.type ?? .neutral)
         }
 
-        return TransactionsViewModel.ViewItem(
+        return BaseTransactionsViewModel.ViewItem(
                 uid: item.record.uid,
                 date: item.record.date,
                 iconType: iconType,

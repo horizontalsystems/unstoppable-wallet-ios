@@ -1,29 +1,41 @@
 import SwiftUI
 
 struct ListSection<Content: View>: View {
-    @Environment(\.themeListStyle) var listStyle
+    @Environment(\.themeListStyle) var themeListStyle
 
     @ViewBuilder let content: Content
 
     var body: some View {
         VStack(spacing: 0) {
-            _VariadicView.Tree(Layout()) {
+            _VariadicView.Tree(Layout(themeListStyle: themeListStyle)) {
                 content
             }
-            .modifier(ThemeListStyleModifier(themeListStyle: listStyle))
+            .modifier(ThemeListStyleModifier(themeListStyle: themeListStyle))
         }
     }
 
     struct Layout: _VariadicView_UnaryViewRoot {
+        let themeListStyle: ThemeListStyle
+
         @ViewBuilder
         func body(children: _VariadicView.Children) -> some View {
             let last = children.last?.id
 
             VStack(spacing: 0) {
-                ForEach(children) { child in
-                    child
+                switch themeListStyle {
+                case .lawrence, .bordered:
+                    ForEach(children) { child in
+                        child
 
-                    if child.id != last {
+                        if child.id != last {
+                            HorizontalDivider()
+                        }
+                    }
+                case .transparent:
+                    HorizontalDivider()
+
+                    ForEach(children) { child in
+                        child
                         HorizontalDivider()
                     }
                 }

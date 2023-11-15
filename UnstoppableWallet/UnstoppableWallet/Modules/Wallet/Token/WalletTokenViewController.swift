@@ -30,7 +30,6 @@ class WalletTokenViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = viewModel.title.localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "manage_2_24"), style: .plain, target: self, action: #selector(onTapScamFilter))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -57,10 +56,5 @@ class WalletTokenViewController: ThemeViewController {
         super.viewWillAppear(animated)
 
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
-    }
-
-    @objc private func onTapScamFilter() {
-        let viewController = ScamFilterModule.view().toNavigationViewController()
-        present(viewController, animated: true)
     }
 }
