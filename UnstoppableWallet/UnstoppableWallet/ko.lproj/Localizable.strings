@@ -110,6 +110,7 @@
 // Access Camera
 
 "access_camera.message" = "%@이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> %@으로 가서 카메라 접근을 허용해 주세요.";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "설정";
 
 // Restore
@@ -180,6 +181,7 @@
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
 "blockchain_settings.description" = "지불을 받기 위한 주소 형식을 선택하십시오. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
 
@@ -311,12 +313,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
-"balance.add_coin" = "코인 추가";
 "balance.invalid_api_key" = "유효하지 않은 API 키";
-"balance.empty.add_coins" = "코인 추가";
 "balance.empty.description" = "이 지갑에 코인을 넣지 않았습니다.";
-"balance.watch_empty.description" = "이 지갑 주소에는 잔액이 없습니다";
-"balance.sort_by" = "정렬 기준";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
@@ -892,6 +890,9 @@
 // Coin Page -> Markets
 
 "coin_markets.empty" = "No data available";
+"coin_markets.filter.all" = "All";
+"coin_markets.filter.verified" = "확인";
+"coin_markets.verified" = "확인";
 
 // Coin Page -> Tweets
 
@@ -931,10 +932,6 @@
 
 "transactions.title" = "거래기록";
 "transactions.tab_bar_item" = "거래기록";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "모든 블록체인";
-"transactions.all_coins" = "모든코인";
-"transactions.choose_coin" = "코인 선택";
 "transactions.filter_all" = "All";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
@@ -1005,6 +1002,7 @@
 "tx_info.you_paid" = "지불한 금액";
 "tx_info.you_got" = "받았던 금액";
 "tx_info.price" = "금액";
+"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
 
 // Settings
 
@@ -1214,8 +1212,9 @@
 "btc_blockchain_settings.restore_source.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 "btc_blockchain_settings.restore_source.alert" = "복원 소스를 변경한 후 지갑은 %@ 블록체인과 자체적으로 다시 동기화해야 합니다.";
 
-"btc_restore_mode.recommended" = "권장";
-"btc_restore_mode.more_private" = "더 개인";
+"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "셔플";
 "btc_transaction_sort_mode.shuffle.description" = "랜덤 인덱싱";
@@ -1600,6 +1599,7 @@
 "evm_network.rpc_source" = "RPC 소스";
 "evm_network.added" = "추가됨";
 "evm_network.add_new" = "신규로 추가";
+"evm_network.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 
 // Add RPC Source
 
@@ -1837,3 +1837,19 @@
 "cex_withdraw_confirm.network" = "회로망";
 "cex_withdraw_confirm.withdraw" = "빼다";
 "cex_withdraw_confirm.withdraw_failed" = "출금 실패";
+
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
+"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+
+// Transaction Filter
+
+"transaction_filter.title" = "Filter";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.coin" = "코인";
+"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
+"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
