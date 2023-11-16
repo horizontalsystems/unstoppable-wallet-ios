@@ -112,7 +112,7 @@
 "access_camera.message" = "%@ требуется доступ к вашей камере для сканирования QR-кода.
 
 Перейдите в \"Настройки\" - > %@ и разрешите доступ к камере.";
-"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.not_supported" = "Ваше устройство не поддерживает сканирование кода с предмета. Пожалуйста, используйте устройство с камерой.";
 "access_camera.settings" = "Настройки";
 
 // Restore
@@ -441,7 +441,7 @@
 "send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее заново как новую транзакцию с нулевой суммой к самому себе. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.cancel" = "Отменить транзакцию";
-"send.confirmation.nonce" = "Nonce";
+"send.confirmation.nonce" = "Memo";
 "send.confirmation.method" = "Метод";
 "send.amount_error.balance" = "Недостаточно средств";
 "send.address_error.own_address" = "Невозможно отправить TRX самому себе";
@@ -1006,7 +1006,7 @@
 "tx_info.you_paid" = "Вы заплатили";
 "tx_info.you_got" = "Вы получили";
 "tx_info.price" = "Цена";
-"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
+"tx_info.scam_warning" = "Эта транзакция подозрительна и может быть мошенничеством. Пожалуйста, не копируйте никакие адреса из этой транзакции.";
 
 // Settings
 
@@ -1216,9 +1216,9 @@
 "btc_blockchain_settings.restore_source.description" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 "btc_blockchain_settings.restore_source.alert" = "После изменения источника восстановления, кошелек должен будет повторно синхронизироваться с блокчейном %@.";
 
-"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchair" = "Быстрый, Конфиденциальный, Централизованный";
+"btc_restore_mode.hybrid" = "API + Блокчейн";
+"btc_restore_mode.blockchain" = "Медленный, Конфиденциальный, Децентрализованный";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
@@ -1845,16 +1845,16 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
-"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
-"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+"no_passcode.info_text" = "Это приложение требует, чтобы на телефоне был включен пароль (блокировка экрана).\n\nВы можете включить его в настройках iOS.\n\nОбратите внимание, что если вы отключили PIN-код на уровне операционной системы, меры безопасности для безопасного хранения данных на вашем телефоне сделали ранее сохраненные данные недействительными. Вам нужно будет восстановить ключи вашего кошелька, чтобы вернуться к вашему кошельку.";
+"cannot_check_passcode.info_text" = "Невозможно проверить состояние кода доступа (блокировки экрана). Пожалуйста, перезапустите приложение.";
+"jailbreak.info_text" = "Команда Unstoppable рекомендует использовать приложение только на не рутированных (не взломанных) телефонах.\n\nОбратите внимание, что при использовании рутированного устройства приложение уже не может гарантировать безопасность ваших криптовалют от вредоносного программного обеспечения.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "Фильтр";
 "transaction_filter.blockchain" = "Blockchain";
-"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.all_blockchains" = "Все блокчейны";
 "transaction_filter.coin" = "Монета";
-"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.all_coins" = "Все токены";
 "transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
 "transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
