@@ -27,7 +27,7 @@ class ChooseWatchViewModel {
             switch item {
             case let .coin(token):
                 return CoinToggleViewModel.ViewItem(
-                    uid: token.type.id,
+                    uid: token.tokenQuery.id,
                     imageUrl: token.coin.imageUrl,
                     placeholderImageName: "placeholder_circle_32",
                     title: token.coin.code,

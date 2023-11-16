@@ -42,7 +42,7 @@ class ChooseCoinService {
         var wallets = [Wallet]()
 
         for item in items {
-            guard case let .coin(token) = item, enabledTokensUids.contains(token.type.id) else {
+            guard case let .coin(token) = item, enabledTokensUids.contains(token.tokenQuery.id) else {
                 continue
             }
 
