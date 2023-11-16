@@ -576,8 +576,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Market
 
-"market.tab_bar_item" = "Markets";
-"market.title" = "Markets";
+"market.tab_bar_item" = "Märkte";
+"market.title" = "Märkte";
 "market.category.overview" = "Overview";
 "market.category.posts" = "News";
 "market.category.watchlist" = "Merkliste";
@@ -704,41 +704,41 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.global.volume_24h.description" = "The 24h trading volume of crypto market";
 
 "market.global.defi_cap.title" = "DeFi Cap";
-"market.global.defi_cap.description" = "Total market value of DeFi projects";
+"market.global.defi_cap.description" = "Gesamter Marktwert von DeFi-Projekten";
 
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
+"market.global.tvl_in_defi.description" = "Gesamtwert gesperrt (TVL) in DeFi";
+"market.global.tvl_in_defi.multi_chain" = "Mehrkettig";
 "market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
 
 // Coin Page
 
 "coin_page.overview" = "Preis";
 "coin_page.analytics" = "Analytics";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "Märkte";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
 
 "coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
+"coin_overview.indicators.show" = "Anzeigen";
+"coin_overview.indicators.hide" = "Verstecken";
 "coin_overview.market_cap" = "Market Cap";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.circulating_supply" = "Im Kreis";
+"coin_overview.total_supply" = "Gesamtmenge";
 "coin_overview.diluted_market_cap" = "Diluted MCap";
-"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.genesis_date" = "Startdatum";
 "coin_overview.trading_volume" = "Trading Volume";
 
 "coin_overview.roi.hour24" = "1 Day";
 "coin_overview.roi.day7" = "1Week";
 "coin_overview.roi.day14" = "2 Weeks";
 "coin_overview.roi.day30" = "1 Monat";
-"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.day200" = "6 Monate";
 "coin_overview.roi.year1" = "1 Year";
 
 "coin_overview.overview" = "Overview";
-"coin_overview.description_warning" = "This is an AI generated description based on the provided reference material for the given cryptocurrency. It may contain errors.";
+"coin_overview.description_warning" = "Dies ist eine von KI generierte Beschreibung, basierend auf dem bereitgestellten Referenzmaterial für die angegebene Kryptowährung. Sie kann Fehler enthalten.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Coin Type";
@@ -1366,14 +1366,14 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "Lautstärke(24 St.)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "Im Kreis";
 "chart.selected.volume" = "Vol.";
 
 "chart.market.header" = "Market";
 "chart.market.market_cap" = "Market Cap";
 "chart.market.volume" = "Lautstärke(24 St.)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "Im Kreis";
+"chart.market.total_supply" = "Gesamtmenge";
 
 "chart.performance.week_changes" = "Changes (1W)";
 "chart.performance.month_changes" = "Changes (1M)";
@@ -1735,7 +1735,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "nft_collection.overview.floor_price" = "Mindestpreis";
 "nft_collection.overview.all_time_average" = "Ganzzeitiger Durchschnitt";
 "nft_collection.overview.royalty" = "Royalty";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "Startdatum";
 
 "nft.activity.contracts" = "Verträge";
 "nft.activity.empty_list" = "Noch keine Artikel-Aktivität";
