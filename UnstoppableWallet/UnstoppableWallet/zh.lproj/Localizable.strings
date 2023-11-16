@@ -112,6 +112,7 @@
 "access_camera.message" = "%@ 需要访问您的相机以扫描二维码。
 
 前往设置 - > %@ 并允许访问相机。";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "设置";
 
 // Restore
@@ -182,6 +183,7 @@
 "coin_settings.title" = "区块链设置";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "遗留问题";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.description" = "选择接收付款的地址格式。恢复现有钱包时应选择正确的格式。";
 
@@ -313,12 +315,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直到 %@";
-"balance.add_coin" = "添加代币";
 "balance.invalid_api_key" = "无效的 API 密钥";
-"balance.empty.add_coins" = "添加代币";
 "balance.empty.description" = "您还没有添加任何代币到此钱包中。";
-"balance.watch_empty.description" = "此钱包地址没有任何余额";
-"balance.sort_by" = "排序方式为";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
@@ -894,6 +892,9 @@
 // Coin Page -> Markets
 
 "coin_markets.empty" = "没有可用数据";
+"coin_markets.filter.all" = "所有";
+"coin_markets.filter.verified" = "已验证";
+"coin_markets.verified" = "已验证";
 
 // Coin Page -> Tweets
 
@@ -933,10 +934,6 @@
 
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "所有Blockchains";
-"transactions.all_coins" = "所有硬币";
-"transactions.choose_coin" = "选择代币";
 "transactions.filter_all" = "所有";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
@@ -1007,6 +1004,7 @@
 "tx_info.you_paid" = "您已支付";
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
+"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
 
 // Settings
 
@@ -1133,7 +1131,7 @@
 "backup_app.backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
 "backup_app.backup.password.highlighted_description" = "此密码用于加密您的钱包备份文件。一旦丢失或遗忘，将无法恢复或重置。";
 
-"backup_app.restore_type.title" = "恢复自";
+"backup_app.restore_type.title" = "恢复";
 
 "backup_app.restore.notice.description" = "此操作将覆盖您的本地付款联系人以及它的 iCloud 副本（如有）。";
 "backup_app.restore.notice.merge" = "替换";
@@ -1216,8 +1214,9 @@
 "btc_blockchain_settings.restore_source.description" = "通过交易为恢复钱包选择数据源。";
 "btc_blockchain_settings.restore_source.alert" = "更改恢复源后，钱包必须将自身与 %@ 区块链重新同步。";
 
-"btc_restore_mode.recommended" = "推荐";
-"btc_restore_mode.more_private" = "更私密";
+"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "随机排序";
 "btc_transaction_sort_mode.shuffle.description" = "随机索引";
@@ -1602,6 +1601,7 @@
 "evm_network.rpc_source" = "RPC 源";
 "evm_network.added" = "已添加";
 "evm_network.add_new" = "添加新的";
+"evm_network.description" = "通过交易为恢复钱包选择数据源。";
 
 // Add RPC Source
 
@@ -1839,3 +1839,19 @@
 "cex_withdraw_confirm.network" = "網絡";
 "cex_withdraw_confirm.withdraw" = "提取";
 "cex_withdraw_confirm.withdraw_failed" = "提取失败";
+
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
+"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+
+// Transaction Filter
+
+"transaction_filter.title" = "Filter";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.coin" = "硬币";
+"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
+"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
