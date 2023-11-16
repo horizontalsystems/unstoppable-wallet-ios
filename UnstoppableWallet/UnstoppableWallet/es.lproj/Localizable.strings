@@ -112,6 +112,7 @@
 "access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.
 
 Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "Ajustes";
 
 // Restore
@@ -182,6 +183,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_settings.title" = "Configuración de Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Dirección de caja (recomendado)";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Desde Blockchain";
 "blockchain_settings.description" = "Seleccione el formato de dirección para recibir pagos. Debe elegirse un formato correcto cuando se restaure una cartera existente.";
 
@@ -313,12 +315,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
 "balance.synced_through" = "hasta %@";
-"balance.add_coin" = "Añadir Monedas";
 "balance.invalid_api_key" = "Clave de API no válida";
-"balance.empty.add_coins" = "Añadir Monedas";
 "balance.empty.description" = "No has añadido ninguna moneda a este monedero.";
-"balance.watch_empty.description" = "Esta dirección de billetera no tiene saldo";
-"balance.sort_by" = "Ordenar por";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
@@ -894,6 +892,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Coin Page -> Markets
 
 "coin_markets.empty" = "No hay datos disponibles";
+"coin_markets.filter.all" = "Todo";
+"coin_markets.filter.verified" = "Verificado";
+"coin_markets.verified" = "Verificado";
 
 // Coin Page -> Tweets
 
@@ -933,10 +934,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "transactions.title" = "Transacciones";
 "transactions.tab_bar_item" = "Transacciones";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Todos los bloqueos";
-"transactions.all_coins" = "Todas";
-"transactions.choose_coin" = "Elegir moneda";
 "transactions.filter_all" = "Todo";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
@@ -1007,6 +1004,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.you_paid" = "Has pagado";
 "tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
+"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
 
 // Settings
 
@@ -1216,8 +1214,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "btc_blockchain_settings.restore_source.description" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
 "btc_blockchain_settings.restore_source.alert" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.";
 
-"btc_restore_mode.recommended" = "Recomendado";
-"btc_restore_mode.more_private" = "Más Privado";
+"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Indexación aleatoria";
@@ -1602,6 +1601,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "evm_network.rpc_source" = "Fuente RPC";
 "evm_network.added" = "Añadido";
 "evm_network.add_new" = "Añadir Nuevo";
+"evm_network.description" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
 
 // Add RPC Source
 
@@ -1839,3 +1839,19 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "cex_withdraw_confirm.network" = "La red";
 "cex_withdraw_confirm.withdraw" = "Retirar";
 "cex_withdraw_confirm.withdraw_failed" = "Fallo al retirar";
+
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
+"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+
+// Transaction Filter
+
+"transaction_filter.title" = "Filter";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.coin" = "Moneda";
+"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
+"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
