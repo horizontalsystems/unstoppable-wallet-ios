@@ -112,7 +112,7 @@
 "access_camera.message" = "%@ 需要访问您的相机以扫描二维码。
 
 前往设置 - > %@ 并允许访问相机。";
-"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+"access_camera.not_supported" = "您的设备不支持扫描物品上的代码。请使用带有摄像头的设备。";
 "access_camera.settings" = "设置";
 
 // Restore
@@ -183,7 +183,7 @@
 "coin_settings.title" = "区块链设置";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "遗留问题";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
-"sync_mode.hybrid" = "Hybrid";
+"sync_mode.hybrid" = "混合型";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.description" = "选择接收付款的地址格式。恢复现有钱包时应选择正确的格式。";
 
@@ -420,7 +420,7 @@
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "交易输出的顺序是随机的每次交易。有时更改可以是第一次输出，有时可以是第二次。 如果用户信任应用程序的开发者，则考虑这个推荐选项。";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "存在一个公认的交易输出排序标准（称为BIP69）。在开源钱包中，该标准确保钱包用户不需要信任应用开发者如何实现输出的排序。由于这个标准是新的，目前还没有多少钱包实施它。因此，在区块链上有可能某种程度上看出交易是否来自使用该标准的钱包。";
 
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.to" = "接收人";
