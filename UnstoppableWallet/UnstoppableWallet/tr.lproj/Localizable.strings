@@ -112,6 +112,7 @@
 "access_camera.message" = "%@, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.
 
 Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "Ayarlar";
 
 // Restore
@@ -182,6 +183,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_settings.title" = "Blockchain Ayarları";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (önerilen)";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.description" = "Ödemeleri almak için adres biçimini seçin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
 
@@ -313,12 +315,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
-"balance.add_coin" = "Para Ekle";
 "balance.invalid_api_key" = "Geçersiz API anahtarı";
-"balance.empty.add_coins" = "Kripto Para Ekle";
 "balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
-"balance.watch_empty.description" = "Bu cüzdan adresinde bakiye bulunmuyor";
-"balance.sort_by" = "Sırala";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
@@ -894,6 +892,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Coin Page -> Markets
 
 "coin_markets.empty" = "No data available";
+"coin_markets.filter.all" = "Hepsi";
+"coin_markets.filter.verified" = "Onaylandı";
+"coin_markets.verified" = "Onaylandı";
 
 // Coin Page -> Tweets
 
@@ -933,10 +934,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "transactions.title" = "Hesap işlemleri";
 "transactions.tab_bar_item" = "Hesap işlemleri";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Tüm Blok Zincirleri";
-"transactions.all_coins" = "Tüm paralar";
-"transactions.choose_coin" = "Kripto Parayı Seç";
 "transactions.filter_all" = "Hepsi";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 "transactions.pending" = "Bekleyen";
@@ -1007,6 +1004,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.you_paid" = "Ödediğiniz Tutar";
 "tx_info.you_got" = "Aldığınız Tutar";
 "tx_info.price" = "Fiyat";
+"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
 
 // Settings
 
@@ -1220,8 +1218,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "btc_blockchain_settings.restore_source.description" = "İşlemler yapılmış cüzdanı geri yüklemek için veri kaynağını seçin.";
 "btc_blockchain_settings.restore_source.alert" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.";
 
-"btc_restore_mode.recommended" = "Tavsiye Edilen";
-"btc_restore_mode.more_private" = "Daha Gizli";
+"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "Karıştır";
 "btc_transaction_sort_mode.shuffle.description" = "Rastgele Dizinleme";
@@ -1606,6 +1605,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "evm_network.rpc_source" = "RPC Kaynak";
 "evm_network.added" = "Eklendi";
 "evm_network.add_new" = "Yeni ekle";
+"evm_network.description" = "İşlemler yapılmış cüzdanı geri yüklemek için veri kaynağını seçin.";
 
 // Add RPC Source
 
@@ -1847,3 +1847,19 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_withdraw_confirm.network" = "Ağ";
 "cex_withdraw_confirm.withdraw" = "Hesaptan Çek";
 "cex_withdraw_confirm.withdraw_failed" = "Para çekme başarısız oldu";
+
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
+"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+
+// Transaction Filter
+
+"transaction_filter.title" = "Filter";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.coin" = "Coin";
+"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
+"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
