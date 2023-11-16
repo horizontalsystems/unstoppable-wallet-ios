@@ -416,7 +416,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.fee_info.title" = "Ücret oranı";
 "send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
 "send.transaction_inputs_outputs_info.title" = "İşlem Girdileri / Çıktıları";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.description" = "Bitcoin'in çoğu işlemi, Bitcoin Cash, Dash ve Litecoin gibi benzer kripto paralar da dahil olmak üzere iki çıkış üretir. Bir çıkış, alıcıya giden miktarı temsil eder ve diğeri geri gönderilen değişim çıkışıdır. Çoğu cüzdanın işlemleri nasıl oluşturduğu, üçüncü bir tarafın hangi çıkışın alıcıya gittiğini ve hangisinin geri gönderilen değişim miktarı olduğunu anlamasını kolaylaştırır. Gönderene geri gönderilen çıkışın daha sonraki işlemlerde kullanılması, bu iki işlem arasındaki bağlantıyı açığa çıkarır.\n\n%@ cüzdanı, hangi çıkışın nereye gittiğini anlamayı zorlaştırmak için önlemler uygular.\n\n%@ kullanıcıları için iki seçenek mevcuttur:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "İşlem çıktılarının sırası her işlemde rastgele belirlenir. Bazen değişim ilk çıktı olabilir, bazen ikinci olabilir. Bir kullanıcı uygulamanın geliştiricisine güveniyorsa bunu önerilen bir seçenek olarak değerlendirin.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
@@ -576,10 +576,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Market
 
-"market.tab_bar_item" = "Markets";
-"market.title" = "Markets";
-"market.category.overview" = "Overview";
-"market.category.posts" = "News";
+"market.tab_bar_item" = "Marketler";
+"market.title" = "Marketler";
+"market.category.overview" = "İzleme";
+"market.category.posts" = "Haberler";
 "market.category.watchlist" = "İzleme Listesi";
 "market.total_market_cap" = "Total Cap";
 "market.24h_volume" = "24h Volume";
@@ -592,7 +592,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.top.section.header.top_gainers" = "En Kazançlılar";
 "market.top.section.header.top_losers" = "Çok Kaybedenler";
 "market.top.section.header.top_sectors" = "En İyi Sektörler";
-"market.top.section.header.news" = "News";
+"market.top.section.header.news" = "Haberler";
 "market.top.volume.title" = "Hacim";
 "market.top.market_cap.title" = "P. Değeri";
 "market.top.diluted_market_cap.title" = "Seyreltilmiş P. Değeri";
@@ -715,7 +715,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "coin_page.overview" = "Fiyat";
 "coin_page.analytics" = "Analitik";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "Marketler";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
@@ -737,7 +737,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_overview.roi.day200" = "6 Ay";
 "coin_overview.roi.year1" = "1 Yıl";
 
-"coin_overview.overview" = "Overview";
+"coin_overview.overview" = "İzleme";
 "coin_overview.description_warning" = "Bu, verilen kripto para birimi için sağlanan referans materyale dayanarak yapay zeka tarafından oluşturulmuş bir açıklamadır. Hatalar içerebilir.";
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
@@ -1694,7 +1694,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Nft Asset
 
-"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.overview" = "İzleme";
 "nft_asset.tab.activity" = "Aktivite";
 
 "nft_asset.last_sale" = "Son İndirim";
@@ -1722,7 +1722,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.overview" = "İzleme";
 "nft_collection.tab.assets" = "Ögeler";
 "nft_collection.tab.activity" = "Aktivite";
 
