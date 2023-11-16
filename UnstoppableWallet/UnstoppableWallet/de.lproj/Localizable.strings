@@ -112,6 +112,7 @@
 "access_camera.message" = "%@ benötigt Zugriff auf Ihre Kamera, um den QR-Code zu scannen.
 
 Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
+"access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "Einstellungen";
 
 // Restore
@@ -182,6 +183,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_settings.title" = "Blockchain Einstellungen";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (empfohlen)";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Von Blockchain";
 "blockchain_settings.description" = "Wählen Sie das Adressformat für den Empfang von Zahlungen. Ein korrektes Format sollte bei der Wiederherstellung einer bestehenden Brieftasche gewählt werden.";
 
@@ -313,12 +315,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisieren... %@";
 "balance.synced_through" = "bis %@";
-"balance.add_coin" = "Coin hinzufügen";
 "balance.invalid_api_key" = "Ungültiger API-Schlüssel";
-"balance.empty.add_coins" = "Coins hinzufügen";
 "balance.empty.description" = "Sie haben keine Coins zu diesem Wallet hinzugefügt.";
-"balance.watch_empty.description" = "Diese Wallet-Adresse hat keinen Kontostand";
-"balance.sort_by" = "Sortieren nach";
 "balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
@@ -894,6 +892,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Coin Page -> Markets
 
 "coin_markets.empty" = "No data available";
+"coin_markets.filter.all" = "All";
+"coin_markets.filter.verified" = "Verifiziert";
+"coin_markets.verified" = "Verifiziert";
 
 // Coin Page -> Tweets
 
@@ -933,10 +934,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Alle Blockchains";
-"transactions.all_coins" = "Alle Coins";
-"transactions.choose_coin" = "Coins auswählen";
 "transactions.filter_all" = "All";
 "transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
@@ -1007,6 +1004,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tx_info.you_paid" = "Du hast gezahlt";
 "tx_info.you_got" = "Du bekommst";
 "tx_info.price" = "Preis";
+"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
 
 // Settings
 
@@ -1216,8 +1214,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "btc_blockchain_settings.restore_source.description" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
 "btc_blockchain_settings.restore_source.alert" = "Nach dem Ändern der Quelle wiederherstellen muss sich die Wallet mit der %@ Blockchain synchronisieren.";
 
-"btc_restore_mode.recommended" = "Empfohlen";
-"btc_restore_mode.more_private" = "Mehr Privat";
+"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
 
 "btc_transaction_sort_mode.shuffle" = "Zufällig";
 "btc_transaction_sort_mode.shuffle.description" = "Zufällige Indizierung";
@@ -1602,6 +1601,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "evm_network.rpc_source" = "RPC-Quelle";
 "evm_network.added" = "Hinzugefügt";
 "evm_network.add_new" = "Neu hinzufügen";
+"evm_network.description" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
 
 // Add RPC Source
 
@@ -1839,3 +1839,19 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "cex_withdraw_confirm.network" = "Netzwerk";
 "cex_withdraw_confirm.withdraw" = "Abheben";
 "cex_withdraw_confirm.withdraw_failed" = "Fehler bei Auszahlung";
+
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
+"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+
+// Transaction Filter
+
+"transaction_filter.title" = "Filter";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.coin" = "Coin";
+"transaction_filter.all_coins" = "All Coins";
+"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
+"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
