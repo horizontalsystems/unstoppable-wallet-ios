@@ -582,7 +582,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.category.posts" = "Haberler";
 "market.category.watchlist" = "İzleme Listesi";
 "market.total_market_cap" = "Total Cap";
-"market.24h_volume" = "24h Volume";
+"market.24h_volume" = "24 saat hacim";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
@@ -642,7 +642,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.show_results" = "Show Results";
 "market.advanced_search.empty_results" = "Empty Results";
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
-"market.advanced_search.24h" = "24h";
+"market.advanced_search.24h" = "24 sa";
 
 "market.advanced_search.market_parameters" = "Market Parameters";
 "market.advanced_search.network_parameters" = "Network Parameters";
@@ -655,11 +655,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Fiyat Değişimi";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.outperformed_btc" = "BTC'yi Geride Bıraktı";
+"market.advanced_search.outperformed_eth" = "ETH'yi Geride Bıraktı";
+"market.advanced_search.outperformed_bnb" = "BNB'yi Geride Bıraktı";
+"market.advanced_search.price_close_to_ath" = "ATH'ye Yakın Fiyat";
+"market.advanced_search.price_close_to_atl" = "ATL'ye Yakın Fiyat";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Sıfırla";
@@ -700,7 +700,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.global.total_market_cap.title" = "Toplam Piyasa Değeri";
 "market.global.total_market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
 
-"market.global.volume_24h.title" = "24h Volume";
+"market.global.volume_24h.title" = "24 saat hacim";
 "market.global.volume_24h.description" = "Kripto piyasa 24 saatlik işlem hacmi";
 
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -754,31 +754,31 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "coin_analytics.indicators.summary" = "Kısa özet";
 "coin_analytics.indicators.title" = "Teknik Göstergeleri";
-"coin_analytics.indicators.no_data" = "No Data";
+"coin_analytics.indicators.no_data" = "Veri Yok";
 "coin_analytics.indicators.strong_buy" = "Strong Buy";
 "coin_analytics.indicators.buy" = "Buy";
-"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.neutral" = "Tarafsız";
 "coin_analytics.indicators.sell" = "Sell";
 "coin_analytics.indicators.strong_sell" = "Strong Sell";
 "coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "Select Period";
 "coin_analytics.period.1h" = "1 saat";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
-"coin_analytics.period.1w" = "1 week";
+"coin_analytics.period.4h" = "4 saat";
+"coin_analytics.period.1d" = "1 gün";
+"coin_analytics.period.1w" = "1 hafta";
 
 "coin_analytics.details" = "Ayrıntılar";
 
 "coin_analytics.not_available" = "This project has no analytical data";
 
 "coin_analytics.technical_indicators" = "Teknik Göstergeleri";
-"coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
-"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
-"coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
+"coin_analytics.technical_indicators.info1" = "Özet: Bu, bir varlığın teknikleri ile ilgili çeşitli teknik göstergeleri ve zaman dilimlerini göz önünde bulunduran genel bir bakıştır. Bu göstergelere dayalı olarak bir uzlaşı görüşü sunar (Al, Sat veya Tarafsız).";
+"coin_analytics.technical_indicators.info2" = "Hareketli Ortalamalar (MA): Bunlar, eğilimi takip eden bir gösterge oluşturmak için fiyat verilerini düzleştiren yaygın olarak kullanılan teknik göstergelerdir. Belirli bir zaman dilimi içinde ortalama fiyatı gösterirler. Birden fazla MA türü bulunur:\n\nBasit Hareketli Ortalama (SMA): Bu, genellikle kapanış fiyatları gibi belirli bir fiyat aralığının ortalamasını, o aralıktaki dönem sayısına göre hesaplar.\n\nÜstel Hareketli Ortalama (EMA): Bu, daha yeni fiyatlara daha fazla ağırlık verir ve bu nedenle daha yeni fiyat değişikliklerine daha hızlı tepki verir.";
+"coin_analytics.technical_indicators.info3" = "Osilatörler: Bunlar, zaman içinde bir bant içinde (bir merkez çizginin üstünde ve altında veya belirlenen seviyeler arasında) dalgalanan teknik göstergelerdir. Piyasada aşırı alım ve aşırı satım koşullarını belirlemeye yardımcı olmak için tasarlanmışlardır. İşte bazı yaygın osilatörler:\n\nGüç Endeksi (RSI - Relative Strength Index): Bu, fiyat hareketlerinin hızını ve değişimini ölçer. Genellikle aşırı alım veya aşırı satım koşullarını belirlemek için kullanılır.\n\nHareketli Ortalama Yakınsama Sapma (MACD - Moving Average Convergence Divergence): Bu, potansiyel alım ve satış sinyallerini belirlemek için kullanılır. Teknik sinyalleri tetiklerken sinyal çizgisinin üzerinden (alış) veya altından (satış) geçtiğinde çalışır.";
 
-"coin_analytics.cex_volume" = "CEX Volume";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
+"coin_analytics.cex_volume" = "CEX Hacmi";
+"coin_analytics.cex_volume_rank" = "CEX Hacim Sıralaması";
+"coin_analytics.cex_volume_rank.description" = "Merkezi borsalarda token için işlem hacmine göre sıralanan tokenlar.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
@@ -1734,7 +1734,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "nft_collection.overview.owners" = "Sahip";
 "nft_collection.overview.items" = "Ögeler";
-"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.24h_volume" = "24 saat hacim";
 "nft_collection.overview.today_sellers" = "Bugünün Satıcıları";
 "nft_collection.overview.floor_price" = "Taban Fiyatı";
 "nft_collection.overview.all_time_average" = "Tüm Zamanların Ortalaması";
