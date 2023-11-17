@@ -420,7 +420,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, considere esta una opción recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "Hay un estándar comúnmente acordado para ordenar salidas de transacciones (conocido como BIP69). En las carteras de código abierto, ese estándar asegura que los usuarios de cartera no necesitan confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Como este estándar es nuevo, no muchas billeteras lo han implementado todavía. Como resultado, es algo posible ver en el blockchain si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Existe un estándar comúnmente acordado para ordenar las salidas de las transacciones (conocido como BIP69). En carteras de código abierto, ese estándar asegura que los usuarios de la cartera no necesiten confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Dado que este estándar es nuevo, todavía no muchos monederos lo han implementado. Como resultado, es algo posible ver en la cadena de bloques si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
 
 "send.confirmation.you_send" = "Usted envía";
 "send.confirmation.to" = "Para";
@@ -1037,7 +1037,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Settings -> Manage Wallet
 
-"manage_wallets.title" = "Monederos";
+"manage_wallets.title" = "Carteras";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir el token manualmente.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
 "manage_wallets.contract_address" = "Dirección del contrato";
@@ -1212,8 +1212,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
 
 "btc_blockchain_settings.restore_source" = "Restaurar Fuente";
-"btc_blockchain_settings.restore_source.description" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
-"btc_blockchain_settings.restore_source.alert" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.";
+"btc_blockchain_settings.restore_source.description" = "Elige la fuente que la aplicación Unstoppable debería usar para sincronizar la(s) cartera(s).";
+"btc_blockchain_settings.restore_source.alert" = "Después de cambiar la Fuente de Restauración, la cartera tendrá que resincronizarse con la cadena de bloques %@.";
 
 "btc_restore_mode.blockchair" = "Rápido, Privado, Centralizado";
 "btc_restore_mode.hybrid" = "API + Blockchain";
@@ -1240,17 +1240,17 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings_manage_keys.title" = "Gestionar Carteras";
 "settings_manage_keys.delete" = "Eliminar";
 "settings_manage_keys.backup" = "Copia de seguridad";
-"settings_manage_keys.delete.title" = "Eliminar Monedero";
-"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos de este dispositivo.";
-"settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"settings_manage_keys.delete.confirmation_watch" = "¿Quieres dejar de ver esta dirección de billetera?";
+"settings_manage_keys.delete.title" = "Eliminar cartera";
+"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará esta cartera del dispositivo.";
+"settings_manage_keys.delete.confirmation_loose" = "Si no hiciste una copia de seguridad de la clave privada de esta cartera, perderás el acceso a tus fondos.";
+"settings_manage_keys.delete.confirmation_watch" = "¿Quieres dejar de monitorear esta dirección de cartera?";
 "settings_manage_keys.delete.confirmation_watch.button" = "Dejar de ver";
 
 // Settings -> About App
 
 "settings.about_app.title" = "Sobre la App";
-"settings.about_app.app_name" = "%@ Monedero";
-"settings.about_app.description" = "La billetera %@ está diseñada para aquellos que buscan invertir y almacenar criptomonedas de manera privada e independiente.\n\nEs una billetera no custodial y peer-to-peer donde solo el usuario tiene control sobre los fondos. No recopila datos y mantiene al usuario independiente al no bloquear los fondos del usuario en una aplicación de billetera específica.\n\nLa billetera %@ es completamente de código abierto y cualquier persona puede confirmar que la aplicación funciona exactamente como dice.";
+"settings.about_app.app_name" = "Cartera %@";
+"settings.about_app.description" = "La cartera %@ está diseñada para aquellos que buscan invertir y almacenar criptomonedas de manera privada e independiente.\n\nEs una cartera no custodial y peer-to-peer donde solo el usuario tiene control sobre los fondos. No recopila ningún dato y mantiene al usuario independiente al no bloquear los fondos del usuario en una aplicación de cartera específica.\n\nLa cartera %@ es completamente de código abierto y cualquiera puede confirmar que la aplicación funciona exactamente como afirma.";
 "settings.about_app.whats_new" = "Qué novedades hay";
 "settings.about_app.website" = "Website";
 
@@ -1263,7 +1263,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privacidad";
-"settings.privacy.description" = "%@ no recopila ningún dato o utiliza herramientas de análisis que puedan exponer cualquier dato sobre sus usuarios. La cartera está diseñada para asegurar un alto nivel de privacidad para sus usuarios.";
+"settings.privacy.description" = "%@ no recopila ningún dato ni utiliza herramientas de análisis que puedan exponer cualquier dato sobre sus usuarios. La cartera está diseñada para garantizar un alto nivel de privacidad para sus usuarios.";
 "settings.privacy.statement.user_data_storage" = "Los datos del usuario siempre permanecen en el dispositivo del usuario.";
 "settings.privacy.statement.data_usage" = "La cartera no recopila ningún dato sobre los usuarios.";
 "settings.privacy.statement.data_privacy" = "La cartera no recopila ningún dato sobre los usuarios.";
@@ -1534,7 +1534,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "onboarding.balance.create" = "Cartera nueva";
 "onboarding.balance.import" = "Importar Cartera";
-"onboarding.balance.watch" = "Ver Monedero";
+"onboarding.balance.watch" = "Ver carteras";
 
 // Manage Accounts
 
@@ -1602,7 +1602,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "evm_network.rpc_source" = "Fuente RPC";
 "evm_network.added" = "Añadido";
 "evm_network.add_new" = "Añadir Nuevo";
-"evm_network.description" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
+"evm_network.description" = "Elige la fuente que la aplicación Unstoppable debería usar para sincronizar la(s) cartera(s).";
 
 // Add RPC Source
 
@@ -1663,7 +1663,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Watch Address
 
-"watch_address.title" = "Ver Monedero";
+"watch_address.title" = "Ver carteras";
 "watch_address.watch" = "Siguiente";
 "watch_address.address" = "Dirección";
 "watch_address.by" = "Por";
