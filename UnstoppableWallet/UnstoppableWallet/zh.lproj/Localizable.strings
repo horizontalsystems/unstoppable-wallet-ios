@@ -780,17 +780,17 @@
 "coin_analytics.cex_volume_rank" = "CEX交易量排名";
 "coin_analytics.cex_volume_rank.description" = "对中心化交易所的代币按交易量排名的代币。";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over a 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume.info2" = "图表显示了过去一年内该代币在主要中心化交易所的日交易量变化。";
+"coin_analytics.cex_volume.info3" = "代币的排名基于过去30天内在主要中心化交易所的交易量。";
+"coin_analytics.cex_volume.info4" = "根据中心化交易所24小时/7天/1个月间隔的交易量排名的所有代币列表。";
 
 "coin_analytics.dex_volume" = "DEX交易量";
 "coin_analytics.dex_volume_rank" = "DEX交易量排名";
 "coin_analytics.dex_volume_rank.description" = "对去中心化交易所的代币按交易量排名的代币。";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.dex_volume.info2" = "图表显示了过去一年内该代币在主要去中心化交易所的日交易量变化。";
+"coin_analytics.dex_volume.info3" = "代币的排名基于在主要去中心化交易所过去30天的交易量。";
+"coin_analytics.dex_volume.info4" = "根据去中心化交易所24小时/7天/1个月间隔的交易量排名的所有代币列表。";
 "coin_analytics.dex_volume.tracked_dexes" = "正在追踪的DEX：";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
@@ -798,9 +798,9 @@
 "coin_analytics.dex_liquidity" = "DEX流动性";
 "coin_analytics.dex_liquidity_rank" = "DEX流通性排名";
 "coin_analytics.dex_liquidity_rank.description" = "对去中心化交易所上按可用流通性排名的代币。";
-"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
+"coin_analytics.dex_liquidity.info1" = "该代币在主要去中心化交易所当前可用的总流动性。";
+"coin_analytics.dex_liquidity.info2" = "图表显示了过去一年内该代币在主要去中心化交易所可用流动性的变化。";
+"coin_analytics.dex_liquidity.info3" = "根据在主要去中心化交易所的代币可用流动性排名的所有代币列表。";
 "coin_analytics.dex_liquidity.tracked_dexes" = "正在追踪的DEX：";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
@@ -810,17 +810,17 @@
 "coin_analytics.active_addresses_rank" = "活跃地址排名";
 "coin_analytics.active_addresses_rank.description" = "按与代币交易的唯一地址的数量排名的代币。";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over a 30-day period.";
+"coin_analytics.active_addresses.info2" = "图表显示了过去一年内每日活跃地址数量的变化。";
+"coin_analytics.active_addresses.info3" = "过去30天内与代币进行交易的独特区块链地址的总数。";
 "coin_analytics.active_addresses.info4" = "Token's rank is based on the number of active wallets transacting with the token during a 30-day period.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info5" = "根据24小时/7天/1个月时间段内与代币进行交易的每日活跃地址数量排名的所有代币列表。";
 
 "coin_analytics.transaction_count" = "交易数";
 "coin_analytics.transaction_count_rank" = "Tx计数排名";
-"coin_analytics.transaction_count_rank.description" = "Tokens are ranked by a number of transactions on a blockchain.";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with tokens over a 30-day period.";
+"coin_analytics.transaction_count_rank.description" = "代币按区块链上的交易数量排名。";
+"coin_analytics.transaction_count.info1" = "30天内代币独特区块链交易的总数。";
 "coin_analytics.transaction_count.info2" = "显示1年周期的交易计数变化的图表。";
-"coin_analytics.transaction_count.info3" = "Token's rank is based on the number of transactions within the token 30-day period.";
+"coin_analytics.transaction_count.info3" = "代币的排名基于30天内代币交易的数量。";
 "coin_analytics.transaction_count.info4" = "基于24时 / 7天 / 1月间隔的交易数量排名的所有代币的列表。";
 "coin_analytics.transaction_count.info5" = "30天周期内在区块链上传输的代币总数。";
 
@@ -837,19 +837,19 @@
 "coin_analytics.project_tvl" = "项目TVL";
 "coin_analytics.tvl_ratio" = "市值 / TVL比率";
 "coin_analytics.project_tvl.info_title" = "项目TVL（锁定总价值）";
-"coin_analytics.project_tvl.info1" = "Total-value-locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank is based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info1" = "项目智能合约中的锁定总价值（或管理下的资产）。";
+"coin_analytics.project_tvl.info2" = "图表显示了过去一年内项目智能合约中锁定总价值的变化。";
+"coin_analytics.project_tvl.info3" = "代币的排名基于当前的锁定总价值。";
 "coin_analytics.project_tvl.info4" = "基于当前锁定总价值排名的所有代币的列表。";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info5" = "项目的市值/锁定总价值（TVL）比率。";
 
 "coin_analytics.project_fee" = "项目费用";
 "coin_analytics.project_fee_rank" = "项目收费等级";
-"coin_analytics.project_fee_rank.description" = "Tokens are ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee_rank.description" = "代币根据各自项目产生的费用进行排名。收取费用的方式因项目而异。";
 
 "coin_analytics.project_revenue" = "项目收入";
 "coin_analytics.project_revenue_rank" = "项目收入排名";
-"coin_analytics.project_revenue_rank.description" = "Tokens are ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue_rank.description" = "代币按照通过机制（如质押或代币销毁）为持有者产生的收入进行排名。";
 
 "coin_analytics.other_data" = "其它数据";
 
@@ -1004,7 +1004,7 @@
 "tx_info.you_paid" = "您已支付";
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
-"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
+"tx_info.scam_warning" = "这笔交易存在可疑，可能是诈骗。请不要从这笔交易中复制任何地址。";
 
 // Settings
 
@@ -1047,7 +1047,7 @@
 // Settings -> Personal Support
 
 "settings.personal_support.telegram_username.title" = "账户";
-"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.telegram_username.placeholder" = "@用户名";
 "settings.personal_support.description" = "请输入您的 Telegram 帳號名稱以開啟一個個人支援聊天。我们將發送消息給您。";
 "settings.personal_support.request" = "请求";
 "settings.personal_support.requested" = "已申请";
@@ -1214,9 +1214,9 @@
 "btc_blockchain_settings.restore_source.description" = "通过交易为恢复钱包选择数据源。";
 "btc_blockchain_settings.restore_source.alert" = "更改恢复源后，钱包必须将自身与 %@ 区块链重新同步。";
 
-"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.blockchair" = "快速、私密、中心化";
 "btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchain" = "缓慢、私密、去中心化";
 
 "btc_transaction_sort_mode.shuffle" = "随机排序";
 "btc_transaction_sort_mode.shuffle.description" = "随机索引";
@@ -1224,9 +1224,9 @@
 "btc_transaction_sort_mode.bip69.description" = "词典索引";
 
 "blockchain_settings.info.restore_source" = "恢复参数";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "这个设置只在恢复已存在的钱包时相关。这是一个获取给定加密货币的交易历史的过程，以便钱包应用能够显示过去的交易并计算用户的余额。当用户恢复以前创建的钱包时，这只需要发生一次。\n\n目前，像 %@ 这样的移动钱包有两种潜在的恢复方式：\n\n通过API服务器：有一个第三方预定义的服务器，它托管整个区块链，并且已经处理并优化了所有数据，以便快速提供这些数据。这种方法快速，但可能（不一定）较少隐私。这也是恢复钱包的一种中心化方法，因为它依赖于第三方服务器的可用性。由于获取数据的速度快（5-10分钟），因此推荐这个选项。\n\n通过区块链：应用尝试直接从区块链节点网络恢复。这是恢复钱包余额和过去交易的一种去中心化方式。应用向网络的许多节点发出请求，从它们那里请求数据，而不特别指定某些节点。这个选项速度慢，很容易需要2-3小时，恢复过程中需要保持应用开启。这种恢复方法不依赖于任何实体，应在所有条件下都能工作。";
 "blockchain_settings.info.rpc_source" = "RPC 源";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "这个设置控制了这个应用程序在发送或接收交易时与区块链的互动方式。\n\n就比特币、比特币现金、莱特币和达世币而言，与区块链网络节点的通信是完全点对点的。%@ 会联系许多节点并与其中一个进行通信。每次应用都会连接到不同的节点。\n\n就以太坊、币安智能链和其他EVM区块链而言，移动钱包与相应区块链互动的方式除了通过第三方RPC服务提供商（例如 Infura.io）或个人节点外，没有其他选择。这基本上意味着您与该区块链的通信不是去中心化的。这不会以任何方式影响您的资金，只影响连接到区块链网络的能力。\n\n请放心，我们正在关注这一点，并将很快尝试提供一种去中心化的同步方式。耐心等待。";
 
 // Manage Accounts
 
@@ -1842,16 +1842,16 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
-"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
-"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+"no_passcode.info_text" = "此应用要求电话已启用密码（屏幕锁定）。\n\n您可以在iOS设置中启用密码。\n\n请注意，禁用操作系统级别的PIN码后，电话的安全存储保障措施将使以前保存的数据无效。您必须恢复您的钱包密钥才能回到您的钱包。";
+"cannot_check_passcode.info_text" = "无法检查密码（屏幕锁）的状态。请重启应用程序。";
+"jailbreak.info_text" = "Unstoppable团队建议仅在未获取根权限（未越狱）的手机上使用应用。\n\n请注意，使用已获取根权限的设备，应用将难以保证您的加密货币免受来自恶意软件的安全威胁。";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "筛选器";
 "transaction_filter.blockchain" = "Blockchain";
-"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.all_blockchains" = "所有区块链";
 "transaction_filter.coin" = "硬币";
-"transaction_filter.all_coins" = "All Coins";
-"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
-"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
+"transaction_filter.all_coins" = "所有硬币";
+"transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
+"transaction_filter.hide_suspicious_txs.description" = "隐藏到达的沙尘群交易，这部分解决了地址中毒攻击问题。";
