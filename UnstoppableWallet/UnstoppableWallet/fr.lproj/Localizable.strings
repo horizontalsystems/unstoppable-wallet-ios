@@ -112,6 +112,7 @@
 "access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.
 
 Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
+"access_camera.not_supported" = "Votre appareil ne prend pas en charge la numérisation d'un code depuis un article. Veuillez utiliser un appareil doté d'une caméra.";
 "access_camera.settings" = "Paramètres";
 
 // Restore
@@ -182,6 +183,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_settings.title" = "Paramètres de la Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommendé)";
+"sync_mode.hybrid" = "Hybride";
 "sync_mode.from_blockchain" = "De la Blockchain";
 "blockchain_settings.description" = "Sélectionnez le format d'adresse pour la réception des paiements. Un format correct doit être choisi lors de la restauration d'un portefeuille existant.";
 
@@ -313,12 +315,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
 "balance.synced_through" = "jusqu'à: %@";
-"balance.add_coin" = "Ajouter la pièce";
 "balance.invalid_api_key" = "Clé API invalide";
-"balance.empty.add_coins" = "Ajouter les pièces";
 "balance.empty.description" = "Vous n'avez ajouté aucune pièce à ce portefeuille.";
-"balance.watch_empty.description" = "Cette adresse de portefeuille n'a pas de solde";
-"balance.sort_by" = "Trier par";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Solde";
 "balance.sort.az" = "Nom";
@@ -894,6 +892,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Coin Page -> Markets
 
 "coin_markets.empty" = "Aucune donnée disponible";
+"coin_markets.filter.all" = "Tout";
+"coin_markets.filter.verified" = "Vérifié";
+"coin_markets.verified" = "Vérifié";
 
 // Coin Page -> Tweets
 
@@ -933,10 +934,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Toutes les blockchains";
-"transactions.all_coins" = "Toutes les pièces";
-"transactions.choose_coin" = "Choisir la pièce";
 "transactions.filter_all" = "Tout";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "En attente";
@@ -1007,6 +1004,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "tx_info.you_paid" = "Vous avez payé";
 "tx_info.you_got" = "Vous avez reçu";
 "tx_info.price" = "Prix";
+"tx_info.scam_warning" = "Cette transaction est suspecte et peut être une arnaque. Veuillez ne copier aucune adresse de cette transaction.";
 
 // Settings
 
@@ -1216,8 +1214,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "btc_blockchain_settings.restore_source.description" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
 "btc_blockchain_settings.restore_source.alert" = "Une fois la source de restauration modifiée, le portefeuille devra être resynchronisé avec la blockchain %@.";
 
-"btc_restore_mode.recommended" = "Recommandé";
-"btc_restore_mode.more_private" = "Plus Privé";
+"btc_restore_mode.blockchair" = "Rapide, Privé, Centralisé";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Lent, Privé, Décentralisé";
 
 "btc_transaction_sort_mode.shuffle" = "Mélanger";
 "btc_transaction_sort_mode.shuffle.description" = "Indexation aléatoire";
@@ -1602,6 +1601,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "evm_network.rpc_source" = "Source RPC";
 "evm_network.added" = "Ajouté";
 "evm_network.add_new" = "Ajouter un Nouveau";
+"evm_network.description" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
 
 // Add RPC Source
 
@@ -1839,3 +1839,19 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "cex_withdraw_confirm.network" = "Réseau";
 "cex_withdraw_confirm.withdraw" = "Retraits";
 "cex_withdraw_confirm.withdraw_failed" = "Échec du retrait";
+
+// No Passcode
+
+"no_passcode.info_text" = "Cette application nécessite que le passcode (verrou d'écran) soit activé.\n\nVous pouvez l'activer dans les paramètres iOS.\n\nVeuillez noter que lorsque vous avez désactivé le code PIN au niveau de l'OS, les mesures de sécurité dans le stockage sûr de votre portable ont rendu les données précédemment stockées invalides. Vous devrez restaurer vos clés de porte-monnaies pour revenir à votre porte-monnaie.";
+"cannot_check_passcode.info_text" = "Impossible de vérifier l'état du code d'accès (verrouillage d'écran). Veuillez redémarrer l'application.";
+"jailbreak.info_text" = "L'équipe Unstoppable recommande d'utiliser l'application uniquement sur des téléphones non rootés (non jailbreakés).\n\nVeuillez noter que lorsque vous utilisez un appareil rooté, l'application ne peut plus garantir la sécurité de votre cryptomonnaie contre les logiciels malveillants.";
+
+// Transaction Filter
+
+"transaction_filter.title" = "Filtre";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "Toutes les blockchains";
+"transaction_filter.coin" = "Coin";
+"transaction_filter.all_coins" = "Toutes les pièces";
+"transaction_filter.hide_suspicious_txs" = "Masquer les transactions suspectes";
+"transaction_filter.hide_suspicious_txs.description" = "Masquer les transactions entrantes avec des montants infimes en stablecoins, cela résout partiellement les problèmes d'attaques de poisoning d'adresse.";

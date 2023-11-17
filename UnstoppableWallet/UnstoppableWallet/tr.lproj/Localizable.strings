@@ -26,7 +26,7 @@
 "button.sign" = "kaydol";
 "button.more" = "Daha Fazlası";
 "button.i_understand" = "Anlıyorum";
-"button.learn_more" = "Learn More";
+"button.learn_more" = "Daha fazla bilgi edin";
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
@@ -46,7 +46,7 @@
 "alert.added_to_watchlist" = "Added To Watchlist";
 "alert.removed_from_watchlist" = "İzleme Listesinden Kaldır";
 "alert.added_to_wallet" = "Cüzdana Eklendi";
-"alert.removed_from_wallet" = "Removed from Wallet";
+"alert.removed_from_wallet" = "Cüzdandan Kaldırıldı";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
 "alert.created" = "Oluşturuldu";
@@ -69,7 +69,7 @@
 "alert.revoked" = "İptal et";
 "alert.cant_recognize" = "Tanıyamıyorum";
 
-"no_results_found" = "No results found";
+"no_results_found" = "Sonuç bulunamadı";
 "action.loading" = "yükleniyor...";
 "placeholder.search" = "Ara";
 
@@ -112,6 +112,7 @@
 "access_camera.message" = "%@, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.
 
 Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
+"access_camera.not_supported" = "Cihazınız bir öğeden kod tarımını desteklemiyor. Bir kameraya sahip bir cihaz kullanın lütfen.";
 "access_camera.settings" = "Ayarlar";
 
 // Restore
@@ -182,6 +183,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_settings.title" = "Blockchain Ayarları";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (önerilen)";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.description" = "Ödemeleri almak için adres biçimini seçin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
 
@@ -313,12 +315,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
-"balance.add_coin" = "Para Ekle";
 "balance.invalid_api_key" = "Geçersiz API anahtarı";
-"balance.empty.add_coins" = "Kripto Para Ekle";
 "balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
-"balance.watch_empty.description" = "Bu cüzdan adresinde bakiye bulunmuyor";
-"balance.sort_by" = "Sırala";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
@@ -418,7 +416,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.fee_info.title" = "Ücret oranı";
 "send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
 "send.transaction_inputs_outputs_info.title" = "İşlem Girdileri / Çıktıları";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.description" = "Bitcoin'in çoğu işlemi, Bitcoin Cash, Dash ve Litecoin gibi benzer kripto paralar da dahil olmak üzere iki çıkış üretir. Bir çıkış, alıcıya giden miktarı temsil eder ve diğeri geri gönderilen değişim çıkışıdır. Çoğu cüzdanın işlemleri nasıl oluşturduğu, üçüncü bir tarafın hangi çıkışın alıcıya gittiğini ve hangisinin geri gönderilen değişim miktarı olduğunu anlamasını kolaylaştırır. Gönderene geri gönderilen çıkışın daha sonraki işlemlerde kullanılması, bu iki işlem arasındaki bağlantıyı açığa çıkarır.\n\n%@ cüzdanı, hangi çıkışın nereye gittiğini anlamayı zorlaştırmak için önlemler uygular.\n\n%@ kullanıcıları için iki seçenek mevcuttur:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "İşlem çıktılarının sırası her işlemde rastgele belirlenir. Bazen değişim ilk çıktı olabilir, bazen ikinci olabilir. Bir kullanıcı uygulamanın geliştiricisine güveniyorsa bunu önerilen bir seçenek olarak değerlendirin.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
@@ -578,23 +576,23 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Market
 
-"market.tab_bar_item" = "Markets";
-"market.title" = "Markets";
-"market.category.overview" = "Overview";
-"market.category.posts" = "News";
+"market.tab_bar_item" = "Marketler";
+"market.title" = "Marketler";
+"market.category.overview" = "İzleme";
+"market.category.posts" = "Haberler";
 "market.category.watchlist" = "İzleme Listesi";
 "market.total_market_cap" = "Total Cap";
-"market.24h_volume" = "24h Volume";
+"market.24h_volume" = "24 saat hacim";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.project_has_no_coin" = "This project doesn’t have a coin";
+"market.project_has_no_coin" = "Bu proje bir koin içermiyor";
 
-"market.top.section.header.see_all" = "See All";
+"market.top.section.header.see_all" = "Hepsini Gör";
 "market.top.section.header.top_gainers" = "En Kazançlılar";
 "market.top.section.header.top_losers" = "Çok Kaybedenler";
 "market.top.section.header.top_sectors" = "En İyi Sektörler";
-"market.top.section.header.news" = "News";
+"market.top.section.header.news" = "Haberler";
 "market.top.volume.title" = "Hacim";
 "market.top.market_cap.title" = "P. Değeri";
 "market.top.diluted_market_cap.title" = "Seyreltilmiş P. Değeri";
@@ -620,48 +618,48 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.top.top_losers" = "Çok Kaybedenler";
 "market.top.top_collections" = "En İyi NFT Koleksiyonlar";
 "market.top.floor_price" = "Taban:";
-"market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.top_platforms" = "En İyi Platformlar";
+"market.top.protocols" = "Protokoller";
 
-"top_platforms.title" = "Platforms Rank";
+"top_platforms.title" = "Platformlar Sıralaması";
 "top_platforms.description" = "Üzerine kurulmuş projelerin oluşturduğu kümülatif pazarla lider blok zinciri platformları.";
 
 "top_platform.title" = "%@ Ecosystem";
-"top_platform.description" = "Market cap of all protocols on the %@ chain";
+"top_platform.description" = "%@ zincirindeki tüm protokollerin piyasa değeri";
 
-"market_discovery.title" = "Discovery";
-"market_discovery.filters" = "Filters";
-"market_discovery.browse_categories" = "Browse Categories";
+"market_discovery.title" = "Keşif";
+"market_discovery.filters" = "Filtreler";
+"market_discovery.browse_categories" = "Kategorilere Göz At";
 "market_discovery.top_coins" = "TOP Coins";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "Sonuç bulunamadı";
 
-"market_watchlist.empty.caption" = "Your watchlist is empty.";
+"market_watchlist.empty.caption" = "İzleme listeniz boş.";
 
 "market.search.title" = "Ara";
-"market.search.empty_text" = "No results found";
+"market.search.empty_text" = "Sonuç bulunamadı";
 
-"market.advanced_search.title" = "Filters";
-"market.advanced_search.show_results" = "Show Results";
-"market.advanced_search.empty_results" = "Empty Results";
-"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
-"market.advanced_search.24h" = "24h";
+"market.advanced_search.title" = "Filtreler";
+"market.advanced_search.show_results" = "Sonuçları Göster";
+"market.advanced_search.empty_results" = "Boş Sonuçlar";
+"market.advanced_search.dex_description" = "Bu ayar, Ethereum (Uniswap DEX) ve Binance Smart Chain (Pancake DEX) üzerinde işlem gören tokenlar için geçerlidir.";
+"market.advanced_search.24h" = "24 sa";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.network_parameters" = "Network Parameters";
-"market.advanced_search.price_parameters" = "Price Parameters";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.price_period" = "Price Period";
+"market.advanced_search.market_parameters" = "Piyasa Parametreleri";
+"market.advanced_search.network_parameters" = "Ağ Parametreleri";
+"market.advanced_search.price_parameters" = "Fiyat Parametreleri";
+"market.advanced_search.choose_set" = "Set Seç";
+"market.advanced_search.market_cap" = "Piyasa Değeri";
+"market.advanced_search.volume" = "İşlem Hacmi";
+"market.advanced_search.liquidity" = "DEX Likiditesi";
+"market.advanced_search.blockchains" = "Blockchain'ler";
+"market.advanced_search.price_period" = "Fiyat Periyodu";
 "market.advanced_search.price_change" = "Fiyat Değişimi";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.outperformed_btc" = "BTC'yi Geride Bıraktı";
+"market.advanced_search.outperformed_eth" = "ETH'yi Geride Bıraktı";
+"market.advanced_search.outperformed_bnb" = "BNB'yi Geride Bıraktı";
+"market.advanced_search.price_close_to_ath" = "ATH'ye Yakın Fiyat";
+"market.advanced_search.price_close_to_atl" = "ATL'ye Yakın Fiyat";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Sıfırla";
@@ -690,253 +688,252 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.more_50_b" = "> 50B";
 "market.advanced_search.more_500_b" = "> 500B";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1 Gün";
+"market.advanced_search.week" = "1 Hafta";
+"market.advanced_search.week2" = "2 Hafta";
+"market.advanced_search.month" = "1 Ay";
+"market.advanced_search.month6" = "6 Ay";
+"market.advanced_search.year" = "1 Yıl";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "Sonuçlar";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.title" = "Toplam Piyasa Değeri";
+"market.global.total_market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
 
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+"market.global.volume_24h.title" = "24 saat hacim";
+"market.global.volume_24h.description" = "Kripto piyasa 24 saatlik işlem hacmi";
 
 "market.global.defi_cap.title" = "DeFi Cap";
-"market.global.defi_cap.description" = "Total market value of DeFi projects";
+"market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
 
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.global.tvl_in_defi.description" = "DeFi'deki Toplam Kilit Değer (TVL)";
 "market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.filter_by_chain" = "Zincir ile filtrele";
 
 // Coin Page
 
 "coin_page.overview" = "Fiyat";
-"coin_page.analytics" = "Analytics";
-"coin_page.markets" = "Markets";
+"coin_page.analytics" = "Analitik";
+"coin_page.markets" = "Marketler";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
-"coin_overview.market_cap" = "Market Cap";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.indicators" = "Göstergeler";
+"coin_overview.indicators.show" = "Göster";
+"coin_overview.indicators.hide" = "Gizle";
+"coin_overview.market_cap" = "Piyasa Değeri";
+"coin_overview.circulating_supply" = "Dolaşımda";
+"coin_overview.total_supply" = "Toplam arz";
 "coin_overview.diluted_market_cap" = "Seyreltilmiş P. Değeri";
-"coin_overview.genesis_date" = "Inception Date";
-"coin_overview.trading_volume" = "Trading Volume";
+"coin_overview.genesis_date" = "Başlangıç ​​tarihi";
+"coin_overview.trading_volume" = "İşlem Hacmi";
 
-"coin_overview.roi.hour24" = "1 Day";
-"coin_overview.roi.day7" = "1 Week";
-"coin_overview.roi.day14" = "2 Weeks";
-"coin_overview.roi.day30" = "1 Month";
-"coin_overview.roi.day200" = "6 Month";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.hour24" = "1 Gün";
+"coin_overview.roi.day7" = "1 Hafta";
+"coin_overview.roi.day14" = "2 Hafta";
+"coin_overview.roi.day30" = "1 Ay";
+"coin_overview.roi.day200" = "6 Ay";
+"coin_overview.roi.year1" = "1 Yıl";
 
-"coin_overview.overview" = "Overview";
+"coin_overview.overview" = "İzleme";
 "coin_overview.description_warning" = "Bu, verilen kripto para birimi için sağlanan referans materyale dayanarak yapay zeka tarafından oluşturulmuş bir açıklamadır. Hatalar içerebilir.";
-"coin_overview.blockchains" = "Blockchains";
+"coin_overview.blockchains" = "Blockchain'ler";
 "coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Coin Types";
+"coin_overview.coin_types" = "Coin çeşitleri";
 "coin_overview.show_more" = "Daha Fazlası";
-"coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.show_less" = "Az göster";
+"coin_overview.links" = "Bağlantılar";
 
-"coin_overview.guide" = "Guide";
+"coin_overview.guide" = "Kılavuzu";
 "coin_overview.website" = "Website";
 "coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
 
-"coin_analytics.indicators.summary" = "Summary";
-"coin_analytics.indicators.title" = "Technical Indicators";
-"coin_analytics.indicators.no_data" = "No Data";
+"coin_analytics.indicators.summary" = "Kısa özet";
+"coin_analytics.indicators.title" = "Teknik Göstergeleri";
+"coin_analytics.indicators.no_data" = "Veri Yok";
 "coin_analytics.indicators.strong_buy" = "Strong Buy";
 "coin_analytics.indicators.buy" = "Buy";
-"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.neutral" = "Tarafsız";
 "coin_analytics.indicators.sell" = "Sell";
 "coin_analytics.indicators.strong_sell" = "Strong Sell";
 "coin_analytics.period" = "Period";
-"coin_analytics.period.select_title" = "Select Period";
+"coin_analytics.period.select_title" = "Periyot Seç";
 "coin_analytics.period.1h" = "1 saat";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
-"coin_analytics.period.1w" = "1 week";
+"coin_analytics.period.4h" = "4 saat";
+"coin_analytics.period.1d" = "1 gün";
+"coin_analytics.period.1w" = "1 hafta";
 
 "coin_analytics.details" = "Ayrıntılar";
 
 "coin_analytics.not_available" = "This project has no analytical data";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
-"coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
-"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
-"coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
+"coin_analytics.technical_indicators" = "Teknik Göstergeleri";
+"coin_analytics.technical_indicators.info1" = "Özet: Bu, bir varlığın teknikleri ile ilgili çeşitli teknik göstergeleri ve zaman dilimlerini göz önünde bulunduran genel bir bakıştır. Bu göstergelere dayalı olarak bir uzlaşı görüşü sunar (Al, Sat veya Tarafsız).";
+"coin_analytics.technical_indicators.info2" = "Hareketli Ortalamalar (MA): Bunlar, eğilimi takip eden bir gösterge oluşturmak için fiyat verilerini düzleştiren yaygın olarak kullanılan teknik göstergelerdir. Belirli bir zaman dilimi içinde ortalama fiyatı gösterirler. Birden fazla MA türü bulunur:\n\nBasit Hareketli Ortalama (SMA): Bu, genellikle kapanış fiyatları gibi belirli bir fiyat aralığının ortalamasını, o aralıktaki dönem sayısına göre hesaplar.\n\nÜstel Hareketli Ortalama (EMA): Bu, daha yeni fiyatlara daha fazla ağırlık verir ve bu nedenle daha yeni fiyat değişikliklerine daha hızlı tepki verir.";
+"coin_analytics.technical_indicators.info3" = "Osilatörler: Bunlar, zaman içinde bir bant içinde (bir merkez çizginin üstünde ve altında veya belirlenen seviyeler arasında) dalgalanan teknik göstergelerdir. Piyasada aşırı alım ve aşırı satım koşullarını belirlemeye yardımcı olmak için tasarlanmışlardır. İşte bazı yaygın osilatörler:\n\nGüç Endeksi (RSI - Relative Strength Index): Bu, fiyat hareketlerinin hızını ve değişimini ölçer. Genellikle aşırı alım veya aşırı satım koşullarını belirlemek için kullanılır.\n\nHareketli Ortalama Yakınsama Sapma (MACD - Moving Average Convergence Divergence): Bu, potansiyel alım ve satış sinyallerini belirlemek için kullanılır. Teknik sinyalleri tetiklerken sinyal çizgisinin üzerinden (alış) veya altından (satış) geçtiğinde çalışır.";
 
-"coin_analytics.cex_volume" = "CEX Volume";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
+"coin_analytics.cex_volume" = "CEX Hacmi";
+"coin_analytics.cex_volume_rank" = "CEX Hacim Sıralaması";
+"coin_analytics.cex_volume_rank.description" = "Merkezi borsalarda token için işlem hacmine göre sıralanan tokenlar.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
+"coin_analytics.cex_volume.info2" = "Önde gelen merkezi borsalarda token için günlük işlem hacmindeki değişimi gösteren 1 yıllık döneme ait grafik.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume.info4" = "24 Saat / 7 Gün / 1 Ay aralıklarında merkezi borsalarda işlem hacmine göre sıralanan tüm tokenların listesi.";
 
-"coin_analytics.dex_volume" = "DEX Volume";
-"coin_analytics.dex_volume_rank" = "DEX Volume Rank";
-"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
+"coin_analytics.dex_volume" = "DEX Hacmi";
+"coin_analytics.dex_volume_rank" = "DEX Hacim Sıralaması";
+"coin_analytics.dex_volume_rank.description" = "Merkezi olmayan borsalarda token için işlem hacmine göre sıralanan tokenlar.";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
-"coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_volume.info2" = "Bir yıllık süre zarfında önde gelen merkezi olmayan borsalarda token için günlük işlem hacmindeki değişikliği gösteren grafik.";
+"coin_analytics.dex_volume.info3" = "30 günlük süre içinde önde gelen merkezi olmayan borsalarda işlem hacmine göre token sıralaması.";
+"coin_analytics.dex_volume.info4" = "24 saat / 7 gün / 1 ay aralıklarında, merkezi olmayan borsalardaki işlem hacmine göre sıralanan tüm tokenlerin listesi.";
+"coin_analytics.dex_volume.tracked_dexes" = "Takip edilen DEX'ler:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
-"coin_analytics.dex_liquidity" = "DEX Liquidity";
-"coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
-"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by available liquidity on decentralized exchanges.";
-"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_liquidity" = "DEX Likiditesi";
+"coin_analytics.dex_liquidity_rank" = "DEX Likidite Sıralaması";
+"coin_analytics.dex_liquidity_rank.description" = "Merkezi olmayan borsalarda mevcut likiditeye göre sıralanan tokenlar.";
+"coin_analytics.dex_liquidity.info1" = "Önde gelen merkezi olmayan borsalarda token için şu anda mevcut olan toplam likidite.";
+"coin_analytics.dex_liquidity.info2" = "Bir yıllık süre zarfında önde gelen merkezi olmayan borsalarda token için mevcut likiditedeki değişikliği gösteren grafik.";
+"coin_analytics.dex_liquidity.info3" = "Önde gelen merkezi olmayan borsalarda token için mevcut likiditeye göre sıralanan tüm tokenlerin listesi.";
+"coin_analytics.dex_liquidity.tracked_dexes" = "Takip edilen DEX'ler:";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Daily Active Addresses";
-"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
-"coin_analytics.active_addresses_rank" = "Active Addresses Rank";
-"coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
+"coin_analytics.active_addresses" = "Günlük Aktif Adresler";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30 Günlük Benzersiz Adresler";
+"coin_analytics.active_addresses_rank" = "Aktif Adresler Sıralaması";
+"coin_analytics.active_addresses_rank.description" = "Token ile işlem yapan benzersiz adreslerin sayısına göre sıralanan tokenlar.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
+"coin_analytics.active_addresses.info2" = "Bir yıllık süre zarfında günlük aktif adres sayısındaki değişimi gösteren grafik.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info5" = "24 saat / 7 gün / 1 ay aralıklarında, token ile işlem yapan günlük aktif adreslerin sayısına göre sıralanan tüm tokenlerin listesi.";
 
-"coin_analytics.transaction_count" = "Transaction Count";
-"coin_analytics.transaction_count_rank" = "Tx Count Rank";
+"coin_analytics.transaction_count" = "İşlem Sayısı";
+"coin_analytics.transaction_count_rank" = "İşlem Sayısı Sıralaması";
 "coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
-"coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
+"coin_analytics.transaction_count.info2" = "Bir yıllık süre zarfında işlem sayısındaki değişimi gösteren grafik.";
 "coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
-"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
-"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
+"coin_analytics.transaction_count.info4" = "24 saat / 7 gün / 1 ay aralıklarında, token ile yapılan işlem sayısına göre sıralanan tüm tokenlerin listesi.";
+"coin_analytics.transaction_count.info5" = "30 günlük süre boyunca blockchain üzerinden transfer edilen toplam token sayısı.";
 
-"coin_analytics.holders" = "Holders";
-"coin_analytics.holders_rank" = "Holders Rank";
-"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
-"coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
-"coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
-"coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
+"coin_analytics.holders" = "Sahipler";
+"coin_analytics.holders_rank" = "Sahipler Sıralaması";
+"coin_analytics.holders_rank.description" = "Çoklu blockchain'lerde onları tutan benzersiz adreslere göre tokenleri sıralama.";
+"coin_analytics.holders.info1" = "Çeşitli blockchain'lerde tokeni tutan benzersiz adreslerin toplam sayısı.";
+"coin_analytics.holders.info2" = "Her blok zincirinde tokenı tutan en iyi 10 cüzdan.";
+"coin_analytics.holders.tracked_blockchains" = "İzlenen blok zincirleri: Ethereum, Binance Smart Chain, İyimserlik, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "ilk 10 sahibinde";
 "coin_analytics.holders.count" = "Toplam Sahip: %@";
-"coin_analytics.holders.see_all" = "See All";
+"coin_analytics.holders.see_all" = "Hepsini Gör";
 
-"coin_analytics.project_tvl" = "Project TVL";
+"coin_analytics.project_tvl" = "Proje TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
+"coin_analytics.project_tvl.info_title" = "Proje TVL (Toplam Değer)";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
+"coin_analytics.project_tvl.info2" = "Projenin akıllı sözleşmelerindeki Toplam Kilit Değerdeki değişimi gösteren 1 yıllık döneme ait grafik.";
 "coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info4" = "Mevcut Toplam Kilit Değere göre sıralanan tüm tokenların listesi.";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
-"coin_analytics.project_fee" = "Project Fee";
-"coin_analytics.project_fee_rank" = "Project Fee Rank";
+"coin_analytics.project_fee" = "Proje Ücreti";
+"coin_analytics.project_fee_rank" = "Proje Ücret Sıralaması";
 "coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
 
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.project_revenue_rank" = "Project Revenue Rank";
+"coin_analytics.project_revenue" = "Proje Geliri";
+"coin_analytics.project_revenue_rank" = "Proje Gelir Sıralaması";
 "coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
 
-"coin_analytics.other_data" = "Other Data";
+"coin_analytics.other_data" = "Diğer Veriler";
 
-"coin_analytics.reports" = "Reports";
+"coin_analytics.reports" = "Raporlar";
 
-"coin_analytics.funding" = "Funding";
-"coin_analytics.funding.lead" = "Lead";
+"coin_analytics.funding" = "Finansman";
+"coin_analytics.funding.lead" = "Önderlik";
 
 "coin_analytics.treasuries" = "Treasuries";
-"coin_analytics.treasuries.filters" = "Filters";
+"coin_analytics.treasuries.filters" = "Filtreler";
 "coin_analytics.treasuries.filter.all" = "Hepsi";
-"coin_analytics.treasuries.filter.public" = "Public";
-"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.public" = "Kamu";
+"coin_analytics.treasuries.filter.private" = "Özel";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
-"coin_analytics.audits" = "Audits";
-"coin_analytics.audits.issues" = "Issues";
-"coin_analytics.audits.no_reports" = "No audit reports";
+"coin_analytics.audits" = "Denetimler";
+"coin_analytics.audits.issues" = "Sorunlar";
+"coin_analytics.audits.no_reports" = "Denetim raporu yok";
 
-"coin_analytics.last_30d" = "last 30d";
-"coin_analytics.current" = "current";
+"coin_analytics.last_30d" = "Son 30 gün";
+"coin_analytics.current" = "mevcut";
 
-"coin_analytics.overall_score" = "Overall Score";
-"coin_analytics.overall_score.excellent" = "Excellent";
-"coin_analytics.overall_score.good" = "Good";
-"coin_analytics.overall_score.fair" = "Fair";
-"coin_analytics.overall_score.poor" = "Poor";
-"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total available liquidity on decentralized exchanges.";
-"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
-"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
+"coin_analytics.overall_score" = "Genel Puan";
+"coin_analytics.overall_score.excellent" = "Mükemmel";
+"coin_analytics.overall_score.good" = "İyi";
+"coin_analytics.overall_score.fair" = "Orta";
+"coin_analytics.overall_score.poor" = "Zayıf";
+"coin_analytics.overall_score.cex_volume" = "Genel puan, son 7 gündeki merkezi borsalarda ortalama günlük işlem hacmine dayanmaktadır.";
+"coin_analytics.overall_score.dex_volume" = "Genel puan, son 7 gündeki merkezi olmayan borsalarda ortalama günlük işlem hacmine dayanmaktadır.";
+"coin_analytics.overall_score.dex_liquidity" = "Genel puan, merkezi olmayan borsalardaki toplam mevcut likiditeye dayanmaktadır.";
+"coin_analytics.overall_score.active_addresses" = "Genel puan, son 7 gündeki ortalama günlük aktif adres sayısına dayanmaktadır.";
+"coin_analytics.overall_score.project_tvl" = "Genel puan, verilen token tarafından temsil edilen projenin toplam değer kilitlenmesine (varlık yönetimi) dayanmaktadır.";
 "coin_analytics.overall_score.transaction_count" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
-"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding the respective token.";
+"coin_analytics.overall_score.holders" = "Genel puan, ilgili tokenı tutan adreslerin toplam sayısına dayanmaktadır.";
 
-"coin_analytics.rank" = "Rank";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.rank" = "Sıralama";
+"coin_analytics.30_day_rank" = "Son 30 Gün Sıralaması";
+"coin_analytics.30_day_volume" = "Son 30 Gün Hacmi";
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "Veri yok";
+"coin_markets.filter.all" = "Hepsi";
+"coin_markets.filter.verified" = "Onaylandı";
+"coin_markets.verified" = "Onaylandı";
 
 // Coin Page -> Tweets
 
-"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
-"coin_tweets.not_available" = "No twitter available";
-"coin_tweets.see_on_twitter" = "See on Twitter";
+"coin_tweets.reference_type.retweeted" = "Retweetlendi @%@";
+"coin_tweets.reference_type.quoted" = "Alıntılandı @%@";
+"coin_tweets.reference_type.replied" = "Yanıtlandı @%@";
+"coin_tweets.no_tweets_yet" = "Henüz tweet yok";
+"coin_tweets.not_available" = "Twitter mevcut değil";
+"coin_tweets.see_on_twitter" = "Twitter'da görün";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
-"chart_indicators.moving_averages" = "Moving Averages";
-"chart_indicators.oscillators" = "Oscillators";
+"chart_indicators.title" = "Göstergeler";
+"chart_indicators.moving_averages" = "Hareketli Ortalamalar";
+"chart_indicators.oscillators" = "Osilatörler";
 
 
-"chart_indicators.settings.period.error" = "Period can’t be more than %d";
+"chart_indicators.settings.period.error" = "Dönem %d'den fazla olamaz";
 
-"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
-"chart_indicators.settings.ma.type_title" = "Type";
+"chart_indicators.settings.ma.description" = "EMA, SMA ve WMA, teknik analizde kullanılan hareketli ortalamalardır:\n\nEMA, daha hızlı tepkiler için yakın dönem fiyatlarına vurgu yapar.\nSMA, genel bir trend görünümü için fiyat verilerini ortalayır.\nWMA, yakın dönem verilerini lineer olarak ağırlıklandırarak hassasiyeti ve gürültü azaltmayı dengelemektedir";
+"chart_indicators.settings.ma.type_title" = "Tür";
 "chart_indicators.settings.ma.period_title" = "Period";
 
 "chart_indicators.settings.rsi.title" = "RSI";
-"chart_indicators.settings.rsi.description" = "The Relative Strength Index (RSI) is a momentum oscillator that measures price speed and change, identifying overbought (above 70) or oversold (below 30) market conditions. It can also detect price reversals through divergences.";
-"chart_indicators.settings.rsi.period_title" = "RSI Length";
+"chart_indicators.settings.rsi.description" = "Göreceli Güç Endeksi (RSI), fiyat hızını ve değişimini ölçen, aşırı alım (70 üzeri) veya aşırı satım (30 altı) piyasa koşullarını tanımlayan bir momentum osilatörüdür. Ayrıca fiyat ters dönüşlerini değişimler yoluyla tespit edebilir.";
+"chart_indicators.settings.rsi.period_title" = "RSI Uzunluğu";
 
 "chart_indicators.settings.macd.title" = "MACD";
-"chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is a momentum indicator that tracks the relationship between two EMAs of a security's price. It signals buying or selling opportunities when the MACD line (12-period EMA minus 26-period EMA) crosses the 9-period EMA, known as the signal line.";
-"chart_indicators.settings.macd.fast_period_title" = "Fast Length";
-"chart_indicators.settings.macd.slow_period_title" = "Slow Length";
-"chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
+"chart_indicators.settings.macd.description" = "Hareketli Ortalama Yakınsama Iraksama (MACD), bir güvenliğin fiyatının iki EMA'sı arasındaki ilişkiyi izleyen bir momentum göstergesidir. MACD çizgisi (12 dönemlik EMA eksi 26 dönemlik EMA), sinyal çizgisi olarak bilinen 9 dönemlik EMA'yı kestiğinde, alım veya satım fırsatlarını sinyalize eder.";
+"chart_indicators.settings.macd.fast_period_title" = "Hızlı Uzunluk";
+"chart_indicators.settings.macd.slow_period_title" = "Yavaş Uzunluk";
+"chart_indicators.settings.macd.signal_period_title" = "Sinyal Düzleştirme";
 
-"chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
+"chart_indicators.settings.macd.slow_fast.error" = "Hızlı Uzunluk, Yavaş Uzunluktan daha az olmalıdır";
 
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
 "transactions.tab_bar_item" = "Hesap işlemleri";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Tüm Blok Zincirleri";
-"transactions.all_coins" = "Tüm paralar";
-"transactions.choose_coin" = "Kripto Parayı Seç";
 "transactions.filter_all" = "Hepsi";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 "transactions.pending" = "Bekleyen";
@@ -1007,6 +1004,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.you_paid" = "Ödediğiniz Tutar";
 "tx_info.you_got" = "Aldığınız Tutar";
 "tx_info.price" = "Fiyat";
+"tx_info.scam_warning" = "Bu işlem şüpheli ve dolandırıcılık olabilir. Lütfen bu işlemden herhangi bir adres kopyalamayın.";
 
 // Settings
 
@@ -1054,12 +1052,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "settings.personal_support.telegram_username.title" = "Account";
 "settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.description" = "Kişisel destek sohbeti açmak için Telegram hesap adınızı girin ve size mesaj göndereceğiz.";
 "settings.personal_support.request" = "İstek";
 "settings.personal_support.requested" = "Talep Edildi";
 "settings.personal_support.failed" = "Talep Başarısız oldu";
-"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
-"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
+"settings.personal_support.need_subscription" = "Bu özellik yalnızca %@ Cüzdan premium kullanıcıları içindir. Daha fazla bilgi resmi sitemizde.";
+"settings.personal_support.requested.description" = "Zaten özel bir sohbet talep ettiniz, bunu Telegram'da bulun";
 "settings.personal_support.requested.open_telegram" = "Abrir Telegram";
 "settings.personal_support.requested.new_request" = "Yeni istek";
 
@@ -1220,8 +1218,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "btc_blockchain_settings.restore_source.description" = "İşlemler yapılmış cüzdanı geri yüklemek için veri kaynağını seçin.";
 "btc_blockchain_settings.restore_source.alert" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.";
 
-"btc_restore_mode.recommended" = "Tavsiye Edilen";
-"btc_restore_mode.more_private" = "Daha Gizli";
+"btc_restore_mode.blockchair" = "Hızlı, Özel, Merkezileştirilmiş";
+"btc_restore_mode.hybrid" = "API + Blockchain";
+"btc_restore_mode.blockchain" = "Yavaş, Özel, Merkezi Olmayan";
 
 "btc_transaction_sort_mode.shuffle" = "Karıştır";
 "btc_transaction_sort_mode.shuffle.description" = "Rastgele Dizinleme";
@@ -1229,9 +1228,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "btc_transaction_sort_mode.bip69.description" = "Lexicographical Dizinleme";
 
 "blockchain_settings.info.restore_source" = "Geri Yükleme Ayarları";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Bu ayar, yalnızca mevcut bir cüzdanı geri yüklerken ilgilidir. Verilen bir kripto para birimi için işlem geçmişini alma sürecidir, böylece cüzdan uygulaması geçmiş işlemleri görüntüleyebilir ve kullanıcının bakiyesini hesaplayabilir. Bu, kullanıcı daha önce oluşturulan cüzdanları geri yüklediğinde yalnızca bir kez gerçekleşmelidir.\n\nBu noktada, %@ gibi bir mobil cüzdan için iki olası yol vardır:\n\nAPI Sunucusundan: Tüm blockchain'i barındıran ve tüm verileri işleyip bu verileri hızlı bir şekilde sağlamak için optimize edilmiş üçüncü taraf belirlenmiş bir sunucu vardır. Bu yöntem hızlıdır, ancak potansiyel olarak (mutlaka değil) daha az özeldir. Ayrıca, bir 3. parti sunucusunun kullanılabilirliğine bağlı olduğu için merkezileştirilmiş bir cüzdan geri yükleme yöntemidir. Bu seçenek, veri alma hızı (5-10 dakika) nedeniyle önerilir.\n\nBlockchain'den: Uygulama, doğrudan bir blockchain düğüm ağından geri yüklemeyi dener. Bu, cüzdan bakiyesini ve geçmiş işlemleri geri yüklemenin merkezi olmayan bir yoludur. Uygulama, ağın birçok düğümünü pingler ve onlardan bazı düğümleri özellikle belirtmeden veri talep eder. Bu seçenek yavaştır ve kolayca 2-3 saat sürebilir, geri yükleme yapılırken uygulamanın açık olması gerekir. Bu geri yükleme yöntemi herhangi bir kuruluşa bağlı değildir ve tüm koşullarda çalışmalıdır.";
 "blockchain_settings.info.rpc_source" = "RPC Kaynak";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "Bu ayar, bu uygulamanın işlem gönderirken veya alırken blockchain'lerle nasıl etkileşimde bulunduğunu kontrol eder.\n\nBitcoin, Bitcoin Cash, Litecoin ve Dash durumunda, blockchain ağ düğümleriyle iletişim tamamen eşler arasıdır. %@ birçok düğümü pingler ve bunlardan biriyle iletişim kurar. Uygulama her seferinde farklı bir düğüme bağlanır.\n\nEthereum, Binance Smart Chain ve diğer EVM blockchain'leri durumunda, mobil cüzdanların ilgili blockchain'lerle etkileşimde bulunmaları için üçüncü taraf RPC hizmet sağlayıcıları (örn. Infura.io) veya kişisel düğümler dışında bir alternatif yoktur. Bu, blockchain'le iletişiminizin merkezi olmayan olmadığı anlamına gelir. Bu, fonlarınızı herhangi bir şekilde etkilemez, yalnızca blockchain ağına bağlanma yeteneğinizi etkiler.\n\nBu konuyu radarımızda tutuyoruz ve yakında senkronizasyon için merkezi olmayan bir yol sağlamayı deneyeceğiz. Sabır.";
 
 // Manage Accounts
 
@@ -1283,7 +1282,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.theme.light" = "Açık";
 
 "appearance.tab_settings" = "Tab Ayarları";
-"appearance.markets_tab" = "Markets Tab";
+"appearance.markets_tab" = "Piyasalar Sekmesi";
 "appearance.launch_screen" = "Başlangıç Ekranı";
 "appearance.launch_screen.auto" = "Oto";
 "appearance.launch_screen.balance" = "Bakiye";
@@ -1303,7 +1302,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "contacts.title" = "Kişiler";
 "contacts.list.search_placeholder" = "İsme göre ara";
 "contacts.list.not_found" = "Eklenmiş bir kişiniz yok";
-"contacts.list.not_found_search" = "No results found";
+"contacts.list.not_found_search" = "Sonuç bulunamadı";
 "contacts.add_new_contact" = "Yeni Kişi Ekle";
 "contacts.update_contact.already_has_address" = "Seçilen kişinin zaten %@ üzerinde bir adresi var. Bu eylem, %@ adresini %@ ile değiştirecek.";
 "contacts.update_contact.replace" = "Değiştir";
@@ -1313,7 +1312,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "contacts.contact.update.error.name_already_exist" = "İsim Zaten Var";
 "contacts.contact.add_address" = "Adres ekle";
 "contacts.contact.delete" = "Kişiyi Sil";
-"contacts.contact.address.blockchains" = "Blockchains";
+"contacts.contact.address.blockchains" = "Blockchain'ler";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Adresi Sil";
 
@@ -1369,22 +1368,22 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "chart.time_duration.year2" = "2Y";
 "chart.time_duration.all" = "All";
 
-"chart.market_cap" = "Market Cap";
+"chart.market_cap" = "Piyasa Değeri";
 "chart.volume" = "Birim(24 saat)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "Dolaşımda";
 "chart.selected.volume" = "Hacim.";
 
-"chart.market.header" = "Market";
-"chart.market.market_cap" = "Market Cap";
+"chart.market.header" = "Piyasa";
+"chart.market.market_cap" = "Piyasa Değeri";
 "chart.market.volume" = "Birim(24 saat)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "Dolaşımda";
+"chart.market.total_supply" = "Toplam arz";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "Değişiklikler (1H)";
+"chart.performance.month_changes" = "Değişiklikler (1A)";
 
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.read_more" = "Daha Fazla Oku";
+"chart.about.read_less" = "Daha Az Oku";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -1492,7 +1491,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Başka bir aktif oturum yok";
 
-"wallet_connect.list.pairings" = "Pairings";
+"wallet_connect.list.pairings" = "Eşleştirme";
 "wallet_connect.list.version_text" = "Sürüm %@";
 "wallet_connect.list.v1_bottom_text" = "WalletConnect'in ilk sürümünde, talebi görmek ve onaylamak için oturumlara gitmeniz gerekir";
 "wallet_connect_list.new_connection" = "Yeni bağlantı";
@@ -1505,7 +1504,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.non_supported_account.switch" = "Değiştir";
 
 "wallet_connect.pending_requests_title" = "Bekleyen Talepler";
-"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.title" = "Eşleştirilmiş dApps";
 "wallet_connect.paired_dapps.cant_disconnect" = "Bağlantı Kesilemiyor";
 "wallet_connect.paired_dapps.disconnect_all" = "Hepsini Sil";
 "wallet_connect.pending_requests.nonactive_footer" = "Bir istek açmak için istenen cüzdanı etkinleştirmelisiniz";
@@ -1606,6 +1605,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "evm_network.rpc_source" = "RPC Kaynak";
 "evm_network.added" = "Eklendi";
 "evm_network.add_new" = "Yeni ekle";
+"evm_network.description" = "İşlemler yapılmış cüzdanı geri yüklemek için veri kaynağını seçin.";
 
 // Add RPC Source
 
@@ -1694,7 +1694,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Nft Asset
 
-"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.overview" = "İzleme";
 "nft_asset.tab.activity" = "Aktivite";
 
 "nft_asset.last_sale" = "Son İndirim";
@@ -1714,7 +1714,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "nft_asset.details.token_id" = "Token Kimliği";
 "nft_asset.details.token_standard" = "Token Standardı";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
+"nft_asset.links" = "Bağlantılar";
 "nft_asset.links.website" = "Website";
 "nft_asset.options.save_to_photos" = "Fotoğraflara Kaydet";
 "nft_asset.options.set_as_watch_face" = "İzleme Yüzü olarak ayarla";
@@ -1722,24 +1722,24 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.overview" = "İzleme";
 "nft_collection.tab.assets" = "Ögeler";
 "nft_collection.tab.activity" = "Aktivite";
 
 "nft_collection.overview.description" = "Açıklama";
 "nft_collection.overview.contracts" = "Kişiler";
-"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links" = "Bağlantılar";
 "nft_collection.overview.links.website" = "Website";
 
 
 "nft_collection.overview.owners" = "Sahip";
 "nft_collection.overview.items" = "Ögeler";
-"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.24h_volume" = "24 saat hacim";
 "nft_collection.overview.today_sellers" = "Bugünün Satıcıları";
 "nft_collection.overview.floor_price" = "Taban Fiyatı";
 "nft_collection.overview.all_time_average" = "Tüm Zamanların Ortalaması";
 "nft_collection.overview.royalty" = "Royalty";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "Başlangıç ​​tarihi";
 
 "nft.activity.contracts" = "Kişiler";
 "nft.activity.empty_list" = "Henüz öğe etkinliği yok";
@@ -1756,16 +1756,16 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Subscription Info
 
 "subscription_info.title" = "Premium Ayrıcalıkları";
-"subscription_info.info1.title" = "Cryptocurrency Analytics";
-"subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info2.title" = "Chart Indicators";
-"subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.info1.title" = "Kripto Para Analitiği";
+"subscription_info.info1.text" = "Kripto Para Dünyasının Dinamik Ortamında Karlı Fırsatları Keşfedin, Dolandırıcılıklardan Kaçının ve Karlarınızı Maksimize Edin.";
+"subscription_info.info2.title" = "Grafik Göstergeleri";
+"subscription_info.info2.text" = "Kripto Para Dünyasının Dinamik Ortamında Karlı Fırsatları Keşfedin, Dolandırıcılıklardan Kaçının ve Karlarınızı Maksimize Edin.";
 "subscription_info.info3.title" = "Kişisel Destek
 
 
 
 ";
-"subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.info3.text" = "Kripto Para Dünyasının Dinamik Ortamında Karlı Fırsatları Keşfedin, Dolandırıcılıklardan Kaçının ve Karlarınızı Maksimize Edin.";
 "subscription_info.get_premium" = "Get Premium";
 "subscription_info.already_have" = "I already have Premium";
 
@@ -1847,3 +1847,19 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_withdraw_confirm.network" = "Ağ";
 "cex_withdraw_confirm.withdraw" = "Hesaptan Çek";
 "cex_withdraw_confirm.withdraw_failed" = "Para çekme başarısız oldu";
+
+// No Passcode
+
+"no_passcode.info_text" = "Bu uygulama, telefonunuzda şifre (ekran kilidi) etkinleştirilmesini gerektirir.\n\nBunu iOS ayarlarında etkinleştirebilirsiniz.\n\nLütfen, işletim sistemi seviyesinde PIN'i devre dışı bıraktığınızda, telefonunuzun güvenli depolamasındaki güvenlik önlemlerinin daha önce depolanan verileri geçersiz kıldığını unutmayın. Cüzdanınıza geri dönebilmek için cüzdan anahtarlarınızı Geri Yüklemeniz gerekecek.";
+"cannot_check_passcode.info_text" = "Şifre (ekran kilidi) durumu kontrol edilemiyor. Lütfen uygulamayı yeniden başlatın.";
+"jailbreak.info_text" = "Unstoppable ekibi, uygulamanın yalnızca rootlanmamış (jailbreak yapılmamış) telefonlarda çalıştırılmasını önerir.\n\nLütfen, rootlanmış bir cihaz kullandığınızda, uygulamanın artık kripto paranızın kötü amaçlı yazılımlardan güvenliğini garanti edemeyeceğini unutmayın.";
+
+// Transaction Filter
+
+"transaction_filter.title" = "Filtre";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "Tüm Blockchain'ler";
+"transaction_filter.coin" = "Coin";
+"transaction_filter.all_coins" = "Tüm Koinler";
+"transaction_filter.hide_suspicious_txs" = "Şüpheli İşlemleri Gizle";
+"transaction_filter.hide_suspicious_txs.description" = "Gelen işlemleri, stablecoin'lerdeki toz miktarı ile gizlemek, adres zehirleme saldırısı sorunlarını kısmen çözer.";
