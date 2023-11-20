@@ -166,6 +166,8 @@ class ActionSheetWrapperViewController: UIViewController {
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+
+        contentView.backgroundColor = .clear
     }
 
     override public func viewDidDisappear(_ animated: Bool) {

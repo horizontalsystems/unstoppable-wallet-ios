@@ -106,7 +106,7 @@ struct CoinPriceListView: View {
                         Spacer()
                     }
                 }
-                .themeListStyle(.transparent)
+                .themeListStyle(.transparentInline)
             }
             .frame(maxHeight: .infinity)
             .padding(.vertical, verticalPadding)
