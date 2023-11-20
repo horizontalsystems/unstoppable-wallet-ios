@@ -662,36 +662,36 @@
 "market.advanced_search.top" = "상위 %d";
 "market.advanced_search.reset_all" = "초기화";
 
-"market.advanced_search.less_5_m" = "< 5M";
-"market.advanced_search.less_10_m" = "< 10M";
-"market.advanced_search.less_50_m" = "< 50M";
-"market.advanced_search.less_500_m" = "< 500M";
-"market.advanced_search.m_5_m_20" = "5M - 20M";
-"market.advanced_search.m_10_m_40" = "10M - 40M";
-"market.advanced_search.m_20_m_100" = "20M - 100M";
-"market.advanced_search.m_40_m_200" = "40M - 200M";
-"market.advanced_search.m_50_m_200" = "50M - 200M";
-"market.advanced_search.m_100_b_1" = "100M - 1B";
-"market.advanced_search.m_200_b_1" = "200M - 1B";
-"market.advanced_search.m_200_b_2" = "200M - 2B";
-"market.advanced_search.m_500_b_2" = "500M - 2B";
-"market.advanced_search.b_1_b_5" = "1B - 5B";
-"market.advanced_search.b_1_b_10" = "1B - 10B";
-"market.advanced_search.b_2_b_10" = "2B - 10B";
-"market.advanced_search.b_10_b_50" = "10B - 50B";
-"market.advanced_search.b_10_b_100" = "10B - 100B";
-"market.advanced_search.b_100_b_500" = "100B - 500B";
-"market.advanced_search.more_5_b" = "> 5B";
-"market.advanced_search.more_10_b" = "> 10B";
-"market.advanced_search.more_50_b" = "> 50B";
-"market.advanced_search.more_500_b" = "> 500B";
+"market.advanced_search.less_5_m" = "< 5백만";
+"market.advanced_search.less_10_m" = "< 10백만";
+"market.advanced_search.less_50_m" = "< 50백만";
+"market.advanced_search.less_500_m" = "< 500백만";
+"market.advanced_search.m_5_m_20" = "5백만 - 20백만";
+"market.advanced_search.m_10_m_40" = "천만 - 4천만";
+"market.advanced_search.m_20_m_100" = "2000만 - 1억";
+"market.advanced_search.m_40_m_200" = "4000만 - 2억";
+"market.advanced_search.m_50_m_200" = "5000만 - 2억";
+"market.advanced_search.m_100_b_1" = "1억 - 10억";
+"market.advanced_search.m_200_b_1" = "2억 - 10억";
+"market.advanced_search.m_200_b_2" = "2억 - 20억";
+"market.advanced_search.m_500_b_2" = "5억 - 20억";
+"market.advanced_search.b_1_b_5" = "10억 - 50억";
+"market.advanced_search.b_1_b_10" = "10억 - 100억";
+"market.advanced_search.b_2_b_10" = "20억 - 100억";
+"market.advanced_search.b_10_b_50" = "100억 - 500억";
+"market.advanced_search.b_10_b_100" = "100억 - 1,000억";
+"market.advanced_search.b_100_b_500" = "1,000억 - 5,000억";
+"market.advanced_search.more_5_b" = "> 50억";
+"market.advanced_search.more_10_b" = ">100억";
+"market.advanced_search.more_50_b" = "> 500억";
+"market.advanced_search.more_500_b" = "> 5000억";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1 일";
+"market.advanced_search.week" = "1 일주";
+"market.advanced_search.week2" = "이주";
+"market.advanced_search.month" = "1 개월";
+"market.advanced_search.month6" = "6 개월";
+"market.advanced_search.year" = "일년";
 
 "market.advanced_search_results.title" = "결과";
 
@@ -726,51 +726,51 @@
 ";
 "coin_overview.total_supply" = "총 공급량";
 "coin_overview.diluted_market_cap" = "희석화 시가 총액";
-"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.genesis_date" = "창립일";
 "coin_overview.trading_volume" = "거래량";
 
-"coin_overview.roi.hour24" = "1 Day";
-"coin_overview.roi.day7" = "1 Week";
-"coin_overview.roi.day14" = "2 Weeks";
-"coin_overview.roi.day30" = "1 Month";
-"coin_overview.roi.day200" = "6 Month";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.hour24" = "1 일";
+"coin_overview.roi.day7" = "1 일주";
+"coin_overview.roi.day14" = "이주";
+"coin_overview.roi.day30" = "1 개월";
+"coin_overview.roi.day200" = "6개월";
+"coin_overview.roi.year1" = "일년";
 
 "coin_overview.overview" = "개요";
 "coin_overview.description_warning" = "이것은 주어진 암호화폐에 대한 참고 자료를 기반으로 한 AI 생성된 설명입니다. 오류가 포함될 수 있습니다.";
 "coin_overview.blockchains" = "블록체인";
 "coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Coin Types";
+"coin_overview.coin_types" = "코인 유형";
 "coin_overview.show_more" = "더 보기";
-"coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.show_less" = "적게 보이기";
+"coin_overview.links" = "링크";
 
-"coin_overview.guide" = "Guide";
-"coin_overview.website" = "Website";
-"coin_overview.whitepaper" = "Whitepaper";
+"coin_overview.guide" = "가이드";
+"coin_overview.website" = "웹사이트";
+"coin_overview.whitepaper" = "백서";
 
 // Coin Page -> Analytics
 
-"coin_analytics.indicators.summary" = "Summary";
-"coin_analytics.indicators.title" = "Technical Indicators";
-"coin_analytics.indicators.no_data" = "No Data";
-"coin_analytics.indicators.strong_buy" = "Strong Buy";
-"coin_analytics.indicators.buy" = "Buy";
-"coin_analytics.indicators.neutral" = "Neutral";
-"coin_analytics.indicators.sell" = "Sell";
-"coin_analytics.indicators.strong_sell" = "Strong Sell";
-"coin_analytics.period" = "Period";
-"coin_analytics.period.select_title" = "Select Period";
+"coin_analytics.indicators.summary" = "요약";
+"coin_analytics.indicators.title" = "기술적 지표";
+"coin_analytics.indicators.no_data" = "데이터 없음";
+"coin_analytics.indicators.strong_buy" = "강한 매수";
+"coin_analytics.indicators.buy" = "매수";
+"coin_analytics.indicators.neutral" = "중립";
+"coin_analytics.indicators.sell" = "매도";
+"coin_analytics.indicators.strong_sell" = "강한 매도";
+"coin_analytics.period" = "기간";
+"coin_analytics.period.select_title" = "기간 선택";
 "coin_analytics.period.1h" = "1시간";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
+"coin_analytics.period.4h" = "4 시간";
+"coin_analytics.period.1d" = "1 일";
 "coin_analytics.period.1w" = "1주일";
 
 "coin_analytics.details" = "상세 정보";
 
 "coin_analytics.not_available" = "이 프로젝트에는 분석 데이터가 없습니다.";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators" = "기술적 지표";
 "coin_analytics.technical_indicators.info1" = "요약: 이것은 다양한 기술적 지표와 시간대를 고려하여 자산의 기술적 특성을 일반적으로 개요합니다. 이러한 지표를 기반으로 한 공통된 견해 (매수, 매도 또는 중립)를 제공합니다.";
 "coin_analytics.technical_indicators.info2" = "이동평균 (MA): 이것들은 추세를 따르는 지표를 만들기 위해 가격 데이터를 평활하게 하는 데 사용되는 일반적인 기술 지표입니다. 이것들은 특정 시간 기간 동안의 평균 가격을 보여줍니다. 다양한 종류의 이동평균이 있습니다:\n\n단순 이동평균 (SMA): 이것은 선택한 가격 범위, 보통 종가, 내의 기간 수로 평균을 계산합니다.\n\n지수 이동평균 (EMA): 이것은 최근 가격에 더 많은 가중치를 부여하여 최근 가격 변동에 더 빨리 반응합니다.";
 "coin_analytics.technical_indicators.info3" = "오실레이터(Oscillators): 이것들은 일정한 범위 내에서 시간에 따라 변동하는 기술 지표로 (중심선 위 및 아래 또는 설정된 수준 사이에서), 시장에서 과매수 및 과매도 상태를 식별하는 데 도움을 주도록 설계되었습니다. 여기 일반적인 오실레이터 중 일부가 있습니다:\n\n상대강도지수 (RSI): 이것은 가격 움직임의 속도와 변화를 측정합니다. 주로 과매수 또는 과매도 상태를 식별하는 데 사용됩니다.\n\n이동평균수렴확산 (MACD): 이것은 잠재적인 매수 및 매도 신호를 식별하는 데 사용됩니다. MACD는 신호선을 크로스할 때 (매수) 또는 (매도) 아래로 크로스할 때 기술적 신호를 생성합니다.";
@@ -842,29 +842,29 @@
 "coin_analytics.project_tvl.info4" = "현재 총 예치 가치(Total-Value-Locked)를 기반으로 순위가 매겨진 모든 토큰의 목록.";
 "coin_analytics.project_tvl.info5" = "프로젝트의 시가총액 / TVL 비율.";
 
-"coin_analytics.project_fee" = "Project Fee";
-"coin_analytics.project_fee_rank" = "Project Fee Rank";
+"coin_analytics.project_fee" = "프로젝트 수수료";
+"coin_analytics.project_fee_rank" = "프로젝트 수수료 순위";
 "coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
 
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.project_revenue_rank" = "Project Revenue Rank";
+"coin_analytics.project_revenue" = "프로젝트 수익";
+"coin_analytics.project_revenue_rank" = "프로젝트 수익 순위";
 "coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
 
-"coin_analytics.other_data" = "Other Data";
+"coin_analytics.other_data" = "기타 데이터";
 
-"coin_analytics.reports" = "Reports";
+"coin_analytics.reports" = "보고서";
 
-"coin_analytics.funding" = "Funding";
-"coin_analytics.funding.lead" = "Lead";
+"coin_analytics.funding" = "자금 조달";
+"coin_analytics.funding.lead" = "리드";
 
-"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries" = "자금 보관";
 "coin_analytics.treasuries.filters" = "필터";
 "coin_analytics.treasuries.filter.all" = "전체";
-"coin_analytics.treasuries.filter.public" = "Public";
-"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.public" = "공개";
+"coin_analytics.treasuries.filter.private" = "비공개";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
-"coin_analytics.audits" = "Audits";
+"coin_analytics.audits" = "감사";
 "coin_analytics.audits.issues" = "문제점";
 "coin_analytics.audits.no_reports" = "감사 보고서 없음";
 
@@ -915,7 +915,7 @@
 
 "chart_indicators.settings.ma.description" = "EMA, SMA 및 WMA는 기술 분석에서 사용되는 이동 평균 지표입니다:\n\nEMA는 더 빠른 반응을 위해 최근 가격을 강조합니다.\nSMA는 일반적인 추세를 파악하기 위해 가격 데이터를 평균화합니다.\nWMA는 최근 데이터에 선형 가중치를 두어 민감도와 잡음 감소를 균형잡히게 조절합니다.";
 "chart_indicators.settings.ma.type_title" = "유형";
-"chart_indicators.settings.ma.period_title" = "Period";
+"chart_indicators.settings.ma.period_title" = "기간";
 
 "chart_indicators.settings.rsi.title" = "RSI";
 "chart_indicators.settings.rsi.description" = "상대 강도 지수(RSI)는 가격 속도와 변화를 측정하는 모멘텀 오실레이터로, 과매수(70 이상) 또는 과매도(30 이하) 시장 상황을 식별합니다. 또한, 가격 역전을 발산을 통해 감지할 수도 있습니다.";
@@ -1250,7 +1250,7 @@
 "settings.about_app.app_name" = "%@ 지갑";
 "settings.about_app.description" = "%@ 지갑은 암호화폐를 개인적이고 독립적인 방식으로 투자하고 보관하려는 사람들을 위해 만들어졌습니다. \n\n이 지갑은 사용자만이 자금에 대한 통제를 갖는 비보관형 P2P 지갑입니다. 데이터를 수집하지 않으며 사용자의 자금을 특정 지갑 앱에 잠그지 않아 독립성을 유지합니다. \n\n%@ 지갑은 완전한 오픈소스이며 누구든지 앱이 주장하는 대로 정확하게 작동하는지 확인할 수 있습니다.";
 "settings.about_app.whats_new" = "새로운 기능";
-"settings.about_app.website" = "Website";
+"settings.about_app.website" = "웹사이트";
 
 // Settings -> About App -> Contact
 
@@ -1358,16 +1358,16 @@
 "chart.time_duration.week2" = "2주";
 "chart.time_duration.month" = "1개월";
 "chart.time_duration.month3" = "3개월";
-"chart.time_duration.halfyear" = "6M";
+"chart.time_duration.halfyear" = "6개월";
 "chart.time_duration.year" = "1년";
 "chart.time_duration.year2" = "2년";
-"chart.time_duration.all" = "ALL";
+"chart.time_duration.all" = "모든";
 
 "chart.market_cap" = "총 시가 총액";
 "chart.volume" = "볼륨 (24 시간)";
 "chart.circulation" = "유통 중
 ";
-"chart.selected.volume" = "Vol.";
+"chart.selected.volume" = "거래량";
 
 "chart.market.header" = "시장";
 "chart.market.market_cap" = "총 시가 총액";
@@ -1711,8 +1711,8 @@
 "nft_asset.details.token_id" = "토큰 ID";
 "nft_asset.details.token_standard" = "토큰 표준";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
-"nft_asset.links.website" = "Website";
+"nft_asset.links" = "링크";
+"nft_asset.links.website" = "웹사이트";
 "nft_asset.options.save_to_photos" = "사진 저장하기";
 "nft_asset.options.set_as_watch_face" = "시계 모드로 설정";
 "nft_asset.save_to_photos.failed" = "NFT 이미지를 저장하지 못했습니다";
@@ -1725,8 +1725,8 @@
 
 "nft_collection.overview.description" = "설명";
 "nft_collection.overview.contracts" = "계약";
-"nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.links" = "링크";
+"nft_collection.overview.links.website" = "웹사이트";
 
 
 "nft_collection.overview.owners" = "소유자";
@@ -1736,7 +1736,7 @@
 "nft_collection.overview.floor_price" = "바닥 가격";
 "nft_collection.overview.all_time_average" = "모든 시간 평균";
 "nft_collection.overview.royalty" = "고귀함";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "창립일";
 
 "nft.activity.contracts" = "계약";
 "nft.activity.empty_list" = "아직 항목 활동이 없습니다";
