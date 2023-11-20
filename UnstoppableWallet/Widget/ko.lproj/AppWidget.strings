@@ -1,8 +1,8 @@
 "6ebp42" = "Selected Coin";
 "8vJheC" = "정렬 기준";
-"qHGyuo" = "Highest Cap";
-"tVjZ7W" = "Lowest Cap";
-"t6AKQ5" = "Highest Volume";
-"C1LmDj" = "Lowest Volume";
-"Rl3a0T" = "Top Gainers";
-"x1kK4T" = "Top Losers";
+"qHGyuo" = "가장 높은 시가총액";
+"tVjZ7W" = "가장 낮은 시가총액";
+"t6AKQ5" = "가장 높은 거래량";
+"C1LmDj" = "가장 낮은 거래량";
+"Rl3a0T" = "최고 상승자";
+"x1kK4T" = "최고 하락자";
