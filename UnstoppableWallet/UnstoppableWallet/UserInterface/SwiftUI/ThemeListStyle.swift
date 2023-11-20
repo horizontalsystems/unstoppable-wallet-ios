@@ -4,6 +4,7 @@ enum ThemeListStyle {
     case lawrence
     case bordered
     case transparent
+    case transparentInline
 }
 
 struct ThemeListStyleModifier: ViewModifier {
@@ -19,7 +20,7 @@ struct ThemeListStyleModifier: ViewModifier {
             content
                 .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
                 .overlay(RoundedRectangle(cornerRadius: .cornerRadius12).stroke(Color.themeSteel20, lineWidth: .heightOneDp))
-        case .transparent:
+        case .transparent, .transparentInline:
             content
         }
     }
@@ -32,7 +33,7 @@ struct ThemeListStyleButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         switch themeListStyle {
         case .lawrence: content.background(isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
-        case .bordered, .transparent: content.background(isPressed ? Color.themeLawrencePressed : Color.themeTyler)
+        case .bordered, .transparent, .transparentInline: content.background(isPressed ? Color.themeLawrencePressed : Color.themeTyler)
         }
     }
 }
