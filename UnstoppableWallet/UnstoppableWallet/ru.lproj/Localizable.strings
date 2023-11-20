@@ -1856,5 +1856,5 @@
 "transaction_filter.all_blockchains" = "Все блокчейны";
 "transaction_filter.coin" = "Монета";
 "transaction_filter.all_coins" = "Все токены";
-"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
-"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
+"transaction_filter.hide_suspicious_txs" = "Скрыть подозрительные транзакции";
+"transaction_filter.hide_suspicious_txs.description" = "Скрытие входящих транзакций с незначительной суммой в стабильных монетах частично решает проблемы атаки на загрязнение адреса.";

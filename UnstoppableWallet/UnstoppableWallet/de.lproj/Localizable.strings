@@ -649,17 +649,17 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.price_parameters" = "Preisparameter";
 "market.advanced_search.choose_set" = "Satz auswählen";
 "market.advanced_search.market_cap" = "Marktkappe";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.volume" = "Handelsvolumen";
+"market.advanced_search.liquidity" = "DEX-Liquidität";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.price_period" = "Price Period";
+"market.advanced_search.price_period" = "Preiszeitraum";
 "market.advanced_search.price_change" = "Preisänderung";
 
 "market.advanced_search.outperformed_btc" = "Übertraf BTC";
 "market.advanced_search.outperformed_eth" = "Übertraf ETH";
 "market.advanced_search.outperformed_bnb" = "Übertraf BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.price_close_to_ath" = "Preis nahe an ATH";
+"market.advanced_search.price_close_to_atl" = "Preis nahe zum ATL";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Zurücksetzen";
@@ -695,13 +695,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "Ergebnisse";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.title" = "Gesamtmarktzahl";
+"market.global.total_market_cap.description" = "Gesamtmarktwert aller Kryptowährungen";
 
 "market.global.volume_24h.title" = "24h Volume";
-"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+"market.global.volume_24h.description" = "Das 24h Handelsvolumen des Krypto-Marktes";
 
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "Gesamter Marktwert von DeFi-Projekten";
@@ -709,18 +709,18 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.tvl_in_defi.description" = "Gesamtwert gesperrt (TVL) in DeFi";
 "market.global.tvl_in_defi.multi_chain" = "Mehrkettig";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.filter_by_chain" = "Filtern nach Kette";
 
 // Coin Page
 
 "coin_page.overview" = "Preis";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "Analytik";
 "coin_page.markets" = "Märkte";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators" = "Indikatoren";
 "coin_overview.indicators.show" = "Anzeigen";
 "coin_overview.indicators.hide" = "Verstecken";
 "coin_overview.market_cap" = "Marktkappe";
@@ -728,7 +728,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_overview.total_supply" = "Gesamtmenge";
 "coin_overview.diluted_market_cap" = "Diluted MCap";
 "coin_overview.genesis_date" = "Startdatum";
-"coin_overview.trading_volume" = "Trading Volume";
+"coin_overview.trading_volume" = "Handelsvolumen";
 
 "coin_overview.roi.hour24" = "1 Day";
 "coin_overview.roi.day7" = "1Week";
@@ -756,58 +756,58 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.indicators.title" = "Technische Indikatoren";
 "coin_analytics.indicators.no_data" = "Keine Daten";
 "coin_analytics.indicators.strong_buy" = "Stark Kaufen";
-"coin_analytics.indicators.buy" = "Buy";
+"coin_analytics.indicators.buy" = "Kaufen";
 "coin_analytics.indicators.neutral" = "Neutral";
-"coin_analytics.indicators.sell" = "Sell";
-"coin_analytics.indicators.strong_sell" = "Strong Sell";
-"coin_analytics.period" = "Period";
-"coin_analytics.period.select_title" = "Select Period";
+"coin_analytics.indicators.sell" = "Verkaufen";
+"coin_analytics.indicators.strong_sell" = "Stark Verkaufen";
+"coin_analytics.period" = "Zeitraum";
+"coin_analytics.period.select_title" = "Zeitraum auswählen";
 "coin_analytics.period.1h" = "1 Stunde";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
-"coin_analytics.period.1w" = "1 week";
+"coin_analytics.period.4h" = "4 Stunden";
+"coin_analytics.period.1d" = "1 Tag";
+"coin_analytics.period.1w" = "1 Woche";
 
 "coin_analytics.details" = "Info";
 
-"coin_analytics.not_available" = "This project has no analytics data";
+"coin_analytics.not_available" = "Dieses Projekt hat keine Analysedaten";
 
 "coin_analytics.technical_indicators" = "Technische Indikatoren";
-"coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
-"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
-"coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
+"coin_analytics.technical_indicators.info1" = "Zusammenfassung: Dies ist eine allgemeine Übersicht über die technischen Daten eines Vermögenswerts, unter Berücksichtigung einer Vielzahl von technischen Indikatoren und Zeitrahmen. Sie bietet einen Konsensansatz (Kaufen, Verkaufen oder Neutral) basierend auf diesen Indikatoren.";
+"coin_analytics.technical_indicators.info2" = "Gleitende Durchschnitte (MA): Dies sind häufig verwendete technische Indikatoren, die Preisdaten glätten, um einen trendfolgenden Indikator zu erstellen. Sie zeigen den Durchschnittspreis über einen bestimmten Zeitraum. Es gibt verschiedene Arten von MAs:\n\nEinfacher gleitender Durchschnitt (SMA): Dieser berechnet den Durchschnitt eines ausgewählten Preisspektrums, in der Regel Schlusskurse, durch die Anzahl der Perioden in diesem Bereich.\n\nExponentieller gleitender Durchschnitt (EMA): Dieser gibt neueren Preisen mehr Gewicht und reagiert daher schneller auf aktuelle Preisänderungen.";
+"coin_analytics.technical_indicators.info3" = "Oszillatoren: Dies sind technische Indikatoren, die im Laufe der Zeit innerhalb eines Bandes (über und unter einer Mittellinie oder zwischen festgelegten Niveaus) schwanken. Sie sind dazu gedacht, überkaufte und überverkaufte Bedingungen auf einem Markt zu identifizieren. Hier sind einige gängige Oszillatoren:\n\nRelative Strength Index (RSI): Dieser misst die Geschwindigkeit und Veränderung von Preisbewegungen. Er wird üblicherweise verwendet, um überkaufte oder überverkaufte Zustände zu identifizieren.\n\nMoving Average Convergence Divergence (MACD): Dieser wird verwendet, um potenzielle Kauf- und Verkaufssignale zu identifizieren. Er löst technische Signale aus, wenn er über (zum Kaufen) oder unter (zum Verkaufen) seiner Signallinie kreuzt.";
 
-"coin_analytics.cex_volume" = "CEX Volume";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
+"coin_analytics.cex_volume" = "CEX-Volume";
+"coin_analytics.cex_volume_rank" = "CEX Volumenrang";
+"coin_analytics.cex_volume_rank.description" = "Token, sortiert nach Handelsvolumen für den Token auf zentralisierten Börsen.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over a 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume.info2" = "Diagramm, das die Schwankungen im täglichen Handelsvolumen des Tokens an führenden zentralisierten Börsen über einen Zeitraum von 1 Jahr zeigt.";
+"coin_analytics.cex_volume.info3" = "Die Rangfolge des Tokens basiert auf dem Handelsvolumen an führenden zentralisierten Börsen über einen Zeitraum von 30 Tagen.";
+"coin_analytics.cex_volume.info4" = "Liste aller Token, sortiert nach Handelsvolumen auf zentralisierten Börsen über Intervalle von 24 Stunden / 7 Tagen / 1 Monat.";
 
-"coin_analytics.dex_volume" = "DEX Volume";
-"coin_analytics.dex_volume_rank" = "DEX Volume Rank";
-"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
+"coin_analytics.dex_volume" = "DEX-Volume";
+"coin_analytics.dex_volume_rank" = "DEX-Volumenrang";
+"coin_analytics.dex_volume_rank.description" = "Token, sortiert nach Handelsvolumen für den Token auf dezentralen Börsen.";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
-"coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_volume.info2" = "Diagramm, das die Schwankungen im täglichen Handelsvolumen des Tokens an führenden dezentralen Börsen über einen Zeitraum von 1 Jahr zeigt.";
+"coin_analytics.dex_volume.info3" = "Rang des Tokens basierend auf dem Handelsvolumen an führenden dezentralen Börsen über einen Zeitraum von 30 Tagen.";
+"coin_analytics.dex_volume.info4" = "Liste aller Token, sortiert nach Handelsvolumen auf dezentralen Börsen über Intervalle von 24 Stunden / 7 Tagen / 1 Monat.";
+"coin_analytics.dex_volume.tracked_dexes" = "Verfolgte DEXes (Dezentrale Börsen):";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
-"coin_analytics.dex_liquidity" = "DEX Liquidity";
-"coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
-"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by available liquidity on decentralized exchanges.";
-"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_liquidity" = "DEX-Liquidität";
+"coin_analytics.dex_liquidity_rank" = "DEX Liquiditätsrang";
+"coin_analytics.dex_liquidity_rank.description" = "Token, sortiert nach verfügbarer Liquidität auf dezentralen Börsen.";
+"coin_analytics.dex_liquidity.info1" = "Gesamte derzeit verfügbare Liquidität für den Token an führenden dezentralen Börsen.";
+"coin_analytics.dex_liquidity.info2" = "Diagramm, das die Schwankungen in der verfügbaren Liquidität für den Token an führenden dezentralen Börsen über einen Zeitraum von 1 Jahr zeigt.";
+"coin_analytics.dex_liquidity.info3" = "Liste aller Tokens basierend auf der verfügbaren Liquidität für das Token an führenden dezentralen Börsen.";
+"coin_analytics.dex_liquidity.tracked_dexes" = "Verfolgte DEXes (Dezentrale Börsen):";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Daily Active Addresses";
+"coin_analytics.active_addresses" = "Täglich aktive Adressen";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Tage Einzigartige Adressen";
-"coin_analytics.active_addresses_rank" = "Active Addresses Rank";
+"coin_analytics.active_addresses_rank" = "Aktive Adressen Rang";
 "coin_analytics.active_addresses_rank.description" = "Token, die nach der Anzahl der eindeutigen Adressen eingestuft werden, die mit dem Token Transaktionen tätigen.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Diagramm, das die Schwankungen in der Anzahl der täglich aktiven Adressen über einen Zeitraum von einem Jahr zeigt.";
@@ -834,35 +834,35 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.holders.count" = "Gesamteinhaber: %@";
 "coin_analytics.holders.see_all" = "Alle anzeigen";
 
-"coin_analytics.project_tvl" = "Project TVL";
+"coin_analytics.project_tvl" = "Projekt TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
-"coin_analytics.project_tvl.info1" = "Total-value-locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank is based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info_title" = "Projekt TVL (Gesamtwert gesperrt)";
+"coin_analytics.project_tvl.info1" = "Überwachte Blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon.";
+"coin_analytics.project_tvl.info2" = "Diagramm mit Variation Total-Value-gesperrt in intelligenten Verträgen über 1 Jahr.";
+"coin_analytics.project_tvl.info3" = "Tokens Rang basiert auf dem aktuellen Total-Wert-gesperrt.";
+"coin_analytics.project_tvl.info4" = "Liste aller Token basierend auf dem aktuellen Total-Wert gesperrt.";
+"coin_analytics.project_tvl.info5" = "Market Cap / TVL Verhältnis für das Projekt.";
 
-"coin_analytics.project_fee" = "Project Fee";
-"coin_analytics.project_fee_rank" = "Project Fee Rank";
-"coin_analytics.project_fee_rank.description" = "Tokens are ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee" = "Projektgebühr";
+"coin_analytics.project_fee_rank" = "Projektgebührenrang";
+"coin_analytics.project_fee_rank.description" = "Token werden nach den von den jeweiligen Projekten generierten Gebühren eingestuft. Die Art und Weise, wie Gebühren gesammelt werden, variiert von Projekt zu Projekt.";
 
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.project_revenue_rank" = "Project Revenue Rank";
-"coin_analytics.project_revenue_rank.description" = "Tokens are ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue" = "Projekteinnahmen";
+"coin_analytics.project_revenue_rank" = "Projekt-Umsatzrang";
+"coin_analytics.project_revenue_rank.description" = "Token werden nach Einnahmen klassifiziert, die über Mechanismen wie Stapel- oder Tokenbrennen für Inhaber generiert werden.";
 
-"coin_analytics.other_data" = "Other Data";
+"coin_analytics.other_data" = "Andere Daten";
 
-"coin_analytics.reports" = "Reports";
+"coin_analytics.reports" = "Berichte";
 
-"coin_analytics.funding" = "Funding";
+"coin_analytics.funding" = "Finanzierung";
 "coin_analytics.funding.lead" = "Lead";
 
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.treasuries.filters" = "Filters";
 "coin_analytics.treasuries.filter.all" = "Alle";
-"coin_analytics.treasuries.filter.public" = "Public";
-"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.public" = "Öffentlich";
+"coin_analytics.treasuries.filter.private" = "Privat";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
 "coin_analytics.audits" = "Prüfungen";
@@ -874,24 +874,24 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "coin_analytics.overall_score" = "Gesamtpunktzahl";
 "coin_analytics.overall_score.excellent" = "Ausgezeichnet";
-"coin_analytics.overall_score.good" = "Good";
-"coin_analytics.overall_score.fair" = "Fair";
-"coin_analytics.overall_score.poor" = "Poor";
-"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total available liquidity on decentralized exchanges.";
-"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
-"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
-"coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
-"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding the respective token.";
+"coin_analytics.overall_score.good" = "Gut";
+"coin_analytics.overall_score.fair" = "Faire";
+"coin_analytics.overall_score.poor" = "Arm";
+"coin_analytics.overall_score.cex_volume" = "Die Gesamtbewertung basiert auf dem durchschnittlichen täglichen Handelsvolumen an zentralisierten Börsen in den letzten 7 Tagen.";
+"coin_analytics.overall_score.dex_volume" = "Die Gesamtpunktzahl basiert auf dem durchschnittlichen täglichen Handelsvolumen an dezentralen Börsen in den letzten 7 Tagen.";
+"coin_analytics.overall_score.dex_liquidity" = "Die Gesamtzahl basiert auf der verfügbaren Liquidität bei dezentralen Börsen.";
+"coin_analytics.overall_score.active_addresses" = "Die Gesamtpunktzahl basiert auf den durchschnittlichen täglichen aktiven Adressen der letzten 7 Tage.";
+"coin_analytics.overall_score.project_tvl" = "Die Gesamtpunktzahl basiert auf dem gesperrten Gesamtwert (verwaltete Assets) auf dem Projekt, das durch den angegebenen Token repräsentiert wird.";
+"coin_analytics.overall_score.transaction_count" = "Die Gesamtpunktzahl basiert auf der durchschnittlichen täglichen Transaktionsanzahl der letzten 7 Tage.";
+"coin_analytics.overall_score.holders" = "Die Gesamtpunktzahl richtet sich nach der Gesamtzahl der Adressen mit dem jeweiligen Token.";
 
-"coin_analytics.rank" = "Rank";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.rank" = "Rang";
+"coin_analytics.30_day_rank" = "30-Tage Rang";
+"coin_analytics.30_day_volume" = "30-Tage Lautstärke";
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "Keine Daten verfügbar";
 "coin_markets.filter.all" = "Alle";
 "coin_markets.filter.verified" = "Verifiziert";
 "coin_markets.verified" = "Verifiziert";
@@ -899,24 +899,24 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Coin Page -> Tweets
 
 "coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
-"coin_tweets.not_available" = "No twitter available";
-"coin_tweets.see_on_twitter" = "See on Twitter";
+"coin_tweets.reference_type.quoted" = "Zitiert @%@";
+"coin_tweets.reference_type.replied" = "Auf @%@ geantwortet";
+"coin_tweets.no_tweets_yet" = "Noch keine Tweets";
+"coin_tweets.not_available" = "Kein Twitter verfügbar";
+"coin_tweets.see_on_twitter" = "Auf Twitter ansehen";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
-"chart_indicators.moving_averages" = "Moving Averages";
-"chart_indicators.oscillators" = "Oscillators";
+"chart_indicators.title" = "Indikatoren";
+"chart_indicators.moving_averages" = "Gleitende Durchschnitte";
+"chart_indicators.oscillators" = "Oszillatoren";
 
 
-"chart_indicators.settings.period.error" = "Period can’t be more than %d";
+"chart_indicators.settings.period.error" = "Zeitraum kann nicht mehr als %d sein";
 
-"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
-"chart_indicators.settings.ma.type_title" = "Type";
-"chart_indicators.settings.ma.period_title" = "Period";
+"chart_indicators.settings.ma.description" = "Die EMA, SMA und WMA sind bewegliche Durchschnittswerte, die in der technischen Analyse verwendet werden:\n\nEMA betont die aktuellen Preise für schnellere Reaktionen.\nSMA ermittelt die durchschnittlichen Preisdaten für eine allgemeine Trendansicht.\nWMA ausgewogen Empfindlichkeit und Rauschreduzierung durch lineares Gewichten der letzten Daten";
+"chart_indicators.settings.ma.type_title" = "Typ";
+"chart_indicators.settings.ma.period_title" = "Zeitraum";
 
 "chart_indicators.settings.rsi.title" = "RSI";
 "chart_indicators.settings.rsi.description" = "Der Relative Strength Index (RSI) ist ein Momentum-Oszillator, der die Geschwindigkeit und Veränderung des Preises misst und überkaufte (über 70) oder überverkaufte (unter 30) Marktbedingungen identifiziert. Er kann auch Preisumkehrungen durch Divergenzen erkennen.";
@@ -1291,7 +1291,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "appearance.balance_value" = "Saldo Wert";
 "appearance.balance_value.coin_value" = "Münzwert";
-"appearance.balance_value.fiat_value" = "Fiat Value";
+"appearance.balance_value.fiat_value" = "Fiat-Wert";
 
 // Settings -> Contacts
 
@@ -1848,7 +1848,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "Filtern";
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Alle Blockchains";
 "transaction_filter.coin" = "Coin";
