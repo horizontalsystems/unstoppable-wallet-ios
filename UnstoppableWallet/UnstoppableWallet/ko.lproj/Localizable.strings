@@ -638,28 +638,28 @@
 
 "market.advanced_search.title" = "필터";
 "market.advanced_search.show_results" = "결과 보기";
-"market.advanced_search.empty_results" = "Empty Results";
+"market.advanced_search.empty_results" = "결과 없음";
 "market.advanced_search.dex_description" = "이 설정은 이더리움(Uniswap DEX) 과 바이낸스 스마트체인(Pancake DEX) 에서 거래되는 토큰에 적용됩니다.";
-"market.advanced_search.24h" = "24h";
+"market.advanced_search.24h" = "24시간";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.network_parameters" = "Network Parameters";
-"market.advanced_search.price_parameters" = "Price Parameters";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.price_period" = "Price Period";
+"market.advanced_search.market_parameters" = "시장 매개변수";
+"market.advanced_search.network_parameters" = "네트워크 매개변수";
+"market.advanced_search.price_parameters" = "가격 매개변수";
+"market.advanced_search.choose_set" = "설정 선택";
+"market.advanced_search.market_cap" = "총 시가 총액";
+"market.advanced_search.volume" = "거래량";
+"market.advanced_search.liquidity" = "DEX 유동성";
+"market.advanced_search.blockchains" = "블록체인";
+"market.advanced_search.price_period" = "가격 기간";
 "market.advanced_search.price_change" = "가격 변경";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
+"market.advanced_search.outperformed_btc" = "BTC를 능가했습니다";
+"market.advanced_search.outperformed_eth" = "ETH를 능가했습니다";
+"market.advanced_search.outperformed_bnb" = "BNB를 능가했습니다";
+"market.advanced_search.price_close_to_ath" = "최고가에 가까운 가격";
 "market.advanced_search.price_close_to_atl" = "Price Close to ATL";
 
-"market.advanced_search.top" = "Top %d";
+"market.advanced_search.top" = "상위 %d";
 "market.advanced_search.reset_all" = "초기화";
 
 "market.advanced_search.less_5_m" = "< 5M";
@@ -693,40 +693,41 @@
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "결과";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.title" = "총 시장 자본금";
+"market.global.total_market_cap.description" = "모든 암호화폐의 총 시장 가치\" or \"모든 가상 화폐의 총 시장 가치";
 
 "market.global.volume_24h.title" = "24시간 거래량";
-"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+"market.global.volume_24h.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
 
 "market.global.defi_cap.title" = "디파이(DeFi) 시가총액";
-"market.global.defi_cap.description" = "Total market value of DeFi projects";
+"market.global.defi_cap.description" = "디파이 프로젝트의 총 시장 가치";
 
 "market.global.tvl_in_defi.title" = "디파이(DeFi)에서의 총 예치 가치";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.description" = "디파이 (DeFi)에서의 총 예치 가치 (TVL)";
+"market.global.tvl_in_defi.multi_chain" = "다중 체인";
+"market.global.tvl_in_defi.filter_by_chain" = "체인별 필터링";
 
 // Coin Page
 
 "coin_page.overview" = "금액";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "분석";
 "coin_page.markets" = "시장";
-"coin_page.tweets" = "Tweets";
+"coin_page.tweets" = "트윗";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
-"coin_overview.market_cap" = "Market Cap";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.indicators" = "지표";
+"coin_overview.indicators.show" = "표시";
+"coin_overview.indicators.hide" = "숨기기";
+"coin_overview.market_cap" = "총 시가 총액";
+"coin_overview.circulating_supply" = "유통 중
+";
+"coin_overview.total_supply" = "총 공급량";
 "coin_overview.diluted_market_cap" = "희석화 시가 총액";
 "coin_overview.genesis_date" = "Inception Date";
-"coin_overview.trading_volume" = "Trading Volume";
+"coin_overview.trading_volume" = "거래량";
 
 "coin_overview.roi.hour24" = "1 Day";
 "coin_overview.roi.day7" = "1 Week";
@@ -737,7 +738,7 @@
 
 "coin_overview.overview" = "개요";
 "coin_overview.description_warning" = "이것은 주어진 암호화폐에 대한 참고 자료를 기반으로 한 AI 생성된 설명입니다. 오류가 포함될 수 있습니다.";
-"coin_overview.blockchains" = "Blockchains";
+"coin_overview.blockchains" = "블록체인";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Coin Types";
 "coin_overview.show_more" = "더 보기";
@@ -763,49 +764,49 @@
 "coin_analytics.period.1h" = "1시간";
 "coin_analytics.period.4h" = "4 hours";
 "coin_analytics.period.1d" = "1 day";
-"coin_analytics.period.1w" = "1 week";
+"coin_analytics.period.1w" = "1주일";
 
 "coin_analytics.details" = "상세 정보";
 
-"coin_analytics.not_available" = "This project has no analytics data";
+"coin_analytics.not_available" = "이 프로젝트에는 분석 데이터가 없습니다.";
 
 "coin_analytics.technical_indicators" = "Technical Indicators";
-"coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
-"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
-"coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
+"coin_analytics.technical_indicators.info1" = "요약: 이것은 다양한 기술적 지표와 시간대를 고려하여 자산의 기술적 특성을 일반적으로 개요합니다. 이러한 지표를 기반으로 한 공통된 견해 (매수, 매도 또는 중립)를 제공합니다.";
+"coin_analytics.technical_indicators.info2" = "이동평균 (MA): 이것들은 추세를 따르는 지표를 만들기 위해 가격 데이터를 평활하게 하는 데 사용되는 일반적인 기술 지표입니다. 이것들은 특정 시간 기간 동안의 평균 가격을 보여줍니다. 다양한 종류의 이동평균이 있습니다:\n\n단순 이동평균 (SMA): 이것은 선택한 가격 범위, 보통 종가, 내의 기간 수로 평균을 계산합니다.\n\n지수 이동평균 (EMA): 이것은 최근 가격에 더 많은 가중치를 부여하여 최근 가격 변동에 더 빨리 반응합니다.";
+"coin_analytics.technical_indicators.info3" = "오실레이터(Oscillators): 이것들은 일정한 범위 내에서 시간에 따라 변동하는 기술 지표로 (중심선 위 및 아래 또는 설정된 수준 사이에서), 시장에서 과매수 및 과매도 상태를 식별하는 데 도움을 주도록 설계되었습니다. 여기 일반적인 오실레이터 중 일부가 있습니다:\n\n상대강도지수 (RSI): 이것은 가격 움직임의 속도와 변화를 측정합니다. 주로 과매수 또는 과매도 상태를 식별하는 데 사용됩니다.\n\n이동평균수렴확산 (MACD): 이것은 잠재적인 매수 및 매도 신호를 식별하는 데 사용됩니다. MACD는 신호선을 크로스할 때 (매수) 또는 (매도) 아래로 크로스할 때 기술적 신호를 생성합니다.";
 
-"coin_analytics.cex_volume" = "CEX Volume";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
+"coin_analytics.cex_volume" = "CEX 거래량";
+"coin_analytics.cex_volume_rank" = "CEX 거래량 순위";
+"coin_analytics.cex_volume_rank.description" = "중앙화 거래소에서의 토큰 거래량을 기준으로 순위가 매겨진 토큰들.";
+"coin_analytics.cex_volume.info1" = "주요 중앙화 거래소에서의 토큰의 30일 동안의 총 거래량.";
+"coin_analytics.cex_volume.info2" = "주요 중앙화 거래소에서의 토큰의 1년 동안 일일 거래량 변동을 보여주는 차트.";
 "coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume.info4" = "24시간 / 7일 / 1개월 간격으로 중앙화 거래소에서의 거래량을 기반으로 순위가 매겨진 모든 토큰의 목록.";
 
-"coin_analytics.dex_volume" = "DEX Volume";
-"coin_analytics.dex_volume_rank" = "DEX Volume Rank";
-"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
-"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
-"coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_volume" = "DEX 거래량";
+"coin_analytics.dex_volume_rank" = "DEX 거래량 순위";
+"coin_analytics.dex_volume_rank.description" = "탈중앙화 거래소에서의 토큰 거래량을 기준으로 순위가 매겨진 토큰들.";
+"coin_analytics.dex_volume.info1" = "주요 탈중앙화 거래소에서의 토큰의 30일 동안의 총 거래량.";
+"coin_analytics.dex_volume.info2" = "1년 동안 주요 탈중앙화 거래소에서의 토큰의 일일 거래량 변동을 보여주는 차트.";
+"coin_analytics.dex_volume.info3" = "주요 탈중앙화 거래소에서 30일 동안의 거래량을 기반으로 한 토큰의 순위.";
+"coin_analytics.dex_volume.info4" = "24시간 / 7일 / 1개월 간격으로 탈중앙화 거래소에서 거래량을 기반으로 한 모든 토큰의 순위 목록.";
+"coin_analytics.dex_volume.tracked_dexes" = "추적 중인 DEX:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
-"coin_analytics.dex_liquidity" = "DEX Liquidity";
-"coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
-"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by available liquidity on decentralized exchanges.";
-"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_liquidity" = "DEX 유동성";
+"coin_analytics.dex_liquidity_rank" = "DEX 유동성 순위";
+"coin_analytics.dex_liquidity_rank.description" = "탈중앙화 거래소에서 사용 가능한 유동성을 기준으로 한 토큰들의 순위.";
+"coin_analytics.dex_liquidity.info1" = "주요 탈중앙화 거래소에서 해당 토큰의 현재 사용 가능한 유동성 총액.";
+"coin_analytics.dex_liquidity.info2" = "주요 탈중앙화 거래소에서의 해당 토큰의 1년 동안 사용 가능한 유동성 변동을 보여주는 차트.";
+"coin_analytics.dex_liquidity.info3" = "주요 탈중앙화 거래소에서의 해당 토큰의 사용 가능한 유동성을 기준으로 순위 매겨진 모든 토큰의 목록.";
+"coin_analytics.dex_liquidity.tracked_dexes" = "추적 중인 DEX:";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
 "coin_analytics.active_addresses" = "일일 활성 주소";
-"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
-"coin_analytics.active_addresses_rank" = "Active Addresses Rank";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30일 동안의 고유 주소";
+"coin_analytics.active_addresses_rank" = "활성 주소 순위";
 "coin_analytics.active_addresses_rank.description" = "토큰과 거래하는 고유 주소의 수에 따라 순위가 매겨진 토큰들.";
 "coin_analytics.active_addresses.info1" = "24시간 동안의 고유 일일 활성 주소 총 수.";
 "coin_analytics.active_addresses.info2" = "1년 동안 일일 활성 주소 수의 변동을 보여주는 차트.";
@@ -814,7 +815,7 @@
 "coin_analytics.active_addresses.info5" = "24시간 / 7일 / 1개월 간격으로 토큰과 거래하는 일일 활성 주소 수를 기반으로 순위가 매겨진 모든 토큰의 목록.";
 
 "coin_analytics.transaction_count" = "트랜잭션 수";
-"coin_analytics.transaction_count_rank" = "Tx Count Rank";
+"coin_analytics.transaction_count_rank" = "거래 수 순위";
 "coin_analytics.transaction_count_rank.description" = "토큰은 블록체인에서의 거래 수에 따라 순위가 매겨집니다.";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "1년 동안의 거래 수 변동을 보여주는 차트.";
@@ -822,19 +823,19 @@
 "coin_analytics.transaction_count.info4" = "24시간 / 7일 / 1개월 간격으로 토큰과의 거래 수를 기반으로 순위가 매겨진 모든 토큰의 목록.";
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30-day period.";
 
-"coin_analytics.holders" = "Holders";
-"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders" = "소유주";
+"coin_analytics.holders_rank" = "소유주 순위";
 "coin_analytics.holders_rank.description" = "여러 블록체인에서 그들을 보유한 고유 주소에 의해 토큰을 순위 매김.";
 "coin_analytics.holders.info1" = "다양한 블록체인에서 토큰을 보유한 고유 주소의 총 수.";
 "coin_analytics.holders.info2" = "각 블록체인에서 토큰을 보유한 상위 10개 지갑.";
 "coin_analytics.holders.tracked_blockchains" = "추적되는 블록체인: 이더리움, 바이낸스 스마트 체인, 옵티미즘, 아비트럼, 셀로, 크로노스, 아발란체, 팬텀, 폴리곤";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
-"coin_analytics.holders.count" = "Total Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "상위 10 소유주 중";
+"coin_analytics.holders.count" = "총 소유주: %@";
 "coin_analytics.holders.see_all" = "모두 보기";
 
-"coin_analytics.project_tvl" = "Project TVL";
-"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
+"coin_analytics.project_tvl" = "프로젝트 TVL";
+"coin_analytics.tvl_ratio" = "시가총액 / TVL 비율";
+"coin_analytics.project_tvl.info_title" = "프로젝트 TVL (총 예치 가치)";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
 "coin_analytics.project_tvl.info2" = "1년 동안 프로젝트의 스마트 계약에서의 총 예치 가치(Total-Value-Locked) 변동을 보여주는 차트.";
 "coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
@@ -864,56 +865,56 @@
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
 "coin_analytics.audits" = "Audits";
-"coin_analytics.audits.issues" = "Issues";
-"coin_analytics.audits.no_reports" = "No audit reports";
+"coin_analytics.audits.issues" = "문제점";
+"coin_analytics.audits.no_reports" = "감사 보고서 없음";
 
 "coin_analytics.last_30d" = "Last 30d";
-"coin_analytics.current" = "current";
+"coin_analytics.current" = "현재";
 
-"coin_analytics.overall_score" = "Overall Score";
-"coin_analytics.overall_score.excellent" = "Excellent";
-"coin_analytics.overall_score.good" = "Good";
-"coin_analytics.overall_score.fair" = "Fair";
-"coin_analytics.overall_score.poor" = "Poor";
-"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
+"coin_analytics.overall_score" = "전체 점수";
+"coin_analytics.overall_score.excellent" = "우수";
+"coin_analytics.overall_score.good" = "양호";
+"coin_analytics.overall_score.fair" = "적정";
+"coin_analytics.overall_score.poor" = "불량";
+"coin_analytics.overall_score.cex_volume" = "종합 점수는 지난 7일 동안 중앙화 거래소에서의 평균 일일 거래량을 기반으로 합니다.";
+"coin_analytics.overall_score.dex_volume" = "종합 점수는 지난 7일 동안 탈중앙화 거래소에서의 평균 일일 거래량을 기반으로 합니다.";
 "coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total avilable liquidity on decentralized exchanges.";
-"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
-"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
-"coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
+"coin_analytics.overall_score.active_addresses" = "종합 점수는 지난 7일 동안의 평균 일일 활성 주소를 기반으로 합니다.";
+"coin_analytics.overall_score.project_tvl" = "종합 점수는 주어진 토큰을 통해 표현된 프로젝트의 총 예치 가치 (자산 관리 대상)를 기반으로 합니다.";
+"coin_analytics.overall_score.transaction_count" = "종합 점수는 지난 7일 동안의 평균 일일 거래 횟수를 기반으로 합니다.";
 "coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding respective token.";
 
-"coin_analytics.rank" = "Rank";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.rank" = "순위";
+"coin_analytics.30_day_rank" = "30일 순위";
+"coin_analytics.30_day_volume" = "30일 거래량";
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "데이터 없음";
 "coin_markets.filter.all" = "전체";
 "coin_markets.filter.verified" = "확인";
 "coin_markets.verified" = "확인";
 
 // Coin Page -> Tweets
 
-"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
-"coin_tweets.not_available" = "No twitter available";
-"coin_tweets.see_on_twitter" = "See on Twitter";
+"coin_tweets.reference_type.retweeted" = "리트윗됨 @%@";
+"coin_tweets.reference_type.quoted" = "인용됨 @%@";
+"coin_tweets.reference_type.replied" = "답글 작성함 @%@";
+"coin_tweets.no_tweets_yet" = "아직 트윗 없음";
+"coin_tweets.not_available" = "트위터 사용 불가";
+"coin_tweets.see_on_twitter" = "트위터에서 확인하세요";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "지표";
 "chart_indicators.moving_averages" = "이동 평균";
-"chart_indicators.oscillators" = "Oscillators";
+"chart_indicators.oscillators" = "오실레이터";
 
 
-"chart_indicators.settings.period.error" = "Period can’t be more than %d";
+"chart_indicators.settings.period.error" = "기간은 %d 이상이 될 수 없습니다.";
 
-"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
-"chart_indicators.settings.ma.type_title" = "Type";
+"chart_indicators.settings.ma.description" = "EMA, SMA 및 WMA는 기술 분석에서 사용되는 이동 평균 지표입니다:\n\nEMA는 더 빠른 반응을 위해 최근 가격을 강조합니다.\nSMA는 일반적인 추세를 파악하기 위해 가격 데이터를 평균화합니다.\nWMA는 최근 데이터에 선형 가중치를 두어 민감도와 잡음 감소를 균형잡히게 조절합니다.";
+"chart_indicators.settings.ma.type_title" = "유형";
 "chart_indicators.settings.ma.period_title" = "Period";
 
 "chart_indicators.settings.rsi.title" = "RSI";
@@ -921,12 +922,12 @@
 "chart_indicators.settings.rsi.period_title" = "RSI 기간";
 
 "chart_indicators.settings.macd.title" = "MACD";
-"chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is a momentum indicator that tracks the relationship between two EMAs of a security's price. It signals buying or selling opportunities when the MACD line (12-period EMA minus 26-period EMA) crosses the 9-period EMA, known as the signal line.";
-"chart_indicators.settings.macd.fast_period_title" = "Fast Length";
-"chart_indicators.settings.macd.slow_period_title" = "Slow Length";
-"chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
+"chart_indicators.settings.macd.description" = "이동평균수렴확산 (MACD)은 보안 가격의 두 EMA 간의 관계를 추적하는 모멘텀 지표입니다. MACD 라인 (12 기간 EMA에서 26 기간 EMA를 뺀 값)이 신호선으로 알려진 9 기간 EMA를 크로스할 때 매수 또는 매도 기회를 신호합니다.";
+"chart_indicators.settings.macd.fast_period_title" = "빠른 길이";
+"chart_indicators.settings.macd.slow_period_title" = "느린 길이";
+"chart_indicators.settings.macd.signal_period_title" = "신호 평활화";
 
-"chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
+"chart_indicators.settings.macd.slow_fast.error" = "빠른 기간은 느린 기간보다 짧아야 합니다.";
 
 // Transactions
 
@@ -1002,7 +1003,7 @@
 "tx_info.you_paid" = "지불한 금액";
 "tx_info.you_got" = "받았던 금액";
 "tx_info.price" = "금액";
-"tx_info.scam_warning" = "This transaction is suspicious and can be scam. Please do not copy any addresses from this transaction.";
+"tx_info.scam_warning" = "이 거래는 의심스럽고 사기일 수 있습니다. 이 거래에서 주소를 복사하지 마십시오.";
 
 // Settings
 
@@ -1046,11 +1047,11 @@
 
 "settings.personal_support.telegram_username.title" = "계정";
 "settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.description" = "개인 지원 채팅을 열려면 텔레그램 계정 이름을 입력하십시오. 그런 다음 메시지를 보내드립니다.";
 "settings.personal_support.request" = "요청";
 "settings.personal_support.requested" = "신청 완료";
 "settings.personal_support.failed" = "요청 실패";
-"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
+"settings.personal_support.need_subscription" = "이 기능은 %@ 월렛 프리미엄 사용자 전용입니다. 공식 웹사이트에서 자세한 정보를 확인하세요.";
 "settings.personal_support.requested.description" = "이미 비공개 채팅을 요청하셨습니다. Telegram에서 찾아보세요.";
 "settings.personal_support.requested.open_telegram" = "오픈 텔레그램";
 "settings.personal_support.requested.new_request" = "요청";
@@ -1212,9 +1213,9 @@
 "btc_blockchain_settings.restore_source.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 "btc_blockchain_settings.restore_source.alert" = "복원 소스를 변경한 후 지갑은 %@ 블록체인과 자체적으로 다시 동기화해야 합니다.";
 
-"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
+"btc_restore_mode.blockchair" = "빠르고 비공개, 중앙집중화";
 "btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchain" = "느리고 비공개, 탈중앙화";
 
 "btc_transaction_sort_mode.shuffle" = "셔플";
 "btc_transaction_sort_mode.shuffle.description" = "랜덤 인덱싱";
@@ -1222,9 +1223,9 @@
 "btc_transaction_sort_mode.bip69.description" = "사전 색인 작성";
 
 "blockchain_settings.info.restore_source" = "매개 변수 복원";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "이 설정은 기존 월렛을 복원할 때에만 관련이 있습니다. 이것은 특정 암호화폐의 거래 내역을 가져오는 과정으로, 월렛 앱이 과거 거래를 표시하고 사용자의 잔액을 계산할 수 있도록 하는 과정입니다. 이 작업은 사용자가 이전에 만든 월렛을 복원할 때 한 번만 수행되어야 합니다.\n\n이 단계에서, %@와 같은 모바일 월렛이 이 작업을 수행하는 두 가지 잠재적인 방법이 있습니다:\n\nAPI 서버에서: 완전한 블록체인을 호스팅하고 모든 데이터를 빠른 방식으로 제공하기 위해 처리하고 최적화한 제3자 정의 서버가 있습니다. 이 방법은 빠르지만 잠재적으로 (필요에 따라) 덜 개인적일 수 있습니다. 또한, 월렛을 복원하는 중에 제3자 서버의 가용성에 의존하기 때문에 중앙 집중식 방법입니다. 이 옵션은 데이터를 빠르게 가져오는 속도 때문에 권장됩니다 (5-10 분).\n\n블록체인에서: 앱은 블록체인 노드 네트워크에서 직접 복원을 시도합니다. 이것은 월렛 잔액과 과거 거래를 복원하는 탈중앙화된 방법입니다. 앱은 네트워크 노드 중 많은 노드에 핑을 보내고 특정 노드를 지정하지 않고 데이터를 요청합니다. 이 옵션은 느리며 2-3 시간이 소요될 수 있으며, 복원 중에 앱을 열어두어야 합니다. 이 복원 방법은 어떤 엔터티에도 의존하지 않으며 모든 상황에서 작동해야 합니다.";
 "blockchain_settings.info.rpc_source" = "RPC 소스";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "이 설정은 이 앱이 거래를 보내거나 받을 때 블록체인과 상호 작용하는 방식을 제어합니다.\n\n비트코인, 비트코인 캐시, 라이트코인 및 대시의 경우 블록체인 네트워크 노드와의 통신이 완전히 동등한 피어 투 피어 방식입니다. %@은 다수의 노드에 핑을 보내고 그 중 하나와 통신합니다. 앱이 다른 노드에 연결될 때마다입니다.\n\n이더리움, 바이낸스 스마트 체인 및 기타 EVM 블록체인의 경우, 모바일 월렛이 해당 블록체인과 상호 작용하는 대안이 외부 RPC 서비스 제공업체 (예: Infura.io) 또는 개인 노드를 통해 이루어져야 합니다. 이것은 본질적으로 해당 블록체인과의 통신이 탈중앙화되지 않음을 의미합니다. 이것은 자금에 어떤 방식으로든 영향을 미치지 않으며 블록체인 네트워크에 연결할 수 있는 능력에만 영향을 미칩니다.\n\n안심하세요. 이것에 대해 우리는 계속 주시하고 곧 탈중앙화된 동기화 방법을 제공하려고 노력할 것입니다. 조금만 기다려주세요.";
 
 // Manage Accounts
 
@@ -1306,7 +1307,7 @@
 "contacts.contact.update.error.name_already_exist" = "이름이 이미 존재합니다";
 "contacts.contact.add_address" = "주소 추가";
 "contacts.contact.delete" = "연락처 삭제";
-"contacts.contact.address.blockchains" = "Blockchains";
+"contacts.contact.address.blockchains" = "블록체인";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "주소 삭제 ";
 
@@ -1362,22 +1363,24 @@
 "chart.time_duration.year2" = "2년";
 "chart.time_duration.all" = "ALL";
 
-"chart.market_cap" = "Market Cap";
+"chart.market_cap" = "총 시가 총액";
 "chart.volume" = "볼륨 (24 시간)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "유통 중
+";
 "chart.selected.volume" = "Vol.";
 
-"chart.market.header" = "Market";
-"chart.market.market_cap" = "Market Cap";
+"chart.market.header" = "시장";
+"chart.market.market_cap" = "총 시가 총액";
 "chart.market.volume" = "볼륨 (24 시간)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "유통 중
+";
+"chart.market.total_supply" = "총 공급량";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "변화 (1주)";
+"chart.performance.month_changes" = "변화 (1개월)";
 
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.read_more" = "더 읽기";
+"chart.about.read_less" = "덜 읽기";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -1613,13 +1616,13 @@
 // Send Settings
 
 "evm_send_settings.nonce" = "트랜잭션 Nonce";
-"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
+"evm_send_settings.nonce.info" = "Nonce(논스)는 사용자 지갑 내에서 거래마다 고유한 정수값입니다. 보통 각 제출된 거래마다 증가하며 변경할 필요가 없습니다. 고급 사용자는 새 거래가 충분히 높은 수수료로 설정되어 이전 거래가 대신 확인되지 않도록 하기 위해 보류 중인 거래의 논스 값을 설정할 수 있습니다. (예를 들어, 거래 확인을 가속화하거나 거래 매개변수를 완전히 변경하려는 경우). 여러 보류 중인 거래가 동일한 논스를 가지면 일반적으로 가장 높은 수수료를 가진 거래만 확인됩니다.";
 "evm_send_settings.nonce.errors.already_in_use" = "중고 Nonce";
 "evm_send_settings.nonce.errors.already_in_use.info" = "이 nonce를 사용하여 실행된 트랜잭션이 이미 존재합니다.";
 
 "fee_settings" = "고급의";
 "fee_settings.fee" = "수수료";
-"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
+"fee_settings.fee.info" = "블록체인은 거래를 보낼 때 사용자로부터 네트워크 수수료를 지불하도록 요구합니다. 이 수수료는 네트워크에서 많은 거래가 이루어질 때 더 높아집니다.";
 "fee_settings.fee_rate" = "수수료율";
 "fee_settings.fee_rate.description" = "다음 2 블록 타격에 대한 권장 값은 다음과 같습니다.";
 "fee_settings.inputs_outputs" = "입력/출력";
@@ -1629,9 +1632,9 @@
 "fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
 
 "fee_settings.network_fee" = "네트워크 수수료";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "네트워크에서 주어진 거래를 보내는 데 예상되는 비용.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+"fee_settings.gas_limit.info" = "거래 복잡성은 '가스'라고 불리는 단위로 측정됩니다. 이는 실행되는 스마트 계약에 따라 다릅니다. 가스 한도는 해당 거래를 실행하는 데 필요한 최대 가스를 예상한 값입니다. 실제로 사용된 가스는 일반적으로 더 낮을 것입니다.";
 
 "fee_settings.gas_price" = "Gas Used";
 "fee_settings.gas_price.info" = "네트워크 거래 수수료는 가스 단위로 측정됩니다. 가스 가격은 사용자가 가스 단위당 지출할 의향이 있는 금액입니다. 네트워크가 사용 중일 때는 가스 가격이 높고 유휴 상태일 때는 가스 가격이 낮습니다. 가스 가격이 충분하지 않아 거래가 장기간 보류 상태로 남아 있는 경우가 많습니다.";
@@ -1639,7 +1642,7 @@
 "fee_settings.base_fee" = "기본 수수료";
 "fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
 "fee_settings.max_fee_rate" = "최대 수수료율";
-"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.max_fee_rate.info" = "이것은 사용자가 지불하려는 가스당 최대 총 가격입니다. 이것은 네트워크의 기본 수수료율과 최대 우선순위 수수료율을 포함해야 합니다. 여기에 표시된 값은 사용자가 선택한 다음 블록의 기본 수수료율과 최대 우선순위 수수료율을 기반으로 추천된 것입니다. 실제로 지불되는 수수료율은 일반적으로 더 낮을 것입니다. 현재 기본 수수료율보다 낮게 설정하면 수수료 지불이 제한될 수 있지만, 거래가 확인되기까지 더 긴 대기 시간이나 막힌 거래가 발생할 수 있습니다.";
 "fee_settings.tips" = "최대 우선 가스비";
 "fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
@@ -1684,7 +1687,7 @@
 "nft_collections.empty" = "지갑에 NFT가 없습니다.";
 
 "top_nft_collections.title" = "주요 NFT 컬렉션";
-"top_nft_collections.description" = "Leading NFT collections by trading volume.";
+"top_nft_collections.description" = "거래량에 따른 주요 NFT 컬렉션.";
 
 // Nft Asset
 
@@ -1752,7 +1755,7 @@
 "subscription_info.title" = "Premium Features";
 "subscription_info.info1.title" = "Cryptocurrency Analytics";
 "subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info2.title" = "Chart Indicators";
+"subscription_info.info2.title" = "차트 지표";
 "subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info3.title" = "개인 지원";
 "subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
@@ -1762,14 +1765,14 @@
 // Activate Subscription
 
 "activate_subscription.title" = "활성화";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "지갑";
 "activate_subscription.address" = "주소";
-"activate_subscription.message" = "Message to Sign";
+"activate_subscription.message" = "서명할 메시지";
 "activate_subscription.sign" = "가입";
 "activate_subscription.activating" = "Activating...";
 "activate_subscription.failed_to_activate" = "Failed to activate subscription";
 "activate_subscription.activated" = "Activated";
-"activate_subscription.no_subscriptions" = "Your wallet address does not have a subscription to premium features, you need to purchase it to activate the subscription.";
+"activate_subscription.no_subscriptions" = "귀하의 월렛 주소는 프리미엄 기능을 구독하지 않았습니다. 구독을 활성화하려면 구매해야 합니다.";
 
 // Launch
 
@@ -1840,16 +1843,16 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
-"cannot_check_passcode.info_text" = "Unable to check the state of passcode (screen lock). Please restart the application.";
-"jailbreak.info_text" = "The Unstoppable team recommends running app only on non-rooted (not jailbroken) phones.\n\nPlease note when you use a rooted device the app can no longer guarantee the safety of your cryptocurrency from malicious software.";
+"no_passcode.info_text" = "이 앱은 전화에 패스코드(화면 잠금)가 활성화되어 있어야 합니다.\n\niOS 설정에서 활성화할 수 있습니다.\n\nOS 수준에서 PIN을 비활성화하면 전화의 안전한 저장소의 보안 조치로 이전에 저장된 데이터가 무효화됩니다. 지갑 키를 복원하여 지갑으로 돌아가야 합니다.";
+"cannot_check_passcode.info_text" = "패스코드 (화면 잠금) 상태를 확인할 수 없습니다. 애플리케이션을 다시 시작하십시오.";
+"jailbreak.info_text" = "Unstoppable 팀은 비루팅 (jailbreak되지 않은) 전화에서만 앱을 실행하는 것을 권장합니다.\n\n루트된 디바이스를 사용할 때 앱은 더 이상 악성 소프트웨어로부터 암호화폐의 안전을 보장할 수 없음을 주의하세요.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "필터";
 "transaction_filter.blockchain" = "Blockchain";
-"transaction_filter.all_blockchains" = "All Blockchains";
+"transaction_filter.all_blockchains" = "모든 블록체인";
 "transaction_filter.coin" = "코인";
-"transaction_filter.all_coins" = "All Coins";
-"transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
-"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
+"transaction_filter.all_coins" = "모든코인";
+"transaction_filter.hide_suspicious_txs" = "의심스러운 거래 숨기기";
+"transaction_filter.hide_suspicious_txs.description" = "Dust 양의 안정화된 암호화폐를 사용하여 수신 거래를 숨기면 주소 독성 공격 문제의 일부를 해결할 수 있습니다.";
