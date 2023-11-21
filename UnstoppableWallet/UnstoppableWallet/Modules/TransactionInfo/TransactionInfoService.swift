@@ -77,6 +77,12 @@ class TransactionInfoService {
             tokens.append(tx.fee.token)
             tokens.append(tx.value.token)
 
+        case let tx as TonIncomingTransactionRecord:
+            tokens.append(tx.value.token)
+        case let tx as TonOutgoingTransactionRecord:
+            tokens.append(tx.fee.token)
+            tokens.append(tx.value.token)
+
         default: ()
         }
 

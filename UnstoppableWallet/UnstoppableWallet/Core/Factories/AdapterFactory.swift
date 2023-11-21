@@ -138,8 +138,11 @@ extension AdapterFactory {
             return trc20Adapter(address: address, wallet: wallet)
 
         case (.native, .ton):
-            return try? TonAdapter(wallet: wallet)
+            let query = TokenQuery(blockchainType: .ton, tokenType: .native)
 
+            if let baseToken = try? coinManager.token(query: query) {
+                return try? TonAdapter(wallet: wallet, baseToken: baseToken)
+            }
         default: ()
         }
 
