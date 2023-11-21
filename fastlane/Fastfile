@@ -263,11 +263,6 @@ platform :ios do
     delete_temp_keychain(keychain_name)
   end
 
-  lane :new_device do |options|
-    force_update_devices("development", options[:username])
-    force_update_devices("adhoc", options[:username])
-  end
-
   lane :match_readonly do
     match(
       type: "development",
@@ -293,14 +288,16 @@ platform :ios do
       type: "development",
       username: options[:username],
       team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"],
+      force_for_new_devices: true
     )
 
     match(
       type: "adhoc",
       username: options[:username],
       team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"],
+      force_for_new_devices: true
     )
 
     match(
