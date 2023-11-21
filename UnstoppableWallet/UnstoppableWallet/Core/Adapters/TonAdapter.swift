@@ -35,6 +35,8 @@ class TonAdapter {
         }
     }
 
+    private let transactionRecordsSubject = PublishSubject<[TonTransactionRecord]>()
+
     init(wallet: Wallet, baseToken: Token) throws {
         transactionSource = wallet.transactionSource
         self.baseToken = baseToken
@@ -73,15 +75,25 @@ class TonAdapter {
                 self?.transactionsState = Self.adapterState(kitSyncState: syncState)
             }
             .store(in: &cancellables)
+
+        collect(tonKit.doNewTransactionsPublisher)
+            .completeOnFailure()
+            .sink { [weak self] tonTransactions in
+                self?.handle(tonTransactions: tonTransactions)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func handle(tonTransactions: [TonTransaction]) {
+        let transactionRecords = tonTransactions.map { transactionRecord(tonTransaction: $0) }
+        transactionRecordsSubject.onNext(transactionRecords)
     }
 
     private static func adapterState(kitSyncState: AnyObject) -> AdapterState {
         switch kitSyncState {
         case is TonKitKmm.SyncState.Syncing: return .syncing(progress: nil, lastBlockDate: nil)
         case is TonKitKmm.SyncState.Synced: return .synced
-        case let notSyncedState as TonKitKmm.SyncState.NotSynced:
-            print(notSyncedState.error)
-            return .notSynced(error: notSyncedState.error)
+        case let notSyncedState as TonKitKmm.SyncState.NotSynced: return .notSynced(error: notSyncedState.error)
         default: return .notSynced(error: AppError.unknownError)
         }
     }
@@ -94,7 +106,7 @@ class TonAdapter {
         return BalanceData(available: decimal / coinRate)
     }
 
-    private func transactionRecord(tonTransaction tx: TonTransaction) -> TransactionRecord {
+    private func transactionRecord(tonTransaction tx: TonTransaction) -> TonTransactionRecord {
         switch tx.type {
         case "Incoming":
             return TonIncomingTransactionRecord(
@@ -209,8 +221,20 @@ extension TonAdapter: ITransactionsAdapter {
         "https://tonscan.org/tx/\(transactionHash)"
     }
 
-    func transactionsObservable(token _: Token?, filter _: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
-        Observable.empty()
+    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+        transactionRecordsSubject
+            .map { transactionRecords in
+                transactionRecords.compactMap { transaction -> TransactionRecord? in
+                    switch (transaction, filter) {
+                    case (_, .all): return transaction
+                    case (is TonIncomingTransactionRecord, .incoming): return transaction
+                    case (is TonOutgoingTransactionRecord, .outgoing): return transaction
+                    case let (tx as TonOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
+                    default: return nil
+                    }
+                }
+            }
+            .filter { !$0.isEmpty }
     }
 
     func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
