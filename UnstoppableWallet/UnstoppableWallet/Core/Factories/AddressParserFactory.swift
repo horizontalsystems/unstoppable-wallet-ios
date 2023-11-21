@@ -120,6 +120,7 @@ class AddressParserFactory {
 
             return [zcashParserItem]
         case .solana: return []
+        case .ton: return []
         case .unsupported: return []
         }
     }

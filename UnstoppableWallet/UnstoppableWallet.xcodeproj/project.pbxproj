@@ -48,6 +48,7 @@
 		11B35068706B5C13888F7E22 /* EvmSyncSourceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B56F5C8138085588EE5 /* EvmSyncSourceRecord.swift */; };
 		11B35068E05BC58C6C9A93D7 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35872950C107E4810AB6B /* AccountManager.swift */; };
 		11B3506ECD6D4D8D0C7717B6 /* MarketAdvancedSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356BEB2B4DFC3E9C950C5 /* MarketAdvancedSearchViewModel.swift */; };
+		11B35071705455BC25C214D2 /* TonAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F9B75F6663FAFCA3177 /* TonAdapter.swift */; };
 		11B3507578AF3163AAC8C494 /* EditPasscodeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3529CF33E51DA1C872106 /* EditPasscodeModule.swift */; };
 		11B35076A96AD17809CE1F62 /* ClickableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D179817528224E926D1 /* ClickableRow.swift */; };
 		11B35076F57EA6103BBE3D63 /* WCSendEthereumTransactionRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BD6F543322880433ACD /* WCSendEthereumTransactionRequestViewController.swift */; };
@@ -433,6 +434,7 @@
 		11B354B5E42290EE934C428E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359697FC3E92D4111ED5D /* String.swift */; };
 		11B354B8BD1C3C036F6DE16A /* LitecoinAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356861F703A5A5C6630B6 /* LitecoinAdapter.swift */; };
 		11B354BC4D954CCDA2E75C68 /* AddEvmSyncSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350B29037572DDAAF9E16 /* AddEvmSyncSourceViewModel.swift */; };
+		11B354C1218C0776499FAA5E /* Kmm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D813B2B43683404CCD6 /* Kmm.swift */; };
 		11B354CAD4BC4FAB3889838D /* EvmSyncSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D9C2409FD9060974F67 /* EvmSyncSourceManager.swift */; };
 		11B354CBCCB0FFD2FDBEE757 /* MarketFilteredListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADF9BC4D149F86F23E4 /* MarketFilteredListService.swift */; };
 		11B354CC5E68F04E22D633D9 /* TopPlatformHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357E05A8AF5608ECF5D5F /* TopPlatformHeaderCell.swift */; };
@@ -774,6 +776,7 @@
 		11B358C3281DE0A34D192CF0 /* SwitchAccountModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351AEFE48529C069B892F /* SwitchAccountModule.swift */; };
 		11B358C72B4E7F70331084AA /* SendEvmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35113CB935A0E54504C1C /* SendEvmViewController.swift */; };
 		11B358CB129212E2A0E455E4 /* MarketAdvancedSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A1CC274EDBF8A67DEA /* MarketAdvancedSearchResultViewController.swift */; };
+		11B358D0D4AE015DC9FECF29 /* Kmm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D813B2B43683404CCD6 /* Kmm.swift */; };
 		11B358D1687049E5DACEBC96 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
 		11B358D35D2270FD78C6EF82 /* AutoLockPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E41142BD3D2FF59BAE7 /* AutoLockPeriod.swift */; };
 		11B358D519ACFE88A7823C7E /* ApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3531363949F235A210921 /* ApiProvider.swift */; };
@@ -1196,6 +1199,7 @@
 		11B35D80781966668550C8B9 /* NftMetadataSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DA9FF23D110A042EDD6 /* NftMetadataSyncer.swift */; };
 		11B35D80D1A22BA2EB8F31B8 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BBEA6AF9464C818389E /* WalletStorage.swift */; };
 		11B35D835774B7F4E286BF32 /* AlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3516415E7A3217BBB1681 /* AlertRouter.swift */; };
+		11B35D88633A14FD13E91702 /* TonAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F9B75F6663FAFCA3177 /* TonAdapter.swift */; };
 		11B35D8E976E984302A81F8B /* ReceiveTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E1B9C559545FC3E6226 /* ReceiveTokenViewModel.swift */; };
 		11B35D90644F7735556DB3D5 /* TopPlatformViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3527F1528AA697AAA6E61 /* TopPlatformViewModel.swift */; };
 		11B35D93B238BA992173E123 /* StackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AAE4114A56DF13ECF0F /* StackViewCell.swift */; };
@@ -2925,6 +2929,10 @@
 		D3BA259F2ADFAF23002B13EA /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3BA25982ADFAF23002B13EA /* HsToolKit */; };
 		D3BA25A02ADFAF23002B13EA /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948F092ADA887300FAE566 /* Intents.framework */; };
 		D3BA25A72ADFB042002B13EA /* IntentExtension Prod.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D3BA25A52ADFAF23002B13EA /* IntentExtension Prod.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D3BC25802B0B5E1E0092F682 /* TonKitKmm.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */; };
+		D3BC25812B0B5E1E0092F682 /* TonKitKmm.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D3BC25832B0B5E460092F682 /* TonKitKmm.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */; };
+		D3BC25842B0B5E460092F682 /* TonKitKmm.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D3BF1E5C274BC29D00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5B274BC29D00229A00 /* Down */; };
 		D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5D274CAF1C00229A00 /* Down */; };
 		D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E62274CBBCE00229A00 /* DeepDiff */; };
@@ -3004,6 +3012,28 @@
 				D3BA25932ADFAF1E002B13EA /* WidgetExtension Prod.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3BC25822B0B5E1E0092F682 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D3BC25812B0B5E1E0092F682 /* TonKitKmm.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3BC25852B0B5E460092F682 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D3BC25842B0B5E460092F682 /* TonKitKmm.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -3633,6 +3663,7 @@
 		11B35D6BFAE62FF61E4BCCC7 /* PrivateKeysService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeysService.swift; sourceTree = "<group>"; };
 		11B35D747108CE6727D3103D /* HsToolKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HsToolKit.swift; sourceTree = "<group>"; };
 		11B35D805327837A9E81801C /* ManageAccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsViewController.swift; sourceTree = "<group>"; };
+		11B35D813B2B43683404CCD6 /* Kmm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kmm.swift; sourceTree = "<group>"; };
 		11B35D8AF9D337A98530548D /* Auditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auditor.swift; sourceTree = "<group>"; };
 		11B35D96B8963CDC30DC5643 /* NftViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftViewModel.swift; sourceTree = "<group>"; };
 		11B35D96CF03878016FC38FD /* Caution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Caution.swift; sourceTree = "<group>"; };
@@ -3716,6 +3747,7 @@
 		11B35F980B34E005B9F02B8F /* EvmAccountManagerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmAccountManagerFactory.swift; sourceTree = "<group>"; };
 		11B35F98E89F83A30870F404 /* ActiveAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveAccount.swift; sourceTree = "<group>"; };
 		11B35F99E093B7DDB24D39C9 /* SetPasscodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasscodeViewModel.swift; sourceTree = "<group>"; };
+		11B35F9B75F6663FAFCA3177 /* TonAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonAdapter.swift; sourceTree = "<group>"; };
 		11B35F9BA41AC15436A4B977 /* DropdownSortHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropdownSortHeaderView.swift; sourceTree = "<group>"; };
 		11B35F9DA79410E7B9C1B0F8 /* MarketTopModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketTopModule.swift; sourceTree = "<group>"; };
 		11B35FA360A91FDE3EB0B85C /* RateAppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateAppManager.swift; sourceTree = "<group>"; };
@@ -4467,6 +4499,7 @@
 		D3B62A9B20CA73A0005A9F80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3BA25912ADFAD7C002B13EA /* WidgetExtension Prod.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WidgetExtension Prod.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BA25A52ADFAF23002B13EA /* IntentExtension Prod.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "IntentExtension Prod.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TonKitKmm.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4483,6 +4516,7 @@
 				6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */,
 				D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */,
+				D3BC25802B0B5E1E0092F682 /* TonKitKmm.xcframework in Frameworks */,
 				D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */,
 				D023D2652A24B9DC004F65B0 /* TronKit in Frameworks */,
 				D3C187BC2907CFC200FE1900 /* Checkpoints in Frameworks */,
@@ -4532,6 +4566,7 @@
 				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */,
+				D3BC25832B0B5E460092F682 /* TonKitKmm.xcframework in Frameworks */,
 				D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */,
 				6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */,
 				D3604E4D28F02AB40066C366 /* NftKit in Frameworks */,
@@ -4955,6 +4990,7 @@
 				ABC9A9B35C58F6525F3B2D5C /* FullCoin.swift */,
 				ABC9A830FE79DBF62FD63CC4 /* ThemeMode.swift */,
 				ABC9A3DFC1E03CB2E6C12F2C /* Encodable.swift */,
+				11B35D813B2B43683404CCD6 /* Kmm.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -6301,6 +6337,7 @@
 				3AF9F619253EF555000626A8 /* ZcashTransactionWrapper.swift */,
 				3AF9F617253EF555000626A8 /* ZcashTransactionPool.swift */,
 				ABC9A4C563432A34A634B82A /* ECashAdapter.swift */,
+				11B35F9B75F6663FAFCA3177 /* TonAdapter.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -7373,6 +7410,7 @@
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */,
 				50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */,
 				D3373D9420BEC7B30082BC4A /* AVFoundation.framework */,
 				D3948EF12ADA846400FAE566 /* WidgetKit.framework */,
@@ -8526,6 +8564,7 @@
 				D38405B7218317DF007D50AD /* Frameworks */,
 				D38405BB218317DF007D50AD /* Resources */,
 				D3948F002ADA846900FAE566 /* Embed Foundation Extensions */,
+				D3BC25822B0B5E1E0092F682 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -8588,6 +8627,7 @@
 				D38406A621831B3D007D50AD /* Frameworks */,
 				D38406AB21831B3D007D50AD /* Resources */,
 				D3BA25962ADFAF1E002B13EA /* Embed Foundation Extensions */,
+				D3BC25852B0B5E460092F682 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -10271,6 +10311,8 @@
 				11B35A4F4A98537CE99B5221 /* TransactionTokenSelectView.swift in Sources */,
 				11B35ACE7B126DCF9F7F1A19 /* SearchBar.swift in Sources */,
 				11B3546CB3C043D22A5F7A88 /* TransactionsViewModel.swift in Sources */,
+				11B35071705455BC25C214D2 /* TonAdapter.swift in Sources */,
+				11B358D0D4AE015DC9FECF29 /* Kmm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11660,6 +11702,8 @@
 				11B355FC0E3DE029EB3F95D5 /* TransactionTokenSelectView.swift in Sources */,
 				11B358781EBEFCE7CED000F0 /* SearchBar.swift in Sources */,
 				11B358D91C9D8102C46B97ED /* TransactionsViewModel.swift in Sources */,
+				11B35D88633A14FD13E91702 /* TonAdapter.swift in Sources */,
+				11B354C1218C0776499FAA5E /* Kmm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12552,7 +12596,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.7;
+				version = 2.2.8;
 			};
 		};
 		D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */ = {
