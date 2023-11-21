@@ -119,6 +119,27 @@ class TonAdapter {
             )
         }
     }
+
+    private func transactionsSingle(from: TransactionRecord?, type: TransactionType?, limit: Int) -> Single<[TransactionRecord]> {
+        let single: Single<[TonTransaction]> = Single.create { [tonKit] observer in
+            let task = Task { [tonKit] in
+                do {
+                    let tonTransactions = try await tonKit.transactions(fromTransactionHash: from?.transactionHash, type: type, limit: Int64(limit))
+                    observer(.success(tonTransactions))
+                } catch {
+                    observer(.error(error))
+                }
+            }
+
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+
+        return single.map { [weak self] tonTransactions -> [TransactionRecord] in
+            tonTransactions.compactMap { self?.transactionRecord(tonTransaction: $0) }
+        }
+    }
 }
 
 extension TonAdapter: IBaseAdapter {
@@ -192,24 +213,12 @@ extension TonAdapter: ITransactionsAdapter {
         Observable.empty()
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter _: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
-        let single: Single<[TonTransaction]> = Single.create { [tonKit] observer in
-            let task = Task { [tonKit] in
-                do {
-                    let tonTransactions = try await tonKit.transactions(fromTransactionHash: from?.transactionHash, type: nil, limit: Int64(limit))
-                    observer(.success(tonTransactions))
-                } catch {
-                    observer(.error(error))
-                }
-            }
-
-            return Disposables.create {
-                task.cancel()
-            }
-        }
-
-        return single.map { [weak self] tonTransactions -> [TransactionRecord] in
-            tonTransactions.compactMap { self?.transactionRecord(tonTransaction: $0) }
+    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+        switch filter {
+        case .all: return transactionsSingle(from: from, type: nil, limit: limit)
+        case .incoming: return transactionsSingle(from: from, type: TransactionType.incoming, limit: limit)
+        case .outgoing: return transactionsSingle(from: from, type: TransactionType.outgoing, limit: limit)
+        default: return Single.just([])
         }
     }
 
