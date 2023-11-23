@@ -95,6 +95,10 @@ protocol ISendTronAdapter {
     func accountActive(address: TronKit.Address) async -> Bool
 }
 
+protocol ISendTonAdapter {
+    func send(recipient: String, amount: Decimal) async throws
+}
+
 protocol IErc20Adapter {
     var pendingTransactions: [TransactionRecord] { get }
     func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>

@@ -250,3 +250,10 @@ extension TonAdapter: ITransactionsAdapter {
         nil
     }
 }
+
+extension TonAdapter: ISendTonAdapter {
+    func send(recipient: String, amount: Decimal) async throws {
+        let rawAmount = amount * Self.coinRate
+        try await tonKit.send(recipient: recipient, amount: rawAmount.description)
+    }
+}

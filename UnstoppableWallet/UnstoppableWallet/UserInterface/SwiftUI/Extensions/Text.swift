@@ -10,6 +10,10 @@ extension Text {
         foregroundColor(color).font(.themeSubhead1)
     }
 
+    func textSubhead2(color: Color = .themeGray) -> some View {
+        foregroundColor(color).font(.themeSubhead2)
+    }
+
     func themeBody(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
         textBody(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }
@@ -19,9 +23,7 @@ extension Text {
     }
 
     func themeSubhead2(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
-        frame(maxWidth: .infinity, alignment: alignment)
-            .foregroundColor(color)
-            .font(.themeSubhead2)
+        textSubhead2(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }
 
     func themeCaption(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
