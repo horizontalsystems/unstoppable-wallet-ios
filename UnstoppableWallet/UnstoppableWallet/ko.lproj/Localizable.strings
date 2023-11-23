@@ -868,7 +868,7 @@
 "coin_analytics.audits.issues" = "문제점";
 "coin_analytics.audits.no_reports" = "감사 보고서 없음";
 
-"coin_analytics.last_30d" = "Last 30d";
+"coin_analytics.last_30d" = "지난 30일";
 "coin_analytics.current" = "현재";
 
 "coin_analytics.overall_score" = "전체 점수";
