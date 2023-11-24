@@ -48,7 +48,7 @@ class TonAdapter {
         let hdWallet = HDWallet(seed: seed, coinType: 607, xPrivKey: 0, curve: .ed25519)
         let privateKey = try hdWallet.privateKey(account: 0)
 
-        tonKit = TonKitFactory(driverFactory: DriverFactory()).create(seed: privateKey.raw.toKotlinByteArray())
+        tonKit = TonKitFactory(driverFactory: DriverFactory()).create(seed: privateKey.raw.toKotlinByteArray(), walletId: wallet.account.id)
         ownAddress = tonKit.receiveAddress
 
         balanceState = Self.adapterState(kitSyncState: tonKit.balanceSyncState)
@@ -252,6 +252,14 @@ extension TonAdapter: ITransactionsAdapter {
 }
 
 extension TonAdapter: ISendTonAdapter {
+    var availableBalance: Decimal {
+        balanceData.available
+    }
+
+    func validate(address: String) throws {
+        try TonKit.companion.validate(address: address)
+    }
+
     func send(recipient: String, amount: Decimal) async throws {
         let rawAmount = amount * Self.coinRate
         try await tonKit.send(recipient: recipient, amount: rawAmount.description)

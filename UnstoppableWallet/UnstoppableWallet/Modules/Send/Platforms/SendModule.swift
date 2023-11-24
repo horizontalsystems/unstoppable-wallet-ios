@@ -1,14 +1,13 @@
-import UIKit
-import ThemeKit
 import MarketKit
 import RxCocoa
+import ThemeKit
+import UIKit
 
 protocol ITitledCautionViewModel {
     var cautionDriver: Driver<TitledCaution?> { get }
 }
 
-class SendModule {
-
+enum SendModule {
     static func controller(wallet: Wallet, mode: SendBaseService.Mode = .send) -> UIViewController? {
         guard let adapter = App.shared.adapterManager.adapter(for: wallet) else {
             return nil
@@ -28,7 +27,8 @@ class SendModule {
         case let adapter as ISendTronAdapter:
             return SendTronModule.viewController(token: token, mode: mode, adapter: adapter)
         case let adapter as ISendTonAdapter:
-            return SendModuleNew.view(adapter: adapter).toViewController()
+//            return SendModuleNew.view(adapter: adapter).toViewController()
+            return Self.viewController(token: token, mode: mode, adapter: adapter)
         default: return nil
         }
     }
@@ -50,11 +50,12 @@ class SendModule {
         let bitcoinParserItem = BitcoinAddressParserItem(blockchainType: token.blockchainType, parserType: .adapter(adapter))
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: token.coin.code, token: token)
         let addressParserChain = AddressParserChain()
-                .append(handler: bitcoinParserItem)
-                .append(handler: udnAddressParserItem)
+            .append(handler: bitcoinParserItem)
+            .append(handler: udnAddressParserItem)
 
         if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
-           let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: bitcoinParserItem) {
+           let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: bitcoinParserItem)
+        {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
@@ -78,27 +79,27 @@ class SendModule {
         }
 
         let bitcoinAdapterService = SendBitcoinAdapterService(
-                feeRateService: feeRateService,
-                amountInputService: amountInputService,
-                addressService: addressService,
-                inputOutputOrderService: inputOutputOrderService,
-                timeLockService: timeLockService,
-                btcBlockchainManager: App.shared.btcBlockchainManager,
-                adapter: adapter
+            feeRateService: feeRateService,
+            amountInputService: amountInputService,
+            addressService: addressService,
+            inputOutputOrderService: inputOutputOrderService,
+            timeLockService: timeLockService,
+            btcBlockchainManager: App.shared.btcBlockchainManager,
+            adapter: adapter
         )
         let service = SendBitcoinService(
-                amountService: amountInputService,
-                amountCautionService: amountCautionService,
-                addressService: addressService,
-                adapterService: bitcoinAdapterService,
-                feeRateService: feeRateService,
-                timeLockErrorService: timeLockErrorService,
-                reachabilityManager: App.shared.reachabilityManager,
-                token: token,
-                mode: mode
+            amountService: amountInputService,
+            amountCautionService: amountCautionService,
+            addressService: addressService,
+            adapterService: bitcoinAdapterService,
+            feeRateService: feeRateService,
+            timeLockErrorService: timeLockErrorService,
+            reachabilityManager: App.shared.reachabilityManager,
+            token: token,
+            mode: mode
         )
 
-        //Add dependencies
+        // Add dependencies
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         amountInputService.availableBalanceService = bitcoinAdapterService
@@ -113,17 +114,17 @@ class SendModule {
         let viewModel = SendViewModel(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: bitcoinAdapterService, coinService: coinService, switchService: switchService)
         let amountInputViewModel = AmountInputViewModel(
-                service: amountInputService,
-                fiatService: fiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: amountInputService,
+            fiatService: fiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
         addressService.amountPublishService = amountInputViewModel
 
         let amountCautionViewModel = SendAmountCautionViewModel(
-                service: amountCautionService,
-                switchService: switchService,
-                coinService: coinService
+            service: amountCautionService,
+            switchService: switchService,
+            coinService: coinService
         )
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
@@ -132,28 +133,28 @@ class SendModule {
         let feeCautionViewModel = SendFeeCautionViewModel(service: feeRateService)
 
         let sendFactory = SendBitcoinFactory(
-                fiatService: fiatService,
-                amountCautionService: amountCautionService,
-                addressService: addressService,
-                feeFiatService: feeFiatService,
-                feeService: feeService,
-                feeRateService: feeRateService,
-                timeLockService: timeLockService,
-                adapterService: bitcoinAdapterService,
-                logger: App.shared.logger,
-                token: token
+            fiatService: fiatService,
+            amountCautionService: amountCautionService,
+            addressService: addressService,
+            feeFiatService: feeFiatService,
+            feeService: feeService,
+            feeRateService: feeRateService,
+            timeLockService: timeLockService,
+            adapterService: bitcoinAdapterService,
+            logger: App.shared.logger,
+            token: token
         )
 
         let viewController = SendBitcoinViewController(
-                confirmationFactory: sendFactory,
-                feeSettingsFactory: sendFactory,
-                viewModel: viewModel,
-                availableBalanceViewModel: availableBalanceViewModel,
-                amountInputViewModel: amountInputViewModel,
-                amountCautionViewModel: amountCautionViewModel,
-                recipientViewModel: recipientViewModel,
-                feeViewModel: feeViewModel,
-                feeCautionViewModel: feeCautionViewModel
+            confirmationFactory: sendFactory,
+            feeSettingsFactory: sendFactory,
+            viewModel: viewModel,
+            availableBalanceViewModel: availableBalanceViewModel,
+            amountInputViewModel: amountInputViewModel,
+            amountCautionViewModel: amountCautionViewModel,
+            recipientViewModel: recipientViewModel,
+            feeViewModel: feeViewModel,
+            feeCautionViewModel: feeCautionViewModel
         )
 
         return viewController
@@ -173,7 +174,7 @@ class SendModule {
         // Address
         let binanceParserItem = BinanceAddressParserItem(parserType: .adapter(adapter))
         let addressParserChain = AddressParserChain()
-                .append(handler: binanceParserItem)
+            .append(handler: binanceParserItem)
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
         let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
@@ -185,17 +186,17 @@ class SendModule {
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: feeToken)
 
         let service = SendBinanceService(
-                amountService: amountInputService,
-                amountCautionService: amountCautionService,
-                addressService: addressService,
-                memoService: memoService,
-                adapter: adapter,
-                reachabilityManager: App.shared.reachabilityManager,
-                token: token,
-                mode: mode
+            amountService: amountInputService,
+            amountCautionService: amountCautionService,
+            addressService: addressService,
+            memoService: memoService,
+            adapter: adapter,
+            reachabilityManager: App.shared.reachabilityManager,
+            token: token,
+            mode: mode
         )
 
-        //Add dependencies
+        // Add dependencies
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         amountInputService.availableBalanceService = service
@@ -207,17 +208,17 @@ class SendModule {
         let viewModel = SendViewModel(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)
         let amountInputViewModel = AmountInputViewModel(
-                service: amountInputService,
-                fiatService: fiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: amountInputService,
+            fiatService: fiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
         addressService.amountPublishService = amountInputViewModel
 
         let amountCautionViewModel = SendAmountCautionViewModel(
-                service: amountCautionService,
-                switchService: switchService,
-                coinService: coinService
+            service: amountCautionService,
+            switchService: switchService,
+            coinService: coinService
         )
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
         let memoViewModel = SendMemoInputViewModel(service: memoService)
@@ -228,25 +229,25 @@ class SendModule {
 
         // Confirmation and Settings
         let sendFactory = SendBinanceFactory(
-                service: service,
-                fiatService: fiatService,
-                addressService: addressService,
-                memoService: memoService,
-                feeFiatService: feeFiatService,
-                logger: App.shared.logger,
-                token: token
+            service: service,
+            fiatService: fiatService,
+            addressService: addressService,
+            memoService: memoService,
+            feeFiatService: feeFiatService,
+            logger: App.shared.logger,
+            token: token
         )
 
         let viewController = SendBinanceViewController(
-                confirmationFactory: sendFactory,
-                viewModel: viewModel,
-                availableBalanceViewModel: availableBalanceViewModel,
-                amountInputViewModel: amountInputViewModel,
-                amountCautionViewModel: amountCautionViewModel,
-                recipientViewModel: recipientViewModel,
-                memoViewModel: memoViewModel,
-                feeViewModel: feeViewModel,
-                feeWarningViewModel: feeWarningViewModel
+            confirmationFactory: sendFactory,
+            viewModel: viewModel,
+            availableBalanceViewModel: availableBalanceViewModel,
+            amountInputViewModel: amountInputViewModel,
+            amountCautionViewModel: amountCautionViewModel,
+            recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel,
+            feeViewModel: feeViewModel,
+            feeWarningViewModel: feeWarningViewModel
         )
 
         return viewController
@@ -264,7 +265,7 @@ class SendModule {
         // Address
         let zcashParserItem = ZcashAddressParserItem(parserType: .adapter(adapter))
         let addressParserChain = AddressParserChain()
-                .append(handler: zcashParserItem)
+            .append(handler: zcashParserItem)
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
         let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
@@ -276,17 +277,17 @@ class SendModule {
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: token)
 
         let service = SendZcashService(
-                amountService: amountInputService,
-                amountCautionService: amountCautionService,
-                addressService: addressService,
-                memoService: memoService,
-                adapter: adapter,
-                reachabilityManager: App.shared.reachabilityManager,
-                token: token,
-                mode: mode
+            amountService: amountInputService,
+            amountCautionService: amountCautionService,
+            addressService: addressService,
+            memoService: memoService,
+            adapter: adapter,
+            reachabilityManager: App.shared.reachabilityManager,
+            token: token,
+            mode: mode
         )
 
-        //Add dependencies
+        // Add dependencies
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         amountInputService.availableBalanceService = service
@@ -299,17 +300,17 @@ class SendModule {
         let viewModel = SendViewModel(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)
         let amountInputViewModel = AmountInputViewModel(
-                service: amountInputService,
-                fiatService: fiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: amountInputService,
+            fiatService: fiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
         addressService.amountPublishService = amountInputViewModel
 
         let amountCautionViewModel = SendAmountCautionViewModel(
-                service: amountCautionService,
-                switchService: switchService,
-                coinService: coinService
+            service: amountCautionService,
+            switchService: switchService,
+            coinService: coinService
         )
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
         let memoViewModel = SendMemoInputViewModel(service: memoService)
@@ -319,27 +320,116 @@ class SendModule {
 
         // Confirmation and Settings
         let sendFactory = SendZcashFactory(
-                service: service,
-                fiatService: fiatService,
-                addressService: addressService,
-                memoService: memoService,
-                feeFiatService: feeFiatService,
-                logger: App.shared.logger,
-                token: token
+            service: service,
+            fiatService: fiatService,
+            addressService: addressService,
+            memoService: memoService,
+            feeFiatService: feeFiatService,
+            logger: App.shared.logger,
+            token: token
         )
 
         let viewController = SendZcashViewController(
-                confirmationFactory: sendFactory,
-                viewModel: viewModel,
-                availableBalanceViewModel: availableBalanceViewModel,
-                amountInputViewModel: amountInputViewModel,
-                amountCautionViewModel: amountCautionViewModel,
-                recipientViewModel: recipientViewModel,
-                memoViewModel: memoViewModel,
-                feeViewModel: feeViewModel
+            confirmationFactory: sendFactory,
+            viewModel: viewModel,
+            availableBalanceViewModel: availableBalanceViewModel,
+            amountInputViewModel: amountInputViewModel,
+            amountCautionViewModel: amountCautionViewModel,
+            recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel,
+            feeViewModel: feeViewModel
         )
 
         return viewController
     }
 
+    private static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendTonAdapter) -> UIViewController? {
+        let switchService = AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage)
+        let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+
+        // Amount
+        let amountInputService = SendBitcoinAmountInputService(token: token)
+        let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
+
+        // Address
+        let parserItem = TonAddressParserItem(adapter: adapter)
+        let addressParserChain = AddressParserChain()
+            .append(handler: parserItem)
+
+        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
+
+        let memoService = SendMemoInputService(maxSymbols: 120)
+
+        // Fee
+        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let feeService = SendFeeService(fiatService: feeFiatService, feeToken: token)
+
+        let service = SendTonService(
+            amountService: amountInputService,
+            amountCautionService: amountCautionService,
+            addressService: addressService,
+            memoService: memoService,
+            adapter: adapter,
+            reachabilityManager: App.shared.reachabilityManager,
+            token: token,
+            mode: mode
+        )
+
+        // Add dependencies
+        switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
+
+        amountInputService.availableBalanceService = service
+        amountCautionService.availableBalanceService = service
+
+        memoService.availableService = service
+        feeService.feeValueService = service
+
+        // ViewModels
+        let viewModel = SendViewModel(service: service)
+        let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)
+        let amountInputViewModel = AmountInputViewModel(
+            service: amountInputService,
+            fiatService: fiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
+        )
+        addressService.amountPublishService = amountInputViewModel
+
+        let amountCautionViewModel = SendAmountCautionViewModel(
+            service: amountCautionService,
+            switchService: switchService,
+            coinService: coinService
+        )
+        let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
+        let memoViewModel = SendMemoInputViewModel(service: memoService)
+
+        // Fee
+        let feeViewModel = SendFeeViewModel(service: feeService)
+
+        // Confirmation and Settings
+        let sendFactory = SendTonFactory(
+            service: service,
+            fiatService: fiatService,
+            addressService: addressService,
+            memoService: memoService,
+            feeFiatService: feeFiatService,
+            logger: App.shared.logger,
+            token: token
+        )
+
+        let viewController = SendTonViewController(
+            confirmationFactory: sendFactory,
+            viewModel: viewModel,
+            availableBalanceViewModel: availableBalanceViewModel,
+            amountInputViewModel: amountInputViewModel,
+            amountCautionViewModel: amountCautionViewModel,
+            recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel,
+            feeViewModel: feeViewModel
+        )
+
+        return viewController
+    }
 }

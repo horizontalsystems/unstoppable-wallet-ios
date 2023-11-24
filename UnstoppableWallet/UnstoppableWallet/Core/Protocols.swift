@@ -96,6 +96,8 @@ protocol ISendTronAdapter {
 }
 
 protocol ISendTonAdapter {
+    var availableBalance: Decimal { get }
+    func validate(address: String) throws
     func send(recipient: String, amount: Decimal) async throws
 }
 
