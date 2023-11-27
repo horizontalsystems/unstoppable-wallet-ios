@@ -13,7 +13,7 @@ struct WalletElementServiceFactory {
 
     func elementService(account: Account) -> IWalletElementService {
         switch account.type {
-        case .mnemonic, .evmPrivateKey, .evmAddress, .tronAddress, .hdExtendedKey:
+        case .mnemonic, .evmPrivateKey, .evmAddress, .tronAddress, .tonAddress, .hdExtendedKey:
             let adapterService = WalletAdapterService(account: account, adapterManager: adapterManager)
             let elementService = WalletBlockchainElementService(
                     account: account,

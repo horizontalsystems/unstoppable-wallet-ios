@@ -3,10 +3,10 @@ import MarketKit
 import TonKitKmm
 
 class TonTransactionRecord: TransactionRecord {
-    let fee: TransactionValue
+    let fee: TransactionValue?
 
     init(source: TransactionSource, transaction: TonTransaction, feeToken: Token) {
-        fee = .coinValue(token: feeToken, value: 0.00001) // todo
+        fee = transaction.fee.map { .coinValue(token: feeToken, value: TonAdapter.amount(kitAmount: $0)) }
 
         super.init(
             source: source,

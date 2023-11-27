@@ -7,8 +7,7 @@ class TonIncomingTransactionRecord: TonTransactionRecord {
     let from: String
 
     init(source: TransactionSource, transaction: TonTransaction, feeToken: Token, token: Token) {
-        let rawTonValue: Decimal = transaction.value_.flatMap { Decimal(string: $0) } ?? 0
-        let tonValue = rawTonValue / TonAdapter.coinRate
+        let tonValue: Decimal = transaction.value_.map { TonAdapter.amount(kitAmount: $0) } ?? 0
         value = .coinValue(token: token, value: tonValue)
         from = transaction.src ?? ""
 

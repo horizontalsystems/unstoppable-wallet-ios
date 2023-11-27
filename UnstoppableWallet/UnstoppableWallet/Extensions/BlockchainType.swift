@@ -117,6 +117,8 @@ extension BlockchainType {
             }
         case .tronAddress:
             return self == .tron
+        case .tonAddress:
+            return self == .ton
         default:
             return false
         }

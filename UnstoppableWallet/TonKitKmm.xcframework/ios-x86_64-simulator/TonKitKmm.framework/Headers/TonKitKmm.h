@@ -6,7 +6,7 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSValue.h>
 
-@class TKKTonApiAdnl, TKKDriverFactory, TKKTonTransactionQueries, TKKKitDatabaseCompanion, TKKKotlinThrowable, TKKKotlinArray<T>, TKKKotlinException, TKKSyncError, TKKSyncState, TKKTransactionManager, TKKBalanceManager, TKKTon_kotlin_blockAddrStd, TKKTon_kotlin_liteclientFullAccountState, TKKTonTransaction, TKKSyncer, TKKTransactionSender, TKKTonKitCompanion, TKKTransactionType, TKKTonKit, TKKKotlinByteArray, TKKKotlinUnit, TKKRuntimeTransacterTransaction, TKKRuntimeBaseTransacterImpl, TKKRuntimeTransacterImpl, TKKRuntimeQuery<__covariant RowType>, TKKTransactionStorage, TKKDatabase, TKKKotlinEnumCompanion, TKKKotlinEnum<E>, TKKKotlinByteIterator, NSData, TKKKotlinRuntimeException, TKKKotlinIllegalStateException, TKKRuntimeAfterVersion, TKKTon_kotlin_tlbTlbPrettyPrinter, TKKTon_kotlin_blockAnycast, TKKTon_kotlin_blockAddrStdCompanion, TKKTon_kotlin_apiTonNodeBlockIdExt, TKKTon_kotlin_liteclientTransactionId, TKKTon_kotlin_liteclientFullAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerGetAccountState, TKKTon_kotlin_liteapiLiteServerAccountState, TKKTon_kotlin_liteapiLiteServerGetAllShardsInfo, TKKTon_kotlin_liteapiLiteServerAllShardsInfo, TKKTon_kotlin_liteapiLiteServerGetBlock, TKKTon_kotlin_liteapiLiteServerBlockData, TKKTon_kotlin_liteapiLiteServerGetBlockHeader, TKKTon_kotlin_liteapiLiteServerBlockHeader, TKKTon_kotlin_liteapiLiteServerGetBlockProof, TKKTon_kotlin_liteapiLiteServerPartialBlockProof, TKKTon_kotlin_liteapiLiteServerGetConfigAll, TKKTon_kotlin_liteapiLiteServerConfigInfo, TKKTon_kotlin_liteapiLiteServerGetConfigParams, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfo, TKKTon_kotlin_liteapiLiteServerMasterchainInfo, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfoExt, TKKTon_kotlin_liteapiLiteServerMasterchainInfoExt, TKKTon_kotlin_liteapiLiteServerGetOneTransaction, TKKTon_kotlin_liteapiLiteServerTransactionInfo, TKKTon_kotlin_liteapiLiteServerGetShardInfo, TKKTon_kotlin_liteapiLiteServerShardInfo, TKKTon_kotlin_liteapiLiteServerGetState, TKKTon_kotlin_liteapiLiteServerBlockState, TKKTon_kotlin_liteapiLiteServerGetTime, TKKTon_kotlin_liteapiLiteServerCurrentTime, TKKTon_kotlin_liteapiLiteServerGetTransactions, TKKTon_kotlin_liteapiLiteServerTransactionList, TKKTon_kotlin_liteapiLiteServerGetValidatorStats, TKKTon_kotlin_liteapiLiteServerValidatorStats, TKKTon_kotlin_liteapiLiteServerGetVersion, TKKTon_kotlin_liteapiLiteServerVersion, TKKTon_kotlin_liteapiLiteServerListBlockTransactions, TKKTon_kotlin_liteapiLiteServerBlockTransactions, TKKTon_kotlin_liteapiLiteServerLookupBlock, TKKTon_kotlin_liteapiLiteServerRunSmcMethod, TKKTon_kotlin_liteapiLiteServerRunMethodResult, TKKTon_kotlin_liteapiLiteServerSendMessage, TKKTon_kotlin_liteapiLiteServerSendMsgStatus, TKKRuntimeExecutableQuery<__covariant RowType>, TKKTon_kotlin_apiPublicKeyEd25519, TKKTon_kotlin_tlByteString, TKKKotlinStringBuilder, TKKKotlinBooleanArray, TKKKotlinIntRange, TKKTon_kotlin_blockAnycastCompanion, TKKTon_kotlin_tlbTlbConstructor<T>, TKKTon_kotlin_apiTonNodeBlockIdExtCompanion, TKKTon_kotlin_liteclientTransactionIdCompanion, TKKTon_kotlin_liteapiLiteServerAccountId, TKKTon_kotlin_liteapiLiteServerGetAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerGetAllShardsInfoCompanion, TKKTon_kotlin_liteapiLiteServerAllShardsInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockCompanion, TKKTon_kotlin_liteapiLiteServerBlockDataCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockHeaderCompanion, TKKTon_kotlin_liteapiLiteServerBlockHeaderCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockProofCompanion, TKKTon_kotlin_liteapiLiteServerPartialBlockProofCompanion, TKKTon_kotlin_liteapiLiteServerGetConfigAllCompanion, TKKTon_kotlin_liteapiLiteServerConfigInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetConfigParamsCompanion, TKKKtor_ioInput, TKKTon_kotlin_tlTlReader, TKKKtor_ioOutput, TKKTon_kotlin_tlTlWriter, TKKTon_kotlin_apiTonNodeZeroStateIdExt, TKKTon_kotlin_liteapiLiteServerMasterchainInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfoExtCompanion, TKKTon_kotlin_liteapiLiteServerMasterchainInfoExtCompanion, TKKTon_kotlin_liteapiLiteServerGetOneTransactionCompanion, TKKTon_kotlin_liteapiLiteServerTransactionInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetShardInfoCompanion, TKKTon_kotlin_liteapiLiteServerShardInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetStateCompanion, TKKTon_kotlin_liteapiLiteServerBlockStateCompanion, TKKTon_kotlin_liteapiLiteServerCurrentTimeCompanion, TKKTon_kotlin_liteapiLiteServerGetTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerTransactionListCompanion, TKKTon_kotlin_liteapiLiteServerGetValidatorStatsCompanion, TKKTon_kotlin_liteapiLiteServerValidatorStatsCompanion, TKKTon_kotlin_liteapiLiteServerVersionCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId3, TKKTon_kotlin_liteapiLiteServerListBlockTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId, TKKTon_kotlin_liteapiLiteServerBlockTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerLookupBlockCompanion, TKKTon_kotlin_liteapiLiteServerRunSmcMethodCompanion, TKKTon_kotlin_liteapiLiteServerRunMethodResultCompanion, TKKTon_kotlin_liteapiLiteServerSendMessageCompanion, TKKTon_kotlin_liteapiLiteServerSendMsgStatusCompanion, TKKTon_kotlin_apiPublicKeyEd25519Companion, TKKTon_kotlin_tlByteStringCompanion, TKKTon_kotlin_apiOverlayNode, TKKKotlinCharArray, TKKKotlinBooleanIterator, TKKKotlinIntProgressionCompanion, TKKKotlinIntIterator, TKKKotlinIntProgression, TKKKotlinIntRangeCompanion, TKKTon_kotlin_cellCellType, TKKTon_kotlin_bigintBigInt, TKKTon_kotlin_tlbAbstractTlbConstructorCompanion, TKKTon_kotlin_tlbAbstractTlbConstructor<T>, TKKTon_kotlin_liteapiLiteServerAccountIdCompanion, TKKTon_kotlin_tlTlConstructor<T>, TKKKtor_ioChunkBuffer, TKKKtor_ioInputCompanion, TKKKtor_ioMemory, TKKKtor_ioByteReadPacket, TKKTon_kotlin_apiTonNodeZeroStateIdExtCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId3Companion, TKKTon_kotlin_liteapiLiteServerTransactionIdCompanion, TKKTon_kotlin_apiOverlayNodeCompanion, TKKKotlinCharIterator, TKKTon_kotlin_cellCellTypeCompanion, TKKKotlinNumber, TKKKotlinx_serialization_coreSerializersModule, TKKKotlinx_serialization_coreSerialKind, TKKKotlinNothing, TKKKtor_ioBufferCompanion, TKKKtor_ioBuffer, TKKKtor_ioChunkBufferCompanion, TKKKtor_ioMemoryCompanion, TKKKtor_ioByteReadPacketCompanion, TKKTon_kotlin_blockVmStackNull;
+@class TKKTonApiAdnl, TKKBalanceStorage, TKKTonBalanceQueries, TKKDriverFactory, TKKTonTransactionQueries, TKKKitDatabaseCompanion, TKKKotlinThrowable, TKKKotlinArray<T>, TKKKotlinException, TKKSyncError, TKKSyncState, TKKTransactionManager, TKKBalanceManager, TKKConnectionManager, TKKTon_kotlin_blockAddrStd, TKKTon_kotlin_liteclientFullAccountState, TKKTonTransaction, TKKTonBalance, TKKKotlinUnit, TKKRuntimeTransacterTransaction, TKKRuntimeBaseTransacterImpl, TKKRuntimeTransacterImpl, TKKRuntimeQuery<__covariant RowType>, TKKSyncer, TKKTransactionSender, TKKTonKitCompanion, TKKTransactionType, TKKTonKit, TKKKotlinByteArray, TKKTransactionStorage, TKKKotlinEnumCompanion, TKKKotlinEnum<E>, TKKKotlinByteIterator, NSData, TKKKotlinRuntimeException, TKKKotlinIllegalStateException, TKKRuntimeAfterVersion, TKKTon_kotlin_tlbTlbPrettyPrinter, TKKTon_kotlin_blockAnycast, TKKTon_kotlin_blockAddrStdCompanion, TKKTon_kotlin_apiTonNodeBlockIdExt, TKKTon_kotlin_liteclientTransactionId, TKKTon_kotlin_liteclientFullAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerGetAccountState, TKKTon_kotlin_liteapiLiteServerAccountState, TKKTon_kotlin_liteapiLiteServerGetAllShardsInfo, TKKTon_kotlin_liteapiLiteServerAllShardsInfo, TKKTon_kotlin_liteapiLiteServerGetBlock, TKKTon_kotlin_liteapiLiteServerBlockData, TKKTon_kotlin_liteapiLiteServerGetBlockHeader, TKKTon_kotlin_liteapiLiteServerBlockHeader, TKKTon_kotlin_liteapiLiteServerGetBlockProof, TKKTon_kotlin_liteapiLiteServerPartialBlockProof, TKKTon_kotlin_liteapiLiteServerGetConfigAll, TKKTon_kotlin_liteapiLiteServerConfigInfo, TKKTon_kotlin_liteapiLiteServerGetConfigParams, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfo, TKKTon_kotlin_liteapiLiteServerMasterchainInfo, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfoExt, TKKTon_kotlin_liteapiLiteServerMasterchainInfoExt, TKKTon_kotlin_liteapiLiteServerGetOneTransaction, TKKTon_kotlin_liteapiLiteServerTransactionInfo, TKKTon_kotlin_liteapiLiteServerGetShardInfo, TKKTon_kotlin_liteapiLiteServerShardInfo, TKKTon_kotlin_liteapiLiteServerGetState, TKKTon_kotlin_liteapiLiteServerBlockState, TKKTon_kotlin_liteapiLiteServerGetTime, TKKTon_kotlin_liteapiLiteServerCurrentTime, TKKTon_kotlin_liteapiLiteServerGetTransactions, TKKTon_kotlin_liteapiLiteServerTransactionList, TKKTon_kotlin_liteapiLiteServerGetValidatorStats, TKKTon_kotlin_liteapiLiteServerValidatorStats, TKKTon_kotlin_liteapiLiteServerGetVersion, TKKTon_kotlin_liteapiLiteServerVersion, TKKTon_kotlin_liteapiLiteServerListBlockTransactions, TKKTon_kotlin_liteapiLiteServerBlockTransactions, TKKTon_kotlin_liteapiLiteServerLookupBlock, TKKTon_kotlin_liteapiLiteServerRunSmcMethod, TKKTon_kotlin_liteapiLiteServerRunMethodResult, TKKTon_kotlin_liteapiLiteServerSendMessage, TKKTon_kotlin_liteapiLiteServerSendMsgStatus, TKKRuntimeExecutableQuery<__covariant RowType>, TKKTon_kotlin_apiPublicKeyEd25519, TKKTon_kotlin_tlByteString, TKKKotlinStringBuilder, TKKKotlinBooleanArray, TKKKotlinIntRange, TKKTon_kotlin_blockAnycastCompanion, TKKTon_kotlin_tlbTlbConstructor<T>, TKKTon_kotlin_apiTonNodeBlockIdExtCompanion, TKKTon_kotlin_liteclientTransactionIdCompanion, TKKTon_kotlin_liteapiLiteServerAccountId, TKKTon_kotlin_liteapiLiteServerGetAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerGetAllShardsInfoCompanion, TKKTon_kotlin_liteapiLiteServerAllShardsInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockCompanion, TKKTon_kotlin_liteapiLiteServerBlockDataCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockHeaderCompanion, TKKTon_kotlin_liteapiLiteServerBlockHeaderCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockProofCompanion, TKKTon_kotlin_liteapiLiteServerPartialBlockProofCompanion, TKKTon_kotlin_liteapiLiteServerGetConfigAllCompanion, TKKTon_kotlin_liteapiLiteServerConfigInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetConfigParamsCompanion, TKKKtor_ioInput, TKKTon_kotlin_tlTlReader, TKKKtor_ioOutput, TKKTon_kotlin_tlTlWriter, TKKTon_kotlin_apiTonNodeZeroStateIdExt, TKKTon_kotlin_liteapiLiteServerMasterchainInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfoExtCompanion, TKKTon_kotlin_liteapiLiteServerMasterchainInfoExtCompanion, TKKTon_kotlin_liteapiLiteServerGetOneTransactionCompanion, TKKTon_kotlin_liteapiLiteServerTransactionInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetShardInfoCompanion, TKKTon_kotlin_liteapiLiteServerShardInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetStateCompanion, TKKTon_kotlin_liteapiLiteServerBlockStateCompanion, TKKTon_kotlin_liteapiLiteServerCurrentTimeCompanion, TKKTon_kotlin_liteapiLiteServerGetTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerTransactionListCompanion, TKKTon_kotlin_liteapiLiteServerGetValidatorStatsCompanion, TKKTon_kotlin_liteapiLiteServerValidatorStatsCompanion, TKKTon_kotlin_liteapiLiteServerVersionCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId3, TKKTon_kotlin_liteapiLiteServerListBlockTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId, TKKTon_kotlin_liteapiLiteServerBlockTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerLookupBlockCompanion, TKKTon_kotlin_liteapiLiteServerRunSmcMethodCompanion, TKKTon_kotlin_liteapiLiteServerRunMethodResultCompanion, TKKTon_kotlin_liteapiLiteServerSendMessageCompanion, TKKTon_kotlin_liteapiLiteServerSendMsgStatusCompanion, TKKTon_kotlin_apiPublicKeyEd25519Companion, TKKTon_kotlin_tlByteStringCompanion, TKKTon_kotlin_apiOverlayNode, TKKKotlinCharArray, TKKKotlinBooleanIterator, TKKKotlinIntProgressionCompanion, TKKKotlinIntIterator, TKKKotlinIntProgression, TKKKotlinIntRangeCompanion, TKKTon_kotlin_cellCellType, TKKTon_kotlin_bigintBigInt, TKKTon_kotlin_tlbAbstractTlbConstructorCompanion, TKKTon_kotlin_tlbAbstractTlbConstructor<T>, TKKTon_kotlin_liteapiLiteServerAccountIdCompanion, TKKTon_kotlin_tlTlConstructor<T>, TKKKtor_ioChunkBuffer, TKKKtor_ioInputCompanion, TKKKtor_ioMemory, TKKKtor_ioByteReadPacket, TKKTon_kotlin_apiTonNodeZeroStateIdExtCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId3Companion, TKKTon_kotlin_liteapiLiteServerTransactionIdCompanion, TKKTon_kotlin_apiOverlayNodeCompanion, TKKKotlinCharIterator, TKKTon_kotlin_cellCellTypeCompanion, TKKKotlinNumber, TKKKotlinx_serialization_coreSerializersModule, TKKKotlinx_serialization_coreSerialKind, TKKKotlinNothing, TKKKtor_ioBufferCompanion, TKKKtor_ioBuffer, TKKKtor_ioChunkBufferCompanion, TKKKtor_ioMemoryCompanion, TKKKtor_ioByteReadPacketCompanion, TKKTon_kotlin_blockVmStackNull;
 
 @protocol TKKKotlinx_coroutines_coreFlow, TKKKotlinx_coroutines_coreStateFlow, TKKRuntimeSqlDriver, TKKRuntimeTransactionWithoutReturn, TKKRuntimeTransactionWithReturn, TKKRuntimeTransacterBase, TKKRuntimeTransacter, TKKKitDatabase, TKKRuntimeSqlSchema, TKKTon_kotlin_liteapiLiteApi, TKKTon_kotlin_apiPrivateKeyEd25519, TKKKotlinComparable, TKKCancellable, TKKKotlinx_coroutines_coreFlowCollector, TKKKotlinx_coroutines_coreSharedFlow, TKKRuntimeQueryListener, TKKRuntimeQueryResult, TKKRuntimeSqlPreparedStatement, TKKRuntimeSqlCursor, TKKRuntimeCloseable, TKKRuntimeTransactionCallbacks, TKKKotlinIterator, TKKTon_kotlin_tlbTlbObject, TKKTon_kotlin_blockMsgAddress, TKKTon_kotlin_blockMsgAddressInt, TKKTon_kotlin_bitstringBitString, TKKTon_kotlin_blockMaybe, TKKTon_kotlin_tlbCellRef, TKKTon_kotlin_apiPublicKey, TKKTon_kotlin_apiAdnlIdShort, TKKTon_kotlin_cryptoDecryptor, TKKTon_kotlin_apiPrivateKey, TKKTon_kotlin_bitstringMutableBitString, TKKKotlinIterable, TKKTon_kotlin_cellCell, TKKTon_kotlin_cellCellBuilder, TKKTon_kotlin_tlbTlbStorer, TKKTon_kotlin_cellCellSlice, TKKTon_kotlin_tlbTlbLoader, TKKTon_kotlin_tlbTlbCodec, TKKKotlinx_serialization_coreKSerializer, TKKTon_kotlin_apiTonNodeBlockId, TKKTon_kotlin_tlTlCodec, TKKTon_kotlin_tlTLFunction, TKKTon_kotlin_liteapiLiteServerBlockLink, TKKTon_kotlin_tlTlDecoder, TKKTon_kotlin_tlTlEncoder, TKKTon_kotlin_cryptoEncryptor, TKKTon_kotlin_tlTlObject, TKKKotlinCharSequence, TKKKotlinAppendable, TKKKotlinClosedRange, TKKKotlinOpenEndRange, TKKTon_kotlin_tlbTlbProvider, TKKTon_kotlin_tlbTlbConstructorProvider, TKKKotlinSequence, TKKTon_kotlin_cellCellDescriptor, TKKKotlinx_serialization_coreEncoder, TKKKotlinx_serialization_coreSerialDescriptor, TKKKotlinx_serialization_coreSerializationStrategy, TKKKotlinx_serialization_coreDecoder, TKKKotlinx_serialization_coreDeserializationStrategy, TKKKtor_ioCloseable, TKKKtor_ioObjectPool, TKKTon_kotlin_blockVmStackValue, TKKTon_kotlin_blockVmStack, TKKTon_kotlin_blockVmStackList, TKKTon_kotlin_apiSignedTlObject, TKKKotlinx_serialization_coreCompositeEncoder, TKKKotlinAnnotation, TKKKotlinx_serialization_coreCompositeDecoder, TKKTon_kotlin_blockMutableVmStack, TKKKotlinCollection, TKKKotlinx_serialization_coreSerializersModuleCollector, TKKKotlinKClass, TKKTon_kotlin_blockVmCont, TKKTon_kotlin_blockVmStackNumber, TKKTon_kotlin_blockVmTuple, TKKKotlinKDeclarationContainer, TKKKotlinKAnnotatedElement, TKKKotlinKClassifier;
 
@@ -147,7 +147,7 @@ __attribute__((swift_name("KotlinBoolean")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("BalanceManager")))
 @interface TKKBalanceManager : TKKBase
-- (instancetype)initWithAdnl:(TKKTonApiAdnl *)adnl __attribute__((swift_name("init(adnl:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithAdnl:(TKKTonApiAdnl *)adnl balanceStorage:(TKKBalanceStorage *)balanceStorage __attribute__((swift_name("init(adnl:balanceStorage:)"))) __attribute__((objc_designated_initializer));
 
 /**
  * @note This method converts instances of CancellationException to errors.
@@ -157,6 +157,14 @@ __attribute__((swift_name("BalanceManager")))
 @property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> balanceFlow __attribute__((swift_name("balanceFlow")));
 @end
 
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("BalanceStorage")))
+@interface TKKBalanceStorage : TKKBase
+- (instancetype)initWithBalanceQuery:(TKKTonBalanceQueries *)balanceQuery __attribute__((swift_name("init(balanceQuery:)"))) __attribute__((objc_designated_initializer));
+- (NSString *)getBalance __attribute__((swift_name("getBalance()")));
+- (void)setBalanceV:(NSString *)v __attribute__((swift_name("setBalance(v:)")));
+@end
+
 __attribute__((swift_name("Cancellable")))
 @protocol TKKCancellable
 @required
@@ -164,9 +172,20 @@ __attribute__((swift_name("Cancellable")))
 @end
 
 __attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ConnectionManager")))
+@interface TKKConnectionManager : TKKBase
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
++ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
+- (void)start __attribute__((swift_name("start()")));
+- (void)stop __attribute__((swift_name("stop()")));
+@property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> isConnectedFlow __attribute__((swift_name("isConnectedFlow")));
+@end
+
+__attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("Database")))
 @interface TKKDatabase : TKKBase
 - (instancetype)initWithDatabaseDriverFactory:(TKKDriverFactory *)databaseDriverFactory databaseName:(NSString *)databaseName __attribute__((swift_name("init(databaseDriverFactory:databaseName:)"))) __attribute__((objc_designated_initializer));
+@property (readonly) TKKTonBalanceQueries *balanceQuery __attribute__((swift_name("balanceQuery")));
 @property (readonly) TKKTonTransactionQueries *transactionQuery __attribute__((swift_name("transactionQuery")));
 @end
 
@@ -193,6 +212,7 @@ __attribute__((swift_name("RuntimeTransacter")))
 __attribute__((swift_name("KitDatabase")))
 @protocol TKKKitDatabase <TKKRuntimeTransacter>
 @required
+@property (readonly) TKKTonBalanceQueries *tonBalanceQueries __attribute__((swift_name("tonBalanceQueries")));
 @property (readonly) TKKTonTransactionQueries *tonTransactionQueries __attribute__((swift_name("tonTransactionQueries")));
 @end
 
@@ -287,7 +307,14 @@ __attribute__((swift_name("SyncState.Syncing")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("Syncer")))
 @interface TKKSyncer : TKKBase
-- (instancetype)initWithTransactionManager:(TKKTransactionManager *)transactionManager balanceManager:(TKKBalanceManager *)balanceManager __attribute__((swift_name("init(transactionManager:balanceManager:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithTransactionManager:(TKKTransactionManager *)transactionManager balanceManager:(TKKBalanceManager *)balanceManager connectionManager:(TKKConnectionManager *)connectionManager __attribute__((swift_name("init(transactionManager:balanceManager:connectionManager:)"))) __attribute__((objc_designated_initializer));
+
+/**
+ * @note This method converts instances of CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)cancelSyncerReason:(TKKKotlinThrowable *)reason completionHandler:(void (^)(NSError * _Nullable))completionHandler __attribute__((swift_name("cancelSyncer(reason:completionHandler:)")));
+- (void)runSyncer __attribute__((swift_name("runSyncer()")));
 - (void)start __attribute__((swift_name("start()")));
 - (void)stop __attribute__((swift_name("stop()")));
 @property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> balanceSyncStateFlow __attribute__((swift_name("balanceSyncStateFlow")));
@@ -331,72 +358,14 @@ __attribute__((swift_name("TonApiAdnl")))
 @end
 
 __attribute__((objc_subclassing_restricted))
-__attribute__((swift_name("TonKit")))
-@interface TKKTonKit : TKKBase
-- (instancetype)initWithTransactionManager:(TKKTransactionManager *)transactionManager balanceManager:(TKKBalanceManager *)balanceManager receiveAddress:(NSString *)receiveAddress syncer:(TKKSyncer *)syncer transactionSender:(TKKTransactionSender * _Nullable)transactionSender __attribute__((swift_name("init(transactionManager:balanceManager:receiveAddress:syncer:transactionSender:)"))) __attribute__((objc_designated_initializer));
-@property (class, readonly, getter=companion) TKKTonKitCompanion *companion __attribute__((swift_name("companion")));
-
-/**
- * @note This method converts instances of CancellationException to errors.
- * Other uncaught Kotlin exceptions are fatal.
-*/
-- (void)sendRecipient:(NSString *)recipient amount:(NSString *)amount completionHandler:(void (^)(NSError * _Nullable))completionHandler __attribute__((swift_name("send(recipient:amount:completionHandler:)")));
-- (void)start __attribute__((swift_name("start()")));
-- (void)stop __attribute__((swift_name("stop()")));
-
-/**
- * @note This method converts instances of CancellationException to errors.
- * Other uncaught Kotlin exceptions are fatal.
-*/
-- (void)transactionsFromTransactionHash:(NSString * _Nullable)fromTransactionHash type:(TKKTransactionType * _Nullable)type limit:(int64_t)limit completionHandler:(void (^)(NSArray<TKKTonTransaction *> * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("transactions(fromTransactionHash:type:limit:completionHandler:)")));
-@property (readonly) NSString * _Nullable balance __attribute__((swift_name("balance")));
-@property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> balanceFlow __attribute__((swift_name("balanceFlow")));
-@property (readonly) TKKSyncState *balanceSyncState __attribute__((swift_name("balanceSyncState")));
-@property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> balanceSyncStateFlow __attribute__((swift_name("balanceSyncStateFlow")));
-@property (readonly, getter=doNewTransactionsFlow) id<TKKKotlinx_coroutines_coreFlow> newTransactionsFlow __attribute__((swift_name("newTransactionsFlow")));
-@property (readonly) NSString *receiveAddress __attribute__((swift_name("receiveAddress")));
-@property (readonly) TKKSyncState *transactionsSyncState __attribute__((swift_name("transactionsSyncState")));
-@property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> transactionsSyncStateFlow __attribute__((swift_name("transactionsSyncStateFlow")));
-@end
-
-__attribute__((objc_subclassing_restricted))
-__attribute__((swift_name("TonKit.Companion")))
-@interface TKKTonKitCompanion : TKKBase
-+ (instancetype)alloc __attribute__((unavailable));
-+ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
-+ (instancetype)companion __attribute__((swift_name("init()")));
-@property (class, readonly, getter=shared) TKKTonKitCompanion *shared __attribute__((swift_name("shared")));
-
-/**
- * @note This method converts instances of Exception to errors.
- * Other uncaught Kotlin exceptions are fatal.
-*/
-- (BOOL)validateAddress:(NSString *)address error:(NSError * _Nullable * _Nullable)error __attribute__((swift_name("validate(address:)")));
-@end
-
-__attribute__((objc_subclassing_restricted))
-__attribute__((swift_name("TonKitFactory")))
-@interface TKKTonKitFactory : TKKBase
-- (instancetype)initWithDriverFactory:(TKKDriverFactory *)driverFactory __attribute__((swift_name("init(driverFactory:)"))) __attribute__((objc_designated_initializer));
-- (TKKTonKit *)createSeed:(TKKKotlinByteArray *)seed walletId:(NSString *)walletId __attribute__((swift_name("create(seed:walletId:)")));
-- (TKKTonKit *)createWords:(NSArray<NSString *> *)words passphrase:(NSString *)passphrase walletId:(NSString *)walletId __attribute__((swift_name("create(words:passphrase:walletId:)")));
-- (TKKTonKit *)createWatchAddress:(NSString *)address walletId:(NSString *)walletId __attribute__((swift_name("createWatch(address:walletId:)")));
-@end
-
-__attribute__((objc_subclassing_restricted))
-__attribute__((swift_name("TonTransaction")))
-@interface TKKTonTransaction : TKKBase
-- (instancetype)initWithHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("init(hash:lt:timestamp:value_:type:src:dest:)"))) __attribute__((objc_designated_initializer));
-- (TKKTonTransaction *)doCopyHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("doCopy(hash:lt:timestamp:value_:type:src:dest:)")));
+__attribute__((swift_name("TonBalance")))
+@interface TKKTonBalance : TKKBase
+- (instancetype)initWithId:(NSString *)id value_:(NSString * _Nullable)value_ __attribute__((swift_name("init(id:value_:)"))) __attribute__((objc_designated_initializer));
+- (TKKTonBalance *)doCopyId:(NSString *)id value_:(NSString * _Nullable)value_ __attribute__((swift_name("doCopy(id:value_:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
-@property (readonly) NSString * _Nullable dest __attribute__((swift_name("dest")));
-@property (readonly, getter=hash_) NSString *hash __attribute__((swift_name("hash")));
-@property (readonly) int64_t lt __attribute__((swift_name("lt")));
-@property (readonly) NSString * _Nullable src __attribute__((swift_name("src")));
-@property (readonly) int64_t timestamp __attribute__((swift_name("timestamp")));
-@property (readonly) NSString *type __attribute__((swift_name("type")));
+@property (readonly) NSString *id __attribute__((swift_name("id")));
 @property (readonly) NSString * _Nullable value_ __attribute__((swift_name("value_")));
 @end
 
@@ -433,32 +402,112 @@ __attribute__((swift_name("RuntimeTransacterImpl")))
 @end
 
 __attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("TonBalanceQueries")))
+@interface TKKTonBalanceQueries : TKKRuntimeTransacterImpl
+- (instancetype)initWithDriver:(id<TKKRuntimeSqlDriver>)driver __attribute__((swift_name("init(driver:)"))) __attribute__((objc_designated_initializer));
+- (TKKRuntimeQuery<TKKTonBalance *> *)get __attribute__((swift_name("get()")));
+- (TKKRuntimeQuery<id> *)getMapper:(id (^)(NSString *, NSString * _Nullable))mapper __attribute__((swift_name("get(mapper:)")));
+- (void)insertValue_:(NSString * _Nullable)value_ __attribute__((swift_name("insert(value_:)")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("TonKit")))
+@interface TKKTonKit : TKKBase
+- (instancetype)initWithTransactionManager:(TKKTransactionManager *)transactionManager balanceManager:(TKKBalanceManager *)balanceManager receiveAddress:(NSString *)receiveAddress syncer:(TKKSyncer *)syncer transactionSender:(TKKTransactionSender * _Nullable)transactionSender __attribute__((swift_name("init(transactionManager:balanceManager:receiveAddress:syncer:transactionSender:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) TKKTonKitCompanion *companion __attribute__((swift_name("companion")));
+
+/**
+ * @note This method converts instances of CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)sendRecipient:(NSString *)recipient amount:(NSString *)amount completionHandler:(void (^)(NSError * _Nullable))completionHandler __attribute__((swift_name("send(recipient:amount:completionHandler:)")));
+- (void)start __attribute__((swift_name("start()")));
+- (void)stop __attribute__((swift_name("stop()")));
+
+/**
+ * @note This method converts instances of CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)transactionsFromTransactionHash:(NSString * _Nullable)fromTransactionHash type:(TKKTransactionType * _Nullable)type limit:(int64_t)limit completionHandler:(void (^)(NSArray<TKKTonTransaction *> * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("transactions(fromTransactionHash:type:limit:completionHandler:)")));
+@property (readonly) NSString *balance __attribute__((swift_name("balance")));
+@property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> balanceFlow __attribute__((swift_name("balanceFlow")));
+@property (readonly) TKKSyncState *balanceSyncState __attribute__((swift_name("balanceSyncState")));
+@property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> balanceSyncStateFlow __attribute__((swift_name("balanceSyncStateFlow")));
+@property (readonly, getter=doNewTransactionsFlow) id<TKKKotlinx_coroutines_coreFlow> newTransactionsFlow __attribute__((swift_name("newTransactionsFlow")));
+@property (readonly) NSString *receiveAddress __attribute__((swift_name("receiveAddress")));
+@property (readonly) TKKSyncState *transactionsSyncState __attribute__((swift_name("transactionsSyncState")));
+@property (readonly) id<TKKKotlinx_coroutines_coreStateFlow> transactionsSyncStateFlow __attribute__((swift_name("transactionsSyncStateFlow")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("TonKit.Companion")))
+@interface TKKTonKitCompanion : TKKBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) TKKTonKitCompanion *shared __attribute__((swift_name("shared")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (BOOL)validateAddress:(NSString *)address error:(NSError * _Nullable * _Nullable)error __attribute__((swift_name("validate(address:)")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("TonKitFactory")))
+@interface TKKTonKitFactory : TKKBase
+- (instancetype)initWithDriverFactory:(TKKDriverFactory *)driverFactory connectionManager:(TKKConnectionManager *)connectionManager __attribute__((swift_name("init(driverFactory:connectionManager:)"))) __attribute__((objc_designated_initializer));
+- (TKKTonKit *)createSeed:(TKKKotlinByteArray *)seed walletId:(NSString *)walletId __attribute__((swift_name("create(seed:walletId:)")));
+- (TKKTonKit *)createWords:(NSArray<NSString *> *)words passphrase:(NSString *)passphrase walletId:(NSString *)walletId __attribute__((swift_name("create(words:passphrase:walletId:)")));
+- (TKKTonKit *)createWatchAddress:(NSString *)address walletId:(NSString *)walletId __attribute__((swift_name("createWatch(address:walletId:)")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("TonTransaction")))
+@interface TKKTonTransaction : TKKBase
+- (instancetype)initWithHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ fee:(NSString * _Nullable)fee type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("init(hash:lt:timestamp:value_:fee:type:src:dest:)"))) __attribute__((objc_designated_initializer));
+- (TKKTonTransaction *)doCopyHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ fee:(NSString * _Nullable)fee type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("doCopy(hash:lt:timestamp:value_:fee:type:src:dest:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) NSString * _Nullable dest __attribute__((swift_name("dest")));
+@property (readonly) NSString * _Nullable fee __attribute__((swift_name("fee")));
+@property (readonly, getter=hash_) NSString *hash __attribute__((swift_name("hash")));
+@property (readonly) int64_t lt __attribute__((swift_name("lt")));
+@property (readonly) NSString * _Nullable src __attribute__((swift_name("src")));
+@property (readonly) int64_t timestamp __attribute__((swift_name("timestamp")));
+@property (readonly) NSString *type __attribute__((swift_name("type")));
+@property (readonly) NSString * _Nullable value_ __attribute__((swift_name("value_")));
+@end
+
+__attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("TonTransactionQueries")))
 @interface TKKTonTransactionQueries : TKKRuntimeTransacterImpl
 - (instancetype)initWithDriver:(id<TKKRuntimeSqlDriver>)driver __attribute__((swift_name("init(driver:)"))) __attribute__((objc_designated_initializer));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getAllLimit:(int64_t)limit __attribute__((swift_name("getAll(limit:)")));
-- (TKKRuntimeQuery<id> *)getAllLimit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getAll(limit:mapper:)")));
+- (TKKRuntimeQuery<id> *)getAllLimit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getAll(limit:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getAllByTypeType:(NSString *)type limit:(int64_t)limit __attribute__((swift_name("getAllByType(type:limit:)")));
-- (TKKRuntimeQuery<id> *)getAllByTypeType:(NSString *)type limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getAllByType(type:limit:mapper:)")));
+- (TKKRuntimeQuery<id> *)getAllByTypeType:(NSString *)type limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getAllByType(type:limit:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getByHashHash:(NSString *)hash __attribute__((swift_name("getByHash(hash:)")));
-- (TKKRuntimeQuery<id> *)getByHashHash:(NSString *)hash mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getByHash(hash:mapper:)")));
+- (TKKRuntimeQuery<id> *)getByHashHash:(NSString *)hash mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getByHash(hash:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getEarliest __attribute__((swift_name("getEarliest()")));
-- (TKKRuntimeQuery<id> *)getEarliestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getEarliest(mapper:)")));
+- (TKKRuntimeQuery<id> *)getEarliestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getEarliest(mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getLatest __attribute__((swift_name("getLatest()")));
-- (TKKRuntimeQuery<id> *)getLatestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getLatest(mapper:)")));
-- (void)insertHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("insert(hash:lt:timestamp:value_:type:src:dest:)")));
+- (TKKRuntimeQuery<id> *)getLatestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getLatest(mapper:)")));
+- (void)insertHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ fee:(NSString * _Nullable)fee type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("insert(hash:lt:timestamp:value_:fee:type:src:dest:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)selectAllValue_:(int64_t)value_ __attribute__((swift_name("selectAll(value_:)")));
-- (TKKRuntimeQuery<id> *)selectAllValue:(int64_t)value mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectAll(value:mapper:)")));
+- (TKKRuntimeQuery<id> *)selectAllValue:(int64_t)value mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectAll(value:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)selectByHashHash:(NSString *)hash __attribute__((swift_name("selectByHash(hash:)")));
-- (TKKRuntimeQuery<id> *)selectByHashHash:(NSString *)hash mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectByHash(hash:mapper:)")));
+- (TKKRuntimeQuery<id> *)selectByHashHash:(NSString *)hash mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectByHash(hash:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)selectEarlierThanTimestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit __attribute__((swift_name("selectEarlierThan(timestamp:lt:limit:)")));
-- (TKKRuntimeQuery<id> *)selectEarlierThanTimestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarlierThan(timestamp:lt:limit:mapper:)")));
+- (TKKRuntimeQuery<id> *)selectEarlierThanTimestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarlierThan(timestamp:lt:limit:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)selectEarlierThanByTypeType:(NSString *)type timestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit __attribute__((swift_name("selectEarlierThanByType(type:timestamp:lt:limit:)")));
-- (TKKRuntimeQuery<id> *)selectEarlierThanByTypeType:(NSString *)type timestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarlierThanByType(type:timestamp:lt:limit:mapper:)")));
+- (TKKRuntimeQuery<id> *)selectEarlierThanByTypeType:(NSString *)type timestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarlierThanByType(type:timestamp:lt:limit:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)selectEarliest __attribute__((swift_name("selectEarliest()")));
-- (TKKRuntimeQuery<id> *)selectEarliestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarliest(mapper:)")));
+- (TKKRuntimeQuery<id> *)selectEarliestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarliest(mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)selectLatest __attribute__((swift_name("selectLatest()")));
-- (TKKRuntimeQuery<id> *)selectLatestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectLatest(mapper:)")));
+- (TKKRuntimeQuery<id> *)selectLatestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectLatest(mapper:)")));
 @end
 
 __attribute__((objc_subclassing_restricted))
@@ -495,7 +544,7 @@ __attribute__((swift_name("TransactionSender")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("TransactionStorage")))
 @interface TKKTransactionStorage : TKKBase
-- (instancetype)initWithDatabase:(TKKDatabase *)database __attribute__((swift_name("init(database:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithTransactionQuery:(TKKTonTransactionQueries *)transactionQuery __attribute__((swift_name("init(transactionQuery:)"))) __attribute__((objc_designated_initializer));
 - (void)addTransactions:(NSArray<TKKTonTransaction *> *)transactions __attribute__((swift_name("add(transactions:)")));
 - (TKKTonTransaction * _Nullable)getEarliestTransaction __attribute__((swift_name("getEarliestTransaction()")));
 - (TKKTonTransaction * _Nullable)getLatestTransaction __attribute__((swift_name("getLatestTransaction()")));
@@ -528,12 +577,13 @@ __attribute__((swift_name("TransactionType")))
 - (instancetype)initWithName:(NSString *)name ordinal:(int32_t)ordinal __attribute__((swift_name("init(name:ordinal:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
 @property (class, readonly) TKKTransactionType *incoming __attribute__((swift_name("incoming")));
 @property (class, readonly) TKKTransactionType *outgoing __attribute__((swift_name("outgoing")));
+@property (class, readonly) TKKTransactionType *unknown __attribute__((swift_name("unknown")));
 + (TKKKotlinArray<TKKTransactionType *> *)values __attribute__((swift_name("values()")));
 @property (class, readonly) NSArray<TKKTransactionType *> *entries __attribute__((swift_name("entries")));
 @end
 
 @interface TKKTonKit (Extensions)
-- (id<TKKCancellable>)balancePublisherOnEach:(void (^)(NSString * _Nullable))onEach onCompletion:(void (^)(TKKKotlinThrowable * _Nullable))onCompletion __attribute__((swift_name("balancePublisher(onEach:onCompletion:)")));
+- (id<TKKCancellable>)balancePublisherOnEach:(void (^)(NSString *))onEach onCompletion:(void (^)(TKKKotlinThrowable * _Nullable))onCompletion __attribute__((swift_name("balancePublisher(onEach:onCompletion:)")));
 - (id<TKKCancellable>)balanceSyncStatePublisherOnEach:(void (^)(TKKSyncState *))onEach onCompletion:(void (^)(TKKKotlinThrowable * _Nullable))onCompletion __attribute__((swift_name("balanceSyncStatePublisher(onEach:onCompletion:)")));
 - (id<TKKCancellable>)doNewTransactionsPublisherOnEach:(void (^)(NSArray<TKKTonTransaction *> *))onEach onCompletion:(void (^)(TKKKotlinThrowable * _Nullable))onCompletion __attribute__((swift_name("doNewTransactionsPublisher(onEach:onCompletion:)")));
 - (id<TKKCancellable>)transactionsSyncStatePublisherOnEach:(void (^)(TKKSyncState *))onEach onCompletion:(void (^)(TKKKotlinThrowable * _Nullable))onCompletion __attribute__((swift_name("transactionsSyncStatePublisher(onEach:onCompletion:)")));

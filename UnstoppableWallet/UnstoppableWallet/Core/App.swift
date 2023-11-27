@@ -36,7 +36,7 @@ class App {
     let systemInfoManager: SystemInfoManager
 
     let pasteboardManager: PasteboardManager
-    let reachabilityManager: IReachabilityManager
+    let reachabilityManager: ReachabilityManager
     let networkManager: NetworkManager
 
     let accountManager: AccountManager
