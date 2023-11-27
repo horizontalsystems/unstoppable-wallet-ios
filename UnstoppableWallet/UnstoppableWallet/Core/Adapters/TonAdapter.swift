@@ -1,18 +1,23 @@
 import Combine
 import Foundation
 import HdWalletKit
+import HsToolKit
 import MarketKit
 import RxSwift
 import TonKitKmm
 
 class TonAdapter {
-    static let coinRate: Decimal = 1_000_000_000
+    private static let coinRate: Decimal = 1_000_000_000
 
     private let tonKit: TonKit
     private let ownAddress: String
     private let transactionSource: TransactionSource
     private let baseToken: Token
+    private let reachabilityManager = App.shared.reachabilityManager
     private var cancellables = Set<AnyCancellable>()
+
+    private var adapterStarted = false
+    private var kitStarted = false
 
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private(set) var balanceState: AdapterState {
@@ -41,18 +46,26 @@ class TonAdapter {
         transactionSource = wallet.transactionSource
         self.baseToken = baseToken
 
-        guard let seed = wallet.account.type.mnemonicSeed else {
+        switch wallet.account.type {
+        case .mnemonic:
+            guard let seed = wallet.account.type.mnemonicSeed else {
+                throw AdapterError.unsupportedAccount
+            }
+
+            let hdWallet = HDWallet(seed: seed, coinType: 607, xPrivKey: 0, curve: .ed25519)
+            let privateKey = try hdWallet.privateKey(account: 0)
+
+            tonKit = TonKitFactory(driverFactory: DriverFactory(), connectionManager: ConnectionManager()).create(seed: privateKey.raw.toKotlinByteArray(), walletId: wallet.account.id)
+        case let .tonAddress(address):
+            tonKit = TonKitFactory(driverFactory: DriverFactory(), connectionManager: ConnectionManager()).createWatch(address: address, walletId: wallet.account.id)
+        default:
             throw AdapterError.unsupportedAccount
         }
 
-        let hdWallet = HDWallet(seed: seed, coinType: 607, xPrivKey: 0, curve: .ed25519)
-        let privateKey = try hdWallet.privateKey(account: 0)
-
-        tonKit = TonKitFactory(driverFactory: DriverFactory()).create(seed: privateKey.raw.toKotlinByteArray(), walletId: wallet.account.id)
         ownAddress = tonKit.receiveAddress
 
         balanceState = Self.adapterState(kitSyncState: tonKit.balanceSyncState)
-        balanceData = Self.balanceData(kitBalance: tonKit.balance)
+        balanceData = BalanceData(available: Self.amount(kitAmount: tonKit.balance))
         transactionsState = Self.adapterState(kitSyncState: tonKit.transactionsSyncState)
 
         collect(tonKit.balanceSyncStatePublisher)
@@ -65,7 +78,7 @@ class TonAdapter {
         collect(tonKit.balancePublisher)
             .completeOnFailure()
             .sink { [weak self] balance in
-                self?.balanceData = Self.balanceData(kitBalance: balance)
+                self?.balanceData = BalanceData(available: Self.amount(kitAmount: balance))
             }
             .store(in: &cancellables)
 
@@ -82,6 +95,24 @@ class TonAdapter {
                 self?.handle(tonTransactions: tonTransactions)
             }
             .store(in: &cancellables)
+
+        reachabilityManager.$isReachable
+            .sink { [weak self] isReachable in
+                self?.handle(isReachable: isReachable)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func handle(isReachable: Bool) {
+        guard adapterStarted else {
+            return
+        }
+
+        if isReachable, !kitStarted {
+            startKit()
+        } else if !isReachable, kitStarted {
+            stopKit()
+        }
     }
 
     private func handle(tonTransactions: [TonTransaction]) {
@@ -98,12 +129,12 @@ class TonAdapter {
         }
     }
 
-    private static func balanceData(kitBalance: String?) -> BalanceData {
-        guard let kitBalance, let decimal = Decimal(string: kitBalance) else {
-            return BalanceData(available: 0)
+    static func amount(kitAmount: String) -> Decimal {
+        guard let decimal = Decimal(string: kitAmount) else {
+            return 0
         }
 
-        return BalanceData(available: decimal / coinRate)
+        return decimal / coinRate
     }
 
     private func transactionRecord(tonTransaction tx: TonTransaction) -> TonTransactionRecord {
@@ -152,6 +183,16 @@ class TonAdapter {
             tonTransactions.compactMap { self?.transactionRecord(tonTransaction: $0) }
         }
     }
+
+    private func startKit() {
+        tonKit.start()
+        kitStarted = true
+    }
+
+    private func stopKit() {
+        tonKit.stop()
+        kitStarted = false
+    }
 }
 
 extension TonAdapter: IBaseAdapter {
@@ -162,11 +203,19 @@ extension TonAdapter: IBaseAdapter {
 
 extension TonAdapter: IAdapter {
     func start() {
-        tonKit.start()
+        adapterStarted = true
+
+        if reachabilityManager.isReachable {
+            startKit()
+        }
     }
 
     func stop() {
-        tonKit.stop()
+        adapterStarted = false
+
+        if kitStarted {
+            stopKit()
+        }
     }
 
     func refresh() {}

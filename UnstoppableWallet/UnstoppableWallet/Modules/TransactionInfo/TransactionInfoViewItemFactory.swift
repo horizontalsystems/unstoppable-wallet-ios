@@ -546,7 +546,10 @@ class TransactionInfoViewItemFactory {
                 sections.append([.sentToSelf])
             }
 
-            feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: record.fee, rate: _rate(record.fee)))
+            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: $0, rate: _rate($0))) }
+
+        case let record as TonTransactionRecord:
+            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: $0, rate: _rate($0))) }
 
         default: ()
         }

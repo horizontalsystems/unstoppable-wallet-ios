@@ -56,6 +56,12 @@ class AccountStorage {
             }
 
             type = .tronAddress(address: try! TronKit.Address(raw: data))
+        case .tonAddress:
+            guard let address = record.dataKey else {
+                return nil
+            }
+
+            type = .tonAddress(address: address)
         case .hdExtendedKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -115,6 +121,9 @@ class AccountStorage {
         case .tronAddress(let address):
             typeName = .tronAddress
             dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
+        case .tonAddress(let address):
+            typeName = .tonAddress
+            dataKey = address
         case .hdExtendedKey(let key):
             typeName = .hdExtendedKey
             dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
@@ -157,6 +166,8 @@ class AccountStorage {
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
         case .cex:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .cex, keyName: .data))
+        default:
+            ()
         }
     }
 
@@ -241,6 +252,7 @@ extension AccountStorage {
         case evmPrivateKey
         case evmAddress = "address"
         case tronAddress
+        case tonAddress
         case hdExtendedKey
         case cex
     }
