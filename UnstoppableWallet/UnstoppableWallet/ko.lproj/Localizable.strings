@@ -2,6 +2,7 @@
 "button.apply" = "적용";
 "button.cancel" = "취소";
 "button.close" = "가까운, 닫힌";
+"button.confirm" = "확인";
 "button.continue" = "계속";
 "button.done" = "완료";
 "button.reset" = "초기화";
@@ -403,6 +404,8 @@
 "send.max_button" = "최대";
 "send.next_button" = "다음";
 "send.error.invalid" = "무효";
+"send.error.invalid_blockchain" = "Invalid Blockchain";
+"send.error.invalid_token" = "Invalid Token";
 "send.error.address" = "주소";
 "send.hodler_locktime" = "시간 자물쇠";
 "send.hodler_locktime_hour" = "1시간";
@@ -1812,6 +1815,8 @@
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "최소  금액";
 "cex_deposit.warning_memo" = "메모(tag)는 필수입니다. 메모 없이는 코인을 잃을 수 있습니다.";
+"cex_deposit.set_amount" = "Set Amount";
+"cex_deposit.enter_amount" = "Enter Amount";
 "cex_deposit.copy_address" = "복사";
 "cex_deposit.share_address" = "공유";
 "cex_deposit.failed" = "입금 주소를 불러오지 못했습니다. 다시 시도해주세요.";
