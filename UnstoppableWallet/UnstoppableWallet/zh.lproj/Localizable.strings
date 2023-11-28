@@ -2,6 +2,7 @@
 "button.apply" = "应用";
 "button.cancel" = "取消";
 "button.close" = "关闭";
+"button.confirm" = "确认";
 "button.continue" = "继续";
 "button.done" = "完成";
 "button.reset" = "重置";
@@ -405,6 +406,8 @@
 "send.max_button" = "最多";
 "send.next_button" = "下一步";
 "send.error.invalid" = "无效";
+"send.error.invalid_blockchain" = "Invalid Blockchain";
+"send.error.invalid_token" = "Invalid Token";
 "send.error.address" = "地址";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 小时";
@@ -1811,6 +1814,8 @@
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "最小金额";
 "cex_deposit.warning_memo" = "Memo(标签)是必需的，否则您将丢失您的硬币。";
+"cex_deposit.set_amount" = "Set Amount";
+"cex_deposit.enter_amount" = "Enter Amount";
 "cex_deposit.copy_address" = "复制";
 "cex_deposit.share_address" = "分享";
 "cex_deposit.failed" = "加载存款地址失败。请重试。";
