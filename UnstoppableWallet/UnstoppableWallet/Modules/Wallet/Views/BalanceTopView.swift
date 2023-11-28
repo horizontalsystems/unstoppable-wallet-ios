@@ -1,7 +1,7 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class BalanceTopView: UIView {
     static let height: CGFloat = 62
@@ -96,18 +96,18 @@ class BalanceTopView: UIView {
         bottomRightLabel.font = .subhead2
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func bind(viewItem: BalanceTopViewItem, onTapError: (() -> ())?) {
+    func bind(viewItem: BalanceTopViewItem, onTapError: (() -> Void)?) {
         coinIconView.bind(
-                iconUrlString: viewItem.iconUrlString,
-                placeholderIconName: viewItem.placeholderIconName,
-                spinnerProgress: viewItem.syncSpinnerProgress,
-                indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
-                failViewVisible: viewItem.failedImageViewVisible,
-                onTapError: onTapError
+            iconUrlString: viewItem.iconUrlString,
+            placeholderIconName: viewItem.placeholderIconName,
+            spinnerProgress: viewItem.syncSpinnerProgress,
+            indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
+            failViewVisible: viewItem.failedImageViewVisible,
+            onTapError: onTapError
         )
 
         testnetImageView.isHidden = viewItem.isMainNet
@@ -157,14 +157,14 @@ class BalanceTopView: UIView {
         case let .syncing(progress, syncedUntil):
             diffLabel.isHidden = true
 
-            if let progress = progress {
+            if let progress {
                 bottomLeftLabel.text = "balance.syncing_percent".localized("\(progress)%")
             } else {
                 bottomLeftLabel.text = "balance.syncing".localized
             }
             bottomLeftLabel.textColor = .themeGray
 
-            if let syncedUntil = syncedUntil {
+            if let syncedUntil {
                 bottomRightLabel.isHidden = false
                 bottomRightLabel.text = "balance.synced_through".localized(syncedUntil)
                 bottomRightLabel.textColor = .themeGray
@@ -176,7 +176,7 @@ class BalanceTopView: UIView {
 
             bottomLeftLabel.text = left
             bottomLeftLabel.textColor = .themeGray
-            if let right = right {
+            if let right {
                 bottomRightLabel.isHidden = false
                 bottomRightLabel.text = right
                 bottomRightLabel.textColor = .themeGray
@@ -185,5 +185,4 @@ class BalanceTopView: UIView {
             }
         }
     }
-
 }

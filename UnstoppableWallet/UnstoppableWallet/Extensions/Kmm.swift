@@ -48,7 +48,7 @@ extension Publishers {
             subscriber.receive(subscription: subscription)
 
             let cancellable = onCollect({ input in _ = subscriber.receive(input) }) { failure in
-                if let failure = failure {
+                if let failure {
                     subscriber.receive(completion: .failure(failure))
                 } else {
                     subscriber.receive(completion: .finished)
@@ -96,7 +96,7 @@ extension Publisher {
      You can hook into these failures by assigning a function to `PublisherHooks.willCompleteOnFailure`.
      */
     func completeOnFailure(file: String = #file, fileID: String = #fileID, filePath: String = #filePath, line: Int = #line, column: Int = #column, function: String = #function, dsoHandle: UnsafeRawPointer = #dsohandle) -> Publishers.Catch<Self, Empty<Output, Never>> {
-        return `catch` { error in
+        `catch` { error in
             let callsite = Callsite(file: file, fileID: fileID, filePath: filePath, line: line, column: column, function: function, dsoHandle: dsoHandle)
             PublisherFailures.willCompleteOnFailure(error, callsite)
             return Empty(completeImmediately: true)

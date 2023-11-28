@@ -1,9 +1,9 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class HistoricalRateService {
     private let marketKit: MarketKit.Kit
@@ -23,10 +23,10 @@ class HistoricalRateService {
         currency = currencyManager.baseCurrency
 
         currencyManager.$baseCurrency
-                .sink { [weak self] currency in
-                    self?.handleUpdated(currency: currency)
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] currency in
+                self?.handleUpdated(currency: currency)
+            }
+            .store(in: &cancellables)
     }
 
     private func handleUpdated(currency: Currency) {
@@ -53,11 +53,9 @@ class HistoricalRateService {
             self?.handle(key: key, rate: rate)
         }.store(in: &tasks)
     }
-
 }
 
 extension HistoricalRateService {
-
     var rateUpdatedObservable: Observable<(RateKey, CurrencyValue)> {
         rateUpdatedRelay.asObservable()
     }
@@ -78,7 +76,7 @@ extension HistoricalRateService {
 
             if let value = marketKit.cachedCoinHistoricalPriceValue(coinUid: key.token.coin.uid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970) {
                 let currencyValue = CurrencyValue(currency: currency, value: value)
-                rates[key]  = currencyValue
+                rates[key] = currencyValue
                 return currencyValue
             }
 
@@ -97,7 +95,6 @@ extension HistoricalRateService {
             }
         }
     }
-
 }
 
 struct RateKey: Hashable {
@@ -112,5 +109,4 @@ struct RateKey: Hashable {
     static func == (lhs: RateKey, rhs: RateKey) -> Bool {
         lhs.token == rhs.token && lhs.date == rhs.date
     }
-
 }

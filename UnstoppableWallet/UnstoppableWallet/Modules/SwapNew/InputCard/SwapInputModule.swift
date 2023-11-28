@@ -1,7 +1,6 @@
 import Foundation
 
 class SwapInputModule {
-
     static func cell(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService) -> SwapInputCell {
         let fromCoinCardService = SwapFromCoinCardService(service: service, tradeService: tradeService)
         let toCoinCardService = SwapToCoinCardService(service: service, tradeService: tradeService)
@@ -15,23 +14,22 @@ class SwapInputModule {
         let toViewModel = SwapCoinCardViewModel(coinCardService: toCoinCardService, fiatService: toFiatService)
 
         let fromAmountInputViewModel = AmountInputViewModel(
-                service: fromCoinCardService,
-                fiatService: fromFiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: fromCoinCardService,
+            fiatService: fromFiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
         let toAmountInputViewModel = AmountInputViewModel(
-                service: toCoinCardService,
-                fiatService: toFiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: toCoinCardService,
+            fiatService: toFiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
 
         return SwapInputCell(fromViewModel: fromViewModel,
-                fromAmountInputViewModel: fromAmountInputViewModel,
-                toViewModel: toViewModel,
-                toAmountInputViewModel: toAmountInputViewModel
-        )
+                             fromAmountInputViewModel: fromAmountInputViewModel,
+                             toViewModel: toViewModel,
+                             toAmountInputViewModel: toAmountInputViewModel)
     }
 
     static func cell(service: UniswapV3Service, tradeService: UniswapV3TradeService, switchService: AmountTypeSwitchService) -> SwapInputCell {
@@ -47,23 +45,22 @@ class SwapInputModule {
         let toViewModel = SwapCoinCardViewModel(coinCardService: toCoinCardService, fiatService: toFiatService)
 
         let fromAmountInputViewModel = AmountInputViewModel(
-                service: fromCoinCardService,
-                fiatService: fromFiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: fromCoinCardService,
+            fiatService: fromFiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
         let toAmountInputViewModel = AmountInputViewModel(
-                service: toCoinCardService,
-                fiatService: toFiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: toCoinCardService,
+            fiatService: toFiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
 
         return SwapInputCell(fromViewModel: fromViewModel,
-                fromAmountInputViewModel: fromAmountInputViewModel,
-                toViewModel: toViewModel,
-                toAmountInputViewModel: toAmountInputViewModel
-        )
+                             fromAmountInputViewModel: fromAmountInputViewModel,
+                             toViewModel: toViewModel,
+                             toAmountInputViewModel: toAmountInputViewModel)
     }
 
     static func cell(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService) -> SwapInputCell {
@@ -79,23 +76,21 @@ class SwapInputModule {
         let toViewModel = SwapCoinCardViewModel(coinCardService: toCoinCardService, fiatService: toFiatService)
 
         let fromAmountInputViewModel = AmountInputViewModel(
-                service: fromCoinCardService,
-                fiatService: fromFiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: fromCoinCardService,
+            fiatService: fromFiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
         let toAmountInputViewModel = AmountInputViewModel(
-                service: toCoinCardService,
-                fiatService: toFiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: toCoinCardService,
+            fiatService: toFiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
 
         return SwapInputCell(fromViewModel: fromViewModel,
-                fromAmountInputViewModel: fromAmountInputViewModel,
-                toViewModel: toViewModel,
-                toAmountInputViewModel: toAmountInputViewModel
-        )
+                             fromAmountInputViewModel: fromAmountInputViewModel,
+                             toViewModel: toViewModel,
+                             toAmountInputViewModel: toAmountInputViewModel)
     }
-
 }

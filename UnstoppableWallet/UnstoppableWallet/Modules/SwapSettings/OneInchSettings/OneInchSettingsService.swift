@@ -1,13 +1,13 @@
-import Foundation
-import UniswapKit
 import EvmKit
+import Foundation
 import RxCocoa
 import RxSwift
+import UniswapKit
 
 class OneInchSettingsService {
     static let defaultSlippage: Decimal = 1
     var recommendedSlippages: [Decimal] = [0.1, 3]
-    private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...50 }
+    private var limitSlippageBounds: ClosedRange<Decimal> { 0.01 ... 50 }
     private var usualHighestSlippage: Decimal = 5
 
     private let disposeBag = DisposeBag()
@@ -18,6 +18,7 @@ class OneInchSettingsService {
             errorsRelay.accept(errors)
         }
     }
+
     private let errorsRelay = PublishRelay<[Error]>()
     private let slippageChangeRelay = PublishRelay<Void>()
 
@@ -54,7 +55,7 @@ class OneInchSettingsService {
 
         switch addressService.state {
         case .loading: loading = true
-        case .success(let address): settings.recipient = address
+        case let .success(address): settings.recipient = address
         case .validationError: errors.append(SwapSettingsModule.AddressError.invalidAddress)
         case .fetchError: errors.append(SwapSettingsModule.AddressError.invalidAddress)
         default: ()
@@ -74,11 +75,9 @@ class OneInchSettingsService {
 
         state = (!errors.isEmpty || loading) ? .invalid : .valid(settings)
     }
-
 }
 
 extension OneInchSettingsService {
-
     var errorsObservable: Observable<[Error]> {
         errorsRelay.asObservable()
     }
@@ -86,11 +85,9 @@ extension OneInchSettingsService {
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
-
 }
 
 extension OneInchSettingsService: ISlippageService {
-
     private func visibleSlippageError(errors: [Error]) -> Error? {
         errors.first {
             if let error = $0 as? SwapSettingsModule.SlippageError {
@@ -130,14 +127,11 @@ extension OneInchSettingsService: ISlippageService {
     func set(slippage: Decimal) {
         self.slippage = slippage
     }
-
 }
 
 extension OneInchSettingsService {
-
     enum State {
         case valid(OneInchSettings)
         case invalid
     }
-
 }

@@ -66,5 +66,4 @@ class CexAssetRecord: Record {
         container[Columns.withdrawNetworks] = withdrawNetworks.toJSONString()
         container[Columns.coinUid] = coinUid
     }
-
 }

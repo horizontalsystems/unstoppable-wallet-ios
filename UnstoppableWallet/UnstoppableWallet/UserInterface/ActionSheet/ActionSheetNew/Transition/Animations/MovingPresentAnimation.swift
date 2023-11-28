@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class MovingPresentAnimation: BaseAnimation {
     private let animationCurve: UIView.AnimationOptions
@@ -9,7 +9,7 @@ class MovingPresentAnimation: BaseAnimation {
         super.init(duration: duration)
     }
 
-   override func animator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
+    override func animator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
         let to = transitionContext.view(forKey: .to)
 
         to?.snp.remakeConstraints { maker in
@@ -19,13 +19,12 @@ class MovingPresentAnimation: BaseAnimation {
         }
 
         return UIViewPropertyAnimator.runningPropertyAnimator(withDuration: duration,
-                delay: 0,
-                options: animationCurve,
-                animations: {
-                    to?.superview?.layoutIfNeeded()
-                }, completion: { position in
-                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
-   }
-
+                                                              delay: 0,
+                                                              options: animationCurve,
+                                                              animations: {
+                                                                  to?.superview?.layoutIfNeeded()
+                                                              }, completion: { _ in
+                                                                  transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                                                              })
+    }
 }

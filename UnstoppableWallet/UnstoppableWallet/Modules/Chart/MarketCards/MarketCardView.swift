@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
 import Chart
-import ThemeKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MarketCardView: UIView {
     static let height: CGFloat = 109
@@ -21,7 +21,7 @@ class MarketCardView: UIView {
 
     private var alreadyHasData: Bool = false
 
-    var onTap: (() -> ())? {
+    var onTap: (() -> Void)? {
         didSet {
             button.isUserInteractionEnabled = onTap != nil
         }
@@ -91,7 +91,8 @@ class MarketCardView: UIView {
         updateUI()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -131,13 +132,13 @@ class MarketCardView: UIView {
     }
 
     var descriptionColor: UIColor! {
-        get { descriptionView.textColor}
+        get { descriptionView.textColor }
         set { descriptionView.textColor = newValue }
     }
 
     func set(chartData data: ChartData?, trend: MovementTrend?) {
         chartView.isHidden = data == nil
-        guard let data = data, let trend = trend else {
+        guard let data, let trend else {
             alreadyHasData = false
             return
         }
@@ -158,7 +159,6 @@ class MarketCardView: UIView {
 }
 
 extension MarketCardView {
-
     class ViewItem {
         let title: String?
         let value: String?
@@ -176,8 +176,5 @@ extension MarketCardView {
             self.chartData = chartData
             self.movementTrend = movementTrend
         }
-
     }
-
 }
-

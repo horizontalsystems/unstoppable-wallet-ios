@@ -1,12 +1,12 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
+import Foundation
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
 import UIExtensions
+import UIKit
 
 class AddEvmSyncSourceViewController: KeyboardAwareViewController {
     private let viewModel: AddEvmSyncSourceViewModel
@@ -28,7 +28,8 @@ class AddEvmSyncSourceViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -97,53 +98,50 @@ class AddEvmSyncSourceViewController: KeyboardAwareViewController {
             self.tableView.endUpdates()
         }
     }
-
 }
 
 extension AddEvmSyncSourceViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "margin",
-                    headerState: .margin(height: .margin12)
+                id: "margin",
+                headerState: .margin(height: .margin12)
             ),
             Section(
-                    id: "url",
-                    headerState: tableView.sectionHeader(text: "add_evm_sync_source.rpc_url".localized),
-                    footerState: .margin(height: .margin24),
-                    rows: [
-                        StaticRow(
-                                cell: urlCell,
-                                id: "url",
-                                dynamicHeight: { [weak self] width in
-                                    self?.urlCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: urlCautionCell,
-                                id: "url-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.urlCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "url",
+                headerState: tableView.sectionHeader(text: "add_evm_sync_source.rpc_url".localized),
+                footerState: .margin(height: .margin24),
+                rows: [
+                    StaticRow(
+                        cell: urlCell,
+                        id: "url",
+                        dynamicHeight: { [weak self] width in
+                            self?.urlCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: urlCautionCell,
+                        id: "url-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.urlCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "basic-auth",
-                    headerState: tableView.sectionHeader(text: "add_evm_sync_source.basic_auth".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: basicAuthCell,
-                                id: "basic-auth",
-                                dynamicHeight: { [weak self] width in
-                                    self?.basicAuthCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
-            )
+                id: "basic-auth",
+                headerState: tableView.sectionHeader(text: "add_evm_sync_source.basic_auth".localized),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: basicAuthCell,
+                        id: "basic-auth",
+                        dynamicHeight: { [weak self] width in
+                            self?.basicAuthCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
+            ),
         ]
     }
-
 }

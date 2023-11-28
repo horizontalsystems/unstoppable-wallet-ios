@@ -13,5 +13,4 @@ class SimpleActivateViewModel: ObservableObject {
         self.localStorage = localStorage
         activated = localStorage.lockTimeEnabled
     }
-
 }

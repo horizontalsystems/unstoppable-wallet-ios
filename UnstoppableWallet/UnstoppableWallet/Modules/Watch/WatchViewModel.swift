@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IWatchSubViewModel: AnyObject {
     var watchEnabled: Bool { get }
@@ -53,16 +53,14 @@ class WatchViewModel {
     }
 
     private func sync(domain: String?) {
-        if let domain = domain, service.name == nil {
+        if let domain, service.name == nil {
             service.set(name: domain)
             nameRelay.accept(domain)
         }
     }
-
 }
 
 extension WatchViewModel {
-
     var watchTypeDriver: Driver<WatchModule.WatchType> {
         watchTypeRelay.asDriver()
     }
@@ -110,5 +108,4 @@ extension WatchViewModel {
             proceedRelay.accept((watchType, accountType, service.resolvedName))
         }
     }
-
 }

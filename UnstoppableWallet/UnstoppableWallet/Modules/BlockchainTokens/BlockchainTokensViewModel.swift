@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class BlockchainTokensViewModel {
     private let service: BlockchainTokensService
@@ -18,26 +18,24 @@ class BlockchainTokensViewModel {
         let blockchain = request.blockchain
 
         let config = SelectorModule.MultiConfig(
-                image: .remote(url: blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
-                title: blockchain.name,
-                description: "blockchain_settings.description".localized,
-                allowEmpty: request.allowEmpty,
-                viewItems: request.tokens.map { token in
-                    SelectorModule.ViewItem(
-                            title: token.type.title,
-                            subtitle: token.type.description,
-                            selected: request.enabledTokens.contains(token)
-                    )
-                }
+            image: .remote(url: blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
+            title: blockchain.name,
+            description: "blockchain_settings.description".localized,
+            allowEmpty: request.allowEmpty,
+            viewItems: request.tokens.map { token in
+                SelectorModule.ViewItem(
+                    title: token.type.title,
+                    subtitle: token.type.description,
+                    selected: request.enabledTokens.contains(token)
+                )
+            }
         )
 
         openBottomSelectorRelay.accept(config)
     }
-
 }
 
 extension BlockchainTokensViewModel {
-
     var openBottomSelectorSignal: Signal<SelectorModule.MultiConfig> {
         openBottomSelectorRelay.asSignal()
     }
@@ -49,5 +47,4 @@ extension BlockchainTokensViewModel {
     func onCancelSelect() {
         service.cancel()
     }
-
 }

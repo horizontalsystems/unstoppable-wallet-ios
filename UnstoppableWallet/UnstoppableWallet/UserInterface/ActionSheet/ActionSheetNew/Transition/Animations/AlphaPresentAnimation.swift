@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class AlphaPresentAnimation: BaseAnimation {
     private let animationCurve: UIView.AnimationOptions
@@ -11,13 +11,12 @@ class AlphaPresentAnimation: BaseAnimation {
 
     override func animator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
         UIViewPropertyAnimator.runningPropertyAnimator(withDuration: duration,
-                delay: 0,
-                options: animationCurve,
-                animations: {
-                    transitionContext.view(forKey: .to)?.alpha = 1
-                }, completion: { position in
-                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
+                                                       delay: 0,
+                                                       options: animationCurve,
+                                                       animations: {
+                                                           transitionContext.view(forKey: .to)?.alpha = 1
+                                                       }, completion: { _ in
+                                                           transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                                                       })
     }
-
 }

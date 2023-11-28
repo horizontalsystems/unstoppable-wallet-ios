@@ -29,7 +29,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                         view(items: items)
                     }
                 }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
 
                 Spacer()
                     .frame(height: 52)
@@ -39,7 +39,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                         actionView(type: action)
                     }
                 }
-                    .padding(.horizontal, .margin48)
+                .padding(.horizontal, .margin48)
 
                 Spacer()
             case .failed:
@@ -56,7 +56,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
             ActivityView.view(activityItems: [shareText])
         }
         .alert("cex_deposit.enter_amount".localized, isPresented: $inputAmountPresented, actions: {
-            TextField("Amount", text: $inputText)       // todo: Can't check valid numbers in default alertview
+            TextField("Amount", text: $inputText) // TODO: Can't check valid numbers in default alertview
                 .keyboardType(.decimalPad)
             Button("button.cancel".localized) {
                 updateAmount(success: false)
@@ -68,15 +68,15 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         .alertButtonTint(color: .themeJacob)
         .bottomSheet(item: $warningAlertPopup) { popup in
             AlertView(
-                    image: .warning,
-                    title: popup.title,
-                    items: [
-                        .highlightedDescription(text: popup.description.text, style: popup.description.style),
-                    ],
-                    buttons: [
-                        .init(style: .yellow, title: popup.doneButtonTitle) { warningAlertPopup = nil },
-                    ],
-                    onDismiss: { warningAlertPopup = nil }
+                image: .warning,
+                title: popup.title,
+                items: [
+                    .highlightedDescription(text: popup.description.text, style: popup.description.style),
+                ],
+                buttons: [
+                    .init(style: .yellow, title: popup.doneButtonTitle) { warningAlertPopup = nil },
+                ],
+                onDismiss: { warningAlertPopup = nil }
             )
         }
         .bottomSheet(item: $infoPopup) { popup in

@@ -1,6 +1,6 @@
-import UIKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import UIKit
 
 class FilterView: UIView {
     static var height: CGFloat = .heightSingleLineCell
@@ -14,13 +14,14 @@ class FilterView: UIView {
             layoutSelectedView(indexPath: collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0))
         }
     }
+
     private var buttonStyle: SecondaryButton.Style
 
     private let selectedView = UIView()
     private let animationDuration: TimeInterval
 
     var autoDeselect: Bool = false
-    var onSelect: ((Int) -> ())?
+    var onSelect: ((Int) -> Void)?
 
     var headerHeight: CGFloat {
         filters.isEmpty ? 0 : Self.height
@@ -81,14 +82,15 @@ class FilterView: UIView {
         selectedView.backgroundColor = buttonStyle == .tab ? .themeJacob : .clear
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
     private func title(index: Int) -> String {
         switch filters[index] {
         case .all: return "transactions.filter_all".localized
-        case .item(let title): return title
+        case let .item(title): return title
         }
     }
 
@@ -112,12 +114,12 @@ class FilterView: UIView {
         let interitemSpacing = CGFloat(filters.count - 1) * layout.minimumInteritemSpacing
         let width = collectionView.width - collectionView.contentInset.left - collectionView.contentInset.right - interitemSpacing
 
-        var items = Array(0..<filters.count)
-                .map { IndexedWidth(index: $0, width: FilterHeaderCell.width(title: title(index: $0), style: buttonStyle)) }
+        var items = Array(0 ..< filters.count)
+            .map { IndexedWidth(index: $0, width: FilterHeaderCell.width(title: title(index: $0), style: buttonStyle)) }
 
         let initialItemWidth = items.reduce(0) { $0 + $1.width }
-        if initialItemWidth >= width {     // elements can't fit into screen
-            itemWidths = items.map { $0.width }
+        if initialItemWidth >= width { // elements can't fit into screen
+            itemWidths = items.map(\.width)
             return
         }
 
@@ -126,15 +128,15 @@ class FilterView: UIView {
         var freeSpace = width - initialItemWidth
         var sameMinimalWidthItemCount = 1
 
-        while freeSpace != 0 && sameMinimalWidthItemCount < items.count {
+        while freeSpace != 0, sameMinimalWidthItemCount < items.count {
             let (newLessWidth, newFreeSpace) = equalize(
-                    count: sameMinimalWidthItemCount,
-                    lessWidth: items[0].width,
-                    greaterWidth: items[sameMinimalWidthItemCount].width,
-                    freeSpace: freeSpace
+                count: sameMinimalWidthItemCount,
+                lessWidth: items[0].width,
+                greaterWidth: items[sameMinimalWidthItemCount].width,
+                freeSpace: freeSpace
             )
 
-            for i in 0..<sameMinimalWidthItemCount {
+            for i in 0 ..< sameMinimalWidthItemCount {
                 items[i].width = newLessWidth
             }
             freeSpace = newFreeSpace
@@ -144,12 +146,12 @@ class FilterView: UIView {
 
         if freeSpace > 0 {
             let delta = freeSpace / CGFloat(items.count)
-            for i in 0..<items.count {
+            for i in 0 ..< items.count {
                 items[i].width = items[i].width + delta
             }
         }
 
-        itemWidths = items.sorted { $0.index < $1.index }.map { $0.width }
+        itemWidths = items.sorted { $0.index < $1.index }.map(\.width)
     }
 
     func reload(filters: [ViewItem]) {
@@ -165,8 +167,9 @@ class FilterView: UIView {
     func select(index: Int) {
         let selectedItem = IndexPath(item: index, section: 0)
 
-        if let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems,      // check already selected item
-           indexPathsForSelectedItems.contains(selectedItem) {
+        if let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems, // check already selected item
+           indexPathsForSelectedItems.contains(selectedItem)
+        {
             return
         }
 
@@ -175,12 +178,10 @@ class FilterView: UIView {
             handleSelected(indexPath: selectedItem)
         }
     }
-
 }
 
 extension FilterView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         filters.count
     }
 
@@ -195,23 +196,23 @@ extension FilterView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         calculateItemWidths()
         return CGSize(width: itemWidths[indexPath.item], height: .heightSingleLineCell)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         .margin8
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first, (!autoDeselect && selectedIndexPath == indexPath) {
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first, !autoDeselect, selectedIndexPath == indexPath {
             return false
         }
         return true
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelect?(indexPath.item)
 
         handleSelected(indexPath: indexPath)
@@ -237,7 +238,7 @@ extension FilterView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
         var offset: CGFloat = 0
         let spacing = collectionView(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: 0)
 
-        for i in 0..<indexPath.item {
+        for i in 0 ..< indexPath.item {
             offset += itemWidths[i] + spacing
         }
 
@@ -248,11 +249,9 @@ extension FilterView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
             maker.width.equalTo(itemWidths[indexPath.item])
         }
     }
-
 }
 
 extension FilterView {
-
     enum ViewItem {
         case all
         case item(title: String)
@@ -266,7 +265,5 @@ extension FilterView {
             self.index = index
             self.width = width
         }
-
     }
-
 }

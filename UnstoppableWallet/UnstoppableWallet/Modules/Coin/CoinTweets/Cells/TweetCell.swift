@@ -1,5 +1,5 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class TweetCell: BaseSelectableThemeCell {
     private static let bodyFont: UIFont = .subhead2
@@ -92,12 +92,12 @@ class TweetCell: BaseSelectableThemeCell {
 
         let attributedString = NSMutableAttributedString(string: viewItem.text, attributes: [
             .foregroundColor: UIColor.themeLeah,
-            .font: Self.bodyFont
+            .font: Self.bodyFont,
         ])
-        
+
         for entity in TwitterText.entities(in: viewItem.text) {
             switch entity.type {
-                case .url, .hashtag, .screenName, .listname: attributedString.addAttribute(.foregroundColor, value: UIColor.themeLaguna, range: entity.range)
+            case .url, .hashtag, .screenName, .listname: attributedString.addAttribute(.foregroundColor, value: UIColor.themeLaguna, range: entity.range)
             default: ()
             }
         }
@@ -136,5 +136,4 @@ class TweetCell: BaseSelectableThemeCell {
 
         return height + .margin12 + Self.dateFont.lineHeight + .margin16
     }
-
 }

@@ -1,9 +1,9 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SwapConfirmationViewController: SendEvmTransactionViewController {
     private let swapButton = SliderButton()
@@ -41,5 +41,4 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
 
         swapButton.reset()
     }
-
 }

@@ -1,11 +1,11 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
+import Foundation
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
 import UIExtensions
+import UIKit
 
 class ChooseWatchViewController: CoinToggleViewController {
     private let viewModel: ChooseWatchViewModel
@@ -21,7 +21,8 @@ class ChooseWatchViewController: CoinToggleViewController {
         super.init(viewModel: viewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -65,5 +66,4 @@ class ChooseWatchViewController: CoinToggleViewController {
     @objc private func onTapWatch() {
         viewModel.onTapWatch()
     }
-
 }

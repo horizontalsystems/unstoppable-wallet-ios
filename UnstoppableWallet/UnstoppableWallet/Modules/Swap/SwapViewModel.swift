@@ -6,5 +6,4 @@ class SwapViewModel {
     init(dexManager: ISwapDexManager) {
         self.dexManager = dexManager
     }
-
 }

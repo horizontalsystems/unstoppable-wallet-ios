@@ -34,7 +34,7 @@ class SwapProviderManager {
     private func initSectionsDataSource(tokenFrom: MarketKit.Token?) {
         let blockchainType: BlockchainType
 
-        if let tokenFrom = tokenFrom {
+        if let tokenFrom {
             if let type = evmBlockchainManager.blockchain(token: tokenFrom)?.type {
                 blockchainType = type
             } else {

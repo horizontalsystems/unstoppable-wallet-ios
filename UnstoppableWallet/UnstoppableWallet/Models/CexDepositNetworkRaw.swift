@@ -1,6 +1,6 @@
 import Foundation
-import ObjectMapper
 import MarketKit
+import ObjectMapper
 
 struct CexDepositNetworkRaw: ImmutableMappable {
     let id: String
@@ -39,13 +39,12 @@ struct CexDepositNetworkRaw: ImmutableMappable {
 
     func cexDepositNetwork(blockchain: Blockchain?) -> CexDepositNetwork {
         CexDepositNetwork(
-                id: id,
-                name: name,
-                isDefault: isDefault,
-                enabled: enabled,
-                minAmount: minAmount,
-                blockchain: blockchain
+            id: id,
+            name: name,
+            isDefault: isDefault,
+            enabled: enabled,
+            minAmount: minAmount,
+            blockchain: blockchain
         )
     }
-
 }

@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class MarkdownHeader1Cell: UITableViewCell {
     private static let topPadding: CGFloat = .margin6x
@@ -34,23 +34,21 @@ class MarkdownHeader1Cell: UITableViewCell {
         separatorView.backgroundColor = .themeGray50
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func bind(attributedString: NSAttributedString) {
         textView.attributedText = attributedString
     }
-
 }
 
 extension MarkdownHeader1Cell {
-
     static func height(containerWidth: CGFloat, attributedString: NSAttributedString) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding
         let textHeight = attributedString.height(containerWidth: textWidth)
 
         return topPadding + textHeight + separatorTopMargin + separatorHeight + bottomPadding
     }
-
 }

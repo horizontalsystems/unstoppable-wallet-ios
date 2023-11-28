@@ -1,7 +1,7 @@
-import Foundation
-import RxSwift
-import RxCocoa
 import BigInt
+import Foundation
+import RxCocoa
+import RxSwift
 
 class SendEip1155AvailableBalanceViewModel {
     private var queue = DispatchQueue(label: "\(AppConfig.label).available-balance-view-model", qos: .userInitiated)
@@ -38,7 +38,7 @@ class SendEip1155AvailableBalanceViewModel {
                     weakSelf.viewStateRelay.accept(.loading)
                 }
             case .failed: weakSelf.updateViewState(availableBalance: 0)
-            case .completed(let availableBalance): weakSelf.updateViewState(availableBalance: availableBalance)
+            case let .completed(availableBalance): weakSelf.updateViewState(availableBalance: availableBalance)
             }
         }
     }
@@ -50,13 +50,10 @@ class SendEip1155AvailableBalanceViewModel {
 
         viewStateRelay.accept(.loaded(value: value))
     }
-
 }
 
 extension SendEip1155AvailableBalanceViewModel: ISendAvailableBalanceViewModel {
-
     var viewStateDriver: Driver<SendAvailableBalanceViewModel.ViewState> {
         viewStateRelay.asDriver()
     }
-
 }

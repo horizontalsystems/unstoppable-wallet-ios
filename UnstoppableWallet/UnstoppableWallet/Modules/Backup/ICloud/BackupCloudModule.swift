@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import HsToolKit
+import ThemeKit
+import UIKit
 
 class BackupCloudModule {
     static let minimumPassphraseLength = 8
@@ -28,11 +28,9 @@ class BackupCloudModule {
 
         return controller
     }
-
 }
 
 extension BackupCloudModule {
-
     enum PassphraseCharacterSet: CaseIterable {
         case lowerCased
         case upperCased
@@ -52,5 +50,4 @@ extension BackupCloudModule {
             string.rangeOfCharacter(from: set) != nil
         }
     }
-
 }

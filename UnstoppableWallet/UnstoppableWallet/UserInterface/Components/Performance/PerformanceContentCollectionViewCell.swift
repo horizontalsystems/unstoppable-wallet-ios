@@ -1,7 +1,6 @@
 import UIKit
 
 class PerformanceContentCollectionViewCell: BasePerformanceCollectionViewCell {
-
     private let label = DiffLabel()
 
     override init(frame: CGRect) {
@@ -15,7 +14,8 @@ class PerformanceContentCollectionViewCell: BasePerformanceCollectionViewCell {
         label.font = .caption
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -24,5 +24,4 @@ class PerformanceContentCollectionViewCell: BasePerformanceCollectionViewCell {
 
         label.set(value: value)
     }
-
 }

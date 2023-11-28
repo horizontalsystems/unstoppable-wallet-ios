@@ -1,12 +1,12 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class PrivateKeysViewModel {
     private let service: PrivateKeysService
 
-    private let openUnlockRelay = PublishRelay<()>()
+    private let openUnlockRelay = PublishRelay<Void>()
     private let openEvmPrivateKeyRelay = PublishRelay<AccountType>()
     private let openBip32RootKeyRelay = PublishRelay<AccountType>()
     private let openAccountExtendedPrivateKeyRelay = PublishRelay<AccountType>()
@@ -16,12 +16,10 @@ class PrivateKeysViewModel {
     init(service: PrivateKeysService) {
         self.service = service
     }
-
 }
 
 extension PrivateKeysViewModel {
-
-    var openUnlockSignal: Signal<()> {
+    var openUnlockSignal: Signal<Void> {
         openUnlockRelay.asSignal()
     }
 
@@ -83,15 +81,12 @@ extension PrivateKeysViewModel {
             openAccountExtendedPrivateKeyRelay.accept(service.accountType)
         }
     }
-
 }
 
 extension PrivateKeysViewModel {
-
     enum UnlockRequest {
         case evmPrivateKey
         case bip32RootKey
         case accountExtendedPrivateKey
     }
-
 }

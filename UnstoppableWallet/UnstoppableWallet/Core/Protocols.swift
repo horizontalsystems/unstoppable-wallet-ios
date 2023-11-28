@@ -1,17 +1,16 @@
-import Combine
-import UIKit
-import RxSwift
-import GRDB
-import UniswapKit
-import EvmKit
-import TronKit
-import ThemeKit
 import Alamofire
+import BigInt
+import Combine
+import EvmKit
+import GRDB
 import HsToolKit
 import MarketKit
-import BigInt
+import RxSwift
+import ThemeKit
+import TronKit
+import UIKit
+import UniswapKit
 import ZcashLightClientKit
-import HsToolKit
 
 protocol IBaseAdapter {
     var isMainNet: Bool { get }
@@ -40,7 +39,6 @@ protocol IDepositAdapter: IBaseAdapter {
 }
 
 extension IDepositAdapter {
-
     var receiveAddressStatus: DataStatus<DepositAddress> {
         .completed(receiveAddress)
     }
@@ -48,7 +46,6 @@ extension IDepositAdapter {
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
         Just(receiveAddressStatus).eraseToAnyPublisher()
     }
-
 }
 
 protocol ITransactionsAdapter {
@@ -154,8 +151,8 @@ protocol IFeeRateProvider {
 }
 
 protocol IAppManager {
-    var didBecomeActiveObservable: Observable<()> { get }
-    var willEnterForegroundObservable: Observable<()> { get }
+    var didBecomeActiveObservable: Observable<Void> { get }
+    var willEnterForegroundObservable: Observable<Void> { get }
 }
 
 protocol IPresentDelegate: AnyObject {
@@ -164,11 +161,9 @@ protocol IPresentDelegate: AnyObject {
 }
 
 extension IPresentDelegate {
-
-    func push(viewController: UIViewController) {
-        //might be implemented by delegate
+    func push(viewController _: UIViewController) {
+        // might be implemented by delegate
     }
-
 }
 
 protocol Warning {}

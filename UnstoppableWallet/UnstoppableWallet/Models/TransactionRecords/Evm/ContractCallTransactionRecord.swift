@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 import MarketKit
 
 class ContractCallTransactionRecord: EvmTransactionRecord {
@@ -9,7 +9,8 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
     let outgoingEvents: [TransferEvent]
 
     init(source: TransactionSource, transaction: Transaction, baseToken: Token,
-         contractAddress: String, method: String?, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) {
+         contractAddress: String, method: String?, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent])
+    {
         self.contractAddress = contractAddress
         self.method = method
         self.incomingEvents = incomingEvents
@@ -33,5 +34,4 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
             return nil
         }
     }
-
 }

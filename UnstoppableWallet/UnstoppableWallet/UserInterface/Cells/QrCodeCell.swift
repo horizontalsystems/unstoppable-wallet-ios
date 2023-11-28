@@ -1,7 +1,7 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class QrCodeCell: UITableViewCell {
     private static let horizontalMargin: CGFloat = .margin16
@@ -18,7 +18,7 @@ class QrCodeCell: UITableViewCell {
     private let tokenImageView = UIImageView()
     private let label = UILabel()
 
-    var onTap: (() -> ())?
+    var onTap: (() -> Void)?
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -98,7 +98,8 @@ class QrCodeCell: UITableViewCell {
         label.textColor = .themeGray
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -112,15 +113,12 @@ class QrCodeCell: UITableViewCell {
 
         label.text = text
     }
-
 }
 
 extension QrCodeCell {
-
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalMargin - 2 * textHorizontalMargin
         let textHeight = text.height(forContainerWidth: textWidth, font: textFont)
         return qrCodeTopMargin + qrCodeSize + qrCodeBottomMargin + textHeight + textBottomMargin
     }
-
 }

@@ -21,21 +21,18 @@ struct CexAsset {
     var coinName: String {
         coin?.name ?? name
     }
-
 }
 
 extension CexAsset: Hashable {
-
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 
-    static func ==(lhs: CexAsset, rhs: CexAsset) -> Bool {
+    static func == (lhs: CexAsset, rhs: CexAsset) -> Bool {
         lhs.id == rhs.id && lhs.name == rhs.name
-                && lhs.freeBalance == rhs.freeBalance && lhs.lockedBalance == rhs.lockedBalance
-                && lhs.depositEnabled == rhs.depositEnabled && lhs.withdrawEnabled == rhs.withdrawEnabled
-                && lhs.depositNetworks == rhs.depositNetworks && lhs.withdrawNetworks == rhs.withdrawNetworks
-                && lhs.coin == rhs.coin
+            && lhs.freeBalance == rhs.freeBalance && lhs.lockedBalance == rhs.lockedBalance
+            && lhs.depositEnabled == rhs.depositEnabled && lhs.withdrawEnabled == rhs.withdrawEnabled
+            && lhs.depositNetworks == rhs.depositNetworks && lhs.withdrawNetworks == rhs.withdrawNetworks
+            && lhs.coin == rhs.coin
     }
-
 }

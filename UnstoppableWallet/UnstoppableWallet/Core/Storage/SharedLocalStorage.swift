@@ -5,12 +5,12 @@ struct SharedLocalStorage {
         userDefaults?.value(forKey: key) as? T
     }
 
-    func set<T>(value: T?, for key: String) {
+    func set(value: (some Any)?, for key: String) {
         guard let userDefaults else {
             return
         }
 
-        if let value = value {
+        if let value {
             userDefaults.set(value, forKey: key)
         } else {
             userDefaults.removeObject(forKey: key)

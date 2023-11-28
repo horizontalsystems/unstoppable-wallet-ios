@@ -1,8 +1,8 @@
-import UIKit
+import ComponentKit
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import SectionsTableView
-import ComponentKit
+import UIKit
 
 class PublicKeysViewController: ThemeViewController {
     private let viewModel: PublicKeysViewModel
@@ -15,7 +15,8 @@ class PublicKeysViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -60,60 +61,57 @@ class PublicKeysViewController: ThemeViewController {
         let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPublicKey, accountType: viewModel.accountType)
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension PublicKeysViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
-                    id: "margin",
-                    headerState: .margin(height: .margin12)
-            )
+                id: "margin",
+                headerState: .margin(height: .margin12)
+            ),
         ]
 
         if viewModel.showEvmAddress {
             sections.append(
-                    Section(
+                Section(
+                    id: "evm-address",
+                    footerState: tableView.sectionFooter(text: "public_keys.evm_address.description".localized),
+                    rows: [
+                        tableView.universalRow48(
                             id: "evm-address",
-                            footerState: tableView.sectionFooter(text: "public_keys.evm_address.description".localized),
-                            rows: [
-                                tableView.universalRow48(
-                                        id: "evm-address",
-                                        title: .body("public_keys.evm_address".localized),
-                                        accessoryType: .disclosure,
-                                        isFirst: true,
-                                        isLast: true
-                                ) { [weak self] in
-                                    self?.openEvmAddress()
-                                }
-                            ]
-                    )
+                            title: .body("public_keys.evm_address".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.openEvmAddress()
+                        },
+                    ]
+                )
             )
         }
 
         if viewModel.showAccountExtendedPublicKey {
             sections.append(
-                    Section(
+                Section(
+                    id: "account-extended-public-key",
+                    footerState: tableView.sectionFooter(text: "public_keys.account_extended_public_key.description".localized),
+                    rows: [
+                        tableView.universalRow48(
                             id: "account-extended-public-key",
-                            footerState: tableView.sectionFooter(text: "public_keys.account_extended_public_key.description".localized),
-                            rows: [
-                                tableView.universalRow48(
-                                        id: "account-extended-public-key",
-                                        title: .body("public_keys.account_extended_public_key".localized),
-                                        accessoryType: .disclosure,
-                                        isFirst: true,
-                                        isLast: true
-                                ) { [weak self] in
-                                    self?.openAccountExtendedPublicKey()
-                                }
-                            ]
-                    )
+                            title: .body("public_keys.account_extended_public_key".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.openAccountExtendedPublicKey()
+                        },
+                    ]
+                )
             )
         }
 
         return sections
     }
-
 }

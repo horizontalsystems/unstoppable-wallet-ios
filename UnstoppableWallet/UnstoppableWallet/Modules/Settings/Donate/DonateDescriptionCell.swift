@@ -38,18 +38,16 @@ class DonateDescriptionCell: UITableViewCell {
         emoji.textAlignment = .center
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension DonateDescriptionCell {
-
     static func height(containerWidth: CGFloat, text: String, font: UIFont? = nil, ignoreBottomMargin: Bool = false) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font ?? Self.labelFont)
         let emojiHeight = "🙏".height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font ?? Self.labelFont)
         return textHeight + .margin24 + emojiHeight + (ignoreBottomMargin ? 1 : 2) * verticalPadding
     }
-
 }

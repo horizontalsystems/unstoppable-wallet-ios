@@ -1,35 +1,34 @@
-import Foundation
-import Combine
-import RxSwift
 import BigInt
-import HsToolKit
+import Combine
 import EvmKit
+import Foundation
+import HsToolKit
+import RxSwift
 
-extension Kit {
+public extension Kit {
+    internal struct DisposedError: Error {}
 
-    struct DisposedError: Error {}
-
-    public var lastBlockHeightObservable: Observable<Int> {
+    var lastBlockHeightObservable: Observable<Int> {
         lastBlockHeightPublisher.asObservable()
     }
 
-    public var syncStateObservable: Observable<SyncState> {
+    var syncStateObservable: Observable<SyncState> {
         syncStatePublisher.asObservable()
     }
 
-    public var transactionsSyncStateObservable: Observable<SyncState> {
+    var transactionsSyncStateObservable: Observable<SyncState> {
         transactionsSyncStatePublisher.asObservable()
     }
 
-    public var accountStateObservable: Observable<AccountState> {
+    var accountStateObservable: Observable<AccountState> {
         accountStatePublisher.asObservable()
     }
 
-    public var allTransactionsObservable: Observable<([FullTransaction], Bool)> {
+    var allTransactionsObservable: Observable<([FullTransaction], Bool)> {
         allTransactionsPublisher.asObservable()
     }
 
-    public func transactionSingle(hash: Data) -> Single<FullTransaction> {
+    func transactionSingle(hash: Data) -> Single<FullTransaction> {
         Single<FullTransaction>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -51,19 +50,19 @@ extension Kit {
         }
     }
 
-    public func transactionsObservable(tagQueries: [TransactionTagQuery]) -> Observable<[FullTransaction]> {
+    func transactionsObservable(tagQueries: [TransactionTagQuery]) -> Observable<[FullTransaction]> {
         transactionsPublisher(tagQueries: tagQueries).asObservable()
     }
 
-    public func transactionsSingle(tagQueries: [TransactionTagQuery], fromHash: Data? = nil, limit: Int? = nil) -> Single<[FullTransaction]> {
+    func transactionsSingle(tagQueries: [TransactionTagQuery], fromHash: Data? = nil, limit: Int? = nil) -> Single<[FullTransaction]> {
         Single.just(transactions(tagQueries: tagQueries, fromHash: fromHash, limit: limit))
     }
 
-    public func rawTransaction(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) -> Single<RawTransaction> {
+    func rawTransaction(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) -> Single<RawTransaction> {
         rawTransaction(address: transactionData.to, value: transactionData.value, transactionInput: transactionData.input, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
     }
 
-    public func rawTransaction(address: EvmKit.Address, value: BigUInt, transactionInput: Data = Data(), gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) -> Single<RawTransaction> {
+    func rawTransaction(address: EvmKit.Address, value: BigUInt, transactionInput: Data = Data(), gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) -> Single<RawTransaction> {
         Single<RawTransaction>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -85,7 +84,7 @@ extension Kit {
         }
     }
 
-    public func nonceSingle(defaultBlockParameter: DefaultBlockParameter) -> Single<Int> {
+    func nonceSingle(defaultBlockParameter: DefaultBlockParameter) -> Single<Int> {
         Single<Int>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -107,7 +106,7 @@ extension Kit {
         }
     }
 
-    public func sendSingle(rawTransaction: RawTransaction, signature: Signature) -> Single<FullTransaction> {
+    func sendSingle(rawTransaction: RawTransaction, signature: Signature) -> Single<FullTransaction> {
         Single<FullTransaction>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -129,7 +128,7 @@ extension Kit {
         }
     }
 
-    public func getStorageAt(contractAddress: EvmKit.Address, positionData: Data, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Data> {
+    func getStorageAt(contractAddress: EvmKit.Address, positionData: Data, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Data> {
         Single<Data>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -151,7 +150,7 @@ extension Kit {
         }
     }
 
-    public func call(contractAddress: EvmKit.Address, data: Data, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Data> {
+    func call(contractAddress: EvmKit.Address, data: Data, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Data> {
         Single<Data>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -173,7 +172,7 @@ extension Kit {
         }
     }
 
-    public func estimateGas(to: EvmKit.Address?, amount: BigUInt, gasPrice: GasPrice) -> Single<Int> {
+    func estimateGas(to: EvmKit.Address?, amount: BigUInt, gasPrice: GasPrice) -> Single<Int> {
         Single<Int>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -195,7 +194,7 @@ extension Kit {
         }
     }
 
-    public func estimateGas(to: EvmKit.Address?, amount: BigUInt?, gasPrice: GasPrice, data: Data?) -> Single<Int> {
+    func estimateGas(to: EvmKit.Address?, amount: BigUInt?, gasPrice: GasPrice, data: Data?) -> Single<Int> {
         Single<Int>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -217,11 +216,11 @@ extension Kit {
         }
     }
 
-    public func estimateGas(transactionData: TransactionData, gasPrice: GasPrice) -> Single<Int> {
+    func estimateGas(transactionData: TransactionData, gasPrice: GasPrice) -> Single<Int> {
         estimateGas(to: transactionData.to, amount: transactionData.value, gasPrice: gasPrice, data: transactionData.input)
     }
 
-    public static func callSingle(networkManager: NetworkManager, rpcSource: RpcSource, contractAddress: EvmKit.Address, data: Data, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Data> {
+    static func callSingle(networkManager: NetworkManager, rpcSource: RpcSource, contractAddress: EvmKit.Address, data: Data, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Data> {
         Single<Data>.create { observer in
             let task = Task {
                 do {
@@ -237,11 +236,9 @@ extension Kit {
             }
         }
     }
-
 }
 
 extension L1FeeProvider {
-
     struct DisposedError: Error {}
 
     public func getL1Fee(gasPrice: GasPrice, gasLimit: Int, to: EvmKit.Address, value: BigUInt, data: Data) -> Single<BigUInt> {
@@ -265,11 +262,9 @@ extension L1FeeProvider {
             }
         }
     }
-
 }
 
 extension LegacyGasPriceProvider {
-
     struct DisposedError: Error {}
 
     public func gasPriceSingle() -> Single<Int> {
@@ -293,11 +288,9 @@ extension LegacyGasPriceProvider {
             }
         }
     }
-
 }
 
 extension Eip1155Provider {
-
     struct DisposedError: Error {}
 
     public func getBalanceOf(contractAddress: EvmKit.Address, tokenId: BigUInt, address: EvmKit.Address) -> Single<BigUInt> {
@@ -321,18 +314,16 @@ extension Eip1155Provider {
             }
         }
     }
-
 }
 
-extension EIP1559GasPriceProvider {
+public extension EIP1559GasPriceProvider {
+    internal struct DisposedError: Error {}
 
-    struct DisposedError: Error {}
-
-    public func feeHistoryObservable(blocksCount: Int, defaultBlockParameter: DefaultBlockParameter = .latest, rewardPercentile: [Int]) -> Observable<FeeHistory> {
+    func feeHistoryObservable(blocksCount: Int, defaultBlockParameter: DefaultBlockParameter = .latest, rewardPercentile: [Int]) -> Observable<FeeHistory> {
         feeHistoryPublisher(blocksCount: blocksCount, defaultBlockParameter: defaultBlockParameter, rewardPercentile: rewardPercentile).asObservable()
     }
 
-    public func feeHistorySingle(blocksCount: Int, defaultBlockParameter: DefaultBlockParameter = .latest, rewardPercentile: [Int]) -> Single<FeeHistory> {
+    func feeHistorySingle(blocksCount: Int, defaultBlockParameter: DefaultBlockParameter = .latest, rewardPercentile: [Int]) -> Single<FeeHistory> {
         Single<FeeHistory>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -353,11 +344,9 @@ extension EIP1559GasPriceProvider {
             }
         }
     }
-
 }
 
 extension ENSProvider {
-
     struct DisposedError: Error {}
 
     public func address(domain: String) -> Single<EvmKit.Address> {
@@ -381,5 +370,4 @@ extension ENSProvider {
             }
         }
     }
-
 }

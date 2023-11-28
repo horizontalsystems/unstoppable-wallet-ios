@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
 import Chart
-import ThemeKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MarketCardValueView: UIView {
     private static let font: UIFont = .subhead1
@@ -37,7 +37,8 @@ class MarketCardValueView: UIView {
         diffLabel.font = Self.font
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError()
     }
 
@@ -60,5 +61,4 @@ class MarketCardValueView: UIView {
         get { diffLabel.textColor }
         set { diffLabel.textColor = newValue }
     }
-
 }

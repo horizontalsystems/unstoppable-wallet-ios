@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
-import ThemeKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SubscriptionInfoViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
@@ -63,27 +63,24 @@ class SubscriptionInfoViewController: ThemeViewController {
             presentingViewController?.present(viewController, animated: true)
         }
     }
-
 }
 
 extension SubscriptionInfoViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "info",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        MarkdownViewController.header1Row(id: "header", string: "subscription_info.title".localized),
-                        MarkdownViewController.header3Row(id: "info1-title", string: "subscription_info.info1.title".localized),
-                        MarkdownViewController.textRow(id: "info1-text", string: "subscription_info.info1.text".localized),
-                        MarkdownViewController.header3Row(id: "info2-title", string: "subscription_info.info2.title".localized),
-                        MarkdownViewController.textRow(id: "info2-text", string: "subscription_info.info2.text".localized),
-                        MarkdownViewController.header3Row(id: "info3-title", string: "subscription_info.info3.title".localized),
-                        MarkdownViewController.textRow(id: "info4-text", string: "subscription_info.info3.text".localized),
-                    ]
-            )
+                id: "info",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    MarkdownViewController.header1Row(id: "header", string: "subscription_info.title".localized),
+                    MarkdownViewController.header3Row(id: "info1-title", string: "subscription_info.info1.title".localized),
+                    MarkdownViewController.textRow(id: "info1-text", string: "subscription_info.info1.text".localized),
+                    MarkdownViewController.header3Row(id: "info2-title", string: "subscription_info.info2.title".localized),
+                    MarkdownViewController.textRow(id: "info2-text", string: "subscription_info.info2.text".localized),
+                    MarkdownViewController.header3Row(id: "info3-title", string: "subscription_info.info3.title".localized),
+                    MarkdownViewController.textRow(id: "info4-text", string: "subscription_info.info3.text".localized),
+                ]
+            ),
         ]
     }
-
 }

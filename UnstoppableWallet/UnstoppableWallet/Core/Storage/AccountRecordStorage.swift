@@ -6,11 +6,9 @@ class AccountRecordStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension AccountRecordStorage {
-
     var all: [AccountRecord] {
         try! dbPool.read { db in
             try AccountRecord.fetchAll(db)
@@ -34,5 +32,4 @@ extension AccountRecordStorage {
             try AccountRecord.deleteAll(db)
         }
     }
-
 }

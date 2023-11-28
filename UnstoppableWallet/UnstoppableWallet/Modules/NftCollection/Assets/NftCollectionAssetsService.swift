@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class NftCollectionAssetsService {
     private let blockchainType: BlockchainType
@@ -35,13 +35,13 @@ class NftCollectionAssetsService {
         state = .loading
 
         nftMetadataManager.collectionAssetsMetadataSingle(blockchainType: blockchainType, providerCollectionUid: providerCollectionUid)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] (assets, paginationData) in
-                    self?.handle(assets: assets, paginationData: paginationData)
-                }, onError: { [weak self] error in
-                    self?.handle(error: error)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] assets, paginationData in
+                self?.handle(assets: assets, paginationData: paginationData)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func _loadMore() {
@@ -56,14 +56,14 @@ class NftCollectionAssetsService {
         loadingMore = true
 
         nftMetadataManager.collectionAssetsMetadataSingle(blockchainType: blockchainType, providerCollectionUid: providerCollectionUid, paginationData: paginationData)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] (assets, paginationData) in
-                    self?.handleMore(assets: assets, paginationData: paginationData)
-                    self?.loadingMore = false
-                }, onError: { [weak self] error in
-                    self?.loadingMore = false
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] assets, paginationData in
+                self?.handleMore(assets: assets, paginationData: paginationData)
+                self?.loadingMore = false
+            }, onError: { [weak self] _ in
+                self?.loadingMore = false
+            })
+            .disposed(by: disposeBag)
     }
 
     private func handle(assets: [NftAssetMetadata], paginationData: PaginationData?) {
@@ -75,7 +75,7 @@ class NftCollectionAssetsService {
 
     private func handleMore(assets: [NftAssetMetadata], paginationData: PaginationData?) {
         queue.async {
-            guard case .loaded(let items, _) = self.state else {
+            guard case let .loaded(items, _) = self.state else {
                 return
             }
 
@@ -117,14 +117,12 @@ class NftCollectionAssetsService {
             item.priceItem = item.price.flatMap { map[$0.token.coin.uid] }
         }
     }
-
 }
 
 extension NftCollectionAssetsService: IWalletCoinPriceServiceDelegate {
-
     func didUpdateBaseCurrency() {
         queue.async {
-            guard case .loaded(let items, let allLoaded) = self.state else {
+            guard case let .loaded(items, allLoaded) = self.state else {
                 return
             }
 
@@ -135,7 +133,7 @@ extension NftCollectionAssetsService: IWalletCoinPriceServiceDelegate {
 
     func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
         queue.async {
-            guard case .loaded(let items, let allLoaded) = self.state else {
+            guard case let .loaded(items, allLoaded) = self.state else {
                 return
             }
 
@@ -143,11 +141,9 @@ extension NftCollectionAssetsService: IWalletCoinPriceServiceDelegate {
             self.state = .loaded(items: items, allLoaded: allLoaded)
         }
     }
-
 }
 
 extension NftCollectionAssetsService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -169,11 +165,9 @@ extension NftCollectionAssetsService {
             self._loadMore()
         }
     }
-
 }
 
 extension NftCollectionAssetsService {
-
     enum State {
         case loading
         case loaded(items: [Item], allLoaded: Bool)
@@ -190,5 +184,4 @@ extension NftCollectionAssetsService {
             self.price = price
         }
     }
-
 }

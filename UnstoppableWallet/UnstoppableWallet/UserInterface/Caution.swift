@@ -68,8 +68,8 @@ class TitledCaution: Equatable {
 
     static func == (lhs: TitledCaution, rhs: TitledCaution) -> Bool {
         lhs.title == rhs.title &&
-                lhs.text == rhs.text &&
-                lhs.type == rhs.type
+            lhs.text == rhs.text &&
+            lhs.type == rhs.type
     }
 }
 

@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class TextDropDownAndSettingsHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = TextDropDownAndSettingsView.height
@@ -25,21 +25,22 @@ class TextDropDownAndSettingsHeaderView: UITableViewHeaderFooterView {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var onTapDropDown: (() -> ())? {
+    var onTapDropDown: (() -> Void)? {
         get { view.onTapDropDown }
         set { view.onTapDropDown = newValue }
     }
 
-    var onTapSettings: (() -> ())? {
+    var onTapSettings: (() -> Void)? {
         get { view.onTapSettings }
         set { view.onTapSettings = newValue }
     }
 
-    var onTapSelector: ((Int) -> ())? {
+    var onTapSelector: ((Int) -> Void)? {
         get { view.onTapSelector }
         set { view.onTapSelector = newValue }
     }
@@ -60,5 +61,4 @@ class TextDropDownAndSettingsHeaderView: UITableViewHeaderFooterView {
     func setSelector(isEnabled: Bool) {
         view.setSelector(isEnabled: isEnabled)
     }
-
 }

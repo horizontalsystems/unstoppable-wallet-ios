@@ -24,7 +24,8 @@ class Eip155ProposalHandler {
 
         for blockchain in namespace.chains ?? [] {
             guard let chainId = Int(blockchain.reference),
-               let evmBlockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
+                  let evmBlockchain = evmBlockchainManager.blockchain(chainId: chainId)
+            else {
                 // can't get blockchain by chainId, or can't parse chainId
                 continue
             }

@@ -1,12 +1,12 @@
-import UIKit
-import SnapKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import SnapKit
 import UIExtensions
+import UIKit
 
 public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
     private var disposeBag = DisposeBag()
-    public var onDeinit: (() -> ())?
+    public var onDeinit: (() -> Void)?
 
     private let content: UIViewController
     private weak var viewDelegate: ActionSheetViewDelegate?
@@ -23,7 +23,8 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
 
     private var savedConstraints: [NSLayoutConstraint]?
 
-    public required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError()
     }
 
@@ -49,16 +50,16 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
         modalPresentationStyle = .custom
 
         NotificationCenter.default.addObserver(self,
-                selector: #selector(keyboardNotification(notification:)),
-                name: UIResponder.keyboardWillChangeFrameNotification,
-                object: nil)
+                                               selector: #selector(keyboardNotification(notification:)),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
     }
 
-    public override var shouldAutomaticallyForwardAppearanceMethods: Bool {
+    override public var shouldAutomaticallyForwardAppearanceMethods: Bool {
         false
     }
 
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         if configuration.tapToDismiss {
@@ -78,8 +79,8 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
     }
 
     // lifecycle
-    public override func viewWillAppear(_ animated: Bool) {
-        if let savedConstraints = savedConstraints {
+    override public func viewWillAppear(_ animated: Bool) {
+        if let savedConstraints {
             view.superview?.addConstraints(savedConstraints)
         }
 
@@ -92,15 +93,15 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
 
         disposeBag = DisposeBag()
         keyboardHeightRelay
-                .asObservable()
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] height in
-                    self?.setContentViewPosition(animated: true)
-                })
-                .disposed(by: disposeBag)
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.setContentViewPosition(animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 
-    public override func viewDidAppear(_ animated: Bool) {
+    override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !ignoreByInteractivePresentingBreak {
             content.endAppearanceTransition()
@@ -109,7 +110,7 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
         didAppear = true
     }
 
-    public override func viewWillDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         dismissing = true
         savedConstraints = view.superview?.constraints
 
@@ -121,7 +122,7 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
         super.viewWillDisappear(animated)
     }
 
-    public override func viewDidDisappear(_ animated: Bool) {
+    override public func viewDidDisappear(_ animated: Bool) {
         content.endAppearanceTransition()
         super.viewDidDisappear(animated)
 
@@ -146,12 +147,10 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
         removeChildController()
         NotificationCenter.default.removeObserver(self)
     }
-
 }
 
 // Child management
 extension ActionSheetControllerNew {
-
     private func addChildController() {
         addChild(content)
         view.addSubview(content.view)
@@ -172,10 +171,10 @@ extension ActionSheetControllerNew {
 
         content.view.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(configuration.sideMargin)
-            if configuration.style == .sheet {      // content controller from bottom of superview
+            if configuration.style == .sheet { // content controller from bottom of superview
                 maker.top.equalToSuperview()
                 maker.bottom.equalToSuperview().inset(configuration.sideMargin + keyboardHeightRelay.value).priority(.required)
-            } else {                                // content controller by center of superview
+            } else { // content controller by center of superview
                 maker.centerX.equalToSuperview()
                 maker.centerY.equalToSuperview().priority(.low)
                 maker.bottom.lessThanOrEqualTo(view.snp.bottom).inset(keyboardHeightRelay.value + 16)
@@ -185,8 +184,8 @@ extension ActionSheetControllerNew {
             }
         }
         if let superview = view.superview {
-            if animated && didAppear {
-                UIView.animate(withDuration: configuration.presentAnimationDuration) { () -> Void in
+            if animated, didAppear {
+                UIView.animate(withDuration: configuration.presentAnimationDuration) { () in
                     superview.layoutIfNeeded()
                 }
             } else {
@@ -194,11 +193,9 @@ extension ActionSheetControllerNew {
             }
         }
     }
-
 }
 
 extension ActionSheetControllerNew: ActionSheetView {
-
     public func contentWillDismissed() {
         dismissing = true
     }
@@ -212,11 +209,9 @@ extension ActionSheetControllerNew: ActionSheetView {
     public func didChangeHeight() {
         setContentViewPosition(animated: true)
     }
-
 }
 
 extension ActionSheetControllerNew: InteractiveTransitionDelegate {
-
     public func start(direction: TransitionDirection) {
         interactiveTransitionDelegate?.start(direction: direction)
         dismissing = direction == .dismiss
@@ -246,11 +241,9 @@ extension ActionSheetControllerNew: InteractiveTransitionDelegate {
     public func fail(direction: TransitionDirection) {
         interactiveTransitionDelegate?.fail(direction: direction)
     }
-
 }
 
 extension ActionSheetControllerNew {
-
     override open var childForStatusBarStyle: UIViewController? {
         content
     }
@@ -258,7 +251,6 @@ extension ActionSheetControllerNew {
     override open var childForStatusBarHidden: UIViewController? {
         content
     }
-
 }
 
 @available(iOS 13.0, *)

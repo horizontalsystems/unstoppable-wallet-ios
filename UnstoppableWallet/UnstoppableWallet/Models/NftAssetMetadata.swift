@@ -44,7 +44,6 @@ struct NftAssetMetadata {
         let value: String
         let count: Int
     }
-
 }
 
 struct ProviderLink {

@@ -1,13 +1,13 @@
 import Combine
-import UIKit
-import DeepDiff
-import RxSwift
-import RxCocoa
 import ComponentKit
+import DeepDiff
 import HUD
 import MarketKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import ThemeKit
+import UIKit
 
 class WalletTokenListViewController: ThemeSearchViewController {
     private let viewModel: WalletTokenListViewModel
@@ -25,7 +25,8 @@ class WalletTokenListViewController: ThemeSearchViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -68,5 +69,4 @@ class WalletTokenListViewController: ThemeSearchViewController {
     @objc func onTapClose() {
         dismiss(animated: true)
     }
-
 }

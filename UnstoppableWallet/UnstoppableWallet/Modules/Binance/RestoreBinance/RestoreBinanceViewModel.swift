@@ -16,8 +16,8 @@ class RestoreBinanceViewModel {
         self.service = service
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -28,7 +28,7 @@ class RestoreBinanceViewModel {
             connectEnabled = false
             connectVisible = true
             connectingVisible = false
-        case .idle(let error):
+        case let .idle(error):
             connectEnabled = true
             connectVisible = true
             connectingVisible = false
@@ -43,11 +43,9 @@ class RestoreBinanceViewModel {
             successSubject.send()
         }
     }
-
 }
 
 extension RestoreBinanceViewModel {
-
     var valuesPublisher: AnyPublisher<(String, String), Never> {
         valuesSubject.eraseToAnyPublisher()
     }
@@ -83,5 +81,4 @@ extension RestoreBinanceViewModel {
     func onTapConnect() {
         service.connect()
     }
-
 }

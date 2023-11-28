@@ -1,8 +1,8 @@
-import Foundation
-import UIKit
 import ComponentKit
+import Foundation
 import SectionsTableView
 import ThemeKit
+import UIKit
 
 class RestoreCexViewController: ThemeViewController {
     private weak var returnViewController: UIViewController?
@@ -15,7 +15,8 @@ class RestoreCexViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -52,47 +53,44 @@ class RestoreCexViewController: ThemeViewController {
         let viewController = cex.restoreViewController(returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension RestoreCexViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "description",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.descriptionRow(
-                                id: "description",
-                                text: "restore.cex.description".localized,
-                                font: .subhead2,
-                                textColor: .themeGray,
-                                ignoreBottomMargin: true
-                        )
-                    ]
+                id: "description",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.descriptionRow(
+                        id: "description",
+                        text: "restore.cex.description".localized,
+                        font: .subhead2,
+                        textColor: .themeGray,
+                        ignoreBottomMargin: true
+                    ),
+                ]
             ),
             Section(
-                    id: "list",
-                    footerState: .margin(height: .margin32),
-                    rows: Cex.allCases.enumerated().map { index, cex in
-                        let rowInfo = RowInfo(index: index, count: Cex.allCases.count)
+                id: "list",
+                footerState: .margin(height: .margin32),
+                rows: Cex.allCases.enumerated().map { index, cex in
+                    let rowInfo = RowInfo(index: index, count: Cex.allCases.count)
 
-                        return tableView.universalRow62(
-                                id: cex.rawValue,
-                                image: .url(cex.imageUrl),
-                                title: .body(cex.title),
-                                description: .subhead2(cex.url),
-                                accessoryType: .disclosure,
-                                isFirst: rowInfo.isFirst,
-                                isLast: rowInfo.isLast
-                        ) { [weak self] in
-                            self?.openRestore(cex: cex)
-                        }
+                    return tableView.universalRow62(
+                        id: cex.rawValue,
+                        image: .url(cex.imageUrl),
+                        title: .body(cex.title),
+                        description: .subhead2(cex.url),
+                        accessoryType: .disclosure,
+                        isFirst: rowInfo.isFirst,
+                        isLast: rowInfo.isLast
+                    ) { [weak self] in
+                        self?.openRestore(cex: cex)
                     }
-            )
+                }
+            ),
         ]
     }
-
 }

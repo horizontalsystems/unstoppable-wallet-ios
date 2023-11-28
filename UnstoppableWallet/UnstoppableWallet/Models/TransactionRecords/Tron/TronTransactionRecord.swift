@@ -1,6 +1,6 @@
 import Foundation
-import TronKit
 import MarketKit
+import TronKit
 
 class TronTransactionRecord: TransactionRecord {
     let transaction: Transaction
@@ -36,15 +36,15 @@ class TronTransactionRecord: TransactionRecord {
 
     private func sameType(_ value: TransactionValue, _ value2: TransactionValue) -> Bool {
         switch (value, value2) {
-            case let (.coinValue(lhsToken, _), .coinValue(rhsToken, _)): return lhsToken == rhsToken
-            case let (.tokenValue(lhsTokenName, lhsTokenCode, lhsTokenDecimals, _), .tokenValue(rhsTokenName, rhsTokenCode, rhsTokenDecimals, _)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals
-            case let (.nftValue(lhsNftUid, _, _, _), .nftValue(rhsNftUid, _, _, _)): return lhsNftUid == rhsNftUid
-            default: return false
+        case let (.coinValue(lhsToken, _), .coinValue(rhsToken, _)): return lhsToken == rhsToken
+        case let (.tokenValue(lhsTokenName, lhsTokenCode, lhsTokenDecimals, _), .tokenValue(rhsTokenName, rhsTokenCode, rhsTokenDecimals, _)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals
+        case let (.nftValue(lhsNftUid, _, _, _), .nftValue(rhsNftUid, _, _, _)): return lhsNftUid == rhsNftUid
+        default: return false
         }
     }
 
     func combined(incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) -> ([TransactionValue], [TransactionValue]) {
-        let values = (incomingEvents + outgoingEvents).map { $0.value }
+        let values = (incomingEvents + outgoingEvents).map(\.value)
         var resultIncoming = [TransactionValue]()
         var resultOutgoing = [TransactionValue]()
 
@@ -58,14 +58,14 @@ class TronTransactionRecord: TransactionRecord {
             let resultValue: TransactionValue
 
             switch value {
-                case let .coinValue(token, _):
-                    resultValue = .coinValue(token: token, value: totalValue)
-                case let .tokenValue(tokenName, tokenCode, tokenDecimals, _):
-                    resultValue = .tokenValue(tokenName: tokenName, tokenCode: tokenCode, tokenDecimals: tokenDecimals, value: totalValue)
-                case let .nftValue(nftUid, _, tokenName, tokenSymbol):
-                    resultValue = .nftValue(nftUid: nftUid, value: totalValue, tokenName: tokenName, tokenSymbol: tokenSymbol)
-                case let .rawValue(value):
-                    resultValue = .rawValue(value: value)
+            case let .coinValue(token, _):
+                resultValue = .coinValue(token: token, value: totalValue)
+            case let .tokenValue(tokenName, tokenCode, tokenDecimals, _):
+                resultValue = .tokenValue(tokenName: tokenName, tokenCode: tokenCode, tokenDecimals: tokenDecimals, value: totalValue)
+            case let .nftValue(nftUid, _, tokenName, tokenSymbol):
+                resultValue = .nftValue(nftUid: nftUid, value: totalValue, tokenName: tokenName, tokenSymbol: tokenSymbol)
+            case let .rawValue(value):
+                resultValue = .rawValue(value: value)
             }
 
             if totalValue > 0 {
@@ -78,7 +78,7 @@ class TronTransactionRecord: TransactionRecord {
         return (resultIncoming, resultOutgoing)
     }
 
-    override func status(lastBlockHeight: Int?) -> TransactionStatus {
+    override func status(lastBlockHeight _: Int?) -> TransactionStatus {
         if failed {
             return .failed
         }
@@ -89,14 +89,11 @@ class TronTransactionRecord: TransactionRecord {
 
         return .pending
     }
-
 }
 
 extension TronTransactionRecord {
-
     struct TransferEvent {
         let address: String
         let value: TransactionValue
     }
-
 }

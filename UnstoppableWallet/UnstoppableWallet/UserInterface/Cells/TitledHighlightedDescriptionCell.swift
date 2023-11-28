@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
 import ComponentKit
 import SectionsTableView
+import ThemeKit
+import UIKit
 
 class TitledHighlightedDescriptionCell: BaseThemeCell {
     private static let horizontalMargin: CGFloat = .margin16
@@ -30,7 +30,8 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -64,12 +65,12 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
         set { descriptionView.titleColor = newValue }
     }
 
-    var onBackgroundButton: (() -> ())? {
+    var onBackgroundButton: (() -> Void)? {
         get { descriptionView.onTapBackground }
         set { descriptionView.onTapBackground = newValue }
     }
 
-    var onCloseButton: (() -> ())? {
+    var onCloseButton: (() -> Void)? {
         didSet {
             descriptionView.onTapClose = onCloseButton
             descriptionView.closeButtonHidden = onCloseButton == nil
@@ -83,22 +84,19 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
         titleText = caution.title
         titleColor = caution.type == .error ? .themeLucian : .themeJacob
         descriptionText = caution.text
-        contentBackgroundColor = caution.type == .error ? UIColor(hex: 0xff4820, alpha: 0.2) : .themeYellow20
+        contentBackgroundColor = caution.type == .error ? UIColor(hex: 0xFF4820, alpha: 0.2) : .themeYellow20
         contentBorderColor = caution.type == .error ? .themeLucian : .themeJacob
     }
 
     func cellHeight(containerWidth: CGFloat) -> CGFloat {
         isVisible ? Self.height(containerWidth: containerWidth, text: descriptionText ?? "") : 0
     }
-
 }
 
 extension TitledHighlightedDescriptionCell {
-
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let descriptionViewWidth = containerWidth - 2 * horizontalMargin
         let descriptionViewHeight = TitledHighlightedDescriptionView.height(containerWidth: descriptionViewWidth, text: text)
         return descriptionViewHeight
     }
-
 }

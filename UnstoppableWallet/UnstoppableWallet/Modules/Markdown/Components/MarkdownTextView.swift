@@ -1,8 +1,7 @@
-import UIKit
 import ThemeKit
+import UIKit
 
 class MarkdownTextView: UITextView {
-
     init() {
         super.init(frame: .zero, textContainer: nil)
 
@@ -15,12 +14,12 @@ class MarkdownTextView: UITextView {
         linkTextAttributes = [
             .foregroundColor: UIColor.themeJacob,
             .underlineColor: UIColor.themeJacob,
-            .underlineStyle: NSUnderlineStyle.single.rawValue
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

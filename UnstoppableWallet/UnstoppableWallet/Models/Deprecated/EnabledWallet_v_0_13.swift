@@ -40,5 +40,4 @@ class EnabledWallet_v_0_13: Record {
         container[Columns.derivation] = derivation
         container[Columns.syncMode] = syncMode
     }
-
 }

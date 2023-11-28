@@ -1,14 +1,14 @@
-import UIKit
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 import ThemeKit
+import UIKit
 
 class RestoreSettingsView {
     private let viewModel: RestoreSettingsViewModel
     private let disposeBag = DisposeBag()
 
-    var onOpenController: ((UIViewController) -> ())?
+    var onOpenController: ((UIViewController) -> Void)?
 
     init(viewModel: RestoreSettingsViewModel) {
         self.viewModel = viewModel
@@ -28,5 +28,4 @@ class RestoreSettingsView {
         }
         onOpenController?(ThemeNavigationController(rootViewController: controller))
     }
-
 }

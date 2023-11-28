@@ -4,11 +4,9 @@ class MarketCategoryViewModel {
     init(service: MarketCategoryService) {
         self.service = service
     }
-
 }
 
 extension MarketCategoryViewModel {
-
     var title: String {
         service.category.name
     }
@@ -20,5 +18,4 @@ extension MarketCategoryViewModel {
     var imageUrl: String {
         service.category.imageUrl
     }
-
 }

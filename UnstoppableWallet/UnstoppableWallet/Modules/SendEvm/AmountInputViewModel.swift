@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 protocol IAmountInputService {
     var amount: Decimal { get }
@@ -17,11 +17,9 @@ protocol IAmountInputService {
 }
 
 extension IAmountInputService {
-
     var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
         Observable.just(nil)
     }
-
 }
 
 open class AmountInputViewModel {
@@ -89,7 +87,7 @@ open class AmountInputViewModel {
     private func sync(amountWarning: AmountWarning?) {
         amountWarningRelay.accept(amountWarning.flatMap { warning in
             switch warning {
-            case .highPriceImpact(let priceImpact): return "-\(priceImpact.description)%"
+            case let .highPriceImpact(priceImpact): return "-\(priceImpact.description)%"
             }
         })
     }
@@ -100,7 +98,7 @@ open class AmountInputViewModel {
         }
     }
 
-    private func sync(balance: Decimal?) {
+    private func sync(balance _: Decimal?) {
         queue.async { [weak self] in
             self?.updateMaxEnabled()
         }
@@ -137,13 +135,13 @@ open class AmountInputViewModel {
 
     private func prefix(primaryInfo: FiatService.PrimaryInfo) -> String? {
         switch primaryInfo {
-        case .amountInfo(let amountInfo):
-            guard let amountInfo = amountInfo else {
+        case let .amountInfo(amountInfo):
+            guard let amountInfo else {
                 return nil
             }
 
             switch amountInfo {
-            case .currencyValue(let currencyValue): return currencyValue.currency.symbol
+            case let .currencyValue(currencyValue): return currencyValue.currency.symbol
             default: return nil
             }
         default:
@@ -155,10 +153,10 @@ open class AmountInputViewModel {
 
     private func amountString(primaryInfo: FiatService.PrimaryInfo) -> String? {
         switch primaryInfo {
-        case .amountInfo(let amountInfo):
+        case let .amountInfo(amountInfo):
             amountTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
 
-            guard let amountInfo = amountInfo else {
+            guard let amountInfo else {
                 return nil
             }
 
@@ -168,7 +166,7 @@ open class AmountInputViewModel {
 
             decimalFormatter.maximumSignificantDigits = amountInfo.value.significandDigits(fractionDigits: amountInfo.decimal)
             return decimalFormatter.string(from: amountInfo.value as NSDecimalNumber)
-        case .amount(let amount):
+        case let .amount(amount):
             amountTypeRelay.accept(.coin)
 
             if amount == 0 {
@@ -182,7 +180,7 @@ open class AmountInputViewModel {
 
     private func sync(primaryInfo: FiatService.PrimaryInfo) {
         switch primaryInfo {
-        case .amountInfo(let amountInfo):
+        case let .amountInfo(amountInfo):
             amountTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
             prefixTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
         case .amount:
@@ -198,11 +196,9 @@ open class AmountInputViewModel {
         secondaryTextTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
         secondaryTextRelay.accept(amountInfo?.formattedFull)
     }
-
 }
 
 extension AmountInputViewModel {
-
     var amount: Decimal {
         service.amount
     }
@@ -287,11 +283,9 @@ extension AmountInputViewModel {
     func onSwitch() {
         switchService.toggle()
     }
-
 }
 
 extension AmountInputViewModel {
-
     enum InputType {
         case coin
         case currency
@@ -307,7 +301,6 @@ extension AmountInputViewModel {
     enum AmountWarning {
         case highPriceImpact(priceImpact: Decimal)
     }
-
 }
 
 extension AmountInputViewModel: IAmountPublishService {}

@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinReportsViewModel {
     private let service: CoinReportsService
@@ -25,7 +25,7 @@ class CoinReportsViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .completed(let reports):
+        case let .completed(reports):
             viewItemsRelay.accept(reports.map { viewItem(report: $0) })
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -38,18 +38,16 @@ class CoinReportsViewModel {
 
     private func viewItem(report: CoinReport) -> ViewItem {
         ViewItem(
-                author: report.author,
-                title: report.title,
-                body: report.body,
-                date: DateHelper.instance.formatMonthYear(from: report.date),
-                url: report.url
+            author: report.author,
+            title: report.title,
+            body: report.body,
+            date: DateHelper.instance.formatMonthYear(from: report.date),
+            url: report.url
         )
     }
-
 }
 
 extension CoinReportsViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
     }
@@ -65,11 +63,9 @@ extension CoinReportsViewModel {
     func onTapRetry() {
         service.refresh()
     }
-
 }
 
 extension CoinReportsViewModel {
-
     struct ViewItem {
         let author: String
         let title: String
@@ -77,5 +73,4 @@ extension CoinReportsViewModel {
         let date: String
         let url: String
     }
-
 }

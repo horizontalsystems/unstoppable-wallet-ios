@@ -1,10 +1,10 @@
-import Foundation
-import DashKit
-import RxSwift
-import HsToolKit
 import BitcoinCore
-import MarketKit
+import DashKit
+import Foundation
 import HdWalletKit
+import HsToolKit
+import MarketKit
+import RxSwift
 
 class DashAdapter: BitcoinBaseAdapter {
     private let feeRate = 1
@@ -22,21 +22,21 @@ class DashAdapter: BitcoinBaseAdapter {
             }
 
             dashKit = try DashKit.Kit(
-                    seed: seed,
-                    walletId: wallet.account.id,
-                    syncMode: syncMode,
-                    networkType: networkType,
-                    confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
-                    logger: logger
+                seed: seed,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                logger: logger
             )
         case let .hdExtendedKey(key):
             dashKit = try DashKit.Kit(
-                    extendedKey: key,
-                    walletId: wallet.account.id,
-                    syncMode: syncMode,
-                    networkType: networkType,
-                    confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
-                    logger: logger
+                extendedKey: key,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                logger: logger
             )
         default:
             throw AdapterError.unsupportedAccount
@@ -54,11 +54,9 @@ class DashAdapter: BitcoinBaseAdapter {
     override func explorerUrl(transactionHash: String) -> String? {
         "https://insight.dash.org/insight/tx/" + transactionHash
     }
-
 }
 
 extension DashAdapter: DashKitDelegate {
-
     public func transactionsUpdated(inserted: [DashTransactionInfo], updated: [DashTransactionInfo]) {
         var records = [BitcoinTransactionRecord]()
 
@@ -71,21 +69,16 @@ extension DashAdapter: DashKitDelegate {
 
         transactionRecordsSubject.onNext(records)
     }
-
 }
 
 extension DashAdapter: ISendBitcoinAdapter {
-
     var blockchainType: BlockchainType {
         .dash
     }
-
 }
 
 extension DashAdapter {
-
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.clear(exceptFor: excludedWalletIds)
     }
-
 }

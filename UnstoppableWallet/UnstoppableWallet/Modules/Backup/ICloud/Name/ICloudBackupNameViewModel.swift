@@ -13,15 +13,15 @@ class ICloudBackupNameViewModel {
         self.service = service
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
 
     private func sync(state: ICloudBackupNameService.State) {
         switch state {
-        case .failure(let error):
+        case let .failure(error):
             nameError = error.localizedDescription
             nextAvailable = false
         case .success:
@@ -29,11 +29,9 @@ class ICloudBackupNameViewModel {
             nextAvailable = true
         }
     }
-
 }
 
 extension ICloudBackupNameViewModel {
-
     var initialName: String {
         service.initialName
     }
@@ -53,16 +51,13 @@ extension ICloudBackupNameViewModel {
     func onChange(name: String?) {
         service.set(name: name ?? "")
     }
-
 }
 
 extension ICloudBackupNameService.NameError: LocalizedError {
-
     var errorDescription: String? {
         switch self {
         case .empty: return "backup.cloud.name.error.empty".localized
         case .alreadyExist: return "backup.cloud.name.error.already_exist".localized
         }
     }
-
 }

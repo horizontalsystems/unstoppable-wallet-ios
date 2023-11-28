@@ -6,11 +6,9 @@ class EnabledWalletStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension EnabledWalletStorage {
-
     func allWallets() throws -> [EnabledWallet] {
         try dbPool.read { db in
             try EnabledWallet.fetchAll(db)
@@ -38,7 +36,6 @@ extension EnabledWalletStorage {
                 try EnabledWallet.filter(EnabledWallet.Columns.tokenQueryId == enabledWallet.tokenQueryId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
             }
         }
-
     }
 
     func clear() throws {
@@ -46,5 +43,4 @@ extension EnabledWalletStorage {
             try EnabledWallet.deleteAll(db)
         }
     }
-
 }

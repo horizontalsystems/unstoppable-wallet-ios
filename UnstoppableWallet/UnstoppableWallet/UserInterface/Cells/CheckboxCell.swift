@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import ComponentKit
+import ThemeKit
+import UIKit
 
 class CheckboxCell: BaseSelectableThemeCell {
     private let checkBoxView = CheckboxView()
@@ -16,7 +16,8 @@ class CheckboxCell: BaseSelectableThemeCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -26,13 +27,10 @@ class CheckboxCell: BaseSelectableThemeCell {
 
         checkBoxView.checked = checked
     }
-
 }
 
 extension CheckboxCell {
-
     static func height(containerWidth: CGFloat, text: String, backgroundStyle: BackgroundStyle) -> CGFloat {
-        CheckboxView.height(containerWidth: containerWidth, text: text, insets: Self.margin(backgroundStyle: backgroundStyle))
+        CheckboxView.height(containerWidth: containerWidth, text: text, insets: margin(backgroundStyle: backgroundStyle))
     }
-
 }

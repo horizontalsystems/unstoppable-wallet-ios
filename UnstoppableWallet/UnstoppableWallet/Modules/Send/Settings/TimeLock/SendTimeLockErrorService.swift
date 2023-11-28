@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class SendTimeLockErrorService {
     private let disposeBag = DisposeBag()
@@ -10,7 +10,7 @@ class SendTimeLockErrorService {
     private let adapter: ISendBitcoinAdapter
 
     private let errorRelay = BehaviorRelay<Error?>(value: nil)
-    private(set) var error: Error? = nil {
+    private(set) var error: Error? {
         didSet {
             errorRelay.accept(error)
         }
@@ -31,7 +31,8 @@ class SendTimeLockErrorService {
 
     private func sync() {
         guard !timeLockService.pluginData.isEmpty,
-              let address = addressService.state.address else {
+              let address = addressService.state.address
+        else {
             error = nil
             return
         }
@@ -43,13 +44,10 @@ class SendTimeLockErrorService {
             self.error = error.convertedError
         }
     }
-
 }
 
 extension SendTimeLockErrorService: IErrorService {
-
     var errorObservable: Observable<Error?> {
         errorRelay.asObservable()
     }
-
 }

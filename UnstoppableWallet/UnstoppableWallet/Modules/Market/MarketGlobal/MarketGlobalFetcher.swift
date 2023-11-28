@@ -1,6 +1,6 @@
+import Chart
 import Foundation
 import MarketKit
-import Chart
 
 class MarketGlobalFetcher {
     private let marketKit: MarketKit.Kit
@@ -12,11 +12,9 @@ class MarketGlobalFetcher {
         self.currencyManager = currencyManager
         self.metricsType = metricsType
     }
-
 }
 
 extension MarketGlobalFetcher: IMetricChartFetcher {
-
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyManager.baseCurrency)
     }
@@ -27,7 +25,6 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
         var dominancePoints = [Decimal]()
         let items = points.map { point -> MetricChartModule.Item in
             let value: Decimal
-
 
             switch metricsType {
             case .defiCap: value = point.defiMarketCap
@@ -43,5 +40,4 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
         let indicators = [MarketGlobalModule.dominance: dominancePoints]
         return MetricChartModule.ItemData(items: items, indicators: indicators, type: .regular)
     }
-
 }

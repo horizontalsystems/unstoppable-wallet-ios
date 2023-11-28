@@ -1,11 +1,11 @@
-import Combine
-import UIKit
 import Chart
+import Combine
 import ComponentKit
 import HUD
 import SectionsTableView
 import ThemeKit
 import UIExtensions
+import UIKit
 import UniswapKit
 
 class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
@@ -27,16 +27,17 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
     private var items = [ChartIndicatorSettingsModule.ValueItem]()
     private var inputSections = [InputIntegerSection]()
 
-    private var onComplete: ((ChartIndicator) -> ())?
+    private var onComplete: ((ChartIndicator) -> Void)?
 
-    init(viewModel: ChartIndicatorSettingsViewModel, onComplete: @escaping (ChartIndicator) -> ()) {
+    init(viewModel: ChartIndicatorSettingsViewModel, onComplete: @escaping (ChartIndicator) -> Void) {
         self.viewModel = viewModel
         self.onComplete = onComplete
 
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -64,54 +65,54 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
         applyButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
 
         viewModel.itemsUpdatedPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] items in
-                    self?.items = items
-                    self?.tableView.reload(animated: true)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] items in
+                self?.items = items
+                self?.tableView.reload(animated: true)
+            }
+            .store(in: &cancellables)
 
         viewModel.buttonEnabledPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] enabled in
-                    self?.applyButton.isEnabled = enabled
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] enabled in
+                self?.applyButton.isEnabled = enabled
+            }
+            .store(in: &cancellables)
 
         viewModel.resetToInitialPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] items in
-                    self?.resetToInitial(items: items)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] items in
+                self?.resetToInitial(items: items)
+            }
+            .store(in: &cancellables)
 
         viewModel.resetEnabledPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] enabled in
-                    self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] enabled in
+                self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
+            }
+            .store(in: &cancellables)
 
         viewModel.cautionPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] cautions in
-                    self?.sync(cautions: cautions)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] cautions in
+                self?.sync(cautions: cautions)
+            }
+            .store(in: &cancellables)
 
         viewModel.updateIndicatorPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] indicator in
-                    self?.onApply(indicator: indicator)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] indicator in
+                self?.onApply(indicator: indicator)
+            }
+            .store(in: &cancellables)
 
         viewModel.showSubscribeInfoPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.showSubscribeInfo()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.showSubscribeInfo()
+            }
+            .store(in: &cancellables)
 
         tableView.buildSections()
     }
@@ -172,50 +173,48 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
             self.tableView.endUpdates()
         }
     }
-
 }
 
 extension ChartIndicatorSettingsViewController {
-
-    private func sectionDescription(id: String, description: String, rowInfo: RowInfo) ->  SectionProtocol {
+    private func sectionDescription(id: String, description: String, rowInfo: RowInfo) -> SectionProtocol {
         Section(
-                id: rowInfo.description,
-                headerState: rowInfo.isFirst ? .margin(height: .margin12) : .margin(height: 0),
-                footerState: .margin(height: .margin24),
-                rows: [
-                    tableView.descriptionRow(id: id, text: description, font: .subhead2, textColor: .gray, ignoreBottomMargin: true)
-                ]
+            id: rowInfo.description,
+            headerState: rowInfo.isFirst ? .margin(height: .margin12) : .margin(height: 0),
+            footerState: .margin(height: .margin24),
+            rows: [
+                tableView.descriptionRow(id: id, text: description, font: .subhead2, textColor: .gray, ignoreBottomMargin: true),
+            ]
         )
     }
 
     private func sectionList(id: String, hash: String, header: String?, title: String, elements: [ChartIndicatorSettingsModule.ListElement], selected: ChartIndicatorSettingsModule.ListElement) -> SectionProtocol {
         Section(
-                id: id,
-                headerState: header.map { tableView.sectionHeader(text: $0) } ?? .margin(height: 0),
-                footerState: .margin(height: .margin24),
-                rows: [
-                    tableView.universalRow48(
-                            id: id,
-                            title: .body(title),
-                            value: .subhead2(selected.title),
-                            accessoryType: .dropdown,
-                            hash: hash,
-                            autoDeselect: true,
-                            isFirst: true,
-                            isLast: true
-                    ) { [weak self] in
-                        self?.onSelectList(id: id, title: title, elements: elements, selected: selected)
-                    }
-                ]
+            id: id,
+            headerState: header.map { tableView.sectionHeader(text: $0) } ?? .margin(height: 0),
+            footerState: .margin(height: .margin24),
+            rows: [
+                tableView.universalRow48(
+                    id: id,
+                    title: .body(title),
+                    value: .subhead2(selected.title),
+                    accessoryType: .dropdown,
+                    hash: hash,
+                    autoDeselect: true,
+                    isFirst: true,
+                    isLast: true
+                ) { [weak self] in
+                    self?.onSelectList(id: id, title: title, elements: elements, selected: selected)
+                },
+            ]
         )
     }
 
     private func onSelectList(id: String, title: String, elements: [ChartIndicatorSettingsModule.ListElement], selected: ChartIndicatorSettingsModule.ListElement) {
         let alertController = AlertRouter.module(
-                title: title,
-                viewItems: elements.map { element in
-                    AlertViewItem(text: element.title, selected: element.id == selected.id)
-                }
+            title: title,
+            viewItems: elements.map { element in
+                AlertViewItem(text: element.title, selected: element.id == selected.id)
+            }
         ) { [weak self] index in
             self?.viewModel.onSelectList(id: id, selected: elements[index])
         }
@@ -226,11 +225,9 @@ extension ChartIndicatorSettingsViewController {
     private func onChangeText(id: String, value: String?) {
         viewModel.onChangeText(id: id, value: value)
     }
-
 }
 
 extension ChartIndicatorSettingsViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
@@ -242,18 +239,19 @@ extension ChartIndicatorSettingsViewController: SectionsDataSource {
             case let field as ChartIndicatorSettingsModule.ListField:
                 var selected = field.initial
                 if let item = items.first(where: { $0.id == field.id }),
-                   let value = item.value as? ChartIndicatorSettingsModule.ListElement {
+                   let value = item.value as? ChartIndicatorSettingsModule.ListElement
+                {
                     selected = value
                 }
                 sections.append(
-                        sectionList(
-                                id: field.id,
-                                hash: [field.id, selected.title].joined(separator: "_"),
-                                header: field.header,
-                                title: field.title,
-                                elements: field.elements,
-                                selected: selected
-                        )
+                    sectionList(
+                        id: field.id,
+                        hash: [field.id, selected.title].joined(separator: "_"),
+                        header: field.header,
+                        title: field.title,
+                        elements: field.elements,
+                        selected: selected
+                    )
                 )
             case let field as ChartIndicatorSettingsModule.InputIntegerField: ()
                 var section: InputIntegerSection
@@ -268,7 +266,7 @@ extension ChartIndicatorSettingsViewController: SectionsDataSource {
                     inputSections.append(section)
                 }
                 sections.append(section
-                        .section(tableView: tableView, header: field.header)
+                    .section(tableView: tableView, header: field.header)
                 )
             default: ()
             }
@@ -276,5 +274,4 @@ extension ChartIndicatorSettingsViewController: SectionsDataSource {
 
         return sections
     }
-
 }

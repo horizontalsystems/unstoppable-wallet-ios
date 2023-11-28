@@ -1,5 +1,4 @@
-struct RestoreSettingsModule {
-
+enum RestoreSettingsModule {
     static func module() -> (RestoreSettingsService, RestoreSettingsView) {
         let service = RestoreSettingsService(manager: App.shared.restoreSettingsManager)
         let viewModel = RestoreSettingsViewModel(service: service)
@@ -7,5 +6,4 @@ struct RestoreSettingsModule {
 
         return (service, view)
     }
-
 }

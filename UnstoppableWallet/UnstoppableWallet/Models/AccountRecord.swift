@@ -66,5 +66,4 @@ class AccountRecord: Record {
         container[Columns.dataKey] = dataKey
         container[Columns.bip39Compliant] = bip39Compliant
     }
-
 }

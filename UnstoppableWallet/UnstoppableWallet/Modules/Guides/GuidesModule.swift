@@ -1,7 +1,7 @@
 import Foundation
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 protocol IGuidesViewModel {
     var filters: Driver<[String]> { get }
@@ -37,12 +37,11 @@ struct GuideViewItem {
     let url: URL?
 }
 
-struct GuidesModule {
-
+enum GuidesModule {
     static func instance() -> UIViewController {
         let repository = GuidesRepository(
-                guidesManager: App.shared.guidesManager,
-                reachabilityManager: App.shared.reachabilityManager
+            guidesManager: App.shared.guidesManager,
+            reachabilityManager: App.shared.reachabilityManager
         )
 
         let service = GuidesService(repository: repository, languageManager: LanguageManager.shared)
@@ -50,5 +49,4 @@ struct GuidesModule {
 
         return GuidesViewController(viewModel: viewModel)
     }
-
 }

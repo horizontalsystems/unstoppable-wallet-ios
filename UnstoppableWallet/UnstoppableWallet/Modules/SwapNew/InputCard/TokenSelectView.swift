@@ -1,7 +1,7 @@
-import Foundation
-import UIKit
 import ComponentKit
+import Foundation
 import ThemeKit
+import UIKit
 
 class TokenSelectView: UIView {
     let wrapperButton = UIButton()
@@ -9,7 +9,7 @@ class TokenSelectView: UIView {
 
     let tokenButton = SecondaryButton()
 
-    var onTap: (() -> ())?
+    var onTap: (() -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -41,12 +41,12 @@ class TokenSelectView: UIView {
         tokenButton.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func onTapButton() {
         onTap?()
     }
-
 }

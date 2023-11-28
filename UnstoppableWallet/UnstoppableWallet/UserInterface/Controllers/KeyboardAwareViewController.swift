@@ -1,8 +1,8 @@
-import ThemeKit
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import ThemeKit
 import UIExtensions
+import UIKit
 
 class KeyboardAwareViewController: ThemeViewController {
     private let scrollViews: [UIScrollView]
@@ -16,13 +16,14 @@ class KeyboardAwareViewController: ThemeViewController {
             updateInsets()
         }
     }
+
     var additionalInsetsOnlyForClosedKeyboard: Bool = true // AdditionalContentInsets by default using only in closed state (mean that not for accessoryView, but wrapper on screen bottom)
 
     var oldPadding: CGFloat = 0
 
     var accessoryView: UIView?
 
-    var ignoreSafeAreaForAccessoryView = true   // when accessory view is wrapper which covering safeArea. You must setInitialState(bottomPadding: wrapper.height) in didAppear(:)
+    var ignoreSafeAreaForAccessoryView = true // when accessory view is wrapper which covering safeArea. You must setInitialState(bottomPadding: wrapper.height) in didAppear(:)
 
     private var pseudoAccessoryView: PseudoAccessoryView?
 
@@ -33,7 +34,7 @@ class KeyboardAwareViewController: ThemeViewController {
     var showAccessoryView: Bool = true
 
     open var accessoryViewHeight: CGFloat {
-        showAccessoryView ? floor(accessoryView?.height ?? 0) : 0   // need to use height without safe-area because tableview already use safe-area insets
+        showAccessoryView ? floor(accessoryView?.height ?? 0) : 0 // need to use height without safe-area because tableview already use safe-area insets
     }
 
     override open var inputAccessoryView: UIView? {
@@ -61,7 +62,8 @@ class KeyboardAwareViewController: ThemeViewController {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -143,7 +145,8 @@ class KeyboardAwareViewController: ThemeViewController {
     @objc private func keyboardWillShow(notification: Notification) {
         guard let oldKeyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue,
               let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
-              oldKeyboardFrame != keyboardFrame else {
+              oldKeyboardFrame != keyboardFrame
+        else {
             return
         }
         // check in visible only accessoryView. If true - keyboard is hidden
@@ -163,7 +166,7 @@ class KeyboardAwareViewController: ThemeViewController {
         }
     }
 
-    @objc private func keyboardWillHide(notification: Notification) {
+    @objc private func keyboardWillHide(notification _: Notification) {
         // try to enable dismiss controller by swipe when keyboard is hidden
         navigationController?.presentationController?.presentedView?.gestureRecognizers?.first?.isEnabled = true
         keyboardFrame = nil
@@ -192,7 +195,7 @@ class KeyboardAwareViewController: ThemeViewController {
         }
     }
 
-    public func updateUIKeyboard(initial: Bool = false) {
+    public func updateUIKeyboard(initial _: Bool = false) {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
 
@@ -223,7 +226,7 @@ class KeyboardAwareViewController: ThemeViewController {
     }
 
     override open func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-        let stopObserveKeyboard = !viewControllerToPresent.isKind(of: UISearchController.self)  // SearchControllers presenting transparent on parent and need to obsevre parent content
+        let stopObserveKeyboard = !viewControllerToPresent.isKind(of: UISearchController.self) // SearchControllers presenting transparent on parent and need to obsevre parent content
         if stopObserveKeyboard {
             view.endEditing(true)
         }
@@ -236,7 +239,7 @@ class KeyboardAwareViewController: ThemeViewController {
         viewControllerToPresent.presentationController?.delegate = self
 
         let awaitClosingKeyboardTime: TimeInterval = keyboardFrame == nil ? 0 : 0.05
-        DispatchQueue.main.asyncAfter(deadline: .now() + awaitClosingKeyboardTime) {    // Time delay needed to handle keyboard dismissing (change insets and accessory position)
+        DispatchQueue.main.asyncAfter(deadline: .now() + awaitClosingKeyboardTime) { // Time delay needed to handle keyboard dismissing (change insets and accessory position)
             super.present(viewControllerToPresent, animated: flag) { [weak self] in
                 if stopObserveKeyboard {
                     self?.observeKeyboard(false)
@@ -247,7 +250,7 @@ class KeyboardAwareViewController: ThemeViewController {
     }
 
     func syncContentOffsetIfRequired(textView: UITextView) {
-        guard let keyboardFrame = keyboardFrame else {
+        guard let keyboardFrame else {
             return
         }
 
@@ -266,8 +269,8 @@ class KeyboardAwareViewController: ThemeViewController {
 
         scrollViews[0].setContentOffset(CGPoint(x: 0, y: shift), animated: true)
     }
-
 }
+
 extension KeyboardAwareViewController {
     public var keyboardVisibilityDriver: Driver<CGFloat> {
         keyboardVisibilityRelay.asDriver()
@@ -275,8 +278,7 @@ extension KeyboardAwareViewController {
 }
 
 extension KeyboardAwareViewController: PseudoAccessoryViewDelegate {
-
-    func pseudoAccessoryView(_ pseudoAccessoryView: PseudoAccessoryView, keyboardFrameDidChange frame: CGRect) {
+    func pseudoAccessoryView(_: PseudoAccessoryView, keyboardFrameDidChange frame: CGRect) {
         let keyboardFrame = view.convert(frame, from: nil)
 
         if shouldObserveKeyboard {
@@ -285,30 +287,25 @@ extension KeyboardAwareViewController: PseudoAccessoryViewDelegate {
             pendingFrame = keyboardFrame
         }
     }
-
 }
 
 extension KeyboardAwareViewController: UIAdaptivePresentationControllerDelegate {
-
-    public func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+    public func presentationControllerWillDismiss(_: UIPresentationController) {
 //        print("presentationControllerWillDismiss : \(presentationController)")
     }
 
-    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+    public func presentationControllerDidDismiss(_: UIPresentationController) {
         observeKeyboard(true)
 //        print("presentationControllerDidDismiss : \(presentationController)")
     }
 
-    public func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+    public func presentationControllerDidAttemptToDismiss(_: UIPresentationController) {
 //        print("presentationControllerDidDismiss : \(presentationController)")
     }
-
 }
 
 extension KeyboardAwareViewController: UIGestureRecognizerDelegate {
-
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         touch.view is UITableView
     }
-
 }

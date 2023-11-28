@@ -7,5 +7,4 @@ class CexDepositNetworkSelectService {
 
         networks = cexAsset.depositNetworks
     }
-
 }

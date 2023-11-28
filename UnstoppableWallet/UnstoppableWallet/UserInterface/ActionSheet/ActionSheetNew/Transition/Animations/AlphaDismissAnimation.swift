@@ -13,10 +13,9 @@ class AlphaDismissAnimation: BaseAnimation {
             transitionContext.view(forKey: .from)?.alpha = 0
         }
 
-        animator.addCompletion { (position) in
+        animator.addCompletion { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
         return animator
     }
-
 }

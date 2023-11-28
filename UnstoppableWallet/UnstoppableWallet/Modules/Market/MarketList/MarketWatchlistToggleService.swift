@@ -10,11 +10,9 @@ class MarketWatchlistToggleService {
         self.coinUidService = coinUidService
         self.favoritesManager = favoritesManager
     }
-
 }
 
 extension MarketWatchlistToggleService {
-
     var statusObservable: Observable<State> {
         statusSubject.asObservable()
     }
@@ -48,15 +46,12 @@ extension MarketWatchlistToggleService {
 
         statusSubject.onNext(.unfavorite)
     }
-
 }
 
 extension MarketWatchlistToggleService {
-
     enum State {
         case favorite
         case unfavorite
         case fail
     }
-
 }

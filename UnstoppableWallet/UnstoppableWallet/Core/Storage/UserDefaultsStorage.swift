@@ -5,8 +5,8 @@ class UserDefaultsStorage {
         UserDefaults.standard.value(forKey: key) as? T
     }
 
-    func set<T>(value: T?, for key: String) {
-        if let value = value {
+    func set(value: (some Any)?, for key: String) {
+        if let value {
             UserDefaults.standard.set(value, forKey: key)
         } else {
             UserDefaults.standard.removeObject(forKey: key)

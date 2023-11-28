@@ -1,10 +1,10 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import TronKit
 import BigInt
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxCocoa
+import RxSwift
+import TronKit
 
 class SendTronConfirmationViewModel {
     private let disposeBag = DisposeBag()
@@ -19,7 +19,7 @@ class SendTronConfirmationViewModel {
     private let sendEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let cautionsRelay = BehaviorRelay<[TitledCaution]>(value: [])
 
-    private let sendingRelay = PublishRelay<()>()
+    private let sendingRelay = PublishRelay<Void>()
     private let sendSuccessRelay = PublishRelay<Void>()
     private let sendFailedRelay = PublishRelay<String>()
 
@@ -46,45 +46,45 @@ class SendTronConfirmationViewModel {
 
     private func sync(state: SendTronConfirmationService.State) {
         switch state {
-            case .ready(let fees):
-                feesRelay.accept(feeItems(fees: fees))
-                sendEnabledRelay.accept(true)
-                cautionsRelay.accept([])
+        case let .ready(fees):
+            feesRelay.accept(feeItems(fees: fees))
+            sendEnabledRelay.accept(true)
+            cautionsRelay.accept([])
 
-            case .notReady(let errors):
-                feesRelay.accept([])
-                sendEnabledRelay.accept(false)
+        case let .notReady(errors):
+            feesRelay.accept([])
+            sendEnabledRelay.accept(false)
 
-                let cautions = errors.map { error in
-                    if let tronError = error as? SendTronConfirmationService.TransactionError {
-                        switch tronError {
-                            case .insufficientBalance(let balance):
-                                let coinValue = coinServiceFactory.baseCoinService.coinValue(value: balance)
-                                let balanceString = ValueFormatter.instance.formatShort(coinValue: coinValue)
+            let cautions = errors.map { error in
+                if let tronError = error as? SendTronConfirmationService.TransactionError {
+                    switch tronError {
+                    case let .insufficientBalance(balance):
+                        let coinValue = coinServiceFactory.baseCoinService.coinValue(value: balance)
+                        let balanceString = ValueFormatter.instance.formatShort(coinValue: coinValue)
 
-                                return TitledCaution(
-                                    title: "fee_settings.errors.insufficient_balance".localized,
-                                    text: "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? ""),
-                                    type: .error
-                                )
-
-                            case .zeroAmount:
-                                return TitledCaution(
-                                    title: "alert.error".localized,
-                                    text: "fee_settings.errors.zero_amount.info".localized,
-                                    type: .error
-                                )
-                        }
-                    } else {
                         return TitledCaution(
-                            title: "Error",
-                            text: error.convertedError.smartDescription,
+                            title: "fee_settings.errors.insufficient_balance".localized,
+                            text: "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? ""),
+                            type: .error
+                        )
+
+                    case .zeroAmount:
+                        return TitledCaution(
+                            title: "alert.error".localized,
+                            text: "fee_settings.errors.zero_amount.info".localized,
                             type: .error
                         )
                     }
+                } else {
+                    return TitledCaution(
+                        title: "Error",
+                        text: error.convertedError.smartDescription,
+                        type: .error
+                    )
                 }
+            }
 
-                cautionsRelay.accept(cautions)
+            cautionsRelay.accept(cautions)
         }
 
         sectionViewItemsRelay.accept(items(dataState: service.dataState))
@@ -100,10 +100,10 @@ class SendTronConfirmationViewModel {
 
     private func sync(sendState: SendTronConfirmationService.SendState) {
         switch sendState {
-            case .idle: ()
-            case .sending: sendingRelay.accept(())
-            case .sent: sendSuccessRelay.accept(())
-            case .failed(let error): sendFailedRelay.accept(error.convertedError.smartDescription)
+        case .idle: ()
+        case .sending: sendingRelay.accept(())
+        case .sent: sendSuccessRelay.accept(())
+        case let .failed(error): sendFailedRelay.accept(error.convertedError.smartDescription)
         }
     }
 
@@ -115,7 +115,7 @@ class SendTronConfirmationViewModel {
 
         for fee in fees {
             switch fee {
-            case .accountActivation(let amount):
+            case let .accountActivation(amount):
                 let amountData = coinService.amountData(value: BigUInt(amount))
 
                 viewItems.append(
@@ -128,11 +128,11 @@ class SendTronConfirmationViewModel {
                     )
                 )
 
-            case .bandwidth(let points, _):
-                    bandwidth = ValueFormatter.instance.formatShort(value: Decimal(points), decimalCount: 0)
+            case let .bandwidth(points, _):
+                bandwidth = ValueFormatter.instance.formatShort(value: Decimal(points), decimalCount: 0)
 
-            case .energy(let required, _):
-                    energy = ValueFormatter.instance.formatShort(value: Decimal(required), decimalCount: 0)
+            case let .energy(required, _):
+                energy = ValueFormatter.instance.formatShort(value: Decimal(required), decimalCount: 0)
             }
         }
 
@@ -152,34 +152,34 @@ class SendTronConfirmationViewModel {
     }
 
     private func items(dataState: SendTronConfirmationService.DataState) -> [SectionViewItem] {
-        if let decoration = dataState.decoration, let items = self.items(decoration: decoration, contract: dataState.contract) {
+        if let decoration = dataState.decoration, let items = items(decoration: decoration, contract: dataState.contract) {
             return items
         }
 
         return []
     }
 
-    private func items(decoration: TransactionDecoration, contract: Contract?) -> [SectionViewItem]? {
+    private func items(decoration: TransactionDecoration, contract _: Contract?) -> [SectionViewItem]? {
         switch decoration {
-            case let decoration as NativeTransactionDecoration:
-                guard let transfer = decoration.contract as? TransferContract else {
-                    return nil
-                }
-
-                return sendBaseCoinItems(
-                    to: transfer.toAddress,
-                    value: BigUInt(transfer.amount)
-                )
-
-            case let decoration as OutgoingEip20Decoration:
-                return eip20TransferItems(
-                    to: decoration.to,
-                    value: decoration.value,
-                    contractAddress: decoration.contractAddress
-                )
-
-            default:
+        case let decoration as NativeTransactionDecoration:
+            guard let transfer = decoration.contract as? TransferContract else {
                 return nil
+            }
+
+            return sendBaseCoinItems(
+                to: transfer.toAddress,
+                value: BigUInt(transfer.amount)
+            )
+
+        case let decoration as OutgoingEip20Decoration:
+            return eip20TransferItems(
+                to: decoration.to,
+                value: decoration.value,
+                contractAddress: decoration.contractAddress
+            )
+
+        default:
+            return nil
         }
     }
 
@@ -189,7 +189,7 @@ class SendTronConfirmationViewModel {
         }
 
         return [
-            .warning(text: "tron.send.inactive_address".localized, title: "tron.send.activation_fee".localized, info: "tron.send.activation_fee.info".localized)
+            .warning(text: "tron.send.inactive_address".localized, title: "tron.send.activation_fee".localized, info: "tron.send.activation_fee.info".localized),
         ]
     }
 
@@ -272,7 +272,7 @@ class SendTronConfirmationViewModel {
                 coinService: coinService,
                 value: value,
                 type: .neutral
-            )
+            ),
         ]
 
         let addressValue = to.base58
@@ -297,11 +297,9 @@ class SendTronConfirmationViewModel {
     private func coinService(token: MarketKit.Token) -> CoinService {
         coinServiceFactory.coinService(token: token)
     }
-
 }
 
 extension SendTronConfirmationViewModel {
-
     var sectionViewItemsDriver: Driver<[SectionViewItem]> {
         sectionViewItemsRelay.asDriver()
     }
@@ -318,7 +316,7 @@ extension SendTronConfirmationViewModel {
         cautionsRelay.asDriver()
     }
 
-    var sendingSignal: Signal<()> {
+    var sendingSignal: Signal<Void> {
         sendingRelay.asSignal()
     }
 
@@ -333,11 +331,9 @@ extension SendTronConfirmationViewModel {
     func send() {
         service.send()
     }
-
 }
 
 extension SendTronConfirmationViewModel {
-
     struct SectionViewItem {
         let viewItems: [ViewItem]
     }
@@ -357,5 +353,4 @@ extension SendTronConfirmationViewModel {
         let value2: String?
         let value2IsSecondary: Bool
     }
-
 }

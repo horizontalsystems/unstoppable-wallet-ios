@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import TronKit
 import HsToolKit
 import MarketKit
+import RxSwift
+import TronKit
 
 class AddTronTokenBlockchainService {
     private let blockchain: Blockchain
@@ -14,11 +14,9 @@ class AddTronTokenBlockchainService {
         self.networkManager = networkManager
         self.network = network
     }
-
 }
 
 extension AddTronTokenBlockchainService: IAddTokenBlockchainService {
-
     var placeholder: String {
         "add_token.input_placeholder.contract_address".localized
     }
@@ -75,11 +73,9 @@ extension AddTronTokenBlockchainService: IAddTokenBlockchainService {
             }
         }
     }
-
 }
 
 extension AddTronTokenBlockchainService {
-
     enum TokenError: LocalizedError {
         case disposableError
         case invalidAddress
@@ -87,11 +83,10 @@ extension AddTronTokenBlockchainService {
 
         var errorDescription: String? {
             switch self {
-                case .disposableError: return ""
-                case .invalidAddress: return "add_token.invalid_contract_address".localized
-                case .notFound(let blockchainName): return "add_token.contract_address_not_found".localized(blockchainName)
+            case .disposableError: return ""
+            case .invalidAddress: return "add_token.invalid_contract_address".localized
+            case let .notFound(blockchainName): return "add_token.contract_address_not_found".localized(blockchainName)
             }
         }
     }
-
 }

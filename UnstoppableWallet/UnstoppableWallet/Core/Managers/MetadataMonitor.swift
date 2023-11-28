@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import HsExtensions
 import HsToolKit
 
@@ -34,11 +34,11 @@ class MetadataMonitor {
     }
 
     private func start() {
-        let predicate: NSPredicate = NSPredicate(
-                format: "%K = FALSE AND %K BEGINSWITH %@",
-                NSMetadataUbiquitousItemIsDownloadingKey,
-                NSMetadataItemPathKey,
-                url.path
+        let predicate = NSPredicate(
+            format: "%K = FALSE AND %K BEGINSWITH %@",
+            NSMetadataUbiquitousItemIsDownloadingKey,
+            NSMetadataItemPathKey,
+            url.path
         )
         let metadataQuery = NSMetadataQuery()
         self.metadataQuery = metadataQuery
@@ -90,7 +90,7 @@ class MetadataMonitor {
         metadataQuery?.disableUpdates()
     }
 
-    @objc private func handle(_ notification: Notification) {
+    @objc private func handle(_: Notification) {
         logger?.debug("=> META MONITOR: has notification!")
         queue.async { [weak self] in
             self?.initiateDownloads()
@@ -140,8 +140,8 @@ class MetadataMonitor {
                 logger?.debug("=> MONITOR : lastChangeTime : \(String(describing: fileChangedTime[url]))")
                 if let changeTime,
                    let lastChangeTime = fileChangedTime[url],
-                   changeTime == lastChangeTime {
-
+                   changeTime == lastChangeTime
+                {
                     logger?.debug("IGNORE FILE")
                     return nil
                 }
@@ -171,8 +171,9 @@ class MetadataMonitor {
 
     private func resolveConflicts(for item: NSMetadataItem) throws {
         guard
-                let url = item.value(forAttribute: NSMetadataItemURLKey) as? URL,
-                let inConflict = item.value(forAttribute: NSMetadataUbiquitousItemHasUnresolvedConflictsKey) as? Bool else {
+            let url = item.value(forAttribute: NSMetadataItemURLKey) as? URL,
+            let inConflict = item.value(forAttribute: NSMetadataUbiquitousItemHasUnresolvedConflictsKey) as? Bool
+        else {
             throw ResolverError.invalidMetadata
         }
         guard inConflict else {
@@ -200,22 +201,17 @@ class MetadataMonitor {
         let conflictVersions = NSFileVersion.unresolvedConflictVersionsOfItem(at: url)
         conflictVersions?.forEach { $0.isResolved = true }
     }
-
 }
 
 extension MetadataMonitor {
-
     var needUpdatePublisher: AnyPublisher<Void, Never> {
         needUpdateSubject.eraseToAnyPublisher()
     }
-
 }
 
 extension MetadataMonitor {
-
     enum ResolverError: Error {
         case invalidMetadata
         case coordinationError(NSError)
     }
-
 }

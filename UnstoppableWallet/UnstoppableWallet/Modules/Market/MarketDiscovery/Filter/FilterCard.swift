@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class FilterCard: UICollectionViewCell {
     private static let titleFont: UIFont = .subhead1
@@ -48,7 +48,8 @@ class FilterCard: UICollectionViewCell {
         contentView.backgroundColor = .themeLawrence
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -88,5 +89,4 @@ class FilterCard: UICollectionViewCell {
 
         return CGSize(width: width, height: 94)
     }
-
 }

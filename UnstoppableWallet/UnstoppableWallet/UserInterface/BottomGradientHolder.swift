@@ -1,6 +1,6 @@
-import UIKit
-import UIExtensions
 import SnapKit
+import UIExtensions
+import UIKit
 
 protocol IHeightAwareView {
     var height: CGFloat { get }
@@ -32,7 +32,8 @@ class BottomGradientHolder: GradientView {
         stackView.spacing = .margin16
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -49,8 +50,9 @@ class BottomGradientHolder: GradientView {
             }
             // try to avoid case, when bottom holder bind to tableview but keyboardViewController rewrite insets (ChooseWatchVC)
             if let keyboardAwareViewController,
-               keyboardAwareViewController.accessoryView != self {
-                keyboardAwareViewController.additionalInsetsOnlyForClosedKeyboard = true    // add bottom height only when closed keyboard
+               keyboardAwareViewController.accessoryView != self
+            {
+                keyboardAwareViewController.additionalInsetsOnlyForClosedKeyboard = true // add bottom height only when closed keyboard
                 keyboardAwareViewController.additionalContentInsets = .init(top: 0, left: 0, bottom: insets.top, right: 0)
             } else { // otherwise just setup insets
                 tableView.contentInset.bottom = insets.top
@@ -65,17 +67,16 @@ class BottomGradientHolder: GradientView {
             // we must use self size as inset when keyboard is closed if it's keyboardAwareViewController
             // only when bottom view is not accessory view (not handling automatic)
             if let keyboardAwareViewController,
-               keyboardAwareViewController.accessoryView != self {
-                    keyboardAwareViewController.additionalInsetsOnlyForClosedKeyboard = true    // add bottom height only when closed keyboard
-                    keyboardAwareViewController.additionalContentInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+               keyboardAwareViewController.accessoryView != self
+            {
+                keyboardAwareViewController.additionalInsetsOnlyForClosedKeyboard = true // add bottom height only when closed keyboard
+                keyboardAwareViewController.additionalContentInsets = .init(top: 0, left: 0, bottom: height, right: 0)
             }
         }
     }
-
 }
 
 extension BottomGradientHolder {
-
     override func addSubview(_ view: UIView) {
         guard let position else {
             fatalError("Before add views need to set position by add(to:_) method")
@@ -84,16 +85,15 @@ extension BottomGradientHolder {
         stackView.layoutIfNeeded()
 
         if position == .floating {
-            remakeConstraints()                 // update constraints only for floating holder
+            remakeConstraints() // update constraints only for floating holder
         }
     }
-
 
     func add(to viewController: UIViewController, under tableView: UITableView? = nil) {
         viewController.view.addSubview(self)
         if let viewController = viewController as? KeyboardAwareViewController {
             keyboardAwareViewController = viewController
-        }   // we need to handle additionalInsets when working with keyboardAware controller
+        } // we need to handle additionalInsets when working with keyboardAware controller
 
         remakeConstraints(tableView: tableView)
     }
@@ -101,14 +101,11 @@ extension BottomGradientHolder {
     override var height: CGFloat {
         insets.height + stackHeight
     }
-
 }
 
 extension BottomGradientHolder {
-
     enum Position {
         case bottom
         case floating
     }
-
 }

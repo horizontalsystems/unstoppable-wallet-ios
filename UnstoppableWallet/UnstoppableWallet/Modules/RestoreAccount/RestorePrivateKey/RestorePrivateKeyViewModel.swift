@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class RestorePrivateKeyViewModel {
     private let service: RestorePrivateKeyService
@@ -14,11 +14,9 @@ class RestorePrivateKeyViewModel {
     init(service: RestorePrivateKeyService) {
         self.service = service
     }
-
 }
 
 extension RestorePrivateKeyViewModel {
-
     var cautionDriver: Driver<Caution?> {
         cautionRelay.asDriver()
     }
@@ -27,11 +25,9 @@ extension RestorePrivateKeyViewModel {
         self.text = text
         cautionRelay.accept(nil)
     }
-
 }
 
 extension RestorePrivateKeyViewModel: IRestoreSubViewModel {
-
     func resolveAccountType() -> AccountType? {
         cautionRelay.accept(nil)
 
@@ -43,7 +39,5 @@ extension RestorePrivateKeyViewModel: IRestoreSubViewModel {
         }
     }
 
-    func clear() {
-    }
-
+    func clear() {}
 }

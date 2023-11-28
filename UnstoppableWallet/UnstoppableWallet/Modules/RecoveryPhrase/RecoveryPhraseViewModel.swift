@@ -4,11 +4,9 @@ class RecoveryPhraseViewModel {
     init(service: RecoveryPhraseService) {
         self.service = service
     }
-
 }
 
 extension RecoveryPhraseViewModel {
-
     var words: [String] {
         service.words
     }
@@ -16,5 +14,4 @@ extension RecoveryPhraseViewModel {
     var passphrase: String? {
         service.salt.isEmpty ? nil : service.salt
     }
-
 }

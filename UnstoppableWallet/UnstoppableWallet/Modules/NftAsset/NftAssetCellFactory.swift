@@ -5,7 +5,7 @@ import UIKit
 class NftAssetCellFactory {
     weak var parentNavigationController: UINavigationController?
 
-    func action(viewItem: NftActivityViewModel.EventViewItem) -> (() -> Void)? { nil }
+    func action(viewItem _: NftActivityViewModel.EventViewItem) -> (() -> Void)? { nil }
 
     func cellElement(viewItem: NftActivityViewModel.EventViewItem) -> CellBuilderNew.CellElement {
         .vStackCentered([
@@ -34,7 +34,6 @@ class NftAssetCellFactory {
 }
 
 extension NftAssetCellFactory: INftActivityCellFactory {
-
     func row(tableView: UIKit.UITableView, viewItem: NftActivityViewModel.EventViewItem, index: Int, onReachBottom: (() -> Void)? = nil) -> RowProtocol {
         CellBuilderNew.row(
             rootElement: cellElement(viewItem: viewItem),

@@ -1,9 +1,9 @@
-import Foundation
-import RxSwift
-import NftKit
-import MarketKit
-import EvmKit
 import BigInt
+import EvmKit
+import Foundation
+import MarketKit
+import NftKit
+import RxSwift
 
 class EvmNftAdapter {
     private let blockchainType: BlockchainType
@@ -18,28 +18,26 @@ class EvmNftAdapter {
 
     private func record(nftBalance: NftBalance) -> EvmNftRecord {
         EvmNftRecord(
-                blockchainType: blockchainType,
-                type: nftBalance.nft.type,
-                contractAddress: nftBalance.nft.contractAddress.hex,
-                tokenId: nftBalance.nft.tokenId.description,
-                tokenName: nftBalance.nft.tokenName,
-                balance: nftBalance.balance
+            blockchainType: blockchainType,
+            type: nftBalance.nft.type,
+            contractAddress: nftBalance.nft.contractAddress.hex,
+            tokenId: nftBalance.nft.tokenId.description,
+            tokenName: nftBalance.nft.tokenName,
+            balance: nftBalance.balance
         )
     }
-
 }
 
 extension EvmNftAdapter: INftAdapter {
-
     var userAddress: String {
         evmKitWrapper.evmKit.address.hex
     }
 
     var nftRecordsObservable: Observable<[NftRecord]> {
         nftKit.nftBalancesObservable
-                .map { [weak self] nftBalances in
-                    nftBalances.compactMap { self?.record(nftBalance: $0) }
-                }
+            .map { [weak self] nftBalances in
+                nftBalances.compactMap { self?.record(nftBalance: $0) }
+            }
     }
 
     var nftRecords: [NftRecord] {
@@ -93,13 +91,10 @@ extension EvmNftAdapter: INftAdapter {
     func sync() {
         nftKit.sync()
     }
-
 }
 
 extension EvmNftAdapter {
-
     static func clear(except excludedWalletIds: [String]) throws {
         try NftKit.Kit.clear(exceptFor: excludedWalletIds)
     }
-
 }

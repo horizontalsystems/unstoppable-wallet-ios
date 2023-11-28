@@ -59,6 +59,7 @@ class BackupAppViewModel: ObservableObject {
             validateName()
         }
     }
+
     @Published var passwordPushed = false {
         didSet {
             // need to reset future fields:
@@ -124,7 +125,7 @@ extension BackupAppViewModel {
 
     private var accountIds: [String] {
         accounts(watch: false)
-            .map { $0.id }
+            .map(\.id)
     }
 
     private func item(account: Account) -> BackupAppModule.AccountItem {
@@ -153,10 +154,10 @@ extension BackupAppViewModel {
         let contacts = contactManager.all ?? []
 
         return BackupAppModule.items(
-                watchAccountCount: accounts(watch: true).count,
-                watchlistCount: favoritesManager.allCoinUids.count,
-                contactAddressCount: contacts.count,
-                blockchainSourcesCount: evmSyncSourceManager.customSyncSources(blockchainType: nil).count
+            watchAccountCount: accounts(watch: true).count,
+            watchlistCount: favoritesManager.allCoinUids.count,
+            contactAddressCount: contacts.count,
+            blockchainSourcesCount: evmSyncSourceManager.customSyncSources(blockchainType: nil).count
         )
     }
 
@@ -183,8 +184,8 @@ extension BackupAppViewModel {
         switch destination {
         case .cloud:
             return RestoreFileHelper.resolve(
-                    name: Self.backupNamePrefix,
-                    elements: cloudBackupManager.existFilenames
+                name: Self.backupNamePrefix,
+                elements: cloudBackupManager.existFilenames
             )
         default:
             return Self.backupNamePrefix
@@ -240,12 +241,12 @@ extension BackupAppViewModel {
 
     func onTapSave() {
         validatePasswords()
-        guard passwordCautionState == .none && confirmCautionState == .none else {
+        guard passwordCautionState == .none, confirmCautionState == .none else {
             return
         }
         passwordButtonProcessing = true
 
-        let selectedIds = accountIds.filter { (selected[$0] ?? false) } + accounts(watch: true).map { $0.id }
+        let selectedIds = accountIds.filter { selected[$0] ?? false } + accounts(watch: true).map(\.id)
         Task {
             switch destination {
             case .none: ()

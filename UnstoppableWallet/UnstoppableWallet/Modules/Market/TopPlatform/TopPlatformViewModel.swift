@@ -4,11 +4,9 @@ class TopPlatformViewModel {
     init(service: TopPlatformService) {
         self.service = service
     }
-
 }
 
 extension TopPlatformViewModel {
-
     var title: String {
         "top_platform.title".localized(service.topPlatform.blockchain.name)
     }
@@ -20,5 +18,4 @@ extension TopPlatformViewModel {
     var imageUrl: String {
         service.topPlatform.blockchain.type.imageUrl
     }
-
 }

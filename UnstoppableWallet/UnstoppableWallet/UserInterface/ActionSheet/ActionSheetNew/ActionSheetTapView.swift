@@ -1,21 +1,21 @@
 import UIKit
 
 class ActionSheetTapView: UIView {
-    var handleTap: (() -> ())?
+    var handleTap: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
-        self.addGestureRecognizer(gestureRecognizer)
+        addGestureRecognizer(gestureRecognizer)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func onTap() {
         handleTap?()
     }
-
 }

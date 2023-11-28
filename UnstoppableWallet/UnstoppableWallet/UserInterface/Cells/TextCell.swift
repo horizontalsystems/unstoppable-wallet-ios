@@ -24,7 +24,8 @@ class TextCell: UITableViewCell {
         label.textColor = .themeGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -32,14 +33,11 @@ class TextCell: UITableViewCell {
         get { label.text }
         set { label.text = newValue }
     }
-
 }
 
 extension TextCell {
-
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font)
         return textHeight + 2 * verticalPadding
     }
-
 }

@@ -14,10 +14,10 @@ class PersonalSupportViewModel {
         self.service = service
 
         service.$requestButtonState
-                .sink { [weak self] state in
-                    self?.sync(state: state)
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] state in
+                self?.sync(state: state)
+            }
+            .store(in: &cancellables)
 
         subscribe(&cancellables, service.$requested) { [weak self] in self?.showRequestedScreenSubject.send($0) }
 
@@ -42,11 +42,9 @@ class PersonalSupportViewModel {
         enabledRequestButtonSubject.send(requestButtonEnabled)
         hiddenRequestingButtonSubject.send(requestingButtonHidden)
     }
-
 }
 
 extension PersonalSupportViewModel {
-
     var showRequestedScreenPublisher: AnyPublisher<Bool, Never> {
         showRequestedScreenSubject.eraseToAnyPublisher()
     }
@@ -84,5 +82,4 @@ extension PersonalSupportViewModel {
     func onTapNewRequest() {
         service.newRequest()
     }
-
 }

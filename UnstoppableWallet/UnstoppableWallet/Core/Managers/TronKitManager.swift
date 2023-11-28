@@ -1,9 +1,9 @@
 import Foundation
-import RxSwift
-import RxRelay
-import TronKit
 import HdWalletKit
 import MarketKit
+import RxRelay
+import RxSwift
+import TronKit
 
 class TronKitManager {
     private let disposeBag = DisposeBag()
@@ -21,7 +21,7 @@ class TronKitManager {
     }
 
     private func _tronKitWrapper(account: Account, blockchainType: BlockchainType) throws -> TronKitWrapper {
-        if let _tronKitWrapper = _tronKitWrapper, let currentAccount = currentAccount, currentAccount == account {
+        if let _tronKitWrapper, let currentAccount, currentAccount == account {
             return _tronKitWrapper
         }
 
@@ -30,16 +30,16 @@ class TronKitManager {
         var signer: Signer?
 
         switch account.type {
-            case .mnemonic:
-                guard let seed = account.type.mnemonicSeed else {
-                    throw KitWrapperError.mnemonicNoSeed
-                }
-                address = try Signer.address(seed: seed)
-                signer = try Signer.instance(seed: seed)
-            case let .tronAddress(value):
-                address = value
-            default:
-                throw AdapterError.unsupportedAccount
+        case .mnemonic:
+            guard let seed = account.type.mnemonicSeed else {
+                throw KitWrapperError.mnemonicNoSeed
+            }
+            address = try Signer.address(seed: seed)
+            signer = try Signer.instance(seed: seed)
+        case let .tronAddress(value):
+            address = value
+        default:
+            throw AdapterError.unsupportedAccount
         }
 
         let tronKit = try TronKit.Kit.instance(
@@ -61,11 +61,9 @@ class TronKitManager {
 
         return wrapper
     }
-
 }
 
 extension TronKitManager {
-
     var tronKitCreatedObservable: Observable<Void> {
         tronKitCreatedRelay.asObservable()
     }
@@ -81,7 +79,6 @@ extension TronKitManager {
             try _tronKitWrapper(account: account, blockchainType: blockchainType)
         }
     }
-
 }
 
 class TronKitWrapper {
@@ -96,27 +93,22 @@ class TronKitWrapper {
     }
 
     func send(contract: Contract, feeLimit: Int?) async throws {
-        guard let signer = signer else {
+        guard let signer else {
             throw SignerError.signerNotSupported
         }
 
         return try await tronKit.send(contract: contract, signer: signer, feeLimit: feeLimit)
     }
-
 }
 
 extension TronKitManager {
-
     enum KitWrapperError: Error {
         case mnemonicNoSeed
     }
-
 }
 
 extension TronKitWrapper {
-
     enum SignerError: Error {
         case signerNotSupported
     }
-
 }

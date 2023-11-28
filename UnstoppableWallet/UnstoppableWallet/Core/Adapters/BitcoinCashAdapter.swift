@@ -1,8 +1,8 @@
 import BitcoinCashKit
 import BitcoinCore
-import RxSwift
-import MarketKit
 import HdWalletKit
+import MarketKit
+import RxSwift
 
 class BitcoinCashAdapter: BitcoinBaseAdapter {
     private let bitcoinCashKit: BitcoinCashKit.Kit
@@ -29,21 +29,21 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
             }
 
             bitcoinCashKit = try BitcoinCashKit.Kit(
-                    seed: seed,
-                    walletId: wallet.account.id,
-                    syncMode: syncMode,
-                    networkType: networkType,
-                    confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
-                    logger: logger
+                seed: seed,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                logger: logger
             )
         case let .hdExtendedKey(key):
             bitcoinCashKit = try BitcoinCashKit.Kit(
-                    extendedKey: key,
-                    walletId: wallet.account.id,
-                    syncMode: syncMode,
-                    networkType: networkType,
-                    confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
-                    logger: logger
+                extendedKey: key,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                logger: logger
             )
         default:
             throw AdapterError.unsupportedAccount
@@ -61,21 +61,16 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
     override func explorerUrl(transactionHash: String) -> String? {
         "https://bch.btc.com/" + transactionHash
     }
-
 }
 
 extension BitcoinCashAdapter: ISendBitcoinAdapter {
-
     var blockchainType: BlockchainType {
         .bitcoinCash
     }
-
 }
 
 extension BitcoinCashAdapter {
-
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.clear(exceptFor: excludedWalletIds)
     }
-
 }

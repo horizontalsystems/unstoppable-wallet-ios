@@ -1,9 +1,8 @@
+import EvmKit
 import Foundation
 import HdWalletKit
-import EvmKit
 
 class RestorePrivateKeyService {
-
     func accountType(text: String) throws -> AccountType {
         let text = text.trimmingCharacters(in: .whitespaces)
 
@@ -25,27 +24,22 @@ class RestorePrivateKeyService {
             default:
                 throw RestoreError.nonPrivateKey
             }
-        } catch {
-        }
+        } catch {}
 
         do {
             let privateKey = try Signer.privateKey(string: text)
             return .evmPrivateKey(data: privateKey)
-        } catch {
-        }
+        } catch {}
 
         throw RestoreError.noValidKey
     }
-
 }
 
 extension RestorePrivateKeyService {
-
     enum RestoreError: Error {
         case emptyText
         case notSupportedDerivedType
         case nonPrivateKey
         case noValidKey
     }
-
 }

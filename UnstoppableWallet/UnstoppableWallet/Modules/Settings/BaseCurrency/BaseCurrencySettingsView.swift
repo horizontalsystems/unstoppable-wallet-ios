@@ -42,7 +42,7 @@ struct BaseCurrencySettingsView: View {
                 .padding(.horizontal, .margin32)
                 .padding(.vertical, .margin24)
 
-                HighlightedTextView(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, viewModel.popularCurrencies.map { $0.code }.joined(separator: ",")))
+                HighlightedTextView(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, viewModel.popularCurrencies.map(\.code).joined(separator: ",")))
                     .padding(.horizontal, .margin16)
 
                 VStack(spacing: .margin12) {

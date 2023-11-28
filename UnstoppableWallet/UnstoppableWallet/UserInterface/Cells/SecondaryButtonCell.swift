@@ -1,13 +1,13 @@
-import UIKit
-import ThemeKit
 import ComponentKit
+import ThemeKit
+import UIKit
 
 class SecondaryButtonCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin16
 
     private let button = SecondaryButton()
 
-    var onTap: (() -> ())?
+    var onTap: (() -> Void)?
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,7 +23,8 @@ class SecondaryButtonCell: UITableViewCell {
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -44,13 +45,10 @@ class SecondaryButtonCell: UITableViewCell {
     func set(style: SecondaryButton.Style) {
         button.set(style: style)
     }
-
 }
 
 extension SecondaryButtonCell {
-
     static func height(style: SecondaryButton.Style) -> CGFloat {
         SecondaryButton.height(style: style) + 2 * verticalPadding
     }
-
 }

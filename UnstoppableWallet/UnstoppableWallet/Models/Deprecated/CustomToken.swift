@@ -32,5 +32,4 @@ class CustomToken: Record {
         container[Columns.coinTypeId] = coinTypeId
         container[Columns.decimals] = decimals
     }
-
 }

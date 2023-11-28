@@ -1,5 +1,5 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class TweetAttachmentView: UIView {
     private static let imageAttachmentHeight: CGFloat = 180
@@ -24,31 +24,32 @@ class TweetAttachmentView: UIView {
         imageTransparencyView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-        
+
         imageTransparencyView.cornerRadius = .cornerRadius4
         imageTransparencyView.layer.cornerCurve = .continuous
         imageTransparencyView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        
+
         imageView.addSubview(videoPlayImageView)
         videoPlayImageView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
             maker.width.equalTo(48)
         }
-        
+
         videoPlayImageView.image = UIImage(named: "play_48")?.withTintColor(.white)
 
         addSubview(pollView)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func bind(attachment: Tweet.Attachment) {
         switch attachment {
-        case .photo(let url): bindPhoto(url: url)
-        case .video(let previewImageUrl): bindVideo(previewImageUrl: previewImageUrl)
-        case .poll(let options): bindPoll(options: options)
+        case let .photo(url): bindPhoto(url: url)
+        case let .video(previewImageUrl): bindVideo(previewImageUrl: previewImageUrl)
+        case let .poll(options): bindPoll(options: options)
         }
     }
 
@@ -97,9 +98,8 @@ class TweetAttachmentView: UIView {
 
     static func height(attachment: Tweet.Attachment, containerWidth: CGFloat) -> CGFloat {
         switch attachment {
-        case .photo, .video: return Self.imageAttachmentHeight
-        case .poll(let options): return TweetPollView.height(options: options, containerWidth: containerWidth)
+        case .photo, .video: return imageAttachmentHeight
+        case let .poll(options): return TweetPollView.height(options: options, containerWidth: containerWidth)
         }
     }
-
 }

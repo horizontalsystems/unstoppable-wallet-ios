@@ -25,7 +25,7 @@ struct SingleCoinPriceView: View {
             }
 
             if #available(iOS 16.0, *), let chartPoints = entry.chartPoints {
-                let values = chartPoints.map { $0.value }
+                let values = chartPoints.map(\.value)
 
                 if let firstValue = values.first, let lastValue = values.last, let minValue = values.min(), let maxValue = values.max() {
                     Chart {

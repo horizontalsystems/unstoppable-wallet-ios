@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import HdWalletKit
+import RxRelay
+import RxSwift
 
 class WatchPublicKeyService {
     private let disposeBag = DisposeBag()
@@ -12,11 +12,9 @@ class WatchPublicKeyService {
             stateRelay.accept(state)
         }
     }
-
 }
 
 extension WatchPublicKeyService {
-
     func set(text: String) {
         if text.trimmingCharacters(in: .whitespaces).isEmpty {
             state = .notReady
@@ -24,11 +22,9 @@ extension WatchPublicKeyService {
             state = .ready(text: text)
         }
     }
-
 }
 
 extension WatchPublicKeyService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -53,11 +49,9 @@ extension WatchPublicKeyService {
             throw ResolveError.notReady
         }
     }
-
 }
 
 extension WatchPublicKeyService {
-
     enum State {
         case ready(text: String)
         case notReady
@@ -75,5 +69,4 @@ extension WatchPublicKeyService {
         case notSupportedDerivedType
         case nonPublicKey
     }
-
 }

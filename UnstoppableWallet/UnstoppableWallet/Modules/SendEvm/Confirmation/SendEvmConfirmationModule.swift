@@ -1,9 +1,9 @@
-import Foundation
-import UIKit
-import ThemeKit
 import EvmKit
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import ThemeKit
+import UIKit
 
 struct SendEvmData {
     let transactionData: TransactionData
@@ -25,19 +25,19 @@ struct SendEvmData {
         case oneInchSwap(info: OneInchSwapInfo)
 
         var dAppInfo: DAppInfo? {
-            if case .otherDApp(let info) = self { return info } else { return nil }
+            if case let .otherDApp(info) = self { return info } else { return nil }
         }
 
         var sendInfo: SendInfo? {
-            if case .send(let info) = self { return info } else { return nil }
+            if case let .send(info) = self { return info } else { return nil }
         }
 
         var swapInfo: SwapInfo? {
-            if case .uniswap(let info) = self { return info } else { return nil }
+            if case let .uniswap(info) = self { return info } else { return nil }
         }
 
         var oneInchSwapInfo: OneInchSwapInfo? {
-            if case .oneInchSwap(let info) = self { return info } else { return nil }
+            if case let .oneInchSwap(info) = self { return info } else { return nil }
         }
     }
 
@@ -75,26 +75,25 @@ struct SendEvmData {
         let slippage: Decimal
         let recipient: Address?
     }
-
 }
 
-struct SendEvmConfirmationModule {
+enum SendEvmConfirmationModule {
     private static let forceMultiplier: Double = 1.2
 
     static func viewController(evmKitWrapper: EvmKitWrapper, sendData: SendEvmData) -> UIViewController? {
         let evmKit = evmKitWrapper.evmKit
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
-                blockchainType: evmKitWrapper.blockchainType,
-                marketKit: App.shared.marketKit,
-                currencyManager: App.shared.currencyManager,
-                coinManager: App.shared.coinManager
+            blockchainType: evmKitWrapper.blockchainType,
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager,
+            coinManager: App.shared.coinManager
         ) else {
             return nil
         }
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
-                evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory
+            evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory
         ) else {
             return nil
         }
@@ -124,10 +123,10 @@ struct SendEvmConfirmationModule {
 
         let evmKitWrapper = adapter.evmKitWrapper
         guard let coinServiceFactory = EvmCoinServiceFactory(
-                blockchainType: evmKitWrapper.blockchainType,
-                marketKit: App.shared.marketKit,
-                currencyManager: App.shared.currencyManager,
-                coinManager: App.shared.coinManager
+            blockchainType: evmKitWrapper.blockchainType,
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager,
+            coinManager: App.shared.coinManager
         ) else {
             throw CreateModuleError.cantCreateFeeRateProvider
         }
@@ -146,8 +145,8 @@ struct SendEvmConfirmationModule {
         }
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
-                evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
-                previousTransaction: transaction, predefinedGasLimit: gasLimit
+            evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
+            previousTransaction: transaction, predefinedGasLimit: gasLimit
         ) else {
             throw CreateModuleError.cantCreateFeeSettingsModule
         }
@@ -164,11 +163,9 @@ struct SendEvmConfirmationModule {
 
         return SendEvmConfirmationViewController(mode: mode, transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
     }
-
 }
 
 extension SendEvmConfirmationModule {
-
     enum CreateModuleError: LocalizedError {
         case wrongTransaction
         case cantCreateFeeRateProvider
@@ -181,9 +178,7 @@ extension SendEvmConfirmationModule {
             case .alreadyInBlock: return "tx_info.transaction.already_in_block".localized
             }
         }
-
     }
-
 }
 
 enum ResendEvmTransactionType {

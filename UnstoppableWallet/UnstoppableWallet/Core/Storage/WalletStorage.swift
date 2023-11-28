@@ -1,5 +1,5 @@
-import RxSwift
 import MarketKit
+import RxSwift
 
 class WalletStorage {
     private let marketKit: MarketKit.Kit
@@ -12,25 +12,23 @@ class WalletStorage {
 
     private func enabledWallet(wallet: Wallet) -> EnabledWallet {
         EnabledWallet(
-                tokenQueryId: wallet.token.tokenQuery.id,
-                accountId: wallet.account.id,
-                coinName: wallet.coin.name,
-                coinCode: wallet.coin.code,
-                tokenDecimals: wallet.token.decimals
+            tokenQueryId: wallet.token.tokenQuery.id,
+            accountId: wallet.account.id,
+            coinName: wallet.coin.name,
+            coinCode: wallet.coin.code,
+            tokenDecimals: wallet.token.decimals
         )
     }
-
 }
 
 extension WalletStorage {
-
     func wallets(account: Account) throws -> [Wallet] {
         let enabledWallets = try storage.enabledWallets(accountId: account.id)
 
         let queries = enabledWallets.compactMap { TokenQuery(id: $0.tokenQueryId) }
         let tokens = try marketKit.tokens(queries: queries)
 
-        let blockchainUids = queries.map { $0.blockchainType.uid }
+        let blockchainUids = queries.map(\.blockchainType.uid)
         let blockchains = try marketKit.blockchains(uids: blockchainUids)
 
         return enabledWallets.compactMap { enabledWallet in
@@ -43,14 +41,15 @@ extension WalletStorage {
             }
 
             if let coinName = enabledWallet.coinName, let coinCode = enabledWallet.coinCode, let tokenDecimals = enabledWallet.tokenDecimals,
-               let blockchain = blockchains.first(where: { $0.uid == tokenQuery.blockchainType.uid }) {
+               let blockchain = blockchains.first(where: { $0.uid == tokenQuery.blockchainType.uid })
+            {
                 let coinUid = tokenQuery.customCoinUid
 
                 let token = Token(
-                        coin: Coin(uid: coinUid, name: coinName, code: coinCode),
-                        blockchain: blockchain,
-                        type: tokenQuery.tokenType,
-                        decimals: tokenDecimals
+                    coin: Coin(uid: coinUid, name: coinName, code: coinCode),
+                    blockchain: blockchain,
+                    type: tokenQuery.tokenType,
+                    decimals: tokenDecimals
                 )
 
                 return Wallet(token: token, account: account)
@@ -73,5 +72,4 @@ extension WalletStorage {
     func clearWallets() {
         try? storage.clear()
     }
-
 }

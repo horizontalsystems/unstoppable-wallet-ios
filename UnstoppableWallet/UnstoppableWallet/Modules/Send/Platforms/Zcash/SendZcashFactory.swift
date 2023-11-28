@@ -1,6 +1,6 @@
-import UIKit
-import MarketKit
 import HsToolKit
+import MarketKit
+import UIKit
 
 class SendZcashFactory: BaseSendFactory {
     private let service: SendZcashService
@@ -41,11 +41,9 @@ class SendZcashFactory: BaseSendFactory {
 
         return viewItems
     }
-
 }
 
 extension SendZcashFactory: ISendConfirmationFactory {
-
     func confirmationViewController() throws -> UIViewController {
         let items = try items()
 
@@ -56,5 +54,4 @@ extension SendZcashFactory: ISendConfirmationFactory {
 
         return viewController
     }
-
 }

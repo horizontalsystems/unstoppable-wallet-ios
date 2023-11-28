@@ -1,16 +1,17 @@
-import UIKit
-import SnapKit
 import HUD
+import SnapKit
+import UIKit
 
 class FeeSliderValueView: UIView {
     private let feeRateLabel = UILabel()
     private let unitNameLabel = UILabel()
 
-    public required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    required public init() {
+    public required init() {
         super.init(frame: CGRect.zero)
 
         backgroundColor = .themeClaude
@@ -42,18 +43,15 @@ class FeeSliderValueView: UIView {
     func set(value: String?) {
         feeRateLabel.text = value
     }
-
 }
 
 extension FeeSliderValueView: HUDContentViewInterface {
-
-    public func updateConstraints(forSize size: CGSize) {
+    public func updateConstraints(forSize _: CGSize) {
         // do nothing
     }
 
     public var actions: [HUDTimeAction] {
         get { [] }
         set {}
-    }   // ignore all actions on view
-
+    } // ignore all actions on view
 }

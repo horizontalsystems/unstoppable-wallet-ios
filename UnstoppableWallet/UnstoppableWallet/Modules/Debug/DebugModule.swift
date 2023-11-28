@@ -16,5 +16,4 @@ protocol IDebugInteractorDelegate: AnyObject {
     func didEnterForeground()
 }
 
-protocol IDebugRouter {
-}
+protocol IDebugRouter {}

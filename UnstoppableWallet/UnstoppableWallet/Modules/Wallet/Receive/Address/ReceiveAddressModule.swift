@@ -1,9 +1,8 @@
 import Foundation
-import UIKit
 import SwiftUI
+import UIKit
 
 class ReceiveAddressModule {
-
     static func view(wallet: Wallet) -> some View {
         let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()
@@ -11,17 +10,15 @@ class ReceiveAddressModule {
         let viewModel = ReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())
         return ReceiveAddressView<ReceiveAddressService, ReceiveAddressViewItemFactory>(viewModel: viewModel)
     }
-
 }
 
 extension ReceiveAddressModule {
-
     struct ErrorItem: Error {
         let icon: String
         let text: String
-        let retryAction: (() -> ())?
+        let retryAction: (() -> Void)?
 
-        init(icon: String, text: String, retryAction: (() -> ())? = nil) {
+        init(icon: String, text: String, retryAction: (() -> Void)? = nil) {
             self.icon = icon
             self.text = text
             self.retryAction = retryAction
@@ -44,9 +41,9 @@ extension ReceiveAddressModule {
         let description: DescriptionItem
         let doneButtonTitle: String
 
-        static func ==(lhs: PopupWarningItem, rhs: PopupWarningItem) -> Bool {
-           lhs.title == rhs.title &&
-           lhs.description.text == rhs.description.text
+        static func == (lhs: PopupWarningItem, rhs: PopupWarningItem) -> Bool {
+            lhs.title == rhs.title &&
+                lhs.description.text == rhs.description.text
         }
 
         public var id: String {
@@ -100,7 +97,7 @@ extension ReceiveAddressModule {
             hasher.combine(id)
         }
 
-        static func ==(lhs: Item, rhs: Item) -> Bool {
+        static func == (lhs: Item, rhs: Item) -> Bool {
             lhs.id == rhs.id
         }
     }
@@ -109,5 +106,4 @@ extension ReceiveAddressModule {
         let copyValue: String
         let sections: [[Item]]
     }
-
 }

@@ -6,12 +6,10 @@ class EvmSyncSourceStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension EvmSyncSourceStorage {
-
-    func getAll() throws ->  [EvmSyncSourceRecord] {
+    func getAll() throws -> [EvmSyncSourceRecord] {
         try dbPool.read { db in
             try EvmSyncSourceRecord.fetchAll(db)
         }
@@ -27,7 +25,6 @@ extension EvmSyncSourceStorage {
         _ = try dbPool.write { db in
             try record.insert(db)
         }
-
     }
 
     func delete(blockchainTypeUid: String, url: String) throws {
@@ -35,5 +32,4 @@ extension EvmSyncSourceStorage {
             try EvmSyncSourceRecord.filter(EvmSyncSourceRecord.Columns.blockchainTypeUid == blockchainTypeUid && EvmSyncSourceRecord.Columns.url == url).deleteAll(db)
         }
     }
-
 }

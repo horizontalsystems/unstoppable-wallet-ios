@@ -1,10 +1,10 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IWalletTokenListService {
     var state: WalletTokenListService.State { get set }
@@ -30,8 +30,8 @@ class WalletTokenListViewModel {
     let emptyText: String
 
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
-    private let noConnectionErrorRelay = PublishRelay<()>()
-    private let showSyncingRelay = PublishRelay<()>()
+    private let noConnectionErrorRelay = PublishRelay<Void>()
+    private let showSyncingRelay = PublishRelay<Void>()
     private let selectWalletRelay = PublishRelay<Wallet>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
 
@@ -52,8 +52,8 @@ class WalletTokenListViewModel {
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdate() }
 
         service.stateUpdatedPublisher
-                .sink { [weak self] in self?.sync(serviceState: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(serviceState: $0) }
+            .store(in: &cancellables)
 
         _sync(serviceState: service.state)
     }
@@ -64,17 +64,17 @@ class WalletTokenListViewModel {
         }
     }
 
-    private func _sync(serviceState: WalletTokenListService.State) {
+    private func _sync(serviceState _: WalletTokenListService.State) {
         switch service.state {
         case .noAccount: state = .noAccount
         case .loading: state = .loading
-        case .loaded(let items):
+        case let .loaded(items):
             if items.isEmpty {
                 state = .empty
             } else {
                 state = .list(viewItems: items.compactMap { _viewItem(item: $0) })
             }
-        case .failed(let reason):
+        case let .failed(reason):
             switch reason {
             case .syncFailed: state = .syncFailed
             case .invalidApiKey: state = .invalidApiKey
@@ -88,7 +88,7 @@ class WalletTokenListViewModel {
 
     private func syncUpdated(item: WalletTokenListService.Item) {
         queue.async {
-            guard case .list(var viewItems) = self.state else {
+            guard case var .list(viewItems) = self.state else {
                 return
             }
 
@@ -104,15 +104,15 @@ class WalletTokenListViewModel {
     }
 
     private func _viewItem(item: WalletTokenListService.Item) -> BalanceViewItem? {
-        if let filter = filter, !filter.isEmpty {
+        if let filter, !filter.isEmpty {
             if !(item.element.name.localizedCaseInsensitiveContains(filter) || (item.element.coin?.name.localizedCaseInsensitiveContains(filter) ?? false)) {
                 return nil
             }
         }
         return factory.viewItem(
-                item: item,
-                balancePrimaryValue: service.balancePrimaryValue,
-                balanceHidden: service.balanceHidden
+            item: item,
+            balancePrimaryValue: service.balancePrimaryValue,
+            balanceHidden: service.balanceHidden
         )
     }
 
@@ -121,20 +121,18 @@ class WalletTokenListViewModel {
 
         sync(serviceState: service.state)
     }
-
 }
 
 extension WalletTokenListViewModel {
-
     var showWarningDriver: Driver<CancellableTitledCaution?> {
         showWarningRelay.asDriver()
     }
 
-    var noConnectionErrorSignal: Signal<()> {
+    var noConnectionErrorSignal: Signal<Void> {
         noConnectionErrorRelay.asSignal()
     }
 
-    var showSyncingSignal: Signal<()> {
+    var showSyncingSignal: Signal<Void> {
         showSyncingRelay.asSignal()
     }
 
@@ -186,11 +184,9 @@ extension WalletTokenListViewModel {
             self?.set(filter: filter)
         }
     }
-
 }
 
 extension WalletTokenListViewModel {
-
     enum State: CustomStringConvertible {
         case list(viewItems: [BalanceViewItem])
         case noAccount
@@ -201,7 +197,7 @@ extension WalletTokenListViewModel {
 
         var description: String {
             switch self {
-            case .list(let viewItems): return "list: \(viewItems.count) view items"
+            case let .list(viewItems): return "list: \(viewItems.count) view items"
             case .noAccount: return "noAccount"
             case .empty: return "empty"
             case .loading: return "loading"
@@ -210,5 +206,4 @@ extension WalletTokenListViewModel {
             }
         }
     }
-
 }

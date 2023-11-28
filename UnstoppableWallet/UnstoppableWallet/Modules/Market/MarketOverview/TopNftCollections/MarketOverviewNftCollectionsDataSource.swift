@@ -1,5 +1,5 @@
-import UIKit
 import ThemeKit
+import UIKit
 
 class MarketOverviewNftCollectionsDataSource: BaseMarketOverviewTopListDataSource {
     private let viewModel: MarketOverviewNftCollectionsViewModel
@@ -8,11 +8,11 @@ class MarketOverviewNftCollectionsDataSource: BaseMarketOverviewTopListDataSourc
         self.viewModel = viewModel
 
         super.init(
-                topListViewModel: viewModel,
-                presentDelegate: presentDelegate,
-                rightSelectorMode: .selector,
-                imageName: "image_2_24",
-                title: "market.top.top_collections".localized
+            topListViewModel: viewModel,
+            presentDelegate: presentDelegate,
+            rightSelectorMode: .selector,
+            imageName: "image_2_24",
+            title: "market.top.top_collections".localized
         )
     }
 
@@ -30,5 +30,4 @@ class MarketOverviewNftCollectionsDataSource: BaseMarketOverviewTopListDataSourc
             presentDelegate?.present(viewController: ThemeNavigationController(rootViewController: module))
         }
     }
-
 }

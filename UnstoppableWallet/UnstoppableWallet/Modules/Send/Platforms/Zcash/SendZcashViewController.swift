@@ -1,10 +1,9 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SendZcashViewController: BaseSendViewController {
-
     private let memoCell: SendMemoInputCell
     private let feeCell: FeeCell
 
@@ -15,22 +14,23 @@ class SendZcashViewController: BaseSendViewController {
          amountCautionViewModel: SendAmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
          memoViewModel: SendMemoInputViewModel,
-         feeViewModel: SendFeeViewModel
-    ) {
+         feeViewModel: SendFeeViewModel)
+    {
         memoCell = SendMemoInputCell(viewModel: memoViewModel, topInset: .margin12)
         feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         super.init(
-                confirmationFactory: confirmationFactory,
-                viewModel: viewModel,
-                availableBalanceViewModel: availableBalanceViewModel,
-                amountInputViewModel: amountInputViewModel,
-                amountCautionViewModel: amountCautionViewModel,
-                recipientViewModel: recipientViewModel
+            confirmationFactory: confirmationFactory,
+            viewModel: viewModel,
+            availableBalanceViewModel: availableBalanceViewModel,
+            amountInputViewModel: amountInputViewModel,
+            amountCautionViewModel: amountCautionViewModel,
+            recipientViewModel: recipientViewModel
         )
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -55,30 +55,30 @@ class SendZcashViewController: BaseSendViewController {
 
     var memoSection: SectionProtocol {
         Section(
-                id: "memo",
-                rows: [
-                    StaticRow(
-                            cell: memoCell,
-                            id: "memo-input",
-                            dynamicHeight: { [weak self] width in
-                                self?.memoCell.height(containerWidth: width) ?? 0
-                            }
-                    )
-                ]
+            id: "memo",
+            rows: [
+                StaticRow(
+                    cell: memoCell,
+                    id: "memo-input",
+                    dynamicHeight: { [weak self] width in
+                        self?.memoCell.height(containerWidth: width) ?? 0
+                    }
+                ),
+            ]
         )
     }
 
     var feeSection: SectionProtocol {
         Section(
-                id: "fee",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: feeCell,
-                            id: "fee",
-                            height: .heightCell48
-                    )
-                ]
+            id: "fee",
+            headerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: feeCell,
+                    id: "fee",
+                    height: .heightCell48
+                ),
+            ]
         )
     }
 
@@ -87,10 +87,9 @@ class SendZcashViewController: BaseSendViewController {
         sections.append(contentsOf: [
             memoSection,
             feeSection,
-            buttonSection
+            buttonSection,
         ])
 
         return sections
     }
-
 }

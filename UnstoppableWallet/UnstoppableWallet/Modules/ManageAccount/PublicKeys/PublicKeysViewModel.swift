@@ -6,11 +6,9 @@ class PublicKeysViewModel {
     init(service: PublicKeysService) {
         self.service = service
     }
-
 }
 
 extension PublicKeysViewModel {
-
     var accountType: AccountType {
         service.accountType
     }
@@ -22,5 +20,4 @@ extension PublicKeysViewModel {
     var showAccountExtendedPublicKey: Bool {
         service.accountExtendedPublicKeySupported
     }
-
 }

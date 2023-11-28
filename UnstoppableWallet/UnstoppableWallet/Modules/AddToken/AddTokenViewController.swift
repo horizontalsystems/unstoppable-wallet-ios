@@ -1,11 +1,11 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
+import Foundation
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class AddTokenViewController: ThemeViewController {
     private let viewModel: AddTokenViewModel
@@ -29,7 +29,8 @@ class AddTokenViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -127,94 +128,91 @@ class AddTokenViewController: ThemeViewController {
 
     private func openBlockchainSelector() {
         let viewController = SelectorModule.singleSelectorViewController(
-                title: "add_token.blockchain".localized,
-                viewItems: viewModel.blockchainViewItems,
-                onSelect: { [weak self] index in
-                    self?.viewModel.onSelectBlockchain(index: index)
-                }
+            title: "add_token.blockchain".localized,
+            viewItems: viewModel.blockchainViewItems,
+            onSelect: { [weak self] index in
+                self?.viewModel.onSelectBlockchain(index: index)
+            }
         )
 
         present(viewController, animated: true)
     }
-
 }
 
 extension AddTokenViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
-                    id: "blockchain",
-                    headerState: .margin(height: .margin12),
+                id: "blockchain",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.universalRow48(
+                        id: "blockchain",
+                        image: .local(UIImage(named: "blocks_24")?.withTintColor(.themeGray)),
+                        title: .body("add_token.blockchain".localized),
+                        value: .subhead1(blockchain, color: .themeGray),
+                        accessoryType: .dropdown,
+                        hash: blockchain,
+                        autoDeselect: true,
+                        isFirst: true,
+                        isLast: true,
+                        action: { [weak self] in
+                            self?.openBlockchainSelector()
+                        }
+                    ),
+                ]
+            ),
+            Section(
+                id: "input",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: inputCell,
+                        id: "input",
+                        dynamicHeight: { [weak self] width in
+                            self?.inputCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: inputCautionCell,
+                        id: "input-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.inputCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
+            ),
+        ]
+
+        if let viewItem {
+            sections.append(
+                Section(
+                    id: "token-info",
                     footerState: .margin(height: .margin32),
                     rows: [
                         tableView.universalRow48(
-                                id: "blockchain",
-                                image: .local(UIImage(named: "blocks_24")?.withTintColor(.themeGray)),
-                                title: .body("add_token.blockchain".localized),
-                                value: .subhead1(blockchain, color: .themeGray),
-                                accessoryType: .dropdown,
-                                hash: blockchain,
-                                autoDeselect: true,
-                                isFirst: true,
-                                isLast: true,
-                                action: { [weak self] in
-                                    self?.openBlockchainSelector()
-                                }
-                        )
-                    ]
-            ),
-            Section(
-                    id: "input",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: inputCell,
-                                id: "input",
-                                dynamicHeight: { [weak self] width in
-                                    self?.inputCell.height(containerWidth: width) ?? 0
-                                }
+                            id: "coin-name",
+                            title: .subhead2("add_token.coin_name".localized),
+                            value: .subhead1(viewItem.name),
+                            isFirst: true
                         ),
-                        StaticRow(
-                                cell: inputCautionCell,
-                                id: "input-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.inputCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
+                        tableView.universalRow48(
+                            id: "coin-name",
+                            title: .subhead2("add_token.symbol".localized),
+                            value: .subhead1(viewItem.code)
+                        ),
+                        tableView.universalRow48(
+                            id: "coin-name",
+                            title: .subhead2("add_token.decimals".localized),
+                            value: .subhead1(viewItem.decimals),
+                            isLast: true
+                        ),
                     ]
-            )
-        ]
-
-        if let viewItem = viewItem {
-            sections.append(
-                    Section(
-                            id: "token-info",
-                            footerState: .margin(height: .margin32),
-                            rows: [
-                                tableView.universalRow48(
-                                        id: "coin-name",
-                                        title: .subhead2("add_token.coin_name".localized),
-                                        value: .subhead1(viewItem.name),
-                                        isFirst: true
-                                ),
-                                tableView.universalRow48(
-                                        id: "coin-name",
-                                        title: .subhead2("add_token.symbol".localized),
-                                        value: .subhead1(viewItem.code)
-                                ),
-                                tableView.universalRow48(
-                                        id: "coin-name",
-                                        title: .subhead2("add_token.decimals".localized),
-                                        value: .subhead1(viewItem.decimals),
-                                        isLast: true
-                                )
-                            ]
-                    )
+                )
             )
         }
 
         return sections
     }
-
 }

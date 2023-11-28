@@ -1,6 +1,6 @@
-import UIKit
 import ComponentKit
 import SectionsTableView
+import UIKit
 
 class DonateDescriptionDataSource: NSObject, ISectionDataSource {
     weak var delegate: ISectionDataSourceDelegate?
@@ -14,9 +14,9 @@ class DonateDescriptionDataSource: NSObject, ISectionDataSource {
     private let rootGetAddressElement: CellBuilderNew.CellElement = .hStack([
         .textElement(text: .body("donate.list.get_address".localized)),
         .margin8,
-        .image20 { (component: ImageComponent) -> () in
+        .image20 { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-        }
+        },
     ])
 
     func prepare(tableView: UITableView) {
@@ -25,11 +25,11 @@ class DonateDescriptionDataSource: NSObject, ISectionDataSource {
         tableView.registerCell(forClass: EmptyCell.self)
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         1
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         3
     }
 
@@ -41,16 +41,16 @@ class DonateDescriptionDataSource: NSObject, ISectionDataSource {
         case 1: return tableView.dequeueReusableCell(withIdentifier: String(describing: EmptyCell.self), for: indexPath)
         default:
             return CellBuilderNew.preparedCell(
-                    tableView: tableView,
-                    indexPath: originalIndexPath,
-                    selectable: true,
-                    rootElement: rootGetAddressElement,
-                    layoutMargins: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
+                tableView: tableView,
+                indexPath: originalIndexPath,
+                selectable: true,
+                rootElement: rootGetAddressElement,
+                layoutMargins: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
             )
         }
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt _: IndexPath) {
         if let cell = cell as? DonateDescriptionCell {
             cell.label.text = "donate.support.description".localized
         }
@@ -76,5 +76,4 @@ class DonateDescriptionDataSource: NSObject, ISectionDataSource {
             showAddresses()
         }
     }
-
 }

@@ -7,10 +7,9 @@ class SendAmountViewModel: ObservableObject {
 
     @Published var inputType: InputType = .coin
     @Published var text: String = "" {
-        didSet {
-
-        }
+        didSet {}
     }
+
     @Published var coinAmount: Decimal = 0
     @Published var currencyAmount: Decimal = 0
 

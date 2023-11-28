@@ -1,7 +1,6 @@
 import Foundation
 
 extension TimeInterval {
-
     var approximateHoursOrMinutes: String {
         let seconds = Int(self)
         let hours = seconds / 3600
@@ -13,5 +12,4 @@ extension TimeInterval {
         let minutes = seconds / 60
         return "send.duration.minutes".localized(minutes)
     }
-
 }

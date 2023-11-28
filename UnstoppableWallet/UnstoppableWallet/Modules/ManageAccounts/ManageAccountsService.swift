@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import Combine
+import RxRelay
+import RxSwift
 
 class ManageAccountsService {
     private let accountManager: AccountManager
@@ -23,10 +23,10 @@ class ManageAccountsService {
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.syncItems() }
 
         cloudBackupManager.$oneWalletItems
-                .sink { [weak self] _ in
-                    self?.syncItems()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] _ in
+                self?.syncItems()
+            }
+            .store(in: &cancellables)
 
         syncItems()
     }
@@ -38,11 +38,9 @@ class ManageAccountsService {
             return Item(account: account, cloudBackedUp: cloudBackedUp, isActive: account == activeAccount)
         }
     }
-
 }
 
 extension ManageAccountsService {
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -58,11 +56,9 @@ extension ManageAccountsService {
     func set(activeAccountId: String) {
         accountManager.set(activeAccountId: activeAccountId)
     }
-
 }
 
 extension ManageAccountsService {
-
     struct Item {
         let account: Account
         let cloudBackedUp: Bool
@@ -76,5 +72,4 @@ extension ManageAccountsService {
             !account.backedUp
         }
     }
-
 }

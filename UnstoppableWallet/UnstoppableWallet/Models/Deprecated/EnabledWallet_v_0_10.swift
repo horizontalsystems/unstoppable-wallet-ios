@@ -41,5 +41,4 @@ class EnabledWallet_v_0_10: Record {
     override class var databaseTableName: String {
         "enabled_wallets"
     }
-
 }

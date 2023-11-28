@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 import TronKit
 
 class WatchTronAddressService {
@@ -19,54 +19,48 @@ class WatchTronAddressService {
 
     private func sync(addressState: AddressService.State) {
         switch addressState {
-            case .success(let address):
-                do {
-                    state = .ready(address: try TronKit.Address(address: address.raw), domain: address.domain)
-                } catch {
-                    state = .notReady
-                }
-            default:
+        case let .success(address):
+            do {
+                state = try .ready(address: TronKit.Address(address: address.raw), domain: address.domain)
+            } catch {
                 state = .notReady
+            }
+        default:
+            state = .notReady
         }
     }
-
 }
 
 extension WatchTronAddressService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
     func resolve() -> AccountType? {
         switch state {
-            case let .ready(address, _): return AccountType.tronAddress(address: address)
-            case .notReady: return nil
+        case let .ready(address, _): return AccountType.tronAddress(address: address)
+        case .notReady: return nil
         }
     }
-
 }
 
 extension WatchTronAddressService {
-
     enum State {
         case ready(address: TronKit.Address, domain: String?)
         case notReady
 
         var watchEnabled: Bool {
             switch self {
-                case .ready: return true
-                case .notReady: return false
+            case .ready: return true
+            case .notReady: return false
             }
         }
 
         var domain: String? {
             switch self {
-                case .ready(_, let domain): return domain
-                case .notReady: return nil
+            case let .ready(_, domain): return domain
+            case .notReady: return nil
             }
         }
-
     }
-
 }

@@ -1,9 +1,9 @@
-import UIKit
-import ThemeKit
-import RxSwift
-import RxCocoa
-import SectionsTableView
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class UniswapSettingsDataSource: ISwapSettingsDataSource {
     private let disposeBag = DisposeBag()
@@ -22,10 +22,10 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
 
     private let serviceFeeNoteCell = HighlightedDescriptionCell(showVerticalMargin: false)
 
-    var onOpen: ((UIViewController) -> ())?
-    var onClose: (() -> ())?
-    var onReload: (() -> ())?
-    var onChangeButtonState: ((Bool, String) -> ())?
+    var onOpen: ((UIViewController) -> Void)?
+    var onClose: (() -> Void)?
+    var onReload: (() -> Void)?
+    var onChangeButtonState: ((Bool, String) -> Void)?
 
     init(viewModel: UniswapSettingsViewModel, recipientViewModel: RecipientAddressViewModel, slippageViewModel: SwapSlippageViewModel, deadlineViewModel: SwapDeadlineViewModel?) {
         self.viewModel = viewModel
@@ -36,7 +36,8 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -82,7 +83,7 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
             switch actionState {
             case .enabled:
                 self?.onChangeButtonState?(true, "button.apply".localized)
-            case .disabled(let title):
+            case let .disabled(title):
                 self?.onChangeButtonState?(false, title)
             }
         }
@@ -95,92 +96,89 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
             HudHelper.instance.show(banner: .error(string: "alert.unknown_error".localized))
         }
     }
-
 }
 
 extension UniswapSettingsDataSource {
-
     func buildSections(tableView: SectionsTableView) -> [SectionProtocol] {
         var sections = [
             Section(
-                    id: "top-margin",
-                    headerState: .margin(height: .margin12)
+                id: "top-margin",
+                headerState: .margin(height: .margin12)
             ),
 
             Section(
-                    id: "recipient",
-                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.recipient_address".localized),
-                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.recipient.footer".localized),
-                    rows: [
-                        StaticRow(
-                                cell: recipientCell,
-                                id: "recipient-input",
-                                dynamicHeight: { [weak self] width in
-                                    self?.recipientCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: recipientCautionCell,
-                                id: "recipient-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.recipientCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "recipient",
+                headerState: tableView.sectionHeader(text: "swap.advanced_settings.recipient_address".localized),
+                footerState: tableView.sectionFooter(text: "swap.advanced_settings.recipient.footer".localized),
+                rows: [
+                    StaticRow(
+                        cell: recipientCell,
+                        id: "recipient-input",
+                        dynamicHeight: { [weak self] width in
+                            self?.recipientCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: recipientCautionCell,
+                        id: "recipient-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.recipientCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
 
             Section(
-                    id: "slippage",
-                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.slippage".localized),
-                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.slippage.footer".localized),
-                    rows: [
-                        StaticRow(
-                                cell: slippageCell,
-                                id: "slippage",
-                                dynamicHeight: { [weak self] width in
-                                    self?.slippageCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: slippageCautionCell,
-                                id: "slippage-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.slippageCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "slippage",
+                headerState: tableView.sectionHeader(text: "swap.advanced_settings.slippage".localized),
+                footerState: tableView.sectionFooter(text: "swap.advanced_settings.slippage.footer".localized),
+                rows: [
+                    StaticRow(
+                        cell: slippageCell,
+                        id: "slippage",
+                        dynamicHeight: { [weak self] width in
+                            self?.slippageCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: slippageCautionCell,
+                        id: "slippage-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.slippageCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
         ]
         if deadlineViewModel != nil {
             sections.append(Section(
-                    id: "deadline",
-                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.deadline".localized),
-                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.deadline.footer".localized),
-                    rows: [
-                        StaticRow(
-                                cell: deadlineCell,
-                                id: "deadline",
-                                dynamicHeight: { [weak self] width in
-                                    self?.deadlineCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "deadline",
+                headerState: tableView.sectionHeader(text: "swap.advanced_settings.deadline".localized),
+                footerState: tableView.sectionFooter(text: "swap.advanced_settings.deadline.footer".localized),
+                rows: [
+                    StaticRow(
+                        cell: deadlineCell,
+                        id: "deadline",
+                        dynamicHeight: { [weak self] width in
+                            self?.deadlineCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ))
         }
         sections.append(Section(
-                id: "service-fee",
-                rows: [
-                    StaticRow(
-                            cell: serviceFeeNoteCell,
-                            id: "service-fee-cell",
-                            dynamicHeight: { [weak self] width in
-                                self?.serviceFeeNoteCell.height(containerWidth: width) ?? 0
-                            }
-                    )
-                ]
-            )
+            id: "service-fee",
+            rows: [
+                StaticRow(
+                    cell: serviceFeeNoteCell,
+                    id: "service-fee-cell",
+                    dynamicHeight: { [weak self] width in
+                        self?.serviceFeeNoteCell.height(containerWidth: width) ?? 0
+                    }
+                ),
+            ]
+        )
         )
         return sections
     }
-
 }

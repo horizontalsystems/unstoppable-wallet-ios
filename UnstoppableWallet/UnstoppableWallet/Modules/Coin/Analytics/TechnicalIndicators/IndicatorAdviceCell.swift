@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
 import ComponentKit
-import ThemeKit
 import HUD
+import SnapKit
+import ThemeKit
+import UIKit
 
 class IndicatorAdviceCell: BaseThemeCell {
     static let height: CGFloat = 229
@@ -14,7 +14,7 @@ class IndicatorAdviceCell: BaseThemeCell {
     private var adviceViews = [IndicatorAdviceView]()
     private let spinner = HUDActivityView.create(with: .medium24)
 
-    var onTapInfo: (() -> ())?
+    var onTapInfo: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -50,7 +50,7 @@ class IndicatorAdviceCell: BaseThemeCell {
         infoButton.addTarget(self, action: #selector(onTapInfoButton), for: .touchUpInside)
 
         var lastView: UIView = headerWrapperView
-        for _ in 0..<3 {
+        for _ in 0 ..< 3 {
             let view = IndicatorAdviceView()
             adviceViews.append(view)
 
@@ -71,18 +71,17 @@ class IndicatorAdviceCell: BaseThemeCell {
         spinner.set(hidden: true)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func onTapInfoButton() {
         onTapInfo?()
     }
-
 }
 
 extension IndicatorAdviceCell {
-
     func set(loading: Bool) {
         adviceViews.forEach { $0.isHidden = loading }
         spinner.isHidden = !loading
@@ -114,5 +113,4 @@ extension IndicatorAdviceCell {
             view.set(advice: element.advice)
         }
     }
-
 }

@@ -30,7 +30,7 @@ class UrlManager {
             return
         }
 
-        if let controller = controller, inApp {
+        if let controller, inApp {
             let safariViewController = SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration())
             safariViewController.modalPresentationStyle = .pageSheet
             controller.present(safariViewController, animated: true)

@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 import MarketKit
 
 class UnknownSwapTransactionRecord: EvmTransactionRecord {
@@ -14,5 +14,4 @@ class UnknownSwapTransactionRecord: EvmTransactionRecord {
 
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: true)
     }
-
 }

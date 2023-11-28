@@ -50,22 +50,22 @@ class TransactionInfoService {
 
         case let tx as ApproveTransactionRecord: tokens.append(tx.value.token)
         case let tx as ContractCallTransactionRecord:
-            tokens.append(contentsOf: tx.incomingEvents.map { $0.value.token })
-            tokens.append(contentsOf: tx.outgoingEvents.map { $0.value.token })
+            tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
 
         case let tx as ExternalContractCallTransactionRecord:
-            tokens.append(contentsOf: tx.incomingEvents.map { $0.value.token })
-            tokens.append(contentsOf: tx.outgoingEvents.map { $0.value.token })
+            tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
 
         case let tx as TronIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as TronOutgoingTransactionRecord: tokens.append(tx.value.token)
         case let tx as TronApproveTransactionRecord: tokens.append(tx.value.token)
         case let tx as TronContractCallTransactionRecord:
-            tokens.append(contentsOf: tx.incomingEvents.map { $0.value.token })
-            tokens.append(contentsOf: tx.outgoingEvents.map { $0.value.token })
+            tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
         case let tx as TronExternalContractCallTransactionRecord:
-            tokens.append(contentsOf: tx.incomingEvents.map { $0.value.token })
-            tokens.append(contentsOf: tx.outgoingEvents.map { $0.value.token })
+            tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
 
         case let tx as BitcoinIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BitcoinOutgoingTransactionRecord:

@@ -1,8 +1,8 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
+import Foundation
 import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketOverviewGlobalService {
     private let baseService: MarketOverviewService
@@ -19,8 +19,8 @@ class MarketOverviewGlobalService {
         self.baseService = baseService
 
         baseService.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync()
     }
@@ -48,18 +48,18 @@ class MarketOverviewGlobalService {
         }
 
         return GlobalMarketData(
-                marketCap: globalMarketItem(pointItems: marketCapPointItems),
-                volume24h: globalMarketItem(pointItems: volume24hPointItems),
-                defiMarketCap: globalMarketItem(pointItems: defiMarketCapPointItems),
-                defiTvl: globalMarketItem(pointItems: tvlPointItems)
+            marketCap: globalMarketItem(pointItems: marketCapPointItems),
+            volume24h: globalMarketItem(pointItems: volume24hPointItems),
+            defiMarketCap: globalMarketItem(pointItems: defiMarketCapPointItems),
+            defiTvl: globalMarketItem(pointItems: tvlPointItems)
         )
     }
 
     private func globalMarketItem(pointItems: [GlobalMarketPointItem]) -> GlobalMarketItem {
         GlobalMarketItem(
-                amount: amount(pointItems: pointItems),
-                diff: diff(pointItems: pointItems),
-                pointItems: pointItems
+            amount: amount(pointItems: pointItems),
+            diff: diff(pointItems: pointItems),
+            pointItems: pointItems
         )
     }
 
@@ -78,11 +78,9 @@ class MarketOverviewGlobalService {
 
         return (lastAmount - firstAmount) * 100 / firstAmount
     }
-
 }
 
 extension MarketOverviewGlobalService {
-
     var globalMarketDataObservable: Observable<GlobalMarketData?> {
         globalMarketDataRelay.asObservable()
     }
@@ -90,11 +88,9 @@ extension MarketOverviewGlobalService {
     var currency: Currency {
         baseService.currency
     }
-
 }
 
 extension MarketOverviewGlobalService {
-
     struct GlobalMarketData {
         let marketCap: GlobalMarketItem
         let volume24h: GlobalMarketItem
@@ -112,5 +108,4 @@ extension MarketOverviewGlobalService {
         let timestamp: TimeInterval
         let amount: Decimal
     }
-
 }

@@ -3,11 +3,10 @@ import UIKit
 private var window: UIWindow!
 
 extension UIAlertController {
-
     public static func showSimpleAlert(fromController: UIViewController? = nil, title: String? = nil, message: String? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let ok = UIAlertAction(title: "button.ok".localized, style: .cancel, handler:nil)
+        let ok = UIAlertAction(title: "button.ok".localized, style: .cancel, handler: nil)
         alert.addAction(ok)
 
         alert.show(forView: nil, barButtonItem: nil, fromController: fromController, sourceRect: nil)
@@ -31,16 +30,15 @@ extension UIAlertController {
         }
         popoverPresentationController?.barButtonItem = barButtonItem
 
-        if let fromController = fromController {
+        if let fromController {
             fromController.present(self, animated: true)
         } else {
             window.rootViewController?.present(self, animated: true, completion: nil)
         }
     }
 
-    open override func viewDidDisappear(_ animated: Bool) {
+    override open func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         window = nil
     }
-
 }

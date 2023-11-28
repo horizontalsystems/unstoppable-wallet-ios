@@ -1,5 +1,5 @@
-import RxSwift
 import RxRelay
+import RxSwift
 
 class BalancePrimaryValueManager {
     private let keyBalancePrimaryValue = "balance-primary-value"
@@ -23,13 +23,10 @@ class BalancePrimaryValueManager {
             balancePrimaryValue = .coin
         }
     }
-
 }
 
 extension BalancePrimaryValueManager {
-
     var balancePrimaryValueObservable: Observable<BalancePrimaryValue> {
         balancePrimaryValueRelay.asObservable()
     }
-
 }

@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class FormAmountInputView: UIView {
     private let viewModel: AmountInputViewModel
@@ -38,7 +38,8 @@ class FormAmountInputView: UIView {
         subscribe(disposeBag, viewModel.secondaryTextTypeDriver) { [weak self] in self?.amountInputView.secondaryButtonTextColor = self?.textColor(inputType: $0) }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -47,7 +48,7 @@ class FormAmountInputView: UIView {
     }
 
     private func set(amount: String?) {
-        guard amountInputView.inputText != amount && !viewModel.equalValue(lhs: amountInputView.inputText, rhs: amount) else { //avoid issue with point ("1" and "1.")
+        guard amountInputView.inputText != amount, !viewModel.equalValue(lhs: amountInputView.inputText, rhs: amount) else { // avoid issue with point ("1" and "1.")
             return
         }
 
@@ -72,11 +73,9 @@ class FormAmountInputView: UIView {
     private func set(secondaryText: String?) {
         amountInputView.secondaryButtonText = secondaryText ?? "n/a".localized
     }
-
 }
 
 extension FormAmountInputView {
-
     var viewHeight: CGFloat {
         amountInputView.viewHeight
     }
@@ -95,12 +94,10 @@ extension FormAmountInputView {
         get { amountInputView.clearHidden }
         set { amountInputView.clearHidden = newValue }
     }
-
 }
 
 extension FormAmountInputView: IHeightControlView {
-
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { amountInputView.onChangeHeight }
         set { amountInputView.onChangeHeight = newValue }
     }
@@ -108,5 +105,4 @@ extension FormAmountInputView: IHeightControlView {
     func height(containerWidth: CGFloat) -> CGFloat {
         amountInputView.height(containerWidth: containerWidth)
     }
-
 }

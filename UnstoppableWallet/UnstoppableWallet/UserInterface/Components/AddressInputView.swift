@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class AddressInputView: UIView {
     private let formValidatedView: FormValidatedView
@@ -14,10 +14,10 @@ class AddressInputView: UIView {
     private let scanView = InputSecondaryCircleButtonWrapperView()
     private let pasteView = InputSecondaryButtonWrapperView(style: .default)
 
-    var onChangeText: ((String?) -> ())?
-    var onFetchText: ((String?) -> ())?
-    var onOpenViewController: ((UIViewController) -> ())?
-    var onTapContacts: (() -> ())?
+    var onChangeText: ((String?) -> Void)?
+    var onFetchText: ((String?) -> Void)?
+    var onOpenViewController: ((UIViewController) -> Void)?
+    var onTapContacts: (() -> Void)?
 
     var showContacts: Bool = false {
         didSet {
@@ -69,7 +69,8 @@ class AddressInputView: UIView {
         syncButtonStates()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -111,11 +112,9 @@ class AddressInputView: UIView {
             contactView.isHidden = !showContacts
         }
     }
-
 }
 
 extension AddressInputView {
-
     var inputPlaceholder: String? {
         get { inputStackView.placeholder }
         set { inputStackView.placeholder = newValue }
@@ -146,12 +145,12 @@ extension AddressInputView {
         stateView.isSpinnerVisible = isLoading
     }
 
-    var onChangeEditing: ((Bool) -> ())? {
+    var onChangeEditing: ((Bool) -> Void)? {
         get { inputStackView.onChangeEditing }
         set { inputStackView.onChangeEditing = newValue }
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { formValidatedView.onChangeHeight }
         set { formValidatedView.onChangeHeight = newValue }
     }
@@ -159,5 +158,4 @@ extension AddressInputView {
     func height(containerWidth: CGFloat) -> CGFloat {
         formValidatedView.height(containerWidth: containerWidth)
     }
-
 }

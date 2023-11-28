@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class SendFeeCautionViewModel {
     private let disposeBag = DisposeBag()
@@ -39,13 +39,10 @@ class SendFeeCautionViewModel {
             caution = nil
         }
     }
-
 }
 
 extension SendFeeCautionViewModel: ITitledCautionViewModel {
-
     var cautionDriver: Driver<TitledCaution?> {
         cautionRelay.asDriver()
     }
-
 }

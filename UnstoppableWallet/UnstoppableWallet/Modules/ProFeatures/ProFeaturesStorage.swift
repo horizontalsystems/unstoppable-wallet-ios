@@ -6,16 +6,15 @@ class ProFeaturesStorage {
     init(keychainStorage: KeychainStorage) {
         self.keychainStorage = keychainStorage
     }
-
 }
 
 extension ProFeaturesStorage {
-
     func getAll() -> [ProFeaturesAuthorizationManager.NftType: SessionKey] {
         var keys = [ProFeaturesAuthorizationManager.NftType: SessionKey]()
         for type in ProFeaturesAuthorizationManager.NftType.allCases {
             if let raw: String = keychainStorage.value(for: type.rawValue),
-               let sessionKey = SessionKey(raw: raw) {
+               let sessionKey = SessionKey(raw: raw)
+            {
                 keys[type] = sessionKey
             }
         }
@@ -42,7 +41,7 @@ extension ProFeaturesStorage {
     }
 
     func clear(type: ProFeaturesAuthorizationManager.NftType?) {
-        if let type = type {
+        if let type {
             try? keychainStorage.removeValue(for: type.rawValue)
             return
         }
@@ -51,11 +50,9 @@ extension ProFeaturesStorage {
             try? keychainStorage.removeValue(for: type.rawValue)
         }
     }
-
 }
 
 extension ProFeaturesStorage {
-
     struct SessionKey: CustomStringConvertible {
         private static let separator: Character = "_"
 
@@ -83,8 +80,5 @@ extension ProFeaturesStorage {
         var rawValue: String {
             [accountId, address, sessionKey].joined(separator: String(SessionKey.separator))
         }
-
     }
-
 }
-

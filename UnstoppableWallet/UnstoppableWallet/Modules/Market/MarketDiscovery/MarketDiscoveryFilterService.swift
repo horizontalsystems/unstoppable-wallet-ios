@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketDiscoveryFilterService {
     private let marketKit: MarketKit.Kit
@@ -22,17 +22,15 @@ class MarketDiscoveryFilterService {
     }
 
     private func coinUid(index: Int) -> String? {
-        guard case .searchResults(let fullCoins) = state, index < fullCoins.count else {
+        guard case let .searchResults(fullCoins) = state, index < fullCoins.count else {
             return nil
         }
 
         return fullCoins[index].coin.uid
     }
-
 }
 
 extension MarketDiscoveryFilterService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -46,7 +44,7 @@ extension MarketDiscoveryFilterService {
             state = .idle
         } else {
             do {
-                state = .searchResults(fullCoins: try marketKit.fullCoins(filter: filter))
+                state = try .searchResults(fullCoins: marketKit.fullCoins(filter: filter))
             } catch {
                 state = .searchResults(fullCoins: [])
             }
@@ -80,11 +78,9 @@ extension MarketDiscoveryFilterService {
         favoritesManager.remove(coinUid: coinUid)
         resultRelay.accept(.unfavorited)
     }
-
 }
 
 extension MarketDiscoveryFilterService {
-
     enum State {
         case idle
         case searchResults(fullCoins: [FullCoin])
@@ -95,5 +91,4 @@ extension MarketDiscoveryFilterService {
         case unfavorited
         case fail
     }
-
 }

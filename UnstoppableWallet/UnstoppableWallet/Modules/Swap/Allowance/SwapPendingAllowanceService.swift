@@ -1,8 +1,8 @@
-import Foundation
 import EvmKit
-import RxSwift
-import RxRelay
+import Foundation
 import MarketKit
+import RxRelay
+import RxSwift
 
 class SwapPendingAllowanceService {
     private let spenderAddress: EvmKit.Address
@@ -29,22 +29,22 @@ class SwapPendingAllowanceService {
         self.allowanceService = allowanceService
 
         allowanceService.stateObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.sync()
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] _ in
+                self?.sync()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func sync() {
 //        print("Pending allowance: \(pendingAllowance ?? -1)")
-        guard let pendingAllowance = pendingAllowance else {
+        guard let pendingAllowance else {
             state = .notAllowed
             return
         }
 
 //        print("allowance state: \(allowanceService.state)")
-        guard case .ready(let allowance) = allowanceService.state else {
+        guard case let .ready(allowance) = allowanceService.state else {
             state = .notAllowed
             return
         }
@@ -55,11 +55,9 @@ class SwapPendingAllowanceService {
             state = .approved
         }
     }
-
 }
 
 extension SwapPendingAllowanceService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -72,7 +70,7 @@ extension SwapPendingAllowanceService {
     }
 
     func syncAllowance() {
-        guard let token = token, let adapter = adapterManager.adapter(for: token) as? IErc20Adapter else {
+        guard let token, let adapter = adapterManager.adapter(for: token) as? IErc20Adapter else {
             return
         }
 
@@ -84,13 +82,10 @@ extension SwapPendingAllowanceService {
 
         sync()
     }
-
 }
 
 extension SwapPendingAllowanceService {
-
     enum State: Int {
         case notAllowed, revoking, pending, approved
     }
-
 }

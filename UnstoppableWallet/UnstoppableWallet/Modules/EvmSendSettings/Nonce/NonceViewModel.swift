@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class NonceViewModel {
     private let disposeBag = DisposeBag()
@@ -29,10 +29,10 @@ class NonceViewModel {
         case .loading:
             cautionType = nil
             nonce = nil
-        case .failed(_):
+        case .failed:
             cautionType = .error
             nonce = nil
-        case .completed(let nonceData):
+        case let .completed(nonceData):
             nonce = Decimal(nonceData.data)
             cautionType = nonceData.cautionType
         }
@@ -41,14 +41,12 @@ class NonceViewModel {
         valueRelay.accept(nonce)
     }
 
-    private func sync(usingRecommended: Bool) {
-        alteredStateRelay.accept(Void())
+    private func sync(usingRecommended _: Bool) {
+        alteredStateRelay.accept(())
     }
-
 }
 
 extension NonceViewModel {
-
     var altered: Bool {
         !service.usingRecommended
     }
@@ -72,5 +70,4 @@ extension NonceViewModel {
     var cautionTypeDriver: Driver<CautionType?> {
         cautionTypeRelay.asDriver()
     }
-
 }

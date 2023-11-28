@@ -1,9 +1,9 @@
-import UIKit
-import RxSwift
-import ThemeKit
-import SectionsTableView
 import ComponentKit
 import HUD
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class CoinTweetsViewController: ThemeViewController {
     private let viewModel: CoinTweetsViewModel
@@ -27,7 +27,8 @@ class CoinTweetsViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -84,7 +85,7 @@ class CoinTweetsViewController: ThemeViewController {
             self?.spinner.isHidden = !loading
         }
         subscribe(disposeBag, viewModel.infoDriver) { [weak self] info in
-            if let info = info {
+            if let info {
                 self?.infoView.text = info
                 self?.infoView.isHidden = false
             } else {
@@ -154,56 +155,54 @@ class CoinTweetsViewController: ThemeViewController {
         let webUrl = "https://twitter.com/\(username)"
         urlManager.open(url: webUrl, from: parentNavigationController)
     }
-
 }
 
 extension CoinTweetsViewController: SectionsDataSource {
-
     private func row(viewItem: CoinTweetsViewModel.ViewItem) -> RowProtocol {
         Row<TweetCell>(
-                id: viewItem.id,
-                autoDeselect: true,
-                dynamicHeight: { containerWidth in TweetCell.height(viewItem: viewItem, containerWidth: containerWidth) },
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    cell.bind(viewItem: viewItem)
-                },
-                action: { [weak self] _ in
-                    self?.open(username: viewItem.username, tweetId: viewItem.id)
-                }
+            id: viewItem.id,
+            autoDeselect: true,
+            dynamicHeight: { containerWidth in TweetCell.height(viewItem: viewItem, containerWidth: containerWidth) },
+            bind: { cell, _ in
+                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                cell.bind(viewItem: viewItem)
+            },
+            action: { [weak self] _ in
+                self?.open(username: viewItem.username, tweetId: viewItem.id)
+            }
         )
     }
 
     private func buttonSection() -> SectionProtocol {
         Section(
-                id: "button_section",
-                headerState: .margin(height: .margin16),
-                footerState: .margin(height: .margin16),
-                rows: [
-                    Row<SecondaryButtonCell>(
-                            id: "see-on-twitter",
-                            height: SecondaryButtonCell.height(style: .default),
-                            bind: { [weak self] cell, _ in
-                                cell.set(style: .default)
-                                cell.title = "coin_tweets.see_on_twitter".localized
-                                cell.onTap = {
-                                    self?.onTapSeeOnTwitter()
-                                }
-                            }
-                    )
-                ]
+            id: "button_section",
+            headerState: .margin(height: .margin16),
+            footerState: .margin(height: .margin16),
+            rows: [
+                Row<SecondaryButtonCell>(
+                    id: "see-on-twitter",
+                    height: SecondaryButtonCell.height(style: .default),
+                    bind: { [weak self] cell, _ in
+                        cell.set(style: .default)
+                        cell.title = "coin_tweets.see_on_twitter".localized
+                        cell.onTap = {
+                            self?.onTapSeeOnTwitter()
+                        }
+                    }
+                ),
+            ]
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let viewItems = viewItems {
+        if let viewItems {
             for (index, viewItem) in viewItems.enumerated() {
                 let section = Section(
-                        id: "tweet_\(index)",
-                        headerState: .margin(height: .margin12),
-                        rows: [row(viewItem: viewItem)]
+                    id: "tweet_\(index)",
+                    headerState: .margin(height: .margin12),
+                    rows: [row(viewItem: viewItem)]
                 )
 
                 sections.append(section)
@@ -214,5 +213,4 @@ extension CoinTweetsViewController: SectionsDataSource {
 
         return sections
     }
-
 }

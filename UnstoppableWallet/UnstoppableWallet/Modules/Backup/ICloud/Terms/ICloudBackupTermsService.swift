@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import HsExtensions
 
 class ICloudBackupTermsService {
@@ -14,18 +14,17 @@ class ICloudBackupTermsService {
         self.account = account
         self.cloudAccountBackupManager = cloudAccountBackupManager
     }
-
 }
 
 extension ICloudBackupTermsService {
-
     var cloudIsAvailable: Bool {
         cloudAccountBackupManager.isAvailable
     }
 
     func toggleTerm(at index: Int) {
-        guard case .selectedTerms(var checkedIndices) = state,
-              index < termCount else {
+        guard case var .selectedTerms(checkedIndices) = state,
+              index < termCount
+        else {
             return
         }
 
@@ -37,14 +36,11 @@ extension ICloudBackupTermsService {
 
         state = .selectedTerms(checkedIndices)
     }
-
 }
 
 extension ICloudBackupTermsService {
-
     enum State {
         case iCloudNotAvailable
         case selectedTerms(Set<Int>)
     }
-
 }

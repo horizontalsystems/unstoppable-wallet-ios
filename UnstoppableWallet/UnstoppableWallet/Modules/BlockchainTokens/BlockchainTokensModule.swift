@@ -1,5 +1,4 @@
-struct BlockchainTokensModule {
-
+enum BlockchainTokensModule {
     static func module() -> (BlockchainTokensService, BlockchainTokensView) {
         let service = BlockchainTokensService()
         let viewModel = BlockchainTokensViewModel(service: service)
@@ -7,5 +6,4 @@ struct BlockchainTokensModule {
 
         return (service, view)
     }
-
 }

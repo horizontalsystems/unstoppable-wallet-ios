@@ -1,7 +1,6 @@
 import Foundation
 
 extension Int {
-
     var digits: Int {
         guard self != 0 else {
             return 0
@@ -14,5 +13,4 @@ extension Int {
         let digitCount: Int = Swift.max(0, digits - depth)
         return (pow(Decimal(10), digitCount) as NSDecimalNumber).intValue
     }
-
 }

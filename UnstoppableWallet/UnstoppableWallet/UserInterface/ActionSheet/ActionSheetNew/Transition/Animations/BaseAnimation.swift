@@ -8,20 +8,17 @@ class BaseAnimation: NSObject {
         self.duration = duration
     }
 
-    func animator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
+    func animator(using _: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
         fatalError("Must be implemented by inheritors")
     }
-
 }
 
-extension BaseAnimation: UIViewControllerAnimatedTransitioning  {
-
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+extension BaseAnimation: UIViewControllerAnimatedTransitioning {
+    func transitionDuration(using _: UIViewControllerContextTransitioning?) -> TimeInterval {
         duration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         animator(using: transitionContext).startAnimation()
     }
-
 }

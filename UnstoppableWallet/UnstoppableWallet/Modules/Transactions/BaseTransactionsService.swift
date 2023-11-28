@@ -154,7 +154,7 @@ class BaseTransactionsService {
         queue.async {
             //            print("Fetched tx items: \(transactionItems.count): \(transactionItems)")
 
-            let nftUids = transactionItems.map { $0.record }.nftUids
+            let nftUids = transactionItems.map(\.record).nftUids
             let nftMetadata = self.nftMetadataService.assetsBriefMetadata(nftUids: nftUids)
 
             let missingNftUids = nftUids.subtracting(Set(nftMetadata.keys))
@@ -249,7 +249,7 @@ class BaseTransactionsService {
     }
 
     private func currencyValue(record: TransactionRecord, rate: CurrencyValue?) -> CurrencyValue? {
-        guard let rate = rate, let decimalValue = record.mainValue?.decimalValue else {
+        guard let rate, let decimalValue = record.mainValue?.decimalValue else {
             return nil
         }
 

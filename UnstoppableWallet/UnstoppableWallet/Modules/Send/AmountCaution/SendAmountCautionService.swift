@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class SendAmountCautionService {
     private let disposeBag = DisposeBag()
@@ -13,10 +13,11 @@ class SendAmountCautionService {
             setAvailableBalanceService()
         }
     }
+
     weak var sendAmountBoundsService: ISendXSendAmountBoundsService?
 
     private let amountCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private(set) var amountCaution: Caution? = nil {
+    private(set) var amountCaution: Caution? {
         didSet {
             amountCautionRelay.accept(amountCaution)
         }
@@ -30,7 +31,7 @@ class SendAmountCautionService {
 
     private func setAvailableBalanceService() {
         availableBalanceDisposeBag = DisposeBag()
-        if let availableBalanceService = availableBalanceService {
+        if let availableBalanceService {
             subscribe(availableBalanceDisposeBag, availableBalanceService.availableBalanceObservable) { [weak self] _ in
                 self?.sync()
             }
@@ -44,36 +45,35 @@ class SendAmountCautionService {
             return
         }
         if let availableBalance = availableBalanceService?.availableBalance.data,
-           availableBalance < amount {
+           availableBalance < amount
+        {
             amountCaution = .insufficientBalance(availableBalance: availableBalance)
             return
         }
         if let maximumAmount = sendAmountBoundsService?.maximumSendAmount,
-           maximumAmount < amount {
+           maximumAmount < amount
+        {
             amountCaution = .maximumAmountExceeded(maximumAmount: maximumAmount)
             return
         }
         if let minimumAmount = sendAmountBoundsService?.minimumSendAmount,
-           minimumAmount > amount {
+           minimumAmount > amount
+        {
             amountCaution = .tooFewAmount(minimumAmount: minimumAmount)
             return
         }
 
         amountCaution = nil
     }
-
 }
 
 extension SendAmountCautionService {
-
     var amountCautionObservable: Observable<Caution?> {
         amountCautionRelay.asObservable()
     }
-
 }
 
 extension SendAmountCautionService {
-
     enum Caution {
         case insufficientBalance(availableBalance: Decimal)
         case maximumAmountExceeded(maximumAmount: Decimal)
@@ -81,12 +81,10 @@ extension SendAmountCautionService {
 
         var value: Decimal {
             switch self {
-            case .insufficientBalance(let value): return value
-            case .maximumAmountExceeded( let value): return value
-            case .tooFewAmount(let value): return value
+            case let .insufficientBalance(value): return value
+            case let .maximumAmountExceeded(value): return value
+            case let .tooFewAmount(value): return value
             }
         }
-
     }
-
 }

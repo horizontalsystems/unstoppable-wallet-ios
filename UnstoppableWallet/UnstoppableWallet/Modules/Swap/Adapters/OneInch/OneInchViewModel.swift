@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import UniswapKit
 import EvmKit
+import Foundation
+import RxCocoa
+import RxSwift
+import UniswapKit
 
 class OneInchViewModel {
     private let disposeBag = DisposeBag()
@@ -65,7 +65,7 @@ class OneInchViewModel {
 
     private func handleObservable(errors: [Error]? = nil) {
         queue.async { [weak self] in
-            if let errors = errors {
+            if let errors {
                 self?.sync(errors: errors)
             }
 
@@ -93,14 +93,15 @@ class OneInchViewModel {
         switch state {
         case .loading:
             loading = true
-        case .ready(let parameters):
+        case let .ready(parameters):
             if !parameters.amountFrom.isZero, !parameters.amountTo.isZero {
                 let executionPrice = parameters.amountTo / parameters.amountFrom
                 let invertedPrice = 1 / executionPrice
                 let prices = viewItemHelper.sortedPrices(
-                        executionPrice: executionPrice,
-                        invertedPrice: invertedPrice,
-                        tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)
+                    executionPrice: executionPrice,
+                    invertedPrice: invertedPrice,
+                    tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut
+                )
                 buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: prices?.0, revertedPrice: prices?.1))
             } else {
                 buyPriceRelay.accept(nil)
@@ -172,12 +173,12 @@ class OneInchViewModel {
         } else if case .notReady = tradeService.state {
             revokeWarning = nil
             approveStep = .notApproved
-        } else if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
+        } else if service.errors.contains(where: { $0 as? SwapModule.SwapError == .insufficientBalanceIn }) {
             approveStep = .notApproved
         } else if revokeWarning != nil {
             revokeAction = .enabled(title: "button.revoke".localized)
             approveStep = .revokeRequired
-        } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
+        } else if service.errors.contains(where: { $0 as? SwapModule.SwapError == .insufficientAllowance }) {
             approveAction = .enabled(title: "button.approve".localized)
             approveStep = .approveRequired
         } else if case .approved = pendingAllowanceService.state {
@@ -204,11 +205,9 @@ class OneInchViewModel {
     private func sync(toggleAvailable: Bool) {
         isAmountToggleAvailableRelay.accept(toggleAvailable)
     }
-
 }
 
 extension OneInchViewModel {
-
     var amountTypeSelectorItems: [String] {
         ["swap.amount_type.coin".localized, currencyManager.baseCurrency.code]
     }
@@ -285,7 +284,7 @@ extension OneInchViewModel {
         tradeService.switchCoins()
     }
 
-    func onChangeAmountType(index: Int) {
+    func onChangeAmountType(index _: Int) {
         switchService.toggle()
     }
 
@@ -310,21 +309,18 @@ extension OneInchViewModel {
     }
 
     func onTapProceed() {
-        guard case .ready(let parameters) = service.state else {
+        guard case let .ready(parameters) = service.state else {
             return
         }
 
         openConfirmRelay.accept(parameters)
     }
-
 }
 
 extension OneInchViewModel {
-
     enum ActionState {
         case hidden
         case enabled(title: String)
         case disabled(title: String)
     }
-
 }

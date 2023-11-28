@@ -38,5 +38,4 @@ class RestoreSettingRecord_v_0_25: Record {
         container[Columns.key] = key
         container[Columns.value] = value
     }
-
 }

@@ -1,13 +1,13 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class WalletHeaderCell: UITableViewCell {
-    internal var amountView = HeaderAmountView()
-    internal let buttonsView = BalanceButtonsView()
+    var amountView = HeaderAmountView()
+    let buttonsView = BalanceButtonsView()
 
-    var actions: [WalletModule.Button: () -> ()] = [:]
+    var actions: [WalletModule.Button: () -> Void] = [:]
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,16 +29,17 @@ class WalletHeaderCell: UITableViewCell {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
-    var onTapAmount: (() -> ())? {
+    var onTapAmount: (() -> Void)? {
         get { amountView.onTapAmount }
         set { amountView.onTapAmount = newValue }
     }
 
-    var onTapConvertedAmount: (() -> ())? {
+    var onTapConvertedAmount: (() -> Void)? {
         get { amountView.onTapConvertedAmount }
         set { amountView.onTapConvertedAmount = newValue }
     }
@@ -47,20 +48,18 @@ class WalletHeaderCell: UITableViewCell {
         amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
         amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
         buttonsView.bind(
-                buttons: viewItem.buttons,
-                sendAction: actions[.send],
-                withdrawAction: actions[.withdraw],
-                receiveAction: actions[.receive],
-                depositAction: actions[.deposit],
-                swapAction: actions[.swap],
-                chartAction: actions[.chart]
+            buttons: viewItem.buttons,
+            sendAction: actions[.send],
+            withdrawAction: actions[.withdraw],
+            receiveAction: actions[.receive],
+            depositAction: actions[.deposit],
+            swapAction: actions[.swap],
+            chartAction: actions[.chart]
         )
     }
-
 }
 
 extension WalletHeaderCell {
-
     static func height(viewItem: WalletModule.HeaderViewItem?) -> CGFloat {
         guard let viewItem else {
             return HeaderAmountView.height
@@ -68,9 +67,8 @@ extension WalletHeaderCell {
 
         var buttonsHidden = viewItem.buttons.isEmpty
         if !viewItem.buttons.isEmpty {
-            buttonsHidden = viewItem.buttons.allSatisfy { key, value in value == .hidden }
+            buttonsHidden = viewItem.buttons.allSatisfy { _, value in value == .hidden }
         }
         return HeaderAmountView.height + (buttonsHidden ? 0 : BalanceButtonsView.height)
     }
-
 }

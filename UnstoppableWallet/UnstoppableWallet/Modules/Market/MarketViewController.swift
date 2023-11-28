@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MarketViewController: ThemeViewController {
     private let viewModel: MarketViewModel
@@ -28,7 +28,8 @@ class MarketViewController: ThemeViewController {
         tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -97,11 +98,9 @@ class MarketViewController: ThemeViewController {
     @objc private func onTapDiscovery() {
         navigationController?.pushViewController(MarketDiscoveryModule.viewController(), animated: true)
     }
-
 }
 
 extension MarketViewController: IPresentDelegate {
-
     func present(viewController: UIViewController) {
         navigationController?.present(viewController, animated: true)
     }
@@ -109,5 +108,4 @@ extension MarketViewController: IPresentDelegate {
     func push(viewController: UIViewController) {
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }

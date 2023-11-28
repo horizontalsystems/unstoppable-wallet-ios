@@ -1,6 +1,6 @@
-import Foundation
-import EvmKit
 import BigInt
+import EvmKit
+import Foundation
 
 struct WCEthereumTransaction: Codable {
     public let from: String

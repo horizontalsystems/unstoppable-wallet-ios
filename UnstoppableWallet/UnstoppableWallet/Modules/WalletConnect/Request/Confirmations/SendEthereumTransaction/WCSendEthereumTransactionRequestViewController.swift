@@ -1,9 +1,9 @@
-import Foundation
-import UIKit
-import ThemeKit
-import RxSwift
-import RxCocoa
 import ComponentKit
+import Foundation
+import RxCocoa
+import RxSwift
+import ThemeKit
+import UIKit
 
 class WCSendEthereumTransactionRequestViewController: SendEvmTransactionViewController {
     private let viewModel: WCSendEthereumTransactionRequestViewModel
@@ -17,7 +17,8 @@ class WCSendEthereumTransactionRequestViewController: SendEvmTransactionViewCont
         super.init(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -51,6 +52,7 @@ class WCSendEthereumTransactionRequestViewController: SendEvmTransactionViewCont
 
         dismiss(animated: true)
     }
+
     override func handleSending() {
         HudHelper.instance.show(banner: .approving)
     }
@@ -61,5 +63,4 @@ class WCSendEthereumTransactionRequestViewController: SendEvmTransactionViewCont
 
         super.handleSendSuccess(transactionHash: transactionHash)
     }
-
 }

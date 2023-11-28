@@ -1,5 +1,4 @@
-struct MarketOverviewModule {
-
+enum MarketOverviewModule {
     static func viewController(presentDelegate: IPresentDelegate) -> MarketOverviewViewController {
         let service = MarketOverviewService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, appManager: App.shared.appManager)
 
@@ -39,8 +38,7 @@ struct MarketOverviewModule {
             topLosersDataSource,
             categoryDataSource,
             nftCollectionsDataSource,
-            topPlatformsDataSource
+            topPlatformsDataSource,
         ])
     }
-
 }

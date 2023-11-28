@@ -2,29 +2,26 @@ class AlertPresenter {
     weak var view: IAlertView?
 
     private let viewItems: [AlertViewItem]
-    private let onSelect: (Int) -> ()
+    private let onSelect: (Int) -> Void
 
     let afterClose: Bool
 
     private let router: IAlertRouter
 
-    init(viewItems: [AlertViewItem], onSelect: @escaping (Int) -> (), router: IAlertRouter, afterClose: Bool) {
+    init(viewItems: [AlertViewItem], onSelect: @escaping (Int) -> Void, router: IAlertRouter, afterClose: Bool) {
         self.viewItems = viewItems
         self.onSelect = onSelect
         self.router = router
         self.afterClose = afterClose
     }
-
 }
 
 extension AlertPresenter: IAlertViewDelegate {
-
     func onLoad() {
         view?.set(viewItems: viewItems)
     }
 
     func onTapViewItem(index: Int) {
-
         if afterClose {
             router.close { [weak self] in
                 self?.onSelect(index)
@@ -34,5 +31,4 @@ extension AlertPresenter: IAlertViewDelegate {
             router.close(completion: nil)
         }
     }
-
 }

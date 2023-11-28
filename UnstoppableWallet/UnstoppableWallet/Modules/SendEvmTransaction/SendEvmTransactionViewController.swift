@@ -1,12 +1,12 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
 import Foundation
 import MarketKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SendEvmTransactionViewController: ThemeViewController {
     let disposeBag = DisposeBag()
@@ -36,7 +36,8 @@ class SendEvmTransactionViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -87,11 +88,11 @@ class SendEvmTransactionViewController: ThemeViewController {
         let value = nonce.flatMap { "\(NSDecimalNumber(decimal: $0).intValue)" } ?? ""
 
         CellBuilderNew.buildStatic(
-                cell: nonceCell,
-                rootElement: .hStack([
-                    .textElement(text: .subhead2("send.confirmation.nonce".localized)),
-                    .textElement(text: .subhead1(value), parameters: [.allCompression, .rightAlignment])
-                ])
+            cell: nonceCell,
+            rootElement: .hStack([
+                .textElement(text: .subhead2("send.confirmation.nonce".localized)),
+                .textElement(text: .subhead1(value), parameters: [.allCompression, .rightAlignment]),
+            ])
         )
     }
 
@@ -113,10 +114,9 @@ class SendEvmTransactionViewController: ThemeViewController {
         reloadTable()
     }
 
-    func handleSending() {
-    }
+    func handleSending() {}
 
-    func handleSendSuccess(transactionHash: Data) {
+    func handleSendSuccess(transactionHash _: Data) {
         dismiss(animated: true)
     }
 
@@ -161,7 +161,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         case let .doubleAmount(title, coinValue, currencyValue):
             return CellComponent.doubleAmountRow(tableView: tableView, rowInfo: rowInfo, title: title, coinValue: coinValue, currencyValue: currencyValue)
         case let .address(title, value, valueTitle, contactAddress):
-            var onAddToContact: (() -> ())? = nil
+            var onAddToContact: (() -> Void)? = nil
             if let contactAddress {
                 onAddToContact = { [weak self] in
                     ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
@@ -170,7 +170,7 @@ class SendEvmTransactionViewController: ThemeViewController {
             return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
         case let .value(title, value, type):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value, type: type)
-        case .input(let value):
+        case let .input(value):
             return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "Input", value: value, valueTitle: nil)
         }
     }
@@ -178,23 +178,21 @@ class SendEvmTransactionViewController: ThemeViewController {
     private func section(sectionViewItem: SendEvmTransactionViewModel.SectionViewItem, index: Int) -> SectionProtocol {
         var headerText: String?
 
-        if index == 0, let topDescription = topDescription {
+        if index == 0, let topDescription {
             headerText = topDescription
         }
 
         return Section(
-                id: "section_\(index)",
-                headerState: headerText.map { tableView.sectionFooter(text: $0) } ?? .margin(height: .margin12),
-                rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
-                    row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
-                }
+            id: "section_\(index)",
+            headerState: headerText.map { tableView.sectionFooter(text: $0) } ?? .margin(height: .margin12),
+            rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
+                row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
+            }
         )
     }
-
 }
 
 extension SendEvmTransactionViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         let transactionSections: [SectionProtocol] = sectionViewItems.enumerated().map { index, sectionViewItem in
             section(sectionViewItem: sectionViewItem, index: index)
@@ -202,66 +200,66 @@ extension SendEvmTransactionViewController: SectionsDataSource {
 
         var settingsSections: [SectionProtocol] = []
 
-        if settingsViewModel.nonceViewModel.altered && !settingsViewModel.nonceViewModel.frozen {
+        if settingsViewModel.nonceViewModel.altered, !settingsViewModel.nonceViewModel.frozen {
             settingsSections.append(
-                    Section(
+                Section(
+                    id: "nonce",
+                    headerState: .margin(height: .margin16),
+                    rows: [
+                        StaticRow(
+                            cell: nonceCell,
                             id: "nonce",
-                            headerState: .margin(height: .margin16),
-                            rows: [
-                                StaticRow(
-                                        cell: nonceCell,
-                                        id: "nonce",
-                                        height: .heightCell48,
-                                        autoDeselect: true
-                                )
-                            ]
-                    )
+                            height: .heightCell48,
+                            autoDeselect: true
+                        ),
+                    ]
+                )
             )
         }
 
         settingsSections.append(
-                Section(
+            Section(
+                id: "fee",
+                headerState: .margin(height: .margin16),
+                rows: [
+                    StaticRow(
+                        cell: feeCell,
                         id: "fee",
-                        headerState: .margin(height: .margin16),
-                        rows: [
-                            StaticRow(
-                                    cell: feeCell,
-                                    id: "fee",
-                                    height: .heightDoubleLineCell
-                            )
-                        ]
-                )
+                        height: .heightDoubleLineCell
+                    ),
+                ]
+            )
         )
 
         let cautionsSections: [SectionProtocol] = [
             Section(
-                    id: "caution1",
-                    headerState: .margin(height: .margin16),
-                    rows: [
-                        StaticRow(
-                                cell: caution1Cell,
-                                id: "caution1",
-                                dynamicHeight: { [weak self] containerWidth in
-                                    self?.caution1Cell.cellHeight(containerWidth: containerWidth) ?? 0
-                                }
-                        )
-                    ]
+                id: "caution1",
+                headerState: .margin(height: .margin16),
+                rows: [
+                    StaticRow(
+                        cell: caution1Cell,
+                        id: "caution1",
+                        dynamicHeight: { [weak self] containerWidth in
+                            self?.caution1Cell.cellHeight(containerWidth: containerWidth) ?? 0
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "caution2",
-                    headerState: .margin(height: .margin12),
-                    rows: [
-                        StaticRow(
-                                cell: caution2Cell,
-                                id: "caution2",
-                                dynamicHeight: { [weak self] containerWidth in
-                                    self?.caution2Cell.cellHeight(containerWidth: containerWidth) ?? 0
-                                }
-                        )]
-            )
+                id: "caution2",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    StaticRow(
+                        cell: caution2Cell,
+                        id: "caution2",
+                        dynamicHeight: { [weak self] containerWidth in
+                            self?.caution2Cell.cellHeight(containerWidth: containerWidth) ?? 0
+                        }
+                    ),
+                ]
+            ),
         ]
 
         return transactionSections + settingsSections + cautionsSections
     }
-
 }

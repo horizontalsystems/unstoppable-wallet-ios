@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 
 class WCSendEthereumTransactionRequestService {
     private let request: WalletConnectRequest
@@ -14,22 +14,21 @@ class WCSendEthereumTransactionRequestService {
         self.request = request
         signService = baseService
     }
-
 }
 
 extension WCSendEthereumTransactionRequestService {
-
     var transactionData: TransactionData {
         TransactionData(
-                to: payload.transaction.to,
-                value: payload.transaction.value,
-                input: payload.transaction.data
+            to: payload.transaction.to,
+            value: payload.transaction.value,
+            input: payload.transaction.data
         )
     }
 
     var gasPrice: GasPrice? {
         if let maxFeePerGas = payload.transaction.maxFeePerGas,
-           let maxPriorityFeePerGas = payload.transaction.maxPriorityFeePerGas {
+           let maxPriorityFeePerGas = payload.transaction.maxPriorityFeePerGas
+        {
             return GasPrice.eip1559(maxFeePerGas: maxFeePerGas, maxPriorityFeePerGas: maxPriorityFeePerGas)
         }
 
@@ -43,5 +42,4 @@ extension WCSendEthereumTransactionRequestService {
     func reject() {
         signService.rejectRequest(id: request.id)
     }
-
 }

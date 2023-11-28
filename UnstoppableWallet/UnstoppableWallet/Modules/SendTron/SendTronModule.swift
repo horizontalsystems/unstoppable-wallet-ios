@@ -1,9 +1,8 @@
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
 class SendTronModule {
-
     static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendTronAdapter) -> UIViewController {
         let tronAddressParserItem = TronAddressParser()
         let addressParserChain = AddressParserChain().append(handler: tronAddressParserItem)
@@ -46,5 +45,4 @@ class SendTronModule {
 
         return viewController
     }
-
 }

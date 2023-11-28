@@ -1,7 +1,7 @@
-import Foundation
-import RxSwift
-import HsToolKit
 import Alamofire
+import Foundation
+import HsToolKit
+import RxSwift
 
 class GuidesManager {
     private let networkManager: NetworkManager
@@ -9,14 +9,11 @@ class GuidesManager {
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
     }
-
 }
 
 extension GuidesManager {
-
     func guideCategoriesSingle(url: URL) -> Single<[GuideCategory]> {
         let request = networkManager.session.request(url)
         return networkManager.single(request: request)
     }
-
 }

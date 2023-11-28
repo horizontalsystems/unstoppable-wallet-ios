@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SendMemoInputCell: UITableViewCell {
     private let disposeBag = DisposeBag()
@@ -12,9 +12,9 @@ class SendMemoInputCell: UITableViewCell {
     private let topInset: CGFloat
 
     private var hiddenState: Bool = false
-    var onChangeHeight: (() -> ())?
+    var onChangeHeight: (() -> Void)?
 
-    init(viewModel: SendMemoInputViewModel, topInset: CGFloat = 0) {    // topInset used for make header padding, which may be dynamically collapse
+    init(viewModel: SendMemoInputViewModel, topInset: CGFloat = 0) { // topInset used for make header padding, which may be dynamically collapse
         self.viewModel = viewModel
         self.topInset = topInset
 
@@ -41,7 +41,6 @@ class SendMemoInputCell: UITableViewCell {
         anInputView.inputPlaceholder = "send.confirmation.memo_placeholder".localized
         anInputView.font = UIFont.body.with(traits: .traitItalic)
 
-
         anInputView.onChangeText = { [weak self] in
             self?.viewModel.change(text: $0)
         }
@@ -54,7 +53,8 @@ class SendMemoInputCell: UITableViewCell {
         sync(hidden: viewModel.isHidden)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -62,14 +62,11 @@ class SendMemoInputCell: UITableViewCell {
         hiddenState = hidden
         onChangeHeight?()
     }
-
 }
 
 extension SendMemoInputCell {
-
     func height(containerWidth: CGFloat) -> CGFloat {
         let height = anInputView.height(containerWidth: containerWidth) + topInset
         return hiddenState ? 0 : height
     }
-
 }

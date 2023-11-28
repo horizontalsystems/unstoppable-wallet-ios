@@ -3,7 +3,7 @@ import Foundation
 class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
     typealias Item = CexDepositService.Item
 
-    func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem {
+    func viewItem(item: Item, amount _: String?) -> ReceiveAddressModule.ViewItem {
         var sections = [[ReceiveAddressModule.Item]]()
 
         var viewItems = [ReceiveAddressModule.Item]()

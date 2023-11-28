@@ -1,13 +1,13 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class ManageBarButtonView: UIView {
     private let button = UIButton()
     private let badgeView = UIView()
 
-    var onTap: (() -> ())?
+    var onTap: (() -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -30,18 +30,17 @@ class ManageBarButtonView: UIView {
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func onTapButton() {
         onTap?()
     }
-
 }
 
 extension ManageBarButtonView {
-
     var isBadgeHidden: Bool {
         get {
             badgeView.isHidden
@@ -50,5 +49,4 @@ extension ManageBarButtonView {
             badgeView.isHidden = newValue
         }
     }
-
 }

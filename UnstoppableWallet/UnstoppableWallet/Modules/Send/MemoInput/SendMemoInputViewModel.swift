@@ -1,7 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
-
+import RxRelay
+import RxSwift
 
 class SendMemoInputViewModel {
     private let disposeBag = DisposeBag()
@@ -24,11 +23,9 @@ class SendMemoInputViewModel {
     private func sync(available: Bool) {
         isHidden = !available
     }
-
 }
 
 extension SendMemoInputViewModel {
-
     var isHiddenDriver: Driver<Bool> {
         isHiddenRelay.asDriver()
     }
@@ -40,5 +37,4 @@ extension SendMemoInputViewModel {
     func isValid(text: String) -> Bool {
         service.isValid(text: text)
     }
-
 }

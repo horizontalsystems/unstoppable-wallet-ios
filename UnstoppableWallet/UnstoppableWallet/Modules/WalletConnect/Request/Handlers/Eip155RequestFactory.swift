@@ -18,14 +18,15 @@ extension Eip155RequestFactory {
         }
 
         guard let chainId = Int(request.chainId.reference),
-              let blockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
+              let blockchain = evmBlockchainManager.blockchain(chainId: chainId)
+        else {
             throw WalletConnectRequest.CreationError.invalidChain
         }
 
         guard let address = try? WalletConnectManager.evmAddress(
-                  account: account,
-                  chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
-              )
+            account: account,
+            chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
+        )
         else {
             throw WalletConnectRequest.CreationError.cantCreateAddress
         }
@@ -33,9 +34,9 @@ extension Eip155RequestFactory {
         let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
 
         return WalletConnectRequest(
-                id: request.id.intValue,
-                chain: chain,
-                payload: payload
+            id: request.id.intValue,
+            chain: chain,
+            payload: payload
         )
     }
 }

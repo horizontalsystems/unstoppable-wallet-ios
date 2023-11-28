@@ -1,20 +1,20 @@
+import Chart
 import Combine
 import Foundation
-import UIKit
-import Chart
 import ThemeKit
+import UIKit
 
 class CoinIndicatorViewItemFactory {
-    static let sectionNames = ["coin_analytics.indicators.summary".localized] + ChartIndicator.Category.allCases.map { $0.title }
+    static let sectionNames = ["coin_analytics.indicators.summary".localized] + ChartIndicator.Category.allCases.map(\.title)
 
     private func advice(items: [TechnicalIndicatorService.Item]) -> Advice {
-        let rating = items.map { $0.advice.rating }.reduce(0, +)
+        let rating = items.map(\.advice.rating).reduce(0, +)
         let adviceCount = items.filter { $0.advice != .noData }.count
         let variations = 2 * adviceCount + 1
 
         let baseDelta = variations / 5
         let remainder = variations % 5
-        let neutralAddict = remainder % 3   // how much variations will be added to neutral zone
+        let neutralAddict = remainder % 3 // how much variations will be added to neutral zone
         let sideAddict = remainder / 3 // how much will be added to sell/buy zone
 
         let deltas = [baseDelta, baseDelta + sideAddict, baseDelta + sideAddict + neutralAddict, baseDelta + sideAddict, baseDelta]
@@ -22,18 +22,16 @@ class CoinIndicatorViewItemFactory {
         var current = -adviceCount
         var ranges = [Range<Int>]()
         for delta in deltas {
-            ranges.append(current..<(current + delta))
+            ranges.append(current ..< (current + delta))
             current += delta
         }
         let index = ranges.firstIndex { $0.contains(rating) } ?? 0
 
         return Advice(rawValue: index) ?? .neutral
     }
-
 }
 
 extension CoinIndicatorViewItemFactory {
-
     func viewItems(items: [TechnicalIndicatorService.SectionItem]) -> [ViewItem] {
         var viewItems = [ViewItem]()
 
@@ -53,16 +51,14 @@ extension CoinIndicatorViewItemFactory {
     func detailViewItems(items: [TechnicalIndicatorService.SectionItem]) -> [SectionDetailViewItem] {
         items.map {
             SectionDetailViewItem(
-                    name: $0.name,
-                    viewItems: $0.items.map { DetailViewItem(name: $0.name, advice: $0.advice.title, color: $0.advice.color) }
+                name: $0.name,
+                viewItems: $0.items.map { DetailViewItem(name: $0.name, advice: $0.advice.title, color: $0.advice.color) }
             )
         }
     }
-
 }
 
 extension CoinIndicatorViewItemFactory {
-
     enum Advice: Int, CaseIterable {
         case strongSell
         case sell
@@ -106,11 +102,9 @@ extension CoinIndicatorViewItemFactory {
         let name: String
         let viewItems: [DetailViewItem]
     }
-
 }
 
 extension TechnicalIndicatorService.Advice {
-
     var title: String {
         switch self {
         case .noData: return "coin_analytics.indicators.no_data".localized
@@ -128,5 +122,4 @@ extension TechnicalIndicatorService.Advice {
         case .sell: return CoinIndicatorViewItemFactory.Advice.sell.color
         }
     }
-
 }

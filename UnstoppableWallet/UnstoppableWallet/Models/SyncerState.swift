@@ -30,5 +30,4 @@ class SyncerState: Record {
         container[Columns.key] = key
         container[Columns.value] = value
     }
-
 }

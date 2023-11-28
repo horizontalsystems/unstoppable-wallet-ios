@@ -316,7 +316,7 @@ class ChartUiView: UIView {
             chartSecondaryValueLabel.isHidden = true
             chartSecondaryDiffLabel.isHidden = true
         case let .volume(value):
-            if let value = value {
+            if let value {
                 chartSecondaryTitleLabel.isHidden = true
                 chartSecondaryValueLabel.isHidden = false
 

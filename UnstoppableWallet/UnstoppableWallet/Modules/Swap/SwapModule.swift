@@ -1,24 +1,24 @@
-import UIKit
-import MarketKit
 import EvmKit
+import MarketKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import ThemeKit
-import RxSwift
-import RxCocoa
+import UIKit
 import UniswapKit
 
 protocol ISwapDexManager {
     var dex: SwapModule.Dex? { get }
     func set(provider: SwapModule.Dex.Provider)
 
-    var dexUpdated: Signal<()> { get }
+    var dexUpdated: Signal<Void> { get }
 }
 
 protocol ISwapDataSourceManager {
     var dataSource: ISwapDataSource? { get }
     var settingsDataSource: ISwapSettingsDataSource? { get }
 
-    var dataSourceUpdated: Signal<()> { get }
+    var dataSourceUpdated: Signal<Void> { get }
 }
 
 protocol ISwapProvider: AnyObject {
@@ -34,48 +34,45 @@ protocol ISwapDataSource: AnyObject {
 
     var state: SwapModule.DataSourceState { get }
 
-    var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? { get set }
-    var onOpenSelectProvider: (() -> ())? { get set }
-    var onOpenSettings: (() -> ())? { get set }
-    var onClose: (() -> ())? { get set }
-    var onReload: (() -> ())? { get set }
+    var onOpen: ((_ viewController: UIViewController, _ viaPush: Bool) -> Void)? { get set }
+    var onOpenSelectProvider: (() -> Void)? { get set }
+    var onOpenSettings: (() -> Void)? { get set }
+    var onClose: (() -> Void)? { get set }
+    var onReload: (() -> Void)? { get set }
 
     func viewDidAppear()
 }
 
-class SwapModule {
-
+enum SwapModule {
     static func viewController(tokenFrom: MarketKit.Token? = nil) -> UIViewController? {
         let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, evmBlockchainManager: App.shared.evmBlockchainManager, tokenFrom: tokenFrom)
 
-        let viewModel =  SwapViewModel(dexManager: swapDexManager)
+        let viewModel = SwapViewModel(dexManager: swapDexManager)
         let viewController = SwapViewController(
-                viewModel: viewModel,
-                dataSourceManager: swapDexManager
+            viewModel: viewModel,
+            dataSourceManager: swapDexManager
         )
         return viewController
     }
-
 }
 
 extension SwapModule {
     private static let addressesForRevoke = ["0xdac17f958d2ee523a2206206994597c13d831ec7"]
 
     static func mustBeRevoked(token: MarketKit.Token?) -> Bool {
-        if let token = token,
+        if let token,
            case .ethereum = token.blockchainType,
-           case .eip20(let address) = token.type,
-           Self.addressesForRevoke.contains(address.lowercased()) {
+           case let .eip20(address) = token.type,
+           addressesForRevoke.contains(address.lowercased())
+        {
             return true
         }
 
         return false
     }
-
 }
 
 extension SwapModule {
-
     enum ApproveStepState: Int {
         case notApproved, revokeRequired, revoking, approveRequired, approving, approved
     }
@@ -94,7 +91,6 @@ extension SwapModule {
             self.amountTo = amountTo
             self.exactFrom = exactFrom
         }
-
     }
 
     class Dex {
@@ -119,42 +115,36 @@ extension SwapModule {
             self.blockchainType = blockchainType
             self.provider = provider
         }
-
     }
-
 }
 
 extension SwapModule {
-
     enum SwapError: Error, Equatable {
         case noBalanceIn
         case insufficientBalanceIn
         case insufficientAllowance
         case needRevokeAllowance(allowance: CoinValue)
 
-        static func ==(lhs: SwapError, rhs: SwapError) -> Bool {
+        static func == (lhs: SwapError, rhs: SwapError) -> Bool {
             switch (lhs, rhs) {
             case (.noBalanceIn, .noBalanceIn): return true
             case (.insufficientBalanceIn, .insufficientBalanceIn): return true
             case (.insufficientAllowance, .insufficientAllowance): return true
-            case (.needRevokeAllowance(let lAllowance), .needRevokeAllowance(let rAllowance)): return lAllowance == rAllowance
+            case let (.needRevokeAllowance(lAllowance), .needRevokeAllowance(rAllowance)): return lAllowance == rAllowance
             default: return false
             }
         }
 
         var revokeAllowance: CoinValue? {
             switch self {
-            case .needRevokeAllowance(let allowance): return allowance
+            case let .needRevokeAllowance(allowance): return allowance
             default: return nil
             }
         }
-
     }
-
 }
 
 extension BlockchainType {
-
     var allowedProviders: [SwapModule.Dex.Provider] {
         switch self {
         case .ethereum: return [.oneInch, .uniswap, .uniswapV3, .pancakeV3]
@@ -168,11 +158,9 @@ extension BlockchainType {
         default: return []
         }
     }
-
 }
 
 extension SwapModule.Dex {
-
     enum Provider: String {
         case uniswap = "Uniswap"
         case uniswapV3 = "Uniswap V3"
@@ -238,9 +226,7 @@ extension SwapModule.Dex {
             default: return .pancakeSwap
             }
         }
-
     }
-
 }
 
 protocol ISwapErrorProvider {

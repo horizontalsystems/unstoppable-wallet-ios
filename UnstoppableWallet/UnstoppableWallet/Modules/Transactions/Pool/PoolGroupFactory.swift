@@ -1,12 +1,11 @@
 import Foundation
-import RxSwift
 import MarketKit
+import RxSwift
 
 class PoolGroupFactory {
-
     private func providers(poolGroupType: PoolGroupType, filter: TransactionTypeFilter) -> [PoolProvider] {
         switch poolGroupType {
-        case .all(let wallets):
+        case let .all(wallets):
             var poolSources = Set<PoolSource>()
 
             for wallet in wallets {
@@ -14,15 +13,15 @@ class PoolGroupFactory {
 
                 if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) || wallet.token.blockchainType == .tron {
                     poolSource = PoolSource(
-                            token: nil,
-                            blockchainType: wallet.token.blockchainType,
-                            filter: filter
+                        token: nil,
+                        blockchainType: wallet.token.blockchainType,
+                        filter: filter
                     )
                 } else {
                     poolSource = PoolSource(
-                            token: wallet.token,
-                            blockchainType: wallet.token.blockchainType,
-                            filter: filter
+                        token: wallet.token,
+                        blockchainType: wallet.token.blockchainType,
+                        filter: filter
                     )
                 }
 
@@ -37,12 +36,12 @@ class PoolGroupFactory {
                 }
             }
 
-        case .blockchain(let blockchainType, let wallets):
+        case let .blockchain(blockchainType, wallets):
             if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) || blockchainType == .tron {
                 let poolSource = PoolSource(
-                        token: nil,
-                        blockchainType: blockchainType,
-                        filter: filter
+                    token: nil,
+                    blockchainType: blockchainType,
+                    filter: filter
                 )
 
                 if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
@@ -57,9 +56,9 @@ class PoolGroupFactory {
                     }
 
                     let poolSource = PoolSource(
-                            token: wallet.token,
-                            blockchainType: blockchainType,
-                            filter: filter
+                        token: wallet.token,
+                        blockchainType: blockchainType,
+                        filter: filter
                     )
 
                     if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
@@ -70,11 +69,11 @@ class PoolGroupFactory {
                 return providers
             }
 
-        case .token(let token):
+        case let .token(token):
             let poolSource = PoolSource(
-                    token: token,
-                    blockchainType: token.blockchainType,
-                    filter: filter
+                token: token,
+                blockchainType: token.blockchainType,
+                filter: filter
             )
 
             if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
@@ -85,11 +84,9 @@ class PoolGroupFactory {
 
         return []
     }
-
 }
 
 extension PoolGroupFactory {
-
     func poolGroup(type: PoolGroupType, filter: TransactionTypeFilter, scamFilterEnabled: Bool) -> PoolGroup {
         let providers = providers(poolGroupType: type, filter: filter)
         let pools = providers.map { poolProvider in
@@ -97,15 +94,12 @@ extension PoolGroupFactory {
         }
         return PoolGroup(pools: pools)
     }
-
 }
 
 extension PoolGroupFactory {
-
     enum PoolGroupType {
         case all(wallets: [Wallet])
         case blockchain(blockchainType: BlockchainType, wallets: [Wallet])
         case token(token: Token)
     }
-
 }

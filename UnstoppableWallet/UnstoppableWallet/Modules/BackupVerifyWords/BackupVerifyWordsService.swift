@@ -1,5 +1,5 @@
-import RxSwift
 import RxRelay
+import RxSwift
 
 class BackupVerifyWordsService {
     let account: Account
@@ -10,7 +10,7 @@ class BackupVerifyWordsService {
     private let disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = State(inputItems: [], wordItems: []) {
+    private(set) var state: State = .init(inputItems: [], wordItems: []) {
         didSet {
             stateRelay.accept(state)
         }
@@ -41,26 +41,24 @@ class BackupVerifyWordsService {
         let validatedWords = inputWords.prefix(validatedWordCount)
 
         state = State(
-                inputItems: inputWords.enumerated().map { index, word in
-                    InputItem(
-                            index: word.index,
-                            text: validatedWords.contains(word) ? word.text : nil,
-                            current: index == validatedWordCount
-                    )
-                },
-                wordItems: suggestionWords.map { word in
-                    WordItem(
-                            text: word.text,
-                            enabled: !validatedWords.contains(word)
-                    )
-                }
+            inputItems: inputWords.enumerated().map { index, word in
+                InputItem(
+                    index: word.index,
+                    text: validatedWords.contains(word) ? word.text : nil,
+                    current: index == validatedWordCount
+                )
+            },
+            wordItems: suggestionWords.map { word in
+                WordItem(
+                    text: word.text,
+                    enabled: !validatedWords.contains(word)
+                )
+            }
         )
     }
-
 }
 
 extension BackupVerifyWordsService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -82,10 +80,10 @@ extension BackupVerifyWordsService {
 //            if hasSalt {
 //                return .showPassphrase
 //            } else {
-                account.backedUp = true
-                accountManager.update(account: account)
+            account.backedUp = true
+            accountManager.update(account: account)
 
-                return .backedUp
+            return .backedUp
 //            }
         } else {
             return .correct
@@ -100,11 +98,9 @@ extension BackupVerifyWordsService {
 
         syncState()
     }
-
 }
 
 extension BackupVerifyWordsService {
-
     enum ActionResult {
         case correct
         case incorrect
@@ -132,9 +128,8 @@ extension BackupVerifyWordsService {
         let index: Int
         let text: String
 
-        static func ==(lhs: Word, rhs: Word) -> Bool {
+        static func == (lhs: Word, rhs: Word) -> Bool {
             lhs.index == rhs.index
         }
     }
-
 }

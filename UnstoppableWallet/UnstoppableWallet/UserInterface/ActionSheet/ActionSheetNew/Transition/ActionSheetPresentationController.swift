@@ -1,6 +1,6 @@
-import UIKit
-import UIExtensions
 import SnapKit
+import UIExtensions
+import UIKit
 
 class ActionSheetPresentationController: UIPresentationController {
     private let tapView = ActionSheetTapView()
@@ -22,7 +22,7 @@ class ActionSheetPresentationController: UIPresentationController {
     override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
 
-        guard let presentedView = presentedView else {
+        guard let presentedView else {
             return
         }
         containerView?.addSubview(tapView)
@@ -60,7 +60,7 @@ class ActionSheetPresentationController: UIPresentationController {
         if completed {
             driver?.direction = .dismiss
         } else {
-            self.tapView.removeFromSuperview()
+            tapView.removeFromSuperview()
         }
     }
 
@@ -72,25 +72,24 @@ class ActionSheetPresentationController: UIPresentationController {
             self?.tapView.alpha = 0
         }
     }
-    
+
     override func dismissalTransitionDidEnd(_ completed: Bool) {
         super.dismissalTransitionDidEnd(completed)
 
         if completed {
             delegate?.presentationControllerDidDismiss?(self)
-            self.tapView.removeFromSuperview()
+            tapView.removeFromSuperview()
         }
     }
-    
+
     private func alongsideTransition(_ action: @escaping () -> Void) {
-        guard let coordinator = self.presentedViewController.transitionCoordinator else {
+        guard let coordinator = presentedViewController.transitionCoordinator else {
             action()
             return
         }
 
-        coordinator.animate(alongsideTransition: { (_) in
+        coordinator.animate(alongsideTransition: { _ in
             action()
         }, completion: nil)
     }
-
 }

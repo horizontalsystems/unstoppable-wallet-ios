@@ -1,6 +1,6 @@
+import EvmKit
 import Foundation
 import MarketKit
-import EvmKit
 
 class WalletViewItemFactory {
     private let minimumProgress = 10
@@ -11,17 +11,17 @@ class WalletViewItemFactory {
         let sendEnabled = state.spendAllowed(beforeSync: item.balanceData.sendBeforeSync)
 
         return BalanceTopViewItem(
-                isMainNet: item.isMainNet,
-                iconUrlString: iconUrlString(coin: item.element.coin, state: state),
-                placeholderIconName: item.element.wallet?.token.placeholderImageName ?? "placeholder_circle_32",
-                name: item.element.name,
-                blockchainBadge: item.element.wallet?.badge,
-                syncSpinnerProgress: syncSpinnerProgress(state: state),
-                indefiniteSearchCircle: indefiniteSearchCircle(state: state),
-                failedImageViewVisible: failedImageViewVisible(state: state),
-                sendEnabled: sendEnabled,
-                primaryValue: balanceHidden ? nil : primaryValue(item: item, balancePrimaryValue: balancePrimaryValue),
-                secondaryInfo: secondaryInfo(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
+            isMainNet: item.isMainNet,
+            iconUrlString: iconUrlString(coin: item.element.coin, state: state),
+            placeholderIconName: item.element.wallet?.token.placeholderImageName ?? "placeholder_circle_32",
+            name: item.element.name,
+            blockchainBadge: item.element.wallet?.badge,
+            syncSpinnerProgress: syncSpinnerProgress(state: state),
+            indefiniteSearchCircle: indefiniteSearchCircle(state: state),
+            failedImageViewVisible: failedImageViewVisible(state: state),
+            sendEnabled: sendEnabled,
+            primaryValue: balanceHidden ? nil : primaryValue(item: item, balancePrimaryValue: balancePrimaryValue),
+            secondaryInfo: secondaryInfo(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
         )
     }
 
@@ -32,15 +32,15 @@ class WalletViewItemFactory {
             return .customSyncing(main: main, secondary: secondary)
         } else if case .stopped = item.state {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
-                    descriptionValue: (text: "balance.stopped".localized, dimmed: false),
-                    secondaryValue: nil,
-                    diff: nil
+                descriptionValue: (text: "balance.stopped".localized, dimmed: false),
+                secondaryValue: nil,
+                diff: nil
             ))
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
-                    descriptionValue: rateValue(rateItem: item.priceItem),
-                    secondaryValue: balanceHidden ? nil : secondaryValue(item: item, balancePrimaryValue: balancePrimaryValue),
-                    diff: diff(rateItem: item.priceItem)
+                descriptionValue: rateValue(rateItem: item.priceItem),
+                secondaryValue: balanceHidden ? nil : secondaryValue(item: item, balancePrimaryValue: balancePrimaryValue),
+                diff: diff(rateItem: item.priceItem)
             ))
         }
     }
@@ -55,7 +55,7 @@ class WalletViewItemFactory {
     private func syncSpinnerProgress(state: AdapterState) -> Int? {
         switch state {
         case let .syncing(progress, _):
-            if let progress = progress {
+            if let progress {
                 return max(minimumProgress, progress)
             } else {
                 return infiniteProgress
@@ -68,7 +68,7 @@ class WalletViewItemFactory {
 
     private func indefiniteSearchCircle(state: AdapterState) -> Bool {
         switch state {
-        case .customSyncing(_, _, let progress): return progress == nil
+        case let .customSyncing(_, _, progress): return progress == nil
         default: return false
         }
     }
@@ -81,7 +81,7 @@ class WalletViewItemFactory {
     }
 
     private func rateValue(rateItem: WalletCoinPriceService.Item?) -> (text: String?, dimmed: Bool) {
-        guard let rateItem = rateItem else {
+        guard let rateItem else {
             return (text: "n/a".localized, dimmed: true)
         }
 
@@ -115,15 +115,15 @@ class WalletViewItemFactory {
         }
     }
 
-    private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state: AdapterState, expanded: Bool = false) -> (text: String?, dimmed: Bool) {
+    private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state: AdapterState, expanded _: Bool = false) -> (text: String?, dimmed: Bool) {
         (
-                text: ValueFormatter.instance.formatShort(value: value, decimalCount: decimalCount, symbol: symbol),
-                dimmed: state != .synced
+            text: ValueFormatter.instance.formatShort(value: value, decimalCount: decimalCount, symbol: symbol),
+            dimmed: state != .synced
         )
     }
 
     private func currencyValue(value: Decimal, state: AdapterState, priceItem: WalletCoinPriceService.Item?, expanded: Bool = false) -> (text: String?, dimmed: Bool) {
-        guard let priceItem = priceItem else {
+        guard let priceItem else {
             return (text: "---", dimmed: true)
         }
 
@@ -131,40 +131,38 @@ class WalletViewItemFactory {
         let currencyValue = CurrencyValue(currency: price.currency, value: value * price.value)
 
         return (
-                text: expanded ? ValueFormatter.instance.formatFull(currencyValue: currencyValue) : ValueFormatter.instance.formatShort(currencyValue: currencyValue),
-                dimmed: state != .synced || priceItem.expired
+            text: expanded ? ValueFormatter.instance.formatFull(currencyValue: currencyValue) : ValueFormatter.instance.formatShort(currencyValue: currencyValue),
+            dimmed: state != .synced || priceItem.expired
         )
     }
 
     private func headerButtons(account: Account?) -> [WalletModule.Button: ButtonState] {
-        guard let account = account else {
+        guard let account else {
             return [:]
         }
         switch account.type {
-        case .cex(let cexAccount):
+        case let .cex(cexAccount):
             let withdrawalEnabled = cexAccount.cex.withdrawalAllowed ? ButtonState.enabled : .disabled
             return [
                 .deposit: .enabled,
-                .withdraw: withdrawalEnabled
+                .withdraw: withdrawalEnabled,
             ]
         case .evmPrivateKey, .hdExtendedKey, .mnemonic:
             return [
                 .send: .enabled,
                 .receive: .enabled,
-                .swap: AppConfig.swapEnabled ? .enabled : .hidden
+                .swap: AppConfig.swapEnabled ? .enabled : .hidden,
             ]
         case .evmAddress, .tronAddress, .tonAddress: return [:]
         }
     }
-
 }
 
 extension WalletViewItemFactory {
-
     func viewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool) -> BalanceViewItem {
         BalanceViewItem(
-                element: item.element,
-                topViewItem: topViewItem(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
+            element: item.element,
+            topViewItem: topViewItem(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
         )
     }
 
@@ -181,12 +179,11 @@ extension WalletViewItemFactory {
         }
 
         return WalletModule.HeaderViewItem(
-                amount: amount,
-                amountExpired: balanceHidden ? false : totalItem.expired,
-                convertedValue: convertedValue,
-                convertedValueExpired: balanceHidden ? false : totalItem.convertedValueExpired,
-                buttons: headerButtons(account: account)
+            amount: amount,
+            amountExpired: balanceHidden ? false : totalItem.expired,
+            convertedValue: convertedValue,
+            convertedValueExpired: balanceHidden ? false : totalItem.convertedValueExpired,
+            buttons: headerButtons(account: account)
         )
     }
-
 }

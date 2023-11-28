@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import HdWalletKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CreateAccountViewModel {
     private let service: CreateAccountService
@@ -12,7 +12,7 @@ class CreateAccountViewModel {
     private let passphraseConfirmationCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let clearInputsRelay = PublishRelay<Void>()
     private let showErrorRelay = PublishRelay<String>()
-    private let finishRelay = PublishRelay<()>()
+    private let finishRelay = PublishRelay<Void>()
 
     init(service: CreateAccountService) {
         self.service = service
@@ -43,11 +43,9 @@ class CreateAccountViewModel {
             passphraseConfirmationCautionRelay.accept(nil)
         }
     }
-
 }
 
 extension CreateAccountViewModel {
-
     var wordCountDriver: Driver<String> {
         wordCountRelay.asDriver()
     }
@@ -72,7 +70,7 @@ extension CreateAccountViewModel {
         showErrorRelay.asSignal()
     }
 
-    var finishSignal: Signal<()> {
+    var finishSignal: Signal<Void> {
         finishRelay.asSignal()
     }
 
@@ -147,5 +145,4 @@ extension CreateAccountViewModel {
             }
         }
     }
-
 }

@@ -1,7 +1,7 @@
-import Foundation
-import UniswapKit
 import EvmKit
+import Foundation
 import MarketKit
+import UniswapKit
 
 class UniswapV3Provider {
     private let swapKit: UniswapKit.KitV3
@@ -13,15 +13,13 @@ class UniswapV3Provider {
     private func uniswapToken(token: MarketKit.Token) throws -> UniswapKit.Token {
         switch token.type {
         case .native: return swapKit.etherToken
-        case let .eip20(address): return swapKit.token(contractAddress: try EvmKit.Address(hex: address), decimals: token.decimals)
+        case let .eip20(address): return try swapKit.token(contractAddress: EvmKit.Address(hex: address), decimals: token.decimals)
         default: throw TokenError.unsupportedToken
         }
     }
-
 }
 
 extension UniswapV3Provider {
-
     var routerAddress: EvmKit.Address {
         swapKit.routerAddress
     }
@@ -45,13 +43,10 @@ extension UniswapV3Provider {
     func transactionData(tradeData: TradeDataV3, tradeOptions: TradeOptions) throws -> TransactionData {
         try swapKit.transactionData(bestTrade: tradeData, tradeOptions: tradeOptions)
     }
-
 }
 
 extension UniswapV3Provider {
-
     enum TokenError: Error {
         case unsupportedToken
     }
-
 }

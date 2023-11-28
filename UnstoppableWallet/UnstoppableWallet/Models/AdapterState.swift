@@ -28,15 +28,14 @@ enum AdapterState {
         case .stopped, .notSynced: return false
         }
     }
-
 }
 
 extension AdapterState: Equatable {
-    public static func ==(lhs: AdapterState, rhs: AdapterState) -> Bool {
+    public static func == (lhs: AdapterState, rhs: AdapterState) -> Bool {
         switch (lhs, rhs) {
         case (.synced, .synced): return true
-        case (.syncing(let lProgress, let lLastBlockDate), .syncing(let rProgress, let rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
-        case (.customSyncing(let lMain, let lSecondary, let lProgress), .customSyncing(let rMain, let rSecondary, let rProgress)): return lMain == rMain && lSecondary == rSecondary && lProgress == rProgress
+        case let (.syncing(lProgress, lLastBlockDate), .syncing(rProgress, rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
+        case let (.customSyncing(lMain, lSecondary, lProgress), .customSyncing(rMain, rSecondary, rProgress)): return lMain == rMain && lSecondary == rSecondary && lProgress == rProgress
         case (.notSynced, .notSynced): return true
         case (.stopped, .stopped): return true
         default: return false

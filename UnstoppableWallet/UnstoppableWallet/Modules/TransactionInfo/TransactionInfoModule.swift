@@ -1,8 +1,7 @@
-import UIKit
 import MarketKit
+import UIKit
 
 struct TransactionInfoModule {
-
     static func instance(transactionRecord: TransactionRecord) -> UIViewController? {
         guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
             return nil
@@ -18,11 +17,9 @@ struct TransactionInfoModule {
 
         return viewController
     }
-
 }
 
 extension TransactionInfoModule {
-
     enum Option {
         case resend(type: ResendEvmTransactionType)
     }
@@ -52,5 +49,4 @@ extension TransactionInfoModule {
         case explorer(title: String, url: String?)
         case warning(text: String)
     }
-
 }

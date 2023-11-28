@@ -1,7 +1,7 @@
-//import GRDB
-//import MarketKit
+// import GRDB
+// import MarketKit
 //
-//class FavoriteCoinRecord_v_0_22: Record {
+// class FavoriteCoinRecord_v_0_22: Record {
 //    let coinType: CoinType
 //
 //    init(coinType: CoinType) {
@@ -29,4 +29,4 @@
 //        container[Columns.coinType] = coinType.id
 //    }
 //
-//}
+// }

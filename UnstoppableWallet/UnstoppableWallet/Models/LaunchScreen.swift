@@ -21,7 +21,6 @@ enum LaunchScreen: String, CaseIterable {
         case .watchlist: return "star_24"
         }
     }
-
 }
 
 extension LaunchScreen: Codable {

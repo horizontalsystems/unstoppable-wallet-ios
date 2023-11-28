@@ -1,7 +1,7 @@
-import UIKit
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
+import UIKit
 
 class HighlightedDescriptionCell: UITableViewCell {
     static let horizontalMargin: CGFloat = .margin16
@@ -61,8 +61,8 @@ class HighlightedDescriptionCell: UITableViewCell {
         setNeedsLayout()
     }
 
-
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -77,17 +77,15 @@ class HighlightedDescriptionCell: UITableViewCell {
             hiddenStateRelay.accept(newValue == nil)
         }
     }
-
 }
 
 extension HighlightedDescriptionCell {
-
     var hiddenStateDriver: Driver<Bool> {
         hiddenStateRelay.asDriver()
     }
 
     func height(containerWidth: CGFloat) -> CGFloat {
-        guard let descriptionText = descriptionText else {
+        guard let descriptionText else {
             return 0
         }
 
@@ -99,5 +97,4 @@ extension HighlightedDescriptionCell {
         let descriptionViewHeight = HighlightedDescriptionView.height(containerWidth: descriptionViewWidth, text: text)
         return descriptionViewHeight + (ignoreBottomMargin ? 0 : 1) * defaultVerticalMargin + (ignoreTopMargin ? 0 : 1) * topVerticalMargin
     }
-
 }

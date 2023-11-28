@@ -11,7 +11,7 @@ struct NftPriceRecord {
     }
 
     init?(tokenQueryId: String?, value: Decimal?) {
-        if let tokenQueryId = tokenQueryId, let tokenQuery = TokenQuery(id: tokenQueryId), let value = value {
+        if let tokenQueryId, let tokenQuery = TokenQuery(id: tokenQueryId), let value {
             self.tokenQuery = tokenQuery
             self.value = value
         } else {

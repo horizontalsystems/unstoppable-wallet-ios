@@ -1,10 +1,9 @@
-import UIKit
 import ComponentKit
 import SectionsTableView
 import ThemeKit
+import UIKit
 
 class CoinDetailAdviceViewController: ThemeViewController {
-
     private let tableView = SectionsTableView(style: .grouped)
 
     private var viewItems: [CoinIndicatorViewItemFactory.SectionDetailViewItem]
@@ -14,7 +13,8 @@ class CoinDetailAdviceViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -37,34 +37,31 @@ class CoinDetailAdviceViewController: ThemeViewController {
 
         tableView.reload()
     }
-
 }
 
 extension CoinDetailAdviceViewController: SectionsDataSource {
-
     private func row(viewItem: CoinIndicatorViewItemFactory.DetailViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         tableView.universalRow48(
-                id: viewItem.name,
-                title: .subhead2(viewItem.name),
-                value: .subhead1(viewItem.advice, color: viewItem.color),
-                backgroundStyle: .lawrence,
-                isFirst: isFirst,
-                isLast: isLast
+            id: viewItem.name,
+            title: .subhead2(viewItem.name),
+            value: .subhead1(viewItem.advice, color: viewItem.color),
+            backgroundStyle: .lawrence,
+            isFirst: isFirst,
+            isLast: isLast
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         [Section(id: "mergin-section", headerState: .margin(height: .margin12))] +
-        viewItems.map { section in
-            Section(
+            viewItems.map { section in
+                Section(
                     id: "header-\(section.name)",
                     headerState: tableView.sectionHeader(text: section.name),
                     footerState: .margin(height: .margin12),
                     rows: section.viewItems.enumerated().map { index, item in
                         row(viewItem: item, isFirst: index == 0, isLast: index == section.viewItems.count - 1)
                     }
-            )
-        }
+                )
+            }
     }
-
 }

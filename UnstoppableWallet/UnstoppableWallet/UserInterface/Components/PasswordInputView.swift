@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class PasswordInputView: UIView {
     private let formValidatedView: FormValidatedView
@@ -10,7 +10,7 @@ class PasswordInputView: UIView {
     private let secureButtonView = TransparentIconButtonView()
     private let insecureButtonView = TransparentIconButtonView()
 
-    var onTextSecurityChange: ((Bool) -> ())?
+    var onTextSecurityChange: ((Bool) -> Void)?
 
     init() {
         formValidatedView = FormValidatedView(contentView: inputStackView, padding: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16))
@@ -38,14 +38,13 @@ class PasswordInputView: UIView {
         inputStackView.appendSubview(insecureButtonView)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension PasswordInputView {
-
     var inputPlaceholder: String? {
         get { inputStackView.placeholder }
         set { inputStackView.placeholder = newValue }
@@ -56,7 +55,7 @@ extension PasswordInputView {
         set { inputStackView.text = newValue }
     }
 
-    var onChangeText: ((String?) -> ())? {
+    var onChangeText: ((String?) -> Void)? {
         get { inputStackView.onChangeText }
         set { inputStackView.onChangeText = newValue }
     }
@@ -79,5 +78,4 @@ extension PasswordInputView {
     func height(containerWidth: CGFloat) -> CGFloat {
         formValidatedView.height(containerWidth: containerWidth)
     }
-
 }

@@ -1,7 +1,7 @@
 import Combine
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketOverviewViewModel {
     private let service: MarketOverviewService
@@ -15,8 +15,8 @@ class MarketOverviewViewModel {
         self.service = service
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -37,11 +37,9 @@ class MarketOverviewViewModel {
             successRelay.accept(false)
         }
     }
-
 }
 
 extension MarketOverviewViewModel {
-
     var successDriver: Driver<Bool> {
         successRelay.asDriver()
     }
@@ -61,5 +59,4 @@ extension MarketOverviewViewModel {
     func refresh() {
         service.refresh()
     }
-
 }

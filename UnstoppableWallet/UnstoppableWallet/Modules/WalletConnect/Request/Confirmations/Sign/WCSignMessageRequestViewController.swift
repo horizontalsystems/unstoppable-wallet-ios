@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SectionsTableView
 import ComponentKit
 import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class WCSignMessageRequestViewController: ThemeViewController {
     private let viewModel: WCSignMessageRequestViewModel
@@ -21,7 +21,8 @@ class WCSignMessageRequestViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -81,11 +82,9 @@ class WCSignMessageRequestViewController: ThemeViewController {
     private func dismiss() {
         dismiss(animated: true)
     }
-
 }
 
 extension WCSignMessageRequestViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         viewModel.sections.enumerated().map { index, section in
             Section(
@@ -97,11 +96,11 @@ extension WCSignMessageRequestViewController: SectionsDataSource {
                     switch item {
                     case let .value(title: title, value: value):
                         return tableView.universalRow48(
-                                id: "value_\(index)_\(itemIndex)",
-                                title: .subhead2(title),
-                                value: .subhead1(value),
-                                isFirst: itemIndex == 0,
-                                isLast: itemIndex == section.items.count - 1
+                            id: "value_\(index)_\(itemIndex)",
+                            title: .subhead2(title),
+                            value: .subhead1(value),
+                            isFirst: itemIndex == 0,
+                            isLast: itemIndex == section.items.count - 1
                         )
                     case let .message(text):
                         return tableView.messageRow(text: text)
@@ -110,5 +109,4 @@ extension WCSignMessageRequestViewController: SectionsDataSource {
             )
         }
     }
-
 }

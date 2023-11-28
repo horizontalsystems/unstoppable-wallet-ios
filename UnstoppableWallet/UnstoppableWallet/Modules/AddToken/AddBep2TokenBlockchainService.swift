@@ -1,9 +1,9 @@
-import Foundation
-import RxSwift
-import HsToolKit
 import Alamofire
-import ObjectMapper
+import Foundation
+import HsToolKit
 import MarketKit
+import ObjectMapper
+import RxSwift
 
 class AddBep2TokenBlockchainService {
     private let blockchain: Blockchain
@@ -13,11 +13,9 @@ class AddBep2TokenBlockchainService {
         self.blockchain = blockchain
         self.networkManager = networkManager
     }
-
 }
 
 extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
-
     var placeholder: String {
         "add_token.input_placeholder.bep2_symbol".localized
     }
@@ -40,7 +38,7 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         let reference = reference.uppercased()
 
         let parameters: Parameters = [
-            "limit": 1000
+            "limit": 1000,
         ]
 
         let url = "https://dex.binance.org/api/v1/tokens"
@@ -49,26 +47,24 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         let blockchain = blockchain
 
         return networkManager.single(request: request)
-                .flatMap { (bep2Tokens: [Bep2Token]) -> Single<Token> in
-                    guard let bep2Token = bep2Tokens.first(where: { $0.symbol == reference }) else {
-                        return Single.error(TokenError.notFound)
-                    }
-
-                    let token = Token(
-                            coin: Coin(uid: tokenQuery.customCoinUid, name: bep2Token.name, code: bep2Token.originalSymbol),
-                            blockchain: blockchain,
-                            type: tokenQuery.tokenType,
-                            decimals: 0
-                    )
-
-                    return Single.just(token)
+            .flatMap { (bep2Tokens: [Bep2Token]) -> Single<Token> in
+                guard let bep2Token = bep2Tokens.first(where: { $0.symbol == reference }) else {
+                    return Single.error(TokenError.notFound)
                 }
-    }
 
+                let token = Token(
+                    coin: Coin(uid: tokenQuery.customCoinUid, name: bep2Token.name, code: bep2Token.originalSymbol),
+                    blockchain: blockchain,
+                    type: tokenQuery.tokenType,
+                    decimals: 0
+                )
+
+                return Single.just(token)
+            }
+    }
 }
 
 extension AddBep2TokenBlockchainService {
-
     struct Bep2Token: ImmutableMappable {
         let name: String
         let originalSymbol: String
@@ -92,5 +88,4 @@ extension AddBep2TokenBlockchainService {
             }
         }
     }
-
 }

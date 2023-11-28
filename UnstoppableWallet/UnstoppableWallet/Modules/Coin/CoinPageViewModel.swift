@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import ComponentKit
+import Foundation
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinPageViewModel {
     private let service: CoinPageService
@@ -21,11 +21,9 @@ class CoinPageViewModel {
             self?.hudRelay.accept(favorite ? .addedToWatchlist : .removedFromWatchlist)
         }
     }
-
 }
 
 extension CoinPageViewModel {
-
     var favoriteDriver: Driver<Bool> {
         favoriteRelay.asDriver()
     }
@@ -41,5 +39,4 @@ extension CoinPageViewModel {
     func onTapFavorite() {
         service.toggleFavorite()
     }
-
 }

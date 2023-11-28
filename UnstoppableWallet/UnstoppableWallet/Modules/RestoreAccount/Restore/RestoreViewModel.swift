@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IRestoreSubViewModel: AnyObject {
     func resolveAccountType() -> AccountType?
@@ -28,11 +28,9 @@ class RestoreViewModel {
         case .privateKey: return privateKeyViewModel
         }
     }
-
 }
 
 extension RestoreViewModel {
-
     var restoreTypeDriver: Driver<RestoreType> {
         restoreTypeRelay.asDriver()
     }
@@ -63,11 +61,9 @@ extension RestoreViewModel {
             proceedRelay.accept((service.resolvedName, accountType))
         }
     }
-
 }
 
 extension RestoreViewModel {
-
     enum RestoreType: CaseIterable {
         case mnemonic
         case privateKey
@@ -79,5 +75,4 @@ extension RestoreViewModel {
             }
         }
     }
-
 }

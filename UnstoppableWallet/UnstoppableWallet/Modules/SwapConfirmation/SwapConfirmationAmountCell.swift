@@ -1,7 +1,7 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class SwapConfirmationAmountCell: BaseThemeCell {
     static let height: CGFloat = 72
@@ -64,7 +64,8 @@ class SwapConfirmationAmountCell: BaseThemeCell {
         getValueLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -75,5 +76,4 @@ class SwapConfirmationAmountCell: BaseThemeCell {
         getTitleLabel.text = getTitle
         getValueLabel.text = getValue
     }
-
 }

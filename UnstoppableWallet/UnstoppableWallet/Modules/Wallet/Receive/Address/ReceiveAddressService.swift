@@ -1,9 +1,9 @@
 import Combine
 import Foundation
-import MarketKit
-import RxSwift
-import RxCocoa
 import HsExtensions
+import MarketKit
+import RxCocoa
+import RxSwift
 
 class ReceiveAddressService {
     typealias ServiceItem = Item
@@ -19,6 +19,7 @@ class ReceiveAddressService {
             stateUpdatedSubject.send(state)
         }
     }
+
     private let stateUpdatedSubject = PassthroughSubject<DataStatus<Item>, Never>()
 
     private var adapter: IDepositAdapter?
@@ -56,10 +57,10 @@ class ReceiveAddressService {
 
         let isMainNet = adapter.isMainNet
         adapter.receiveAddressPublisher
-                .sink { [weak self] status in
-                    self?.updateStatus(status: status, isMainNet: isMainNet)
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] status in
+                self?.updateStatus(status: status, isMainNet: isMainNet)
+            }
+            .store(in: &cancellables)
 
         updateStatus(status: adapter.receiveAddressStatus, isMainNet: isMainNet)
     }
@@ -67,20 +68,18 @@ class ReceiveAddressService {
     private func updateStatus(status: DataStatus<DepositAddress>, isMainNet: Bool) {
         state = status.map { address in
             Item(
-                    address: address,
-                    token: wallet.token,
-                    isMainNet: isMainNet,
-                    watchAccount: wallet.account.watchAccount,
-                    coinCode: wallet.coin.code,
-                    imageUrl: wallet.coin.imageUrl
+                address: address,
+                token: wallet.token,
+                isMainNet: isMainNet,
+                watchAccount: wallet.account.watchAccount,
+                coinCode: wallet.coin.code,
+                imageUrl: wallet.coin.imageUrl
             )
         }
     }
-
 }
 
 extension ReceiveAddressService: IReceiveAddressService {
-
     var title: String {
         "deposit.receive_coin".localized(wallet.coin.code)
     }
@@ -88,11 +87,9 @@ extension ReceiveAddressService: IReceiveAddressService {
     var statusUpdatedPublisher: AnyPublisher<DataStatus<ServiceItem>, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
-
 }
 
 extension ReceiveAddressService {
-
     struct Item {
         let address: DepositAddress
         let token: Token
@@ -111,5 +108,4 @@ extension ReceiveAddressService {
             }
         }
     }
-
 }

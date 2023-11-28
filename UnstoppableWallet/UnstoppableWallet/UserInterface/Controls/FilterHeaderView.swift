@@ -1,6 +1,6 @@
-import UIKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import UIKit
 
 class FilterHeaderView: UITableViewHeaderFooterView {
     static var height: CGFloat = FilterView.height
@@ -21,7 +21,8 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         backgroundView?.backgroundColor = .themeNavigationBarBackground
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
@@ -30,7 +31,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         set { view.autoDeselect = newValue }
     }
 
-    var onSelect: ((Int) -> ())? {
+    var onSelect: ((Int) -> Void)? {
         get { view.onSelect }
         set { view.onSelect = newValue }
     }
@@ -46,5 +47,4 @@ class FilterHeaderView: UITableViewHeaderFooterView {
     func select(index: Int) {
         view.select(index: index)
     }
-
 }

@@ -13,17 +13,16 @@ enum FeeRateState {
     }
 
     var isValid: Bool {
-        if case .value(_) = self {
+        if case .value = self {
             return true
         }
         return false
     }
 
     var isError: Bool {
-        if case .error(_) = self {
+        if case .error = self {
             return true
         }
         return false
     }
-
 }

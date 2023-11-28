@@ -66,5 +66,4 @@ class NftAssetRecord: Record {
         container[Columns.lastSalePriceTokenQueryId] = lastSalePrice?.tokenQuery.id
         container[Columns.lastSalePriceValue] = lastSalePrice?.value
     }
-
 }

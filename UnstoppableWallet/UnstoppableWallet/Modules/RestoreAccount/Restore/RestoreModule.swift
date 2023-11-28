@@ -1,9 +1,8 @@
-import UIKit
 import ThemeKit
+import UIKit
 
 struct RestoreModule {
-
-    static func viewController(advanced: Bool = false, sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
+    static func viewController(advanced: Bool = false, sourceViewController _: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
         let mnemonicService = RestoreMnemonicService(languageManager: LanguageManager.shared)
         let mnemonicViewModel = RestoreMnemonicViewModel(service: mnemonicService)
 
@@ -14,14 +13,13 @@ struct RestoreModule {
         let viewModel = RestoreViewModel(service: service, mnemonicViewModel: mnemonicViewModel, privateKeyViewModel: privateKeyViewModel)
 
         let viewController = RestoreViewController(
-                advanced: advanced,
-                viewModel: viewModel,
-                mnemonicViewModel: mnemonicViewModel,
-                privateKeyViewModel: privateKeyViewModel,
-                returnViewController: returnViewController
+            advanced: advanced,
+            viewModel: viewModel,
+            mnemonicViewModel: mnemonicViewModel,
+            privateKeyViewModel: privateKeyViewModel,
+            returnViewController: returnViewController
         )
 
         return viewController
     }
-
 }

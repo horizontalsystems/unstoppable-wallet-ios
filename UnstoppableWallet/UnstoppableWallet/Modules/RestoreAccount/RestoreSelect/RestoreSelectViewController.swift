@@ -1,10 +1,10 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
+import Foundation
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class RestoreSelectViewController: CoinToggleViewController {
     private let viewModel: RestoreSelectViewModel
@@ -22,7 +22,8 @@ class RestoreSelectViewController: CoinToggleViewController {
         super.init(viewModel: viewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -57,5 +58,4 @@ class RestoreSelectViewController: CoinToggleViewController {
     @objc private func onTapRightBarButton() {
         viewModel.onRestore()
     }
-
 }

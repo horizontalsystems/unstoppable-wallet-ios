@@ -1,6 +1,6 @@
+import Chart
 import Combine
 import Foundation
-import Chart
 
 class ChartIndicatorSettingsViewModel {
     private let dataSource: IIndicatorDataSource
@@ -42,16 +42,14 @@ class ChartIndicatorSettingsViewModel {
         switch dataSource.state {
         case .notChanged: ()
         case .success: applyEnabled = true
-        case .failed(let cautions): newCautions = cautions
+        case let .failed(cautions): newCautions = cautions
         }
         buttonEnabledSubject.send(applyEnabled)
         cautionSubject.send(newCautions)
     }
-
 }
 
 extension ChartIndicatorSettingsViewModel {
-
     var title: String {
         let indicator = dataSource.chartIndicator
         switch indicator.abstractType {
@@ -123,5 +121,4 @@ extension ChartIndicatorSettingsViewModel {
 
         updateIndicatorSubject.send(indicator)
     }
-
 }

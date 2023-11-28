@@ -20,19 +20,19 @@ class BtcBlockchainSettingsViewModel: ObservableObject {
         restoreModes = service.restoreModes.map { restoreMode in
             let image: BtcRestoreModeViewItem.Image
             switch restoreMode.restoreMode {
-                case .blockchair:
-                    image = .local(name: "blockchair_32")
-                case .hybrid:
-                    image = .local(name: "api_placeholder_32")
-                case .blockchain:
-                    image = .remote(url: service.blockchain.type.imageUrl)
+            case .blockchair:
+                image = .local(name: "blockchair_32")
+            case .hybrid:
+                image = .local(name: "api_placeholder_32")
+            case .blockchain:
+                image = .remote(url: service.blockchain.type.imageUrl)
             }
 
             let description: String
             switch restoreMode.restoreMode {
-                case .blockchair: description = "btc_restore_mode.blockchair".localized
-                case .hybrid: description = "btc_restore_mode.hybrid".localized
-                case .blockchain: description = "btc_restore_mode.blockchain".localized
+            case .blockchair: description = "btc_restore_mode.blockchair".localized
+            case .hybrid: description = "btc_restore_mode.hybrid".localized
+            case .blockchain: description = "btc_restore_mode.blockchain".localized
             }
 
             return BtcRestoreModeViewItem(

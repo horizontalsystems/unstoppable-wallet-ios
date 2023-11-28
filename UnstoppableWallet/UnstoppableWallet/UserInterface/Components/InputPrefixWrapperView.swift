@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class InputPrefixWrapperView: UIView, ISizeAwareView {
     let label = UILabel()
@@ -19,7 +19,8 @@ class InputPrefixWrapperView: UIView, ISizeAwareView {
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -30,14 +31,11 @@ class InputPrefixWrapperView: UIView, ISizeAwareView {
 
         return text.size(containerWidth: containerWidth, font: label.font).width
     }
-
 }
 
 extension InputPrefixWrapperView {
-
     var textColor: UIColor? {
         get { label.textColor }
         set { label.textColor = newValue }
     }
-
 }

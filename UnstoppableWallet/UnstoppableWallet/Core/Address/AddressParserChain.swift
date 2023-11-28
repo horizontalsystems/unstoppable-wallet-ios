@@ -60,7 +60,7 @@ extension AddressParserChain {
         }
 
         return Single.zip(singles) { handlers in
-            return handlers.compactMap { $0 }
+            handlers.compactMap { $0 }
         }
     }
 

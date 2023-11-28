@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class BarPageControl: UIView {
     private let barSize = CGSize(width: 20, height: 4)
@@ -16,7 +16,7 @@ class BarPageControl: UIView {
     init(barCount: Int) {
         super.init(frame: .zero)
 
-        for i in 0..<barCount {
+        for i in 0 ..< barCount {
             let barView = UIView()
 
             addSubview(barView)
@@ -42,7 +42,8 @@ class BarPageControl: UIView {
         updateBackgrounds()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -55,5 +56,4 @@ class BarPageControl: UIView {
             view.backgroundColor = index == currentPage ? .themeJacob : .themeSteel20
         }
     }
-
 }

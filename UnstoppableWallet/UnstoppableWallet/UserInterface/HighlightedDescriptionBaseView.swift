@@ -1,12 +1,12 @@
-import UIKit
 import SwiftUI
+import UIKit
 
 class HighlightedDescriptionBaseView: UIView {
-    internal static let font: UIFont = .subhead2
-    internal static let sidePadding: CGFloat = .margin16
-    internal static let verticalPadding: CGFloat = .margin12
+    static let font: UIFont = .subhead2
+    static let sidePadding: CGFloat = .margin16
+    static let verticalPadding: CGFloat = .margin12
 
-    internal let label = UILabel()
+    let label = UILabel()
 
     public init() {
         super.init(frame: .zero)
@@ -21,7 +21,8 @@ class HighlightedDescriptionBaseView: UIView {
         label.setContentCompressionResistancePriority(.required, for: .vertical)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -31,7 +32,7 @@ class HighlightedDescriptionBaseView: UIView {
             backgroundColor = .themeYellow20
             borderColor = .themeYellowD
         case .red:
-            backgroundColor = UIColor(hex: 0xff4820, alpha: 0.2)
+            backgroundColor = UIColor(hex: 0xFF4820, alpha: 0.2)
             borderColor = .themeLucian
         }
     }
@@ -40,11 +41,9 @@ class HighlightedDescriptionBaseView: UIView {
         get { label.text }
         set { label.text = newValue }
     }
-
 }
 
 extension HighlightedDescriptionBaseView {
-
     enum Style: String {
         case yellow
         case red
@@ -56,5 +55,4 @@ extension HighlightedDescriptionBaseView {
             }
         }
     }
-
 }

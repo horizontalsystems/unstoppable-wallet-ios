@@ -1,5 +1,5 @@
-import TronKit
 import MarketKit
+import TronKit
 
 class WatchTronService {
     private let accountFactory: AccountFactory
@@ -13,11 +13,9 @@ class WatchTronService {
         self.walletManager = walletManager
         self.marketKit = marketKit
     }
-
 }
 
 extension WatchTronService {
-
     func enableWatch(accountType: AccountType, accountName: String) {
         let account = accountFactory.watchAccount(type: accountType, name: accountName)
         accountManager.save(account: account)
@@ -30,5 +28,4 @@ extension WatchTronService {
 
         walletManager.save(wallets: [Wallet(token: token, account: account)])
     }
-
 }

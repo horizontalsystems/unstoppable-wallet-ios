@@ -13,10 +13,11 @@ class WCWalletPayload: WCRequestPayload {
         super.init(dAppName: dAppName, data: data)
     }
 
-    required public convenience init(dAppName: String, from anyCodable: AnyCodable) throws {
+    public required convenience init(dAppName: String, from anyCodable: AnyCodable) throws {
         let chain = try anyCodable.get([WalletConnectChain].self)
         guard let chain = chain.first,
-              let chainId = Int(chain.chainId.replacingOccurrences(of: "0x", with: ""), radix: 16) else {
+              let chainId = Int(chain.chainId.replacingOccurrences(of: "0x", with: ""), radix: 16)
+        else {
             throw ParsingError.badJSONRPCRequest
         }
 

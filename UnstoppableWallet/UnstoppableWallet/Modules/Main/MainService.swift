@@ -101,7 +101,7 @@ extension MainService {
     }
 
     var initialTab: MainModule.Tab {
-        if let presetTab = presetTab {
+        if let presetTab {
             return presetTab
         }
 

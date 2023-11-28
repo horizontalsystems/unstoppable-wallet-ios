@@ -1,7 +1,7 @@
-import Foundation
 import BigInt
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
 
 class CexCoinService {
     let cexAsset: CexAsset
@@ -13,11 +13,9 @@ class CexCoinService {
         self.currencyManager = currencyManager
         self.marketKit = marketKit
     }
-
 }
 
 extension CexCoinService: ICoinService {
-
     var rate: CurrencyValue? {
         guard let coin = cexAsset.coin else {
             return nil
@@ -61,5 +59,4 @@ extension CexCoinService: ICoinService {
     func amountData(value: BigUInt, sign: FloatingPointSign = .plus) -> AmountData {
         amountData(value: Decimal(bigUInt: value, decimals: CexAsset.decimals) ?? 0, sign: sign)
     }
-
 }

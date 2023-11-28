@@ -13,7 +13,8 @@ class ChooseBlockchainService {
 
     init(accountType: AccountType, accountName: String,
          accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager,
-         evmBlockchainManager: EvmBlockchainManager, marketKit: MarketKit.Kit) {
+         evmBlockchainManager: EvmBlockchainManager, marketKit: MarketKit.Kit)
+    {
         self.accountType = accountType
         self.accountName = accountName
         self.accountFactory = accountFactory
@@ -44,17 +45,14 @@ class ChooseBlockchainService {
             }
 
             walletManager.save(wallets: wallets)
-        } catch { }
+        } catch {}
     }
-
 }
 
 extension ChooseBlockchainService: IChooseWatchService {
-
     func watch(enabledUids: [String]) {
         let account = accountFactory.watchAccount(type: accountType, name: accountName)
         accountManager.save(account: account)
         enableWallets(account: account, enabledBlockchainUids: enabledUids)
     }
-
 }

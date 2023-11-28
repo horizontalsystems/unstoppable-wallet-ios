@@ -28,7 +28,7 @@ extension DeepLinkManager {
             return true
         }
 
-        if scheme == "unstoppable.money" && host == "coin" {
+        if scheme == "unstoppable.money", host == "coin" {
             let uid = path.replacingOccurrences(of: "/", with: "")
 
             newSchemeRelay.accept(.coin(uid: uid))

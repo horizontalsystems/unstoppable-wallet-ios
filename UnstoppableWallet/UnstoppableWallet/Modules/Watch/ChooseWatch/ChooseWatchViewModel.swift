@@ -1,8 +1,8 @@
 import Foundation
 import MarketKit
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IChooseWatchService {
     var items: [WatchModule.Item] { get }
@@ -49,11 +49,9 @@ class ChooseWatchViewModel {
             }
         }
     }
-
 }
 
 extension ChooseWatchViewModel {
-
     var title: String {
         switch watchType {
         case .evmAddress: return "watch_address.choose_blockchain".localized
@@ -74,11 +72,9 @@ extension ChooseWatchViewModel {
         service.watch(enabledUids: enabledBlockchainUids)
         watchRelay.accept(())
     }
-
 }
 
 extension ChooseWatchViewModel: ICoinToggleViewModel {
-
     var viewItemsDriver: Driver<[CoinToggleViewModel.ViewItem]> {
         Driver.just(viewItems)
     }
@@ -101,8 +97,7 @@ extension ChooseWatchViewModel: ICoinToggleViewModel {
         }
     }
 
-    func onTapSettings(uid: String) { }
-    func onTapInfo(uid: String) { }
-    func onUpdate(filter: String) {}
-
+    func onTapSettings(uid _: String) {}
+    func onTapInfo(uid _: String) {}
+    func onUpdate(filter _: String) {}
 }

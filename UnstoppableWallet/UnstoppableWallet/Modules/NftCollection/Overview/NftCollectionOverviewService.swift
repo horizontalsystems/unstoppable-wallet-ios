@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class NftCollectionOverviewService {
     let blockchainType: BlockchainType
@@ -31,20 +31,18 @@ class NftCollectionOverviewService {
         state = .loading
 
         nftMetadataManager.collectionMetadataSingle(blockchainType: blockchainType, providerUid: providerCollectionUid)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] collection in
-                    let item = Item(collection: collection)
-                    self?.state = .completed(item)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] collection in
+                let item = Item(collection: collection)
+                self?.state = .completed(item)
+            }, onError: { [weak self] error in
+                self?.state = .failed(error)
+            })
+            .disposed(by: disposeBag)
     }
-
 }
 
 extension NftCollectionOverviewService {
-
     var stateObservable: Observable<DataStatus<Item>> {
         stateRelay.asObservable()
     }
@@ -55,7 +53,8 @@ extension NftCollectionOverviewService {
 
     var providerLink: ProviderLink? {
         guard let title = nftMetadataManager.providerTitle(blockchainType: blockchainType),
-              let link = nftMetadataManager.collectionLink(blockchainType: blockchainType, providerUid: providerCollectionUid) else {
+              let link = nftMetadataManager.collectionLink(blockchainType: blockchainType, providerUid: providerCollectionUid)
+        else {
             return nil
         }
 
@@ -65,13 +64,10 @@ extension NftCollectionOverviewService {
     func resync() {
         sync()
     }
-
 }
 
 extension NftCollectionOverviewService {
-
     struct Item {
         let collection: NftCollectionMetadata
     }
-
 }

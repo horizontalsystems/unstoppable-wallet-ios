@@ -1,11 +1,11 @@
 import Combine
-import UIKit
-import RxSwift
-import RxCocoa
-import SnapKit
 import ComponentKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
+import SnapKit
 import ThemeKit
+import UIKit
 
 class ManageWalletsViewController: ThemeSearchViewController {
     private let viewModel: ManageWalletsViewModel
@@ -26,7 +26,8 @@ class ManageWalletsViewController: ThemeSearchViewController {
         super.init(scrollViews: [tableView])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -71,9 +72,9 @@ class ManageWalletsViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.showContractSignal) { [weak self] in self?.showContract(viewItem: $0) }
 
         $filter
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+            .store(in: &cancellables)
 
         tableView.buildSections()
 
@@ -98,7 +99,7 @@ class ManageWalletsViewController: ThemeSearchViewController {
     }
 
     private func onUpdate(viewItems: [ManageWalletsViewModel.ViewItem]) {
-        let animated = self.viewItems.map { $0.uid } == viewItems.map { $0.uid }
+        let animated = self.viewItems.map(\.uid) == viewItems.map(\.uid)
         self.viewItems = viewItems
 
         if isLoaded {
@@ -112,28 +113,28 @@ class ManageWalletsViewController: ThemeSearchViewController {
 
     private func showInfo(viewItem: ManageWalletsViewModel.InfoViewItem) {
         showBottomSheet(viewItem: viewItem.coin, items: [
-            .description(text: viewItem.text)
+            .description(text: viewItem.text),
         ])
     }
 
     private func showBirthdayHeight(viewItem: ManageWalletsViewModel.BirthdayHeightViewItem) {
         showBottomSheet(viewItem: viewItem.coin, items: [
-            .copyableValue(title: "birthday_height.title".localized, value: viewItem.height)
+            .copyableValue(title: "birthday_height.title".localized, value: viewItem.height),
         ])
     }
 
     private func showContract(viewItem: ManageWalletsViewModel.ContractViewItem) {
         showBottomSheet(viewItem: viewItem.coin, items: [
-            .contractAddress(imageUrl: viewItem.blockchainImageUrl, value: viewItem.value, explorerUrl: viewItem.explorerUrl)
+            .contractAddress(imageUrl: viewItem.blockchainImageUrl, value: viewItem.value, explorerUrl: viewItem.explorerUrl),
         ])
     }
 
     private func showBottomSheet(viewItem: ManageWalletsViewModel.CoinViewItem, items: [BottomSheetModule.Item]) {
         let viewController = BottomSheetModule.viewController(
-                image: .remote(url: viewItem.coinImageUrl, placeholder: viewItem.coinPlaceholderImageName),
-                title: viewItem.coinCode,
-                subtitle: viewItem.coinName,
-                items: items
+            image: .remote(url: viewItem.coinImageUrl, placeholder: viewItem.coinPlaceholderImageName),
+            title: viewItem.coinCode,
+            subtitle: viewItem.coinName,
+            items: items
         )
 
         present(viewController, animated: true)
@@ -154,17 +155,15 @@ class ManageWalletsViewController: ThemeSearchViewController {
 
         CellBuilderNew.buildStatic(cell: cell, rootElement: rootElement(index: index, viewItem: viewItems[index], forceToggleOn: on))
     }
-
 }
 
 extension ManageWalletsViewController: SectionsDataSource {
-
     private func rootElement(index: Int, viewItem: ManageWalletsViewModel.ViewItem, forceToggleOn: Bool? = nil) -> CellBuilderNew.CellElement {
         .hStack([
             .image32 { component in
                 component.setImage(
-                        urlString: viewItem.imageUrl,
-                        placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) }
+                    urlString: viewItem.imageUrl,
+                    placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) }
                 )
             },
             .vStackCentered([
@@ -177,10 +176,10 @@ extension ManageWalletsViewController: SectionsDataSource {
                         component.badgeView.text = viewItem.badge
                     },
                     .margin0,
-                    .text { _ in }
+                    .text { _ in },
                 ]),
                 .margin(1),
-                .textElement(text: .subhead2(viewItem.subtitle))
+                .textElement(text: .subhead2(viewItem.subtitle)),
             ]),
             .secondaryCircleButton { [weak self] component in
                 component.isHidden = !viewItem.hasInfo
@@ -199,33 +198,32 @@ extension ManageWalletsViewController: SectionsDataSource {
                 component.onSwitch = { [weak self] enabled in
                     self?.onToggle(index: index, enabled: enabled)
                 }
-            }
+            },
         ])
     }
 
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "coins",
-                    headerState: .margin(height: .margin4),
-                    footerState: .margin(height: .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        let isLast = index == viewItems.count - 1
+                id: "coins",
+                headerState: .margin(height: .margin4),
+                footerState: .margin(height: .margin32),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    let isLast = index == viewItems.count - 1
 
-                        return CellBuilderNew.row(
-                                rootElement: rootElement(index: index, viewItem: viewItem),
-                                tableView: tableView,
-                                id: "token_\(viewItem.uid)",
-                                hash: "token_\(viewItem.enabled)_\(viewItem.hasInfo)_\(isLast)",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-                                }
-                        )
-                    }
-            )
+                    return CellBuilderNew.row(
+                        rootElement: rootElement(index: index, viewItem: viewItem),
+                        tableView: tableView,
+                        id: "token_\(viewItem.uid)",
+                        hash: "token_\(viewItem.enabled)_\(viewItem.hasInfo)_\(isLast)",
+                        height: .heightDoubleLineCell,
+                        autoDeselect: true,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .transparent, isLast: isLast)
+                        }
+                    )
+                }
+            ),
         ]
     }
-
 }

@@ -1,10 +1,10 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class IndicatorAdviceView: UIView {
-    static private let blockHeight: CGFloat = 6
+    private static let blockHeight: CGFloat = 6
 
     private let titleLabel = UILabel()
     private let valueLabel = UILabel()
@@ -52,7 +52,7 @@ class IndicatorAdviceView: UIView {
         stackView.spacing = 1
         stackView.distribution = .fillEqually
 
-        for _ in 0..<CoinIndicatorViewItemFactory.Advice.allCases.count {
+        for _ in 0 ..< CoinIndicatorViewItemFactory.Advice.allCases.count {
             let view = UIView()
             view.clipsToBounds = true
             view.cornerRadius = .cornerRadius2
@@ -63,7 +63,8 @@ class IndicatorAdviceView: UIView {
         }
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -73,16 +74,14 @@ class IndicatorAdviceView: UIView {
             return
         }
 
-        for i in 0..<CoinIndicatorViewItemFactory.Advice.allCases.count {
+        for i in 0 ..< CoinIndicatorViewItemFactory.Advice.allCases.count {
             let blockColor = CoinIndicatorViewItemFactory.Advice(rawValue: i)?.color ?? UIColor.themeSteel20
             blocks.at(index: i)?.backgroundColor = advice.rawValue >= i ? blockColor : blockColor.withAlphaComponent(0.2)
         }
     }
-
 }
 
 extension IndicatorAdviceView {
-
     func set(advice: CoinIndicatorViewItemFactory.Advice?) {
         valueLabel.text = advice?.title
         valueLabel.textColor = advice?.color ?? .themeGray
@@ -95,5 +94,4 @@ extension IndicatorAdviceView {
         valueLabel.textColor = .themeGray
         updateBlocks(advice: nil)
     }
-
 }

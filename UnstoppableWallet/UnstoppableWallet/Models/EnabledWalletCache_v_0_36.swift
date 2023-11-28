@@ -28,7 +28,7 @@ class EnabledWalletCache_v_0_36: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case tokenQueryId, accountId, balance, balanceLocked // todo: migration - remove coinSettingsId
+        case tokenQueryId, accountId, balance, balanceLocked // TODO: migration - remove coinSettingsId
     }
 
     required init(row: Row) throws {
@@ -47,5 +47,4 @@ class EnabledWalletCache_v_0_36: Record {
         container[Columns.balance] = balance
         container[Columns.balanceLocked] = balanceLocked
     }
-
 }

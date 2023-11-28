@@ -1,14 +1,13 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 protocol ICexAmountInputService: IAmountInputService {
     var cexAsset: CexAsset { get }
 }
 
 extension ICexAmountInputService {
-
     var token: Token? {
         nil
     }
@@ -16,11 +15,9 @@ extension ICexAmountInputService {
     var tokenObservable: Observable<Token?> {
         .empty()
     }
-
 }
 
 class CexAmountInputViewModel: AmountInputViewModel {
-
     init(service: ICexAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: AmountDecimalParser) {
         super.init(service: service, fiatService: fiatService, switchService: switchService, decimalParser: decimalParser)
         sync(cexAsset: service.cexAsset)
@@ -33,5 +30,4 @@ class CexAmountInputViewModel: AmountInputViewModel {
             self?.updateMaxEnabled()
         }
     }
-
 }

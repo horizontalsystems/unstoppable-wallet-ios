@@ -16,5 +16,4 @@ class ChartIntervalConverter {
         case .year2: return 4 * month
         }
     }
-
 }

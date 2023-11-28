@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import UIExtensions
+import UIKit
 
 class SelectableValueView: UIView {
     weak var delegate: ISelectableValueViewDelegate?
@@ -71,7 +71,8 @@ class SelectableValueView: UIView {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
@@ -85,7 +86,6 @@ class SelectableValueView: UIView {
         valueLabel.textColor = enabled ? .themeLeah : .themeGray50
         dropDownImageView.tintColor = enabled ? .themeGray : .themeGray50
     }
-
 }
 
 protocol ISelectableValueViewDelegate: AnyObject {

@@ -68,7 +68,7 @@ class MarketListViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
-        if let emptyView = emptyView {
+        if let emptyView {
             view.addSubview(emptyView)
             emptyView.snp.makeConstraints { maker in
                 maker.edges.equalTo(view.safeAreaLayoutGuide)
@@ -126,19 +126,19 @@ class MarketListViewController: ThemeViewController {
     private func sync(viewItemData: MarketModule.ListViewItemData?) {
         viewItems = viewItemData?.viewItems
 
-        if let viewItems = viewItems, viewItems.isEmpty {
+        if let viewItems, viewItems.isEmpty {
             emptyView?.isHidden = false
         } else {
             emptyView?.isHidden = true
         }
 
-        if let viewItems = viewItems, !viewItems.isEmpty {
+        if let viewItems, !viewItems.isEmpty {
             tableView.bounces = true
         } else {
             tableView.bounces = false
         }
 
-        if let viewItemData = viewItemData {
+        if let viewItemData {
             tableView.reload(animated: viewItemData.softUpdate)
         } else {
             tableView.reload()
@@ -206,7 +206,7 @@ extension MarketListViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         let headerState: ViewState<UITableViewHeaderFooterView>
 
-        if let headerView = headerView, let viewItems = viewItems, !viewItems.isEmpty {
+        if let headerView, let viewItems, !viewItems.isEmpty {
             headerState = .static(view: headerView, height: .heightSingleLineCell)
         } else {
             headerState = .margin(height: 0)

@@ -9,8 +9,7 @@ struct NftKey: Hashable {
         hasher.combine(blockchainType)
     }
 
-    static func ==(lhs: NftKey, rhs: NftKey) -> Bool {
+    static func == (lhs: NftKey, rhs: NftKey) -> Bool {
         lhs.account == rhs.account && lhs.blockchainType == rhs.blockchainType
     }
-
 }

@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class AdditionalDataCellNew: UITableViewCell {
     private let titleLabel = UILabel()
@@ -59,5 +59,4 @@ class AdditionalDataCellNew: UITableViewCell {
     var cellHeight: CGFloat {
         isVisible ? 29 : 0
     }
-
 }

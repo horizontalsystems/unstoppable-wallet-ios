@@ -9,11 +9,9 @@ class MarketListTvlDecorator {
     init(service: MarketGlobalTvlMetricService) {
         self.service = service
     }
-
 }
 
 extension MarketListTvlDecorator: IMarketListDecorator {
-
     func listViewItem(item defiCoin: DefiCoin) -> MarketModule.ListViewItem {
         let currency = service.currency
 
@@ -23,12 +21,12 @@ extension MarketListTvlDecorator: IMarketListDecorator {
         let name: String
 
         switch defiCoin.type {
-        case .fullCoin(let fullCoin):
+        case let .fullCoin(fullCoin):
             uid = fullCoin.coin.uid
             iconUrl = fullCoin.coin.imageUrl
             iconPlaceholderName = "placeholder_circle_32"
             name = fullCoin.coin.name
-        case .defiCoin(let defiName, let logo):
+        case let .defiCoin(defiName, logo):
             iconUrl = logo
             iconPlaceholderName = "placeholder_circle_32"
             name = defiName
@@ -63,17 +61,16 @@ extension MarketListTvlDecorator: IMarketListDecorator {
         }
 
         return MarketModule.ListViewItem(
-                uid: uid,
-                iconUrl: iconUrl,
-                iconShape: .square,
-                iconPlaceholderName: iconPlaceholderName,
-                leftPrimaryValue: name,
-                leftSecondaryValue: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "market.global.tvl_in_defi.multi_chain".localized,
-                badge: "\(defiCoin.tvlRank)",
-                badgeSecondaryValue: nil,
-                rightPrimaryValue: tvl.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized,
-                rightSecondaryValue: diff
+            uid: uid,
+            iconUrl: iconUrl,
+            iconShape: .square,
+            iconPlaceholderName: iconPlaceholderName,
+            leftPrimaryValue: name,
+            leftSecondaryValue: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "market.global.tvl_in_defi.multi_chain".localized,
+            badge: "\(defiCoin.tvlRank)",
+            badgeSecondaryValue: nil,
+            rightPrimaryValue: tvl.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized,
+            rightSecondaryValue: diff
         )
     }
-
 }

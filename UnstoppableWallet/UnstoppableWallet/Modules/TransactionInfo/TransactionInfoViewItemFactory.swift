@@ -32,7 +32,7 @@ class TransactionInfoViewItemFactory {
         } else {
             var currencyValue: CurrencyValue?
 
-            if let rate = rate, let value = transactionValue.decimalValue {
+            if let rate, let value = transactionValue.decimalValue {
                 currencyValue = CurrencyValue(currency: rate.currency, value: rate.value * value)
             }
 
@@ -65,7 +65,7 @@ class TransactionInfoViewItemFactory {
             parts.append(formattedCoinValue)
         }
 
-        if let rate = rate, case let .coinValue(_, value) = transactionValue {
+        if let rate, case let .coinValue(_, value) = transactionValue {
             if let formattedCurrencyValue = ValueFormatter.instance.formatFull(currency: rate.currency, value: rate.value * value) {
                 parts.append(formattedCurrencyValue)
             }
@@ -90,7 +90,7 @@ class TransactionInfoViewItemFactory {
     }
 
     private func rateString(currencyValue: CurrencyValue?, coinCode: String?) -> String {
-        guard let currencyValue = currencyValue, let coinCode = coinCode else {
+        guard let currencyValue, let coinCode else {
             return "---"
         }
 
@@ -163,7 +163,7 @@ class TransactionInfoViewItemFactory {
             rateViewItem = .rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code))
         }
 
-        if !burn, let to = to {
+        if !burn, let to {
             let contactData = contactLabelService.contactData(for: to)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: to) : nil
             toViewItem = .to(value: to, valueTitle: valueTitle, contactAddress: contactData.contactAddress)
@@ -230,7 +230,7 @@ class TransactionInfoViewItemFactory {
             rateViewItem = .rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code))
         }
 
-        if !mint, let from = from {
+        if !mint, let from {
             let contactData = contactLabelService.contactData(for: from)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: from) : nil
             fromViewItem = .from(value: from, valueTitle: valueTitle, contactAddress: contactData.contactAddress)
@@ -585,7 +585,7 @@ class TransactionInfoViewItemFactory {
             )
         }
 
-        if let feeViewItem = feeViewItem {
+        if let feeViewItem {
             transactionViewItems.append(feeViewItem)
         }
 

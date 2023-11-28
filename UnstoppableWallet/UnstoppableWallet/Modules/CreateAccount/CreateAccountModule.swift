@@ -1,16 +1,15 @@
-import UIKit
 import ThemeKit
+import UIKit
 
 struct CreateAccountModule {
-
     static func viewController(advanced: Bool = false, sourceViewController: UIViewController? = nil, listener: ICreateAccountListener? = nil) -> UIViewController {
         let service = CreateAccountService(
-                accountFactory: App.shared.accountFactory,
-                predefinedBlockchainService: App.shared.predefinedBlockchainService,
-                languageManager: LanguageManager.shared,
-                accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManager,
-                marketKit: App.shared.marketKit
+            accountFactory: App.shared.accountFactory,
+            predefinedBlockchainService: App.shared.predefinedBlockchainService,
+            languageManager: LanguageManager.shared,
+            accountManager: App.shared.accountManager,
+            walletManager: App.shared.walletManager,
+            marketKit: App.shared.marketKit
         )
         let viewModel = CreateAccountViewModel(service: service)
 
@@ -28,5 +27,4 @@ struct CreateAccountModule {
             }
         }
     }
-
 }

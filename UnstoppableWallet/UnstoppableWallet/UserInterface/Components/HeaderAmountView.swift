@@ -1,7 +1,7 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class HeaderAmountView: UIView {
     static let height: CGFloat = 131
@@ -34,16 +34,17 @@ class HeaderAmountView: UIView {
         convertedAmountButton.font = .body
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var onTapAmount: (() -> ())? {
+    var onTapAmount: (() -> Void)? {
         get { amountButton.onTap }
         set { amountButton.onTap = newValue }
     }
 
-    var onTapConvertedAmount: (() -> ())? {
+    var onTapConvertedAmount: (() -> Void)? {
         get { convertedAmountButton.onTap }
         set { convertedAmountButton.onTap = newValue }
     }
@@ -57,5 +58,4 @@ class HeaderAmountView: UIView {
         convertedAmountButton.text = convertedAmountText
         convertedAmountButton.textColor = expired ? .themeGray50 : .themeGray
     }
-
 }

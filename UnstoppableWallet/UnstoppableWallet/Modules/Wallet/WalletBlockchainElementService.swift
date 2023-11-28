@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import MarketKit
+import RxSwift
 
 class WalletBlockchainElementService {
     private let account: Account
@@ -45,11 +45,9 @@ class WalletBlockchainElementService {
     private func handleUpdated(wallets: [Wallet]) {
         delegate?.didUpdate(elementState: .loaded(elements: filtered(wallets).map { .wallet(wallet: $0) }), elementService: self)
     }
-
 }
 
 extension WalletBlockchainElementService: IWalletElementService {
-
     var state: WalletModule.ElementState {
         .loaded(elements: filtered(walletManager.activeWallets).map { .wallet(wallet: $0) })
     }
@@ -89,11 +87,9 @@ extension WalletBlockchainElementService: IWalletElementService {
 
         walletManager.delete(wallets: [wallet])
     }
-
 }
 
 extension WalletBlockchainElementService: IWalletAdapterServiceDelegate {
-
     func didPrepareAdapters() {
         delegate?.didUpdateElements(elementService: self)
     }
@@ -109,5 +105,4 @@ extension WalletBlockchainElementService: IWalletAdapterServiceDelegate {
     func didUpdate(state: AdapterState, wallet: Wallet) {
         delegate?.didUpdate(state: state, element: .wallet(wallet: wallet))
     }
-
 }

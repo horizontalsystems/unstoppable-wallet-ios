@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class TextFieldCell: UITableViewCell {
     private let wrapperView = UIView()
@@ -32,7 +32,8 @@ class TextFieldCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,11 +44,9 @@ class TextFieldCell: UITableViewCell {
     func prependSubview(_ view: UIView, customSpacing: CGFloat? = nil) {
         stackView.prependSubview(view, customSpacing: customSpacing)
     }
-
 }
 
 extension TextFieldCell {
-
     var inputPlaceholder: String? {
         get { stackView.placeholder }
         set { stackView.placeholder = newValue }
@@ -81,7 +80,7 @@ extension TextFieldCell {
     func set(cautionType: CautionType?) {
         let borderColor: UIColor
 
-        if let cautionType = cautionType {
+        if let cautionType {
             borderColor = cautionType.borderColor
         } else {
             borderColor = .themeSteel20
@@ -90,12 +89,12 @@ extension TextFieldCell {
         wrapperView.layer.borderColor = borderColor.cgColor
     }
 
-    var onChangeText: ((String?) -> ())? {
+    var onChangeText: ((String?) -> Void)? {
         get { stackView.onChangeText }
         set { stackView.onChangeText = newValue }
     }
 
-    var onReturn: (() -> ())? {
+    var onReturn: (() -> Void)? {
         get { stackView.onReturn }
         set { stackView.onReturn = newValue }
     }
@@ -104,5 +103,4 @@ extension TextFieldCell {
         get { stackView.isValidText }
         set { stackView.isValidText = newValue }
     }
-
 }

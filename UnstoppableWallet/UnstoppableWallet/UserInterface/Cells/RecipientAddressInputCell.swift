@@ -1,6 +1,6 @@
-import UIKit
-import RxSwift
 import ComponentKit
+import RxSwift
+import UIKit
 
 class RecipientAddressInputCell: AddressInputCell {
     private let viewModel: RecipientAddressViewModel
@@ -37,14 +37,15 @@ class RecipientAddressInputCell: AddressInputCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func openContacts() {
         guard let blockchainType = viewModel.contactBlockchainType, let viewController = ContactBookModule.viewController(
-                mode: .select(blockchainType, self),
-                presented: true
+            mode: .select(blockchainType, self),
+            presented: true
         ) else {
             return
         }
@@ -60,13 +61,10 @@ class RecipientAddressInputCell: AddressInputCell {
         self.inputText = inputText ?? ""
         viewModel.onChange(text: inputText)
     }
-
 }
 
 extension RecipientAddressInputCell: ContactBookSelectorDelegate {
-
     func onFetch(address: String) {
         set(inputText: address)
     }
-
 }

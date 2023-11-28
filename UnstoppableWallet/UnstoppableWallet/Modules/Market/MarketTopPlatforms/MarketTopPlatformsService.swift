@@ -1,9 +1,9 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketTopPlatformsService {
     typealias Item = TopPlatform
@@ -27,10 +27,10 @@ class MarketTopPlatformsService {
         self.timePeriod = timePeriod
 
         currencyManager.$baseCurrency
-                .sink { [weak self] _ in
-                    self?.sync()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] _ in
+                self?.sync()
+            }
+            .store(in: &cancellables)
 
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.sync() }
 
@@ -63,17 +63,15 @@ class MarketTopPlatformsService {
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let platforms, _, _) = internalState else {
+        guard case let .loaded(platforms, _, _) = internalState else {
             return
         }
 
         sync(topPlatforms: platforms, reorder: true)
     }
-
 }
 
 extension MarketTopPlatformsService {
-
     var topPlatforms: [TopPlatform]? {
         if case let .loaded(data, _, _) = state {
             return data
@@ -81,11 +79,9 @@ extension MarketTopPlatformsService {
 
         return nil
     }
-
 }
 
 extension MarketTopPlatformsService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
         $state
     }
@@ -93,13 +89,10 @@ extension MarketTopPlatformsService: IMarketListService {
     func refresh() {
         sync()
     }
-
 }
 
 extension MarketTopPlatformsService: IMarketListTopPlatformDecoratorService {
-
     var currency: Currency {
         currencyManager.baseCurrency
     }
-
 }

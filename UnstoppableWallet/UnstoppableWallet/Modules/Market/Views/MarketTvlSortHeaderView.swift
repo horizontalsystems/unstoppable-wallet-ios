@@ -1,10 +1,10 @@
-import UIKit
-import UIExtensions
-import ThemeKit
-import SnapKit
 import ComponentKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIExtensions
+import UIKit
 
 class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell
@@ -71,14 +71,15 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
         subscribe(disposeBag, viewModel.marketTvlFieldDriver) { [weak self] in self?.syncMarketTvlFieldButton(marketTvlField: $0) }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func onTapDropdownButton() {
         let alertController = AlertRouter.module(
-                title: "market.global.tvl_in_defi.filter_by_chain".localized,
-                viewItems: viewModel.platformFieldViewItems
+            title: "market.global.tvl_in_defi.filter_by_chain".localized,
+            viewItems: viewModel.platformFieldViewItems
         ) { [weak self] index in
             self?.viewModel.onSelectMarketPlatformField(index: index)
         }
@@ -111,5 +112,4 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
     private func syncSortButton(ascending: Bool) {
         sortButton.set(image: UIImage(named: ascending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20"))
     }
-
 }

@@ -24,21 +24,19 @@ class EvmCommonGasDataService {
         let adjustedTransactionData = stubAmount.map { TransactionData(to: transactionData.to, value: $0, input: transactionData.input) } ?? transactionData
 
         return evmKit.estimateGas(transactionData: adjustedTransactionData, gasPrice: gasPrice)
-                .map { estimatedGasLimit in
-                    let limit = surchargeRequired ? EvmFeeModule.surcharged(gasLimit: estimatedGasLimit) : estimatedGasLimit
+            .map { estimatedGasLimit in
+                let limit = surchargeRequired ? EvmFeeModule.surcharged(gasLimit: estimatedGasLimit) : estimatedGasLimit
 
-                    return EvmFeeModule.GasData(
-                            limit: limit,
-                            estimatedLimit: estimatedGasLimit,
-                            price: gasPrice
-                    )
-                }
+                return EvmFeeModule.GasData(
+                    limit: limit,
+                    estimatedLimit: estimatedGasLimit,
+                    price: gasPrice
+                )
+            }
     }
-
 }
 
 extension EvmCommonGasDataService {
-
     static func instance(evmKit: EvmKit.Kit, blockchainType: BlockchainType, predefinedGasLimit: Int?) -> EvmCommonGasDataService {
         if let rollupFeeContractAddress = blockchainType.rollupFeeContractAddress {
             return EvmRollupGasDataService(evmKit: evmKit, l1GasFeeContractAddress: rollupFeeContractAddress, predefinedGasLimit: predefinedGasLimit)
@@ -46,5 +44,4 @@ extension EvmCommonGasDataService {
 
         return EvmCommonGasDataService(evmKit: evmKit, predefinedGasLimit: predefinedGasLimit)
     }
-
 }

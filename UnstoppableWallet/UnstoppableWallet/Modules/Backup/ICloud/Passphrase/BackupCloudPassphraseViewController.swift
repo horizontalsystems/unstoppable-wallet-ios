@@ -1,10 +1,10 @@
 import Combine
-import SnapKit
-import ThemeKit
-import UIKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
 import UIExtensions
+import UIKit
 
 class BackupCloudPassphraseViewController: KeyboardAwareViewController {
     private let viewModel: BackupCloudPassphraseViewModel
@@ -32,7 +32,8 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -80,49 +81,49 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
         passphraseDescriptionCell.descriptionText = "restore.passphrase_description".localized
 
         viewModel.$passphraseCaution
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] caution in
-                    self?.passphraseCell.set(cautionType: caution?.type)
-                    self?.passphraseCautionCell.set(caution: caution)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] caution in
+                self?.passphraseCell.set(cautionType: caution?.type)
+                self?.passphraseCautionCell.set(caution: caution)
+            }
+            .store(in: &cancellables)
 
         viewModel.$passphraseConfirmationCaution
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] caution in
-                    self?.passphraseConfirmationCell.set(cautionType: caution?.type)
-                    self?.passphraseConfirmationCautionCell.set(caution: caution)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] caution in
+                self?.passphraseConfirmationCell.set(cautionType: caution?.type)
+                self?.passphraseConfirmationCautionCell.set(caution: caution)
+            }
+            .store(in: &cancellables)
 
         viewModel.$processing
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] processing in
-                    self?.show(processing: processing)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] processing in
+                self?.show(processing: processing)
+            }
+            .store(in: &cancellables)
 
         viewModel.clearInputsPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.passphraseCell.inputText = nil
-                    self?.passphraseConfirmationCell.inputText = nil
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.passphraseCell.inputText = nil
+                self?.passphraseConfirmationCell.inputText = nil
+            }
+            .store(in: &cancellables)
 
         viewModel.showErrorPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.show(error: $0)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.show(error: $0)
+            }
+            .store(in: &cancellables)
 
         viewModel.finishPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.finish()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.finish()
+            }
+            .store(in: &cancellables)
 
         showDefaultPassphrase()
 
@@ -178,83 +179,79 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
 
         dismiss(animated: true)
     }
-
 }
 
 extension BackupCloudPassphraseViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "description-section",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.descriptionRow(
-                                id: "description",
-                                text: "backup.cloud.password.description".localized,
-                                font: .subhead2,
-                                textColor: .gray,
-                                ignoreBottomMargin: true
-                        )
-                    ]
+                id: "description-section",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.descriptionRow(
+                        id: "description",
+                        text: "backup.cloud.password.description".localized,
+                        font: .subhead2,
+                        textColor: .gray,
+                        ignoreBottomMargin: true
+                    ),
+                ]
             ),
             Section(
-                    id: "passphrase",
-                    footerState: .margin(height: .margin16),
-                    rows: [
-                        StaticRow(
-                                cell: passphraseCell,
-                                id: "passphrase",
-                                height: .heightSingleLineCell
-                        ),
-                        StaticRow(
-                                cell: passphraseCautionCell,
-                                id: "passphrase-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.passphraseCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "passphrase",
+                footerState: .margin(height: .margin16),
+                rows: [
+                    StaticRow(
+                        cell: passphraseCell,
+                        id: "passphrase",
+                        height: .heightSingleLineCell
+                    ),
+                    StaticRow(
+                        cell: passphraseCautionCell,
+                        id: "passphrase-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.passphraseCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "confirm",
-                    footerState: .margin(height: 20),
-                    rows: [
-                        StaticRow(
-                                cell: passphraseConfirmationCell,
-                                id: "confirm",
-                                height: .heightSingleLineCell
-                        ),
-                        StaticRow(
-                                cell: passphraseConfirmationCautionCell,
-                                id: "confirm-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.passphraseConfirmationCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "confirm",
+                footerState: .margin(height: 20),
+                rows: [
+                    StaticRow(
+                        cell: passphraseConfirmationCell,
+                        id: "confirm",
+                        height: .heightSingleLineCell
+                    ),
+                    StaticRow(
+                        cell: passphraseConfirmationCautionCell,
+                        id: "confirm-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.passphraseConfirmationCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "highlighted-description",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: passphraseDescriptionCell,
-                                id: "passphrase-description",
-                                dynamicHeight: { [weak self] width in
-                                    self?.passphraseDescriptionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "highlighted-description",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: passphraseDescriptionCell,
+                        id: "passphrase-description",
+                        dynamicHeight: { [weak self] width in
+                            self?.passphraseDescriptionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
         ]
     }
-
 }
 
 extension BackupCloudPassphraseViewController: IDynamicHeightCellDelegate {
-
     func onChangeHeight() {
         guard isLoaded else {
             return
@@ -265,5 +262,4 @@ extension BackupCloudPassphraseViewController: IDynamicHeightCellDelegate {
             self?.tableView.endUpdates()
         }
     }
-
 }

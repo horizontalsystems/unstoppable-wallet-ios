@@ -6,11 +6,9 @@ class FavoriteCoinRecordStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension FavoriteCoinRecordStorage {
-
     var favoriteCoinRecords: [FavoriteCoinRecord] {
         try! dbPool.read { db in
             try FavoriteCoinRecord.fetchAll(db)
@@ -34,24 +32,23 @@ extension FavoriteCoinRecordStorage {
     func deleteAll() {
         _ = try! dbPool.write { db in
             try FavoriteCoinRecord
-                    .deleteAll(db)
+                .deleteAll(db)
         }
     }
 
     func deleteFavoriteCoinRecord(coinUid: String) {
         _ = try! dbPool.write { db in
             try FavoriteCoinRecord
-                    .filter(FavoriteCoinRecord.Columns.coinUid == coinUid)
-                    .deleteAll(db)
+                .filter(FavoriteCoinRecord.Columns.coinUid == coinUid)
+                .deleteAll(db)
         }
     }
 
     func favoriteCoinRecordExists(coinUid: String) -> Bool {
         try! dbPool.read { db in
             try FavoriteCoinRecord
-                    .filter(FavoriteCoinRecord.Columns.coinUid == coinUid)
-                    .fetchCount(db) > 0
+                .filter(FavoriteCoinRecord.Columns.coinUid == coinUid)
+                .fetchCount(db) > 0
         }
     }
-
 }

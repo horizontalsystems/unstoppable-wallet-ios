@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 class MarketAdvancedSearchViewModel {
     private let disposeBag = DisposeBag()
@@ -47,7 +47,7 @@ class MarketAdvancedSearchViewModel {
         switch state {
         case .loading:
             buttonStateRelay.accept(.loading)
-        case .loaded(let marketInfos):
+        case let .loaded(marketInfos):
             if marketInfos.isEmpty {
                 buttonStateRelay.accept(.emptyResults)
             } else {
@@ -58,19 +58,19 @@ class MarketAdvancedSearchViewModel {
         }
     }
 
-    private func sync(coinList: MarketAdvancedSearchService.CoinListCount) {
+    private func sync(coinList _: MarketAdvancedSearchService.CoinListCount) {
         coinListViewItemRelay.accept(ViewItem(value: service.coinListCount.title, valueStyle: .normal))
     }
 
-    private func sync(marketCap: MarketAdvancedSearchService.ValueFilter) {
+    private func sync(marketCap _: MarketAdvancedSearchService.ValueFilter) {
         marketCapViewItemRelay.accept(ViewItem(value: service.marketCap.title, valueStyle: service.marketCap.valueStyle))
     }
 
-    private func sync(volume: MarketAdvancedSearchService.ValueFilter) {
+    private func sync(volume _: MarketAdvancedSearchService.ValueFilter) {
         volumeViewItemRelay.accept(ViewItem(value: service.volume.title, valueStyle: service.volume.valueStyle))
     }
 
-    private func sync(blockchains: [Blockchain]) {
+    private func sync(blockchains _: [Blockchain]) {
         let value: String
         let valueStyle: ValueStyle
 
@@ -88,18 +88,16 @@ class MarketAdvancedSearchViewModel {
         blockchainsViewItemRelay.accept(ViewItem(value: value, valueStyle: valueStyle))
     }
 
-    private func sync(priceChangeType: MarketModule.PriceChangeType) {
+    private func sync(priceChangeType _: MarketModule.PriceChangeType) {
         priceChangeTypeViewItemRelay.accept(ViewItem(value: service.priceChangeType.title, valueStyle: .normal))
     }
 
-    private func sync(priceChange: MarketAdvancedSearchService.PriceChangeFilter) {
+    private func sync(priceChange _: MarketAdvancedSearchService.PriceChangeFilter) {
         priceChangeViewItemRelay.accept(ViewItem(value: service.priceChange.title, valueStyle: service.priceChange.valueStyle))
     }
-
 }
 
 extension MarketAdvancedSearchViewModel {
-
     var buttonStateDriver: Driver<ButtonState> {
         buttonStateRelay.asDriver()
     }
@@ -149,9 +147,9 @@ extension MarketAdvancedSearchViewModel {
     var blockchainViewItems: [SelectorModule.ViewItem] {
         service.allBlockchains.map { blockchain in
             SelectorModule.ViewItem(
-                    image: .url(blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
-                    title: blockchain.name,
-                    selected: service.blockchains.contains(blockchain)
+                image: .url(blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
+                title: blockchain.name,
+                selected: service.blockchains.contains(blockchain)
             )
         }
     }
@@ -169,7 +167,7 @@ extension MarketAdvancedSearchViewModel {
     }
 
     var marketInfos: [MarketInfo] {
-        guard case .loaded(let marketInfos) = service.state else {
+        guard case let .loaded(marketInfos) = service.state else {
             return []
         }
 
@@ -227,11 +225,9 @@ extension MarketAdvancedSearchViewModel {
     func reset() {
         service.reset()
     }
-
 }
 
 extension MarketAdvancedSearchViewModel {
-
     struct FilterViewItem {
         let title: String
         let style: ValueStyle
@@ -256,19 +252,15 @@ extension MarketAdvancedSearchViewModel {
         case showResults(count: Int)
         case error(String)
     }
-
 }
 
 extension MarketAdvancedSearchService.CoinListCount {
-
     var title: String {
-        "market.advanced_search.top".localized(self.rawValue)
+        "market.advanced_search.top".localized(rawValue)
     }
-
 }
 
 extension MarketAdvancedSearchService.ValueFilter {
-
     static let valuesByCurrencyCode: [String: [Self]] = [
         "USD": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
         "EUR": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
@@ -282,7 +274,7 @@ extension MarketAdvancedSearchService.ValueFilter {
         "HKD": [.none, .lessM50, .m50m200, .m200b1, .b1b10, .b10b50, .moreB50],
         "ILS": [.none, .lessM10, .m10m40, .m40m200, .m200b2, .b2b10, .moreB10],
         "RUB": [.none, .lessM500, .m500b2, .b2b10, .b10b100, .b100b500, .moreB500],
-        "SGD": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5]
+        "SGD": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
     ]
 
     var title: String {
@@ -317,11 +309,9 @@ extension MarketAdvancedSearchService.ValueFilter {
     var valueStyle: MarketAdvancedSearchViewModel.ValueStyle {
         self == .none ? .none : .normal
     }
-
 }
 
 extension MarketAdvancedSearchService.PriceChangeFilter {
-
     var title: String {
         switch self {
         case .none: return "selector.any".localized
@@ -343,5 +333,4 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
         case .minus10, .minus25, .minus50, .minus75: return .negative
         }
     }
-
 }

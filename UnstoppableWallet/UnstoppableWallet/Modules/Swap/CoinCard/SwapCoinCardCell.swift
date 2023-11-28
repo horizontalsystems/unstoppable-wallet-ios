@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import RxSwift
-import MarketKit
 import ComponentKit
+import MarketKit
+import RxSwift
+import ThemeKit
+import UIKit
 
 class SwapCoinCardCell: UITableViewCell {
     let cellHeight: CGFloat = 170 + 2 * .margin12
@@ -115,7 +115,8 @@ class SwapCoinCardCell: UITableViewCell {
         subscribeToViewModel()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -131,11 +132,9 @@ class SwapCoinCardCell: UITableViewCell {
         let viewController = CoinSelectModule.viewController(dex: viewModel.dex, delegate: self)
         presentDelegate?.present(viewController: ThemeNavigationController(rootViewController: viewController))
     }
-
 }
 
 extension SwapCoinCardCell {
-
     private func set(readOnly: Bool) {
         formAmountInput.editable = !readOnly
     }
@@ -152,7 +151,7 @@ extension SwapCoinCardCell {
             tokenIconImageView.image = tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) }
         }
 
-        if let tokenViewItem = tokenViewItem {
+        if let tokenViewItem {
             tokenSelectButton.setTitle(tokenViewItem.title, for: .normal)
             tokenSelectButton.setTitleColor(.themeLeah, for: .normal)
         } else {
@@ -170,13 +169,10 @@ extension SwapCoinCardCell {
         balanceView.setTitle(color: color)
         balanceView.setValue(color: color)
     }
-
 }
 
 extension SwapCoinCardCell: ICoinSelectDelegate {
-
     func didSelect(token: Token) {
         viewModel.onSelect(token: token)
     }
-
 }

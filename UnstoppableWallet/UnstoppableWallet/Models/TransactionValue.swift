@@ -1,6 +1,6 @@
+import BigInt
 import Foundation
 import MarketKit
-import BigInt
 
 enum TransactionValue {
     case coinValue(token: Token, value: Decimal)
@@ -10,45 +10,45 @@ enum TransactionValue {
 
     var fullName: String {
         switch self {
-        case .coinValue(let token, _): return token.coin.name
-        case .tokenValue(let tokenName, _, _, _): return tokenName
-        case .nftValue(let nftUid, _, let tokenName, _): return tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+        case let .coinValue(token, _): return token.coin.name
+        case let .tokenValue(tokenName, _, _, _): return tokenName
+        case let .nftValue(nftUid, _, tokenName, _): return tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
         case .rawValue: return ""
         }
     }
 
     var coinCode: String {
         switch self {
-        case .coinValue(let token, _): return token.coin.code
-        case .tokenValue(_, let tokenCode, _, _): return tokenCode
-        case .nftValue(_, _, _, let tokenSymbol): return tokenSymbol ?? "NFT"
+        case let .coinValue(token, _): return token.coin.code
+        case let .tokenValue(_, tokenCode, _, _): return tokenCode
+        case let .nftValue(_, _, _, tokenSymbol): return tokenSymbol ?? "NFT"
         case .rawValue: return ""
         }
     }
 
     var coin: Coin? {
         switch self {
-        case .coinValue(let token, _): return token.coin
+        case let .coinValue(token, _): return token.coin
         default: return nil
         }
     }
 
     var token: Token? {
         switch self {
-        case .coinValue(let token, _): return token
+        case let .coinValue(token, _): return token
         default: return nil
         }
     }
 
     var tokenProtocol: TokenProtocol? {
         switch self {
-        case .coinValue(let token, _): return token.type.tokenProtocol
+        case let .coinValue(token, _): return token.type.tokenProtocol
         case .tokenValue: return .eip20
         case .nftValue: return nil
         case .rawValue: return nil
         }
     }
-    
+
     var nftUid: NftUid? {
         switch self {
         case let .nftValue(nftUid, _, _, _): return nftUid
@@ -58,26 +58,26 @@ enum TransactionValue {
 
     var decimalValue: Decimal? {
         switch self {
-        case .coinValue(_, let value): return value
-        case .tokenValue(_, _, _, let value): return value
-        case .nftValue(_, let value, _, _): return value
+        case let .coinValue(_, value): return value
+        case let .tokenValue(_, _, _, value): return value
+        case let .nftValue(_, value, _, _): return value
         case .rawValue: return nil
         }
     }
 
     var zeroValue: Bool {
         switch self {
-        case .coinValue(_, let value): return value == 0
-        case .tokenValue(_, _, _, let value): return value == 0
-        case .nftValue(_, let value, _, _): return value == 0
-        case .rawValue(let value): return value == 0
+        case let .coinValue(_, value): return value == 0
+        case let .tokenValue(_, _, _, value): return value == 0
+        case let .nftValue(_, value, _, _): return value == 0
+        case let .rawValue(value): return value == 0
         }
     }
 
     public var isMaxValue: Bool {
         switch self {
-        case .coinValue(let token, let value): return value.isMaxValue(decimals: token.decimals)
-        case .tokenValue(_, _, let tokenDecimals, let value): return value.isMaxValue(decimals: tokenDecimals)
+        case let .coinValue(token, value): return value.isMaxValue(decimals: token.decimals)
+        case let .tokenValue(_, _, tokenDecimals, value): return value.isMaxValue(decimals: tokenDecimals)
         default: return false
         }
     }
@@ -107,19 +107,16 @@ enum TransactionValue {
             return nil
         }
     }
-
 }
 
 extension TransactionValue: Equatable {
-
-    static func ==(lhs: TransactionValue, rhs: TransactionValue) -> Bool {
+    static func == (lhs: TransactionValue, rhs: TransactionValue) -> Bool {
         switch (lhs, rhs) {
-        case (.coinValue(let lhsToken, let lhsValue), .coinValue(let rhsToken, let rhsValue)): return lhsToken == rhsToken && lhsValue == rhsValue
-        case (.tokenValue(let lhsTokenName, let lhsTokenCode, let lhsTokenDecimals, let lhsValue), .tokenValue(let rhsTokenName, let rhsTokenCode, let rhsTokenDecimals, let rhsValue)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals && lhsValue == rhsValue
-        case (.nftValue(let lhsNftUid, let lhsValue, _, _), .nftValue(let rhsNftUid, let rhsValue, _, _)): return lhsNftUid == rhsNftUid && lhsValue == rhsValue
-        case (.rawValue(let lhsValue), .rawValue(let rhsValue)): return lhsValue == rhsValue
+        case let (.coinValue(lhsToken, lhsValue), .coinValue(rhsToken, rhsValue)): return lhsToken == rhsToken && lhsValue == rhsValue
+        case let (.tokenValue(lhsTokenName, lhsTokenCode, lhsTokenDecimals, lhsValue), .tokenValue(rhsTokenName, rhsTokenCode, rhsTokenDecimals, rhsValue)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals && lhsValue == rhsValue
+        case let (.nftValue(lhsNftUid, lhsValue, _, _), .nftValue(rhsNftUid, rhsValue, _, _)): return lhsNftUid == rhsNftUid && lhsValue == rhsValue
+        case let (.rawValue(lhsValue), .rawValue(rhsValue)): return lhsValue == rhsValue
         default: return false
         }
     }
-
 }

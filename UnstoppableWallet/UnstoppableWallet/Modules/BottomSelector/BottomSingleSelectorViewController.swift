@@ -1,16 +1,16 @@
-import UIKit
-import ThemeKit
 import ComponentKit
 import SectionsTableView
+import ThemeKit
+import UIKit
 
 class BottomSingleSelectorViewController: ThemeActionSheetController {
     private let viewItems: [SelectorModule.ViewItem]
-    private let onSelect: (Int) -> ()
+    private let onSelect: (Int) -> Void
 
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private let titleView = BottomSheetTitleView()
 
-    init(image: BottomSheetTitleView.Image?, title: String, subtitle: String?, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> ()) {
+    init(image: BottomSheetTitleView.Image?, title: String, subtitle: String?, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> Void) {
         self.viewItems = viewItems
         self.onSelect = onSelect
 
@@ -19,7 +19,8 @@ class BottomSingleSelectorViewController: ThemeActionSheetController {
         titleView.bind(image: image, title: title, subtitle: subtitle, viewController: self)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -49,30 +50,27 @@ class BottomSingleSelectorViewController: ThemeActionSheetController {
         onSelect(index)
         dismiss(animated: true)
     }
-
 }
 
 extension BottomSingleSelectorViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        SelectorModule.row(
-                                viewItem: viewItem,
-                                tableView: tableView,
-                                selected: viewItem.selected,
-                                backgroundStyle: .bordered,
-                                index: index,
-                                isFirst: index == 0,
-                                isLast: index == viewItems.count - 1
-                        ) { [weak self] in
-                            self?.onSelect(index: index)
-                        }
+                id: "main",
+                rows: viewItems.enumerated().map { index, viewItem in
+                    SelectorModule.row(
+                        viewItem: viewItem,
+                        tableView: tableView,
+                        selected: viewItem.selected,
+                        backgroundStyle: .bordered,
+                        index: index,
+                        isFirst: index == 0,
+                        isLast: index == viewItems.count - 1
+                    ) { [weak self] in
+                        self?.onSelect(index: index)
                     }
-            )
+                }
+            ),
         ]
     }
-
 }

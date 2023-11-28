@@ -1,7 +1,7 @@
-import RxSwift
-import RxCocoa
 import EvmKit
 import MarketKit
+import RxCocoa
+import RxSwift
 
 class SendEip721ViewModel {
     private let service: SendEip721Service
@@ -24,11 +24,9 @@ class SendEip721ViewModel {
             proceedEnabledRelay.accept(false)
         }
     }
-
 }
 
 extension SendEip721ViewModel {
-
     var proceedEnableDriver: Driver<Bool> {
         proceedEnabledRelay.asDriver()
     }
@@ -46,11 +44,10 @@ extension SendEip721ViewModel {
     }
 
     func didTapProceed() {
-        guard case .ready(let sendData) = service.state else {
+        guard case let .ready(sendData) = service.state else {
             return
         }
 
         proceedRelay.accept(sendData)
     }
-
 }

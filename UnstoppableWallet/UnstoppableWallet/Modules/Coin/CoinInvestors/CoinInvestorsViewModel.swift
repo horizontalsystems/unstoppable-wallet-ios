@@ -1,8 +1,8 @@
 import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinInvestorsViewModel {
     private let service: CoinInvestorsService
@@ -16,8 +16,8 @@ class CoinInvestorsViewModel {
         self.service = service
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -28,7 +28,7 @@ class CoinInvestorsViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .completed(let investments):
+        case let .completed(investments):
             viewItemsRelay.accept(investments.map { viewItem(investment: $0) })
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -41,26 +41,24 @@ class CoinInvestorsViewModel {
 
     private func viewItem(investment: CoinInvestment) -> ViewItem {
         ViewItem(
-                amount: investment.amount.flatMap { ValueFormatter.instance.formatShort(currency: service.usdCurrency, value: $0) } ?? "---",
-                info: "\(investment.round) - \(DateHelper.instance.formatFullDateOnly(from: investment.date))",
-                fundViewItems: investment.funds.map { fundViewItem(fund: $0) }
+            amount: investment.amount.flatMap { ValueFormatter.instance.formatShort(currency: service.usdCurrency, value: $0) } ?? "---",
+            info: "\(investment.round) - \(DateHelper.instance.formatFullDateOnly(from: investment.date))",
+            fundViewItems: investment.funds.map { fundViewItem(fund: $0) }
         )
     }
 
     private func fundViewItem(fund: CoinInvestment.Fund) -> FundViewItem {
         FundViewItem(
-                uid: fund.uid,
-                name: fund.name,
-                logoUrl: fund.logoUrl,
-                isLead: fund.isLead,
-                url: fund.website
+            uid: fund.uid,
+            name: fund.name,
+            logoUrl: fund.logoUrl,
+            isLead: fund.isLead,
+            url: fund.website
         )
     }
-
 }
 
 extension CoinInvestorsViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
     }
@@ -76,11 +74,9 @@ extension CoinInvestorsViewModel {
     func onTapRetry() {
         service.refresh()
     }
-
 }
 
 extension CoinInvestorsViewModel {
-
     struct ViewItem {
         let amount: String
         let info: String
@@ -94,5 +90,4 @@ extension CoinInvestorsViewModel {
         let isLead: Bool
         let url: String
     }
-
 }

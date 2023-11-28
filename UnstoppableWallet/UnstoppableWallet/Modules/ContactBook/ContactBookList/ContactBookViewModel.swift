@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class ContactBookViewModel {
     private let service: ContactBookService
@@ -28,20 +28,20 @@ class ContactBookViewModel {
         viewItems = items.map { item in
             switch item {
             case let item as ContactBookService.ReadOnlyItem:
-                    return SelectorViewItem(
-                            uid: item.uid,
-                            title: item.name,
-                            subtitle: item.blockchainAddress.shortened,
-                            showDisclosure: false,
-                            address: item.blockchainAddress
-                    )
+                return SelectorViewItem(
+                    uid: item.uid,
+                    title: item.name,
+                    subtitle: item.blockchainAddress.shortened,
+                    showDisclosure: false,
+                    address: item.blockchainAddress
+                )
             case let item as ContactBookService.EditableItem:
-                    return ViewItem(
-                            uid: item.uid,
-                            title: item.name,
-                            subtitle: "contacts.list.addresses_count".localized(item.addressCount),
-                            showDisclosure: false
-                    )
+                return ViewItem(
+                    uid: item.uid,
+                    title: item.name,
+                    subtitle: "contacts.list.addresses_count".localized(item.addressCount),
+                    showDisclosure: false
+                )
             default:
                 return ViewItem(uid: item.uid, title: item.name, subtitle: "", showDisclosure: true)
             }
@@ -53,11 +53,9 @@ class ContactBookViewModel {
             emptyListRelay.accept(nil)
         }
     }
-
 }
 
 extension ContactBookViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -87,11 +85,9 @@ extension ContactBookViewModel {
     func blockchainName(blockchainUid: String) -> String? {
         service.blockchainName(blockchainUid: blockchainUid)
     }
-
 }
 
 extension ContactBookViewModel {
-
     class ViewItem {
         let uid: String
         let title: String
@@ -122,5 +118,4 @@ extension ContactBookViewModel {
         case emptyBook
         case emptySearch
     }
-
 }

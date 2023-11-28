@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class InputStackView: UIView {
     private let stackView = UIStackView()
@@ -31,7 +31,8 @@ class InputStackView: UIView {
         stackView.addArrangedSubview(formTextView)
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,11 +44,9 @@ class InputStackView: UIView {
         get { stackView.isUserInteractionEnabled }
         set { stackView.isUserInteractionEnabled = newValue }
     }
-
 }
 
 extension InputStackView {
-
     var placeholder: String? {
         get { formTextView.placeholder }
         set { formTextView.placeholder = newValue }
@@ -93,12 +92,12 @@ extension InputStackView {
         set { formTextView.autocorrectionType = newValue }
     }
 
-    var onChangeText: ((String?) -> ())? {
+    var onChangeText: ((String?) -> Void)? {
         get { formTextView.onChangeText }
         set { formTextView.onChangeText = newValue }
     }
 
-    var onChangeEditing: ((Bool) -> ())? {
+    var onChangeEditing: ((Bool) -> Void)? {
         get { formTextView.onChangeEditing }
         set { formTextView.onChangeEditing = newValue }
     }
@@ -119,27 +118,25 @@ extension InputStackView {
         leftViews.insert((view, spacing), at: 0)
         stackView.insertArrangedSubview(view, at: 0)
 
-        if let customSpacing = customSpacing {
+        if let customSpacing {
             stackView.setCustomSpacing(customSpacing, after: view)
         }
     }
 
     func appendSubview(_ view: ISizeAwareView, customSpacing: CGFloat? = nil) {
         let spacing = customSpacing ?? stackView.spacing
-        
+
         rightViews.append((view, spacing))
         stackView.addArrangedSubview(view)
 
-        if let customSpacing = customSpacing {
+        if let customSpacing {
             stackView.setCustomSpacing(customSpacing, after: view)
         }
     }
-
 }
 
 extension InputStackView: IHeightControlView {
-
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { formTextView.onChangeHeight }
         set { formTextView.onChangeHeight = newValue }
     }
@@ -153,14 +150,12 @@ extension InputStackView: IHeightControlView {
             textViewWidth -= view.width(containerWidth: .greatestFiniteMagnitude) + spacing
         }
 
-
         for (view, spacing) in visibleRightViews {
             textViewWidth -= view.width(containerWidth: .greatestFiniteMagnitude) + spacing
         }
 
         return formTextView.height(containerWidth: textViewWidth)
     }
-
 }
 
 protocol ISizeAwareView: UIView {

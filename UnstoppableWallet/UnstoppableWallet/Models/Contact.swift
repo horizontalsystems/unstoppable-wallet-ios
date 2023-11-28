@@ -36,7 +36,7 @@ class ContactAddress: Codable, ImmutableMappable, Hashable, Equatable {
     }
 }
 
-extension Array where Element == ContactAddress {
+extension [ContactAddress] {
     static func == (lhs: [ContactAddress], rhs: [ContactAddress]) -> Bool {
         Set(lhs) == Set(rhs)
     }

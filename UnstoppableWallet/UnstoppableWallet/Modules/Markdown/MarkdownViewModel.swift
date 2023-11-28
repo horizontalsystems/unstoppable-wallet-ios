@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import Down
+import Foundation
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarkdownViewModel {
     private let service: MarkdownService
@@ -22,11 +22,11 @@ class MarkdownViewModel {
         sync(content: service.content)
 
         service.contentObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] content in
-                    self?.sync(content: content)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] content in
+                self?.sync(content: content)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func sync(content: String?) {
@@ -34,11 +34,9 @@ class MarkdownViewModel {
 
         viewItemsRelay.accept(content.map { parser.viewItems(content: $0, url: service.markdownUrl, configuration: parserConfig) })
     }
-
 }
 
 extension MarkdownViewModel {
-
     var loadingDriver: Driver<Bool> {
         loadingRelay.asDriver()
     }
@@ -58,5 +56,4 @@ extension MarkdownViewModel {
 
         openUrlRelay.accept(resolvedUrl)
     }
-
 }

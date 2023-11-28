@@ -105,9 +105,9 @@ extension ChartIndicatorsRepository {
             }
         }
         return BackupIndicators(
-                ma: ma,
-                rsi: rsi,
-                macd: macd
+            ma: ma,
+            rsi: rsi,
+            macd: macd
         )
     }
 
@@ -142,17 +142,17 @@ extension ChartIndicatorsRepository {
         }
         backup.macd.enumerated().forEach { index, element in
             indicators.append(
-                    MacdIndicator(
-                            id: "MACD",
-                            index: index,
-                            enabled: element.enabled,
-                            fast: element.fast,
-                            slow: element.slow,
-                            signal: element.signal,
-                            onChart: false,
-                            single: true,
-                            configuration: ChartIndicatorFactory.macdConfiguration
-                    )
+                MacdIndicator(
+                    id: "MACD",
+                    index: index,
+                    enabled: element.enabled,
+                    fast: element.fast,
+                    slow: element.slow,
+                    signal: element.signal,
+                    onChart: false,
+                    single: true,
+                    configuration: ChartIndicatorFactory.macdConfiguration
+                )
             )
         }
         set(indicators: indicators)

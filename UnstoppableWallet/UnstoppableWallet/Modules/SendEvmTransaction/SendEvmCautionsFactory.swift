@@ -1,5 +1,4 @@
 class SendEvmCautionsFactory {
-
     func items(errors: [Error], warnings: [Warning], baseCoinService: CoinService) -> [TitledCaution] {
         var warningCautions = [TitledCaution]()
 
@@ -9,10 +8,10 @@ class SendEvmCautionsFactory {
                 case .insufficientBalance:
                     return [
                         TitledCaution(
-                                title: "fee_settings.errors.insufficient_balance".localized,
-                                text: "fee_settings.errors.insufficient_balance.info".localized(baseCoinService.token.coin.code),
-                                type: .error
-                        )
+                            title: "fee_settings.errors.insufficient_balance".localized,
+                            text: "fee_settings.errors.insufficient_balance.info".localized(baseCoinService.token.coin.code),
+                            type: .error
+                        ),
                     ]
                 }
             } else if let error = error as? NonceService.NonceError {
@@ -20,21 +19,20 @@ class SendEvmCautionsFactory {
                 case .alreadyInUse:
                     return [
                         TitledCaution(
-                                title: "evm_send_settings.nonce.errors.already_in_use".localized,
-                                text: "evm_send_settings.nonce.errors.already_in_use.info".localized(baseCoinService.token.coin.code),
-                                type: .error
-                        )
+                            title: "evm_send_settings.nonce.errors.already_in_use".localized,
+                            text: "evm_send_settings.nonce.errors.already_in_use.info".localized(baseCoinService.token.coin.code),
+                            type: .error
+                        ),
                     ]
                 }
             } else if let error = error as? UniswapModule.UniswapError {
                 switch error {
-                case .forbiddenPriceImpact(let provider):
+                case let .forbiddenPriceImpact(provider):
                     return [
-                        TitledCaution(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(AppConfig.appName, provider), type: .error)
+                        TitledCaution(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(AppConfig.appName, provider), type: .error),
                     ]
                 }
-            }
-            else {
+            } else {
                 return [convert(error: error, baseCoinService: baseCoinService)]
             }
         }
@@ -64,18 +62,18 @@ class SendEvmCautionsFactory {
         var title: String? = nil
         var text: String? = nil
 
-        if case SendEvmTransactionService.TransactionError.insufficientBalance(let requiredBalance) = error {
+        if case let SendEvmTransactionService.TransactionError.insufficientBalance(requiredBalance) = error {
             let amountData = baseCoinService.amountData(value: requiredBalance)
             title = "fee_settings.errors.insufficient_balance".localized
             text = "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedFull)
         }
 
-        if case AppError.ethereum(let reason) = error.convertedError {
+        if case let AppError.ethereum(reason) = error.convertedError {
             switch reason {
             case .insufficientBalanceWithFee:
                 title = "fee_settings.errors.insufficient_balance".localized
                 text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.token.coin.code)
-            case .executionReverted(let message):
+            case let .executionReverted(message):
                 title = "fee_settings.errors.unexpected_error".localized
                 text = message
             case .lowerThanBaseGasLimit:
@@ -96,7 +94,7 @@ class SendEvmCautionsFactory {
             }
         }
 
-        if case AppError.oneInch(let reason) = error.convertedError {
+        if case let AppError.oneInch(reason) = error.convertedError {
             switch reason {
             case .insufficientBalanceWithFee:
                 title = "fee_settings.errors.insufficient_balance".localized
@@ -111,10 +109,9 @@ class SendEvmCautionsFactory {
         }
 
         return TitledCaution(
-                title: title ?? "ethereum_transaction.error.title".localized,
-                text: text ?? error.convertedError.smartDescription,
-                type: .error
+            title: title ?? "ethereum_transaction.error.title".localized,
+            text: text ?? error.convertedError.smartDescription,
+            type: .error
         )
     }
-
 }

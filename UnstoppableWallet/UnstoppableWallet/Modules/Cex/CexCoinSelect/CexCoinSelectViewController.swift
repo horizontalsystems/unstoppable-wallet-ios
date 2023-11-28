@@ -1,9 +1,9 @@
 import Combine
-import UIKit
-import SnapKit
-import ThemeKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class CexCoinSelectViewController: ThemeSearchViewController {
     private let viewModel: CexCoinSelectViewModel
@@ -23,7 +23,8 @@ class CexCoinSelectViewController: ThemeSearchViewController {
         super.init(scrollViews: [tableView])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -39,9 +40,9 @@ class CexCoinSelectViewController: ThemeSearchViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         $filter
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0) }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.viewModel.onUpdate(filter: $0) }
+            .store(in: &cancellables)
 
         if viewModel.isEmpty {
             navigationItem.searchController = nil
@@ -76,9 +77,9 @@ class CexCoinSelectViewController: ThemeSearchViewController {
             notFoundPlaceholder.text = "no_results_found".localized
 
             viewModel.$viewItems
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] in self?.sync(viewItems: $0) }
-                    .store(in: &cancellables)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.sync(viewItems: $0) }
+                .store(in: &cancellables)
 
             sync(viewItems: viewModel.viewItems)
         }
@@ -126,49 +127,46 @@ class CexCoinSelectViewController: ThemeSearchViewController {
             }
         }
     }
-
 }
 
 extension CexCoinSelectViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "cex-assets",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        let isLast = index == viewItems.count - 1
+                id: "cex-assets",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    let isLast = index == viewItems.count - 1
 
-                        return CellBuilderNew.row(
-                                rootElement: .hStack([
-                                    .image32 { component in
-                                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_circle_32"))
-                                    },
-                                    .vStackCentered([
-                                        .textElement(text: .body(viewItem.title)),
-                                        .margin(1),
-                                        .textElement(text: .subhead2(viewItem.subtitle)),
-                                    ]),
-                                    .badge { component in
-                                        component.isHidden = viewItem.enabled
-                                        component.badgeView.set(style: .small)
-                                        component.badgeView.text = "cex_coin_select.suspended".localized.uppercased()
-                                    }
-                                ]),
-                                tableView: tableView,
-                                id: "cex-asset-\(index)",
-                                height: .heightDoubleLineCell,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-                                },
-                                action: viewItem.enabled ? { [weak self] in
-                                    self?.onSelect(cexAsset: viewItem.cexAsset)
-                                } : nil
-                        )
-                    }
-            )
+                    return CellBuilderNew.row(
+                        rootElement: .hStack([
+                            .image32 { component in
+                                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_circle_32"))
+                            },
+                            .vStackCentered([
+                                .textElement(text: .body(viewItem.title)),
+                                .margin(1),
+                                .textElement(text: .subhead2(viewItem.subtitle)),
+                            ]),
+                            .badge { component in
+                                component.isHidden = viewItem.enabled
+                                component.badgeView.set(style: .small)
+                                component.badgeView.text = "cex_coin_select.suspended".localized.uppercased()
+                            },
+                        ]),
+                        tableView: tableView,
+                        id: "cex-asset-\(index)",
+                        height: .heightDoubleLineCell,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .transparent, isLast: isLast)
+                        },
+                        action: viewItem.enabled ? { [weak self] in
+                            self?.onSelect(cexAsset: viewItem.cexAsset)
+                        } : nil
+                    )
+                }
+            ),
         ]
     }
-
 }

@@ -26,7 +26,7 @@ class TransactionRecord {
     func status(lastBlockHeight: Int?) -> TransactionStatus {
         if failed {
             return .failed
-        } else if let blockHeight = blockHeight, let lastBlockHeight = lastBlockHeight {
+        } else if let blockHeight, let lastBlockHeight {
             let threshold = confirmationsThreshold ?? 1
             let confirmations = lastBlockHeight - blockHeight + 1
 
@@ -135,10 +135,10 @@ extension TransactionRecord {
             }
 
         case let record as ContractCallTransactionRecord:
-            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap { $0.value.nftUid }))
+            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap(\.value.nftUid)))
 
         case let record as ExternalContractCallTransactionRecord:
-            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap { $0.value.nftUid }))
+            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap(\.value.nftUid)))
 
         default: ()
         }
@@ -147,7 +147,7 @@ extension TransactionRecord {
     }
 }
 
-extension Array where Element == TransactionRecord {
+extension [TransactionRecord] {
     var nftUids: Set<NftUid> {
         var nftUids = Set<NftUid>()
 

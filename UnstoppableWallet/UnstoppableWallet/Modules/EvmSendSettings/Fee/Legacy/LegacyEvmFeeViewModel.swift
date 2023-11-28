@@ -1,8 +1,8 @@
+import EvmKit
 import Foundation
-import RxSwift
 import RxCocoa
 import RxRelay
-import EvmKit
+import RxSwift
 
 class LegacyEvmFeeViewModel {
     private let disposeBag = DisposeBag()
@@ -43,11 +43,11 @@ class LegacyEvmFeeViewModel {
         case .loading:
             cautionType = nil
             gasPrice = nil
-        case .failed(_):
+        case .failed:
             cautionType = .error
             gasPrice = nil
-        case .completed(let fallibleGasPrice):
-            if case .legacy(let _gasPrice) = fallibleGasPrice.data.userDefined {
+        case let .completed(fallibleGasPrice):
+            if case let .legacy(_gasPrice) = fallibleGasPrice.data.userDefined {
                 gasPrice = feeViewItemFactory.decimalValue(value: _gasPrice)
             } else {
                 gasPrice = nil
@@ -70,11 +70,11 @@ class LegacyEvmFeeViewModel {
             spinnerVisible = true
             feeValue = nil
             gasLimit = "n/a".localized
-        case .failed(_):
+        case .failed:
             spinnerVisible = false
             feeValue = .error(text: "n/a".localized)
             gasLimit = "n/a".localized
-        case .completed(let fallibleTransaction):
+        case let .completed(fallibleTransaction):
             spinnerVisible = false
 
             let gasData = fallibleTransaction.data.gasData
@@ -82,8 +82,8 @@ class LegacyEvmFeeViewModel {
             let tilda = gasData.isSurcharged
             if fallibleTransaction.errors.isEmpty, let coinValue = amountData.coinValue.formattedFull {
                 feeValue = .regular(
-                        text: "\(tilda ? "~" : "")\(coinValue)",
-                        secondaryText: amountData.currencyValue?.formattedFull.map { "\(tilda ? "~" : "")\($0)" }
+                    text: "\(tilda ? "~" : "")\(coinValue)",
+                    secondaryText: amountData.currencyValue?.formattedFull.map { "\(tilda ? "~" : "")\($0)" }
                 )
             } else {
                 feeValue = .error(text: "n/a".localized)
@@ -97,14 +97,12 @@ class LegacyEvmFeeViewModel {
         gasLimitRelay.accept(gasLimit)
     }
 
-    private func sync(usingRecommended: Bool) {
-        alteredStateRelay.accept(Void())
+    private func sync(usingRecommended _: Bool) {
+        alteredStateRelay.accept(())
     }
-
 }
 
 extension LegacyEvmFeeViewModel {
-
     var altered: Bool {
         !gasPriceService.usingRecommended
     }
@@ -132,11 +130,9 @@ extension LegacyEvmFeeViewModel {
     var cautionTypeDriver: Driver<CautionType?> {
         cautionTypeRelay.asDriver()
     }
-
 }
 
 extension LegacyEvmFeeViewModel: IFeeViewModel {
-
     var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }
@@ -144,5 +140,4 @@ extension LegacyEvmFeeViewModel: IFeeViewModel {
     var spinnerVisibleDriver: Driver<Bool> {
         spinnerVisibleRelay.asDriver()
     }
-
 }

@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class AddEvmSyncSourceViewModel {
     private let service: AddEvmSyncSourceService
@@ -12,11 +12,9 @@ class AddEvmSyncSourceViewModel {
     init(service: AddEvmSyncSourceService) {
         self.service = service
     }
-
 }
 
 extension AddEvmSyncSourceViewModel {
-
     var urlCautionDriver: Driver<Caution?> {
         urlCautionRelay.asDriver()
     }
@@ -42,8 +40,6 @@ extension AddEvmSyncSourceViewModel {
             urlCautionRelay.accept(Caution(text: "add_evm_sync_source.warning.url_exists".localized, type: .warning))
         } catch AddEvmSyncSourceService.UrlError.invalid {
             urlCautionRelay.accept(Caution(text: "add_evm_sync_source.error.invalid_url".localized, type: .error))
-        } catch {
-        }
+        } catch {}
     }
-
 }

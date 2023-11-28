@@ -1,32 +1,30 @@
 enum MarketDiscoveryFilter: String, CaseIterable {
     case blockchains = "blockchain"
     case dexEs = "dexes"
-    case lending = "lending"
+    case lending
     case yieldAggregators = "yield_aggregators"
-    case gaming = "gaming"
-    case oracles = "oracles"
-    case nft = "nft"
-    case privacy = "privacy"
-    case storage = "storage"
-    case wallets = "wallets"
-    case identity = "identity"
-    case scaling = "scaling"
-    case analytics = "analytics"
+    case gaming
+    case oracles
+    case nft
+    case privacy
+    case storage
+    case wallets
+    case identity
+    case scaling
+    case analytics
     case yieldTokens = "yield_tokens"
     case exchangeTokens = "exchange_tokens"
     case fiatStableCoins = "stablecoins"
     case tokenizedBitcoin = "tokenized_bitcoin"
     case riskManagement = "risk_management"
-    case synthetics = "synthetics"
+    case synthetics
     case indexFunds = "index_funds"
     case predictionMarkets = "prediction_markets"
-    case fundraising = "fundraising"
-    case infrastructure = "infrastructure"
-
+    case fundraising
+    case infrastructure
 }
 
 extension MarketDiscoveryFilter {
-
     var icon: String {
         switch self {
         case .blockchains: return "blocks_24"
@@ -52,7 +50,6 @@ extension MarketDiscoveryFilter {
         case .storage: return "storage_24"
         case .identity: return "identity_24"
         case .yieldTokens: return "yield_24"
-
         }
     }
 
@@ -63,5 +60,4 @@ extension MarketDiscoveryFilter {
     var description: String {
         "market_discovery.filter_description.\(rawValue)".localized
     }
-
 }

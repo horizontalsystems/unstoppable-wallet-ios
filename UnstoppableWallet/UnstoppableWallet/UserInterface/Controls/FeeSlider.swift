@@ -1,8 +1,8 @@
 import UIKit
 
 class FeeSlider: UISlider {
-    var onTracking: ((Float, CGPoint) -> ())?
-    var finishTracking: ((Float) -> ())?
+    var onTracking: ((Float, CGPoint) -> Void)?
+    var finishTracking: ((Float) -> Void)?
 
     private var lastValue: Float?
 
@@ -30,11 +30,12 @@ class FeeSlider: UISlider {
         slideBar.clipsToBounds = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func correctCenter(touch: UITouch) -> CGPoint {     // touch position may be not in center of thumb, we need correct centerX
+    private func correctCenter(touch: UITouch) -> CGPoint { // touch position may be not in center of thumb, we need correct centerX
         touch.location(in: nil)
     }
 
@@ -66,7 +67,7 @@ class FeeSlider: UISlider {
         lastValue = nil
     }
 
-    override open func endTracking(_ touch: UITouch?, with event: UIEvent?)  {
+    override open func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         super.endTracking(touch, with: event)
         finish()
     }
@@ -75,5 +76,4 @@ class FeeSlider: UISlider {
         super.cancelTracking(with: event)
         finish()
     }
-
 }

@@ -1,8 +1,8 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
+import Foundation
 import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketOverviewTopPlatformsService {
     private let baseService: MarketOverviewService
@@ -25,8 +25,8 @@ class MarketOverviewTopPlatformsService {
         self.baseService = baseService
 
         baseService.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync()
     }
@@ -38,20 +38,16 @@ class MarketOverviewTopPlatformsService {
             item.marketOverview.topPlatforms
         }
     }
-
 }
 
 extension MarketOverviewTopPlatformsService {
-
     var topPlatformsObservable: Observable<[TopPlatform]?> {
         topPlatformsRelay.asObservable()
     }
-
 }
-extension MarketOverviewTopPlatformsService: IMarketListTopPlatformDecoratorService {
 
+extension MarketOverviewTopPlatformsService: IMarketListTopPlatformDecoratorService {
     var currency: Currency {
         baseService.currency
     }
-
 }

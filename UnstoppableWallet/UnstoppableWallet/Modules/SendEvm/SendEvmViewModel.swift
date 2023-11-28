@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxCocoa
 import EvmKit
+import Foundation
 import MarketKit
+import RxCocoa
+import RxSwift
 
 class SendEvmViewModel {
     private let service: SendEvmService
@@ -30,7 +30,7 @@ class SendEvmViewModel {
     }
 
     private func sync(amountCaution: (error: Error?, warning: SendEvmService.AmountWarning?)) {
-        var caution: Caution? = nil
+        var caution: Caution?
 
         if let error = amountCaution.error {
             caution = Caution(text: error.smartDescription, type: .error)
@@ -42,11 +42,9 @@ class SendEvmViewModel {
 
         amountCautionRelay.accept(caution)
     }
-
 }
 
 extension SendEvmViewModel {
-
     var title: String {
         switch service.mode {
         case .send, .prefilled: return "send.title".localized(token.coin.code)
@@ -78,22 +76,19 @@ extension SendEvmViewModel {
     }
 
     func didTapProceed() {
-        guard case .ready(let sendData) = service.state else {
+        guard case let .ready(sendData) = service.state else {
             return
         }
 
         proceedRelay.accept(sendData)
     }
-
 }
 
 extension SendEvmService.AmountError: LocalizedError {
-
     var errorDescription: String? {
         switch self {
         case .insufficientBalance: return "send.amount_error.balance".localized
         default: return "\(self)"
         }
     }
-
 }

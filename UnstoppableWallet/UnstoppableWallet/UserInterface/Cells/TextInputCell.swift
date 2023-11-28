@@ -155,7 +155,7 @@ class TextInputCell: UITableViewCell {
     func set(cautionType: CautionType?) {
         let borderColor: UIColor
 
-        if let cautionType = cautionType {
+        if let cautionType {
             borderColor = cautionType.borderColor
         } else {
             borderColor = textViewBorderColor

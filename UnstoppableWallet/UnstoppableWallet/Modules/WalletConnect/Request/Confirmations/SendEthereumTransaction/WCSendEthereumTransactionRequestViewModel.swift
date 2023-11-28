@@ -6,11 +6,9 @@ class WCSendEthereumTransactionRequestViewModel {
     init(service: WCSendEthereumTransactionRequestService) {
         self.service = service
     }
-
 }
 
 extension WCSendEthereumTransactionRequestViewModel {
-
     func approve(transactionHash: Data) {
         service.approve(transactionHash: transactionHash)
     }
@@ -18,5 +16,4 @@ extension WCSendEthereumTransactionRequestViewModel {
     func reject() {
         service.reject()
     }
-
 }

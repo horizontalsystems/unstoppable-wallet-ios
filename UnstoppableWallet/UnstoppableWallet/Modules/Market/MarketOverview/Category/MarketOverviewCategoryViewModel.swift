@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketOverviewCategoryViewModel {
     private let service: MarketOverviewCategoryService
@@ -25,19 +25,17 @@ class MarketOverviewCategoryViewModel {
         let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, timePeriod: .day1, currency: service.currency)
 
         return ViewItem(
-                uid: category.uid,
-                imageUrl: category.imageUrl,
-                name: category.name,
-                marketCap: marketCap,
-                diff: diffString,
-                diffType: diffType
+            uid: category.uid,
+            imageUrl: category.imageUrl,
+            name: category.name,
+            marketCap: marketCap,
+            diff: diffString,
+            diffType: diffType
         )
     }
-
 }
 
 extension MarketOverviewCategoryViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
     }
@@ -45,11 +43,9 @@ extension MarketOverviewCategoryViewModel {
     func category(uid: String) -> CoinCategory? {
         service.category(uid: uid)
     }
-
 }
 
 extension MarketOverviewCategoryViewModel {
-
     struct ViewItem {
         let uid: String
         let imageUrl: String
@@ -58,5 +54,4 @@ extension MarketOverviewCategoryViewModel {
         let diff: String?
         let diffType: MarketDiscoveryModule.DiffType
     }
-
 }

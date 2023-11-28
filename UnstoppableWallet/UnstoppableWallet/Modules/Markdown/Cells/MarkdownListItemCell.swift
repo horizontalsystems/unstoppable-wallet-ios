@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class MarkdownListItemCell: UITableViewCell {
     private static let horizontalPadding: CGFloat = .margin6x
@@ -39,7 +39,8 @@ class MarkdownListItemCell: UITableViewCell {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -54,11 +55,9 @@ class MarkdownListItemCell: UITableViewCell {
             maker.bottom.equalToSuperview().inset(tightBottom ? MarkdownListItemCell.tightVerticalPadding : MarkdownListItemCell.verticalPadding)
         }
     }
-
 }
 
 extension MarkdownListItemCell {
-
     static func height(containerWidth: CGFloat, attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool) -> CGFloat {
         let textWidth = containerWidth - prefixWidth - 2 * horizontalPadding
         let textHeight = attributedString.height(containerWidth: textWidth)
@@ -67,5 +66,4 @@ extension MarkdownListItemCell {
 
         return topPadding + textHeight + bottomPadding
     }
-
 }

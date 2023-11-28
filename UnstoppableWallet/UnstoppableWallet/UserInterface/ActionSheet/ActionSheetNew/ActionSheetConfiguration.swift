@@ -7,10 +7,10 @@ public struct ActionSheetConfiguration {
 
     public var ignoreInteractiveFalseMoving: Bool = true
 
-    public var coverBackgroundColor: UIColor = UIColor(white: 0, alpha: 0.5)
+    public var coverBackgroundColor: UIColor = .init(white: 0, alpha: 0.5)
 
     public var presentAnimationDuration: TimeInterval = 0.3
-    public var presentAnimationCurve: UIView.AnimationOptions = UIView.AnimationOptions(rawValue: 5 << 16)
+    public var presentAnimationCurve: UIView.AnimationOptions = .init(rawValue: 5 << 16)
     public var dismissAnimationDuration: TimeInterval = 0.2
     public var dismissAnimationCurve: UIView.AnimationCurve = .easeIn
 
@@ -27,5 +27,4 @@ public struct ActionSheetConfiguration {
             sideMargin = 0
         }
     }
-
 }

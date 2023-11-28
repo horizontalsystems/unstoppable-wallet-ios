@@ -112,12 +112,12 @@ extension BackupCryptoHelper {
 
     public static func mac(pass: String, message: Data, kdf: KdfParams) throws -> Data {
         let key = try BackupCryptoHelper.makeScrypt(
-                pass: pass.hs.data,
-                salt: kdf.salt.hs.data,
-                dkLen: kdf.dklen,
-                N: kdf.n,
-                r: kdf.r,
-                p: kdf.p
+            pass: pass.hs.data,
+            salt: kdf.salt.hs.data,
+            dkLen: kdf.dklen,
+            N: kdf.n,
+            r: kdf.r,
+            p: kdf.p
         )
         let startIndex = kdf.dklen / 2
         let lastHalfKey = key.suffix(from: startIndex)

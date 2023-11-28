@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 import UniswapKit
 
 class SwapDeadlineViewModel {
@@ -17,11 +17,9 @@ class SwapDeadlineViewModel {
     private func toString(_ value: Double) -> String {
         Decimal(floatLiteral: floor(value / 60)).description
     }
-
 }
 
 extension SwapDeadlineViewModel {
-
     var placeholder: String {
         toString(TradeOptions.defaultTtl)
     }
@@ -59,5 +57,4 @@ extension SwapDeadlineViewModel {
 
         return amount.decimalCount == 0
     }
-
 }

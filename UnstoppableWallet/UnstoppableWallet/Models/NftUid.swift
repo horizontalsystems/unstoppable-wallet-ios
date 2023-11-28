@@ -62,18 +62,16 @@ enum NftUid: Hashable {
         hasher.combine(uid)
     }
 
-    static func ==(lhs: NftUid, rhs: NftUid) -> Bool {
+    static func == (lhs: NftUid, rhs: NftUid) -> Bool {
         switch (lhs, rhs) {
         case let (.evm(lhsBlockchainType, lhsContractAddress, lhsTokenId), .evm(rhsBlockchainType, rhsContractAddress, rhsTokenId)): return lhsBlockchainType == rhsBlockchainType && lhsContractAddress == rhsContractAddress && lhsTokenId == rhsTokenId
         case let (.solana(lhsContractAddress, lhsTokenId), .solana(rhsContractAddress, rhsTokenId)): return lhsContractAddress == rhsContractAddress && lhsTokenId == rhsTokenId
         default: return false
         }
     }
-
 }
 
 extension NftUid: DatabaseValueConvertible {
-
     var databaseValue: DatabaseValue {
         uid.databaseValue
     }
@@ -85,5 +83,4 @@ extension NftUid: DatabaseValueConvertible {
 
         return NftUid(uid: uid)
     }
-
 }

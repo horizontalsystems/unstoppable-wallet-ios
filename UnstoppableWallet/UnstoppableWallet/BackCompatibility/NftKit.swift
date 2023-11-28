@@ -1,8 +1,8 @@
-import Foundation
 import Combine
-import RxSwift
+import Foundation
 import HsToolKit
 import NftKit
+import RxSwift
 
 extension Kit {
     struct DisposedError: Error {}
@@ -10,5 +10,4 @@ extension Kit {
     public var nftBalancesObservable: Observable<[NftBalance]> {
         nftBalancesPublisher.asObservable()
     }
-
 }

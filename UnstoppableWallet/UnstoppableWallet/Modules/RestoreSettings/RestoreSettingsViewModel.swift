@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class RestoreSettingsViewModel {
     private let service: RestoreSettingsService
@@ -25,11 +25,9 @@ class RestoreSettingsViewModel {
             openBirthdayAlertRelay.accept(request.token)
         }
     }
-
 }
 
 extension RestoreSettingsViewModel {
-
     var openBirthdayAlertSignal: Signal<Token> {
         openBirthdayAlertRelay.asSignal()
     }
@@ -52,5 +50,4 @@ extension RestoreSettingsViewModel {
 
         service.cancel(token: request.token)
     }
-
 }

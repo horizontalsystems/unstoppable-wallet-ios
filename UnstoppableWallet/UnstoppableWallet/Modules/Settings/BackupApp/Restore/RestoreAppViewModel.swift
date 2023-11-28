@@ -8,6 +8,4 @@ class RestoreAppViewModel {
     }
 }
 
-extension RestoreAppViewModel {
-
-}
+extension RestoreAppViewModel {}

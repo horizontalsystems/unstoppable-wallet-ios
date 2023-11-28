@@ -1,8 +1,8 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
+import Foundation
 import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketOverviewNftCollectionsService: IMarketListNftTopCollectionDecoratorService {
     private let baseService: MarketOverviewService
@@ -25,8 +25,8 @@ class MarketOverviewNftCollectionsService: IMarketListNftTopCollectionDecoratorS
         self.baseService = baseService
 
         baseService.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync()
     }
@@ -38,21 +38,18 @@ class MarketOverviewNftCollectionsService: IMarketListNftTopCollectionDecoratorS
             item.marketOverview.collections[timePeriod] ?? []
         }
     }
-
 }
 
 extension MarketOverviewNftCollectionsService {
-
     var collectionsObservable: Observable<[NftTopCollection]?> {
         collectionsRelay.asObservable()
     }
 
     func topCollection(uid: String) -> NftTopCollection? {
-        guard let collections = collections else {
+        guard let collections else {
             return nil
         }
 
         return collections.first { $0.uid == uid }
     }
-
 }

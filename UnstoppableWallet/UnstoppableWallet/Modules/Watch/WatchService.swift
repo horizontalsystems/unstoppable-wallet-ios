@@ -8,11 +8,9 @@ class WatchService {
     init(accountFactory: AccountFactory) {
         self.accountFactory = accountFactory
     }
-
 }
 
 extension WatchService {
-
     var defaultAccountName: String {
         accountFactory.nextWatchAccountName
     }
@@ -29,5 +27,4 @@ extension WatchService {
             self.name = name
         }
     }
-
 }

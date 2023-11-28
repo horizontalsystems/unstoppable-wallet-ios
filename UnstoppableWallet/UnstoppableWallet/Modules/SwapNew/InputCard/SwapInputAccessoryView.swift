@@ -11,7 +11,7 @@ class SwapInputAccessoryView: UIView {
         }
     }
 
-    var onSelect: ((Decimal) -> ())?
+    var onSelect: ((Decimal) -> Void)?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,10 +36,11 @@ class SwapInputAccessoryView: UIView {
             FilterView.ViewItem.item(title: "75%"),
             FilterView.ViewItem.item(title: "100%"),
         ])
-        autocompleteView.onSelect = {[weak self] in self?.onTap(at: $0) }
+        autocompleteView.onSelect = { [weak self] in self?.onTap(at: $0) }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -63,5 +64,4 @@ class SwapInputAccessoryView: UIView {
         let multi = 0.25 * Decimal(index + 1)
         onSelect?(multi)
     }
-
 }

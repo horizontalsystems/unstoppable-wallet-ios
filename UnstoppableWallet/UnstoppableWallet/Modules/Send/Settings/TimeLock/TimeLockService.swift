@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import Hodler
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class TimeLockService {
     private var disposeBag = DisposeBag()
@@ -32,11 +32,9 @@ class TimeLockService {
     }
 
     var lockTimeList = Item.allCases
-
 }
 
 extension TimeLockService {
-
     var lockTimeObservable: Observable<Item> {
         lockTimeRelay.asObservable()
     }
@@ -52,11 +50,9 @@ extension TimeLockService {
 
         lockTime = lockTimeList[index]
     }
-
 }
 
 extension TimeLockService {
-
     enum Item: UInt16, CaseIterable {
         case none
         case hour
@@ -77,7 +73,5 @@ extension TimeLockService {
         var title: String {
             HodlerPlugin.LockTimeInterval.title(lockTimeInterval: lockTimeInterval)
         }
-
     }
-
 }

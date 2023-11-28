@@ -1,9 +1,9 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SendEvmConfirmationViewController: SendEvmTransactionViewController {
     private let mode: Mode
@@ -17,7 +17,8 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
         super.init(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -82,15 +83,12 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
 
         sendSliderButton.reset()
     }
-
 }
 
 extension SendEvmConfirmationViewController {
-
     enum Mode {
         case send
         case resend
         case cancel
     }
-
 }

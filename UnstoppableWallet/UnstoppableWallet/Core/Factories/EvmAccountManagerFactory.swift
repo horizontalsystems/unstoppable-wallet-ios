@@ -13,20 +13,17 @@ class EvmAccountManagerFactory {
         self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
         self.marketKit = marketKit
     }
-
 }
 
 extension EvmAccountManagerFactory {
-
     func evmAccountManager(blockchainType: BlockchainType, evmKitManager: EvmKitManager) -> EvmAccountManager {
         EvmAccountManager(
-                blockchainType: blockchainType,
-                accountManager: accountManager,
-                walletManager: walletManager,
-                marketKit: marketKit,
-                evmKitManager: evmKitManager,
-                evmAccountRestoreStateManager: evmAccountRestoreStateManager
+            blockchainType: blockchainType,
+            accountManager: accountManager,
+            walletManager: walletManager,
+            marketKit: marketKit,
+            evmKitManager: evmKitManager,
+            evmAccountRestoreStateManager: evmAccountRestoreStateManager
         )
     }
-
 }

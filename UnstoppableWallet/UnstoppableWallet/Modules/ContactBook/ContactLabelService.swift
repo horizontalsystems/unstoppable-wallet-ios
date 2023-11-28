@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
-import RxSwift
 import RxRelay
+import RxSwift
 
 class ContactLabelService {
     private let disposeBag = DisposeBag()
@@ -43,11 +43,9 @@ class ContactLabelService {
             }
         }
     }
-
 }
 
 extension ContactLabelService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -62,11 +60,9 @@ extension ContactLabelService {
         }
         return ContactData(name: nil, contactAddress: ContactAddress(blockchainUid: blockchainType.uid, address: address))
     }
-
 }
 
 extension ContactLabelService {
-
     enum State {
         case idle
         case exist
@@ -77,5 +73,4 @@ extension ContactLabelService {
         let name: String?
         let contactAddress: ContactAddress?
     }
-
 }

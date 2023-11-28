@@ -1,7 +1,7 @@
-import Combine
-import UIKit
 import Chart
+import Combine
 import MarketKit
+import UIKit
 
 protocol IMetricChartFetcher {
     var valueType: MetricChartModule.ValueType { get }
@@ -11,7 +11,6 @@ protocol IMetricChartFetcher {
 }
 
 extension IMetricChartFetcher {
-
     var intervals: [HsTimePeriod] {
         [.day1, .week1, .week2, .month1, .month3, .month6, .year1]
     }
@@ -19,11 +18,9 @@ extension IMetricChartFetcher {
     var needUpdatePublisher: AnyPublisher<Void, Never> {
         Empty().eraseToAnyPublisher()
     }
-
 }
 
-class MetricChartModule {
-
+enum MetricChartModule {
     enum ValueType {
         case percent
         case counter
@@ -57,12 +54,10 @@ class MetricChartModule {
             self.value = value
             self.timestamp = timestamp
         }
-
     }
 
     struct OverriddenValue {
         let value: String
         let description: String?
     }
-
 }

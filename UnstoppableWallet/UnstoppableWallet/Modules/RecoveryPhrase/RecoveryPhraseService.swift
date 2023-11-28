@@ -10,5 +10,4 @@ class RecoveryPhraseService {
         self.words = words
         self.salt = salt
     }
-
 }

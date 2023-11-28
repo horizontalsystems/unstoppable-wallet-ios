@@ -16,16 +16,15 @@ struct WalletElementServiceFactory {
         case .mnemonic, .evmPrivateKey, .evmAddress, .tronAddress, .tonAddress, .hdExtendedKey:
             let adapterService = WalletAdapterService(account: account, adapterManager: adapterManager)
             let elementService = WalletBlockchainElementService(
-                    account: account,
-                    adapterService: adapterService,
-                    walletManager: walletManager
+                account: account,
+                adapterService: adapterService,
+                walletManager: walletManager
             )
             adapterService.delegate = elementService
 
             return elementService
-        case .cex(let cexAccount):
+        case let .cex(cexAccount):
             return WalletCexElementService(account: account, provider: cexAccount.assetProvider, cexAssetManager: cexAssetManager)
         }
     }
-
 }

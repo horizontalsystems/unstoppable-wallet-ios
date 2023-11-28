@@ -138,16 +138,16 @@ extension AppBackupProvider {
     func restore(raws: [RawWalletBackup]) {
         let updated = raws.map { raw in
             let account = accountFactory.account(
-                    type: raw.account.type,
-                    origin: raw.account.origin,
-                    backedUp: raw.account.backedUp,
-                    fileBackedUp: raw.account.fileBackedUp,
-                    name: raw.account.name
+                type: raw.account.type,
+                origin: raw.account.origin,
+                backedUp: raw.account.backedUp,
+                fileBackedUp: raw.account.fileBackedUp,
+                name: raw.account.name
             )
             return RawWalletBackup(account: account, enabledWallets: raw.enabledWallets)
         }
 
-        accountManager.save(accounts: updated.map { $0.account })
+        accountManager.save(accounts: updated.map(\.account))
 
         updated.forEach { (raw: RawWalletBackup) in
             switch raw.account.type {
@@ -155,7 +155,8 @@ extension AppBackupProvider {
             default:
                 let wallets = raw.enabledWallets.compactMap { (wallet: WalletBackup.EnabledWallet) -> EnabledWallet? in
                     guard let tokenQuery = TokenQuery(id: wallet.tokenQueryId),
-                        BlockchainType.supported.contains(tokenQuery.blockchainType) else {
+                          BlockchainType.supported.contains(tokenQuery.blockchainType)
+                    else {
                         return nil
                     }
 
@@ -170,11 +171,11 @@ extension AppBackupProvider {
                     }
 
                     return EnabledWallet(
-                            tokenQueryId: wallet.tokenQueryId,
-                            accountId: raw.account.id,
-                            coinName: wallet.coinName,
-                            coinCode: wallet.coinCode,
-                            tokenDecimals: wallet.tokenDecimals
+                        tokenQueryId: wallet.tokenQueryId,
+                        accountId: raw.account.id,
+                        coinName: wallet.coinName,
+                        coinCode: wallet.coinCode,
+                        tokenDecimals: wallet.tokenDecimals
                     )
                 }
                 walletManager.save(enabledWallets: wallets)

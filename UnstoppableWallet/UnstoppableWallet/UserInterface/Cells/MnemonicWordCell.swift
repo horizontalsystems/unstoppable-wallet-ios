@@ -1,5 +1,5 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class MnemonicWordCell: UICollectionViewCell {
     private static let indexFont: UIFont = .subhead1
@@ -33,7 +33,8 @@ class MnemonicWordCell: UICollectionViewCell {
         wordText.textColor = .themeLeah
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -41,19 +42,16 @@ class MnemonicWordCell: UICollectionViewCell {
         indexText.text = "\(index)"
         wordText.text = word
     }
-
 }
 
 extension MnemonicWordCell {
-
     static func size(index: Int, word: String) -> CGSize {
         let indexSize = "\(index)".size(containerWidth: .greatestFiniteMagnitude, font: indexFont)
         let wordSize = word.size(containerWidth: .greatestFiniteMagnitude, font: wordFont)
 
         return CGSize(
-                width: indexSize.width + spacing + wordSize.width,
-                height: max(indexSize.height, wordSize.height)
+            width: indexSize.width + spacing + wordSize.width,
+            height: max(indexSize.height, wordSize.height)
         )
     }
-
 }

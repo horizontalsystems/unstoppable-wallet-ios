@@ -1,5 +1,5 @@
-import UIKit
 import SectionsTableView
+import UIKit
 
 class InputIntegerSection {
     private let inputCell = ShortcutInputCell()
@@ -7,8 +7,8 @@ class InputIntegerSection {
 
     let id: String
 
-    var onChangeText: ((String?) -> ())?
-    var onReload: (() -> ())?
+    var onChangeText: ((String?) -> Void)?
+    var onReload: (() -> Void)?
 
     init(id: String, placeholder: String?, initialValue: String?) {
         self.id = id
@@ -29,11 +29,9 @@ class InputIntegerSection {
         }
         return true
     }
-
 }
 
 extension InputIntegerSection {
-
     func set(caution: Caution?) {
         inputCautionCell.set(caution: caution)
     }
@@ -49,20 +47,19 @@ extension InputIntegerSection {
                 footerState: .margin(height: .margin24),
                 rows: [
                     StaticRow(
-                            cell: inputCell,
-                            id: id + "_input",
-                            dynamicHeight: { [weak self] width in
-                                self?.inputCell.height(containerWidth: width) ?? 0
-                            }
+                        cell: inputCell,
+                        id: id + "_input",
+                        dynamicHeight: { [weak self] width in
+                            self?.inputCell.height(containerWidth: width) ?? 0
+                        }
                     ),
                     StaticRow(
-                            cell: inputCautionCell,
-                            id: id + "_caution",
-                            dynamicHeight: { [weak self] width in
-                                self?.inputCautionCell.height(containerWidth: width) ?? 0
-                            }
-                    )
-                ]
-        )
+                        cell: inputCautionCell,
+                        id: id + "_caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.inputCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ])
     }
 }

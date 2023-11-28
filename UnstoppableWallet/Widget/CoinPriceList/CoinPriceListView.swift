@@ -146,7 +146,7 @@ struct CoinPriceListView: View {
     }
 
     @ViewBuilder private func icon(image: Image?) -> some View {
-        if let image = image {
+        if let image {
             image
                 .resizable()
                 .scaledToFit()

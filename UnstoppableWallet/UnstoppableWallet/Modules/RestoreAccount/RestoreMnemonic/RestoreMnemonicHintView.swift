@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import ComponentKit
 import AlignedCollectionViewFlowLayout
+import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class RestoreMnemonicHintView: UIView {
     private static let horizontalPadding: CGFloat = .margin16
@@ -13,7 +13,7 @@ class RestoreMnemonicHintView: UIView {
     private let emptyView = UIImageView()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: AlignedCollectionViewFlowLayout(horizontalAlignment: .leading))
 
-    var onSelectWord: ((String) -> ())?
+    var onSelectWord: ((String) -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -56,14 +56,13 @@ class RestoreMnemonicHintView: UIView {
         collectionView.register(RestoreMnemonicHintCell.self, forCellWithReuseIdentifier: String(describing: RestoreMnemonicHintCell.self))
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension RestoreMnemonicHintView {
-
     func set(words: [String]) {
         self.words = words
 
@@ -71,24 +70,20 @@ extension RestoreMnemonicHintView {
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
     }
-
 }
 
 extension RestoreMnemonicHintView: UICollectionViewDataSource {
-
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         words.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RestoreMnemonicHintCell.self), for: indexPath)
     }
-
 }
 
 extension RestoreMnemonicHintView: UICollectionViewDelegate {
-
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    public func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? RestoreMnemonicHintCell {
             let word = words[indexPath.item]
             cell.bind(word: word) { [weak self] in
@@ -96,17 +91,14 @@ extension RestoreMnemonicHintView: UICollectionViewDelegate {
             }
         }
     }
-
 }
 
 extension RestoreMnemonicHintView: UICollectionViewDelegateFlowLayout {
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         RestoreMnemonicHintCell.size(word: words[indexPath.item])
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         Self.itemSpacing
     }
-
 }

@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxCocoa
 import EvmKit
+import Foundation
 import MarketKit
+import RxCocoa
+import RxSwift
 
 class SendEip1155ViewModel {
     private let service: SendEip1155Service
@@ -30,7 +30,7 @@ class SendEip1155ViewModel {
     }
 
     private func sync(amountCaution: Error?) {
-        var caution: Caution? = nil
+        var caution: Caution?
 
         if let error = amountCaution {
             caution = Caution(text: error.smartDescription, type: .error)
@@ -38,11 +38,9 @@ class SendEip1155ViewModel {
 
         amountCautionRelay.accept(caution)
     }
-
 }
 
 extension SendEip1155ViewModel {
-
     var showKeyboard: Bool {
         (service.balance ?? 0) != 1 // If balance == 1 don't show keyboard
     }
@@ -68,21 +66,18 @@ extension SendEip1155ViewModel {
     }
 
     func didTapProceed() {
-        guard case .ready(let sendData) = service.state else {
+        guard case let .ready(sendData) = service.state else {
             return
         }
 
         proceedRelay.accept(sendData)
     }
-
 }
 
 extension SendEip1155Service.AmountError: LocalizedError {
-
     var errorDescription: String? {
         switch self {
         case .insufficientBalance: return "send.amount_error.balance".localized
         }
     }
-
 }

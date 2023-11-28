@@ -1,8 +1,8 @@
-import RxSwift
-import RxRelay
 import HsToolKit
 import MarketKit
 import ObjectMapper
+import RxRelay
+import RxSwift
 
 class NftMetadataManager {
     private let storage: NftStorage
@@ -15,18 +15,16 @@ class NftMetadataManager {
         self.storage = storage
 
         providerMap = [
-            .ethereum: OpenSeaNftProvider(networkManager: networkManager, marketKit: marketKit)
+            .ethereum: OpenSeaNftProvider(networkManager: networkManager, marketKit: marketKit),
         ]
 
         eventProviderMap = [
-            .ethereum: ReservoirNftProvider(networkManager: networkManager, marketKit: marketKit)
+            .ethereum: ReservoirNftProvider(networkManager: networkManager, marketKit: marketKit),
         ]
     }
-
 }
 
 extension NftMetadataManager {
-
     var addressMetadataObservable: Observable<(NftKey, NftAddressMetadata)> {
         addressMetadataRelay.asObservable()
     }
@@ -104,13 +102,13 @@ extension NftMetadataManager {
             }
 
             return provider.assetsBriefMetadataSingle(nftUids: nftUids)
-                    .catchErrorJustReturn([])
+                .catchErrorJustReturn([])
         }
 
         return Single.zip(singles)
-                .map { arrays in
-                    arrays.reduce([], +)
-                }
+            .map { arrays in
+                arrays.reduce([], +)
+            }
     }
 
     func addressMetadata(nftKey: NftKey) -> NftAddressMetadata? {
@@ -133,15 +131,12 @@ extension NftMetadataManager {
     func save(assetsBriefMetadata: [NftAssetBriefMetadata]) {
         storage.save(assetsBriefMetadata: assetsBriefMetadata)
     }
-
 }
 
 extension NftMetadataManager {
-
     enum ProviderError: Error {
         case noProviderForBlockchainType
     }
-
 }
 
 enum PaginationData {
@@ -150,14 +145,14 @@ enum PaginationData {
 
     var cursor: String? {
         switch self {
-        case .cursor(let value): return value
+        case let .cursor(value): return value
         default: return nil
         }
     }
 
     var page: Int? {
         switch self {
-        case .page(let value): return value
+        case let .page(value): return value
         default: return nil
         }
     }

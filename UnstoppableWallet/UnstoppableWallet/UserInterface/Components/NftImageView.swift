@@ -1,7 +1,7 @@
-import UIKit
+import Kingfisher
 import SnapKit
 import ThemeKit
-import Kingfisher
+import UIKit
 import WebKit
 
 class NftImageView: UIView {
@@ -30,16 +30,17 @@ class NftImageView: UIView {
         webView.isUserInteractionEnabled = false
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func set(nftImage: NftImage) {
         switch nftImage {
-        case .image(let image):
+        case let .image(image):
             imageView.image = image
             webView.alpha = 0
-        case .svg(let string):
+        case let .svg(string):
             imageView.image = nil
             webView.alpha = 0
             webView.loadHTMLString(html(svgString: string), baseURL: nil)
@@ -50,11 +51,9 @@ class NftImageView: UIView {
     var currentImage: UIImage? {
         imageView.image
     }
-
 }
 
 extension NftImageView {
-
     func html(svgString: String) -> String {
         """
         <!DOCTYPE html>
@@ -83,5 +82,4 @@ extension NftImageView {
         </html>
         """
     }
-
 }

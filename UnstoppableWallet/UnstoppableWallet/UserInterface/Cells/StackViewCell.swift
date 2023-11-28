@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class StackViewCell: UITableViewCell {
     private let stackView = UIStackView()
@@ -22,12 +22,12 @@ class StackViewCell: UITableViewCell {
         stackView.spacing = .margin2x
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func add(view: UIView) {
         stackView.addArrangedSubview(view)
     }
-
 }

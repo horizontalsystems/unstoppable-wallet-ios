@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
+import EvmKit
 import RxSwift
 import SectionsTableView
-import EvmKit
+import ThemeKit
+import UIKit
 
 class SwapApproveViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
@@ -27,7 +27,8 @@ class SwapApproveViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -96,58 +97,54 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension SwapApproveViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    rows: [
-                        tableView.highlightedDescriptionRow(id: "description", text: "swap.approve.description".localized)
-                    ]
+                id: "main",
+                rows: [
+                    tableView.highlightedDescriptionRow(id: "description", text: "swap.approve.description".localized),
+                ]
             ),
             Section(
-                    id: "amount",
-                    headerState: .margin(height: CGFloat.margin16),
-                    rows: [
-                        StaticRow(
-                                cell: amountCell,
-                                id: "amount",
-                                dynamicHeight: { [weak self] width in
-                                    self?.amountCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: amountCautionCell,
-                                id: "amount-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.amountCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "amount",
+                headerState: .margin(height: CGFloat.margin16),
+                rows: [
+                    StaticRow(
+                        cell: amountCell,
+                        id: "amount",
+                        dynamicHeight: { [weak self] width in
+                            self?.amountCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: amountCautionCell,
+                        id: "amount-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.amountCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "approve_button",
-                    headerState: .margin(height: .margin8),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: buttonCell,
-                                id: "approve-button",
-                                height: PrimaryButtonCell.height
-                        )
-                    ]
-            )
+                id: "approve_button",
+                headerState: .margin(height: .margin8),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: buttonCell,
+                        id: "approve-button",
+                        height: PrimaryButtonCell.height
+                    ),
+                ]
+            ),
         ]
     }
-
 }
 
 extension SwapApproveViewController: IDynamicHeightCellDelegate {
-
     func onChangeHeight() {
         guard isLoaded else {
             return
@@ -158,5 +155,4 @@ extension SwapApproveViewController: IDynamicHeightCellDelegate {
             self?.tableView.endUpdates()
         }
     }
-
 }

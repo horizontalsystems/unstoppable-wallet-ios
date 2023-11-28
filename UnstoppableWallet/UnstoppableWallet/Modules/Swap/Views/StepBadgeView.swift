@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class StepBadgeView: UIView {
     private let label = UILabel()
@@ -19,7 +19,8 @@ class StepBadgeView: UIView {
         layer.cornerRadius = .cornerRadius12
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -32,5 +33,4 @@ class StepBadgeView: UIView {
         get { label.text }
         set { label.text = newValue }
     }
-
 }

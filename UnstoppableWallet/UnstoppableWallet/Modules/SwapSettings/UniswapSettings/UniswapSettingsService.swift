@@ -1,15 +1,15 @@
-import Foundation
-import UniswapKit
 import EvmKit
+import Foundation
 import RxCocoa
 import RxSwift
+import UniswapKit
 
 class UniswapSettingsService {
     var recommendedSlippages: [Decimal] = [0.1, 1]
-    private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...50 }
+    private var limitSlippageBounds: ClosedRange<Decimal> { 0.01 ... 50 }
     private var usualHighestSlippage: Decimal = 5
 
-    var recommendedDeadlineBounds: ClosedRange<TimeInterval> { 600...1800 }
+    var recommendedDeadlineBounds: ClosedRange<TimeInterval> { 600 ... 1800 }
 
     private let disposeBag = DisposeBag()
     private let addressService: AddressService
@@ -19,6 +19,7 @@ class UniswapSettingsService {
             errorsRelay.accept(errors)
         }
     }
+
     private let errorsRelay = PublishRelay<[Error]>()
     private let slippageChangeRelay = PublishRelay<Void>()
 
@@ -62,7 +63,7 @@ class UniswapSettingsService {
 
         switch addressService.state {
         case .loading: loading = true
-        case .success(let address): settings.recipient = address
+        case let .success(address): settings.recipient = address
         case .validationError: errors.append(SwapSettingsModule.AddressError.invalidAddress)
         case .fetchError: errors.append(SwapSettingsModule.AddressError.invalidAddress)
         default: ()
@@ -88,11 +89,9 @@ class UniswapSettingsService {
 
         state = (!errors.isEmpty || loading) ? .invalid : .valid(settings)
     }
-
 }
 
 extension UniswapSettingsService {
-
     var errorsObservable: Observable<[Error]> {
         errorsRelay.asObservable()
     }
@@ -100,11 +99,9 @@ extension UniswapSettingsService {
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
-
 }
 
 extension UniswapSettingsService: ISlippageService {
-
     private func visibleSlippageError(errors: [Error]) -> Error? {
         errors.first {
             if let error = $0 as? SwapSettingsModule.SlippageError {
@@ -144,14 +141,11 @@ extension UniswapSettingsService: ISlippageService {
     func set(slippage: Decimal) {
         self.slippage = slippage
     }
-
 }
 
 extension UniswapSettingsService {
-
     enum State {
         case valid(UniswapSettings)
         case invalid
     }
-
 }

@@ -33,5 +33,4 @@ class WalletConnectManager {
 
         return try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType)
     }
-
 }

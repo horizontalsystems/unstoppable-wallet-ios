@@ -15,13 +15,11 @@ class MarketListDefiDecorator {
         self.service = service
         marketField = MarketModule.MarketField.allCases[service.initialMarketFieldIndex]
     }
-
 }
 
 extension MarketListDefiDecorator: IMarketSingleSortHeaderDecorator {
-
     var allFields: [String] {
-        MarketModule.MarketField.allCases.map { $0.title }
+        MarketModule.MarketField.allCases.map(\.title)
     }
 
     var currentFieldIndex: Int {
@@ -31,11 +29,9 @@ extension MarketListDefiDecorator: IMarketSingleSortHeaderDecorator {
     func setCurrentField(index: Int) {
         marketField = MarketModule.MarketField.allCases[index]
     }
-
 }
 
 extension MarketListDefiDecorator: IMarketListDecorator {
-
     func listViewItem(item: MarketGlobalDefiMetricService.DefiItem) -> MarketModule.ListViewItem {
         let marketInfo = item.marketInfo
         let currency = service.currency
@@ -51,17 +47,16 @@ extension MarketListDefiDecorator: IMarketListDecorator {
         }
 
         return MarketModule.ListViewItem(
-                uid: marketInfo.fullCoin.coin.uid,
-                iconUrl: marketInfo.fullCoin.coin.imageUrl,
-                iconShape: .square,
-                iconPlaceholderName: "placeholder_circle_32",
-                leftPrimaryValue: marketInfo.fullCoin.coin.code,
-                leftSecondaryValue: marketInfo.fullCoin.coin.name,
-                badge: "\(item.tvlRank)",
-                badgeSecondaryValue: nil,
-                rightPrimaryValue: price,
-                rightSecondaryValue: dataValue
+            uid: marketInfo.fullCoin.coin.uid,
+            iconUrl: marketInfo.fullCoin.coin.imageUrl,
+            iconShape: .square,
+            iconPlaceholderName: "placeholder_circle_32",
+            leftPrimaryValue: marketInfo.fullCoin.coin.code,
+            leftSecondaryValue: marketInfo.fullCoin.coin.name,
+            badge: "\(item.tvlRank)",
+            badgeSecondaryValue: nil,
+            rightPrimaryValue: price,
+            rightSecondaryValue: dataValue
         )
     }
-
 }

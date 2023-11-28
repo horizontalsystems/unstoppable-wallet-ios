@@ -1,9 +1,9 @@
+import Alamofire
 import Foundation
-import RxSwift
 import HsToolKit
 import MarketKit
 import ObjectMapper
-import Alamofire
+import RxSwift
 
 class OpenSeaNftProvider {
     private let baseUrl = "https://api.opensea.io/api/v1"
@@ -22,7 +22,7 @@ class OpenSeaNftProvider {
 
         headers = HTTPHeaders([
             HTTPHeader.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"),
-            HTTPHeader(name: "X-API-KEY", value: AppConfig.openSeaApiKey)
+            HTTPHeader(name: "X-API-KEY", value: AppConfig.openSeaApiKey),
         ])
     }
 
@@ -31,7 +31,7 @@ class OpenSeaNftProvider {
             "asset_owner": address,
             "limit": collectionLimit,
             "offset": offset,
-            "format": "json"
+            "format": "json",
         ]
 
         let request = networkManager.session.request("\(baseUrl)/collections", parameters: parameters, encoding: encoding, headers: headers)
@@ -42,18 +42,18 @@ class OpenSeaNftProvider {
         var parameters: Parameters = [
             "include_orders": true,
             "limit": assetLimit,
-            "format": "json"
+            "format": "json",
         ]
 
-        if let address = address {
+        if let address {
             parameters["owner"] = address
         }
 
-        if let collection = collection {
+        if let collection {
             parameters["collection"] = collection
         }
 
-        if let cursor = cursor {
+        if let cursor {
             parameters["cursor"] = cursor
         }
 
@@ -63,10 +63,10 @@ class OpenSeaNftProvider {
 
     private func assetsSingle(references: [AssetReference]) -> Single<AssetsResponse> {
         let parameters: Parameters = [
-            "asset_contract_addresses": references.map { $0.contractAddress },
-            "token_ids": references.map { $0.tokenId },
+            "asset_contract_addresses": references.map(\.contractAddress),
+            "token_ids": references.map(\.tokenId),
             "limit": assetLimit,
-            "format": "json"
+            "format": "json",
         ]
 
         let request = networkManager.session.request("\(baseUrl)/assets", parameters: parameters, encoding: encoding, headers: headers)
@@ -76,7 +76,7 @@ class OpenSeaNftProvider {
     private func assetSingle(contractAddress: String, tokenId: String) -> Single<AssetResponse> {
         let parameters: Parameters = [
             "include_orders": true,
-            "format": "json"
+            "format": "json",
         ]
 
         let request = networkManager.session.request("\(baseUrl)/asset/\(contractAddress)/\(tokenId)", parameters: parameters, encoding: encoding, headers: headers)
@@ -85,7 +85,7 @@ class OpenSeaNftProvider {
 
     private func collectionSingle(slug: String) -> Single<SingleCollectionResponse> {
         let parameters: Parameters = [
-            "format": "json"
+            "format": "json",
         ]
 
         let request = networkManager.session.request("\(baseUrl)/collection/\(slug)", parameters: parameters, encoding: encoding, headers: headers)
@@ -94,36 +94,36 @@ class OpenSeaNftProvider {
 
     private func recursiveCollectionsSingle(address: String, offset: Int = 0, allCollections: [CollectionResponse] = []) -> Single<[CollectionResponse]> {
         collectionsSingle(address: address, offset: offset)
-                .flatMap { [weak self] collections in
-                    guard let strongSelf = self else {
-                        throw ProviderError.weakReference
-                    }
-
-                    let allCollections = allCollections + collections
-
-                    if collections.count == strongSelf.collectionLimit {
-                        return strongSelf.recursiveCollectionsSingle(address: address, offset: allCollections.count, allCollections: allCollections)
-                    } else {
-                        return Single.just(allCollections)
-                    }
+            .flatMap { [weak self] collections in
+                guard let strongSelf = self else {
+                    throw ProviderError.weakReference
                 }
+
+                let allCollections = allCollections + collections
+
+                if collections.count == strongSelf.collectionLimit {
+                    return strongSelf.recursiveCollectionsSingle(address: address, offset: allCollections.count, allCollections: allCollections)
+                } else {
+                    return Single.just(allCollections)
+                }
+            }
     }
 
     private func recursiveAssetsSingle(address: String, cursor: String? = nil, allAssets: [AssetResponse] = []) -> Single<[AssetResponse]> {
         assetsSingle(address: address, cursor: cursor)
-                .flatMap { [weak self] response in
-                    guard let strongSelf = self else {
-                        throw ProviderError.weakReference
-                    }
-
-                    let allAssets = allAssets + response.assets
-
-                    if let cursor = response.cursor {
-                        return strongSelf.recursiveAssetsSingle(address: address, cursor: cursor, allAssets: allAssets)
-                    } else {
-                        return Single.just(allAssets)
-                    }
+            .flatMap { [weak self] response in
+                guard let strongSelf = self else {
+                    throw ProviderError.weakReference
                 }
+
+                let allAssets = allAssets + response.assets
+
+                if let cursor = response.cursor {
+                    return strongSelf.recursiveAssetsSingle(address: address, cursor: cursor, allAssets: allAssets)
+                } else {
+                    return Single.just(allAssets)
+                }
+            }
     }
 
     private func collections(blockchainType: BlockchainType, responses: [CollectionResponse]) -> [NftCollectionMetadata] {
@@ -138,36 +138,36 @@ class OpenSeaNftProvider {
         let baseToken = baseToken ?? (try? marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: .native)))
 
         return NftCollectionMetadata(
-                blockchainType: blockchainType,
-                providerUid: response.slug,
-                contracts: response.contracts.map { contract(response: $0) },
-                name: response.name,
-                description: response.description,
-                imageUrl: response.largeImageUrl,
-                thumbnailImageUrl: response.imageUrl,
-                externalLink: response.externalUrl,
-                discordLink: response.discordUrl,
-                twitterUsername: response.twitterUsername,
-                count: response.stats?.count,
-                ownerCount: response.stats?.ownerCount,
-                totalSupply: response.stats?.totalSupply,
-                totalVolume: response.stats?.totalVolume,
-                floorPrice: nftPrice(token: baseToken, value: response.stats?.floorPrice, shift: false),
-                marketCap: nftPrice(token: baseToken, value: response.stats?.marketCap, shift: false),
-                royalty: response.devSellerFeeBasisPoints / 100,
-                inceptionDate: response.createdDate,
-                volume1d: nftPrice(token: baseToken, value: response.stats?.oneDayVolume, shift: false),
-                change1d: response.stats?.oneDayChange,
-                sales1d: response.stats?.oneDaySales,
-                averagePrice1d: nftPrice(token: baseToken, value: response.stats?.oneDayAveragePrice, shift: false),
-                volume7d: nftPrice(token: baseToken, value: response.stats?.sevenDayVolume, shift: false),
-                change7d: response.stats?.sevenDayChange,
-                sales7d: response.stats?.sevenDaySales,
-                averagePrice7d: nftPrice(token: baseToken, value: response.stats?.sevenDayAveragePrice, shift: false),
-                volume30d: nftPrice(token: baseToken, value: response.stats?.thirtyDayVolume, shift: false),
-                change30d: response.stats?.thirtyDayChange,
-                sales30d: response.stats?.thirtyDaySales,
-                averagePrice30d: nftPrice(token: baseToken, value: response.stats?.thirtyDayAveragePrice, shift: false)
+            blockchainType: blockchainType,
+            providerUid: response.slug,
+            contracts: response.contracts.map { contract(response: $0) },
+            name: response.name,
+            description: response.description,
+            imageUrl: response.largeImageUrl,
+            thumbnailImageUrl: response.imageUrl,
+            externalLink: response.externalUrl,
+            discordLink: response.discordUrl,
+            twitterUsername: response.twitterUsername,
+            count: response.stats?.count,
+            ownerCount: response.stats?.ownerCount,
+            totalSupply: response.stats?.totalSupply,
+            totalVolume: response.stats?.totalVolume,
+            floorPrice: nftPrice(token: baseToken, value: response.stats?.floorPrice, shift: false),
+            marketCap: nftPrice(token: baseToken, value: response.stats?.marketCap, shift: false),
+            royalty: response.devSellerFeeBasisPoints / 100,
+            inceptionDate: response.createdDate,
+            volume1d: nftPrice(token: baseToken, value: response.stats?.oneDayVolume, shift: false),
+            change1d: response.stats?.oneDayChange,
+            sales1d: response.stats?.oneDaySales,
+            averagePrice1d: nftPrice(token: baseToken, value: response.stats?.oneDayAveragePrice, shift: false),
+            volume7d: nftPrice(token: baseToken, value: response.stats?.sevenDayVolume, shift: false),
+            change7d: response.stats?.sevenDayChange,
+            sales7d: response.stats?.sevenDaySales,
+            averagePrice7d: nftPrice(token: baseToken, value: response.stats?.sevenDayAveragePrice, shift: false),
+            volume30d: nftPrice(token: baseToken, value: response.stats?.thirtyDayVolume, shift: false),
+            change30d: response.stats?.thirtyDayChange,
+            sales30d: response.stats?.thirtyDaySales,
+            averagePrice30d: nftPrice(token: baseToken, value: response.stats?.thirtyDayAveragePrice, shift: false)
         )
     }
 
@@ -198,11 +198,11 @@ class OpenSeaNftProvider {
             let response = responses.first { $0.contract.address == nftUid.contractAddress && $0.tokenId == nftUid.tokenId }
 
             return NftAssetBriefMetadata(
-                    nftUid: nftUid,
-                    providerCollectionUid: response?.collection.slug,
-                    name: response?.name,
-                    imageUrl: response?.imageUrl,
-                    previewImageUrl: response?.imagePreviewUrl
+                nftUid: nftUid,
+                providerCollectionUid: response?.collection.slug,
+                name: response?.name,
+                imageUrl: response?.imageUrl,
+                previewImageUrl: response?.imagePreviewUrl
             )
         }
     }
@@ -210,7 +210,7 @@ class OpenSeaNftProvider {
     private func asset(blockchainType: BlockchainType, response: AssetResponse, tokenMap: [String: Token]? = nil) -> NftAssetMetadata {
         let map: [String: Token]
 
-        if let tokenMap = tokenMap {
+        if let tokenMap {
             map = tokenMap
         } else {
             var addresses = Set<String>()
@@ -248,49 +248,49 @@ class OpenSeaNftProvider {
         }
 
         return NftAssetMetadata(
-                nftUid: .evm(blockchainType: blockchainType, contractAddress: response.contract.address, tokenId: response.tokenId),
-                providerCollectionUid: response.collection.slug,
-                name: response.name,
-                imageUrl: response.imageUrl,
-                previewImageUrl: response.imagePreviewUrl,
-                description: response.description,
-                contract: contract(response: response.contract),
-                externalLink: response.externalLink,
-                providerLink: response.permalink,
-                traits: response.traits.map { NftAssetMetadata.Trait(type: $0.type, value: $0.value, count: $0.count) },
-                providerTraitLink: "https://opensea.io/assets/\(response.collection.slug)?search[stringTraits][0][name]=$traitName&search[stringTraits][0][values][0]=$traitValue&search[sortAscending]=true&search[sortBy]=PRICE",
-                lastSalePrice: response.lastSale.flatMap { nftPrice(token: map[$0.paymentTokenAddress.lowercased()], value: $0.totalPrice, shift: true) },
-                offers: offers,
-                saleInfo: saleInfo
+            nftUid: .evm(blockchainType: blockchainType, contractAddress: response.contract.address, tokenId: response.tokenId),
+            providerCollectionUid: response.collection.slug,
+            name: response.name,
+            imageUrl: response.imageUrl,
+            previewImageUrl: response.imagePreviewUrl,
+            description: response.description,
+            contract: contract(response: response.contract),
+            externalLink: response.externalLink,
+            providerLink: response.permalink,
+            traits: response.traits.map { NftAssetMetadata.Trait(type: $0.type, value: $0.value, count: $0.count) },
+            providerTraitLink: "https://opensea.io/assets/\(response.collection.slug)?search[stringTraits][0][name]=$traitName&search[stringTraits][0][values][0]=$traitValue&search[sortAscending]=true&search[sortBy]=PRICE",
+            lastSalePrice: response.lastSale.flatMap { nftPrice(token: map[$0.paymentTokenAddress.lowercased()], value: $0.totalPrice, shift: true) },
+            offers: offers,
+            saleInfo: saleInfo
         )
     }
 
     private func saleInfo(type: NftAssetMetadata.SaleType, orders: [OrderResponse], map: [String: Token]) -> NftAssetMetadata.SaleInfo {
         NftAssetMetadata.SaleInfo(
-                type: type,
-                listings: orders.compactMap { order -> NftAssetMetadata.SaleListing? in
-                    guard let consideration = order.considerations.first, let token = map[consideration.token.lowercased()] else {
-                        return nil
-                    }
-
-                    return NftAssetMetadata.SaleListing(
-                            untilDate: order.expirationDate,
-                            price: nftPrice(token: token, value: order.currentPrice, shift: true)
-                    )
+            type: type,
+            listings: orders.compactMap { order -> NftAssetMetadata.SaleListing? in
+                guard let consideration = order.considerations.first, let token = map[consideration.token.lowercased()] else {
+                    return nil
                 }
+
+                return NftAssetMetadata.SaleListing(
+                    untilDate: order.expirationDate,
+                    price: nftPrice(token: token, value: order.currentPrice, shift: true)
+                )
+            }
         )
     }
 
     private func contract(response: AssetContractResponse) -> NftContractMetadata {
         NftContractMetadata(
-                address: response.address,
-                name: response.name,
-                schema: response.schemaName
+            address: response.address,
+            name: response.name,
+            schema: response.schemaName
         )
     }
 
     private func nftPrice(token: Token?, value: Decimal?, shift: Bool) -> NftPrice? {
-        guard let token = token, let value = value else {
+        guard let token, let value else {
             return nil
         }
 
@@ -299,8 +299,8 @@ class OpenSeaNftProvider {
 
     private func nftPrice(token: Token, value: Decimal, shift: Bool) -> NftPrice {
         NftPrice(
-                token: token,
-                value: shift ? Decimal(sign: .plus, exponent: -token.decimals, significand: value) : value
+            token: token,
+            value: shift ? Decimal(sign: .plus, exponent: -token.decimals, significand: value) : value
         )
     }
 
@@ -322,7 +322,7 @@ class OpenSeaNftProvider {
                 switch token.type {
                 case .native:
                     map[zeroAddress] = token
-                case .eip20(let address):
+                case let .eip20(address):
                     map[address.lowercased()] = token
                 default:
                     ()
@@ -334,11 +334,9 @@ class OpenSeaNftProvider {
             return [:]
         }
     }
-
 }
 
 extension OpenSeaNftProvider: INftProvider {
-
     var title: String {
         "OpenSea"
     }
@@ -365,30 +363,30 @@ extension OpenSeaNftProvider: INftProvider {
         }
 
         return Single.zip(collectionsSingle, assetsSingle)
-                .map { collections, assets in
-                    let collectionsMetadata = collections.map { collection in
-                        NftCollectionShortMetadata(
-                                providerUid: collection.providerUid,
-                                name: collection.name,
-                                thumbnailImageUrl: collection.imageUrl ?? collection.thumbnailImageUrl,
-                                averagePrice7d: collection.averagePrice7d,
-                                averagePrice30d: collection.averagePrice30d
-                        )
-                    }
-
-                    let assetsMetadata = assets.map { asset in
-                        NftAssetShortMetadata(
-                                nftUid: asset.nftUid,
-                                providerCollectionUid: asset.providerCollectionUid,
-                                name: asset.name,
-                                previewImageUrl: asset.previewImageUrl,
-                                onSale: asset.saleInfo != nil,
-                                lastSalePrice: asset.lastSalePrice
-                        )
-                    }
-
-                    return NftAddressMetadata(collections: collectionsMetadata, assets: assetsMetadata)
+            .map { collections, assets in
+                let collectionsMetadata = collections.map { collection in
+                    NftCollectionShortMetadata(
+                        providerUid: collection.providerUid,
+                        name: collection.name,
+                        thumbnailImageUrl: collection.imageUrl ?? collection.thumbnailImageUrl,
+                        averagePrice7d: collection.averagePrice7d,
+                        averagePrice30d: collection.averagePrice30d
+                    )
                 }
+
+                let assetsMetadata = assets.map { asset in
+                    NftAssetShortMetadata(
+                        nftUid: asset.nftUid,
+                        providerCollectionUid: asset.providerCollectionUid,
+                        name: asset.name,
+                        previewImageUrl: asset.previewImageUrl,
+                        onSale: asset.saleInfo != nil,
+                        lastSalePrice: asset.lastSalePrice
+                    )
+                }
+
+                return NftAddressMetadata(collections: collectionsMetadata, assets: assetsMetadata)
+            }
     }
 
     func assetsBriefMetadataSingle(nftUids: [NftUid]) -> Single<[NftAssetBriefMetadata]> {
@@ -397,7 +395,7 @@ extension OpenSeaNftProvider: INftProvider {
         }
 
         let chunkedReferences = stride(from: 0, to: references.count, by: assetLimit).map {
-            Array(references[$0..<min($0 + assetLimit, references.count)])
+            Array(references[$0 ..< min($0 + assetLimit, references.count)])
         }
 
         let singles = chunkedReferences.map {
@@ -405,62 +403,60 @@ extension OpenSeaNftProvider: INftProvider {
         }
 
         return Single.zip(singles)
-                .map { [weak self] assetsResponses in
-                    guard let strongSelf = self else {
-                        throw ProviderError.weakReference
-                    }
-
-                    let assets = assetsResponses.map { $0.assets }.reduce([], +)
-
-                    return strongSelf.assetsBrief(requestedNftUids: nftUids, responses: assets)
+            .map { [weak self] assetsResponses in
+                guard let strongSelf = self else {
+                    throw ProviderError.weakReference
                 }
+
+                let assets = assetsResponses.map(\.assets).reduce([], +)
+
+                return strongSelf.assetsBrief(requestedNftUids: nftUids, responses: assets)
+            }
     }
 
     func extendedAssetMetadataSingle(nftUid: NftUid, providerCollectionUid: String) -> Single<(NftAssetMetadata, NftCollectionMetadata)> {
         Single.zip(
-                        assetSingle(contractAddress: nftUid.contractAddress, tokenId: nftUid.tokenId),
-                        collectionSingle(slug: providerCollectionUid)
+            assetSingle(contractAddress: nftUid.contractAddress, tokenId: nftUid.tokenId),
+            collectionSingle(slug: providerCollectionUid)
         )
-                .map { [weak self] assetResponse, collectionResponse in
-                    guard let strongSelf = self else {
-                        throw ProviderError.weakReference
-                    }
+        .map { [weak self] assetResponse, collectionResponse in
+            guard let strongSelf = self else {
+                throw ProviderError.weakReference
+            }
 
-                    return (
-                            strongSelf.asset(blockchainType: nftUid.blockchainType, response: assetResponse),
-                            strongSelf.collection(blockchainType: nftUid.blockchainType, response: collectionResponse.collection)
-                    )
-                }
+            return (
+                strongSelf.asset(blockchainType: nftUid.blockchainType, response: assetResponse),
+                strongSelf.collection(blockchainType: nftUid.blockchainType, response: collectionResponse.collection)
+            )
+        }
     }
 
     func collectionAssetsMetadataSingle(blockchainType: BlockchainType, providerCollectionUid: String, paginationData: PaginationData?) -> Single<([NftAssetMetadata], PaginationData?)> {
         assetsSingle(collection: providerCollectionUid, cursor: paginationData?.cursor)
-                .map { [weak self] response in
-                    guard let strongSelf = self else {
-                        throw ProviderError.weakReference
-                    }
-
-                    let assets = strongSelf.assets(blockchainType: blockchainType, responses: response.assets)
-
-                    return (assets, response.cursor.map { .cursor(value: $0) })
+            .map { [weak self] response in
+                guard let strongSelf = self else {
+                    throw ProviderError.weakReference
                 }
+
+                let assets = strongSelf.assets(blockchainType: blockchainType, responses: response.assets)
+
+                return (assets, response.cursor.map { .cursor(value: $0) })
+            }
     }
 
     func collectionMetadataSingle(blockchainType: BlockchainType, providerUid: String) -> Single<NftCollectionMetadata> {
         collectionSingle(slug: providerUid)
-                .map { [weak self] response in
-                    guard let strongSelf = self else {
-                        throw ProviderError.weakReference
-                    }
-
-                    return strongSelf.collection(blockchainType: blockchainType, response: response.collection)
+            .map { [weak self] response in
+                guard let strongSelf = self else {
+                    throw ProviderError.weakReference
                 }
-    }
 
+                return strongSelf.collection(blockchainType: blockchainType, response: response.collection)
+            }
+    }
 }
 
 extension OpenSeaNftProvider {
-
     private struct CollectionResponse: ImmutableMappable {
         private static let reusableDateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd'T'HH:mm:ss.SSSSSZ", locale: "en_US_POSIX")
@@ -677,5 +673,4 @@ extension OpenSeaNftProvider {
     enum ProviderError: Error {
         case weakReference
     }
-
 }

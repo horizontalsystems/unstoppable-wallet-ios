@@ -1,8 +1,8 @@
-import Foundation
-import BitcoinCore
 import BinanceChainKit
+import BitcoinCore
 import Eip20Kit
 import EvmKit
+import Foundation
 import HdWalletKit
 import Hodler
 import HsToolKit
@@ -17,14 +17,12 @@ protocol ConvertibleError {
 }
 
 extension Error {
-
     var convertedError: Error {
         if let error = self as? ConvertibleError {
             return error.convertedError
         }
         return self
     }
-
 }
 
 // converted errors
@@ -33,7 +31,7 @@ extension NetworkManager.RequestError: ConvertibleError {
     var convertedError: Error {
         switch self {
         case .noResponse: return AppError.noConnection
-        case .invalidResponse(let statusCode, let data):
+        case let .invalidResponse(statusCode, data):
             let description: String?
             switch data {
             case let data as Data: description = String(data: data, encoding: .utf8)
@@ -64,7 +62,7 @@ extension BinanceError: ConvertibleError {
 extension Mnemonic.ValidationError: ConvertibleError {
     var convertedError: Error {
         switch self {
-        case .invalidWords(count: let count):
+        case let .invalidWords(count: count):
             return AppError.invalidWords(count: count)
         case .invalidChecksum:
             return AppError.wordsChecksum
@@ -93,19 +91,19 @@ extension EvmKit.Kit.SyncError: ConvertibleError {
 
 extension EvmKit.Address.ValidationError: ConvertibleError {
     var convertedError: Error {
-         AppError.addressInvalid
+        AppError.addressInvalid
     }
 }
 
 extension BinanceChainKit.CoderError: ConvertibleError {
     var convertedError: Error {
-         AppError.addressInvalid
+        AppError.addressInvalid
     }
 }
 
 extension HodlerPluginError: ConvertibleError {
     var convertedError: Error {
-         AppError.notSupportedByHodler
+        AppError.notSupportedByHodler
     }
 }
 
@@ -117,15 +115,14 @@ extension BitcoinCoreErrors.AddressConversionErrors: ConvertibleError {
 
 extension HsToolKit.WebSocketStateError: ConvertibleError {
     var convertedError: Error {
-        return AppError.noConnection
+        AppError.noConnection
     }
 }
 
 extension EvmKit.JsonRpcResponse.ResponseError: ConvertibleError {
-
     var convertedError: Error {
         switch self {
-        case .rpcError(let rpcError):
+        case let .rpcError(rpcError):
             if rpcError.message == "insufficient funds for transfer" || rpcError.message.starts(with: "gas required exceeds allowance") {
                 return AppError.ethereum(reason: .insufficientBalanceWithFee)
             }
@@ -158,26 +155,21 @@ extension EvmKit.JsonRpcResponse.ResponseError: ConvertibleError {
         default: return self
         }
     }
-
 }
 
 extension OneInchKit.Kit.SwapError: ConvertibleError {
-
     var convertedError: Error {
         switch self {
         case .notEnough: return AppError.oneInch(reason: .insufficientBalanceWithFee)
         case .cannotEstimate: return AppError.oneInch(reason: .cannotEstimate)
         }
     }
-
 }
 
 extension OneInchKit.Kit.QuoteError: ConvertibleError {
-
     var convertedError: Error {
         switch self {
-            case .insufficientLiquidity: return AppError.oneInch(reason: .insufficientLiquidity)
+        case .insufficientLiquidity: return AppError.oneInch(reason: .insufficientLiquidity)
         }
     }
-
 }

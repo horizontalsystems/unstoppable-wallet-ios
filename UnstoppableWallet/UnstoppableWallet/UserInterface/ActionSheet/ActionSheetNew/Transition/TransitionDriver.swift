@@ -10,8 +10,8 @@ class TransitionDriver: UIPercentDrivenInteractiveTransition {
     var speedMultiplier: CGFloat = 1
     func add(to controller: UIViewController) {
         presentedController = controller
-        
-        panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handle(_ :)))
+
+        panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handle(_:)))
         presentedController?.view.addGestureRecognizer(panRecognizer!)
     }
 
@@ -25,8 +25,8 @@ class TransitionDriver: UIPercentDrivenInteractiveTransition {
                 return gestureIsActive
             }
         }
-        
-        set { }
+
+        set {}
     }
 
     var interactiveTransitionStarted: Bool {
@@ -38,7 +38,6 @@ class TransitionDriver: UIPercentDrivenInteractiveTransition {
         default: return false
         }
     }
-
 
     @objc private func handle(_ recognizer: UIPanGestureRecognizer) {
         switch direction {
@@ -52,11 +51,9 @@ class TransitionDriver: UIPercentDrivenInteractiveTransition {
     deinit {
 //        print("deinit \(self)")
     }
-
 }
 
-extension TransitionDriver {                    // Gesture Handling
-    
+extension TransitionDriver { // Gesture Handling
     private func handlePresentation(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .began:
@@ -76,7 +73,7 @@ extension TransitionDriver {                    // Gesture Handling
                 finish()
                 interactiveTransitionDelegate?.end(direction: .present, cancelled: false)
             }
-            
+
         case .failed:
             cancel()
             interactiveTransitionDelegate?.fail(direction: .present)
@@ -85,7 +82,7 @@ extension TransitionDriver {                    // Gesture Handling
             break
         }
     }
-    
+
     private func handleDismiss(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .began:
@@ -95,7 +92,7 @@ extension TransitionDriver {                    // Gesture Handling
                 presentedController?.dismiss(animated: true) // Start the new one
                 interactiveTransitionDelegate?.start(direction: .dismiss)
             }
-        
+
         case .changed:
             let newValue = percentComplete + recognizer.incrementToBottom(maxTranslation: maxTranslation)
             update(newValue)
@@ -119,20 +116,19 @@ extension TransitionDriver {                    // Gesture Handling
             break
         }
     }
-    
+
     var maxTranslation: CGFloat {
         presentedController?.view.frame.height ?? 0
     }
-    
+
     private var isRunning: Bool {
         percentComplete != 0
     }
 }
 
 private extension UIPanGestureRecognizer {
-
     func projectedLocation(decelerationRate: UIScrollView.DecelerationRate) -> CGPoint {
-        guard let view = view else {
+        guard let view else {
             return .zero
         }
         var loc = location(in: view)
@@ -146,18 +142,17 @@ private extension UIPanGestureRecognizer {
 
     func swipeMultiplier(maxTranslation: CGFloat) -> CGFloat {
         let endLocation = projectedLocation(decelerationRate: .fast)
-        guard endLocation.y.sign == .plus else {    // user swipe up after try dismiss
+        guard endLocation.y.sign == .plus else { // user swipe up after try dismiss
             return 1
         }
-        return max(0.3, min(1, abs(maxTranslation / endLocation.y)))  // when calculate speed for dismiss animation make range 0.3...1 for multiplier
+        return max(0.3, min(1, abs(maxTranslation / endLocation.y))) // when calculate speed for dismiss animation make range 0.3...1 for multiplier
     }
-    
+
     func incrementToBottom(maxTranslation: CGFloat) -> CGFloat {
-        let translation = self.translation(in: view).y
+        let translation = translation(in: view).y
         setTranslation(.zero, in: nil)
-        
+
         let percentIncrement = translation / maxTranslation
         return percentIncrement
     }
-
 }

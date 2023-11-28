@@ -1,8 +1,7 @@
-import RxSwift
 import MarketKit
+import RxSwift
 
 class UdnAddressParserItem {
-
     private let provider = AddressResolutionProvider()
     private let coinCode: String
     private let platformCoinCode: String?
@@ -27,8 +26,8 @@ class UdnAddressParserItem {
 
         return singles[index].flatMap { [weak self] resultOfAddress in
             switch resultOfAddress {
-            case .success(let address):
-                    return Single.just(Result.success(address))
+            case let .success(address):
+                return Single.just(Result.success(address))
             case .failure:
                 return self?.resolve(index: index + 1, singles: singles) ?? failure
             }
@@ -37,12 +36,11 @@ class UdnAddressParserItem {
 
     private func rawAddressHandle(address: Address) -> Single<Address> {
         rawAddressParserItem
-                .handle(address: address.raw)
-                .map { rawAddress in
-                    Address(raw: rawAddress.raw, domain: address.domain)
-                }
+            .handle(address: address.raw)
+            .map { rawAddress in
+                Address(raw: rawAddress.raw, domain: address.domain)
+            }
     }
-
 }
 
 extension UdnAddressParserItem: IAddressParserItem {
@@ -50,42 +48,40 @@ extension UdnAddressParserItem: IAddressParserItem {
 
     func handle(address: String) -> Single<Address> {
         var singles = [Single<Result<String, Error>>]()
-        if let chain = chain {
+        if let chain {
             singles.append(provider.resolveSingle(domain: address, ticker: coinCode, chain: chain))
         }
         singles.append(provider.resolveSingle(domain: address, ticker: coinCode, chain: nil))
-        if let platformCoinCode = platformCoinCode {
+        if let platformCoinCode {
             singles.append(provider.resolveSingle(domain: address, ticker: platformCoinCode, chain: nil))
         }
 
         return resolve(singles: singles)
-                .flatMap { [weak self] result in
-                    switch result {
-                    case .success(let resolvedAddress):
-                        let address = Address(raw: resolvedAddress, domain: address)
-                        return self?.rawAddressHandle(address: address) ?? Single.just(address)
-                    case .failure(let error):
-                        return Single.error(error)
-                    }
+            .flatMap { [weak self] result in
+                switch result {
+                case let .success(resolvedAddress):
+                    let address = Address(raw: resolvedAddress, domain: address)
+                    return self?.rawAddressHandle(address: address) ?? Single.just(address)
+                case let .failure(error):
+                    return Single.error(error)
                 }
+            }
     }
 
     func isValid(address: String) -> Single<Bool> {
         let parts = address.components(separatedBy: ".")
         if parts.count > 1,
            let last = parts.last?.lowercased(),
-           !exceptionRegistrars.contains(last) {
-
+           !exceptionRegistrars.contains(last)
+        {
             return provider.isValid(domain: address)
         }
 
         return .just(false)
     }
-
 }
 
 extension UdnAddressParserItem {
-
     static func chainCoinCode(blockchainType: BlockchainType) -> String {
         switch blockchainType {
         case .bitcoin: return "BTC"
@@ -106,7 +102,7 @@ extension UdnAddressParserItem {
         case .tron: return "TRX"
         case .solana: return "SOL"
         case .ton: return "TON"
-        case .unsupported(let uid): return uid
+        case let .unsupported(uid): return uid
         }
     }
 
@@ -119,17 +115,15 @@ extension UdnAddressParserItem {
         default: return nil
         }
     }
-
 }
 
 extension UdnAddressParserItem {
-
     static func item(rawAddressParserItem: IAddressParserItem, coinCode: String, token: Token?) -> UdnAddressParserItem {
         let item = UdnAddressParserItem(
-                rawAddressParserItem: rawAddressParserItem,
-                coinCode: coinCode,
-                platformCoinCode: token.flatMap { chainCoinCode(blockchainType: $0.blockchainType) },
-                chain: token.flatMap { chain(token: $0) }
+            rawAddressParserItem: rawAddressParserItem,
+            coinCode: coinCode,
+            platformCoinCode: token.flatMap { chainCoinCode(blockchainType: $0.blockchainType) },
+            chain: token.flatMap { chain(token: $0) }
         )
 
         item.exceptionRegistrars = EnsAddressParserItem.registrars
@@ -138,14 +132,13 @@ extension UdnAddressParserItem {
 
     static func item(rawAddressParserItem: IAddressParserItem, blockchainType: BlockchainType) -> UdnAddressParserItem {
         let item = UdnAddressParserItem(
-                rawAddressParserItem: rawAddressParserItem,
-                coinCode: chainCoinCode(blockchainType: blockchainType),
-                platformCoinCode: nil,
-                chain: nil
+            rawAddressParserItem: rawAddressParserItem,
+            coinCode: chainCoinCode(blockchainType: blockchainType),
+            platformCoinCode: nil,
+            chain: nil
         )
 
         item.exceptionRegistrars = EnsAddressParserItem.registrars
         return item
     }
-
 }

@@ -1,10 +1,10 @@
-import UIKit
-import SnapKit
 import Combine
-import ThemeKit
 import ComponentKit
-import UIExtensions
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIExtensions
+import UIKit
 
 class ICloudBackupTermsViewController: ThemeViewController {
     private let viewModel: ICloudBackupTermsViewModel
@@ -22,7 +22,8 @@ class ICloudBackupTermsViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -55,35 +56,34 @@ class ICloudBackupTermsViewController: ThemeViewController {
 
         viewItems = viewModel.viewItems
         viewModel.$viewItems
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.viewItems = $0
-                    self?.reloadTable()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.viewItems = $0
+                self?.reloadTable()
+            }
+            .store(in: &cancellables)
 
         continueButton.isEnabled = viewModel.buttonEnabled
         viewModel.$buttonEnabled
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.continueButton.isEnabled = $0
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.continueButton.isEnabled = $0
+            }
+            .store(in: &cancellables)
 
         viewModel.showModulePublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.showModule()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.showModule()
+            }
+            .store(in: &cancellables)
 
         viewModel.showCloudNotAvailablePublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.showNotCloudAvailable()
-                }
-                .store(in: &cancellables)
-
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.showNotCloudAvailable()
+            }
+            .store(in: &cancellables)
 
         loaded = true
         reloadTable()
@@ -112,48 +112,46 @@ class ICloudBackupTermsViewController: ThemeViewController {
             tableView.reload(animated: true)
         }
     }
-
 }
 
 extension ICloudBackupTermsViewController: SectionsDataSource {
-
     private func row(viewItem: ICloudBackupTermsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
         let textFont: UIFont = .subhead2
         let text = viewItem.text
 
         return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image24 { component in
-                        component.imageView.image = UIImage(named: viewItem.checked ? "checkbox_active_24" : "checkbox_diactive_24")
-                    },
-                    .text { component in
-                        component.font = textFont
-                        component.textColor = .themeLeah
-                        component.text = text
-                        component.numberOfLines = 0
-                    }
-                ]),
-                tableView: tableView,
-                id: "row-\(index)",
-                hash: "\(viewItem.checked)",
-                autoDeselect: true,
-                dynamicHeight: { width in
-                    CellBuilderNew.height(
-                            containerWidth: width,
-                            backgroundStyle: backgroundStyle,
-                            text: text,
-                            font: textFont,
-                            verticalPadding: .margin16,
-                            elements: [.fixed(width: .iconSize24), .multiline]
-                    )
+            rootElement: .hStack([
+                .image24 { component in
+                    component.imageView.image = UIImage(named: viewItem.checked ? "checkbox_active_24" : "checkbox_diactive_24")
                 },
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                .text { component in
+                    component.font = textFont
+                    component.textColor = .themeLeah
+                    component.text = text
+                    component.numberOfLines = 0
                 },
-                action: { [weak self] in
-                    self?.viewModel.onToggle(index: index)
-                }
+            ]),
+            tableView: tableView,
+            id: "row-\(index)",
+            hash: "\(viewItem.checked)",
+            autoDeselect: true,
+            dynamicHeight: { width in
+                CellBuilderNew.height(
+                    containerWidth: width,
+                    backgroundStyle: backgroundStyle,
+                    text: text,
+                    font: textFont,
+                    verticalPadding: .margin16,
+                    elements: [.fixed(width: .iconSize24), .multiline]
+                )
+            },
+            bind: { cell in
+                cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+            },
+            action: { [weak self] in
+                self?.viewModel.onToggle(index: index)
+            }
         )
     }
 
@@ -165,10 +163,10 @@ extension ICloudBackupTermsViewController: SectionsDataSource {
                 footerState: .margin(height: .margin32),
                 rows: [
                     tableView.highlightedDescriptionRow(
-                            id: "description",
-                            text: "backup.cloud.description".localized,
-                            ignoreBottomMargin: true
-                    )
+                        id: "description",
+                        text: "backup.cloud.description".localized,
+                        ignoreBottomMargin: true
+                    ),
                 ]
             ),
             Section(
@@ -177,8 +175,7 @@ extension ICloudBackupTermsViewController: SectionsDataSource {
                 rows: viewItems.enumerated().map { index, viewItem in
                     row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
                 }
-            )
+            ),
         ]
     }
-
 }

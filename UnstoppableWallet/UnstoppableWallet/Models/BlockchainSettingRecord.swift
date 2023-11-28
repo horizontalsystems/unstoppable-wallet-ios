@@ -35,5 +35,4 @@ class BlockchainSettingRecord: Record {
         container[Columns.key] = key
         container[Columns.value] = value
     }
-
 }

@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class ContactBookAddressService {
     private let disposeBag = DisposeBag()
@@ -45,15 +45,15 @@ class ContactBookAddressService {
         self.currentContactUid = currentContactUid
         self.mode = mode
 
-        let blockchainUids = BlockchainType.supported.map { $0.uid }
+        let blockchainUids = BlockchainType.supported.map(\.uid)
         let allBlockchains = ((try? marketKit.blockchains(uids: blockchainUids)) ?? []).sorted { $0.type.order < $1.type.order }
 
         switch mode {
-        case .create(let addresses):
+        case let .create(addresses):
             let usedBlockchains = addresses.compactMap { try? marketKit.blockchain(uid: $0.blockchainUid) }
             unusedBlockchains = allBlockchains.filter { !usedBlockchains.contains($0) }
             initialAddress = nil
-        case .edit(let address):
+        case let .edit(address):
             unusedBlockchains = allBlockchains
             initialAddress = address
         }
@@ -67,7 +67,6 @@ class ContactBookAddressService {
 
         sync()
     }
-
 
     private func contact(with address: ContactAddress) -> Contact? {
         var otherContacts = contactBookManager.all
@@ -87,7 +86,7 @@ class ContactBookAddressService {
             state = .loading
         case .validationError, .fetchError:
             state = .invalid(ValidationError.invalidAddress)
-        case .success(let address):
+        case let .success(address):
             if let initialAddress, address.raw.lowercased() == initialAddress.address.lowercased() {
                 state = .idle
                 return
@@ -95,7 +94,6 @@ class ContactBookAddressService {
 
             let address = ContactAddress(blockchainUid: selectedBlockchain.type.uid, address: address.raw)
             if let contact = contact(with: address) {
-
                 let error = ValidationError.duplicate(contact: contact)
                 self.error = error
                 state = .invalid(error)
@@ -106,11 +104,9 @@ class ContactBookAddressService {
         }
         error = nil
     }
-
 }
 
 extension ContactBookAddressService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -118,11 +114,9 @@ extension ContactBookAddressService {
     var selectedBlockchainObservable: Observable<Blockchain> {
         selectedBlockchainRelay.asObservable()
     }
-
 }
 
 extension ContactBookAddressService {
-
     enum State {
         case idle
         case loading
@@ -134,13 +128,10 @@ extension ContactBookAddressService {
         case invalidAddress
         case duplicate(contact: Contact)
     }
-
 }
 
 extension ContactBookAddressService: IErrorService {
-
     var errorObservable: Observable<Error?> {
         errorRelay.asObservable()
     }
-
 }

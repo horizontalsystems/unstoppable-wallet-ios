@@ -112,11 +112,11 @@ struct BooleanActionSheetModifier<ContentView: View>: ViewModifier {
 }
 
 public extension View {
-    func bottomSheet<Content>(
+    func bottomSheet(
         isPresented: Binding<Bool>,
         onDismiss: (() -> Void)? = nil,
-        @ViewBuilder content: @escaping () -> Content
-    ) -> some View where Content: View {
+        @ViewBuilder content: @escaping () -> some View
+    ) -> some View {
         modifier(
             BooleanActionSheetModifier(
                 isPresented: isPresented,
@@ -126,11 +126,11 @@ public extension View {
         )
     }
 
-    func bottomSheet<Item, Content>(
+    func bottomSheet<Item>(
         item: Binding<Item?>,
         onDismiss: (() -> Void)? = nil,
-        @ViewBuilder content: @escaping (Item) -> Content
-    ) -> some View where Item: Identifiable, Content: View {
+        @ViewBuilder content: @escaping (Item) -> some View
+    ) -> some View where Item: Identifiable {
         modifier(
             ActionSheetModifier(
                 item: item,

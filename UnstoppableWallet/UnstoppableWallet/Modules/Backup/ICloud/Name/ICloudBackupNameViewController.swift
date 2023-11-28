@@ -1,10 +1,10 @@
 import Combine
-import SnapKit
-import ThemeKit
-import UIKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
 import UIExtensions
+import UIKit
 
 class ICloudBackupNameViewController: KeyboardAwareViewController {
     private let viewModel: ICloudBackupNameViewModel
@@ -21,7 +21,7 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
     private var keyboardShown = false
     private var isLoaded = false
 
-    var onNext: ((String) -> ())?
+    var onNext: ((String) -> Void)?
 
     init(viewModel: ICloudBackupNameViewModel) {
         self.viewModel = viewModel
@@ -29,7 +29,8 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: bottomView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -65,29 +66,27 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
 
         nameCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
-
         viewModel.$nameError
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] nameError in
-                    guard let nameError else {
-                        self?.nameCell.set(cautionType: nil)
-                        self?.nameCautionCell.set(caution: nil)
-                        return
-                    }
-
-                    self?.nameCell.set(cautionType: .error)
-                    self?.nameCautionCell.set(caution: Caution(text: nameError, type: .error))
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] nameError in
+                guard let nameError else {
+                    self?.nameCell.set(cautionType: nil)
+                    self?.nameCautionCell.set(caution: nil)
+                    return
                 }
-                .store(in: &cancellables)
 
-       viewModel.$nextAvailable
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] available in
-                    self?.navigationItem.rightBarButtonItem?.isEnabled = available
-                    self?.nextButton.isEnabled = available
-                }
-                .store(in: &cancellables)
+                self?.nameCell.set(cautionType: .error)
+                self?.nameCautionCell.set(caution: Caution(text: nameError, type: .error))
+            }
+            .store(in: &cancellables)
 
+        viewModel.$nextAvailable
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] available in
+                self?.navigationItem.rightBarButtonItem?.isEnabled = available
+                self?.nextButton.isEnabled = available
+            }
+            .store(in: &cancellables)
 
         tableView.buildSections()
         isLoaded = true
@@ -114,52 +113,48 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
         let controller = BackupCloudModule.backupPassword(account: viewModel.account, name: name)
         navigationController?.pushViewController(controller, animated: true)
     }
-
 }
 
 extension ICloudBackupNameViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "description-section",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.descriptionRow(
-                                id: "description",
-                                text: "backup.cloud.name.description".localized,
-                                font: .subhead2,
-                                textColor: .gray,
-                                ignoreBottomMargin: true
-                        )
-                    ]
+                id: "description-section",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.descriptionRow(
+                        id: "description",
+                        text: "backup.cloud.name.description".localized,
+                        font: .subhead2,
+                        textColor: .gray,
+                        ignoreBottomMargin: true
+                    ),
+                ]
             ),
             Section(
-                    id: "name",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        ),
-                        StaticRow(
-                                cell: nameCautionCell,
-                                id: "name-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.nameCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
-            )
+                id: "name",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: nameCell,
+                        id: "name",
+                        height: .heightSingleLineCell
+                    ),
+                    StaticRow(
+                        cell: nameCautionCell,
+                        id: "name-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.nameCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
+            ),
         ]
     }
-
 }
 
 extension ICloudBackupNameViewController: IDynamicHeightCellDelegate {
-
     func onChangeHeight() {
         guard isLoaded else {
             return
@@ -170,5 +165,4 @@ extension ICloudBackupNameViewController: IDynamicHeightCellDelegate {
             self?.tableView.endUpdates()
         }
     }
-
 }

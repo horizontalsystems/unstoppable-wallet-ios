@@ -6,13 +6,11 @@ class KitCleaner {
     init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
-
 }
 
 extension KitCleaner {
-
     func clear() {
-        let accountIds = accountManager.accounts.map { $0.id }
+        let accountIds = accountManager.accounts.map(\.id)
 
         DispatchQueue.global(qos: .background).async {
             try? BitcoinAdapter.clear(except: accountIds)
@@ -26,5 +24,4 @@ extension KitCleaner {
             try? TronAdapter.clear(except: accountIds)
         }
     }
-
 }

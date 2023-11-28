@@ -26,6 +26,4 @@ class TronRecipientAddressViewModel: RecipientAddressViewModel {
             sendService.sync(address: address.raw)
         }
     }
-
 }
-

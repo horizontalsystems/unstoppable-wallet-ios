@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class AddTokenViewModel {
     private let service: AddTokenService
@@ -42,17 +42,17 @@ class AddTokenViewModel {
             viewItemRelay.accept(nil)
             buttonEnabledRelay.accept(false)
             cautionRelay.accept(nil)
-        case .alreadyExists(let token):
+        case let .alreadyExists(token):
             loadingRelay.accept(false)
             viewItemRelay.accept(viewItem(token: token))
             buttonEnabledRelay.accept(false)
             cautionRelay.accept(Caution(text: "add_token.already_added".localized, type: .warning))
-        case .fetched(let token):
+        case let .fetched(token):
             loadingRelay.accept(false)
             viewItemRelay.accept(viewItem(token: token))
             buttonEnabledRelay.accept(true)
             cautionRelay.accept(nil)
-        case .failed(let error):
+        case let .failed(error):
             loadingRelay.accept(false)
             viewItemRelay.accept(nil)
             buttonEnabledRelay.accept(false)
@@ -62,16 +62,14 @@ class AddTokenViewModel {
 
     private func viewItem(token: Token) -> ViewItem {
         ViewItem(
-                name: token.coin.name,
-                code: token.coin.code,
-                decimals: String(token.decimals)
+            name: token.coin.name,
+            code: token.coin.code,
+            decimals: String(token.decimals)
         )
     }
-
 }
 
 extension AddTokenViewModel {
-
     var blockchainDriver: Driver<String> {
         blockchainRelay.asDriver()
     }
@@ -103,9 +101,9 @@ extension AddTokenViewModel {
     var blockchainViewItems: [SelectorModule.ViewItem] {
         service.blockchainItems.map { item in
             SelectorModule.ViewItem(
-                    image: .url(item.blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
-                    title: item.blockchain.name,
-                    selected: item.current
+                image: .url(item.blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
+                title: item.blockchain.name,
+                selected: item.current
             )
         }
     }
@@ -122,15 +120,12 @@ extension AddTokenViewModel {
         service.save()
         finishRelay.accept(())
     }
-
 }
 
 extension AddTokenViewModel {
-
     struct ViewItem {
         let name: String
         let code: String
         let decimals: String
     }
-
 }

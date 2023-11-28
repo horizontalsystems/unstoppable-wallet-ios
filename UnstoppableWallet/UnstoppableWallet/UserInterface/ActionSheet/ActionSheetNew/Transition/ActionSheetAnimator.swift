@@ -25,36 +25,35 @@ public class ActionSheetAnimator: NSObject, UIViewControllerTransitioningDelegat
     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         driver?.add(to: presented)
         return ActionSheetPresentationController(driver: driver, presentedViewController: presented,
-                                                                presenting: presenting ?? source,
-                                                                configuration: configuration)
+                                                 presenting: presenting ?? source,
+                                                 configuration: configuration)
     }
-    
+
     // Animation
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forPresented _: UIViewController, presenting _: UIViewController, source _: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch configuration.style {
         case .sheet: return MovingPresentAnimation(duration: configuration.presentAnimationDuration, animationCurve: configuration.presentAnimationCurve)
         case .alert: return AlphaPresentAnimation(duration: configuration.presentAnimationDuration, animationCurve: configuration.presentAnimationCurve)
         }
     }
 
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forDismissed _: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch configuration.style {
         case .sheet: return MovingDismissAnimation(duration: configuration.dismissAnimationDuration, animationCurve: configuration.dismissAnimationCurve)
         case .alert: return AlphaDismissAnimation(duration: configuration.dismissAnimationDuration, animationCurve: configuration.dismissAnimationCurve)
         }
     }
-    
+
     // Interaction
-    public func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    public func interactionControllerForPresentation(using _: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         driver
     }
 
-    public func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    public func interactionControllerForDismissal(using _: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         driver
     }
 
     deinit {
 //        print("deinit \(self)")
     }
-
 }

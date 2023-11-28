@@ -1,13 +1,13 @@
 import Combine
-import UIKit
-import DeepDiff
-import RxSwift
-import RxCocoa
 import ComponentKit
+import DeepDiff
 import HUD
 import MarketKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import ThemeKit
+import UIKit
 
 class WalletTokenListDataSource: NSObject {
     private let animationDuration: TimeInterval = 0.2
@@ -20,7 +20,7 @@ class WalletTokenListDataSource: NSObject {
     private var customCell: CustomCell = .none
     private var isLoaded = false
 
-    var onSelectWallet: ((Wallet) -> ())?
+    var onSelectWallet: ((Wallet) -> Void)?
 
     weak var viewController: UIViewController?
     private weak var tableView: UITableView?
@@ -30,7 +30,8 @@ class WalletTokenListDataSource: NSObject {
         self.viewModel = viewModel
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -41,14 +42,14 @@ class WalletTokenListDataSource: NSObject {
     private func sync(state: WalletTokenListViewModel.State) {
         switch state {
         case .loading: customCell = .spinner
-        case .list(let viewItems): customCell = viewItems.isEmpty ? .noResults : .none
+        case let .list(viewItems): customCell = viewItems.isEmpty ? .noResults : .none
         case .empty, .noAccount: customCell = .empty
         case .syncFailed: customCell = .failed
         case .invalidApiKey: customCell = .invalidApiKey
         }
 
         switch state {
-        case .list(let viewItems):
+        case let .list(viewItems):
             viewController?.navigationItem.searchController?.searchBar.isHidden = false
             if isLoaded {
                 handle(newViewItems: viewItems)
@@ -85,10 +86,10 @@ class WalletTokenListDataSource: NSObject {
 
         for change in changes {
             switch change {
-            case .move(let move):
+            case let .move(move):
                 updateIndexes.insert(move.fromIndex)
                 updateIndexes.insert(move.toIndex)
-            case .replace(let replace):
+            case let .replace(replace):
                 updateIndexes.insert(replace.index)
             default: ()
             }
@@ -121,12 +122,12 @@ class WalletTokenListDataSource: NSObject {
         cell.set(backgroundStyle: .transparent, isFirst: hideTopSeparator, isLast: index == viewItems.count - 1)
 
         cell.bind(
-                viewItem: viewItem,
-                animated: animated,
-                duration: animationDuration,
-                onTapError: { [weak self] in
-                    self?.viewModel.onTapFailedIcon(element: viewItem.element)
-                }
+            viewItem: viewItem,
+            animated: animated,
+            duration: animationDuration,
+            onTapError: { [weak self] in
+                self?.viewModel.onTapFailedIcon(element: viewItem.element)
+            }
         )
     }
 
@@ -144,11 +145,9 @@ class WalletTokenListDataSource: NSObject {
         controller.addAction(UIAlertAction(title: "button.ok".localized, style: .default))
         controller.show()
     }
-
 }
 
 extension WalletTokenListDataSource: ISectionDataSource {
-
     func prepare(tableView: UITableView) {
         self.tableView = tableView
 
@@ -160,9 +159,9 @@ extension WalletTokenListDataSource: ISectionDataSource {
         // setup filter for search results if viewController has search
         if let viewController = viewController as? ThemeSearchViewController {
             viewController.$filter
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
-                    .store(in: &cancellables)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+                .store(in: &cancellables)
         }
 
         subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
@@ -171,22 +170,22 @@ extension WalletTokenListDataSource: ISectionDataSource {
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
 
         viewModel.$state
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.sync(state: $0)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.sync(state: $0)
+            }
+            .store(in: &cancellables)
 
         sync(state: viewModel.state)
 
         isLoaded = true
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         (viewItems.isEmpty ? 0 : 1) + 1
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         if viewItems.isEmpty {
             return 1
         } else {
@@ -215,7 +214,6 @@ extension WalletTokenListDataSource: ISectionDataSource {
         case 0: return tableView.dequeueReusableCell(withIdentifier: String(describing: WalletTokenCell.self), for: originalIndexPath)
         default: return tableView.dequeueReusableCell(withIdentifier: String(describing: EmptyCell.self), for: originalIndexPath)
         }
-
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -244,10 +242,10 @@ extension WalletTokenListDataSource: ISectionDataSource {
                     cell.text = "sync_error".localized
                     cell.removeAllButtons()
                     cell.addPrimaryButton(
-                            style: .yellow,
-                            title: "button.retry".localized,
-                            target: self,
-                            action: #selector(onTapRetry)
+                        style: .yellow,
+                        title: "button.retry".localized,
+                        target: self,
+                        action: #selector(onTapRetry)
                     )
                 }
             case .invalidApiKey:
@@ -291,11 +289,9 @@ extension WalletTokenListDataSource: ISectionDataSource {
             viewModel.didSelect(item: viewItems[indexPath.row])
         }
     }
-
 }
 
 extension WalletTokenListDataSource {
-
     enum CustomCell {
         case none
         case empty
@@ -311,5 +307,4 @@ extension WalletTokenListDataSource {
             }
         }
     }
-
 }

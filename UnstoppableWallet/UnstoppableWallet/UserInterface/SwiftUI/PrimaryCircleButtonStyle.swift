@@ -1,5 +1,5 @@
-import SwiftUI
 import ComponentKit
+import SwiftUI
 
 struct PrimaryCircleButtonStyle: ButtonStyle {
     let style: Style

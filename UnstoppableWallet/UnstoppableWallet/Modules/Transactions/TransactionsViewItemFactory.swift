@@ -78,7 +78,7 @@ class TransactionsViewItemFactory {
         let backUrl: String?
         let backPlaceholder: String
 
-        if let primaryValue = primaryValue {
+        if let primaryValue {
             switch primaryValue {
             case let .nftValue(nftUid, _, _, _):
                 frontType = .squircle
@@ -95,7 +95,7 @@ class TransactionsViewItemFactory {
             frontPlaceholder = "placeholder_circle_32"
         }
 
-        if let secondaryValue = secondaryValue {
+        if let secondaryValue {
             switch secondaryValue {
             case let .nftValue(nftUid, _, _, _):
                 backType = .squircle
@@ -140,24 +140,24 @@ class TransactionsViewItemFactory {
             primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: outgoingValue), type: type(value: outgoingValue, .outgoing))
             secondaryValue = singleValueSecondaryValue(value: outgoingValue, currencyValue: currencyValue, nftMetadata: nftMetadata)
         } else if !incomingValues.isEmpty, outgoingValues.isEmpty {
-            let coinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
+            let coinCodes = incomingValues.map(\.coinCode).joined(separator: ", ")
             primaryValue = BaseTransactionsViewModel.Value(text: coinCodes, type: .incoming)
             secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
         } else if incomingValues.isEmpty, !outgoingValues.isEmpty {
-            let coinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
+            let coinCodes = outgoingValues.map(\.coinCode).joined(separator: ", ")
             primaryValue = BaseTransactionsViewModel.Value(text: coinCodes, type: .outgoing)
             secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
         } else {
             if incomingValues.count == 1 {
                 primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: type(value: incomingValues[0], .incoming))
             } else {
-                let incomingCoinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
+                let incomingCoinCodes = incomingValues.map(\.coinCode).joined(separator: ", ")
                 primaryValue = BaseTransactionsViewModel.Value(text: incomingCoinCodes, type: .incoming)
             }
             if outgoingValues.count == 1 {
                 secondaryValue = BaseTransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type: type(value: outgoingValues[0], .outgoing))
             } else {
-                let outgoingCoinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
+                let outgoingCoinCodes = outgoingValues.map(\.coinCode).joined(separator: ", ")
                 secondaryValue = BaseTransactionsViewModel.Value(text: outgoingCoinCodes, type: .outgoing)
             }
         }
@@ -251,7 +251,7 @@ class TransactionsViewItemFactory {
 
             if record.outgoingEvents.isEmpty {
                 title = "transactions.receive".localized
-                let addresses = Array(Set(record.incomingEvents.map { $0.address }))
+                let addresses = Array(Set(record.incomingEvents.map(\.address)))
                 if addresses.count == 1 {
                     subTitle = "transactions.from".localized(mapped(address: addresses[0], blockchainType: item.record.source.blockchainType))
                 } else {
@@ -375,7 +375,7 @@ class TransactionsViewItemFactory {
 
             if record.outgoingEvents.isEmpty {
                 title = "transactions.receive".localized
-                let addresses = Array(Set(record.incomingEvents.map { $0.address }))
+                let addresses = Array(Set(record.incomingEvents.map(\.address)))
                 if addresses.count == 1 {
                     subTitle = "transactions.from".localized(mapped(address: addresses[0], blockchainType: item.record.source.blockchainType))
                 } else {

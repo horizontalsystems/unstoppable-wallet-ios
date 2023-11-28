@@ -1,8 +1,8 @@
-import Foundation
-import TronKit
-import RxSwift
 import BigInt
+import Foundation
 import HsToolKit
+import RxSwift
+import TronKit
 
 class BaseTronAdapter {
     static let confirmationsThreshold = 18
@@ -20,7 +20,7 @@ class BaseTronAdapter {
     }
 
     func balanceDecimal(kitBalance: BigUInt?, decimals: Int) -> Decimal {
-        guard let kitBalance = kitBalance else {
+        guard let kitBalance else {
             return 0
         }
 
@@ -33,9 +33,9 @@ class BaseTronAdapter {
 
     func convertToAdapterState(tronSyncState: TronKit.SyncState) -> AdapterState {
         switch tronSyncState {
-            case .synced: return .synced
-            case .notSynced(let error): return .notSynced(error: error.convertedError)
-            case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
+        case .synced: return .synced
+        case let .notSynced(error): return .notSynced(error: error.convertedError)
+        case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
         }
     }
 
@@ -48,14 +48,12 @@ class BaseTronAdapter {
     }
 
     func accountActive(address: TronKit.Address) async -> Bool {
-        return (try? await tronKit.accountActive(address: address)) ?? true
+        await (try? tronKit.accountActive(address: address)) ?? true
     }
-
 }
 
 // IAdapter
 extension BaseTronAdapter {
-
     var statusInfo: [(String, Any)] {
         []
     }
@@ -63,12 +61,10 @@ extension BaseTronAdapter {
     var debugInfo: String {
         ""
     }
-
 }
 
 // ITransactionsAdapter
 extension BaseTronAdapter {
-
     var lastBlockInfo: LastBlockInfo? {
         tronKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
     }
@@ -76,16 +72,13 @@ extension BaseTronAdapter {
     var lastBlockUpdatedObservable: Observable<Void> {
         tronKit.lastBlockHeightPublisher.asObservable().map { _ in () }
     }
-
 }
 
 extension BaseTronAdapter: IDepositAdapter {
-
     var receiveAddress: DepositAddress {
         ActivatedDepositAddress(
             receiveAddress: tronKit.receiveAddress.base58,
             isActive: tronKit.accountActive
         )
     }
-
 }

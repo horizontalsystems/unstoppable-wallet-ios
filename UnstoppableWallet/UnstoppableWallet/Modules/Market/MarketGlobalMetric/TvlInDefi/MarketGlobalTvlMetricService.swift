@@ -110,7 +110,7 @@ class MarketGlobalTvlMetricService {
     private func subscribeChart() {
         cancellables = Set()
 
-        guard let chartService = chartService else {
+        guard let chartService else {
             return
         }
 

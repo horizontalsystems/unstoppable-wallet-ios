@@ -15,8 +15,8 @@ class ICloudBackupTermsViewModel {
         self.service = service
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -26,17 +26,15 @@ class ICloudBackupTermsViewModel {
             return
         }
 
-        viewItems = (0..<service.termCount).map { index in
+        viewItems = (0 ..< service.termCount).map { index in
             ViewItem(text: "backup.cloud.terms.item.\(index + 1)".localized, checked: checkedIndices.contains(index))
         }
 
         buttonEnabled = checkedIndices.count == service.termCount
     }
-
 }
 
 extension ICloudBackupTermsViewModel {
-
     var account: Account {
         service.account
     }
@@ -60,19 +58,16 @@ extension ICloudBackupTermsViewModel {
             showCloudNotAvailableSubject.send(())
         }
     }
-
 }
 
 extension ICloudBackupTermsViewModel {
-
     struct ViewItem: Equatable {
         let text: String
         let checked: Bool
 
-        static func ==(lhs: ViewItem, rhs: ViewItem) -> Bool {
+        static func == (lhs: ViewItem, rhs: ViewItem) -> Bool {
             lhs.text == rhs.text &&
-            lhs.checked == rhs.checked
+                lhs.checked == rhs.checked
         }
     }
-
 }

@@ -8,14 +8,13 @@ class NftCollectionsMultiSortHeaderViewModel {
         self.service = service
         self.decorator = decorator
     }
-
 }
 
 extension NftCollectionsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel {
-
     var sortItems: [String] {
-        MarketNftTopCollectionsModule.SortType.allCases.map { $0.title }
+        MarketNftTopCollectionsModule.SortType.allCases.map(\.title)
     }
+
     var sortIndex: Int {
         MarketNftTopCollectionsModule.SortType.allCases.firstIndex(of: service.sortType) ?? 0
     }
@@ -23,12 +22,13 @@ extension NftCollectionsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewMode
     var leftSelectorItems: [String] {
         []
     }
+
     var leftSelectorIndex: Int {
         0
     }
 
     var rightSelectorItems: [String] {
-        MarketNftTopCollectionsModule.selectorValues.map { $0.title }
+        MarketNftTopCollectionsModule.selectorValues.map(\.title)
     }
 
     var rightSelectorIndex: Int {
@@ -39,11 +39,9 @@ extension NftCollectionsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewMode
         service.sortType = MarketNftTopCollectionsModule.SortType.allCases[index]
     }
 
-    func onSelectLeft(index: Int) {
-    }
+    func onSelectLeft(index _: Int) {}
 
     func onSelectRight(index: Int) {
         service.timePeriod = MarketNftTopCollectionsModule.selectorValues[index]
     }
-
 }

@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import ComponentKit
 import CollectionViewCenteredFlowLayout
+import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MnemonicPhraseCell: BaseThemeCell {
     private static let backgroundStyle: BaseThemeCell.BackgroundStyle = .bordered
@@ -47,22 +47,21 @@ class MnemonicPhraseCell: BaseThemeCell {
         hintText.textColor = .themeGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension MnemonicPhraseCell {
-
     func set(state: State) {
         switch state {
-        case .hidden(let hint):
+        case let .hidden(hint):
             collectionView.isHidden = true
             hintText.isHidden = false
 
             hintText.text = hint
-        case .visible(let words):
+        case let .visible(words):
             hintText.isHidden = true
             collectionView.isHidden = false
 
@@ -71,51 +70,43 @@ extension MnemonicPhraseCell {
             collectionView.layoutIfNeeded()
         }
     }
-
 }
 
 extension MnemonicPhraseCell: UICollectionViewDataSource {
-
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         words.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MnemonicWordCell.self), for: indexPath)
     }
-
 }
 
 extension MnemonicPhraseCell: UICollectionViewDelegate {
-
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    public func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? MnemonicWordCell {
             let index = indexPath.item
             cell.bind(index: index + 1, word: words[index])
         }
     }
-
 }
 
 extension MnemonicPhraseCell: UICollectionViewDelegateFlowLayout {
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let index = indexPath.item
         return MnemonicWordCell.size(index: index + 1, word: words[index])
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         Self.itemSpacing
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
         Self.lineSpacing
     }
-
 }
 
 extension MnemonicPhraseCell {
-
     static func height(containerWidth: CGFloat, words: [String]) -> CGFloat {
         let collectionWidth = containerWidth - margin(backgroundStyle: backgroundStyle).width - horizontalPadding * 2
 
@@ -139,14 +130,11 @@ extension MnemonicPhraseCell {
         let collectionHeight = CGFloat(lines) * lineHeight + CGFloat(lines - 1) * lineSpacing
         return collectionHeight + verticalPadding * 2
     }
-
 }
 
 extension MnemonicPhraseCell {
-
     enum State {
         case hidden(hint: String)
         case visible(words: [String])
     }
-
 }

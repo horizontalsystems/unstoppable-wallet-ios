@@ -1,8 +1,8 @@
 import Combine
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
     typealias Item = MarketInfo
@@ -30,34 +30,27 @@ class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
     private func syncState(reorder: Bool = false) {
         state = .loaded(items: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
     }
-
 }
 
 extension MarketAdvancedSearchResultService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
         $state
     }
 
-    func refresh() {
-    }
-
+    func refresh() {}
 }
 
 extension MarketAdvancedSearchResultService: IMarketListCoinUidService {
-
     func coinUid(index: Int) -> String? {
-        guard case .loaded(let marketInfos, _, _) = state, index < marketInfos.count else {
+        guard case let .loaded(marketInfos, _, _) = state, index < marketInfos.count else {
             return nil
         }
 
         return marketInfos[index].fullCoin.coin.uid
     }
-
 }
 
 extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
-
     var initialMarketFieldIndex: Int {
         0
     }
@@ -66,10 +59,9 @@ extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
         currencyManager.baseCurrency
     }
 
-    func onUpdate(marketFieldIndex: Int) {
-        if case .loaded(let marketInfos, _, _) = state {
+    func onUpdate(marketFieldIndex _: Int) {
+        if case let .loaded(marketInfos, _, _) = state {
             state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }
     }
-
 }

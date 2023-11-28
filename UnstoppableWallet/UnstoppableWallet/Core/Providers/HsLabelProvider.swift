@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import ObjectMapper
-import HsToolKit
 import Alamofire
+import Foundation
+import HsToolKit
+import ObjectMapper
+import RxSwift
 
 class HsLabelProvider {
     private let networkManager: NetworkManager
@@ -13,11 +13,9 @@ class HsLabelProvider {
         self.networkManager = networkManager
         headers = AppConfig.hsProviderApiKey.flatMap { HTTPHeaders([HTTPHeader(name: "apikey", value: $0)]) }
     }
-
 }
 
 extension HsLabelProvider {
-
     func updateStatusSingle() -> Single<EvmUpdateStatus> {
         let request = networkManager.session.request("\(apiUrl)/v1/status/updates", headers: headers)
         return networkManager.single(request: request)
@@ -32,5 +30,4 @@ extension HsLabelProvider {
         let request = networkManager.session.request("\(apiUrl)/v1/addresses/labels", headers: headers)
         return networkManager.single(request: request)
     }
-
 }

@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class BrandFooterView: UIView {
     private static let topPadding: CGFloat = .margin12
@@ -36,7 +36,8 @@ class BrandFooterView: UIView {
         label.textColor = .themeGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -44,16 +45,13 @@ class BrandFooterView: UIView {
         get { label.text }
         set { label.text = newValue }
     }
-
 }
 
 extension BrandFooterView {
-
     static func height(containerWidth: CGFloat, title: String) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding
         let textHeight = title.height(forContainerWidth: textWidth, font: labelFont)
 
         return topPadding + textHeight + bottomPadding
     }
-
 }

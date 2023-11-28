@@ -1,7 +1,7 @@
-import Foundation
-import RxSwift
-import HsToolKit
 import Alamofire
+import Foundation
+import HsToolKit
+import RxSwift
 
 protocol IMarkdownContentProvider {
     var contentSingle: Single<String> { get }
@@ -23,9 +23,9 @@ class MarkdownPlainContentProvider: IMarkdownContentProvider {
         return Single.create { observer in
             let requestReference = request.responseString(queue: DispatchQueue.global(qos: .background)) { response in
                 switch response.result {
-                case .success(let result):
+                case let .success(result):
                     observer(.success(result))
-                case .failure(let error):
+                case let .failure(error):
                     observer(.error(NetworkManager.unwrap(error: error)))
                 }
             }
@@ -39,7 +39,6 @@ class MarkdownPlainContentProvider: IMarkdownContentProvider {
     var markdownUrl: URL? {
         url
     }
-
 }
 
 class MarkdownGitReleaseContentProvider: IMarkdownContentProvider {
@@ -60,11 +59,9 @@ class MarkdownGitReleaseContentProvider: IMarkdownContentProvider {
     var markdownUrl: URL? {
         nil
     }
-
 }
 
 extension MarkdownGitReleaseContentProvider: IApiMapper {
-
     public func map(statusCode: Int, data: Any?) throws -> String {
         guard let map = data as? [String: Any] else {
             throw NetworkManager.RequestError.invalidResponse(statusCode: statusCode, data: data)
@@ -76,5 +73,4 @@ extension MarkdownGitReleaseContentProvider: IApiMapper {
 
         return result
     }
-
 }

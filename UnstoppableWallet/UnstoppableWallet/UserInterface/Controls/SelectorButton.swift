@@ -1,12 +1,12 @@
+import ComponentKit
 import Foundation
 import UIKit
-import ComponentKit
 
 class SelectorButton: SecondaryButton {
     private var items = [String]()
 
     var currentIndex: Int = 0
-    var onSelect: ((Int) -> ())?
+    var onSelect: ((Int) -> Void)?
 
     private func imageName(count: Int, index: Int) -> String { "mode_\(count)_\(index + 1)_20" }
 
@@ -16,7 +16,7 @@ class SelectorButton: SecondaryButton {
         addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -58,5 +58,4 @@ class SelectorButton: SecondaryButton {
     public func setSelected(index: Int) {
         setSelected(index: index, initial: true)
     }
-
 }

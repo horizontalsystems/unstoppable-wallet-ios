@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SectionsTableView
 import Combine
 import ComponentKit
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectDelegate {
     private var cancellables = Set<AnyCancellable>()
@@ -38,7 +38,8 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -152,12 +153,9 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
 
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
-
 extension CexWithdrawViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
@@ -168,7 +166,7 @@ extension CexWithdrawViewController: SectionsDataSource {
                         cell: availableBalanceCell,
                         id: "available-balance",
                         height: availableBalanceCell.cellHeight
-                    )
+                    ),
                 ]
             ),
             Section(
@@ -186,7 +184,7 @@ extension CexWithdrawViewController: SectionsDataSource {
                         dynamicHeight: { [weak self] width in
                             self?.amountCautionCell.height(containerWidth: width) ?? 0
                         }
-                    )
+                    ),
                 ]
             ),
             Section(
@@ -203,7 +201,7 @@ extension CexWithdrawViewController: SectionsDataSource {
                         isFirst: true,
                         isLast: true,
                         action: viewModel.networkViewItems.count > 1 ? { [weak self] in self?.openNetworkSelect() } : nil
-                    )
+                    ),
                 ]
             ),
             Section(
@@ -223,7 +221,7 @@ extension CexWithdrawViewController: SectionsDataSource {
                         dynamicHeight: { [weak self] width in
                             self?.recipientCautionCell.height(containerWidth: width) ?? 0
                         }
-                    )
+                    ),
                 ]
             ),
             Section(
@@ -241,20 +239,20 @@ extension CexWithdrawViewController: SectionsDataSource {
                             .margin0,
                             .text { _ in },
                             .vStackCentered([
-                                .text { [weak self] (component: TextComponent) -> () in
+                                .text { [weak self] (component: TextComponent) in
                                     component.font = .subhead2
                                     component.textColor = .themeLeah
                                     component.textAlignment = .right
                                     component.text = self?.fee?.coinAmount
                                 },
                                 .margin(1),
-                                .text { [weak self] (component: TextComponent) -> () in
+                                .text { [weak self] (component: TextComponent) in
                                     component.font = .caption
                                     component.textColor = .themeGray
                                     component.textAlignment = .right
                                     component.text = self?.fee?.currencyAmount
-                                }
-                            ])
+                                },
+                            ]),
                         ]),
                         tableView: tableView,
                         id: "fee-value",
@@ -277,7 +275,7 @@ extension CexWithdrawViewController: SectionsDataSource {
                             .switch { component in
                                 component.switchView.isOn = false
                                 component.onSwitch = { [weak self] in self?.onChange(feeFromAmount: $0) }
-                            }
+                            },
                         ]),
                         tableView: tableView,
                         id: "fee-from-amount",
@@ -299,7 +297,7 @@ extension CexWithdrawViewController: SectionsDataSource {
                         dynamicHeight: { [weak self] width in
                             self?.warningCell.height(containerWidth: width) ?? 0
                         }
-                    )
+                    ),
                 ]
             ),
             Section(
@@ -310,11 +308,9 @@ extension CexWithdrawViewController: SectionsDataSource {
                         cell: buttonCell,
                         id: "button",
                         height: PrimaryButtonCell.height
-                    )
+                    ),
                 ]
-            )
+            ),
         ]
     }
-
 }
-
