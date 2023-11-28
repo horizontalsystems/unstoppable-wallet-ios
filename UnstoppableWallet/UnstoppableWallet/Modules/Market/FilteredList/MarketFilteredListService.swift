@@ -1,11 +1,11 @@
 import Combine
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 protocol IMarketFilteredListProvider {
-    func marketInfo(currencyCode: String) async throws -> [MarketInfo]
+    func marketInfos(currencyCode: String) async throws -> [MarketInfo]
 }
 
 class MarketFilteredListService: IMarketMultiSortHeaderService {
@@ -37,7 +37,7 @@ class MarketFilteredListService: IMarketMultiSortHeaderService {
 
         Task { [weak self, provider, currency] in
             do {
-                let marketInfos = try await provider.marketInfo(currencyCode: currency.code)
+                let marketInfos = try await provider.marketInfos(currencyCode: currency.code)
                 self?.sync(marketInfos: marketInfos)
             } catch {
                 self?.state = .failed(error: error)
@@ -50,17 +50,15 @@ class MarketFilteredListService: IMarketMultiSortHeaderService {
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let marketInfos, _, _) = state else {
+        guard case let .loaded(marketInfos, _, _) = state else {
             return
         }
 
         sync(marketInfos: marketInfos, reorder: true)
     }
-
 }
 
 extension MarketFilteredListService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<MarketInfo>, Never> {
         $state
     }
@@ -68,23 +66,19 @@ extension MarketFilteredListService: IMarketListService {
     func refresh() {
         syncMarketInfos()
     }
-
 }
 
 extension MarketFilteredListService: IMarketListCoinUidService {
-
     func coinUid(index: Int) -> String? {
-        guard case .loaded(let marketInfos, _, _) = state, index < marketInfos.count else {
+        guard case let .loaded(marketInfos, _, _) = state, index < marketInfos.count else {
             return nil
         }
 
         return marketInfos[index].fullCoin.coin.uid
     }
-
 }
 
 extension MarketFilteredListService: IMarketListDecoratorService {
-
     var initialMarketFieldIndex: Int {
         0
     }
@@ -97,10 +91,9 @@ extension MarketFilteredListService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketFieldIndex: Int) {
-        if case .loaded(let marketInfos, _, _) = state {
+    func onUpdate(marketFieldIndex _: Int) {
+        if case let .loaded(marketInfos, _, _) = state {
             state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }
     }
-
 }

@@ -19,27 +19,26 @@ class MarketOverviewTopCoinsDataSource: BaseMarketOverviewTopListDataSource {
         }
 
         super.init(
-                topListViewModel: viewModel,
-                presentDelegate: presentDelegate,
-                rightSelectorMode: .selector,
-                imageName: imageName,
-                title: title
+            topListViewModel: viewModel,
+            presentDelegate: presentDelegate,
+            rightSelectorMode: .selector,
+            imageName: imageName,
+            title: title
         )
     }
 
     override func didTapSeeAll() {
         let module = MarketTopModule.viewController(
-                marketTop: viewModel.marketTop,
-                sortingField: viewModel.listType.sortingField,
-                marketField: viewModel.listType.marketField
+            marketTop: viewModel.marketTop,
+            sortingField: viewModel.listType.sortingField,
+            marketField: viewModel.listType.marketField
         )
         presentDelegate?.present(viewController: module)
     }
 
     override func onSelect(listViewItem: MarketModule.ListViewItem) {
-        if let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) {
+        if let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid, apiTag: "market_overview_top_coins") {
             presentDelegate?.present(viewController: module)
         }
     }
-
 }

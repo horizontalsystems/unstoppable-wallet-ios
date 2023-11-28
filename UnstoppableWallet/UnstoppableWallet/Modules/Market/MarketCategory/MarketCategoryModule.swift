@@ -1,15 +1,15 @@
-import UIKit
-import ThemeKit
 import Chart
 import MarketKit
+import ThemeKit
+import UIKit
 
 struct MarketCategoryModule {
-
-    static func viewController(category: CoinCategory) -> UIViewController {
+    static func viewController(category: CoinCategory, apiTag: String) -> UIViewController {
         let service = MarketCategoryService(
-                category: category,
-                marketKit: App.shared.marketKit,
-                languageManager: LanguageManager.shared
+            category: category,
+            marketKit: App.shared.marketKit,
+            languageManager: LanguageManager.shared,
+            apiTag: apiTag
         )
 
         let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service)
@@ -29,5 +29,4 @@ struct MarketCategoryModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }

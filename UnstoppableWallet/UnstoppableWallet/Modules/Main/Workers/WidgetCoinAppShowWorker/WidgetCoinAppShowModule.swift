@@ -9,7 +9,6 @@ class WidgetCoinAppShowModule {
 }
 
 extension WidgetCoinAppShowModule: IEventHandler {
-    
     @MainActor
     func handle(event: Any, eventType: EventHandler.EventType) async throws {
         guard eventType.contains(.deepLink) else {
@@ -28,7 +27,8 @@ extension WidgetCoinAppShowModule: IEventHandler {
         }
 
         guard let uid,
-            let viewController = CoinPageModule.viewController(coinUid: uid) else {
+              let viewController = CoinPageModule.viewController(coinUid: uid, apiTag: "widget")
+        else {
             throw EventHandler.HandleError.noSuitableHandler
         }
 

@@ -1,9 +1,9 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketOverviewService {
     private let marketKit: MarketKit.Kit
@@ -42,21 +42,19 @@ class MarketOverviewService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension MarketOverviewService {
-
     var currency: Currency {
         currencyManager.baseCurrency
     }
 
     func load() {
         currencyManager.$baseCurrency
-                .sink { [weak self] _ in
-                    self?.syncState()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] _ in
+                self?.syncState()
+            }
+            .store(in: &cancellables)
 
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncState() }
 
@@ -66,14 +64,11 @@ extension MarketOverviewService {
     func refresh() {
         syncState()
     }
-
 }
 
 extension MarketOverviewService {
-
     struct Item {
         let marketOverview: MarketOverview
         let topMovers: TopMovers
     }
-
 }

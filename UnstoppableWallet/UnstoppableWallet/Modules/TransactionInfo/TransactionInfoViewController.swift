@@ -87,7 +87,7 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func openCoin(coinUid: String) {
-        guard let module = CoinPageModule.viewController(coinUid: coinUid) else {
+        guard let module = CoinPageModule.viewController(coinUid: coinUid, apiTag: "transaction_info") else {
             return
         }
 

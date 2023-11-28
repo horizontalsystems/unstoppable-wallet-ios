@@ -1,21 +1,22 @@
-import UIKit
-import RxSwift
-import RxCocoa
-import ThemeKit
-import SectionsTableView
 import ComponentKit
 import HUD
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 protocol IMarketListViewModel {
     var viewItemDataDriver: Driver<MarketModule.ListViewItemData?> { get }
     var loadingDriver: Driver<Bool> { get }
     var syncErrorDriver: Driver<Bool> { get }
-    var scrollToTopSignal: Signal<()> { get }
+    var scrollToTopSignal: Signal<Void> { get }
     func refresh()
 }
 
 class MarketListViewController: ThemeViewController {
     private let listViewModel: IMarketListViewModel
+    private let apiTag: String
     private let disposeBag = DisposeBag()
 
     let tableView = SectionsTableView(style: .plain)
@@ -29,10 +30,11 @@ class MarketListViewController: ThemeViewController {
     var headerView: UITableViewHeaderFooterView? { nil }
     var emptyView: UIView? { nil }
     var refreshEnabled: Bool { true }
-    func topSections(loaded: Bool) -> [SectionProtocol] { [] }
+    func topSections(loaded _: Bool) -> [SectionProtocol] { [] }
 
-    init(listViewModel: IMarketListViewModel) {
+    init(listViewModel: IMarketListViewModel, apiTag: String) {
         self.listViewModel = listViewModel
+        self.apiTag = apiTag
 
         super.init()
 
@@ -43,7 +45,8 @@ class MarketListViewController: ThemeViewController {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -143,7 +146,7 @@ class MarketListViewController: ThemeViewController {
     }
 
     func onSelect(viewItem: MarketModule.ListViewItem) {
-        guard let uid = viewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) else {
+        guard let uid = viewItem.uid, let module = CoinPageModule.viewController(coinUid: uid, apiTag: apiTag) else {
             HudHelper.instance.show(banner: .attention(string: "market.project_has_no_coin".localized))
             return
         }
@@ -162,7 +165,7 @@ class MarketListViewController: ThemeViewController {
 
         let type: RowActionType
         let iconName: String
-        let action: (UITableViewCell?) -> ()
+        let action: (UITableViewCell?) -> Void
 
         if isFavorite {
             type = .destructive
@@ -180,9 +183,9 @@ class MarketListViewController: ThemeViewController {
 
         return [
             RowAction(
-                    pattern: .icon(image: UIImage(named: iconName)?.withTintColor(type.iconColor), background: type.backgroundColor),
-                    action: action
-            )
+                pattern: .icon(image: UIImage(named: iconName)?.withTintColor(type.iconColor), background: type.backgroundColor),
+                action: action
+            ),
         ]
     }
 
@@ -197,11 +200,9 @@ class MarketListViewController: ThemeViewController {
     func showRemovedFromWatchlist() {
         HudHelper.instance.show(banner: .removedFromWatchlist)
     }
-
 }
 
 extension MarketListViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         let headerState: ViewState<UITableViewHeaderFooterView>
 
@@ -213,28 +214,27 @@ extension MarketListViewController: SectionsDataSource {
 
         return topSections(loaded: viewItems != nil) + [
             Section(
-                    id: "coins",
-                    headerState: headerState,
-                    footerState: .marginColor(height: .margin32, color: .clear) ,
-                    rows: viewItems.map { viewItems in
-                        viewItems.enumerated().map { index, viewItem in
-                            MarketModule.marketListCell(
-                                    tableView: tableView,
-                                    backgroundStyle: .transparent,
-                                    listViewItem: viewItem,
-                                    isFirst: false,
-                                    isLast: index == viewItems.count - 1,
-                                    rowActionProvider: { [weak self] in
-                                        self?.rowActions(index: index) ?? []
-                                    },
-                                    action: { [weak self] in
-                                        self?.onSelect(viewItem: viewItem)
-                                    }
-                            )
-                        }
-                    } ?? []
-            )
+                id: "coins",
+                headerState: headerState,
+                footerState: .marginColor(height: .margin32, color: .clear),
+                rows: viewItems.map { viewItems in
+                    viewItems.enumerated().map { index, viewItem in
+                        MarketModule.marketListCell(
+                            tableView: tableView,
+                            backgroundStyle: .transparent,
+                            listViewItem: viewItem,
+                            isFirst: false,
+                            isLast: index == viewItems.count - 1,
+                            rowActionProvider: { [weak self] in
+                                self?.rowActions(index: index) ?? []
+                            },
+                            action: { [weak self] in
+                                self?.onSelect(viewItem: viewItem)
+                            }
+                        )
+                    }
+                } ?? []
+            ),
         ]
     }
-
 }

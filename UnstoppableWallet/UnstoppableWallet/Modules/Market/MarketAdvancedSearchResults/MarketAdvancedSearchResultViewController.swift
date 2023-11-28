@@ -1,7 +1,7 @@
-import UIKit
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import SectionsTableView
+import UIKit
 
 class MarketAdvancedSearchResultViewController: MarketListViewController {
     private let multiSortHeaderView: MarketMultiSortHeaderView
@@ -13,12 +13,13 @@ class MarketAdvancedSearchResultViewController: MarketListViewController {
     init(listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
 
-        super.init(listViewModel: listViewModel)
+        super.init(listViewModel: listViewModel, apiTag: "market_advanced_search_results")
 
         multiSortHeaderView.viewController = self
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -27,5 +28,4 @@ class MarketAdvancedSearchResultViewController: MarketListViewController {
 
         title = "market.advanced_search_results.title".localized
     }
-
 }

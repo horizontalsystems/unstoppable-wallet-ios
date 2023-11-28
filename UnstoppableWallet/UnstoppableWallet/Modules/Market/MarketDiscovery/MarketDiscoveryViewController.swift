@@ -1,11 +1,11 @@
 import Combine
-import UIKit
-import RxSwift
-import SnapKit
 import ComponentKit
 import HUD
+import RxSwift
 import SectionsTableView
+import SnapKit
 import ThemeKit
+import UIKit
 
 class MarketDiscoveryViewController: ThemeSearchViewController {
     private let viewModel: MarketDiscoveryViewModel
@@ -34,7 +34,8 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -112,9 +113,9 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.failDriver) { HudHelper.instance.show(banner: .error(string: "alert.unknown_error".localized)) }
 
         $filter
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+            .store(in: &cancellables)
 
         isLoaded = true
     }
@@ -161,7 +162,7 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
     }
 
     private func onSelect(viewItem: MarketDiscoveryViewModel.SearchViewItem) {
-        guard let module = CoinPageModule.viewController(coinUid: viewItem.uid) else {
+        guard let module = CoinPageModule.viewController(coinUid: viewItem.uid, apiTag: "market_discovery") else {
             return
         }
 
@@ -171,7 +172,7 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
     private func rowActions(index: Int) -> [RowAction] {
         let type: RowActionType
         let iconName: String
-        let action: (UITableViewCell?) -> ()
+        let action: (UITableViewCell?) -> Void
 
         if viewModel.isFavorite(index: index) {
             type = .destructive
@@ -189,39 +190,35 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
 
         return [
             RowAction(
-                    pattern: .icon(image: UIImage(named: iconName)?.withTintColor(type.iconColor), background: type.backgroundColor),
-                    action: action
-            )
+                pattern: .icon(image: UIImage(named: iconName)?.withTintColor(type.iconColor), background: type.backgroundColor),
+                action: action
+            ),
         ]
     }
-
 }
 
 extension MarketDiscoveryViewController: UICollectionViewDataSource {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in _: UICollectionView) -> Int {
         2
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         section == 0 ? 1 : discoveryViewItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: indexPath.section == 0 ? MarketDiscoveryTitleCell.self : MarketDiscoveryCell.self), for: indexPath)
     }
-
 }
 
 extension MarketDiscoveryViewController: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? MarketDiscoveryCell {
             cell.set(viewItem: discoveryViewItems[indexPath.item])
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.section != 0 else {
             return
         }
@@ -230,84 +227,79 @@ extension MarketDiscoveryViewController: UICollectionViewDelegate {
         case .topCoins:
             let viewController = MarketTopModule.viewController()
             present(viewController, animated: true)
-        case .category(let category):
-            let viewController = MarketCategoryModule.viewController(category: category)
+        case let .category(category):
+            let viewController = MarketCategoryModule.viewController(category: category, apiTag: "market_discovery")
             present(viewController, animated: true)
         }
     }
-
 }
 
 extension MarketDiscoveryViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         indexPath.section == 0 ?
-                CGSize(width: collectionView.width, height: .heightSingleLineCell) :
-                CGSize(width: (collectionView.width - .margin16 * 2 - .margin12) / 2, height: MarketDiscoveryCell.cellHeight)
+            CGSize(width: collectionView.width, height: .heightSingleLineCell) :
+            CGSize(width: (collectionView.width - .margin16 * 2 - .margin12) / 2, height: MarketDiscoveryCell.cellHeight)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         section == 0 ?
-                .zero :
-                UIEdgeInsets(top: .margin12, left: .margin16, bottom: .margin32, right: .margin16)
+            .zero :
+            UIEdgeInsets(top: .margin12, left: .margin16, bottom: .margin32, right: .margin16)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         .margin12
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
         .margin12
     }
-
 }
 
 extension MarketDiscoveryViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "coins",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: searchViewItems.enumerated().map { index, viewItem in
-                        let isLast = index == searchViewItems.count - 1
+                id: "coins",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: searchViewItems.enumerated().map { index, viewItem in
+                    let isLast = index == searchViewItems.count - 1
 
-                        return CellBuilderNew.row(
-                                rootElement: .hStack([
-                                    .image32 { component in
-                                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
-                                    },
-                                    .vStackCentered([
-                                        .text { component in
-                                            component.font = .body
-                                            component.textColor = .themeLeah
-                                            component.text = viewItem.code
-                                        },
-                                        .margin(3),
-                                        .text { component in
-                                            component.font = .subhead2
-                                            component.textColor = .themeGray
-                                            component.text = viewItem.name
-                                        }
-                                    ])
-                                ]),
-                                tableView: tableView,
-                                id: "coin_\(viewItem.uid)",
-                                hash: "\(viewItem.favorite)",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                rowActionProvider: { [weak self] in self?.rowActions(index: index) ?? [] },
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .transparent, isLast: isLast)
+                    return CellBuilderNew.row(
+                        rootElement: .hStack([
+                            .image32 { component in
+                                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
+                            },
+                            .vStackCentered([
+                                .text { component in
+                                    component.font = .body
+                                    component.textColor = .themeLeah
+                                    component.text = viewItem.code
                                 },
-                                action: { [weak self] in
-                                    self?.onSelect(viewItem: viewItem)
-                                }
-                        )
-                    }
-            )
+                                .margin(3),
+                                .text { component in
+                                    component.font = .subhead2
+                                    component.textColor = .themeGray
+                                    component.text = viewItem.name
+                                },
+                            ]),
+                        ]),
+                        tableView: tableView,
+                        id: "coin_\(viewItem.uid)",
+                        hash: "\(viewItem.favorite)",
+                        height: .heightDoubleLineCell,
+                        autoDeselect: true,
+                        rowActionProvider: { [weak self] in self?.rowActions(index: index) ?? [] },
+                        bind: { cell in
+                            cell.set(backgroundStyle: .transparent, isLast: isLast)
+                        },
+                        action: { [weak self] in
+                            self?.onSelect(viewItem: viewItem)
+                        }
+                    )
+                }
+            ),
         ]
     }
-
 }

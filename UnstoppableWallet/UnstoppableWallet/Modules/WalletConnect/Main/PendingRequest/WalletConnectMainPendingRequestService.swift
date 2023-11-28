@@ -94,7 +94,7 @@ extension WalletConnectMainPendingRequestService {
         let result = requestHandler.handle(session: session, request: request)
         switch result {
         case let .unsuccessful(error):
-            print("Cant select request because: \(error)")
+            print("Cant select request because: \(error?.localizedDescription ?? "nil")")
         case .handled: ()
         case let .request(request):
             showPendingRequestRelay.accept(request)

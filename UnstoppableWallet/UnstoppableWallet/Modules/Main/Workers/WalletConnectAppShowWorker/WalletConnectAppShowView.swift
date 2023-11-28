@@ -91,7 +91,7 @@ class WalletConnectAppShowView {
     private func handle(request: WalletConnectRequest) {
         let result = requestViewFactory.viewController(request: request)
         switch result {
-        case let .unsuccessful(error):
+        case .unsuccessful:
             print("Can't create view")
             return
         case let .controller(controller):

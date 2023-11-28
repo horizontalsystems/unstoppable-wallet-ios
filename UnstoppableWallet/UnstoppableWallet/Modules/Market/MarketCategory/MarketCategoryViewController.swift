@@ -1,7 +1,7 @@
-import UIKit
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import SectionsTableView
+import UIKit
 
 class MarketCategoryViewController: MarketListViewController {
     private let viewModel: MarketCategoryViewModel
@@ -24,17 +24,18 @@ class MarketCategoryViewController: MarketListViewController {
 
         chartCell = ChartCell(viewModel: chartViewModel, configuration: .baseChart)
         chartRow = StaticRow(
-                cell: chartCell,
-                id: "chartView",
-                height: chartCell.cellHeight
+            cell: chartCell,
+            id: "chartView",
+            height: chartCell.cellHeight
         )
 
-        super.init(listViewModel: listViewModel)
+        super.init(listViewModel: listViewModel, apiTag: "market_category")
 
         multiSortHeaderView.viewController = self
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -56,16 +57,16 @@ class MarketCategoryViewController: MarketListViewController {
 
     override func topSections(loaded: Bool) -> [SectionProtocol] {
         var sections = [Section(
-                id: "header",
-                rows: [
-                    Row<MarketHeaderCell>(
-                            id: "header",
-                            height: MarketHeaderCell.height,
-                            bind: { [weak self] cell, _ in
-                                self?.bind(cell: cell)
-                            }
-                    )
-                ]
+            id: "header",
+            rows: [
+                Row<MarketHeaderCell>(
+                    id: "header",
+                    height: MarketHeaderCell.height,
+                    bind: { [weak self] cell, _ in
+                        self?.bind(cell: cell)
+                    }
+                ),
+            ]
         )]
 
         if loaded {
@@ -77,10 +78,9 @@ class MarketCategoryViewController: MarketListViewController {
 
     private func bind(cell: MarketHeaderCell) {
         cell.set(
-                title: viewModel.title,
-                description: viewModel.description,
-                imageMode: .remote(imageUrl: viewModel.imageUrl)
+            title: viewModel.title,
+            description: viewModel.description,
+            imageMode: .remote(imageUrl: viewModel.imageUrl)
         )
     }
-
 }

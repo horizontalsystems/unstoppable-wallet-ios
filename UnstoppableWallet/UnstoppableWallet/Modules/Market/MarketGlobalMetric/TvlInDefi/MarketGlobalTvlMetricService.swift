@@ -1,13 +1,14 @@
-import Foundation
 import Combine
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
 
 class MarketGlobalTvlMetricService {
     typealias Item = DefiCoin
 
     private let marketKit: MarketKit.Kit
     private let currencyManager: CurrencyManager
+    private let apiTag: String
 
     private var tasks = Set<AnyTask>()
     private var cancellables = Set<AnyCancellable>()
@@ -50,9 +51,10 @@ class MarketGlobalTvlMetricService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, apiTag: String) {
         self.marketKit = marketKit
         self.currencyManager = currencyManager
+        self.apiTag = apiTag
 
         syncDefiCoins()
     }
@@ -64,9 +66,9 @@ class MarketGlobalTvlMetricService {
             internalState = .loading
         }
 
-        Task { [weak self, marketKit, currency] in
+        Task { [weak self, marketKit, currency, apiTag] in
             do {
-                let defiCoins = try await marketKit.defiCoins(currencyCode: currency.code)
+                let defiCoins = try await marketKit.defiCoins(currencyCode: currency.code, apiTag: apiTag)
                 self?.internalState = .loaded(defiCoins: defiCoins)
             } catch {
                 self?.internalState = .failed(error: error)
@@ -78,21 +80,21 @@ class MarketGlobalTvlMetricService {
         switch internalState {
         case .loading:
             state = .loading
-        case .loaded(let defiCoins):
+        case let .loaded(defiCoins):
             let defiCoins = defiCoins
-                    .filter { defiCoin in
-                        switch marketPlatformField {
-                        case .all: return true
-                        default: return defiCoin.chains.contains(marketPlatformField.chain)
-                        }
+                .filter { defiCoin in
+                    switch marketPlatformField {
+                    case .all: return true
+                    default: return defiCoin.chains.contains(marketPlatformField.chain)
                     }
-                    .sorted { lhsDefiCoin, rhsDefiCoin in
-                        let lhsTvl = lhsDefiCoin.tvl(marketPlatformField: marketPlatformField) ?? 0
-                        let rhsTvl = rhsDefiCoin.tvl(marketPlatformField: marketPlatformField) ?? 0
-                        return sortDirectionAscending ? lhsTvl < rhsTvl : lhsTvl > rhsTvl
-                    }
+                }
+                .sorted { lhsDefiCoin, rhsDefiCoin in
+                    let lhsTvl = lhsDefiCoin.tvl(marketPlatformField: marketPlatformField) ?? 0
+                    let rhsTvl = rhsDefiCoin.tvl(marketPlatformField: marketPlatformField) ?? 0
+                    return sortDirectionAscending ? lhsTvl < rhsTvl : lhsTvl > rhsTvl
+                }
             state = .loaded(items: defiCoins, softUpdate: false, reorder: reorder)
-        case .failed(let error):
+        case let .failed(error):
             state = .failed(error: error)
         }
     }
@@ -113,22 +115,18 @@ class MarketGlobalTvlMetricService {
         }
 
         chartService.$interval
-                .sink { [weak self] in self?.priceChangePeriod = $0 }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.priceChangePeriod = $0 }
+            .store(in: &cancellables)
     }
-
 }
 
 extension MarketGlobalTvlMetricService {
-
     var currency: Currency {
         currencyManager.baseCurrency
     }
-
 }
 
 extension MarketGlobalTvlMetricService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
         $state
     }
@@ -136,41 +134,34 @@ extension MarketGlobalTvlMetricService: IMarketListService {
     func refresh() {
         syncDefiCoins()
     }
-
 }
 
 extension MarketGlobalTvlMetricService: IMarketListCoinUidService {
-
     func coinUid(index: Int) -> String? {
-        guard case .loaded(let defiCoins, _, _) = state, index < defiCoins.count else {
+        guard case let .loaded(defiCoins, _, _) = state, index < defiCoins.count else {
             return nil
         }
 
         switch defiCoins[index].type {
-        case .fullCoin(let fullCoin): return fullCoin.coin.uid
+        case let .fullCoin(fullCoin): return fullCoin.coin.uid
         default: return nil
         }
     }
-
 }
 
 extension MarketGlobalTvlMetricService {
-
     private enum State {
         case loading
         case loaded(defiCoins: [DefiCoin])
         case failed(error: Error)
     }
-
 }
 
 extension DefiCoin {
-
     func tvl(marketPlatformField: MarketModule.MarketPlatformField) -> Decimal? {
         switch marketPlatformField {
         case .all: return tvl
         default: return chainTvls[marketPlatformField.chain]
         }
     }
-
 }
