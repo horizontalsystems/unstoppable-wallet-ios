@@ -7,11 +7,11 @@ class MarketOverviewTopPlatformsDataSource: BaseMarketOverviewTopListDataSource 
         self.viewModel = viewModel
 
         super.init(
-                topListViewModel: viewModel,
-                presentDelegate: presentDelegate,
-                rightSelectorMode: .selector,
-                imageName: "blocks_24",
-                title: "market.top.top_platforms".localized
+            topListViewModel: viewModel,
+            presentDelegate: presentDelegate,
+            rightSelectorMode: .selector,
+            imageName: "blocks_24",
+            title: "market.top.top_platforms".localized
         )
     }
 
@@ -25,7 +25,6 @@ class MarketOverviewTopPlatformsDataSource: BaseMarketOverviewTopListDataSource 
             return
         }
 
-        presentDelegate?.present(viewController: TopPlatformModule.viewController(topPlatform: topPlatform))
+        presentDelegate?.present(viewController: TopPlatformModule.viewController(topPlatform: topPlatform, apiTag: "market_overview"))
     }
-
 }

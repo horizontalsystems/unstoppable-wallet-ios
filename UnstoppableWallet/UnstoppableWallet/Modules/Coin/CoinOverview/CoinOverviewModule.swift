@@ -3,7 +3,7 @@ import MarketKit
 import SwiftUI
 
 struct CoinOverviewModule {
-    static func view(coinUid: String) -> some View {
+    static func view(coinUid: String, apiTag: String) -> some View {
         let repository = ChartIndicatorsRepository(
             localStorage: App.shared.localStorage,
             subscriptionManager: App.shared.subscriptionManager
@@ -24,7 +24,8 @@ struct CoinOverviewModule {
             currencyManager: App.shared.currencyManager,
             languageManager: LanguageManager.shared,
             accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager
+            walletManager: App.shared.walletManager,
+            apiTag: apiTag
         )
 
         return CoinOverviewView(
@@ -35,14 +36,15 @@ struct CoinOverviewModule {
         )
     }
 
-    static func viewController(coinUid: String) -> CoinOverviewViewController {
+    static func viewController(coinUid: String, apiTag: String) -> CoinOverviewViewController {
         let service = CoinOverviewService(
             coinUid: coinUid,
             marketKit: App.shared.marketKit,
             currencyManager: App.shared.currencyManager,
             languageManager: LanguageManager.shared,
             accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager
+            walletManager: App.shared.walletManager,
+            apiTag: apiTag
         )
 
         let repository = ChartIndicatorsRepository(

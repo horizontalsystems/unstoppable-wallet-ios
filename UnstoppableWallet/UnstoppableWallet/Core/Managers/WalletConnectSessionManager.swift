@@ -96,15 +96,16 @@ class WalletConnectSessionManager {
         let activeSessions = storage.sessions(accountId: account.id)
 
         guard activeSessions.first(where: { session in session.topic == request.topic }) != nil,
-              let session = allSessions.first(where: { session in session.topic == request.topic }) else {
+              let session = allSessions.first(where: { session in session.topic == request.topic })
+        else {
             return
         }
 
         let request = requestHandler.handle(session: session, request: request)
         switch request {
-        case .request(let request): sessionRequestReceivedRelay.accept(request)
+        case let .request(request): sessionRequestReceivedRelay.accept(request)
         case .handled: ()
-        case .unsuccessful(error: let error): print("Error while parsing request: \(error)")
+        case let .unsuccessful(error): print("Error while parsing request: \(error?.localizedDescription ?? "nil")")
         }
     }
 

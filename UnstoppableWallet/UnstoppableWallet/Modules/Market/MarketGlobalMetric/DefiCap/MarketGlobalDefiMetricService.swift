@@ -1,8 +1,8 @@
 import Combine
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
     typealias Item = DefiItem
@@ -38,7 +38,7 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
 
         Task { [weak self, marketKit, currency] in
             do {
-                let marketInfos = try await marketKit.marketInfos(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code, defi: true)
+                let marketInfos = try await marketKit.marketInfos(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code, defi: true, apiTag: "global_metrics_defi_cap")
 
                 let rankedItems = marketInfos.enumerated().map { index, info in
                     Item(marketInfo: info, tvlRank: index + 1)
@@ -56,7 +56,7 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let items, _, _) = state else {
+        guard case let .loaded(items, _, _) = state else {
             return
         }
 
@@ -72,11 +72,9 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
             }
         }
     }
-
 }
 
 extension MarketGlobalDefiMetricService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
         $state
     }
@@ -84,23 +82,19 @@ extension MarketGlobalDefiMetricService: IMarketListService {
     func refresh() {
         syncMarketInfos()
     }
-
 }
 
 extension MarketGlobalDefiMetricService: IMarketListCoinUidService {
-
     func coinUid(index: Int) -> String? {
-        guard case .loaded(let items, _, _) = state, index < items.count else {
+        guard case let .loaded(items, _, _) = state, index < items.count else {
             return nil
         }
 
         return items[index].marketInfo.fullCoin.coin.uid
     }
-
 }
 
 extension MarketGlobalDefiMetricService: IMarketListDecoratorService {
-
     var currency: Currency {
         currencyManager.baseCurrency
     }
@@ -109,19 +103,16 @@ extension MarketGlobalDefiMetricService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketFieldIndex: Int) {
-        if case .loaded(let items, _, _) = state {
+    func onUpdate(marketFieldIndex _: Int) {
+        if case let .loaded(items, _, _) = state {
             state = .loaded(items: items, softUpdate: false, reorder: false)
         }
     }
-
 }
 
 extension MarketGlobalDefiMetricService {
-
     struct DefiItem {
         let marketInfo: MarketInfo
         let tvlRank: Int
     }
-
 }

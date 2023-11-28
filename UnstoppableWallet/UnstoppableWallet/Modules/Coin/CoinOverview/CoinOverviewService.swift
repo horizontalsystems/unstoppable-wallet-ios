@@ -1,8 +1,8 @@
-import UIKit
-import RxSwift
-import RxCocoa
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxCocoa
+import RxSwift
+import UIKit
 
 class CoinOverviewService {
     private var tasks = Set<AnyTask>()
@@ -13,6 +13,7 @@ class CoinOverviewService {
     private let languageManager: LanguageManager
     private let accountManager: AccountManager
     private let walletManager: WalletManager
+    private let apiTag: String
 
     private let stateRelay = PublishRelay<DataStatus<Item>>()
     private(set) var state: DataStatus<Item> = .loading {
@@ -21,57 +22,58 @@ class CoinOverviewService {
         }
     }
 
-    init(coinUid: String, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager) {
+    init(coinUid: String, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager, apiTag: String) {
         self.coinUid = coinUid
         self.marketKit = marketKit
         self.currencyManager = currencyManager
         self.languageManager = languageManager
         self.accountManager = accountManager
         self.walletManager = walletManager
+        self.apiTag = apiTag
     }
 
     private func sync(info: MarketInfoOverview) {
         let account = accountManager.activeAccount
 
         let tokens = info.fullCoin.tokens
-                .filter {
-                    switch $0.type {
-                    case .unsupported(_, let reference): return reference != nil
-                    default: return true
-                    }
+            .filter {
+                switch $0.type {
+                case let .unsupported(_, reference): return reference != nil
+                default: return true
                 }
+            }
 
         let walletTokens = walletManager.activeWallets.map { $0.token }
 
         let tokenItems = tokens
-                .sorted { lhsToken, rhsToken in
-                    let lhsTypeOrder = lhsToken.type.order
-                    let rhsTypeOrder = rhsToken.type.order
+            .sorted { lhsToken, rhsToken in
+                let lhsTypeOrder = lhsToken.type.order
+                let rhsTypeOrder = rhsToken.type.order
 
-                    guard lhsTypeOrder == rhsTypeOrder else {
-                        return lhsTypeOrder < rhsTypeOrder
-                    }
-
-                    return lhsToken.blockchainType.order < rhsToken.blockchainType.order
+                guard lhsTypeOrder == rhsTypeOrder else {
+                    return lhsTypeOrder < rhsTypeOrder
                 }
-                .map { token in
-                    let state: TokenItemState
 
-                    if let account = account, !account.watchAccount, account.type.supports(token: token) {
-                        if walletTokens.contains(token) {
-                            state = .alreadyAdded
-                        } else {
-                            state = .canBeAdded
-                        }
+                return lhsToken.blockchainType.order < rhsToken.blockchainType.order
+            }
+            .map { token in
+                let state: TokenItemState
+
+                if let account = account, !account.watchAccount, account.type.supports(token: token) {
+                    if walletTokens.contains(token) {
+                        state = .alreadyAdded
                     } else {
-                        state = .cannotBeAdded
+                        state = .canBeAdded
                     }
-
-                    return TokenItem(
-                            token: token,
-                            state: state
-                    )
+                } else {
+                    state = .cannotBeAdded
                 }
+
+                return TokenItem(
+                    token: token,
+                    state: state
+                )
+            }
 
         state = .completed(Item(info: info, tokens: tokenItems, guideUrl: guideUrl))
     }
@@ -102,11 +104,9 @@ class CoinOverviewService {
         default: return nil
         }
     }
-
 }
 
 extension CoinOverviewService {
-
     var stateObservable: Observable<DataStatus<Item>> {
         stateRelay.asObservable()
     }
@@ -120,9 +120,14 @@ extension CoinOverviewService {
 
         state = .loading
 
-        Task { [weak self, marketKit, coinUid, currencyManager, languageManager] in
+        Task { [weak self, marketKit, coinUid, currencyManager, languageManager, apiTag] in
             do {
-                let info = try await marketKit.marketInfoOverview(coinUid: coinUid, currencyCode: currencyManager.baseCurrency.code, languageCode: languageManager.currentLanguage)
+                let info = try await marketKit.marketInfoOverview(
+                    coinUid: coinUid,
+                    currencyCode: currencyManager.baseCurrency.code,
+                    languageCode: languageManager.currentLanguage,
+                    apiTag: apiTag
+                )
                 self?.sync(info: info)
             } catch {
                 self?.state = .failed(error)
@@ -131,7 +136,7 @@ extension CoinOverviewService {
     }
 
     func editWallet(index: Int, add: Bool) throws {
-        guard case .completed(let item) = state else {
+        guard case let .completed(item) = state else {
             throw EditWalletError.invalidState
         }
 
@@ -151,11 +156,9 @@ extension CoinOverviewService {
 
         sync(info: item.info)
     }
-
 }
 
 extension CoinOverviewService {
-
     struct Item {
         let info: MarketInfoOverview
         let tokens: [TokenItem]
@@ -177,5 +180,4 @@ extension CoinOverviewService {
         case invalidState
         case noActiveAccount
     }
-
 }

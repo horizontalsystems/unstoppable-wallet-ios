@@ -1,7 +1,7 @@
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
 import SectionsTableView
+import UIKit
 
 class MarketOverviewCategoryDataSource {
     private let viewModel: MarketOverviewCategoryViewModel
@@ -25,32 +25,22 @@ class MarketOverviewCategoryDataSource {
                 return
             }
 
-            let viewController = MarketCategoryModule.viewController(category: category)
+            let viewController = MarketCategoryModule.viewController(category: category, apiTag: "market_overview")
             self?.presentDelegate?.present(viewController: viewController)
         }
     }
-
-    private func onSelect(listViewItem: MarketModule.ListViewItem) {
-        guard let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) else {
-            return
-        }
-
-        presentDelegate?.present(viewController: module)
-    }
-
 }
 
 extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
-
     var isReady: Bool {
         viewItemsRelay.value != nil
     }
 
-    var updateObservable: Observable<()> {
+    var updateObservable: Observable<Void> {
         viewItemsRelay.map { _ in () }
     }
 
-    func sections(tableView: SectionsTableView) -> [SectionProtocol] {
+    func sections(tableView _: SectionsTableView) -> [SectionProtocol] {
         guard let viewItems = viewItemsRelay.value else {
             return []
         }
@@ -59,39 +49,38 @@ extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
 
         return [
             Section(
-                    id: "categories_header",
-                    footerState: .margin(height: .margin8),
-                    rows: [
-                        Row<MarketOverviewHeaderCell>(
-                                id: "categories_header_cell",
-                                height: .heightCell48,
-                                bind: { [weak self] cell, _ in
-                                    cell.set(backgroundStyle: .transparent)
+                id: "categories_header",
+                footerState: .margin(height: .margin8),
+                rows: [
+                    Row<MarketOverviewHeaderCell>(
+                        id: "categories_header_cell",
+                        height: .heightCell48,
+                        bind: { [weak self] cell, _ in
+                            cell.set(backgroundStyle: .transparent)
 
-                                    cell.buttonMode = .seeAll
-                                    let onSeeAll: () -> () = { [weak self] in
-                                        self?.presentDelegate?.push(viewController: MarketDiscoveryModule.viewController())
-                                    }
-                                    cell.onSeeAll = onSeeAll
-                                    cell.onTapTitle = onSeeAll
+                            cell.buttonMode = .seeAll
+                            let onSeeAll: () -> Void = { [weak self] in
+                                self?.presentDelegate?.push(viewController: MarketDiscoveryModule.viewController())
+                            }
+                            cell.onSeeAll = onSeeAll
+                            cell.onTapTitle = onSeeAll
 
-                                    cell.titleImage = UIImage(named: "categories_20")
-                                    cell.title = "market.top.section.header.top_sectors".localized
-                                }
-                        )
-                    ]
+                            cell.titleImage = UIImage(named: "categories_20")
+                            cell.title = "market.top.section.header.top_sectors".localized
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "categories",
-                    rows: [
-                        StaticRow(
-                                cell: categoryCell,
-                                id: "metrics",
-                                height: MarketOverviewCategoryCell.cellHeight
-                        )
-                    ]
-            )
+                id: "categories",
+                rows: [
+                    StaticRow(
+                        cell: categoryCell,
+                        id: "metrics",
+                        height: MarketOverviewCategoryCell.cellHeight
+                    ),
+                ]
+            ),
         ]
     }
-
 }

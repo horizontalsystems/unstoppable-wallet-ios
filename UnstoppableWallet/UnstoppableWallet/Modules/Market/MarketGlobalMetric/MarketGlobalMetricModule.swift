@@ -1,16 +1,15 @@
-import UIKit
-import ThemeKit
 import Chart
+import ThemeKit
+import UIKit
 
 struct MarketGlobalMetricModule {
-
     static func viewController(type: MarketGlobalModule.MetricsType) -> UIViewController {
         let viewController: UIViewController
 
         switch type {
         case .totalMarketCap, .volume24h: viewController = globalMetricViewController(type: type)
         case .defiCap: viewController = defiCapViewController()
-        case .tvlInDefi: viewController = tvlInDefiViewController()
+        case .tvlInDefi: viewController = tvlInDefiViewController(apiTag: "global_metrics")
         }
 
         return ThemeNavigationController(rootViewController: viewController)
@@ -18,14 +17,14 @@ struct MarketGlobalMetricModule {
 
     private static func globalMetricViewController(type: MarketGlobalModule.MetricsType) -> UIViewController {
         let service = MarketGlobalMetricService(
-                marketKit: App.shared.marketKit,
-                currencyManager: App.shared.currencyManager,
-                metricsType: type
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager,
+            metricsType: type
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
-                coinUidService: service,
-                favoritesManager: App.shared.favoritesManager
+            coinUidService: service,
+            favoritesManager: App.shared.favoritesManager
         )
 
         let decorator = MarketListMarketFieldDecorator(service: service)
@@ -34,8 +33,8 @@ struct MarketGlobalMetricModule {
 
         let chartFetcher = MarketGlobalFetcher(currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, metricsType: type)
         let chartService = MetricChartService(
-                chartFetcher: chartFetcher,
-                interval: .day1
+            chartFetcher: chartFetcher,
+            interval: .day1
         )
 
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
@@ -46,13 +45,13 @@ struct MarketGlobalMetricModule {
 
     private static func defiCapViewController() -> UIViewController {
         let service = MarketGlobalDefiMetricService(
-                marketKit: App.shared.marketKit,
-                currencyManager: App.shared.currencyManager
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
-                coinUidService: service,
-                favoritesManager: App.shared.favoritesManager
+            coinUidService: service,
+            favoritesManager: App.shared.favoritesManager
         )
 
         let decorator = MarketListDefiDecorator(service: service)
@@ -61,8 +60,8 @@ struct MarketGlobalMetricModule {
 
         let chartFetcher = MarketGlobalFetcher(currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, metricsType: .defiCap)
         let chartService = MetricChartService(
-                chartFetcher: chartFetcher,
-                interval: .day1
+            chartFetcher: chartFetcher,
+            interval: .day1
         )
 
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
@@ -71,15 +70,16 @@ struct MarketGlobalMetricModule {
         return MarketGlobalMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, metricsType: MarketGlobalModule.MetricsType.defiCap)
     }
 
-    static func tvlInDefiViewController() -> UIViewController {
+    static func tvlInDefiViewController(apiTag: String) -> UIViewController {
         let service = MarketGlobalTvlMetricService(
-                marketKit: App.shared.marketKit,
-                currencyManager: App.shared.currencyManager
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager,
+            apiTag: apiTag
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
-                coinUidService: service,
-                favoritesManager: App.shared.favoritesManager
+            coinUidService: service,
+            favoritesManager: App.shared.favoritesManager
         )
 
         let decorator = MarketListTvlDecorator(service: service)
@@ -88,8 +88,8 @@ struct MarketGlobalMetricModule {
 
         let chartFetcher = MarketGlobalTvlFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, marketGlobalTvlPlatformService: service)
         let chartService = MetricChartService(
-                chartFetcher: chartFetcher,
-                interval: .day1
+            chartFetcher: chartFetcher,
+            interval: .day1
         )
         service.chartService = chartService
 
@@ -98,5 +98,4 @@ struct MarketGlobalMetricModule {
 
         return MarketGlobalTvlMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel)
     }
-
 }

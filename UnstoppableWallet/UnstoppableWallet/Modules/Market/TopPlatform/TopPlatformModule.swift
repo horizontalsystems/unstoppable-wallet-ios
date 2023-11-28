@@ -1,12 +1,11 @@
-import UIKit
-import ThemeKit
-import MarketKit
 import Chart
+import MarketKit
+import ThemeKit
+import UIKit
 
 struct TopPlatformModule {
-
-    static func viewController(topPlatform: TopPlatform) -> UIViewController {
-        let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit)
+    static func viewController(topPlatform: TopPlatform, apiTag: String) -> UIViewController {
+        let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit, apiTag: apiTag)
         let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service)
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, favoritesManager: App.shared.favoritesManager)
 
@@ -24,5 +23,4 @@ struct TopPlatformModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }

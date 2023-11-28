@@ -95,8 +95,6 @@ extension SendTonService: ISendService {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        let memo = memoService.memo // todo
-
         return Single.create { [adapter] observer in
             let task = Task { [adapter] in
                 do {

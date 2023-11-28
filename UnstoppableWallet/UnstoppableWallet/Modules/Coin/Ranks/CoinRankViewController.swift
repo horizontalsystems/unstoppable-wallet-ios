@@ -1,9 +1,9 @@
-import UIKit
-import RxSwift
-import ThemeKit
-import SectionsTableView
 import ComponentKit
 import HUD
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class CoinRankViewController: ThemeViewController {
     private let viewModel: CoinRankViewModel
@@ -23,7 +23,8 @@ class CoinRankViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -83,56 +84,54 @@ class CoinRankViewController: ThemeViewController {
     private func scrollToTop() {
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
-
 }
 
 extension CoinRankViewController: SectionsDataSource {
-
     private func row(viewItem: CoinRankViewModel.ViewItem, index: Int, isLast: Bool) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .captionSB
-                        component.textColor = .themeGray
-                        component.text = viewItem.rank
-                        component.textAlignment = .center
+            rootElement: .hStack([
+                .text { component in
+                    component.font = .captionSB
+                    component.textColor = .themeGray
+                    component.text = viewItem.rank
+                    component.textAlignment = .center
 
-                        component.snp.remakeConstraints { maker in
-                            maker.width.equalTo(40)
-                        }
-                    },
-                    .margin8,
-                    .image32 { component in
-                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_circle_32"))
-                    },
-                    .vStackCentered([
-                        .textElement(text: .body(viewItem.code)),
-                        .margin(1),
-                        .textElement(text: .subhead2(viewItem.name)),
-                    ]),
-                    .textElement(text: .body(viewItem.value), parameters: .rightAlignment)
-                ]),
-                layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: CellBuilderNew.defaultMargin),
-                tableView: tableView,
-                id: "row-\(index)",
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-                },
-                action: { [weak self] in
-                    if let viewController = CoinPageModule.viewController(coinUid: viewItem.uid) {
-                        self?.present(viewController, animated: true)
+                    component.snp.remakeConstraints { maker in
+                        maker.width.equalTo(40)
                     }
+                },
+                .margin8,
+                .image32 { component in
+                    component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_circle_32"))
+                },
+                .vStackCentered([
+                    .textElement(text: .body(viewItem.code)),
+                    .margin(1),
+                    .textElement(text: .subhead2(viewItem.name)),
+                ]),
+                .textElement(text: .body(viewItem.value), parameters: .rightAlignment),
+            ]),
+            layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: CellBuilderNew.defaultMargin),
+            tableView: tableView,
+            id: "row-\(index)",
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .transparent, isLast: isLast)
+            },
+            action: { [weak self] in
+                if let viewController = CoinPageModule.viewController(coinUid: viewItem.uid, apiTag: "coin_rank") {
+                    self?.present(viewController, animated: true)
                 }
+            }
         )
     }
 
     private func bind(cell: MarketHeaderCell) {
         cell.set(
-                title: viewModel.title,
-                description: viewModel.description,
-                imageMode: .remote(imageUrl: viewModel.imageUid.headerImageUrl)
+            title: viewModel.title,
+            description: viewModel.description,
+            imageMode: .remote(imageUrl: viewModel.imageUid.headerImageUrl)
         )
     }
 
@@ -143,26 +142,25 @@ extension CoinRankViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "header",
-                    rows: [
-                        Row<MarketHeaderCell>(
-                                id: "header",
-                                height: MarketHeaderCell.height,
-                                bind: { [weak self] cell, _ in
-                                    self?.bind(cell: cell)
-                                }
-                        )
-                    ]
+                id: "header",
+                rows: [
+                    Row<MarketHeaderCell>(
+                        id: "header",
+                        height: MarketHeaderCell.height,
+                        bind: { [weak self] cell, _ in
+                            self?.bind(cell: cell)
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "coins",
-                    headerState: .static(view: headerView, height: CoinRankHeaderView.height),
-                    footerState: .marginColor(height: .margin32, color: .clear),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isLast: index == viewItems.count - 1)
-                    }
-            )
+                id: "coins",
+                headerState: .static(view: headerView, height: CoinRankHeaderView.height),
+                footerState: .marginColor(height: .margin32, color: .clear),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, index: index, isLast: index == viewItems.count - 1)
+                }
+            ),
         ]
     }
-
 }

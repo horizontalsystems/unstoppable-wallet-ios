@@ -209,7 +209,7 @@ class WalletTokenBalanceDataSource: NSObject {
     }
 
     private func openCoinPage(coin: Coin) {
-        if let viewController = CoinPageModule.viewController(coinUid: coin.uid) {
+        if let viewController = CoinPageModule.viewController(coinUid: coin.uid, apiTag: "wallet_token_balance") {
             parentViewController?.present(viewController, animated: true)
         }
     }

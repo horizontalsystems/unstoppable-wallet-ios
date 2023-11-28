@@ -4,11 +4,11 @@ import ThemeKit
 import UIKit
 
 struct CoinPageModule {
-    static func view(fullCoin: FullCoin) -> some View {
+    static func view(fullCoin: FullCoin, apiTag: String) -> some View {
         let viewModel = CoinPageViewModelNew(fullCoin: fullCoin, favoritesManager: App.shared.favoritesManager)
 
-        let overviewView = CoinOverviewModule.view(coinUid: fullCoin.coin.uid)
-        let analyticsView = CoinAnalyticsModule.view(fullCoin: fullCoin)
+        let overviewView = CoinOverviewModule.view(coinUid: fullCoin.coin.uid, apiTag: apiTag)
+        let analyticsView = CoinAnalyticsModule.view(fullCoin: fullCoin, apiTag: apiTag)
         let marketsView = CoinMarketsModule.view(coin: fullCoin.coin)
 
         return CoinPageView(
@@ -19,7 +19,7 @@ struct CoinPageModule {
         )
     }
 
-    static func viewController(coinUid: String) -> UIViewController? {
+    static func viewController(coinUid: String, apiTag: String) -> UIViewController? {
         guard let fullCoin = try? App.shared.marketKit.fullCoins(coinUids: [coinUid]).first else {
             return nil
         }
@@ -31,9 +31,9 @@ struct CoinPageModule {
 
         let viewModel = CoinPageViewModel(service: service)
 
-        let overviewController = CoinOverviewModule.viewController(coinUid: coinUid)
+        let overviewController = CoinOverviewModule.viewController(coinUid: coinUid, apiTag: apiTag)
         let marketsController = CoinMarketsModule.view(coin: fullCoin.coin).toViewController()
-        let analyticsController = CoinAnalyticsModule.viewController(fullCoin: fullCoin)
+        let analyticsController = CoinAnalyticsModule.viewController(fullCoin: fullCoin, apiTag: apiTag)
 //        let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin)
 
         let viewController = CoinPageViewController(
