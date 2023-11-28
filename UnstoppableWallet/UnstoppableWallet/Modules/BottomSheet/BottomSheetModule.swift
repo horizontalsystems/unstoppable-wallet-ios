@@ -18,7 +18,7 @@ enum BottomSheetModule {
 extension BottomSheetModule {
     static func copyConfirmation(value: String) -> UIViewController {
         viewController(
-            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+            image: .warning,
             title: "copy_warning.title".localized,
             items: [
                 .highlightedDescription(text: "copy_warning.description".localized),
@@ -55,7 +55,7 @@ extension BottomSheetModule {
 
     private static func backupPrompt(title: String, description: String, cancelText: String, account: Account, sourceViewController: UIViewController?) -> UIViewController {
         viewController(
-            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+            image: .warning,
             title: title,
             items: [
                 .highlightedDescription(text: description),
@@ -78,7 +78,7 @@ extension BottomSheetModule {
 
     static func description(title: String, text: String) -> UIViewController {
         viewController(
-            image: .local(image: UIImage(named: "circle_information_20")?.withTintColor(.themeGray)),
+            image: .local(name: "circle_information_20", tint: .gray),
             title: title,
             items: [
                 .description(text: text),
@@ -88,7 +88,7 @@ extension BottomSheetModule {
 
     static func confirmDeleteCloudBackupController(action: (() -> Void)?) -> UIViewController {
         viewController(
-            image: .local(image: UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+            image: .trash,
             title: "manage_account.cloud_delete_backup_recovery_phrase".localized,
             items: [
                 .highlightedDescription(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized),
@@ -104,7 +104,7 @@ extension BottomSheetModule {
 
     static func deleteCloudBackupAfterManualBackupController(action: (() -> Void)?) -> UIViewController {
         viewController(
-            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+            image: .warning,
             title: "manage_account.manual_backup_required".localized,
             items: [
                 .highlightedDescription(text: "manage_account.manual_backup_required.description".localized),
@@ -120,7 +120,7 @@ extension BottomSheetModule {
 
     static func cloudNotAvailableController() -> UIViewController {
         BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "icloud_24")?.withTintColor(.themeJacob)),
+            image: .local(name: "icloud_24", tint: .warning),
             title: "backup.cloud.no_access.title".localized,
             items: [
                 .highlightedDescription(text: "backup.cloud.no_access.description".localized),
@@ -133,14 +133,23 @@ extension BottomSheetModule {
 }
 
 extension BottomSheetModule {
-    enum Item {
+    enum Item: Identifiable {
         case description(text: String)
         case highlightedDescription(text: String, style: HighlightedDescriptionBaseView.Style = .yellow)
         case copyableValue(title: String, value: String)
         case contractAddress(imageUrl: String, value: String, explorerUrl: String?)
+
+        public var id: String {
+            switch self {
+            case let .description(text): return "description_\(text)"
+            case let .highlightedDescription(text, style): return "highlightedDescription_\(text)_\(style.rawValue)"
+            case let .copyableValue(title, value): return "copyableValue_\(title)_\(value)"
+            case let .contractAddress(url, value, explorerUrl): return "contractAddress_\(url)_\(value)_\(explorerUrl ?? "N/A")"
+            }
+        }
     }
 
-    struct Button {
+    struct Button: Identifiable {
         let style: PrimaryButton.Style
         let title: String
         let imageName: String?
@@ -158,6 +167,10 @@ extension BottomSheetModule {
         enum ActionType {
             case regular
             case afterClose
+        }
+
+        public var id: String {
+            "\(style.hashValue.description)_\(title)_\(imageName ?? "NA")"
         }
     }
 }

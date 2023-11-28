@@ -201,11 +201,8 @@ class WalletTokenBalanceDataSource: NSObject {
     }
 
     private func openReceive(wallet: Wallet) {
-        guard let viewController = ReceiveAddressModule.viewController(wallet: wallet) else {
-            return
-        }
-        let navigationController = ThemeNavigationController(rootViewController: viewController)
-        parentViewController?.present(navigationController, animated: true)
+        let view = ReceiveAddressModule.view(wallet: wallet)
+        parentViewController?.present(view.toNavigationViewController(), animated: true)
     }
 
     private func openCoinPage(coin: Coin) {

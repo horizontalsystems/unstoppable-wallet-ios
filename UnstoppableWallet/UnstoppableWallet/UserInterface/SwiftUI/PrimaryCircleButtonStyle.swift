@@ -1,19 +1,17 @@
 import SwiftUI
 import ComponentKit
 
-struct PrimaryButtonStyle: ButtonStyle {
+struct PrimaryCircleButtonStyle: ButtonStyle {
     let style: Style
 
     @Environment(\.isEnabled) private var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(maxWidth: .infinity)
-            .padding(EdgeInsets(top: 15, leading: .margin32, bottom: 15, trailing: .margin32))
-            .font(.themeHeadline2)
+            .frame(width: .heightButton, height: .heightButton)
             .foregroundColor(style.foregroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
             .background(style.backgroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
-            .clipShape(Capsule(style: .continuous))
+            .clipShape(Circle())
             .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
     }
 

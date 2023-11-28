@@ -17,7 +17,7 @@ class SendNftModule {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
-        let addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil)
         return AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: blockchainType)
     }
 

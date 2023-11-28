@@ -9,6 +9,34 @@ class AddressAppShowModule {
     init(parentViewController: UIViewController?) {
         self.parentViewController = parentViewController
     }
+
+    private func uri(text: String) -> AddressUri? {
+        guard AddressUriParser.hasUriPrefix(text: text) else {
+            return nil
+        }
+
+        let abstractParser = AddressUriParser(blockchainType: nil, tokenType: nil)
+        let result = abstractParser.parse(addressUri: text)
+        switch result {
+        case .uri(let uri):
+            guard BlockchainType.supported.map({ $0.uriScheme }).contains(uri.scheme) else {
+                return nil
+            }
+            return uri
+        default: return nil
+        }
+    }
+
+    private func showSendTokenList(uri: AddressUri, allowedBlockchainTypes: [BlockchainType]?, allowedTokenTypes: [TokenType]?) {
+        guard let viewController = WalletModule.sendTokenListViewController(
+                allowedBlockchainTypes: allowedBlockchainTypes,
+                allowedTokenTypes: allowedTokenTypes,
+                mode: .prefilled(address: uri.address, amount: uri.amount)) else {
+            return
+        }
+        parentViewController?.visibleController.present(viewController, animated: true)
+    }
+
 }
 
 extension AddressAppShowModule: IEventHandler {
@@ -19,58 +47,44 @@ extension AddressAppShowModule: IEventHandler {
             return
         }
 
-        guard var address = event as? String else {
+        guard var text = event as? String else {
             throw EventHandler.HandleError.noSuitableHandler
         }
+        text = text.trimmingCharacters(in: .whitespacesAndNewlines)
 
         // Handle uri string if exist
-        var uriBlockchainType: BlockchainType? = nil
-        var addressData: AddressData? = nil
-        if AddressUriParser.hasUriPrefix(text: address) {
-            let data = AddressParserFactory.uriBlockchainTypes.map { type -> AddressUriParser in
-                AddressParserFactory.parser(blockchainType: type)
-            }.compactMap { parser in
-                switch parser.parse(paymentAddress: address) {
-                case let .data(addressData):
-                    return (parser.blockchainType, addressData)
-                default: return nil
-                }
-            }.first
+        if let uri = uri(text: text) {
+            let allowedBlockchainTypes = uri.allowedBlockchainTypes
 
-            // we can handle one of blockchain types. For .ethereum -> we must return nil, to check all Evm blockchains for now
-            if let data {
-                switch data.0 {
-                case .ethereum: uriBlockchainType = nil
-                default: uriBlockchainType = data.0
-                }
+            var allowedTokenTypes: [TokenType]?
+            if let tokenUid: String = uri.value(field: .tokenUid),
+               let tokenType = TokenType(id: tokenUid) {
+
+                allowedTokenTypes = [tokenType]
             }
-            addressData = data?.1
-        }
-        address = addressData?.address ?? address
-        let disposeBag = DisposeBag()
-        let chain = AddressParserFactory.parserChain(blockchainType: uriBlockchainType, withEns: false)
-        let types = try await withCheckedThrowingContinuation { continuation in
-            chain
-                .handlers(address: address)
-                .subscribe(onSuccess: { items in
-                    continuation.resume(returning: items.map { $0.blockchainType })
-                }, onError: { error in
-                    continuation.resume(throwing: error)
-                })
-                .disposed(by: disposeBag)
-        }
 
-        guard !types.isEmpty else {
-            throw EventHandler.HandleError.noSuitableHandler
-        }
+            showSendTokenList(uri: uri, allowedBlockchainTypes: allowedBlockchainTypes, allowedTokenTypes: allowedTokenTypes)
+        } else {
+            let disposeBag = DisposeBag()
+            let chain = AddressParserFactory.parserChain(blockchainType: nil, withEns: false)
+            let types = try await withCheckedThrowingContinuation { continuation in
+                chain
+                    .handlers(address: text)
+                    .subscribe(onSuccess: { items in
+                        continuation.resume(returning: items.map { $0.blockchainType })
+                    }, onError: { error in
+                        continuation.resume(throwing: error)
+                    })
+                    .disposed(by: disposeBag)
+            }
 
-        guard let viewController = WalletModule.sendTokenListViewController(
-                allowedBlockchainTypes: types,
-                mode: .prefilled(address: address, amount: addressData?.amount.map { Decimal($0) })) else {
-            return
+            guard !types.isEmpty else {
+                throw EventHandler.HandleError.noSuitableHandler
+            }
+            var uri = AddressUri(scheme: "")
+            uri.address = text
+            showSendTokenList(uri: uri, allowedBlockchainTypes: types, allowedTokenTypes: nil)
         }
-
-        parentViewController?.visibleController.present(viewController, animated: true)
     }
 }
 

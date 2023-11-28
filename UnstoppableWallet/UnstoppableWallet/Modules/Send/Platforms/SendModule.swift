@@ -40,10 +40,10 @@ enum SendModule {
 
         let switchService = AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage)
         let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
-        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, amount: mode.amount ?? 0)
 
         // Amount
-        let amountInputService = SendBitcoinAmountInputService(token: token)
+        let amountInputService = SendBitcoinAmountInputService(token: token, amount: mode.amount ?? 0)
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
@@ -59,12 +59,12 @@ enum SendModule {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
-        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType, tokenType: token.type)
         let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
 
         // Fee
         let feeRateService = FeeRateService(provider: feeRateProvider)
-        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, amount: mode.amount ?? 0)
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: token)
         let inputOutputOrderService = InputOutputOrderService(blockchainType: adapter.blockchainType, blockchainManager: App.shared.btcBlockchainManager, itemsList: TransactionDataSortMode.allCases)
 
@@ -165,10 +165,10 @@ enum SendModule {
 
         let switchService = AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage)
         let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
-        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, amount: mode.amount ?? 0)
 
         // Amount
-        let amountInputService = SendBitcoinAmountInputService(token: token)
+        let amountInputService = SendBitcoinAmountInputService(token: token, amount: mode.amount ?? 0)
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
@@ -176,13 +176,13 @@ enum SendModule {
         let addressParserChain = AddressParserChain()
             .append(handler: binanceParserItem)
 
-        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType, tokenType: token.type)
         let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 
         // Fee
-        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, amount: mode.amount ?? 0)
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: feeToken)
 
         let service = SendBinanceService(
@@ -256,10 +256,10 @@ enum SendModule {
     private static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendZcashAdapter) -> UIViewController? {
         let switchService = AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage)
         let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
-        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, amount: mode.amount ?? 0)
 
         // Amount
-        let amountInputService = SendBitcoinAmountInputService(token: token)
+        let amountInputService = SendBitcoinAmountInputService(token: token, amount: mode.amount ?? 0)
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
@@ -267,13 +267,13 @@ enum SendModule {
         let addressParserChain = AddressParserChain()
             .append(handler: zcashParserItem)
 
-        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType, tokenType: token.type)
         let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 
         // Fee
-        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, amount: mode.amount ?? 0)
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: token)
 
         let service = SendZcashService(
@@ -357,7 +357,7 @@ enum SendModule {
         let addressParserChain = AddressParserChain()
             .append(handler: parserItem)
 
-        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType, tokenType: token.type)
         let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
 
         let memoService = SendMemoInputService(maxSymbols: 120)

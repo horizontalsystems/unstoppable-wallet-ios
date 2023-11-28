@@ -31,7 +31,7 @@ class SwitchAccountViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "switch_wallet_24")?.withTintColor(.themeJacob)),
+                image: .local(name: "switch_wallet_24", tint: .warning),
                 title: "switch_account.title".localized,
                 viewController: self
         )

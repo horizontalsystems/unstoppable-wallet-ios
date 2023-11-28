@@ -35,7 +35,7 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob)),
+                image: .local(name: "arrow_swap_2_24", tint: .warning),
                 title: "swap.switch_provider.title".localized,
                 viewController: self
         )

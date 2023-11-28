@@ -3,31 +3,24 @@ import Foundation
 class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
     typealias Item = CexDepositService.Item
 
-    func viewItem(item: Item) -> ReceiveAddressModule.ViewItem {
+    func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem {
         var sections = [[ReceiveAddressModule.Item]]()
 
-        let qrItem = ReceiveAddressModule.QrItem(
-                address: item.address,
-                text: "deposit.qr_code_description".localized(item.coinCode)
-        )
-        sections.append([.qrItem(qrItem)])
-
         var viewItems = [ReceiveAddressModule.Item]()
+        let qrItem = ReceiveAddressModule.QrItem(
+            address: item.address,
+            uri: nil,
+            networkName: item.networkName
+        )
+        viewItems.append(.qrItem(qrItem))
         viewItems.append(.value(title: "cex_deposit.address".localized, value: item.address, copyable: false))
 
         if let network = item.networkName {
             viewItems.append(.value(title: "cex_deposit.network".localized, value: network, copyable: false))
         }
 
-        var popupViewItem: ReceiveAddressModule.PopupWarningItem?
         if let memo = item.memo {
             viewItems.append(.value(title: "cex_deposit.memo".localized, value: memo, copyable: true))
-
-            popupViewItem = .init(
-                    title: "cex_deposit.memo_warning.title".localized,
-                    description: .init(text: "cex_deposit.memo_warning.description".localized, style: .red),
-                    doneButtonTitle: "button.i_understand".localized
-            )
         }
 
         sections.append(viewItems)
@@ -37,12 +30,21 @@ class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
 
         sections.append([.highlightedDescription(text: text, style: style)])
 
-
         return .init(
-                address: item.address,
-                popup: popupViewItem,
-                sections: sections
+            copyValue: item.address,
+            sections: sections
         )
     }
 
+    func popup(item: Item) -> ReceiveAddressModule.PopupWarningItem? {
+        item.memo.map { _ in
+            .init(title: "cex_deposit.memo_warning.title".localized,
+                  description: .init(text: "cex_deposit.memo_warning.description".localized, style: .red),
+                  doneButtonTitle: "button.i_understand".localized)
+        }
+    }
+
+    func actions(item _: Item) -> [ReceiveAddressModule.ActionType] {
+        [.copy, .share]
+    }
 }

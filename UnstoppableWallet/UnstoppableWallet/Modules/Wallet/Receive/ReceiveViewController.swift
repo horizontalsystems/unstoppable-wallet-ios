@@ -56,10 +56,8 @@ class ReceiveViewController: ThemeNavigationController {
     }
 
     private func showReceive(wallet: Wallet) {
-        guard let viewController = ReceiveAddressModule.viewController(wallet: wallet) else {
-            return
-        }
-        pushViewController(viewController, animated: true)
+        let view = ReceiveAddressModule.view(wallet: wallet)
+        pushViewController(view.toViewController(), animated: true)
     }
 
     private func showDerivationSelect(wallets: [Wallet]) {

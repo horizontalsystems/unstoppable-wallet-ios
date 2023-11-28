@@ -154,9 +154,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         }
     }
 
-    private func showSelector(image: UIImage?, title: String, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> ()) {
+    private func showSelector(image: BottomSheetTitleView.Image, title: String, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> ()) {
         let viewController = SelectorModule.bottomSingleSelectorViewController(
-                image: .local(image: image),
+                image: image,
                 title: title,
                 viewItems: viewItems,
                 onSelect: onSelect
@@ -169,7 +169,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapCoinListCell() {
         showSelector(
-                image: UIImage(named: "circle_coin_24")?.withTintColor(.themeJacob),
+                image: .local(name: "circle_coin_24", tint: .warning),
                 title: "market.advanced_search.choose_set".localized,
                 viewItems: selectorItems(viewItems: viewModel.coinListViewItems)
         ) { [weak self] index in
@@ -179,7 +179,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapMarketCapCell() {
         showSelector(
-                image: UIImage(named: "usd_24")?.withTintColor(.themeJacob),
+                image: .local(name: "usd_24", tint: .warning),
                 title: "market.advanced_search.market_cap".localized,
                 viewItems: selectorItems(viewItems: viewModel.marketCapViewItems)
         ) { [weak self] index in
@@ -189,7 +189,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapVolumeCell() {
         showSelector(
-                image: UIImage(named: "chart_2_24")?.withTintColor(.themeJacob),
+                image: .local(name: "chart_2_24", tint: .warning),
                 title: "market.advanced_search.volume".localized,
                 viewItems: selectorItems(viewItems: viewModel.volumeViewItems)
         ) { [weak self] index in
@@ -211,7 +211,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapPeriodCell() {
         showSelector(
-                image: UIImage(named: "circle_clock_24")?.withTintColor(.themeJacob),
+                image: .local(name: "circle_clock_24", tint: .warning),
                 title: "market.advanced_search.price_period".localized,
                 viewItems: selectorItems(viewItems: viewModel.priceChangeTypeViewItems)
         ) { [weak self] index in
@@ -221,7 +221,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapPriceChangeCell() {
         showSelector(
-                image: UIImage(named: "markets_24")?.withTintColor(.themeJacob),
+                image: .local(name: "markets_24", tint: .warning),
                 title: "market.advanced_search.price_change".localized,
                 viewItems: selectorItems(viewItems: viewModel.priceChangeViewItems)
         ) { [weak self] index in

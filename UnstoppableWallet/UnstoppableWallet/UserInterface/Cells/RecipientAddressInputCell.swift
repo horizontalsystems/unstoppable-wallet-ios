@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import ComponentKit
 
 class RecipientAddressInputCell: AddressInputCell {
     private let viewModel: RecipientAddressViewModel
@@ -28,6 +29,9 @@ class RecipientAddressInputCell: AddressInputCell {
         subscribe(disposeBag, viewModel.setTextDriver) { [weak self] in
             self?.inputText = $0
         }
+        subscribe(disposeBag, viewModel.showUriErrorDriver) { [weak self] error in
+            self?.show(error: error)
+        }
         subscribe(disposeBag, viewModel.showContactsDriver) { [weak self] in
             self?.showContacts = $0
         }
@@ -46,6 +50,10 @@ class RecipientAddressInputCell: AddressInputCell {
         }
 
         onOpenViewController?(viewController)
+    }
+
+    private func show(error: String) {
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     func set(inputText: String?) {

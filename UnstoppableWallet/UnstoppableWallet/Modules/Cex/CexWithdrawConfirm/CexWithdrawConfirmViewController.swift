@@ -96,7 +96,7 @@ class CexWithdrawConfirmViewController: ThemeViewController {
 
     private func show(error: String) {
         let viewController = BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
+            image: .warning,
             title: "cex_withdraw_confirm.withdraw_failed".localized,
             items: [
                 .highlightedDescription(text: error, style: .red)

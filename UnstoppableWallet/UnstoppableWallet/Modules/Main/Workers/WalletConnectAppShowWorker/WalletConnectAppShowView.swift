@@ -109,7 +109,7 @@ extension WalletConnectAppShowView {
         switch error {
         case .noAccount:
             viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
+                image: .walletConnect,
                 title: "wallet_connect.title".localized,
                 items: [
                     .highlightedDescription(text: "wallet_connect.no_account.description".localized),
@@ -120,7 +120,7 @@ extension WalletConnectAppShowView {
             )
         case let .nonSupportedAccountType(accountTypeDescription):
             viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
+                image: .walletConnect,
                 title: "wallet_connect.title".localized,
                 items: [
                     .highlightedDescription(text: "wallet_connect.non_supported_account.description".localized(accountTypeDescription)),

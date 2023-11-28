@@ -74,7 +74,7 @@ class ContactBookSettingsViewController: ThemeViewController {
 
     private func showRestoreAlert(contacts: [BackupContact]) {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                image: .warning,
                 title: "alert.warning".localized,
                 items: [
                     .highlightedDescription(text: "contacts.restore.overwrite_alert.description".localized)
@@ -99,7 +99,7 @@ class ContactBookSettingsViewController: ThemeViewController {
 
     private func showMergeConfirmation() {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                image: .warning,
                 title: "alert.warning".localized,
                 items: [
                     .highlightedDescription(text: "contacts.settings.merge_disclaimer".localized)

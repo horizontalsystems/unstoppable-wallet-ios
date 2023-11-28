@@ -3,7 +3,7 @@ import SwiftUI
 struct AppStatusView: View {
     let viewModel: AppStatusViewModel
 
-    @State private var shareText: ShareText?
+    @State private var shareText: String?
 
     var body: some View {
         ScrollableThemeView {
@@ -17,15 +17,14 @@ struct AppStatusView: View {
                     .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
                     Button(action: {
-                        shareText = ShareText(text: viewModel.rawStatus)
+                        shareText = viewModel.rawStatus
                     }) {
                         Text("button.share".localized)
                     }
                     .buttonStyle(PrimaryButtonStyle(style: .gray))
                 }
                 .sheet(item: $shareText) { shareText in
-                    ActivityView(text: shareText.text)
-                        .ignoresSafeArea()
+                    ActivityView(activityItems: [shareText]).ignoresSafeArea()
                 }
 
                 ForEach(viewModel.sections, id: \.title) { section in
@@ -58,10 +57,5 @@ struct AppStatusView: View {
         }
         .navigationTitle("app_status.title".localized)
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-    private struct ShareText: Identifiable {
-        let id = UUID()
-        let text: String
     }
 }

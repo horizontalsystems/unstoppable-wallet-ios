@@ -21,19 +21,8 @@ class AddressParserFactory {
             .tron,
     ]
 
-    static func parser(blockchainType: BlockchainType?) -> AddressUriParser {
-        switch blockchainType {
-        case .bitcoin: return AddressUriParser(blockchainType: blockchainType, validScheme: "bitcoin", removeScheme: true)
-        case .bitcoinCash: return AddressUriParser(blockchainType: blockchainType, validScheme: "bitcoincash", removeScheme: false)
-        case .ecash: return AddressUriParser(blockchainType: blockchainType, validScheme: "ecash", removeScheme: false)
-        case .litecoin: return AddressUriParser(blockchainType: blockchainType, validScheme: "litecoin", removeScheme: true)
-        case .dash: return AddressUriParser(blockchainType: blockchainType, validScheme: "dash", removeScheme: true)
-        case .zcash: return AddressUriParser(blockchainType: blockchainType, validScheme: "zcash", removeScheme: true)
-        case .ethereum: return AddressUriParser(blockchainType: blockchainType, validScheme: "ethereum", removeScheme: true)
-        case .binanceChain: return AddressUriParser(blockchainType: blockchainType, validScheme: "binance", removeScheme: true)
-        case .tron: return AddressUriParser(blockchainType: blockchainType, validScheme: "tron", removeScheme: true)
-        default: return AddressUriParser(blockchainType: blockchainType, validScheme: nil, removeScheme: false)
-        }
+    static func parser(blockchainType: BlockchainType?, tokenType: TokenType?) -> AddressUriParser {
+        AddressUriParser(blockchainType: blockchainType, tokenType: tokenType)
     }
 
     static func parserChainHandlers(blockchainType: BlockchainType, withEns: Bool = true) -> [IAddressParserItem] {
@@ -136,5 +125,45 @@ class AddressParserFactory {
         }
 
         return AddressParserChain().append(handlers: handlers)
+    }
+}
+
+extension BlockchainType {
+    var uriScheme: String? {
+        if EvmBlockchainManager.blockchainTypes.contains(self) {
+            return "ethereum"
+        }
+
+        switch self {
+        case .bitcoin: return "bitcoin"
+        case .bitcoinCash: return "bitcoincash"
+        case .ecash: return "ecash"
+        case .litecoin: return "litecoin"
+        case .dash: return "dash"
+        case .zcash: return "zcash"
+        case .ethereum: return "ethereum"
+        case .binanceChain: return "binancecoin"
+        case .tron: return "tron"
+        default: return nil
+        }
+    }
+
+    var removeScheme: Bool {
+        if EvmBlockchainManager.blockchainTypes.contains(self) {
+            return true
+        }
+
+        switch self {
+        case .bitcoinCash: return false
+        case .ecash: return false
+        case .bitcoin: return true
+        case .litecoin: return true
+        case .dash: return true
+        case .zcash: return true
+        case .ethereum: return true
+        case .binanceChain: return true
+        case .tron: return true
+        default: return false
+        }
     }
 }

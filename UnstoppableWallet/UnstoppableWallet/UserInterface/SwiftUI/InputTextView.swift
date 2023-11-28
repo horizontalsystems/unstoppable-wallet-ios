@@ -5,7 +5,6 @@ struct InputTextView: View {
     var placeholder: String = ""
 
     var text: Binding<String>
-    @State private var oldValue: String
 
     @Binding var secured: Bool
 
@@ -19,8 +18,7 @@ struct InputTextView: View {
     init(placeholder: String = "", text: Binding<String>, secured: Binding<Bool> = .constant(false), onEditingChanged: ((Bool) -> Void)? = nil, onCommit: (() -> Void)? = nil, isValidText: ((String) -> Bool)? = nil) {
         self.placeholder = placeholder
         self.text = text
-        oldValue = text.wrappedValue
-        self._secured = secured
+        _secured = secured
 
         self.onEditingChanged = onEditingChanged
         self.onCommit = onCommit
@@ -31,20 +29,8 @@ struct InputTextView: View {
         editView()
             .font(.themeBody)
             .accentColor(.themeLeah)
-            .frame(height: 20)      //todo: How to remove this?
-            .onReceive(text.wrappedValue.publisher.collect()) {
-                let newValue = $0.map { String($0) }.joined()
-                if isValidText?(newValue) ?? true {
-                    oldValue = newValue
-                } else {
-                    text.wrappedValue = oldValue
-
-                    if shakeOnInvalid {
-                        shake = true
-                    }
-                }
-            }
-            .shake($shake)
+            .frame(height: 20) // TODO: How to remove this?
+            .modifier(Validated(text: text, isValidText: isValidText))
     }
 
     @ViewBuilder
@@ -123,5 +109,39 @@ struct CautionPrompt: ViewModifier {
                     .themeCaption(color: cautionState.color)
             }
         }
+    }
+}
+
+struct Validated: ViewModifier {
+    let text: Binding<String>
+    let isValidText: ((String) -> Bool)?
+    let shakeOnInvalid: Bool
+
+    @State private var oldValue: String
+    @State private var shake = false
+
+    init(text: Binding<String>, shakeOnInvalid: Bool = true, isValidText: ((String) -> Bool)? = nil) {
+        self.text = text
+        self.isValidText = isValidText
+        self.shakeOnInvalid = shakeOnInvalid
+
+        oldValue = text.wrappedValue
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .onReceive(text.wrappedValue.publisher.collect()) {
+                let newValue = $0.map { String($0) }.joined()
+                if isValidText?(newValue) ?? true {
+                    oldValue = newValue
+                } else {
+                    text.wrappedValue = oldValue
+
+                    if shakeOnInvalid {
+                        shake = true
+                    }
+                }
+            }
+            .shake($shake)
     }
 }

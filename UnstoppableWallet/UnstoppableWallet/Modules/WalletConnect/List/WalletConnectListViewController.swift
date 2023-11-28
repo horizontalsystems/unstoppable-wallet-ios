@@ -129,7 +129,7 @@ class WalletConnectListViewController: ThemeViewController {
 
     private func show(newConnectionError: String) {
         let viewController = BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
+            image: .walletConnect,
             title: "WalletConnect",
             items: [
                 .highlightedDescription(text: newConnectionError),
@@ -258,4 +258,8 @@ extension WalletConnectListViewController: SectionsDataSource {
 
         return sections
     }
+}
+
+extension BottomSheetTitleView.Image {
+    static let walletConnect: Self = .local(name: "wallet_connect_24", tint: .warning)
 }

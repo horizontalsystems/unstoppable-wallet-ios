@@ -33,7 +33,7 @@ class InputOutputOrderDataSource {
 
     private func showList() {
         let viewController = SelectorModule.bottomSingleSelectorViewController(
-                image: .local(image: UIImage(named: "arrow_medium_2_up_right_24")?.withTintColor(.themeGray)),
+                image: .local(name: "arrow_medium_2_up_right_24", tint: .gray),
                 title: "fee_settings.transaction_settings".localized,
                 viewItems: viewModel.itemsList,
                 onSelect: { [weak self] index in
