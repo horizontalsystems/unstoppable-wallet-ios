@@ -1,6 +1,6 @@
+import EvmKit
 import Foundation
 import UniswapKit
-import EvmKit
 
 class UniswapV3Module {
     private let tradeService: UniswapV3TradeService
@@ -20,48 +20,46 @@ class UniswapV3Module {
         let uniswapRepository = UniswapV3Provider(swapKit: swapKit)
 
         tradeService = UniswapV3TradeService(
-                uniswapProvider: uniswapRepository,
-                state: dataSourceState,
-                evmKit: evmKit
+            uniswapProvider: uniswapRepository,
+            state: dataSourceState,
+            evmKit: evmKit
         )
         allowanceService = SwapAllowanceService(
-                spenderAddress: uniswapRepository.routerAddress,
-                adapterManager: App.shared.adapterManager,
-                evmKit: evmKit
+            spenderAddress: uniswapRepository.routerAddress,
+            adapterManager: App.shared.adapterManager,
+            evmKit: evmKit
         )
         pendingAllowanceService = SwapPendingAllowanceService(
-                spenderAddress: uniswapRepository.routerAddress,
-                adapterManager: App.shared.adapterManager,
-                allowanceService: allowanceService
+            spenderAddress: uniswapRepository.routerAddress,
+            adapterManager: App.shared.adapterManager,
+            allowanceService: allowanceService
         )
         service = UniswapV3Service(
-                dex: dex,
-                tradeService: tradeService,
-                allowanceService: allowanceService,
-                pendingAllowanceService: pendingAllowanceService,
-                adapterManager: App.shared.adapterManager
+            dex: dex,
+            tradeService: tradeService,
+            allowanceService: allowanceService,
+            pendingAllowanceService: pendingAllowanceService,
+            adapterManager: App.shared.adapterManager
         )
     }
-
 }
 
 extension UniswapV3Module: ISwapProvider {
-
     var dataSource: ISwapDataSource {
         let allowanceViewModel = SwapAllowanceViewModel(errorProvider: service, allowanceService: allowanceService, pendingAllowanceService: pendingAllowanceService)
         let viewModel = UniswapV3ViewModel(
-                service: service,
-                tradeService: tradeService,
-                switchService: AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage, useLocalStorage: false),
-                allowanceService: allowanceService,
-                pendingAllowanceService: pendingAllowanceService,
-                currencyManager: App.shared.currencyManager,
-                viewItemHelper: SwapViewItemHelper()
+            service: service,
+            tradeService: tradeService,
+            switchService: AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage, useLocalStorage: false),
+            allowanceService: allowanceService,
+            pendingAllowanceService: pendingAllowanceService,
+            currencyManager: App.shared.currencyManager,
+            viewItemHelper: SwapViewItemHelper()
         )
 
         return UniswapV3DataSource(
-                viewModel: viewModel,
-                allowanceViewModel: allowanceViewModel
+            viewModel: viewModel,
+            allowanceViewModel: allowanceViewModel
         )
     }
 
@@ -73,17 +71,16 @@ extension UniswapV3Module: ISwapProvider {
         let exactIn = tradeService.tradeType == .exactIn
 
         return SwapModule.DataSourceState(
-                tokenFrom: tradeService.tokenIn,
-                tokenTo: tradeService.tokenOut,
-                amountFrom: tradeService.amountIn,
-                amountTo: tradeService.amountOut,
-                exactFrom: exactIn)
+            tokenFrom: tradeService.tokenIn,
+            tokenTo: tradeService.tokenOut,
+            amountFrom: tradeService.amountIn,
+            amountTo: tradeService.amountOut,
+            exactFrom: exactIn
+        )
     }
-
 }
 
 extension UniswapV3Module {
-
     struct PriceImpactViewItem {
         let value: String
         let level: UniswapTradeService.PriceImpactLevel
@@ -101,5 +98,4 @@ extension UniswapV3Module {
     enum TradeError: Error {
         case wrapUnwrapNotAllowed
     }
-
 }

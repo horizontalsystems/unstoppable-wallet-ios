@@ -1,10 +1,10 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class FeeRateDataSource {
     private let feeRateViewModel: FeeRateViewModel
@@ -14,10 +14,10 @@ class FeeRateDataSource {
     private let feeRateCell: StepperAmountInputCell
 
     weak var tableView: SectionsTableView?
-    var onOpenInfo: ((String, String) -> ())? = nil
-    var present: ((UIViewController) -> ())? = nil
-    var onUpdateAlteredState: (() -> ())? = nil
-    var onCaution: ((TitledCaution?) -> ())? = nil
+    var onOpenInfo: ((String, String) -> Void)?
+    var present: ((UIViewController) -> Void)?
+    var onUpdateAlteredState: (() -> Void)?
+    var onCaution: ((TitledCaution?) -> Void)?
 
     init(feeViewModel: SendFeeViewModel, feeRateViewModel: FeeRateViewModel) {
         self.feeRateViewModel = feeRateViewModel
@@ -44,58 +44,55 @@ class FeeRateDataSource {
         feeRateCell.set(cautionType: caution?.type)
         onCaution?(caution)
     }
-
 }
 
 extension FeeRateDataSource: ISendSettingsDataSource {
-
     var altered: Bool {
         feeRateViewModel.altered
     }
 
     var buildSections: [SectionProtocol] {
-        guard let tableView = tableView else {
+        guard let tableView else {
             return []
         }
 
         return [
             Section(
-                    id: "fee",
-                    headerState: .margin(height: .margin12),
-                    rows: [
-                        StaticRow(
-                                cell: feeCell,
-                                id: "fee-cell",
-                                height: .heightDoubleLineCell
-                        )
-                    ]
+                id: "fee",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    StaticRow(
+                        cell: feeCell,
+                        id: "fee-cell",
+                        height: .heightDoubleLineCell
+                    ),
+                ]
             ),
             Section(
-                    id: "fee-rate",
-                    headerState: .margin(height: .margin24),
-                    rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "fee_settings.fee_rate".localized + " (Sat/Byte)", uppercase: false)  { [weak self] in
-                            self?.present?(InfoModule.feeInfo)
-                        },
-                        StaticRow(
-                                cell: feeRateCell,
-                                id: "fee-rate-cell",
-                                height: .heightCell48
-                        ),
-                        tableView.descriptionRow(
-                                id: "fee-rate-description-cell",
-                                text: "fee_settings.fee_rate.description".localized,
-                                font: .subhead2,
-                                textColor: .themeGray,
-                                ignoreBottomMargin: true
-                        )
-                    ]
-            )
+                id: "fee-rate",
+                headerState: .margin(height: .margin24),
+                rows: [
+                    tableView.subtitleWithInfoButtonRow(text: "fee_settings.fee_rate".localized + " (Sat/Byte)", uppercase: false) { [weak self] in
+                        self?.present?(InfoModule.feeInfo)
+                    },
+                    StaticRow(
+                        cell: feeRateCell,
+                        id: "fee-rate-cell",
+                        height: .heightCell48
+                    ),
+                    tableView.descriptionRow(
+                        id: "fee-rate-description-cell",
+                        text: "fee_settings.fee_rate.description".localized,
+                        font: .subhead2,
+                        textColor: .themeGray,
+                        ignoreBottomMargin: true
+                    ),
+                ]
+            ),
         ]
     }
 
     func onTapReset() {
         feeRateViewModel.reset()
     }
-
 }

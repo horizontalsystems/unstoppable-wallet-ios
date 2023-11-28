@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import HdWalletKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class RestoreMnemonicViewModel {
     private let service: RestoreMnemonicService
@@ -50,11 +50,9 @@ class RestoreMnemonicViewModel {
     private var cursorItem: RestoreMnemonicService.WordItem? {
         service.items.first { hasCursor(item: $0) }
     }
-
 }
 
 extension RestoreMnemonicViewModel {
-
     var possibleWordsDriver: Driver<[String]> {
         possibleWordsRelay.asDriver()
     }
@@ -111,9 +109,9 @@ extension RestoreMnemonicViewModel {
             }
         }
 
-        invalidRangesRelay.accept(nonCursorInvalidItems.map { $0.range })
+        invalidRangesRelay.accept(nonCursorInvalidItems.map(\.range))
 
-        if let cursorItem = cursorItem {
+        if let cursorItem {
             let possibleWords = service.possibleWords(string: cursorItem.word)
             possibleWordsRelay.accept(possibleWords)
         } else {
@@ -122,7 +120,7 @@ extension RestoreMnemonicViewModel {
     }
 
     func onSelect(word: String) {
-        guard let cursorItem = cursorItem else {
+        guard let cursorItem else {
             return
         }
 
@@ -138,23 +136,21 @@ extension RestoreMnemonicViewModel {
         service.passphrase = passphrase
         clearCautions()
     }
-
 }
 
 extension RestoreMnemonicViewModel: IRestoreSubViewModel {
-
     func resolveAccountType() -> AccountType? {
         mnemonicCautionRelay.accept(nil)
         passphraseCautionRelay.accept(nil)
 
         guard service.items.allSatisfy({ $0.type == .correct }) else {
-            invalidRangesRelay.accept(service.items.filter { $0.type != .correct }.map { $0.range })
+            invalidRangesRelay.accept(service.items.filter { $0.type != .correct }.map(\.range))
             return nil
         }
 
         do {
-            return try service.accountType(words: service.items.map { $0.word })
-        } catch RestoreMnemonicService.ErrorList.errors(let errors) {
+            return try service.accountType(words: service.items.map(\.word))
+        } catch let RestoreMnemonicService.ErrorList.errors(errors) {
             errors.forEach { error in
                 if case RestoreMnemonicService.RestoreError.emptyPassphrase = error {
                     passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
@@ -168,7 +164,5 @@ extension RestoreMnemonicViewModel: IRestoreSubViewModel {
         }
     }
 
-    func clear() {
-    }
-
+    func clear() {}
 }

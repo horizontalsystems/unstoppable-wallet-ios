@@ -1,17 +1,17 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 protocol ISendSettingsDataSource: AnyObject {
     var tableView: SectionsTableView? { get set }
-    var onOpenInfo: ((String, String) -> ())? { get set }
-    var present: ((UIViewController) -> ())? { get set }
-    var onUpdateAlteredState: (() -> ())? { get set }
-    var onCaution: ((TitledCaution?) -> ())? { get set }
+    var onOpenInfo: ((String, String) -> Void)? { get set }
+    var present: ((UIViewController) -> Void)? { get set }
+    var onUpdateAlteredState: (() -> Void)? { get set }
+    var onCaution: ((TitledCaution?) -> Void)? { get set }
 
     var altered: Bool { get }
     var buildSections: [SectionProtocol] { get }
@@ -66,7 +66,8 @@ class SendSettingsViewController: ThemeViewController {
         navigationItem.leftBarButtonItem?.isEnabled = false
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -114,7 +115,7 @@ class SendSettingsViewController: ThemeViewController {
     private func handle(caution: TitledCaution?) {
         cautionCell.isVisible = caution != nil
 
-        if let caution = caution {
+        if let caution {
             cautionCell.bind(caution: caution)
         }
 
@@ -125,31 +126,28 @@ class SendSettingsViewController: ThemeViewController {
             }
         }
     }
-
 }
 
 extension SendSettingsViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
-        let dataSourceSections = dataSources.map{ $0.buildSections }.reduce([], +)
+        let dataSourceSections = dataSources.map(\.buildSections).reduce([], +)
 
         let cautionsSections: [SectionProtocol] = [
             Section(
-                    id: "caution",
-                    headerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: cautionCell,
-                                id: "caution",
-                                dynamicHeight: { [weak self] containerWidth in
-                                    self?.cautionCell.cellHeight(containerWidth: containerWidth) ?? 0
-                                }
-                        )
-                    ]
-            )
+                id: "caution",
+                headerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: cautionCell,
+                        id: "caution",
+                        dynamicHeight: { [weak self] containerWidth in
+                            self?.cautionCell.cellHeight(containerWidth: containerWidth) ?? 0
+                        }
+                    ),
+                ]
+            ),
         ]
 
         return dataSourceSections + cautionsSections
     }
-
 }

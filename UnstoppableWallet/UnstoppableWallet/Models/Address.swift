@@ -11,9 +11,8 @@ struct Address: Equatable {
         domain ?? raw
     }
 
-    static func ==(lhs: Address, rhs: Address) -> Bool {
+    static func == (lhs: Address, rhs: Address) -> Bool {
         lhs.raw == rhs.raw &&
-        lhs.domain == rhs.domain
+            lhs.domain == rhs.domain
     }
-
 }

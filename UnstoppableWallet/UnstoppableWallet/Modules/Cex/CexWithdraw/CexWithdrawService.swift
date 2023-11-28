@@ -1,9 +1,9 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import MarketKit
 import Combine
+import Foundation
 import HsExtensions
+import MarketKit
+import RxCocoa
+import RxSwift
 
 class CexWithdrawService {
     private let disposeBag = DisposeBag()
@@ -26,6 +26,7 @@ class CexWithdrawService {
             availableBalanceSubject.onNext(_availableBalance)
         }
     }
+
     private(set) var amount: Decimal = 0 {
         didSet {
             amountSubject.onNext(amount)
@@ -44,7 +45,7 @@ class CexWithdrawService {
     init(cexAsset: CexAsset, addressService: AddressService, selectedNetwork: CexWithdrawNetwork) {
         self.cexAsset = cexAsset
         self.addressService = addressService
-        self.networks = cexAsset.withdrawNetworks
+        networks = cexAsset.withdrawNetworks
         self.selectedNetwork = selectedNetwork
 
         feeFromAmount = false
@@ -85,7 +86,7 @@ class CexWithdrawService {
             throw AmountError.minAmountViolated(coinAmount: "\(selectedNetwork.minAmount.description) \(cexAsset.coinCode)")
         }
 
-        if feeFromAmount && amount < fee {
+        if feeFromAmount, amount < fee {
             throw AmountError.minAmountViolated(coinAmount: "\(fee.description) \(cexAsset.coinCode)")
         }
     }
@@ -105,11 +106,9 @@ class CexWithdrawService {
 
         return fee
     }
-
 }
 
 extension CexWithdrawService: IAvailableBalanceService {
-
     var availableBalance: DataStatus<Decimal> {
         .completed(_availableBalance)
     }
@@ -117,11 +116,9 @@ extension CexWithdrawService: IAvailableBalanceService {
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
         availableBalanceSubject.asObserver().map { .completed($0) }
     }
-
 }
 
 extension CexWithdrawService: ICexAmountInputService {
-
     var balance: Decimal? {
         _availableBalance
     }
@@ -138,19 +135,15 @@ extension CexWithdrawService: ICexAmountInputService {
         self.amount = amount
         syncFee()
     }
-
 }
 
 extension CexWithdrawService: IErrorService {
-
     var errorObservable: Observable<Error?> {
         errorRelay.asObservable()
     }
-
 }
 
 extension CexWithdrawService {
-
     func setSelectNetwork(index: Int) {
         if let network = networks.at(index: index) {
             selectedNetwork = network
@@ -176,7 +169,7 @@ extension CexWithdrawService {
 
         switch addressService.state {
         case .empty: error = AddressError.addressRequired
-        case .success(let address):
+        case let .success(address):
             proceedSendData = CexWithdrawModule.SendData(
                 cexAsset: cexAsset,
                 network: selectedNetwork,
@@ -188,11 +181,9 @@ extension CexWithdrawService {
         default: ()
         }
     }
-
 }
 
 extension CexWithdrawService {
-
     enum AmountError: Error, LocalizedError {
         case insufficientBalance
         case maxAmountViolated(coinAmount: String)
@@ -201,8 +192,8 @@ extension CexWithdrawService {
         public var errorDescription: String? {
             switch self {
             case .insufficientBalance: return "cex_withdraw.error.insufficient_funds".localized
-            case .maxAmountViolated(let coinAmount): return "cex_withdraw.error.max_amount_violated".localized(coinAmount)
-            case .minAmountViolated(let coinAmount): return "cex_withdraw.error.min_amount_violated".localized(coinAmount)
+            case let .maxAmountViolated(coinAmount): return "cex_withdraw.error.max_amount_violated".localized(coinAmount)
+            case let .minAmountViolated(coinAmount): return "cex_withdraw.error.min_amount_violated".localized(coinAmount)
             }
         }
     }
@@ -214,5 +205,4 @@ extension CexWithdrawService {
             "cex_withdraw.address_required".localized
         }
     }
-
 }

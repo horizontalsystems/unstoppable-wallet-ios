@@ -1,8 +1,8 @@
-import UIKit
 import ComponentKit
-import ThemeKit
-import RxSwift
 import HUD
+import RxSwift
+import ThemeKit
+import UIKit
 
 class SwapSwitchCell: UITableViewCell {
     let cellHeight: CGFloat = 24
@@ -10,9 +10,9 @@ class SwapSwitchCell: UITableViewCell {
     private let spinner = HUDActivityView.create(with: .medium24)
     private let switchButton = UIButton()
 
-    var onSwitch: (() -> ())?
+    var onSwitch: (() -> Void)?
 
-    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style _: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
@@ -40,7 +40,8 @@ class SwapSwitchCell: UITableViewCell {
         switchButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -56,5 +57,4 @@ class SwapSwitchCell: UITableViewCell {
             spinner.stopAnimating()
         }
     }
-
 }

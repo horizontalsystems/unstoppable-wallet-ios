@@ -10,15 +10,14 @@ class BinanceChainTransactionRecord: TransactionRecord {
         memo = transaction.memo
 
         super.init(
-                source: source,
-                uid: transaction.hash,
-                transactionHash: transaction.hash,
-                transactionIndex: 0,
-                blockHeight: transaction.blockHeight,
-                confirmationsThreshold: BinanceAdapter.confirmationsThreshold,
-                date: transaction.date,
-                failed: false
+            source: source,
+            uid: transaction.hash,
+            transactionHash: transaction.hash,
+            transactionIndex: 0,
+            blockHeight: transaction.blockHeight,
+            confirmationsThreshold: BinanceAdapter.confirmationsThreshold,
+            date: transaction.date,
+            failed: false
         )
     }
-
 }

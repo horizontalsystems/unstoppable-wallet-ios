@@ -1,11 +1,11 @@
-import Foundation
-import RxSwift
-import RxRelay
-import HdWalletKit
-import BitcoinKit
 import BitcoinCashKit
-import LitecoinKit
+import BitcoinKit
 import DashKit
+import Foundation
+import HdWalletKit
+import LitecoinKit
+import RxRelay
+import RxSwift
 
 class ExtendedKeyService {
     let mode: ExtendedKeyModule.Mode
@@ -32,8 +32,8 @@ class ExtendedKeyService {
 
     private func syncDerivation() {
         switch accountType {
-        case .hdExtendedKey(let key):
-            let derivations = key.purposes.map { $0.mnemonicDerivation }
+        case let .hdExtendedKey(key):
+            let derivations = key.purposes.map(\.mnemonicDerivation)
             if !derivations.contains(derivation) {
                 derivation = derivations[0]
             }
@@ -68,7 +68,7 @@ class ExtendedKeyService {
             switch accountType {
             case .mnemonic:
                 return blockchain
-            case .hdExtendedKey(let extendedKey):
+            case let .hdExtendedKey(extendedKey):
                 switch extendedKey.derivedType {
                 case .master: return blockchain
                 default: return nil
@@ -86,7 +86,7 @@ class ExtendedKeyService {
             switch accountType {
             case .mnemonic:
                 return account
-            case .hdExtendedKey(let extendedKey):
+            case let .hdExtendedKey(extendedKey):
                 switch extendedKey.derivedType {
                 case .master: return account
                 default: return nil
@@ -105,9 +105,9 @@ class ExtendedKeyService {
             }
 
             return key(rootKey: rootKey)
-        case .hdExtendedKey(let extendedKey):
+        case let .hdExtendedKey(extendedKey):
             switch extendedKey {
-            case .private(let privateKey):
+            case let .private(privateKey):
                 switch extendedKey.derivedType {
                 case .master:
                     return key(rootKey: privateKey)
@@ -119,7 +119,7 @@ class ExtendedKeyService {
                     }
                 default: return nil
                 }
-            case .public(let publicKey):
+            case let .public(publicKey):
                 switch extendedKey.derivedType {
                 case .account:
                     switch mode {
@@ -143,13 +143,13 @@ class ExtendedKeyService {
 
     private func syncItem() {
         item = Item(
-                derivation: derivation,
-                derivationSwitchable: derivationSwitchable,
-                blockchain: resolvedBlockchain,
-                blockchainSwitchable: blockchainSwitchable,
-                account: resolvedAccount,
-                key: resolvedKey,
-                keyIsPrivate: keyIsPrivate
+            derivation: derivation,
+            derivationSwitchable: derivationSwitchable,
+            blockchain: resolvedBlockchain,
+            blockchainSwitchable: blockchainSwitchable,
+            account: resolvedAccount,
+            key: resolvedKey,
+            keyIsPrivate: keyIsPrivate
         )
     }
 
@@ -169,7 +169,7 @@ class ExtendedKeyService {
     }
 
     private func rootKey(seed: Data?) -> HDPrivateKey? {
-        guard let seed = seed else {
+        guard let seed else {
             return nil
         }
 
@@ -179,18 +179,16 @@ class ExtendedKeyService {
 
         return HDPrivateKey(seed: seed, xPrivKey: version.rawValue)
     }
-
 }
 
 extension ExtendedKeyService {
-
     var itemObservable: Observable<Item> {
         itemRelay.asObservable()
     }
 
     var supportedBlockchains: [Blockchain] {
         var coinTypesDerivableFromKey = [HDExtendedKeyVersion.ExtendedKeyCoinType]()
-        if case .hdExtendedKey(let key) = accountType {
+        if case let .hdExtendedKey(key) = accountType {
             coinTypesDerivableFromKey.append(contentsOf: key.coinTypes)
         }
 
@@ -226,11 +224,9 @@ extension ExtendedKeyService {
         self.account = account
         syncItem()
     }
-
 }
 
 extension ExtendedKeyService {
-
     struct Item {
         let derivation: MnemonicDerivation
         let derivationSwitchable: Bool
@@ -276,5 +272,4 @@ extension ExtendedKeyService {
             }
         }
     }
-
 }

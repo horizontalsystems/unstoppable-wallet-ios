@@ -15,5 +15,4 @@ class ReachabilityService {
     var reachabilityObservable: Observable<Bool> {
         reachabilityManager.reachabilityObservable
     }
-
 }

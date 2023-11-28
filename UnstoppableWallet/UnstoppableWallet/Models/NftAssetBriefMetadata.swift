@@ -46,5 +46,4 @@ class NftAssetBriefMetadata: Record {
         container[Columns.imageUrl] = imageUrl
         container[Columns.previewImageUrl] = previewImageUrl
     }
-
 }

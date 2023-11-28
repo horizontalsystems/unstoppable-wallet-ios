@@ -4,7 +4,7 @@ import ThemeKit
 
 struct BackupPasswordView: View {
     @ObservedObject var viewModel: BackupAppViewModel
-    var onDismiss: (() -> ())?
+    var onDismiss: (() -> Void)?
 
     @State var secureLock = true
 

@@ -1,9 +1,9 @@
-import Foundation
-import TronKit
-import RxSwift
 import BigInt
+import Foundation
 import HsToolKit
 import MarketKit
+import RxSwift
+import TronKit
 
 class TronTransactionsAdapter: BaseTronAdapter {
     static let decimal = 6
@@ -21,30 +21,29 @@ class TronTransactionsAdapter: BaseTronAdapter {
         var `protocol`: TransactionTag.TagProtocol?
         var contractAddress: TronKit.Address?
 
-        if let token = token {
+        if let token {
             switch token.type {
-                case .native:
-                    `protocol` = .native
-                case .eip20(let address):
-                    if let address = try? TronKit.Address(address: address) {
-                        `protocol` = .eip20
-                        contractAddress = address
-                    }
-                default: ()
+            case .native:
+                `protocol` = .native
+            case let .eip20(address):
+                if let address = try? TronKit.Address(address: address) {
+                    `protocol` = .eip20
+                    contractAddress = address
+                }
+            default: ()
             }
         }
 
         switch filter {
-            case .all: ()
-            case .incoming: type = .incoming
-            case .outgoing: type = .outgoing
-            case .swap: type = .swap
-            case .approve: type = .approve
+        case .all: ()
+        case .incoming: type = .incoming
+        case .outgoing: type = .outgoing
+        case .swap: type = .swap
+        case .approve: type = .approve
         }
 
         return TransactionTagQuery(type: type, protocol: `protocol`, contractAddress: contractAddress)
     }
-
 }
 
 extension TronTransactionsAdapter: ITransactionsAdapter {
@@ -52,7 +51,7 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
         tronKit.syncState.syncing
     }
 
-    var syncingObservable: Observable<()> {
+    var syncingObservable: Observable<Void> {
         tronKit.syncStatePublisher.asObservable().map { _ in () }
     }
 
@@ -62,9 +61,9 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
 
     func explorerUrl(transactionHash: String) -> String? {
         switch tronKit.network {
-            case .mainNet: return "https://tronscan.org/#/transaction/\(transactionHash)"
-            case .nileTestnet: return "https://nile.tronscan.org/#/transaction/\(transactionHash)"
-            case .shastaTestnet: return "https://shasta.tronscan.org/#/transaction/\(transactionHash)"
+        case .mainNet: return "https://tronscan.org/#/transaction/\(transactionHash)"
+        case .nileTestnet: return "https://nile.tronscan.org/#/transaction/\(transactionHash)"
+        case .shastaTestnet: return "https://shasta.tronscan.org/#/transaction/\(transactionHash)"
         }
     }
 
@@ -81,10 +80,9 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
         return Single.just(transactions.compactMap { transactionConverter.transactionRecord(fromTransaction: $0) })
     }
 
-    func rawTransaction(hash: String) -> String? {
+    func rawTransaction(hash _: String) -> String? {
         nil
     }
-
 }
 
 class ActivatedDepositAddress: DepositAddress {

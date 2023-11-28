@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class AdapterManager {
     private let disposeBag = DisposeBag()
@@ -18,18 +18,19 @@ class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, btcBlockchainManager: BtcBlockchainManager) {
+         tronKitManager: TronKitManager, btcBlockchainManager: BtcBlockchainManager)
+    {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
         self.tronKitManager = tronKitManager
 
         walletManager.activeWalletDataUpdatedObservable
-                .observeOn(SerialDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] walletData in
-                    self?.initAdapters(wallets: walletData.wallets, account: walletData.account)
-                })
-                .disposed(by: disposeBag)
+            .observeOn(SerialDispatchQueueScheduler(qos: .utility))
+            .subscribe(onNext: { [weak self] walletData in
+                self?.initAdapters(wallets: walletData.wallets, account: walletData.account)
+            })
+            .disposed(by: disposeBag)
 
         for blockchain in evmBlockchainManager.allBlockchains {
             subscribe(disposeBag, evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
@@ -107,11 +108,9 @@ class AdapterManager {
         let activeWalletData = walletManager.activeWalletData
         initAdapters(wallets: activeWalletData.wallets, account: activeWalletData.account)
     }
-
 }
 
 extension AdapterManager {
-
     var adapterData: AdapterData {
         queue.sync { _adapterData }
     }
@@ -126,7 +125,7 @@ extension AdapterManager {
 
     func adapter(for token: Token) -> IAdapter? {
         queue.sync {
-            guard let wallet = walletManager.activeWallets.first(where: { $0.token == token } ) else {
+            guard let wallet = walletManager.activeWallets.first(where: { $0.token == token }) else {
                 return nil
             }
 
@@ -176,14 +175,11 @@ extension AdapterManager {
             }
         }
     }
-
 }
 
 extension AdapterManager {
-
     struct AdapterData {
         var adapterMap: [Wallet: IAdapter]
         let account: Account?
     }
-
 }

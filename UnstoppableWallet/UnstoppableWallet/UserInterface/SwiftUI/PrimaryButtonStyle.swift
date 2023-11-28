@@ -1,5 +1,5 @@
-import SwiftUI
 import ComponentKit
+import SwiftUI
 
 struct PrimaryButtonStyle: ButtonStyle {
     let style: Style

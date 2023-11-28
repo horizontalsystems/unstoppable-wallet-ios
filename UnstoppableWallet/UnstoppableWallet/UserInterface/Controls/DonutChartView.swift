@@ -1,9 +1,8 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class DonutChartView: UIView {
-
     var baseColor: UIColor = .themeJacob {
         didSet { setNeedsDisplay() }
     }
@@ -26,7 +25,8 @@ class DonutChartView: UIView {
         backgroundColor = .clear
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
@@ -35,7 +35,7 @@ class DonutChartView: UIView {
         return baseColor.withAlphaComponent(1 - CGFloat(index) * diff)
     }
 
-    override func draw(_ rect: CGRect) {
+    override func draw(_: CGRect) {
         let radius = bounds.width / 2
         let arcWidth = radius * arcWidthPercent
 
@@ -52,11 +52,11 @@ class DonutChartView: UIView {
             currentPercent = nextPercent
 
             let path = UIBezierPath(
-                    arcCenter: center,
-                    radius: radius - arcWidth / 2,
-                    startAngle: startAngle,
-                    endAngle: endAngle,
-                    clockwise: true
+                arcCenter: center,
+                radius: radius - arcWidth / 2,
+                startAngle: startAngle,
+                endAngle: endAngle,
+                clockwise: true
             )
 
             path.lineWidth = arcWidth
@@ -64,13 +64,10 @@ class DonutChartView: UIView {
             path.stroke()
         }
     }
-
 }
 
 extension DonutChartView {
-
     static func height(containerWidth: CGFloat) -> CGFloat {
         containerWidth / 2
     }
-
 }

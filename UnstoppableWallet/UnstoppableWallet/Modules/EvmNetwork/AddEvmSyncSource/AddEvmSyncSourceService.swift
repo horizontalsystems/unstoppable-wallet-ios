@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxRelay
 import EvmKit
+import Foundation
 import MarketKit
+import RxRelay
+import RxSwift
 
 class AddEvmSyncSourceService {
     private let blockchainType: BlockchainType
@@ -16,11 +16,9 @@ class AddEvmSyncSourceService {
         self.blockchainType = blockchainType
         self.evmSyncSourceManager = evmSyncSourceManager
     }
-
 }
 
 extension AddEvmSyncSourceService {
-
     func set(urlString: String) {
         self.urlString = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
     }
@@ -48,14 +46,11 @@ extension AddEvmSyncSourceService {
 
         evmSyncSourceManager.saveSyncSource(blockchainType: blockchainType, url: url, auth: auth)
     }
-
 }
 
 extension AddEvmSyncSourceService {
-
     enum UrlError: Error {
         case invalid
         case alreadyExists
     }
-
 }

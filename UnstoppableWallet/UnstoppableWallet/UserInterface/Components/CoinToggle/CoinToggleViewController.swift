@@ -1,13 +1,13 @@
-import Combine
-import UIKit
 import Alamofire
-import RxSwift
-import RxCocoa
-import SnapKit
+import Combine
 import ComponentKit
 import MarketKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
+import SnapKit
 import ThemeKit
+import UIKit
 
 class CoinToggleViewController: ThemeSearchViewController {
     private let viewModel: ICoinToggleViewModel
@@ -25,7 +25,8 @@ class CoinToggleViewController: ThemeSearchViewController {
         super.init(scrollViews: [tableView])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -44,9 +45,9 @@ class CoinToggleViewController: ThemeSearchViewController {
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         $filter
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+            .store(in: &cancellables)
 
         tableView.buildSections()
 
@@ -54,7 +55,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     }
 
     private func onUpdate(viewItems: [CoinToggleViewModel.ViewItem]) {
-        let animated = self.viewItems.map { $0.uid } == viewItems.map { $0.uid }
+        let animated = self.viewItems.map(\.uid) == viewItems.map(\.uid)
         self.viewItems = viewItems
 
         if isLoaded {
@@ -65,7 +66,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     private func elements(viewItem: CoinToggleViewModel.ViewItem, forceToggleOn: Bool? = nil) -> [CellBuilderNew.CellElement] {
         var elements = [CellBuilderNew.CellElement]()
 
-        elements.append(.image32 { (component: ImageComponent) -> () in
+        elements.append(.image32 { (component: ImageComponent) in
             component.setImage(urlString: viewItem.imageUrl, placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) })
         })
         elements.append(.vStackCentered([
@@ -83,14 +84,14 @@ class CoinToggleViewController: ThemeSearchViewController {
                     component.isHidden = viewItem.badge == nil
                 },
                 .margin0,
-                .text { _ in }
+                .text { _ in },
             ]),
             .margin(1),
-            .text { (component: TextComponent) -> () in
+            .text { (component: TextComponent) in
                 component.font = .subhead2
                 component.textColor = .themeGray
                 component.text = viewItem.subtitle
-            }
+            },
         ]))
         switch viewItem.state {
         case let .toggleVisible(enabled, hasSettings, hasInfo):
@@ -109,7 +110,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                         self?.viewModel.onTapInfo(uid: viewItem.uid)
                     }
                 },
-                .switch { (component: SwitchComponent) -> () in
+                .switch { (component: SwitchComponent) in
                     if let forceOn = forceToggleOn {
                         component.switchView.setOn(forceOn, animated: true)
                     } else {
@@ -119,7 +120,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                     component.onSwitch = { [weak self] enabled in
                         self?.onToggle(viewItem: viewItem, enabled: enabled)
                     }
-                }
+                },
             ])
         default: ()
         }
@@ -129,29 +130,29 @@ class CoinToggleViewController: ThemeSearchViewController {
 
     private func row(viewItem: CoinToggleViewModel.ViewItem, isLast: Bool) -> RowProtocol {
         let elements = elements(viewItem: viewItem)
-        var hash: String = ""
-        var action: (() -> ())?
+        var hash = ""
+        var action: (() -> Void)?
 
         switch viewItem.state {
         case let .toggleVisible(enabled, hasSettings, hasInfo):
             hash = "coin_\(enabled)_\(hasSettings)_\(hasInfo)_\(isLast)"
-        case .toggleHidden(let notSupportedReason):
+        case let .toggleHidden(notSupportedReason):
             hash = "coin_\(isLast)"
             action = { [weak self] in
                 self?.onTapToggleHidden(viewItem: viewItem, notSupportedReason: notSupportedReason)
             }
         }
         return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: tableView,
-                id: "coin_\(viewItem.uid)",
-                hash: hash,
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-                },
-                action: action
+            rootElement: .hStack(elements),
+            tableView: tableView,
+            id: "coin_\(viewItem.uid)",
+            hash: hash,
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .transparent, isLast: isLast)
+            },
+            action: action
         )
     }
 
@@ -175,24 +176,20 @@ class CoinToggleViewController: ThemeSearchViewController {
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements(viewItem: viewItems[index], forceToggleOn: on)))
     }
 
-    func onTapToggleHidden(viewItem: CoinToggleViewModel.ViewItem, notSupportedReason: String) {
-    }
-
+    func onTapToggleHidden(viewItem _: CoinToggleViewModel.ViewItem, notSupportedReason _: String) {}
 }
 
 extension CoinToggleViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "coins",
-                    headerState: .margin(height: .margin4),
-                    footerState: .margin(height: .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, isLast: index == viewItems.count - 1)
-                    }
-            )
+                id: "coins",
+                headerState: .margin(height: .margin4),
+                footerState: .margin(height: .margin32),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, isLast: index == viewItems.count - 1)
+                }
+            ),
         ]
     }
-
 }

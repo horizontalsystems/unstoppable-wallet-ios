@@ -10,5 +10,4 @@ class MarketNftTopCollectionsViewModel {
     func topCollection(uid: String) -> NftTopCollection? {
         service.topCollection(uid: uid)
     }
-
 }

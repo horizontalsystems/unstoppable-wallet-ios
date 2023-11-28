@@ -1,5 +1,5 @@
-import RxSwift
 import RxRelay
+import RxSwift
 
 class LaunchScreenManager {
     private let keyLaunchScreen = "launch-screen"
@@ -50,5 +50,4 @@ class LaunchScreenManager {
     var showMarketObservable: Observable<Bool> {
         showMarketRelay.asObservable()
     }
-
 }

@@ -62,5 +62,4 @@ class AccountRecord_v_0_19: Record {
         container[Columns.dataKey] = dataKey
         container[Columns.eosAccount] = eosAccount
     }
-
 }

@@ -1,9 +1,9 @@
-import Foundation
-import TronKit
-import RxSwift
 import BigInt
+import Foundation
 import HsToolKit
 import MarketKit
+import RxSwift
+import TronKit
 
 class Trc20Adapter: BaseTronAdapter {
     private let contractAddress: TronKit.Address
@@ -13,12 +13,10 @@ class Trc20Adapter: BaseTronAdapter {
 
         super.init(tronKitWrapper: tronKitWrapper, decimals: wallet.decimals)
     }
-
 }
 
 // IAdapter
 extension Trc20Adapter: IAdapter {
-
     func start() {
         // started via TronKitManager
     }
@@ -30,11 +28,9 @@ extension Trc20Adapter: IAdapter {
     func refresh() {
         // refreshed via TronKitManager
     }
-
 }
 
 extension Trc20Adapter: IBalanceAdapter {
-
     var balanceState: AdapterState {
         convertToAdapterState(tronSyncState: tronKit.syncState)
     }
@@ -54,13 +50,10 @@ extension Trc20Adapter: IBalanceAdapter {
             self?.balanceData(balance: $0) ?? BalanceData(available: 0)
         }
     }
-
 }
 
 extension Trc20Adapter: ISendTronAdapter {
-
     func contract(amount: BigUInt, address: TronKit.Address) -> Contract {
         tronKit.transferTrc20TriggerSmartContract(contractAddress: contractAddress, toAddress: address, amount: amount)
     }
-
 }

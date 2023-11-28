@@ -9,25 +9,23 @@ class AccountRestoreWarningManager {
         self.accountManager = accountManager
         self.userDefaultsStorage = userDefaultsStorage
     }
-
 }
 
 extension AccountRestoreWarningManager {
-
     var hasNonStandard: Bool {
-        !accountManager.accounts.filter { $0.nonStandard }.isEmpty
+        !accountManager.accounts.filter(\.nonStandard).isEmpty
     }
 
     var hasNonStandardObservable: Observable<Bool> {
-        accountManager.accountsObservable.map { !$0.filter { $0.nonStandard }.isEmpty }
+        accountManager.accountsObservable.map { !$0.filter(\.nonStandard).isEmpty }
     }
 
     var hasNonRecommended: Bool {
-        !accountManager.accounts.filter { $0.nonRecommended }.isEmpty
+        !accountManager.accounts.filter(\.nonRecommended).isEmpty
     }
 
     var hasNonRecommendedObservable: Observable<Bool> {
-        accountManager.accountsObservable.map { !$0.filter { $0.nonStandard }.isEmpty }
+        accountManager.accountsObservable.map { !$0.filter(\.nonStandard).isEmpty }
     }
 
     func removeIgnoreWarning(account: Account) {
@@ -37,7 +35,6 @@ extension AccountRestoreWarningManager {
     func setIgnoreWarning(account: Account) {
         userDefaultsStorage.set(value: true, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
     }
-
 }
 
 class AccountRestoreWarningFactory {
@@ -58,7 +55,7 @@ class AccountRestoreWarningFactory {
                 return nil
             }
 
-            return CancellableTitledCaution(title: "note".localized, text:  "restore.warning.non_recommended.description".localized, type: .warning, cancellable: canIgnoreActiveAccountWarning)
+            return CancellableTitledCaution(title: "note".localized, text: "restore.warning.non_recommended.description".localized, type: .warning, cancellable: canIgnoreActiveAccountWarning)
         }
         return nil
     }
@@ -75,5 +72,4 @@ class AccountRestoreWarningFactory {
 
         return URL(string: fileUrl, relativeTo: faqIndexUrl)
     }
-
 }

@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class CoinTreasuriesService {
     private let coin: Coin
@@ -50,22 +50,22 @@ class CoinTreasuriesService {
         switch internalState {
         case .loading:
             state = .loading
-        case .completed(let treasuries):
+        case let .completed(treasuries):
             let treasuries = treasuries
-                    .filter {
-                        switch typeFilter {
-                        case .all: return true
-                        case .public: return $0.type == .public
-                        case .private: return $0.type == .private
-                        case .etf: return $0.type == .etf
-                        }
+                .filter {
+                    switch typeFilter {
+                    case .all: return true
+                    case .public: return $0.type == .public
+                    case .private: return $0.type == .private
+                    case .etf: return $0.type == .etf
                     }
-                    .sorted { lhsTreasury, rhsTreasury in
-                        sortDirectionAscending ? lhsTreasury.amount < rhsTreasury.amount : lhsTreasury.amount > rhsTreasury.amount
-                    }
+                }
+                .sorted { lhsTreasury, rhsTreasury in
+                    sortDirectionAscending ? lhsTreasury.amount < rhsTreasury.amount : lhsTreasury.amount > rhsTreasury.amount
+                }
 
             state = .loaded(treasuries: treasuries, reorder: reorder)
-        case .failed(let error):
+        case let .failed(error):
             state = .failed(error: error)
         }
     }
@@ -79,7 +79,7 @@ class CoinTreasuriesService {
 
         Task { [weak self, marketKit, coin, currencyManager] in
             do {
-                let treasuries  = try await marketKit.treasuries(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code)
+                let treasuries = try await marketKit.treasuries(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code)
                 self?.internalState = .completed(treasuries)
             } catch {
                 self?.internalState = .failed(error)
@@ -94,11 +94,9 @@ class CoinTreasuriesService {
 
         syncState(reorder: reorder)
     }
-
 }
 
 extension CoinTreasuriesService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -122,11 +120,9 @@ extension CoinTreasuriesService {
     func refresh() {
         syncTreasuries()
     }
-
 }
 
 extension CoinTreasuriesService {
-
     enum State {
         case loading
         case loaded(treasuries: [CoinTreasury], reorder: Bool)
@@ -139,5 +135,4 @@ extension CoinTreasuriesService {
         case `private`
         case etf
     }
-
 }

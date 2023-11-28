@@ -1,8 +1,7 @@
-import UIKit
 import SectionsTableView
+import UIKit
 
 class SelfSizedSectionsTableView: SectionsTableView {
-
     override init(style: Style) {
         super.init(style: style)
 
@@ -13,7 +12,8 @@ class SelfSizedSectionsTableView: SectionsTableView {
         setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -32,5 +32,4 @@ class SelfSizedSectionsTableView: SectionsTableView {
     override var intrinsicContentSize: CGSize {
         CGSize(width: contentSize.width, height: contentSize.height + adjustedContentInset.bottom)
     }
-
 }

@@ -10,7 +10,7 @@ extension Blockchain {
 
     func explorerUrl(reference: String?) -> String? {
         // using eip3091url field as it was renamed in MarketKit for further refactoring
-        guard let explorerUrl = explorerUrl, let reference = reference else {
+        guard let explorerUrl, let reference else {
             return nil
         }
 

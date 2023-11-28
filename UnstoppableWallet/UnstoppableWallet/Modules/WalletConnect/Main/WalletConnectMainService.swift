@@ -1,9 +1,9 @@
-import RxSwift
-import RxRelay
-import WalletConnectUtils
-import WalletConnectSign
-import HsToolKit
 import EvmKit
+import HsToolKit
+import RxRelay
+import RxSwift
+import WalletConnectSign
+import WalletConnectUtils
 
 class WalletConnectMainService {
     private let disposeBag = DisposeBag()
@@ -23,7 +23,7 @@ class WalletConnectMainService {
     }
 
     private let connectionStateRelay = PublishRelay<WalletConnectMainModule.ConnectionState>()
-    private let requestRelay = PublishRelay<WalletConnectSign.`Request`>()
+    private let requestRelay = PublishRelay<WalletConnectSign.Request>()
     private let errorRelay = PublishRelay<Error>()
     private let sessionUpdatedRelay = PublishRelay<WalletConnectSign.Session?>()
 
@@ -110,37 +110,35 @@ class WalletConnectMainService {
         }
     }
 
-    private func didDelete(topic: String, reason: WalletConnectSign.Reason) {
+    private func didDelete(topic: String, reason _: WalletConnectSign.Reason) {
         guard let currentTopic = session?.topic, currentTopic == topic else {
             return
         }
 
-        state = .killed(reason: .killSession) // todo: ???
+        state = .killed(reason: .killSession) // TODO: ???
     }
-
 }
 
 extension WalletConnectMainService {
-
     var activeAccountName: String? {
         accountManager.activeAccount?.name
     }
 
     var appMetaItem: WalletConnectMainModule.AppMetaItem? {
-        if let session = session {
+        if let session {
             return WalletConnectMainModule.AppMetaItem(
-                    name: session.peer.name,
-                    url: session.peer.url,
-                    description: session.peer.description,
-                    icons: session.peer.icons
+                name: session.peer.name,
+                url: session.peer.url,
+                description: session.peer.description,
+                icons: session.peer.icons
             )
         }
-        if let proposal = proposal {
+        if let proposal {
             return WalletConnectMainModule.AppMetaItem(
-                    name: proposal.proposer.name,
-                    url: proposal.proposer.url,
-                    description: proposal.proposer.description,
-                    icons: proposal.proposer.icons
+                name: proposal.proposer.name,
+                url: proposal.proposer.url,
+                description: proposal.proposer.description,
+                icons: proposal.proposer.icons
             )
         }
 
@@ -164,7 +162,7 @@ extension WalletConnectMainService {
         }
 
         switch state {
-        case .invalid(let error):
+        case let .invalid(error):
             return error.smartDescription
         case .waitingForApproveSession:
             return "wallet_connect.connect_description".localized
@@ -189,7 +187,7 @@ extension WalletConnectMainService {
         connectionStateRelay.asObservable()
     }
 
-    var proposalTimeOutAttentionObservable: Observable<()> {
+    var proposalTimeOutAttentionObservable: Observable<Void> {
         Observable.empty()
     }
 
@@ -213,7 +211,7 @@ extension WalletConnectMainService {
     }
 
     func approveSession() {
-        guard let proposal = proposal else {
+        guard let proposal else {
             return
         }
 
@@ -227,17 +225,18 @@ extension WalletConnectMainService {
             return
         }
 
-        //todo: check
+        // TODO: check
         let accounts: [WalletConnectUtils.Account] = blockchains.items.compactMap { item in
             Blockchain(
                 namespace: item.namespace,
-                reference: item.chainId.description)
-                .flatMap { chain in
-                    WalletConnectUtils.Account(
-                            blockchain: chain,
-                            address: item.address
-                    )
-                }
+                reference: item.chainId.description
+            )
+            .flatMap { chain in
+                WalletConnectUtils.Account(
+                    blockchain: chain,
+                    address: item.address
+                )
+            }
         }
 
         Task { [weak self, service, blockchains] in
@@ -255,7 +254,7 @@ extension WalletConnectMainService {
             return
         }
 
-        if let proposal = proposal {
+        if let proposal {
             Task { [weak self, service] in
                 defer {
                     self?.state = .killed(reason: .rejectProposal)
@@ -275,18 +274,16 @@ extension WalletConnectMainService {
             return
         }
 
-        guard let session = session else {
+        guard let session else {
             return
         }
 
         service.disconnect(topic: session.topic, reason: RejectionReason(code: 1, message: "Session Killed by User"))
-        state = .killed(reason: .killSession) //todo: ???
+        state = .killed(reason: .killSession) // TODO: ???
     }
-
 }
 
 extension WalletConnectMainService {
-
     struct RejectionReason: Reason {
         let code: Int
         let message: String
@@ -296,5 +293,4 @@ extension WalletConnectMainService {
         let proposal: WalletConnectSign.Session.Proposal
         let appMeta: WalletConnectMainModule.AppMetaItem
     }
-
 }

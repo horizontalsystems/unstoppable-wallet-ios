@@ -1,20 +1,20 @@
-import SectionsTableView
-import UIKit
-import ThemeKit
-import MarketKit
 import EvmKit
+import MarketKit
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 struct EvmSendSettingsModule {
-
     static func instance(evmKit: EvmKit.Kit, blockchainType: BlockchainType, sendData: SendEvmData, coinServiceFactory: EvmCoinServiceFactory,
                          gasPrice: GasPrice? = nil, previousTransaction: EvmKit.Transaction? = nil,
-                         predefinedGasLimit: Int? = nil, predefinedNonce: Int? = nil) -> (EvmSendSettingsService, EvmSendSettingsViewModel)? {
+                         predefinedGasLimit: Int? = nil, predefinedNonce: Int? = nil) -> (EvmSendSettingsService, EvmSendSettingsViewModel)?
+    {
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKit, gasPrice: gasPrice, previousTransaction: previousTransaction)
 
         let gasDataService = EvmCommonGasDataService.instance(
-                evmKit: evmKit,
-                blockchainType: blockchainType,
-                predefinedGasLimit: predefinedGasLimit
+            evmKit: evmKit,
+            blockchainType: blockchainType,
+            predefinedGasLimit: predefinedGasLimit
         )
 
         let coinService = coinServiceFactory.baseCoinService
@@ -61,13 +61,12 @@ struct EvmSendSettingsModule {
 
         return ThemeNavigationController(rootViewController: settingsViewController)
     }
-
 }
 
 protocol IEvmSendSettingsDataSource: AnyObject {
     var tableView: SectionsTableView? { get set }
-    var onOpenInfo: ((String, String) -> ())? { get set }
-    var onUpdateAlteredState: (() -> ())? { get set }
+    var onOpenInfo: ((String, String) -> Void)? { get set }
+    var onUpdateAlteredState: (() -> Void)? { get set }
 
     var altered: Bool { get }
     var buildSections: [SectionProtocol] { get }

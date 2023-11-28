@@ -1,5 +1,5 @@
-import MarketKit
 import HsExtensions
+import MarketKit
 
 class CoinMajorHoldersService {
     let coin: Coin
@@ -33,11 +33,9 @@ class CoinMajorHoldersService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension CoinMajorHoldersService {
-
     func labeled(address: String) -> String {
         evmLabelManager.mapped(address: address)
     }
@@ -45,5 +43,4 @@ extension CoinMajorHoldersService {
     func refresh() {
         sync()
     }
-
 }

@@ -12,8 +12,8 @@ class AddressResolutionProvider {
         Single<Bool>.create { [weak self] observer in
             self?.resolution?.isSupported(domain: domain) { result in
                 switch result {
-                case .success(let valid): observer(.success(valid))
-                case .failure(let error): observer(.error(error))
+                case let .success(valid): observer(.success(valid))
+                case let .failure(error): observer(.error(error))
                 }
             }
 
@@ -25,13 +25,13 @@ class AddressResolutionProvider {
         Single<Result<String, Error>>.create { [weak self] observer in
             let completionBlock: StringResultConsumer = { result in
                 switch result {
-                case .success(let returnValue):
+                case let .success(returnValue):
                     observer(.success(.success(returnValue)))
-                case .failure(let error):
+                case let .failure(error):
                     observer(.success(.failure(error)))
                 }
             }
-            if let chain = chain {
+            if let chain {
                 self?.resolution?.multiChainAddress(domain: domain, ticker: ticker, chain: chain, completion: completionBlock)
             } else {
                 self?.resolution?.addr(domain: domain, ticker: ticker, completion: completionBlock)
@@ -40,5 +40,4 @@ class AddressResolutionProvider {
             return Disposables.create()
         }
     }
-
 }

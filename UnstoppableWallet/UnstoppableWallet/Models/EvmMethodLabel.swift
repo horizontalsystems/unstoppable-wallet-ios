@@ -22,7 +22,7 @@ class EvmMethodLabel: Record, ImmutableMappable {
     }
 
     required init(map: Map) throws {
-        methodId = (try map.value("method_id") as String).lowercased()
+        methodId = try (map.value("method_id") as String).lowercased()
         label = try map.value("label")
 
         super.init()
@@ -39,5 +39,4 @@ class EvmMethodLabel: Record, ImmutableMappable {
         container[Columns.methodId] = methodId
         container[Columns.label] = label
     }
-
 }

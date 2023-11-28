@@ -1,13 +1,13 @@
 import Foundation
-import UIKit
 import MarketKit
 import SectionsTableView
 import ThemeKit
+import UIKit
 
 class ReceiveSelectorViewController<ViewModel: IReceiveSelectorViewModel>: ThemeViewController {
     private let viewModel: ViewModel
 
-    var onSelect: ((ViewModel.Item) -> ())?
+    var onSelect: ((ViewModel.Item) -> Void)?
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -17,7 +17,8 @@ class ReceiveSelectorViewController<ViewModel: IReceiveSelectorViewModel>: Theme
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -55,64 +56,61 @@ class ReceiveSelectorViewController<ViewModel: IReceiveSelectorViewModel>: Theme
 
         onSelect?(item)
     }
-
 }
 
 extension ReceiveSelectorViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         let viewItems = viewModel.viewItems
         var sections: [SectionProtocol] = [
             Section(
-                    id: "description",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.descriptionRow(
-                                id: "description",
-                                text: viewModel.topDescription,
-                                font: .subhead2,
-                                textColor: .themeGray,
-                                ignoreBottomMargin: true
-                        )
-                    ]
+                id: "description",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.descriptionRow(
+                        id: "description",
+                        text: viewModel.topDescription,
+                        font: .subhead2,
+                        textColor: .themeGray,
+                        ignoreBottomMargin: true
+                    ),
+                ]
             ),
             Section(
-                    id: "main",
-                    footerState: .margin(height: .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        tableView.universalRow62(
-                                id: viewItem.uid,
-                                image: .url(viewItem.imageUrl, placeholder: "placeholder_rectangle_32"),
-                                title: .body(viewItem.title),
-                                description: .subhead2(viewItem.subtitle),
-                                accessoryType: .disclosure,
-                                isFirst: index == 0,
-                                isLast: index == viewItems.count - 1)
-                        { [weak self] in
-                            self?.onSelect(uid: viewItem.uid)
-                        }
+                id: "main",
+                footerState: .margin(height: .margin32),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    tableView.universalRow62(
+                        id: viewItem.uid,
+                        image: .url(viewItem.imageUrl, placeholder: "placeholder_rectangle_32"),
+                        title: .body(viewItem.title),
+                        description: .subhead2(viewItem.subtitle),
+                        accessoryType: .disclosure,
+                        isFirst: index == 0,
+                        isLast: index == viewItems.count - 1
+                    ) { [weak self] in
+                        self?.onSelect(uid: viewItem.uid)
                     }
-            )
+                }
+            ),
         ]
 
         if let bottomDescription = viewModel.highlightedBottomDescription {
             sections.append(
-                    Section(
+                Section(
+                    id: "description",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.highlightedDescriptionRow(
                             id: "description",
-                            footerState: .margin(height: .margin32),
-                            rows: [
-                                tableView.highlightedDescriptionRow(
-                                        id: "description",
-                                        text: bottomDescription,
-                                        ignoreBottomMargin: true
-                                )
-                            ]
-                    )
+                            text: bottomDescription,
+                            ignoreBottomMargin: true
+                        ),
+                    ]
+                )
             )
         }
 
         return sections
     }
-
 }

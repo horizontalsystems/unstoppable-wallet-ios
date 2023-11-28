@@ -11,11 +11,11 @@ class WCSignMessagePayload: WCRequestPayload {
         super.init(dAppName: dAppName, data: data)
     }
 
-    required public convenience init(dAppName: String, from anyCodable: AnyCodable) throws {
-        self.init(dAppName: dAppName, data: try Self.data(from: anyCodable))
+    public required convenience init(dAppName: String, from anyCodable: AnyCodable) throws {
+        try self.init(dAppName: dAppName, data: Self.data(from: anyCodable))
     }
 
-    class func data(from anyCodable: AnyCodable) throws -> Data {
+    class func data(from _: AnyCodable) throws -> Data {
         throw ParsingError.badJSONRPCRequest
     }
 

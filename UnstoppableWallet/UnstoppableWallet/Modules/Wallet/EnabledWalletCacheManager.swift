@@ -13,11 +13,9 @@ class EnabledWalletCacheManager {
     private func handleDelete(account: Account) {
         storage.deleteEnabledWalletCaches(accountId: account.id)
     }
-
 }
 
 extension EnabledWalletCacheManager {
-
     func cacheContainer(accountId: String) -> CacheContainer {
         CacheContainer(caches: storage.enabledWalletCaches(accountId: accountId))
     }
@@ -33,11 +31,9 @@ extension EnabledWalletCacheManager {
         let cache = EnabledWalletCache(wallet: wallet, balanceData: balanceData)
         storage.save(enabledWalletCaches: [cache])
     }
-
 }
 
 extension EnabledWalletCacheManager {
-
     struct CacheContainer {
         private let caches: [EnabledWalletCache]
 
@@ -49,5 +45,4 @@ extension EnabledWalletCacheManager {
             caches.first { $0.tokenQueryId == wallet.token.tokenQuery.id }?.balanceData
         }
     }
-
 }

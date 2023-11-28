@@ -1,7 +1,7 @@
 import Foundation
 import HsExtensions
-import MarketKit
 import HsToolKit
+import MarketKit
 
 class SubscriptionManager {
     private let keyAuthToken = "subscription-auth-token"
@@ -34,12 +34,10 @@ class SubscriptionManager {
         authToken = nil
         userDefaultsStorage.set(value: authToken, for: keyAuthToken)
     }
-
 }
 
 extension SubscriptionManager {
-
-    func fetch<T>(request: () async throws -> T, onSuccess: (T) -> (), onInvalidAuthToken: () -> (), onFailure: (Error) -> ()) async throws {
+    func fetch<T>(request: () async throws -> T, onSuccess: (T) -> Void, onInvalidAuthToken _: () -> Void, onFailure: (Error) -> Void) async throws {
         do {
             let result = try await request()
             onSuccess(result)
@@ -55,10 +53,9 @@ extension SubscriptionManager {
         }
     }
 
-    func set(authToken: String) {
+    func set(authToken _: String) {
 //        marketKit.set(proAuthToken: authToken)
 //        self.authToken = authToken
 //        localStorage.set(value: authToken, for: keyAuthToken)
     }
-
 }

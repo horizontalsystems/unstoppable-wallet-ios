@@ -67,9 +67,7 @@ class WalletConnectSessionManager {
 
         let currentSessions = allSessions
         let allDbSessions = storage.sessions(accountId: nil)
-        let dbTopics = allDbSessions.map {
-            $0.topic
-        }
+        let dbTopics = allDbSessions.map(\.topic)
 
         let newSessions = currentSessions.filter { session in
             !dbTopics.contains(session.topic)

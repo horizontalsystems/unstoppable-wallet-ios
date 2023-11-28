@@ -24,16 +24,16 @@ class WalletTokenBalanceViewModel {
         self.factory = factory
 
         service.$item
-                .sink { [weak self] in self?.sync(item: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(item: $0) }
+            .store(in: &cancellables)
 
         service.itemUpdatedPublisher
-                .sink { [weak self] in self?.sync() }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync() }
+            .store(in: &cancellables)
 
         service.balanceHiddenPublisher
-                .sink { [weak self] _ in self?.sync() }
-                .store(in: &cancellables)
+            .sink { [weak self] _ in self?.sync() }
+            .store(in: &cancellables)
 
         sync(item: service.item)
     }
@@ -47,11 +47,9 @@ class WalletTokenBalanceViewModel {
             buttons = newButtons
         }
     }
-
 }
 
 extension WalletTokenBalanceViewModel {
-
     var playHapticPublisher: AnyPublisher<Void, Never> {
         playHapticSubject.eraseToAnyPublisher()
     }
@@ -85,10 +83,9 @@ extension WalletTokenBalanceViewModel {
         playHapticSubject.send()
     }
 
-
     func onTapReceive() {
         switch service.element {
-        case .wallet(let wallet):
+        case let .wallet(wallet):
             if wallet.account.backedUp || service.isCloudBackedUp() {
                 openReceiveSubject.send(wallet)
             } else {
@@ -127,11 +124,9 @@ extension WalletTokenBalanceViewModel {
 
         openSyncErrorSubject.send((wallet, error))
     }
-
 }
 
 extension WalletTokenBalanceViewModel {
-
     struct BalanceCustomStateViewItem {
         let title: String
         let amountValue: (text: String?, dimmed: Bool)?
@@ -152,5 +147,4 @@ extension WalletTokenBalanceViewModel {
         let descriptionValue: (text: String?, dimmed: Bool)?
         let customStates: [BalanceCustomStateViewItem]
     }
-
 }

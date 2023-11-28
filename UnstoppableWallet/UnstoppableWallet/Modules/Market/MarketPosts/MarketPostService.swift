@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketPostService {
     private let marketKit: Kit
@@ -34,11 +34,9 @@ class MarketPostService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension MarketPostService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -50,15 +48,12 @@ extension MarketPostService {
     func refresh() {
         fetch()
     }
-
 }
 
 extension MarketPostService {
-
     enum State {
         case loading
         case loaded(posts: [Post])
         case failed(error: Error)
     }
-
 }

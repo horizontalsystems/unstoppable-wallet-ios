@@ -1,5 +1,5 @@
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class UniswapSettingsViewModel {
     private let disposeBag = DisposeBag()
@@ -14,11 +14,11 @@ class UniswapSettingsViewModel {
         self.settingProvider = settingProvider
 
         service.stateObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.syncAction()
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] _ in
+                self?.syncAction()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func syncAction() {
@@ -41,11 +41,9 @@ class UniswapSettingsViewModel {
             }
         }
     }
-
 }
 
 extension UniswapSettingsViewModel {
-
     public var actionDriver: Driver<ActionState> {
         actionRelay.asDriver()
     }
@@ -57,14 +55,11 @@ extension UniswapSettingsViewModel {
         }
         return false
     }
-
 }
 
 extension UniswapSettingsViewModel {
-
     enum ActionState {
         case enabled
         case disabled(title: String)
     }
-
 }

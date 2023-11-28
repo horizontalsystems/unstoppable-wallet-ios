@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 import UniswapKit
 
 protocol ISlippageService {
@@ -28,11 +28,11 @@ class SwapSlippageViewModel {
         self.decimalParser = decimalParser
 
         service.slippageChangeObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] in
-                    self?.sync()
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] in
+                self?.sync()
+            })
+            .disposed(by: disposeBag)
 
         sync()
     }
@@ -50,11 +50,9 @@ class SwapSlippageViewModel {
 
         cautionRelay.accept(caution)
     }
-
 }
 
 extension SwapSlippageViewModel {
-
     var placeholder: String {
         service.defaultSlippage.description
     }
@@ -89,17 +87,14 @@ extension SwapSlippageViewModel {
 
         return amount.decimalCount <= 2
     }
-
 }
 
 extension SwapSettingsModule.SlippageError: LocalizedError {
-
     var errorDescription: String? {
         switch self {
         case .tooLow: return "swap.advanced_settings.error.lower_slippage".localized
-        case .tooHigh(let max): return "swap.advanced_settings.error.higher_slippage".localized(max.description)
+        case let .tooHigh(max): return "swap.advanced_settings.error.higher_slippage".localized(max.description)
         default: return nil
         }
     }
-
 }

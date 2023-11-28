@@ -1,7 +1,6 @@
 import HdWalletKit
 
 extension Mnemonic.Language {
-
     var language: String {
         switch self {
         case .english: return "en"
@@ -16,5 +15,4 @@ extension Mnemonic.Language {
         case .portuguese: return "pt"
         }
     }
-
 }

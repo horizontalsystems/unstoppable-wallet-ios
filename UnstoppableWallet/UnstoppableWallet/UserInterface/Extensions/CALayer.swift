@@ -29,7 +29,7 @@ extension CALayer {
         return animation
     }
 
-    class func perform(withoutAnimation: Bool = true, duration: TimeInterval? = nil, _ action: () -> Void, completion: (() -> ())? = nil) {
+    class func perform(withoutAnimation: Bool = true, duration: TimeInterval? = nil, _ action: () -> Void, completion: (() -> Void)? = nil) {
         CATransaction.begin()
         CATransaction.setAnimationDuration(duration ?? .themeAnimationDuration)
         CATransaction.setDisableActions(withoutAnimation)
@@ -43,5 +43,4 @@ extension CALayer {
         action()
         CATransaction.commit()
     }
-
 }

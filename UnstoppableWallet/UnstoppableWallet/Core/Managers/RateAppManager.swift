@@ -42,7 +42,7 @@ class RateAppManager {
     }
 
     private func showIfAllowed() {
-        guard isRequestAllowed && isOnBalancePage else {
+        guard isRequestAllowed, isOnBalancePage else {
             return
         }
 
@@ -51,19 +51,18 @@ class RateAppManager {
 
     private func show() {
         if let scene = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                DispatchQueue.main.async {
-                    SKStoreReviewController.requestReview(in: scene)
-                }
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+        {
+            DispatchQueue.main.async {
+                SKStoreReviewController.requestReview(in: scene)
             }
+        }
         localStorage.rateAppLastRequestDate = Date()
         isRequestAllowed = false
     }
-
 }
 
 extension RateAppManager {
-
     func onBalancePageAppear() {
         isOnBalancePage = true
         showIfAllowed()
@@ -107,5 +106,4 @@ extension RateAppManager {
 
         show()
     }
-
 }

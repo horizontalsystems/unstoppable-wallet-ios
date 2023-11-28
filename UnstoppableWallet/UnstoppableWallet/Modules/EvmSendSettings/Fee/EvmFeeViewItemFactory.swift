@@ -50,5 +50,4 @@ extension FeeViewItemFactory {
     func intValue(value: Float) -> Int {
         Int(value * Float(scale.scaleValue))
     }
-
 }

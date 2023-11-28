@@ -48,26 +48,25 @@ class WCSignMessageRequestService {
     private func sign(message: Data, isLegacy: Bool = false) throws -> Data {
         try signer.signed(message: message, isLegacy: isLegacy)
     }
-
 }
 
 extension WCSignMessageRequestService {
     var sections: [Section] {
         var sections = [Section]()
 
-        if let domain = domain {
+        if let domain {
             sections.append(Section(header: nil, items: [.domain(domain)]))
         }
 
         var infoItems: [Item] = [
-            .dApp(name: request.payload.dAppName)
+            .dApp(name: request.payload.dAppName),
         ]
         if let name = request.chain.chainName, let address = request.chain.address {
             infoItems.append(.blockchain(name: name, address: address))
         }
         sections.append(Section(header: nil, items: infoItems))
 
-        if let message = message {
+        if let message {
             sections.append(Section(header: .signMessage, items: [.message(message)]))
         }
 

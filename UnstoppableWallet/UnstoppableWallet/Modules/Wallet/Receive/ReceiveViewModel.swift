@@ -8,11 +8,9 @@ class ReceiveViewModel {
     init(service: ReceiveService) {
         self.service = service
     }
-
 }
 
 extension ReceiveViewModel {
-
     func onSelect(fullCoin: FullCoin) {
         service.onSelect(fullCoin: fullCoin)
     }
@@ -24,11 +22,9 @@ extension ReceiveViewModel {
     func onRestoreZcash(token: Token, height: Int?) {
         service.onRestoreZcash(token: token, height: height)
     }
-
 }
 
 extension ReceiveViewModel {
-
     var showTokenPublisher: AnyPublisher<Wallet, Never> {
         service.showTokenPublisher
     }
@@ -48,5 +44,4 @@ extension ReceiveViewModel {
     var showBlockchainSelectPublisher: AnyPublisher<(FullCoin, AccountType), Never> {
         service.showBlockchainSelectPublisher
     }
-
 }

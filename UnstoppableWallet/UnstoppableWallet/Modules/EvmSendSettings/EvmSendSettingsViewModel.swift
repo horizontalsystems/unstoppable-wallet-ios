@@ -1,5 +1,5 @@
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class EvmSendSettingsViewModel {
     let service: EvmSendSettingsService
@@ -29,21 +29,18 @@ class EvmSendSettingsViewModel {
         switch transactionStatus {
         case .loading:
             cautions = []
-        case .failed(let error):
+        case let .failed(error):
             cautions = cautionsFactory.items(errors: [error], warnings: [], baseCoinService: coinService)
-        case .completed(let fallibleTransaction):
+        case let .completed(fallibleTransaction):
             cautions = cautionsFactory.items(errors: fallibleTransaction.errors, warnings: fallibleTransaction.warnings, baseCoinService: coinService)
         }
 
         cautionRelay.accept(cautions.first)
     }
-
 }
 
 extension EvmSendSettingsViewModel {
-
     var cautionDriver: Driver<TitledCaution?> {
         cautionRelay.asDriver()
     }
-
 }

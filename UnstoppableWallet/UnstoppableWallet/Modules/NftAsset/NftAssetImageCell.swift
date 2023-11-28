@@ -1,5 +1,5 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class NftAssetImageCell: UITableViewCell {
     private static let horizontalMargin: CGFloat = .margin16
@@ -17,7 +17,8 @@ class NftAssetImageCell: UITableViewCell {
         nftImageView.layer.cornerCurve = .continuous
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -35,12 +36,10 @@ class NftAssetImageCell: UITableViewCell {
     var currentImage: UIImage? {
         nftImageView.currentImage
     }
-
 }
 
 extension NftAssetImageCell {
-
-    static func height(containerWidth: CGFloat, maxHeight: CGFloat, ratio: CGFloat) -> CGFloat {
+    static func height(containerWidth: CGFloat, maxHeight _: CGFloat, ratio: CGFloat) -> CGFloat {
         let imageWidth = max(0, containerWidth - 2 * horizontalMargin)
         return min(120, imageWidth * ratio)
     }
@@ -49,5 +48,4 @@ extension NftAssetImageCell {
         let imageWidth = max(0, containerWidth - 2 * horizontalMargin)
         return imageWidth * ratio
     }
-
 }

@@ -13,17 +13,15 @@ class DebugInteractor {
         self.pasteboardManager = pasteboardManager
 
         appManager.willEnterForegroundObservable
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
-                    self?.delegate?.didEnterForeground()
-                })
-                .disposed(by: disposeBag)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.delegate?.didEnterForeground()
+            })
+            .disposed(by: disposeBag)
     }
-
 }
 
 extension DebugInteractor: IDebugInteractor {
-
     var logs: [String] {
         debugBackgroundManager?.logs ?? ["not available!"]
     }
@@ -31,5 +29,4 @@ extension DebugInteractor: IDebugInteractor {
     func clearLogs() {
         debugBackgroundManager?.clearLogs()
     }
-
 }

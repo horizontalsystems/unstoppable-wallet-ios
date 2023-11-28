@@ -9,7 +9,7 @@ class BtcBlockchainManager {
         .bitcoinCash,
         .ecash,
         .litecoin,
-        .dash
+        .dash,
     ]
 
     private let marketKit: MarketKit.Kit
@@ -25,7 +25,7 @@ class BtcBlockchainManager {
         self.storage = storage
 
         do {
-            allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+            allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map(\.uid))
         } catch {
             allBlockchains = []
         }

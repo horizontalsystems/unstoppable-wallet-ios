@@ -4,11 +4,9 @@ class SwitchAccountService {
     init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
-
 }
 
 extension SwitchAccountService {
-
     var items: [Item] {
         let activeAccount = accountManager.activeAccount
         return accountManager.accounts.map { account in
@@ -19,14 +17,11 @@ extension SwitchAccountService {
     func set(activeAccountId: String) {
         accountManager.set(activeAccountId: activeAccountId)
     }
-
 }
 
 extension SwitchAccountService {
-
     struct Item {
         let account: Account
         let isActive: Bool
     }
-
 }

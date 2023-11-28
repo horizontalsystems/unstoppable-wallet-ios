@@ -25,7 +25,8 @@ class SendEthereumErrorCell: UITableViewCell {
         errorLabel.textColor = .themeLucian
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -40,13 +41,10 @@ class SendEthereumErrorCell: UITableViewCell {
 
         return isVisible ? Self.height(text: text, containerWidth: width) : 0
     }
-
 }
 
 extension SendEthereumErrorCell {
-
     static func height(text: String, containerWidth: CGFloat) -> CGFloat {
         text.height(forContainerWidth: containerWidth - SendEthereumErrorCell.padding * 2, font: SendEthereumErrorCell.font) + SendEthereumErrorCell.padding
     }
-
 }

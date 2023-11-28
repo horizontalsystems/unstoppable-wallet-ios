@@ -59,7 +59,7 @@ extension AddressUri {
             return [BlockchainType(uid: concreteUid)]
         }
 
-        if let type = BlockchainType.supported.first(where: {$0.uriScheme == scheme }) {
+        if let type = BlockchainType.supported.first(where: { $0.uriScheme == scheme }) {
             // For any evm types uses ethereum:_ scheme
             if EvmBlockchainManager.blockchainTypes.contains(type) {
                 return EvmBlockchainManager.blockchainTypes

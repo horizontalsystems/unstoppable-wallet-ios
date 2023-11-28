@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class SendFeeViewModel {
     private let disposeBag = DisposeBag()
@@ -18,7 +18,6 @@ class SendFeeViewModel {
         subscribe(disposeBag, service.stateObservable) { [weak self] in
             self?.sync(state: $0)
         }
-
     }
 
     private func sync(state: DataStatus<SendFeeService.State>) {
@@ -35,7 +34,7 @@ class SendFeeViewModel {
             spinnerVisibleRelay.accept(false)
 
             valueRelay.accept(.error(text: "n/a".localized))
-        case .completed(let state):
+        case let .completed(state):
             spinnerVisibleRelay.accept(false)
             firstLoaded = true
 
@@ -47,11 +46,9 @@ class SendFeeViewModel {
             valueRelay.accept(.regular(text: state.primaryInfo.formattedFull ?? "n/a".localized, secondaryText: state.secondaryInfo?.formattedFull))
         }
     }
-
 }
 
 extension SendFeeViewModel: IFeeViewModel {
-
     var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }
@@ -59,5 +56,4 @@ extension SendFeeViewModel: IFeeViewModel {
     var spinnerVisibleDriver: Driver<Bool> {
         spinnerVisibleRelay.asDriver()
     }
-
 }

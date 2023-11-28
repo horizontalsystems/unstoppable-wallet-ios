@@ -1,10 +1,10 @@
+import BigInt
+import EvmKit
 import Foundation
 import MarketKit
-import RxSwift
-import RxRelay
-import EvmKit
 import OneInchKit
-import BigInt
+import RxRelay
+import RxSwift
 
 struct OneInchSwapParameters: Equatable {
     let tokenFrom: MarketKit.Token
@@ -14,15 +14,14 @@ struct OneInchSwapParameters: Equatable {
     let slippage: Decimal
     let recipient: Address?
 
-    static func ==(lhs: OneInchSwapParameters, rhs: OneInchSwapParameters) -> Bool {
+    static func == (lhs: OneInchSwapParameters, rhs: OneInchSwapParameters) -> Bool {
         lhs.tokenFrom == rhs.tokenFrom &&
-        lhs.tokenTo == rhs.tokenTo &&
-        lhs.amountFrom == rhs.amountFrom &&
-        lhs.amountTo == rhs.amountTo &&
-        lhs.slippage == rhs.slippage &&
-        lhs.recipient == rhs.recipient
+            lhs.tokenTo == rhs.tokenTo &&
+            lhs.amountFrom == rhs.amountFrom &&
+            lhs.amountTo == rhs.amountTo &&
+            lhs.slippage == rhs.slippage &&
+            lhs.recipient == rhs.recipient
     }
-
 }
 
 class OneInchFeeService {
@@ -66,8 +65,8 @@ class OneInchFeeService {
     private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrices>>) {
         switch gasPriceStatus {
         case .loading: status = .loading
-        case .failed(let error): status = .failed(error)
-        case .completed(let fallibleGasPrice): sync(fallibleGasPrice: fallibleGasPrice)
+        case let .failed(error): status = .failed(error)
+        case let .completed(fallibleGasPrice): sync(fallibleGasPrice: fallibleGasPrice)
         }
     }
 
@@ -77,26 +76,26 @@ class OneInchFeeService {
         let recipient: EvmKit.Address? = parameters.recipient.flatMap { try? EvmKit.Address(hex: $0.raw) }
 
         provider.swapSingle(
-                        tokenFrom: parameters.tokenFrom,
-                        tokenTo: parameters.tokenTo,
-                        amount: parameters.amountFrom,
-                        recipient: recipient,
-                        slippage: parameters.slippage,
-                        gasPrice: fallibleGasPrice.data.userDefined
-                )
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] swap in
-                    self?.sync(swap: swap, fallibleGasPrice: fallibleGasPrice)
-                }, onError: { [weak self] error in
-                    self?.onSwap(error: error, fallibleGasPrice: fallibleGasPrice)
-                })
-                .disposed(by: disposeBag)
+            tokenFrom: parameters.tokenFrom,
+            tokenTo: parameters.tokenTo,
+            amount: parameters.amountFrom,
+            recipient: recipient,
+            slippage: parameters.slippage,
+            gasPrice: fallibleGasPrice.data.userDefined
+        )
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+        .subscribe(onSuccess: { [weak self] swap in
+            self?.sync(swap: swap, fallibleGasPrice: fallibleGasPrice)
+        }, onError: { [weak self] error in
+            self?.onSwap(error: error, fallibleGasPrice: fallibleGasPrice)
+        })
+        .disposed(by: disposeBag)
     }
 
     private func onSwap(error: Error, fallibleGasPrice: FallibleData<EvmFeeModule.GasPrices>) {
         parameters.amountTo = 0
 
-        if let error = error as? OneInchKit.Kit.SwapError, error == .cannotEstimate {       // retry request fee every 5 seconds if cannot estimate
+        if let error = error as? OneInchKit.Kit.SwapError, error == .cannotEstimate { // retry request fee every 5 seconds if cannot estimate
             let retryTimer = Observable.just(()).delay(.seconds(Self.retryInterval), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
 
             subscribe(retryDisposeBag, retryTimer) { [weak self] in
@@ -123,18 +122,15 @@ class OneInchFeeService {
         }
 
         status = .completed(FallibleData<EvmFeeModule.Transaction>(
-                data: EvmFeeModule.Transaction(transactionData: transactionData, gasData: gasData),
-                errors: errors,
-                warnings: fallibleGasPrice.warnings
+            data: EvmFeeModule.Transaction(transactionData: transactionData, gasData: gasData),
+            errors: errors,
+            warnings: fallibleGasPrice.warnings
         ))
     }
-
 }
 
 extension OneInchFeeService: IEvmFeeService {
-
     var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.Transaction>>> {
         transactionStatusRelay.asObservable()
     }
-
 }

@@ -47,7 +47,8 @@ class MarketDiscoveryCell: UICollectionViewCell {
         nameLabel.textColor = .themeLeah
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -78,5 +79,4 @@ class MarketDiscoveryCell: UICollectionViewCell {
             maker.bottom.equalTo(stackView.snp.top).offset(viewItem.marketCap == nil ? 0 : -CGFloat.margin8)
         }
     }
-
 }

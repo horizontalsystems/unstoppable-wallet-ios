@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class ExtendedKeyViewModel {
     private let service: ExtendedKeyService
@@ -18,13 +18,13 @@ class ExtendedKeyViewModel {
 
     private func sync(item: ExtendedKeyService.Item) {
         let viewItem = ViewItem(
-                derivation: item.derivation.rawValue.uppercased(),
-                derivationSwitchable: item.derivationSwitchable,
-                blockchain: item.blockchain.map { $0.title },
-                blockchainSwitchable: item.blockchainSwitchable,
-                account: item.account.map { "\($0)" },
-                key: item.key ?? "",
-                keyIsPrivate: item.keyIsPrivate
+            derivation: item.derivation.rawValue.uppercased(),
+            derivationSwitchable: item.derivationSwitchable,
+            blockchain: item.blockchain.map(\.title),
+            blockchainSwitchable: item.blockchainSwitchable,
+            account: item.account.map { "\($0)" },
+            key: item.key ?? "",
+            keyIsPrivate: item.keyIsPrivate
         )
 
         viewItemRelay.accept(viewItem)
@@ -32,7 +32,6 @@ class ExtendedKeyViewModel {
 }
 
 extension ExtendedKeyViewModel {
-
     var viewItemDriver: Driver<ViewItem> {
         viewItemRelay.asDriver()
     }
@@ -48,8 +47,8 @@ extension ExtendedKeyViewModel {
     var derivationViewItems: [AlertViewItem] {
         MnemonicDerivation.allCases.map { derivation in
             AlertViewItem(
-                    text: derivation.rawValue.uppercased(),
-                    selected: service.item.derivation == derivation
+                text: derivation.rawValue.uppercased(),
+                selected: service.item.derivation == derivation
             )
         }
     }
@@ -57,17 +56,17 @@ extension ExtendedKeyViewModel {
     var blockchainViewItems: [AlertViewItem] {
         service.supportedBlockchains.map { blockchain in
             AlertViewItem(
-                    text: blockchain.title,
-                    selected: service.item.blockchain == blockchain
+                text: blockchain.title,
+                selected: service.item.blockchain == blockchain
             )
         }
     }
 
     var accountViewItems: [AlertViewItem] {
-        Range<Int>(0...5).map { account in
+        Range<Int>(0 ... 5).map { account in
             AlertViewItem(
-                    text: "\(account)",
-                    selected: service.item.account == account
+                text: "\(account)",
+                selected: service.item.account == account
             )
         }
     }
@@ -83,11 +82,9 @@ extension ExtendedKeyViewModel {
     func onSelectAccount(index: Int) {
         service.set(account: index)
     }
-
 }
 
 extension ExtendedKeyViewModel {
-
     struct ViewItem {
         let derivation: String
         let derivationSwitchable: Bool
@@ -101,5 +98,4 @@ extension ExtendedKeyViewModel {
             ViewItem(derivation: "", derivationSwitchable: false, blockchain: nil, blockchainSwitchable: false, account: nil, key: "", keyIsPrivate: false)
         }
     }
-
 }

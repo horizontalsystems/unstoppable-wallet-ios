@@ -3,7 +3,6 @@ import RxRelay
 import RxSwift
 import ThemeKit
 
-
 class MainSettingsService {
     private let disposeBag = DisposeBag()
 
@@ -96,7 +95,7 @@ extension MainSettingsService {
     }
 
     var walletConnectSessionCountObservable: Observable<Int> {
-        walletConnectSessionManager.sessionsObservable.map { $0.count }
+        walletConnectSessionManager.sessionsObservable.map(\.count)
     }
 
     var walletConnectPendingRequestCount: Int {
@@ -104,7 +103,7 @@ extension MainSettingsService {
     }
 
     var walletConnectPendingRequestCountObservable: Observable<Int> {
-        walletConnectSessionManager.activePendingRequestsObservable.map { $0.count }
+        walletConnectSessionManager.activePendingRequestsObservable.map(\.count)
     }
 
     var currentLanguageDisplayName: String? {
@@ -132,7 +131,7 @@ extension MainSettingsService {
     }
 
     var walletConnectState: WalletConnectState {
-        guard let activeAccount = activeAccount else {
+        guard let activeAccount else {
             return .noAccount
         }
 

@@ -1,8 +1,7 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 struct CexDepositModule {
-
     static func viewController(cexAsset: CexAsset) -> UIViewController? {
         if cexAsset.depositNetworks.isEmpty {
             return viewController(cexAsset: cexAsset, network: nil)
@@ -18,7 +17,7 @@ struct CexDepositModule {
             return nil
         }
 
-        guard case .cex(let cexAccount) = account.type else {
+        guard case let .cex(cexAccount) = account.type else {
             return nil
         }
 
@@ -28,5 +27,4 @@ struct CexDepositModule {
 
         return ReceiveAddressView(viewModel: viewModel).toViewController()
     }
-
 }

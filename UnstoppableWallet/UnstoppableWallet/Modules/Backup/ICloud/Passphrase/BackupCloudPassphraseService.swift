@@ -13,11 +13,9 @@ class BackupCloudPassphraseService {
         self.account = account
         self.name = name
     }
-
 }
 
 extension BackupCloudPassphraseService {
-
     func validate(text: String?) -> Bool {
         PassphraseValidator.validate(text: text)
     }
@@ -38,15 +36,12 @@ extension BackupCloudPassphraseService {
             throw CreateError.cantSaveFile(error)
         }
     }
-
 }
 
 extension BackupCloudPassphraseService {
-
     enum CreateError: Error {
         case invalidConfirmation
         case urlNotAvailable
         case cantSaveFile(Error)
     }
-
 }

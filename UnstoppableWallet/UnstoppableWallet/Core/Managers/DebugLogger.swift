@@ -20,11 +20,9 @@ class DebugLogger {
             self.localStorage.debugLog = fullLog.joined(separator: "|")
         }
     }
-
 }
 
 extension DebugLogger {
-
     var logs: [String] {
         let fullLog = localStorage.debugLog ?? ""
 
@@ -56,5 +54,4 @@ extension DebugLogger {
     func clearLogs() {
         localStorage.debugLog = nil
     }
-
 }

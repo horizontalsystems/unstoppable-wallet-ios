@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class IntegerAmountInputView: UIView {
     let viewHeight: CGFloat = 44
@@ -16,14 +16,15 @@ class IntegerAmountInputView: UIView {
             syncButtonStates()
         }
     }
+
     var clearHidden = false {
         didSet {
             syncButtonStates()
         }
     }
 
-    var onChangeText: ((String?) -> ())?
-    var onTapMax: (() -> ())?
+    var onChangeText: ((String?) -> Void)?
+    var onTapMax: (() -> Void)?
 
     init(singleLine: Bool = false) {
         inputStackView = InputStackView(singleLine: singleLine)
@@ -57,7 +58,8 @@ class IntegerAmountInputView: UIView {
         syncButtonStates()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -79,11 +81,9 @@ class IntegerAmountInputView: UIView {
             clearView.isHidden = true
         }
     }
-
 }
 
 extension IntegerAmountInputView {
-
     var inputPlaceholder: String? {
         get { inputStackView.placeholder }
         set { inputStackView.placeholder = newValue }
@@ -121,18 +121,15 @@ extension IntegerAmountInputView {
         get { inputStackView.editable }
         set { inputStackView.editable = newValue }
     }
-
 }
 
 extension IntegerAmountInputView: IHeightControlView { // required in FormValidatedView, but not used yet
-
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { nil }
         set {}
     }
 
-    func height(containerWidth: CGFloat) -> CGFloat {
+    func height(containerWidth _: CGFloat) -> CGFloat {
         0
     }
-
 }

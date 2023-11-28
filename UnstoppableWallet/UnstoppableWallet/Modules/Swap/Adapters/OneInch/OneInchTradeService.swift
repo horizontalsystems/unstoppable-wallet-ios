@@ -1,9 +1,9 @@
-import Foundation
 import EvmKit
-import OneInchKit
-import RxSwift
-import RxRelay
+import Foundation
 import MarketKit
+import OneInchKit
+import RxRelay
+import RxSwift
 
 class OneInchTradeService {
     private static let timerFramePerSecond = 30
@@ -81,11 +81,11 @@ class OneInchTradeService {
         amountIn = state.amountFrom ?? 0
 
         evmKit.lastBlockHeightObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] blockNumber in
-                    self?.syncQuote()
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] _ in
+                self?.syncQuote()
+            })
+            .disposed(by: disposeBag)
 
         syncQuote()
     }
@@ -95,21 +95,21 @@ class OneInchTradeService {
         let countdownValue = Int(syncInterval) * Self.timerFramePerSecond
 
         Observable<Int>
-                .interval(.milliseconds(1000 / Self.timerFramePerSecond), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .map {
-                    countdownValue - $0
-                }
-                .takeUntil(.inclusive, predicate: { $0 == 0 })
-                .subscribe(onNext: { [weak self] value in
-                    self?.countdownTimerRelay.accept(Float(value) / Float(countdownValue))
-                }, onCompleted: { [weak self] in
-                    self?.syncQuote()
-                })
-                .disposed(by: refreshTimerDisposeBag)
+            .interval(.milliseconds(1000 / Self.timerFramePerSecond), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .map {
+                countdownValue - $0
+            }
+            .takeUntil(.inclusive, predicate: { $0 == 0 })
+            .subscribe(onNext: { [weak self] value in
+                self?.countdownTimerRelay.accept(Float(value) / Float(countdownValue))
+            }, onCompleted: { [weak self] in
+                self?.syncQuote()
+            })
+            .disposed(by: refreshTimerDisposeBag)
     }
 
     @discardableResult private func syncQuote() -> Bool {
-        guard let tokenIn = tokenIn, let tokenOut = tokenOut else {
+        guard let tokenIn, let tokenOut else {
             state = .notReady(errors: [])
             return false
         }
@@ -127,22 +127,22 @@ class OneInchTradeService {
         }
 
         oneInchProvider.quoteSingle(tokenIn: tokenIn, tokenOut: tokenOut, amount: amountIn)
-                .subscribe(onSuccess: { [weak self] quote in
-                    self?.handle(quote: quote, tokenFrom: tokenIn, tokenTo: tokenOut, amountFrom: amountIn)
-                }, onError: { [weak self] error in
-                    var identifiedError = error.convertedError
+            .subscribe(onSuccess: { [weak self] quote in
+                self?.handle(quote: quote, tokenFrom: tokenIn, tokenTo: tokenOut, amountFrom: amountIn)
+            }, onError: { [weak self] error in
+                var identifiedError = error.convertedError
 
-                    if let error = identifiedError as? AppError,
-                        case .invalidResponse(let reason) = error {
-
-                        if reason.contains("liquidity") {
-                            identifiedError = AppError.oneInch(reason: .insufficientLiquidity)
-                        }
+                if let error = identifiedError as? AppError,
+                   case let .invalidResponse(reason) = error
+                {
+                    if reason.contains("liquidity") {
+                        identifiedError = AppError.oneInch(reason: .insufficientLiquidity)
                     }
+                }
 
-                    self?.state = .notReady(errors: [identifiedError])
-                })
-                .disposed(by: quoteDisposeBag)
+                self?.state = .notReady(errors: [identifiedError])
+            })
+            .disposed(by: quoteDisposeBag)
 
         return true
     }
@@ -163,11 +163,9 @@ class OneInchTradeService {
 
         state = .ready(parameters: parameters)
     }
-
 }
 
 extension OneInchTradeService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -246,15 +244,12 @@ extension OneInchTradeService {
 
         set(tokenIn: swapToken)
     }
-
 }
 
 extension OneInchTradeService {
-
     enum State {
         case loading
         case ready(parameters: OneInchSwapParameters)
         case notReady(errors: [Error])
     }
-
 }

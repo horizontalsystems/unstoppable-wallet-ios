@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 import MarketKit
 
 class SwapTransactionRecord: EvmTransactionRecord {
@@ -25,21 +25,18 @@ class SwapTransactionRecord: EvmTransactionRecord {
     var valueOut: TransactionValue? {
         amountOut?.value
     }
-
 }
 
 extension SwapTransactionRecord {
-
     enum Amount {
         case exact(value: TransactionValue)
         case extremum(value: TransactionValue)
 
         var value: TransactionValue {
             switch self {
-            case .exact(let value): return value
-            case .extremum(let value): return value
+            case let .exact(value): return value
+            case let .extremum(value): return value
             }
         }
     }
-
 }

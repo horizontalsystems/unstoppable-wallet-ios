@@ -6,11 +6,9 @@ class AppVersionRecordStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension AppVersionRecordStorage {
-
     var appVersionRecords: [AppVersionRecord] {
         try! dbPool.read { db in
             try AppVersionRecord.fetchAll(db)
@@ -24,5 +22,4 @@ extension AppVersionRecordStorage {
             }
         }
     }
-
 }

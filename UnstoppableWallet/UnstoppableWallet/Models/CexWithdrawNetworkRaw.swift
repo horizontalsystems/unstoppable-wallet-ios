@@ -1,6 +1,6 @@
 import Foundation
-import ObjectMapper
 import MarketKit
+import ObjectMapper
 
 struct CexWithdrawNetworkRaw: ImmutableMappable {
     let id: String
@@ -55,16 +55,16 @@ struct CexWithdrawNetworkRaw: ImmutableMappable {
 
     func cexWithdrawNetwork(blockchain: Blockchain?) -> CexWithdrawNetwork {
         CexWithdrawNetwork(
-                id: id,
-                name: name,
-                isDefault: isDefault,
-                enabled: enabled,
-                minAmount: minAmount,
-                maxAmount: maxAmount,
-                fixedFee: fixedFee,
-                feePercent: feePercent,
-                minFee: minFee,
-                blockchain: blockchain
+            id: id,
+            name: name,
+            isDefault: isDefault,
+            enabled: enabled,
+            minAmount: minAmount,
+            maxAmount: maxAmount,
+            fixedFee: fixedFee,
+            feePercent: feePercent,
+            minFee: minFee,
+            blockchain: blockchain
         )
     }
 }

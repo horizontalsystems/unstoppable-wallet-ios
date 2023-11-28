@@ -1,6 +1,6 @@
-import UIKit
-import HUD
 import ComponentKit
+import HUD
+import UIKit
 
 class FeeSliderWrapper: UIView {
     private let slider = FeeSlider()
@@ -10,12 +10,12 @@ class FeeSliderWrapper: UIView {
     private let feeRateView = FeeSliderValueView()
     private var sliderLastValue: Float?
     private var step: Int = 1
-    var scale: FeePriceScale = FeePriceScale.gwei
+    var scale: FeePriceScale = .gwei
 
-    var finishTracking: ((Float) -> ())?
+    var finishTracking: ((Float) -> Void)?
 
     var sliderRange: ClosedRange<Int> {
-        Int(slider.minimumValue)...Int(slider.maximumValue)
+        Int(slider.minimumValue) ... Int(slider.maximumValue)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,7 +58,6 @@ class FeeSliderWrapper: UIView {
         increaseButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         increaseButton.setImage(UIImage(named: "plus_2_20"), for: .normal)
         increaseButton.addTarget(self, action: #selector(increase), for: .touchUpInside)
-
     }
 
     @objc private func decrease() {
@@ -135,5 +134,4 @@ class FeeSliderWrapper: UIView {
 
         finishTracking?(value)
     }
-
 }

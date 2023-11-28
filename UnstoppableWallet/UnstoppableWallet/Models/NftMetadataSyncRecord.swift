@@ -37,5 +37,4 @@ class NftMetadataSyncRecord: Record {
         container[Columns.accountId] = accountId
         container[Columns.lastSyncTimestamp] = lastSyncTimestamp
     }
-
 }

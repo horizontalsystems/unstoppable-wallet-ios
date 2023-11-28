@@ -1,11 +1,11 @@
-import UIKit
-import SnapKit
-import RxSwift
-import RxCocoa
-import ThemeKit
 import ComponentKit
-import UIExtensions
+import RxCocoa
+import RxSwift
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIExtensions
+import UIKit
 
 class TermsViewController: ThemeViewController {
     private let viewModel: TermsViewModel
@@ -28,7 +28,8 @@ class TermsViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -94,17 +95,15 @@ class TermsViewController: ThemeViewController {
             tableView.reload(animated: true)
         }
     }
-
 }
 
 extension TermsViewController: SectionsDataSource {
-
     private func row(viewItem: TermsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
         let textFont: UIFont = .subhead2
         let text = viewItem.text
 
-        var action: (() -> ())?
+        var action: (() -> Void)?
 
         if viewModel.buttonVisible {
             action = { [weak self] in
@@ -113,49 +112,48 @@ extension TermsViewController: SectionsDataSource {
         }
 
         return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image24 { component in
-                        component.imageView.image = UIImage(named: viewItem.checked ? "checkbox_active_24" : "checkbox_diactive_24")
-                    },
-                    .text { component in
-                        component.font = textFont
-                        component.textColor = .themeLeah
-                        component.text = text
-                        component.numberOfLines = 0
-                    }
-                ]),
-                tableView: tableView,
-                id: "row-\(index)",
-                hash: "\(viewItem.checked)",
-                autoDeselect: true,
-                dynamicHeight: { width in
-                    CellBuilderNew.height(
-                            containerWidth: width,
-                            backgroundStyle: backgroundStyle,
-                            text: text,
-                            font: textFont,
-                            verticalPadding: .margin16,
-                            elements: [.fixed(width: .iconSize24), .multiline]
-                    )
+            rootElement: .hStack([
+                .image24 { component in
+                    component.imageView.image = UIImage(named: viewItem.checked ? "checkbox_active_24" : "checkbox_diactive_24")
                 },
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                .text { component in
+                    component.font = textFont
+                    component.textColor = .themeLeah
+                    component.text = text
+                    component.numberOfLines = 0
                 },
-                action: action
+            ]),
+            tableView: tableView,
+            id: "row-\(index)",
+            hash: "\(viewItem.checked)",
+            autoDeselect: true,
+            dynamicHeight: { width in
+                CellBuilderNew.height(
+                    containerWidth: width,
+                    backgroundStyle: backgroundStyle,
+                    text: text,
+                    font: textFont,
+                    verticalPadding: .margin16,
+                    elements: [.fixed(width: .iconSize24), .multiline]
+                )
+            },
+            bind: { cell in
+                cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+            },
+            action: action
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "terms",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: viewModel.buttonVisible ? .margin32 + .heightButton + .margin32 : .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
-                    }
-            )
+                id: "terms",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: viewModel.buttonVisible ? .margin32 + .heightButton + .margin32 : .margin32),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
+                }
+            ),
         ]
     }
-
 }

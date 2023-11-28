@@ -1,12 +1,12 @@
+import ComponentKit
 import Foundation
-import UIKit
-import ThemeKit
-import RxSwift
 import RxCocoa
+import RxSwift
 import SectionsTableView
 import SnapKit
-import ComponentKit
+import ThemeKit
 import UIExtensions
+import UIKit
 
 class RestoreNonStandardViewController: KeyboardAwareViewController {
     private let viewModel: RestoreNonStandardViewModel
@@ -44,7 +44,8 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: hintView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -93,16 +94,16 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
         CellBuilderNew.buildStatic(
-                cell: passphraseToggleCell,
-                rootElement: .hStack(
-                        tableView.universalImage24Elements(
-                                image: .local(UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)),
-                                title: .body("restore.passphrase".localized),
-                                accessoryType: .switch { [weak self] in
-                                    self?.mnemonicViewModel.onTogglePassphrase(isOn: $0)
-                                }
-                        )
+            cell: passphraseToggleCell,
+            rootElement: .hStack(
+                tableView.universalImage24Elements(
+                    image: .local(UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)),
+                    title: .body("restore.passphrase".localized),
+                    accessoryType: .switch { [weak self] in
+                        self?.mnemonicViewModel.onTogglePassphrase(isOn: $0)
+                    }
                 )
+            )
         )
 
         passphraseCell.set(textSecure: true)
@@ -174,15 +175,15 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
 
     private func syncWordListLanguageCell(wordListLanguage: String) {
         CellBuilderNew.buildStatic(
-                cell: wordListCell,
-                rootElement: .hStack(
-                    tableView.universalImage24Elements(
-                            image: .local(UIImage(named: "globe_24")?.withTintColor(.themeGray)),
-                            title: .body("create_wallet.word_list".localized),
-                            value: .subhead1(wordListLanguage, color: .themeGray),
-                            accessoryType: .dropdown
-                    )
+            cell: wordListCell,
+            rootElement: .hStack(
+                tableView.universalImage24Elements(
+                    image: .local(UIImage(named: "globe_24")?.withTintColor(.themeGray)),
+                    title: .body("create_wallet.word_list".localized),
+                    value: .subhead1(wordListLanguage, color: .themeGray),
+                    accessoryType: .dropdown
                 )
+            )
         )
 
         mnemonicInputCell.set(text: mnemonicInputCell.textView.text)
@@ -215,117 +216,114 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-
 }
 
 extension RestoreNonStandardViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         let descriptionText = "restore.non_standard_import.description".localized(AppConfig.appName, AppConfig.appName)
         var sections: [SectionProtocol] = [
             Section(
-                    id: "description",
-                    headerState: .margin(height: 3),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        Row<DescriptionCell>(
-                                id: "description",
-                                dynamicHeight: { containerWidth in
-                                    DescriptionCell.height(containerWidth: containerWidth, text: descriptionText, font: .subhead2, ignoreBottomMargin: true)
-                                },
-                                bind: { cell, _ in
-                                    cell.label.text = descriptionText
-                                    cell.label.font = .subhead2
-                                    cell.label.textColor = .themeGray
-                                }
-                        )
-                    ]
+                id: "description",
+                headerState: .margin(height: 3),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    Row<DescriptionCell>(
+                        id: "description",
+                        dynamicHeight: { containerWidth in
+                            DescriptionCell.height(containerWidth: containerWidth, text: descriptionText, font: .subhead2, ignoreBottomMargin: true)
+                        },
+                        bind: { cell, _ in
+                            cell.label.text = descriptionText
+                            cell.label.font = .subhead2
+                            cell.label.textColor = .themeGray
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "name",
-                    headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        )
-                    ]
-            )
+                id: "name",
+                headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: nameCell,
+                        id: "name",
+                        height: .heightSingleLineCell
+                    ),
+                ]
+            ),
         ]
 
         let mnemonicSections: [SectionProtocol] = [
             Section(
-                    id: "mnemonic-input",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: mnemonicInputCell,
-                                id: "mnemonic-input",
-                                dynamicHeight: { [weak self] width in
-                                    self?.mnemonicInputCell.cellHeight(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: mnemonicCautionCell,
-                                id: "mnemonic-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.mnemonicCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "mnemonic-input",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: mnemonicInputCell,
+                        id: "mnemonic-input",
+                        dynamicHeight: { [weak self] width in
+                            self?.mnemonicInputCell.cellHeight(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: mnemonicCautionCell,
+                        id: "mnemonic-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.mnemonicCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "wordlist-passphrase-toggle",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: wordListCell,
-                                id: "word-list",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.openWordListSelector()
-                                }
-                        ),
-                        StaticRow(
-                                cell: passphraseToggleCell,
-                                id: "passphrase-toggle",
-                                height: .heightCell48
-                        )
-                    ]
+                id: "wordlist-passphrase-toggle",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: wordListCell,
+                        id: "word-list",
+                        height: .heightCell48,
+                        autoDeselect: true,
+                        action: { [weak self] in
+                            self?.openWordListSelector()
+                        }
+                    ),
+                    StaticRow(
+                        cell: passphraseToggleCell,
+                        id: "passphrase-toggle",
+                        height: .heightCell48
+                    ),
+                ]
             ),
             Section(
-                    id: "passphrase",
-                    footerState: inputsVisible ? .margin(height: .margin24) : .margin(height: 0),
-                    rows: [
-                        StaticRow(
-                                cell: passphraseCell,
-                                id: "passphrase",
-                                height: inputsVisible ? .heightSingleLineCell : 0
-                        ),
-                        StaticRow(
-                                cell: passphraseCautionCell,
-                                id: "passphrase-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.passphraseCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: passphraseDescriptionCell,
-                                id: "passphrase-description",
-                                dynamicHeight: { [weak self] width in
-                                    self.flatMap { $0.inputsVisible ? $0.passphraseDescriptionCell.height(containerWidth: width) : 0 } ?? 0
-                                }
-                        )
-                    ]
-            )
+                id: "passphrase",
+                footerState: inputsVisible ? .margin(height: .margin24) : .margin(height: 0),
+                rows: [
+                    StaticRow(
+                        cell: passphraseCell,
+                        id: "passphrase",
+                        height: inputsVisible ? .heightSingleLineCell : 0
+                    ),
+                    StaticRow(
+                        cell: passphraseCautionCell,
+                        id: "passphrase-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.passphraseCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: passphraseDescriptionCell,
+                        id: "passphrase-description",
+                        dynamicHeight: { [weak self] width in
+                            self.flatMap { $0.inputsVisible ? $0.passphraseDescriptionCell.height(containerWidth: width) : 0 } ?? 0
+                        }
+                    ),
+                ]
+            ),
         ]
 
         sections.append(contentsOf: mnemonicSections)
 
         return sections
     }
-
 }

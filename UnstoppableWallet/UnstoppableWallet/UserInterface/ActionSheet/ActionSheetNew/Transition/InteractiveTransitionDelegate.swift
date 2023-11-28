@@ -11,9 +11,9 @@ public protocol InteractiveTransitionDelegate: AnyObject {
 }
 
 // Make pure swift option methods for delegate
-extension InteractiveTransitionDelegate {
-    public func start(direction: TransitionDirection) {}
-    public func move(direction: TransitionDirection, percent: CGFloat) {}
-    public func end(direction: TransitionDirection, cancelled: Bool) {}
-    public func fail(direction: TransitionDirection) {}
+public extension InteractiveTransitionDelegate {
+    func start(direction _: TransitionDirection) {}
+    func move(direction _: TransitionDirection, percent _: CGFloat) {}
+    func end(direction _: TransitionDirection, cancelled _: Bool) {}
+    func fail(direction _: TransitionDirection) {}
 }

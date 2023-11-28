@@ -1,6 +1,6 @@
 import Foundation
-import TronKit
 import MarketKit
+import TronKit
 
 class TronContractCallTransactionRecord: TronTransactionRecord {
     let contractAddress: String
@@ -9,7 +9,8 @@ class TronContractCallTransactionRecord: TronTransactionRecord {
     let outgoingEvents: [TransferEvent]
 
     init(source: TransactionSource, transaction: Transaction, baseToken: Token,
-         contractAddress: String, method: String?, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) {
+         contractAddress: String, method: String?, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent])
+    {
         self.contractAddress = contractAddress
         self.method = method
         self.incomingEvents = incomingEvents
@@ -33,5 +34,4 @@ class TronContractCallTransactionRecord: TronTransactionRecord {
             return nil
         }
     }
-
 }

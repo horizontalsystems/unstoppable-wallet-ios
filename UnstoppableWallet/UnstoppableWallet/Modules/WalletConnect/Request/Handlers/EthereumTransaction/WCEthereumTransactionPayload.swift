@@ -15,9 +15,10 @@ class WCEthereumTransactionPayload: WCRequestPayload {
         super.init(dAppName: dAppName, data: data)
     }
 
-    required public convenience init(dAppName: String, from anyCodable: AnyCodable) throws {
+    public required convenience init(dAppName: String, from anyCodable: AnyCodable) throws {
         guard let transactions = try? anyCodable.get([WCEthereumTransaction].self),
-              let wcTransaction = transactions.first else {
+              let wcTransaction = transactions.first
+        else {
             throw WCRequestPayload.ParsingError.badJSONRPCRequest
         }
 
@@ -25,7 +26,7 @@ class WCEthereumTransactionPayload: WCRequestPayload {
         self.init(dAppName: dAppName, transaction: transaction, data: anyCodable.encoded)
     }
 
-    class func module(request: WalletConnectRequest) -> UIViewController? {
+    class func module(request _: WalletConnectRequest) -> UIViewController? {
         nil
     }
 }

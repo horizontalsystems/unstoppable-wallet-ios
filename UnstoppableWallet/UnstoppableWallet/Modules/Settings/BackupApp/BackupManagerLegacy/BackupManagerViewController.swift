@@ -41,13 +41,13 @@ class BackupManagerViewController: ThemeViewController {
         viewModel
             .openUnlockPublisher
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] event in self?.onUnlock() })
+            .sink(receiveValue: { [weak self] _ in self?.onUnlock() })
             .store(in: &cancellables)
 
         viewModel
             .openBackupPublisher
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] event in self?.onCreate() })
+            .sink(receiveValue: { [weak self] _ in self?.onCreate() })
             .store(in: &cancellables)
 
         tableView.buildSections()
@@ -65,8 +65,8 @@ class BackupManagerViewController: ThemeViewController {
 
     private func onUnlock() {
         let viewController = UnlockModule.moduleUnlockView { [weak self] in
-                self?.viewModel.unlock()
-            }.toNavigationViewController()
+            self?.viewModel.unlock()
+        }.toNavigationViewController()
 
         present(viewController, animated: true)
     }
@@ -77,7 +77,7 @@ class BackupManagerViewController: ThemeViewController {
                 self?.presentedViewController?.dismiss(animated: true)
             }.toNavigationViewController()
 
-        self.present(viewController, animated: true)
+        present(viewController, animated: true)
     }
 }
 

@@ -1,8 +1,7 @@
-import UIKit
 import ThemeKit
+import UIKit
 
 struct CexWithdrawModule {
-
     static func viewController(cexAsset: CexAsset) -> UIViewController? {
         let networks = cexAsset.withdrawNetworks
 
@@ -44,11 +43,9 @@ struct CexWithdrawModule {
             recipientViewModel: recipientViewModel
         )
     }
-
 }
 
 extension CexWithdrawModule {
-
     struct SendData {
         let cexAsset: CexAsset
         let network: CexWithdrawNetwork?
@@ -57,5 +54,4 @@ extension CexWithdrawModule {
         let feeFromAmount: Bool
         let fee: Decimal
     }
-
 }

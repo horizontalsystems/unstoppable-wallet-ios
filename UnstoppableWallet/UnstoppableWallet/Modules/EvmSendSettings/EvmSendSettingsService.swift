@@ -30,44 +30,40 @@ class EvmSendSettingsService {
         switch (feeService.status, nonceService.status) {
         case (.loading, _), (_, .loading):
             status = .loading
-        case (.failed(let error), _), (_, .failed(let error)):
+        case let (.failed(error), _), let (_, .failed(error)):
             status = .failed(error)
         default:
-            guard case .completed(let fallibleTransaction) = feeService.status else {
+            guard case let .completed(fallibleTransaction) = feeService.status else {
                 return
             }
 
-            guard case .completed(let fallibleNonce) = nonceService.status else {
+            guard case let .completed(fallibleNonce) = nonceService.status else {
                 return
             }
 
             status = .completed(FallibleData<Transaction>(
-                    data: Transaction(
-                            transactionData: fallibleTransaction.data.transactionData,
-                            gasData: fallibleTransaction.data.gasData,
-                            nonce: fallibleNonce.data
-                    ),
-                    errors: fallibleTransaction.errors + fallibleNonce.errors, warnings: fallibleTransaction.warnings)
+                data: Transaction(
+                    transactionData: fallibleTransaction.data.transactionData,
+                    gasData: fallibleTransaction.data.gasData,
+                    nonce: fallibleNonce.data
+                ),
+                errors: fallibleTransaction.errors + fallibleNonce.errors, warnings: fallibleTransaction.warnings
+            )
             )
         }
     }
-
 }
 
 extension EvmSendSettingsService {
-
     var statusObservable: Observable<DataStatus<FallibleData<Transaction>>> {
         statusRelay.asObservable()
     }
-
 }
 
 extension EvmSendSettingsService {
-
     struct Transaction {
         let transactionData: TransactionData
         let gasData: EvmFeeModule.GasData
         let nonce: Int
     }
-
 }

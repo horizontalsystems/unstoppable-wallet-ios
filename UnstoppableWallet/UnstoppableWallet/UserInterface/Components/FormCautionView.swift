@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class FormCautionView: UIView {
     private let padding = UIEdgeInsets(top: .margin8, left: .margin32, bottom: 0, right: .margin32)
@@ -8,7 +8,7 @@ class FormCautionView: UIView {
 
     private let label = UILabel()
 
-    var onChangeHeight: (() -> ())?
+    var onChangeHeight: (() -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -22,16 +22,15 @@ class FormCautionView: UIView {
         label.font = font
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension FormCautionView {
-
     func set(caution: Caution?) {
-        if let caution = caution {
+        if let caution {
             label.text = caution.text
             label.textColor = caution.type.labelColor
         } else {
@@ -51,5 +50,4 @@ extension FormCautionView {
 
         return textHeight + padding.height
     }
-
 }

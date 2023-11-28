@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import ComponentKit
+import ThemeKit
+import UIKit
 
 class TraitCell: UICollectionViewCell {
     private static let horizontalPadding: CGFloat = .margin16
@@ -52,7 +52,8 @@ class TraitCell: UICollectionViewCell {
         typeLabel.textColor = .themeGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
@@ -86,5 +87,4 @@ class TraitCell: UICollectionViewCell {
             contentView.backgroundColor = newValue ? .themeLawrencePressed : .themeLawrence
         }
     }
-
 }

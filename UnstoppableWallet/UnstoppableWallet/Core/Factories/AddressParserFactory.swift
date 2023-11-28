@@ -10,15 +10,15 @@ import ZcashLightClientKit
 
 class AddressParserFactory {
     static let uriBlockchainTypes: [BlockchainType] = [
-            .bitcoin,
-            .bitcoinCash,
-            .ecash,
-            .litecoin,
-            .dash,
-            .zcash,
-            .ethereum,
-            .binanceChain,
-            .tron,
+        .bitcoin,
+        .bitcoinCash,
+        .ecash,
+        .litecoin,
+        .dash,
+        .zcash,
+        .ethereum,
+        .binanceChain,
+        .tron,
     ]
 
     static func parser(blockchainType: BlockchainType?, tokenType: TokenType?) -> AddressUriParser {
@@ -88,7 +88,8 @@ class AddressParserFactory {
                 handlers.append(udnAddressParserItem)
 
                 if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
-                   let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem) {
+                   let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
+                {
                     handlers.append(ensAddressParserItem)
                 }
             }

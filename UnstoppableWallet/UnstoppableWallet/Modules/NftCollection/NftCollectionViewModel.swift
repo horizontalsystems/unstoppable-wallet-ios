@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class NftCollectionViewModel {
     private let service: NftCollectionService
@@ -9,9 +9,6 @@ class NftCollectionViewModel {
     init(service: NftCollectionService) {
         self.service = service
     }
-
 }
 
-extension NftCollectionViewModel {
-
-}
+extension NftCollectionViewModel {}

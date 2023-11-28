@@ -1,6 +1,6 @@
-import RxSwift
 import EvmKit
 import MarketKit
+import RxSwift
 
 class EvmAddressParser: IAddressParserItem {
     let blockchainType: BlockchainType
@@ -22,5 +22,4 @@ class EvmAddressParser: IAddressParserItem {
         let address = try? EvmKit.Address(hex: address)
         return Single.just(address != nil)
     }
-
 }

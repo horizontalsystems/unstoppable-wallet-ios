@@ -27,6 +27,7 @@ class BaseUnlockViewModel: ObservableObject {
             syncErrorText()
         }
     }
+
     @Published var shakeTrigger: Int = 0
 
     let finishSubject = PassthroughSubject<Bool, Never>()

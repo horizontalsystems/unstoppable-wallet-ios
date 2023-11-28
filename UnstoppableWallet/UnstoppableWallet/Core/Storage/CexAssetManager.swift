@@ -1,5 +1,5 @@
-import RxSwift
 import MarketKit
+import RxSwift
 
 class CexAssetManager {
     private let accountManager: AccountManager
@@ -28,23 +28,21 @@ class CexAssetManager {
 
         return records.compactMap { record in
             CexAsset(
-                    id: record.id,
-                    name: record.name,
-                    freeBalance: record.freeBalance,
-                    lockedBalance: record.lockedBalance,
-                    depositEnabled: record.depositEnabled,
-                    withdrawEnabled: record.withdrawEnabled,
-                    depositNetworks: record.depositNetworks.map { $0.cexDepositNetwork(blockchain: $0.blockchainUid.flatMap { blockchainMap[$0] }) },
-                    withdrawNetworks: record.withdrawNetworks.map { $0.cexWithdrawNetwork(blockchain: $0.blockchainUid.flatMap { blockchainMap[$0] }) },
-                    coin: record.coinUid.flatMap { coinMap[$0] }
+                id: record.id,
+                name: record.name,
+                freeBalance: record.freeBalance,
+                lockedBalance: record.lockedBalance,
+                depositEnabled: record.depositEnabled,
+                withdrawEnabled: record.withdrawEnabled,
+                depositNetworks: record.depositNetworks.map { $0.cexDepositNetwork(blockchain: $0.blockchainUid.flatMap { blockchainMap[$0] }) },
+                withdrawNetworks: record.withdrawNetworks.map { $0.cexWithdrawNetwork(blockchain: $0.blockchainUid.flatMap { blockchainMap[$0] }) },
+                coin: record.coinUid.flatMap { coinMap[$0] }
             )
         }
     }
-
 }
 
 extension CexAssetManager {
-
     func balanceCexAssets(account: Account) -> [CexAsset] {
         do {
             let records = try storage.balanceAssets(accountId: account.id)
@@ -72,5 +70,4 @@ extension CexAssetManager {
             print("Failed to resave: \(error)")
         }
     }
-
 }

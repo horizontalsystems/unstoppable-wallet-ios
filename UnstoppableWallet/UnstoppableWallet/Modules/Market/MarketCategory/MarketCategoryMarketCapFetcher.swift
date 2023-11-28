@@ -1,6 +1,6 @@
+import Chart
 import Foundation
 import MarketKit
-import Chart
 
 class MarketCategoryMarketCapFetcher {
     private let marketKit: MarketKit.Kit
@@ -12,11 +12,9 @@ class MarketCategoryMarketCapFetcher {
         self.currencyManager = currencyManager
         self.category = category
     }
-
 }
 
 extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
-
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyManager.baseCurrency)
     }
@@ -34,5 +32,4 @@ extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
 
         return MetricChartModule.ItemData(items: items, type: .regular)
     }
-
 }

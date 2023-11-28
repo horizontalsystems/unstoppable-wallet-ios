@@ -35,7 +35,7 @@ class SetPasscodeViewModel: ObservableObject {
     var title: String { "" }
     var passcodeDescription: String { "" }
     var confirmDescription: String { "" }
-    func isCurrent(passcode: String) -> Bool { false }
+    func isCurrent(passcode _: String) -> Bool { false }
     func onEnter(passcode _: String) {}
     func onCancel() {}
 
@@ -49,7 +49,7 @@ class SetPasscodeViewModel: ObservableObject {
                 syncDescription()
                 errorText = "set_passcode.invalid_confirmation".localized
             }
-        } else if passcodeManager.has(passcode: passcode) && !isCurrent(passcode: passcode) {
+        } else if passcodeManager.has(passcode: passcode), !isCurrent(passcode: passcode) {
             self.passcode = ""
             errorText = "set_passcode.already_used".localized
 

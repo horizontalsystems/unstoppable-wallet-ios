@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class WatchPublicKeyViewModel {
     private let service: WatchPublicKeyService
@@ -11,11 +11,9 @@ class WatchPublicKeyViewModel {
     init(service: WatchPublicKeyService) {
         self.service = service
     }
-
 }
 
 extension WatchPublicKeyViewModel {
-
     var cautionDriver: Driver<Caution?> {
         cautionRelay.asDriver()
     }
@@ -24,17 +22,15 @@ extension WatchPublicKeyViewModel {
         service.set(text: text)
         cautionRelay.accept(nil)
     }
-
 }
 
 extension WatchPublicKeyViewModel: IWatchSubViewModel {
-
     var watchEnabled: Bool {
         service.state.watchEnabled
     }
 
     var watchEnabledObservable: Observable<Bool> {
-        service.stateObservable.map { $0.watchEnabled }
+        service.stateObservable.map(\.watchEnabled)
     }
 
     var domainObservable: Observable<String?> {
@@ -52,5 +48,4 @@ extension WatchPublicKeyViewModel: IWatchSubViewModel {
             return nil
         }
     }
-
 }

@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class CoinSelectService {
     private let dex: SwapModule.Dex
@@ -129,11 +129,9 @@ class CoinSelectService {
             return lhsItem.token.coin.name.lowercased() < rhsItem.token.coin.name.lowercased()
         }
     }
-
 }
 
 extension CoinSelectService {
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -147,15 +145,12 @@ extension CoinSelectService {
 
         syncItems()
     }
-
 }
 
 extension CoinSelectService {
-
     struct Item {
         let token: Token
         let balance: Decimal?
         let rate: Decimal?
     }
-
 }

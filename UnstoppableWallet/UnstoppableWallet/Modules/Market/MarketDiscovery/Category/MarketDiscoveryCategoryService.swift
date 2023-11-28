@@ -1,9 +1,9 @@
 import Foundation
-import RxSwift
-import RxRelay
-import MarketKit
-import HsToolKit
 import HsExtensions
+import HsToolKit
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
     private static let allowedTimePeriods: [HsTimePeriod] = [.day1, .week1, .month1]
@@ -39,18 +39,18 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
 
     private var sortedItems: [DiscoveryItem] {
         let items = categories
-                .sorted { category, category2 in
-                    guard let diff = category.diff(timePeriod: timePeriod) else {
-                        return false
-                    }
-                    guard let diff2 = category2.diff(timePeriod: timePeriod) else {
-                        return true
-                    }
-                    return sortDirectionAscending ? diff < diff2 : diff > diff2
+            .sorted { category, category2 in
+                guard let diff = category.diff(timePeriod: timePeriod) else {
+                    return false
                 }
-                .map { category in
-                    DiscoveryItem.category(category: category)
+                guard let diff2 = category2.diff(timePeriod: timePeriod) else {
+                    return true
                 }
+                return sortDirectionAscending ? diff < diff2 : diff > diff2
+            }
+            .map { category in
+                DiscoveryItem.category(category: category)
+            }
 
         return [.topCoins] + items
     }
@@ -60,11 +60,11 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
         self.currencyManager = currencyManager
 
         reachabilityManager.reachabilityObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.refresh()
-                })
-                .disposed(by: reachabilityDisposeBag)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] _ in
+                self?.refresh()
+            })
+            .disposed(by: reachabilityDisposeBag)
 
         sync()
     }
@@ -93,7 +93,6 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
     }
 
     private func sync(error: Error) {
-
         // Try to get fallback from storage if categories empty yet, or return last items
         guard categories.isEmpty else {
             state = .items(sortedItems)
@@ -115,21 +114,17 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
         default: ()
         }
     }
-
 }
 
 extension MarketDiscoveryCategoryService {
-
     func refresh() {
         if state.isEmpty {
             sync()
         }
     }
-
 }
 
 extension MarketDiscoveryCategoryService {
-
     enum DiscoveryItem {
         case topCoins
         case category(category: CoinCategory)
@@ -143,19 +138,16 @@ extension MarketDiscoveryCategoryService {
         var isEmpty: Bool {
             switch self {
             case .loading: return false
-            case .items(let items): return items.isEmpty
+            case let .items(items): return items.isEmpty
             default: return true
             }
         }
-
     }
-
 }
 
 extension MarketDiscoveryCategoryService: IMarketSingleSortHeaderDecorator {
-
     var allFields: [String] {
-        Self.allowedTimePeriods.map { $0.title }
+        Self.allowedTimePeriods.map(\.title)
     }
 
     var currentFieldIndex: Int {
@@ -169,5 +161,4 @@ extension MarketDiscoveryCategoryService: IMarketSingleSortHeaderDecorator {
 
         timePeriod = Self.allowedTimePeriods[index]
     }
-
 }

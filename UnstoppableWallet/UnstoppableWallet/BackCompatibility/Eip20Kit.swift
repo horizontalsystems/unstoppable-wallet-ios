@@ -1,35 +1,35 @@
-import Foundation
-import Combine
-import RxSwift
 import BigInt
-import EvmKit
-import HsToolKit
+import Combine
 import Eip20Kit
+import EvmKit
+import Foundation
+import HsToolKit
+import RxSwift
 
-extension Eip20Kit.Kit {
-    struct DisposedError: Error {}
+public extension Eip20Kit.Kit {
+    internal struct DisposedError: Error {}
 
-    public func transactionsSingle(from hash: Data?, limit: Int?) throws -> Single<[FullTransaction]> {
+    func transactionsSingle(from hash: Data?, limit: Int?) throws -> Single<[FullTransaction]> {
         Single.just(transactions(from: hash, limit: limit))
     }
 
-    public var syncStateObservable: Observable<SyncState> {
+    var syncStateObservable: Observable<SyncState> {
         syncStatePublisher.asObservable()
     }
 
-    public var transactionsSyncStateObservable: Observable<SyncState> {
+    var transactionsSyncStateObservable: Observable<SyncState> {
         transactionsSyncStatePublisher.asObservable()
     }
 
-    public var balanceObservable: Observable<BigUInt> {
+    var balanceObservable: Observable<BigUInt> {
         balancePublisher.asObservable()
     }
 
-    public var transactionsObservable: Observable<[FullTransaction]> {
+    var transactionsObservable: Observable<[FullTransaction]> {
         transactionsPublisher.asObservable()
     }
 
-    public func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<String> {
+    func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<String> {
         Single<String>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -51,7 +51,7 @@ extension Eip20Kit.Kit {
         }
     }
 
-    public static func tokenInfoSingle(networkManager: NetworkManager, rpcSource: RpcSource, contractAddress: EvmKit.Address) -> Single<TokenInfo> {
+    static func tokenInfoSingle(networkManager: NetworkManager, rpcSource: RpcSource, contractAddress: EvmKit.Address) -> Single<TokenInfo> {
         Single<TokenInfo>.create { observer in
             let task = Task {
                 do {
@@ -67,5 +67,4 @@ extension Eip20Kit.Kit {
             }
         }
     }
-
 }

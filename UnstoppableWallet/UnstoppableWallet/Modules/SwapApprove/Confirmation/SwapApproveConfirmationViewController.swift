@@ -1,9 +1,9 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
     private let approveButton = PrimaryButton()
@@ -15,7 +15,8 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
         super.init(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -47,5 +48,4 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
 
         super.handleSendSuccess(transactionHash: transactionHash)
     }
-
 }

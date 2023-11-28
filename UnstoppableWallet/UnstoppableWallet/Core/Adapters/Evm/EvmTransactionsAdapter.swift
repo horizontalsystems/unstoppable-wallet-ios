@@ -1,11 +1,11 @@
-import Foundation
-import EvmKit
-import RxSwift
 import BigInt
-import HsToolKit
 import Eip20Kit
-import UniswapKit
+import EvmKit
+import Foundation
+import HsToolKit
 import MarketKit
+import RxSwift
+import UniswapKit
 
 class EvmTransactionsAdapter: BaseEvmAdapter {
     static let decimal = 18
@@ -25,11 +25,11 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         var `protocol`: TransactionTag.TagProtocol?
         var contractAddress: EvmKit.Address?
 
-        if let token = token {
+        if let token {
             switch token.type {
             case .native:
                 `protocol` = .native
-            case .eip20(let address):
+            case let .eip20(address):
                 if let address = try? EvmKit.Address(hex: address) {
                     `protocol` = .eip20
                     contractAddress = address
@@ -48,7 +48,6 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
 
         return TransactionTagQuery(type: type, protocol: `protocol`, contractAddress: contractAddress)
     }
-
 }
 
 extension EvmTransactionsAdapter: ITransactionsAdapter {
@@ -56,7 +55,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         evmKit.transactionsSyncState.syncing
     }
 
-    var syncingObservable: Observable<()> {
+    var syncingObservable: Observable<Void> {
         evmKit.transactionsSyncStateObservable.map { _ in () }
     }
 
@@ -76,13 +75,12 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
 
     func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
         evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter)], fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
-                }
+            .map { [weak self] transactions -> [TransactionRecord] in
+                transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
+            }
     }
 
-    func rawTransaction(hash: String) -> String? {
+    func rawTransaction(hash _: String) -> String? {
         nil
     }
-
 }

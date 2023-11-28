@@ -28,5 +28,4 @@ class ActiveAccount_v_0_36: Record {
         container[Columns.uniqueId] = uniqueId
         container[Columns.accountId] = accountId
     }
-
 }

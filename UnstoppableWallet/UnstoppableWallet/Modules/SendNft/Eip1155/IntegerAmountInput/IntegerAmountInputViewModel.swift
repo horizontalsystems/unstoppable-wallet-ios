@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 protocol IIntegerAmountInputService {
     var amount: Int { get }
@@ -23,7 +23,6 @@ class IntegerAmountInputViewModel {
 
     private var amountRelay = BehaviorRelay<String?>(value: nil)
     private var isMaxEnabledRelay = BehaviorRelay<Bool>(value: false)
-
 
     var amountDisposeBag = DisposeBag()
     var publishAmountRelay: BehaviorRelay<Decimal>? {
@@ -60,7 +59,7 @@ class IntegerAmountInputViewModel {
         }
     }
 
-    private func sync(balance: Int?) {
+    private func sync(balance _: Int?) {
         queue.async { [weak self] in
             self?.updateMaxEnabled()
         }
@@ -80,21 +79,20 @@ class IntegerAmountInputViewModel {
     private func updateMaxEnabled() {
         isMaxEnabledRelay.accept(isMaxSupported && (service.balance ?? 0) > 0)
     }
-
 }
 
 extension IntegerAmountInputViewModel {
-
     func isValid(amount: String?) -> Bool {
         guard let string = amount,
-            let _ = Int(string) else {
+              let _ = Int(string)
+        else {
             return false
         }
         return true
     }
 
     func equalValue(lhs: String?, rhs: String?) -> Bool {
-        lhs.map({ Int($0) }) == rhs.map({ Int($0) })
+        lhs.map { Int($0) } == rhs.map { Int($0) }
     }
 
     var amountDriver: Driver<String?> {
@@ -119,7 +117,6 @@ extension IntegerAmountInputViewModel {
         amountRelay.accept("\(balance)")
         service.onChange(amount: balance)
     }
-
 }
 
 extension IntegerAmountInputViewModel: IAmountPublishService {}

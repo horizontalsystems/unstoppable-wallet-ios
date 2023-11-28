@@ -1,6 +1,6 @@
 import Foundation
-import WalletConnectSign
 import UIKit
+import WalletConnectSign
 
 protocol IWalletConnectRequestHandler {
     func handle(session: Session, request: Request) -> WalletConnectRequestChain.RequestResult
@@ -79,7 +79,7 @@ extension WalletConnectRequestChain {
 
         var error: Error? {
             switch self {
-            case .unsuccessful(let error): return error
+            case let .unsuccessful(error): return error
             case .handled, .request: return nil
             }
         }

@@ -1,7 +1,7 @@
-import UIKit
+import Kingfisher
 import SnapKit
 import ThemeKit
-import Kingfisher
+import UIKit
 
 class MarkdownImageCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin3x
@@ -32,11 +32,12 @@ class MarkdownImageCell: UITableViewCell {
         markdownImageView.clipsToBounds = true
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(imageUrl: URL, type: MarkdownImageType, tight: Bool) {
+    func bind(imageUrl: URL, type _: MarkdownImageType, tight: Bool) {
         placeholderImageView.isHidden = false
 
         markdownImageView.kf.setImage(with: imageUrl) { [weak self] result in
@@ -51,11 +52,9 @@ class MarkdownImageCell: UITableViewCell {
             maker.top.bottom.equalToSuperview().inset(tight ? 0 : MarkdownImageCell.verticalPadding)
         }
     }
-
 }
 
 extension MarkdownImageCell {
-
     static func height(containerWidth: CGFloat, type: MarkdownImageType, tight: Bool) -> CGFloat {
         var imageHeight: CGFloat
 
@@ -71,5 +70,4 @@ extension MarkdownImageCell {
 
         return imageHeight
     }
-
 }

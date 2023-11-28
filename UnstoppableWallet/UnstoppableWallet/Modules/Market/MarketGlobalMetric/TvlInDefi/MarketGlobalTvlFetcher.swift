@@ -1,7 +1,7 @@
-import Foundation
-import Combine
-import MarketKit
 import Chart
+import Combine
+import Foundation
+import MarketKit
 
 class MarketGlobalTvlFetcher {
     private let marketKit: MarketKit.Kit
@@ -15,11 +15,9 @@ class MarketGlobalTvlFetcher {
         self.currencyManager = currencyManager
         service = marketGlobalTvlPlatformService
     }
-
 }
 
 extension MarketGlobalTvlFetcher: IMetricChartFetcher {
-
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyManager.baseCurrency)
     }
@@ -37,5 +35,4 @@ extension MarketGlobalTvlFetcher: IMetricChartFetcher {
 
         return MetricChartModule.ItemData(items: items, type: .regular)
     }
-
 }

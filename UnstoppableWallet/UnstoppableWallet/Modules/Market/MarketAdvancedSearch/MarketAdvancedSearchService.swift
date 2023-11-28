@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketAdvancedSearchService {
     private let blockchainTypes: [BlockchainType] = [
@@ -180,7 +180,7 @@ class MarketAdvancedSearchService {
         self.currencyManager = currencyManager
 
         do {
-            let blockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+            let blockchains = try marketKit.blockchains(uids: blockchainTypes.map(\.uid))
             allBlockchains = blockchainTypes.compactMap { type in blockchains.first(where: { $0.type == type }) }
         } catch {
             allBlockchains = []
@@ -208,15 +208,15 @@ class MarketAdvancedSearchService {
         switch internalState {
         case .loading:
             state = .loading
-        case .loaded(let marketInfos):
+        case let .loaded(marketInfos):
             state = .loaded(marketInfos: filtered(marketInfos: marketInfos))
-        case .failed(let error):
+        case let .failed(error):
             state = .failed(error: error)
         }
     }
 
     private func marketInfo(coinUid: String) -> MarketInfo? {
-        guard case .loaded(let marketInfos) = internalState else {
+        guard case let .loaded(marketInfos) = internalState else {
             return nil
         }
 
@@ -224,7 +224,7 @@ class MarketAdvancedSearchService {
     }
 
     private func inBounds(value: Decimal?, lower: Decimal, upper: Decimal) -> Bool {
-        guard let value = value else {
+        guard let value else {
             return false
         }
 
@@ -233,8 +233,9 @@ class MarketAdvancedSearchService {
 
     private func outperformed(value: Decimal?, coinUid: String) -> Bool {
         guard let marketInfo = marketInfo(coinUid: coinUid),
-              let value = value,
-              let priceChangeValue = marketInfo.priceChangeValue(type: priceChangeType) else {
+              let value,
+              let priceChangeValue = marketInfo.priceChangeValue(type: priceChangeType)
+        else {
             return false
         }
 
@@ -242,7 +243,7 @@ class MarketAdvancedSearchService {
     }
 
     private func closedToAllTime(value: Decimal?) -> Bool {
-        guard let value = value else {
+        guard let value else {
             return false
         }
 
@@ -254,7 +255,7 @@ class MarketAdvancedSearchService {
             return true
         }
 
-        guard let tokens = tokens else {
+        guard let tokens else {
             return false
         }
 
@@ -272,21 +273,19 @@ class MarketAdvancedSearchService {
             let priceChangeValue = marketInfo.priceChangeValue(type: priceChangeType)
 
             return inBounds(value: marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
-                    inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
-                    inBlockchain(tokens: marketInfo.fullCoin.tokens) &&
-                    inBounds(value: priceChangeValue, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
-                    (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
-                    (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
-                    (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binancecoin")) &&
-                    (!priceCloseToAth || closedToAllTime(value: marketInfo.athPercentage)) &&
-                    (!priceCloseToAtl || closedToAllTime(value: marketInfo.atlPercentage))
+                inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
+                inBlockchain(tokens: marketInfo.fullCoin.tokens) &&
+                inBounds(value: priceChangeValue, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
+                (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
+                (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
+                (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binancecoin")) &&
+                (!priceCloseToAth || closedToAllTime(value: marketInfo.athPercentage)) &&
+                (!priceCloseToAtl || closedToAllTime(value: marketInfo.atlPercentage))
         }
     }
-
 }
 
 extension MarketAdvancedSearchService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -333,11 +332,9 @@ extension MarketAdvancedSearchService {
         priceCloseToAtl = false
         priceCloseToAth = false
     }
-
 }
 
 extension MarketAdvancedSearchService {
-
     enum State {
         case loading
         case loaded(marketInfos: [MarketInfo])
@@ -420,7 +417,6 @@ extension MarketAdvancedSearchService {
             case .none, .moreB5, .moreB10, .moreB50, .moreB500: return Decimal.greatestFiniteMagnitude
             }
         }
-
     }
 
     enum PriceChangeFilter: CaseIterable {
@@ -461,7 +457,5 @@ extension MarketAdvancedSearchService {
             case .minus75: return -75
             }
         }
-
     }
-
 }

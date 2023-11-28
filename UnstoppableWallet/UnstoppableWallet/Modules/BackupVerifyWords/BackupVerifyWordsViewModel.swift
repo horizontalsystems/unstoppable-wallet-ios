@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class BackupVerifyWordsViewModel {
     private let service: BackupVerifyWordsService
@@ -9,7 +9,7 @@ class BackupVerifyWordsViewModel {
     private let viewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(inputViewItems: [], wordViewItems: []))
     private let errorRelay = PublishRelay<String>()
     private let openPassphraseRelay = PublishRelay<Account>()
-    private let successRelay = PublishRelay<()>()
+    private let successRelay = PublishRelay<Void>()
 
     init(service: BackupVerifyWordsService) {
         self.service = service
@@ -21,27 +21,25 @@ class BackupVerifyWordsViewModel {
 
     private func sync(state: BackupVerifyWordsService.State) {
         let viewItem = ViewItem(
-                inputViewItems: state.inputItems.map { item in
-                    InputViewItem(
-                            text: "\(item.index)." + (item.text.map { " \($0)" } ?? ""),
-                            selected: item.current
-                    )
-                },
-                wordViewItems: state.wordItems.map { item in
-                    WordViewItem(
-                            text: item.text,
-                            enabled: item.enabled
-                    )
-                }
+            inputViewItems: state.inputItems.map { item in
+                InputViewItem(
+                    text: "\(item.index)." + (item.text.map { " \($0)" } ?? ""),
+                    selected: item.current
+                )
+            },
+            wordViewItems: state.wordItems.map { item in
+                WordViewItem(
+                    text: item.text,
+                    enabled: item.enabled
+                )
+            }
         )
 
         viewItemRelay.accept(viewItem)
     }
-
 }
 
 extension BackupVerifyWordsViewModel {
-
     var viewItemDriver: Driver<ViewItem> {
         viewItemRelay.asDriver()
     }
@@ -54,7 +52,7 @@ extension BackupVerifyWordsViewModel {
         openPassphraseRelay.asSignal()
     }
 
-    var successSignal: Signal<()> {
+    var successSignal: Signal<Void> {
         successRelay.asSignal()
     }
 
@@ -72,11 +70,9 @@ extension BackupVerifyWordsViewModel {
         case .backedUp: successRelay.accept(())
         }
     }
-
 }
 
 extension BackupVerifyWordsViewModel {
-
     struct ViewItem {
         let inputViewItems: [InputViewItem]
         let wordViewItems: [WordViewItem]
@@ -91,5 +87,4 @@ extension BackupVerifyWordsViewModel {
         let text: String
         let enabled: Bool
     }
-
 }

@@ -1,5 +1,5 @@
-import UIKit
 import ThemeKit
+import UIKit
 
 class DebugViewController: ThemeViewController {
     private let delegate: IDebugViewDelegate
@@ -14,7 +14,8 @@ class DebugViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -35,15 +36,12 @@ class DebugViewController: ThemeViewController {
     @objc private func didTapButton() {
         delegate.onClear()
     }
-
 }
 
 extension DebugViewController: IDebugView {
-
     func set(logs: [String]) {
-        DispatchQueue.main.async { //need to handle weird behaviour of large title in relation to UITextView
+        DispatchQueue.main.async { // need to handle weird behaviour of large title in relation to UITextView
             self.textView.text = logs.joined(separator: "\n")
         }
     }
-
 }

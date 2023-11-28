@@ -1,9 +1,9 @@
-import Foundation
-import Crypto
 import Alamofire
-import ObjectMapper
-import MarketKit
+import Crypto
+import Foundation
 import HsToolKit
+import MarketKit
+import ObjectMapper
 
 class BinanceCexProvider {
     private static let baseUrl = "https://api.binance.com"
@@ -473,11 +473,9 @@ class BinanceCexProvider {
     private func fetch<T: ImmutableMappable>(path: String, method: HTTPMethod = .get, parameters: Parameters = [:]) async throws -> [T] {
         try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: path, method: method, parameters: parameters)
     }
-
 }
 
 extension BinanceCexProvider: ICexAssetProvider {
-
     func assets() async throws -> [CexAssetResponse] {
         let response: [AssetResponse] = try await fetch(path: "/sapi/v1/capital/config/getall")
 
@@ -485,53 +483,51 @@ extension BinanceCexProvider: ICexAssetProvider {
         let blockchainUidMap = try await blockchainUidMap()
 
         return response
-                .filter { asset in
-                    !asset.isLegalMoney
-                }
-                .map { asset in
-                    CexAssetResponse(
-                            id: asset.coin,
-                            name: asset.name,
-                            freeBalance: asset.free,
-                            lockedBalance: asset.locked,
-                            depositEnabled: asset.depositAllEnable,
-                            withdrawEnabled: false,
-                            depositNetworks: asset.networks.map { network in
-                                CexDepositNetworkRaw(
-                                        id: network.network,
-                                        name: network.name,
-                                        isDefault: network.isDefault,
-                                        enabled: network.depositEnable,
-                                        minAmount: 0,
-                                        blockchainUid: blockchainUidMap[network.network]
-                                )
-                            },
-                            withdrawNetworks: asset.networks.map { network in
-                                CexWithdrawNetworkRaw(
-                                        id: network.network,
-                                        name: network.name,
-                                        isDefault: network.isDefault,
-                                        enabled: network.withdrawEnable,
-                                        minAmount: network.withdrawMin,
-                                        maxAmount: network.withdrawMax,
-                                        fixedFee: network.withdrawFee,
-                                        feePercent: 0,
-                                        minFee: 0,
-                                        blockchainUid: blockchainUidMap[network.network]
-                                )
-                            },
-                            coinUid: coinUidMap[asset.coin]
-                    )
-                }
+            .filter { asset in
+                !asset.isLegalMoney
+            }
+            .map { asset in
+                CexAssetResponse(
+                    id: asset.coin,
+                    name: asset.name,
+                    freeBalance: asset.free,
+                    lockedBalance: asset.locked,
+                    depositEnabled: asset.depositAllEnable,
+                    withdrawEnabled: false,
+                    depositNetworks: asset.networks.map { network in
+                        CexDepositNetworkRaw(
+                            id: network.network,
+                            name: network.name,
+                            isDefault: network.isDefault,
+                            enabled: network.depositEnable,
+                            minAmount: 0,
+                            blockchainUid: blockchainUidMap[network.network]
+                        )
+                    },
+                    withdrawNetworks: asset.networks.map { network in
+                        CexWithdrawNetworkRaw(
+                            id: network.network,
+                            name: network.name,
+                            isDefault: network.isDefault,
+                            enabled: network.withdrawEnable,
+                            minAmount: network.withdrawMin,
+                            maxAmount: network.withdrawMax,
+                            fixedFee: network.withdrawFee,
+                            feePercent: 0,
+                            minFee: 0,
+                            blockchainUid: blockchainUidMap[network.network]
+                        )
+                    },
+                    coinUid: coinUidMap[asset.coin]
+                )
+            }
     }
-
 }
 
 extension BinanceCexProvider: ICexDepositProvider {
-
     func deposit(id: String, network: String?) async throws -> (String, String?) {
         var parameters: Parameters = [
-            "coin": id
+            "coin": id,
         ]
 
         if let network {
@@ -541,16 +537,14 @@ extension BinanceCexProvider: ICexDepositProvider {
         let response: DepositResponse = try await fetch(path: "/sapi/v1/capital/deposit/address", parameters: parameters)
         return (response.address, response.tag.isEmpty ? nil : response.tag)
     }
-
 }
 
 extension BinanceCexProvider {
-
-    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> String {
+    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount _: Bool?) async throws -> String {
         var parameters: Parameters = [
             "coin": id,
             "address": address,
-            "amount": amount
+            "amount": amount,
         ]
 
         if let network {
@@ -560,19 +554,15 @@ extension BinanceCexProvider {
         let response: WithdrawResponse = try await fetch(path: "/sapi/v1/capital/withdraw/apply", method: .post, parameters: parameters)
         return response.id
     }
-
 }
 
 extension BinanceCexProvider {
-
     static func validate(apiKey: String, secret: String, networkManager: NetworkManager) async throws {
         let _: [AssetResponse] = try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: "/sapi/v1/capital/config/getall")
     }
-
 }
 
 extension BinanceCexProvider {
-
     private struct AssetResponse: ImmutableMappable {
         let coin: String
         let name: String
@@ -639,5 +629,4 @@ extension BinanceCexProvider {
         case invalidSecret
         case invalidQueryString
     }
-
 }

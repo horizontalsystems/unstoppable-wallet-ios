@@ -11,13 +11,11 @@ protocol IReceiveSelectorViewModel {
     func item(uid: String) -> Item?
 }
 
-class ReceiveSelectorViewModel {
-
+enum ReceiveSelectorViewModel {
     struct ViewItem {
         let uid: String
         let imageUrl: String?
         let title: String
         let subtitle: String
     }
-
 }

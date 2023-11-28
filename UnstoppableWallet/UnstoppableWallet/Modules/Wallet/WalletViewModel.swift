@@ -292,9 +292,7 @@ extension WalletViewModel {
             do {
                 self?.qrScanningRelay.accept(true)
                 try await eventHandler.handle(event: scanned.trimmingCharacters(in: .whitespacesAndNewlines), eventType: [.walletConnectUri, .address])
-            } catch {
-
-            }
+            } catch {}
         }
     }
 }

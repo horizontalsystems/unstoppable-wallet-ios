@@ -1,6 +1,6 @@
-import UIKit
-import SnapKit
 import RxSwift
+import SnapKit
+import UIKit
 
 class BarsProgressView: UIView {
     static let progressStepsCount = 3
@@ -39,11 +39,12 @@ class BarsProgressView: UIView {
         }
 
         snp.makeConstraints { maker in
-            maker.size.equalTo(20)   //you can not change height unless it's changed in design
+            maker.size.equalTo(20) // you can not change height unless it's changed in design
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -58,11 +59,11 @@ class BarsProgressView: UIView {
     func set(barsCount count: Int) {
         bars.forEach { $0.removeFromSuperview() }
 
-        bars = (0..<count).map { _ in
+        bars = (0 ..< count).map { _ in
             UIView(frame: .zero)
         }
 
-        for i in 0..<bars.count {
+        for i in 0 ..< bars.count {
             barsHolder.addSubview(bars[i])
 
             bars[i].snp.makeConstraints { maker in
@@ -96,13 +97,13 @@ class BarsProgressView: UIView {
         var dx = 0
         let count = bars.count
         animateDisposable = Observable<Int>
-                .timer(.milliseconds(0), period: .milliseconds(animationDelay), scheduler: MainScheduler.instance)
-                .subscribe(onNext: { [weak self] _ in
-                    let startIndex = self?.filledCount ?? 0
-                    self?.updateFillColor(fullFillBefore: startIndex + dx)
-                    dx += 1
-                    dx = startIndex + dx > count ? 0 : dx
-                })
+            .timer(.milliseconds(0), period: .milliseconds(animationDelay), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                let startIndex = self?.filledCount ?? 0
+                self?.updateFillColor(fullFillBefore: startIndex + dx)
+                dx += 1
+                dx = startIndex + dx > count ? 0 : dx
+            })
 
         animateDisposable?.disposed(by: disposeBag)
     }
@@ -118,5 +119,4 @@ class BarsProgressView: UIView {
             bar.backgroundColor = index < filledCount ? filledColor : (index < count ? color : inactiveColor)
         }
     }
-
 }

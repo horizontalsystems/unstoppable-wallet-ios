@@ -1,11 +1,11 @@
-import Foundation
-import UIKit
-import MarketKit
-import RxSwift
-import RxRelay
-import EvmKit
 import BigInt
+import EvmKit
+import Foundation
 import Kingfisher
+import MarketKit
+import RxRelay
+import RxSwift
+import UIKit
 
 class SendEip721Service {
     let nftUid: NftUid
@@ -37,9 +37,9 @@ class SendEip721Service {
 
     private func sync(addressState: AddressService.State) {
         switch addressState {
-        case .success(let address):
+        case let .success(address):
             do {
-                addressData = AddressData(evmAddress: try EvmKit.Address(hex: address.raw), domain: address.domain)
+                addressData = try AddressData(evmAddress: EvmKit.Address(hex: address.raw), domain: address.domain)
             } catch {
                 addressData = nil
             }
@@ -50,7 +50,7 @@ class SendEip721Service {
     }
 
     private func syncState() {
-        if case .success = addressService.state, let addressData = addressData {
+        if case .success = addressService.state, let addressData {
             guard let transactionData = adapter.transferEip721TransactionData(contractAddress: nftUid.contractAddress, to: addressData.evmAddress, tokenId: nftUid.tokenId) else {
                 state = .notReady
                 return
@@ -77,19 +77,15 @@ class SendEip721Service {
             return nil
         }
     }
-
 }
 
 extension SendEip721Service {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
-
 }
 
 extension SendEip721Service {
-
     enum State {
         case ready(sendData: SendEvmData)
         case notReady
@@ -99,5 +95,4 @@ extension SendEip721Service {
         let evmAddress: EvmKit.Address
         let domain: String?
     }
-
 }

@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class ContactBookAddressViewModel {
     private let disposeBag = DisposeBag()
@@ -15,6 +15,7 @@ class ContactBookAddressViewModel {
             viewItemRelay.accept(viewItem)
         }
     }
+
     private let blockchainNameRelay = BehaviorRelay<String>(value: "")
     private let addressCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
@@ -32,7 +33,7 @@ class ContactBookAddressViewModel {
 
         switch state {
         case .idle, .loading: ()
-        case .valid(let item):
+        case let .valid(item):
             saveEnabled = true
             viewItem = viewItem(item: item)
         case .invalid:
@@ -49,11 +50,9 @@ class ContactBookAddressViewModel {
     private func viewItem(item: ContactAddress) -> String {
         item.address
     }
-
 }
 
 extension ContactBookAddressViewModel {
-
     var existAddress: Bool {
         switch service.mode {
         case .edit: return true
@@ -82,9 +81,9 @@ extension ContactBookAddressViewModel {
     var blockchainViewItems: [SelectorModule.ViewItem] {
         service.unusedBlockchains.map { blockchain in
             SelectorModule.ViewItem(
-                    image: .url(blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
-                    title: blockchain.name,
-                    selected: service.selectedBlockchain == blockchain
+                image: .url(blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
+                title: blockchain.name,
+                selected: service.selectedBlockchain == blockchain
             )
         }
     }
@@ -115,7 +114,7 @@ extension ContactBookAddressViewModel {
 extension ContactBookAddressService.ValidationError: LocalizedError {
     var errorDescription: String? {
         switch self {
-        case .duplicate(let contact): return "contacts.add_address.exist_address".localized(contact.name)
+        case let .duplicate(contact): return "contacts.add_address.exist_address".localized(contact.name)
         case .invalidAddress: return nil
         }
     }

@@ -18,7 +18,7 @@ enum ValueFormatter {
     }()
 
     private static func fractionZeroCount(value: Decimal, maxCount: Int) -> Int {
-        guard value > 0 && value < 1 else {
+        guard value > 0, value < 1 else {
             return 0
         }
 
@@ -65,11 +65,11 @@ enum ValueFormatter {
     private static func decorated(string: String, symbol: String? = nil, signValue: Decimal? = nil) -> String {
         var string = string
 
-        if let symbol = symbol {
+        if let symbol {
             string = "\(string) \(symbol)"
         }
 
-        if let signValue = signValue {
+        if let signValue {
             var sign = ""
             if !signValue.isZero {
                 sign = signValue.isSignMinus ? "-" : "+"

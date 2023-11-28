@@ -1,9 +1,9 @@
-import Foundation
 import Combine
 import EvmKit
-import MarketKit
-import HsToolKit
+import Foundation
 import HsExtensions
+import HsToolKit
+import MarketKit
 
 class ActivateSubscriptionService {
     private let marketKit: MarketKit.Kit
@@ -41,7 +41,7 @@ class ActivateSubscriptionService {
 
         state = .loading
 
-        let addresses = addressItems.map { $0.address.hex }
+        let addresses = addressItems.map(\.address.hex)
 
         Task { [weak self, marketKit] in
             do {
@@ -79,11 +79,9 @@ class ActivateSubscriptionService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension ActivateSubscriptionService {
-
     var activatedPublisher: AnyPublisher<Void, Never> {
         activatedSubject.eraseToAnyPublisher()
     }
@@ -118,11 +116,9 @@ extension ActivateSubscriptionService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension ActivateSubscriptionService {
-
     private struct AddressItem {
         let account: Account
         let address: EvmKit.Address
@@ -139,5 +135,4 @@ extension ActivateSubscriptionService {
         case ready
         case activating
     }
-
 }

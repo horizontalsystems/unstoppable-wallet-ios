@@ -38,9 +38,9 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             uri = parser.uri(addressUri)
         }
         let qrItem = ReceiveAddressModule.QrItem(
-                address: item.address.address,
-                uri: uri,
-                networkName: networkName
+            address: item.address.address,
+            uri: uri,
+            networkName: networkName
         )
         viewItems.append(.qrItem(qrItem))
 

@@ -1,9 +1,9 @@
-import UIKit
-import ThemeKit
 import ComponentKit
-import SectionsTableView
-import RxSwift
 import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class SendBitcoinViewController: BaseSendViewController {
     private let disposeBag = DisposeBag()
@@ -21,25 +21,25 @@ class SendBitcoinViewController: BaseSendViewController {
          amountCautionViewModel: SendAmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
          feeViewModel: SendFeeViewModel,
-         feeCautionViewModel: ITitledCautionViewModel
-    ) {
-
+         feeCautionViewModel: ITitledCautionViewModel)
+    {
         self.feeCautionViewModel = feeCautionViewModel
 
         feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         super.init(
-                confirmationFactory: confirmationFactory,
-                feeSettingsFactory: feeSettingsFactory,
-                viewModel: viewModel,
-                availableBalanceViewModel: availableBalanceViewModel,
-                amountInputViewModel: amountInputViewModel,
-                amountCautionViewModel: amountCautionViewModel,
-                recipientViewModel: recipientViewModel
+            confirmationFactory: confirmationFactory,
+            feeSettingsFactory: feeSettingsFactory,
+            viewModel: viewModel,
+            availableBalanceViewModel: availableBalanceViewModel,
+            amountInputViewModel: amountInputViewModel,
+            amountCautionViewModel: amountCautionViewModel,
+            recipientViewModel: recipientViewModel
         )
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -60,7 +60,7 @@ class SendBitcoinViewController: BaseSendViewController {
     private func handle(caution: TitledCaution?) {
         feeCautionCell.isVisible = caution != nil
 
-        if let caution = caution {
+        if let caution {
             feeCautionCell.bind(caution: caution)
         }
 
@@ -74,31 +74,31 @@ class SendBitcoinViewController: BaseSendViewController {
 
     var feeSection: SectionProtocol {
         Section(
-                id: "fee",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: feeCell,
-                            id: "fee",
-                            height: .heightDoubleLineCell
-                    )
-                ]
+            id: "fee",
+            headerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: feeCell,
+                    id: "fee",
+                    height: .heightDoubleLineCell
+                ),
+            ]
         )
     }
 
     var feeCautionSection: SectionProtocol {
         Section(
-                id: "fee-caution",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: feeCautionCell,
-                            id: "fee-caution",
-                            dynamicHeight: { [weak self] containerWidth in
-                                self?.feeCautionCell.cellHeight(containerWidth: containerWidth) ?? 0
-                            }
-                    )
-                ]
+            id: "fee-caution",
+            headerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: feeCautionCell,
+                    id: "fee-caution",
+                    dynamicHeight: { [weak self] containerWidth in
+                        self?.feeCautionCell.cellHeight(containerWidth: containerWidth) ?? 0
+                    }
+                ),
+            ]
         )
     }
 
@@ -107,10 +107,9 @@ class SendBitcoinViewController: BaseSendViewController {
         sections.append(contentsOf: [
             feeSection,
             feeCautionSection,
-            buttonSection
+            buttonSection,
         ])
 
         return sections
     }
-
 }

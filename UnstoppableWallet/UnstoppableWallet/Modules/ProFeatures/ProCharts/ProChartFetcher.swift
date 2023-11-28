@@ -1,6 +1,6 @@
+import Chart
 import Foundation
 import MarketKit
-import Chart
 
 class ProChartFetcher {
     private let marketKit: MarketKit.Kit
@@ -14,11 +14,9 @@ class ProChartFetcher {
         self.coin = coin
         self.type = type
     }
-
 }
 
 extension ProChartFetcher: IMetricChartFetcher {
-
     var intervals: [HsTimePeriod] {
         switch type {
         case .cexVolume, .dexVolume, .dexLiquidity, .activeAddresses, .txCount:
@@ -40,44 +38,43 @@ extension ProChartFetcher: IMetricChartFetcher {
         case .cexVolume:
             let data = try await marketKit.cexVolumes(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)
             return MetricChartModule.ItemData(
-                    items: data.points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
-                    type: .aggregated(value: data.aggregatedValue)
+                items: data.points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
+                type: .aggregated(value: data.aggregatedValue)
             )
         case .dexVolume:
             let data = try await marketKit.dexVolumes(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)
             return MetricChartModule.ItemData(
-                    items: data.points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
-                    type: .aggregated(value: data.aggregatedValue)
+                items: data.points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
+                type: .aggregated(value: data.aggregatedValue)
             )
         case .dexLiquidity:
             let points = try await marketKit.dexLiquidity(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)
             return MetricChartModule.ItemData(
-                    items: points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
-                    type: .regular
+                items: points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
+                type: .regular
             )
         case .activeAddresses:
             let points = try await marketKit.activeAddresses(coinUid: coin.uid, timePeriod: interval)
             return MetricChartModule.ItemData(
-                    items: points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
-                    type: .regular
+                items: points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
+                type: .regular
             )
         case .txCount:
             let data = try await marketKit.transactions(coinUid: coin.uid, timePeriod: interval)
             let volumes = data.points.map { $0.volume ?? 0 }
             return MetricChartModule.ItemData(
-                    items: data.points.map {
-                        MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp)
-                    },
-                    indicators: [ChartData.volume: volumes],
-                    type: .aggregated(value: data.aggregatedValue)
+                items: data.points.map {
+                    MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp)
+                },
+                indicators: [ChartData.volume: volumes],
+                type: .aggregated(value: data.aggregatedValue)
             )
         case .tvl:
             let points = try await marketKit.marketInfoTvl(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)
             return MetricChartModule.ItemData(
-                    items: points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
-                    type: .regular
+                items: points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
+                type: .regular
             )
         }
     }
-
 }

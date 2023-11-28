@@ -1,5 +1,5 @@
-import Combine
 import Chart
+import Combine
 
 class RsiIndicatorDataSource {
     private let periodId = "rsi-period-input"
@@ -8,24 +8,24 @@ class RsiIndicatorDataSource {
         let isChanged = defaultIndicator.period != indicator.period
         return [
             ChartIndicatorSettingsModule.TextField(
-                    id: "title-description",
-                    text: "chart_indicators.settings.rsi.description".localized
+                id: "title-description",
+                text: "chart_indicators.settings.rsi.description".localized
             ),
             ChartIndicatorSettingsModule.InputIntegerField(
-                    id: periodId,
-                    header: "chart_indicators.settings.rsi.period_title".localized,
-                    placeholder: defaultIndicator.period.description,
-                    initial: isChanged ? indicator.period.description : nil
-            )
+                id: periodId,
+                header: "chart_indicators.settings.rsi.period_title".localized,
+                placeholder: defaultIndicator.period.description,
+                initial: isChanged ? indicator.period.description : nil
+            ),
         ]
     }
 
     var currentItems: [ChartIndicatorSettingsModule.ValueItem] {
-        [ .init(id: periodId, value: period) ]
+        [.init(id: periodId, value: period)]
     }
 
     var initialItems: [ChartIndicatorSettingsModule.ValueItem] {
-        [ .init(id: periodId, value: nil) ]
+        [.init(id: periodId, value: nil)]
     }
 
     private let itemsUpdatedSubject = PassthroughSubject<Void, Never>()
@@ -63,20 +63,18 @@ class RsiIndicatorDataSource {
         }
 
         state = .success(
-                RsiIndicator(
-                        id: indicator.id,
-                        index: indicator.index,
-                        enabled: indicator.enabled,
-                        period: period,
-                        configuration: indicator.configuration
-                )
+            RsiIndicator(
+                id: indicator.id,
+                index: indicator.index,
+                enabled: indicator.enabled,
+                period: period,
+                configuration: indicator.configuration
+            )
         )
     }
-
 }
 
 extension RsiIndicatorDataSource: IIndicatorDataSource {
-
     var chartIndicator: ChartIndicator {
         indicator
     }
@@ -91,7 +89,7 @@ extension RsiIndicatorDataSource: IIndicatorDataSource {
 
     func set(id: String, value: Any?) {
         switch id {
-        case periodId:                   // change period
+        case periodId: // change period
             guard let period = value as? String, let intValue = Int(period) else {
                 period = defaultIndicator.period
                 sync()
@@ -112,8 +110,7 @@ extension RsiIndicatorDataSource: IIndicatorDataSource {
         itemsUpdatedSubject.eraseToAnyPublisher()
     }
 
-    var stateUpdatedPublisher: AnyPublisher<(), Never> {
+    var stateUpdatedPublisher: AnyPublisher<Void, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
-
 }

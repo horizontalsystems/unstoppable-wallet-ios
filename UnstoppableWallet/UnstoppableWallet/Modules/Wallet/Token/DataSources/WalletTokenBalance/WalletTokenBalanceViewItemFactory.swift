@@ -57,7 +57,7 @@ class WalletTokenBalanceViewItemFactory {
     private func descriptionValue(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> (text: String?, dimmed: Bool) {
         if case let .syncing(progress, lastBlockDate) = item.state {
             var text = ""
-            if let progress = progress {
+            if let progress {
                 text = "balance.syncing_percent".localized("\(progress)%")
             } else {
                 text = "balance.syncing".localized
@@ -123,7 +123,7 @@ class WalletTokenBalanceViewItemFactory {
     }
 
     private func currencyValue(value: Decimal, balanceHidden: Bool, state: AdapterState, priceItem: WalletCoinPriceService.Item?) -> (text: String?, dimmed: Bool) {
-        guard let priceItem = priceItem else {
+        guard let priceItem else {
             return (text: "---", dimmed: true)
         }
 

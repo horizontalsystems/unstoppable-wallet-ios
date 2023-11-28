@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class CoinPageService {
     let fullCoin: FullCoin
@@ -29,11 +29,9 @@ class CoinPageService {
     private func syncFavorite() {
         favorite = favoritesManager.isFavorite(coinUid: fullCoin.coin.uid)
     }
-
 }
 
 extension CoinPageService {
-
     var favoriteObservable: Observable<Bool> {
         favoriteRelay.asObservable()
     }
@@ -45,5 +43,4 @@ extension CoinPageService {
             favoritesManager.add(coinUid: fullCoin.coin.uid)
         }
     }
-
 }

@@ -10,11 +10,9 @@ class TopPlatformMarketCapFetcher {
         self.currencyManager = currencyManager
         self.topPlatform = topPlatform
     }
-
 }
 
 extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
-
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyManager.baseCurrency)
     }
@@ -32,5 +30,4 @@ extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
 
         return MetricChartModule.ItemData(items: items, type: .regular)
     }
-
 }

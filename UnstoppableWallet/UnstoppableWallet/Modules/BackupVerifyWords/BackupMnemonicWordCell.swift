@@ -1,12 +1,12 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class BackupMnemonicWordCell: UICollectionViewCell {
     private let button = SecondaryButton()
 
-    private var onTap: (() -> ())?
+    private var onTap: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,7 +20,8 @@ class BackupMnemonicWordCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -28,19 +29,16 @@ class BackupMnemonicWordCell: UICollectionViewCell {
         onTap?()
     }
 
-    func bind(viewItem: BackupVerifyWordsViewModel.WordViewItem, onTap: @escaping () -> ()) {
+    func bind(viewItem: BackupVerifyWordsViewModel.WordViewItem, onTap: @escaping () -> Void) {
         button.setTitle(viewItem.text, for: .normal)
         button.isEnabled = viewItem.enabled
 
         self.onTap = onTap
     }
-
 }
 
 extension BackupMnemonicWordCell {
-
     static func size(word: String) -> CGSize {
         CGSize(width: SecondaryButton.width(title: word, style: .default, hasImage: false), height: SecondaryButton.height(style: .default))
     }
-
 }

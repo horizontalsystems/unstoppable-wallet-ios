@@ -12,7 +12,7 @@ class DateHelper {
         return DateFormatter.cachedFormatter(format: format).string(from: date)
     }
 
-    func formatTransactionTime(from date: Date, useYesterday: Bool = false) -> String {
+    func formatTransactionTime(from date: Date, useYesterday _: Bool = false) -> String {
         DateFormatter.cachedFormatter(format: "\(LanguageHourFormatter.hourFormat):mm").string(from: date)
     }
 
@@ -84,5 +84,4 @@ class DateHelper {
         }
         return DateFormatter.cachedFormatter(format: short ? "MM/dd/yy" : "MMMM d, yyyy")
     }
-
 }

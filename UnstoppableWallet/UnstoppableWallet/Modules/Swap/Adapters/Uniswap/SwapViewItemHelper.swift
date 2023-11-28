@@ -1,11 +1,10 @@
 import Foundation
-import UniswapKit
 import MarketKit
+import UniswapKit
 
 class SwapViewItemHelper {
-
     func sortedPrices(executionPrice: Decimal?, invertedPrice: Decimal?, tokenIn: MarketKit.Token?, tokenOut: MarketKit.Token?) -> (String, String)? {
-        guard let price = executionPrice, let inverted = invertedPrice, let tokenOut = tokenOut, let tokenIn = tokenIn else {
+        guard let price = executionPrice, let inverted = invertedPrice, let tokenOut, let tokenIn else {
             return nil
         }
 
@@ -21,13 +20,13 @@ class SwapViewItemHelper {
     }
 
     func priceImpactViewItem(priceImpact: Decimal?, impactLevel: UniswapTradeService.PriceImpactLevel?, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> UniswapModule.PriceImpactViewItem? {
-        guard var priceImpact = priceImpact, let impactLevel, impactLevel.rawValue >= minLevel.rawValue else {
+        guard var priceImpact, let impactLevel, impactLevel.rawValue >= minLevel.rawValue else {
             return nil
         }
         priceImpact.negate()
         return UniswapModule.PriceImpactViewItem(
-                value: priceImpact.description + "%",
-                level: impactLevel
+            value: priceImpact.description + "%",
+            level: impactLevel
         )
     }
 
@@ -39,11 +38,9 @@ class SwapViewItemHelper {
         let ttl = Decimal(floatLiteral: floor(deadline / 60))
         return deadline == TradeOptions.defaultTtl ? nil : "swap.advanced_settings.deadline_minute".localized(ttl.description)
     }
-
 }
 
 extension SwapViewItemHelper {
-
     struct PriceCoinValue {
         let baseCoin: Coin
         let quoteCoinValue: CoinValue
@@ -51,7 +48,5 @@ extension SwapViewItemHelper {
         var formattedFull: String {
             ValueFormatter.instance.formatFull(coinValue: quoteCoinValue).map { "1 " + [baseCoin.code, $0].joined(separator: " = ") } ?? ""
         }
-
     }
-
 }

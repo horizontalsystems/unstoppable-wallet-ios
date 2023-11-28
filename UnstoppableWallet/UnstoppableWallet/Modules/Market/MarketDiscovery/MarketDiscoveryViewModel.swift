@@ -1,9 +1,9 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
+import Foundation
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketDiscoveryViewModel {
     private var queue = DispatchQueue(label: "\(AppConfig.label).market-discovery-view-model", qos: .userInitiated)
@@ -17,17 +17,17 @@ class MarketDiscoveryViewModel {
     private let discoveryLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let discoveryErrorRelay = BehaviorRelay<String?>(value: nil)
     private let searchViewItemsRelay = BehaviorRelay<[SearchViewItem]?>(value: nil)
-    private let favoritedRelay = PublishRelay<()>()
-    private let unfavoritedRelay = PublishRelay<()>()
-    private let failRelay = PublishRelay<()>()
+    private let favoritedRelay = PublishRelay<Void>()
+    private let unfavoritedRelay = PublishRelay<Void>()
+    private let failRelay = PublishRelay<Void>()
 
     init(categoryService: MarketDiscoveryCategoryService, filterService: MarketDiscoveryFilterService) {
         self.categoryService = categoryService
         self.filterService = filterService
 
         categoryService.$state
-                .sink { [weak self] in self?.sync(categoryState: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(categoryState: $0) }
+            .store(in: &cancellables)
 
         subscribe(disposeBag, filterService.stateObservable) { [weak self] in self?.sync(filterState: $0) }
         subscribe(disposeBag, filterService.resultObservable) { [weak self] in self?.sync(result: $0) }
@@ -56,7 +56,7 @@ class MarketDiscoveryViewModel {
         switch filterState {
         case .idle:
             searchViewItemsRelay.accept(nil)
-        case .searchResults(let fullCoins):
+        case let .searchResults(fullCoins):
             searchViewItemsRelay.accept(fullCoins.map { searchViewItem(fullCoin: $0) })
             discoveryLoadingRelay.accept(false)
             discoveryErrorRelay.accept(nil)
@@ -69,11 +69,11 @@ class MarketDiscoveryViewModel {
             discoveryErrorRelay.accept(nil)
             discoveryLoadingRelay.accept(true)
             discoveryViewItemsRelay.accept(nil)
-        case .items(let items):
+        case let .items(items):
             discoveryErrorRelay.accept(nil)
             discoveryLoadingRelay.accept(false)
             discoveryViewItemsRelay.accept(items.map { discoveryViewItem(item: $0) })
-        case .failed(let error):
+        case let .failed(error):
             discoveryErrorRelay.accept(error.localizedDescription)
             discoveryLoadingRelay.accept(false)
             discoveryViewItemsRelay.accept(nil)
@@ -84,42 +84,40 @@ class MarketDiscoveryViewModel {
         switch item {
         case .topCoins:
             return DiscoveryViewItem(
-                    type: .topCoins,
-                    imageUrl: "top_coins".headerImageUrl,
-                    name: "market_discovery.top_coins".localized,
-                    marketCap: nil,
-                    diff: nil,
-                    diffType: .up
+                type: .topCoins,
+                imageUrl: "top_coins".headerImageUrl,
+                name: "market_discovery.top_coins".localized,
+                marketCap: nil,
+                diff: nil,
+                diffType: .up
             )
-        case .category(let category):
+        case let .category(category):
             let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, timePeriod: categoryService.timePeriod, currency: categoryService.currency)
 
             return DiscoveryViewItem(
-                    type: .category(category: category),
-                    imageUrl: category.imageUrl,
-                    name: category.name,
-                    marketCap: marketCap,
-                    diff: diffString,
-                    diffType: diffType
+                type: .category(category: category),
+                imageUrl: category.imageUrl,
+                name: category.name,
+                marketCap: marketCap,
+                diff: diffString,
+                diffType: diffType
             )
         }
     }
 
     private func searchViewItem(fullCoin: FullCoin) -> SearchViewItem {
         SearchViewItem(
-                uid: fullCoin.coin.uid,
-                imageUrl: fullCoin.coin.imageUrl,
-                placeholderImageName: "placeholder_circle_32",
-                name: fullCoin.coin.name,
-                code: fullCoin.coin.code,
-                favorite: false
+            uid: fullCoin.coin.uid,
+            imageUrl: fullCoin.coin.imageUrl,
+            placeholderImageName: "placeholder_circle_32",
+            name: fullCoin.coin.name,
+            code: fullCoin.coin.code,
+            favorite: false
         )
     }
-
 }
 
 extension MarketDiscoveryViewModel {
-
     var discoveryViewItemsDriver: Driver<[DiscoveryViewItem]?> {
         discoveryViewItemsRelay.asDriver()
     }
@@ -136,15 +134,15 @@ extension MarketDiscoveryViewModel {
         searchViewItemsRelay.asDriver()
     }
 
-    var favoritedDriver: Driver<()> {
+    var favoritedDriver: Driver<Void> {
         favoritedRelay.asDriver(onErrorJustReturn: ())
     }
 
-    var unfavoritedDriver: Driver<()> {
+    var unfavoritedDriver: Driver<Void> {
         unfavoritedRelay.asDriver(onErrorJustReturn: ())
     }
 
-    var failDriver: Driver<()> {
+    var failDriver: Driver<Void> {
         failRelay.asDriver(onErrorJustReturn: ())
     }
 
@@ -167,11 +165,9 @@ extension MarketDiscoveryViewModel {
     func unfavorite(index: Int) {
         filterService.unfavorite(index: index)
     }
-
 }
 
 extension MarketDiscoveryViewModel {
-
     struct DiscoveryViewItem {
         let type: Type
         let imageUrl: String
@@ -194,5 +190,4 @@ extension MarketDiscoveryViewModel {
         let code: String
         let favorite: Bool
     }
-
 }

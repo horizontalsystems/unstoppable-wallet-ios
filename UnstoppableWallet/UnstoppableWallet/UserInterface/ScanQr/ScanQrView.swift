@@ -108,7 +108,7 @@ class ScanQrView: UIView {
     }
 
     private func updateRectOfInterest() {
-        guard !width.isZero && !height.isZero else {
+        guard !width.isZero, !height.isZero else {
             return
         }
 
@@ -155,7 +155,7 @@ class ScanQrView: UIView {
     }
 
     func startCaptureSession() {
-        if let captureSession = captureSession, !captureSession.isRunning {
+        if let captureSession, !captureSession.isRunning {
             DispatchQueue.main.async {
                 captureSession.startRunning()
             }
@@ -163,7 +163,7 @@ class ScanQrView: UIView {
     }
 
     func stop() {
-        if let captureSession = captureSession, captureSession.isRunning {
+        if let captureSession, captureSession.isRunning {
             captureSession.stopRunning()
         }
     }

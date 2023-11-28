@@ -1,6 +1,6 @@
-import UIKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import UIKit
 
 class MarketOverviewHeaderCell: BaseThemeCell {
     private let leftImage = ImageComponent(size: .iconSize24)
@@ -9,13 +9,14 @@ class MarketOverviewHeaderCell: BaseThemeCell {
     private let rightButton = SelectorButton()
     private let seeAllButton = SecondaryButton()
 
-    var onSelect: ((Int) -> ())? {
+    var onSelect: ((Int) -> Void)? {
         didSet {
             rightButton.onSelect = onSelect
         }
     }
-    var onSeeAll: (() -> ())?
-    var onTapTitle: (() -> ())?
+
+    var onSeeAll: (() -> Void)?
+    var onTapTitle: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -70,7 +71,8 @@ class MarketOverviewHeaderCell: BaseThemeCell {
         seeAllButton.addTarget(self, action: #selector(onTapSeeAll), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -128,15 +130,12 @@ class MarketOverviewHeaderCell: BaseThemeCell {
             }
         }
     }
-
 }
 
 extension MarketOverviewHeaderCell {
-
     enum ButtonMode {
         case selector
         case seeAll
         case none
     }
-
 }

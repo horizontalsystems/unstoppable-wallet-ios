@@ -1,7 +1,6 @@
 import UIKit
 
 extension UITextView {
-
     static var appDebug: UITextView {
         let textView = UITextView()
 
@@ -13,15 +12,14 @@ extension UITextView {
 
         return textView
     }
-
 }
 
 extension UITextField {
-
     func textRange(range: NSRange) -> UITextRange? {
         let beginning = beginningOfDocument
         guard let start = position(from: beginning, offset: range.location),
-              let end = position(from: start, offset: range.length) else {
+              let end = position(from: start, offset: range.length)
+        else {
             return nil
         }
 
@@ -33,5 +31,4 @@ extension UITextField {
         let length = offset(from: textRange.start, to: textRange.end)
         return NSRange(location: location, length: length)
     }
-
 }

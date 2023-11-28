@@ -15,5 +15,4 @@ enum BalancePrimaryValue: String, CaseIterable, Codable {
         case .currency: return "appearance.balance_value.coin_value".localized
         }
     }
-
 }

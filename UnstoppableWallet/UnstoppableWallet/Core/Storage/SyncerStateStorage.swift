@@ -6,11 +6,9 @@ class SyncerStateStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension SyncerStateStorage {
-
     func value(key: String) throws -> String? {
         try dbPool.read { db in
             try SyncerState.filter(SyncerState.Columns.key == key).fetchOne(db)?.value
@@ -29,5 +27,4 @@ extension SyncerStateStorage {
             try SyncerState.filter(SyncerState.Columns.key == key).deleteAll(db)
         }
     }
-
 }

@@ -30,5 +30,4 @@ class EnabledWallet_v_0_20: Record {
         container[Columns.coinId] = coinId
         container[Columns.accountId] = accountId
     }
-
 }

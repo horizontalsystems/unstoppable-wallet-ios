@@ -1,6 +1,6 @@
+import BinanceChainKit
 import Foundation
 import RxSwift
-import BinanceChainKit
 
 class BinanceKitManager {
     private weak var _binanceKit: BinanceChainKit?
@@ -9,7 +9,7 @@ class BinanceKitManager {
     private let queue = DispatchQueue(label: "\(AppConfig.label).ethereum-kit-manager", qos: .userInitiated)
 
     private func _binanceKit(account: Account) throws -> BinanceChainKit {
-        if let _binanceKit = _binanceKit, let currentAccount = currentAccount, currentAccount == account {
+        if let _binanceKit, let currentAccount, currentAccount == account {
             return _binanceKit
         }
 
@@ -18,10 +18,10 @@ class BinanceKitManager {
         }
 
         let binanceKit = try BinanceChainKit.instance(
-                seed: seed,
-                networkType: .mainNet,
-                walletId: account.id,
-                minLogLevel: .error
+            seed: seed,
+            networkType: .mainNet,
+            walletId: account.id,
+            minLogLevel: .error
         )
 
         binanceKit.refresh()
@@ -34,13 +34,11 @@ class BinanceKitManager {
 }
 
 extension BinanceKitManager {
-
     var binanceKit: BinanceChainKit? {
         queue.sync { _binanceKit }
     }
 
     func binanceKit(account: Account) throws -> BinanceChainKit {
-        try queue.sync { try _binanceKit(account: account)  }
+        try queue.sync { try _binanceKit(account: account) }
     }
-
 }

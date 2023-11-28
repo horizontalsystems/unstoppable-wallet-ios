@@ -16,5 +16,4 @@ class JailbreakService {
     func setAlertShown() {
         localStorage.jailbreakShownOnce = true
     }
-
 }

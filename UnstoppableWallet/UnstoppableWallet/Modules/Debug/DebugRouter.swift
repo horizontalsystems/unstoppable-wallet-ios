@@ -1,13 +1,10 @@
 import UIKit
 
-class DebugRouter {
-}
+class DebugRouter {}
 
-extension DebugRouter: IDebugRouter {
-}
+extension DebugRouter: IDebugRouter {}
 
 extension DebugRouter {
-
     static func module() -> UIViewController {
         let interactor = DebugInteractor(appManager: App.shared.appManager, debugBackgroundManager: App.shared.debugLogger, pasteboardManager: App.shared.pasteboardManager)
         let presenter = DebugPresenter(interactor: interactor)
@@ -18,5 +15,4 @@ extension DebugRouter {
 
         return viewController
     }
-
 }

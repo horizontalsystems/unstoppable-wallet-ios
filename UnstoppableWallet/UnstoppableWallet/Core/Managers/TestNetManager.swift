@@ -13,14 +13,11 @@ class TestNetManager {
 
         testNetEnabled = userDefaultsStorage.value(for: keyTestNetEnabled) ?? false
     }
-
 }
 
 extension TestNetManager {
-
     func set(testNetEnabled: Bool) {
         self.testNetEnabled = testNetEnabled
         userDefaultsStorage.set(value: testNetEnabled, for: keyTestNetEnabled)
     }
-
 }

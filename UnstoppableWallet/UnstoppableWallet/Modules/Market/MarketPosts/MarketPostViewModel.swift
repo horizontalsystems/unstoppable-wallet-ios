@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketPostViewModel {
     private let service: MarketPostService
@@ -26,7 +26,7 @@ class MarketPostViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .loaded(let posts):
+        case let .loaded(posts):
             viewItemsRelay.accept(posts.map { viewItem(post: $0) })
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -39,11 +39,11 @@ class MarketPostViewModel {
 
     private func viewItem(post: Post) -> ViewItem {
         ViewItem(
-                source: post.source,
-                title: post.title,
-                body: post.body,
-                timeAgo: timeAgo(interval: Date().timeIntervalSince1970 - post.timestamp),
-                url: post.url
+            source: post.source,
+            title: post.title,
+            body: post.body,
+            timeAgo: timeAgo(interval: Date().timeIntervalSince1970 - post.timestamp),
+            url: post.url
         )
     }
 
@@ -65,11 +65,9 @@ class MarketPostViewModel {
         interval /= 24
         return "timestamp.days_ago".localized(interval)
     }
-
 }
 
 extension MarketPostViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
     }
@@ -89,11 +87,9 @@ extension MarketPostViewModel {
     func refresh() {
         service.refresh()
     }
-
 }
 
 extension MarketPostViewModel {
-
     struct ViewItem {
         let source: String
         let title: String
@@ -101,5 +97,4 @@ extension MarketPostViewModel {
         let timeAgo: String
         let url: String
     }
-
 }

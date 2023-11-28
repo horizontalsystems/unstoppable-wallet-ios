@@ -34,5 +34,4 @@ class EvmAccountRestoreState: Record {
         container[Columns.blockchainUid] = blockchainUid
         container[Columns.restored] = restored
     }
-
 }

@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IMemoAvailableService: AnyObject {
     var isAvailable: Bool { get }
@@ -33,7 +33,7 @@ class SendMemoInputService {
     private func setAvailableService() {
         availableDisposeBag = DisposeBag()
 
-        if let availableService = availableService {
+        if let availableService {
             subscribe(availableDisposeBag, availableService.isAvailableObservable) { [weak self] in self?.sync(available: $0) }
             sync(available: availableService.isAvailable)
         }
@@ -42,11 +42,9 @@ class SendMemoInputService {
     private func sync(available: Bool) {
         isAvailable = available
     }
-
 }
 
 extension SendMemoInputService {
-
     var isAvailableObservable: Observable<Bool> {
         isAvailableRelay.asObservable()
     }
@@ -62,5 +60,4 @@ extension SendMemoInputService {
     func isValid(text: String) -> Bool {
         text.count <= maxSymbols
     }
-
 }

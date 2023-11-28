@@ -60,7 +60,6 @@ class WalletAdapterService {
 }
 
 extension WalletAdapterService {
-
     func isMainNet(wallet: Wallet) -> Bool? {
         queue.sync { adapterMap[wallet]?.isMainNet }
     }

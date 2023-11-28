@@ -1,6 +1,6 @@
-import UIKit
 import Down
 import libcmark
+import UIKit
 
 protocol MarkdownBlock: CustomStringConvertible {}
 
@@ -12,7 +12,6 @@ class MarkdownVisitor {
         self.attributedStringVisitor = attributedStringVisitor
         self.styler = styler
     }
-
 }
 
 extension MarkdownVisitor: Visitor {
@@ -29,7 +28,7 @@ extension MarkdownVisitor: Visitor {
     public func visit(list node: List) -> MarkdownBlock {
         var startOrder: Int?
 
-        if case .ordered(let start) = node.listType {
+        if case let .ordered(start) = node.listType {
             startOrder = start
         }
 
@@ -40,15 +39,15 @@ extension MarkdownVisitor: Visitor {
         ItemBlock(blocks: visitChildren(of: node))
     }
 
-    public func visit(codeBlock node: CodeBlock) -> MarkdownBlock {
+    public func visit(codeBlock _: CodeBlock) -> MarkdownBlock {
         UnhandledBlock(type: "CodeBlock")
     }
 
-    public func visit(htmlBlock node: HtmlBlock) -> MarkdownBlock {
+    public func visit(htmlBlock _: HtmlBlock) -> MarkdownBlock {
         UnhandledBlock(type: "HtmlBlock")
     }
 
-    public func visit(customBlock node: CustomBlock) -> MarkdownBlock {
+    public func visit(customBlock _: CustomBlock) -> MarkdownBlock {
         UnhandledBlock(type: "CustomBlock")
     }
 
@@ -69,61 +68,58 @@ extension MarkdownVisitor: Visitor {
         return HeadingBlock(attributedString: s, level: node.headingLevel)
     }
 
-    public func visit(thematicBreak node: ThematicBreak) -> MarkdownBlock {
+    public func visit(thematicBreak _: ThematicBreak) -> MarkdownBlock {
         UnhandledBlock(type: "ThematicBreak")
     }
 
-    public func visit(text node: Text) -> MarkdownBlock {
+    public func visit(text _: Text) -> MarkdownBlock {
         UnhandledBlock(type: "Text")
     }
 
-    public func visit(softBreak node: SoftBreak) -> MarkdownBlock {
+    public func visit(softBreak _: SoftBreak) -> MarkdownBlock {
         UnhandledBlock(type: "SoftBreak")
     }
 
-    public func visit(lineBreak node: LineBreak) -> MarkdownBlock {
+    public func visit(lineBreak _: LineBreak) -> MarkdownBlock {
         UnhandledBlock(type: "LineBreak")
     }
 
-    public func visit(code node: Code) -> MarkdownBlock {
+    public func visit(code _: Code) -> MarkdownBlock {
         UnhandledBlock(type: "Code")
     }
 
-    public func visit(htmlInline node: HtmlInline) -> MarkdownBlock {
+    public func visit(htmlInline _: HtmlInline) -> MarkdownBlock {
         UnhandledBlock(type: "HtmlInline")
     }
 
-    public func visit(customInline node: CustomInline) -> MarkdownBlock {
+    public func visit(customInline _: CustomInline) -> MarkdownBlock {
         UnhandledBlock(type: "CustomInline")
     }
 
-    public func visit(emphasis node: Emphasis) -> MarkdownBlock {
+    public func visit(emphasis _: Emphasis) -> MarkdownBlock {
         UnhandledBlock(type: "Emphasis")
     }
 
-    public func visit(strong node: Strong) -> MarkdownBlock {
+    public func visit(strong _: Strong) -> MarkdownBlock {
         UnhandledBlock(type: "Strong")
     }
 
-    public func visit(link node: Link) -> MarkdownBlock {
+    public func visit(link _: Link) -> MarkdownBlock {
         UnhandledBlock(type: "Link")
     }
 
     public func visit(image node: Image) -> MarkdownBlock {
         ImageBlock(title: node.title, url: node.url)
     }
-
 }
 
 extension MarkdownVisitor {
-
     struct DocumentBlock: MarkdownBlock {
         let blocks: [MarkdownBlock]
 
         var description: String {
             "DocumentBlock: \(blocks.count) blocks:\n\(blocks.map { "\($0)" }.joined(separator: "\n"))\n\n"
         }
-
     }
 
     struct HeadingBlock: MarkdownBlock {
@@ -133,7 +129,6 @@ extension MarkdownVisitor {
         var description: String {
             "Heading Block: level: \(level): \(attributedString.string)"
         }
-
     }
 
     struct ParagraphBlock: MarkdownBlock {
@@ -142,7 +137,6 @@ extension MarkdownVisitor {
         var description: String {
             "Paragraph Block: \(attributedString.string)"
         }
-
     }
 
     struct ImageBlock: MarkdownBlock {
@@ -152,7 +146,6 @@ extension MarkdownVisitor {
         var description: String {
             "Image Block: title: \(title ?? "nil"), url: \(url ?? "nil")"
         }
-
     }
 
     struct ListBlock: MarkdownBlock {
@@ -167,7 +160,6 @@ extension MarkdownVisitor {
         var description: String {
             "List Block: [tight=\(tight), startOrder=\(startOrder.map { "\($0)" } ?? "nil")] \(blocks.count) blocks:\n\(blocks.map { "\($0)" }.joined(separator: "\n"))\n\n"
         }
-
     }
 
     struct ItemBlock: MarkdownBlock {
@@ -180,7 +172,6 @@ extension MarkdownVisitor {
         var description: String {
             "Item Block: \(blocks.count) block(s)"
         }
-
     }
 
     struct BlockQuoteBlock: MarkdownBlock {
@@ -193,7 +184,6 @@ extension MarkdownVisitor {
         var description: String {
             "BlockQuote Block: \(blocks.count) block(s)"
         }
-
     }
 
     struct UnhandledBlock: MarkdownBlock {
@@ -202,15 +192,11 @@ extension MarkdownVisitor {
         var description: String {
             "Unhandled Block: \(type)"
         }
-
     }
-
 }
 
 private extension Sequence where Iterator.Element == NSMutableAttributedString {
-
     var joined: NSMutableAttributedString {
         reduce(into: NSMutableAttributedString()) { $0.append($1) }
     }
-
 }

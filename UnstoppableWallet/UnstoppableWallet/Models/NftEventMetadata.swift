@@ -10,7 +10,6 @@ struct NftEventMetadata {
 }
 
 extension NftEventMetadata {
-
     enum EventType {
         case sale
         case transfer
@@ -20,5 +19,4 @@ extension NftEventMetadata {
         case offer
         case offerCancel
     }
-
 }

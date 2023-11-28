@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
 import Chart
-import ThemeKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MarketCardTitleView: UIView {
     private static let font: UIFont = .caption
@@ -39,7 +39,8 @@ class MarketCardTitleView: UIView {
         badgeView.isHidden = true
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError()
     }
 
@@ -60,5 +61,4 @@ class MarketCardTitleView: UIView {
         get { badgeView.textColor }
         set { badgeView.textColor = newValue }
     }
-
 }

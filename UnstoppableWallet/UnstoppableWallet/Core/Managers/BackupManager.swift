@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
 import Combine
 import HsExtensions
+import RxRelay
+import RxSwift
 
 class BackupManager {
     private let accountManager: AccountManager
@@ -18,13 +18,11 @@ class BackupManager {
     private func updateAllBackedUp() {
         allBackedUpRelay.accept(allBackedUp)
     }
-
 }
 
 extension BackupManager {
-
     var allBackedUp: Bool {
-        accountManager.accounts.allSatisfy { $0.backedUp }
+        accountManager.accounts.allSatisfy(\.backedUp)
     }
 
     var allBackedUpObservable: Observable<Bool> {
@@ -39,5 +37,4 @@ extension BackupManager {
         account.backedUp = true
         accountManager.update(account: account)
     }
-
 }

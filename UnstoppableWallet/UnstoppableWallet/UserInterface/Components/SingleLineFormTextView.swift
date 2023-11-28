@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class SingleLineFormTextView: UIView, IFormTextView {
     private var textViewFont: UIFont = .body
@@ -9,21 +9,21 @@ class SingleLineFormTextView: UIView, IFormTextView {
     let textField = UITextField()
     private let placeholderLabel = UILabel()
 
-    var onChangeHeight: (() -> ())?
-    var onChangeText: ((String?) -> ())?
-    var onChangeEditing: ((Bool) -> ())?
+    var onChangeHeight: (() -> Void)?
+    var onChangeText: ((String?) -> Void)?
+    var onChangeEditing: ((Bool) -> Void)?
     var isValidText: ((String) -> Bool)?
 
     var textFieldInset: UIEdgeInsets = .zero
     var prefix: String? {
         didSet {
             let text = textField.text ?? ""
-            if let prefix = prefix {
+            if let prefix {
                 if !text.hasPrefix(prefix) {
                     textField.text = prefix + (textField.text ?? "")
                     syncPlaceholder()
                 }
-            } else if let oldValue = oldValue, text.hasPrefix(oldValue) {
+            } else if let oldValue, text.hasPrefix(oldValue) {
                 textField.text = text.stripping(prefix: oldValue)
                 syncPlaceholder()
             }
@@ -63,7 +63,8 @@ class SingleLineFormTextView: UIView, IFormTextView {
         placeholderLabel.textColor = .themeGray50
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -71,8 +72,8 @@ class SingleLineFormTextView: UIView, IFormTextView {
         textField.becomeFirstResponder()
     }
 
-    private func height(text: String, width: CGFloat) -> CGFloat {
-         round(textViewFont.lineHeight) + textFieldInset.height
+    private func height(text _: String, width _: CGFloat) -> CGFloat {
+        round(textViewFont.lineHeight) + textFieldInset.height
     }
 
     private func syncPlaceholder() {
@@ -83,11 +84,9 @@ class SingleLineFormTextView: UIView, IFormTextView {
         onChangeText?(textField.text?.stripping(prefix: prefix))
         syncPlaceholder()
     }
-
 }
 
 extension SingleLineFormTextView {
-
     var text: String? {
         get {
             textField.text?.stripping(prefix: prefix)
@@ -171,13 +170,11 @@ extension SingleLineFormTextView {
             }
         }
     }
-
 }
 
 extension SingleLineFormTextView: UITextFieldDelegate {
-
     public func textFieldDidChangeSelection(_ textField: UITextField) {
-        if let prefix = prefix, let selectedTextRange = textField.selectedTextRange {
+        if let prefix, let selectedTextRange = textField.selectedTextRange {
             let selectedRange = textField.range(textRange: selectedTextRange)
             if selectedRange.location < prefix.count {
                 let length = max(0, selectedRange.length - prefix.count)
@@ -191,13 +188,13 @@ extension SingleLineFormTextView: UITextFieldDelegate {
     public func textField(_ textView: UITextField, shouldChangeCharactersIn range: NSRange, replacementString text: String) -> Bool {
         let newText = ((textView.text ?? "") as NSString).replacingCharacters(in: range, with: text)
 
-        if let prefix = prefix {    //avoid delete prefix if it was set
+        if let prefix { // avoid delete prefix if it was set
             if !newText.hasPrefix(prefix) {
                 return false
             }
         }
 
-        if text.isEmpty || newText.isEmpty {       // allow backspacing in inputView
+        if text.isEmpty || newText.isEmpty { // allow backspacing in inputView
             return true
         }
 
@@ -210,20 +207,17 @@ extension SingleLineFormTextView: UITextFieldDelegate {
         return isValid
     }
 
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
+    public func textFieldDidBeginEditing(_: UITextField) {
         onChangeEditing?(true)
     }
 
-    public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+    public func textFieldDidEndEditing(_: UITextField, reason _: UITextField.DidEndEditingReason) {
         onChangeEditing?(false)
     }
-
 }
 
 extension SingleLineFormTextView {
-
     func height(containerWidth: CGFloat) -> CGFloat {
         height(text: textField.text ?? "", width: containerWidth)
     }
-
 }

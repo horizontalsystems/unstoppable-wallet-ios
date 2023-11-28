@@ -1,9 +1,9 @@
-import UIKit
-import RxSwift
-import ThemeKit
-import SectionsTableView
 import ComponentKit
 import HUD
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class MarketPostViewController: ThemeViewController {
     private let viewModel: MarketPostViewModel
@@ -26,7 +26,8 @@ class MarketPostViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -110,41 +111,39 @@ class MarketPostViewController: ThemeViewController {
     private func open(url: String) {
         urlManager.open(url: url, from: parentNavigationController)
     }
-
 }
 
 extension MarketPostViewController: SectionsDataSource {
-
     private func row(viewItem: MarketPostViewModel.ViewItem) -> RowProtocol {
         Row<PostCell>(
-                id: viewItem.title,
-                height: PostCell.height,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    cell.bind(
-                            header: viewItem.source,
-                            title: viewItem.title,
-                            body: viewItem.body,
-                            time: viewItem.timeAgo
-                    )
-                },
-                action: { [weak self] _ in
-                    self?.open(url: viewItem.url)
-                }
+            id: viewItem.title,
+            height: PostCell.height,
+            autoDeselect: true,
+            bind: { cell, _ in
+                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                cell.bind(
+                    header: viewItem.source,
+                    title: viewItem.title,
+                    body: viewItem.body,
+                    time: viewItem.timeAgo
+                )
+            },
+            action: { [weak self] _ in
+                self?.open(url: viewItem.url)
+            }
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let viewItems = viewItems {
+        if let viewItems {
             for (index, viewItem) in viewItems.enumerated() {
                 let section = Section(
-                        id: "post_\(index)",
-                        headerState: .margin(height: .margin12),
-                        footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
-                        rows: [row(viewItem: viewItem)]
+                    id: "post_\(index)",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
+                    rows: [row(viewItem: viewItem)]
                 )
 
                 sections.append(section)
@@ -153,5 +152,4 @@ extension MarketPostViewController: SectionsDataSource {
 
         return sections
     }
-
 }

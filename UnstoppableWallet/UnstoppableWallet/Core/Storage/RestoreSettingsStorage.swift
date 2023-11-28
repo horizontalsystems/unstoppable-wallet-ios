@@ -6,11 +6,9 @@ class RestoreSettingsStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension RestoreSettingsStorage {
-
     func restoreSettings(accountId: String, blockchainUid: String) -> [RestoreSettingRecord] {
         try! dbPool.read { db in
             try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId && RestoreSettingRecord.Columns.blockchainUid == blockchainUid).fetchAll(db)
@@ -36,5 +34,4 @@ extension RestoreSettingsStorage {
             try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId).deleteAll(db)
         }
     }
-
 }

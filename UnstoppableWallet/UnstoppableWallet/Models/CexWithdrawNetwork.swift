@@ -16,20 +16,17 @@ struct CexWithdrawNetwork {
     var networkName: String {
         blockchain?.name ?? name
     }
-
 }
 
 extension CexWithdrawNetwork: Hashable {
-
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 
-    static func ==(lhs: CexWithdrawNetwork, rhs: CexWithdrawNetwork) -> Bool {
+    static func == (lhs: CexWithdrawNetwork, rhs: CexWithdrawNetwork) -> Bool {
         lhs.id == rhs.id && lhs.name == rhs.name && lhs.isDefault == rhs.isDefault && lhs.enabled == rhs.enabled
-                && lhs.minAmount == rhs.minAmount && lhs.maxAmount == rhs.maxAmount
-                && lhs.fixedFee == rhs.fixedFee && lhs.feePercent == rhs.feePercent && lhs.minFee == rhs.minFee
-                && lhs.blockchain == rhs.blockchain
+            && lhs.minAmount == rhs.minAmount && lhs.maxAmount == rhs.maxAmount
+            && lhs.fixedFee == rhs.fixedFee && lhs.feePercent == rhs.feePercent && lhs.minFee == rhs.minFee
+            && lhs.blockchain == rhs.blockchain
     }
-
 }

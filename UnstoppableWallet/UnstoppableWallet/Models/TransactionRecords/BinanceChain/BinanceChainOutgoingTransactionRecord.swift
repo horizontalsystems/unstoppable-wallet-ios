@@ -1,5 +1,5 @@
-import Foundation
 import BinanceChainKit
+import Foundation
 import MarketKit
 
 class BinanceChainOutgoingTransactionRecord: BinanceChainTransactionRecord {
@@ -18,5 +18,4 @@ class BinanceChainOutgoingTransactionRecord: BinanceChainTransactionRecord {
     override var mainValue: TransactionValue? {
         value
     }
-
 }

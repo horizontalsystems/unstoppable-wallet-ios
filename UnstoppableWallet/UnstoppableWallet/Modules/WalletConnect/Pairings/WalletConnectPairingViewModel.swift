@@ -1,13 +1,13 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class WalletConnectPairingViewModel {
     private let service: WalletConnectPairingService
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private let showDisconnectingRelay = PublishRelay<()>()
+    private let showDisconnectingRelay = PublishRelay<Void>()
     private let showDisconnectedRelay = PublishRelay<Bool>()
 
     init(service: WalletConnectPairingService) {
@@ -34,23 +34,20 @@ class WalletConnectPairingViewModel {
         case .failed: showDisconnectedRelay.accept(false)
         }
     }
-
 }
 
 extension WalletConnectPairingViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemRelay.asDriver()
     }
 
-    var showDisconnectingSignal: Signal<()> {
+    var showDisconnectingSignal: Signal<Void> {
         showDisconnectingRelay.asSignal()
     }
 
     var showDisconnectedSignal: Signal<Bool> {
         showDisconnectedRelay.asSignal()
     }
-
 
     func onDisconnect(topic: String) {
         service.disconnect(topic: topic)
@@ -59,16 +56,13 @@ extension WalletConnectPairingViewModel {
     func onDisconnectAll() {
         service.disconnectAll()
     }
-
 }
 
 extension WalletConnectPairingViewModel {
-
     struct ViewItem {
         let topic: String
         let title: String
         let description: String?
         let imageUrl: String?
     }
-
 }

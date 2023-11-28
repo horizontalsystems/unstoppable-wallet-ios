@@ -80,7 +80,7 @@ class AlertViewController: ThemeActionSheetController {
             bind: { cell in
                 cell.set(backgroundStyle: .transparent)
             },
-            action: {  [weak self] in
+            action: { [weak self] in
                 self?.delegate?.onTapViewItem(index: index)
             }
         )

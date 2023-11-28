@@ -8,10 +8,10 @@ class TransactionFilterService {
     var allTokens = [Token]()
 
     func handle(wallets: [Wallet]) {
-        allBlockchains = Array(Set(wallets.map { $0.token.blockchain }))
+        allBlockchains = Array(Set(wallets.map(\.token.blockchain)))
             .sorted { $0.type.order < $1.type.order }
 
-        allTokens = wallets.map { $0.token }
+        allTokens = wallets.map(\.token)
             .sorted { lhsToken, rhsToken in
                 let lhsName = lhsToken.coin.name.lowercased()
                 let rhsName = rhsToken.coin.name.lowercased()

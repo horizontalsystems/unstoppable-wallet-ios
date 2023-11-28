@@ -1,8 +1,8 @@
 import Combine
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 struct NftCollectionItem {
     let index: Int
@@ -58,23 +58,21 @@ class MarketNftTopCollectionsService {
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let collections, _, _) = internalState else {
+        guard case let .loaded(collections, _, _) = internalState else {
             return
         }
 
         sync(collections: collections, reorder: true)
     }
-
 }
 
 extension MarketNftTopCollectionsService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
         $state
     }
 
     func topCollection(uid: String) -> NftTopCollection? {
-        guard case .loaded(let collections, _, _) = internalState else {
+        guard case let .loaded(collections, _, _) = internalState else {
             return nil
         }
 
@@ -84,8 +82,6 @@ extension MarketNftTopCollectionsService: IMarketListService {
     func refresh() {
         sync()
     }
-
 }
 
-extension MarketNftTopCollectionsService: IMarketListNftTopCollectionDecoratorService {
-}
+extension MarketNftTopCollectionsService: IMarketListNftTopCollectionDecoratorService {}

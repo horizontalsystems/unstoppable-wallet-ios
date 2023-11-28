@@ -1,14 +1,14 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
 import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class PlaceholderView: UIView {
     private let disposeBag = DisposeBag()
 
     private let reachabilityViewModel: ReachabilityViewModel?
-    private var retryAction: (() -> ())?
+    private var retryAction: (() -> Void)?
 
     private let stackView = UIStackView()
     private let topSpacer = UIView()
@@ -70,7 +70,8 @@ class PlaceholderView: UIView {
         label.textColor = .themeGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -100,7 +101,7 @@ class PlaceholderView: UIView {
         return button
     }
 
-    func configureSyncError(title: String = "sync_error".localized, action: (() -> ())? = nil) {
+    func configureSyncError(title: String = "sync_error".localized, action: (() -> Void)? = nil) {
         retryAction = action
 
         if let driver = reachabilityViewModel?.retryDriver {
@@ -113,10 +114,10 @@ class PlaceholderView: UIView {
         text = title
 
         addPrimaryButton(
-                style: .yellow,
-                title: "button.retry".localized,
-                target: self,
-                action: #selector(retry)
+            style: .yellow,
+            title: "button.retry".localized,
+            target: self,
+            action: #selector(retry)
         )
     }
 
@@ -135,13 +136,10 @@ class PlaceholderView: UIView {
         } else {
             HudHelper.instance.show(banner: .noInternet)
         }
-
     }
-
 }
 
 extension PlaceholderView {
-
     enum LayoutType {
         case upperMiddle
         case keyboard
@@ -161,5 +159,4 @@ extension PlaceholderView {
             }
         }
     }
-
 }

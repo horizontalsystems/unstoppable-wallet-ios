@@ -600,7 +600,7 @@ extension WalletViewController: UITableViewDelegate {
                 bind(headerCell: cell)
             }
 
-            if let cell = cell as? TitledHighlightedDescriptionCell, let warningViewItem = warningViewItem {
+            if let cell = cell as? TitledHighlightedDescriptionCell, let warningViewItem {
                 cell.set(backgroundStyle: .transparent, isFirst: true)
                 cell.topOffset = .margin12
                 cell.bind(caution: warningViewItem)

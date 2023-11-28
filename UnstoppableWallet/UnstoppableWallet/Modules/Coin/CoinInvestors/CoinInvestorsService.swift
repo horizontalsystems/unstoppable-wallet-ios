@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class CoinInvestorsService {
     private let coinUid: String
@@ -33,11 +33,9 @@ class CoinInvestorsService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension CoinInvestorsService {
-
     var usdCurrency: Currency {
         let currencies = currencyManager.currencies
         return currencies.first { $0.code == "USD" } ?? currencies[0]
@@ -46,5 +44,4 @@ extension CoinInvestorsService {
     func refresh() {
         sync()
     }
-
 }

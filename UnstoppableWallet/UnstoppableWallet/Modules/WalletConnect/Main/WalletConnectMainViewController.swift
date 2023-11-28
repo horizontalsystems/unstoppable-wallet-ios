@@ -304,7 +304,7 @@ extension WalletConnectMainViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
         var rows = [RowProtocol]()
 
-        if let viewItem = viewItem {
+        if let viewItem {
             if let dAppMeta = viewItem.dAppMeta {
                 sections.append(Section(id: "dapp-meta",
                                         rows: [headerRow(imageUrl: dAppMeta.icon, title: dAppMeta.name)]))

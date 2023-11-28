@@ -1,13 +1,12 @@
-import Foundation
-import Combine
-import RxSwift
-import ObjectMapper
 import Alamofire
+import Combine
+import Foundation
 import HsToolKit
+import ObjectMapper
+import RxSwift
 
-extension NetworkManager {
-
-    public func single<Mapper: IApiMapper>(request: DataRequest, mapper: Mapper, sync: Bool = false, postDelay: TimeInterval? = nil) -> Single<Mapper.T> {
+public extension NetworkManager {
+    func single<Mapper: IApiMapper>(request: DataRequest, mapper: Mapper, sync _: Bool = false, postDelay _: TimeInterval? = nil) -> Single<Mapper.T> {
         Single<Mapper.T>.create { [weak self] observer in
             guard let manager = self else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -30,8 +29,9 @@ extension NetworkManager {
         }
     }
 
-    public func single<Mapper: IApiMapper>(url: URLConvertible, method: HTTPMethod, parameters: Parameters, mapper: Mapper, encoding: ParameterEncoding = URLEncoding.default,
-                                           headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil) -> Single<Mapper.T> {
+    func single<Mapper: IApiMapper>(url: URLConvertible, method: HTTPMethod, parameters: Parameters, mapper: Mapper, encoding: ParameterEncoding = URLEncoding.default,
+                                    headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil) -> Single<Mapper.T>
+    {
         Single<Mapper.T>.create { [weak self] observer in
             guard let manager = self else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -54,7 +54,7 @@ extension NetworkManager {
         }
     }
 
-    public func single(request: DataRequest, sync: Bool = false, postDelay: TimeInterval? = nil) -> Single<Data> {
+    func single(request: DataRequest, sync _: Bool = false, postDelay _: TimeInterval? = nil) -> Single<Data> {
         Single<Data>.create { [weak self] observer in
             guard let manager = self else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -76,7 +76,7 @@ extension NetworkManager {
         }
     }
 
-    public func single<T: ImmutableMappable>(request: DataRequest, sync: Bool = false, postDelay: TimeInterval = 0, context: MapContext? = nil) -> Single<T> {
+    func single<T: ImmutableMappable>(request: DataRequest, sync _: Bool = false, postDelay _: TimeInterval = 0, context: MapContext? = nil) -> Single<T> {
         Single<T>.create { [weak self] observer in
             guard let manager = self else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -99,7 +99,7 @@ extension NetworkManager {
         }
     }
 
-    public func single<T: ImmutableMappable>(request: DataRequest, context: MapContext? = nil) -> Single<[T]> {
+    func single<T: ImmutableMappable>(request: DataRequest, context: MapContext? = nil) -> Single<[T]> {
         Single<[T]>.create { [weak self] observer in
             guard let manager = self else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -122,7 +122,7 @@ extension NetworkManager {
         }
     }
 
-    public func single<T: ImmutableMappable>(url: URLConvertible, method: HTTPMethod, parameters: Parameters = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil, context: MapContext? = nil) -> Single<T> {
+    func single<T: ImmutableMappable>(url: URLConvertible, method: HTTPMethod, parameters: Parameters = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil, context: MapContext? = nil) -> Single<T> {
         Single<T>.create { [weak self] observer in
             guard let manager = self else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -144,7 +144,7 @@ extension NetworkManager {
         }
     }
 
-    public func single<T: ImmutableMappable>(url: URLConvertible, method: HTTPMethod, parameters: Parameters = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil, context: MapContext? = nil) -> Single<[T]> {
+    func single<T: ImmutableMappable>(url: URLConvertible, method: HTTPMethod, parameters: Parameters = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil, context: MapContext? = nil) -> Single<[T]> {
         Single<[T]>.create { [weak self] observer in
             guard let manager = self else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -166,7 +166,7 @@ extension NetworkManager {
         }
     }
 
-    public func single<T: ImmutableMappable>(url: URLConvertible, method: HTTPMethod, parameters: Parameters = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil, context: MapContext? = nil) -> Single<[String: T]> {
+    func single<T: ImmutableMappable>(url: URLConvertible, method: HTTPMethod, parameters: Parameters = [:], encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil, context: MapContext? = nil) -> Single<[String: T]> {
         Single<[String: T]>.create { [weak self] observer in
             guard let manager = self else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -188,12 +188,11 @@ extension NetworkManager {
         }
     }
 
-    public enum RequestError: Error {
+    enum RequestError: Error {
         case invalidResponse(statusCode: Int, data: Any?)
         case noResponse(reason: String?)
         case disposed
     }
-
 }
 
 public protocol IReachabilityManager {
@@ -203,7 +202,6 @@ public protocol IReachabilityManager {
 }
 
 extension ReachabilityManager: IReachabilityManager {
-
     public var reachabilityObservable: Observable<Bool> {
         $isReachable.asObservable()
     }
@@ -211,15 +209,12 @@ extension ReachabilityManager: IReachabilityManager {
     public var connectionTypeUpdatedObservable: Observable<Void> {
         connectionTypeChangedPublisher.asObservable()
     }
-
 }
 
-extension BackgroundModeObserver {
-
-    public var foregroundFromExpiredBackgroundObservable: Observable<Void> {
+public extension BackgroundModeObserver {
+    var foregroundFromExpiredBackgroundObservable: Observable<Void> {
         foregroundFromExpiredBackgroundPublisher.asObservable()
     }
-
 }
 
 public protocol IApiMapper {
@@ -235,7 +230,8 @@ public class SerialNetworkManager {
     }
 
     public func single<Mapper: IApiMapper>(url: URLConvertible, method: HTTPMethod, parameters: Parameters, mapper: Mapper, encoding: ParameterEncoding = URLEncoding.default,
-                                           headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil) -> Single<Mapper.T> {
+                                           headers: HTTPHeaders? = nil, interceptor: RequestInterceptor? = nil, responseCacherBehavior: ResponseCacher.Behavior? = nil) -> Single<Mapper.T>
+    {
         Single<Mapper.T>.create { [weak self] observer in
             guard let manager = self?.networkManager else {
                 observer(.error(NetworkManager.RequestError.disposed))
@@ -257,5 +253,4 @@ public class SerialNetworkManager {
             }
         }
     }
-
 }

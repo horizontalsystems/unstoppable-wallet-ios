@@ -1,5 +1,5 @@
-import MarketKit
 import HdWalletKit
+import MarketKit
 
 enum MnemonicDerivation: String, CaseIterable {
     static let `default` = bip84
@@ -52,11 +52,9 @@ enum MnemonicDerivation: String, CaseIterable {
     var recommended: String {
         self == Self.default ? "blockchain_type.recommended".localized : ""
     }
-
 }
 
 extension Purpose {
-
     var mnemonicDerivation: MnemonicDerivation {
         switch self {
         case .bip44: return .bip44
@@ -65,11 +63,9 @@ extension Purpose {
         case .bip86: return .bip86
         }
     }
-
 }
 
 extension TokenType.Derivation {
-
     var mnemonicDerivation: MnemonicDerivation {
         switch self {
         case .bip44: return .bip44
@@ -78,5 +74,4 @@ extension TokenType.Derivation {
         case .bip86: return .bip86
         }
     }
-
 }

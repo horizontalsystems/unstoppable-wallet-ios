@@ -1,10 +1,10 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import TronKit
 import BigInt
-import HsExtensions
 import Combine
+import Foundation
+import HsExtensions
+import RxCocoa
+import RxSwift
+import TronKit
 
 class SendTronConfirmationService {
     private var tasks = Set<AnyTask>()
@@ -60,17 +60,17 @@ class SendTronConfirmationService {
         )
 
         switch contract {
-            case let transfer as TransferContract:
-                sendAddress = transfer.toAddress
+        case let transfer as TransferContract:
+            sendAddress = transfer.toAddress
 
-            case is TriggerSmartContract:
-                if let transfer = dataState.decoration as? OutgoingEip20Decoration {
-                    sendAddress = transfer.to
-                } else {
-                    sendAddress = nil
-                }
+        case is TriggerSmartContract:
+            if let transfer = dataState.decoration as? OutgoingEip20Decoration {
+                sendAddress = transfer.to
+            } else {
+                sendAddress = nil
+            }
 
-            default: sendAddress = nil
+        default: sendAddress = nil
         }
 
         feeService.feeValueService = self
@@ -102,11 +102,11 @@ class SendTronConfirmationService {
         var totalFees = 0
         for fee in fees {
             switch fee {
-            case .bandwidth(let points, let price):
+            case let .bandwidth(points, price):
                 totalFees += points * price
-            case .energy(let required, let price):
+            case let .energy(required, price):
                 totalFees += required * price
-            case .accountActivation(let amount):
+            case let .accountActivation(amount):
                 totalFees += amount
             }
         }
@@ -145,7 +145,7 @@ class SendTronConfirmationService {
     }
 
     private func syncAddress() {
-        guard let sendAddress = sendAddress else {
+        guard let sendAddress else {
             return
         }
 
@@ -154,20 +154,15 @@ class SendTronConfirmationService {
             self?.sendAdressActive = active ?? true
         }.store(in: &tasks)
     }
-
 }
 
 extension SendTronConfirmationService: ISendXFeeValueService {
-
     var feeStateObservable: Observable<DataStatus<Decimal>> {
         feeStateRelay.asObservable()
     }
-
-
 }
 
 extension SendTronConfirmationService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -198,11 +193,9 @@ extension SendTronConfirmationService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension SendTronConfirmationService {
-
     enum State {
         case ready(fees: [Fee])
         case notReady(errors: [Error])
@@ -224,5 +217,4 @@ extension SendTronConfirmationService {
         case insufficientBalance(balance: BigUInt)
         case zeroAmount
     }
-
 }

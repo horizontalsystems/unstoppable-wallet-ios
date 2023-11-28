@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class AmountInputView: UIView {
     let viewHeight: CGFloat = 85
@@ -21,15 +21,16 @@ class AmountInputView: UIView {
             syncButtonStates()
         }
     }
+
     var clearHidden = false {
         didSet {
             syncButtonStates()
         }
     }
 
-    var onChangeText: ((String?) -> ())?
-    var onTapMax: (() -> ())?
-    var onTapSecondary: (() -> ())?
+    var onChangeText: ((String?) -> Void)?
+    var onTapMax: (() -> Void)?
+    var onTapSecondary: (() -> Void)?
 
     init(singleLine: Bool = false) {
         inputStackView = InputStackView(singleLine: singleLine)
@@ -102,7 +103,8 @@ class AmountInputView: UIView {
         syncButtonStates()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -128,11 +130,9 @@ class AmountInputView: UIView {
             clearView.isHidden = true
         }
     }
-
 }
 
 extension AmountInputView {
-
     var inputPlaceholder: String? {
         get { inputStackView.placeholder }
         set { inputStackView.placeholder = newValue }
@@ -169,7 +169,6 @@ extension AmountInputView {
         set { prefixView.textColor = newValue }
     }
 
-
     var secondaryButtonText: String? {
         get { secondaryButton.title(for: .normal) }
         set { secondaryButton.setTitle(newValue, for: .normal) }
@@ -185,18 +184,18 @@ extension AmountInputView {
         set { secondaryButton.isEnabled = newValue }
     }
 
-     var estimatedVisible: Bool {
-         get { estimatedView.isHidden }
-         set { estimatedView.isHidden = !newValue }
-     }
+    var estimatedVisible: Bool {
+        get { estimatedView.isHidden }
+        set { estimatedView.isHidden = !newValue }
+    }
 
-     var warningText: String? {
-         get { warningView.text }
-         set {
-             warningView.text = newValue
-             warningView.isHidden = (newValue == nil)
-         }
-     }
+    var warningText: String? {
+        get { warningView.text }
+        set {
+            warningView.text = newValue
+            warningView.isHidden = (newValue == nil)
+        }
+    }
 
     var isValidText: ((String) -> Bool)? {
         get { inputStackView.isValidText }
@@ -212,18 +211,15 @@ extension AmountInputView {
         get { inputStackView.editable }
         set { inputStackView.editable = newValue }
     }
-
 }
 
 extension AmountInputView: IHeightControlView { // required in FormValidatedView, but not used yet
-
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { nil }
         set {}
     }
 
-    func height(containerWidth: CGFloat) -> CGFloat {
+    func height(containerWidth _: CGFloat) -> CGFloat {
         0
     }
-
 }

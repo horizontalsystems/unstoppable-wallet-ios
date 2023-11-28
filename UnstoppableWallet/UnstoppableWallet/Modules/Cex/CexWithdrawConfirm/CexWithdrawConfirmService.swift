@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import HsExtensions
 
 class CexWithdrawConfirmService {
@@ -35,11 +35,9 @@ class CexWithdrawConfirmService {
     var fee: Decimal {
         sendData.fee
     }
-
 }
 
 extension CexWithdrawConfirmService {
-
     var confirmWithdrawPublisher: AnyPublisher<Any, Never> {
         confirmWithdrawSubject.eraseToAnyPublisher()
     }
@@ -71,11 +69,9 @@ extension CexWithdrawConfirmService {
             self?.state = .idle
         }.store(in: &tasks)
     }
-
 }
 
 extension CexWithdrawConfirmService {
-
     enum State {
         case idle
         case loading
@@ -84,5 +80,4 @@ extension CexWithdrawConfirmService {
     enum ConfirmError: Error {
         case invalidId
     }
-
 }

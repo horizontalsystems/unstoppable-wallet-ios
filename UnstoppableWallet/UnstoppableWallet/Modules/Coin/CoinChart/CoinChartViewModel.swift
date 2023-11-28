@@ -1,11 +1,11 @@
-import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
-import MarketKit
 import Chart
-import HUD
 import Combine
+import Foundation
+import HUD
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinChartViewModel: ObservableObject {
     private let service: CoinChartService
@@ -22,12 +22,12 @@ class CoinChartViewModel: ObservableObject {
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<Bool>(value: false)
     private let indicatorsShownRelay = BehaviorRelay<Bool>(value: true)
-    private let openSettingsRelay = PublishRelay<()>()
+    private let openSettingsRelay = PublishRelay<Void>()
 
     @Published private(set) var indicatorsShown: Bool
 
     var intervals: [String] {
-        service.validIntervals.map { $0.title } + ["chart.time_duration.all".localized]
+        service.validIntervals.map(\.title) + ["chart.time_duration.all".localized]
     }
 
     init(service: CoinChartService, factory: CoinChartFactory) {
@@ -58,7 +58,7 @@ class CoinChartViewModel: ObservableObject {
     private func index(periodType: HsPeriodType) -> Int {
         switch periodType {
         case .byStartTime: return service.validIntervals.count
-        case .byPeriod(let interval), .byCustomPoints(let interval, _): return service.validIntervals.firstIndex(of: interval) ?? 0
+        case let .byPeriod(interval), let .byCustomPoints(interval, _): return service.validIntervals.firstIndex(of: interval) ?? 0
         }
     }
 
@@ -75,18 +75,16 @@ class CoinChartViewModel: ObservableObject {
             loadingRelay.accept(false)
             errorRelay.accept(true)
             chartInfoRelay.accept(nil)
-        case .completed(let item):
+        case let .completed(item):
             loadingRelay.accept(false)
             errorRelay.accept(false)
             let convert = factory.convert(item: item, periodType: service.periodType, currency: service.currency)
             chartInfoRelay.accept(convert)
         }
     }
-
 }
 
 extension CoinChartViewModel: IChartViewModel {
-
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
     }
@@ -115,7 +113,7 @@ extension CoinChartViewModel: IChartViewModel {
         indicatorsShownRelay.asDriver()
     }
 
-    var openSettingsSignal: Signal<()> {
+    var openSettingsSignal: Signal<Void> {
         openSettingsRelay.asSignal()
     }
 
@@ -150,35 +148,30 @@ extension CoinChartViewModel: IChartViewModel {
     func onToggleIndicators() {
         service.indicatorsShown.toggle()
     }
-
 }
 
 extension CoinChartViewModel: IChartViewTouchDelegate {
-
-    public func touchDown() {
-    }
+    public func touchDown() {}
 
     public func select(item: ChartItem, indicators: [ChartIndicator]) {
         HapticGenerator.instance.notification(.feedback(.soft))
 
         pointSelectedItemRelay.accept(
-                factory.selectedPointViewItem(
-                        chartItem: item,
-                        indicators: indicators,
-                        firstChartItem: chartInfoRelay.value?.chartData.visibleItems.first,
-                        currency: service.currency
-                )
+            factory.selectedPointViewItem(
+                chartItem: item,
+                indicators: indicators,
+                firstChartItem: chartInfoRelay.value?.chartData.visibleItems.first,
+                currency: service.currency
+            )
         )
     }
 
     public func touchUp() {
         pointSelectedItemRelay.accept(nil)
     }
-
 }
 
 extension HsTimePeriod {
-
     var title: String {
         switch self {
         case .day1: return "chart.time_duration.day".localized
@@ -191,5 +184,4 @@ extension HsTimePeriod {
         case .year2: return "chart.time_duration.year2".localized
         }
     }
-
 }

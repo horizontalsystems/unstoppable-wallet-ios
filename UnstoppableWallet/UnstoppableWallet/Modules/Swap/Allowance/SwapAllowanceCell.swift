@@ -1,6 +1,6 @@
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 class SwapAllowanceCell: AdditionalDataCellNew {
     weak var delegate: IDynamicHeightCellDelegate?
@@ -21,7 +21,8 @@ class SwapAllowanceCell: AdditionalDataCellNew {
         subscribe(disposeBag, viewModel.isErrorDriver) { [weak self] in self?.handle(isError: $0) }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
@@ -37,5 +38,4 @@ class SwapAllowanceCell: AdditionalDataCellNew {
     private func handle(isError: Bool) {
         valueColor = isError ? .themeLucian : .themeGray
     }
-
 }

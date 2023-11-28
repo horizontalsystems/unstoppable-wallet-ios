@@ -6,11 +6,9 @@ class EvmLabelStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension EvmLabelStorage {
-
     func evmMethodLabel(methodId: String) throws -> EvmMethodLabel? {
         try dbPool.read { db in
             try EvmMethodLabel.filter(EvmMethodLabel.Columns.methodId == methodId).fetchOne(db)
@@ -42,5 +40,4 @@ extension EvmLabelStorage {
             }
         }
     }
-
 }

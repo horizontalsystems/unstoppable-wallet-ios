@@ -9,7 +9,6 @@ class FavoriteCoinRecord: Record {
         super.init()
     }
 
-
     override class var databaseTableName: String {
         "favorite_coins"
     }
@@ -27,5 +26,4 @@ class FavoriteCoinRecord: Record {
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.coinUid] = coinUid
     }
-
 }

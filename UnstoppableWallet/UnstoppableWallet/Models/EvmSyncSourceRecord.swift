@@ -34,5 +34,4 @@ class EvmSyncSourceRecord: Record {
         container[Columns.url] = url
         container[Columns.auth] = auth
     }
-
 }

@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import HUD
+import SnapKit
+import ThemeKit
+import UIKit
 
 class InputStateWrapperView: UIView, ISizeAwareView {
     private let spinner = HUDActivityView.create(with: .small20)
@@ -25,7 +25,8 @@ class InputStateWrapperView: UIView, ISizeAwareView {
         successImageView.tintColor = .themeRemus
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -62,8 +63,7 @@ class InputStateWrapperView: UIView, ISizeAwareView {
         }
     }
 
-    func width(containerWidth: CGFloat) -> CGFloat {
+    func width(containerWidth _: CGFloat) -> CGFloat {
         20
     }
-
 }

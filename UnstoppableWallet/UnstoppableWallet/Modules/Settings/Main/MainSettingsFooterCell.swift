@@ -1,6 +1,6 @@
-import UIKit
-import UIExtensions
 import SnapKit
+import UIExtensions
+import UIKit
 
 class MainSettingsFooterCell: UITableViewCell {
     let cellHeight: CGFloat = 130
@@ -8,7 +8,7 @@ class MainSettingsFooterCell: UITableViewCell {
     private let versionLabel = UILabel()
     private let logoButton = UIButton()
 
-    var onTapLogo: (() -> ())?
+    var onTapLogo: (() -> Void)?
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -58,7 +58,8 @@ class MainSettingsFooterCell: UITableViewCell {
         logoButton.addTarget(self, action: #selector(onTapLogoButton), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -69,5 +70,4 @@ class MainSettingsFooterCell: UITableViewCell {
     func set(appVersion: String) {
         versionLabel.text = "\(AppConfig.appName.uppercased()) \(appVersion)"
     }
-
 }

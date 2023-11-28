@@ -8,11 +8,9 @@ class MarketService {
         self.userDefaultsStorage = userDefaultsStorage
         self.launchScreenManager = launchScreenManager
     }
-
 }
 
 extension MarketService {
-
     var initialTab: MarketModule.Tab {
         switch launchScreenManager.launchScreen {
         case .auto:
@@ -31,5 +29,4 @@ extension MarketService {
     func set(tab: MarketModule.Tab) {
         userDefaultsStorage.set(value: tab.rawValue, for: keyTabIndex)
     }
-
 }

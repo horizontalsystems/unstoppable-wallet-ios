@@ -59,21 +59,21 @@ extension BackupCrypto {
 
         // validation passphrase
         let isValid = try BackupCryptoHelper.isValid(
-                macHex: mac,
-                pass: passphrase,
-                message: cipherText.hs.data,
-                kdf: kdfParams
+            macHex: mac,
+            pass: passphrase,
+            message: cipherText.hs.data,
+            kdf: kdfParams
         )
         guard isValid else {
             throw RestoreCloudModule.RestoreError.invalidPassword
         }
 
         return try BackupCryptoHelper.AES128(
-                operation: .decrypt,
-                ivHex: cipherParams.iv,
-                pass: passphrase,
-                message: data,
-                kdf: kdfParams
+            operation: .decrypt,
+            ivHex: cipherParams.iv,
+            pass: passphrase,
+            message: data,
+            kdf: kdfParams
         )
     }
 }
@@ -98,27 +98,27 @@ extension BackupCrypto {
         let iv = BackupCryptoHelper.generateInitialVector().hs.hex
 
         let cipherText = try BackupCryptoHelper.AES128(
-                operation: .encrypt,
-                ivHex: iv,
-                pass: passphrase,
-                message: data,
-                kdf: kdf
+            operation: .encrypt,
+            ivHex: iv,
+            pass: passphrase,
+            message: data,
+            kdf: kdf
         )
 
         let encodedCipherText = cipherText.base64EncodedString()
         let mac = try BackupCryptoHelper.mac(
-                pass: passphrase,
-                message: encodedCipherText.hs.data,
-                kdf: kdf
+            pass: passphrase,
+            message: encodedCipherText.hs.data,
+            kdf: kdf
         )
 
         return BackupCrypto(
-                cipher: BackupCryptoHelper.defaultCypher,
-                cipherParams: CipherParams(iv: iv),
-                cipherText: encodedCipherText,
-                kdf: BackupCryptoHelper.defaultKdf,
-                kdfParams: kdf,
-                mac: mac.hs.hex
+            cipher: BackupCryptoHelper.defaultCypher,
+            cipherParams: CipherParams(iv: iv),
+            cipherText: encodedCipherText,
+            kdf: BackupCryptoHelper.defaultKdf,
+            kdfParams: kdf,
+            mac: mac.hs.hex
         )
     }
 }

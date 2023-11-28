@@ -34,13 +34,11 @@ extension SendBitcoinAmountInputService: IAmountInputService {
     }
 
     var balanceObservable: Observable<Decimal?> {
-        guard let availableBalanceService = availableBalanceService else {
+        guard let availableBalanceService else {
             return .just(nil)
         }
 
-        return availableBalanceService.availableBalanceObservable.map {
-            $0.data
-        }
+        return availableBalanceService.availableBalanceObservable.map(\.data)
     }
 
     var tokenObservable: Observable<Token?> {

@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 extension MarketDiscoveryFilterHeaderView {
     struct ViewItem {
@@ -18,7 +18,7 @@ class MarketDiscoveryFilterHeaderView: UIView {
     private let collectionView: UICollectionView
     private var loaded = false
 
-    var onSelect: ((Int?) -> ())?
+    var onSelect: ((Int?) -> Void)?
 
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -54,14 +54,13 @@ class MarketDiscoveryFilterHeaderView: UIView {
         loaded = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
-
 }
 
 extension MarketDiscoveryFilterHeaderView {
-
     func set(filters: [MarketDiscoveryFilterHeaderView.ViewItem]) {
         self.filters = filters
 
@@ -69,12 +68,10 @@ extension MarketDiscoveryFilterHeaderView {
             collectionView.reloadData()
         }
     }
-
 }
 
 extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         filters.count
     }
 
@@ -82,17 +79,17 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
         collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: FilterCard.self), for: indexPath)
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? FilterCard {
             cell.bind(item: filters[indexPath.item])
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         FilterCard.size(item: filters[indexPath.item])
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         .margin12
     }
 
@@ -130,11 +127,9 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
     private func handleSelect() {
         onSelect?(collectionView.indexPathsForSelectedItems?.first?.item)
     }
-
 }
 
 extension MarketDiscoveryFilterHeaderView {
-
     func setSelected(index: Int?) {
         guard collectionView.indexPathsForSelectedItems?.first?.item != index else {
             return
@@ -144,5 +139,4 @@ extension MarketDiscoveryFilterHeaderView {
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         collectionView.performBatchUpdates(nil)
     }
-
 }

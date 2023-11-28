@@ -23,16 +23,14 @@ struct Wallet {
 
     var transactionSource: TransactionSource {
         TransactionSource(
-                blockchainType: token.blockchainType,
-                meta: token.type.meta
+            blockchainType: token.blockchainType,
+            meta: token.type.meta
         )
     }
-
 }
 
 extension Wallet: Hashable {
-
-    public static func ==(lhs: Wallet, rhs: Wallet) -> Bool {
+    public static func == (lhs: Wallet, rhs: Wallet) -> Bool {
         lhs.token == rhs.token && lhs.account == rhs.account
     }
 
@@ -40,5 +38,4 @@ extension Wallet: Hashable {
         hasher.combine(token)
         hasher.combine(account)
     }
-
 }

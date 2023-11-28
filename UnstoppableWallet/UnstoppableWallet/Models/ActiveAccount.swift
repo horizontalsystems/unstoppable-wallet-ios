@@ -30,5 +30,4 @@ class ActiveAccount: Record {
         container[Columns.level] = level
         container[Columns.accountId] = accountId
     }
-
 }

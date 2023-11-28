@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketViewModel {
     private let service: MarketService
@@ -13,11 +13,9 @@ class MarketViewModel {
 
         currentTabRelay = BehaviorRelay<MarketModule.Tab>(value: service.initialTab)
     }
-
 }
 
 extension MarketViewModel {
-
     var currentTabDriver: Driver<MarketModule.Tab> {
         currentTabRelay.asDriver()
     }
@@ -30,5 +28,4 @@ extension MarketViewModel {
         service.set(tab: tab)
         currentTabRelay.accept(tab)
     }
-
 }

@@ -1,5 +1,5 @@
-import RxSwift
 import RxRelay
+import RxSwift
 
 class BalanceHiddenManager {
     static let placeholder = "*****"
@@ -23,7 +23,7 @@ class BalanceHiddenManager {
         if let balanceHidden: Bool = userDefaultsStorage.value(for: keyBalanceHidden) {
             self.balanceHidden = balanceHidden
         } else if let balanceHidden: Bool = userDefaultsStorage.value(for: "balance_hidden") {
-            // todo: temp solution for restoring from version 0.22
+            // TODO: temp solution for restoring from version 0.22
             self.balanceHidden = balanceHidden
         } else {
             balanceHidden = false
@@ -40,11 +40,9 @@ class BalanceHiddenManager {
         self.balanceHidden = balanceHidden
         userDefaultsStorage.set(value: balanceHidden, for: keyBalanceHidden)
     }
-
 }
 
 extension BalanceHiddenManager {
-
     var balanceHiddenObservable: Observable<Bool> {
         balanceHiddenRelay.asObservable()
     }
@@ -67,5 +65,4 @@ extension BalanceHiddenManager {
             set(balanceHidden: true)
         }
     }
-
 }

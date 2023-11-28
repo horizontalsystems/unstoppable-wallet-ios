@@ -42,5 +42,4 @@ class KdfParams: Codable {
         self.r = r
         self.salt = salt
     }
-
 }

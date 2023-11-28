@@ -12,8 +12,7 @@ class BinanceWithdrawHandler: ICexWithdrawHandler {
         try await provider.withdraw(id: id, network: network, address: address, amount: amount, feeFromAmount: feeFromAmount)
     }
 
-    func handle(result: Any, viewController: UIViewController) {
+    func handle(result _: Any, viewController _: UIViewController) {
         // todo
     }
-
 }

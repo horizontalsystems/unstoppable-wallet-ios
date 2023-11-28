@@ -6,11 +6,9 @@ class FeeCoinProvider {
     init(marketKit: Kit) {
         self.marketKit = marketKit
     }
-
 }
 
 extension FeeCoinProvider {
-
     func feeToken(token: Token) -> Token? {
         switch token.type {
         case .eip20, .bep2:
@@ -20,5 +18,4 @@ extension FeeCoinProvider {
             return nil
         }
     }
-
 }

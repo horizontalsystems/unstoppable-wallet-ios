@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class InputView: UIView {
     private let formValidatedView: FormValidatedView
@@ -8,7 +8,7 @@ class InputView: UIView {
 
     private let deleteView = InputSecondaryCircleButtonWrapperView()
 
-    var onChangeText: ((String?) -> ())?
+    var onChangeText: ((String?) -> Void)?
 
     var isEnabled: Bool = true {
         didSet {
@@ -42,7 +42,8 @@ class InputView: UIView {
         syncButtonStates()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -67,11 +68,9 @@ class InputView: UIView {
             deleteView.isHidden = true
         }
     }
-
 }
 
 extension InputView {
-
     var inputPlaceholder: String? {
         get { inputStackView.placeholder }
         set { inputStackView.placeholder = newValue }
@@ -114,12 +113,12 @@ extension InputView {
         formValidatedView.set(cautionType: cautionType)
     }
 
-    var onChangeEditing: ((Bool) -> ())? {
+    var onChangeEditing: ((Bool) -> Void)? {
         get { inputStackView.onChangeEditing }
         set { inputStackView.onChangeEditing = newValue }
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { formValidatedView.onChangeHeight }
         set { formValidatedView.onChangeHeight = newValue }
     }
@@ -132,5 +131,4 @@ extension InputView {
     func height(containerWidth: CGFloat) -> CGFloat {
         formValidatedView.height(containerWidth: containerWidth)
     }
-
 }

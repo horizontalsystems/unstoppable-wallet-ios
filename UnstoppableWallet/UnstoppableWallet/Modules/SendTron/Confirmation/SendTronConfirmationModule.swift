@@ -1,12 +1,11 @@
 import Foundation
-import UIKit
+import HsExtensions
+import MarketKit
 import ThemeKit
 import TronKit
-import MarketKit
-import HsExtensions
+import UIKit
 
 struct SendTronConfirmationModule {
-
     static func viewController(tronKitWrapper: TronKitWrapper, contract: Contract) -> UIViewController? {
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: .tron,
@@ -29,5 +28,4 @@ struct SendTronConfirmationModule {
 
         return controller
     }
-
 }

@@ -57,9 +57,9 @@ struct BtcSyncModeItem {
 
     var title: String {
         switch restoreMode {
-            case .blockchair: return "Blockchair API"
-            case .hybrid: return "sync_mode.hybrid".localized
-            case .blockchain: return "sync_mode.from_blockchain".localized(blockchain.name)
+        case .blockchair: return "Blockchair API"
+        case .hybrid: return "sync_mode.hybrid".localized
+        case .blockchain: return "sync_mode.from_blockchain".localized(blockchain.name)
         }
     }
 }

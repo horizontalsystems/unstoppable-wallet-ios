@@ -1,8 +1,8 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
+import Foundation
 import MarketKit
+import RxRelay
+import RxSwift
 
 class FiatService {
     private var disposeBag = DisposeBag()
@@ -41,7 +41,7 @@ class FiatService {
         }
     }
 
-    private let amountAlreadyUpdatedRelay = PublishRelay<()>()
+    private let amountAlreadyUpdatedRelay = PublishRelay<Void>()
 
     private var toggleAvailableRelay = BehaviorRelay<Bool>(value: false)
 
@@ -63,7 +63,7 @@ class FiatService {
     }
 
     private func sync(coinPrice: CoinPrice?) {
-        if let coinPrice = coinPrice, !coinPrice.expired {
+        if let coinPrice, !coinPrice.expired {
             price = coinPrice.value
 
             if coinAmountLocked {
@@ -79,7 +79,7 @@ class FiatService {
         sync()
     }
 
-    private func sync(amountType: AmountTypeSwitchService.AmountType) {
+    private func sync(amountType _: AmountTypeSwitchService.AmountType) {
         sync()
     }
 
@@ -105,7 +105,7 @@ class FiatService {
     }
 
     private func syncCoinAmount() {
-        if let currencyAmount = currencyAmount, let price = price {
+        if let currencyAmount, let price {
             coinAmount = price == 0 ? 0 : currencyAmount / price
         } else {
             coinAmount = 0
@@ -115,7 +115,7 @@ class FiatService {
     }
 
     private func syncCurrencyAmount() {
-        if let price = price {
+        if let price {
             currencyAmount = coinAmount * price
         } else {
             currencyAmount = nil
@@ -133,11 +133,9 @@ class FiatService {
                 .store(in: &cancellables)
         }
     }
-
 }
 
 extension FiatService {
-
     var coinAmountObservable: Observable<Decimal> {
         coinAmountRelay.asObservable()
     }
@@ -150,7 +148,7 @@ extension FiatService {
         secondaryAmountInfoRelay.asObservable()
     }
 
-    var amountAlreadyUpdatedObservable: Observable<()> {
+    var amountAlreadyUpdatedObservable: Observable<Void> {
         amountAlreadyUpdatedRelay.asObservable()
     }
 
@@ -166,21 +164,20 @@ extension FiatService {
         self.coinValueKind = coinValueKind
 
         cancellables = Set()
-        var fetching: Bool = true
+        var fetching = true
 
-        if let coinValueKind = coinValueKind {
+        if let coinValueKind {
             switch coinValueKind {
-            case .token(let token):
+            case let .token(token):
                 fetchRate(coin: token.coin, subscribe: !token.isCustom)
-            case .coin(let coin, _):
+            case let .coin(coin, _):
                 fetchRate(coin: coin, subscribe: false)
-            case .cexAsset(let cexAsset):
+            case let .cexAsset(cexAsset):
                 if let coin = cexAsset.coin {
                     fetchRate(coin: coin, subscribe: false)
                 } else {
                     fetching = false
                 }
-
             }
         } else {
             fetching = false
@@ -222,14 +219,11 @@ extension FiatService {
         syncCurrencyAmount()
         sync()
     }
-
 }
 
 extension FiatService {
-
     enum PrimaryInfo {
         case amountInfo(amountInfo: AmountInfo?)
         case amount(amount: Decimal)
     }
-
 }

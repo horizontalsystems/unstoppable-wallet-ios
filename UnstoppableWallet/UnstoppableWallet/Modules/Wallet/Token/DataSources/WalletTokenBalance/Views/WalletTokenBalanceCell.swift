@@ -1,7 +1,7 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class WalletTokenBalanceCell: UITableViewCell {
     private let stackView = UIStackView()
@@ -63,19 +63,20 @@ class WalletTokenBalanceCell: UITableViewCell {
         descriptionLabel.textColor = .themeGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: WalletTokenBalanceViewModel.ViewItem, onTapError: (() -> ())?) {
+    func bind(viewItem: WalletTokenBalanceViewModel.ViewItem, onTapError: (() -> Void)?) {
         testnetImageView.isHidden = viewItem.isMainNet
         coinIconView.bind(
-                iconUrlString: viewItem.iconUrlString,
-                placeholderIconName: viewItem.placeholderIconName,
-                spinnerProgress: viewItem.syncSpinnerProgress,
-                indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
-                failViewVisible: viewItem.failedImageViewVisible,
-                onTapError: onTapError
+            iconUrlString: viewItem.iconUrlString,
+            placeholderIconName: viewItem.placeholderIconName,
+            spinnerProgress: viewItem.syncSpinnerProgress,
+            indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
+            failViewVisible: viewItem.failedImageViewVisible,
+            onTapError: onTapError
         )
 
         amountLabel.text = viewItem.balanceValue?.text ?? "----"
@@ -85,15 +86,13 @@ class WalletTokenBalanceCell: UITableViewCell {
         descriptionLabel.textColor = (viewItem.descriptionValue?.dimmed ?? true) ? .themeGray50 : .themeGray
     }
 
-    var onTapAmount: (() -> ())? {
+    var onTapAmount: (() -> Void)? {
         get { amountButton.onTap }
         set { amountButton.onTap = newValue }
     }
-
 }
 
 extension WalletTokenBalanceCell {
-
     static func height(containerWidth: CGFloat, viewItem: WalletTokenBalanceViewModel.ViewItem?) -> CGFloat {
         var height: CGFloat = .margin24 + .iconSize32 + .margin12
         height += (viewItem?.balanceValue?.text ?? "----").height(forContainerWidth: containerWidth - 2 * .margin16, font: .title2R) + .margin6
@@ -105,5 +104,4 @@ extension WalletTokenBalanceCell {
 
         return height
     }
-
 }

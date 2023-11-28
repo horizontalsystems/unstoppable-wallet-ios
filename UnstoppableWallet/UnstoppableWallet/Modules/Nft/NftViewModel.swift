@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class NftViewModel {
     private let service: NftService
@@ -28,13 +28,13 @@ class NftViewModel {
 
     private func viewItem(item: NftService.Item) -> ViewItem {
         ViewItem(
-                uid: item.uid,
-                imageUrl: item.imageUrl,
-                name: item.name,
-                count: "\(item.count)",
-                assetViewItems: item.assetItems.map {
-                    assetViewItem(item: item, assetItem: $0)
-                }
+            uid: item.uid,
+            imageUrl: item.imageUrl,
+            name: item.name,
+            count: "\(item.count)",
+            assetViewItems: item.assetItems.map {
+                assetViewItem(item: item, assetItem: $0)
+            }
         )
     }
 
@@ -54,21 +54,19 @@ class NftViewModel {
         }
 
         return NftDoubleCell.ViewItem(
-                providerCollectionUid: item.providerCollectionUid,
-                nftUid: assetItem.nftUid,
-                imageUrl: assetItem.imageUrl,
-                name: assetItem.name,
-                count: assetItem.count == 1 ? nil : "\(assetItem.count)",
-                onSale: assetItem.onSale,
-                coinPrice: coinPrice,
-                fiatPrice: fiatPrice
+            providerCollectionUid: item.providerCollectionUid,
+            nftUid: assetItem.nftUid,
+            imageUrl: assetItem.imageUrl,
+            name: assetItem.name,
+            count: assetItem.count == 1 ? nil : "\(assetItem.count)",
+            onSale: assetItem.onSale,
+            coinPrice: coinPrice,
+            fiatPrice: fiatPrice
         )
     }
-
 }
 
 extension NftViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -92,11 +90,9 @@ extension NftViewModel {
 
         expandedUidsRelay.accept(expandedUids)
     }
-
 }
 
 extension NftViewModel {
-
     struct ViewItem {
         let uid: String
         let imageUrl: String?
@@ -104,5 +100,4 @@ extension NftViewModel {
         let count: String
         let assetViewItems: [NftDoubleCell.ViewItem]
     }
-
 }

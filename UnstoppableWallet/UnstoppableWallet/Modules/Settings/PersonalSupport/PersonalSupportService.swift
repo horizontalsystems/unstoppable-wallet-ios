@@ -1,6 +1,6 @@
 import Combine
-import MarketKit
 import HsExtensions
+import MarketKit
 
 class PersonalSupportService {
     private let marketKit: MarketKit.Kit
@@ -35,11 +35,9 @@ class PersonalSupportService {
 
         requestButtonState = .enabled
     }
-
 }
 
 extension PersonalSupportService {
-
     var successPublisher: AnyPublisher<Void, Never> {
         successSubject.eraseToAnyPublisher()
     }
@@ -52,7 +50,7 @@ extension PersonalSupportService {
         self.username = username
     }
 
-    func request() {    
+    func request() {
         guard let username else {
             return
         }
@@ -76,5 +74,4 @@ extension PersonalSupportService {
     func newRequest() {
         requested = false
     }
-
 }

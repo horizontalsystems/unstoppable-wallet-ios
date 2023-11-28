@@ -14,7 +14,7 @@ class ModuleUnlockViewModel: BaseUnlockViewModel {
         passcodeManager.isValid(passcode: passcode)
     }
 
-    override func onEnterValid(passcode: String) {
+    override func onEnterValid(passcode _: String) {
         onUnlock()
         finishSubject.send(false)
     }

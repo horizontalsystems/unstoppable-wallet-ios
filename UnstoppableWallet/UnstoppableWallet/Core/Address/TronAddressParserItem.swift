@@ -1,6 +1,6 @@
+import MarketKit
 import RxSwift
 import TronKit
-import MarketKit
 
 class TronAddressParser: IAddressParserItem {
     var blockchainType: BlockchainType { .tron }
@@ -18,5 +18,4 @@ class TronAddressParser: IAddressParserItem {
         let address = try? TronKit.Address(address: address)
         return Single.just(address != nil)
     }
-
 }

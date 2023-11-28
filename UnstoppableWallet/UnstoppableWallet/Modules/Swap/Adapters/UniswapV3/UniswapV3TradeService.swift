@@ -1,11 +1,11 @@
 import Combine
-import Foundation
 import EvmKit
-import UniswapKit
-import RxSwift
-import RxRelay
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
+import UniswapKit
 
 class UniswapV3TradeService: ISwapSettingProvider {
     private static let timerFramePerSecond: Int = 30
@@ -105,10 +105,10 @@ class UniswapV3TradeService: ISwapSettingProvider {
         }
 
         evmKit.lastBlockHeightPublisher
-                .sink { [weak self] blockNumber in
-                    self?.syncTradeData()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] _ in
+                self?.syncTradeData()
+            }
+            .store(in: &cancellables)
 
         syncTradeData()
     }
@@ -118,7 +118,7 @@ class UniswapV3TradeService: ISwapSettingProvider {
         let tickerCount = Int(syncInterval) * Self.timerFramePerSecond
 
         refreshTimerTask = Task { [weak self] in
-            for i in 0...tickerCount {
+            for i in 0 ... tickerCount {
                 try await Task.sleep(nanoseconds: 1_000_000_000 / UInt64(Self.timerFramePerSecond))
                 self?.countdownTimerRelay.accept(Float(i) / Float(tickerCount))
             }
@@ -128,8 +128,9 @@ class UniswapV3TradeService: ISwapSettingProvider {
     }
 
     @discardableResult private func syncTradeData() -> Bool {
-        guard let tokenIn = tokenIn,
-              let tokenOut = tokenOut else {
+        guard let tokenIn,
+              let tokenOut
+        else {
             state = .notReady(errors: [])
             return false
         }
@@ -156,11 +157,11 @@ class UniswapV3TradeService: ISwapSettingProvider {
                 if case UniswapKit.KitV3.TradeError.tradeNotFound = error {
                     let wethAddressString = uniswapProvider.wethAddress.hex
 
-                    if case .native = tokenIn.type, case .eip20(let address) = tokenOut.type, address == wethAddressString {
+                    if case .native = tokenIn.type, case let .eip20(address) = tokenOut.type, address == wethAddressString {
                         convertedError = UniswapModule.TradeError.wrapUnwrapNotAllowed
                     }
 
-                    if case .native = tokenOut.type, case .eip20(let address) = tokenIn.type, address == wethAddressString {
+                    if case .native = tokenOut.type, case let .eip20(address) = tokenIn.type, address == wethAddressString {
                         convertedError = UniswapModule.TradeError.wrapUnwrapNotAllowed
                     }
                 }
@@ -185,16 +186,13 @@ class UniswapV3TradeService: ISwapSettingProvider {
         let trade = Trade(tradeData: tradeData)
         state = .ready(trade: trade)
     }
-
 }
 
 protocol IUniswapTradeService {
     var stateObservable: Observable<UniswapTradeService.State> { get }
-
 }
 
 extension UniswapV3TradeService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -307,11 +305,9 @@ extension UniswapV3TradeService {
 
         set(tokenIn: swapToken)
     }
-
 }
 
 extension UniswapV3TradeService {
-
     enum State {
         case loading
         case ready(trade: Trade)
@@ -339,5 +335,4 @@ extension UniswapV3TradeService {
             }
         }
     }
-
 }

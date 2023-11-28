@@ -1,7 +1,7 @@
 import Combine
-import UIKit
 import HsExtensions
 import ThemeKit
+import UIKit
 
 class ThemeSearchViewController: KeyboardAwareViewController {
     private let searchController = UISearchController(searchResultsController: nil)
@@ -24,7 +24,7 @@ class ThemeSearchViewController: KeyboardAwareViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
-    override func dismiss(animated flag: Bool, completion: (() -> ())? = nil) {
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         if searchController.isActive {
             searchController.dismiss(animated: false)
         }
@@ -44,21 +44,17 @@ class ThemeSearchViewController: KeyboardAwareViewController {
             }
         }
     }
-
 }
 
 extension ThemeSearchViewController: UISearchControllerDelegate {
-
-    public func didPresentSearchController(_ searchController: UISearchController) {
+    public func didPresentSearchController(_: UISearchController) {
         DispatchQueue.main.async {
             self.searchController.searchBar.becomeFirstResponder()
         }
     }
-
 }
 
 extension ThemeSearchViewController: UISearchResultsUpdating {
-
     public func updateSearchResults(for searchController: UISearchController) {
         var filter = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces)
 
@@ -72,5 +68,4 @@ extension ThemeSearchViewController: UISearchResultsUpdating {
             self.filter = filter
         }
     }
-
 }

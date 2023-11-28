@@ -54,5 +54,4 @@ class LogRecord: Record {
         container[Columns.context] = context
         container[Columns.message] = message
     }
-
 }

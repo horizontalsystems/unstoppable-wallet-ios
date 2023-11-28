@@ -1,8 +1,8 @@
-import UIKit
+import Combine
+import ComponentKit
 import SectionsTableView
 import ThemeKit
-import ComponentKit
-import Combine
+import UIKit
 
 class PersonalSupportViewController: KeyboardAwareViewController {
     private let viewModel: PersonalSupportViewModel
@@ -23,7 +23,8 @@ class PersonalSupportViewController: KeyboardAwareViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -137,11 +138,9 @@ class PersonalSupportViewController: KeyboardAwareViewController {
     @objc private func onNewRequestTapped() {
         viewModel.onTapNewRequest()
     }
-
 }
 
 extension PersonalSupportViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
@@ -152,10 +151,9 @@ extension PersonalSupportViewController: SectionsDataSource {
                     StaticRow(
                         cell: telegramUsernameCell,
                         id: "telegram-username"
-                    )
+                    ),
                 ]
             ),
         ]
     }
-
 }

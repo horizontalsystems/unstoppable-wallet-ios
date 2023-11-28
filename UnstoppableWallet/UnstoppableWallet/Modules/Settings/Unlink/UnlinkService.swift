@@ -6,13 +6,10 @@ class UnlinkService {
         self.account = account
         self.accountManager = accountManager
     }
-
 }
 
 extension UnlinkService {
-
     func deleteAccount() {
         accountManager.delete(account: account)
     }
-
 }

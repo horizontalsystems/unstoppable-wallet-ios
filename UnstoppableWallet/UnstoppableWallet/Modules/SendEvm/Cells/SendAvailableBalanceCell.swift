@@ -1,7 +1,7 @@
-import UIKit
-import SnapKit
 import HUD
 import RxSwift
+import SnapKit
+import UIKit
 
 class SendAvailableBalanceCell: UITableViewCell {
     let cellHeight: CGFloat = 40
@@ -60,7 +60,8 @@ class SendAvailableBalanceCell: UITableViewCell {
         subscribe(disposeBag, viewModel.viewStateDriver) { [weak self] in self?.sync(viewState: $0) }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -73,12 +74,11 @@ class SendAvailableBalanceCell: UITableViewCell {
             spinner.stopAnimating()
         }
 
-        if case .loaded(let value) = viewState {
+        if case let .loaded(value) = viewState {
             availableAmountValueLabel.text = value
             availableAmountValueLabel.isHidden = false
         } else {
             availableAmountValueLabel.isHidden = true
         }
     }
-
 }

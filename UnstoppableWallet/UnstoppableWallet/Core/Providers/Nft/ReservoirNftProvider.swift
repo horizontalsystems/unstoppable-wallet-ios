@@ -1,9 +1,9 @@
+import Alamofire
 import Foundation
-import RxSwift
 import HsToolKit
 import MarketKit
 import ObjectMapper
-import Alamofire
+import RxSwift
 
 class ReservoirNftProvider {
     private let baseUrl = "https://api.reservoir.tools"
@@ -22,11 +22,11 @@ class ReservoirNftProvider {
 
             return responses.map { response in
                 NftEventMetadata(
-                        nftUid: response.tokenId.map { .evm(blockchainType: blockchainType, contractAddress: response.contract, tokenId: $0) },
-                        previewImageUrl: response.tokenImage,
-                        type: eventType(apiEventType: response.type),
-                        date: response.date,
-                        price: nftPrice(token: token, value: response.price)
+                    nftUid: response.tokenId.map { .evm(blockchainType: blockchainType, contractAddress: response.contract, tokenId: $0) },
+                    previewImageUrl: response.tokenImage,
+                    type: eventType(apiEventType: response.type),
+                    date: response.date,
+                    price: nftPrice(token: token, value: response.price)
                 )
             }
         } catch {
@@ -35,7 +35,7 @@ class ReservoirNftProvider {
     }
 
     private func nftPrice(token: Token?, value: Decimal?) -> NftPrice? {
-        guard let token = token, let value = value else {
+        guard let token, let value else {
             return nil
         }
 
@@ -43,7 +43,7 @@ class ReservoirNftProvider {
     }
 
     private func apiEventType(eventType: NftEventMetadata.EventType?) -> String? {
-        guard let eventType = eventType else {
+        guard let eventType else {
             return nil
         }
 
@@ -59,7 +59,7 @@ class ReservoirNftProvider {
     }
 
     private func eventType(apiEventType: String?) -> NftEventMetadata.EventType? {
-        guard let apiEventType = apiEventType else {
+        guard let apiEventType else {
             return nil
         }
 
@@ -74,11 +74,9 @@ class ReservoirNftProvider {
         default: return nil
         }
     }
-
 }
 
 extension ReservoirNftProvider: INftEventProvider {
-
     func assetEventsMetadataSingle(nftUid: NftUid, eventType: NftEventMetadata.EventType?, paginationData: PaginationData?) -> Single<([NftEventMetadata], PaginationData?)> {
         var parameters: Parameters = [:]
 
@@ -93,20 +91,20 @@ extension ReservoirNftProvider: INftEventProvider {
         let request = networkManager.session.request("\(baseUrl)/tokens/\(nftUid.contractAddress):\(nftUid.tokenId)/activity/v4", parameters: parameters)
 
         return networkManager.single(request: request)
-                .map { [weak self] (response: EventsResponse) in
-                    guard let strongSelf = self else {
-                        throw ProviderError.weakReference
-                    }
-
-                    let events = strongSelf.events(blockchainType: nftUid.blockchainType, responses: response.events)
-
-                    return (events, response.cursor.map { .cursor(value: $0) })
+            .map { [weak self] (response: EventsResponse) in
+                guard let strongSelf = self else {
+                    throw ProviderError.weakReference
                 }
+
+                let events = strongSelf.events(blockchainType: nftUid.blockchainType, responses: response.events)
+
+                return (events, response.cursor.map { .cursor(value: $0) })
+            }
     }
 
     func collectionEventsMetadataSingle(blockchainType: BlockchainType, contractAddress: String, eventType: NftEventMetadata.EventType?, paginationData: PaginationData?) -> Single<([NftEventMetadata], PaginationData?)> {
         var parameters: Parameters = [
-            "collection": contractAddress
+            "collection": contractAddress,
         ]
 
         if let eventType = apiEventType(eventType: eventType) {
@@ -120,21 +118,19 @@ extension ReservoirNftProvider: INftEventProvider {
         let request = networkManager.session.request("\(baseUrl)/collections/activity/v5", parameters: parameters)
 
         return networkManager.single(request: request)
-                .map { [weak self] (response: EventsResponse) in
-                    guard let strongSelf = self else {
-                        throw ProviderError.weakReference
-                    }
-
-                    let events = strongSelf.events(blockchainType: blockchainType, responses: response.events)
-
-                    return (events, response.cursor.map { .cursor(value: $0) })
+            .map { [weak self] (response: EventsResponse) in
+                guard let strongSelf = self else {
+                    throw ProviderError.weakReference
                 }
-    }
 
+                let events = strongSelf.events(blockchainType: blockchainType, responses: response.events)
+
+                return (events, response.cursor.map { .cursor(value: $0) })
+            }
+    }
 }
 
 extension ReservoirNftProvider {
-
     private struct EventResponse: ImmutableMappable {
         let contract: String
         let tokenId: String?
@@ -166,5 +162,4 @@ extension ReservoirNftProvider {
     enum ProviderError: Error {
         case weakReference
     }
-
 }

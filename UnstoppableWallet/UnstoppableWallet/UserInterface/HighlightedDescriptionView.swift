@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class HighlightedDescriptionView: HighlightedDescriptionBaseView {
-
     override public init() {
         super.init()
 
@@ -17,17 +16,15 @@ class HighlightedDescriptionView: HighlightedDescriptionBaseView {
         label.textColor = .themeLeah
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension HighlightedDescriptionView {
-
     public static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * sidePadding, font: font)
         return textHeight + 2 * verticalPadding
     }
-
 }

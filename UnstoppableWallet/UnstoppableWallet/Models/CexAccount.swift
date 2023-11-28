@@ -26,7 +26,7 @@ enum CexAccount {
 
     var uniqueId: String {
         switch self {
-        case .binance(let apiKey, let secret): return [Cex.binance.rawValue, apiKey, secret].joined(separator: Self.separator)
+        case let .binance(apiKey, secret): return [Cex.binance.rawValue, apiKey, secret].joined(separator: Self.separator)
         }
     }
 
@@ -48,36 +48,32 @@ enum CexAccount {
             return nil
         }
     }
-
 }
 
 extension CexAccount {
-
     var assetProvider: ICexAssetProvider {
         switch self {
-        case .binance(let apiKey, let secret): return BinanceCexProvider(networkManager: App.shared.networkManager, apiKey: apiKey, secret: secret)
+        case let .binance(apiKey, secret): return BinanceCexProvider(networkManager: App.shared.networkManager, apiKey: apiKey, secret: secret)
         }
     }
 
     var depositProvider: ICexDepositProvider {
         switch self {
-        case .binance(let apiKey, let secret): return BinanceCexProvider(networkManager: App.shared.networkManager, apiKey: apiKey, secret: secret)
+        case let .binance(apiKey, secret): return BinanceCexProvider(networkManager: App.shared.networkManager, apiKey: apiKey, secret: secret)
         }
     }
 
     var withdrawHandler: ICexWithdrawHandler {
         switch self {
-        case .binance(let apiKey, let secret):
+        case let .binance(apiKey, secret):
             let provider = BinanceCexProvider(networkManager: App.shared.networkManager, apiKey: apiKey, secret: secret)
             return BinanceWithdrawHandler(provider: provider)
         }
     }
-
 }
 
 extension CexAccount: Hashable {
-
-    public static func ==(lhs: CexAccount, rhs: CexAccount) -> Bool {
+    public static func == (lhs: CexAccount, rhs: CexAccount) -> Bool {
         switch (lhs, rhs) {
         case (let .binance(lhsApiKey, lhsSecret), let .binance(rhsApiKey, rhsSecret)):
             return lhsApiKey == rhsApiKey && lhsSecret == rhsSecret
@@ -86,11 +82,10 @@ extension CexAccount: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         switch self {
-        case .binance(let apiKey, let secret):
+        case let .binance(apiKey, secret):
             hasher.combine(Cex.binance.rawValue)
             hasher.combine(apiKey)
             hasher.combine(secret)
         }
     }
-
 }

@@ -63,5 +63,4 @@ class NftCollectionRecord: Record {
         container[Columns.averagePrice30dTokenQueryId] = averagePrice30d?.tokenQuery.id
         container[Columns.averagePrice30dValue] = averagePrice30d?.value
     }
-
 }

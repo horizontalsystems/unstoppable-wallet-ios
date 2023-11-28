@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class BottomSheetTitleView: UIView {
     private let imageView = UIImageView()
@@ -65,7 +65,8 @@ class BottomSheetTitleView: UIView {
         closeButton.addTarget(self, action: #selector(_onTapClose), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -78,7 +79,7 @@ class BottomSheetTitleView: UIView {
             maker.height.equalTo(subtitle != nil ? 72 : 60)
         }
 
-        if let image = image {
+        if let image {
             imageView.isHidden = false
 
             imageView.snp.updateConstraints { maker in
@@ -102,7 +103,7 @@ class BottomSheetTitleView: UIView {
         titleLabel.font = subtitle != nil ? .body : .headline2
         titleLabel.text = title
 
-        if let subtitle = subtitle {
+        if let subtitle {
             subtitleLabel.isHidden = false
             subtitleLabel.text = subtitle
         } else {
@@ -111,11 +112,9 @@ class BottomSheetTitleView: UIView {
 
         self.viewController = viewController
     }
-
 }
 
 extension BottomSheetTitleView {
-
     enum Image {
         static let warning: Self = .local(name: "warning_2_24", tint: .warning)
         static let info: Self = .local(name: "circle_information_24", tint: .gray)

@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import HsToolKit
 import HsExtensions
+import HsToolKit
 import MarketKit
+import RxSwift
 
 class WalletCexElementService {
     private let account: Account
@@ -46,7 +46,7 @@ class WalletCexElementService {
             state = cexAssets.isEmpty ? .loading : .loaded(elements: elements)
         case .loaded:
             state = .loaded(elements: elements)
-        case .failed(let reason):
+        case let .failed(reason):
             switch reason {
             case .syncFailed: state = cexAssets.isEmpty ? .failed(reason: reason) : .loaded(elements: elements)
             case .invalidApiKey: state = .failed(reason: reason)
@@ -76,12 +76,10 @@ class WalletCexElementService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension WalletCexElementService: IWalletElementService {
-
-    func isMainNet(element: WalletModule.Element) -> Bool? {
+    func isMainNet(element _: WalletModule.Element) -> Bool? {
         true
     }
 
@@ -93,9 +91,9 @@ extension WalletCexElementService: IWalletElementService {
         return VerifiedBalanceData(fullBalance: cexAsset.freeBalance + cexAsset.lockedBalance, available: cexAsset.freeBalance)
     }
 
-    func state(element: WalletModule.Element) -> AdapterState? {
+    func state(element _: WalletModule.Element) -> AdapterState? {
         switch internalState {
-        case .failed(let reason): return .notSynced(error: reason)
+        case let .failed(reason): return .notSynced(error: reason)
         default: return .synced
         }
     }
@@ -104,18 +102,15 @@ extension WalletCexElementService: IWalletElementService {
         sync()
     }
 
-    func disable(element: WalletModule.Element) {
+    func disable(element _: WalletModule.Element) {
         // not supported
     }
-
 }
 
 extension WalletCexElementService {
-
     enum State {
         case loading
         case loaded
         case failed(reason: WalletModule.FailureReason)
     }
-
 }

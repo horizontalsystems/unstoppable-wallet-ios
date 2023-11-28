@@ -1,22 +1,19 @@
-import UIKit
 import MarketKit
+import UIKit
 
 struct NftAssetModule {
-
     static func viewController(providerCollectionUid: String, nftUid: NftUid) -> UIViewController {
         let overviewController = NftAssetOverviewModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
         let activityController = NftActivityModule.viewController(eventListType: .asset(nftUid: nftUid), defaultEventType: nil)
 
         return NftAssetViewController(
-                overviewController: overviewController,
-                activityController: activityController
+            overviewController: overviewController,
+            activityController: activityController
         )
     }
-
 }
 
 extension NftAssetModule {
-
     enum Tab: Int, CaseIterable {
         case overview
         case activity
@@ -28,5 +25,4 @@ extension NftAssetModule {
             }
         }
     }
-
 }

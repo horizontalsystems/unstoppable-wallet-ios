@@ -443,7 +443,7 @@ class TransactionInfoViewController: ThemeViewController {
             isFirst: rowInfo.isFirst,
             isLast: rowInfo.isLast,
             action: { [weak self] in
-                if let url = url {
+                if let url {
                     self?.urlManager.open(url: url, from: self)
                 }
             }
@@ -466,7 +466,7 @@ class TransactionInfoViewController: ThemeViewController {
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type, coinUid):
             var action: (() -> Void)?
 
-            if let coinUid = coinUid {
+            if let coinUid {
                 action = { [weak self] in
                     self?.openCoin(coinUid: coinUid)
                 }
@@ -476,7 +476,7 @@ class TransactionInfoViewController: ThemeViewController {
         case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type, providerCollectionUid, nftUid):
             var onTapOpenNft: (() -> Void)?
 
-            if let providerCollectionUid = providerCollectionUid, let nftUid = nftUid {
+            if let providerCollectionUid, let nftUid {
                 onTapOpenNft = { [weak self] in
                     self?.openNftAsset(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
                 }

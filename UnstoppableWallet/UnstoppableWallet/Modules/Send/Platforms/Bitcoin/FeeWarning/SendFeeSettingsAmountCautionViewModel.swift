@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 class SendFeeSettingsAmountCautionViewModel {
     private let disposeBag = DisposeBag()
@@ -10,7 +10,7 @@ class SendFeeSettingsAmountCautionViewModel {
     private let feeToken: Token
 
     private let amountCautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
-    private(set) var amountCaution: TitledCaution? = nil {
+    private(set) var amountCaution: TitledCaution? {
         didSet {
             amountCautionRelay.accept(amountCaution)
         }
@@ -25,7 +25,7 @@ class SendFeeSettingsAmountCautionViewModel {
     }
 
     private func sync(amountCaution: SendAmountCautionService.Caution?) {
-        guard let amountCaution = amountCaution else {
+        guard let amountCaution else {
             self.amountCaution = nil
             return
         }
@@ -33,19 +33,17 @@ class SendFeeSettingsAmountCautionViewModel {
         switch amountCaution {
         case .insufficientBalance:
             self.amountCaution = TitledCaution(
-                    title: "send.fee_settings.amount_error.balance.title".localized,
-                    text: "send.fee_settings.amount_error.balance".localized(feeToken.coin.code),
-                    type: .error)
+                title: "send.fee_settings.amount_error.balance.title".localized,
+                text: "send.fee_settings.amount_error.balance".localized(feeToken.coin.code),
+                type: .error
+            )
         default: self.amountCaution = nil
         }
     }
-
 }
 
 extension SendFeeSettingsAmountCautionViewModel {
-
     var amountCautionDriver: Driver<TitledCaution?> {
         amountCautionRelay.asDriver()
     }
-
 }

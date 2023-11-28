@@ -1,7 +1,7 @@
-import Foundation
-import UIKit
 import Chart
+import Foundation
 import MarketKit
+import UIKit
 
 class CoinChartFactory {
     private let dateFormatter = DateFormatter()
@@ -50,28 +50,26 @@ class CoinChartFactory {
             return item
         }
 
-        let values = points.map {
-            $0.value
-        }
+        let values = points.map(\.value)
 
         return ChartModule.ViewItem(
-                value: ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: item.rate)),
-                valueDescription: nil,
-                rightSideMode: .none,
-                chartData: ChartData(items: items, startWindow: firstPoint.timestamp, endWindow: lastPoint.timestamp),
-                indicators: item.indicators,
-                chartTrend: lastPoint.value > firstPoint.value ? .up : .down,
-                chartDiff: (lastPoint.value - firstPoint.value) / firstPoint.value * 100,
-                minValue: values.min().flatMap {
-                    ValueFormatter.instance.formatFull(currency: currency, value: $0)
-                },
-                maxValue: values.max().flatMap {
-                    ValueFormatter.instance.formatFull(currency: currency, value: $0)
-                }
+            value: ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: item.rate)),
+            valueDescription: nil,
+            rightSideMode: .none,
+            chartData: ChartData(items: items, startWindow: firstPoint.timestamp, endWindow: lastPoint.timestamp),
+            indicators: item.indicators,
+            chartTrend: lastPoint.value > firstPoint.value ? .up : .down,
+            chartDiff: (lastPoint.value - firstPoint.value) / firstPoint.value * 100,
+            minValue: values.min().flatMap {
+                ValueFormatter.instance.formatFull(currency: currency, value: $0)
+            },
+            maxValue: values.max().flatMap {
+                ValueFormatter.instance.formatFull(currency: currency, value: $0)
+            }
         )
     }
 
-    func selectedPointViewItem(chartItem: ChartItem, indicators: [ChartIndicator], firstChartItem: ChartItem?, currency: Currency) -> ChartModule.SelectedPointViewItem? {
+    func selectedPointViewItem(chartItem: ChartItem, indicators: [ChartIndicator], firstChartItem _: ChartItem?, currency: Currency) -> ChartModule.SelectedPointViewItem? {
         guard let rate = chartItem.indicators[ChartData.rate] else {
             return nil
         }
@@ -90,21 +88,21 @@ class CoinChartFactory {
         }
 
         let visibleMaIndicators = indicators
-                .filter {
-                    $0.onChart && $0.enabled
-                }
-                .compactMap {
-                    $0 as? MaIndicator
-                }
+            .filter {
+                $0.onChart && $0.enabled
+            }
+            .compactMap {
+                $0 as? MaIndicator
+            }
 
         let visibleBottomIndicators = indicators
-                .filter {
-                    !$0.onChart && $0.enabled
-                }
+            .filter {
+                !$0.onChart && $0.enabled
+            }
 
         let rightSideMode: ChartModule.RightSideMode
         // If no any visible indicators, we show only volume
-        if visibleMaIndicators.isEmpty && visibleBottomIndicators.isEmpty {
+        if visibleMaIndicators.isEmpty, visibleBottomIndicators.isEmpty {
             rightSideMode = .volume(value: volumeString)
         } else {
             let maPairs = visibleMaIndicators.compactMap { ma -> (Decimal, UIColor)? in
@@ -117,7 +115,7 @@ class CoinChartFactory {
             }
             // build top-line string
             let topLineString = NSMutableAttributedString()
-            let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+            let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = NSTextAlignment.right
 
             for (index, pair) in maPairs.enumerated() {
@@ -169,9 +167,9 @@ class CoinChartFactory {
         }
 
         return ChartModule.SelectedPointViewItem(
-                value: formattedValue,
-                date: formattedDate,
-                rightSideMode: rightSideMode
+            value: formattedValue,
+            date: formattedDate,
+            rightSideMode: rightSideMode
         )
     }
 
@@ -182,34 +180,31 @@ class CoinChartFactory {
 
         // try to split interval by 4 chunks
         switch hoursCount {
-        case 120...Int.max: return hoursCount / 4
-        case 60..<120: return 24
-        case 28..<60: return 12
+        case 120 ... Int.max: return hoursCount / 4
+        case 60 ..< 120: return 24
+        case 28 ..< 60: return 12
         default: return 4
         }
     }
-
 }
 
 extension HsPeriodType {
-
     public func `in`(_ intervals: [HsTimePeriod]) -> Bool {
         switch self {
-        case .byPeriod(let interval): return intervals.contains(interval)
-        case .byCustomPoints(let interval, _): return intervals.contains(interval)
+        case let .byPeriod(interval): return intervals.contains(interval)
+        case let .byCustomPoints(interval, _): return intervals.contains(interval)
         case .byStartTime: return false
         }
     }
 
     var gridInterval: Int {
         switch self {
-        case .byPeriod(let interval):
+        case let .byPeriod(interval):
             return ChartIntervalConverter.convert(interval: interval)
-        case .byCustomPoints(let interval, _):
+        case let .byCustomPoints(interval, _):
             return ChartIntervalConverter.convert(interval: interval)
-        case .byStartTime(let startTime):
+        case let .byStartTime(startTime):
             return CoinChartFactory.gridInterval(fromTimestamp: startTime)
         }
     }
-
 }

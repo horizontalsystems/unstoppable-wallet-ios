@@ -1,12 +1,12 @@
-import UIKit
-import ThemeKit
+import ComponentKit
+import HUD
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import SnapKit
-import RxSwift
-import RxCocoa
-import HUD
-import ComponentKit
+import ThemeKit
 import UIExtensions
+import UIKit
 
 protocol ICreateAccountListener: UIViewController {
     func handleCreateAccount()
@@ -40,7 +40,8 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -78,14 +79,14 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
 
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         CellBuilderNew.buildStatic(
-                cell: passphraseToggleCell,
-                rootElement: .hStack(
-                    tableView.universalImage24Elements(
-                            image: .local(UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)),
-                            title: .body("create_wallet.passphrase".localized),
-                            accessoryType: .switch { [weak self] in self?.viewModel.onTogglePassphrase(isOn: $0) }
-                    )
+            cell: passphraseToggleCell,
+            rootElement: .hStack(
+                tableView.universalImage24Elements(
+                    image: .local(UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)),
+                    title: .body("create_wallet.passphrase".localized),
+                    accessoryType: .switch { [weak self] in self?.viewModel.onTogglePassphrase(isOn: $0) }
                 )
+            )
         )
 
         passphraseCell.set(textSecure: true)
@@ -156,7 +157,7 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
     private func finish() {
         HudHelper.instance.show(banner: .created)
 
-        if let listener = listener {
+        if let listener {
             listener.handleCreateAccount()
         } else {
             dismiss(animated: true)
@@ -180,118 +181,116 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-
 }
 
 extension CreateAccountAdvancedViewController: SectionsDataSource {
-
     private func sync(cell: BaseThemeCell, image: UIImage?, title: String, value: String) {
         CellBuilderNew.buildStatic(
-                cell: cell,
-                rootElement: .hStack(
-                        tableView.universalImage24Elements(
-                                image: .local(image?.withTintColor(.themeGray)),
-                                title: .body(title),
-                                value: .subhead1(value, color: .themeGray),
-                                accessoryType: .dropdown
-                        )
+            cell: cell,
+            rootElement: .hStack(
+                tableView.universalImage24Elements(
+                    image: .local(image?.withTintColor(.themeGray)),
+                    title: .body(title),
+                    value: .subhead1(value, color: .themeGray),
+                    accessoryType: .dropdown
                 )
+            )
         )
     }
 
     private func syncMnemonicCell(wordCount: String) {
         sync(
-                cell: mnemonicCell,
-                image: UIImage(named: "key_24"),
-                title: "create_wallet.phrase_count".localized,
-                value: wordCount
+            cell: mnemonicCell,
+            image: UIImage(named: "key_24"),
+            title: "create_wallet.phrase_count".localized,
+            value: wordCount
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
-                    id: "margin",
-                    headerState: .margin(height: .margin12)
+                id: "margin",
+                headerState: .margin(height: .margin12)
             ),
             Section(
-                    id: "name",
-                    headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        )
-                    ]
+                id: "name",
+                headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: nameCell,
+                        id: "name",
+                        height: .heightSingleLineCell
+                    ),
+                ]
             ),
             Section(
-                    id: "mnemonic",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: mnemonicCell,
-                                id: "mnemonic",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.openWordCountSelector()
-                                }
-                        )
-                    ]
+                id: "mnemonic",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: mnemonicCell,
+                        id: "mnemonic",
+                        height: .heightCell48,
+                        autoDeselect: true,
+                        action: { [weak self] in
+                            self?.openWordCountSelector()
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "passphrase-toggle",
-                    footerState: .margin(height: inputsVisible ? .margin24 : .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: passphraseToggleCell,
-                                id: "passphrase-toggle",
-                                height: .heightCell48
-                        )
-                    ]
-            )
+                id: "passphrase-toggle",
+                footerState: .margin(height: inputsVisible ? .margin24 : .margin32),
+                rows: [
+                    StaticRow(
+                        cell: passphraseToggleCell,
+                        id: "passphrase-toggle",
+                        height: .heightCell48
+                    ),
+                ]
+            ),
         ]
 
         if inputsVisible {
             let inputSections: [SectionProtocol] = [
                 Section(
-                        id: "passphrase",
-                        footerState: .margin(height: .margin16),
-                        rows: [
-                            StaticRow(
-                                    cell: passphraseCell,
-                                    id: "passphrase",
-                                    height: .heightSingleLineCell
-                            ),
-                            StaticRow(
-                                    cell: passphraseCautionCell,
-                                    id: "passphrase-caution",
-                                    dynamicHeight: { [weak self] width in
-                                        self?.passphraseCautionCell.height(containerWidth: width) ?? 0
-                                    }
-                            )
-                        ]
+                    id: "passphrase",
+                    footerState: .margin(height: .margin16),
+                    rows: [
+                        StaticRow(
+                            cell: passphraseCell,
+                            id: "passphrase",
+                            height: .heightSingleLineCell
+                        ),
+                        StaticRow(
+                            cell: passphraseCautionCell,
+                            id: "passphrase-caution",
+                            dynamicHeight: { [weak self] width in
+                                self?.passphraseCautionCell.height(containerWidth: width) ?? 0
+                            }
+                        ),
+                    ]
                 ),
                 Section(
-                        id: "passphrase-confirmation",
-                        footerState: tableView.sectionFooter(text: "create_wallet.passphrase_description".localized),
-                        rows: [
-                            StaticRow(
-                                    cell: passphraseConfirmationCell,
-                                    id: "passphrase-confirmation",
-                                    height: .heightSingleLineCell
-                            ),
-                            StaticRow(
-                                    cell: passphraseConfirmationCautionCell,
-                                    id: "passphrase-confirmation-caution",
-                                    dynamicHeight: { [weak self] width in
-                                        self?.passphraseConfirmationCautionCell.height(containerWidth: width) ?? 0
-                                    }
-                            )
-                        ]
-                )
+                    id: "passphrase-confirmation",
+                    footerState: tableView.sectionFooter(text: "create_wallet.passphrase_description".localized),
+                    rows: [
+                        StaticRow(
+                            cell: passphraseConfirmationCell,
+                            id: "passphrase-confirmation",
+                            height: .heightSingleLineCell
+                        ),
+                        StaticRow(
+                            cell: passphraseConfirmationCautionCell,
+                            id: "passphrase-confirmation-caution",
+                            dynamicHeight: { [weak self] width in
+                                self?.passphraseConfirmationCautionCell.height(containerWidth: width) ?? 0
+                            }
+                        ),
+                    ]
+                ),
             ]
 
             sections.append(contentsOf: inputSections)
@@ -299,5 +298,4 @@ extension CreateAccountAdvancedViewController: SectionsDataSource {
 
         return sections
     }
-
 }

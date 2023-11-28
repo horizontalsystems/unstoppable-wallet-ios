@@ -1,9 +1,8 @@
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
 struct OneInchSettingsModule {
-
     static func dataSource(tradeService: OneInchTradeService) -> ISwapSettingsDataSource? {
         guard let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
             return nil
@@ -17,11 +16,12 @@ struct OneInchSettingsModule {
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: coinCode, token: token)
 
         let addressParserChain = AddressParserChain()
-                .append(handler: evmAddressParserItem)
-                .append(handler: udnAddressParserItem)
+            .append(handler: evmAddressParserItem)
+            .append(handler: udnAddressParserItem)
 
         if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
-           let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem) {
+           let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
+        {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
@@ -35,10 +35,9 @@ struct OneInchSettingsModule {
         let slippageViewModel = SwapSlippageViewModel(service: service, decimalParser: AmountDecimalParser())
 
         return OneInchSettingsDataSource(
-                viewModel: viewModel,
-                recipientViewModel: recipientViewModel,
-                slippageViewModel: slippageViewModel
+            viewModel: viewModel,
+            recipientViewModel: recipientViewModel,
+            slippageViewModel: slippageViewModel
         )
     }
-
 }

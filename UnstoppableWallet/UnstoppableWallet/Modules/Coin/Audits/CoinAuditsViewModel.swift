@@ -1,8 +1,8 @@
 import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinAuditsViewModel {
     private let service: CoinAuditsService
@@ -16,8 +16,8 @@ class CoinAuditsViewModel {
         self.service = service
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -28,7 +28,7 @@ class CoinAuditsViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .completed(let items):
+        case let .completed(items):
             viewItemsRelay.accept(items.map { viewItem(item: $0) })
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -41,25 +41,23 @@ class CoinAuditsViewModel {
 
     private func auditViewItem(report: AuditReport) -> AuditViewItem {
         AuditViewItem(
-                date: DateHelper.instance.formatFullDateOnly(from: report.date),
-                name: report.name,
-                issues: "coin_analytics.audits.issues".localized + ": \(report.issues)",
-                reportUrl: report.link
+            date: DateHelper.instance.formatFullDateOnly(from: report.date),
+            name: report.name,
+            issues: "coin_analytics.audits.issues".localized + ": \(report.issues)",
+            reportUrl: report.link
         )
     }
 
     private func viewItem(item: CoinAuditsService.Item) -> ViewItem {
         ViewItem(
-                logoUrl: item.logoUrl,
-                name: item.name,
-                auditViewItems: item.reports.map { auditViewItem(report: $0) }
+            logoUrl: item.logoUrl,
+            name: item.name,
+            auditViewItems: item.reports.map { auditViewItem(report: $0) }
         )
     }
-
 }
 
 extension CoinAuditsViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
     }
@@ -75,11 +73,9 @@ extension CoinAuditsViewModel {
     func onTapRetry() {
         service.refresh()
     }
-
 }
 
 extension CoinAuditsViewModel {
-
     struct ViewItem {
         let logoUrl: String?
         let name: String
@@ -92,5 +88,4 @@ extension CoinAuditsViewModel {
         let issues: String
         let reportUrl: String?
     }
-
 }

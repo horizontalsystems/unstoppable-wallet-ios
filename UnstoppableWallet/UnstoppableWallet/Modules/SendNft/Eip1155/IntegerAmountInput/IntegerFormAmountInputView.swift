@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class IntegerFormAmountInputView: UIView {
     private let viewModel: IntegerAmountInputViewModel
@@ -29,7 +29,8 @@ class IntegerFormAmountInputView: UIView {
         subscribe(disposeBag, viewModel.isMaxEnabledDriver) { [weak self] in self?.amountInputView.maxButtonVisible = $0 }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -38,17 +39,15 @@ class IntegerFormAmountInputView: UIView {
     }
 
     private func set(amount: String?) {
-        guard amountInputView.inputText != amount && !viewModel.equalValue(lhs: amountInputView.inputText, rhs: amount) else { //avoid issue with point ("1" and "1.")
+        guard amountInputView.inputText != amount, !viewModel.equalValue(lhs: amountInputView.inputText, rhs: amount) else { // avoid issue with point ("1" and "1.")
             return
         }
 
         amountInputView.inputText = amount
     }
-
 }
 
 extension IntegerFormAmountInputView {
-
     var viewHeight: CGFloat {
         amountInputView.viewHeight
     }
@@ -62,12 +61,10 @@ extension IntegerFormAmountInputView {
         get { amountInputView.clearHidden }
         set { amountInputView.clearHidden = newValue }
     }
-
 }
 
 extension IntegerFormAmountInputView: IHeightControlView {
-
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { amountInputView.onChangeHeight }
         set { amountInputView.onChangeHeight = newValue }
     }
@@ -75,5 +72,4 @@ extension IntegerFormAmountInputView: IHeightControlView {
     func height(containerWidth: CGFloat) -> CGFloat {
         amountInputView.height(containerWidth: containerWidth)
     }
-
 }

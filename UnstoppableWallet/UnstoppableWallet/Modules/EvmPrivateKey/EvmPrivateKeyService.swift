@@ -8,14 +8,14 @@ class EvmPrivateKeyService {
         switch accountType {
         case .mnemonic:
             guard let seed = accountType.mnemonicSeed,
-                  let privateKey = try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).hs.hex else {
+                  let privateKey = try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).hs.hex
+            else {
                 return nil
             }
             self.privateKey = privateKey
-        case .evmPrivateKey(data: let data):
+        case let .evmPrivateKey(data: data):
             privateKey = data.hs.hex
         default: return nil
         }
     }
-
 }

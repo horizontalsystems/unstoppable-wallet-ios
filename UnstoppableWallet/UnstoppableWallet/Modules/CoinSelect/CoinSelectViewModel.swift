@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 class CoinSelectViewModel {
     private let service: CoinSelectService
@@ -20,23 +20,21 @@ class CoinSelectViewModel {
     private func sync(items: [CoinSelectService.Item]) {
         let viewItems = items.map { item -> ViewItem in
             let formatted = item.balance
-                    .flatMap { CoinValue(kind: .token(token: item.token), value: $0) }
-                    .flatMap { ValueFormatter.instance.formatShort(coinValue: $0) }
+                .flatMap { CoinValue(kind: .token(token: item.token), value: $0) }
+                .flatMap { ValueFormatter.instance.formatShort(coinValue: $0) }
 
             let fiatFormatted = item.rate
-                    .flatMap { rate in item.balance.map { $0 * rate } }
-                    .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
+                .flatMap { rate in item.balance.map { $0 * rate } }
+                .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
 
             return ViewItem(token: item.token, balance: formatted, fiatBalance: fiatFormatted)
         }
 
         viewItemsRelay.accept(viewItems)
     }
-
 }
 
 extension CoinSelectViewModel {
-
     public var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -46,15 +44,12 @@ extension CoinSelectViewModel {
             self?.service.set(filter: filter?.trimmingCharacters(in: .whitespaces) ?? "")
         }
     }
-
 }
 
 extension CoinSelectViewModel {
-
     struct ViewItem {
         let token: Token
         let balance: String?
         let fiatBalance: String?
     }
-
 }

@@ -1,8 +1,8 @@
-import UIKit
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
 import ThemeKit
+import UIKit
 
 protocol IDropDownListViewModel {
     var selectedItemDriver: Driver<String?> { get }
@@ -13,7 +13,7 @@ class DropDownListCell: BaseSelectableThemeCell {
     private let viewModel: IDropDownListViewModel
     private let title: String
 
-    var showList: (() -> ())? = nil
+    var showList: (() -> Void)? = nil
 
     init(viewModel: IDropDownListViewModel, title: String) {
         self.viewModel = viewModel
@@ -40,12 +40,12 @@ class DropDownListCell: BaseSelectableThemeCell {
                 component.onTap = { [weak self] in
                     self?.showList?()
                 }
-            }
+            },
         ]))
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

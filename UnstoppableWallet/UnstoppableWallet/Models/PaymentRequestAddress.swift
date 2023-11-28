@@ -10,5 +10,4 @@ struct PaymentRequestAddress {
         self.amount = amount
         self.error = error
     }
-
 }

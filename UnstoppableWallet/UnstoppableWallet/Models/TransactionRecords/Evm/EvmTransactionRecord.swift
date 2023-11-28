@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 import MarketKit
 
 class EvmTransactionRecord: TransactionRecord {
@@ -20,15 +20,15 @@ class EvmTransactionRecord: TransactionRecord {
         }
 
         super.init(
-                source: source,
-                uid: txHash,
-                transactionHash: txHash,
-                transactionIndex: transaction.transactionIndex ?? 0,
-                blockHeight: transaction.blockNumber,
-                confirmationsThreshold: BaseEvmAdapter.confirmationsThreshold,
-                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                failed: transaction.isFailed,
-                spam: spam
+            source: source,
+            uid: txHash,
+            transactionHash: txHash,
+            transactionIndex: transaction.transactionIndex ?? 0,
+            blockHeight: transaction.blockNumber,
+            confirmationsThreshold: BaseEvmAdapter.confirmationsThreshold,
+            date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+            failed: transaction.isFailed,
+            spam: spam
         )
     }
 
@@ -42,7 +42,7 @@ class EvmTransactionRecord: TransactionRecord {
     }
 
     func combined(incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) -> ([TransactionValue], [TransactionValue]) {
-        let values = (incomingEvents + outgoingEvents).map { $0.value }
+        let values = (incomingEvents + outgoingEvents).map(\.value)
         var resultIncoming = [TransactionValue]()
         var resultOutgoing = [TransactionValue]()
 
@@ -75,14 +75,11 @@ class EvmTransactionRecord: TransactionRecord {
 
         return (resultIncoming, resultOutgoing)
     }
-
 }
 
 extension EvmTransactionRecord {
-
     struct TransferEvent {
         let address: String
         let value: TransactionValue
     }
-
 }

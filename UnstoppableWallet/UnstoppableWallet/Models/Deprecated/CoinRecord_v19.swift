@@ -55,5 +55,4 @@ class CoinRecord_v19: Record {
         container[Columns.erc20Address] = erc20Address
         container[Columns.bep2Symbol] = bep2Symbol
     }
-
 }

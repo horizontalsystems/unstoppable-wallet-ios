@@ -126,7 +126,7 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
     }
 
     private func sync(discoveryViewItems: [MarketDiscoveryViewModel.DiscoveryViewItem]?) {
-        if let discoveryViewItems = discoveryViewItems {
+        if let discoveryViewItems {
             self.discoveryViewItems = discoveryViewItems
             collectionView.reloadData()
             collectionView.isHidden = false
@@ -138,7 +138,7 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
     }
 
     private func sync(searchViewItems: [MarketDiscoveryViewModel.SearchViewItem]?) {
-        if let searchViewItems = searchViewItems {
+        if let searchViewItems {
             self.searchViewItems = searchViewItems
             reloadTable()
             tableView.isHidden = false

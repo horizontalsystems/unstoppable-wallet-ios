@@ -27,7 +27,7 @@ extension FavoritesManager {
     }
 
     var allCoinUids: [String] {
-        storage.favoriteCoinRecords.map { $0.coinUid }
+        storage.favoriteCoinRecords.map(\.coinUid)
     }
 
     func add(coinUid: String) {

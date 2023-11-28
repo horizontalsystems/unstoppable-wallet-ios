@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketOverviewNftCollectionsViewModel {
     private let service: MarketOverviewNftCollectionsService
@@ -22,11 +22,9 @@ class MarketOverviewNftCollectionsViewModel {
     private func sync(collections: [NftTopCollection]?) {
         listViewItemsRelay.accept(collections.map { $0.enumerated().map { decorator.listViewItem(item: NftCollectionItem(index: $0 + 1, collection: $1)) } })
     }
-
 }
 
 extension MarketOverviewNftCollectionsViewModel {
-
     var timePeriod: HsTimePeriod {
         service.timePeriod
     }
@@ -34,17 +32,15 @@ extension MarketOverviewNftCollectionsViewModel {
     func topCollection(uid: String) -> NftTopCollection? {
         service.topCollection(uid: uid)
     }
-
 }
 
 extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewModel {
-
     var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> {
         listViewItemsRelay.asDriver()
     }
 
     var selectorTitles: [String] {
-        MarketNftTopCollectionsModule.selectorValues.map { $0.title }
+        MarketNftTopCollectionsModule.selectorValues.map(\.title)
     }
 
     var selectorIndex: Int {
@@ -54,5 +50,4 @@ extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewM
     func onSelect(selectorIndex: Int) {
         service.timePeriod = MarketNftTopCollectionsModule.selectorValues[selectorIndex]
     }
-
 }

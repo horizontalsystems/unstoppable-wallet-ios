@@ -1,11 +1,11 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
 import ComponentKit
-import RxSwift
-import RxCocoa
 import HUD
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class CoinAuditsViewController: ThemeViewController {
     private let viewModel: CoinAuditsViewModel
@@ -26,7 +26,8 @@ class CoinAuditsViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -87,7 +88,7 @@ class CoinAuditsViewController: ThemeViewController {
     private func sync(viewItems: [CoinAuditsViewModel.ViewItem]?) {
         self.viewItems = viewItems
 
-        if let viewItems = viewItems {
+        if let viewItems {
             tableView.bounces = true
             emptyView.isHidden = !viewItems.isEmpty
         } else {
@@ -101,17 +102,15 @@ class CoinAuditsViewController: ThemeViewController {
     private func open(url: String) {
         urlManager.open(url: url, from: self)
     }
-
 }
 
 extension CoinAuditsViewController: SectionsDataSource {
-
     private func headerRow(logoUrl: String?, name: String) -> RowProtocol {
         tableView.universalRow56(
-                id: "header-\(name)",
-                image: .url(logoUrl, placeholder: "placeholder_circle_32"),
-                title: .body(name),
-                backgroundStyle: .transparent
+            id: "header-\(name)",
+            image: .url(logoUrl, placeholder: "placeholder_circle_32"),
+            title: .body(name),
+            backgroundStyle: .transparent
         )
     }
 
@@ -120,48 +119,48 @@ extension CoinAuditsViewController: SectionsDataSource {
             .vStackCentered([
                 .textElement(text: .body(auditViewItem.date)),
                 .margin(1),
-                .textElement(text: .subhead2(auditViewItem.name))
+                .textElement(text: .subhead2(auditViewItem.name)),
             ]),
-            .textElement(text: .subhead1(auditViewItem.issues, color: .themeGray), parameters: .rightAlignment)
+            .textElement(text: .subhead1(auditViewItem.issues, color: .themeGray), parameters: .rightAlignment),
         ]
         if auditViewItem.reportUrl != nil {
             elements.append(contentsOf: CellBuilderNew.CellElement.accessoryElements(.disclosure))
         }
         return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: tableView,
-                id: auditViewItem.name + (auditViewItem.reportUrl ?? ""),
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
-                action: auditViewItem.reportUrl.map { url in
-                    { [weak self] in self?.open(url: url) }
-                }
+            rootElement: .hStack(elements),
+            tableView: tableView,
+            id: auditViewItem.name + (auditViewItem.reportUrl ?? ""),
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            },
+            action: auditViewItem.reportUrl.map { url in
+                { [weak self] in self?.open(url: url) }
+            }
         )
     }
 
     private func poweredBySection(text: String) -> SectionProtocol {
         Section(
-                id: "powered-by",
-                headerState: .margin(height: .margin32),
-                rows: [
-                    Row<BrandFooterCell>(
-                            id: "powered-by",
-                            dynamicHeight: { containerWidth in
-                                BrandFooterCell.height(containerWidth: containerWidth, title: text)
-                            },
-                            bind: { cell, _ in
-                                cell.title = text
-                            }
-                    )
-                ]
+            id: "powered-by",
+            headerState: .margin(height: .margin32),
+            rows: [
+                Row<BrandFooterCell>(
+                    id: "powered-by",
+                    dynamicHeight: { containerWidth in
+                        BrandFooterCell.height(containerWidth: containerWidth, title: text)
+                    },
+                    bind: { cell, _ in
+                        cell.title = text
+                    }
+                ),
+            ]
         )
     }
 
     func buildSections() -> [SectionProtocol] {
-        guard let viewItems = viewItems, !viewItems.isEmpty else {
+        guard let viewItems, !viewItems.isEmpty else {
             return []
         }
 
@@ -170,24 +169,24 @@ extension CoinAuditsViewController: SectionsDataSource {
         for (index, viewItem) in viewItems.enumerated() {
             sections.append(contentsOf: [
                 Section(
-                        id: "header-\(index)",
-                        headerState: .margin(height: .margin12),
-                        footerState: .margin(height: .margin8),
-                        rows: [
-                            headerRow(logoUrl: viewItem.logoUrl, name: viewItem.name)
-                        ]
+                    id: "header-\(index)",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin8),
+                    rows: [
+                        headerRow(logoUrl: viewItem.logoUrl, name: viewItem.name),
+                    ]
                 ),
                 Section(
-                        id: "audits-\(index)",
-                        footerState: .margin(height: .margin12),
-                        rows: viewItem.auditViewItems.enumerated().map { index, auditViewItem in
-                            row(
-                                    auditViewItem: auditViewItem,
-                                    isFirst: index == 0,
-                                    isLast: index == viewItem.auditViewItems.count - 1
-                            )
-                        }
-                )
+                    id: "audits-\(index)",
+                    footerState: .margin(height: .margin12),
+                    rows: viewItem.auditViewItems.enumerated().map { index, auditViewItem in
+                        row(
+                            auditViewItem: auditViewItem,
+                            isFirst: index == 0,
+                            isLast: index == viewItem.auditViewItems.count - 1
+                        )
+                    }
+                ),
             ])
         }
 
@@ -195,5 +194,4 @@ extension CoinAuditsViewController: SectionsDataSource {
 
         return sections
     }
-
 }

@@ -39,7 +39,8 @@ class AdditionalDataView: UIView {
         valueLabel.font = .subhead2
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -66,7 +67,7 @@ class AdditionalDataView: UIView {
     }
 
     func set(hidden: Bool) {
-        self.isHidden = hidden
+        isHidden = hidden
         snp.updateConstraints { maker in
             maker.height.equalTo(hidden ? 0 : Self.height)
         }
@@ -82,5 +83,4 @@ class AdditionalDataView: UIView {
         get { valueLabel.text }
         set { valueLabel.text = newValue }
     }
-
 }

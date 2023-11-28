@@ -1,8 +1,8 @@
-import UIKit
+import Chart
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
-import Chart
+import UIKit
 
 class MarketWideCardCell: BaseSelectableThemeCell {
     private let titleLabel = UILabel()
@@ -11,7 +11,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
     private let valueInfoLabel = UILabel()
     private var chartView: RateChartView?
 
-    private var onTapInfo: (() -> ())?
+    private var onTapInfo: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,7 +72,8 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         chartView.isUserInteractionEnabled = false
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -80,7 +81,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         onTapInfo?()
     }
 
-    func bind(title: String, value: String?, valueInfo: String?, chartData: ChartData? = nil, chartTrend: MovementTrend? = nil, chartCurveType: ChartConfiguration.CurveType = .line, onTapInfo: (() -> ())? = nil) {
+    func bind(title: String, value: String?, valueInfo: String?, chartData: ChartData? = nil, chartTrend: MovementTrend? = nil, chartCurveType: ChartConfiguration.CurveType = .line, onTapInfo: (() -> Void)? = nil) {
         titleLabel.text = title
         valueLabel.text = value
         valueInfoLabel.text = value != nil ? valueInfo : nil
@@ -103,13 +104,10 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         self.onTapInfo = onTapInfo
         infoButton.isHidden = onTapInfo == nil
     }
-
 }
 
 extension MarketWideCardCell {
-
     static func height(hasChart: Bool = true, bottomMargin: CGFloat = .margin16) -> CGFloat {
         64 + (hasChart ? 60 + .margin12 : 0) + bottomMargin
     }
-
 }

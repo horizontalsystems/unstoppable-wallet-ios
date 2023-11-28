@@ -39,7 +39,7 @@ class BalanceConversionManager {
         let blockchainUid: String? = userDefaultsStorage.value(for: keyBlockchainUid)
         let blockchainType = blockchainUid.map { BlockchainType(uid: $0) }
 
-        if let blockchainType = blockchainType, let token = conversionTokens.first(where: { $0.blockchainType == blockchainType }) {
+        if let blockchainType, let token = conversionTokens.first(where: { $0.blockchainType == blockchainType }) {
             conversionToken = token
         } else {
             conversionToken = conversionTokens.first
@@ -53,7 +53,7 @@ extension BalanceConversionManager {
     }
 
     func toggleConversionToken() {
-        guard conversionTokens.count > 1, let conversionToken = conversionToken else {
+        guard conversionTokens.count > 1, let conversionToken else {
             return
         }
 

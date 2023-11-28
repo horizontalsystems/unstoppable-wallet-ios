@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class FaqViewModel {
     private let disposeBag = DisposeBag()
@@ -15,10 +15,10 @@ class FaqViewModel {
         self.service = service
 
         service.faqObservable
-                .subscribe(onNext: { [weak self] dataStatus in
-                    self?.handle(dataStatus: dataStatus)
-                })
-                .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] dataStatus in
+                self?.handle(dataStatus: dataStatus)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func handle(dataStatus: DataStatus<[FaqService.SectionItem]>) {
@@ -28,23 +28,21 @@ class FaqViewModel {
             loadingRelay.accept(false)
         }
 
-        if case .completed(let items) = dataStatus {
+        if case let .completed(items) = dataStatus {
             sectionItemsRelay.accept(items)
         } else {
             sectionItemsRelay.accept([])
         }
 
-        if case .failed(let error) = dataStatus {
+        if case let .failed(error) = dataStatus {
             errorRelay.accept(error.convertedError)
         } else {
             errorRelay.accept(nil)
         }
     }
-
 }
 
 extension FaqViewModel {
-
     var sectionItemsDriver: Driver<[FaqService.SectionItem]> {
         sectionItemsRelay.asDriver()
     }
@@ -56,5 +54,4 @@ extension FaqViewModel {
     var errorDriver: Driver<Error?> {
         errorRelay.asDriver()
     }
-
 }

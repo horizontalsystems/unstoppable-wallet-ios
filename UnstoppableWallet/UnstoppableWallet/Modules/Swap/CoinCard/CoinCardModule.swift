@@ -1,7 +1,7 @@
 import Foundation
-import UniswapKit
-import RxSwift
 import MarketKit
+import RxSwift
+import UniswapKit
 
 protocol ISwapCoinCardService: AnyObject {
     var dex: SwapModule.Dex { get }
@@ -23,7 +23,6 @@ protocol ISwapCoinCardService: AnyObject {
 }
 
 extension ISwapCoinCardService {
-
     var readOnly: Bool {
         false
     }
@@ -31,11 +30,9 @@ extension ISwapCoinCardService {
     var readOnlyObservable: Observable<Bool> {
         Observable.just(false)
     }
-
 }
 
-struct CoinCardModule {
-
+enum CoinCardModule {
     static func fromCell(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapFromCoinCardService(service: service, tradeService: tradeService)
 
@@ -45,10 +42,10 @@ struct CoinCardModule {
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
 
         let amountInputViewModel = AmountInputViewModel(
-                service: coinCardService,
-                fiatService: fiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: coinCardService,
+            fiatService: fiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
         return SwapCoinCardCell(viewModel: viewModel, amountInputViewModel: amountInputViewModel, title: "swap.you_pay".localized)
     }
@@ -62,11 +59,11 @@ struct CoinCardModule {
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
 
         let amountInputViewModel = AmountInputViewModel(
-                service: coinCardService,
-                fiatService: fiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser(),
-                isMaxSupported: false
+            service: coinCardService,
+            fiatService: fiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser(),
+            isMaxSupported: false
         )
         return SwapCoinCardCell(viewModel: viewModel, amountInputViewModel: amountInputViewModel, title: "swap.you_get".localized)
     }
@@ -80,10 +77,10 @@ struct CoinCardModule {
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
 
         let amountInputViewModel = AmountInputViewModel(
-                service: coinCardService,
-                fiatService: fiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser()
+            service: coinCardService,
+            fiatService: fiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser()
         )
         return SwapCoinCardCell(viewModel: viewModel, amountInputViewModel: amountInputViewModel, title: "swap.you_pay".localized)
     }
@@ -97,15 +94,14 @@ struct CoinCardModule {
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
 
         let amountInputViewModel = AmountInputViewModel(
-                service: coinCardService,
-                fiatService: fiatService,
-                switchService: switchService,
-                decimalParser: AmountDecimalParser(),
-                isMaxSupported: false
+            service: coinCardService,
+            fiatService: fiatService,
+            switchService: switchService,
+            decimalParser: AmountDecimalParser(),
+            isMaxSupported: false
         )
         return SwapCoinCardCell(viewModel: viewModel, amountInputViewModel: amountInputViewModel, title: "swap.you_get".localized)
     }
-
 }
 
 class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
@@ -129,9 +125,10 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
-            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError })
+            $0.first(where: { $0 as? SwapModule.SwapError == .insufficientBalanceIn })
         }
     }
+
     var isLoading: Observable<Bool> {
         tradeService.stateObservable.map { state in
             switch state {
@@ -148,7 +145,6 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
     func onChange(token: MarketKit.Token) {
         tradeService.set(tokenIn: token)
     }
-
 }
 
 class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
@@ -173,6 +169,7 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
     }
+
     var isLoading: Observable<Bool> {
         tradeService.stateObservable.map { state in
             switch state {
@@ -184,10 +181,11 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
 
     var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
         tradeService.stateObservable.map { state in
-            guard case .ready(let trade) = state,
+            guard case let .ready(trade) = state,
                   let impactLevel = trade.impactLevel,
                   case .forbidden = impactLevel,
-                  let priceImpact = trade.tradeData.priceImpact else {
+                  let priceImpact = trade.tradeData.priceImpact
+            else {
                 return nil
             }
 
@@ -202,7 +200,6 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
     func onChange(token: MarketKit.Token) {
         tradeService.set(tokenOut: token)
     }
-
 }
 
 class SwapV3FromCoinCardService: ISwapCoinCardService, IAmountInputService {
@@ -226,9 +223,10 @@ class SwapV3FromCoinCardService: ISwapCoinCardService, IAmountInputService {
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
-            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError })
+            $0.first(where: { $0 as? SwapModule.SwapError == .insufficientBalanceIn })
         }
     }
+
     var isLoading: Observable<Bool> {
         tradeService.stateObservable.map { state in
             switch state {
@@ -245,7 +243,6 @@ class SwapV3FromCoinCardService: ISwapCoinCardService, IAmountInputService {
     func onChange(token: MarketKit.Token) {
         tradeService.set(tokenIn: token)
     }
-
 }
 
 class SwapV3ToCoinCardService: ISwapCoinCardService, IAmountInputService {
@@ -270,6 +267,7 @@ class SwapV3ToCoinCardService: ISwapCoinCardService, IAmountInputService {
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
     }
+
     var isLoading: Observable<Bool> {
         tradeService.stateObservable.map { state in
             switch state {
@@ -281,10 +279,11 @@ class SwapV3ToCoinCardService: ISwapCoinCardService, IAmountInputService {
 
     var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
         tradeService.stateObservable.map { state in
-            guard case .ready(let trade) = state,
+            guard case let .ready(trade) = state,
                   let impactLevel = trade.impactLevel,
                   case .forbidden = impactLevel,
-                  let priceImpact = trade.tradeData.priceImpact else {
+                  let priceImpact = trade.tradeData.priceImpact
+            else {
                 return nil
             }
 
@@ -299,7 +298,6 @@ class SwapV3ToCoinCardService: ISwapCoinCardService, IAmountInputService {
     func onChange(token: MarketKit.Token) {
         tradeService.set(tokenOut: token)
     }
-
 }
 
 class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
@@ -323,9 +321,10 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
-            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError })
+            $0.first(where: { $0 as? SwapModule.SwapError == .insufficientBalanceIn })
         }
     }
+
     var isLoading: Observable<Bool> {
         .just(false)
     }
@@ -337,7 +336,6 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
     func onChange(token: MarketKit.Token) {
         tradeService.set(tokenIn: token)
     }
-
 }
 
 class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
@@ -364,6 +362,7 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
     }
+
     var isLoading: Observable<Bool> {
         tradeService.stateObservable.map { state in
             switch state {
@@ -373,12 +372,11 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
         }
     }
 
-    func onChange(amount: Decimal) {
+    func onChange(amount _: Decimal) {
         // can't change to-card
     }
 
     func onChange(token: MarketKit.Token) {
         tradeService.set(tokenOut: token)
     }
-
 }

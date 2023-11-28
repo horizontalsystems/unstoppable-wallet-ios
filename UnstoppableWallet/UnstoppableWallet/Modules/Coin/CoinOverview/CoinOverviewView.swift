@@ -122,7 +122,7 @@ struct CoinOverviewView: View {
     }
 
     private func format(value: Decimal?, coinCode: String) -> String? {
-        guard let value = value, !value.isZero else {
+        guard let value, !value.isZero else {
             return nil
         }
 
@@ -130,7 +130,7 @@ struct CoinOverviewView: View {
     }
 
     private func format(value: Decimal?, currency: Currency) -> String? {
-        guard let value = value, !value.isZero else {
+        guard let value, !value.isZero else {
             return nil
         }
 

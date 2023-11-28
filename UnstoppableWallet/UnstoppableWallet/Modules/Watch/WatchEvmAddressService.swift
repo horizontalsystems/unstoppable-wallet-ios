@@ -1,7 +1,7 @@
-import Foundation
-import RxSwift
-import RxRelay
 import EvmKit
+import Foundation
+import RxRelay
+import RxSwift
 
 class WatchEvmAddressService {
     private let disposeBag = DisposeBag()
@@ -19,9 +19,9 @@ class WatchEvmAddressService {
 
     private func sync(addressState: AddressService.State) {
         switch addressState {
-        case .success(let address):
+        case let .success(address):
             do {
-                state = .ready(address: try EvmKit.Address(hex: address.raw), domain: address.domain)
+                state = try .ready(address: EvmKit.Address(hex: address.raw), domain: address.domain)
             } catch {
                 state = .notReady
             }
@@ -29,11 +29,9 @@ class WatchEvmAddressService {
             state = .notReady
         }
     }
-
 }
 
 extension WatchEvmAddressService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -44,11 +42,9 @@ extension WatchEvmAddressService {
         case .notReady: return nil
         }
     }
-
 }
 
 extension WatchEvmAddressService {
-
     enum State {
         case ready(address: EvmKit.Address, domain: String?)
         case notReady
@@ -62,11 +58,9 @@ extension WatchEvmAddressService {
 
         var domain: String? {
             switch self {
-            case .ready(_, let domain): return domain
+            case let .ready(_, domain): return domain
             case .notReady: return nil
             }
         }
-
     }
-
 }

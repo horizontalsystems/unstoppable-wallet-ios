@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class SendFeeService {
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).send-fee-service")
@@ -39,7 +39,7 @@ class SendFeeService {
 
     private func setFeeValueService() {
         feeRateDisposeBag = DisposeBag()
-        if let feeValueService = feeValueService {
+        if let feeValueService {
             subscribe(feeRateDisposeBag, feeValueService.feeStateObservable) { [weak self] in
                 self?.sync(feeState: $0)
             }
@@ -49,8 +49,8 @@ class SendFeeService {
     private func sync(feeState: DataStatus<Decimal>) {
         switch feeState {
         case .loading: state = .loading
-        case .failed(let error): state = .failed(error)
-        case .completed(let value):
+        case let .failed(error): state = .failed(error)
+        case let .completed(value):
             fiatService.set(coinAmount: value)
         }
     }
@@ -65,29 +65,24 @@ class SendFeeService {
         let secondaryInfo = secondaryInfo ?? fiatService.secondaryAmountInfo
 
         switch primaryInfo {
-        case .amount(let value):
+        case let .amount(value):
             state = .completed(State(primaryInfo: amountInfo(value: value), secondaryInfo: secondaryInfo))
-        case .amountInfo(let value):
+        case let .amountInfo(value):
             let amountInfo = value ?? amountInfo(value: fiatService.coinAmount)
             state = .completed(State(primaryInfo: amountInfo, secondaryInfo: secondaryInfo))
         }
     }
-
 }
 
 extension SendFeeService {
-
     var stateObservable: Observable<DataStatus<State>> {
         stateRelay.asObservable()
     }
-
 }
 
 extension SendFeeService {
-
     struct State {
         let primaryInfo: AmountInfo
         let secondaryInfo: AmountInfo?
     }
-
 }

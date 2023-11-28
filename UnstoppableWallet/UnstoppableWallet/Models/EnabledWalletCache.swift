@@ -44,5 +44,4 @@ class EnabledWalletCache: Record {
         container[Columns.accountId] = accountId
         container[Columns.balances] = balances
     }
-
 }

@@ -11,17 +11,18 @@ extension Publisher {
     func asObservable() -> Observable<Output> {
         Observable<Output>.create { observer in
             let cancellable = self.sink(
-                    receiveCompletion: { completion in
-                        switch completion {
-                        case .finished:
-                            observer.onCompleted()
-                        case .failure(let error):
-                            observer.onError(error)
-                        }
-                    },
-                    receiveValue: { value in
-                        observer.onNext(value)
-                    })
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        observer.onCompleted()
+                    case let .failure(error):
+                        observer.onError(error)
+                    }
+                },
+                receiveValue: { value in
+                    observer.onNext(value)
+                }
+            )
 
             return Disposables.create {
                 cancellable.cancel()

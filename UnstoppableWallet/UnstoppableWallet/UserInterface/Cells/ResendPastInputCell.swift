@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class ResendPasteInputCell: UITableViewCell {
     private let view = ResendPasteInputView()
@@ -17,14 +17,13 @@ class ResendPasteInputCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension ResendPasteInputCell {
-
     var inputPlaceholder: String? {
         get { view.inputPlaceholder }
         set { view.inputPlaceholder = newValue }
@@ -59,27 +58,27 @@ extension ResendPasteInputCell {
         view.set(cautionType: cautionType)
     }
 
-    var onChangeText: ((String?) -> ())? {
+    var onChangeText: ((String?) -> Void)? {
         get { view.onChangeText }
         set { view.onChangeText = newValue }
     }
 
-    var onFetchText: ((String?) -> ())? {
+    var onFetchText: ((String?) -> Void)? {
         get { view.onFetchText }
         set { view.onFetchText = newValue }
     }
 
-    var onResend: (() -> ())? {
+    var onResend: (() -> Void)? {
         get { view.onResend }
         set { view.onResend = newValue }
     }
 
-    var onChangeEditing: ((Bool) -> ())? {
+    var onChangeEditing: ((Bool) -> Void)? {
         get { view.onChangeEditing }
         set { view.onChangeEditing = newValue }
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { view.onChangeHeight }
         set { view.onChangeHeight = newValue }
     }
@@ -87,5 +86,4 @@ extension ResendPasteInputCell {
     func height(containerWidth: CGFloat) -> CGFloat {
         view.height(containerWidth: containerWidth)
     }
-
 }

@@ -44,5 +44,4 @@ class EnabledWallet: Record {
         container[Columns.coinCode] = coinCode
         container[Columns.tokenDecimals] = tokenDecimals
     }
-
 }

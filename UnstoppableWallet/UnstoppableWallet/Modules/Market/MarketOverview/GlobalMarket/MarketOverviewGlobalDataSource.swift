@@ -1,9 +1,9 @@
-import UIKit
-import RxSwift
-import RxCocoa
-import SectionsTableView
 import Chart
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import UIKit
 
 class MarketOverviewGlobalDataSource {
     private let viewModel: MarketOverviewGlobalViewModel
@@ -21,29 +21,27 @@ class MarketOverviewGlobalDataSource {
 
         marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallPreviewChart, presentDelegate: presentDelegate)
         marketMetricsRow = StaticRow(
-                cell: marketMetricsCell,
-                id: "metrics",
-                height: MarketOverviewMetricsCell.cellHeight
+            cell: marketMetricsCell,
+            id: "metrics",
+            height: MarketOverviewMetricsCell.cellHeight
         )
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in
             self?.viewItemRelay.accept(viewItem)
         }
     }
-
 }
 
 extension MarketOverviewGlobalDataSource: IMarketOverviewDataSource {
-
     var isReady: Bool {
         viewItemRelay.value != nil
     }
 
-    var updateObservable: Observable<()> {
+    var updateObservable: Observable<Void> {
         viewItemRelay.map { _ in () }
     }
 
-    func sections(tableView: SectionsTableView) -> [SectionProtocol] {
+    func sections(tableView _: SectionsTableView) -> [SectionProtocol] {
         guard let viewItem = viewItemRelay.value else {
             return []
         }
@@ -54,10 +52,9 @@ extension MarketOverviewGlobalDataSource: IMarketOverviewDataSource {
 
         return [
             Section(
-                    id: "market_metrics",
-                    rows: [marketMetricsRow]
-            )
+                id: "market_metrics",
+                rows: [marketMetricsRow]
+            ),
         ]
     }
-
 }

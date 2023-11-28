@@ -7,7 +7,7 @@ class ContactBookSettingsService {
     private let contactManager: ContactBookManager
 
     private let activatedChangedRelay = BehaviorRelay<Bool>(value: false)
-    private let confirmationRelay = PublishRelay<()>()
+    private let confirmationRelay = PublishRelay<Void>()
 
     private let cloudErrorRelay = BehaviorRelay<Error?>(value: nil)
     var cloudError: Error? {
@@ -16,7 +16,7 @@ class ContactBookSettingsService {
         }
     }
 
-    private var needToMerge: Bool {     // when remote sync not enabled yet and user has contacts
+    private var needToMerge: Bool { // when remote sync not enabled yet and user has contacts
         !(contactManager.remoteSync || (contactManager.all?.isEmpty ?? true))
     }
 
@@ -32,11 +32,9 @@ class ContactBookSettingsService {
     private func sync(error: Error?) {
         cloudError = error
     }
-
 }
 
 extension ContactBookSettingsService {
-
     var hasContacts: Bool {
         guard let contactBook = contactManager.state.data else {
             return false
@@ -84,7 +82,7 @@ extension ContactBookSettingsService {
         }
     }
 
-    var confirmationObservable: Observable<()> {
+    var confirmationObservable: Observable<Void> {
         confirmationRelay.asObservable()
     }
 
@@ -117,14 +115,11 @@ extension ContactBookSettingsService {
 
         return temporaryFileUrl
     }
-
 }
 
 extension ContactBookSettingsService {
-
     enum CreateBackupFileError: Error {
         case noBackupContactBook
         case noTempFileUrl
     }
-
 }

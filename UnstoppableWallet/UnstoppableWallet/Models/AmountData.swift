@@ -1,7 +1,7 @@
-import UIKit
-import RxSwift
 import HsToolKit
 import MarketKit
+import RxSwift
+import UIKit
 
 enum AmountInfo {
     case coinValue(coinValue: CoinValue)
@@ -9,27 +9,26 @@ enum AmountInfo {
 
     var formattedFull: String? {
         switch self {
-        case .coinValue(let coinValue):
+        case let .coinValue(coinValue):
             return coinValue.formattedFull
-        case .currencyValue(let currencyValue):
+        case let .currencyValue(currencyValue):
             return currencyValue.formattedFull
         }
     }
 
     var value: Decimal {
         switch self {
-        case .currencyValue(let currencyValue): return currencyValue.value
-        case .coinValue(let coinValue): return coinValue.value
+        case let .currencyValue(currencyValue): return currencyValue.value
+        case let .coinValue(coinValue): return coinValue.value
         }
     }
 
     var decimal: Int {
         switch self {
-        case .currencyValue(let currencyValue): return currencyValue.currency.decimal
-        case .coinValue(let coinValue): return coinValue.decimals
+        case let .currencyValue(currencyValue): return currencyValue.currency.decimal
+        case let .coinValue(coinValue): return coinValue.decimals
         }
     }
-
 }
 
 struct AmountData {
@@ -49,5 +48,4 @@ struct AmountData {
 
         return parts.joined(separator: "  |  ")
     }
-
 }

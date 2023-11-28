@@ -1,7 +1,7 @@
+import Alamofire
 import Foundation
 import HsToolKit
 import ObjectMapper
-import Alamofire
 
 class TweetsProvider {
     typealias TweetsPage = (tweets: [Tweet], nextToken: String?)
@@ -18,7 +18,7 @@ class TweetsProvider {
     func userRequest(username: String) async throws -> TwitterUser? {
         let parameters: Parameters = [
             "usernames": username,
-            "user.fields": "profile_image_url"
+            "user.fields": "profile_image_url",
         ]
 
         let headers = bearerToken.map { HTTPHeaders([HTTPHeader.authorization(bearerToken: $0)]) }
@@ -33,14 +33,14 @@ class TweetsProvider {
             "expansions": "attachments.poll_ids,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id",
             "media.fields": "media_key,preview_image_url,type,url",
             "tweet.fields": "id,author_id,created_at,attachments",
-            "user.fields": "profile_image_url"
+            "user.fields": "profile_image_url",
         ]
 
         if let token = paginationToken {
-           parameters["next_token"] = token
+            parameters["next_token"] = token
         }
 
-        if let sinceId = sinceId {
+        if let sinceId {
             parameters["since_id"] = sinceId
         }
 
@@ -49,5 +49,4 @@ class TweetsProvider {
         let tweetsResponse: TweetsPageResponse = try await networkManager.fetch(url: "\(baseUrl)/users/\(user.id)/tweets", method: .get, parameters: parameters, headers: headers)
         return (tweets: tweetsResponse.tweets(user: user), nextToken: tweetsResponse.nextToken)
     }
-
 }

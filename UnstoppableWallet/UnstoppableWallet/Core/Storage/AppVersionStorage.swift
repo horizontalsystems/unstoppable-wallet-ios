@@ -6,11 +6,9 @@ class AppVersionStorage {
     init(storage: AppVersionRecordStorage) {
         self.storage = storage
     }
-
 }
 
 extension AppVersionStorage {
-
     var appVersions: [AppVersion] {
         storage.appVersionRecords.compactMap {
             AppVersion(version: $0.version, build: $0.build, date: $0.date)
@@ -23,5 +21,4 @@ extension AppVersionStorage {
         }
         storage.save(appVersionRecords: records)
     }
-
 }

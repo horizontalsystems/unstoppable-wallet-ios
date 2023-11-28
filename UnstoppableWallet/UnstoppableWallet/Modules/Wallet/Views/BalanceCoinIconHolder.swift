@@ -1,20 +1,20 @@
-import UIKit
-import ThemeKit
-import HUD
 import ComponentKit
+import HUD
+import ThemeKit
+import UIKit
 
 class BalanceCoinIconHolder: UIView {
     private let coinIconImageView = UIImageView()
     private let syncSpinner = HUDProgressView(
-            progress: 0,
-            strokeLineWidth: 2,
-            radius: 19,
-            strokeColor: .themeGray,
-            duration: 2
+        progress: 0,
+        strokeLineWidth: 2,
+        radius: 19,
+        strokeColor: .themeGray,
+        duration: 2
     )
     private let failedButton = UIButton()
 
-    private var onTapError: (() -> ())?
+    private var onTapError: (() -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -40,7 +40,8 @@ class BalanceCoinIconHolder: UIView {
         failedButton.addTarget(self, action: #selector(onTapErrorButton), for: .touchUpInside)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
@@ -48,17 +49,17 @@ class BalanceCoinIconHolder: UIView {
         onTapError?()
     }
 
-    func bind(iconUrlString: String?, placeholderIconName: String, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> ())?) {
+    func bind(iconUrlString: String?, placeholderIconName: String, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> Void)?) {
         self.onTapError = onTapError
 
         coinIconImageView.isHidden = iconUrlString == nil
-        if let iconUrlString = iconUrlString {
+        if let iconUrlString {
             coinIconImageView.setImage(withUrlString: iconUrlString, placeholder: UIImage(named: placeholderIconName))
         } else {
             coinIconImageView.image = nil
         }
 
-        if let spinnerProgress = spinnerProgress {
+        if let spinnerProgress {
             syncSpinner.set(progress: Float(spinnerProgress) / 100)
             syncSpinner.set(strokeColor: .themeGray)
             syncSpinner.isHidden = false
@@ -75,5 +76,4 @@ class BalanceCoinIconHolder: UIView {
 
         failedButton.isHidden = !failViewVisible
     }
-
 }

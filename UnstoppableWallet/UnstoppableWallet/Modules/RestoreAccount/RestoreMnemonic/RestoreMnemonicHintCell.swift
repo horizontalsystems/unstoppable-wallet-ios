@@ -1,12 +1,12 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class RestoreMnemonicHintCell: UICollectionViewCell {
     private let button = SecondaryButton()
 
-    private var onTap: (() -> ())?
+    private var onTap: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,7 +20,8 @@ class RestoreMnemonicHintCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -28,18 +29,15 @@ class RestoreMnemonicHintCell: UICollectionViewCell {
         onTap?()
     }
 
-    func bind(word: String, onTap: @escaping () -> ()) {
+    func bind(word: String, onTap: @escaping () -> Void) {
         button.setTitle(word, for: .normal)
 
         self.onTap = onTap
     }
-
 }
 
 extension RestoreMnemonicHintCell {
-
     static func size(word: String) -> CGSize {
         CGSize(width: SecondaryButton.width(title: word, style: .default, hasImage: false), height: .heightSingleLineCell)
     }
-
 }

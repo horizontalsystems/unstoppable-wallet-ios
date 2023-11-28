@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxRelay
 import Alamofire
+import Foundation
 import HsToolKit
+import RxRelay
+import RxSwift
 
 class FileStorage {
     private let logger: Logger?
@@ -44,8 +44,8 @@ class FileStorage {
     func deleteFile(url: URL?) throws {
         logger?.debug("=> FDStorage =>: Try to delete file")
         guard let url,
-              (try? FileManager.default.fileExists(coordinatingAccessAt: url).exists) ?? false else {
-
+              (try? FileManager.default.fileExists(coordinatingAccessAt: url).exists) ?? false
+        else {
             logger?.debug("=> FDStorage =>: Can't find file! no need to remove")
             return
         }
@@ -53,13 +53,10 @@ class FileStorage {
         try FileManager.default.removeItem(coordinatingAccessAt: url)
         logger?.debug("=> FDStorage =>: File deleted!")
     }
-
 }
 
 extension FileStorage {
-
     enum StorageError: Error {
         case cantCreateFile
     }
-
 }

@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import MarketKit
+import RxSwift
 
 class DashAddressParserItem {
     private let adapter: ISendDashAdapter
@@ -8,7 +8,6 @@ class DashAddressParserItem {
     init(adapter: ISendDashAdapter) {
         self.adapter = adapter
     }
-
 }
 
 extension DashAddressParserItem: IAddressParserItem {
@@ -31,5 +30,4 @@ extension DashAddressParserItem: IAddressParserItem {
             return Single.just(false)
         }
     }
-
 }

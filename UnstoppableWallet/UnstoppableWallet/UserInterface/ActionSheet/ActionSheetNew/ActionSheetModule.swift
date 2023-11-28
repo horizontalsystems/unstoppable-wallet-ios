@@ -1,9 +1,9 @@
 import UIKit
 
 public protocol ActionSheetView: AnyObject {
-    func contentWillDismissed()             //child viewController will start dismissing programmatically
-    func dismissView(animated: Bool)       // child viewController can't get access to parentVC from iOS 5.*
-    func didChangeHeight()               // Change height flicker for .sheet
+    func contentWillDismissed() // child viewController will start dismissing programmatically
+    func dismissView(animated: Bool) // child viewController can't get access to parentVC from iOS 5.*
+    func didChangeHeight() // Change height flicker for .sheet
 }
 
 public protocol ActionSheetViewDelegate: AnyObject {
@@ -13,16 +13,15 @@ public protocol ActionSheetViewDelegate: AnyObject {
     func didInteractiveDismissed()
 }
 
-extension ActionSheetViewDelegate {
-
-    public var actionSheetView: ActionSheetView? {
+public extension ActionSheetViewDelegate {
+    var actionSheetView: ActionSheetView? {
         get { nil }
-        set { ()  }
+        set { () }
     }
 
-    public var height: CGFloat? {
+    var height: CGFloat? {
         nil
     }
 
-    public func didInteractiveDismissed() {}
+    func didInteractiveDismissed() {}
 }

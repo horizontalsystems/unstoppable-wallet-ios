@@ -58,5 +58,4 @@ class AccountRecord_v_0_20: Record {
         container[Columns.birthdayHeightKey] = birthdayHeightKey
         container[Columns.dataKey] = dataKey
     }
-
 }

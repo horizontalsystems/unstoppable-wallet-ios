@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import MarketKit
 import EvmKit
+import MarketKit
+import RxRelay
+import RxSwift
 
 class ManageWalletsService {
     private let account: Account
@@ -68,10 +68,10 @@ class ManageWalletsService {
     private func fetchTokens() -> [Token] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                let list = BlockchainType.supported.map { $0.defaultTokenQuery }
+                let list = BlockchainType.supported.map(\.defaultTokenQuery)
                 let tokens = try marketKit.tokens(queries: list)
                 let featuredTokens = tokens.filter { account.type.supports(token: $0) }
-                let enabledTokens = wallets.map { $0.token }
+                let enabledTokens = wallets.map(\.token)
 
                 return (enabledTokens + featuredTokens).removeDuplicates()
             } else if let ethAddress = try? EvmKit.Address(hex: filter) {
@@ -81,7 +81,7 @@ class ManageWalletsService {
                 return tokens.filter { account.type.supports(token: $0) }
             } else {
                 let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100)
-                let tokens = allFullCoins.map { $0.tokens }.flatMap { $0 }
+                let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
                 return tokens.filter { account.type.supports(token: $0) }
             }
@@ -162,9 +162,9 @@ class ManageWalletsService {
         let enabled = isEnabled(token: token)
 
         return Item(
-                token: token,
-                enabled: enabled,
-                hasInfo: hasInfo(token: token, enabled: enabled)
+            token: token,
+            enabled: enabled,
+            hasInfo: hasInfo(token: token, enabled: enabled)
         )
     }
 
@@ -189,11 +189,9 @@ class ManageWalletsService {
         let wallet = Wallet(token: token, account: account)
         walletManager.save(wallets: [wallet])
     }
-
 }
 
 extension ManageWalletsService {
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -251,17 +249,15 @@ extension ManageWalletsService {
         }
 
         switch token.type {
-        case .eip20(let value), .bep2(let value):
+        case let .eip20(value), let .bep2(value):
             return InfoItem(token: token, type: .contractAddress(value: value, explorerUrl: token.blockchain.explorerUrl(reference: value)))
         default:
             return nil
         }
     }
-
 }
 
 extension ManageWalletsService {
-
     struct Item {
         let token: Token
         let enabled: Bool
@@ -279,5 +275,4 @@ extension ManageWalletsService {
         case birthdayHeight(height: Int)
         case contractAddress(value: String, explorerUrl: String?)
     }
-
 }

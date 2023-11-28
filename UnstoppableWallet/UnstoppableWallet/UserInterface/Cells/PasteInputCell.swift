@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class PasteInputCell: UITableViewCell {
     private let pasteInputView = PasteInputView()
@@ -17,14 +17,13 @@ class PasteInputCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension PasteInputCell {
-
     var inputPlaceholder: String? {
         get { pasteInputView.inputPlaceholder }
         set { pasteInputView.inputPlaceholder = newValue }
@@ -54,22 +53,22 @@ extension PasteInputCell {
         pasteInputView.set(cautionType: cautionType)
     }
 
-    var onChangeText: ((String?) -> ())? {
+    var onChangeText: ((String?) -> Void)? {
         get { pasteInputView.onChangeText }
         set { pasteInputView.onChangeText = newValue }
     }
 
-    var onFetchText: ((String?) -> ())? {
+    var onFetchText: ((String?) -> Void)? {
         get { pasteInputView.onFetchText }
         set { pasteInputView.onFetchText = newValue }
     }
 
-    var onChangeEditing: ((Bool) -> ())? {
+    var onChangeEditing: ((Bool) -> Void)? {
         get { pasteInputView.onChangeEditing }
         set { pasteInputView.onChangeEditing = newValue }
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { pasteInputView.onChangeHeight }
         set { pasteInputView.onChangeHeight = newValue }
     }
@@ -77,5 +76,4 @@ extension PasteInputCell {
     func height(containerWidth: CGFloat) -> CGFloat {
         pasteInputView.height(containerWidth: containerWidth)
     }
-
 }

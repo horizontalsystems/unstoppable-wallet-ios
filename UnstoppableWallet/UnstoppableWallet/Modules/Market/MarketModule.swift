@@ -112,7 +112,7 @@ enum MarketModule {
         case let .valueDiff(currencyValue, diff):
             title = nil
 
-            if let currencyValue = currencyValue, let diff = diff {
+            if let currencyValue, let diff {
                 let valueDiff = diff * currencyValue.value / 100
                 value = ValueFormatter.instance.formatShort(currency: currencyValue.currency, value: valueDiff, showSign: true) ?? "----"
                 color = valueDiff.isSignMinus ? .themeLucian : .themeRemus
@@ -123,7 +123,7 @@ enum MarketModule {
         case let .diff(diff):
             title = nil
             value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
-            if let diff = diff {
+            if let diff {
                 color = diff.isSignMinus ? .themeLucian : .themeRemus
             } else {
                 color = .themeGray50
@@ -299,7 +299,7 @@ extension MarketKit.MarketInfo {
     }
 }
 
-extension Array where Element == MarketKit.MarketInfo {
+extension [MarketKit.MarketInfo] {
     func sorted(sortingField: MarketModule.SortingField, priceChangeType: MarketModule.PriceChangeType) -> [MarketKit.MarketInfo] {
         sorted { lhsMarketInfo, rhsMarketInfo in
             switch sortingField {

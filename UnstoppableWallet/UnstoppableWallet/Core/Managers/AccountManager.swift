@@ -64,7 +64,6 @@ class AccountManager {
             accountsLostRelay.accept(true)
         }
     }
-
 }
 
 extension AccountManager {

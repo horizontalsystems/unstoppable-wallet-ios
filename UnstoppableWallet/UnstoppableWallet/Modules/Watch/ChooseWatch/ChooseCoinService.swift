@@ -22,20 +22,20 @@ class ChooseCoinService {
     }
 
     private func btcItems() -> [WatchModule.Item] {
-        guard case .hdExtendedKey(let key) = accountType, case .public = key else {
+        guard case let .hdExtendedKey(key) = accountType, case .public = key else {
             return []
         }
 
         let blockchainTypes: [BlockchainType] = [.bitcoin, .bitcoinCash, .ecash, .litecoin, .dash]
-        let tokenQueries = blockchainTypes.map { $0.nativeTokenQueries }.flatMap { $0 }
+        let tokenQueries = blockchainTypes.map(\.nativeTokenQueries).flatMap { $0 }
 
         guard let tokens = try? marketKit.tokens(queries: tokenQueries) else {
             return []
         }
 
         return tokens
-                .filter { accountType.supports(token: $0) }
-                .map { .coin(token: $0) }
+            .filter { accountType.supports(token: $0) }
+            .map { .coin(token: $0) }
     }
 
     private func enableWallets(account: Account, enabledTokensUids: [String]) {
@@ -51,15 +51,12 @@ class ChooseCoinService {
 
         walletManager.save(wallets: wallets)
     }
-
 }
 
 extension ChooseCoinService: IChooseWatchService {
-
     func watch(enabledUids: [String]) {
         let account = accountFactory.watchAccount(type: accountType, name: accountName)
         accountManager.save(account: account)
         enableWallets(account: account, enabledTokensUids: enabledUids)
     }
-
 }

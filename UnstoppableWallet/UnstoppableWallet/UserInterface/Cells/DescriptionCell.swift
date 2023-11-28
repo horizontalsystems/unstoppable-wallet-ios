@@ -24,17 +24,15 @@ class DescriptionCell: UITableViewCell {
         label.textColor = .themeBran
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension DescriptionCell {
-
     static func height(containerWidth: CGFloat, text: String, font: UIFont? = nil, ignoreBottomMargin: Bool = false) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font ?? Self.font)
         return textHeight + (ignoreBottomMargin ? 1 : 2) * verticalPadding
     }
-
 }

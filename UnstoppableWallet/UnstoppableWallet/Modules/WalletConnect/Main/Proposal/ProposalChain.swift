@@ -20,8 +20,8 @@ extension Session: INamespaceProvider {
         namespaces.reduce(into: [:]) {
             $0[$1.key] = ProposalNamespace(
                 chains: Set($1.value.accounts.compactMap { account in
-                            Blockchain(namespace: account.namespace, reference: account.reference)
-                        }),
+                    Blockchain(namespace: account.namespace, reference: account.reference)
+                }),
                 methods: $1.value.methods,
                 events: $1.value.events
             )

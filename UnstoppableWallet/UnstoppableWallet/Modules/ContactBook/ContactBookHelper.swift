@@ -84,7 +84,7 @@ extension ContactBookHelper {
 
                 name = RestoreFileHelper.resolve(
                     name: contact.name,
-                    elements: updatedContacts.map { $0.name },
+                    elements: updatedContacts.map(\.name),
                     style: "(%d)"
                 )
             }
@@ -99,9 +99,9 @@ extension ContactBookHelper {
         }
 
         return ContactBook(
-                version: (book?.version ?? 0) + 1,
-                contacts: updatedContacts,
-                deletedContacts: book?.deleted ?? []
+            version: (book?.version ?? 0) + 1,
+            contacts: updatedContacts,
+            deletedContacts: book?.deleted ?? []
         )
     }
 
@@ -149,7 +149,7 @@ extension ContactBookHelper {
         let likeLhs = identical(lhs: lhs, rhs: newBook)
         let likeRhs = identical(lhs: rhs, rhs: newBook)
 
-        if likeLhs && likeRhs {
+        if likeLhs, likeRhs {
             return .equal
         }
 

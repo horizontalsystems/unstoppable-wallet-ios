@@ -17,10 +17,10 @@ class GradientLayer: CALayer {
         name = GradientLayer.name
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     override func draw(in ctx: CGContext) {
         super.draw(in: ctx)
@@ -36,21 +36,21 @@ class GradientLayer: CALayer {
 
         // 5
         let gradient = CGGradient(colorsSpace: colorSpace,
-                colors: colors as CFArray,
-                locations: colorLocations)!
+                                  colors: colors as CFArray,
+                                  locations: colorLocations)!
 
         // 6
         let startPoint = CGPoint(x: 0, y: 0)
         let endPoint = CGPoint(x: 0, y: bounds.height)
 
         ctx.drawLinearGradient(gradient,
-                start: startPoint,
-                end: endPoint,
-                options: [])
+                               start: startPoint,
+                               end: endPoint,
+                               options: [])
     }
 
     static func appendLayer(to view: UIView?, fromColor: UIColor, toColor: UIColor, topOffset: CGFloat = 160) {
-        guard let view = view else {
+        guard let view else {
             return
         }
         if let sublayer = view.layer.sublayers?.first(where: { $0.name == GradientLayer.name }) {
@@ -63,5 +63,4 @@ class GradientLayer: CALayer {
         view.layer.insertSublayer(layer, at: 0)
         layer.display()
     }
-
 }

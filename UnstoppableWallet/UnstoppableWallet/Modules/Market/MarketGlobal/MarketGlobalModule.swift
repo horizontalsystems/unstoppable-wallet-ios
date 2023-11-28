@@ -1,6 +1,6 @@
-import UIKit
-import RxSwift
 import Chart
+import RxSwift
+import UIKit
 
 struct MarketGlobalModule {
     static let dominance = "dominance"
@@ -43,7 +43,5 @@ struct MarketGlobalModule {
             case .tvlInDefi: return .price
             }
         }
-
     }
-
 }

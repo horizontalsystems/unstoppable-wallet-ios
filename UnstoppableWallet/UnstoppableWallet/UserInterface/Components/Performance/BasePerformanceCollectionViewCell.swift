@@ -27,7 +27,8 @@ class BasePerformanceCollectionViewCell: UICollectionViewCell {
         leftSeparator.backgroundColor = .themeSteel10
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -35,5 +36,4 @@ class BasePerformanceCollectionViewCell: UICollectionViewCell {
         leftSeparator.isHidden = horizontalFirst
         topSeparator.isHidden = verticalFirst
     }
-
 }

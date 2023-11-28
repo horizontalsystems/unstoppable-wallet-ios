@@ -1,5 +1,5 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class PostCell: BaseSelectableThemeCell {
     static let height: CGFloat = 140
@@ -74,5 +74,4 @@ class PostCell: BaseSelectableThemeCell {
             bodyLabel.numberOfLines = 3 - titleNumberOfLines
         }
     }
-
 }

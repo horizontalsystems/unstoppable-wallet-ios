@@ -4,11 +4,9 @@ class PublicKeysService {
     init(account: Account) {
         self.account = account
     }
-
 }
 
 extension PublicKeysService {
-
     var accountType: AccountType {
         account.type
     }
@@ -26,5 +24,4 @@ extension PublicKeysService {
         default: return false
         }
     }
-
 }

@@ -12,10 +12,10 @@ class ReceiveSelectCoinViewModel {
         self.service = service
 
         service.$coins
-                .sink { [weak self] coins in
-                    self?.sync(coins: coins)
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] coins in
+                self?.sync(coins: coins)
+            }
+            .store(in: &cancellables)
 
         sync(coins: service.coins)
     }
@@ -25,11 +25,9 @@ class ReceiveSelectCoinViewModel {
             ViewItem(uid: fullCoin.coin.uid, imageUrl: fullCoin.coin.imageUrl, title: fullCoin.coin.code, description: fullCoin.coin.name)
         }
     }
-
 }
 
 extension ReceiveSelectCoinViewModel {
-
     func apply(filter: String?) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             self?.service.set(filter: filter?.trimmingCharacters(in: .whitespaces) ?? "")
@@ -39,16 +37,13 @@ extension ReceiveSelectCoinViewModel {
     func fullCoin(uid: String) -> FullCoin? {
         service.fullCoin(uid: uid)
     }
-
 }
 
 extension ReceiveSelectCoinViewModel {
-
     struct ViewItem {
         let uid: String
         let imageUrl: String?
         let title: String
         let description: String
     }
-
 }

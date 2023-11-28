@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class MarkdownTextCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin3x
@@ -20,7 +20,8 @@ class MarkdownTextCell: UITableViewCell {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -28,16 +29,13 @@ class MarkdownTextCell: UITableViewCell {
         textView.attributedText = attributedString
         textView.delegate = delegate
     }
-
 }
 
 extension MarkdownTextCell {
-
     static func height(containerWidth: CGFloat, attributedString: NSAttributedString) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding
         let textHeight = attributedString.height(containerWidth: textWidth)
 
         return textHeight + 2 * verticalPadding
     }
-
 }

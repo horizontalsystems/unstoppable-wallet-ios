@@ -1,8 +1,8 @@
-import UIKit
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
 import ThemeKit
+import UIKit
 
 protocol IFeeViewModel {
     var valueDriver: Driver<FeeCell.Value?> { get }
@@ -19,7 +19,7 @@ class FeeCell: BaseThemeCell {
     private var value: FeeCell.Value?
     private var spinnerVisible: Bool = false
 
-    var onOpenInfo: (() -> ())? = nil
+    var onOpenInfo: (() -> Void)? = nil
 
     init(viewModel: IFeeViewModel, title: String, showInfoIcon: Bool = true, isFirst: Bool = true, isLast: Bool = true) {
         self.viewModel = viewModel
@@ -43,7 +43,8 @@ class FeeCell: BaseThemeCell {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -60,7 +61,7 @@ class FeeCell: BaseThemeCell {
                     }
                 },
                 .margin0,
-                .text { _ in }
+                .text { _ in },
             ])
         } else {
             titleElements.append(
@@ -70,39 +71,39 @@ class FeeCell: BaseThemeCell {
 
         let valueElements: [CellBuilderNew.CellElement] = [
             .vStackCentered([
-                .text({ [weak self] component in
+                .text { [weak self] component in
                     if let value = self?.value, case let .regular(text, _) = value {
                         component.font = .subhead1
                         component.textColor = .themeLeah
                         component.text = text
                         component.textAlignment = .right
                     }
-                }),
+                },
                 .margin(1),
-                .text({ [weak self] component in
+                .text { [weak self] component in
                     if let value = self?.value, case let .regular(_, secondaryText) = value {
                         component.font = .caption
                         component.textColor = .themeGray
                         component.text = secondaryText ?? "---"
                         component.textAlignment = .right
                     }
-                }),
-            ], { [weak self] component in
+                },
+            ]) { [weak self] component in
                 if let value = self?.value, case .regular = value {
                     component.isHidden = false
                 } else {
                     component.isHidden = true
                 }
-            }),
-            .text({ [weak self] component in
+            },
+            .text { [weak self] component in
                 switch self?.value {
-                case .error(let text):
+                case let .error(text):
                     component.isHidden = false
                     component.font = .subhead1
                     component.textColor = .themeLucian
                     component.text = text
                     component.textAlignment = .right
-                case .disabled(let text):
+                case let .disabled(text):
                     component.isHidden = false
                     component.font = .subhead1
                     component.textColor = .themeGray
@@ -111,19 +112,17 @@ class FeeCell: BaseThemeCell {
                 default:
                     component.isHidden = true
                 }
-            }),
+            },
             .spinner20 { [weak self] component in
                 component.isHidden = !(self?.spinnerVisible ?? false)
-            }
+            },
         ]
 
         CellBuilderNew.buildStatic(cell: self, rootElement: .hStack(titleElements + valueElements))
     }
-
 }
 
 extension FeeCell {
-
     enum Value {
         case disabled(text: String)
         case regular(text: String, secondaryText: String?)
@@ -137,5 +136,4 @@ extension FeeCell {
             }
         }
     }
-
 }

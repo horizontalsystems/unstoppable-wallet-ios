@@ -37,5 +37,4 @@ class AppVersionRecord: Record {
         container[Columns.build] = build
         container[Columns.date] = date
     }
-
 }

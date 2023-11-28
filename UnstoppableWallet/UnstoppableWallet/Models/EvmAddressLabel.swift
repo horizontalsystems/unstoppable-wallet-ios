@@ -22,7 +22,7 @@ class EvmAddressLabel: Record, ImmutableMappable {
     }
 
     required init(map: Map) throws {
-        address = (try map.value("address") as String).lowercased()
+        address = try (map.value("address") as String).lowercased()
         label = try map.value("label")
 
         super.init()
@@ -39,5 +39,4 @@ class EvmAddressLabel: Record, ImmutableMappable {
         container[Columns.address] = address
         container[Columns.label] = label
     }
-
 }

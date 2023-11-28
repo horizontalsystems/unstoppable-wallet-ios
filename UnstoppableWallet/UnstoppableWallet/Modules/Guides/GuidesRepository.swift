@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import HsToolKit
+import RxRelay
+import RxSwift
 
 class GuidesRepository {
     private let disposeBag = DisposeBag()
@@ -15,13 +15,13 @@ class GuidesRepository {
         self.reachabilityManager = reachabilityManager
 
         reachabilityManager.reachabilityObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] reachable in
-                    if reachable {
-                        self?.onReachable()
-                    }
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] reachable in
+                if reachable {
+                    self?.onReachable()
+                }
+            })
+            .disposed(by: disposeBag)
 
         fetch()
     }
@@ -36,17 +36,16 @@ class GuidesRepository {
         categoriesRelay.accept(.loading)
 
         guidesManager.guideCategoriesSingle(url: AppConfig.guidesIndexUrl)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] categories in
-                    self?.categoriesRelay.accept(.success(result: categories))
-                }, onError: { [weak self] error in
-                    self?.categoriesRelay.accept(.error(error: error))
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] categories in
+                self?.categoriesRelay.accept(.success(result: categories))
+            }, onError: { [weak self] error in
+                self?.categoriesRelay.accept(.error(error: error))
+            })
+            .disposed(by: disposeBag)
     }
 
     var categories: Observable<DataState<[GuideCategory]>> {
         categoriesRelay.asObservable()
     }
-
 }

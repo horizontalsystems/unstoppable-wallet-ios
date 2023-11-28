@@ -1,6 +1,6 @@
-import Foundation
 import Chart
 import Combine
+import Foundation
 import HsExtensions
 import MarketKit
 
@@ -22,29 +22,29 @@ class ChartIndicatorsService {
         self.subscriptionManager = subscriptionManager
 
         repository.updatedPublisher
-                .sink { [weak self] in
-                    self?.sync()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] in
+                self?.sync()
+            }
+            .store(in: &cancellables)
 
         chartPointFetcher.pointsUpdatedPublisher
-                .sink { [weak self] in
-                    self?.sync()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] in
+                self?.sync()
+            }
+            .store(in: &cancellables)
 
         subscriptionManager.$isAuthenticated
-                .sink { [weak self] _ in
-                    self?.sync()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] _ in
+                self?.sync()
+            }
+            .store(in: &cancellables)
 
         sync()
     }
 
     private func calculateInsufficient(indicator: ChartIndicator, points: [ChartPoint]?) -> Bool {
         var insufficientData = false
-        if let points = points, indicator.enabled {
+        if let points, indicator.enabled {
             let minimumPoints = indicator.greatestPeriod + Self.minimumIndicatorPoints
             insufficientData = minimumPoints <= points.count
         }
@@ -58,15 +58,14 @@ class ChartIndicatorsService {
 
         items = userIndicators.map { indicator in
             IndicatorItem(
-                    indicator: indicator,
-                    insufficientData: calculateInsufficient(indicator: indicator, points: points))
+                indicator: indicator,
+                insufficientData: calculateInsufficient(indicator: indicator, points: points)
+            )
         }
     }
-
 }
 
 extension ChartIndicatorsService {
-
     func set(enabled: Bool, id: String, index: Int) {
         guard let itemIndex = items.firstIndex(where: { $0.indicator.id == id && $0.indicator.index == index }) else {
             return
@@ -89,16 +88,16 @@ extension ChartIndicatorsService {
         }
 
         items[itemIndex] = IndicatorItem(
+            indicator: newItemIndicator,
+            insufficientData: calculateInsufficient(
                 indicator: newItemIndicator,
-                insufficientData: calculateInsufficient(
-                        indicator: newItemIndicator,
-                        points: chartPointFetcher.points.data
-                )
+                points: chartPointFetcher.points.data
+            )
         )
     }
 
     func saveIndicators() {
-        repository.set(indicators: items.map { $0.indicator })
+        repository.set(indicators: items.map(\.indicator))
     }
 
     func indicator(id: String, index: Int) -> ChartIndicator? {
@@ -116,14 +115,11 @@ extension ChartIndicatorsService {
 
         items[index] = IndicatorItem(indicator: indicator, insufficientData: items[index].insufficientData)
     }
-
 }
 
 extension ChartIndicatorsService {
-
     struct IndicatorItem {
         let indicator: ChartIndicator
         let insufficientData: Bool
     }
-
 }

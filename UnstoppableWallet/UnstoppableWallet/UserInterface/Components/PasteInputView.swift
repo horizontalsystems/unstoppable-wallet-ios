@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class PasteInputView: UIView {
     private let formValidatedView: FormValidatedView
@@ -24,8 +24,8 @@ class PasteInputView: UIView {
         }
     }
 
-    var onChangeText: ((String?) -> ())?
-    var onFetchText: ((String?) -> ())?
+    var onChangeText: ((String?) -> Void)?
+    var onFetchText: ((String?) -> Void)?
 
     init() {
         formValidatedView = FormValidatedView(contentView: inputStackView, padding: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16))
@@ -59,7 +59,8 @@ class PasteInputView: UIView {
         syncButtonStates()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -90,11 +91,9 @@ class PasteInputView: UIView {
             pasteView.isHidden = false
         }
     }
-
 }
 
 extension PasteInputView {
-
     var inputPlaceholder: String? {
         get { inputStackView.placeholder }
         set { inputStackView.placeholder = newValue }
@@ -122,12 +121,12 @@ extension PasteInputView {
         formValidatedView.set(cautionType: cautionType)
     }
 
-    var onChangeEditing: ((Bool) -> ())? {
+    var onChangeEditing: ((Bool) -> Void)? {
         get { inputStackView.onChangeEditing }
         set { inputStackView.onChangeEditing = newValue }
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { formValidatedView.onChangeHeight }
         set { formValidatedView.onChangeHeight = newValue }
     }
@@ -135,5 +134,4 @@ extension PasteInputView {
     func height(containerWidth: CGFloat) -> CGFloat {
         formValidatedView.height(containerWidth: containerWidth)
     }
-
 }

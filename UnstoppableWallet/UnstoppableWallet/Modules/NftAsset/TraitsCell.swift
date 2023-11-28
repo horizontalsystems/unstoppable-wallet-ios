@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import ComponentKit
 import AlignedCollectionViewFlowLayout
+import ComponentKit
+import ThemeKit
+import UIKit
 
 class TraitsCell: UITableViewCell {
     private static let lineSpacing: CGFloat = .margin6
@@ -12,7 +12,7 @@ class TraitsCell: UITableViewCell {
     private let collectionView: UICollectionView
     private var viewItems: [NftAssetOverviewViewModel.TraitViewItem] = []
 
-    private var onSelect: ((Int) -> ())?
+    private var onSelect: ((Int) -> Void)?
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         layout.scrollDirection = .vertical
@@ -41,11 +41,12 @@ class TraitsCell: UITableViewCell {
         collectionView.registerCell(forClass: TraitCell.self)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItems: [NftAssetOverviewViewModel.TraitViewItem], onSelect: @escaping (Int) -> ()) {
+    func bind(viewItems: [NftAssetOverviewViewModel.TraitViewItem], onSelect: @escaping (Int) -> Void) {
         self.viewItems = viewItems
         self.onSelect = onSelect
 
@@ -55,12 +56,10 @@ class TraitsCell: UITableViewCell {
     static func height(lines: Int) -> CGFloat {
         CGFloat(lines) * TraitCell.height + CGFloat(lines - 1) * lineSpacing
     }
-
 }
 
 extension TraitsCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         viewItems.count
     }
 
@@ -68,21 +67,21 @@ extension TraitsCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
         collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: TraitCell.self), for: indexPath)
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? TraitCell {
             cell.bind(viewItem: viewItems[indexPath.item])
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         TraitCell.size(for: viewItems[indexPath.item], containerWidth: collectionView.bounds.width - CGFloat.margin16 * 2)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         Self.interItemSpacing
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.item < viewItems.count else {
             return
         }
@@ -90,5 +89,4 @@ extension TraitsCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
         let viewItem = viewItems[indexPath.item]
         onSelect?(viewItem.index)
     }
-
 }

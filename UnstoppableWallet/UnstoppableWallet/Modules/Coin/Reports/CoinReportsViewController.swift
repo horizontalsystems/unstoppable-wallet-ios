@@ -1,9 +1,9 @@
-import UIKit
-import RxSwift
-import ThemeKit
-import SectionsTableView
 import ComponentKit
 import HUD
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class CoinReportsViewController: ThemeViewController {
     private let viewModel: CoinReportsViewModel
@@ -23,7 +23,8 @@ class CoinReportsViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -81,43 +82,41 @@ class CoinReportsViewController: ThemeViewController {
 
         tableView.reload()
     }
-
 }
 
 extension CoinReportsViewController: SectionsDataSource {
-
     private func row(viewItem: CoinReportsViewModel.ViewItem) -> RowProtocol {
         Row<PostCell>(
-                id: viewItem.title,
-                height: PostCell.height,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    cell.bind(
-                            header: viewItem.author,
-                            title: viewItem.title,
-                            body: viewItem.body,
-                            time: viewItem.date
-                    )
-                },
-                action: { [weak self] _ in
-                    self?.urlManager.open(url: viewItem.url, from: self)
-                }
+            id: viewItem.title,
+            height: PostCell.height,
+            autoDeselect: true,
+            bind: { cell, _ in
+                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                cell.bind(
+                    header: viewItem.author,
+                    title: viewItem.title,
+                    body: viewItem.body,
+                    time: viewItem.date
+                )
+            },
+            action: { [weak self] _ in
+                self?.urlManager.open(url: viewItem.url, from: self)
+            }
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let viewItems = viewItems {
+        if let viewItems {
             for (index, viewItem) in viewItems.enumerated() {
                 let section = Section(
-                        id: "report\(index)",
-                        headerState: .margin(height: .margin12),
-                        footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
-                        rows: [
-                            row(viewItem: viewItem)
-                        ]
+                    id: "report\(index)",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
+                    rows: [
+                        row(viewItem: viewItem),
+                    ]
                 )
 
                 sections.append(section)
@@ -126,5 +125,4 @@ extension CoinReportsViewController: SectionsDataSource {
 
         return sections
     }
-
 }

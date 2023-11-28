@@ -1,6 +1,6 @@
 import BigInt
-import MarketKit
 import EvmKit
+import MarketKit
 import TronKit
 
 class EvmCoinServiceFactory {
@@ -49,5 +49,4 @@ class EvmCoinServiceFactory {
     func coinService(token: Token) -> CoinService {
         CoinService(token: token, currencyManager: currencyManager, marketKit: marketKit)
     }
-
 }

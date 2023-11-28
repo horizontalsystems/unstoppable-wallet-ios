@@ -1,6 +1,6 @@
 import ComponentKit
-import ThemeKit
 import SnapKit
+import ThemeKit
 import UIKit
 
 class CoinMajorHolderChartCell: BaseThemeCell {
@@ -42,7 +42,8 @@ class CoinMajorHolderChartCell: BaseThemeCell {
         descriptionLabel.text = "coin_analytics.holders.in_top_10_addresses".localized
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -50,5 +51,4 @@ class CoinMajorHolderChartCell: BaseThemeCell {
         percentLabel.text = percent
         countLabel.text = count.map { "coin_analytics.holders.count".localized($0) }
     }
-
 }

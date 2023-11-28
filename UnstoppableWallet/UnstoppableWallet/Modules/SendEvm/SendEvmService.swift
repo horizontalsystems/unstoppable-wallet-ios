@@ -38,10 +38,10 @@ class SendEvmService {
         self.addressService = addressService
 
         switch mode {
-        case .prefilled(let address, let amount):
+        case let .prefilled(address, amount):
             addressService.set(text: address)
             if let amount { addressService.publishAmountRelay.accept(amount) }
-        case .predefined(let address): addressService.set(text: address)
+        case let .predefined(address): addressService.set(text: address)
         case .send: ()
         }
 
@@ -63,7 +63,7 @@ class SendEvmService {
     }
 
     private func syncState() {
-        if amountCaution.error == nil, case .success = addressService.state, let evmAmount = evmAmount, let addressData = addressData {
+        if amountCaution.error == nil, case .success = addressService.state, let evmAmount, let addressData {
             let transactionData = adapter.transactionData(amount: evmAmount, address: addressData.evmAddress)
             let sendInfo = SendEvmData.SendInfo(domain: addressData.domain)
 

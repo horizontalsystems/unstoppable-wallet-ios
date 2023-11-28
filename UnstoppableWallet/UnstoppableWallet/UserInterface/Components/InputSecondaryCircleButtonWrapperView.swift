@@ -1,12 +1,12 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class InputSecondaryCircleButtonWrapperView: UIView, ISizeAwareView {
     let button = SecondaryCircleButton()
 
-    var onTapButton: (() -> ())?
+    var onTapButton: (() -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -21,7 +21,8 @@ class InputSecondaryCircleButtonWrapperView: UIView, ISizeAwareView {
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -29,8 +30,7 @@ class InputSecondaryCircleButtonWrapperView: UIView, ISizeAwareView {
         onTapButton?()
     }
 
-    func width(containerWidth: CGFloat) -> CGFloat {
+    func width(containerWidth _: CGFloat) -> CGFloat {
         SecondaryCircleButton.size
     }
-
 }

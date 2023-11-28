@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
     private let titleIconImageView = UIImageView()
@@ -7,8 +7,8 @@ class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
     private let closeButton = UIButton()
     private let backgroundButton = UIButton()
 
-    var onTapClose: (() -> ())?
-    var onTapBackground: (() -> ())?
+    var onTapClose: (() -> Void)?
+    var onTapBackground: (() -> Void)?
 
     override public init() {
         super.init()
@@ -60,7 +60,8 @@ class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
         label.textColor = .themeLeah
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -94,10 +95,8 @@ class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
 }
 
 extension TitledHighlightedDescriptionView {
-
     @objc public class func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * sidePadding, font: font)
         return verticalPadding + .iconSize20 + textHeight + 2 * verticalPadding
     }
-
 }

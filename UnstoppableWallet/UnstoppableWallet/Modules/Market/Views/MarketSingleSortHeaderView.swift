@@ -1,10 +1,10 @@
-import UIKit
-import UIExtensions
-import ThemeKit
-import SnapKit
 import ComponentKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIExtensions
+import UIKit
 
 class MarketSingleSortHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell
@@ -61,7 +61,8 @@ class MarketSingleSortHeaderView: UITableViewHeaderFooterView {
         subscribe(disposeBag, viewModel.sortDirectionDriver) { [weak self] in self?.syncSortButton(ascending: $0) }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -72,5 +73,4 @@ class MarketSingleSortHeaderView: UITableViewHeaderFooterView {
     private func syncSortButton(ascending: Bool) {
         sortButton.set(image: UIImage(named: ascending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20"))
     }
-
 }

@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
 import HsToolKit
 import MarketKit
+import RxRelay
+import RxSwift
 
 protocol IAddTokenBlockchainService {
     var placeholder: String { get }
@@ -74,22 +74,20 @@ class AddTokenService {
         state = .loading
 
         service.tokenSingle(reference: reference)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(
-                        onSuccess: { [weak self] token in
-                            self?.state = .fetched(token: token)
-                        },
-                        onError: { [weak self] error in
-                            self?.state = .failed(error: error)
-                        }
-                )
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(
+                onSuccess: { [weak self] token in
+                    self?.state = .fetched(token: token)
+                },
+                onError: { [weak self] error in
+                    self?.state = .failed(error: error)
+                }
+            )
+            .disposed(by: disposeBag)
     }
-
 }
 
 extension AddTokenService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -116,18 +114,16 @@ extension AddTokenService {
     }
 
     func save() {
-        guard case .fetched(let token) = state else {
+        guard case let .fetched(token) = state else {
             return
         }
 
         let wallet = Wallet(token: token, account: account)
         walletManager.save(wallets: [wallet])
     }
-
 }
 
 extension AddTokenService {
-
     enum State {
         case idle
         case loading
@@ -150,5 +146,4 @@ extension AddTokenService {
             placeholder = item.service.placeholder
         }
     }
-
 }

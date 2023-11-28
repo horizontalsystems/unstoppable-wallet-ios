@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import HsExtensions
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class FeeRateService {
     private var tasks = Set<AnyTask>()
@@ -32,11 +32,9 @@ class FeeRateService {
 
         setRecommendedFeeRate()
     }
-
 }
 
 extension FeeRateService {
-
     var statusObservable: Observable<DataStatus<Int>> {
         statusRelay.asObservable()
     }
@@ -70,5 +68,4 @@ extension FeeRateService {
             }
         }.store(in: &tasks)
     }
-
 }

@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import ComponentKit
+import ThemeKit
+import UIKit
 
 class PrimaryButtonCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin16
@@ -8,7 +8,7 @@ class PrimaryButtonCell: UITableViewCell {
 
     private let button = PrimaryButton()
 
-    var onTap: (() -> ())?
+    var onTap: (() -> Void)?
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,7 +25,8 @@ class PrimaryButtonCell: UITableViewCell {
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -46,5 +47,4 @@ class PrimaryButtonCell: UITableViewCell {
     func set(style: PrimaryButton.Style) {
         button.set(style: style)
     }
-
 }

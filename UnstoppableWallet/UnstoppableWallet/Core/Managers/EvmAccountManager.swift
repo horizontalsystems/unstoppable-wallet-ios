@@ -132,7 +132,7 @@ class EvmAccountManager {
             }
         }
 
-        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map { $0.tokenType })), account: account, evmKit: evmKitWrapper.evmKit)
+        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map(\.tokenType))), account: account, evmKit: evmKitWrapper.evmKit)
     }
 
     private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account, evmKit: EvmKit.Kit) {
@@ -144,7 +144,7 @@ class EvmAccountManager {
 //        print("SUSPICIOUS TOKEN TYPES: \(suspiciousTokenTypes.count): \n\(suspiciousTokenTypes.map { $0.id }.joined(separator: "\n"))")
 
         do {
-            let queries = (foundTokens.map { $0.tokenType } + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
+            let queries = (foundTokens.map(\.tokenType) + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
             let tokens = try queries.chunks(500).map { try marketKit.tokens(queries: $0) }.flatMap { $0 }
 
             var tokenInfos = [TokenInfo]()
@@ -194,7 +194,7 @@ class EvmAccountManager {
 //        print("Handle Tokens: \(tokenInfos.count)\n\(tokenInfos.map { $0.type.id }.joined(separator: " "))")
 
         let existingWallets = walletManager.activeWallets
-        let existingTokenTypeIds = existingWallets.map { $0.token.type.id }
+        let existingTokenTypeIds = existingWallets.map(\.token.type.id)
         let newTokenInfos = tokenInfos.filter { !existingTokenTypeIds.contains($0.type.id) }
 
 //        print("New Tokens: \(newTokenInfos.count)")
@@ -217,7 +217,7 @@ class EvmAccountManager {
                     }
 
                     group.addTask {
-                        let balance = (try? await dataProvider.fetchBalance(contractAddress: contractAddress, address: userAddress)) ?? 0
+                        let balance = await (try? dataProvider.fetchBalance(contractAddress: contractAddress, address: userAddress)) ?? 0
                         return (tokenInfo, balance)
                     }
                 }
@@ -230,7 +230,7 @@ class EvmAccountManager {
                 return results
             }
 
-            let nonZeroBalanceTokens = tokenInfos.filter { $0.balance > 0 }.map { $0.tokenInfo }
+            let nonZeroBalanceTokens = tokenInfos.filter { $0.balance > 0 }.map(\.tokenInfo)
 
             self?.handle(processedTokenInfos: nonZeroBalanceTokens, account: account)
         }

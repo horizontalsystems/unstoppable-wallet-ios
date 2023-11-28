@@ -19,11 +19,9 @@ class NoAccountWalletTokenListService: IWalletTokenListService {
         self.reachabilityManager = reachabilityManager
         self.balancePrimaryValueManager = balancePrimaryValueManager
     }
-
 }
 
 extension NoAccountWalletTokenListService {
-
     var isReachable: Bool {
         reachabilityManager.isReachable
     }
@@ -40,8 +38,7 @@ extension NoAccountWalletTokenListService {
         .never()
     }
 
-    func item(element: WalletModule.Element) -> WalletTokenListService.Item? {
+    func item(element _: WalletModule.Element) -> WalletTokenListService.Item? {
         nil
     }
-
 }

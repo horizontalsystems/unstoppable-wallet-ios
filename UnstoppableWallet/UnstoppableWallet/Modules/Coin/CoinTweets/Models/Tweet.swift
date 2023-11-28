@@ -8,7 +8,7 @@ class Tweet {
     let date: Date
     let attachments: [Attachment]
     let referencedTweet: (referenceType: ReferenceType, tweet: Tweet)?
-    
+
     init(id: String, user: TwitterUser, text: String, date: Date, attachments: [Attachment], referencedTweet: (referenceType: ReferenceType, tweet: Tweet)?) {
         self.id = id
         self.user = user
@@ -27,5 +27,4 @@ class Tweet {
     enum ReferenceType: String {
         case quoted, retweeted, replied
     }
-
 }

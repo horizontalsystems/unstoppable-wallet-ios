@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class BalanceCell: UITableViewCell {
     private static let margins = UIEdgeInsets(top: .margin8, left: .margin16, bottom: 0, right: .margin16)
@@ -28,17 +28,17 @@ class BalanceCell: UITableViewCell {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceViewItem, onTapError: (() -> ())?) {
+    func bind(viewItem: BalanceViewItem, onTapError: (() -> Void)?) {
         topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
         topView.layoutIfNeeded()
     }
 
     static func height() -> CGFloat {
-        return BalanceTopView.height + margins.height
+        BalanceTopView.height + margins.height
     }
-
 }

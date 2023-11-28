@@ -1,7 +1,6 @@
 import UIKit
 
 class PerformanceSideCollectionViewCell: BasePerformanceCollectionViewCell {
-
     private let label = UILabel()
 
     override init(frame: CGRect) {
@@ -13,7 +12,8 @@ class PerformanceSideCollectionViewCell: BasePerformanceCollectionViewCell {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -46,5 +46,4 @@ class PerformanceSideCollectionViewCell: BasePerformanceCollectionViewCell {
         get { label.text }
         set { label.text = newValue }
     }
-
 }

@@ -121,12 +121,12 @@ struct ChartPoint: ImmutableMappable {
 
 enum Transform {
     static let stringToDecimalTransform: TransformOf<Decimal, String> = TransformOf(fromJSON: { string -> Decimal? in
-        guard let string = string else {
+        guard let string else {
             return nil
         }
         return Decimal(string: string)
     }, toJSON: { (value: Decimal?) in
-        guard let value = value else {
+        guard let value else {
             return nil
         }
         return value.description

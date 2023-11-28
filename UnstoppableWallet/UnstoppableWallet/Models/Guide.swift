@@ -19,11 +19,9 @@ struct GuideCategory: ImmutableMappable {
             guideMap[language] ?? guideMap[fallbackLanguage]
         }
     }
-
 }
 
 extension GuideCategory {
-
     class GuideTransform: TransformType {
         typealias Object = [[String: Guide]]
         typealias JSON = Any
@@ -44,12 +42,10 @@ extension GuideCategory {
             }
         }
 
-        func transformToJSON(_ value: [[String: Guide]]?) -> Any? {
+        func transformToJSON(_: [[String: Guide]]?) -> Any? {
             fatalError("transformToJSON(_:) has not been implemented")
         }
-
     }
-
 }
 
 struct Guide: ImmutableMappable {
@@ -74,7 +70,6 @@ struct Guide: ImmutableMappable {
 }
 
 extension Guide {
-
     class DateTransform: TransformType {
         private static let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -93,7 +88,7 @@ extension Guide {
             return DateTransform.dateFormatter.date(from: value)
         }
 
-        func transformToJSON(_ value: Date?) -> String? {
+        func transformToJSON(_: Date?) -> String? {
             fatalError("transformToJSON(_:) has not been implemented")
         }
     }

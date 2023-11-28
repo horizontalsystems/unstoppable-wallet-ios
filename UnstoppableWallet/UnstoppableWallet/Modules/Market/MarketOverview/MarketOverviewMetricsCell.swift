@@ -1,9 +1,9 @@
-import UIKit
-import SnapKit
-import ThemeKit
-import HUD
 import Chart
 import ComponentKit
+import HUD
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MarketOverviewMetricsCell: UITableViewCell {
     static let cellHeight: CGFloat = 250
@@ -71,7 +71,8 @@ class MarketOverviewMetricsCell: UITableViewCell {
         deFiTvlView.title = "market.defi_tvl".localized
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -79,27 +80,22 @@ class MarketOverviewMetricsCell: UITableViewCell {
         let viewController = MarketGlobalMetricModule.viewController(type: metricType)
         presentDelegate?.present(viewController: viewController)
     }
-
 }
 
 extension MarketOverviewMetricsCell {
-
     func set(viewItem: MarketOverviewGlobalViewModel.GlobalMarketViewItem) {
         totalMarketCapView.set(viewItem: viewItem.totalMarketCap)
         volume24hView.set(viewItem: viewItem.volume24h)
         deFiCapView.set(viewItem: viewItem.defiCap)
         deFiTvlView.set(viewItem: viewItem.defiTvl)
     }
-
 }
 
 extension MarketCardView {
-
     func set(viewItem: MarketOverviewGlobalViewModel.ChartViewItem) {
         value = viewItem.value
         descriptionText = DiffLabel.formatted(value: viewItem.diff)
         descriptionColor = DiffLabel.color(value: viewItem.diff)
         set(chartData: viewItem.chartData, trend: viewItem.chartTrend)
     }
-
 }

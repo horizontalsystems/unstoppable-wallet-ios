@@ -19,6 +19,7 @@ class EnabledWallet_v_0_34: Record {
         self.tokenDecimals = tokenDecimals
         super.init()
     }
+
     override class var databaseTableName: String {
         "enabled_wallets"
     }

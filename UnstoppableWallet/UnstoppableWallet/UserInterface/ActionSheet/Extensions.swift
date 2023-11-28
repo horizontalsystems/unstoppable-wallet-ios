@@ -1,18 +1,16 @@
-import UIKit
 import SwiftUI
+import UIKit
 
-extension UIViewController {
-
-    public var toBottomSheet: UIViewController {
+public extension UIViewController {
+    var toBottomSheet: UIViewController {
         ActionSheetControllerNew(content: self, configuration: ActionSheetConfiguration(style: .sheet))
     }
 
-    public var toAlert: UIViewController {
+    var toAlert: UIViewController {
         ActionSheetControllerNew(content: self, configuration: ActionSheetConfiguration(style: .alert))
     }
 
-    public func toActionSheet(configuration: ActionSheetConfiguration) -> UIViewController {
+    func toActionSheet(configuration: ActionSheetConfiguration) -> UIViewController {
         ActionSheetControllerNew(content: self, configuration: configuration)
     }
-
 }

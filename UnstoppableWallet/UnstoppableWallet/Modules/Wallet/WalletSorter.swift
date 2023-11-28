@@ -1,7 +1,6 @@
 import Foundation
 
 class WalletSorter {
-
     private let descending: (ISortableWalletItem, ISortableWalletItem) -> Bool = { lhsItem, rhsItem in
         let lhsBalance = lhsItem.balance
         let rhsBalance = rhsItem.balance
@@ -22,7 +21,7 @@ class WalletSorter {
         switch sortType {
         case .balance:
             let nonZeroItems = items.filter { !$0.balance.isZero }
-            let zeroItems = items.filter { $0.balance.isZero }
+            let zeroItems = items.filter(\.balance.isZero)
 
             return nonZeroItems.sorted(by: descending) + zeroItems.sorted(by: descending)
         case .name:
@@ -39,7 +38,6 @@ class WalletSorter {
             }
         }
     }
-
 }
 
 protocol ISortableWalletItem {
@@ -50,7 +48,6 @@ protocol ISortableWalletItem {
 }
 
 extension WalletService.Item: ISortableWalletItem {
-
     var balance: Decimal {
         balanceData.available
     }
@@ -62,11 +59,9 @@ extension WalletService.Item: ISortableWalletItem {
     var diff: Decimal? {
         priceItem?.diff
     }
-
 }
 
 extension WalletTokenListService.Item: ISortableWalletItem {
-
     var balance: Decimal {
         balanceData.available
     }
@@ -78,5 +73,4 @@ extension WalletTokenListService.Item: ISortableWalletItem {
     var diff: Decimal? {
         priceItem?.diff
     }
-
 }

@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxCocoa
-import UniswapKit
 import MarketKit
+import RxCocoa
+import RxSwift
+import UniswapKit
 
 class SwapCoinCardViewModel {
     private let coinCardService: ISwapCoinCardService
@@ -64,7 +64,7 @@ class SwapCoinCardViewModel {
             return
         }
 
-        guard let balance = balance else {
+        guard let balance else {
             balanceRelay.accept("n/a".localized)
             return
         }
@@ -76,11 +76,9 @@ class SwapCoinCardViewModel {
     private func sync(error: Error?) {
         balanceErrorRelay.accept(error != nil)
     }
-
 }
 
 extension SwapCoinCardViewModel {
-
     var dex: SwapModule.Dex {
         coinCardService.dex
     }
@@ -116,15 +114,12 @@ extension SwapCoinCardViewModel {
     func onSelect(token: MarketKit.Token) {
         coinCardService.onChange(token: token)
     }
-
 }
 
 extension SwapCoinCardViewModel {
-
     struct TokenViewItem {
         let title: String
         let iconUrlString: String
         let placeholderIconName: String
     }
-
 }

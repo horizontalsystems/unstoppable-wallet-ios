@@ -74,7 +74,7 @@ class ZcashAdapter {
 
         network = ZcashNetworkBuilder.network(for: .mainnet)
 
-        // todo: update fee settings
+        // TODO: update fee settings
         fee = network.constants.defaultFee().decimalValue.decimalValue
 
         token = wallet.token
@@ -83,7 +83,8 @@ class ZcashAdapter {
 
         var existingMode: WalletInitMode?
         if let dbUrl = try? Self.spendParamsURL(uniqueId: uniqueId),
-           Self.exist(url: dbUrl) {
+           Self.exist(url: dbUrl)
+        {
             existingMode = .existingWallet
         }
         switch wallet.account.origin {
@@ -179,8 +180,8 @@ class ZcashAdapter {
                 let shieldedVerified = await (try? synchronizer.getShieldedVerifiedBalance(accountIndex: 0).decimalValue.decimalValue) ?? 0
                 self?.balanceSubject.onNext(
                     VerifiedBalanceData(
-                            fullBalance: shielded,
-                            available: shieldedVerified
+                        fullBalance: shielded,
+                        available: shieldedVerified
                     )
                 )
                 let height = try await synchronizer.latestHeight()
@@ -475,7 +476,7 @@ class ZcashAdapter {
     }
 
     private var _balanceData: BalanceData {
-        guard let synchronizerState = synchronizerState else {
+        guard let synchronizerState else {
             return BalanceData(available: 0)
         }
 

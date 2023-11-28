@@ -1,8 +1,7 @@
-import UIKit
 import MarketKit
+import UIKit
 
 extension UIImage {
-
     static func qrCodeImage(qrCodeString: String, size: CGFloat) -> UIImage? {
         let data = qrCodeString.data(using: .utf8)
 
@@ -38,5 +37,4 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return image
     }
-
 }

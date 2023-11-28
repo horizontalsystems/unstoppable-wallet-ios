@@ -1,10 +1,9 @@
 import Foundation
-import UIKit
 import LocalAuthentication
 import RxSwift
+import UIKit
 
 class SystemInfoManager {
-
     var appVersion: AppVersion {
         AppVersion(version: AppConfig.appVersion, build: AppConfig.appBuild, date: Date())
     }
@@ -20,5 +19,4 @@ class SystemInfoManager {
     var osVersion: String {
         UIDevice.current.systemVersion
     }
-
 }

@@ -1,11 +1,11 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
-import RxCocoa
-import HUD
 import ComponentKit
+import Foundation
+import HUD
+import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
@@ -31,7 +31,8 @@ class CoinPageViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -115,15 +116,14 @@ class CoinPageViewController: ThemeViewController {
         var items = [UIBarButtonItem]()
 
         let favoriteItem = UIBarButtonItem(
-                image: favorite ? UIImage(named: "filled_star_24") : UIImage(named: "star_24"),
-                style: .plain,
-                target: self,
-                action: #selector(onTapFavorite)
+            image: favorite ? UIImage(named: "filled_star_24") : UIImage(named: "star_24"),
+            style: .plain,
+            target: self,
+            action: #selector(onTapFavorite)
         )
         favoriteItem.tintColor = favorite ? .themeJacob : .themeGray
         items.append(favoriteItem)
 
         navigationItem.rightBarButtonItems = items
     }
-
 }

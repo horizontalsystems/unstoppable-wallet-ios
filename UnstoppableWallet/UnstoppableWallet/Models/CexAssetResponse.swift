@@ -13,17 +13,16 @@ struct CexAssetResponse {
 
     func record(accountId: String) -> CexAssetRecord {
         CexAssetRecord(
-                accountId: accountId,
-                id: id,
-                name: name,
-                freeBalance: freeBalance,
-                lockedBalance: lockedBalance,
-                depositEnabled: depositEnabled,
-                withdrawEnabled: withdrawEnabled,
-                depositNetworks: depositNetworks,
-                withdrawNetworks: withdrawNetworks,
-                coinUid: coinUid
+            accountId: accountId,
+            id: id,
+            name: name,
+            freeBalance: freeBalance,
+            lockedBalance: lockedBalance,
+            depositEnabled: depositEnabled,
+            withdrawEnabled: withdrawEnabled,
+            depositNetworks: depositNetworks,
+            withdrawNetworks: withdrawNetworks,
+            coinUid: coinUid
         )
     }
-
 }

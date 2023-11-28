@@ -22,7 +22,6 @@ struct AppVersion: Codable {
 }
 
 extension AppVersion: CustomStringConvertible {
-
     var releaseNotesVersion: String {
         "\(major).\(minor)"
     }
@@ -30,13 +29,12 @@ extension AppVersion: CustomStringConvertible {
     var description: String {
         let showBuildNumber = Bundle.main.object(forInfoDictionaryKey: "ShowBuildNumber") as? String == "true"
 
-        guard showBuildNumber, let build = build else {
+        guard showBuildNumber, let build else {
             return version
         }
 
         return version + " (\(build))"
     }
-
 }
 
 extension AppVersion {

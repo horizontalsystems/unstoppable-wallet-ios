@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinTreasuriesViewModel {
     private let service: CoinTreasuriesService
@@ -10,7 +10,7 @@ class CoinTreasuriesViewModel {
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
-    private let scrollToTopRelay = PublishRelay<()>()
+    private let scrollToTopRelay = PublishRelay<Void>()
 
     private let dropdownValueRelay = BehaviorRelay<String>(value: "")
     private let sortDirectionAscendingRelay = BehaviorRelay<Bool>(value: false)
@@ -33,7 +33,7 @@ class CoinTreasuriesViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .loaded(let treasuries, let reorder):
+        case let .loaded(treasuries, reorder):
             viewItemsRelay.accept(treasuries.map { viewItem(treasury: $0) })
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -58,11 +58,11 @@ class CoinTreasuriesViewModel {
 
     private func viewItem(treasury: CoinTreasury) -> ViewItem {
         ViewItem(
-                logoUrl: treasury.fundLogoUrl,
-                fund: treasury.fund,
-                country: treasury.country,
-                amount: ValueFormatter.instance.formatShort(value: treasury.amount, decimalCount: 8, symbol: service.coinCode) ?? "---",
-                amountInCurrency: ValueFormatter.instance.formatShort(currency: service.currency, value: treasury.amountInCurrency) ?? "---"
+            logoUrl: treasury.fundLogoUrl,
+            fund: treasury.fund,
+            country: treasury.country,
+            amount: ValueFormatter.instance.formatShort(value: treasury.amount, decimalCount: 8, symbol: service.coinCode) ?? "---",
+            amountInCurrency: ValueFormatter.instance.formatShort(currency: service.currency, value: treasury.amountInCurrency) ?? "---"
         )
     }
 
@@ -77,7 +77,6 @@ class CoinTreasuriesViewModel {
 }
 
 extension CoinTreasuriesViewModel: IDropdownSortHeaderViewModel {
-
     var dropdownTitle: String {
         "coin_analytics.treasuries.filters".localized
     }
@@ -103,11 +102,9 @@ extension CoinTreasuriesViewModel: IDropdownSortHeaderViewModel {
     func onToggleSortDirection() {
         service.sortDirectionAscending = !service.sortDirectionAscending
     }
-
 }
 
 extension CoinTreasuriesViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
     }
@@ -120,18 +117,16 @@ extension CoinTreasuriesViewModel {
         syncErrorRelay.asDriver()
     }
 
-    var scrollToTopSignal: Signal<()> {
+    var scrollToTopSignal: Signal<Void> {
         scrollToTopRelay.asSignal()
     }
 
     func onTapRetry() {
         service.refresh()
     }
-
 }
 
 extension CoinTreasuriesViewModel {
-
     struct ViewItem {
         let logoUrl: String
         let fund: String
@@ -139,5 +134,4 @@ extension CoinTreasuriesViewModel {
         let amount: String
         let amountInCurrency: String
     }
-
 }

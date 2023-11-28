@@ -1,10 +1,10 @@
-import Foundation
-import EvmKit
-import Eip20Kit
-import RxSwift
 import BigInt
+import Eip20Kit
+import EvmKit
+import Foundation
 import HsToolKit
 import MarketKit
+import RxSwift
 
 class Eip20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
@@ -21,13 +21,11 @@ class Eip20Adapter: BaseEvmAdapter {
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: wallet.decimals)
     }
-
 }
 
 // IAdapter
 
 extension Eip20Adapter: IAdapter {
-
     func start() {
         eip20Kit.start()
     }
@@ -36,13 +34,10 @@ extension Eip20Adapter: IAdapter {
         eip20Kit.stop()
     }
 
-    func refresh() {
-    }
-
+    func refresh() {}
 }
 
 extension Eip20Adapter: IBalanceAdapter {
-
     var balanceState: AdapterState {
         convertToAdapterState(evmSyncState: eip20Kit.syncState)
     }
@@ -62,19 +57,15 @@ extension Eip20Adapter: IBalanceAdapter {
             self?.balanceData(balance: $0) ?? BalanceData(available: 0)
         }
     }
-
 }
 
 extension Eip20Adapter: ISendEthereumAdapter {
-
     func transactionData(amount: BigUInt, address: EvmKit.Address) -> TransactionData {
         eip20Kit.transferTransactionData(to: address, value: amount)
     }
-
 }
 
 extension Eip20Adapter: IErc20Adapter {
-
     var pendingTransactions: [TransactionRecord] {
         eip20Kit.pendingTransactions().map { transactionConverter.transactionRecord(fromTransaction: $0) }
     }
@@ -83,13 +74,12 @@ extension Eip20Adapter: IErc20Adapter {
         let decimals = decimals
 
         return eip20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
-                .map { allowanceString in
-                    if let significand = Decimal(string: allowanceString) {
-                        return Decimal(sign: .plus, exponent: -decimals, significand: significand)
-                    }
-
-                    return 0
+            .map { allowanceString in
+                if let significand = Decimal(string: allowanceString) {
+                    return Decimal(sign: .plus, exponent: -decimals, significand: significand)
                 }
-    }
 
+                return 0
+            }
+    }
 }

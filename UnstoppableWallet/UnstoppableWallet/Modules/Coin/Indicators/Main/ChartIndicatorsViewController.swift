@@ -1,11 +1,10 @@
-import Combine
-import UIKit
-import SnapKit
 import Chart
+import Combine
 import ComponentKit
-import ThemeKit
 import SectionsTableView
-
+import SnapKit
+import ThemeKit
+import UIKit
 
 class ChartIndicatorsViewController: ThemeViewController {
     private let viewModel: ChartIndicatorsViewModel
@@ -21,7 +20,8 @@ class ChartIndicatorsViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,33 +43,33 @@ class ChartIndicatorsViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         viewModel.$isLocked
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] isLocked in
-                    self?.isLocked = isLocked
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLocked in
+                self?.isLocked = isLocked
+            }
+            .store(in: &cancellables)
 
         viewModel.$viewItems
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] viewItems in
-                    self?.viewItems = viewItems
-                    self?.tableView.reload()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] viewItems in
+                self?.viewItems = viewItems
+                self?.tableView.reload()
+            }
+            .store(in: &cancellables)
 
         viewModel.openSettingsPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] indicator in
-                    self?.openSettings(indicator: indicator)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] indicator in
+                self?.openSettings(indicator: indicator)
+            }
+            .store(in: &cancellables)
 
         isLocked = viewModel.isLocked
         viewItems = viewModel.viewItems
         tableView.buildSections()
     }
 
-    deinit {    // on any dismiss we need to save user indicators
+    deinit { // on any dismiss we need to save user indicators
         viewModel.saveIndicators()
     }
 
@@ -84,10 +84,11 @@ class ChartIndicatorsViewController: ThemeViewController {
 
     private func openSettings(indicator: ChartIndicator) {
         guard let viewController = ChartIndicatorSettingsModule.viewController(
-                indicator: indicator,
-                onComplete: { [weak self] indicator in
-                    self?.viewModel.update(indicator: indicator)
-        }) else {
+            indicator: indicator,
+            onComplete: { [weak self] indicator in
+                self?.viewModel.update(indicator: indicator)
+            }
+        ) else {
             return
         }
 
@@ -98,11 +99,9 @@ class ChartIndicatorsViewController: ThemeViewController {
         let viewController = SubscriptionInfoViewController()
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
-
 }
 
 extension ChartIndicatorsViewController {
-
     private func indicatorRow(viewItem: ChartIndicatorsViewModel.IndicatorViewItem, rowInfo: RowInfo) -> RowProtocol {
         let isLocked = isLocked
         let elements: [CellBuilderNew.CellElement] = [
@@ -119,42 +118,37 @@ extension ChartIndicatorsViewController {
                         self?.viewModel.onToggle(viewItem: viewItem, $0)
                     }
                 }
-            }
+            },
         ]
 
         return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: tableView,
-                id: viewItem.name,
-                hash: viewItem.name + viewItem.enabled.description,
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                },
-                action: { [weak self] in self?.viewModel.onEdit(viewItem: viewItem) }
+            rootElement: .hStack(elements),
+            tableView: tableView,
+            id: viewItem.name,
+            hash: viewItem.name + viewItem.enabled.description,
+            height: .heightCell48,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+            },
+            action: { [weak self] in self?.viewModel.onEdit(viewItem: viewItem) }
         )
-
     }
-
 
     private func section(viewItem: ChartIndicatorsViewModel.ViewItem) -> SectionProtocol {
         Section(
-                id: viewItem.category,
-                headerState: tableView.sectionHeader(text: viewItem.category),
-                footerState: .margin(height: .margin24),
-                rows: viewItem.indicators.enumerated().map { index, item in
-                    indicatorRow(viewItem: item, rowInfo: RowInfo(index: index, count: viewItem.indicators.count))
-                }
+            id: viewItem.category,
+            headerState: tableView.sectionHeader(text: viewItem.category),
+            footerState: .margin(height: .margin24),
+            rows: viewItem.indicators.enumerated().map { index, item in
+                indicatorRow(viewItem: item, rowInfo: RowInfo(index: index, count: viewItem.indicators.count))
+            }
         )
     }
-
 }
 
 extension ChartIndicatorsViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         viewItems.map { section(viewItem: $0) }
     }
-
 }

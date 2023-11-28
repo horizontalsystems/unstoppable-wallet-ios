@@ -1,8 +1,8 @@
-import UIKit
-import UIExtensions
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIExtensions
+import UIKit
 
 class BalanceButtonsView: UIView {
     public static let height: CGFloat = 70
@@ -21,12 +21,12 @@ class BalanceButtonsView: UIView {
     private let chartButtonWrapper = UIControl()
     private let chartButton = PrimaryCircleButton()
 
-    private var onTapSend: (() -> ())?
-    private var onTapWithdraw: (() -> ())?
-    private var onTapReceive: (() -> ())?
-    private var onTapDeposit: (() -> ())?
-    private var onTapSwap: (() -> ())?
-    private var onTapChart: (() -> ())?
+    private var onTapSend: (() -> Void)?
+    private var onTapWithdraw: (() -> Void)?
+    private var onTapReceive: (() -> Void)?
+    private var onTapDeposit: (() -> Void)?
+    private var onTapSwap: (() -> Void)?
+    private var onTapChart: (() -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -122,11 +122,12 @@ class BalanceButtonsView: UIView {
         chartButton.addTarget(self, action: #selector(onChart), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(buttons: [WalletModule.Button: ButtonState], sendAction: (() -> ())?, withdrawAction: (() -> ())?, receiveAction: (() -> ())?, depositAction: (() -> ())?, swapAction: (() -> ())?, chartAction: (() -> ())?) {
+    func bind(buttons: [WalletModule.Button: ButtonState], sendAction: (() -> Void)?, withdrawAction: (() -> Void)?, receiveAction: (() -> Void)?, depositAction: (() -> Void)?, swapAction: (() -> Void)?, chartAction: (() -> Void)?) {
         sendButton.isEnabled = buttons[.send] == .enabled
         withdrawButton.isEnabled = buttons[.withdraw] == .enabled
         receiveButton.isEnabled = buttons[.receive] == .enabled
@@ -176,5 +177,4 @@ class BalanceButtonsView: UIView {
     @objc private func onChart() {
         onTapChart?()
     }
-
 }

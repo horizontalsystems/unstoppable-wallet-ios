@@ -1,9 +1,9 @@
-import UIKit
-import RxSwift
-import RxCocoa
-import SectionsTableView
 import Chart
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import UIKit
 
 protocol IBaseMarketOverviewTopListViewModel {
     var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> { get }
@@ -37,44 +37,41 @@ class BaseMarketOverviewTopListDataSource {
     private func rows(tableView: SectionsTableView, listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
         listViewItems.enumerated().map { index, listViewItem in
             MarketModule.marketListCell(
-                    tableView: tableView,
-                    backgroundStyle: .lawrence,
-                    listViewItem: listViewItem,
-                    isFirst: index == 0,
-                    isLast: false,
-                    rowActionProvider: nil,
-                    action:  { [weak self] in
-                        self?.onSelect(listViewItem: listViewItem)
-                    })
+                tableView: tableView,
+                backgroundStyle: .lawrence,
+                listViewItem: listViewItem,
+                isFirst: index == 0,
+                isLast: false,
+                rowActionProvider: nil,
+                action: { [weak self] in
+                    self?.onSelect(listViewItem: listViewItem)
+                }
+            )
         }
     }
 
-    private func seeAllRow(tableView: SectionsTableView, id: String, action: @escaping () -> ()) -> RowProtocol {
+    private func seeAllRow(tableView: SectionsTableView, id: String, action: @escaping () -> Void) -> RowProtocol {
         tableView.universalRow48(
-                id: id,
-                title: .body("market.top.section.header.see_all".localized),
-                accessoryType: .disclosure,
-                autoDeselect: true,
-                isLast: true,
-                action: action
+            id: id,
+            title: .body("market.top.section.header.see_all".localized),
+            accessoryType: .disclosure,
+            autoDeselect: true,
+            isLast: true,
+            action: action
         )
     }
 
-    func didTapSeeAll() {
-    }
+    func didTapSeeAll() {}
 
-    func onSelect(listViewItem: MarketModule.ListViewItem) {
-    }
-
+    func onSelect(listViewItem _: MarketModule.ListViewItem) {}
 }
 
 extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
-
     var isReady: Bool {
         listViewItemsRelay.value != nil
     }
 
-    var updateObservable: Observable<()> {
+    var updateObservable: Observable<Void> {
         listViewItemsRelay.map { _ in () }
     }
 
@@ -101,31 +98,31 @@ extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
         var sections = [SectionProtocol]()
 
         let headerSection = Section(
-                id: "header_\(title)",
-                footerState: .margin(height: .margin8),
-                rows: [
-                    Row<MarketOverviewHeaderCell>(
-                            id: "header_\(title)",
-                            height: .heightCell48,
-                            bind: { [weak self] cell, _ in
-                                self?.bind(cell: cell)
-                            }
-                    )
-                ]
+            id: "header_\(title)",
+            footerState: .margin(height: .margin8),
+            rows: [
+                Row<MarketOverviewHeaderCell>(
+                    id: "header_\(title)",
+                    height: .heightCell48,
+                    bind: { [weak self] cell, _ in
+                        self?.bind(cell: cell)
+                    }
+                ),
+            ]
         )
 
         let listSection = Section(
-                id: title,
-                footerState: .margin(height: .margin24),
-                rows: rows(tableView: tableView, listViewItems: listViewItems) + [
-                    seeAllRow(
-                            tableView: tableView,
-                            id: "\(title)-see-all",
-                            action: { [weak self] in
-                                self?.didTapSeeAll()
-                            }
-                    )
-                ]
+            id: title,
+            footerState: .margin(height: .margin24),
+            rows: rows(tableView: tableView, listViewItems: listViewItems) + [
+                seeAllRow(
+                    tableView: tableView,
+                    id: "\(title)-see-all",
+                    action: { [weak self] in
+                        self?.didTapSeeAll()
+                    }
+                ),
+            ]
         )
 
         sections.append(headerSection)
@@ -133,5 +130,4 @@ extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
 
         return sections
     }
-
 }

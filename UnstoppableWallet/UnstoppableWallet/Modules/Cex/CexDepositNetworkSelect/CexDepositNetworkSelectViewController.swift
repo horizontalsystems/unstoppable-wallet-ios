@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
-import ThemeKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class CexDepositNetworkSelectViewController: ThemeViewController {
     private let viewModel: CexDepositNetworkSelectViewModel
@@ -15,7 +15,8 @@ class CexDepositNetworkSelectViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -58,60 +59,57 @@ class CexDepositNetworkSelectViewController: ThemeViewController {
 
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension CexDepositNetworkSelectViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "description",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.descriptionRow(
-                                id: "description",
-                                text: "cex_deposit_network_select.description".localized,
-                                font: .subhead2,
-                                textColor: .themeGray,
-                                ignoreBottomMargin: true
-                        )
-                    ]
+                id: "description",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.descriptionRow(
+                        id: "description",
+                        text: "cex_deposit_network_select.description".localized,
+                        font: .subhead2,
+                        textColor: .themeGray,
+                        ignoreBottomMargin: true
+                    ),
+                ]
             ),
             Section(
-                    id: "cex-networks",
-                    footerState: .margin(height: .margin32),
-                    rows: viewModel.viewItems.enumerated().map { index, viewItem in
-                        let isFirst = index == 0
-                        let isLast = index == viewModel.viewItems.count - 1
+                id: "cex-networks",
+                footerState: .margin(height: .margin32),
+                rows: viewModel.viewItems.enumerated().map { index, viewItem in
+                    let isFirst = index == 0
+                    let isLast = index == viewModel.viewItems.count - 1
 
-                        return CellBuilderNew.row(
-                                rootElement: .hStack([
-                                    .image32 { component in
-                                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
-                                    },
-                                    .textElement(text: .body(viewItem.title)),
-                                    .imageElement(image: viewItem.enabled ? .local(UIImage(named: "arrow_big_forward_20")) : nil, size: .image20),
-                                    .badge { component in
-                                        component.isHidden = viewItem.enabled
-                                        component.badgeView.set(style: .small)
-                                        component.badgeView.text = "cex_coin_select.suspended".localized.uppercased()
-                                    }
-                                ]),
-                                tableView: tableView,
-                                id: "cex-network-\(index)",
-                                height: .heightCell56,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                },
-                                action: viewItem.enabled ? { [weak self] in
-                                    self?.onSelect(network: viewItem.network)
-                                } : nil
-                        )
-                    }
-            )
+                    return CellBuilderNew.row(
+                        rootElement: .hStack([
+                            .image32 { component in
+                                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
+                            },
+                            .textElement(text: .body(viewItem.title)),
+                            .imageElement(image: viewItem.enabled ? .local(UIImage(named: "arrow_big_forward_20")) : nil, size: .image20),
+                            .badge { component in
+                                component.isHidden = viewItem.enabled
+                                component.badgeView.set(style: .small)
+                                component.badgeView.text = "cex_coin_select.suspended".localized.uppercased()
+                            },
+                        ]),
+                        tableView: tableView,
+                        id: "cex-network-\(index)",
+                        height: .heightCell56,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                        },
+                        action: viewItem.enabled ? { [weak self] in
+                            self?.onSelect(network: viewItem.network)
+                        } : nil
+                    )
+                }
+            ),
         ]
     }
-
 }

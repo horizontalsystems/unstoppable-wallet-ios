@@ -1,6 +1,6 @@
 import Foundation
-import MarketKit
 import HsExtensions
+import MarketKit
 
 class CoinAuditsService {
     private let addresses: [String]
@@ -36,33 +36,28 @@ class CoinAuditsService {
             let sortedReports = auditor.reports.sorted { $0.date > $1.date }
 
             return Item(
-                    logoUrl: auditor.logoUrl,
-                    name: auditor.name,
-                    latestDate: sortedReports.first?.date ?? Date(timeIntervalSince1970: 0),
-                    reports: sortedReports
+                logoUrl: auditor.logoUrl,
+                name: auditor.name,
+                latestDate: sortedReports.first?.date ?? Date(timeIntervalSince1970: 0),
+                reports: sortedReports
             )
         }
 
         state = .completed(items.sorted { $0.latestDate > $1.latestDate })
     }
-
 }
 
 extension CoinAuditsService {
-
     func refresh() {
         sync()
     }
-
 }
 
 extension CoinAuditsService {
-
     struct Item {
         let logoUrl: String?
         let name: String
         let latestDate: Date
         let reports: [AuditReport]
     }
-
 }

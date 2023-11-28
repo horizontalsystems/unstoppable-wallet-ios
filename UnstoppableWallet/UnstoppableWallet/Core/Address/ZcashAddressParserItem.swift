@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import MarketKit
+import RxSwift
 
 class ZcashAddressParserItem {
     private let parserType: ParserType
@@ -12,10 +12,10 @@ class ZcashAddressParserItem {
     private func validate(address: String, checkSendToSelf: Bool) -> Single<Address> {
         do {
             switch parserType {
-            case .adapter(let adapter):
+            case let .adapter(adapter):
                 _ = try adapter.validate(address: address, checkSendToSelf: checkSendToSelf)
                 return Single.just(Address(raw: address, domain: nil))
-            case .validator(let validator):
+            case let .validator(validator):
                 try validator.validate(address: address)
                 return Single.just(Address(raw: address, domain: nil))
             }
@@ -24,7 +24,6 @@ class ZcashAddressParserItem {
             return Single.error(error)
         }
     }
-
 }
 
 extension ZcashAddressParserItem: IAddressParserItem {
@@ -36,17 +35,14 @@ extension ZcashAddressParserItem: IAddressParserItem {
 
     func isValid(address: String) -> Single<Bool> {
         validate(address: address, checkSendToSelf: false)
-                .map { _ in true }
-                .catchErrorJustReturn(false)
+            .map { _ in true }
+            .catchErrorJustReturn(false)
     }
-
 }
 
 extension ZcashAddressParserItem {
-
     enum ParserType {
         case adapter(ISendZcashAdapter)
         case validator(ZcashAddressValidator)
     }
-
 }

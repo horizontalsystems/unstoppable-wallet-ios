@@ -1,7 +1,6 @@
 extension String {
-
     func stripping(prefix: String?) -> String {
-        if let prefix = prefix, hasPrefix(prefix) {
+        if let prefix, hasPrefix(prefix) {
             return String(dropFirst(prefix.count))
         }
 
@@ -22,7 +21,6 @@ extension String {
 
         return String(prefix(extraPrefix + 4)) + "..." + String(suffix(4))
     }
-
 }
 
 extension String: Identifiable {

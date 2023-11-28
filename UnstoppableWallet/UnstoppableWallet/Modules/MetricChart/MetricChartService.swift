@@ -1,7 +1,7 @@
 import Combine
-import UIKit
-import MarketKit
 import HsExtensions
+import MarketKit
+import UIKit
 
 class MetricChartService {
     private var tasks = Set<AnyTask>()
@@ -26,8 +26,8 @@ class MetricChartService {
         self.interval = interval
 
         chartFetcher.needUpdatePublisher
-                .sink { [weak self] in self?.fetchChartData() }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.fetchChartData() }
+            .store(in: &cancellables)
     }
 
     func fetchChartData() {
@@ -50,15 +50,12 @@ class MetricChartService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension MetricChartService {
-
     var valueType: MetricChartModule.ValueType {
         chartFetcher.valueType
     }
 
     var intervals: [HsTimePeriod] { chartFetcher.intervals }
-
 }

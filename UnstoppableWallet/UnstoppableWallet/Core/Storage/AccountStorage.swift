@@ -1,7 +1,7 @@
-import Foundation
 import EvmKit
-import TronKit
+import Foundation
 import HdWalletKit
+import TronKit
 
 class AccountStorage {
     private let keychainStorage: KeychainStorage
@@ -34,7 +34,7 @@ class AccountStorage {
             }
 
             let compliant = record.bip39Compliant ?? (
-                    Mnemonic.seed(mnemonic: words, passphrase: salt) == Mnemonic.seedNonStandard(mnemonic: words, passphrase: salt)
+                Mnemonic.seed(mnemonic: words, passphrase: salt) == Mnemonic.seedNonStandard(mnemonic: words, passphrase: salt)
             )
 
             type = .mnemonic(words: words, salt: salt, bip39Compliant: compliant)
@@ -87,13 +87,13 @@ class AccountStorage {
         }
 
         return Account(
-                id: id,
-                level: record.level,
-                name: record.name,
-                type: type,
-                origin: origin,
-                backedUp: record.backedUp,
-                fileBackedUp: record.fileBackedUp
+            id: id,
+            level: record.level,
+            name: record.name,
+            type: type,
+            origin: origin,
+            backedUp: record.backedUp,
+            fileBackedUp: record.fileBackedUp
         )
     }
 
@@ -107,27 +107,27 @@ class AccountStorage {
         var bip39Compliant: Bool?
 
         switch account.type {
-        case .mnemonic(let words, let salt, let compliant):
+        case let .mnemonic(words, salt, compliant):
             typeName = .mnemonic
             wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
             saltKey = try store(salt, id: id, typeName: typeName, keyName: .salt)
             bip39Compliant = compliant
-        case .evmPrivateKey(let data):
+        case let .evmPrivateKey(data):
             typeName = .evmPrivateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
-        case .evmAddress(let address):
+        case let .evmAddress(address):
             typeName = .evmAddress
             dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
-        case .tronAddress(let address):
+        case let .tronAddress(address):
             typeName = .tronAddress
             dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
-        case .tonAddress(let address):
+        case let .tonAddress(address):
             typeName = .tonAddress
             dataKey = address
-        case .hdExtendedKey(let key):
+        case let .hdExtendedKey(key):
             typeName = .hdExtendedKey
             dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
-        case .cex(let cexAccount):
+        case let .cex(cexAccount):
             typeName = .cex
             if let data = cexAccount.uniqueId.data(using: .utf8) {
                 dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
@@ -135,17 +135,17 @@ class AccountStorage {
         }
 
         return AccountRecord(
-                id: id,
-                level: account.level,
-                name: account.name,
-                type: typeName.rawValue,
-                origin: account.origin.rawValue,
-                backedUp: account.backedUp,
-                fileBackedUp: account.fileBackedUp,
-                wordsKey: wordsKey,
-                saltKey: saltKey,
-                dataKey: dataKey,
-                bip39Compliant: bip39Compliant
+            id: id,
+            level: account.level,
+            name: account.name,
+            type: typeName.rawValue,
+            origin: account.origin.rawValue,
+            backedUp: account.backedUp,
+            fileBackedUp: account.fileBackedUp,
+            wordsKey: wordsKey,
+            saltKey: saltKey,
+            dataKey: dataKey,
+            bip39Compliant: bip39Compliant
         )
     }
 
@@ -179,7 +179,7 @@ class AccountStorage {
         try store(stringArray.joined(separator: ","), id: id, typeName: typeName, keyName: keyName)
     }
 
-    private func store<T: LosslessStringConvertible>(_ value: T, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
+    private func store(_ value: some LosslessStringConvertible, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
         try keychainStorage.set(value: value, for: key)
         return key
@@ -205,11 +205,9 @@ class AccountStorage {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
         return keychainStorage.value(for: key)
     }
-
 }
 
 extension AccountStorage {
-
     var allAccounts: [Account] {
         storage.all.compactMap { createAccount(record: $0) }
     }
@@ -242,11 +240,9 @@ extension AccountStorage {
     func clear() {
         storage.clear()
     }
-
 }
 
 extension AccountStorage {
-
     private enum TypeName: String {
         case mnemonic
         case evmPrivateKey
@@ -262,5 +258,4 @@ extension AccountStorage {
         case salt
         case data
     }
-
 }

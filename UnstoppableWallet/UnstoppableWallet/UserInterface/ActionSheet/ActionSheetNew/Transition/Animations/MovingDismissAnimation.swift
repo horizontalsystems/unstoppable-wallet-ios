@@ -16,19 +16,16 @@ class MovingDismissAnimation: BaseAnimation {
         let animator = UIViewPropertyAnimator(duration: duration, curve: animationCurve) {
             from.frame = from.frame.offsetBy(dx: 0, dy: from.height)
         }
-        
-        animator.addCompletion { (position) in
+
+        animator.addCompletion { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
         return animator
     }
-
 }
 
 extension MovingDismissAnimation {
-
     func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
         animator(using: transitionContext)
     }
-
 }

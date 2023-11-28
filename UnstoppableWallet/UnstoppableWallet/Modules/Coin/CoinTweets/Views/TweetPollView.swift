@@ -1,5 +1,5 @@
-import UIKit
 import ThemeKit
+import UIKit
 
 class TweetPollView: UIView {
     private static let pollOptionHeight: CGFloat = 28
@@ -21,7 +21,8 @@ class TweetPollView: UIView {
         stackView.spacing = .margin8
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -68,7 +69,7 @@ class TweetPollView: UIView {
             label.text = option.label
             label.font = .captionSB
 
-            if let mostVotesOption = mostVotesOption, mostVotesOption.position == option.position {
+            if let mostVotesOption, mostVotesOption.position == option.position {
                 votesView.backgroundColor = .themeLaguna
                 label.textColor = .themeClaude
             } else {
@@ -89,8 +90,7 @@ class TweetPollView: UIView {
         }
     }
 
-    static func height(options: [(position: Int, label: String, votes: Int)], containerWidth: CGFloat) -> CGFloat {
-        (Self.pollOptionHeight + .margin8) * CGFloat(options.count) - .margin8
+    static func height(options: [(position: Int, label: String, votes: Int)], containerWidth _: CGFloat) -> CGFloat {
+        (pollOptionHeight + .margin8) * CGFloat(options.count) - .margin8
     }
-
 }

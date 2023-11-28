@@ -27,11 +27,9 @@ class BackupCloudPassphraseViewModel {
             passphraseConfirmationCaution = nil
         }
     }
-
 }
 
 extension BackupCloudPassphraseViewModel {
-
     var clearInputsPublisher: AnyPublisher<Void, Never> {
         clearInputsSubject.eraseToAnyPublisher()
     }
@@ -43,7 +41,6 @@ extension BackupCloudPassphraseViewModel {
     var finishPublisher: AnyPublisher<Void, Never> {
         finishSubject.eraseToAnyPublisher()
     }
-
 
     func onChange(passphrase: String) {
         service.passphrase = passphrase
@@ -94,7 +91,6 @@ extension BackupCloudPassphraseViewModel {
             processing = false
         }
     }
-
 }
 
 extension BackupCrypto.ValidationError: LocalizedError {
@@ -124,4 +120,3 @@ extension CloudBackupManager.BackupError: LocalizedError {
         }
     }
 }
-

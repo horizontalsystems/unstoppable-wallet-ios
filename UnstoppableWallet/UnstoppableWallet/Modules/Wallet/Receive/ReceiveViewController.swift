@@ -1,7 +1,7 @@
 import Combine
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
 class ReceiveViewController: ThemeNavigationController {
     private let viewModel: ReceiveViewModel
@@ -16,42 +16,43 @@ class ReceiveViewController: ThemeNavigationController {
         }
 
         viewModel.showTokenPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] wallet in
-                    self?.showReceive(wallet: wallet)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] wallet in
+                self?.showReceive(wallet: wallet)
+            }
+            .store(in: &cancellables)
 
         viewModel.showDerivationSelectPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] wallets in
-                    self?.showDerivationSelect(wallets: wallets)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] wallets in
+                self?.showDerivationSelect(wallets: wallets)
+            }
+            .store(in: &cancellables)
 
         viewModel.showBitcoinCashCoinTypeSelectPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] wallets in
-                    self?.showBitcoinCashCoinTypeSelect(wallets: wallets)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] wallets in
+                self?.showBitcoinCashCoinTypeSelect(wallets: wallets)
+            }
+            .store(in: &cancellables)
 
         viewModel.showZcashRestoreSelectPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] token in
-                    self?.showZcashRestoreSelect(token: token)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] token in
+                self?.showZcashRestoreSelect(token: token)
+            }
+            .store(in: &cancellables)
 
         viewModel.showBlockchainSelectPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (fullCoin, accountType) in
-                    self?.showBlockchainSelect(fullCoin: fullCoin, accountType: accountType)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] fullCoin, accountType in
+                self?.showBlockchainSelect(fullCoin: fullCoin, accountType: accountType)
+            }
+            .store(in: &cancellables)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -76,20 +77,21 @@ class ReceiveViewController: ThemeNavigationController {
 
     private func showZcashRestoreSelect(token: Token) {
         let viewController = BottomSheetModule.viewController(
-                image: .remote(url: token.coin.imageUrl, placeholder: "placeholder_circle_32"),
-                title: token.coin.code,
-                subtitle: token.coin.name,
-                items: [
-                    .description(text: "deposit.zcash.restore.description".localized)
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "deposit.zcash.restore.already_own".localized, actionType: .afterClose, action: { [weak self] in
-                        self?.showRestoreZcash(token: token)
-                    }),
-                    .init(style: .gray, title: "deposit.zcash.restore.dont_have".localized, actionType: .afterClose, action: { [weak self] in
-                        self?.viewModel.onRestoreZcash(token: token, height: nil)
-                    }),
-                ])
+            image: .remote(url: token.coin.imageUrl, placeholder: "placeholder_circle_32"),
+            title: token.coin.code,
+            subtitle: token.coin.name,
+            items: [
+                .description(text: "deposit.zcash.restore.description".localized),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "deposit.zcash.restore.already_own".localized, actionType: .afterClose, action: { [weak self] in
+                    self?.showRestoreZcash(token: token)
+                }),
+                .init(style: .gray, title: "deposit.zcash.restore.dont_have".localized, actionType: .afterClose, action: { [weak self] in
+                    self?.viewModel.onRestoreZcash(token: token, height: nil)
+                }),
+            ]
+        )
 
         present(viewController, animated: true)
     }
@@ -108,11 +110,9 @@ class ReceiveViewController: ThemeNavigationController {
         }
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
-
 }
 
 extension ReceiveViewController {
-
     func onSelect(fullCoin: FullCoin) {
         viewModel.onSelect(fullCoin: fullCoin)
     }
@@ -120,5 +120,4 @@ extension ReceiveViewController {
     func onSelectExact(token: Token) {
         viewModel.onSelectExact(token: token)
     }
-
 }

@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class SwapStepCell: UITableViewCell {
     private let firstStepView = StepBadgeView()
@@ -45,7 +45,6 @@ class SwapStepCell: UITableViewCell {
 
         lastStepView.text = "2"
         lastStepView.set(active: false)
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -60,5 +59,4 @@ class SwapStepCell: UITableViewCell {
     var cellHeight: CGFloat {
         isVisible ? 24 : 0
     }
-
 }

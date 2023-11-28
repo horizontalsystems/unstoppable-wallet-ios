@@ -76,7 +76,7 @@ class CoinMarketsViewModel: ObservableObject {
         case .all:
             filteredTickers = tickers
         case .verified:
-            filteredTickers = tickers.filter { $0.verified }
+            filteredTickers = tickers.filter(\.verified)
         }
 
         let sortedTickers = filteredTickers.sorted { $0.volume > $1.volume }

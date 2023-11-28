@@ -15,7 +15,7 @@ struct CoinPageView<Overview: View, Analytics: View, Markets: View>: View {
             ThemeView {
                 VStack(spacing: 0) {
                     TabHeaderView(
-                        tabs: Tab.allCases.map { $0.title },
+                        tabs: Tab.allCases.map(\.title),
                         currentTabIndex: $currentTabIndex
                     )
 

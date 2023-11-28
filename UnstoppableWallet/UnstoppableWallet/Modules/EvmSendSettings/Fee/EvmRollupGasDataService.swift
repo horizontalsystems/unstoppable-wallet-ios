@@ -41,10 +41,9 @@ class EvmRollupGasDataService: EvmCommonGasDataService {
                 }
 
                 return self?.l1GasFeeSingle(transactionData: l1TransactionData, gasPrice: gasPrice, gasLimit: commonGasData.limit)
-                        .map { l1GasFee in
-                            EvmFeeModule.RollupGasData(additionalFee: l1GasFee, limit: commonGasData.limit, price: gasPrice)
-                        } ?? .just(EvmFeeModule.RollupGasData(additionalFee: 0, limit: commonGasData.limit, price: gasPrice))
+                    .map { l1GasFee in
+                        EvmFeeModule.RollupGasData(additionalFee: l1GasFee, limit: commonGasData.limit, price: gasPrice)
+                    } ?? .just(EvmFeeModule.RollupGasData(additionalFee: 0, limit: commonGasData.limit, price: gasPrice))
             }
     }
-
 }

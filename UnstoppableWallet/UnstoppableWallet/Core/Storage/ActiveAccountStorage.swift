@@ -6,11 +6,9 @@ class ActiveAccountStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension ActiveAccountStorage {
-
     func activeAccountId(level: Int) -> String? {
         try? dbPool.read { db in
             try ActiveAccount.filter(ActiveAccount.Columns.level == level).fetchOne(db)?.accountId
@@ -26,5 +24,4 @@ extension ActiveAccountStorage {
             }
         }
     }
-
 }

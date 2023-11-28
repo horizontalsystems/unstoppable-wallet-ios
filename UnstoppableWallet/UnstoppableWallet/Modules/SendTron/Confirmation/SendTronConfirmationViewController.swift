@@ -1,12 +1,12 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
 import Foundation
 import MarketKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SendTronConfirmationViewController: ThemeViewController {
     let disposeBag = DisposeBag()
@@ -34,7 +34,8 @@ class SendTronConfirmationViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -100,12 +101,11 @@ class SendTronConfirmationViewController: ThemeViewController {
     }
 
     private func handleFeeItems(items: [SendTronConfirmationViewModel.TronFeeViewItem]) {
-        self.feeViewItems = items
+        feeViewItems = items
         reloadTable()
     }
 
-    func handleSending() {
-    }
+    func handleSending() {}
 
     func handleSendSuccess() {
         dismiss(animated: true)
@@ -136,27 +136,27 @@ class SendTronConfirmationViewController: ThemeViewController {
 
     private func row(viewItem: SendTronConfirmationViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
-            case let .subhead(iconName, title, value):
-                return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)
-            case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
-                return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
-            case let .address(title, value, valueTitle, contactAddress):
-                var onAddToContact: (() -> ())? = nil
-                if let contactAddress {
-                    onAddToContact = { [weak self] in
-                        ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
-                    }
+        case let .subhead(iconName, title, value):
+            return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)
+        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .address(title, value, valueTitle, contactAddress):
+            var onAddToContact: (() -> Void)? = nil
+            if let contactAddress {
+                onAddToContact = { [weak self] in
+                    ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
                 }
-                return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
-            case let .value(title, value, type):
-                return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value, type: type)
-            case let .warning(text, title, info):
-                return warningRow(tableView: tableView, rowInfo: rowInfo, text: text, title: title, info: info)
+            }
+            return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
+        case let .value(title, value, type):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value, type: type)
+        case let .warning(text, title, info):
+            return warningRow(tableView: tableView, rowInfo: rowInfo, text: text, title: title, info: info)
         }
     }
 
     private func section(sectionViewItem: SendTronConfirmationViewModel.SectionViewItem, index: Int) -> SectionProtocol {
-        return Section(
+        Section(
             id: "section_\(index)",
             headerState: .margin(height: .margin12),
             rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
@@ -195,30 +195,30 @@ class SendTronConfirmationViewController: ThemeViewController {
 
         return CellBuilderNew.row(
             rootElement: .hStack([
-                    .secondaryButton { [weak self] component in
-                        component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
-                        component.button.setTitle(item.title, for: .normal)
-                        component.onTap = { [weak self] in
-                            self?.openInfo(title: item.title, description: item.info)
-                        }
-                    },
-                    .margin0,
-                    .text { _ in },
-                    .vStackCentered([
-                    .text { (component: TextComponent) -> () in
+                .secondaryButton { [weak self] component in
+                    component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                    component.button.setTitle(item.title, for: .normal)
+                    component.onTap = { [weak self] in
+                        self?.openInfo(title: item.title, description: item.info)
+                    }
+                },
+                .margin0,
+                .text { _ in },
+                .vStackCentered([
+                    .text { (component: TextComponent) in
                         component.font = .subhead2
                         component.textColor = .themeLeah
                         component.textAlignment = .right
                         component.text = item.value1
                     },
                     .margin(1),
-                    .text { (component: TextComponent) -> () in
+                    .text { (component: TextComponent) in
                         component.font = value2Font
                         component.textColor = value2Color
                         component.textAlignment = .right
                         component.text = item.value2
-                    }
-                ])
+                    },
+                ]),
             ]),
             tableView: tableView,
             id: "double-amount-\(rowInfo.index)",
@@ -229,11 +229,9 @@ class SendTronConfirmationViewController: ThemeViewController {
             }
         )
     }
-
 }
 
 extension SendTronConfirmationViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         let transactionSections: [SectionProtocol] = sectionViewItems.enumerated().map { index, sectionViewItem in
             section(sectionViewItem: sectionViewItem, index: index)
@@ -269,12 +267,11 @@ extension SendTronConfirmationViewController: SectionsDataSource {
                         dynamicHeight: { [weak self] containerWidth in
                             self?.cautionCell.cellHeight(containerWidth: containerWidth) ?? 0
                         }
-                    )
+                    ),
                 ]
-            )
+            ),
         ]
 
         return transactionSections + feeSections + cautionsSections
     }
-
 }

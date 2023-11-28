@@ -25,7 +25,7 @@ class AddressService {
 
     private let showContactsRelay = PublishRelay<Bool>()
     var showContacts: Bool {
-        guard let contactBookManager, let blockchainType = blockchainType else {
+        guard let contactBookManager, let blockchainType else {
             return false
         }
 
@@ -69,14 +69,14 @@ class AddressService {
 
         switch mode {
         case .blockchainType:
-            addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil)  //todo: Check if tokenType is nesessary
+            addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil) // TODO: Check if tokenType is nesessary
             addressParserChain = blockchainType.flatMap { AddressParserFactory.parserChain(blockchainType: $0) }
         case let .parsers(uriParser, parserChain):
             addressUriParser = uriParser
             addressParserChain = parserChain
         }
 
-        if let initialAddress = initialAddress {
+        if let initialAddress {
             state = .success(initialAddress)
         } else {
             state = .empty
@@ -91,7 +91,7 @@ class AddressService {
     private func register(customErrorService: IErrorService?) {
         customErrorDisposeBag = DisposeBag()
 
-        if let customErrorService = customErrorService {
+        if let customErrorService {
             subscribe(disposeBag, customErrorService.errorObservable) { [weak self] in
                 self?.sync(customError: $0)
             }
@@ -103,7 +103,7 @@ class AddressService {
     }
 
     private func sync(address: Address?) {
-        guard let address = address else {
+        guard let address else {
             state = .empty
             return
         }
@@ -148,7 +148,7 @@ extension AddressService {
             return
         }
 
-        guard let addressParserChain = addressParserChain else {
+        guard let addressParserChain else {
             sync(address: Address(raw: text))
             return
         }

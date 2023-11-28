@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class ReadMoreTextCell: BaseThemeCell {
     private static let collapsedHeight: CGFloat = 160
@@ -24,8 +24,8 @@ class ReadMoreTextCell: BaseThemeCell {
         }
     }
 
-    var onTapLink: ((URL) -> ())?
-    var onChangeHeight: (() -> ())?
+    var onTapLink: ((URL) -> Void)?
+    var onChangeHeight: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -68,7 +68,8 @@ class ReadMoreTextCell: BaseThemeCell {
         collapseButton.addTarget(self, action: #selector(onTapCollapse), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -135,14 +136,11 @@ class ReadMoreTextCell: BaseThemeCell {
             expandable = true
         }
     }
-
 }
 
 extension ReadMoreTextCell: UITextViewDelegate {
-
-    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public func textView(_: UITextView, shouldInteractWith URL: URL, in _: NSRange, interaction _: UITextItemInteraction) -> Bool {
         onTapLink?(URL)
         return true
     }
-
 }

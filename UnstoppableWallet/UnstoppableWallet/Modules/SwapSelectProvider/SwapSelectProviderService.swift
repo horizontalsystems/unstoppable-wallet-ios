@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import ThemeKit
 import MarketKit
+import RxRelay
+import RxSwift
+import ThemeKit
 
 class SwapSelectProviderService {
     private let dexManager: ISwapDexManager
@@ -28,18 +28,15 @@ class SwapSelectProviderService {
         }
         var items = [Item]()
 
-
         for provider in dex.blockchainType.allowedProviders {
             items.append(Item(provider: provider, selected: provider == dex.provider))
         }
 
         self.items = items
     }
-
 }
 
 extension SwapSelectProviderService {
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -53,14 +50,11 @@ extension SwapSelectProviderService {
 
         syncItems()
     }
-
 }
 
 extension SwapSelectProviderService {
-
     struct Item {
         let provider: SwapModule.Dex.Provider
         let selected: Bool
     }
-
 }

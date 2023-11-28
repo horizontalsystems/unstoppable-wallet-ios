@@ -1,6 +1,6 @@
-import UIKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
+import UIKit
 
 class NftCollectionCellFactory: NftAssetCellFactory {
     private let providerCollectionUid: String
@@ -9,7 +9,7 @@ class NftCollectionCellFactory: NftAssetCellFactory {
         self.providerCollectionUid = providerCollectionUid
     }
 
-    override func action(viewItem: NftActivityViewModel.EventViewItem) -> (() -> ())? {
+    override func action(viewItem: NftActivityViewModel.EventViewItem) -> (() -> Void)? {
         guard let nftUid = viewItem.nftUid else {
             return nil
         }
@@ -22,7 +22,7 @@ class NftCollectionCellFactory: NftAssetCellFactory {
     override func cellElement(viewItem: NftActivityViewModel.EventViewItem) -> CellBuilderNew.CellElement {
         .hStack([
             image(viewItem: viewItem),
-            super.cellElement(viewItem: viewItem)
+            super.cellElement(viewItem: viewItem),
         ])
     }
 

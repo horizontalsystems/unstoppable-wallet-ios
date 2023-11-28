@@ -1,8 +1,7 @@
-import UIKit
 import MarketKit
+import UIKit
 
 struct MarketDiscoveryModule {
-
     static func viewController() -> UIViewController {
         let categoryService = MarketDiscoveryCategoryService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, reachabilityManager: App.shared.reachabilityManager)
         let filterService = MarketDiscoveryFilterService(marketKit: App.shared.marketKit, favoritesManager: App.shared.favoritesManager)
@@ -40,5 +39,4 @@ struct MarketDiscoveryModule {
             }
         }
     }
-
 }

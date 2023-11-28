@@ -45,11 +45,11 @@ struct Shake<Content: View>: View {
     private func backAndForthAnimation(duration: CGFloat, offset: CGFloat) async {
         let halfDuration = duration / 2
         await animate(duration: halfDuration) {
-            self.xOffset = offset
+            xOffset = offset
         }
 
         await animate(duration: halfDuration) {
-            self.xOffset = -offset
+            xOffset = -offset
         }
     }
 }

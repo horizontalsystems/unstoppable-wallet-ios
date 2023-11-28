@@ -12,5 +12,4 @@ class BackupService {
         self.words = words
         self.salt = salt
     }
-
 }

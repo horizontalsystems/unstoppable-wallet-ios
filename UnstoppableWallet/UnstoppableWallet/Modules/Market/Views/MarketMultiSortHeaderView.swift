@@ -1,8 +1,8 @@
-import UIKit
-import UIExtensions
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIExtensions
+import UIKit
 
 protocol IMarketMultiSortHeaderViewModel {
     var sortItems: [String] { get }
@@ -92,16 +92,17 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func tapSortButton() {
         let alertController = AlertRouter.module(
-                title: "market.sort_by".localized,
-                viewItems: viewModel.sortItems.enumerated().map { (index, sortingField) in
-                    AlertViewItem(text: sortingField, selected: index == viewModel.sortIndex)
-                }
+            title: "market.sort_by".localized,
+            viewItems: viewModel.sortItems.enumerated().map { index, sortingField in
+                AlertViewItem(text: sortingField, selected: index == viewModel.sortIndex)
+            }
         ) { [weak self] index in
             self?.viewModel.onSelectSort(index: index)
             self?.syncSortButtonTitle()
@@ -113,5 +114,4 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
     private func syncSortButtonTitle() {
         sortButton.setTitle(viewModel.sortItems[viewModel.sortIndex], for: .normal)
     }
-
 }

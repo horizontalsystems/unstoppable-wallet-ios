@@ -1,9 +1,9 @@
-import UIKit
-import SnapKit
-import ThemeKit
-import HUD
 import Chart
 import ComponentKit
+import HUD
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MarketCardCell: UITableViewCell {
     private let stackView = UIStackView()
@@ -27,24 +27,23 @@ class MarketCardCell: UITableViewCell {
         stackView.distribution = .fillEqually
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func append(viewItem: MarketCardView.ViewItem, configuration: ChartConfiguration = .smallPreviewChart, onTap: (() -> ())? = nil) {
+    func append(viewItem: MarketCardView.ViewItem, configuration: ChartConfiguration = .smallPreviewChart, onTap: (() -> Void)? = nil) {
         let marketCardView = MarketCardView(configuration: configuration)
         marketCardView.onTap = onTap
 
         append(view: marketCardView)
         marketCardView.set(viewItem: viewItem)
     }
-
 }
 
 extension MarketCardCell {
-
     func append(view: UIView?) {
-        guard let view = view else {
+        guard let view else {
             return
         }
 
@@ -76,5 +75,4 @@ extension MarketCardCell {
 
         marketCardViews.removeAll()
     }
-
 }

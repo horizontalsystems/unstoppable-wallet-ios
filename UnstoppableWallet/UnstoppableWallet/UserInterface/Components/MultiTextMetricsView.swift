@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class MultiTextMetricsView: UIView {
     static let titleHeight: CGFloat = MultiTextMetricsView.titleFont.lineHeight
@@ -41,7 +41,8 @@ class MultiTextMetricsView: UIView {
         metricsStackView.axis = .vertical
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -65,11 +66,10 @@ class MultiTextMetricsView: UIView {
             return
         }
 
-
         metricViews.forEach { view in metricsStackView.removeArrangedSubview(view) }
         metricViews = []
 
-        metricsViewItems.enumerated().forEach { index, item in
+        metricsViewItems.enumerated().forEach { _, item in
             let view = MetricsView()
             bind(view: view, viewItem: item)
             metricsStackView.addArrangedSubview(view)
@@ -86,11 +86,9 @@ class MultiTextMetricsView: UIView {
     static func viewHeight(viewItems: [MultiTextMetricsView.MetricsViewItem]) -> CGFloat {
         CGFloat.margin16 + MultiTextMetricsView.titleHeight + CGFloat.margin4 + CGFloat.heightOnePixel + CGFloat.margin8 + CGFloat(viewItems.count) * MetricsView.viewHeight + CGFloat.margin8
     }
-
 }
 
 extension MultiTextMetricsView {
-
     struct MetricsViewItem {
         init(value: String?) {
             self.value = value
@@ -112,7 +110,7 @@ extension MultiTextMetricsView {
     class MetricsView: UIView {
         static let viewHeight: CGFloat = valueFont.lineHeight + bottomInset
 
-        private static let bottomInset: CGFloat = CGFloat.margin8
+        private static let bottomInset: CGFloat = .margin8
         private static let valueFont: UIFont = .subhead1
 
         private let valueLabel = UILabel()
@@ -142,7 +140,8 @@ extension MultiTextMetricsView {
             valueChangeLabel.font = .caption
         }
 
-        required init?(coder aDecoder: NSCoder) {
+        @available(*, unavailable)
+        required init?(coder _: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
 
@@ -160,7 +159,5 @@ extension MultiTextMetricsView {
             get { valueChangeLabel.textColor }
             set { valueChangeLabel.textColor = newValue }
         }
-
     }
-
 }

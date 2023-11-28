@@ -1,9 +1,8 @@
-import UIKit
-import ThemeKit
 import Down
+import ThemeKit
+import UIKit
 
 class MarkdownParser {
-
     func viewItems(content: String, url: URL?, configuration: DownStylerConfiguration) -> [MarkdownBlockViewItem] {
         let down = Down(markdownString: content)
 
@@ -46,10 +45,10 @@ class MarkdownParser {
 
                         for (paragraphIndex, paragraphBlock) in itemBlock.paragraphBlocks.enumerated() {
                             viewItems.append(.listItem(
-                                    attributedString: paragraphBlock.attributedString,
-                                    prefix: paragraphIndex == 0 ? prefix : nil,
-                                    tightTop: listBlock.tight && itemIndex != 0,
-                                    tightBottom: listBlock.tight && itemIndex != listBlock.itemBlocks.count - 1
+                                attributedString: paragraphBlock.attributedString,
+                                prefix: paragraphIndex == 0 ? prefix : nil,
+                                tightTop: listBlock.tight && itemIndex != 0,
+                                tightBottom: listBlock.tight && itemIndex != listBlock.itemBlocks.count - 1
                             ))
                         }
 
@@ -60,9 +59,9 @@ class MarkdownParser {
                 if let blockQuoteBlock = block as? MarkdownVisitor.BlockQuoteBlock {
                     for (paragraphIndex, paragraphBlock) in blockQuoteBlock.paragraphBlocks.enumerated() {
                         viewItems.append(.blockQuote(
-                                attributedString: paragraphBlock.attributedString,
-                                tightTop: paragraphIndex != 0,
-                                tightBottom: paragraphIndex != blockQuoteBlock.paragraphBlocks.count - 1
+                            attributedString: paragraphBlock.attributedString,
+                            tightTop: paragraphIndex != 0,
+                            tightBottom: paragraphIndex != blockQuoteBlock.paragraphBlocks.count - 1
                         ))
                     }
                 }
@@ -91,5 +90,4 @@ class MarkdownParser {
             return []
         }
     }
-
 }

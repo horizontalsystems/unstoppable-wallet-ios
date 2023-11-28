@@ -43,7 +43,7 @@ class WalletConnectMainPendingRequestService {
     }
 
     private func syncPendingRequests() {
-        guard let session = session else {
+        guard let session else {
             items = []
             return
         }
@@ -73,7 +73,7 @@ extension WalletConnectMainPendingRequestService {
     }
 
     func blockchain(chainId: String?) -> String? {
-        guard let chainId = chainId,
+        guard let chainId,
               let id = Int(chainId),
               let blockchain = evmBlockchainManager.blockchain(chainId: id)
         else {

@@ -1,9 +1,9 @@
-import Foundation
-import RxSwift
-import EvmKit
 import Eip20Kit
+import EvmKit
+import Foundation
 import HsToolKit
 import MarketKit
+import RxSwift
 
 class AddEvmTokenBlockchainService {
     private let blockchain: Blockchain
@@ -20,11 +20,9 @@ class AddEvmTokenBlockchainService {
 
         self.rpcSource = rpcSource
     }
-
 }
 
 extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
-
     var placeholder: String {
         "add_token.input_placeholder.contract_address".localized
     }
@@ -50,23 +48,21 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
         let blockchain = blockchain
 
         return Eip20Kit.Kit.tokenInfoSingle(networkManager: networkManager, rpcSource: rpcSource, contractAddress: address)
-                .map { tokenInfo in
-                    Token(
-                            coin: Coin(uid: tokenQuery.customCoinUid, name: tokenInfo.name, code: tokenInfo.symbol),
-                            blockchain: blockchain,
-                            type: tokenQuery.tokenType,
-                            decimals: tokenInfo.decimals
-                    )
-                }
-                .catchError { _ in
-                    Single.error(TokenError.notFound(blockchainName: blockchain.name))
-                }
+            .map { tokenInfo in
+                Token(
+                    coin: Coin(uid: tokenQuery.customCoinUid, name: tokenInfo.name, code: tokenInfo.symbol),
+                    blockchain: blockchain,
+                    type: tokenQuery.tokenType,
+                    decimals: tokenInfo.decimals
+                )
+            }
+            .catchError { _ in
+                Single.error(TokenError.notFound(blockchainName: blockchain.name))
+            }
     }
-
 }
 
 extension AddEvmTokenBlockchainService {
-
     enum TokenError: LocalizedError {
         case invalidAddress
         case notFound(blockchainName: String)
@@ -74,9 +70,8 @@ extension AddEvmTokenBlockchainService {
         var errorDescription: String? {
             switch self {
             case .invalidAddress: return "add_token.invalid_contract_address".localized
-            case .notFound(let blockchainName): return "add_token.contract_address_not_found".localized(blockchainName)
+            case let .notFound(blockchainName): return "add_token.contract_address_not_found".localized(blockchainName)
             }
         }
     }
-
 }

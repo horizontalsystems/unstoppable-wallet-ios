@@ -18,7 +18,6 @@ class AddressUriParser {
     private func fullAddress(scheme: String, address: String, uriBlockchainUid: String? = nil) -> String {
         // there is no explicit indication of the blockchain in the uri. We use the rules of the blockchain parser
         guard let uriBlockchainUid else {
-
             // if has blockchainType check if needed prefix
             if let blockchainType {
                 return pair(blockchainType, address)
@@ -60,13 +59,15 @@ class AddressUriParser {
 
         if let uid: String = uri.value(field: .blockchainUid),
            let blockchainType,
-           blockchainType != BlockchainType(uid: uid) {
+           blockchainType != BlockchainType(uid: uid)
+        {
             return .invalidBlockchainType
         }
 
         if let uid: String = uri.value(field: .tokenUid),
            let tokenType,
-           tokenType != TokenType(id: uid) {
+           tokenType != TokenType(id: uid)
+        {
             return .invalidTokenType
         }
 

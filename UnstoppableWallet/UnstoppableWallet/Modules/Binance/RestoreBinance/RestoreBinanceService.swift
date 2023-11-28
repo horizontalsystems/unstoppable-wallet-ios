@@ -1,7 +1,7 @@
 import Combine
-import ObjectMapper
-import HsToolKit
 import HsExtensions
+import HsToolKit
+import ObjectMapper
 
 class RestoreBinanceService {
     private let networkManager: NetworkManager
@@ -42,11 +42,9 @@ class RestoreBinanceService {
 
         state = .connected
     }
-
 }
 
 extension RestoreBinanceService {
-
     func parse(qrCodeString: String) throws -> QrCode {
         try QrCode(JSONString: qrCodeString)
     }
@@ -63,11 +61,9 @@ extension RestoreBinanceService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension RestoreBinanceService {
-
     enum State {
         case notReady
         case idle(error: Error?)
@@ -84,5 +80,4 @@ extension RestoreBinanceService {
             secretKey = try map.value("secretKey")
         }
     }
-
 }

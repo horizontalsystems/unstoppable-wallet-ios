@@ -1,8 +1,8 @@
 import Foundation
-import MarketKit
-import RxSwift
-import RxRelay
 import HsToolKit
+import MarketKit
+import RxRelay
+import RxSwift
 
 class SendBinanceService {
     private let disposeBag = DisposeBag()
@@ -34,10 +34,10 @@ class SendBinanceService {
         self.mode = mode
 
         switch mode {
-        case .prefilled(let address, let amount):
+        case let .prefilled(address, amount):
             addressService.set(text: address)
             if let amount { addressService.publishAmountRelay.accept(amount) }
-        case .predefined(let address): addressService.set(text: address)
+        case let .predefined(address): addressService.set(text: address)
         case .send: ()
         }
 
@@ -54,8 +54,8 @@ class SendBinanceService {
 
     private func syncState() {
         guard amountCautionService.amountCaution == nil,
-           !amountService.amount.isZero else {
-
+              !amountService.amount.isZero
+        else {
             state = .notReady
             return
         }
@@ -77,24 +77,20 @@ class SendBinanceService {
 
         state = .ready
     }
-
 }
 
 extension SendBinanceService: ISendBaseService {
-
     var stateObservable: Observable<SendBaseService.State> {
         stateRelay.asObservable()
     }
-
 }
 
 extension SendBinanceService: ISendService {
-
-    func sendSingle(logger: Logger) -> Single<Void> {
+    func sendSingle(logger _: Logger) -> Single<Void> {
         let address: Address
         switch addressService.state {
-        case .success(let sendAddress): address = sendAddress
-        case .fetchError(let error): return Single.error(error)
+        case let .success(sendAddress): address = sendAddress
+        case let .fetchError(error): return Single.error(error)
         default: return Single.error(AppError.addressInvalid)
         }
 
@@ -107,16 +103,14 @@ extension SendBinanceService: ISendService {
         }
 
         return adapter.sendSingle(
-                amount: amountService.amount,
-                address: address.raw,
-                memo: memoService.memo
+            amount: amountService.amount,
+            address: address.raw,
+            memo: memoService.memo
         )
     }
-
 }
 
 extension SendBinanceService: ISendXFeeValueService {
-
     var editable: Bool {
         false
     }
@@ -128,11 +122,9 @@ extension SendBinanceService: ISendXFeeValueService {
     var feeStateObservable: Observable<DataStatus<Decimal>> {
         .just(feeState)
     }
-
 }
 
 extension SendBinanceService: IAvailableBalanceService {
-
     var availableBalance: DataStatus<Decimal> {
         .completed(adapter.availableBalance)
     }
@@ -140,5 +132,4 @@ extension SendBinanceService: IAvailableBalanceService {
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
         .just(availableBalance)
     }
-
 }

@@ -1,6 +1,6 @@
+import MarketKit
 import RxSwift
 import UIKit
-import MarketKit
 
 class AddressAppShowModule {
     private let disposeBag = DisposeBag()
@@ -18,8 +18,8 @@ class AddressAppShowModule {
         let abstractParser = AddressUriParser(blockchainType: nil, tokenType: nil)
         let result = abstractParser.parse(addressUri: text)
         switch result {
-        case .uri(let uri):
-            guard BlockchainType.supported.map({ $0.uriScheme }).contains(uri.scheme) else {
+        case let .uri(uri):
+            guard BlockchainType.supported.map(\.uriScheme).contains(uri.scheme) else {
                 return nil
             }
             return uri
@@ -29,18 +29,17 @@ class AddressAppShowModule {
 
     private func showSendTokenList(uri: AddressUri, allowedBlockchainTypes: [BlockchainType]?, allowedTokenTypes: [TokenType]?) {
         guard let viewController = WalletModule.sendTokenListViewController(
-                allowedBlockchainTypes: allowedBlockchainTypes,
-                allowedTokenTypes: allowedTokenTypes,
-                mode: .prefilled(address: uri.address, amount: uri.amount)) else {
+            allowedBlockchainTypes: allowedBlockchainTypes,
+            allowedTokenTypes: allowedTokenTypes,
+            mode: .prefilled(address: uri.address, amount: uri.amount)
+        ) else {
             return
         }
         parentViewController?.visibleController.present(viewController, animated: true)
     }
-
 }
 
 extension AddressAppShowModule: IEventHandler {
-
     @MainActor
     func handle(event: Any, eventType: EventHandler.EventType) async throws {
         guard eventType.contains(.address) else {
@@ -58,8 +57,8 @@ extension AddressAppShowModule: IEventHandler {
 
             var allowedTokenTypes: [TokenType]?
             if let tokenUid: String = uri.value(field: .tokenUid),
-               let tokenType = TokenType(id: tokenUid) {
-
+               let tokenType = TokenType(id: tokenUid)
+            {
                 allowedTokenTypes = [tokenType]
             }
 
@@ -71,7 +70,7 @@ extension AddressAppShowModule: IEventHandler {
                 chain
                     .handlers(address: text)
                     .subscribe(onSuccess: { items in
-                        continuation.resume(returning: items.map { $0.blockchainType })
+                        continuation.resume(returning: items.map(\.blockchainType))
                     }, onError: { error in
                         continuation.resume(throwing: error)
                     })

@@ -1,10 +1,10 @@
-import UIKit
+import ComponentKit
+import HUD
+import RxSwift
 import SectionsTableView
 import SnapKit
 import ThemeKit
-import RxSwift
-import HUD
-import ComponentKit
+import UIKit
 
 class MarketAdvancedSearchViewController: ThemeViewController {
     private let viewModel: MarketAdvancedSearchViewModel
@@ -36,10 +36,10 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,36 +130,37 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func buildSelector(cell: BaseThemeCell, title: String? = nil, viewItem: MarketAdvancedSearchViewModel.ViewItem? = nil) {
         let elements = tableView.universalImage24Elements(
-                title: .body(title),
-                value: viewItem.map { .subhead1($0.value, color: $0.valueStyle.valueTextColor )},
-                accessoryType: .dropdown)
-        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements)
+            title: .body(title),
+            value: viewItem.map { .subhead1($0.value, color: $0.valueStyle.valueTextColor) },
+            accessoryType: .dropdown
         )
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
     }
 
-    private func buildToggle(cell: BaseThemeCell, title: String? = nil, onToggle: @escaping (Bool) -> ()) {
+    private func buildToggle(cell: BaseThemeCell, title: String? = nil, onToggle: @escaping (Bool) -> Void) {
         let elements = tableView.universalImage24Elements(
-                title: .body(title),
-                accessoryType: .switch(onSwitch: onToggle))
+            title: .body(title),
+            accessoryType: .switch(onSwitch: onToggle)
+        )
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
     }
 
     private func selectorItems(viewItems: [MarketAdvancedSearchViewModel.FilterViewItem]) -> [SelectorModule.ViewItem] {
         viewItems.map {
             SelectorModule.ViewItem(
-                    title: $0.title,
-                    titleColor: $0.style.filterTextColor,
-                    selected: $0.selected
+                title: $0.title,
+                titleColor: $0.style.filterTextColor,
+                selected: $0.selected
             )
         }
     }
 
-    private func showSelector(image: BottomSheetTitleView.Image, title: String, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> ()) {
+    private func showSelector(image: BottomSheetTitleView.Image, title: String, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> Void) {
         let viewController = SelectorModule.bottomSingleSelectorViewController(
-                image: image,
-                title: title,
-                viewItems: viewItems,
-                onSelect: onSelect
+            image: image,
+            title: title,
+            viewItems: viewItems,
+            onSelect: onSelect
         )
 
         DispatchQueue.main.async {
@@ -169,9 +170,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapCoinListCell() {
         showSelector(
-                image: .local(name: "circle_coin_24", tint: .warning),
-                title: "market.advanced_search.choose_set".localized,
-                viewItems: selectorItems(viewItems: viewModel.coinListViewItems)
+            image: .local(name: "circle_coin_24", tint: .warning),
+            title: "market.advanced_search.choose_set".localized,
+            viewItems: selectorItems(viewItems: viewModel.coinListViewItems)
         ) { [weak self] index in
             self?.viewModel.setCoinList(at: index)
         }
@@ -179,9 +180,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapMarketCapCell() {
         showSelector(
-                image: .local(name: "usd_24", tint: .warning),
-                title: "market.advanced_search.market_cap".localized,
-                viewItems: selectorItems(viewItems: viewModel.marketCapViewItems)
+            image: .local(name: "usd_24", tint: .warning),
+            title: "market.advanced_search.market_cap".localized,
+            viewItems: selectorItems(viewItems: viewModel.marketCapViewItems)
         ) { [weak self] index in
             self?.viewModel.setMarketCap(at: index)
         }
@@ -189,9 +190,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapVolumeCell() {
         showSelector(
-                image: .local(name: "chart_2_24", tint: .warning),
-                title: "market.advanced_search.volume".localized,
-                viewItems: selectorItems(viewItems: viewModel.volumeViewItems)
+            image: .local(name: "chart_2_24", tint: .warning),
+            title: "market.advanced_search.volume".localized,
+            viewItems: selectorItems(viewItems: viewModel.volumeViewItems)
         ) { [weak self] index in
             self?.viewModel.setVolume(at: index)
         }
@@ -199,11 +200,11 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapBlockchainsCell() {
         let viewController = SelectorModule.multiSelectorViewController(
-                title: "market.advanced_search.blockchains".localized,
-                viewItems: viewModel.blockchainViewItems,
-                onFinish: { [weak self] in
-                    self?.viewModel.setBlockchains(indexes: $0)
-                }
+            title: "market.advanced_search.blockchains".localized,
+            viewItems: viewModel.blockchainViewItems,
+            onFinish: { [weak self] in
+                self?.viewModel.setBlockchains(indexes: $0)
+            }
         )
 
         present(viewController, animated: true)
@@ -211,9 +212,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapPeriodCell() {
         showSelector(
-                image: .local(name: "circle_clock_24", tint: .warning),
-                title: "market.advanced_search.price_period".localized,
-                viewItems: selectorItems(viewItems: viewModel.priceChangeTypeViewItems)
+            image: .local(name: "circle_clock_24", tint: .warning),
+            title: "market.advanced_search.price_period".localized,
+            viewItems: selectorItems(viewItems: viewModel.priceChangeTypeViewItems)
         ) { [weak self] index in
             self?.viewModel.setPriceChangeType(at: index)
         }
@@ -221,9 +222,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapPriceChangeCell() {
         showSelector(
-                image: .local(name: "markets_24", tint: .warning),
-                title: "market.advanced_search.price_change".localized,
-                viewItems: selectorItems(viewItems: viewModel.priceChangeViewItems)
+            image: .local(name: "markets_24", tint: .warning),
+            title: "market.advanced_search.price_change".localized,
+            viewItems: selectorItems(viewItems: viewModel.priceChangeViewItems)
         ) { [weak self] index in
             self?.viewModel.setPriceChange(at: index)
         }
@@ -258,7 +259,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func set(isOn: Bool, cell: BaseThemeCell) {
+    private func set(isOn _: Bool, cell _: BaseThemeCell) {
 //        cell.bind(index: 1) { (component: SwitchComponent) in
 //            component.switchView.isOn = isOn
 //        }
@@ -299,96 +300,96 @@ class MarketAdvancedSearchViewController: ThemeViewController {
             spinner.isHidden = true
             showResultButton.setTitle("market.advanced_search.empty_results".localized, for: .normal)
             showResultButton.isEnabled = false
-        case .showResults(let count):
+        case let .showResults(count):
             spinner.isHidden = true
             showResultButton.setTitle("\("market.advanced_search.show_results".localized): \(count)", for: .normal)
             showResultButton.isEnabled = true
-        case .error(let description):
+        case let .error(description):
             spinner.isHidden = true
             showResultButton.setTitle(description, for: .normal)
             showResultButton.isEnabled = false
         }
     }
 
-    private func row(cell: UITableViewCell, id: String, height: CGFloat = .heightCell48, action: (() -> ())? = nil) -> RowProtocol {
+    private func row(cell: UITableViewCell, id: String, height: CGFloat = .heightCell48, action: (() -> Void)? = nil) -> RowProtocol {
         StaticRow(
-                cell: cell,
-                id: id,
-                height: height,
-                autoDeselect: true,
-                action: action
+            cell: cell,
+            id: id,
+            height: height,
+            autoDeselect: true,
+            action: action
         )
     }
-
 }
 
 extension MarketAdvancedSearchViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
         sections.append(Section(
-                id: "coin_list",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin24),
-                rows: [
-                    row(cell: coinListCell, id: "coin_list") { [weak self] in
-                        self?.onTapCoinListCell()
-                    }
-                ])
+            id: "coin_list",
+            headerState: .margin(height: .margin12),
+            footerState: .margin(height: .margin24),
+            rows: [
+                row(cell: coinListCell, id: "coin_list") { [weak self] in
+                    self?.onTapCoinListCell()
+                },
+            ]
+        )
         )
 
         sections.append(Section(
-                id: "market_filters",
-                headerState: tableView.sectionHeader(text: "market.advanced_search.market_parameters".localized.uppercased()),
-                footerState: .margin(height: .margin24),
-                rows: [
-                    row(cell: marketCapCell, id: "market_cap") { [weak self] in
-                        self?.onTapMarketCapCell()
-                    },
-                    row(cell: volumeCell, id: "volume") { [weak self] in
-                        self?.onTapVolumeCell()
-                    }
-                ])
+            id: "market_filters",
+            headerState: tableView.sectionHeader(text: "market.advanced_search.market_parameters".localized.uppercased()),
+            footerState: .margin(height: .margin24),
+            rows: [
+                row(cell: marketCapCell, id: "market_cap") { [weak self] in
+                    self?.onTapMarketCapCell()
+                },
+                row(cell: volumeCell, id: "volume") { [weak self] in
+                    self?.onTapVolumeCell()
+                },
+            ]
+        )
         )
 
         sections.append(Section(
-                id: "network_filters",
-                headerState: tableView.sectionHeader(text: "market.advanced_search.network_parameters".localized.uppercased()),
-                footerState: .margin(height: .margin24),
-                rows: [
-                    row(cell: blockchainsCell, id: "blockchains") { [weak self] in
-                        self?.onTapBlockchainsCell()
-                    }
-                ])
+            id: "network_filters",
+            headerState: tableView.sectionHeader(text: "market.advanced_search.network_parameters".localized.uppercased()),
+            footerState: .margin(height: .margin24),
+            rows: [
+                row(cell: blockchainsCell, id: "blockchains") { [weak self] in
+                    self?.onTapBlockchainsCell()
+                },
+            ]
+        )
         )
 
         sections.append(Section(
-                id: "price_filters",
-                headerState: tableView.sectionHeader(text: "market.advanced_search.price_parameters".localized.uppercased()),
-                footerState: .margin(height: .margin32),
-                rows: [
-                    row(cell: priceChangeCell, id: "price_change") { [weak self] in
-                        self?.onTapPriceChangeCell()
-                    },
-                    row(cell: periodCell, id: "price_period") { [weak self] in
-                        self?.onTapPeriodCell()
-                    },
-                    row(cell: outperformedBtcCell, id: "outperformed_btc", height: .heightCell56),
-                    row(cell: outperformedEthCell, id: "outperformed_eth", height: .heightCell56),
-                    row(cell: outperformedBnbCell, id: "outperformed_bnb", height: .heightCell56),
-                    row(cell: priceCloseToAthCell, id: "price_close_to_ath", height: .heightCell56),
-                    row(cell: priceCloseToAtlCell, id: "price_close_to_atl", height: .heightCell56),
-                ])
+            id: "price_filters",
+            headerState: tableView.sectionHeader(text: "market.advanced_search.price_parameters".localized.uppercased()),
+            footerState: .margin(height: .margin32),
+            rows: [
+                row(cell: priceChangeCell, id: "price_change") { [weak self] in
+                    self?.onTapPriceChangeCell()
+                },
+                row(cell: periodCell, id: "price_period") { [weak self] in
+                    self?.onTapPeriodCell()
+                },
+                row(cell: outperformedBtcCell, id: "outperformed_btc", height: .heightCell56),
+                row(cell: outperformedEthCell, id: "outperformed_eth", height: .heightCell56),
+                row(cell: outperformedBnbCell, id: "outperformed_bnb", height: .heightCell56),
+                row(cell: priceCloseToAthCell, id: "price_close_to_ath", height: .heightCell56),
+                row(cell: priceCloseToAtlCell, id: "price_close_to_atl", height: .heightCell56),
+            ]
+        )
         )
 
         return sections
     }
-
 }
 
 extension MarketAdvancedSearchViewModel.ValueStyle {
-
     var valueTextColor: UIColor {
         switch self {
         case .none: return .themeGray
@@ -406,5 +407,4 @@ extension MarketAdvancedSearchViewModel.ValueStyle {
         case .normal: return .themeLeah
         }
     }
-
 }

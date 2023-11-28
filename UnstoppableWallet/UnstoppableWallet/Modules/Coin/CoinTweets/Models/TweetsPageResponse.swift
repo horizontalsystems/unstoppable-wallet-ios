@@ -40,14 +40,15 @@ class TweetsPageResponse: ImmutableMappable {
             var referencedTweet: (referenceType: Tweet.ReferenceType, tweet: Tweet)? = nil
             if let tweetReference = rawTweet.referencedTweets.first,
                let rawReferencedTweet = referencedTweets.first(where: { tweet in tweet.id == tweetReference.id }),
-               let referencedTweetAuthor = users.first(where: { user in user.id == rawReferencedTweet.authorId }) {
+               let referencedTweetAuthor = users.first(where: { user in user.id == rawReferencedTweet.authorId })
+            {
                 let tweet = Tweet(
-                        id: rawReferencedTweet.id,
-                        user: referencedTweetAuthor,
-                        text: rawReferencedTweet.text,
-                        date: rawReferencedTweet.date,
-                        attachments: [],
-                        referencedTweet: nil
+                    id: rawReferencedTweet.id,
+                    user: referencedTweetAuthor,
+                    text: rawReferencedTweet.text,
+                    date: rawReferencedTweet.date,
+                    attachments: [],
+                    referencedTweet: nil
                 )
 
                 switch tweetReference.type {
@@ -59,20 +60,18 @@ class TweetsPageResponse: ImmutableMappable {
             }
 
             return Tweet(
-                    id: rawTweet.id,
-                    user: user,
-                    text: rawTweet.text,
-                    date: rawTweet.date,
-                    attachments: attachments,
-                    referencedTweet: referencedTweet
+                id: rawTweet.id,
+                user: user,
+                text: rawTweet.text,
+                date: rawTweet.date,
+                attachments: attachments,
+                referencedTweet: referencedTweet
             )
         }
     }
-
 }
 
 extension TweetsPageResponse {
-
     struct RawTweet: ImmutableMappable {
         let id: String
         let date: Date
@@ -103,7 +102,7 @@ extension TweetsPageResponse {
             self.mentions = mentions
             self.hashTags = hashTags
         }
-        
+
         init(map: Map) throws {
             urls = (try? map.value("urls")) ?? []
             mentions = (try? map.value("mentions")) ?? []
@@ -194,11 +193,9 @@ extension TweetsPageResponse {
             id = try map.value("id")
         }
     }
-
 }
 
 extension TweetsPageResponse {
-
     static var utcDateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -208,11 +205,10 @@ extension TweetsPageResponse {
     }
 
     static let utcDateTransform: TransformOf<Date, String> = TransformOf(fromJSON: { string -> Date? in
-        guard let string = string else { return nil }
+        guard let string else { return nil }
         return utcDateFormatter.date(from: string)
     }, toJSON: { (value: Date?) in
-        guard let value = value else { return nil }
+        guard let value else { return nil }
         return utcDateFormatter.string(from: value)
     })
-
 }

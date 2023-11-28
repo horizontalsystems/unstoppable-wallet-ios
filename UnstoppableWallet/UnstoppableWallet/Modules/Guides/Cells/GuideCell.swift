@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import Kingfisher
 import ComponentKit
+import Kingfisher
+import SnapKit
+import ThemeKit
+import UIKit
 
 class GuideCell: UITableViewCell {
     private static let cardTopMargin: CGFloat = 0
@@ -65,7 +65,8 @@ class GuideCell: UITableViewCell {
         titleLabel.textColor = .themeLeah
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
@@ -81,19 +82,15 @@ class GuideCell: UITableViewCell {
         dateLabel.text = GuideCell.formattedDate(viewItem: viewItem)
         titleLabel.text = viewItem.title
     }
-
 }
 
 extension GuideCell {
-
     private static func formattedDate(viewItem: GuideViewItem) -> String {
         DateFormatter.cachedFormatter(format: "MMMM d, yyyy").string(from: viewItem.date)
     }
-
 }
 
 extension GuideCell {
-
     static func height(containerWidth: CGFloat, viewItem: GuideViewItem, first: Bool, last: Bool) -> CGFloat {
         let titleWidth = containerWidth - 2 * cardHorizontalMargin - 2 * titleHorizontalMargin
         let titleHeight = viewItem.title.height(forContainerWidth: titleWidth, font: titleFont)
@@ -103,5 +100,4 @@ extension GuideCell {
 
         return cardTop + imageHeight + dateTopMargin + dateFont.lineHeight + titleTopMargin + titleHeight + titleBottomMargin + cardBottom
     }
-
 }

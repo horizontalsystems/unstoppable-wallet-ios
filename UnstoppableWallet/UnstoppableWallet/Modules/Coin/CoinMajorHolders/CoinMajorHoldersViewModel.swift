@@ -1,9 +1,9 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
+import Foundation
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinMajorHoldersViewModel {
     private let service: CoinMajorHoldersService
@@ -26,8 +26,8 @@ class CoinMajorHoldersViewModel {
         self.service = service
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -38,7 +38,7 @@ class CoinMajorHoldersViewModel {
             stateViewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .completed(let tokenHolders):
+        case let .completed(tokenHolders):
             stateViewItemRelay.accept(stateViewItem(tokenHolders: tokenHolders))
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -54,33 +54,31 @@ class CoinMajorHoldersViewModel {
 
         let viewItems = tokenHolders.topHolders.enumerated().map { index, item in
             ViewItem(
-                    order: "\(index + 1)",
-                    percent: percentFormatter.string(from: (item.percentage / 100) as NSNumber),
-                    quantity: ValueFormatter.instance.formatShort(value: item.balance, decimalCount: 0, symbol: service.coin.code),
-                    labeledAddress: service.labeled(address: item.address),
-                    address: item.address
+                order: "\(index + 1)",
+                percent: percentFormatter.string(from: (item.percentage / 100) as NSNumber),
+                quantity: ValueFormatter.instance.formatShort(value: item.balance, decimalCount: 0, symbol: service.coin.code),
+                labeledAddress: service.labeled(address: item.address),
+                address: item.address
             )
         }
 
-        let totalPercent = tokenHolders.topHolders.map { $0.percentage }.reduce(0, +)
+        let totalPercent = tokenHolders.topHolders.map(\.percentage).reduce(0, +)
 
         percentFormatter.maximumFractionDigits = 2
         let percent = percentFormatter.string(from: (totalPercent / 100) as NSNumber)
 
         return StateViewItem(
-                holdersCount: ValueFormatter.instance.formatShort(value: tokenHolders.count),
-                totalPercent: totalPercent,
-                remainingPercent: 100.0 - totalPercent,
-                percent: percent,
-                viewItems: viewItems,
-                holdersUrl: tokenHolders.holdersUrl
+            holdersCount: ValueFormatter.instance.formatShort(value: tokenHolders.count),
+            totalPercent: totalPercent,
+            remainingPercent: 100.0 - totalPercent,
+            percent: percent,
+            viewItems: viewItems,
+            holdersUrl: tokenHolders.holdersUrl
         )
     }
-
 }
 
 extension CoinMajorHoldersViewModel {
-
     var stateViewItemDriver: Driver<StateViewItem?> {
         stateViewItemRelay.asDriver()
     }
@@ -104,11 +102,9 @@ extension CoinMajorHoldersViewModel {
     func onTapRetry() {
         service.refresh()
     }
-
 }
 
 extension CoinMajorHoldersViewModel {
-
     struct ViewItem {
         let order: String
         let percent: String?
@@ -125,5 +121,4 @@ extension CoinMajorHoldersViewModel {
         let viewItems: [ViewItem]
         let holdersUrl: String?
     }
-
 }

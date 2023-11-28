@@ -1,9 +1,9 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
 import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SendBinanceViewController: BaseSendViewController {
     private let disposeBag = DisposeBag()
@@ -23,8 +23,8 @@ class SendBinanceViewController: BaseSendViewController {
          recipientViewModel: RecipientAddressViewModel,
          memoViewModel: SendMemoInputViewModel,
          feeViewModel: SendFeeViewModel,
-         feeWarningViewModel: ITitledCautionViewModel
-    ) {
+         feeWarningViewModel: ITitledCautionViewModel)
+    {
         self.feeWarningViewModel = feeWarningViewModel
 
         memoCell = SendMemoInputCell(viewModel: memoViewModel)
@@ -32,16 +32,17 @@ class SendBinanceViewController: BaseSendViewController {
         feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         super.init(
-                confirmationFactory: confirmationFactory,
-                viewModel: viewModel,
-                availableBalanceViewModel: availableBalanceViewModel,
-                amountInputViewModel: amountInputViewModel,
-                amountCautionViewModel: amountCautionViewModel,
-                recipientViewModel: recipientViewModel
+            confirmationFactory: confirmationFactory,
+            viewModel: viewModel,
+            availableBalanceViewModel: availableBalanceViewModel,
+            amountInputViewModel: amountInputViewModel,
+            amountCautionViewModel: amountCautionViewModel,
+            recipientViewModel: recipientViewModel
         )
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -62,7 +63,7 @@ class SendBinanceViewController: BaseSendViewController {
     private func handle(caution: TitledCaution?) {
         feeCautionCell.isVisible = caution != nil
 
-        if let caution = caution {
+        if let caution {
             feeCautionCell.bind(caution: caution)
         }
 
@@ -76,45 +77,45 @@ class SendBinanceViewController: BaseSendViewController {
 
     var memoSection: SectionProtocol {
         Section(
-                id: "memo",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: memoCell,
-                            id: "memo-input",
-                            height: .heightSingleLineCell
-                    )
-                ]
+            id: "memo",
+            headerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: memoCell,
+                    id: "memo-input",
+                    height: .heightSingleLineCell
+                ),
+            ]
         )
     }
 
     var feeSection: SectionProtocol {
         Section(
-                id: "fee",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: feeCell,
-                            id: "fee",
-                            height: .heightCell48
-                    )
-                ]
+            id: "fee",
+            headerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: feeCell,
+                    id: "fee",
+                    height: .heightCell48
+                ),
+            ]
         )
     }
 
     var feeWarningSection: SectionProtocol {
         Section(
-                id: "fee-warning",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: feeCautionCell,
-                            id: "fee-warning",
-                            dynamicHeight: { [weak self] containerWidth in
-                                self?.feeCautionCell.cellHeight(containerWidth: containerWidth) ?? 0
-                            }
-                    )
-                ]
+            id: "fee-warning",
+            headerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: feeCautionCell,
+                    id: "fee-warning",
+                    dynamicHeight: { [weak self] containerWidth in
+                        self?.feeCautionCell.cellHeight(containerWidth: containerWidth) ?? 0
+                    }
+                ),
+            ]
         )
     }
 
@@ -124,10 +125,9 @@ class SendBinanceViewController: BaseSendViewController {
             memoSection,
             feeSection,
             feeWarningSection,
-            buttonSection
+            buttonSection,
         ])
 
         return sections
     }
-
 }

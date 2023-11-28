@@ -1,9 +1,9 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 
 class ReleaseNotesService {
-    static private let releaseUrl = "https://api.github.com/repos/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)/releases/tags/"
+    private static let releaseUrl = "https://api.github.com/repos/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)/releases/tags/"
 
     private let appVersionManager: AppVersionManager
 
@@ -23,5 +23,4 @@ class ReleaseNotesService {
     var lastVersionUrl: URL? {
         URL(string: Self.releaseUrl + appVersionManager.currentVersion.releaseNotesVersion)
     }
-
 }

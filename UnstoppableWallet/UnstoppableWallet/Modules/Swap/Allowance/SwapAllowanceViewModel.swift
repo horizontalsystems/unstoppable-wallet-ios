@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class SwapAllowanceViewModel {
     private let disposeBag = DisposeBag()
@@ -13,6 +13,7 @@ class SwapAllowanceViewModel {
             isVisibleRelay.accept(isVisible)
         }
     }
+
     private var isVisibleRelay = PublishRelay<Bool>()
     private var allowanceRelay = BehaviorRelay<String?>(value: nil)
     private var isErrorRelay = BehaviorRelay<Bool>(value: false)
@@ -57,26 +58,24 @@ class SwapAllowanceViewModel {
     }
 
     private func handle(errors: [Error]) {
-        let error = errors.first(where: { .insufficientAllowance == $0 as? SwapModule.SwapError })
+        let error = errors.first(where: { $0 as? SwapModule.SwapError == .insufficientAllowance })
         isErrorRelay.accept(error != nil)
 
         syncVisible()
     }
 
     private func allowance(state: SwapAllowanceService.State, errors: [Error]) -> String? {
-        let isInsufficientAllowance = errors.first(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) != nil
+        let isInsufficientAllowance = errors.first(where: { $0 as? SwapModule.SwapError == .insufficientAllowance }) != nil
 
         switch state {
-        case .ready(let allowance):
+        case let .ready(allowance):
             return isInsufficientAllowance ? ValueFormatter.instance.formatFull(coinValue: allowance) : nil
         default: return nil
         }
     }
-
 }
 
 extension SwapAllowanceViewModel {
-
     var isVisibleSignal: Signal<Bool> {
         isVisibleRelay.asSignal()
     }
@@ -88,5 +87,4 @@ extension SwapAllowanceViewModel {
     var isErrorDriver: Driver<Bool> {
         isErrorRelay.asDriver()
     }
-
 }

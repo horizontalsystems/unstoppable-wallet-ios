@@ -41,7 +41,8 @@ class TopPlatformHeaderCell: UITableViewCell {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -50,5 +51,4 @@ class TopPlatformHeaderCell: UITableViewCell {
         descriptionLabel.text = description
         rightImageView.setImage(withUrlString: imageUrl, placeholder: nil)
     }
-
 }

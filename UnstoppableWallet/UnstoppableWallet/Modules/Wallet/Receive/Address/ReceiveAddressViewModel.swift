@@ -33,8 +33,8 @@ class ReceiveAddressViewModel<Service: IReceiveAddressService, Factory: IReceive
         self.decimalParser = decimalParser
 
         service.statusUpdatedPublisher
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -57,11 +57,9 @@ class ReceiveAddressViewModel<Service: IReceiveAddressService, Factory: IReceive
             actions = viewItemFactory.actions(item: item)
         }
     }
-
 }
 
 extension ReceiveAddressViewModel {
-
     var title: String {
         service.title
     }

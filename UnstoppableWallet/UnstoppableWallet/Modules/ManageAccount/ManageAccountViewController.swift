@@ -303,7 +303,7 @@ extension ManageAccountViewController: SectionsDataSource {
             ),
         ]
 
-        if let warningViewItem = warningViewItem {
+        if let warningViewItem {
             sections.append(
                 Section(
                     id: "migration-warning",

@@ -17,8 +17,8 @@ extension KeychainStorage {
         return T(string)
     }
 
-    func set<T: LosslessStringConvertible>(value: T?, for key: String) throws {
-        if let value = value {
+    func set(value: (some LosslessStringConvertible)?, for key: String) throws {
+        if let value {
             try keychain.set(value.description, key: key)
         } else {
             try keychain.remove(key)
@@ -30,7 +30,7 @@ extension KeychainStorage {
     }
 
     func set(value: Data?, for key: String) throws {
-        if let value = value {
+        if let value {
             try keychain.set(value, key: key)
         } else {
             try keychain.remove(key)

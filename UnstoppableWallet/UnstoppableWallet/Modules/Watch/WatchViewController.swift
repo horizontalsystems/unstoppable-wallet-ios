@@ -1,11 +1,11 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
 import ComponentKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
 import UIExtensions
+import UIKit
 
 class WatchViewController: KeyboardAwareViewController {
     private let viewModel: WatchViewModel
@@ -44,7 +44,8 @@ class WatchViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -109,7 +110,7 @@ class WatchViewController: KeyboardAwareViewController {
             self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
             self?.nextButton.isEnabled = enabled
         }
-        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] (watchType, accountType, name) in
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] watchType, accountType, name in
             self?.proceedToNextPage(watchType: watchType, accountType: accountType, name: name)
         }
 
@@ -133,14 +134,14 @@ class WatchViewController: KeyboardAwareViewController {
 
     private func onTapWatchType() {
         let alertController = AlertRouter.module(
-                title: "watch_address.watch_by".localized,
-                viewItems: WatchModule.WatchType.allCases.enumerated().map { index, watchType in
-                    AlertViewItem(
-                            text: watchType.title,
-                            description: watchType.subtitle,
-                            selected: self.watchType == watchType
-                    )
-                }
+            title: "watch_address.watch_by".localized,
+            viewItems: WatchModule.WatchType.allCases.enumerated().map { _, watchType in
+                AlertViewItem(
+                    text: watchType.title,
+                    description: watchType.subtitle,
+                    selected: self.watchType == watchType
+                )
+            }
         ) { [weak self] index in
             self?.viewModel.onSelect(watchType: WatchModule.WatchType.allCases[index])
         }
@@ -157,11 +158,9 @@ class WatchViewController: KeyboardAwareViewController {
 
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension WatchViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
@@ -177,98 +176,98 @@ extension WatchViewController: SectionsDataSource {
                         cell: nameCell,
                         id: "name",
                         height: .heightSingleLineCell
-                    )
+                    ),
                 ]
-            )
+            ),
         ]
 
         sections.append(
-                Section(
-                        id: "watch-type",
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            tableView.universalRow48(
-                                    id: "watch_type",
-                                    title: .body("watch_address.by".localized),
-                                    value: .subhead1(watchType.title, color: .themeGray),
-                                    accessoryType: .dropdown,
-                                    autoDeselect: true,
-                                    isFirst: true,
-                                    isLast: true
-                            ) { [weak self] in
-                                self?.onTapWatchType()
-                            }
-                        ]
-                )
+            Section(
+                id: "watch-type",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.universalRow48(
+                        id: "watch_type",
+                        title: .body("watch_address.by".localized),
+                        value: .subhead1(watchType.title, color: .themeGray),
+                        accessoryType: .dropdown,
+                        autoDeselect: true,
+                        isFirst: true,
+                        isLast: true
+                    ) { [weak self] in
+                        self?.onTapWatchType()
+                    },
+                ]
+            )
         )
 
         switch watchType {
         case .evmAddress:
             let evmAddressSection: SectionProtocol = Section(
-                    id: "address",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: evmAddressCell,
-                                id: "address-input",
-                                dynamicHeight: { [weak self] width in
-                                    self?.evmAddressCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: evmAddressCautionCell,
-                                id: "address-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.evmAddressCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "address",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: evmAddressCell,
+                        id: "address-input",
+                        dynamicHeight: { [weak self] width in
+                            self?.evmAddressCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: evmAddressCautionCell,
+                        id: "address-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.evmAddressCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             )
 
             sections.append(evmAddressSection)
         case .tronAddress:
             let tronAddressSection: SectionProtocol = Section(
-                    id: "address",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: tronAddressCell,
-                                id: "address-input",
-                                dynamicHeight: { [weak self] width in
-                                    self?.tronAddressCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: tronAddressCautionCell,
-                                id: "address-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.tronAddressCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "address",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: tronAddressCell,
+                        id: "address-input",
+                        dynamicHeight: { [weak self] width in
+                            self?.tronAddressCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: tronAddressCautionCell,
+                        id: "address-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.tronAddressCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             )
 
             sections.append(tronAddressSection)
         case .publicKey:
             let publicKeySection: SectionProtocol = Section(
-                    id: "public-key-input",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: publicKeyInputCell,
-                                id: "public-key-input",
-                                dynamicHeight: { [weak self] width in
-                                    self?.publicKeyInputCell.cellHeight(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: publicKeyCautionCell,
-                                id: "public-key-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.publicKeyCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "public-key-input",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: publicKeyInputCell,
+                        id: "public-key-input",
+                        dynamicHeight: { [weak self] width in
+                            self?.publicKeyInputCell.cellHeight(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: publicKeyCautionCell,
+                        id: "public-key-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.publicKeyCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             )
 
             sections.append(publicKeySection)
@@ -276,5 +275,4 @@ extension WatchViewController: SectionsDataSource {
 
         return sections
     }
-
 }

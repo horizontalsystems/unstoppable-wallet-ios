@@ -1,10 +1,10 @@
-import UIKit
+import BigInt
+import EvmKit
+import HsExtensions
 import RxCocoa
 import RxRelay
 import RxSwift
-import EvmKit
-import BigInt
-import HsExtensions
+import UIKit
 
 class ProFeaturesAuthorizationManager {
     static let contractAddress = try! EvmKit.Address(hex: "0x495f947276749ce646f68ac8c248420045cb7b5e")
@@ -32,29 +32,29 @@ class ProFeaturesAuthorizationManager {
 
     private func sortedAccountData() -> [AccountData] {
         let accounts = accountManager
-                .accounts
-                .filter { account in
-                    account.type.mnemonicSeed != nil
-                }
+            .accounts
+            .filter { account in
+                account.type.mnemonicSeed != nil
+            }
 
         guard !accounts.isEmpty,
               let active = accountManager.activeAccount
         else {
-
             return []
         }
 
         return accounts
-                .sorted { account, account2 in
-                    account.id == active.id
+            .sorted { account, _ in
+                account.id == active.id
+            }
+            .compactMap { account in
+                if let seed = account.type.mnemonicSeed,
+                   let address = try? Signer.address(seed: seed, chain: .ethereum)
+                {
+                    return AccountData(accountId: account.id, address: address)
                 }
-                .compactMap { account in
-                    if let seed = account.type.mnemonicSeed,
-                       let address = try? Signer.address(seed: seed, chain: .ethereum) {
-                        return AccountData(accountId: account.id, address: address)
-                    }
-                    return nil
-                }
+                return nil
+            }
     }
 
     private func tokenHolder(provider: Eip1155Provider, contractAddress: EvmKit.Address, tokenId: BigUInt, accountData: [AccountData], index: Int = 0) -> Single<AccountData?> {
@@ -63,19 +63,17 @@ class ProFeaturesAuthorizationManager {
         }
 
         return provider.getBalanceOf(contractAddress: contractAddress, tokenId: tokenId, address: accountData[index].address)
-                .flatMap { [weak self] balance in
-                    if balance != 0 {
-                        return Single.just(accountData[index])
-                    } else {
-                        return self?.tokenHolder(provider: provider, contractAddress: contractAddress, tokenId: tokenId, accountData: accountData, index: index + 1) ?? Single.just(nil)
-                    }
+            .flatMap { [weak self] balance in
+                if balance != 0 {
+                    return Single.just(accountData[index])
+                } else {
+                    return self?.tokenHolder(provider: provider, contractAddress: contractAddress, tokenId: tokenId, accountData: accountData, index: index + 1) ?? Single.just(nil)
                 }
+            }
     }
-
 }
 
 extension ProFeaturesAuthorizationManager {
-
     var sessionKeyObservable: Observable<SessionKey> {
         sessionKeyRelay.asObservable()
     }
@@ -89,13 +87,13 @@ extension ProFeaturesAuthorizationManager {
         sessionKeyRelay.accept(SessionKey(type: type, key: sessionKey))
     }
 
-    func nftHolder(type: NftType) -> Single<AccountData?> {
+    func nftHolder(type _: NftType) -> Single<AccountData?> {
         let accountData = sortedAccountData()
 
         guard !accountData.isEmpty,
               let httpSyncSource = evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
-              let provider = try? Eip1155Provider.instance(rpcSource: httpSyncSource.rpcSource) else {
-
+              let provider = try? Eip1155Provider.instance(rpcSource: httpSyncSource.rpcSource)
+        else {
             return Single.just(nil)
         }
 
@@ -104,7 +102,8 @@ extension ProFeaturesAuthorizationManager {
 
     func sign(accountData: AccountData, data: Data) -> String? {
         guard let account = accountManager.account(id: accountData.accountId),
-              let seed = account.type.mnemonicSeed else {
+              let seed = account.type.mnemonicSeed
+        else {
             return nil
         }
 
@@ -115,11 +114,9 @@ extension ProFeaturesAuthorizationManager {
     func clearSessionKey(type: NftType?) {
         storage.clear(type: type)
     }
-
 }
 
 extension ProFeaturesAuthorizationManager {
-
     enum NftType: String, CaseIterable {
         case mountainYak
     }
@@ -133,5 +130,4 @@ extension ProFeaturesAuthorizationManager {
         let type: NftType
         let key: String
     }
-
 }

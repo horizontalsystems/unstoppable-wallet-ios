@@ -62,7 +62,7 @@ class Eip1559EvmFeeViewModel {
             spinnerVisible = true
             feeValue = nil
             gasLimit = "n/a".localized
-        case .failed(_):
+        case .failed:
             spinnerVisible = false
             feeValue = .error(text: "n/a".localized)
             gasLimit = "n/a".localized
@@ -74,8 +74,8 @@ class Eip1559EvmFeeViewModel {
             let tilda = gasData.isSurcharged
             if fallibleTransaction.errors.isEmpty, let coinValue = amountData.coinValue.formattedFull {
                 feeValue = .regular(
-                        text: "\(tilda ? "~" : "")\(coinValue)",
-                        secondaryText: amountData.currencyValue?.formattedFull.map { "\(tilda ? "~" : "")\($0)" }
+                    text: "\(tilda ? "~" : "")\(coinValue)",
+                    secondaryText: amountData.currencyValue?.formattedFull.map { "\(tilda ? "~" : "")\($0)" }
                 )
             } else {
                 feeValue = .error(text: "n/a".localized)
@@ -100,11 +100,11 @@ class Eip1559EvmFeeViewModel {
             cautionType = nil
             maxGasPrice = nil
             tips = nil
-        case .failed(_):
+        case .failed:
             cautionType = .error
             maxGasPrice = nil
             tips = nil
-        case .completed(let fallibleGasPrice):
+        case let .completed(fallibleGasPrice):
             maxGasPrice = feeViewItemFactory.decimalValue(value: gasPriceService.maxFee)
             tips = feeViewItemFactory.decimalValue(value: gasPriceService.tips)
             cautionType = fallibleGasPrice.cautionType
@@ -120,14 +120,12 @@ class Eip1559EvmFeeViewModel {
         currentBaseFeeRelay.accept(feeViewItemFactory.description(value: recommendedBaseFee, step: baseStep))
     }
 
-    private func sync(usingRecommended: Bool) {
-        alteredStateRelay.accept(Void())
+    private func sync(usingRecommended _: Bool) {
+        alteredStateRelay.accept(())
     }
-
 }
 
 extension Eip1559EvmFeeViewModel {
-
     var altered: Bool {
         !gasPriceService.usingRecommended
     }
@@ -167,11 +165,9 @@ extension Eip1559EvmFeeViewModel {
     var cautionTypeDriver: Driver<CautionType?> {
         cautionTypeRelay.asDriver()
     }
-
 }
 
 extension Eip1559EvmFeeViewModel: IFeeViewModel {
-
     var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }

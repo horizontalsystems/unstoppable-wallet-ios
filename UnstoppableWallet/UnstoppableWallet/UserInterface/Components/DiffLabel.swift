@@ -1,15 +1,15 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class DiffLabel: UILabel {
-
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -26,13 +26,11 @@ class DiffLabel: UILabel {
     func clear() {
         text = nil
     }
-
 }
 
 extension DiffLabel {
-
     static func formatted(value: Decimal?) -> String? {
-        guard let value = value else {
+        guard let value else {
             return "----"
         }
 
@@ -40,7 +38,7 @@ extension DiffLabel {
     }
 
     static func color(value: Decimal?, highlight: Bool = true) -> UIColor {
-        guard let value = value else {
+        guard let value else {
             return .themeGray50
         }
 
@@ -50,5 +48,4 @@ extension DiffLabel {
 
         return value.isSignMinus ? .themeLucian : .themeRemus
     }
-
 }

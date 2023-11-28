@@ -42,9 +42,7 @@ class CoinOverviewViewModelNew: ObservableObject {
                 }
             }
 
-        let walletTokens = walletManager.activeWallets.map {
-            $0.token
-        }
+        let walletTokens = walletManager.activeWallets.map(\.token)
 
         let tokenItems = tokens
             .sorted { lhsToken, rhsToken in
@@ -60,7 +58,7 @@ class CoinOverviewViewModelNew: ObservableObject {
             .map { token in
                 let state: TokenItemState
 
-                if let account = account, !account.watchAccount, account.type.supports(token: token) {
+                if let account, !account.watchAccount, account.type.supports(token: token) {
                     if walletTokens.contains(token) {
                         state = .alreadyAdded
                     } else {
@@ -88,7 +86,7 @@ class CoinOverviewViewModelNew: ObservableObject {
     }
 
     private var guideUrl: URL? {
-        guard let guideFileUrl = guideFileUrl else {
+        guard let guideFileUrl else {
             return nil
         }
 
