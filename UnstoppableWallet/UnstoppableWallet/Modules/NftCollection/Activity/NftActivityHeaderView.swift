@@ -66,7 +66,7 @@ class NftActivityHeaderView: UIView {
 
     @objc private func onTapContract() {
         let viewController = SelectorModule.bottomSingleSelectorViewController(
-                image: .local(image: UIImage(named: "paper_contract_24")?.withTintColor(.themeJacob)),
+                image: .local(name: "paper_contract_24", tint: .warning),
                 title: "nft.activity.contracts".localized,
                 viewItems: viewModel.contractViewItems,
                 onSelect: { [weak self] index in

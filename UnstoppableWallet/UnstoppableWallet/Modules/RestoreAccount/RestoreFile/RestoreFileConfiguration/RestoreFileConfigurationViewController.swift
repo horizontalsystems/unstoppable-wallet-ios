@@ -87,7 +87,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
 
     private func showMergeAlert() {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                image: .warning,
                 title: "alert.notice".localized,
                 items: [
                     .highlightedDescription(text: "backup_app.restore.notice.description".localized),

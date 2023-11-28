@@ -2,78 +2,76 @@ import Foundation
 import MarketKit
 
 class AddressUriParser {
-    fileprivate static let parameterVersion = "version"
-    fileprivate static let parameterAmount = "amount"   // BIP21 uses amount field
-    fileprivate static let parameterValue = "value"     // EIP67 uses value field
-    fileprivate static let parameterLabel = "label"
-    fileprivate static let parameterMessage = "message"
-
     let blockchainType: BlockchainType?
-    private let validScheme: String?
-    private let removeScheme: Bool
+    let tokenType: TokenType?
 
-    init(blockchainType: BlockchainType?, validScheme: String?, removeScheme: Bool) {
+    init(blockchainType: BlockchainType?, tokenType: TokenType?) {
         self.blockchainType = blockchainType
-        self.validScheme = validScheme
-        self.removeScheme = removeScheme
+        self.tokenType = tokenType
     }
 
-    func parse(paymentAddress: String) -> Result {
-        var parsedString = paymentAddress
-        var address: String
+    private func pair(_ type: BlockchainType, _ s2: String?) -> String {
+        let prefix = type.removeScheme ? nil : type.uriScheme
+        return [prefix, s2].compactMap { $0 }.joined(separator: ":")
+    }
 
-        var version: String?
-        var amount: Double?
-        var label: String?
-        var message: String?
+    private func fullAddress(scheme: String, address: String, uriBlockchainUid: String? = nil) -> String {
+        // there is no explicit indication of the blockchain in the uri. We use the rules of the blockchain parser
+        guard let uriBlockchainUid else {
 
-        var parameters = [String: String]()
-        var parametersParts = [String]()
-
-        let schemeSeparatedParts = paymentAddress.components(separatedBy: ":")
-        // check exist scheme. If scheme equal network scheme, remove scheme as stated in flag. Otherwise, leave wrong scheme to make throw in validator
-        if schemeSeparatedParts.count >= 2 {
-            if validScheme == nil || schemeSeparatedParts[0].lowercased() == validScheme {
-                parsedString = removeScheme ? schemeSeparatedParts[1] : paymentAddress
-            } else {
-                return .wrongUri
+            // if has blockchainType check if needed prefix
+            if let blockchainType {
+                return pair(blockchainType, address)
             }
-        } else {
+
+            // if there is no any blockchainTypes supported, try to determine
+            if let type = BlockchainType.supported.first(where: { $0.uriScheme == scheme }) {
+                return pair(type, address)
+            }
+            return address
+        }
+
+        // There is a blockchain Uid in the uri. We use it to create an address
+        return pair(BlockchainType(uid: uriBlockchainUid), address)
+    }
+
+    func parse(addressUri: String) -> Result {
+        guard let components = URLComponents(string: addressUri), let scheme = components.scheme else {
             return .noUri
         }
-
-        // check exist version
-        var versionSeparatedParts = parsedString.components(separatedBy: CharacterSet(charactersIn: ";?"))
-        guard versionSeparatedParts.count >= 2 else {
-            return .data(AddressData(address: parsedString))
-        }
-        address = versionSeparatedParts.removeFirst()
-        if let firstPart = versionSeparatedParts.first?.lowercased(), firstPart.range(of: AddressUriParser.parameterVersion) != nil {
-            parametersParts.append(firstPart)
-
-            versionSeparatedParts.removeFirst(1)
+        if let validScheme = blockchainType?.uriScheme, components.scheme != validScheme {
+            return .invalidBlockchainType
         }
 
-        // parsing all parameters
-        if let parameters = versionSeparatedParts.first?.components(separatedBy: CharacterSet(charactersIn: "&")) {
-            parametersParts.append(contentsOf: parameters)
+        var uri = AddressUri(scheme: scheme)
+        guard let parameters = components.queryItems else {
+            uri.address = fullAddress(scheme: scheme, address: components.path)
+            return .uri(uri)
         }
 
-        parametersParts.forEach { parameter in
-            let parts = parameter.components(separatedBy: "=")
-            if parts.count == 2 {
-                switch parts[0] {
-                case AddressUriParser.parameterVersion: version = parts[1]
-                case AddressUriParser.parameterAmount: amount = Double(parts[1]) ?? nil
-                case AddressUriParser.parameterValue: amount = Double(parts[1]) ?? nil
-                case AddressUriParser.parameterLabel: label = parts[1].removingPercentEncoding
-                case AddressUriParser.parameterMessage: message = parts[1].removingPercentEncoding
-                default: parameters[parts[0]] = parts[1].removingPercentEncoding
-                }
+        for parameter in parameters {
+            guard let value = parameter.value else { continue }
+            if let field = AddressUri.Field(rawValue: parameter.name) {
+                uri.parameters[field] = parameter.value
+            } else {
+                uri.unhandledParameters[parameter.name] = value
             }
         }
 
-        return .data(AddressData(address: address, version: version, amount: amount, label: label, message: message, parameters: parameters.isEmpty ? nil : parameters))
+        if let uid: String = uri.value(field: .blockchainUid),
+           let blockchainType,
+           blockchainType != BlockchainType(uid: uid) {
+            return .invalidBlockchainType
+        }
+
+        if let uid: String = uri.value(field: .tokenUid),
+           let tokenType,
+           tokenType != TokenType(id: uid) {
+            return .invalidTokenType
+        }
+
+        uri.address = fullAddress(scheme: scheme, address: components.path, uriBlockchainUid: uri.parameters[.blockchainUid])
+        return .uri(uri)
     }
 
     static func hasUriPrefix(text: String) -> Bool {
@@ -82,9 +80,30 @@ class AddressUriParser {
 }
 
 extension AddressUriParser {
+    func uri(_ addressUri: AddressUri) -> String {
+        var components = URLComponents()
+        components.scheme = blockchainType?.uriScheme
+        components.path = addressUri.address.stripping(prefix: blockchainType?.uriScheme).stripping(prefix: ":")
+
+        components.queryItems = addressUri.parameters.map {
+            URLQueryItem(name: $0.rawValue, value: $1)
+        }
+
+        components.queryItems?.append(contentsOf: addressUri.unhandledParameters.map {
+            URLQueryItem(name: $0, value: $1)
+        })
+
+        if let url = components.url { return url.absoluteString }
+        return [components.scheme, components.path].compactMap { $0 }.joined(separator: ":")
+    }
+}
+
+extension AddressUriParser {
     enum Result {
         case wrongUri
+        case invalidBlockchainType
+        case invalidTokenType
         case noUri
-        case data(AddressData)
+        case uri(AddressUri)
     }
 }

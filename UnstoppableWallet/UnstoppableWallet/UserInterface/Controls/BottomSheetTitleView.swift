@@ -86,7 +86,13 @@ class BottomSheetTitleView: UIView {
             }
 
             switch image {
-            case .local(let image): imageView.image = image
+            case let .local(name, tint):
+                let image = name.flatMap { UIImage(named: $0) }
+                if let color = tint.uiColor {
+                    imageView.image = image?.withTintColor(color)
+                } else {
+                    imageView.image = image
+                }
             case let .remote(url, placeholder): imageView.setImage(withUrlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
             }
         } else {
@@ -111,8 +117,26 @@ class BottomSheetTitleView: UIView {
 extension BottomSheetTitleView {
 
     enum Image {
-        case local(image: UIImage?)
-        case remote(url: String, placeholder: String?)
-    }
+        static let warning: Self = .local(name: "warning_2_24", tint: .warning)
+        static let info: Self = .local(name: "circle_information_24", tint: .gray)
+        static let trash: Self = .local(name: "trash_24", tint: .alert)
 
+        case local(name: String?, tint: TintType)
+        case remote(url: String, placeholder: String?)
+
+        enum TintType {
+            case none, gray, warning, alert
+        }
+    }
+}
+
+extension BottomSheetTitleView.Image.TintType {
+    var uiColor: UIColor? {
+        switch self {
+        case .none: return nil
+        case .gray: return .themeGray
+        case .warning: return .themeJacob
+        case .alert: return .themeLucian
+        }
+    }
 }

@@ -100,7 +100,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         // show disclaimer
 
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                image: .warning,
                 title: "alert.warning".localized,
                 items: [
                     .highlightedDescription(text: "restore_setting.download.disclaimer".localized)

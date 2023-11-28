@@ -9,6 +9,14 @@ struct HighlightedTextView: View {
         self.style = style
     }
 
+    init(text: String, style: HighlightedDescriptionBaseView.Style) {
+        self.text = text
+        switch style {
+        case .yellow: self.style = .warning
+        case .red: self.style = .alert
+        }
+    }
+
     var body: some View {
         Text(text)
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))

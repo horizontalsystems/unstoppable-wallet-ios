@@ -14,6 +14,13 @@ extension SendBaseService {
         case send
         case prefilled(address: String, amount: Decimal?)
         case predefined(address: String)
+
+        var amount: Decimal? {
+            switch self {
+            case .prefilled(_, let amount): return amount
+            default: return nil
+            }
+        }
     }
 
     enum AmountError: Error {

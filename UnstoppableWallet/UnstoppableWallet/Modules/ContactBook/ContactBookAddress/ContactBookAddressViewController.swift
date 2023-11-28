@@ -123,7 +123,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
     @objc private func onCloseConfirmation() {
         if addressWasChanged {
             let viewController = BottomSheetModule.viewController(
-                    image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                    image: .warning,
                     title: "alert.warning".localized,
                     items: [
                         .highlightedDescription(text: "contacts.contact.dismiss_changes.description".localized)
@@ -150,7 +150,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
 
     private func onTapDeleteAddress() {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                image: .warning,
                 title: "contacts.add_address.delete_alert.title".localized,
                 items: [
                     .highlightedDescription(text: "contacts.add_address.delete_alert.description".localized)

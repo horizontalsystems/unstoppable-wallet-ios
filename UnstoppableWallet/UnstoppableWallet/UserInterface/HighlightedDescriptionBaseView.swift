@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 class HighlightedDescriptionBaseView: UIView {
     internal static let font: UIFont = .subhead2
@@ -44,9 +45,16 @@ class HighlightedDescriptionBaseView: UIView {
 
 extension HighlightedDescriptionBaseView {
 
-    enum Style {
+    enum Style: String {
         case yellow
         case red
+
+        var accentColor: Color {
+            switch self {
+            case .yellow: return .themeJacob
+            case .red: return .themeLucian
+            }
+        }
     }
 
 }

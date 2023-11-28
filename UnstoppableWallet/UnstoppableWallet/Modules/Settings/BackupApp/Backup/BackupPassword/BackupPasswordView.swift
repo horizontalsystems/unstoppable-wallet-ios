@@ -77,9 +77,9 @@ struct BackupPasswordView: View {
                     }
                 }
                 if #available(iOS 16, *) {
-                    ActivityViewController(activityItems: [url], completionWithItemsHandler: completion).presentationDetents([.medium, .large])
+                    ActivityView(activityItems: [url], completionWithItemsHandler: completion).presentationDetents([.medium, .large])
                 } else {
-                    ActivityViewController(activityItems: [url], completionWithItemsHandler: completion)
+                    ActivityView(activityItems: [url], completionWithItemsHandler: completion)
                 }
             }
             .onReceive(viewModel.dismissPublisher) {

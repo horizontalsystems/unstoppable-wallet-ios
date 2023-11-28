@@ -160,7 +160,7 @@ class ContactBookViewController: ThemeSearchViewController {
     private func updateAfterAlert(new: ContactAddress, old: ContactAddress, onSuccess: (() -> ())?) {
         let blockchainName = viewModel.blockchainName(blockchainUid: new.blockchainUid) ?? ""
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                image: .warning,
                 title: "alert.warning".localized,
                 items: [
                     .highlightedDescription(text: "contacts.update_contact.already_has_address".localized(blockchainName, old.address.shortened, new.address.shortened))

@@ -51,10 +51,11 @@ class FiatService {
 
     var coinAmountLocked = false
 
-    init(switchService: AmountTypeSwitchService, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
+    init(switchService: AmountTypeSwitchService, currencyManager: CurrencyManager, marketKit: MarketKit.Kit, amount: Decimal = 0) {
         self.switchService = switchService
         self.currencyManager = currencyManager
         self.marketKit = marketKit
+        coinAmount = amount
 
         subscribe(disposeBag, switchService.amountTypeObservable) { [weak self] in self?.sync(amountType: $0) }
 

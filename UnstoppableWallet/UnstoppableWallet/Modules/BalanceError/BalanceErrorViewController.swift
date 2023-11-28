@@ -34,7 +34,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
+                image: .warning,
                 title: "balance_error.sync_error".localized,
                 viewController: self
         )

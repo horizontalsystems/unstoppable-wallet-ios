@@ -17,7 +17,7 @@ struct WatchModule {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
-        let addressUriParser = AddressParserFactory.parser(blockchainType: .ethereum)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: .ethereum, tokenType: nil)
         let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: nil, blockchainType: .ethereum)
 
         let evmAddressService = WatchEvmAddressService(addressService: addressService)
@@ -25,7 +25,7 @@ struct WatchModule {
 
         let tronAddressParserChain = AddressParserChain().append(handler: TronAddressParser())
         let tronAddressService = AddressService(
-            mode: .parsers(AddressParserFactory.parser(blockchainType: .tron), tronAddressParserChain),
+            mode: .parsers(AddressParserFactory.parser(blockchainType: .tron, tokenType: .native), tronAddressParserChain),
             marketKit: App.shared.marketKit, contactBookManager: nil, blockchainType: .tron
         )
         let watchTronAddressService = WatchTronAddressService(addressService: tronAddressService)

@@ -7,15 +7,17 @@ class WalletBlockchainElementService {
     private let adapterService: WalletAdapterService
     private let walletManager: WalletManager
     private let allowedBlockchainTypes: [BlockchainType]?
+    private let allowedTokenTypes: [TokenType]?
     private let disposeBag = DisposeBag()
 
     weak var delegate: IWalletElementServiceDelegate?
 
-    init(account: Account, adapterService: WalletAdapterService, walletManager: WalletManager, allowedBlockchainTypes: [BlockchainType]? = nil) {
+    init(account: Account, adapterService: WalletAdapterService, walletManager: WalletManager, allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil) {
         self.account = account
         self.adapterService = adapterService
         self.walletManager = walletManager
         self.allowedBlockchainTypes = allowedBlockchainTypes
+        self.allowedTokenTypes = allowedTokenTypes
 
         subscribe(disposeBag, walletManager.activeWalletDataUpdatedObservable) { [weak self] walletData in
             guard walletData.account == self?.account else {
@@ -27,8 +29,17 @@ class WalletBlockchainElementService {
     }
 
     private func filtered(_ wallets: [Wallet]) -> [Wallet] {
-        guard let allowedBlockchainTypes else { return wallets }
-        return wallets.filter { wallet in allowedBlockchainTypes.contains(wallet.token.blockchainType) }
+        var wallets = wallets
+
+        if let allowedBlockchainTypes {
+            wallets = wallets.filter { wallet in allowedBlockchainTypes.contains(wallet.token.blockchainType) }
+        }
+
+        if let allowedTokenTypes {
+            wallets = wallets.filter { wallet in allowedTokenTypes.contains(wallet.token.type) }
+        }
+
+        return wallets
     }
 
     private func handleUpdated(wallets: [Wallet]) {

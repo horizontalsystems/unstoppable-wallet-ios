@@ -48,7 +48,7 @@ class MetricChartViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "chart_2_24")?.withTintColor(.themeJacob)),
+                image: .local(name: "chart_2_24", tint: .warning),
                 title: bottomSheetTitle,
                 viewController: self
         )

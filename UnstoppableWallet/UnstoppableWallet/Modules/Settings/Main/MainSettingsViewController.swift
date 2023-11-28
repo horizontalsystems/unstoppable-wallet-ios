@@ -458,7 +458,7 @@ class MainSettingsViewController: ThemeViewController {
 
     private func handleContact() {
         let viewController = BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "at_24")?.withTintColor(.themeJacob)),
+            image: .local(name: "at_24", tint: .warning),
             title: "settings.contact.title".localized,
             items: [],
             buttons: [

@@ -29,7 +29,7 @@ class UnlinkWatchViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                image: .warning,
                 title: "settings_manage_keys.delete.title".localized,
                 viewController: self
         )

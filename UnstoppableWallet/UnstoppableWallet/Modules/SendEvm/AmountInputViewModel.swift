@@ -122,6 +122,7 @@ open class AmountInputViewModel {
 
         amountDisposeBag = DisposeBag()
         subscribe(amountDisposeBag, publishAmountRelay.asObservable()) { [weak self] amount in
+            self?.syncCoin(amount: amount)
             self?.fiatService.set(coinAmount: amount, notify: true)
         }
     }

@@ -9,7 +9,7 @@ class SendTronModule {
         let addressParserChain = AddressParserChain().append(handler: tronAddressParserItem)
 
         let addressService = AddressService(
-            mode: .parsers(AddressParserFactory.parser(blockchainType: .tron), addressParserChain),
+            mode: .parsers(AddressParserFactory.parser(blockchainType: .tron, tokenType: token.type), addressParserChain),
             marketKit: App.shared.marketKit,
             contactBookManager: App.shared.contactManager,
             blockchainType: .tron
