@@ -6,9 +6,9 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSValue.h>
 
-@class TKKTonApiAdnl, TKKBalanceStorage, TKKTonBalanceQueries, TKKDriverFactory, TKKTonTransactionQueries, TKKKitDatabaseCompanion, TKKKotlinThrowable, TKKKotlinArray<T>, TKKKotlinException, TKKSyncError, TKKSyncState, TKKTransactionManager, TKKBalanceManager, TKKConnectionManager, TKKTon_kotlin_blockAddrStd, TKKTon_kotlin_liteclientFullAccountState, TKKTonTransaction, TKKTonBalance, TKKKotlinUnit, TKKRuntimeTransacterTransaction, TKKRuntimeBaseTransacterImpl, TKKRuntimeTransacterImpl, TKKRuntimeQuery<__covariant RowType>, TKKSyncer, TKKTransactionSender, TKKTonKitCompanion, TKKTransactionType, TKKTonKit, TKKKotlinByteArray, TKKTransactionStorage, TKKKotlinEnumCompanion, TKKKotlinEnum<E>, TKKKotlinByteIterator, NSData, TKKKotlinRuntimeException, TKKKotlinIllegalStateException, TKKRuntimeAfterVersion, TKKTon_kotlin_tlbTlbPrettyPrinter, TKKTon_kotlin_blockAnycast, TKKTon_kotlin_blockAddrStdCompanion, TKKTon_kotlin_apiTonNodeBlockIdExt, TKKTon_kotlin_liteclientTransactionId, TKKTon_kotlin_liteclientFullAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerGetAccountState, TKKTon_kotlin_liteapiLiteServerAccountState, TKKTon_kotlin_liteapiLiteServerGetAllShardsInfo, TKKTon_kotlin_liteapiLiteServerAllShardsInfo, TKKTon_kotlin_liteapiLiteServerGetBlock, TKKTon_kotlin_liteapiLiteServerBlockData, TKKTon_kotlin_liteapiLiteServerGetBlockHeader, TKKTon_kotlin_liteapiLiteServerBlockHeader, TKKTon_kotlin_liteapiLiteServerGetBlockProof, TKKTon_kotlin_liteapiLiteServerPartialBlockProof, TKKTon_kotlin_liteapiLiteServerGetConfigAll, TKKTon_kotlin_liteapiLiteServerConfigInfo, TKKTon_kotlin_liteapiLiteServerGetConfigParams, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfo, TKKTon_kotlin_liteapiLiteServerMasterchainInfo, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfoExt, TKKTon_kotlin_liteapiLiteServerMasterchainInfoExt, TKKTon_kotlin_liteapiLiteServerGetOneTransaction, TKKTon_kotlin_liteapiLiteServerTransactionInfo, TKKTon_kotlin_liteapiLiteServerGetShardInfo, TKKTon_kotlin_liteapiLiteServerShardInfo, TKKTon_kotlin_liteapiLiteServerGetState, TKKTon_kotlin_liteapiLiteServerBlockState, TKKTon_kotlin_liteapiLiteServerGetTime, TKKTon_kotlin_liteapiLiteServerCurrentTime, TKKTon_kotlin_liteapiLiteServerGetTransactions, TKKTon_kotlin_liteapiLiteServerTransactionList, TKKTon_kotlin_liteapiLiteServerGetValidatorStats, TKKTon_kotlin_liteapiLiteServerValidatorStats, TKKTon_kotlin_liteapiLiteServerGetVersion, TKKTon_kotlin_liteapiLiteServerVersion, TKKTon_kotlin_liteapiLiteServerListBlockTransactions, TKKTon_kotlin_liteapiLiteServerBlockTransactions, TKKTon_kotlin_liteapiLiteServerLookupBlock, TKKTon_kotlin_liteapiLiteServerRunSmcMethod, TKKTon_kotlin_liteapiLiteServerRunMethodResult, TKKTon_kotlin_liteapiLiteServerSendMessage, TKKTon_kotlin_liteapiLiteServerSendMsgStatus, TKKRuntimeExecutableQuery<__covariant RowType>, TKKTon_kotlin_apiPublicKeyEd25519, TKKTon_kotlin_tlByteString, TKKKotlinStringBuilder, TKKKotlinBooleanArray, TKKKotlinIntRange, TKKTon_kotlin_blockAnycastCompanion, TKKTon_kotlin_tlbTlbConstructor<T>, TKKTon_kotlin_apiTonNodeBlockIdExtCompanion, TKKTon_kotlin_liteclientTransactionIdCompanion, TKKTon_kotlin_liteapiLiteServerAccountId, TKKTon_kotlin_liteapiLiteServerGetAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerGetAllShardsInfoCompanion, TKKTon_kotlin_liteapiLiteServerAllShardsInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockCompanion, TKKTon_kotlin_liteapiLiteServerBlockDataCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockHeaderCompanion, TKKTon_kotlin_liteapiLiteServerBlockHeaderCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockProofCompanion, TKKTon_kotlin_liteapiLiteServerPartialBlockProofCompanion, TKKTon_kotlin_liteapiLiteServerGetConfigAllCompanion, TKKTon_kotlin_liteapiLiteServerConfigInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetConfigParamsCompanion, TKKKtor_ioInput, TKKTon_kotlin_tlTlReader, TKKKtor_ioOutput, TKKTon_kotlin_tlTlWriter, TKKTon_kotlin_apiTonNodeZeroStateIdExt, TKKTon_kotlin_liteapiLiteServerMasterchainInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfoExtCompanion, TKKTon_kotlin_liteapiLiteServerMasterchainInfoExtCompanion, TKKTon_kotlin_liteapiLiteServerGetOneTransactionCompanion, TKKTon_kotlin_liteapiLiteServerTransactionInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetShardInfoCompanion, TKKTon_kotlin_liteapiLiteServerShardInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetStateCompanion, TKKTon_kotlin_liteapiLiteServerBlockStateCompanion, TKKTon_kotlin_liteapiLiteServerCurrentTimeCompanion, TKKTon_kotlin_liteapiLiteServerGetTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerTransactionListCompanion, TKKTon_kotlin_liteapiLiteServerGetValidatorStatsCompanion, TKKTon_kotlin_liteapiLiteServerValidatorStatsCompanion, TKKTon_kotlin_liteapiLiteServerVersionCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId3, TKKTon_kotlin_liteapiLiteServerListBlockTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId, TKKTon_kotlin_liteapiLiteServerBlockTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerLookupBlockCompanion, TKKTon_kotlin_liteapiLiteServerRunSmcMethodCompanion, TKKTon_kotlin_liteapiLiteServerRunMethodResultCompanion, TKKTon_kotlin_liteapiLiteServerSendMessageCompanion, TKKTon_kotlin_liteapiLiteServerSendMsgStatusCompanion, TKKTon_kotlin_apiPublicKeyEd25519Companion, TKKTon_kotlin_tlByteStringCompanion, TKKTon_kotlin_apiOverlayNode, TKKKotlinCharArray, TKKKotlinBooleanIterator, TKKKotlinIntProgressionCompanion, TKKKotlinIntIterator, TKKKotlinIntProgression, TKKKotlinIntRangeCompanion, TKKTon_kotlin_cellCellType, TKKTon_kotlin_bigintBigInt, TKKTon_kotlin_tlbAbstractTlbConstructorCompanion, TKKTon_kotlin_tlbAbstractTlbConstructor<T>, TKKTon_kotlin_liteapiLiteServerAccountIdCompanion, TKKTon_kotlin_tlTlConstructor<T>, TKKKtor_ioChunkBuffer, TKKKtor_ioInputCompanion, TKKKtor_ioMemory, TKKKtor_ioByteReadPacket, TKKTon_kotlin_apiTonNodeZeroStateIdExtCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId3Companion, TKKTon_kotlin_liteapiLiteServerTransactionIdCompanion, TKKTon_kotlin_apiOverlayNodeCompanion, TKKKotlinCharIterator, TKKTon_kotlin_cellCellTypeCompanion, TKKKotlinNumber, TKKKotlinx_serialization_coreSerializersModule, TKKKotlinx_serialization_coreSerialKind, TKKKotlinNothing, TKKKtor_ioBufferCompanion, TKKKtor_ioBuffer, TKKKtor_ioChunkBufferCompanion, TKKKtor_ioMemoryCompanion, TKKKtor_ioByteReadPacketCompanion, TKKTon_kotlin_blockVmStackNull;
+@class TKKTonApiAdnl, TKKBalanceStorage, TKKTonBalanceQueries, TKKDriverFactory, TKKTonTransactionQueries, TKKKitDatabaseCompanion, TKKTonTransactionAdapter, TKKKotlinThrowable, TKKKotlinArray<T>, TKKKotlinException, TKKSyncError, TKKSyncState, TKKTransactionManager, TKKBalanceManager, TKKConnectionManager, TKKTon_kotlin_blockAddrStd, TKKTon_kotlin_liteclientFullAccountState, TKKTonTransaction, TKKTonBalance, TKKKotlinUnit, TKKRuntimeTransacterTransaction, TKKRuntimeBaseTransacterImpl, TKKRuntimeTransacterImpl, TKKRuntimeQuery<__covariant RowType>, TKKSyncer, TKKTransactionSender, TKKTonKitCompanion, TKKTransactionType, TKKTonKit, TKKKotlinByteArray, TKKTransactionStorage, TKKKotlinEnumCompanion, TKKKotlinEnum<E>, TKKTransferCompanion, TKKTransfer, TKKKotlinByteIterator, NSData, TKKKotlinRuntimeException, TKKKotlinIllegalStateException, TKKRuntimeAfterVersion, TKKTon_kotlin_tlbTlbPrettyPrinter, TKKTon_kotlin_blockAnycast, TKKTon_kotlin_blockAddrStdCompanion, TKKTon_kotlin_apiTonNodeBlockIdExt, TKKTon_kotlin_liteclientTransactionId, TKKTon_kotlin_liteclientFullAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerGetAccountState, TKKTon_kotlin_liteapiLiteServerAccountState, TKKTon_kotlin_liteapiLiteServerGetAllShardsInfo, TKKTon_kotlin_liteapiLiteServerAllShardsInfo, TKKTon_kotlin_liteapiLiteServerGetBlock, TKKTon_kotlin_liteapiLiteServerBlockData, TKKTon_kotlin_liteapiLiteServerGetBlockHeader, TKKTon_kotlin_liteapiLiteServerBlockHeader, TKKTon_kotlin_liteapiLiteServerGetBlockProof, TKKTon_kotlin_liteapiLiteServerPartialBlockProof, TKKTon_kotlin_liteapiLiteServerGetConfigAll, TKKTon_kotlin_liteapiLiteServerConfigInfo, TKKTon_kotlin_liteapiLiteServerGetConfigParams, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfo, TKKTon_kotlin_liteapiLiteServerMasterchainInfo, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfoExt, TKKTon_kotlin_liteapiLiteServerMasterchainInfoExt, TKKTon_kotlin_liteapiLiteServerGetOneTransaction, TKKTon_kotlin_liteapiLiteServerTransactionInfo, TKKTon_kotlin_liteapiLiteServerGetShardInfo, TKKTon_kotlin_liteapiLiteServerShardInfo, TKKTon_kotlin_liteapiLiteServerGetState, TKKTon_kotlin_liteapiLiteServerBlockState, TKKTon_kotlin_liteapiLiteServerGetTime, TKKTon_kotlin_liteapiLiteServerCurrentTime, TKKTon_kotlin_liteapiLiteServerGetTransactions, TKKTon_kotlin_liteapiLiteServerTransactionList, TKKTon_kotlin_liteapiLiteServerGetValidatorStats, TKKTon_kotlin_liteapiLiteServerValidatorStats, TKKTon_kotlin_liteapiLiteServerGetVersion, TKKTon_kotlin_liteapiLiteServerVersion, TKKTon_kotlin_liteapiLiteServerListBlockTransactions, TKKTon_kotlin_liteapiLiteServerBlockTransactions, TKKTon_kotlin_liteapiLiteServerLookupBlock, TKKTon_kotlin_liteapiLiteServerRunSmcMethod, TKKTon_kotlin_liteapiLiteServerRunMethodResult, TKKTon_kotlin_liteapiLiteServerSendMessage, TKKTon_kotlin_liteapiLiteServerSendMsgStatus, TKKRuntimeExecutableQuery<__covariant RowType>, TKKTon_kotlin_apiPublicKeyEd25519, TKKTon_kotlin_tlByteString, TKKKotlinStringBuilder, TKKKotlinBooleanArray, TKKKotlinIntRange, TKKTon_kotlin_blockAnycastCompanion, TKKTon_kotlin_tlbTlbConstructor<T>, TKKTon_kotlin_apiTonNodeBlockIdExtCompanion, TKKTon_kotlin_liteclientTransactionIdCompanion, TKKTon_kotlin_liteapiLiteServerAccountId, TKKTon_kotlin_liteapiLiteServerGetAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerAccountStateCompanion, TKKTon_kotlin_liteapiLiteServerGetAllShardsInfoCompanion, TKKTon_kotlin_liteapiLiteServerAllShardsInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockCompanion, TKKTon_kotlin_liteapiLiteServerBlockDataCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockHeaderCompanion, TKKTon_kotlin_liteapiLiteServerBlockHeaderCompanion, TKKTon_kotlin_liteapiLiteServerGetBlockProofCompanion, TKKTon_kotlin_liteapiLiteServerPartialBlockProofCompanion, TKKTon_kotlin_liteapiLiteServerGetConfigAllCompanion, TKKTon_kotlin_liteapiLiteServerConfigInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetConfigParamsCompanion, TKKKtor_ioInput, TKKTon_kotlin_tlTlReader, TKKKtor_ioOutput, TKKTon_kotlin_tlTlWriter, TKKTon_kotlin_apiTonNodeZeroStateIdExt, TKKTon_kotlin_liteapiLiteServerMasterchainInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetMasterchainInfoExtCompanion, TKKTon_kotlin_liteapiLiteServerMasterchainInfoExtCompanion, TKKTon_kotlin_liteapiLiteServerGetOneTransactionCompanion, TKKTon_kotlin_liteapiLiteServerTransactionInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetShardInfoCompanion, TKKTon_kotlin_liteapiLiteServerShardInfoCompanion, TKKTon_kotlin_liteapiLiteServerGetStateCompanion, TKKTon_kotlin_liteapiLiteServerBlockStateCompanion, TKKTon_kotlin_liteapiLiteServerCurrentTimeCompanion, TKKTon_kotlin_liteapiLiteServerGetTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerTransactionListCompanion, TKKTon_kotlin_liteapiLiteServerGetValidatorStatsCompanion, TKKTon_kotlin_liteapiLiteServerValidatorStatsCompanion, TKKTon_kotlin_liteapiLiteServerVersionCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId3, TKKTon_kotlin_liteapiLiteServerListBlockTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId, TKKTon_kotlin_liteapiLiteServerBlockTransactionsCompanion, TKKTon_kotlin_liteapiLiteServerLookupBlockCompanion, TKKTon_kotlin_liteapiLiteServerRunSmcMethodCompanion, TKKTon_kotlin_liteapiLiteServerRunMethodResultCompanion, TKKTon_kotlin_liteapiLiteServerSendMessageCompanion, TKKTon_kotlin_liteapiLiteServerSendMsgStatusCompanion, TKKTon_kotlin_apiPublicKeyEd25519Companion, TKKTon_kotlin_tlByteStringCompanion, TKKTon_kotlin_apiOverlayNode, TKKKotlinx_serialization_coreSerializersModule, TKKKotlinx_serialization_coreSerialKind, TKKKotlinNothing, TKKKotlinCharArray, TKKKotlinBooleanIterator, TKKKotlinIntProgressionCompanion, TKKKotlinIntIterator, TKKKotlinIntProgression, TKKKotlinIntRangeCompanion, TKKTon_kotlin_cellCellType, TKKTon_kotlin_bigintBigInt, TKKTon_kotlin_tlbAbstractTlbConstructorCompanion, TKKTon_kotlin_tlbAbstractTlbConstructor<T>, TKKTon_kotlin_liteapiLiteServerAccountIdCompanion, TKKTon_kotlin_tlTlConstructor<T>, TKKKtor_ioChunkBuffer, TKKKtor_ioInputCompanion, TKKKtor_ioMemory, TKKKtor_ioByteReadPacket, TKKTon_kotlin_apiTonNodeZeroStateIdExtCompanion, TKKTon_kotlin_liteapiLiteServerTransactionId3Companion, TKKTon_kotlin_liteapiLiteServerTransactionIdCompanion, TKKTon_kotlin_apiOverlayNodeCompanion, TKKKotlinCharIterator, TKKTon_kotlin_cellCellTypeCompanion, TKKKotlinNumber, TKKKtor_ioBufferCompanion, TKKKtor_ioBuffer, TKKKtor_ioChunkBufferCompanion, TKKKtor_ioMemoryCompanion, TKKKtor_ioByteReadPacketCompanion, TKKTon_kotlin_blockVmStackNull;
 
-@protocol TKKKotlinx_coroutines_coreFlow, TKKKotlinx_coroutines_coreStateFlow, TKKRuntimeSqlDriver, TKKRuntimeTransactionWithoutReturn, TKKRuntimeTransactionWithReturn, TKKRuntimeTransacterBase, TKKRuntimeTransacter, TKKKitDatabase, TKKRuntimeSqlSchema, TKKTon_kotlin_liteapiLiteApi, TKKTon_kotlin_apiPrivateKeyEd25519, TKKKotlinComparable, TKKCancellable, TKKKotlinx_coroutines_coreFlowCollector, TKKKotlinx_coroutines_coreSharedFlow, TKKRuntimeQueryListener, TKKRuntimeQueryResult, TKKRuntimeSqlPreparedStatement, TKKRuntimeSqlCursor, TKKRuntimeCloseable, TKKRuntimeTransactionCallbacks, TKKKotlinIterator, TKKTon_kotlin_tlbTlbObject, TKKTon_kotlin_blockMsgAddress, TKKTon_kotlin_blockMsgAddressInt, TKKTon_kotlin_bitstringBitString, TKKTon_kotlin_blockMaybe, TKKTon_kotlin_tlbCellRef, TKKTon_kotlin_apiPublicKey, TKKTon_kotlin_apiAdnlIdShort, TKKTon_kotlin_cryptoDecryptor, TKKTon_kotlin_apiPrivateKey, TKKTon_kotlin_bitstringMutableBitString, TKKKotlinIterable, TKKTon_kotlin_cellCell, TKKTon_kotlin_cellCellBuilder, TKKTon_kotlin_tlbTlbStorer, TKKTon_kotlin_cellCellSlice, TKKTon_kotlin_tlbTlbLoader, TKKTon_kotlin_tlbTlbCodec, TKKKotlinx_serialization_coreKSerializer, TKKTon_kotlin_apiTonNodeBlockId, TKKTon_kotlin_tlTlCodec, TKKTon_kotlin_tlTLFunction, TKKTon_kotlin_liteapiLiteServerBlockLink, TKKTon_kotlin_tlTlDecoder, TKKTon_kotlin_tlTlEncoder, TKKTon_kotlin_cryptoEncryptor, TKKTon_kotlin_tlTlObject, TKKKotlinCharSequence, TKKKotlinAppendable, TKKKotlinClosedRange, TKKKotlinOpenEndRange, TKKTon_kotlin_tlbTlbProvider, TKKTon_kotlin_tlbTlbConstructorProvider, TKKKotlinSequence, TKKTon_kotlin_cellCellDescriptor, TKKKotlinx_serialization_coreEncoder, TKKKotlinx_serialization_coreSerialDescriptor, TKKKotlinx_serialization_coreSerializationStrategy, TKKKotlinx_serialization_coreDecoder, TKKKotlinx_serialization_coreDeserializationStrategy, TKKKtor_ioCloseable, TKKKtor_ioObjectPool, TKKTon_kotlin_blockVmStackValue, TKKTon_kotlin_blockVmStack, TKKTon_kotlin_blockVmStackList, TKKTon_kotlin_apiSignedTlObject, TKKKotlinx_serialization_coreCompositeEncoder, TKKKotlinAnnotation, TKKKotlinx_serialization_coreCompositeDecoder, TKKTon_kotlin_blockMutableVmStack, TKKKotlinCollection, TKKKotlinx_serialization_coreSerializersModuleCollector, TKKKotlinKClass, TKKTon_kotlin_blockVmCont, TKKTon_kotlin_blockVmStackNumber, TKKTon_kotlin_blockVmTuple, TKKKotlinKDeclarationContainer, TKKKotlinKAnnotatedElement, TKKKotlinKClassifier;
+@protocol TKKKotlinx_coroutines_coreFlow, TKKKotlinx_coroutines_coreStateFlow, TKKRuntimeSqlDriver, TKKRuntimeTransactionWithoutReturn, TKKRuntimeTransactionWithReturn, TKKRuntimeTransacterBase, TKKRuntimeTransacter, TKKKitDatabase, TKKRuntimeSqlSchema, TKKTon_kotlin_liteapiLiteApi, TKKRuntimeColumnAdapter, TKKTon_kotlin_apiPrivateKeyEd25519, TKKKotlinComparable, TKKKotlinx_serialization_coreKSerializer, TKKCancellable, TKKKotlinx_coroutines_coreFlowCollector, TKKKotlinx_coroutines_coreSharedFlow, TKKRuntimeQueryListener, TKKRuntimeQueryResult, TKKRuntimeSqlPreparedStatement, TKKRuntimeSqlCursor, TKKRuntimeCloseable, TKKRuntimeTransactionCallbacks, TKKKotlinIterator, TKKTon_kotlin_tlbTlbObject, TKKTon_kotlin_blockMsgAddress, TKKTon_kotlin_blockMsgAddressInt, TKKTon_kotlin_bitstringBitString, TKKTon_kotlin_blockMaybe, TKKTon_kotlin_tlbCellRef, TKKTon_kotlin_apiPublicKey, TKKTon_kotlin_apiAdnlIdShort, TKKTon_kotlin_cryptoDecryptor, TKKTon_kotlin_apiPrivateKey, TKKKotlinx_serialization_coreEncoder, TKKKotlinx_serialization_coreSerialDescriptor, TKKKotlinx_serialization_coreSerializationStrategy, TKKKotlinx_serialization_coreDecoder, TKKKotlinx_serialization_coreDeserializationStrategy, TKKTon_kotlin_bitstringMutableBitString, TKKKotlinIterable, TKKTon_kotlin_cellCell, TKKTon_kotlin_cellCellBuilder, TKKTon_kotlin_tlbTlbStorer, TKKTon_kotlin_cellCellSlice, TKKTon_kotlin_tlbTlbLoader, TKKTon_kotlin_tlbTlbCodec, TKKTon_kotlin_apiTonNodeBlockId, TKKTon_kotlin_tlTlCodec, TKKTon_kotlin_tlTLFunction, TKKTon_kotlin_liteapiLiteServerBlockLink, TKKTon_kotlin_tlTlDecoder, TKKTon_kotlin_tlTlEncoder, TKKTon_kotlin_cryptoEncryptor, TKKTon_kotlin_tlTlObject, TKKKotlinx_serialization_coreCompositeEncoder, TKKKotlinAnnotation, TKKKotlinx_serialization_coreCompositeDecoder, TKKKotlinCharSequence, TKKKotlinAppendable, TKKKotlinClosedRange, TKKKotlinOpenEndRange, TKKTon_kotlin_tlbTlbProvider, TKKTon_kotlin_tlbTlbConstructorProvider, TKKKotlinSequence, TKKTon_kotlin_cellCellDescriptor, TKKKtor_ioCloseable, TKKKtor_ioObjectPool, TKKTon_kotlin_blockVmStackValue, TKKTon_kotlin_blockVmStack, TKKTon_kotlin_blockVmStackList, TKKTon_kotlin_apiSignedTlObject, TKKKotlinx_serialization_coreSerializersModuleCollector, TKKKotlinKClass, TKKTon_kotlin_blockMutableVmStack, TKKKotlinCollection, TKKKotlinKDeclarationContainer, TKKKotlinKAnnotatedElement, TKKKotlinKClassifier, TKKTon_kotlin_blockVmCont, TKKTon_kotlin_blockVmStackNumber, TKKTon_kotlin_blockVmTuple;
 
 NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
@@ -223,7 +223,7 @@ __attribute__((swift_name("KitDatabaseCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) TKKKitDatabaseCompanion *shared __attribute__((swift_name("shared")));
-- (id<TKKKitDatabase>)invokeDriver:(id<TKKRuntimeSqlDriver>)driver __attribute__((swift_name("invoke(driver:)")));
+- (id<TKKKitDatabase>)invokeDriver:(id<TKKRuntimeSqlDriver>)driver TonTransactionAdapter:(TKKTonTransactionAdapter *)TonTransactionAdapter __attribute__((swift_name("invoke(driver:TonTransactionAdapter:)")));
 @property (readonly) id<TKKRuntimeSqlSchema> Schema __attribute__((swift_name("Schema")));
 @end
 
@@ -417,8 +417,7 @@ __attribute__((swift_name("TonKit")))
 @property (class, readonly, getter=companion) TKKTonKitCompanion *companion __attribute__((swift_name("companion")));
 
 /**
- * @note This method converts instances of CancellationException to errors.
- * Other uncaught Kotlin exceptions are fatal.
+ * @note This method converts all Kotlin exceptions to errors.
 */
 - (void)sendRecipient:(NSString *)recipient amount:(NSString *)amount completionHandler:(void (^)(NSError * _Nullable))completionHandler __attribute__((swift_name("send(recipient:amount:completionHandler:)")));
 - (void)start __attribute__((swift_name("start()")));
@@ -448,8 +447,7 @@ __attribute__((swift_name("TonKit.Companion")))
 @property (class, readonly, getter=shared) TKKTonKitCompanion *shared __attribute__((swift_name("shared")));
 
 /**
- * @note This method converts instances of Exception to errors.
- * Other uncaught Kotlin exceptions are fatal.
+ * @note This method converts all Kotlin exceptions to errors.
 */
 - (BOOL)validateAddress:(NSString *)address error:(NSError * _Nullable * _Nullable)error __attribute__((swift_name("validate(address:)")));
 @end
@@ -466,48 +464,47 @@ __attribute__((swift_name("TonKitFactory")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("TonTransaction")))
 @interface TKKTonTransaction : TKKBase
-- (instancetype)initWithHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ fee:(NSString * _Nullable)fee type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("init(hash:lt:timestamp:value_:fee:type:src:dest:)"))) __attribute__((objc_designated_initializer));
-- (TKKTonTransaction *)doCopyHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ fee:(NSString * _Nullable)fee type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("doCopy(hash:lt:timestamp:value_:fee:type:src:dest:)")));
+- (instancetype)initWithHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp amount:(NSString * _Nullable)amount fee:(NSString * _Nullable)fee type:(TKKTransactionType *)type transfersJson:(NSString *)transfersJson __attribute__((swift_name("init(hash:lt:timestamp:amount:fee:type:transfersJson:)"))) __attribute__((objc_designated_initializer));
+- (TKKTonTransaction *)doCopyHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp amount:(NSString * _Nullable)amount fee:(NSString * _Nullable)fee type:(TKKTransactionType *)type transfersJson:(NSString *)transfersJson __attribute__((swift_name("doCopy(hash:lt:timestamp:amount:fee:type:transfersJson:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
-@property (readonly) NSString * _Nullable dest __attribute__((swift_name("dest")));
+@property (readonly) NSString * _Nullable amount __attribute__((swift_name("amount")));
 @property (readonly) NSString * _Nullable fee __attribute__((swift_name("fee")));
 @property (readonly, getter=hash_) NSString *hash __attribute__((swift_name("hash")));
 @property (readonly) int64_t lt __attribute__((swift_name("lt")));
-@property (readonly) NSString * _Nullable src __attribute__((swift_name("src")));
 @property (readonly) int64_t timestamp __attribute__((swift_name("timestamp")));
-@property (readonly) NSString *type __attribute__((swift_name("type")));
-@property (readonly) NSString * _Nullable value_ __attribute__((swift_name("value_")));
+@property (readonly) NSString *transfersJson __attribute__((swift_name("transfersJson")));
+@property (readonly) TKKTransactionType *type __attribute__((swift_name("type")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("TonTransaction.Adapter")))
+@interface TKKTonTransactionAdapter : TKKBase
+- (instancetype)initWithTypeAdapter:(id<TKKRuntimeColumnAdapter>)typeAdapter __attribute__((swift_name("init(typeAdapter:)"))) __attribute__((objc_designated_initializer));
+@property (readonly) id<TKKRuntimeColumnAdapter> typeAdapter __attribute__((swift_name("typeAdapter")));
 @end
 
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("TonTransactionQueries")))
 @interface TKKTonTransactionQueries : TKKRuntimeTransacterImpl
-- (instancetype)initWithDriver:(id<TKKRuntimeSqlDriver>)driver __attribute__((swift_name("init(driver:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithDriver:(id<TKKRuntimeSqlDriver>)driver TonTransactionAdapter:(TKKTonTransactionAdapter *)TonTransactionAdapter __attribute__((swift_name("init(driver:TonTransactionAdapter:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithDriver:(id<TKKRuntimeSqlDriver>)driver __attribute__((swift_name("init(driver:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getAllLimit:(int64_t)limit __attribute__((swift_name("getAll(limit:)")));
-- (TKKRuntimeQuery<id> *)getAllLimit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getAll(limit:mapper:)")));
-- (TKKRuntimeQuery<TKKTonTransaction *> *)getAllByTypeType:(NSString *)type limit:(int64_t)limit __attribute__((swift_name("getAllByType(type:limit:)")));
-- (TKKRuntimeQuery<id> *)getAllByTypeType:(NSString *)type limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getAllByType(type:limit:mapper:)")));
+- (TKKRuntimeQuery<id> *)getAllLimit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, TKKTransactionType *, NSString *))mapper __attribute__((swift_name("getAll(limit:mapper:)")));
+- (TKKRuntimeQuery<TKKTonTransaction *> *)getAllByTypeType:(TKKTransactionType *)type limit:(int64_t)limit __attribute__((swift_name("getAllByType(type:limit:)")));
+- (TKKRuntimeQuery<id> *)getAllByTypeType:(TKKTransactionType *)type limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, TKKTransactionType *, NSString *))mapper __attribute__((swift_name("getAllByType(type:limit:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getByHashHash:(NSString *)hash __attribute__((swift_name("getByHash(hash:)")));
-- (TKKRuntimeQuery<id> *)getByHashHash:(NSString *)hash mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getByHash(hash:mapper:)")));
+- (TKKRuntimeQuery<id> *)getByHashHash:(NSString *)hash mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, TKKTransactionType *, NSString *))mapper __attribute__((swift_name("getByHash(hash:mapper:)")));
+- (TKKRuntimeQuery<TKKTonTransaction *> *)getEarlierThanTimestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit __attribute__((swift_name("getEarlierThan(timestamp:lt:limit:)")));
+- (TKKRuntimeQuery<id> *)getEarlierThanTimestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, TKKTransactionType *, NSString *))mapper __attribute__((swift_name("getEarlierThan(timestamp:lt:limit:mapper:)")));
+- (TKKRuntimeQuery<TKKTonTransaction *> *)getEarlierThanByTypeType:(TKKTransactionType *)type timestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit __attribute__((swift_name("getEarlierThanByType(type:timestamp:lt:limit:)")));
+- (TKKRuntimeQuery<id> *)getEarlierThanByTypeType:(TKKTransactionType *)type timestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, TKKTransactionType *, NSString *))mapper __attribute__((swift_name("getEarlierThanByType(type:timestamp:lt:limit:mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getEarliest __attribute__((swift_name("getEarliest()")));
-- (TKKRuntimeQuery<id> *)getEarliestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getEarliest(mapper:)")));
+- (TKKRuntimeQuery<id> *)getEarliestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, TKKTransactionType *, NSString *))mapper __attribute__((swift_name("getEarliest(mapper:)")));
 - (TKKRuntimeQuery<TKKTonTransaction *> *)getLatest __attribute__((swift_name("getLatest()")));
-- (TKKRuntimeQuery<id> *)getLatestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("getLatest(mapper:)")));
-- (void)insertHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp value_:(NSString * _Nullable)value_ fee:(NSString * _Nullable)fee type:(NSString *)type src:(NSString * _Nullable)src dest:(NSString * _Nullable)dest __attribute__((swift_name("insert(hash:lt:timestamp:value_:fee:type:src:dest:)")));
-- (TKKRuntimeQuery<TKKTonTransaction *> *)selectAllValue_:(int64_t)value_ __attribute__((swift_name("selectAll(value_:)")));
-- (TKKRuntimeQuery<id> *)selectAllValue:(int64_t)value mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectAll(value:mapper:)")));
-- (TKKRuntimeQuery<TKKTonTransaction *> *)selectByHashHash:(NSString *)hash __attribute__((swift_name("selectByHash(hash:)")));
-- (TKKRuntimeQuery<id> *)selectByHashHash:(NSString *)hash mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectByHash(hash:mapper:)")));
-- (TKKRuntimeQuery<TKKTonTransaction *> *)selectEarlierThanTimestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit __attribute__((swift_name("selectEarlierThan(timestamp:lt:limit:)")));
-- (TKKRuntimeQuery<id> *)selectEarlierThanTimestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarlierThan(timestamp:lt:limit:mapper:)")));
-- (TKKRuntimeQuery<TKKTonTransaction *> *)selectEarlierThanByTypeType:(NSString *)type timestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit __attribute__((swift_name("selectEarlierThanByType(type:timestamp:lt:limit:)")));
-- (TKKRuntimeQuery<id> *)selectEarlierThanByTypeType:(NSString *)type timestamp:(int64_t)timestamp lt:(int64_t)lt limit:(int64_t)limit mapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarlierThanByType(type:timestamp:lt:limit:mapper:)")));
-- (TKKRuntimeQuery<TKKTonTransaction *> *)selectEarliest __attribute__((swift_name("selectEarliest()")));
-- (TKKRuntimeQuery<id> *)selectEarliestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectEarliest(mapper:)")));
-- (TKKRuntimeQuery<TKKTonTransaction *> *)selectLatest __attribute__((swift_name("selectLatest()")));
-- (TKKRuntimeQuery<id> *)selectLatestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, NSString *, NSString * _Nullable, NSString * _Nullable))mapper __attribute__((swift_name("selectLatest(mapper:)")));
+- (TKKRuntimeQuery<id> *)getLatestMapper:(id (^)(NSString *, TKKLong *, TKKLong *, NSString * _Nullable, NSString * _Nullable, TKKTransactionType *, NSString *))mapper __attribute__((swift_name("getLatest(mapper:)")));
+- (void)insertHash:(NSString *)hash lt:(int64_t)lt timestamp:(int64_t)timestamp amount:(NSString * _Nullable)amount fee:(NSString * _Nullable)fee type:(TKKTransactionType *)type transfersJson:(NSString *)transfersJson __attribute__((swift_name("insert(hash:lt:timestamp:amount:fee:type:transfersJson:)")));
 @end
 
 __attribute__((objc_subclassing_restricted))
@@ -580,6 +577,39 @@ __attribute__((swift_name("TransactionType")))
 @property (class, readonly) TKKTransactionType *unknown __attribute__((swift_name("unknown")));
 + (TKKKotlinArray<TKKTransactionType *> *)values __attribute__((swift_name("values()")));
 @property (class, readonly) NSArray<TKKTransactionType *> *entries __attribute__((swift_name("entries")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("Transfer")))
+@interface TKKTransfer : TKKBase
+- (instancetype)initWithSrc:(NSString *)src dest:(NSString *)dest amount:(NSString *)amount __attribute__((swift_name("init(src:dest:amount:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) TKKTransferCompanion *companion __attribute__((swift_name("companion")));
+- (TKKTransfer *)doCopySrc:(NSString *)src dest:(NSString *)dest amount:(NSString *)amount __attribute__((swift_name("doCopy(src:dest:amount:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) NSString *amount __attribute__((swift_name("amount")));
+@property (readonly) NSString *dest __attribute__((swift_name("dest")));
+@property (readonly) NSString *src __attribute__((swift_name("src")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("Transfer.Companion")))
+@interface TKKTransferCompanion : TKKBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) TKKTransferCompanion *shared __attribute__((swift_name("shared")));
+- (id<TKKKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+@interface TKKTonTransaction (Extensions)
+@property (readonly) NSArray<TKKTransfer *> *transfers __attribute__((swift_name("transfers")));
 @end
 
 @interface TKKTonKit (Extensions)
@@ -974,6 +1004,13 @@ __attribute__((swift_name("RuntimeQuery")))
 - (void)removeListenerListener:(id<TKKRuntimeQueryListener>)listener __attribute__((swift_name("removeListener(listener:)")));
 @end
 
+__attribute__((swift_name("RuntimeColumnAdapter")))
+@protocol TKKRuntimeColumnAdapter
+@required
+- (id)decodeDatabaseValue:(id _Nullable)databaseValue __attribute__((swift_name("decode(databaseValue:)")));
+- (id _Nullable)encodeValue:(id)value __attribute__((swift_name("encode(value:)")));
+@end
+
 __attribute__((swift_name("Ton_kotlin_cryptoDecryptor")))
 @protocol TKKTon_kotlin_cryptoDecryptor
 @required
@@ -1007,6 +1044,25 @@ __attribute__((swift_name("KotlinEnumCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) TKKKotlinEnumCompanion *shared __attribute__((swift_name("shared")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreSerializationStrategy")))
+@protocol TKKKotlinx_serialization_coreSerializationStrategy
+@required
+- (void)serializeEncoder:(id<TKKKotlinx_serialization_coreEncoder>)encoder value:(id _Nullable)value __attribute__((swift_name("serialize(encoder:value:)")));
+@property (readonly) id<TKKKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreDeserializationStrategy")))
+@protocol TKKKotlinx_serialization_coreDeserializationStrategy
+@required
+- (id _Nullable)deserializeDecoder:(id<TKKKotlinx_serialization_coreDecoder>)decoder __attribute__((swift_name("deserialize(decoder:)")));
+@property (readonly) id<TKKKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreKSerializer")))
+@protocol TKKKotlinx_serialization_coreKSerializer <TKKKotlinx_serialization_coreSerializationStrategy, TKKKotlinx_serialization_coreDeserializationStrategy>
+@required
 @end
 
 __attribute__((swift_name("KotlinIterator")))
@@ -2234,6 +2290,147 @@ __attribute__((swift_name("Ton_kotlin_apiAdnlIdShort")))
 @property (readonly) TKKKotlinByteArray *id __attribute__((swift_name("id")));
 @end
 
+__attribute__((swift_name("Kotlinx_serialization_coreEncoder")))
+@protocol TKKKotlinx_serialization_coreEncoder
+@required
+- (id<TKKKotlinx_serialization_coreCompositeEncoder>)beginCollectionDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor collectionSize:(int32_t)collectionSize __attribute__((swift_name("beginCollection(descriptor:collectionSize:)")));
+- (id<TKKKotlinx_serialization_coreCompositeEncoder>)beginStructureDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("beginStructure(descriptor:)")));
+- (void)encodeBooleanValue:(BOOL)value __attribute__((swift_name("encodeBoolean(value:)")));
+- (void)encodeByteValue:(int8_t)value __attribute__((swift_name("encodeByte(value:)")));
+- (void)encodeCharValue:(unichar)value __attribute__((swift_name("encodeChar(value:)")));
+- (void)encodeDoubleValue:(double)value __attribute__((swift_name("encodeDouble(value:)")));
+- (void)encodeEnumEnumDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)enumDescriptor index:(int32_t)index __attribute__((swift_name("encodeEnum(enumDescriptor:index:)")));
+- (void)encodeFloatValue:(float)value __attribute__((swift_name("encodeFloat(value:)")));
+- (id<TKKKotlinx_serialization_coreEncoder>)encodeInlineDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("encodeInline(descriptor:)")));
+- (void)encodeIntValue:(int32_t)value __attribute__((swift_name("encodeInt(value:)")));
+- (void)encodeLongValue:(int64_t)value __attribute__((swift_name("encodeLong(value:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (void)encodeNotNullMark __attribute__((swift_name("encodeNotNullMark()")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (void)encodeNull __attribute__((swift_name("encodeNull()")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (void)encodeNullableSerializableValueSerializer:(id<TKKKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeNullableSerializableValue(serializer:value:)")));
+- (void)encodeSerializableValueSerializer:(id<TKKKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeSerializableValue(serializer:value:)")));
+- (void)encodeShortValue:(int16_t)value __attribute__((swift_name("encodeShort(value:)")));
+- (void)encodeStringValue:(NSString *)value __attribute__((swift_name("encodeString(value:)")));
+@property (readonly) TKKKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreSerialDescriptor")))
+@protocol TKKKotlinx_serialization_coreSerialDescriptor
+@required
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (NSArray<id<TKKKotlinAnnotation>> *)getElementAnnotationsIndex:(int32_t)index __attribute__((swift_name("getElementAnnotations(index:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id<TKKKotlinx_serialization_coreSerialDescriptor>)getElementDescriptorIndex:(int32_t)index __attribute__((swift_name("getElementDescriptor(index:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (int32_t)getElementIndexName:(NSString *)name __attribute__((swift_name("getElementIndex(name:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (NSString *)getElementNameIndex:(int32_t)index __attribute__((swift_name("getElementName(index:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (BOOL)isElementOptionalIndex:(int32_t)index __attribute__((swift_name("isElementOptional(index:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+@property (readonly) NSArray<id<TKKKotlinAnnotation>> *annotations __attribute__((swift_name("annotations")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+@property (readonly) int32_t elementsCount __attribute__((swift_name("elementsCount")));
+@property (readonly) BOOL isInline __attribute__((swift_name("isInline")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+@property (readonly) BOOL isNullable __attribute__((swift_name("isNullable")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+@property (readonly) TKKKotlinx_serialization_coreSerialKind *kind __attribute__((swift_name("kind")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+@property (readonly) NSString *serialName __attribute__((swift_name("serialName")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreDecoder")))
+@protocol TKKKotlinx_serialization_coreDecoder
+@required
+- (id<TKKKotlinx_serialization_coreCompositeDecoder>)beginStructureDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("beginStructure(descriptor:)")));
+- (BOOL)decodeBoolean __attribute__((swift_name("decodeBoolean()")));
+- (int8_t)decodeByte __attribute__((swift_name("decodeByte()")));
+- (unichar)decodeChar __attribute__((swift_name("decodeChar()")));
+- (double)decodeDouble __attribute__((swift_name("decodeDouble()")));
+- (int32_t)decodeEnumEnumDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)enumDescriptor __attribute__((swift_name("decodeEnum(enumDescriptor:)")));
+- (float)decodeFloat __attribute__((swift_name("decodeFloat()")));
+- (id<TKKKotlinx_serialization_coreDecoder>)decodeInlineDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeInline(descriptor:)")));
+- (int32_t)decodeInt __attribute__((swift_name("decodeInt()")));
+- (int64_t)decodeLong __attribute__((swift_name("decodeLong()")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (BOOL)decodeNotNullMark __attribute__((swift_name("decodeNotNullMark()")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (TKKKotlinNothing * _Nullable)decodeNull __attribute__((swift_name("decodeNull()")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id _Nullable)decodeNullableSerializableValueDeserializer:(id<TKKKotlinx_serialization_coreDeserializationStrategy>)deserializer __attribute__((swift_name("decodeNullableSerializableValue(deserializer:)")));
+- (id _Nullable)decodeSerializableValueDeserializer:(id<TKKKotlinx_serialization_coreDeserializationStrategy>)deserializer __attribute__((swift_name("decodeSerializableValue(deserializer:)")));
+- (int16_t)decodeShort __attribute__((swift_name("decodeShort()")));
+- (NSString *)decodeString __attribute__((swift_name("decodeString()")));
+@property (readonly) TKKKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
+@end
+
 __attribute__((swift_name("KotlinCharSequence")))
 @protocol TKKKotlinCharSequence
 @required
@@ -2579,25 +2776,6 @@ __attribute__((swift_name("Ton_kotlin_cellCellSlice")))
 @property (readonly) NSArray<id<TKKTon_kotlin_cellCell>> *refs __attribute__((swift_name("refs")));
 @property int32_t refsPosition __attribute__((swift_name("refsPosition")));
 @property (readonly) int32_t remainingBits __attribute__((swift_name("remainingBits")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreSerializationStrategy")))
-@protocol TKKKotlinx_serialization_coreSerializationStrategy
-@required
-- (void)serializeEncoder:(id<TKKKotlinx_serialization_coreEncoder>)encoder value:(id _Nullable)value __attribute__((swift_name("serialize(encoder:value:)")));
-@property (readonly) id<TKKKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreDeserializationStrategy")))
-@protocol TKKKotlinx_serialization_coreDeserializationStrategy
-@required
-- (id _Nullable)deserializeDecoder:(id<TKKKotlinx_serialization_coreDecoder>)decoder __attribute__((swift_name("deserialize(decoder:)")));
-@property (readonly) id<TKKKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreKSerializer")))
-@protocol TKKKotlinx_serialization_coreKSerializer <TKKKotlinx_serialization_coreSerializationStrategy, TKKKotlinx_serialization_coreDeserializationStrategy>
-@required
 @end
 
 __attribute__((swift_name("Ton_kotlin_tlbAbstractTlbConstructor")))
@@ -3738,6 +3916,117 @@ __attribute__((swift_name("Ton_kotlin_apiOverlayNode")))
 @property (readonly) int32_t version __attribute__((swift_name("version")));
 @end
 
+__attribute__((swift_name("Kotlinx_serialization_coreCompositeEncoder")))
+@protocol TKKKotlinx_serialization_coreCompositeEncoder
+@required
+- (void)encodeBooleanElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(BOOL)value __attribute__((swift_name("encodeBooleanElement(descriptor:index:value:)")));
+- (void)encodeByteElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int8_t)value __attribute__((swift_name("encodeByteElement(descriptor:index:value:)")));
+- (void)encodeCharElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(unichar)value __attribute__((swift_name("encodeCharElement(descriptor:index:value:)")));
+- (void)encodeDoubleElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(double)value __attribute__((swift_name("encodeDoubleElement(descriptor:index:value:)")));
+- (void)encodeFloatElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(float)value __attribute__((swift_name("encodeFloatElement(descriptor:index:value:)")));
+- (id<TKKKotlinx_serialization_coreEncoder>)encodeInlineElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("encodeInlineElement(descriptor:index:)")));
+- (void)encodeIntElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int32_t)value __attribute__((swift_name("encodeIntElement(descriptor:index:value:)")));
+- (void)encodeLongElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int64_t)value __attribute__((swift_name("encodeLongElement(descriptor:index:value:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (void)encodeNullableSerializableElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index serializer:(id<TKKKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeNullableSerializableElement(descriptor:index:serializer:value:)")));
+- (void)encodeSerializableElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index serializer:(id<TKKKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeSerializableElement(descriptor:index:serializer:value:)")));
+- (void)encodeShortElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int16_t)value __attribute__((swift_name("encodeShortElement(descriptor:index:value:)")));
+- (void)encodeStringElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(NSString *)value __attribute__((swift_name("encodeStringElement(descriptor:index:value:)")));
+- (void)endStructureDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("endStructure(descriptor:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (BOOL)shouldEncodeElementDefaultDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("shouldEncodeElementDefault(descriptor:index:)")));
+@property (readonly) TKKKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreSerializersModule")))
+@interface TKKKotlinx_serialization_coreSerializersModule : TKKBase
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (void)dumpToCollector:(id<TKKKotlinx_serialization_coreSerializersModuleCollector>)collector __attribute__((swift_name("dumpTo(collector:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id<TKKKotlinx_serialization_coreKSerializer> _Nullable)getContextualKClass:(id<TKKKotlinKClass>)kClass typeArgumentsSerializers:(NSArray<id<TKKKotlinx_serialization_coreKSerializer>> *)typeArgumentsSerializers __attribute__((swift_name("getContextual(kClass:typeArgumentsSerializers:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id<TKKKotlinx_serialization_coreSerializationStrategy> _Nullable)getPolymorphicBaseClass:(id<TKKKotlinKClass>)baseClass value:(id)value __attribute__((swift_name("getPolymorphic(baseClass:value:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id<TKKKotlinx_serialization_coreDeserializationStrategy> _Nullable)getPolymorphicBaseClass:(id<TKKKotlinKClass>)baseClass serializedClassName:(NSString * _Nullable)serializedClassName __attribute__((swift_name("getPolymorphic(baseClass:serializedClassName:)")));
+@end
+
+__attribute__((swift_name("KotlinAnnotation")))
+@protocol TKKKotlinAnnotation
+@required
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+__attribute__((swift_name("Kotlinx_serialization_coreSerialKind")))
+@interface TKKKotlinx_serialization_coreSerialKind : TKKBase
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreCompositeDecoder")))
+@protocol TKKKotlinx_serialization_coreCompositeDecoder
+@required
+- (BOOL)decodeBooleanElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeBooleanElement(descriptor:index:)")));
+- (int8_t)decodeByteElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeByteElement(descriptor:index:)")));
+- (unichar)decodeCharElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeCharElement(descriptor:index:)")));
+- (int32_t)decodeCollectionSizeDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeCollectionSize(descriptor:)")));
+- (double)decodeDoubleElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeDoubleElement(descriptor:index:)")));
+- (int32_t)decodeElementIndexDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeElementIndex(descriptor:)")));
+- (float)decodeFloatElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeFloatElement(descriptor:index:)")));
+- (id<TKKKotlinx_serialization_coreDecoder>)decodeInlineElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeInlineElement(descriptor:index:)")));
+- (int32_t)decodeIntElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeIntElement(descriptor:index:)")));
+- (int64_t)decodeLongElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeLongElement(descriptor:index:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id _Nullable)decodeNullableSerializableElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index deserializer:(id<TKKKotlinx_serialization_coreDeserializationStrategy>)deserializer previousValue:(id _Nullable)previousValue __attribute__((swift_name("decodeNullableSerializableElement(descriptor:index:deserializer:previousValue:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (BOOL)decodeSequentially __attribute__((swift_name("decodeSequentially()")));
+- (id _Nullable)decodeSerializableElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index deserializer:(id<TKKKotlinx_serialization_coreDeserializationStrategy>)deserializer previousValue:(id _Nullable)previousValue __attribute__((swift_name("decodeSerializableElement(descriptor:index:deserializer:previousValue:)")));
+- (int16_t)decodeShortElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeShortElement(descriptor:index:)")));
+- (NSString *)decodeStringElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeStringElement(descriptor:index:)")));
+- (void)endStructureDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("endStructure(descriptor:)")));
+@property (readonly) TKKKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KotlinNothing")))
+@interface TKKKotlinNothing : TKKBase
+@end
+
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("KotlinCharArray")))
 @interface TKKKotlinCharArray : TKKBase
@@ -3866,147 +4155,6 @@ __attribute__((swift_name("Ton_kotlin_bigintBigInt")))
 - (int64_t)toLong __attribute__((swift_name("toLong()")));
 - (int16_t)toShort __attribute__((swift_name("toShort()")));
 - (NSString *)toStringRadix:(int32_t)radix __attribute__((swift_name("toString(radix:)")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreEncoder")))
-@protocol TKKKotlinx_serialization_coreEncoder
-@required
-- (id<TKKKotlinx_serialization_coreCompositeEncoder>)beginCollectionDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor collectionSize:(int32_t)collectionSize __attribute__((swift_name("beginCollection(descriptor:collectionSize:)")));
-- (id<TKKKotlinx_serialization_coreCompositeEncoder>)beginStructureDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("beginStructure(descriptor:)")));
-- (void)encodeBooleanValue:(BOOL)value __attribute__((swift_name("encodeBoolean(value:)")));
-- (void)encodeByteValue:(int8_t)value __attribute__((swift_name("encodeByte(value:)")));
-- (void)encodeCharValue:(unichar)value __attribute__((swift_name("encodeChar(value:)")));
-- (void)encodeDoubleValue:(double)value __attribute__((swift_name("encodeDouble(value:)")));
-- (void)encodeEnumEnumDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)enumDescriptor index:(int32_t)index __attribute__((swift_name("encodeEnum(enumDescriptor:index:)")));
-- (void)encodeFloatValue:(float)value __attribute__((swift_name("encodeFloat(value:)")));
-- (id<TKKKotlinx_serialization_coreEncoder>)encodeInlineDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("encodeInline(descriptor:)")));
-- (void)encodeIntValue:(int32_t)value __attribute__((swift_name("encodeInt(value:)")));
-- (void)encodeLongValue:(int64_t)value __attribute__((swift_name("encodeLong(value:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (void)encodeNotNullMark __attribute__((swift_name("encodeNotNullMark()")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (void)encodeNull __attribute__((swift_name("encodeNull()")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (void)encodeNullableSerializableValueSerializer:(id<TKKKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeNullableSerializableValue(serializer:value:)")));
-- (void)encodeSerializableValueSerializer:(id<TKKKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeSerializableValue(serializer:value:)")));
-- (void)encodeShortValue:(int16_t)value __attribute__((swift_name("encodeShort(value:)")));
-- (void)encodeStringValue:(NSString *)value __attribute__((swift_name("encodeString(value:)")));
-@property (readonly) TKKKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreSerialDescriptor")))
-@protocol TKKKotlinx_serialization_coreSerialDescriptor
-@required
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (NSArray<id<TKKKotlinAnnotation>> *)getElementAnnotationsIndex:(int32_t)index __attribute__((swift_name("getElementAnnotations(index:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id<TKKKotlinx_serialization_coreSerialDescriptor>)getElementDescriptorIndex:(int32_t)index __attribute__((swift_name("getElementDescriptor(index:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (int32_t)getElementIndexName:(NSString *)name __attribute__((swift_name("getElementIndex(name:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (NSString *)getElementNameIndex:(int32_t)index __attribute__((swift_name("getElementName(index:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (BOOL)isElementOptionalIndex:(int32_t)index __attribute__((swift_name("isElementOptional(index:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-@property (readonly) NSArray<id<TKKKotlinAnnotation>> *annotations __attribute__((swift_name("annotations")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-@property (readonly) int32_t elementsCount __attribute__((swift_name("elementsCount")));
-@property (readonly) BOOL isInline __attribute__((swift_name("isInline")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-@property (readonly) BOOL isNullable __attribute__((swift_name("isNullable")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-@property (readonly) TKKKotlinx_serialization_coreSerialKind *kind __attribute__((swift_name("kind")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-@property (readonly) NSString *serialName __attribute__((swift_name("serialName")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreDecoder")))
-@protocol TKKKotlinx_serialization_coreDecoder
-@required
-- (id<TKKKotlinx_serialization_coreCompositeDecoder>)beginStructureDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("beginStructure(descriptor:)")));
-- (BOOL)decodeBoolean __attribute__((swift_name("decodeBoolean()")));
-- (int8_t)decodeByte __attribute__((swift_name("decodeByte()")));
-- (unichar)decodeChar __attribute__((swift_name("decodeChar()")));
-- (double)decodeDouble __attribute__((swift_name("decodeDouble()")));
-- (int32_t)decodeEnumEnumDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)enumDescriptor __attribute__((swift_name("decodeEnum(enumDescriptor:)")));
-- (float)decodeFloat __attribute__((swift_name("decodeFloat()")));
-- (id<TKKKotlinx_serialization_coreDecoder>)decodeInlineDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeInline(descriptor:)")));
-- (int32_t)decodeInt __attribute__((swift_name("decodeInt()")));
-- (int64_t)decodeLong __attribute__((swift_name("decodeLong()")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (BOOL)decodeNotNullMark __attribute__((swift_name("decodeNotNullMark()")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (TKKKotlinNothing * _Nullable)decodeNull __attribute__((swift_name("decodeNull()")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id _Nullable)decodeNullableSerializableValueDeserializer:(id<TKKKotlinx_serialization_coreDeserializationStrategy>)deserializer __attribute__((swift_name("decodeNullableSerializableValue(deserializer:)")));
-- (id _Nullable)decodeSerializableValueDeserializer:(id<TKKKotlinx_serialization_coreDeserializationStrategy>)deserializer __attribute__((swift_name("decodeSerializableValue(deserializer:)")));
-- (int16_t)decodeShort __attribute__((swift_name("decodeShort()")));
-- (NSString *)decodeString __attribute__((swift_name("decodeString()")));
-@property (readonly) TKKKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
 @end
 
 __attribute__((objc_subclassing_restricted))
@@ -4262,6 +4410,55 @@ __attribute__((swift_name("Ton_kotlin_apiOverlayNode.Companion")))
 - (id<TKKKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+__attribute__((swift_name("Kotlinx_serialization_coreSerializersModuleCollector")))
+@protocol TKKKotlinx_serialization_coreSerializersModuleCollector
+@required
+- (void)contextualKClass:(id<TKKKotlinKClass>)kClass provider:(id<TKKKotlinx_serialization_coreKSerializer> (^)(NSArray<id<TKKKotlinx_serialization_coreKSerializer>> *))provider __attribute__((swift_name("contextual(kClass:provider:)")));
+- (void)contextualKClass:(id<TKKKotlinKClass>)kClass serializer:(id<TKKKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("contextual(kClass:serializer:)")));
+- (void)polymorphicBaseClass:(id<TKKKotlinKClass>)baseClass actualClass:(id<TKKKotlinKClass>)actualClass actualSerializer:(id<TKKKotlinx_serialization_coreKSerializer>)actualSerializer __attribute__((swift_name("polymorphic(baseClass:actualClass:actualSerializer:)")));
+- (void)polymorphicDefaultBaseClass:(id<TKKKotlinKClass>)baseClass defaultDeserializerProvider:(id<TKKKotlinx_serialization_coreDeserializationStrategy> _Nullable (^)(NSString * _Nullable))defaultDeserializerProvider __attribute__((swift_name("polymorphicDefault(baseClass:defaultDeserializerProvider:)"))) __attribute__((deprecated("Deprecated in favor of function with more precise name: polymorphicDefaultDeserializer")));
+- (void)polymorphicDefaultDeserializerBaseClass:(id<TKKKotlinKClass>)baseClass defaultDeserializerProvider:(id<TKKKotlinx_serialization_coreDeserializationStrategy> _Nullable (^)(NSString * _Nullable))defaultDeserializerProvider __attribute__((swift_name("polymorphicDefaultDeserializer(baseClass:defaultDeserializerProvider:)")));
+- (void)polymorphicDefaultSerializerBaseClass:(id<TKKKotlinKClass>)baseClass defaultSerializerProvider:(id<TKKKotlinx_serialization_coreSerializationStrategy> _Nullable (^)(id))defaultSerializerProvider __attribute__((swift_name("polymorphicDefaultSerializer(baseClass:defaultSerializerProvider:)")));
+@end
+
+__attribute__((swift_name("KotlinKDeclarationContainer")))
+@protocol TKKKotlinKDeclarationContainer
+@required
+@end
+
+__attribute__((swift_name("KotlinKAnnotatedElement")))
+@protocol TKKKotlinKAnnotatedElement
+@required
+@end
+
+
+/**
+ * @note annotations
+ *   kotlin.SinceKotlin(version="1.1")
+*/
+__attribute__((swift_name("KotlinKClassifier")))
+@protocol TKKKotlinKClassifier
+@required
+@end
+
+__attribute__((swift_name("KotlinKClass")))
+@protocol TKKKotlinKClass <TKKKotlinKDeclarationContainer, TKKKotlinKAnnotatedElement, TKKKotlinKClassifier>
+@required
+
+/**
+ * @note annotations
+ *   kotlin.SinceKotlin(version="1.1")
+*/
+- (BOOL)isInstanceValue:(id _Nullable)value __attribute__((swift_name("isInstance(value:)")));
+@property (readonly) NSString * _Nullable qualifiedName __attribute__((swift_name("qualifiedName")));
+@property (readonly) NSString * _Nullable simpleName __attribute__((swift_name("simpleName")));
+@end
+
 __attribute__((swift_name("KotlinCharIterator")))
 @interface TKKKotlinCharIterator : TKKBase <TKKKotlinIterator>
 - (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
@@ -4283,117 +4480,6 @@ __attribute__((swift_name("Ton_kotlin_cellCellType.Companion")))
  *   kotlin.jvm.JvmStatic
 */
 - (TKKTon_kotlin_cellCellType *)getIndex:(int32_t)index __attribute__((swift_name("get(index:)")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreCompositeEncoder")))
-@protocol TKKKotlinx_serialization_coreCompositeEncoder
-@required
-- (void)encodeBooleanElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(BOOL)value __attribute__((swift_name("encodeBooleanElement(descriptor:index:value:)")));
-- (void)encodeByteElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int8_t)value __attribute__((swift_name("encodeByteElement(descriptor:index:value:)")));
-- (void)encodeCharElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(unichar)value __attribute__((swift_name("encodeCharElement(descriptor:index:value:)")));
-- (void)encodeDoubleElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(double)value __attribute__((swift_name("encodeDoubleElement(descriptor:index:value:)")));
-- (void)encodeFloatElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(float)value __attribute__((swift_name("encodeFloatElement(descriptor:index:value:)")));
-- (id<TKKKotlinx_serialization_coreEncoder>)encodeInlineElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("encodeInlineElement(descriptor:index:)")));
-- (void)encodeIntElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int32_t)value __attribute__((swift_name("encodeIntElement(descriptor:index:value:)")));
-- (void)encodeLongElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int64_t)value __attribute__((swift_name("encodeLongElement(descriptor:index:value:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (void)encodeNullableSerializableElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index serializer:(id<TKKKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeNullableSerializableElement(descriptor:index:serializer:value:)")));
-- (void)encodeSerializableElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index serializer:(id<TKKKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeSerializableElement(descriptor:index:serializer:value:)")));
-- (void)encodeShortElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int16_t)value __attribute__((swift_name("encodeShortElement(descriptor:index:value:)")));
-- (void)encodeStringElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(NSString *)value __attribute__((swift_name("encodeStringElement(descriptor:index:value:)")));
-- (void)endStructureDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("endStructure(descriptor:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (BOOL)shouldEncodeElementDefaultDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("shouldEncodeElementDefault(descriptor:index:)")));
-@property (readonly) TKKKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreSerializersModule")))
-@interface TKKKotlinx_serialization_coreSerializersModule : TKKBase
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (void)dumpToCollector:(id<TKKKotlinx_serialization_coreSerializersModuleCollector>)collector __attribute__((swift_name("dumpTo(collector:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id<TKKKotlinx_serialization_coreKSerializer> _Nullable)getContextualKClass:(id<TKKKotlinKClass>)kClass typeArgumentsSerializers:(NSArray<id<TKKKotlinx_serialization_coreKSerializer>> *)typeArgumentsSerializers __attribute__((swift_name("getContextual(kClass:typeArgumentsSerializers:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id<TKKKotlinx_serialization_coreSerializationStrategy> _Nullable)getPolymorphicBaseClass:(id<TKKKotlinKClass>)baseClass value:(id)value __attribute__((swift_name("getPolymorphic(baseClass:value:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id<TKKKotlinx_serialization_coreDeserializationStrategy> _Nullable)getPolymorphicBaseClass:(id<TKKKotlinKClass>)baseClass serializedClassName:(NSString * _Nullable)serializedClassName __attribute__((swift_name("getPolymorphic(baseClass:serializedClassName:)")));
-@end
-
-__attribute__((swift_name("KotlinAnnotation")))
-@protocol TKKKotlinAnnotation
-@required
-@end
-
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-__attribute__((swift_name("Kotlinx_serialization_coreSerialKind")))
-@interface TKKKotlinx_serialization_coreSerialKind : TKKBase
-- (NSUInteger)hash __attribute__((swift_name("hash()")));
-- (NSString *)description __attribute__((swift_name("description()")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreCompositeDecoder")))
-@protocol TKKKotlinx_serialization_coreCompositeDecoder
-@required
-- (BOOL)decodeBooleanElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeBooleanElement(descriptor:index:)")));
-- (int8_t)decodeByteElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeByteElement(descriptor:index:)")));
-- (unichar)decodeCharElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeCharElement(descriptor:index:)")));
-- (int32_t)decodeCollectionSizeDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeCollectionSize(descriptor:)")));
-- (double)decodeDoubleElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeDoubleElement(descriptor:index:)")));
-- (int32_t)decodeElementIndexDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeElementIndex(descriptor:)")));
-- (float)decodeFloatElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeFloatElement(descriptor:index:)")));
-- (id<TKKKotlinx_serialization_coreDecoder>)decodeInlineElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeInlineElement(descriptor:index:)")));
-- (int32_t)decodeIntElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeIntElement(descriptor:index:)")));
-- (int64_t)decodeLongElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeLongElement(descriptor:index:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id _Nullable)decodeNullableSerializableElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index deserializer:(id<TKKKotlinx_serialization_coreDeserializationStrategy>)deserializer previousValue:(id _Nullable)previousValue __attribute__((swift_name("decodeNullableSerializableElement(descriptor:index:deserializer:previousValue:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (BOOL)decodeSequentially __attribute__((swift_name("decodeSequentially()")));
-- (id _Nullable)decodeSerializableElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index deserializer:(id<TKKKotlinx_serialization_coreDeserializationStrategy>)deserializer previousValue:(id _Nullable)previousValue __attribute__((swift_name("decodeSerializableElement(descriptor:index:deserializer:previousValue:)")));
-- (int16_t)decodeShortElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeShortElement(descriptor:index:)")));
-- (NSString *)decodeStringElementDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeStringElement(descriptor:index:)")));
-- (void)endStructureDescriptor:(id<TKKKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("endStructure(descriptor:)")));
-@property (readonly) TKKKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
-@end
-
-__attribute__((objc_subclassing_restricted))
-__attribute__((swift_name("KotlinNothing")))
-@interface TKKKotlinNothing : TKKBase
 @end
 
 __attribute__((objc_subclassing_restricted))
@@ -4469,55 +4555,6 @@ __attribute__((swift_name("Ton_kotlin_blockMutableVmStack")))
 - (void)pushTinyIntTinyInt__:(int64_t)tinyInt __attribute__((swift_name("pushTinyInt(tinyInt__:)")));
 - (void)pushTupleVmTuple:(id<TKKTon_kotlin_blockVmTuple>)vmTuple __attribute__((swift_name("pushTuple(vmTuple:)")));
 - (void)swap __attribute__((swift_name("swap()")));
-@end
-
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-__attribute__((swift_name("Kotlinx_serialization_coreSerializersModuleCollector")))
-@protocol TKKKotlinx_serialization_coreSerializersModuleCollector
-@required
-- (void)contextualKClass:(id<TKKKotlinKClass>)kClass provider:(id<TKKKotlinx_serialization_coreKSerializer> (^)(NSArray<id<TKKKotlinx_serialization_coreKSerializer>> *))provider __attribute__((swift_name("contextual(kClass:provider:)")));
-- (void)contextualKClass:(id<TKKKotlinKClass>)kClass serializer:(id<TKKKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("contextual(kClass:serializer:)")));
-- (void)polymorphicBaseClass:(id<TKKKotlinKClass>)baseClass actualClass:(id<TKKKotlinKClass>)actualClass actualSerializer:(id<TKKKotlinx_serialization_coreKSerializer>)actualSerializer __attribute__((swift_name("polymorphic(baseClass:actualClass:actualSerializer:)")));
-- (void)polymorphicDefaultBaseClass:(id<TKKKotlinKClass>)baseClass defaultDeserializerProvider:(id<TKKKotlinx_serialization_coreDeserializationStrategy> _Nullable (^)(NSString * _Nullable))defaultDeserializerProvider __attribute__((swift_name("polymorphicDefault(baseClass:defaultDeserializerProvider:)"))) __attribute__((deprecated("Deprecated in favor of function with more precise name: polymorphicDefaultDeserializer")));
-- (void)polymorphicDefaultDeserializerBaseClass:(id<TKKKotlinKClass>)baseClass defaultDeserializerProvider:(id<TKKKotlinx_serialization_coreDeserializationStrategy> _Nullable (^)(NSString * _Nullable))defaultDeserializerProvider __attribute__((swift_name("polymorphicDefaultDeserializer(baseClass:defaultDeserializerProvider:)")));
-- (void)polymorphicDefaultSerializerBaseClass:(id<TKKKotlinKClass>)baseClass defaultSerializerProvider:(id<TKKKotlinx_serialization_coreSerializationStrategy> _Nullable (^)(id))defaultSerializerProvider __attribute__((swift_name("polymorphicDefaultSerializer(baseClass:defaultSerializerProvider:)")));
-@end
-
-__attribute__((swift_name("KotlinKDeclarationContainer")))
-@protocol TKKKotlinKDeclarationContainer
-@required
-@end
-
-__attribute__((swift_name("KotlinKAnnotatedElement")))
-@protocol TKKKotlinKAnnotatedElement
-@required
-@end
-
-
-/**
- * @note annotations
- *   kotlin.SinceKotlin(version="1.1")
-*/
-__attribute__((swift_name("KotlinKClassifier")))
-@protocol TKKKotlinKClassifier
-@required
-@end
-
-__attribute__((swift_name("KotlinKClass")))
-@protocol TKKKotlinKClass <TKKKotlinKDeclarationContainer, TKKKotlinKAnnotatedElement, TKKKotlinKClassifier>
-@required
-
-/**
- * @note annotations
- *   kotlin.SinceKotlin(version="1.1")
-*/
-- (BOOL)isInstanceValue:(id _Nullable)value __attribute__((swift_name("isInstance(value:)")));
-@property (readonly) NSString * _Nullable qualifiedName __attribute__((swift_name("qualifiedName")));
-@property (readonly) NSString * _Nullable simpleName __attribute__((swift_name("simpleName")));
 @end
 
 
