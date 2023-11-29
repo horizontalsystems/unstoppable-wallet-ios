@@ -368,6 +368,9 @@
 "deposit.qr_code_description.watch" = "观看 %@ 的地址";
 "deposit.account" = "账户";
 
+"deposit.amount" = "金额";
+"deposit.set_amount" = "Set Amount";
+"deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "不活动";
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
@@ -376,7 +379,7 @@
 "deposit.zcash.restore.already_own" = "是的，我已经拥有了";
 "deposit.zcash.restore.dont_have" = "不，我没有";
 
-"deposit.warning" = "只发送 %@ 到此地址。向此地址发送其他类型的令牌将导致其最终丢失。";
+"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
 
 "receive_network_select.title" = "網絡";
 "receive_network_select.description" = "选择一个网络并获取要接收的地址。";
@@ -1813,9 +1816,7 @@
 "cex_deposit.network" = "網絡";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "最小金额";
-"cex_deposit.warning_memo" = "Memo(标签)是必需的，否则您将丢失您的硬币。";
-"cex_deposit.set_amount" = "Set Amount";
-"cex_deposit.enter_amount" = "Enter Amount";
+"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
 "cex_deposit.copy_address" = "复制";
 "cex_deposit.share_address" = "分享";
 "cex_deposit.failed" = "加载存款地址失败。请重试。";
