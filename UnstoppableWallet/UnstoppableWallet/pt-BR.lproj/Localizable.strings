@@ -368,6 +368,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.qr_code_description.watch" = "Endereço do relógio do %@";
 "deposit.account" = "Conta";
 
+"deposit.amount" = "Montante";
+"deposit.set_amount" = "Set Amount";
+"deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "Não ativo";
 "deposit.not_active.title" = "Endereço não ativo";
 "deposit.not_active.tron_description" = "Contas recém-criadas no blockchain TRON estão inativas e não podem ser consultadas ou exploradas. Elas precisam ser ativadas.\n\nPara ativar uma nova conta na cadeia Tron, é necessário transferir tokens TRX ou TRC-10 para um endereço de conta inativo, juntamente com uma taxa de ativação de 1 TRX";
@@ -376,7 +379,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.zcash.restore.already_own" = "Sim, eu já possuo";
 "deposit.zcash.restore.dont_have" = "Não, eu não tenho";
 
-"deposit.warning" = "Envie apenas %@ para este endereço. Enviar outros tipos de tokens para este endereço resultará em sua perda suprema.";
+"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
 
 "receive_network_select.title" = "Rede";
 "receive_network_select.description" = "Escolha uma rede e receba um endereço para depositar.";
@@ -1813,9 +1816,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_deposit.network" = "Rede";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Valor Mín.";
-"cex_deposit.warning_memo" = "Memo (tag) é necessário, ou você perderá suas moedas.";
-"cex_deposit.set_amount" = "Set Amount";
-"cex_deposit.enter_amount" = "Enter Amount";
+"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
 "cex_deposit.copy_address" = "Copiar";
 "cex_deposit.share_address" = "Compartilhar";
 "cex_deposit.failed" = "Não foi possível carregar o endereço de depósito. Por favor, tente novamente.";
