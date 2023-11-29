@@ -4,11 +4,10 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
     typealias Item = ReceiveAddressService.Item
 
     func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem {
-        var sections = [[ReceiveAddressModule.Item]]()
-
-        sections.append([.highlightedDescription(text: "deposit.warning".localized(item.coinCode), style: .yellow)])
-
-        var viewItems = [ReceiveAddressModule.Item]()
+        let description = ReceiveAddressModule.HighlightedDescription(
+                text: "deposit.warning".localized,
+                style: .yellow
+        )
 
         var networkName = ""
         if let derivation = item.token.type.derivation {
@@ -42,26 +41,24 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             uri: uri,
             networkName: networkName
         )
-        viewItems.append(.qrItem(qrItem))
+        var amountString: String?
         if let amount, let decimalValue = Decimal(string: amount) {
             let coinValue = CoinValue(kind: .token(token: item.token), value: decimalValue)
-
-            if let formatted = coinValue.formattedFull {
-                viewItems.append(.amount(value: formatted))
-            }
+            amountString = coinValue.formattedFull
         }
 
+        var active = true
         if let address = item.address as? ActivatedDepositAddress, !address.isActive {
-            viewItems.append(
-                .status(value: "deposit.not_active".localized)
-            )
+            active = false
         }
-
-        sections.append(viewItems)
 
         return .init(
             copyValue: uri,
-            sections: sections
+            highlightedDescription: description,
+            qrItem: qrItem,
+            amount: amountString,
+            active: active,
+            memo: nil
         )
     }
 
