@@ -80,15 +80,17 @@ extension ReceiveAddressModule {
 
     enum Item: Identifiable, Hashable {
         case qrItem(QrItem)
-        case value(title: String, value: String, copyable: Bool)
-        case infoValue(title: String, value: String, infoTitle: String, infoDescription: String, style: HighlightedDescriptionBaseView.Style = .yellow)
+        case amount(value: String)
+        case status(value: String)
+        case memo(value: String)
         case highlightedDescription(text: String, style: HighlightedDescriptionBaseView.Style = .yellow)
 
         public var id: String {
             switch self {
             case let .qrItem(item): return "\(item.address)_\(item.networkName ?? "NA")"
-            case let .value(title, value, _): return title + value
-            case let .infoValue(title, value, _, _, _): return title + value
+            case let .amount(value): return value
+            case let .status(value): return value
+            case let .memo(value): return value
             case let .highlightedDescription(text, _): return text
             }
         }

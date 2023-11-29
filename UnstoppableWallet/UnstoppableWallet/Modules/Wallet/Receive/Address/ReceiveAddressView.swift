@@ -9,8 +9,6 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
     @State private var hasAppeared = false
     @State private var warningAlertPopup: ReceiveAddressModule.PopupWarningItem?
 
-    @State private var infoPopup: AlertView.InfoDescription? = nil
-
     @State private var shareText: String?
     @State private var inputAmountPresented: Bool = false
 
@@ -46,10 +44,9 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 PlaceholderViewNew(image: Image("sync_error_48"), text: "sync_error".localized)
             }
         }
+        .animation(.default) // , value: viewModel.state)
         .onChange(of: viewModel.popup) {
-            print("Come on Change")
             guard hasAppeared else { return }
-            print("Set Popup to VIEW")
             warningAlertPopup = $0
         }
         .sheet(item: $shareText) { shareText in
@@ -77,16 +74,6 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                     .init(style: .yellow, title: popup.doneButtonTitle) { warningAlertPopup = nil },
                 ],
                 onDismiss: { warningAlertPopup = nil }
-            )
-        }
-        .bottomSheet(item: $infoPopup) { popup in
-            AlertView(
-                image: .info,
-                title: popup.title,
-                items: [
-                    .description(text: popup.description),
-                ],
-                onDismiss: { infoPopup = nil }
             )
         }
         .onAppear {
@@ -180,21 +167,56 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
 
     @ViewBuilder private func view(item: ReceiveAddressModule.Item) -> some View {
         switch item {
-        case let .qrItem(item): qrView(item: item)
-        case let .value(title, value, _):
+        case let .qrItem(item):
+            qrView(item: item)
+        case let .amount(value):
             ListRow {
-                Text(title).textSubhead2()
+                Text("deposit.amount".localized).textSubhead2()
                 Spacer()
                 Text(value).textSubhead1(color: .themeLeah)
+
+                Button(action: {
+                    inputText = ""
+                    viewModel.set(amount: "")
+                }, label: {
+                    Image("trash_20").renderingMode(.template)
+                })
+                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             }
-        case let .infoValue(title, value, infoTitle, infoDescription, style):
-            ClickableRow(action: {
-                infoPopup = AlertView.InfoDescription(title: infoTitle, description: infoDescription)
-            }) {
-                Text(title).textSubhead2()
-                Image("circle_information_20").themeIcon()
+        case let .status(value):
+            ListRow {
+                Text("deposit.account".localized)
+                    .textSubhead2()
+                    .modifier(Informed(description:
+                       AlertView.InfoDescription(
+                            title: "deposit.not_active.title".localized,
+                            description: "deposit.not_active.tron_description".localized
+                        )
+                    ))
                 Spacer()
-                Text(value).textSubhead1(color: style.accentColor)
+                Text(value).textSubhead1(color: .themeYellow)
+            }
+        case let .memo(value):
+            ListRow {
+                Text("cex_deposit.memo".localized)
+                    .textSubhead2()
+                    .modifier(Informed(description:
+                       AlertView.InfoDescription(
+                           title: "cex_deposit.memo_warning.title".localized,
+                           description: "cex_deposit.memo_warning.description".localized
+                       )
+                    ))
+
+                Spacer()
+
+                Text(value).textSubhead1(color: .themeLeah)
+
+                Button(action: {
+                    CopyHelper.copyAndNotify(value: value)
+                }, label: {
+                    Image("copy_20").renderingMode(.template)
+                })
+                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             }
         case let .highlightedDescription(text, style):
             HighlightedTextView(text: text, style: style)
