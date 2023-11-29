@@ -23,14 +23,24 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 ProgressView()
             case let .completed(viewItem):
                 VStack(spacing: .margin12) {
-                    ForEach(viewItem.sections, id: \.self) { items in
-                        view(items: items)
+                    HighlightedTextView(text: viewItem.highlightedDescription.text, style: viewItem.highlightedDescription.style)
+
+                    ListSection {
+                        qrView(item: viewItem.qrItem)
+                        if let amount = viewItem.amount {
+                            view(amount: amount)
+                        }
+                        if !viewItem.active {
+                            notActive()
+                        }
+                        if let memo = viewItem.memo {
+                            view(memo: memo)
+                        }
                     }
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
 
-                Spacer()
-                    .frame(height: 52)
+                Spacer().frame(height: 52)
 
                 LazyVGrid(columns: viewModel.actions.map { _ in GridItem(.flexible()) }, spacing: .margin16) {
                     ForEach(viewModel.actions, id: \.self) { action in
@@ -44,7 +54,6 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 PlaceholderViewNew(image: Image("sync_error_48"), text: "sync_error".localized)
             }
         }
-        .animation(.default) // , value: viewModel.state)
         .onChange(of: viewModel.popup) {
             guard hasAppeared else { return }
             warningAlertPopup = $0
@@ -52,8 +61,8 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         .sheet(item: $shareText) { shareText in
             ActivityView.view(activityItems: [shareText])
         }
-        .alert("cex_deposit.enter_amount".localized, isPresented: $inputAmountPresented, actions: {
-            TextField("Amount", text: $inputText) // TODO: Can't check valid numbers in default alertview
+        .alert("deposit.enter_amount".localized, isPresented: $inputAmountPresented, actions: {
+            TextField("deposit.enter_amount".localized, text: $inputText) // TODO: Can't check valid numbers in default alertview
                 .keyboardType(.decimalPad)
             Button("button.cancel".localized) {
                 updateAmount(success: false)
@@ -165,69 +174,56 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         }
     }
 
-    @ViewBuilder private func view(item: ReceiveAddressModule.Item) -> some View {
-        switch item {
-        case let .qrItem(item):
-            qrView(item: item)
-        case let .amount(value):
-            ListRow {
-                Text("deposit.amount".localized).textSubhead2()
-                Spacer()
-                Text(value).textSubhead1(color: .themeLeah)
+    @ViewBuilder func view(amount: String) -> some View {
+        ListRow {
+            Text("deposit.amount".localized).textSubhead2()
+            Spacer()
+            Text(amount).textSubhead1(color: .themeLeah)
+            Button(action: {
+                inputText = ""
+                viewModel.set(amount: "")
+            }, label: {
+                Image("trash_20").renderingMode(.template)
+            })
+            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+        }
+    }
 
-                Button(action: {
-                    inputText = ""
-                    viewModel.set(amount: "")
-                }, label: {
-                    Image("trash_20").renderingMode(.template)
-                })
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-            }
-        case let .status(value):
-            ListRow {
-                Text("deposit.account".localized)
-                    .textSubhead2()
-                    .modifier(Informed(description:
-                       AlertView.InfoDescription(
+    @ViewBuilder func notActive() -> some View {
+        ListRow {
+            Text("deposit.account".localized)
+                .textSubhead2()
+                .modifier(
+                    Informed(description:
+                        AlertView.InfoDescription(
                             title: "deposit.not_active.title".localized,
                             description: "deposit.not_active.tron_description".localized
                         )
                     ))
-                Spacer()
-                Text(value).textSubhead1(color: .themeYellow)
-            }
-        case let .memo(value):
-            ListRow {
-                Text("cex_deposit.memo".localized)
-                    .textSubhead2()
-                    .modifier(Informed(description:
-                       AlertView.InfoDescription(
-                           title: "cex_deposit.memo_warning.title".localized,
-                           description: "cex_deposit.memo_warning.description".localized
-                       )
-                    ))
-
-                Spacer()
-
-                Text(value).textSubhead1(color: .themeLeah)
-
-                Button(action: {
-                    CopyHelper.copyAndNotify(value: value)
-                }, label: {
-                    Image("copy_20").renderingMode(.template)
-                })
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-            }
-        case let .highlightedDescription(text, style):
-            HighlightedTextView(text: text, style: style)
+            Spacer()
+            Text("deposit.not_active".localized).textSubhead1(color: .themeYellow)
         }
     }
 
-    @ViewBuilder private func view(items: [ReceiveAddressModule.Item]) -> some View {
-        ListSection {
-            ForEach(items) { item in
-                view(item: item)
-            }
+    @ViewBuilder func view(memo: String) -> some View {
+        ListRow {
+            Text("cex_deposit.memo".localized)
+                .textSubhead2()
+                .modifier(
+                    Informed(description:
+                        AlertView.InfoDescription(
+                            title: "cex_deposit.memo_warning.title".localized,
+                            description: "cex_deposit.memo_warning.description".localized
+                        )
+                    ))
+            Spacer()
+            Text(memo).textSubhead1(color: .themeLeah)
+            Button(action: {
+                CopyHelper.copyAndNotify(value: memo)
+            }, label: {
+                Image("copy_20").renderingMode(.template)
+            })
+            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
         }
     }
 }

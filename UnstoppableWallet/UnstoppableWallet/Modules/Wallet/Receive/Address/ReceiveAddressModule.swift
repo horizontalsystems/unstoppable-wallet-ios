@@ -63,7 +63,7 @@ extension ReceiveAddressModule {
 
         var title: String {
             switch self {
-            case .amount: return "cex_deposit.set_amount".localized
+            case .amount: return "deposit.set_amount".localized
             case .share: return "cex_deposit.share_address".localized
             case .copy: return "cex_deposit.copy_address".localized
             }
@@ -104,8 +104,17 @@ extension ReceiveAddressModule {
         }
     }
 
+    struct HighlightedDescription {
+        let text: String
+        let style: HighlightedDescriptionBaseView.Style
+    }
+
     struct ViewItem {
         let copyValue: String
-        let sections: [[Item]]
+        let highlightedDescription: HighlightedDescription
+        let qrItem: QrItem
+        let amount: String?
+        let active: Bool
+        let memo: String?
     }
 }

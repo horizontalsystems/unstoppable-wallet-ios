@@ -367,6 +367,8 @@
 "deposit.account" = "Account";
 
 "deposit.amount" = "Amount";
+"deposit.set_amount" = "Set Amount";
+"deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "Not active";
 "deposit.not_active.title" = "Not Active Address";
 "deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
@@ -375,7 +377,7 @@
 "deposit.zcash.restore.already_own" = "Yes, I already own";
 "deposit.zcash.restore.dont_have" = "No, I don’t have";
 
-"deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
 
 "receive_network_select.title" = "Network";
 "receive_network_select.description" = "Choose a network and get an address to receive.";
@@ -1812,9 +1814,7 @@
 "cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
-"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
-"cex_deposit.set_amount" = "Set Amount";
-"cex_deposit.enter_amount" = "Enter Amount";
+"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
 "cex_deposit.copy_address" = "Copy";
 "cex_deposit.share_address" = "Share";
 "cex_deposit.failed" = "Failed to load deposit address. Please retry.";
