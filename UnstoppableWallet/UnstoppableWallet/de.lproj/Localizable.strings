@@ -368,6 +368,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.qr_code_description.watch" = "Beobachtungsadresse von %@";
 "deposit.account" = "Account";
 
+"deposit.amount" = "Betrag";
+"deposit.set_amount" = "Set Amount";
+"deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "nicht aktiv";
 "deposit.not_active.title" = "Keine aktive Adresse";
 "deposit.not_active.tron_description" = "Neu erstellte Konten in der TRON-Blockchain sind inaktiv und können nicht abgefragt oder untersucht werden. Sie müssen aktiviert werden.\n\nDie Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren. Zur Aktivierung eines neuen Kontos auf der Tron-Kette ist eine Gebühr von 1 TRX erforderlich";
@@ -376,7 +379,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.zcash.restore.already_own" = "Ja, ich besitze bereits";
 "deposit.zcash.restore.dont_have" = "Nein, ich habe nicht";
 
-"deposit.warning" = "Senden Sie nur %@ an diese Adresse. Das Senden anderer Arten von Tokens an diese Adresse führt zu ihrem ultimativen Verlust.";
+"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
 
 "receive_network_select.title" = "Netzwerk";
 "receive_network_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse.";
@@ -1813,9 +1816,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "cex_deposit.network" = "Netzwerk";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Betrag";
-"cex_deposit.warning_memo" = "Memo (Tag) ist erforderlich, sonst verlieren Sie Ihre Münzen.";
-"cex_deposit.set_amount" = "Set Amount";
-"cex_deposit.enter_amount" = "Enter Amount";
+"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
 "cex_deposit.copy_address" = "Kopieren";
 "cex_deposit.share_address" = "Teilen";
 "cex_deposit.failed" = "Fehler beim Laden der Einzahlungsadresse. Bitte erneut versuchen.";
