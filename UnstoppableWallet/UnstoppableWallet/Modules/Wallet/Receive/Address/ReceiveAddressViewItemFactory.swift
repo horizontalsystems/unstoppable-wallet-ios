@@ -43,16 +43,17 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             networkName: networkName
         )
         viewItems.append(.qrItem(qrItem))
+        if let amount, let decimalValue = Decimal(string: amount) {
+            let coinValue = CoinValue(kind: .token(token: item.token), value: decimalValue)
+
+            if let formatted = coinValue.formattedFull {
+                viewItems.append(.amount(value: formatted))
+            }
+        }
 
         if let address = item.address as? ActivatedDepositAddress, !address.isActive {
             viewItems.append(
-                .infoValue(
-                    title: "deposit.account".localized,
-                    value: "deposit.not_active".localized,
-                    infoTitle: "deposit.not_active.title".localized,
-                    infoDescription: "deposit.not_active.tron_description".localized,
-                    style: .yellow
-                )
+                .status(value: "deposit.not_active".localized)
             )
         }
 

@@ -2173,6 +2173,7 @@
 		ABC9A20D2DDF8736293DE5C5 /* CoinIndicatorViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A76776AD840DBFAA1804 /* CoinIndicatorViewItemFactory.swift */; };
 		ABC9A20F6F7D5EA2A1A55A9E /* ContactLabelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB89F64056FFB98928E7 /* ContactLabelService.swift */; };
 		ABC9A220C97C81DC578AA3C7 /* ProposalValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE997CF6814BA9EAA6BB /* ProposalValidator.swift */; };
+		ABC9A22690729B58621A1BBA /* InformedModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC701F3F7FE0A21AFBF9 /* InformedModifier.swift */; };
 		ABC9A227648FF076E9518703 /* ContactBookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE12A5E8B9FB24FFE42F /* ContactBookHelper.swift */; };
 		ABC9A231F63CDD5EC0BB71EF /* ActionSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9A18EECD26A7A93D972 /* ActionSheetPresentationController.swift */; };
 		ABC9A23C433DC06FB7791285 /* WCSignMessageRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0576B804ABA38EF9843 /* WCSignMessageRequestViewModel.swift */; };
@@ -2318,6 +2319,7 @@
 		ABC9A62209E284513C33DFE2 /* MarketDiscoveryCategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADFD9DA59BD2FB21C51B /* MarketDiscoveryCategoryService.swift */; };
 		ABC9A62EF59AF658C1DAD36F /* SendAmountCautionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A580220B9FD291A6496A /* SendAmountCautionService.swift */; };
 		ABC9A638E7EA1788D40FF929 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8CE84FA36438BE4D6B5 /* FileManager.swift */; };
+		ABC9A639040A77968B5D86B8 /* InformedModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC701F3F7FE0A21AFBF9 /* InformedModifier.swift */; };
 		ABC9A63B2AABC0414000DEC2 /* SendConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3AB799024C8FC2C7DD8 /* SendConfirmationViewModel.swift */; };
 		ABC9A63EC83A82A76E67778B /* SendNftModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */; };
 		ABC9A6424F39E24F7198B9DF /* WCSignMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF628790F13411CB3D1C /* WCSignMessagePayload.swift */; };
@@ -4347,6 +4349,7 @@
 		ABC9AC4A19838CA08603E17B /* ContactBookService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookService.swift; sourceTree = "<group>"; };
 		ABC9AC50307ABA3DF7034E1D /* BackupContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupContact.swift; sourceTree = "<group>"; };
 		ABC9AC6A0B950C0AABD5A93E /* SendEip1155Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEip1155Service.swift; sourceTree = "<group>"; };
+		ABC9AC701F3F7FE0A21AFBF9 /* InformedModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformedModifier.swift; sourceTree = "<group>"; };
 		ABC9AC7983E4A81E421AB639 /* MarketCardTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketCardTitleView.swift; sourceTree = "<group>"; };
 		ABC9AC8CCF3B57FDFC817356 /* ContactBookAddressService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookAddressService.swift; sourceTree = "<group>"; };
 		ABC9ACC91C29905F8E7A2046 /* ActionSheetTapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetTapView.swift; sourceTree = "<group>"; };
@@ -5166,6 +5169,7 @@
 				ABC9A9B9B3A81581BA7E4082 /* AlertView.swift */,
 				ABC9A6EF6EB856EAAA8CFACB /* PrimaryCircleButtonStyle.swift */,
 				ABC9ABB793A6494225FF73B7 /* Alert.swift */,
+				ABC9AC701F3F7FE0A21AFBF9 /* InformedModifier.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -10412,6 +10416,7 @@
 				ABC9AFBBB0042989EB4592E7 /* AlertView.swift in Sources */,
 				ABC9A57D1DA5481E44DEE8C0 /* PrimaryCircleButtonStyle.swift in Sources */,
 				ABC9AD8A956680AAC03DE7F1 /* Alert.swift in Sources */,
+				ABC9A22690729B58621A1BBA /* InformedModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11818,6 +11823,7 @@
 				ABC9A32EECAEB892927B996D /* AlertView.swift in Sources */,
 				ABC9AD530352E51084B1B4B7 /* PrimaryCircleButtonStyle.swift in Sources */,
 				ABC9A267A28122E3E6E3D5DC /* Alert.swift in Sources */,
+				ABC9A639040A77968B5D86B8 /* InformedModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
