@@ -366,6 +366,9 @@
 "deposit.qr_code_description.watch" = "%@의 시계 주소";
 "deposit.account" = "계정";
 
+"deposit.amount" = "양";
+"deposit.set_amount" = "Set Amount";
+"deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "비활성화됨";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
@@ -374,7 +377,7 @@
 "deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
 "deposit.zcash.restore.dont_have" = "아니요, 없어요";
 
-"deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
+"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
 
 "receive_network_select.title" = "회로망";
 "receive_network_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
@@ -1814,9 +1817,7 @@
 "cex_deposit.network" = "회로망";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "최소  금액";
-"cex_deposit.warning_memo" = "메모(tag)는 필수입니다. 메모 없이는 코인을 잃을 수 있습니다.";
-"cex_deposit.set_amount" = "Set Amount";
-"cex_deposit.enter_amount" = "Enter Amount";
+"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
 "cex_deposit.copy_address" = "복사";
 "cex_deposit.share_address" = "공유";
 "cex_deposit.failed" = "입금 주소를 불러오지 못했습니다. 다시 시도해주세요.";
