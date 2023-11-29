@@ -368,6 +368,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.qr_code_description.watch" = "Adresse de la montre de %@";
 "deposit.account" = "Compte";
 
+"deposit.amount" = "Montant";
+"deposit.set_amount" = "Set Amount";
+"deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "non actif";
 "deposit.not_active.title" = "Adresse non-active";
 "deposit.not_active.tron_description" = "Les comptes récemment créés sur la blockchain TRON sont inactifs et ne peuvent pas être interrogés ou explorés. Ils doivent être activés.\n\nLe transfert de jetons TRX ou TRC-10 vers une adresse de compte inactive activera le compte. Pour activer un nouveau compte sur la chaîne Tron, des frais de 1 TRX sont nécessaires";
@@ -376,7 +379,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
 "deposit.zcash.restore.dont_have" = "Non, je n'ai pas";
 
-"deposit.warning" = "Envoyer seulement %@ à cette adresse. Envoyer d'autres types de jetons à cette adresse entraînera leur perte ultime.";
+"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
 
 "receive_network_select.title" = "Réseau";
 "receive_network_select.description" = "Choisissez un réseau et obtenez une adresse à recevoir.";
@@ -1813,9 +1816,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "cex_deposit.network" = "Réseau";
 "cex_deposit.memo" = "Mémo (Tag)";
 "cex_deposit.min_amount" = "Montant minimum";
-"cex_deposit.warning_memo" = "Mémo (tag) est requis ou vous perdrez vos pièces.";
-"cex_deposit.set_amount" = "Set Amount";
-"cex_deposit.enter_amount" = "Enter Amount";
+"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
 "cex_deposit.copy_address" = "Copier";
 "cex_deposit.share_address" = "Partager";
 "cex_deposit.failed" = "Impossible de charger l'adresse du dépôt. Veuillez réessayer.";
