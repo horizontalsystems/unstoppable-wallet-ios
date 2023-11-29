@@ -282,7 +282,7 @@ class MainSettingsViewController: ThemeViewController {
                 id: "launch-screen",
                 height: .heightCell48,
                 action: { [weak self] in
-                    let viewController = AppearanceModule.view().toViewController(title: "appearance.title".localized)
+                    let viewController = AppearanceView().toViewController(title: "appearance.title".localized)
                     self?.navigationController?.pushViewController(viewController, animated: true)
                 }
             ),

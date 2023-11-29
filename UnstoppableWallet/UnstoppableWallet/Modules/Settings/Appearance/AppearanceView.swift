@@ -3,7 +3,7 @@ import SwiftUI
 import ThemeKit
 
 struct AppearanceView: View {
-    @ObservedObject var viewModel: AppearanceViewModel
+    @StateObject var viewModel = AppearanceViewModel()
 
     var body: some View {
         ScrollableThemeView {
