@@ -370,6 +370,9 @@
 "deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
 "deposit.account" = "Account";
 
+"deposit.amount" = "Сумма";
+"deposit.set_amount" = "Set Amount";
+"deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "Не активен";
 "deposit.not_active.title" = "Неактивный адрес";
 "deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
@@ -378,7 +381,7 @@
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
 "deposit.zcash.restore.dont_have" = "Нет, у меня нет";
 
-"deposit.warning" = "Отправка только %@ на этот адрес. Отправка других типов токенов на этот адрес приведет к их окончательной потере.";
+"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
 
 "receive_network_select.title" = "Сеть";
 "receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
@@ -1816,9 +1819,7 @@
 "cex_deposit.network" = "Сеть";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Мин. сумма";
-"cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
-"cex_deposit.set_amount" = "Set Amount";
-"cex_deposit.enter_amount" = "Enter Amount";
+"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
 "cex_deposit.copy_address" = "Копировать";
 "cex_deposit.share_address" = "Поделиться";
 "cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
