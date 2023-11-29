@@ -368,6 +368,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.qr_code_description.watch" = "%@ adresini izle";
 "deposit.account" = "Account";
 
+"deposit.amount" = "Tutar";
+"deposit.set_amount" = "Set Amount";
+"deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "aktif değil";
 "deposit.not_active.title" = "Aktif Adres Değil";
 "deposit.not_active.tron_description" = "TRON blok zincirinde yeni oluşturulan hesaplar etkin değildir ve sorgulanamaz veya araştırılamaz. Etkinleştirilmeleri gerekiyor.\n\nTRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir. Tron zincirinde yeni bir hesabın etkinleştirilmesi 1 TRX ücret gerektirir";
@@ -376,7 +379,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.zcash.restore.already_own" = "Evet, zaten sahibim";
 "deposit.zcash.restore.dont_have" = "Hayır, bende yok";
 
-"deposit.warning" = "Bu adrese yalnızca %@ gönderin. Bu adrese başka türden jetonların gönderilmesi nihai kayıplarına neden olacaktır.";
+"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
 
 "receive_network_select.title" = "Ağ";
 "receive_network_select.description" = "Bir ağ seçin ve para yatırmak için bir adres alın.";
@@ -1821,9 +1824,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_deposit.network" = "Ağ";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. miktar";
-"cex_deposit.warning_memo" = "Not (etiket) gereklidir, aksi takdirde madeni paralarınızı kaybedersiniz.";
-"cex_deposit.set_amount" = "Set Amount";
-"cex_deposit.enter_amount" = "Enter Amount";
+"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
 "cex_deposit.copy_address" = "Kopyala";
 "cex_deposit.share_address" = "Paylaş";
 "cex_deposit.failed" = "Para yatırma adresi yüklenemedi. Lütfen tekrar deneyiniz.";
