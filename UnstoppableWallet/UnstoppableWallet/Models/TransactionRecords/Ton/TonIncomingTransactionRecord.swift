@@ -3,18 +3,20 @@ import MarketKit
 import TonKitKmm
 
 class TonIncomingTransactionRecord: TonTransactionRecord {
-    let value: TransactionValue
-    let from: String
+    let transfer: Transfer?
 
     init(source: TransactionSource, transaction: TonTransaction, feeToken: Token, token: Token) {
-        let tonValue: Decimal = transaction.value_.map { TonAdapter.amount(kitAmount: $0) } ?? 0
-        value = .coinValue(token: token, value: tonValue)
-        from = transaction.src ?? ""
+        transfer = transaction.transfers.first.map { transfer in
+            Transfer(
+                address: transfer.src,
+                value: .coinValue(token: token, value: TonAdapter.amount(kitAmount: transfer.amount))
+            )
+        }
 
         super.init(source: source, transaction: transaction, feeToken: feeToken)
     }
 
     override var mainValue: TransactionValue? {
-        value
+        transfer?.value
     }
 }

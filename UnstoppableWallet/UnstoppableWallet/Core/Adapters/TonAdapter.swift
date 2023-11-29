@@ -139,20 +139,19 @@ class TonAdapter {
 
     private func transactionRecord(tonTransaction tx: TonTransaction) -> TonTransactionRecord {
         switch tx.type {
-        case "Incoming":
+        case TransactionType.incoming:
             return TonIncomingTransactionRecord(
                 source: transactionSource,
                 transaction: tx,
                 feeToken: baseToken,
                 token: baseToken
             )
-        case "Outgoing":
+        case TransactionType.outgoing:
             return TonOutgoingTransactionRecord(
                 source: transactionSource,
                 transaction: tx,
                 feeToken: baseToken,
-                token: baseToken,
-                sentToSelf: ownAddress == tx.dest
+                token: baseToken
             )
         default:
             return TonTransactionRecord(
@@ -278,7 +277,6 @@ extension TonAdapter: ITransactionsAdapter {
                     case (_, .all): return transaction
                     case (is TonIncomingTransactionRecord, .incoming): return transaction
                     case (is TonOutgoingTransactionRecord, .outgoing): return transaction
-                    case let (tx as TonOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
                     default: return nil
                     }
                 }

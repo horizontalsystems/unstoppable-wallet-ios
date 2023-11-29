@@ -24,3 +24,10 @@ class TonTransactionRecord: TransactionRecord {
         .completed
     }
 }
+
+extension TonTransactionRecord {
+    struct Transfer {
+        let address: String
+        let value: TransactionValue
+    }
+}
