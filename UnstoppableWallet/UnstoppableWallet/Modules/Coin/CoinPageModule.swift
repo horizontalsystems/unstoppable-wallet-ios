@@ -9,7 +9,7 @@ struct CoinPageModule {
 
         let overviewView = CoinOverviewModule.view(coinUid: fullCoin.coin.uid, apiTag: apiTag)
         let analyticsView = CoinAnalyticsModule.view(fullCoin: fullCoin, apiTag: apiTag)
-        let marketsView = CoinMarketsModule.view(coin: fullCoin.coin)
+        let marketsView = CoinMarketsView(coin: fullCoin.coin)
 
         return CoinPageView(
             viewModel: viewModel,
@@ -32,7 +32,7 @@ struct CoinPageModule {
         let viewModel = CoinPageViewModel(service: service)
 
         let overviewController = CoinOverviewModule.viewController(coinUid: coinUid, apiTag: apiTag)
-        let marketsController = CoinMarketsModule.view(coin: fullCoin.coin).toViewController()
+        let marketsController = CoinMarketsView(coin: fullCoin.coin).toViewController()
         let analyticsController = CoinAnalyticsModule.viewController(fullCoin: fullCoin, apiTag: apiTag)
 //        let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin)
 

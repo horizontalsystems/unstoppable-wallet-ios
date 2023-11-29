@@ -1,10 +1,15 @@
 import Kingfisher
+import MarketKit
 import SwiftUI
 
 struct CoinMarketsView: View {
-    @ObservedObject var viewModel: CoinMarketsViewModel
+    @StateObject private var viewModel: CoinMarketsViewModel
 
     @State private var hasAppeared = false
+
+    init(coin: Coin) {
+        _viewModel = StateObject(wrappedValue: CoinMarketsViewModel(coin: coin))
+    }
 
     var body: some View {
         ThemeView {
