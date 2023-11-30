@@ -477,11 +477,12 @@
 // Donate
 
 "donate.list.title" = "Пожертвовать с помощью";
-"donate.list.get_address" = "Получить адрес";
+"donate.list.get_address" = "Get Donate Address";
 "donate.list.get_address.title" = "Адреса";
 "donate.title" = "Пожертвовать %@";
 "donate.no_assets" = "У вас нет активов для пожертвования.";
 "donate.support.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
+"donate.support.bottom_description" = "Or select a coin to donate";
 
 // CoinSelector
 
