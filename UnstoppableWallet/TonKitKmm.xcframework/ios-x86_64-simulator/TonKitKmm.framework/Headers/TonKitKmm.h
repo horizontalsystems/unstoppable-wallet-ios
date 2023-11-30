@@ -336,7 +336,7 @@ __attribute__((swift_name("TonApiAdnl")))
  * @note This method converts instances of CancellationException to errors.
  * Other uncaught Kotlin exceptions are fatal.
 */
-- (void)getFullAccountStateWithCompletionHandler:(void (^)(TKKTon_kotlin_liteclientFullAccountState * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getFullAccountState(completionHandler:)")));
+- (void)getFullAccountStateOrNullWithCompletionHandler:(void (^)(TKKTon_kotlin_liteclientFullAccountState * _Nullable_result, NSError * _Nullable))completionHandler __attribute__((swift_name("getFullAccountStateOrNull(completionHandler:)")));
 
 /**
  * @note This method converts instances of CancellationException to errors.
@@ -415,6 +415,11 @@ __attribute__((swift_name("TonKit")))
 @interface TKKTonKit : TKKBase
 - (instancetype)initWithTransactionManager:(TKKTransactionManager *)transactionManager balanceManager:(TKKBalanceManager *)balanceManager receiveAddress:(NSString *)receiveAddress syncer:(TKKSyncer *)syncer transactionSender:(TKKTransactionSender * _Nullable)transactionSender __attribute__((swift_name("init(transactionManager:balanceManager:receiveAddress:syncer:transactionSender:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) TKKTonKitCompanion *companion __attribute__((swift_name("companion")));
+
+/**
+ * @note This method converts all Kotlin exceptions to errors.
+*/
+- (void)estimateFeeWithCompletionHandler:(void (^)(NSString * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("estimateFee(completionHandler:)")));
 
 /**
  * @note This method converts all Kotlin exceptions to errors.
@@ -530,6 +535,12 @@ __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("TransactionSender")))
 @interface TKKTransactionSender : TKKBase
 - (instancetype)initWithAdnl:(TKKTonApiAdnl *)adnl privateKey:(id<TKKTon_kotlin_apiPrivateKeyEd25519>)privateKey __attribute__((swift_name("init(adnl:privateKey:)"))) __attribute__((objc_designated_initializer));
+
+/**
+ * @note This method converts instances of CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)estimateFeeWithCompletionHandler:(void (^)(NSString * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("estimateFee(completionHandler:)")));
 
 /**
  * @note This method converts instances of CancellationException to errors.
