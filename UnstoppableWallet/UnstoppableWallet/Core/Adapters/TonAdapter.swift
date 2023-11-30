@@ -307,6 +307,11 @@ extension TonAdapter: ISendTonAdapter {
         try TonKit.companion.validate(address: address)
     }
 
+    func estimateFee() async throws -> Decimal {
+        let kitAmount = try await tonKit.estimateFee()
+        return Self.amount(kitAmount: kitAmount)
+    }
+
     func send(recipient: String, amount: Decimal) async throws {
         let rawAmount = amount * Self.coinRate
         try await tonKit.send(recipient: recipient, amount: rawAmount.description)
