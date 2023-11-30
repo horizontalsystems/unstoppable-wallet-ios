@@ -2377,6 +2377,7 @@
 		ABC9A7F5ECEC3311216A407F /* SendMemoInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A80143F95E28346C81FE /* SendMemoInputService.swift */; };
 		ABC9A802418438F6BD1FC1E3 /* WalletTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A64A66778C137FA9642C /* WalletTokenViewController.swift */; };
 		ABC9A80BCDA72347C6619E6C /* SendTimeLockErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADF114FCFABEA148AF04 /* SendTimeLockErrorService.swift */; };
+		ABC9A8117EAF046CDD020077 /* BorderedEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A87D38298791EBAC52DB /* BorderedEmptyCell.swift */; };
 		ABC9A819DDAEE683FCCA02EF /* NftAssetCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A30A8F78E9C9AEE861F1 /* NftAssetCellFactory.swift */; };
 		ABC9A82C93C9E266D1AFD1C3 /* WalletConnectTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF0029A65DAB20925BDF /* WalletConnectTransaction.swift */; };
 		ABC9A8451CEF02EA0A94CEAA /* ProFeaturesAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9628A708749A31EEA70 /* ProFeaturesAuthorizationManager.swift */; };
@@ -2473,6 +2474,7 @@
 		ABC9AB83EE3F909BD80E0539 /* BackupCryptoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD5CB1911A698718213F /* BackupCryptoHelper.swift */; };
 		ABC9AB86218564E4873F6428 /* WalletConnectUriHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1C31F5343EB2BEA4540 /* WalletConnectUriHandler.swift */; };
 		ABC9AB92AA6E6B239B147FA7 /* ProposalChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A768C7AA282229C30409 /* ProposalChain.swift */; };
+		ABC9AB982879DE0BAE6701EC /* BorderedEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A87D38298791EBAC52DB /* BorderedEmptyCell.swift */; };
 		ABC9AB9DCC782F2EC14A7031 /* TechnicalIndicatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3EE670713BA4B6110F4 /* TechnicalIndicatorService.swift */; };
 		ABC9ABA70CEF664E8E01FA7A /* SendNftModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */; };
 		ABC9ABBE120DB35A597FFE44 /* Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3DFC1E03CB2E6C12F2C /* Encodable.swift */; };
@@ -4273,6 +4275,7 @@
 		ABC9A830FE79DBF62FD63CC4 /* ThemeMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeMode.swift; sourceTree = "<group>"; };
 		ABC9A85E2F420CB76C0E1CC3 /* WCSignMessageRequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCSignMessageRequestService.swift; sourceTree = "<group>"; };
 		ABC9A86EA911DA12C7A6AC20 /* WalletTokenBalanceViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTokenBalanceViewItemFactory.swift; sourceTree = "<group>"; };
+		ABC9A87D38298791EBAC52DB /* BorderedEmptyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedEmptyCell.swift; sourceTree = "<group>"; };
 		ABC9A88CFC0598CD6D780AC2 /* WalletConnectRequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectRequestHandler.swift; sourceTree = "<group>"; };
 		ABC9A88E126AB21F856522A7 /* IntegerAmountInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerAmountInputView.swift; sourceTree = "<group>"; };
 		ABC9A896A83640B618328FE1 /* EnsAddressParserItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnsAddressParserItem.swift; sourceTree = "<group>"; };
@@ -4912,6 +4915,7 @@
 				11B3597E2B288ECD850C1DFE /* PasteInputCell.swift */,
 				11B356F4578E266268264021 /* QrCodeCell.swift */,
 				D00267B82A57E6CE00D6B2D5 /* ResendPastInputCell.swift */,
+				ABC9A87D38298791EBAC52DB /* BorderedEmptyCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -10407,6 +10411,7 @@
 				ABC9A57D1DA5481E44DEE8C0 /* PrimaryCircleButtonStyle.swift in Sources */,
 				ABC9AD8A956680AAC03DE7F1 /* Alert.swift in Sources */,
 				ABC9A22690729B58621A1BBA /* InformedModifier.swift in Sources */,
+				ABC9A8117EAF046CDD020077 /* BorderedEmptyCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11812,6 +11817,7 @@
 				ABC9AD530352E51084B1B4B7 /* PrimaryCircleButtonStyle.swift in Sources */,
 				ABC9A267A28122E3E6E3D5DC /* Alert.swift in Sources */,
 				ABC9A639040A77968B5D86B8 /* InformedModifier.swift in Sources */,
+				ABC9AB982879DE0BAE6701EC /* BorderedEmptyCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

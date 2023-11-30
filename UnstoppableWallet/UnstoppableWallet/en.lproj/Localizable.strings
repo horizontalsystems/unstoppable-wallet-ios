@@ -473,11 +473,12 @@
 // Donate
 
 "donate.list.title" = "Donate with";
-"donate.list.get_address" = "Get Address";
+"donate.list.get_address" = "Get Donate Address";
 "donate.list.get_address.title" = "Addresses";
 "donate.title" = "Donate %@";
 "donate.no_assets" = "You have no assets to donate.";
 "donate.support.description" = "Together, with your support, we can make this app even better!";
+"donate.support.bottom_description" = "Or select a coin to donate";
 
 // CoinSelector
 

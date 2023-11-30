@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import UIKit
 
 class AppManager {
     private let accountManager: AccountManager
@@ -49,10 +50,17 @@ class AppManager {
         self.walletConnectSocketConnectionService = walletConnectSocketConnectionService
         self.nftMetadataSyncer = nftMetadataSyncer
     }
+
+    private func warmUp() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            _ = UIImage.qrCodeImage(qrCodeString: "", size: .margin48)
+        }
+    }
 }
 
 extension AppManager {
     func didFinishLaunching() {
+        warmUp()
         debugBackgroundLogger?.logFinishLaunching()
 
         keychainManager.handleLaunch()
