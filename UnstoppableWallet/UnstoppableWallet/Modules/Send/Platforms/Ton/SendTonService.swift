@@ -1,4 +1,5 @@
 import Foundation
+import HsExtensions
 import HsToolKit
 import MarketKit
 import RxRelay
@@ -16,11 +17,30 @@ class SendTonService {
     private let addressService: AddressService
     private let memoService: SendMemoInputService
     private let adapter: ISendTonAdapter
+    private var tasks = Set<AnyTask>()
 
     private let stateRelay = PublishRelay<SendBaseService.State>()
     private(set) var state: SendBaseService.State = .notReady {
         didSet {
             stateRelay.accept(state)
+        }
+    }
+
+    private let feeStateRelay = BehaviorRelay<DataStatus<Decimal>>(value: .loading)
+    private(set) var feeState: DataStatus<Decimal> = .loading {
+        didSet {
+            if !feeState.equalTo(oldValue) {
+                feeStateRelay.accept(feeState)
+            }
+        }
+    }
+
+    private let availableBalanceRelay: BehaviorRelay<DataStatus<Decimal>>
+    private(set) var availableBalance: DataStatus<Decimal> {
+        didSet {
+            if !availableBalance.equalTo(oldValue) {
+                availableBalanceRelay.accept(availableBalance)
+            }
         }
     }
 
@@ -41,6 +61,9 @@ class SendTonService {
         case .send: ()
         }
 
+        availableBalance = .completed(adapter.availableBalance)
+        availableBalanceRelay = .init(value: .completed(adapter.availableBalance))
+
         subscribe(MainScheduler.instance, disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
             if isReachable {
                 self?.syncState()
@@ -50,12 +73,12 @@ class SendTonService {
         subscribe(scheduler, disposeBag, amountService.amountObservable) { [weak self] _ in self?.syncState() }
         subscribe(scheduler, disposeBag, amountCautionService.amountCautionObservable) { [weak self] _ in self?.syncState() }
         subscribe(scheduler, disposeBag, addressService.stateObservable) { [weak self] _ in self?.syncState() }
+
+        loadFee()
     }
 
     private func syncState() {
-        guard amountCautionService.amountCaution == nil,
-              !amountService.amount.isZero
-        else {
+        guard amountCautionService.amountCaution == nil, !amountService.amount.isZero else {
             state = .notReady
             return
         }
@@ -70,7 +93,26 @@ class SendTonService {
             return
         }
 
+        guard feeState.data != nil else {
+            state = .notReady
+            return
+        }
+
         state = .ready
+    }
+
+    private func loadFee() {
+        Task { [weak self, adapter] in
+            do {
+                let fee = try await adapter.estimateFee()
+                self?.feeState = .completed(fee)
+                self?.availableBalance = .completed(max(0, adapter.availableBalance - fee))
+            } catch {
+                self?.feeState = .failed(error)
+                self?.availableBalance = .completed(adapter.availableBalance)
+            }
+        }
+        .store(in: &tasks)
     }
 }
 
@@ -113,29 +155,20 @@ extension SendTonService: ISendService {
 }
 
 extension SendTonService: ISendXFeeValueService {
-    var feeState: DataStatus<Decimal> {
-//        .completed(adapter.fee)
-        .completed(0.005)
-    }
-
     var feeStateObservable: Observable<DataStatus<Decimal>> {
-        .just(feeState)
+        feeStateRelay.asObservable()
     }
 }
 
 extension SendTonService: IAvailableBalanceService {
-    var availableBalance: DataStatus<Decimal> {
-        .completed(adapter.availableBalance)
-    }
-
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
-        .just(availableBalance)
+        availableBalanceRelay.asObservable()
     }
 }
 
 extension SendTonService: IMemoAvailableService {
     var isAvailable: Bool {
-        true
+        false
     }
 
     var isAvailableObservable: Observable<Bool> {
