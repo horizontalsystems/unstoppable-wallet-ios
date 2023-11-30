@@ -473,11 +473,12 @@
 // Donate
 
 "donate.list.title" = "기부하기";
-"donate.list.get_address" = "주소 받기";
+"donate.list.get_address" = "Get Donate Address";
 "donate.list.get_address.title" = "구애";
 "donate.title" = "기부하기 %@";
 "donate.no_assets" = "당신은 기부할 자산이 없습니다.";
 "donate.support.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
+"donate.support.bottom_description" = "Or select a coin to donate";
 
 // CoinSelector
 
