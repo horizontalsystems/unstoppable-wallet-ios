@@ -223,6 +223,7 @@ struct WalletModule {
         dataSourceChain.append(source: dataSource)
 
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
+        viewController.hideSearchBar = true
 
         descriptionDataSource.viewController = viewController
         dataSource.viewController = viewController

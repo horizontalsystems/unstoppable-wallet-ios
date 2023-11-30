@@ -12,6 +12,8 @@ import UIKit
 class WalletTokenListViewController: ThemeSearchViewController {
     private let viewModel: WalletTokenListViewModel
 
+    var hideSearchBar: Bool = false
+
     let tableView = UITableView(frame: .zero, style: .plain)
     private let dataSource: ISectionDataSource
 
@@ -37,6 +39,9 @@ class WalletTokenListViewController: ThemeSearchViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.searchController?.searchBar.placeholder = "add_token.coin_name".localized
+        if hideSearchBar {
+            navigationItem.searchController = nil
+        }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
