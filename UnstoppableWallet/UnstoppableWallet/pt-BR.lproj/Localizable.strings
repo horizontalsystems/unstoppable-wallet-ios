@@ -475,11 +475,12 @@ Go to Settings - > %@ and allow access to the camera.";
 // Donate
 
 "donate.list.title" = "Doar com";
-"donate.list.get_address" = "Obter endereço";
+"donate.list.get_address" = "Get Donate Address";
 "donate.list.get_address.title" = "Endereços";
 "donate.title" = "Doe %@";
 "donate.no_assets" = "Você não tem ativos para doar.";
 "donate.support.description" = "Juntos, com o seu apoio, podemos fazer este aplicativo ainda melhor!";
+"donate.support.bottom_description" = "Or select a coin to donate";
 
 // CoinSelector
 
