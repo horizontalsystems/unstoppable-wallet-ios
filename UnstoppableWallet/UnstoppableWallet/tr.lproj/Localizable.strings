@@ -475,11 +475,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Donate
 
 "donate.list.title" = "Bağış yapın";
-"donate.list.get_address" = "Adresi al";
+"donate.list.get_address" = "Get Donate Address";
 "donate.list.get_address.title" = "Adresler";
 "donate.title" = "Bağış yapmak %@";
 "donate.no_assets" = "Bağışlayacak varlığınız yok.";
 "donate.support.description" = "Desteğinizle birlikte bu uygulamayı daha da iyi hale getirebiliriz!";
+"donate.support.bottom_description" = "Or select a coin to donate";
 
 // CoinSelector
 
