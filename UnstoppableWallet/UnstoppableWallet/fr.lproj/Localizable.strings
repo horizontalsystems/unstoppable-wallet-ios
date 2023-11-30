@@ -475,11 +475,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Donate
 
 "donate.list.title" = "Donnez avec";
-"donate.list.get_address" = "Obtenir une adresse";
+"donate.list.get_address" = "Get Donate Address";
 "donate.list.get_address.title" = "Adresses";
 "donate.title" = "Donate %@";
 "donate.no_assets" = "Vous n'avez pas d'actifs à donner.";
 "donate.support.description" = "Ensemble, avec votre soutien, nous pouvons encore améliorer cette application!";
+"donate.support.bottom_description" = "Or select a coin to donate";
 
 // CoinSelector
 
