@@ -475,11 +475,12 @@
 // Donate
 
 "donate.list.title" = "捐赠方式";
-"donate.list.get_address" = "获取地址";
+"donate.list.get_address" = "Get Donate Address";
 "donate.list.get_address.title" = "地址";
 "donate.title" = "捐赠%@";
 "donate.no_assets" = "您没有资产可以捐赠。";
 "donate.support.description" = "在你的支持下，我们可以使这个应用更好！";
+"donate.support.bottom_description" = "Or select a coin to donate";
 
 // CoinSelector
 
