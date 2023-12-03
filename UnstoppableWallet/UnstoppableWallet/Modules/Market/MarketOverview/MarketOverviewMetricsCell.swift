@@ -6,7 +6,7 @@ import ThemeKit
 import UIKit
 
 class MarketOverviewMetricsCell: UITableViewCell {
-    static let cellHeight: CGFloat = 250
+    static let cellHeight: CGFloat = MarketCardView.height + 2 * .margin16
 
     private weak var presentDelegate: IPresentDelegate?
 
@@ -28,36 +28,56 @@ class MarketOverviewMetricsCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(totalMarketCapView)
-        totalMarketCapView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin12)
-            maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(MarketCardView.height)
+        let scrollView = UIScrollView()
+
+        contentView.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
+            make.top.bottom.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        contentView.addSubview(volume24hView)
-        volume24hView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin12)
-            maker.leading.equalTo(totalMarketCapView.snp.trailing).offset(CGFloat.margin8)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.width.equalTo(totalMarketCapView.snp.width)
-            maker.height.equalTo(MarketCardView.height)
+        scrollView.isPagingEnabled = true
+        scrollView.clipsToBounds = false
+        scrollView.showsHorizontalScrollIndicator = false
+
+        let firstStack = UIStackView(arrangedSubviews: [totalMarketCapView, volume24hView])
+        firstStack.spacing = .margin8
+        firstStack.distribution = .fillEqually
+
+        let secondStack = UIStackView(arrangedSubviews: [deFiCapView, deFiTvlView])
+        secondStack.spacing = .margin8
+        secondStack.distribution = .fillEqually
+
+        let leadingView = UIView()
+        let trailingView = UIView()
+
+        let stackView = UIStackView(arrangedSubviews: [
+            leadingView,
+            firstStack,
+            secondStack,
+            trailingView
+        ])
+
+        scrollView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(scrollView).inset(-CGFloat.margin4)
+            make.top.bottom.equalTo(scrollView)
+            make.height.equalTo(scrollView)
         }
 
-        contentView.addSubview(deFiCapView)
-        deFiCapView.snp.makeConstraints { maker in
-            maker.top.equalTo(totalMarketCapView.snp.bottom).offset(CGFloat.margin8)
-            maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(MarketCardView.height)
-        }
+        stackView.spacing = .margin8
 
-        contentView.addSubview(deFiTvlView)
-        deFiTvlView.snp.makeConstraints { maker in
-            maker.top.equalTo(volume24hView.snp.bottom).offset(CGFloat.margin8)
-            maker.leading.equalTo(deFiCapView.snp.trailing).offset(CGFloat.margin8)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.width.equalTo(deFiCapView.snp.width)
-            maker.height.equalTo(MarketCardView.height)
+        leadingView.snp.makeConstraints { make in
+            make.width.equalTo(0)
+        }
+        trailingView.snp.makeConstraints { make in
+            make.width.equalTo(0)
+        }
+        firstStack.snp.makeConstraints { make in
+            make.width.equalTo(scrollView).offset(-CGFloat.margin8)
+        }
+        secondStack.snp.makeConstraints { make in
+            make.width.equalTo(scrollView).offset(-CGFloat.margin8)
         }
 
         totalMarketCapView.onTap = { [weak self] in self?.onTap(metricType: .totalMarketCap) }

@@ -3,81 +3,99 @@ import SnapKit
 import UIKit
 
 class MarketOverviewCategoryCell: UITableViewCell {
-    static let cellHeight: CGFloat = 316
+    static let cellHeight: CGFloat = MarketCategoryView.height + 2 * .margin16
 
     var onSelect: ((String) -> Void)?
 
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-
     var viewItems = [MarketOverviewCategoryViewModel.ViewItem]() {
         didSet {
-            collectionView.reloadData()
+            build()
         }
     }
+
+    private let scrollView = UIScrollView()
+    private let stackView = UIStackView()
+    private let leadingView = UIView()
+    private let trailingView = UIView()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
+        selectionStyle = .none
 
-        contentView.addSubview(collectionView)
-        collectionView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        contentView.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
+            make.top.bottom.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        collectionView.backgroundColor = .clear
+        scrollView.isPagingEnabled = true
+        scrollView.clipsToBounds = false
+        scrollView.showsHorizontalScrollIndicator = false
 
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(MarketDiscoveryCell.self, forCellWithReuseIdentifier: String(describing: MarketDiscoveryCell.self))
+        scrollView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(scrollView).inset(-CGFloat.margin4)
+            make.top.bottom.equalTo(scrollView)
+            make.height.equalTo(scrollView)
+        }
+
+        stackView.spacing = .margin8
+
+        leadingView.snp.makeConstraints { make in
+            make.width.equalTo(0)
+        }
+        trailingView.snp.makeConstraints { make in
+            make.width.equalTo(0)
+        }
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
 
-extension MarketOverviewCategoryCell: UICollectionViewDataSource {
-    func numberOfSections(in _: UICollectionView) -> Int {
-        1
-    }
-
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        viewItems.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MarketDiscoveryCell.self), for: indexPath)
-    }
-}
-
-extension MarketOverviewCategoryCell: UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? MarketDiscoveryCell {
-            cell.set(viewItem: viewItems[indexPath.item])
+    private func build() {
+        for view in stackView.arrangedSubviews {
+            stackView.removeArrangedSubview(view)
         }
-    }
 
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        onSelect?(viewItems[indexPath.item].uid)
-    }
-}
+        stackView.addArrangedSubview(leadingView)
 
-extension MarketOverviewCategoryCell: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        CGSize(width: (collectionView.width - .margin16 * 2 - .margin12) / 2, height: MarketDiscoveryCell.cellHeight)
-    }
+        var bufferView: UIView?
 
-    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, insetForSectionAt _: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
-    }
+        for (index, viewItem) in viewItems.enumerated() {
+            let view = MarketCategoryView()
+            view.set(viewItem: viewItem)
 
-    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
-        .margin12
-    }
+            if let _bufferView = bufferView {
+                let stackView = UIStackView(arrangedSubviews: [_bufferView, view])
+                stackView.spacing = .margin8
+                stackView.distribution = .fillEqually
 
-    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
-        .margin12
+                self.stackView.addArrangedSubview(stackView)
+
+                stackView.snp.makeConstraints { make in
+                    make.width.equalTo(scrollView).offset(-CGFloat.margin8)
+                }
+
+                bufferView = nil
+            } else if index == viewItems.count - 1 {
+                let stackView = UIStackView(arrangedSubviews: [view, UIView()])
+                stackView.spacing = .margin8
+                stackView.distribution = .fillEqually
+
+                self.stackView.addArrangedSubview(stackView)
+
+                stackView.snp.makeConstraints { make in
+                    make.width.equalTo(scrollView).offset(-CGFloat.margin8)
+                }
+            } else {
+                bufferView = view
+            }
+        }
+
+        stackView.addArrangedSubview(trailingView)
     }
 }

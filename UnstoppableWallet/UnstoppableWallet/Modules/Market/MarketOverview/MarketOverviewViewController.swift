@@ -50,6 +50,7 @@ class MarketOverviewViewController: ThemeViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: MarketOverviewHeaderCell.self)

@@ -755,6 +755,7 @@
 		11B3588E8DA44A45661351D7 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35614C6E244926AF48701 /* Account.swift */; };
 		11B358902CE8D7EF2AD38448 /* CoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550B863970039577CD00 /* CoinService.swift */; };
 		11B35890939A3326B352A0FB /* ActiveAccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354C4B46DF1A50103F026 /* ActiveAccountStorage.swift */; };
+		11B358946C5E7A72712EACB2 /* MarketCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB992C240A4CF24938A /* MarketCategoryView.swift */; };
 		11B3589541E87A032D9D2D50 /* BottomSingleSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EF3688D60C8E6823267 /* BottomSingleSelectorViewController.swift */; };
 		11B35895C483A56545A6700E /* CexDepositNetworkSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C227EDC2D4ED188A0FC /* CexDepositNetworkSelectViewController.swift */; };
 		11B35897566548048FCEC11E /* WalletBlockchainElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AE5785634316A1A5DA8 /* WalletBlockchainElementService.swift */; };
@@ -795,6 +796,7 @@
 		11B358E508ECA92493A9A3FD /* CoinPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BFAAAE3B1357B5CE944 /* CoinPageService.swift */; };
 		11B358E7A9BC36B1B562A5B4 /* NftMetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FE71F5DE6AAD2BA3D8 /* NftMetadataManager.swift */; };
 		11B358EC0A19773B1455CF62 /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3576F224007FD4154EBE8 /* LockoutManager.swift */; };
+		11B358F04D8F15D43CB2BAA6 /* MarketCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB992C240A4CF24938A /* MarketCategoryView.swift */; };
 		11B358F1E7C72C1F42EC456F /* CoinToggleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350CDE31673BA1673B620 /* CoinToggleViewModel.swift */; };
 		11B358F2CD17616038016E59 /* NftRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354B32BD428041237570A /* NftRecord.swift */; };
 		11B358F9D6842ECD84E80752 /* MarketCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352AC4F5BE70D055293D7 /* MarketCategoryViewModel.swift */; };
@@ -3700,6 +3702,7 @@
 		11B35DA9FF23D110A042EDD6 /* NftMetadataSyncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftMetadataSyncer.swift; sourceTree = "<group>"; };
 		11B35DB358405198CF67F11D /* MnemonicInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicInputCell.swift; sourceTree = "<group>"; };
 		11B35DB5445B83B51C69D7AE /* TokenTransactionsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenTransactionsService.swift; sourceTree = "<group>"; };
+		11B35DB992C240A4CF24938A /* MarketCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketCategoryView.swift; sourceTree = "<group>"; };
 		11B35DBDADDA8D4F9D88C7AA /* RecipientAddressInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipientAddressInputCell.swift; sourceTree = "<group>"; };
 		11B35DC48EEBE1160676B269 /* ManageAccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountService.swift; sourceTree = "<group>"; };
 		11B35DC72F0D8DBBCCE2F988 /* MarkdownVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownVisitor.swift; sourceTree = "<group>"; };
@@ -7158,6 +7161,7 @@
 				58AAA2521E8F8845D96AB865 /* MarketOverviewHeaderCell.swift */,
 				11B35DCCC2D8CD00EF6A9A77 /* MarketOverviewMetricsCell.swift */,
 				11B3554159E6E5B7C1E71F04 /* MarketOverviewService.swift */,
+				11B35DB992C240A4CF24938A /* MarketCategoryView.swift */,
 			);
 			path = MarketOverview;
 			sourceTree = "<group>";
@@ -10384,6 +10388,7 @@
 				ABC9AD8A956680AAC03DE7F1 /* Alert.swift in Sources */,
 				ABC9A22690729B58621A1BBA /* InformedModifier.swift in Sources */,
 				ABC9A8117EAF046CDD020077 /* BorderedEmptyCell.swift in Sources */,
+				11B358946C5E7A72712EACB2 /* MarketCategoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11786,6 +11791,7 @@
 				ABC9A267A28122E3E6E3D5DC /* Alert.swift in Sources */,
 				ABC9A639040A77968B5D86B8 /* InformedModifier.swift in Sources */,
 				ABC9AB982879DE0BAE6701EC /* BorderedEmptyCell.swift in Sources */,
+				11B358F04D8F15D43CB2BAA6 /* MarketCategoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
