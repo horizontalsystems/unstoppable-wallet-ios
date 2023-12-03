@@ -100,7 +100,7 @@ class BaseTransactionsViewModel {
             let daysAgo = daysFrom(date: viewItem.date)
 
             if daysAgo != lastDaysAgo {
-                sectionViewItems.append(SectionViewItem(title: dateHeaderTitle(daysAgo: daysAgo).uppercased(), viewItems: [viewItem]))
+                sectionViewItems.append(SectionViewItem(title: dateHeaderTitle(daysAgo: daysAgo), viewItems: [viewItem]))
             } else {
                 sectionViewItems[sectionViewItems.count - 1].viewItems.append(viewItem)
             }

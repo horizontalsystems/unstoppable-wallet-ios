@@ -632,6 +632,9 @@
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.description" = "Market cap of all protocols on the %@ chain";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
@@ -639,9 +642,6 @@
 "market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
-
-"market.search.title" = "Search";
-"market.search.empty_text" = "No results found";
 
 "market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Show Results";
