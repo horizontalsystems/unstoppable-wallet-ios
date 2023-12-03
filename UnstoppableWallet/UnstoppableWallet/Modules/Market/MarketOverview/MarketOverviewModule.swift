@@ -20,11 +20,6 @@ enum MarketOverviewModule {
         let categoryViewModel = MarketOverviewCategoryViewModel(service: categoryService)
         let categoryDataSource = MarketOverviewCategoryDataSource(viewModel: categoryViewModel, presentDelegate: presentDelegate)
 
-        let nftCollectionsService = MarketOverviewNftCollectionsService(baseService: service)
-        let nftCollectionsDecorator = MarketListNftCollectionDecorator(service: nftCollectionsService)
-        let nftCollectionsViewModel = MarketOverviewNftCollectionsViewModel(service: nftCollectionsService, decorator: nftCollectionsDecorator)
-        let nftCollectionsDataSource = MarketOverviewNftCollectionsDataSource(viewModel: nftCollectionsViewModel, presentDelegate: presentDelegate)
-
         let topPlatformsService = MarketOverviewTopPlatformsService(baseService: service)
         let topPlatformsDecorator = MarketListTopPlatformDecorator(service: topPlatformsService)
         let topPlatformsViewModel = MarketOverviewTopPlatformsViewModel(service: topPlatformsService, decorator: topPlatformsDecorator)
@@ -36,9 +31,8 @@ enum MarketOverviewModule {
             marketOverviewDataSource,
             topGainersDataSource,
             topLosersDataSource,
-            categoryDataSource,
-            nftCollectionsDataSource,
             topPlatformsDataSource,
+            categoryDataSource,
         ])
     }
 }
