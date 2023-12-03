@@ -27,5 +27,12 @@ class MarketAdvancedSearchResultViewController: MarketListViewController {
         super.viewDidLoad()
 
         title = "market.advanced_search_results.title".localized
+
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+    }
+
+    @objc private func onTapClose() {
+        dismiss(animated: true)
     }
 }

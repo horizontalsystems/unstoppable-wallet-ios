@@ -44,8 +44,6 @@ class ReceiveSelectCoinViewController: ThemeSearchViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
-
         viewModel.$viewItems
             .receive(on: DispatchQueue.main)
             .sink { [weak self] viewItems in

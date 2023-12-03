@@ -73,7 +73,6 @@ class TransactionsViewController: ThemeViewController {
 
         view.addSubview(tableView)
 
-        tableView.backgroundColor = .clear
         tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear

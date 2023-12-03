@@ -57,7 +57,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "market.advanced_search.reset_all".localized, style: .plain, target: self, action: #selector(onTapReset))
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "market.advanced_search.reset_all".localized, style: .plain, target: self, action: #selector(onTapReset))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
         coinListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         marketCapCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
@@ -67,29 +69,10 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
 
         outperformedBtcCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        buildToggle(cell: outperformedBtcCell, title: "market.advanced_search.outperformed_btc".localized) { [weak self] in
-            self?.onTapOutperformedBtcCell(isOn: $0)
-        }
-
         outperformedEthCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        buildToggle(cell: outperformedEthCell, title: "market.advanced_search.outperformed_eth".localized) { [weak self] in
-            self?.onTapOutperformedEthCell(isOn: $0)
-        }
-
         outperformedBnbCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        buildToggle(cell: outperformedBnbCell, title: "market.advanced_search.outperformed_bnb".localized) { [weak self] in
-            self?.onTapOutperformedBnbCell(isOn: $0)
-        }
-
         priceCloseToAthCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        buildToggle(cell: priceCloseToAthCell, title: "market.advanced_search.price_close_to_ath".localized) { [weak self] in
-            self?.onTapPriceCloseToAthCell(isOn: $0)
-        }
-
         priceCloseToAtlCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-        buildToggle(cell: priceCloseToAtlCell, title: "market.advanced_search.price_close_to_atl".localized) { [weak self] in
-            self?.onTapPriceCloseToAtlCell(isOn: $0)
-        }
 
         showResultButtonHolder.add(to: self, under: tableView)
         showResultButtonHolder.addSubview(showResultButton)
@@ -122,6 +105,24 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.priceChangeViewItemDriver) { [weak self] in
             self?.syncPriceChange(viewItem: $0)
         }
+        subscribe(disposeBag, viewModel.outperformedBtcDriver) { [weak self] in
+            self?.syncOutperformedBtc(isOn: $0)
+        }
+        subscribe(disposeBag, viewModel.outperformedEthDriver) { [weak self] in
+            self?.syncOutperformedEth(isOn: $0)
+        }
+        subscribe(disposeBag, viewModel.outperformedBnbDriver) { [weak self] in
+            self?.syncOutperformedBnb(isOn: $0)
+        }
+        subscribe(disposeBag, viewModel.priceCloseToAthDriver) { [weak self] in
+            self?.syncPriceCloseToAth(isOn: $0)
+        }
+        subscribe(disposeBag, viewModel.priceCloseToAtlDriver) { [weak self] in
+            self?.syncPriceCloseToAtl(isOn: $0)
+        }
+        subscribe(disposeBag, viewModel.resetEnabledDriver) { [weak self] enabled in
+            self?.navigationItem.leftBarButtonItem?.isEnabled = enabled
+        }
 
         subscribe(disposeBag, viewModel.buttonStateDriver) { [weak self] in
             self?.sync(buttonState: $0)
@@ -137,10 +138,10 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
     }
 
-    private func buildToggle(cell: BaseThemeCell, title: String? = nil, onToggle: @escaping (Bool) -> Void) {
+    private func buildToggle(cell: BaseThemeCell, title: String? = nil, isOn: Bool, onToggle: @escaping (Bool) -> Void) {
         let elements = tableView.universalImage24Elements(
             title: .body(title),
-            accessoryType: .switch(onSwitch: onToggle)
+            accessoryType: .switch(isOn: isOn, onSwitch: onToggle)
         )
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
     }
@@ -254,6 +255,10 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         viewModel.reset()
     }
 
+    @objc private func onTapClose() {
+        dismiss(animated: true)
+    }
+
     @objc private func onTapShowResult() {
         let viewController = MarketAdvancedSearchResultModule.viewController(marketInfos: viewModel.marketInfos, priceChangeType: viewModel.priceChangeType)
         navigationController?.pushViewController(viewController, animated: true)
@@ -287,6 +292,36 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func syncPriceChange(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
         buildSelector(cell: priceChangeCell, title: "market.advanced_search.price_change".localized, viewItem: viewItem)
+    }
+
+    private func syncOutperformedBtc(isOn: Bool) {
+        buildToggle(cell: outperformedBtcCell, title: "market.advanced_search.outperformed_btc".localized, isOn: isOn) { [weak self] in
+            self?.onTapOutperformedBtcCell(isOn: $0)
+        }
+    }
+
+    private func syncOutperformedEth(isOn: Bool) {
+        buildToggle(cell: outperformedEthCell, title: "market.advanced_search.outperformed_eth".localized, isOn: isOn) { [weak self] in
+            self?.onTapOutperformedEthCell(isOn: $0)
+        }
+    }
+
+    private func syncOutperformedBnb(isOn: Bool) {
+        buildToggle(cell: outperformedBnbCell, title: "market.advanced_search.outperformed_bnb".localized, isOn: isOn) { [weak self] in
+            self?.onTapOutperformedBnbCell(isOn: $0)
+        }
+    }
+
+    private func syncPriceCloseToAth(isOn: Bool) {
+        buildToggle(cell: priceCloseToAthCell, title: "market.advanced_search.price_close_to_ath".localized, isOn: isOn) { [weak self] in
+            self?.onTapPriceCloseToAthCell(isOn: $0)
+        }
+    }
+
+    private func syncPriceCloseToAtl(isOn: Bool) {
+        buildToggle(cell: priceCloseToAtlCell, title: "market.advanced_search.price_close_to_atl".localized, isOn: isOn) { [weak self] in
+            self?.onTapPriceCloseToAtlCell(isOn: $0)
+        }
     }
 
     private func sync(buttonState: MarketAdvancedSearchViewModel.ButtonState) {

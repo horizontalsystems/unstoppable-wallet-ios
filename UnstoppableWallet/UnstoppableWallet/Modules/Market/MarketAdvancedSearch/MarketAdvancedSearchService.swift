@@ -38,14 +38,14 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var stateRelay = PublishRelay<State>()
+    private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .loading {
         didSet {
             stateRelay.accept(state)
         }
     }
 
-    private var coinListCountRelay = PublishRelay<CoinListCount>()
+    private let coinListCountRelay = PublishRelay<CoinListCount>()
     var coinListCount: CoinListCount = .top250 {
         didSet {
             guard coinListCount != oldValue else {
@@ -57,7 +57,7 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var marketCapRelay = PublishRelay<ValueFilter>()
+    private let marketCapRelay = PublishRelay<ValueFilter>()
     var marketCap: ValueFilter = .none {
         didSet {
             guard marketCap != oldValue else {
@@ -69,7 +69,7 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var volumeRelay = PublishRelay<ValueFilter>()
+    private let volumeRelay = PublishRelay<ValueFilter>()
     var volume: ValueFilter = .none {
         didSet {
             guard volume != oldValue else {
@@ -81,7 +81,7 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var blockchainsRelay = PublishRelay<[Blockchain]>()
+    private let blockchainsRelay = PublishRelay<[Blockchain]>()
     var blockchains: [Blockchain] = [] {
         didSet {
             guard blockchains != oldValue else {
@@ -93,7 +93,7 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var priceChangeRelay = PublishRelay<PriceChangeFilter>()
+    private let priceChangeRelay = PublishRelay<PriceChangeFilter>()
     var priceChange: PriceChangeFilter = .none {
         didSet {
             guard priceChange != oldValue else {
@@ -105,7 +105,7 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var priceChangeTypeRelay = PublishRelay<MarketModule.PriceChangeType>()
+    private let priceChangeTypeRelay = PublishRelay<MarketModule.PriceChangeType>()
     var priceChangeType: MarketModule.PriceChangeType = .day {
         didSet {
             guard priceChangeType != oldValue else {
@@ -117,7 +117,7 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var outperformedBtcRelay = PublishRelay<Bool>()
+    private let outperformedBtcRelay = PublishRelay<Bool>()
     var outperformedBtc: Bool = false {
         didSet {
             guard outperformedBtc != oldValue else {
@@ -129,43 +129,60 @@ class MarketAdvancedSearchService {
         }
     }
 
+    private let outperformedEthRelay = PublishRelay<Bool>()
     var outperformedEth: Bool = false {
         didSet {
             guard outperformedEth != oldValue else {
                 return
             }
 
+            outperformedEthRelay.accept(outperformedEth)
             syncState()
         }
     }
 
+    private let outperformedBnbRelay = PublishRelay<Bool>()
     var outperformedBnb: Bool = false {
         didSet {
             guard outperformedBnb != oldValue else {
                 return
             }
 
+            outperformedBnbRelay.accept(outperformedBnb)
             syncState()
         }
     }
 
+    private let priceCloseToAthRelay = PublishRelay<Bool>()
     var priceCloseToAth: Bool = false {
         didSet {
             guard priceCloseToAth != oldValue else {
                 return
             }
 
+            priceCloseToAthRelay.accept(priceCloseToAth)
             syncState()
         }
     }
 
+    private let priceCloseToAtlRelay = PublishRelay<Bool>()
     var priceCloseToAtl: Bool = false {
         didSet {
             guard priceCloseToAtl != oldValue else {
                 return
             }
 
+            priceCloseToAtlRelay.accept(priceCloseToAtl)
             syncState()
+        }
+    }
+
+    private var canResetRelay = PublishRelay<Bool>()
+    private(set) var canReset: Bool = false {
+        didSet {
+            if canReset != oldValue {
+                canResetRelay.accept(canReset)
+            }
         }
     }
 
@@ -213,6 +230,18 @@ class MarketAdvancedSearchService {
         case let .failed(error):
             state = .failed(error: error)
         }
+
+        canReset = coinListCount != .top250
+            || marketCap != .none
+            || volume != .none
+            || blockchains != []
+            || priceChangeType != .day
+            || priceChange != .none
+            || outperformedBtc != false
+            || outperformedEth != false
+            || outperformedBnb != false
+            || priceCloseToAtl != false
+            || priceCloseToAth != false
     }
 
     private func marketInfo(coinUid: String) -> MarketInfo? {
@@ -316,6 +345,26 @@ extension MarketAdvancedSearchService {
 
     var outperformedBtcObservable: Observable<Bool> {
         outperformedBtcRelay.asObservable()
+    }
+
+    var outperformedEthObservable: Observable<Bool> {
+        outperformedEthRelay.asObservable()
+    }
+
+    var outperformedBnbObservable: Observable<Bool> {
+        outperformedBnbRelay.asObservable()
+    }
+
+    var priceCloseToAthObservable: Observable<Bool> {
+        priceCloseToAthRelay.asObservable()
+    }
+
+    var priceCloseToAtlObservable: Observable<Bool> {
+        priceCloseToAtlRelay.asObservable()
+    }
+
+    var canResetObservable: Observable<Bool> {
+        canResetRelay.asObservable()
     }
 
     func reset() {

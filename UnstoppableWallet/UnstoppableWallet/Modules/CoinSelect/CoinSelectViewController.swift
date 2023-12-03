@@ -45,8 +45,6 @@ class CoinSelectViewController: ThemeSearchViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
-
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.handle(viewItems: $0) }
         $filter
             .receive(on: DispatchQueue.main)

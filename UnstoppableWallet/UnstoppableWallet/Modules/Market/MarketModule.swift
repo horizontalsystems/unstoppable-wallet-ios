@@ -27,9 +27,7 @@ enum RowActionType {
 
 enum MarketModule {
     static func viewController() -> UIViewController {
-        let service = MarketService(userDefaultsStorage: App.shared.userDefaultsStorage, launchScreenManager: App.shared.launchScreenManager)
-        let viewModel = MarketViewModel(service: service)
-        return MarketViewController(viewModel: viewModel)
+        MarketViewController()
     }
 
     static func marketListCell(tableView: UITableView, backgroundStyle: BaseThemeCell.BackgroundStyle, listViewItem: MarketModule.ListViewItem, isFirst: Bool, isLast: Bool, rowActionProvider: (() -> [RowAction])?, action: (() -> Void)?) -> RowProtocol {

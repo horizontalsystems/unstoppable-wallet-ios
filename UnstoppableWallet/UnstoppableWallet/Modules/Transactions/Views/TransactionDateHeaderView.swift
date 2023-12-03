@@ -27,6 +27,6 @@ class TransactionDateHeaderView: UITableViewHeaderFooterView {
 
     var text: String? {
         get { label.text }
-        set { label.text = newValue }
+        set { label.text = newValue?.uppercased() }
     }
 }
