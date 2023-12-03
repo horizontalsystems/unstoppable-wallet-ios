@@ -1,4 +1,5 @@
 import MarketKit
+import ThemeKit
 import UIKit
 
 struct MarketDiscoveryModule {
@@ -8,7 +9,8 @@ struct MarketDiscoveryModule {
 
         let headerViewModel = MarketSingleSortHeaderViewModel(service: categoryService, decorator: categoryService)
         let viewModel = MarketDiscoveryViewModel(categoryService: categoryService, filterService: filterService)
-        return MarketDiscoveryViewController(viewModel: viewModel, sortHeaderViewModel: headerViewModel)
+        let viewController = MarketDiscoveryViewController(viewModel: viewModel, sortHeaderViewModel: headerViewModel)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
     static func formatCategoryMarketData(category: CoinCategory, timePeriod: HsTimePeriod, currency: Currency) -> (String?, String?, DiffType) {

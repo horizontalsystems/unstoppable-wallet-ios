@@ -7,7 +7,7 @@ import SnapKit
 import ThemeKit
 import UIKit
 
-class MarketDiscoveryViewController: ThemeSearchViewController {
+class MarketDiscoveryViewController: ThemeViewController {
     private let viewModel: MarketDiscoveryViewModel
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
@@ -29,7 +29,7 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         self.viewModel = viewModel
         headerView = MarketSingleSortHeaderView(viewModel: sortHeaderViewModel)
 
-        super.init(scrollViews: [collectionView, tableView])
+        super.init()
 
         hidesBottomBarWhenPushed = true
     }
@@ -43,7 +43,9 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         super.viewDidLoad()
 
         title = "market_discovery.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "market_discovery.filters".localized, style: .plain, target: self, action: #selector(onTapFilters))
+
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
         view.addSubview(headerView)
         headerView.snp.makeConstraints { maker in
@@ -112,17 +114,11 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.unfavoritedDriver) { HudHelper.instance.show(banner: .removedFromWatchlist) }
         subscribe(disposeBag, viewModel.failDriver) { HudHelper.instance.show(banner: .error(string: "alert.unknown_error".localized)) }
 
-        $filter
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
-            .store(in: &cancellables)
-
         isLoaded = true
     }
 
-    @objc private func onTapFilters() {
-        let viewController = MarketAdvancedSearchModule.viewController()
-        navigationController?.pushViewController(viewController, animated: true)
+    @objc private func onTapClose() {
+        dismiss(animated: true)
     }
 
     private func sync(discoveryViewItems: [MarketDiscoveryViewModel.DiscoveryViewItem]?) {

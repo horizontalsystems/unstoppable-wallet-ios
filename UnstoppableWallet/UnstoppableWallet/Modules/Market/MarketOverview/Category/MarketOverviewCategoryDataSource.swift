@@ -60,7 +60,7 @@ extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
 
                             cell.buttonMode = .seeAll
                             let onSeeAll: () -> Void = { [weak self] in
-                                self?.presentDelegate?.push(viewController: MarketDiscoveryModule.viewController())
+                                self?.presentDelegate?.present(viewController: MarketDiscoveryModule.viewController())
                             }
                             cell.onSeeAll = onSeeAll
                             cell.onTapTitle = onSeeAll
