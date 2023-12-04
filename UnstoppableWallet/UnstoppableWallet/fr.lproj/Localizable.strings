@@ -379,7 +379,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
 "deposit.zcash.restore.dont_have" = "Non, je n'ai pas";
 
-"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
+"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
 
 "receive_network_select.title" = "Réseau";
 "receive_network_select.description" = "Choisissez un réseau et obtenez une adresse à recevoir.";
@@ -1221,9 +1221,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "btc_blockchain_settings.restore_source.description" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
 "btc_blockchain_settings.restore_source.alert" = "Une fois la source de restauration modifiée, le portefeuille devra être resynchronisé avec la blockchain %@.";
 
-"btc_restore_mode.blockchair" = "Rapide, Privé, Centralisé";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Lent, Privé, Décentralisé";
+"btc_restore_mode.blockchair" = "Fast, No Private";
+"btc_restore_mode.hybrid" = "Slow, No Private";
+"btc_restore_mode.blockchain" = "Slow, Private";
 
 "btc_transaction_sort_mode.shuffle" = "Mélanger";
 "btc_transaction_sort_mode.shuffle.description" = "Indexation aléatoire";
