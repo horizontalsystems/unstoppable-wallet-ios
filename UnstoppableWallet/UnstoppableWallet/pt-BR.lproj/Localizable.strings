@@ -379,7 +379,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.zcash.restore.already_own" = "Sim, eu já possuo";
 "deposit.zcash.restore.dont_have" = "Não, eu não tenho";
 
-"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
+"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
 
 "receive_network_select.title" = "Rede";
 "receive_network_select.description" = "Escolha uma rede e receba um endereço para depositar.";
@@ -1221,9 +1221,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "btc_blockchain_settings.restore_source.description" = "Selecione uma fonte de dados para restaurar uma carteira com transações.";
 "btc_blockchain_settings.restore_source.alert" = "Após mudar a Restauração, a carteira terá que ressincronizar-se com a blockchain %@.";
 
-"btc_restore_mode.blockchair" = "Rápido, Privado, Centralizado";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Lento, Privado, Descentralizado";
+"btc_restore_mode.blockchair" = "Fast, No Private";
+"btc_restore_mode.hybrid" = "Slow, No Private";
+"btc_restore_mode.blockchain" = "Slow, Private";
 
 "btc_transaction_sort_mode.shuffle" = "Embaralhar";
 "btc_transaction_sort_mode.shuffle.description" = "Indexação aleatória";
