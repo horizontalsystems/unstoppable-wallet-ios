@@ -371,8 +371,8 @@
 "deposit.account" = "Account";
 
 "deposit.amount" = "Сумма";
-"deposit.set_amount" = "Set Amount";
-"deposit.enter_amount" = "Enter Amount";
+"deposit.set_amount" = "Установить сумму";
+"deposit.enter_amount" = "Ввести сумму";
 "deposit.not_active" = "Не активен";
 "deposit.not_active.title" = "Неактивный адрес";
 "deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
@@ -381,7 +381,7 @@
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
 "deposit.zcash.restore.dont_have" = "Нет, у меня нет";
 
-"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
+"deposit.warning" = "Только совместимые с сетью токены. Другие будут потеряны.";
 
 "receive_network_select.title" = "Сеть";
 "receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
@@ -411,8 +411,8 @@
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid" = "Неверно";
-"send.error.invalid_blockchain" = "Invalid Blockchain";
-"send.error.invalid_token" = "Invalid Token";
+"send.error.invalid_blockchain" = "Недействительный блокчейн";
+"send.error.invalid_token" = "Недействительный токен";
 "send.error.address" = "Адрес";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 час";
@@ -477,12 +477,12 @@
 // Donate
 
 "donate.list.title" = "Пожертвовать с помощью";
-"donate.list.get_address" = "Get Donate Address";
+"donate.list.get_address" = "Получить адрес для пожертвования";
 "donate.list.get_address.title" = "Адреса";
 "donate.title" = "Пожертвовать %@";
 "donate.no_assets" = "У вас нет активов для пожертвования.";
 "donate.support.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
-"donate.support.bottom_description" = "Or select a coin to donate";
+"donate.support.bottom_description" = "Или выберите монету для пожертвования";
 
 // CoinSelector
 
@@ -1223,9 +1223,9 @@
 "btc_blockchain_settings.restore_source.description" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 "btc_blockchain_settings.restore_source.alert" = "После изменения источника восстановления, кошелек должен будет повторно синхронизироваться с блокчейном %@.";
 
-"btc_restore_mode.blockchair" = "Fast, No Private";
-"btc_restore_mode.hybrid" = "Slow, No Private";
-"btc_restore_mode.blockchain" = "Slow, Private";
+"btc_restore_mode.blockchair" = "Быстро, не приватно";
+"btc_restore_mode.hybrid" = "Медленно, не приватно";
+"btc_restore_mode.blockchain" = "Медленно, приватно";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
@@ -1820,7 +1820,7 @@
 "cex_deposit.network" = "Сеть";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Мин. сумма";
-"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
+"cex_deposit.warning_memo" = "Укажите необходимое мемо (тэг) и отправьте только токены, совместимые с сетью. Другие токены будут потеряны.";
 "cex_deposit.copy_address" = "Копировать";
 "cex_deposit.share_address" = "Поделиться";
 "cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
