@@ -377,7 +377,7 @@
 "deposit.zcash.restore.already_own" = "Yes, I already own";
 "deposit.zcash.restore.dont_have" = "No, I don’t have";
 
-"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
+"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
 
 "receive_network_select.title" = "Network";
 "receive_network_select.description" = "Choose a network and get an address to receive.";
@@ -1219,9 +1219,9 @@
 "btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 "btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
 
-"btc_restore_mode.blockchair" = "Fast, Private, Centralized";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Slow, Private, Decentralized";
+"btc_restore_mode.blockchair" = "Fast, No Private";
+"btc_restore_mode.hybrid" = "Slow, No Private";
+"btc_restore_mode.blockchain" = "Slow, Private";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
