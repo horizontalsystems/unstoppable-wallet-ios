@@ -379,7 +379,7 @@
 "deposit.zcash.restore.already_own" = "是的，我已经拥有了";
 "deposit.zcash.restore.dont_have" = "不，我没有";
 
-"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
+"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
 
 "receive_network_select.title" = "網絡";
 "receive_network_select.description" = "选择一个网络并获取要接收的地址。";
@@ -1221,9 +1221,9 @@
 "btc_blockchain_settings.restore_source.description" = "通过交易为恢复钱包选择数据源。";
 "btc_blockchain_settings.restore_source.alert" = "更改恢复源后，钱包必须将自身与 %@ 区块链重新同步。";
 
-"btc_restore_mode.blockchair" = "快速、私密、中心化";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "缓慢、私密、去中心化";
+"btc_restore_mode.blockchair" = "Fast, No Private";
+"btc_restore_mode.hybrid" = "Slow, No Private";
+"btc_restore_mode.blockchain" = "Slow, Private";
 
 "btc_transaction_sort_mode.shuffle" = "随机排序";
 "btc_transaction_sort_mode.shuffle.description" = "随机索引";
