@@ -9,12 +9,28 @@ class MarketCategoryView: UIView {
     private let marketCapLabel = UILabel()
     private let diffLabel = UILabel()
 
+    private let button = UIButton()
+
+    var onTap: (() -> Void)? {
+        didSet {
+            button.isUserInteractionEnabled = onTap != nil
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         backgroundColor = .themeLawrence
         cornerRadius = .cornerRadius12
         layer.cornerCurve = .continuous
+
+        addSubview(button)
+        button.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        button.isUserInteractionEnabled = false
 
         addSubview(imageView)
         imageView.snp.makeConstraints { maker in
@@ -45,11 +61,27 @@ class MarketCategoryView: UIView {
         nameLabel.numberOfLines = 0
         nameLabel.font = .subhead1
         nameLabel.textColor = .themeLeah
+
+        updateUI()
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateUI()
+    }
+
+    @objc private func didTapButton() {
+        onTap?()
+    }
+
+    private func updateUI() {
+        button.setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
     }
 
     func set(viewItem: MarketOverviewCategoryViewModel.ViewItem) {
