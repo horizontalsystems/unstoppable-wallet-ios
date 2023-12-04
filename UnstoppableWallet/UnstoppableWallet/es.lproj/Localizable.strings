@@ -379,7 +379,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.zcash.restore.already_own" = "Sí, ya tengo";
 "deposit.zcash.restore.dont_have" = "No, no tengo";
 
-"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
+"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
 
 "receive_network_select.title" = "La red";
 "receive_network_select.description" = "Elija una red y obtenga una dirección a recibir.";
@@ -1222,9 +1222,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "btc_blockchain_settings.restore_source.description" = "Elige la fuente que la aplicación Unstoppable debería usar para sincronizar la(s) cartera(s).";
 "btc_blockchain_settings.restore_source.alert" = "Después de cambiar la Fuente de Restauración, la cartera tendrá que resincronizarse con la cadena de bloques %@.";
 
-"btc_restore_mode.blockchair" = "Rápido, Privado, Centralizado";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Lento, Privado, Descentralizado";
+"btc_restore_mode.blockchair" = "Fast, No Private";
+"btc_restore_mode.hybrid" = "Slow, No Private";
+"btc_restore_mode.blockchain" = "Slow, Private";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Indexación aleatoria";
