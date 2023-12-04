@@ -370,7 +370,7 @@
 
 "deposit.amount" = "金额";
 "deposit.set_amount" = "设定金额";
-"deposit.enter_amount" = "Enter Amount";
+"deposit.enter_amount" = "输入金额";
 "deposit.not_active" = "不活动";
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
@@ -379,7 +379,7 @@
 "deposit.zcash.restore.already_own" = "是的，我已经拥有了";
 "deposit.zcash.restore.dont_have" = "不，我没有";
 
-"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
+"deposit.warning" = "仅支持与网络兼容的代币，其他将会丧失。";
 
 "receive_network_select.title" = "網絡";
 "receive_network_select.description" = "选择一个网络并获取要接收的地址。";
@@ -409,8 +409,8 @@
 "send.max_button" = "最多";
 "send.next_button" = "下一步";
 "send.error.invalid" = "无效";
-"send.error.invalid_blockchain" = "Invalid Blockchain";
-"send.error.invalid_token" = "Invalid Token";
+"send.error.invalid_blockchain" = "无效的区块链";
+"send.error.invalid_token" = "无效代币";
 "send.error.address" = "地址";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 小时";
@@ -475,12 +475,12 @@
 // Donate
 
 "donate.list.title" = "捐赠方式";
-"donate.list.get_address" = "Get Donate Address";
+"donate.list.get_address" = "获取捐赠地址";
 "donate.list.get_address.title" = "地址";
 "donate.title" = "捐赠%@";
 "donate.no_assets" = "您没有资产可以捐赠。";
 "donate.support.description" = "在你的支持下，我们可以使这个应用更好！";
-"donate.support.bottom_description" = "Or select a coin to donate";
+"donate.support.bottom_description" = "或选择一种币进行捐赠";
 
 // CoinSelector
 
@@ -1221,9 +1221,9 @@
 "btc_blockchain_settings.restore_source.description" = "通过交易为恢复钱包选择数据源。";
 "btc_blockchain_settings.restore_source.alert" = "更改恢复源后，钱包必须将自身与 %@ 区块链重新同步。";
 
-"btc_restore_mode.blockchair" = "Fast, No Private";
-"btc_restore_mode.hybrid" = "Slow, No Private";
-"btc_restore_mode.blockchain" = "Slow, Private";
+"btc_restore_mode.blockchair" = "快速，不私密";
+"btc_restore_mode.hybrid" = "慢，无隐私";
+"btc_restore_mode.blockchain" = "慢，私密";
 
 "btc_transaction_sort_mode.shuffle" = "随机排序";
 "btc_transaction_sort_mode.shuffle.description" = "随机索引";
@@ -1817,7 +1817,7 @@
 "cex_deposit.network" = "網絡";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "最小金额";
-"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
+"cex_deposit.warning_memo" = "提供必需的备忘录（标签），并仅发送兼容网络的代币。其他将会丢失。";
 "cex_deposit.copy_address" = "复制";
 "cex_deposit.share_address" = "分享";
 "cex_deposit.failed" = "加载存款地址失败。请重试。";
