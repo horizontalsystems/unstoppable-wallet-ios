@@ -369,7 +369,7 @@
 "deposit.account" = "账户";
 
 "deposit.amount" = "金额";
-"deposit.set_amount" = "Set Amount";
+"deposit.set_amount" = "设定金额";
 "deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "不活动";
 "deposit.not_active.title" = "未激活的地址";
