@@ -377,7 +377,7 @@
 "deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
 "deposit.zcash.restore.dont_have" = "아니요, 없어요";
 
-"deposit.warning" = "Send only network-compatible tokens. Others will be lost.";
+"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
 
 "receive_network_select.title" = "회로망";
 "receive_network_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
@@ -1220,9 +1220,9 @@
 "btc_blockchain_settings.restore_source.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 "btc_blockchain_settings.restore_source.alert" = "복원 소스를 변경한 후 지갑은 %@ 블록체인과 자체적으로 다시 동기화해야 합니다.";
 
-"btc_restore_mode.blockchair" = "빠르고 비공개, 중앙집중화";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "느리고 비공개, 탈중앙화";
+"btc_restore_mode.blockchair" = "Fast, No Private";
+"btc_restore_mode.hybrid" = "Slow, No Private";
+"btc_restore_mode.blockchain" = "Slow, Private";
 
 "btc_transaction_sort_mode.shuffle" = "셔플";
 "btc_transaction_sort_mode.shuffle.description" = "랜덤 인덱싱";
