@@ -68,34 +68,32 @@ class MarketOverviewCategoryCell: UITableViewCell {
         for (index, viewItem) in viewItems.enumerated() {
             let view = MarketCategoryView()
             view.set(viewItem: viewItem)
+            view.onTap = { [weak self] in
+                self?.onSelect?(viewItem.uid)
+            }
 
             if let _bufferView = bufferView {
-                let stackView = UIStackView(arrangedSubviews: [_bufferView, view])
-                stackView.spacing = .margin8
-                stackView.distribution = .fillEqually
-
-                self.stackView.addArrangedSubview(stackView)
-
-                stackView.snp.makeConstraints { make in
-                    make.width.equalTo(scrollView).offset(-CGFloat.margin8)
-                }
-
+                addPage(views: [_bufferView, view])
                 bufferView = nil
             } else if index == viewItems.count - 1 {
-                let stackView = UIStackView(arrangedSubviews: [view, UIView()])
-                stackView.spacing = .margin8
-                stackView.distribution = .fillEqually
-
-                self.stackView.addArrangedSubview(stackView)
-
-                stackView.snp.makeConstraints { make in
-                    make.width.equalTo(scrollView).offset(-CGFloat.margin8)
-                }
+                addPage(views: [view, UIView()])
             } else {
                 bufferView = view
             }
         }
 
         stackView.addArrangedSubview(trailingView)
+    }
+
+    private func addPage(views: [UIView]) {
+        let stackView = UIStackView(arrangedSubviews: views)
+        stackView.spacing = .margin8
+        stackView.distribution = .fillEqually
+
+        self.stackView.addArrangedSubview(stackView)
+
+        stackView.snp.makeConstraints { make in
+            make.width.equalTo(scrollView).offset(-CGFloat.margin8)
+        }
     }
 }
