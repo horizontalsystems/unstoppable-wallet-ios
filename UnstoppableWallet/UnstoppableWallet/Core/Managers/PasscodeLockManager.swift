@@ -30,7 +30,7 @@ class PasscodeLockManager {
     }
 
     private func show(viewController: UIViewController) {
-        UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: viewController)
+        UIWindow.keyWindow?.set(newRootController: viewController)
     }
 }
 

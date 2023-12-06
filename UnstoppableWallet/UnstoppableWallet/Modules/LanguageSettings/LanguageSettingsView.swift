@@ -14,7 +14,7 @@ struct LanguageSettingsView: View {
                             presentationMode.wrappedValue.dismiss()
                         } else {
                             viewModel.currentLanguage = language
-                            UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance(presetTab: .settings))
+                            UIWindow.keyWindow?.set(newRootController: MainModule.instance(presetTab: .settings))
                         }
                     }) {
                         Image(language)

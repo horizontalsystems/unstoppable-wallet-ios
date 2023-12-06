@@ -30,7 +30,7 @@ struct UnlockView: View {
         }
         .onReceive(viewModel.finishSubject) { reloadApp in
             if reloadApp {
-                UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
+                UIWindow.keyWindow?.set(newRootController: MainModule.instance())
             } else {
                 presentationMode.wrappedValue.dismiss()
             }

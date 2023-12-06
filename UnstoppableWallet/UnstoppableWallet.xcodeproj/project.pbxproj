@@ -705,6 +705,7 @@
 		11B358092D442440DAAE8AC0 /* CoinSelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F1E3B5875396F03E0D /* CoinSelectService.swift */; };
 		11B3580ABF4CD61826D0FCBB /* ReceiveBitcoinCashCoinTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A81AD46F48B63E59ED3 /* ReceiveBitcoinCashCoinTypeViewModel.swift */; };
 		11B3580B9C21B55ACC07B043 /* AdapterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A4E49ED2D2BF8E60863 /* AdapterManager.swift */; };
+		11B3580BC3B5D2CBC68854D2 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353356496AA219686B993 /* UIWindow.swift */; };
 		11B3580CD18A931ABAA6C122 /* BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359A35AEB7964A94AFFC0 /* BiometryType.swift */; };
 		11B3580E4A964C65BF8EDDE9 /* StackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AAE4114A56DF13ECF0F /* StackViewCell.swift */; };
 		11B358122FE64E16EC25F095 /* MarketOverviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3554159E6E5B7C1E71F04 /* MarketOverviewService.swift */; };
@@ -998,6 +999,7 @@
 		11B35AF1B38CDF6728158514 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3586FDC91E3742847B7E0 /* AppConfig.swift */; };
 		11B35AF2A7175246F8586F09 /* SendEvmModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3515139F2682C9C733F3D /* SendEvmModule.swift */; };
 		11B35AF308141DC4CFA45918 /* NftHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357B1854BAD99C7CFB3DE /* NftHeaderViewModel.swift */; };
+		11B35AF710C287EB89018342 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353356496AA219686B993 /* UIWindow.swift */; };
 		11B35AF765474AEE15CA4240 /* AccountRecord_v_0_20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3506CB3D780A00F4BBBBE /* AccountRecord_v_0_20.swift */; };
 		11B35AFE3ECB8A5EE7649F2D /* ExperimentalFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3531E4476F43B9C2BA5A0 /* ExperimentalFeaturesView.swift */; };
 		11B35B03C6F88AFE3E45C13D /* SendAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352436A876FC59DF41C78 /* SendAmountView.swift */; };
@@ -3207,6 +3209,7 @@
 		11B3532A1DC90E3D0E3403F8 /* ReceiveAddressViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveAddressViewModel.swift; sourceTree = "<group>"; };
 		11B35332D245CFF50A68F8CA /* SectionsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsTableView.swift; sourceTree = "<group>"; };
 		11B353355FF7FBE72BF60981 /* SendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendView.swift; sourceTree = "<group>"; };
+		11B353356496AA219686B993 /* UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
 		11B35336293A4473DD9F5C8B /* RestoreSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSettingsModule.swift; sourceTree = "<group>"; };
 		11B35340910590E6FCF05A90 /* NftCollectionAssetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftCollectionAssetsViewController.swift; sourceTree = "<group>"; };
 		11B353450DED12F9F024BAD0 /* AddressParserFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressParserFactory.swift; sourceTree = "<group>"; };
@@ -4928,6 +4931,7 @@
 				ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */,
 				ABC9AF26FDCB363793BF66E1 /* Integer.swift */,
 				ABC9A776346AF62265896CA1 /* CellElement.swift */,
+				11B353356496AA219686B993 /* UIWindow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -10315,6 +10319,7 @@
 				ABC9A22690729B58621A1BBA /* InformedModifier.swift in Sources */,
 				ABC9A8117EAF046CDD020077 /* BorderedEmptyCell.swift in Sources */,
 				11B358946C5E7A72712EACB2 /* MarketCategoryView.swift in Sources */,
+				11B35AF710C287EB89018342 /* UIWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11708,6 +11713,7 @@
 				ABC9A639040A77968B5D86B8 /* InformedModifier.swift in Sources */,
 				ABC9AB982879DE0BAE6701EC /* BorderedEmptyCell.swift in Sources */,
 				11B358F04D8F15D43CB2BAA6 /* MarketCategoryView.swift in Sources */,
+				11B3580BC3B5D2CBC68854D2 /* UIWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
