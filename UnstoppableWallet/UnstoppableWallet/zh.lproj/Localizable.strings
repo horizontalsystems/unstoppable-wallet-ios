@@ -598,7 +598,7 @@
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
 "market.top.section.header.top_losers" = "跌幅榜";
-"market.top.section.header.top_sectors" = "前列行业";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "发现";
 "market.top.volume.title" = "成交量";
 "market.top.market_cap.title" = "市值";
@@ -634,6 +634,9 @@
 "top_platform.title" = "%@ 星系";
 "top_platform.description" = "%@ 链上所有协议的市场上限";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "发现";
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "浏览类别";
@@ -641,9 +644,6 @@
 "market_discovery.not_found" = "未发现结果";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
-
-"market.search.title" = "搜索​​​​";
-"market.search.empty_text" = "未发现结果";
 
 "market.advanced_search.title" = "过滤器";
 "market.advanced_search.show_results" = "显示结果";
