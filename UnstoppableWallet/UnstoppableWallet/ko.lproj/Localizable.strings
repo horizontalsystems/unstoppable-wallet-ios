@@ -596,7 +596,7 @@
 "market.top.section.header.see_all" = "모두 보기";
 "market.top.section.header.top_gainers" = "최고 상승자";
 "market.top.section.header.top_losers" = "최고 하락자";
-"market.top.section.header.top_sectors" = "주요 부문";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "뉴스";
 "market.top.volume.title" = "거래량";
 "market.top.market_cap.title" = "시가총액";
@@ -632,6 +632,9 @@
 "top_platform.title" = "%@ 생태계";
 "top_platform.description" = "%@ 체인상의 모든 프로토콜의 시가총액";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "탐색";
 "market_discovery.filters" = "필터";
 "market_discovery.browse_categories" = "카테고리 탐색";
@@ -639,9 +642,6 @@
 "market_discovery.not_found" = "검색 결과가 없습니다";
 
 "market_watchlist.empty.caption" = "관심 목록이 비어 있습니다.";
-
-"market.search.title" = "검색";
-"market.search.empty_text" = "검색 결과가 없습니다";
 
 "market.advanced_search.title" = "필터";
 "market.advanced_search.show_results" = "결과 보기";
