@@ -598,7 +598,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.top.section.header.see_all" = "Alle anzeigen";
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.top_sectors" = "Top-Sektoren";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "Nachrichten";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
@@ -634,6 +634,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.description" = "Marktkapitalisierung aller Protokolle auf der %@ Kette";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "Discovey";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Kategorien durchsuchen";
@@ -641,9 +644,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market_discovery.not_found" = "Keine Ergebnisse gefunden";
 
 "market_watchlist.empty.caption" = "Ihre Beobachtungsliste ist leer.";
-
-"market.search.title" = "Suche";
-"market.search.empty_text" = "Keine Ergebnisse gefunden";
 
 "market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Ergebnisse anzeigen";
