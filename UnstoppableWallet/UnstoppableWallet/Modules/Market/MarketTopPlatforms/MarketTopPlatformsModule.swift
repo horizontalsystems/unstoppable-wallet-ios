@@ -33,9 +33,11 @@ struct MarketTopPlatformsModule {
     }
 
     static var selectorValues: [HsTimePeriod] {
-        [HsTimePeriod.day1,
-         HsTimePeriod.week1,
-         HsTimePeriod.month1]
+        [
+            HsTimePeriod.week1,
+            HsTimePeriod.month1,
+            HsTimePeriod.month3,
+        ]
     }
 }
 
