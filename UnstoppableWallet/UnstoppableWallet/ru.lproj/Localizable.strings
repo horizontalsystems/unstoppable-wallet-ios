@@ -600,7 +600,7 @@
 "market.top.section.header.see_all" = "Посмотреть всё";
 "market.top.section.header.top_gainers" = "Взлеты";
 "market.top.section.header.top_losers" = "Падения";
-"market.top.section.header.top_sectors" = "Топ секторы";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объем";
 "market.top.market_cap.title" = "Цена";
@@ -636,6 +636,9 @@
 "top_platform.title" = "%@ Экосистема";
 "top_platform.description" = "Капитализация рынка всех протоколов на блокчейне %@ ";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "Токены";
 "market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Обзор категорий";
@@ -643,9 +646,6 @@
 "market_discovery.not_found" = "Ничего не найдено";
 
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
-
-"market.search.title" = "Поиск";
-"market.search.empty_text" = "Ничего не найдено";
 
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать результаты";
