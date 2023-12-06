@@ -1,7 +1,7 @@
 import MarketKit
 import SwiftUI
 
-struct SendModuleNew {
+enum SendModuleNew {
     static func view(adapter _: ISendTonAdapter) -> some View {
         let token = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ton, tokenType: .native))
 

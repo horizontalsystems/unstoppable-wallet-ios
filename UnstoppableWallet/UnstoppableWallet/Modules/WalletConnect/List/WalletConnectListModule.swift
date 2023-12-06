@@ -1,6 +1,6 @@
 import UIKit
 
-class WalletConnectListModule {
+enum WalletConnectListModule {
     static func viewController() -> UIViewController {
         let service = WalletConnectListService(
             sessionManager: App.shared.walletConnectSessionManager,

@@ -2,7 +2,7 @@ import Foundation
 import ThemeKit
 import UIKit
 
-struct ActivateSubscriptionModule {
+enum ActivateSubscriptionModule {
     static func viewController() -> UIViewController {
         let service = ActivateSubscriptionService(
             marketKit: App.shared.marketKit,

@@ -2,7 +2,7 @@ import MarketKit
 import RxSwift
 import UIKit
 
-struct TransactionsModule {
+enum TransactionsModule {
     static func viewController() -> UIViewController {
         let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)

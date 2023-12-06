@@ -2,7 +2,7 @@ import SwiftUI
 import ThemeKit
 import UIKit
 
-struct InfoModule {
+enum InfoModule {
     static func viewController(viewItems: [ViewItem]) -> UIViewController {
         let viewController = InfoViewController(viewItems: viewItems)
         return ThemeNavigationController(rootViewController: viewController)

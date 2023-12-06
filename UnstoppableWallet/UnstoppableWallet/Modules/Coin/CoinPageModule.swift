@@ -3,7 +3,7 @@ import SwiftUI
 import ThemeKit
 import UIKit
 
-struct CoinPageModule {
+enum CoinPageModule {
     static func view(fullCoin: FullCoin, apiTag: String) -> some View {
         let viewModel = CoinPageViewModelNew(fullCoin: fullCoin, favoritesManager: App.shared.favoritesManager)
 

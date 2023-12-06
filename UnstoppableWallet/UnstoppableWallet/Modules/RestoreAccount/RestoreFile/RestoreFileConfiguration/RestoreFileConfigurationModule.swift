@@ -1,6 +1,6 @@
 import UIKit
 
-class RestoreFileConfigurationModule {
+enum RestoreFileConfigurationModule {
     static func viewController(rawBackup: RawFullBackup, returnViewController: UIViewController?) -> UIViewController {
         let viewModel = RestoreFileConfigurationViewModel(
             cloudBackupManager: App.shared.cloudBackupManager,

@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct RestoreModule {
+enum RestoreModule {
     static func viewController(advanced: Bool = false, sourceViewController _: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
         let mnemonicService = RestoreMnemonicService(languageManager: LanguageManager.shared)
         let mnemonicViewModel = RestoreMnemonicViewModel(service: mnemonicService)

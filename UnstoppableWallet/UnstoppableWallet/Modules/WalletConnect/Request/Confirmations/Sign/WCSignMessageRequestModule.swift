@@ -1,7 +1,7 @@
 import EvmKit
 import UIKit
 
-struct WCSignMessageRequestModule {
+enum WCSignMessageRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount,
               let evmWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account),

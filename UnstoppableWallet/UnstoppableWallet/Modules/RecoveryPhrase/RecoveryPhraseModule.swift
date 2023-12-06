@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct RecoveryPhraseModule {
+enum RecoveryPhraseModule {
     static func viewController(account: Account) -> UIViewController? {
         guard let service = RecoveryPhraseService(account: account) else {
             return nil

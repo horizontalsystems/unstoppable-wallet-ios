@@ -1,6 +1,6 @@
 import MarketKit
 
-class ChartIntervalConverter {
+enum ChartIntervalConverter {
     private static let day = 24
     private static let month = 24 * 30
 

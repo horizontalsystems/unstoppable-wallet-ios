@@ -1,7 +1,7 @@
 import ComponentKit
 import UIKit
 
-struct CexDepositModule {
+enum CexDepositModule {
     static func viewController(cexAsset: CexAsset) -> UIViewController? {
         if cexAsset.depositNetworks.isEmpty {
             return viewController(cexAsset: cexAsset, network: nil)

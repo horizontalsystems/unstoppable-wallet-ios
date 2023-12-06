@@ -1,6 +1,6 @@
 import AVFoundation
 
-class PermissionsHelper {
+enum PermissionsHelper {
     static func performWithCameraPermission(onComplete: @escaping (Bool) -> Void) {
         if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) == .authorized {
             onComplete(true)

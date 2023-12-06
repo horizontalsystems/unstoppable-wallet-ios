@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct MarketTopPlatformsModule {
+enum MarketTopPlatformsModule {
     static func viewController(timePeriod: HsTimePeriod) -> UIViewController {
         let service = MarketTopPlatformsService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, appManager: App.shared.appManager, timePeriod: timePeriod)
 

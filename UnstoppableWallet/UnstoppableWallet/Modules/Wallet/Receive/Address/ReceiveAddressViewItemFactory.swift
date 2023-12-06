@@ -5,8 +5,8 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
 
     func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem {
         let description = ReceiveAddressModule.HighlightedDescription(
-                text: "deposit.warning".localized,
-                style: .yellow
+            text: "deposit.warning".localized,
+            style: .yellow
         )
 
         var networkName = ""

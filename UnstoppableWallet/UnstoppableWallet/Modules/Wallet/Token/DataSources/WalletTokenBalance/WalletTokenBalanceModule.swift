@@ -1,6 +1,6 @@
 import Foundation
 
-struct WalletTokenBalanceModule {
+enum WalletTokenBalanceModule {
     static func dataSource(element: WalletModule.Element) -> WalletTokenBalanceDataSource? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil

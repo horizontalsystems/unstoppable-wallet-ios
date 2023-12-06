@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct WalletConnectPairingModule {
+enum WalletConnectPairingModule {
     static func viewController() -> UIViewController {
         let service = WalletConnectPairingService(sessionManager: App.shared.walletConnectSessionManager)
 

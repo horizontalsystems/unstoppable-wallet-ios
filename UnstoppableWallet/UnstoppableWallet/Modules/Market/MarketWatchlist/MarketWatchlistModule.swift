@@ -1,6 +1,6 @@
 import UIKit
 
-struct MarketWatchlistModule {
+enum MarketWatchlistModule {
     static func viewController() -> MarketWatchlistViewController {
         let service = MarketWatchlistService(
             marketKit: App.shared.marketKit,

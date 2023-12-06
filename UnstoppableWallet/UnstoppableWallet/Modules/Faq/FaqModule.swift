@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-struct FaqModule {
+enum FaqModule {
     static func viewController() -> UIViewController {
         let repository = FaqRepository(
             networkManager: App.shared.networkManager,

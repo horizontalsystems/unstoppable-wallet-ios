@@ -5,7 +5,7 @@ import UIKit
 import WalletConnectSign
 import WalletConnectUtils
 
-struct WalletConnectMainModule {
+enum WalletConnectMainModule {
     static func viewController(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil

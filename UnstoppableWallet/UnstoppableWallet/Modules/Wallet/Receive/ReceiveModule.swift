@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct ReceiveModule {
+enum ReceiveModule {
     static func viewController() -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil

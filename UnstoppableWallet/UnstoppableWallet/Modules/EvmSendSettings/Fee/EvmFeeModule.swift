@@ -5,7 +5,7 @@ import RxSwift
 import ThemeKit
 import UIKit
 
-struct EvmFeeModule {
+enum EvmFeeModule {
     private static let surchargePercent: Double = 10
 
     static func surcharged(gasLimit: Int) -> Int {

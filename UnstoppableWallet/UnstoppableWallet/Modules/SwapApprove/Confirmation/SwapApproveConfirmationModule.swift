@@ -4,7 +4,7 @@ import HsExtensions
 import ThemeKit
 import UIKit
 
-struct SwapApproveConfirmationModule {
+enum SwapApproveConfirmationModule {
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex, revokeAllowance: Bool = false, delegate: ISwapApproveDelegate?) -> UIViewController? {
         guard let evmKitWrapper = App.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil

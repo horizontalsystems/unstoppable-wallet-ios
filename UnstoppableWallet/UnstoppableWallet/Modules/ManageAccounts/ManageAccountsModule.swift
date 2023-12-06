@@ -1,6 +1,6 @@
 import UIKit
 
-struct ManageAccountsModule {
+enum ManageAccountsModule {
     static func viewController(mode: Mode, createAccountListener: ICreateAccountListener? = nil) -> UIViewController {
         let service = ManageAccountsService(accountManager: App.shared.accountManager, cloudBackupManager: App.shared.cloudBackupManager)
         let viewModel = ManageAccountsViewModel(service: service, mode: mode)

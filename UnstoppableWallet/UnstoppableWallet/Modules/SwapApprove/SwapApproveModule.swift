@@ -4,7 +4,7 @@ import HsExtensions
 import ThemeKit
 import UIKit
 
-struct SwapApproveModule {
+enum SwapApproveModule {
     static func instance(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
         guard let eip20Adapter = App.shared.adapterManager.adapter(for: data.token) as? Eip20Adapter else {
             return nil

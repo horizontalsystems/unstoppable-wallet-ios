@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-struct MarkdownModule {
+enum MarkdownModule {
     static func viewController(url: URL, handleRelativeUrl: Bool = true) -> UIViewController {
         let provider = MarkdownPlainContentProvider(url: url, networkManager: App.shared.networkManager)
         let service = MarkdownService(provider: provider)

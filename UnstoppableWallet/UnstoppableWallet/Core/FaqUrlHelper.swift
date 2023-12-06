@@ -1,6 +1,6 @@
 import Foundation
 
-class FaqUrlHelper {
+enum FaqUrlHelper {
     static var privateKeysUrl: URL? {
         URL(string: "faq/en/management/what-are-private-keys-mnemonic-phrase-wallet-seed.md", relativeTo: AppConfig.faqIndexUrl)
     }

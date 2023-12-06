@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct ManageWalletsModule {
+enum ManageWalletsModule {
     static func viewController() -> UIViewController? {
         let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module()
 

@@ -1,6 +1,6 @@
 import UIKit
 
-struct SwitchAccountModule {
+enum SwitchAccountModule {
     static func viewController() -> UIViewController {
         let service = SwitchAccountService(accountManager: App.shared.accountManager)
         let viewModel = SwitchAccountViewModel(service: service)

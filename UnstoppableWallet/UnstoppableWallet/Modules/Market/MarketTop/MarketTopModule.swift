@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct MarketTopModule {
+enum MarketTopModule {
     static func viewController(marketTop: MarketModule.MarketTop = .top100, sortingField: MarketModule.SortingField = .highestCap, marketField: MarketModule.MarketField = .price) -> UIViewController {
         let service = MarketTopService(
             marketKit: App.shared.marketKit,

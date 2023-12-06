@@ -3,7 +3,7 @@ import RxSwift
 import ThemeKit
 import UIKit
 
-struct WalletModule {
+enum WalletModule {
     static func viewController() -> UIViewController {
         let coinPriceService = WalletCoinPriceService(
             tag: "wallet",

@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct NftModule {
+enum NftModule {
     static func viewController() -> UIViewController? {
         let coinPriceService = WalletCoinPriceService(
             tag: "nft",

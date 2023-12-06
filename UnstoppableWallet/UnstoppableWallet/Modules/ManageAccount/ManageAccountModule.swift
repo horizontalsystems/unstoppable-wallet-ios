@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct ManageAccountModule {
+enum ManageAccountModule {
     static func viewController(accountId: String, sourceViewController: ManageAccountsViewController) -> UIViewController? {
         guard let service = ManageAccountService(
             accountId: accountId,

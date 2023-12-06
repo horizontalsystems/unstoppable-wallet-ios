@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-struct WidgetConfig {
+enum WidgetConfig {
     static var appVersion: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
     }

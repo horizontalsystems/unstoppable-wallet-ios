@@ -6,7 +6,7 @@ import MarketKit
 import RxCocoa
 import RxSwift
 
-class StorageMigrator {
+enum StorageMigrator {
     static func migrate(dbPool: DatabasePool) throws {
         var migrator = DatabaseMigrator()
 

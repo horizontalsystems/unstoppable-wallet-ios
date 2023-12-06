@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AboutModule {
+enum AboutModule {
     static func view() -> some View {
         let releaseNotesService = ReleaseNotesService(appVersionManager: App.shared.appVersionManager)
 

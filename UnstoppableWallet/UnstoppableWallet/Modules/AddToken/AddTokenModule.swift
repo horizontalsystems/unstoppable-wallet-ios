@@ -4,7 +4,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct AddTokenModule {
+enum AddTokenModule {
     static func viewController() -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil

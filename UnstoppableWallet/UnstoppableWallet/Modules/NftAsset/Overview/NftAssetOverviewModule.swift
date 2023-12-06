@@ -1,6 +1,6 @@
 import UIKit
 
-struct NftAssetOverviewModule {
+enum NftAssetOverviewModule {
     static func viewController(providerCollectionUid: String, nftUid: NftUid) -> NftAssetOverviewViewController {
         let coinPriceService = WalletCoinPriceService(
             tag: "nft-asset-overview",

@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-class SendTronModule {
+enum SendTronModule {
     static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendTronAdapter) -> UIViewController {
         let tronAddressParserItem = TronAddressParser()
         let addressParserChain = AddressParserChain().append(handler: tronAddressParserItem)

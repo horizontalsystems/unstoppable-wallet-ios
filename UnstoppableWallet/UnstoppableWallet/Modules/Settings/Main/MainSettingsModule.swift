@@ -1,6 +1,6 @@
 import UIKit
 
-struct MainSettingsModule {
+enum MainSettingsModule {
     static func viewController() -> UIViewController {
         let service = MainSettingsService(
             backupManager: App.shared.backupManager,

@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-class ContactBookAddressModule {
+enum ContactBookAddressModule {
     static func viewController(contactUid: String?, existAddresses: [ContactAddress], currentAddress: ContactAddress? = nil, onSaveAddress: @escaping (ContactAddress?) -> Void) -> UIViewController? {
         let service: ContactBookAddressService
         let addressService: AddressService

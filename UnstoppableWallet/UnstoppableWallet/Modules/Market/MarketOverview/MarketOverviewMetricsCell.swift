@@ -55,7 +55,7 @@ class MarketOverviewMetricsCell: UITableViewCell {
             leadingView,
             firstStack,
             secondStack,
-            trailingView
+            trailingView,
         ])
 
         scrollView.addSubview(stackView)

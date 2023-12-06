@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SecuritySettingsModule {
+enum SecuritySettingsModule {
     static func view() -> some View {
         let viewModel = SecuritySettingsViewModel(
             passcodeManager: App.shared.passcodeManager,

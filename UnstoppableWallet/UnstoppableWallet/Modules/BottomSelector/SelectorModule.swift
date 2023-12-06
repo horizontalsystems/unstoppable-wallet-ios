@@ -3,7 +3,7 @@ import SectionsTableView
 import ThemeKit
 import UIKit
 
-struct SelectorModule {
+enum SelectorModule {
     static func singleSelectorViewController(title: String, viewItems: [ViewItem], onSelect: @escaping (Int) -> Void) -> UIViewController {
         let viewController = SingleSelectorViewController(title: title, viewItems: viewItems, onSelect: onSelect)
         return ThemeNavigationController(rootViewController: viewController)

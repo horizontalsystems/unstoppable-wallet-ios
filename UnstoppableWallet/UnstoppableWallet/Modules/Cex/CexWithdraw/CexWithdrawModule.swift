@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct CexWithdrawModule {
+enum CexWithdrawModule {
     static func viewController(cexAsset: CexAsset) -> UIViewController? {
         let networks = cexAsset.withdrawNetworks
 

@@ -2,7 +2,7 @@ import EvmKit
 import MarketKit
 import UIKit
 
-struct WCSendEthereumTransactionRequestModule {
+enum WCSendEthereumTransactionRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {
         guard let payload = request.payload as? WCEthereumTransactionPayload,
               let account = App.shared.accountManager.activeAccount,
