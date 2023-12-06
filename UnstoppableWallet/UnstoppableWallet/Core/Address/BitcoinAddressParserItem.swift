@@ -19,10 +19,13 @@ class BitcoinAddressParserItem {
             switch parserType {
             case let .adapter(adapter):
                 try adapter.validate(address: address, pluginData: [:]) // validate
-                return Single.just(Address(raw: address, domain: nil))
+                return Single.just(Address(raw: address, domain: nil, blockchainType: blockchainType))
             case let .converter(converter):
-                let _ = try converter.convert(address: address)
-                return Single.just(Address(raw: address, domain: nil))
+                let btcAddress = try converter.convert(address: address)
+                guard let mnemonicDerivation = btcAddress.scriptType.mnemonicDerivation else {
+                    throw ParseError.couldNotInfereDerivation
+                }
+                return Single.just(BitcoinAddress(raw: address, domain: nil, blockchainType: blockchainType, mnemonicDerivation: mnemonicDerivation))
             }
         } catch {
             return Single.error(error)
@@ -46,5 +49,9 @@ extension BitcoinAddressParserItem {
     enum ParserType {
         case adapter(ISendBitcoinAdapter)
         case converter(IAddressConverter)
+    }
+
+    enum ParseError: Error {
+        case couldNotInfereDerivation
     }
 }

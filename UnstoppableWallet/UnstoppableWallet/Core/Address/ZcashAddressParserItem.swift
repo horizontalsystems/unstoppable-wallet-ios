@@ -14,10 +14,10 @@ class ZcashAddressParserItem {
             switch parserType {
             case let .adapter(adapter):
                 _ = try adapter.validate(address: address, checkSendToSelf: checkSendToSelf)
-                return Single.just(Address(raw: address, domain: nil))
+                return Single.just(Address(raw: address, domain: nil, blockchainType: blockchainType))
             case let .validator(validator):
                 try validator.validate(address: address)
-                return Single.just(Address(raw: address, domain: nil))
+                return Single.just(Address(raw: address, domain: nil, blockchainType: blockchainType))
             }
 
         } catch {

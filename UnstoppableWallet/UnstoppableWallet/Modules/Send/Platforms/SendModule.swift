@@ -353,7 +353,7 @@ enum SendModule {
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
-        let parserItem = TonAddressParserItem(adapter: adapter)
+        let parserItem = TonAddressParserItem()
         let addressParserChain = AddressParserChain()
             .append(handler: parserItem)
 

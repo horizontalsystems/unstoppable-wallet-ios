@@ -4,7 +4,7 @@ import RxRelay
 import RxSwift
 
 class BtcBlockchainManager {
-    private let blockchainTypes: [BlockchainType] = [
+    static let blockchainTypes: [BlockchainType] = [
         .bitcoin,
         .bitcoinCash,
         .ecash,
@@ -25,7 +25,7 @@ class BtcBlockchainManager {
         self.storage = storage
 
         do {
-            allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map(\.uid))
+            allBlockchains = try marketKit.blockchains(uids: Self.blockchainTypes.map(\.uid))
         } catch {
             allBlockchains = []
         }
@@ -82,7 +82,7 @@ extension BtcBlockchainManager {
 
 extension BtcBlockchainManager {
     var backup: [BtcRestoreModeBackup] {
-        blockchainTypes.map {
+        Self.blockchainTypes.map {
             BtcRestoreModeBackup(
                 blockchainTypeUid: $0.uid,
                 restoreMode: restoreMode(blockchainType: $0).rawValue,

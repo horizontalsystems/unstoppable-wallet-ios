@@ -108,3 +108,45 @@ extension AddressUriParser {
         case uri(AddressUri)
     }
 }
+
+extension BlockchainType {
+    var uriScheme: String? {
+        if EvmBlockchainManager.blockchainTypes.contains(self) {
+            return "ethereum"
+        }
+
+        switch self {
+        case .bitcoin: return "bitcoin"
+        case .bitcoinCash: return "bitcoincash"
+        case .ecash: return "ecash"
+        case .litecoin: return "litecoin"
+        case .dash: return "dash"
+        case .zcash: return "zcash"
+        case .ethereum: return "ethereum"
+        case .binanceChain: return "binancecoin"
+        case .tron: return "tron"
+        case .ton: return "toncoin"
+        default: return nil
+        }
+    }
+
+    var removeScheme: Bool {
+        if EvmBlockchainManager.blockchainTypes.contains(self) {
+            return true
+        }
+
+        switch self {
+        case .bitcoinCash: return false
+        case .ecash: return false
+        case .bitcoin: return true
+        case .litecoin: return true
+        case .dash: return true
+        case .zcash: return true
+        case .ethereum: return true
+        case .binanceChain: return true
+        case .tron: return true
+        case .ton: return true
+        default: return false
+        }
+    }
+}

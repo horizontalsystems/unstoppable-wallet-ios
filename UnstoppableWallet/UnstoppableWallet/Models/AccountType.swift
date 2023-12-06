@@ -13,6 +13,7 @@ enum AccountType {
     case tronAddress(address: TronKit.Address)
     case tonAddress(address: String)
     case hdExtendedKey(key: HDExtendedKey)
+    case btcAddress(address: String, blockchainType: BlockchainType, mnemonicDerivation: MnemonicDerivation)
     case cex(cexAccount: CexAccount)
 
     var mnemonicSeed: Data? {
@@ -49,6 +50,8 @@ enum AccountType {
             privateData = address.hs.data
         case let .hdExtendedKey(key):
             privateData = key.serialized
+        case let .btcAddress(address, blockchainType, mnemonicDerivation):
+            privateData = "\(address)&\(blockchainType.uid)|\(mnemonicDerivation.rawValue)".data(using: .utf8) ?? Data()
         case let .cex(cexAccount):
             privateData = cexAccount.uniqueId.data(using: .utf8) ?? Data() // always non-null
         }
@@ -122,6 +125,8 @@ enum AccountType {
             case (.ton, .native): return true
             default: return false
             }
+        case let .btcAddress(_, blockchainType, _):
+            return token.blockchainType == blockchainType
         default:
             return false
         }
@@ -182,6 +187,8 @@ enum AccountType {
                 default: return ""
                 }
             }
+        case .btcAddress:
+            return "BTC Address"
         case let .cex(cexAccount):
             return cexAccount.cex.title
         }
@@ -194,6 +201,8 @@ enum AccountType {
         case let .tronAddress(address):
             return address.base58.shortened
         case let .tonAddress(address):
+            return address.shortened
+        case let .btcAddress(address, _, _):
             return address.shortened
         default: return description
         }
@@ -264,6 +273,14 @@ extension AccountType {
             } catch {
                 return nil
             }
+        case .btcAddress:
+            let (address, details) = split(string, separator: "&")
+            let (mnemonicDerivationValue, blockchainTypeUid) = split(details, separator: "|")
+            guard let mnemonicDerivation = MnemonicDerivation(rawValue: mnemonicDerivationValue) else {
+                return nil
+            }
+
+            return AccountType.btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), mnemonicDerivation: mnemonicDerivation)
         case .evmAddress:
             return (try? EvmKit.Address(hex: string)).map { AccountType.evmAddress(address: $0) }
         case .tronAddress:
@@ -286,6 +303,7 @@ extension AccountType {
         case tronAddress = "tron_address"
         case tonAddress = "ton_address"
         case hdExtendedKey = "hd_extended_key"
+        case btcAddress = "btc_address_key"
         case cex
 
         init(_ type: AccountType) {
@@ -296,14 +314,8 @@ extension AccountType {
             case .tronAddress: self = .tronAddress
             case .tonAddress: self = .tonAddress
             case .hdExtendedKey: self = .hdExtendedKey
+            case .btcAddress: self = .btcAddress
             case .cex: self = .cex
-            }
-        }
-
-        var isWatch: Bool {
-            switch self {
-            case .evmAddress, .tronAddress, .tonAddress: return true
-            default: return false
             }
         }
     }
@@ -324,6 +336,8 @@ extension AccountType: Hashable {
             return lhsAddress == rhsAddress
         case let (.hdExtendedKey(lhsKey), .hdExtendedKey(rhsKey)):
             return lhsKey == rhsKey
+        case let (.btcAddress(lhsAddress, lhsBlockchainType, lhsMnemonicDerivation), .btcAddress(rhsAddress, rhsBlockchainType, rhsMnemonicDerivation)):
+            return lhsAddress == rhsAddress && lhsBlockchainType == rhsBlockchainType && lhsMnemonicDerivation == rhsMnemonicDerivation
         case let (.cex(lhsCexAccount), .cex(rhsCexAccount)):
             return lhsCexAccount == rhsCexAccount
         default: return false
@@ -352,6 +366,11 @@ extension AccountType: Hashable {
         case let .hdExtendedKey(key):
             hasher.combine("hdExtendedKey")
             hasher.combine(key)
+        case let .btcAddress(address, blockchainType, mnemonicDerivation):
+            hasher.combine("btcAddress")
+            hasher.combine(address)
+            hasher.combine(blockchainType)
+            hasher.combine(mnemonicDerivation)
         case let .cex(cexAccount):
             hasher.combine("cex")
             hasher.combine(cexAccount)

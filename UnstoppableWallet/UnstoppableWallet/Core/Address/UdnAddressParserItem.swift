@@ -38,7 +38,7 @@ class UdnAddressParserItem {
         rawAddressParserItem
             .handle(address: address.raw)
             .map { rawAddress in
-                Address(raw: rawAddress.raw, domain: address.domain)
+                Address(raw: rawAddress.raw, domain: address.domain, blockchainType: address.blockchainType)
             }
     }
 }
@@ -57,10 +57,10 @@ extension UdnAddressParserItem: IAddressParserItem {
         }
 
         return resolve(singles: singles)
-            .flatMap { [weak self] result in
+            .flatMap { [weak self, blockchainType] result in
                 switch result {
                 case let .success(resolvedAddress):
-                    let address = Address(raw: resolvedAddress, domain: address)
+                    let address = Address(raw: resolvedAddress, domain: address, blockchainType: blockchainType)
                     return self?.rawAddressHandle(address: address) ?? Single.just(address)
                 case let .failure(error):
                     return Single.error(error)
