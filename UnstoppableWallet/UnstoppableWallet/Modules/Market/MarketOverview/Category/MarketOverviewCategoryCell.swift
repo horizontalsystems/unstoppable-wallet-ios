@@ -59,6 +59,7 @@ class MarketOverviewCategoryCell: UITableViewCell {
     private func build() {
         for view in stackView.arrangedSubviews {
             stackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
         }
 
         stackView.addArrangedSubview(leadingView)

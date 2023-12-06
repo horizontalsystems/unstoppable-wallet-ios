@@ -2,6 +2,7 @@ import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import UIKit
 
 class MarketOverviewCategoryViewModel {
     private let service: MarketOverviewCategoryService
@@ -22,7 +23,19 @@ class MarketOverviewCategoryViewModel {
     }
 
     private func viewItem(category: CoinCategory) -> ViewItem {
-        let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, timePeriod: .day1, currency: service.currency)
+        var marketCap: String?
+        if let amount = category.marketCap {
+            marketCap = ValueFormatter.instance.formatShort(currency: service.currency, value: amount)
+        } else {
+            marketCap = "----"
+        }
+
+        let diff = category.diff(timePeriod: .day1)
+        let diffString: String? = diff.flatMap {
+            ValueFormatter.instance.format(percentValue: $0)
+        }
+
+        let diffType: DiffType = (diff?.isSignMinus ?? true) ? .down : .up
 
         return ViewItem(
             uid: category.uid,
@@ -52,6 +65,18 @@ extension MarketOverviewCategoryViewModel {
         let name: String
         let marketCap: String?
         let diff: String?
-        let diffType: MarketDiscoveryModule.DiffType
+        let diffType: DiffType
+    }
+
+    enum DiffType {
+        case down
+        case up
+
+        var textColor: UIColor {
+            switch self {
+            case .up: return .themeRemus
+            case .down: return .themeLucian
+            }
+        }
     }
 }
