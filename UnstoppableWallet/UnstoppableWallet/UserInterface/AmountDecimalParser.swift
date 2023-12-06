@@ -7,9 +7,7 @@ struct AmountDecimalParser {
         formatter.usesGroupingSeparator = false
         return formatter
     }()
-}
 
-extension AmountDecimalParser {
     func parseAnyDecimal(from string: String?) -> Decimal? {
         if let string {
             for localeIdentifier in Locale.availableIdentifiers {
