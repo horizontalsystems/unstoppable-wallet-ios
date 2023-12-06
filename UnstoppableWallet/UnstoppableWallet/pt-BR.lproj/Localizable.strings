@@ -598,7 +598,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.top.section.header.see_all" = "Ver tudo";
 "market.top.section.header.top_gainers" = "Maiores Altas";
 "market.top.section.header.top_losers" = "Maiores Quedas";
-"market.top.section.header.top_sectors" = "Principais Setores";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "Notícias";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "Cap. de mercado";
@@ -634,6 +634,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "top_platform.title" = "%@ Ecossistema";
 "top_platform.description" = "Valor de mercado de todos procolos na cadeia %@";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "Descobrir";
 "market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Navegar nas categorias";
@@ -641,9 +644,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "market_discovery.not_found" = "Nenhum resultado encontrado";
 
 "market_watchlist.empty.caption" = "Seu catálogo está vazio.";
-
-"market.search.title" = "Buscar";
-"market.search.empty_text" = "Nenhum resultado encontrado";
 
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
