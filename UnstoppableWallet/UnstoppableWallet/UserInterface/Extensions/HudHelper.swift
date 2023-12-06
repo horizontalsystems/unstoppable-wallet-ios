@@ -172,7 +172,7 @@ extension HudHelper {
             isLoading: banner.isLoading
         )
 
-        let statusBarStyle = UIApplication.shared.windows.filter(\.isKeyWindow).first?.windowScene?.statusBarManager?.statusBarStyle
+        let statusBarStyle = UIWindow.keyWindow?.windowScene?.statusBarManager?.statusBarStyle
         HUD.instance.show(config: config, viewItem: viewItem, statusBarStyle: statusBarStyle, forced: banner.forced)
     }
 }

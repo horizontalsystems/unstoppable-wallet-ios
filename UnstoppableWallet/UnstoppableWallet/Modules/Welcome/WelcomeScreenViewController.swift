@@ -211,7 +211,7 @@ class WelcomeScreenViewController: ThemeViewController {
         if pageControl.currentPage < pageControl.numberOfPages - 1 {
             scrollView.setContentOffset(CGPoint(x: scrollView.width * CGFloat(pageControl.currentPage + 1), y: 0), animated: true)
         } else {
-            UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
+            UIWindow.keyWindow?.set(newRootController: MainModule.instance())
         }
     }
 }
