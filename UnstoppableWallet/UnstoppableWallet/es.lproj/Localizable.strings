@@ -598,7 +598,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.top.section.header.see_all" = "Ver Todos";
 "market.top.section.header.top_gainers" = "Máximos Ganadores";
 "market.top.section.header.top_losers" = "Máximos Perdedores";
-"market.top.section.header.top_sectors" = "Mejores Sectores";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "Noticias";
 "market.top.volume.title" = "Volumen";
 "market.top.market_cap.title" = "Capitalización de Mercado";
@@ -634,6 +634,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "top_platform.title" = "Ecosistema %@";
 "top_platform.description" = "Límite de mercado de todos los protocolos en la cadena %@";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "Descubrimiento";
 "market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Navegar Categorías";
@@ -641,9 +644,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market_discovery.not_found" = "No se han encontrado resultados";
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
-
-"market.search.title" = "Buscar";
-"market.search.empty_text" = "No se han encontrado resultados";
 
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
