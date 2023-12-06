@@ -1670,15 +1670,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Watch Address
 
 "watch_address.title" = "Wallet ansehen";
-"watch_address.watch" = "Weiter";
+"watch_address.watch" = "Watch";
 "watch_address.address" = "Adresse";
-"watch_address.by" = "Von";
-"watch_address.watch_by" = "Beobachten von";
-"watch_address.evm_address" = "EVM-Adresse";
-"watch_address.tron_address" = "TRON Adresse";
-"watch_address.public_key" = "Account xPubKey";
-"watch_address.public_key.placeholder" = "Account Extended Public Key eingeben";
-"watch_address.public_key.invalid_key" = "Ungültiger Schlüssel";
+"watch_address.error.not_supported" = "Address format is not supported";
+"watch_address.error.non_public_key" = "Watching by private key is not allowed";
+"watch_address.error.not_supported_derived_type" = "Derived type is not supported";
 "watch_address.choose_blockchain" = "Blockchain auswählen";
 "watch_address.choose_coin" = "Coins auswählen";
 
