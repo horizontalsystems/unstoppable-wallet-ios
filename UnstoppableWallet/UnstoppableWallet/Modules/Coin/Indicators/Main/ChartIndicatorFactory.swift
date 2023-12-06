@@ -2,7 +2,7 @@ import Chart
 import UIExtensions
 import UIKit
 
-class ChartIndicatorFactory {
+enum ChartIndicatorFactory {
     static let precalculatedColor = [UIColor.themeYellowD]
     static let maColors = [UIColor(hex: 0xF54900), UIColor(hex: 0xBF5AF2), UIColor(hex: 0x09C1AB)]
     static let maPeriods = [9, 25, 50]

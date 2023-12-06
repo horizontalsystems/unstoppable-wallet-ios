@@ -2,7 +2,7 @@ import Chart
 import ThemeKit
 import UIKit
 
-struct MarketGlobalMetricModule {
+enum MarketGlobalMetricModule {
     static func viewController(type: MarketGlobalModule.MetricsType) -> UIViewController {
         let viewController: UIViewController
 

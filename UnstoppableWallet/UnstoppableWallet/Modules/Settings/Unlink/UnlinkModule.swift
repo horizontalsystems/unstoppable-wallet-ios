@@ -1,6 +1,6 @@
 import UIKit
 
-struct UnlinkModule {
+enum UnlinkModule {
     static func viewController(account: Account) -> UIViewController {
         let service = UnlinkService(account: account, accountManager: App.shared.accountManager)
         let viewModel = UnlinkViewModel(service: service)

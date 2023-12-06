@@ -1,6 +1,6 @@
 import MarketKit
 
-struct CoinTweetsModule {
+enum CoinTweetsModule {
     static func viewController(fullCoin: FullCoin) -> CoinTweetsViewController {
         let tweetsProvider = TweetsProvider(
             networkManager: App.shared.networkManager,

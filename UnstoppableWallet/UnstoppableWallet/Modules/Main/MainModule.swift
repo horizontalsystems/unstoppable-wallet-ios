@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct MainModule {
+enum MainModule {
     enum Tab: Int {
         case market, balance, transactions, settings
     }

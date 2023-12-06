@@ -1,6 +1,6 @@
 import UIKit
 
-class WalletConnectAppShowModule {
+enum WalletConnectAppShowModule {
     static func handler(parentViewController: UIViewController? = nil) -> IEventHandler {
         let walletConnectWorkerService = WalletConnectAppShowService(
             walletConnectManager: App.shared.walletConnectSessionManager,

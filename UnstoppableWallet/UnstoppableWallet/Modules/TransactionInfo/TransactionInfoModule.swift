@@ -1,7 +1,7 @@
 import MarketKit
 import UIKit
 
-struct TransactionInfoModule {
+enum TransactionInfoModule {
     static func instance(transactionRecord: TransactionRecord) -> UIViewController? {
         guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
             return nil

@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-class ReceiveAddressModule {
+enum ReceiveAddressModule {
     static func view(wallet: Wallet) -> some View {
         let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()

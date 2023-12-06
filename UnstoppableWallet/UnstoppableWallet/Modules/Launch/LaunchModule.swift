@@ -1,6 +1,6 @@
 import UIKit
 
-class LaunchModule {
+enum LaunchModule {
     static func viewController() -> UIViewController {
         let service = LaunchService(
             accountManager: App.shared.accountManager,

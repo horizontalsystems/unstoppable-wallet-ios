@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-class SendNftModule {
+enum SendNftModule {
     private static func addressService(blockchainType: BlockchainType) -> AddressService {
         let evmAddressParserItem = EvmAddressParser()
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, blockchainType: blockchainType)

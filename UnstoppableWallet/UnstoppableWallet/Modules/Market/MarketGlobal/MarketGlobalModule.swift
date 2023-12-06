@@ -2,7 +2,7 @@ import Chart
 import RxSwift
 import UIKit
 
-struct MarketGlobalModule {
+enum MarketGlobalModule {
     static let dominance = "dominance"
 
     enum MetricsType {

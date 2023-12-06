@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct BackupModule {
+enum BackupModule {
     static func manualViewController(account: Account, onComplete: (() -> Void)? = nil) -> UIViewController? {
         guard let service = BackupService(account: account) else {
             return nil

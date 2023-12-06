@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-class ContactBookContactModule {
+enum ContactBookContactModule {
     static func viewController(mode: Mode, onUpdateContact: (() -> Void)? = nil) -> UIViewController? {
         let service: ContactBookContactService
 

@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct OneInchSettingsModule {
+enum OneInchSettingsModule {
     static func dataSource(tradeService: OneInchTradeService) -> ISwapSettingsDataSource? {
         guard let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
             return nil

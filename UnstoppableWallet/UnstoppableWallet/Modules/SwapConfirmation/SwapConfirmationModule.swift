@@ -3,7 +3,7 @@ import OneInchKit
 import ThemeKit
 import UIKit
 
-struct SwapConfirmationModule {
+enum SwapConfirmationModule {
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
         guard let evmKitWrapper = App.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil

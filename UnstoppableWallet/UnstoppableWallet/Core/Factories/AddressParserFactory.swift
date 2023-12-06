@@ -8,7 +8,7 @@ import LitecoinKit
 import MarketKit
 import ZcashLightClientKit
 
-class AddressParserFactory {
+enum AddressParserFactory {
     static let uriBlockchainTypes: [BlockchainType] = [
         .bitcoin,
         .bitcoinCash,

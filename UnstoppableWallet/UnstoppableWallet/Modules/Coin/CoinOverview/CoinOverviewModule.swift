@@ -2,7 +2,7 @@ import Chart
 import MarketKit
 import SwiftUI
 
-struct CoinOverviewModule {
+enum CoinOverviewModule {
     static func view(coinUid: String, apiTag: String) -> some View {
         let repository = ChartIndicatorsRepository(
             localStorage: App.shared.localStorage,

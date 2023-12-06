@@ -1,6 +1,6 @@
 import Foundation
 
-class SwapInputModule {
+enum SwapInputModule {
     static func cell(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService) -> SwapInputCell {
         let fromCoinCardService = SwapFromCoinCardService(service: service, tradeService: tradeService)
         let toCoinCardService = SwapToCoinCardService(service: service, tradeService: tradeService)

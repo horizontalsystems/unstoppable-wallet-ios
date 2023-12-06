@@ -3,7 +3,7 @@ import SwiftUI
 import ThemeKit
 import UIKit
 
-struct CoinAnalyticsModule {
+enum CoinAnalyticsModule {
     static func view(fullCoin: FullCoin, apiTag: String) -> some View {
         CoinAnalyticsView(fullCoin: fullCoin, apiTag: apiTag)
     }

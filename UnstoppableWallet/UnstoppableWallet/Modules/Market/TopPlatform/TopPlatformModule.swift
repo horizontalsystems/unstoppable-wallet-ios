@@ -3,7 +3,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct TopPlatformModule {
+enum TopPlatformModule {
     static func viewController(topPlatform: TopPlatform, apiTag: String) -> UIViewController {
         let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit, apiTag: apiTag)
         let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service)

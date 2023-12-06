@@ -1,6 +1,6 @@
 import UIKit
 
-struct BackupVerifyWordsModule {
+enum BackupVerifyWordsModule {
     static func viewController(account: Account, onComplete: (() -> Void)? = nil) -> UIViewController? {
         guard let service = BackupVerifyWordsService(account: account, accountManager: App.shared.accountManager, appManager: App.shared.appManager) else {
             return nil

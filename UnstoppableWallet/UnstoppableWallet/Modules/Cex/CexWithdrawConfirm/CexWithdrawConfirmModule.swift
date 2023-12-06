@@ -2,7 +2,7 @@ import ComponentKit
 import Foundation
 import UIKit
 
-struct CexWithdrawConfirmModule {
+enum CexWithdrawConfirmModule {
     static func viewController(sendData: CexWithdrawModule.SendData) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil

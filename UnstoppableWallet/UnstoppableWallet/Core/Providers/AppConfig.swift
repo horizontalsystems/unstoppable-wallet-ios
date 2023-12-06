@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import UIKit
 
-struct AppConfig {
+enum AppConfig {
     static let label = "io.horizontalsystems.unstoppable"
     static let backupSalt = "unstoppable"
 

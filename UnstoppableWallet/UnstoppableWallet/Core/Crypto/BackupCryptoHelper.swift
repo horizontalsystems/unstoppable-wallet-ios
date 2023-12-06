@@ -6,7 +6,7 @@ import HsCryptoKit
 import HsExtensions
 import Scrypt
 
-class BackupCryptoHelper {
+enum BackupCryptoHelper {
     static let defaultCypher = "aes-128-ctr"
     static let defaultKdf = "scrypt"
 

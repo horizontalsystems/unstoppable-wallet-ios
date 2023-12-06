@@ -3,7 +3,7 @@ import RxCocoa
 import RxSwift
 import WalletConnectUtils
 
-class WalletConnectUriHandler {
+enum WalletConnectUriHandler {
     public static func validate(uri: String) throws {
         _ = try App.shared.walletConnectSessionManager.service.validate(uri: uri)
     }

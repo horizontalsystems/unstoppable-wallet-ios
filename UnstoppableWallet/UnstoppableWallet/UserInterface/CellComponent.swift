@@ -4,7 +4,7 @@ import SectionsTableView
 import ThemeKit
 import UIKit
 
-struct CellComponent {
+enum CellComponent {
     static func actionTitleRow(tableView: SectionsTableView, rowInfo: RowInfo, iconName: String?, iconDimmed: Bool, title: String, value: String) -> RowProtocol {
         CellBuilderNew.row(
             rootElement: .hStack([

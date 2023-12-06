@@ -3,7 +3,7 @@ import MarketKit
 import RxSwift
 import UIKit
 
-class CoinProChartModule {
+enum CoinProChartModule {
     static func viewController(coin: Coin, type: ProChartType) -> UIViewController {
         let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, coin: coin, type: type)
 

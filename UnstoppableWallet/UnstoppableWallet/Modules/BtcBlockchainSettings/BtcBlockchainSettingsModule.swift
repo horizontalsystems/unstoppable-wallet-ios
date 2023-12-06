@@ -1,7 +1,7 @@
 import MarketKit
 import SwiftUI
 
-struct BtcBlockchainSettingsModule {
+enum BtcBlockchainSettingsModule {
     static func view(blockchain: Blockchain) -> some View {
         let service = BtcBlockchainSettingsService(blockchain: blockchain, btcBlockchainManager: App.shared.btcBlockchainManager)
         let viewModel = BtcBlockchainSettingsViewModel(service: service)

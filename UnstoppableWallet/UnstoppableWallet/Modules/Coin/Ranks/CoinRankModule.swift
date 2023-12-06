@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct CoinRankModule {
+enum CoinRankModule {
     static func viewController(type: RankType) -> UIViewController {
         let service = CoinRankService(
             type: type,

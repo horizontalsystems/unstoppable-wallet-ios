@@ -1,6 +1,6 @@
 import UIKit
 
-struct RestoreBinanceModule {
+enum RestoreBinanceModule {
     static func viewController(returnViewController: UIViewController?) -> UIViewController {
         let service = RestoreBinanceService(
             networkManager: App.shared.networkManager,

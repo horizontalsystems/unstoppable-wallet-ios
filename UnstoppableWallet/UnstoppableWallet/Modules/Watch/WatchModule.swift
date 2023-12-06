@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct WatchModule {
+enum WatchModule {
     static func viewController(sourceViewController: UIViewController? = nil) -> UIViewController {
         let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native))
 

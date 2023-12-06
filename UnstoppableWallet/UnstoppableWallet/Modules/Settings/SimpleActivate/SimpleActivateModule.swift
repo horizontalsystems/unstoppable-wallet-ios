@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SimpleActivateModule {
+enum SimpleActivateModule {
     static func bitcoinHodlingView() -> some View {
         let viewModel = SimpleActivateViewModel(localStorage: App.shared.localStorage)
 

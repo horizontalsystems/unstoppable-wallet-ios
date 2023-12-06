@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct UnlockModule {
+enum UnlockModule {
     static func appUnlockView(appStart: Bool) -> some View {
         let viewModel = AppUnlockViewModel(
             appStart: appStart,

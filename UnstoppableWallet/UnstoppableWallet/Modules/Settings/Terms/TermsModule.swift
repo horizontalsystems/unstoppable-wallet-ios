@@ -2,7 +2,7 @@ import SwiftUI
 import ThemeKit
 import UIKit
 
-struct TermsModule {
+enum TermsModule {
     static func viewController(sourceViewController: UIViewController? = nil, moduleToOpen: UIViewController? = nil) -> UIViewController {
         let service = TermsService(termsManager: App.shared.termsManager)
         let viewModel = TermsViewModel(service: service)

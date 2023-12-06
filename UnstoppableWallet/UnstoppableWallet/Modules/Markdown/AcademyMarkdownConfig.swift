@@ -3,7 +3,7 @@ import Foundation
 import ThemeKit
 import UIKit
 
-struct AcademyMarkdownConfig {
+enum AcademyMarkdownConfig {
     private static let colors = StaticColorCollection(
         heading1: .themeLeah,
         heading2: .themeJacob,

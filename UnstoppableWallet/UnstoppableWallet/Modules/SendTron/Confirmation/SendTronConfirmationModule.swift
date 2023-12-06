@@ -5,7 +5,7 @@ import ThemeKit
 import TronKit
 import UIKit
 
-struct SendTronConfirmationModule {
+enum SendTronConfirmationModule {
     static func viewController(tronKitWrapper: TronKitWrapper, contract: Contract) -> UIViewController? {
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: .tron,

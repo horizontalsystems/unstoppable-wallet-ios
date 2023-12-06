@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct SwapSelectProviderModule {
+enum SwapSelectProviderModule {
     static func viewController(dexManager: ISwapDexManager) -> UIViewController {
         let service = SwapSelectProviderService(dexManager: dexManager, evmBlockchainManager: App.shared.evmBlockchainManager)
 

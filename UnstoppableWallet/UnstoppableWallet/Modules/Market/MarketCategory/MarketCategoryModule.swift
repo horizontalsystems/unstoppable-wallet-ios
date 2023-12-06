@@ -3,7 +3,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct MarketCategoryModule {
+enum MarketCategoryModule {
     static func viewController(category: CoinCategory, apiTag: String) -> UIViewController {
         let service = MarketCategoryService(
             category: category,

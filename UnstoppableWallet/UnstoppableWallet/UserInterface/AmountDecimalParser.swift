@@ -1,6 +1,6 @@
 import Foundation
 
-class AmountDecimalParser {
+enum AmountDecimalParser {
     private static let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal

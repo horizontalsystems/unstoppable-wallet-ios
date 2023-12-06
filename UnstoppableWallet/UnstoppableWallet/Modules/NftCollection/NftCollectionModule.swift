@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct NftCollectionModule {
+enum NftCollectionModule {
     static func viewController(blockchainType: BlockchainType, providerCollectionUid: String) -> UIViewController? {
         let service = NftCollectionService()
         let viewModel = NftCollectionViewModel(service: service)

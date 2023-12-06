@@ -2,7 +2,7 @@ import MarketKit
 import RxSwift
 import UIKit
 
-struct RestoreCloudModule {
+enum RestoreCloudModule {
     static func viewController(returnViewController: UIViewController?) -> UIViewController {
         let service = RestoreCloudService(
             cloudAccountBackupManager: App.shared.cloudBackupManager,

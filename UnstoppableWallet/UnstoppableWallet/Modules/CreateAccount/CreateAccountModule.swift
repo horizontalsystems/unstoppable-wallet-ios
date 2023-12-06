@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct CreateAccountModule {
+enum CreateAccountModule {
     static func viewController(advanced: Bool = false, sourceViewController: UIViewController? = nil, listener: ICreateAccountListener? = nil) -> UIViewController {
         let service = CreateAccountService(
             accountFactory: App.shared.accountFactory,

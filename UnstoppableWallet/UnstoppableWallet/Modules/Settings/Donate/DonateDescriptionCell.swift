@@ -1,5 +1,5 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class DonateDescriptionCell: UITableViewCell {
     private static let horizontalPadding: CGFloat = .margin32
@@ -12,7 +12,7 @@ class DonateDescriptionCell: UITableViewCell {
     let getAddressButton = PrimaryButton()
     let descriptionLabel = UILabel()
 
-    var onGetAddressAction: (() -> ())?
+    var onGetAddressAction: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

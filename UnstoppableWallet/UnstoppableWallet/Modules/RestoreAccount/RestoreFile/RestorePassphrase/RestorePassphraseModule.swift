@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class RestorePassphraseModule {
+enum RestorePassphraseModule {
     static func viewController(item: BackupModule.NamedSource, returnViewController: UIViewController?) -> UIViewController {
         let service = RestorePassphraseService(
             iCloudManager: App.shared.cloudBackupManager,

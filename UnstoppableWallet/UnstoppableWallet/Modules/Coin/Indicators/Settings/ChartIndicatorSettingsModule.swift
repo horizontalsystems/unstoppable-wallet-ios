@@ -1,7 +1,7 @@
 import Chart
 import UIKit
 
-class ChartIndicatorSettingsModule {
+enum ChartIndicatorSettingsModule {
     static func viewController(indicator: ChartIndicator, onComplete: @escaping (ChartIndicator) -> Void) -> UIViewController? {
         let dataSource: IIndicatorDataSource
         let defaultIndicator = ChartIndicatorFactory

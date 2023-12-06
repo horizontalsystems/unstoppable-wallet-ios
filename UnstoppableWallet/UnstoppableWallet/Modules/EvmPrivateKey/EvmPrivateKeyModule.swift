@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct EvmPrivateKeyModule {
+enum EvmPrivateKeyModule {
     static func viewController(accountType: AccountType) -> UIViewController? {
         guard let service = EvmPrivateKeyService(accountType: accountType, evmBlockchainManager: App.shared.evmBlockchainManager) else {
             return nil

@@ -2,7 +2,7 @@ import MarketKit
 import RxSwift
 import UIKit
 
-struct RestoreSelectModule {
+enum RestoreSelectModule {
     static func viewController(accountName: String, accountType: AccountType, isManualBackedUp: Bool = true, isFileBackedUp: Bool = false, returnViewController: UIViewController?) -> UIViewController {
         let (blockchainTokensService, blockchainTokensView) = BlockchainTokensModule.module()
         let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module()

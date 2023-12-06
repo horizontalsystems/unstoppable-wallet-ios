@@ -1,6 +1,6 @@
 import UIKit
 
-struct PersonalSupportModule {
+enum PersonalSupportModule {
     static func viewController() -> UIViewController {
         let localStorage = App.shared.localStorage
         let service = PersonalSupportService(marketKit: App.shared.marketKit, localStorage: localStorage)

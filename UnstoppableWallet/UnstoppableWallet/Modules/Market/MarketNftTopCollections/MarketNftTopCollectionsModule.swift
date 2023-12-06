@@ -2,7 +2,7 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct MarketNftTopCollectionsModule {
+enum MarketNftTopCollectionsModule {
     static func viewController(timePeriod: HsTimePeriod) -> UIViewController {
         let service = MarketNftTopCollectionsService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, timePeriod: timePeriod)
 

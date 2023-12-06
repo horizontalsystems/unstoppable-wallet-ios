@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BackupAppModule {
+enum BackupAppModule {
     static func view(onDismiss: (() -> Void)?) -> some View {
         let viewModel = BackupAppViewModel(
             accountManager: App.shared.accountManager,

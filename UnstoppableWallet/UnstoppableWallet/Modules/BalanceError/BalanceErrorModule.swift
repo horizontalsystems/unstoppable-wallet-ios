@@ -1,6 +1,6 @@
 import UIKit
 
-struct BalanceErrorModule {
+enum BalanceErrorModule {
     static func viewController(wallet: Wallet, error: Error, sourceViewController: UIViewController?) -> UIViewController {
         let service = BalanceErrorService(
             wallet: wallet,

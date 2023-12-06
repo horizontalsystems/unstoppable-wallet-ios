@@ -4,7 +4,7 @@ import SectionsTableView
 import ThemeKit
 import UIKit
 
-struct EvmSendSettingsModule {
+enum EvmSendSettingsModule {
     static func instance(evmKit: EvmKit.Kit, blockchainType: BlockchainType, sendData: SendEvmData, coinServiceFactory: EvmCoinServiceFactory,
                          gasPrice: GasPrice? = nil, previousTransaction: EvmKit.Transaction? = nil,
                          predefinedGasLimit: Int? = nil, predefinedNonce: Int? = nil) -> (EvmSendSettingsService, EvmSendSettingsViewModel)?

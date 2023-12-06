@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CreatePasscodeModule {
+enum CreatePasscodeModule {
     static func createPasscodeView(reason: CreatePasscodeReason, showParentSheet: Binding<Bool>, onCreate: @escaping () -> Void, onCancel: @escaping () -> Void) -> some View {
         let viewModel = CreatePasscodeViewModel(
             passcodeManager: App.shared.passcodeManager,

@@ -3,7 +3,7 @@ import Foundation
 import RxCocoa
 import UIKit
 
-struct ChartModule {
+enum ChartModule {
     struct ViewItem {
         let value: String?
         let valueDescription: String?
