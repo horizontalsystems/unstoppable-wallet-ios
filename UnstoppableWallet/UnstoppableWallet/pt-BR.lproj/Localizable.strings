@@ -1670,15 +1670,11 @@ Go to Settings - > %@ and allow access to the camera.";
 // Watch Address
 
 "watch_address.title" = "Ver Endereço";
-"watch_address.watch" = "Próximo";
+"watch_address.watch" = "Watch";
 "watch_address.address" = "Endereço";
-"watch_address.by" = "Por";
-"watch_address.watch_by" = "Assistir Por";
-"watch_address.evm_address" = "Endereço EVM";
-"watch_address.tron_address" = "Endereço TRON";
-"watch_address.public_key" = "xPubKey da Conta";
-"watch_address.public_key.placeholder" = "Insira a chave pública estendida da conta ";
-"watch_address.public_key.invalid_key" = "Chave Inválida";
+"watch_address.error.not_supported" = "Address format is not supported";
+"watch_address.error.non_public_key" = "Watching by private key is not allowed";
+"watch_address.error.not_supported_derived_type" = "Derived type is not supported";
 "watch_address.choose_blockchain" = "Escolha Blockchain";
 "watch_address.choose_coin" = "Escolher Moedas";
 
