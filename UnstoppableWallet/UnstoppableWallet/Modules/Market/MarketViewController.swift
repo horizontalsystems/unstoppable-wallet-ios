@@ -101,6 +101,14 @@ class MarketViewController: ThemeSearchViewController {
             .sink { [weak self] in self?.sync(state: $0) }
             .store(in: &cancellables)
 
+        viewModel.favoritedPublisher
+            .sink { HudHelper.instance.show(banner: .addedToWatchlist) }
+            .store(in: &cancellables)
+
+        viewModel.unfavoritedPublisher
+            .sink { HudHelper.instance.show(banner: .removedFromWatchlist) }
+            .store(in: &cancellables)
+
         $filter
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.sync(filter: $0) }
@@ -118,6 +126,7 @@ class MarketViewController: ThemeSearchViewController {
             notFoundPlaceholder.isHidden = true
         case .placeholder:
             tableView.reload()
+            tableView.setContentOffset(CGPoint(x: 0, y: -tableView.adjustedContentInset.top), animated: false)
             tableView.isHidden = false
             notFoundPlaceholder.isHidden = true
         case let .searchResults(fullCoins):
