@@ -1673,15 +1673,11 @@
 // Watch Address
 
 "watch_address.title" = "Просмотр кошелька";
-"watch_address.watch" = "Далее";
+"watch_address.watch" = "Watch";
 "watch_address.address" = "Адрес";
-"watch_address.by" = "Из";
-"watch_address.watch_by" = "Смотреть из";
-"watch_address.evm_address" = "EVM адрес";
-"watch_address.tron_address" = "TRON адрес";
-"watch_address.public_key" = "Account xPubKey";
-"watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
-"watch_address.public_key.invalid_key" = "Неверный ключ";
+"watch_address.error.not_supported" = "Address format is not supported";
+"watch_address.error.non_public_key" = "Watching by private key is not allowed";
+"watch_address.error.not_supported_derived_type" = "Derived type is not supported";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
 "watch_address.choose_coin" = "Выберите токен";
 
