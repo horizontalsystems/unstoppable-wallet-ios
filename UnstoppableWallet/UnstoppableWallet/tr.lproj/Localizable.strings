@@ -598,7 +598,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.top.section.header.see_all" = "Hepsini Gör";
 "market.top.section.header.top_gainers" = "En Kazançlılar";
 "market.top.section.header.top_losers" = "Çok Kaybedenler";
-"market.top.section.header.top_sectors" = "En İyi Sektörler";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "Haberler";
 "market.top.volume.title" = "Hacim";
 "market.top.market_cap.title" = "P. Değeri";
@@ -634,6 +634,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.description" = "%@ zincirindeki tüm protokollerin piyasa değeri";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "Keşif";
 "market_discovery.filters" = "Filtreler";
 "market_discovery.browse_categories" = "Kategorilere Göz At";
@@ -641,9 +644,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market_discovery.not_found" = "Sonuç bulunamadı";
 
 "market_watchlist.empty.caption" = "İzleme listeniz boş.";
-
-"market.search.title" = "Ara";
-"market.search.empty_text" = "Sonuç bulunamadı";
 
 "market.advanced_search.title" = "Filtreler";
 "market.advanced_search.show_results" = "Sonuçları Göster";
