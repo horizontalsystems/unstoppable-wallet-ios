@@ -598,7 +598,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market.top.section.header.see_all" = "Tout Afficher";
 "market.top.section.header.top_gainers" = "Les grands gagnants";
 "market.top.section.header.top_losers" = "Les gros perdants";
-"market.top.section.header.top_sectors" = "Meilleurs secteurs";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "Infos";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "CapM";
@@ -634,6 +634,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "top_platform.title" = "Écosystème %@";
 "top_platform.description" = "Capitalisation boursière de tous les protocoles de la chaîne %@";
 
+"market.search.recent" = "Recent";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "Découverte";
 "market_discovery.filters" = "Filtres";
 "market_discovery.browse_categories" = "Parcourir les catégories";
@@ -641,9 +644,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market_discovery.not_found" = "Aucun résultat";
 
 "market_watchlist.empty.caption" = "Votre liste de suivi est vide.";
-
-"market.search.title" = "Chercher";
-"market.search.empty_text" = "Aucun résultat";
 
 "market.advanced_search.title" = "Filtres";
 "market.advanced_search.show_results" = "Afficher les résultats";
