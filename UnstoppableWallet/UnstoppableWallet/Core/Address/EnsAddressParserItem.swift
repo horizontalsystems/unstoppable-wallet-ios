@@ -21,7 +21,7 @@ class EnsAddressParserItem {
         rawAddressParserItem
             .handle(address: address.raw)
             .map { rawAddress in
-                Address(raw: rawAddress.raw, domain: address.domain)
+                Address(raw: rawAddress.raw, domain: address.domain, blockchainType: address.blockchainType)
             }
     }
 }
@@ -33,7 +33,7 @@ extension EnsAddressParserItem: IAddressParserItem {
         let blockchainType = blockchainType
         return provider.address(domain: address)
             .flatMap { [weak self] resolvedAddress in
-                let address = Address(raw: resolvedAddress.hex, domain: address)
+                let address = Address(raw: resolvedAddress.hex, domain: address, blockchainType: blockchainType)
                 return self?.rawAddressHandle(address: address) ?? Single.just(address)
             }.catchError { _ in
                 .error(AddressService.AddressError.invalidAddress(blockchainName: blockchainType.uid))
@@ -41,7 +41,7 @@ extension EnsAddressParserItem: IAddressParserItem {
     }
 
     func isValid(address: String) -> Single<Bool> {
-        let parts = address.components(separatedBy: ".")
+        let parts = address.trimmingCharacters(in: .whitespaces).components(separatedBy: ".")
         if parts.count > 1,
            let last = parts.last?.lowercased()
         {

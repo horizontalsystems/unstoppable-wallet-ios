@@ -16,7 +16,7 @@ extension DashAddressParserItem: IAddressParserItem {
     func handle(address: String) -> Single<Address> {
         do {
             try adapter.validate(address: address)
-            return Single.just(Address(raw: address, domain: nil))
+            return Single.just(Address(raw: address, domain: nil, blockchainType: blockchainType))
         } catch {
             return Single.error(error)
         }

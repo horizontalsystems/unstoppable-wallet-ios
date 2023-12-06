@@ -38,6 +38,15 @@ class DashAdapter: BitcoinBaseAdapter {
                 confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
                 logger: logger
             )
+        case let .btcAddress(address, _, _):
+            dashKit = try DashKit.Kit(
+                watchAddress: address,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                logger: logger
+            )
         default:
             throw AdapterError.unsupportedAccount
         }

@@ -12,7 +12,7 @@ class EvmAddressParser: IAddressParserItem {
     func handle(address: String) -> Single<Address> {
         do {
             let address = try EvmKit.Address(hex: address)
-            return Single.just(Address(raw: address.hex))
+            return Single.just(Address(raw: address.hex, blockchainType: blockchainType))
         } catch {
             return Single.error(error)
         }

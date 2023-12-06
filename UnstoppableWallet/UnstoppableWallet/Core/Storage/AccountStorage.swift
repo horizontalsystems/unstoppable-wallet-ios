@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import HdWalletKit
+import MarketKit
 import TronKit
 
 class AccountStorage {
@@ -72,6 +73,19 @@ class AccountStorage {
             }
 
             type = .hdExtendedKey(key: key)
+        case .btcAddress:
+            guard let address = record.wordsKey else {
+                return nil
+            }
+
+            guard let mnemonicDerivationValue = record.dataKey,
+                  let mnemonicDerivation = MnemonicDerivation(rawValue: mnemonicDerivationValue),
+                  let blockchainTypeUid = record.saltKey
+            else {
+                return nil
+            }
+
+            type = .btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), mnemonicDerivation: mnemonicDerivation)
         case .cex:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -132,6 +146,11 @@ class AccountStorage {
             if let data = cexAccount.uniqueId.data(using: .utf8) {
                 dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
             }
+        case let .btcAddress(address, blockchainType, mnemonicDerivation):
+            typeName = .btcAddress
+            wordsKey = address
+            saltKey = blockchainType.uid
+            dataKey = mnemonicDerivation.rawValue
         }
 
         return AccountRecord(
@@ -164,6 +183,8 @@ class AccountStorage {
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .tronAddress, keyName: .data))
         case .hdExtendedKey:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
+        case .btcAddress:
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .btcAddress, keyName: .data))
         case .cex:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .cex, keyName: .data))
         default:
@@ -250,6 +271,7 @@ extension AccountStorage {
         case tronAddress
         case tonAddress
         case hdExtendedKey
+        case btcAddress
         case cex
     }
 

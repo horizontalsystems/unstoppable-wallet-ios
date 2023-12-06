@@ -38,6 +38,15 @@ class ECashAdapter: BitcoinBaseAdapter {
                 confirmationsThreshold: Self.eCashConfirmationsThreshold,
                 logger: logger
             )
+        case let .btcAddress(address, _, _):
+            eCashKit = try ECashKit.Kit(
+                watchAddress: address,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: Self.eCashConfirmationsThreshold,
+                logger: logger
+            )
         default:
             throw AdapterError.unsupportedAccount
         }

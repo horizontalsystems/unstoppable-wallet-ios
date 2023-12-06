@@ -44,6 +44,16 @@ class BitcoinAdapter: BitcoinBaseAdapter {
                 confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
                 logger: logger
             )
+        case let .btcAddress(address, _, mnemonicDerivation):
+            bitcoinKit = try BitcoinKit.Kit(
+                watchAddress: address,
+                purpose: mnemonicDerivation.purpose,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                logger: logger
+            )
         default:
             throw AdapterError.unsupportedAccount
         }

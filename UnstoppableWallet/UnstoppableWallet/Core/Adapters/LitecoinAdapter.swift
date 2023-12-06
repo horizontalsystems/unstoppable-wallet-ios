@@ -61,6 +61,17 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                 confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
                 logger: logger
             )
+        case let .btcAddress(address, _, mnemonicDerivation):
+            litecoinKit = try LitecoinKit.Kit(
+                watchAddress: address,
+                purpose: mnemonicDerivation.purpose,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                hasher: hasher,
+                networkType: networkType,
+                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                logger: logger
+            )
         default:
             throw AdapterError.unsupportedAccount
         }
