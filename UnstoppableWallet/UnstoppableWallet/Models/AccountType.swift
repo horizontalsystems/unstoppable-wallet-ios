@@ -13,7 +13,7 @@ enum AccountType {
     case tronAddress(address: TronKit.Address)
     case tonAddress(address: String)
     case hdExtendedKey(key: HDExtendedKey)
-    case btcAddress(address: String, blockchainType: BlockchainType, mnemonicDerivation: MnemonicDerivation)
+    case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
     case cex(cexAccount: CexAccount)
 
     var mnemonicSeed: Data? {
@@ -50,8 +50,8 @@ enum AccountType {
             privateData = address.hs.data
         case let .hdExtendedKey(key):
             privateData = key.serialized
-        case let .btcAddress(address, blockchainType, mnemonicDerivation):
-            privateData = "\(address)&\(blockchainType.uid)|\(mnemonicDerivation.rawValue)".data(using: .utf8) ?? Data()
+        case let .btcAddress(address, blockchainType, tokenType):
+            privateData = "\(address)&\(blockchainType.uid)|\(tokenType.id)".data(using: .utf8) ?? Data()
         case let .cex(cexAccount):
             privateData = cexAccount.uniqueId.data(using: .utf8) ?? Data() // always non-null
         }
@@ -125,8 +125,9 @@ enum AccountType {
             case (.ton, .native): return true
             default: return false
             }
-        case let .btcAddress(_, blockchainType, _):
-            return token.blockchainType == blockchainType
+        case let .btcAddress(_, blockchainType, tokenType):
+            return token.blockchainType == blockchainType && token.type == tokenType
+
         default:
             return false
         }
@@ -275,12 +276,12 @@ extension AccountType {
             }
         case .btcAddress:
             let (address, details) = split(string, separator: "&")
-            let (mnemonicDerivationValue, blockchainTypeUid) = split(details, separator: "|")
-            guard let mnemonicDerivation = MnemonicDerivation(rawValue: mnemonicDerivationValue) else {
+            let (tokenTypeValue, blockchainTypeUid) = split(details, separator: "|")
+            guard let tokenType = TokenType(id: tokenTypeValue) else {
                 return nil
             }
 
-            return AccountType.btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), mnemonicDerivation: mnemonicDerivation)
+            return AccountType.btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), tokenType: tokenType)
         case .evmAddress:
             return (try? EvmKit.Address(hex: string)).map { AccountType.evmAddress(address: $0) }
         case .tronAddress:
@@ -336,8 +337,8 @@ extension AccountType: Hashable {
             return lhsAddress == rhsAddress
         case let (.hdExtendedKey(lhsKey), .hdExtendedKey(rhsKey)):
             return lhsKey == rhsKey
-        case let (.btcAddress(lhsAddress, lhsBlockchainType, lhsMnemonicDerivation), .btcAddress(rhsAddress, rhsBlockchainType, rhsMnemonicDerivation)):
-            return lhsAddress == rhsAddress && lhsBlockchainType == rhsBlockchainType && lhsMnemonicDerivation == rhsMnemonicDerivation
+        case let (.btcAddress(lhsAddress, lhsBlockchainType, lhsTokenType), .btcAddress(rhsAddress, rhsBlockchainType, rhsTokenType)):
+            return lhsAddress == rhsAddress && lhsBlockchainType == rhsBlockchainType && lhsTokenType == rhsTokenType
         case let (.cex(lhsCexAccount), .cex(rhsCexAccount)):
             return lhsCexAccount == rhsCexAccount
         default: return false
@@ -366,11 +367,11 @@ extension AccountType: Hashable {
         case let .hdExtendedKey(key):
             hasher.combine("hdExtendedKey")
             hasher.combine(key)
-        case let .btcAddress(address, blockchainType, mnemonicDerivation):
+        case let .btcAddress(address, blockchainType, tokenType):
             hasher.combine("btcAddress")
             hasher.combine(address)
             hasher.combine(blockchainType)
-            hasher.combine(mnemonicDerivation)
+            hasher.combine(tokenType)
         case let .cex(cexAccount):
             hasher.combine("cex")
             hasher.combine(cexAccount)

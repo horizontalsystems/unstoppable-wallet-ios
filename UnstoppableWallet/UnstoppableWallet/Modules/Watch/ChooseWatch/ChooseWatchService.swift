@@ -47,23 +47,9 @@ class ChooseWatchService {
                 return nil
             }
 
-            let blockchainTypes: [BlockchainType] = [.bitcoin, .bitcoinCash, .ecash, .litecoin, .dash]
-            tokenQueries = blockchainTypes.map(\.nativeTokenQueries).flatMap { $0 }
+            tokenQueries = BtcBlockchainManager.blockchainTypes.map(\.nativeTokenQueries).flatMap { $0 }
 
-        case let .btcAddress(_, blockchainType, mnemonicDerivation):
-            let tokenType: TokenType
-
-            switch blockchainType {
-            case .bitcoin, .litecoin:
-                tokenType = TokenType.derived(derivation: mnemonicDerivation.derivation)
-            case .bitcoinCash, .ecash:
-                tokenType = TokenType.addressType(type: .type145)
-            case .dash:
-                tokenType = TokenType.native
-            default:
-                return nil
-            }
-
+        case let .btcAddress(_, blockchainType, tokenType):
             tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
         }
 

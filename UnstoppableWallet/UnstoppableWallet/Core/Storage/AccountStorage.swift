@@ -78,14 +78,14 @@ class AccountStorage {
                 return nil
             }
 
-            guard let mnemonicDerivationValue = record.dataKey,
-                  let mnemonicDerivation = MnemonicDerivation(rawValue: mnemonicDerivationValue),
+            guard let tokenTypeId = record.dataKey,
+                  let tokenType = TokenType(id: tokenTypeId),
                   let blockchainTypeUid = record.saltKey
             else {
                 return nil
             }
 
-            type = .btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), mnemonicDerivation: mnemonicDerivation)
+            type = .btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), tokenType: tokenType)
         case .cex:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -146,11 +146,11 @@ class AccountStorage {
             if let data = cexAccount.uniqueId.data(using: .utf8) {
                 dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
             }
-        case let .btcAddress(address, blockchainType, mnemonicDerivation):
+        case let .btcAddress(address, blockchainType, tokenType):
             typeName = .btcAddress
             wordsKey = address
             saltKey = blockchainType.uid
-            dataKey = mnemonicDerivation.rawValue
+            dataKey = tokenType.id
         }
 
         return AccountRecord(

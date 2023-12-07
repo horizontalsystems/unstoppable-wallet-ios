@@ -44,10 +44,14 @@ class BitcoinAdapter: BitcoinBaseAdapter {
                 confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
                 logger: logger
             )
-        case let .btcAddress(address, _, mnemonicDerivation):
+        case let .btcAddress(address, _, tokenType):
+            guard let purpose =  tokenType.derivation?.purpose else {
+                throw AdapterError.wrongParameters
+            }
+
             bitcoinKit = try BitcoinKit.Kit(
                 watchAddress: address,
-                purpose: mnemonicDerivation.purpose,
+                purpose: purpose,
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 networkType: networkType,
