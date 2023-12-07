@@ -68,8 +68,14 @@ class ManageWalletsService {
     private func fetchTokens() -> [Token] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                let list = BlockchainType.supported.map(\.defaultTokenQuery)
-                let tokens = try marketKit.tokens(queries: list)
+                let tokenQueries: [TokenQuery]
+                if case .hdExtendedKey = account.type {
+                    tokenQueries = BtcBlockchainManager.blockchainTypes.map(\.nativeTokenQueries).flatMap { $0 }
+                } else {
+                    tokenQueries = BlockchainType.supported.map(\.defaultTokenQuery)
+                }
+
+                let tokens = try marketKit.tokens(queries: tokenQueries)
                 let featuredTokens = tokens.filter { account.type.supports(token: $0) }
                 let enabledTokens = wallets.map(\.token)
 

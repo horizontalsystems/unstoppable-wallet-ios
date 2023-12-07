@@ -23,10 +23,10 @@ open class Address: Equatable {
 }
 
 class BitcoinAddress: Address {
-    let mnemonicDerivation: MnemonicDerivation
+    let tokenType: TokenType
 
-    init(raw: String, domain: String? = nil, blockchainType: BlockchainType, mnemonicDerivation: MnemonicDerivation) {
-        self.mnemonicDerivation = mnemonicDerivation
+    init(raw: String, domain: String? = nil, blockchainType: BlockchainType, tokenType: TokenType) {
+        self.tokenType = tokenType
 
         super.init(raw: raw, domain: domain, blockchainType: blockchainType)
     }

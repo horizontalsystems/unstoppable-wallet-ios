@@ -77,7 +77,7 @@ class WatchService {
         do {
             let accountType: AccountType
             if let bitcoinAddress = address as? BitcoinAddress, let blockchainType = bitcoinAddress.blockchainType {
-                accountType = .btcAddress(address: bitcoinAddress.raw, blockchainType: blockchainType, mnemonicDerivation: bitcoinAddress.mnemonicDerivation)
+                accountType = .btcAddress(address: bitcoinAddress.raw, blockchainType: blockchainType, tokenType: bitcoinAddress.tokenType)
             } else {
                 switch address.blockchainType {
                 case let evmAddress where EvmBlockchainManager.blockchainTypes.contains(where: { $0 == evmAddress }):
