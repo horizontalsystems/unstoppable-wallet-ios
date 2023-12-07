@@ -1,3 +1,4 @@
+import SwiftUI
 import ThemeKit
 import UIKit
 
@@ -51,4 +52,38 @@ extension BackupModule {
         let name: String
         let source: Source
     }
+}
+
+struct BackupView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    private let account: Account
+    private let onComplete: (() -> Void)?
+
+    init(account: Account, onComplete: (() -> Void)? = nil) {
+        self.account = account
+        self.onComplete = onComplete
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        BackupModule.manualViewController(account: account, onComplete: onComplete) ?? UIViewController()
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
+}
+
+struct ICloudBackupTermsView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    private let account: Account
+
+    init(account: Account) {
+        self.account = account
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        BackupModule.cloudViewController(account: account)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

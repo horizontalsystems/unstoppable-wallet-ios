@@ -1,41 +1,33 @@
-import RxCocoa
-import RxRelay
-import RxSwift
+import Combine
 
-class SwitchAccountViewModel {
-    private let service: SwitchAccountService
+class SwitchAccountViewModel: ObservableObject {
+    private let accountManager = App.shared.accountManager
 
-    private(set) var regularViewItems = [ViewItem]()
-    private(set) var watchViewItems = [ViewItem]()
-    private let finishRelay = PublishRelay<Void>()
+    let regularViewItems: [ViewItem]
+    let watchViewItems: [ViewItem]
 
-    init(service: SwitchAccountService) {
-        self.service = service
+    init() {
+        let activeAccount = accountManager.activeAccount
 
-        let sortedItems = service.items.sorted { $0.account.name.lowercased() < $1.account.name.lowercased() }
+        let sortedAccounts = accountManager.accounts.sorted { $0.name.lowercased() < $1.name.lowercased() }
 
-        regularViewItems = sortedItems.filter { !$0.account.watchAccount }.map { viewItem(item: $0) }
-        watchViewItems = sortedItems.filter(\.account.watchAccount).map { viewItem(item: $0) }
+        regularViewItems = sortedAccounts.filter { !$0.watchAccount }.map { Self.viewItem(account: $0, activeAccount: activeAccount) }
+        watchViewItems = sortedAccounts.filter(\.watchAccount).map { Self.viewItem(account: $0, activeAccount: activeAccount) }
     }
 
-    private func viewItem(item: SwitchAccountService.Item) -> ViewItem {
+    private static func viewItem(account: Account, activeAccount: Account?) -> ViewItem {
         ViewItem(
-            accountId: item.account.id,
-            title: item.account.name,
-            subtitle: item.account.type.detailedDescription,
-            selected: item.isActive
+            accountId: account.id,
+            title: account.name,
+            subtitle: account.type.detailedDescription,
+            selected: account == activeAccount
         )
     }
 }
 
 extension SwitchAccountViewModel {
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
-    }
-
     func onSelect(accountId: String) {
-        service.set(activeAccountId: accountId)
-        finishRelay.accept(())
+        accountManager.set(activeAccountId: accountId)
 
         stat(page: .switchWallet, event: .select(entity: .wallet))
     }

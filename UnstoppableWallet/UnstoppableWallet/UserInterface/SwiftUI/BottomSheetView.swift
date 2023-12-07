@@ -109,7 +109,15 @@ struct BottomSheetView: View {
     @ViewBuilder private func buttonView(item: ButtonItem) -> some View {
         Button(
             action: { item.action?() },
-            label: { Text(item.title) }
+            label: {
+                HStack(spacing: .margin8) {
+                    if let icon = item.icon {
+                        Image(icon).renderingMode(.template)
+                    }
+
+                    Text(item.title)
+                }
+            }
         )
         .buttonStyle(PrimaryButtonStyle(style: item.style))
     }
@@ -133,11 +141,13 @@ extension BottomSheetView {
     struct ButtonItem {
         let style: PrimaryButtonStyle.Style
         let title: String
+        let icon: String?
         let action: (() -> Void)?
 
-        init(style: PrimaryButtonStyle.Style, title: String, action: (() -> Void)? = nil) {
+        init(style: PrimaryButtonStyle.Style, title: String, icon: String? = nil, action: (() -> Void)? = nil) {
             self.style = style
             self.title = title
+            self.icon = icon
             self.action = action
         }
     }

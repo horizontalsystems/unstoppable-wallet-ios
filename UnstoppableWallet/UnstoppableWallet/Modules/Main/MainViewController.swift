@@ -12,7 +12,9 @@ class MainViewController: ThemeTabBarController {
     private var marketModule: UIViewController?
     private let balanceModule = ThemeNavigationController(rootViewController: WalletModule.viewController())
     private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsModule.viewController())
-    private let settingsModule = ThemeNavigationController(rootViewController: MainSettingsModule.viewController())
+    private let settingsModule = MainSettingsView().toNavigationViewController()
+
+    private let settingsTabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "filled_settings_2_24"), tag: 0)
 
     private var showAlerts = [() -> Void]()
 
@@ -25,6 +27,8 @@ class MainViewController: ThemeTabBarController {
         super.init()
 
         selectedIndex = MainModule.Tab.allCases.firstIndex(of: viewModel.initialTab) ?? 0
+
+        settingsModule.tabBarItem = settingsTabBarItem
     }
 
     @available(*, unavailable)
@@ -75,7 +79,7 @@ class MainViewController: ThemeTabBarController {
 
     private func handleDoubleClick(index: Int) {
         if let viewControllers, viewControllers.count > index, let navigationController = viewControllers[index] as? UINavigationController, navigationController.topViewController is WalletViewController {
-            present(SwitchAccountModule.viewController(), animated: true)
+            present(SwitchAccountView().toViewController().toBottomSheet, animated: true)
 
             stat(page: .main, event: .open(page: .switchWallet))
         }
@@ -107,7 +111,7 @@ class MainViewController: ThemeTabBarController {
     }
 
     private func setSettingsBadge(visible: Bool, count: Int = 0) {
-        settingsModule.viewControllers.first?.tabBarItem.setDotBadge(visible: visible, count: count)
+        settingsTabBarItem.setDotBadge(visible: visible, count: count)
     }
 
     private func showReleaseNotes(url: URL?) {

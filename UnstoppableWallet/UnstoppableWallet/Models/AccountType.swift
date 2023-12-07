@@ -6,7 +6,7 @@ import HdWalletKit
 import MarketKit
 import TronKit
 
-enum AccountType {
+enum AccountType: Identifiable {
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
     case evmPrivateKey(data: Data)
     case stellarSecretKey(secretSeed: String)
@@ -17,6 +17,10 @@ enum AccountType {
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
     case cex(cexAccount: CexAccount)
+
+    var id: Self {
+        self
+    }
 
     var mnemonicSeed: Data? {
         switch self {

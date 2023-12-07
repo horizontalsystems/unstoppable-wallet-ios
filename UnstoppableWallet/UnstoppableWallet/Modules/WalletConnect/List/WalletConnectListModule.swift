@@ -1,3 +1,4 @@
+import SwiftUI
 import UIKit
 
 enum WalletConnectListModule {
@@ -12,4 +13,14 @@ enum WalletConnectListModule {
 
         return viewController
     }
+}
+
+struct WalletConnectListView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        WalletConnectListModule.viewController()
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

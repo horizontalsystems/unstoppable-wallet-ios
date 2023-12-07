@@ -10,6 +10,9 @@ class AppearanceViewModel: ObservableObject {
     private let balancePrimaryValueManager = App.shared.balancePrimaryValueManager
     private let walletButtonHiddenManager = App.shared.walletButtonHiddenManager
     private let priceChangeModeManager = App.shared.priceChangeModeManager
+    private let currencyManager = App.shared.currencyManager
+
+    private var cancellables = Set<AnyCancellable>()
 
     let themeModes: [ThemeMode] = [.system, .dark, .light]
 
@@ -22,6 +25,8 @@ class AppearanceViewModel: ObservableObject {
             themeManager.themeMode = themeMode
         }
     }
+
+    @Published var baseCurrencyCode: String = ""
 
     @Published var hideMarkets: Bool {
         didSet {
@@ -91,5 +96,13 @@ class AppearanceViewModel: ObservableObject {
         hideBalanceButtons = walletButtonHiddenManager.buttonHidden
         balancePrimaryValue = balancePrimaryValueManager.balancePrimaryValue
         appIcon = appIconManager.appIcon
+
+        subscribe(&cancellables, currencyManager.$baseCurrency) { [weak self] _ in self?.syncBaseCurrencyCode() }
+
+        syncBaseCurrencyCode()
+    }
+
+    private func syncBaseCurrencyCode() {
+        baseCurrencyCode = currencyManager.baseCurrency.code
     }
 }

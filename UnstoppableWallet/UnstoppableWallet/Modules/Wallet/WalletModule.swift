@@ -1,5 +1,6 @@
 import MarketKit
 import RxSwift
+import SwiftUI
 import ThemeKit
 import UIKit
 
@@ -173,7 +174,7 @@ enum WalletModule {
         return ThemeNavigationController(rootViewController: viewController)
     }
 
-    static func donateTokenListViewController() -> UIViewController? {
+    static func donateTokenListViewController() -> UIViewController {
         let service: IWalletTokenListService
         if let account = App.shared.accountManager.activeAccount, !account.watchAccount, !account.cexAccount {
             let coinPriceService = WalletCoinPriceService(
@@ -382,4 +383,14 @@ extension WalletModule {
             self.buttons = buttons
         }
     }
+}
+
+struct DonateTokenListView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        WalletModule.donateTokenListViewController()
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

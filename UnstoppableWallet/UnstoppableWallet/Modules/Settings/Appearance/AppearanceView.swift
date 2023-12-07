@@ -36,6 +36,36 @@ struct AppearanceView: View {
                     )
                 }
 
+                ListSection {
+                    NavigationRow(spacing: .margin8, destination: {
+                        LanguageSettingsModule.view()
+                            .onFirstAppear {
+                                stat(page: .appearance, event: .open(page: .language))
+                            }
+                    }) {
+                        Text("settings.language".localized).textBody()
+                        Spacer()
+
+                        if let language = LanguageManager.shared.currentLanguageDisplayName {
+                            Text(language).textSubhead1()
+                        }
+
+                        Image.disclosureIcon
+                    }
+
+                    NavigationRow(spacing: .margin8, destination: {
+                        BaseCurrencySettingsModule.view()
+                            .onFirstAppear {
+                                stat(page: .appearance, event: .open(page: .baseCurrency))
+                            }
+                    }) {
+                        Text("settings.base_currency".localized).textBody()
+                        Spacer()
+                        Text(viewModel.baseCurrencyCode).textSubhead1()
+                        Image.disclosureIcon
+                    }
+                }
+
                 VStack(spacing: 0) {
                     ListSectionHeader(text: "appearance.markets_tab".localized)
                     ListSection {

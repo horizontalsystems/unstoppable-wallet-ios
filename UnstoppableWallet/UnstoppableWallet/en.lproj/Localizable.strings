@@ -1372,6 +1372,8 @@
 "settings.contact_us" = "Contact Us";
 "settings.social_networks.label" = "Join Unstoppables";
 "settings.get_your_tokens" = "Get your tokens";
+"settings.dapp_connection" = "DApp Connection";
+"settings.app_settings" = "App Settings";
 
 // Settings -> Base Currency
 
@@ -1796,7 +1798,7 @@
 
 // Education
 
-"education.title" = "Education";
+"education.title" = "Academy";
 "quiz.title" = "Crypto Quiz";
 
 // Add Token

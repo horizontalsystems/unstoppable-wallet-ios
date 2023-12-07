@@ -127,7 +127,7 @@ extension WalletConnectAppShowView {
                 ],
                 buttons: [
                     .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized, actionType: .afterClose) { [weak sourceViewController] in
-                        sourceViewController?.present(SwitchAccountModule.viewController(), animated: true)
+                        sourceViewController?.present(SwitchAccountView().toViewController().toBottomSheet, animated: true)
                     },
                     .init(style: .transparent, title: "button.cancel".localized),
                 ]
