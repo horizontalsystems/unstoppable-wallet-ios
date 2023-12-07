@@ -1679,6 +1679,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "watch_address.error.not_supported" = "Address format is not supported";
 "watch_address.error.non_public_key" = "Watching by private key is not allowed";
 "watch_address.error.not_supported_derived_type" = "Derived type is not supported";
+"watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
 "watch_address.choose_blockchain" = "Blockchain Seç";
 "watch_address.choose_coin" = "Kripto Parayı Seç";
 
