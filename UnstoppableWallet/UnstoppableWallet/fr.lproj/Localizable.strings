@@ -369,8 +369,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.account" = "Compte";
 
 "deposit.amount" = "Montant";
-"deposit.set_amount" = "Set Amount";
-"deposit.enter_amount" = "Enter Amount";
+"deposit.set_amount" = "Définir le montant";
+"deposit.enter_amount" = "Entrez le montant";
 "deposit.not_active" = "non actif";
 "deposit.not_active.title" = "Adresse non-active";
 "deposit.not_active.tron_description" = "Les comptes récemment créés sur la blockchain TRON sont inactifs et ne peuvent pas être interrogés ou explorés. Ils doivent être activés.\n\nLe transfert de jetons TRX ou TRC-10 vers une adresse de compte inactive activera le compte. Pour activer un nouveau compte sur la chaîne Tron, des frais de 1 TRX sont nécessaires";
@@ -379,7 +379,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
 "deposit.zcash.restore.dont_have" = "Non, je n'ai pas";
 
-"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
+"deposit.warning" = "Seuls les jetons compatibles avec le réseau seront conservés. Les autres seront perdus.";
 
 "receive_network_select.title" = "Réseau";
 "receive_network_select.description" = "Choisissez un réseau et obtenez une adresse à recevoir.";
@@ -409,8 +409,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.max_button" = "Max";
 "send.next_button" = "Suivant";
 "send.error.invalid" = "Invalide";
-"send.error.invalid_blockchain" = "Invalid Blockchain";
-"send.error.invalid_token" = "Invalid Token";
+"send.error.invalid_blockchain" = "Blockchain invalide";
+"send.error.invalid_token" = "Jeton invalide";
 "send.error.address" = "Adresses";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 heure";
@@ -475,12 +475,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Donate
 
 "donate.list.title" = "Donnez avec";
-"donate.list.get_address" = "Get Donate Address";
+"donate.list.get_address" = "Obtenir l'adresse du don";
 "donate.list.get_address.title" = "Adresses";
 "donate.title" = "Donate %@";
 "donate.no_assets" = "Vous n'avez pas d'actifs à donner.";
 "donate.support.description" = "Ensemble, avec votre soutien, nous pouvons encore améliorer cette application!";
-"donate.support.bottom_description" = "Or select a coin to donate";
+"donate.support.bottom_description" = "Ou sélectionnez une pièce à faire un don";
 
 // CoinSelector
 
@@ -598,7 +598,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market.top.section.header.see_all" = "Tout Afficher";
 "market.top.section.header.top_gainers" = "Les grands gagnants";
 "market.top.section.header.top_losers" = "Les gros perdants";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "Secteurs";
 "market.top.section.header.news" = "Infos";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "CapM";
@@ -634,8 +634,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "top_platform.title" = "Écosystème %@";
 "top_platform.description" = "Capitalisation boursière de tous les protocoles de la chaîne %@";
 
-"market.search.recent" = "Recent";
-"market.search.popular" = "Popular";
+"market.search.recent" = "Récentes";
+"market.search.popular" = "Populaire";
 
 "market_discovery.title" = "Découverte";
 "market_discovery.filters" = "Filtres";
@@ -1221,9 +1221,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "btc_blockchain_settings.restore_source.description" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
 "btc_blockchain_settings.restore_source.alert" = "Une fois la source de restauration modifiée, le portefeuille devra être resynchronisé avec la blockchain %@.";
 
-"btc_restore_mode.blockchair" = "Fast, No Private";
-"btc_restore_mode.hybrid" = "Slow, No Private";
-"btc_restore_mode.blockchain" = "Slow, Private";
+"btc_restore_mode.blockchair" = "Rapide, sans privé";
+"btc_restore_mode.hybrid" = "Slower, pas de privé";
+"btc_restore_mode.blockchain" = "Ralentissement, privé";
 
 "btc_transaction_sort_mode.shuffle" = "Mélanger";
 "btc_transaction_sort_mode.shuffle.description" = "Indexation aléatoire";
@@ -1670,12 +1670,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Watch Address
 
 "watch_address.title" = "Regarder les portefeuilles";
-"watch_address.watch" = "Watch";
+"watch_address.watch" = "Suivi";
 "watch_address.address" = "Adresses";
-"watch_address.error.not_supported" = "Address format is not supported";
-"watch_address.error.non_public_key" = "Watching by private key is not allowed";
-"watch_address.error.not_supported_derived_type" = "Derived type is not supported";
-"watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
+"watch_address.error.not_supported" = "Le format de l'adresse n'est pas pris en charge";
+"watch_address.error.non_public_key" = "La surveillance par clé privée n'est pas autorisée";
+"watch_address.error.not_supported_derived_type" = "Le type dérivé n'est pas pris en charge";
+"watch_address.watch_data.placeholder" = "Entrez votre EVM, TRON, TON ou adresse publique (Bitcoin, Litecoin, Bitcoin Cash) ou votre compte xPubKey.";
 "watch_address.choose_blockchain" = "Choisir la blockchain";
 "watch_address.choose_coin" = "Choisir la pièce";
 
@@ -1814,7 +1814,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "cex_deposit.network" = "Réseau";
 "cex_deposit.memo" = "Mémo (Tag)";
 "cex_deposit.min_amount" = "Montant minimum";
-"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
+"cex_deposit.warning_memo" = "Fournissez le Mémo requis (Tag) et envoyez uniquement des jetons compatibles avec le réseau. D'autres seront perdus.";
 "cex_deposit.copy_address" = "Copier";
 "cex_deposit.share_address" = "Partager";
 "cex_deposit.failed" = "Impossible de charger l'adresse du dépôt. Veuillez réessayer.";
