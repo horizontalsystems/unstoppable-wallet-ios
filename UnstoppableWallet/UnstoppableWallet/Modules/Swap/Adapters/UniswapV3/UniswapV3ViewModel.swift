@@ -369,14 +369,16 @@ extension UniswapV3ViewModel {
         )
 
         var impactWarning = [Warning]()
+        var impactErrors = [Error]()
         switch trade.impactLevel {
         case .warning: impactWarning = [UniswapModule.UniswapWarning.highPriceImpact]
-        case .forbidden: impactWarning = [UniswapModule.UniswapWarning.forbiddenPriceImpact]
+        case .forbidden: impactErrors = [UniswapModule.UniswapError.forbiddenPriceImpact(provider: dexName)]
         default: ()
         }
         let sendEvmData = SendEvmData(
             transactionData: transactionData, additionalInfo: .uniswap(info: swapInfo),
-            warnings: impactWarning
+            warnings: impactWarning,
+            errors: impactErrors
         )
 
         openConfirmRelay.accept(sendEvmData)

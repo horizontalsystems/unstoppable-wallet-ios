@@ -8,7 +8,7 @@ import ThemeKit
 import UIKit
 
 class OneInchDataSource {
-    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian]
+    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian, .themeLucian]
 
     private let disposeBag = DisposeBag()
 
