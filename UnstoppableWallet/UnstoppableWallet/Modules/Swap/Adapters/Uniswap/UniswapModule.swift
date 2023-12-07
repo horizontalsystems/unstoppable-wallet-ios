@@ -114,6 +114,15 @@ extension UniswapKit.Kit.TradeError: LocalizedError {
     }
 }
 
+extension UniswapKit.KitV3.TradeError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .tradeNotFound: return "swap.trade_error.not_found".localized
+        default: return nil
+        }
+    }
+}
+
 extension UniswapModule.TradeError: LocalizedError {
     public var errorDescription: String? {
         switch self {

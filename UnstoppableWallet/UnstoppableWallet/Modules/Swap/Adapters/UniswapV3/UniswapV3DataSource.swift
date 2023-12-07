@@ -8,7 +8,7 @@ import UIKit
 import UniswapKit
 
 class UniswapV3DataSource {
-    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian]
+    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian, .themeLucian]
 
     private let disposeBag = DisposeBag()
 

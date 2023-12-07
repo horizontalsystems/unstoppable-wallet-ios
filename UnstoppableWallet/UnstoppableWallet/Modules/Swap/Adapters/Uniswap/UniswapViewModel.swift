@@ -369,7 +369,7 @@ extension UniswapViewModel {
 
         switch trade.impactLevel {
         case .warning: impactWarnings = [UniswapModule.UniswapWarning.highPriceImpact]
-        case .forbidden: impactErrors = [UniswapModule.UniswapError.forbiddenPriceImpact(provider: "Uniswap")] // we can use url from dex
+        case .forbidden: impactErrors = [UniswapModule.UniswapError.forbiddenPriceImpact(provider: dexName)] // we can use url from dex
         default: ()
         }
         let sendEvmData = SendEvmData(
