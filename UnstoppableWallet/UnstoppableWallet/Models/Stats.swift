@@ -113,6 +113,7 @@ enum StatPage: String {
     case sendTokenList = "send_token_list"
     case settings
     case stellarSecretKey = "stellar_secret_key"
+    case subscription
     case swap
     case switchWallet = "switch_wallet"
     case tellFriends = "tell_friends"

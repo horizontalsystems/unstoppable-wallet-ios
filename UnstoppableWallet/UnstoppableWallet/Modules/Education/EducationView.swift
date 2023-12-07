@@ -32,7 +32,7 @@ struct EducationView: View {
                 }
             }
         }
-        .navigationBarTitle("education.title".localized)
+        .navigationTitle("education.title".localized)
     }
 }
 

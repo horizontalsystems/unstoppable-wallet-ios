@@ -127,7 +127,7 @@ struct ContactBookView: UIViewControllerRepresentable {
     let mode: ContactBookModule.Mode
     let presented: Bool
 
-    init(mode: ContactBookModule.Mode, presented: Bool) {
+    init(mode: ContactBookModule.Mode, presented: Bool = false) {
         self.mode = mode
         self.presented = presented
     }

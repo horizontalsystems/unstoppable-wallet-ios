@@ -1,196 +1,116 @@
 import Combine
-import RxCocoa
-import RxRelay
+import Foundation
+import MarketKit
 import RxSwift
 import ThemeKit
 
-class MainSettingsViewModel {
-    private let service: MainSettingsService
+class MainSettingsViewModel: ObservableObject {
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
-    private let manageWalletsAlertRelay: BehaviorRelay<Bool>
-    private let securityCenterAlertRelay: BehaviorRelay<Bool>
-    private let hasActiveSubscriptionRelay: BehaviorRelay<Bool>
-    private let intoductoryTitleRelay: BehaviorRelay<String?>
-    private let iCloudSyncAlertRelay: BehaviorRelay<Bool>
-    private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool, text: String)?>
-    private let baseCurrencyRelay: BehaviorRelay<String>
-    private let aboutAlertRelay: BehaviorRelay<Bool>
-    private let openWalletConnectRelay = PublishRelay<WalletConnectOpenMode>()
-    private let openLinkRelay = PublishRelay<String>()
+    private let backupManager = App.shared.backupManager
+    private let cloudBackupManager = App.shared.cloudBackupManager
+    private let accountRestoreWarningManager = App.shared.accountRestoreWarningManager
+    private let accountManager = App.shared.accountManager
+    private let contactManager = App.shared.contactManager
+    private let passcodeManager = App.shared.passcodeManager
+    private let termsManager = App.shared.termsManager
+    private let systemInfoManager = App.shared.systemInfoManager
+    private let walletConnectSessionManager = App.shared.walletConnectSessionManager
+    private let rateAppManager = App.shared.rateAppManager
+    private let localStorage = App.shared.localStorage
+    private let testNetManager = App.shared.testNetManager
+    private let purchaseManager = App.shared.purchaseManager
 
-    init(service: MainSettingsService) {
-        self.service = service
+    @Published var manageWalletsAlert: Bool = false
+    @Published var walletConnectSessionCount: Int = 0
+    @Published var walletConnectPendingRequestCount: Int = 0
+    @Published var securityAlert: Bool = false
+    @Published var aboutAlert: Bool = false
+    @Published var iCloudUnavailable: Bool = false
 
-        manageWalletsAlertRelay = BehaviorRelay(value: !service.noWalletRequiredActions)
-        securityCenterAlertRelay = BehaviorRelay(value: !service.isPasscodeSet)
-        hasActiveSubscriptionRelay = BehaviorRelay(value: service.hasActiveSubscriptions)
-        intoductoryTitleRelay = BehaviorRelay(value: service.allowIntroductoryOffer.title)
-        iCloudSyncAlertRelay = BehaviorRelay(value: service.isCloudAvailableError)
-        walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
-        baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
-        aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
+    let showTestSwitchers: Bool
 
-        service.noWalletRequiredActionsObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] noWalletRequiredActions in
-                self?.manageWalletsAlertRelay.accept(!noWalletRequiredActions)
-            })
-            .disposed(by: disposeBag)
-
-        service.isPasscodeSetPublisher
-            .sink { [weak self] isPinSet in
-                self?.securityCenterAlertRelay.accept(!isPinSet)
-            }
-            .store(in: &cancellables)
-
-        service.hasActiveSubscriptionsPublisher
-            .sink { [weak self] in self?.hasActiveSubscriptionRelay.accept($0) }
-            .store(in: &cancellables)
-
-        service.allowIntoductoryPublisher
-            .sink { [weak self] in self?.intoductoryTitleRelay.accept($0.title) }
-            .store(in: &cancellables)
-
-        service.iCloudAvailableErrorObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] hasError in
-                self?.iCloudSyncAlertRelay.accept(hasError)
-            })
-            .disposed(by: disposeBag)
-
-        service.walletConnectSessionCountObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] count in
-                self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: count, walletConnectPendingRequestCount: self?.service.walletConnectPendingRequestCount ?? 0))
-            })
-            .disposed(by: disposeBag)
-
-        service.walletConnectPendingRequestCountObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] count in
-                self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: self?.service.walletConnectSessionCount ?? 0, walletConnectPendingRequestCount: count))
-            })
-            .disposed(by: disposeBag)
-
-        service.baseCurrencyPublisher
-            .sink { [weak self] currency in
-                self?.baseCurrencyRelay.accept(currency.code)
-            }
-            .store(in: &cancellables)
-
-        service.termsAcceptedPublisher
-            .sink { [weak self] accepted in
-                self?.aboutAlertRelay.accept(!accepted)
-            }
-            .store(in: &cancellables)
+    @Published var newSendEnabled: Bool {
+        didSet {
+            localStorage.newSendEnabled = newSendEnabled
+        }
     }
 
-    private static func convert(walletConnectSessionCount: Int, walletConnectPendingRequestCount: Int) -> (highlighted: Bool, text: String)? {
-        if walletConnectPendingRequestCount != 0 {
-            return (highlighted: true, text: "\(walletConnectPendingRequestCount)")
+    @Published var testNetEnabled: Bool {
+        didSet {
+            testNetManager.set(testNetEnabled: testNetEnabled)
         }
-        return walletConnectSessionCount > 0 ? (highlighted: false, text: "\(walletConnectSessionCount)") : nil
+    }
+
+    init() {
+        showTestSwitchers = Bundle.main.object(forInfoDictionaryKey: "ShowTestNetSwitcher") as? String == "true"
+        newSendEnabled = localStorage.newSendEnabled
+        testNetEnabled = testNetManager.testNetEnabled
+
+        subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
+        subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.sessionsObservable) { [weak self] _ in self?.syncWalletConnectSessionCount() }
+        subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.activePendingRequestsObservable) { [weak self] _ in self?.syncWalletConnectPendingRequestCount() }
+        subscribe(MainScheduler.instance, disposeBag, contactManager.iCloudErrorObservable) { [weak self] error in
+            if error != nil, self?.contactManager.remoteSync ?? false {
+                self?.iCloudUnavailable = true
+            } else {
+                self?.iCloudUnavailable = false
+            }
+        }
+
+        subscribe(&cancellables, accountRestoreWarningManager.hasNonStandardPublisher) { [weak self] _ in self?.syncManageWalletsAlert() }
+        subscribe(&cancellables, passcodeManager.$isPasscodeSet) { [weak self] _ in self?.syncSecurityAlert() }
+        subscribe(&cancellables, termsManager.$termsAccepted) { [weak self] _ in self?.syncAboutAlert() }
+
+        syncManageWalletsAlert()
+        syncWalletConnectSessionCount()
+        syncWalletConnectPendingRequestCount()
+        syncSecurityAlert()
+        syncAboutAlert()
+    }
+
+    private func syncManageWalletsAlert() {
+        manageWalletsAlert = !backupManager.allBackedUp || accountRestoreWarningManager.hasNonStandard
+    }
+
+    private func syncWalletConnectSessionCount() {
+        walletConnectSessionCount = walletConnectSessionManager.sessions.count
+    }
+
+    private func syncWalletConnectPendingRequestCount() {
+        walletConnectPendingRequestCount = walletConnectSessionManager.activePendingRequests.count
+    }
+
+    private func syncSecurityAlert() {
+        securityAlert = !passcodeManager.isPasscodeSet
+    }
+
+    private func syncAboutAlert() {
+        aboutAlert = !termsManager.termsAccepted
     }
 }
 
 extension MainSettingsViewModel {
-    var intoductoryTitleSignal: Driver<String?> {
-        intoductoryTitleRelay.asDriver()
-    }
-
-    var openWalletConnectSignal: Signal<WalletConnectOpenMode> {
-        openWalletConnectRelay.asSignal()
-    }
-
-    var openLinkSignal: Signal<String> {
-        openLinkRelay.asSignal()
-    }
-
-    var manageWalletsAlertDriver: Driver<Bool> {
-        manageWalletsAlertRelay.asDriver()
-    }
-
-    var securityCenterAlertDriver: Driver<Bool> {
-        securityCenterAlertRelay.asDriver()
-    }
-
-    var showSubscriptionDriver: Driver<Bool> {
-        hasActiveSubscriptionRelay.asDriver()
-    }
-
-    var iCloudSyncAlertDriver: Driver<Bool> {
-        iCloudSyncAlertRelay.asDriver()
-    }
-
-    var walletConnectCountDriver: Driver<(highlighted: Bool, text: String)?> {
-        walletConnectCountRelay.asDriver()
-    }
-
-    var baseCurrencyDriver: Driver<String> {
-        baseCurrencyRelay.asDriver()
-    }
-
-    var aboutAlertDriver: Driver<Bool> {
-        aboutAlertRelay.asDriver()
-    }
-
-    var currentLanguage: String? {
-        service.currentLanguageDisplayName
-    }
-
     var appVersion: String {
-        service.appVersion
+        systemInfoManager.appVersion.description
     }
 
-    var analyticsLink: String {
-        service.analyticsLink
+    func rateApp() {
+        rateAppManager.forceShow()
     }
 
-    var isAuthenticated: Bool {
-        service.isAuthenticated
-    }
-
-    var hasActiveSubscriptions: Bool {
-        service.hasActiveSubscriptions
-    }
-
-    var offerTitle: String? {
-        service.allowIntroductoryOffer.title
-    }
-
-    func activated(_ premiumFeature: PremiumFeature) -> Bool {
-        service.activated(premiumFeature)
-    }
-
-    func onTapWalletConnect() {
-        switch service.walletConnectState {
-        case .noAccount:
-            openWalletConnectRelay.accept(.errorDialog(error: .noAccount))
-        case .backedUp:
-            openWalletConnectRelay.accept(.list)
-            stat(page: .settings, event: .open(page: .walletConnect))
-        case let .nonSupportedAccountType(accountType):
-            openWalletConnectRelay.accept(.errorDialog(error: .nonSupportedAccountType(accountTypeDescription: accountType.description)))
-        case let .unBackedUpAccount(account):
-            openWalletConnectRelay.accept(.errorDialog(error: .unbackupedAccount(account: account)))
-        }
-    }
-
-    func onTapCompanyLink() {
-        openLinkRelay.accept(AppConfig.companyWebPageLink)
-    }
-
-    func onTapRateApp() {
-        service.rateApp()
+    func activated(premiumFeature: PremiumFeature) -> Bool {
+        purchaseManager.activated(premiumFeature)
     }
 }
 
 extension MainSettingsViewModel {
-    enum WalletConnectOpenMode {
-        case list
-        case errorDialog(error: WalletConnectAppShowView.WalletConnectOpenError)
+    enum WalletConnectState {
+        case noAccount
+        case backedUp
+        case nonSupportedAccountType(accountType: AccountType)
+        case unBackedUpAccount(account: Account)
     }
 }
 

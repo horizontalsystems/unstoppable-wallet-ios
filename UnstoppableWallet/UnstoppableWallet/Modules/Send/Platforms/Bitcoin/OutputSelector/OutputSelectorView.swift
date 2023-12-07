@@ -26,7 +26,6 @@ struct OutputSelectorView: View {
                                 }
                             }
                         }
-                        .themeListStyle(.borderedLawrence)
 
                         ListSection {
                             ForEach(viewModel.outputsViewItems) { viewItem in

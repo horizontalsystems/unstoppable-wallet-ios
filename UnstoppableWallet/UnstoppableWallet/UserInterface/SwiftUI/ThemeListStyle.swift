@@ -29,7 +29,9 @@ struct ThemeListStyleModifier: ViewModifier {
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         case .borderedLawrence:
             content
-                .background(Color.themeLawrence)
+                .background(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).fill(Color.themeLawrence))
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(selected ? Color.themeJacob : Color.themeSteel20, lineWidth: .heightOneDp))
         case .bordered:
             content
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
