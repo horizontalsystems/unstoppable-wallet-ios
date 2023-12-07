@@ -369,8 +369,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.account" = "Account";
 
 "deposit.amount" = "Betrag";
-"deposit.set_amount" = "Set Amount";
-"deposit.enter_amount" = "Enter Amount";
+"deposit.set_amount" = "Setze Betrag";
+"deposit.enter_amount" = "Betrag eingeben";
 "deposit.not_active" = "nicht aktiv";
 "deposit.not_active.title" = "Keine aktive Adresse";
 "deposit.not_active.tron_description" = "Neu erstellte Konten in der TRON-Blockchain sind inaktiv und können nicht abgefragt oder untersucht werden. Sie müssen aktiviert werden.\n\nDie Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren. Zur Aktivierung eines neuen Kontos auf der Tron-Kette ist eine Gebühr von 1 TRX erforderlich";
@@ -379,7 +379,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.zcash.restore.already_own" = "Ja, ich besitze bereits";
 "deposit.zcash.restore.dont_have" = "Nein, ich habe nicht";
 
-"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
+"deposit.warning" = "Nur Netzwerk-kompatible Tokens. Andere gehen verloren.";
 
 "receive_network_select.title" = "Netzwerk";
 "receive_network_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse.";
@@ -409,8 +409,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
 "send.error.invalid" = "Ungültig";
-"send.error.invalid_blockchain" = "Invalid Blockchain";
-"send.error.invalid_token" = "Invalid Token";
+"send.error.invalid_blockchain" = "Ungültige Blockchain";
+"send.error.invalid_token" = "Ungültiges Token";
 "send.error.address" = "Adresse";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 Stunde";
@@ -475,12 +475,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Donate
 
 "donate.list.title" = "Spenden mit";
-"donate.list.get_address" = "Get Donate Address";
+"donate.list.get_address" = "Spendenadresse erhalten";
 "donate.list.get_address.title" = "Adresse";
 "donate.title" = "%@ Spenden";
 "donate.no_assets" = "Sie haben keine Assets zu spenden.";
 "donate.support.description" = "Gemeinsam können wir mit Ihrer Unterstützung diese App noch besser machen!";
-"donate.support.bottom_description" = "Or select a coin to donate";
+"donate.support.bottom_description" = "Oder wählen Sie eine Münze zum Spenden";
 
 // CoinSelector
 
@@ -598,7 +598,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.top.section.header.see_all" = "Alle anzeigen";
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "Sektoren";
 "market.top.section.header.news" = "Nachrichten";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
@@ -634,8 +634,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.description" = "Marktkapitalisierung aller Protokolle auf der %@ Kette";
 
-"market.search.recent" = "Recent";
-"market.search.popular" = "Popular";
+"market.search.recent" = "Neueste";
+"market.search.popular" = "Beliebt";
 
 "market_discovery.title" = "Discovey";
 "market_discovery.filters" = "Filters";
@@ -1221,9 +1221,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "btc_blockchain_settings.restore_source.description" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
 "btc_blockchain_settings.restore_source.alert" = "Nach dem Ändern der Quelle wiederherstellen muss sich die Wallet mit der %@ Blockchain synchronisieren.";
 
-"btc_restore_mode.blockchair" = "Fast, No Private";
-"btc_restore_mode.hybrid" = "Slow, No Private";
-"btc_restore_mode.blockchain" = "Slow, Private";
+"btc_restore_mode.blockchair" = "Schnell, kein Privat";
+"btc_restore_mode.hybrid" = "Langsam, kein Privat";
+"btc_restore_mode.blockchain" = "Langsam, privat";
 
 "btc_transaction_sort_mode.shuffle" = "Zufällig";
 "btc_transaction_sort_mode.shuffle.description" = "Zufällige Indizierung";
@@ -1670,12 +1670,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Watch Address
 
 "watch_address.title" = "Wallet ansehen";
-"watch_address.watch" = "Watch";
+"watch_address.watch" = "Beobachten";
 "watch_address.address" = "Adresse";
-"watch_address.error.not_supported" = "Address format is not supported";
-"watch_address.error.non_public_key" = "Watching by private key is not allowed";
-"watch_address.error.not_supported_derived_type" = "Derived type is not supported";
-"watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
+"watch_address.error.not_supported" = "Adressformat wird nicht unterstützt";
+"watch_address.error.non_public_key" = "Das Beobachten mit privatem Schlüssel ist nicht erlaubt";
+"watch_address.error.not_supported_derived_type" = "Abgeleiteter Typ wird nicht unterstützt";
+"watch_address.watch_data.placeholder" = "Geben Sie Ihre EVM, TRON, TON oder öffentliche Adresse (Bitcoin, Litecoin, Bitcoin Cash) oder Konto xPubKey ein.";
 "watch_address.choose_blockchain" = "Blockchain auswählen";
 "watch_address.choose_coin" = "Coins auswählen";
 
@@ -1814,7 +1814,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "cex_deposit.network" = "Netzwerk";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Betrag";
-"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
+"cex_deposit.warning_memo" = "Benötigte Memo (Tag) bereitstellen und nur Netzwerk-kompatible Token senden. Andere gehen verloren.";
 "cex_deposit.copy_address" = "Kopieren";
 "cex_deposit.share_address" = "Teilen";
 "cex_deposit.failed" = "Fehler beim Laden der Einzahlungsadresse. Bitte erneut versuchen.";
