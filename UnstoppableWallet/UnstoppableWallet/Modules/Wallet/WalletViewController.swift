@@ -184,6 +184,76 @@ class WalletViewController: ThemeViewController {
         sync(qrScanVisible: viewModel.qrScanVisible)
 
         isLoaded = true
+        checkThor()
+    }
+
+    func checkThor() {
+        let thorchain = Thorchain(networkManager: App.shared.networkManager, withChain: .mainnet)
+        Task {
+            let swapData = try await thorchain.performSwap(
+                fromAsset: .BTC,
+                toAsset: .ETH,
+                destinationAddress: "0x73De013b50550A07C3006516eCB38bCF4BCb844b",
+                fromAssetAmount: 10
+            )
+
+            // Success - Current transaction estimates (display to user):
+            print(swapData.1.slip)
+            print(swapData.1.fee.assetAmount)
+            print(swapData.1.output)
+
+            print("=================")
+            // If user chooses to perform transaction, use the
+            // following information to perform your transaction:
+            switch swapData.0 {
+            case let .regularSwap(regularTxData):
+                print(regularTxData.amount)
+                print(regularTxData.memo)
+                print(regularTxData.recipient)
+            case let .routedSwap(routedTxData):
+                print(routedTxData.routerContractAddress) // use .deposit()
+                print(routedTxData.payableVaultAddress)
+                print(routedTxData.assetAddress)
+                print(routedTxData.amount)
+                print(routedTxData.memo)
+            case let .runeNativeDeposit(runeNativeDeposit):
+                print(runeNativeDeposit.memo)
+                print(runeNativeDeposit.amount)
+            }
+        }
+
+//        thorchain.performSwap(
+//                fromAsset: .BTC,
+//                toAsset: .ETH,
+//                destinationAddress: "0x73De013b50550A07C3006516eCB38bCF4BCb844b",
+//                fromAssetAmount: 0.01
+//        ) { swapData in
+//            if let txParams = swapData?.0, let swapCalculations = swapData?.1 {
+//                // Success - Current transaction estimates (display to user):
+//                print(swapCalculations.slip)
+//                print(swapCalculations.fee)
+//                print(swapCalculations.output)
+//
+//                print("=================")
+//                // If user chooses to perform transaction, use the
+//                // following information to perform your transaction:
+//                switch txParams {
+//                case .regularSwap(let regularTxData):
+//                    print(regularTxData.amount)
+//                    print(regularTxData.memo)
+//                    print(regularTxData.recipient)
+//                case .routedSwap(let routedTxData):
+//                    print(routedTxData.routerContractAddress) //use .deposit()
+//                    print(routedTxData.payableVaultAddress)
+//                    print(routedTxData.assetAddress)
+//                    print(routedTxData.amount)
+//                    print(routedTxData.memo)
+//                case .runeNativeDeposit(let runeNativeDeposit):
+//                    print(runeNativeDeposit.memo)
+//                    print(runeNativeDeposit.amount)
+//                }
+//            }
+//        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
