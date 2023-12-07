@@ -367,8 +367,8 @@
 "deposit.account" = "계정";
 
 "deposit.amount" = "양";
-"deposit.set_amount" = "Set Amount";
-"deposit.enter_amount" = "Enter Amount";
+"deposit.set_amount" = "금액 설정";
+"deposit.enter_amount" = "금액 입력";
 "deposit.not_active" = "비활성화됨";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
@@ -377,7 +377,7 @@
 "deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
 "deposit.zcash.restore.dont_have" = "아니요, 없어요";
 
-"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
+"deposit.warning" = "네트워크 호환 토큰만 허용됩니다. 그 외에는 소멸됩니다.";
 
 "receive_network_select.title" = "회로망";
 "receive_network_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
@@ -407,8 +407,8 @@
 "send.max_button" = "최대";
 "send.next_button" = "다음";
 "send.error.invalid" = "무효";
-"send.error.invalid_blockchain" = "Invalid Blockchain";
-"send.error.invalid_token" = "Invalid Token";
+"send.error.invalid_blockchain" = "유효하지 않은 블록체인";
+"send.error.invalid_token" = "잘못된 토큰";
 "send.error.address" = "주소";
 "send.hodler_locktime" = "시간 자물쇠";
 "send.hodler_locktime_hour" = "1시간";
@@ -473,12 +473,12 @@
 // Donate
 
 "donate.list.title" = "기부하기";
-"donate.list.get_address" = "Get Donate Address";
+"donate.list.get_address" = "기부 주소 획득";
 "donate.list.get_address.title" = "구애";
 "donate.title" = "기부하기 %@";
 "donate.no_assets" = "당신은 기부할 자산이 없습니다.";
 "donate.support.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
-"donate.support.bottom_description" = "Or select a coin to donate";
+"donate.support.bottom_description" = "기부할 코인을 선택하세요";
 
 // CoinSelector
 
@@ -596,7 +596,7 @@
 "market.top.section.header.see_all" = "모두 보기";
 "market.top.section.header.top_gainers" = "최고 상승자";
 "market.top.section.header.top_losers" = "최고 하락자";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "분야";
 "market.top.section.header.news" = "뉴스";
 "market.top.volume.title" = "거래량";
 "market.top.market_cap.title" = "시가총액";
@@ -632,8 +632,8 @@
 "top_platform.title" = "%@ 생태계";
 "top_platform.description" = "%@ 체인상의 모든 프로토콜의 시가총액";
 
-"market.search.recent" = "Recent";
-"market.search.popular" = "Popular";
+"market.search.recent" = "최근의";
+"market.search.popular" = "인기있는";
 
 "market_discovery.title" = "탐색";
 "market_discovery.filters" = "필터";
@@ -1220,9 +1220,9 @@
 "btc_blockchain_settings.restore_source.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 "btc_blockchain_settings.restore_source.alert" = "복원 소스를 변경한 후 지갑은 %@ 블록체인과 자체적으로 다시 동기화해야 합니다.";
 
-"btc_restore_mode.blockchair" = "Fast, No Private";
-"btc_restore_mode.hybrid" = "Slow, No Private";
-"btc_restore_mode.blockchain" = "Slow, Private";
+"btc_restore_mode.blockchair" = "빠르게, 개인 정보 없음";
+"btc_restore_mode.hybrid" = "느리고 개인 정보 없음";
+"btc_restore_mode.blockchain" = "느리지만 개인 정보 보호";
 
 "btc_transaction_sort_mode.shuffle" = "셔플";
 "btc_transaction_sort_mode.shuffle.description" = "랜덤 인덱싱";
@@ -1671,12 +1671,12 @@
 // Watch Address
 
 "watch_address.title" = "주소 관찰";
-"watch_address.watch" = "Watch";
+"watch_address.watch" = "시계";
 "watch_address.address" = "주소";
-"watch_address.error.not_supported" = "Address format is not supported";
-"watch_address.error.non_public_key" = "Watching by private key is not allowed";
-"watch_address.error.not_supported_derived_type" = "Derived type is not supported";
-"watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
+"watch_address.error.not_supported" = "주소 형식은 지원되지 않습니다";
+"watch_address.error.non_public_key" = "개인 키로 감시하는 것은 허용되지 않습니다";
+"watch_address.error.not_supported_derived_type" = "파생된 유형은 지원되지 않습니다";
+"watch_address.watch_data.placeholder" = "귀하의 EVM, TRON, TON 또는 공용 주소 (비트코인, 라이트코인, 비트코인 캐시) 또는 계정 xPubKey을 입력하십시오.";
 "watch_address.choose_blockchain" = "블록체인 선택";
 "watch_address.choose_coin" = "코인 선택";
 
@@ -1815,7 +1815,7 @@
 "cex_deposit.network" = "회로망";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "최소  금액";
-"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
+"cex_deposit.warning_memo" = "필요한 메모 (태그)를 제공하고 호환되는 네트워크 토큰만 보내십시오. 그렇지 않으면 소멸됩니다.";
 "cex_deposit.copy_address" = "복사";
 "cex_deposit.share_address" = "공유";
 "cex_deposit.failed" = "입금 주소를 불러오지 못했습니다. 다시 시도해주세요.";
