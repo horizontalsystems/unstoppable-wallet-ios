@@ -26,7 +26,7 @@ class AdapterManager {
         self.tronKitManager = tronKitManager
 
         walletManager.activeWalletDataUpdatedObservable
-            .observeOn(SerialDispatchQueueScheduler(qos: .utility))
+            .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] walletData in
                 self?.initAdapters(wallets: walletData.wallets, account: walletData.account)
             })

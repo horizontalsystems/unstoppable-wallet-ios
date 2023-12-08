@@ -18,7 +18,7 @@ class NftMetadataSyncer {
         self.nftStorage = nftStorage
 
         nftAdapterManager.adaptersUpdatedObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] adapterMap in
                 self?.sync(adapterMap: adapterMap)
                 self?.subscribeToAdapterRecords(adapterMap: adapterMap)
@@ -33,7 +33,7 @@ class NftMetadataSyncer {
 
         for (nftKey, adapter) in adapterMap {
             adapter.nftRecordsObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] _ in
                     self?.sync(nftKey: nftKey, adapter: adapter, force: true)
                 })
@@ -57,7 +57,7 @@ class NftMetadataSyncer {
         }
 
         nftMetadataManager.addressMetadataSingle(blockchainType: nftKey.blockchainType, address: adapter.userAddress)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] addressMetadata in
                 self?.handle(addressMetadata: addressMetadata, nftKey: nftKey)
             }, onError: { _ in

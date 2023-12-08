@@ -31,7 +31,7 @@ class PoolProvider {
         self.source = source
 
         adapter.syncingObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] in
                 self?.syncing = adapter.syncing
             })

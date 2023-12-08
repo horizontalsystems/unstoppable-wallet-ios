@@ -19,7 +19,7 @@ class PoolGroup {
         self.pools = pools
 
         Observable.merge(pools.map(\.syncingObservable))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] _ in
                 self?.syncState()
             })
@@ -56,7 +56,7 @@ extension PoolGroup {
     func itemsSingle(count: Int) -> Single<[TransactionItem]> {
         let singles = pools.map { pool in
             pool.itemsSingle(count: count)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
         }
 
         return Single.zip(singles)

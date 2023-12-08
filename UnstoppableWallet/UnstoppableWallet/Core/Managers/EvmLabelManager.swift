@@ -23,7 +23,7 @@ class EvmLabelManager {
         }
 
         provider.evmMethodLabelsSingle()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] labels in
                 try? self?.storage.save(evmMethodLabels: labels)
                 self?.saveMethodLabels(timestamp: timestamp)
@@ -39,7 +39,7 @@ class EvmLabelManager {
         }
 
         provider.evmAddressLabelsSingle()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] labels in
                 try? self?.storage.save(evmAddressLabels: labels)
                 self?.saveAddressLabels(timestamp: timestamp)
@@ -61,7 +61,7 @@ class EvmLabelManager {
 extension EvmLabelManager {
     func sync() {
         provider.updateStatusSingle()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] status in
                 self?.syncMethodLabels(timestamp: status.methodLabels)
                 self?.syncAddressLabels(timestamp: status.addressLabels)

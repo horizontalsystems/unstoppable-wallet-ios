@@ -20,7 +20,7 @@ class TransactionAdapterManager {
         self.adapterFactory = adapterFactory
 
         adapterManager.adapterDataReadyObservable
-            .observeOn(SerialDispatchQueueScheduler(qos: .utility))
+            .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] adapterData in
                 self?.initAdapters(adapterMap: adapterData.adapterMap)
             })

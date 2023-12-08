@@ -13,20 +13,20 @@ class Pool {
     private var invalidated = false
     private var allLoaded = false
 
-    private let queue = DispatchQueue(label: "\(AppConfig.label).pool")
+    private let queue = DispatchQueue(label: "\(AppConfig.label).pool", qos: .userInitiated)
 
     init(provider: IPoolProvider) {
         self.provider = provider
 
         provider.recordsObservable()
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] records in
                 self?.handleUpdated(records: records)
             })
             .disposed(by: disposeBag)
 
         provider.lastBlockUpdatedObservable()
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] in
                 self?.handleUpdatedLastBlock()
             })

@@ -30,7 +30,7 @@ class EvmAccountManager {
         self.evmKitManager = evmKitManager
         self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
 
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
+        subscribe(ConcurrentDispatchQueueScheduler(qos: .userInitiated), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
     }
 
     private func handleEvmKitCreated() {
@@ -48,7 +48,7 @@ class EvmAccountManager {
 //        print("Subscribe: \(evmKitWrapper.evmKit.networkType)")
 
         evmKitWrapper.evmKit.allTransactionsPublisher
-            .receive(on: DispatchQueue.global(qos: .utility))
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self] fullTransactions, initial in
                 self?.handle(fullTransactions: fullTransactions, initial: initial)
             }
@@ -209,7 +209,7 @@ class EvmAccountManager {
         let userAddress = evmKit.address
         let dataProvider = DataProvider(evmKit: evmKit)
 
-        let task = Task(priority: .utility) { [weak self] in
+        let task = Task(priority: .userInitiated) { [weak self] in
             let tokenInfos: [(tokenInfo: TokenInfo, balance: BigUInt)] = await withTaskGroup(of: (TokenInfo, BigUInt).self) { group in
                 for tokenInfo in tokenInfos {
                     guard case let .eip20(address) = tokenInfo.type, let contractAddress = try? EvmKit.Address(hex: address) else {
