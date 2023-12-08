@@ -33,7 +33,7 @@ extension NftMetadataService {
 
     func fetch(nftUids: Set<NftUid>) {
         nftMetadataManager.assetsBriefMetadataSingle(nftUids: nftUids)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] assetsBriefMetadata in
                 self?.handle(assetsBriefMetadata: assetsBriefMetadata)
             })

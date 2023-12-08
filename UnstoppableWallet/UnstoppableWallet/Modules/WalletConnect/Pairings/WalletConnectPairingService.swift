@@ -49,7 +49,7 @@ extension WalletConnectPairingService {
         pairingKillingRelay.accept(.processing)
 
         sessionManager.disconnectPairing(topic: topic)
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] _ in
                 self?.pairingKillingRelay.accept(.completed)
                 self?.syncPairings()
@@ -69,7 +69,7 @@ extension WalletConnectPairingService {
         }
 
         Single.zip(singles)
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] results in
                 self?.pairingKillingRelay.accept(results.first(where: { $0 == false }) == nil ? .completed : .failed)
                 self?.syncPairings()

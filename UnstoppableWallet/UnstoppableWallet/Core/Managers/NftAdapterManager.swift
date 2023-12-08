@@ -18,7 +18,7 @@ class NftAdapterManager {
         self.evmBlockchainManager = evmBlockchainManager
 
         walletManager.activeWalletDataUpdatedObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] walletData in
                 self?.handleAdaptersReady(wallets: walletData.wallets)
             })

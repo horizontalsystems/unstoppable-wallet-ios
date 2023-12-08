@@ -21,7 +21,7 @@ class TronAccountManager {
         self.tronKitManager = tronKitManager
         self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
 
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, tronKitManager.tronKitCreatedObservable) { [weak self] in self?.handleTronKitCreated() }
+        subscribe(ConcurrentDispatchQueueScheduler(qos: .userInitiated), disposeBag, tronKitManager.tronKitCreatedObservable) { [weak self] in self?.handleTronKitCreated() }
     }
 
     private func handleTronKitCreated() {
@@ -36,7 +36,7 @@ class TronAccountManager {
         }
 
         tronKitWrapper.tronKit.allTransactionsPublisher.asObservable()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] fullTransactions, initial in
                 self?.handle(fullTransactions: fullTransactions, initial: initial)
             })

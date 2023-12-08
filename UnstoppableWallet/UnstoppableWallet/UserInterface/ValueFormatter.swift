@@ -3,8 +3,8 @@ import Foundation
 class ValueFormatter {
     static let instance = ValueFormatter()
 
-    private let rawFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.raw-formatter", qos: .utility)
-    private let currencyFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.currency-formatter", qos: .utility)
+    private let rawFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.raw-formatter", qos: .userInitiated)
+    private let currencyFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.currency-formatter", qos: .userInitiated)
 
     private let rawFormatter: NumberFormatter = {
         let formatter = NumberFormatter()

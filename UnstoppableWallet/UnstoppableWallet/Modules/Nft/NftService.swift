@@ -95,7 +95,7 @@ class NftService {
             metadataMap[nftKey.blockchainType] = nftMetadataManager.addressMetadata(nftKey: nftKey)
 
             adapter.nftRecordsObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] records in
                     self?.handleUpdated(records: records, blockchainType: nftKey.blockchainType)
                 })
@@ -103,7 +103,7 @@ class NftService {
         }
 
         nftMetadataManager.addressMetadataObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] nftKey, addressMetadata in
                 self?.handleUpdated(addressMetadata: addressMetadata, nftKey: nftKey)
             })

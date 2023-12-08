@@ -55,7 +55,7 @@ class BaseTransactionsService {
     private var loadMoreRequested = false
     private var poolUpdateRequested = false
 
-    let queue = DispatchQueue(label: "\(AppConfig.label).base-transactions-service")
+    let queue = DispatchQueue(label: "\(AppConfig.label).base-transactions-service", qos: .userInitiated)
 
     init(rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
         self.rateService = rateService
@@ -96,21 +96,21 @@ class BaseTransactionsService {
         poolGroupSyncing = poolGroup.syncing
 
         poolGroup.invalidatedObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] in
                 self?.onPoolGroupInvalidated()
             })
             .disposed(by: poolGroupDisposeBag)
 
         poolGroup.itemsUpdatedObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] transactionItems in
                 self?.handleUpdated(transactionItems: transactionItems)
             })
             .disposed(by: poolGroupDisposeBag)
 
         poolGroup.syncingObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] syncing in
                 self?.handleUpdated(poolGroupSyncing: syncing)
             })
@@ -132,8 +132,8 @@ class BaseTransactionsService {
         let loadingMore = loadMoreRequested
 
         poolGroup.itemsSingle(count: lastRequestedCount)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] transactionItems in
                 self?.handle(transactionItems: transactionItems, loadedMore: loadingMore)
             })
