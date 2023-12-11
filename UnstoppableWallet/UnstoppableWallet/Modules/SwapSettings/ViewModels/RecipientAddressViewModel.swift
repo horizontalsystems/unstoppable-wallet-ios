@@ -159,13 +159,15 @@ extension AddressService.AddressError: LocalizedError {
     }
 }
 
-extension AddressService.UriError: LocalizedError {
+extension AddressUriParser.ParseError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidBlockchainType:
             return "send.error.invalid_blockchain".localized
         case .invalidTokenType:
             return "send.error.invalid_token".localized
+        case .wrongUri, .noUri:
+            return "alert.cant_recognize".localized
         }
     }
 }

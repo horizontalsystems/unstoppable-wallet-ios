@@ -1,8 +1,11 @@
+import ComponentKit
 import Foundation
 import RxRelay
 import RxSwift
 
 class DeepLinkManager {
+    static let tonDeepLinkScheme = "ton"
+
     private let newSchemeRelay = BehaviorRelay<DeepLink?>(value: nil)
 }
 
@@ -28,6 +31,16 @@ extension DeepLinkManager {
             return true
         }
 
+        if scheme == Self.tonDeepLinkScheme {
+            let parser = AddressParserFactory.parser(blockchainType: .ton, tokenType: nil)
+            do {
+                let address = try parser.parse(url: url.absoluteString)
+                newSchemeRelay.accept(.transfer(addressUri: address))
+            } catch {
+                HudHelper.instance.show(banner: .error(string: error.localizedDescription))
+            }
+        }
+
         if scheme == "unstoppable.money", host == "coin" {
             let uid = path.replacingOccurrences(of: "/", with: "")
 
@@ -43,5 +56,6 @@ extension DeepLinkManager {
     enum DeepLink {
         case walletConnect(url: String)
         case coin(uid: String)
+        case transfer(addressUri: AddressUri)
     }
 }

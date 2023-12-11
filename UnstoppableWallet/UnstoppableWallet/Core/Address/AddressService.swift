@@ -167,25 +167,23 @@ extension AddressService {
     }
 
     func handleFetched(text: String) -> String {
-        let result = addressUriParser.parse(addressUri: text.trimmingCharacters(in: .whitespaces))
-        switch result {
-        case .invalidBlockchainType:
-            showUriErrorRelay.accept(UriError.invalidBlockchainType)
-            return ""
-        case .invalidTokenType:
-            showUriErrorRelay.accept(UriError.invalidTokenType)
-            return ""
-        case .noUri, .wrongUri:
-            let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
-            set(text: text)
-            return text
-        case let .uri(data):
-
-            if let amount = data.amount {
+        do {
+            let result = try addressUriParser.parse(url: text.trimmingCharacters(in: .whitespaces))
+            if let amount = result.amount {
                 publishAmountRelay.accept(amount)
             }
-            set(text: data.address)
-            return data.address
+            set(text: result.address)
+            return result.address
+        } catch {
+            switch error {
+            case AddressUriParser.ParseError.noUri, AddressUriParser.ParseError.wrongUri:
+                let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                set(text: text)
+                return text
+            default:
+                showUriErrorRelay.accept(error)
+                return ""
+            }
         }
     }
 

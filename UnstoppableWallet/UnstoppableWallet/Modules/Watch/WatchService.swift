@@ -65,10 +65,9 @@ class WatchService {
     }
 
     private func parseUri(text: String) {
-        switch uriParser.parse(addressUri: text) {
-        case let .uri(data):
-            parseAddress(text: data.address)
-        default:
+        if let address = try? uriParser.parse(url: text) {
+            parseAddress(text: address.address)
+        } else {
             parseAddress(text: text)
         }
     }

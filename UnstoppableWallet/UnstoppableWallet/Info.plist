@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BlockchairApiKey</key>
-	<string>${blockchair_api_key}</string>
 	<key>ArbiscanApiKey</key>
 	<string>${arbiscan_api_key}</string>
+	<key>BlockchairApiKey</key>
+	<string>${blockchair_api_key}</string>
 	<key>BscscanApiKey</key>
 	<string>${bscscan_api_key}</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -32,6 +32,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>unstoppable.money</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>toncoin.deeplink</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ton</string>
 			</array>
 		</dict>
 	</array>
@@ -103,8 +113,6 @@
 	</array>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
-	<key>oneInchApiKey</key>
-	<string>${one_inch_api_key}</string>
 	<key>OpenSeaApiKey</key>
 	<string>${open_sea_api_key}</string>
 	<key>OptimismEtherscanApiKey</key>
@@ -154,5 +162,7 @@
 	<string>${unstoppable_domains_api_key}</string>
 	<key>WallectConnectV2ProjectKey</key>
 	<string>${wallet_connect_v2_project_key}</string>
+	<key>oneInchApiKey</key>
+	<string>${one_inch_api_key}</string>
 </dict>
 </plist>
