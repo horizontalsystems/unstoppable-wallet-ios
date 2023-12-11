@@ -600,7 +600,7 @@
 "market.top.section.header.see_all" = "Посмотреть всё";
 "market.top.section.header.top_gainers" = "Взлеты";
 "market.top.section.header.top_losers" = "Падения";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "Секторы";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объем";
 "market.top.market_cap.title" = "Цена";
@@ -636,8 +636,8 @@
 "top_platform.title" = "%@ Экосистема";
 "top_platform.description" = "Капитализация рынка всех протоколов на блокчейне %@ ";
 
-"market.search.recent" = "Recent";
-"market.search.popular" = "Popular";
+"market.search.recent" = "Недавние";
+"market.search.popular" = "Популярные";
 
 "market_discovery.title" = "Токены";
 "market_discovery.filters" = "Фильтры";
@@ -1673,10 +1673,10 @@
 // Watch Address
 
 "watch_address.title" = "Просмотр кошелька";
-"watch_address.watch" = "Watch";
+"watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
-"watch_address.error.not_supported" = "Address format is not supported";
-"watch_address.error.non_public_key" = "Watching by private key is not allowed";
+"watch_address.error.not_supported" = "Формат адреса не поддерживается";
+"watch_address.error.non_public_key" = "Просмотр по приватному ключу не разрешён";
 "watch_address.error.not_supported_derived_type" = "Derived type is not supported";
 "watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
