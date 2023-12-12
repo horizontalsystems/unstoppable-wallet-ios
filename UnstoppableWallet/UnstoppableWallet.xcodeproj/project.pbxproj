@@ -12558,7 +12558,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.3.2;
+				version = 2.3.3;
 			};
 		};
 		D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */ = {
@@ -12694,7 +12694,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.14;
+				version = 1.0.15;
 			};
 		};
 		D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit.Swift" */ = {
