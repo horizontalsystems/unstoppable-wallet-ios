@@ -598,7 +598,7 @@
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
 "market.top.section.header.top_losers" = "跌幅榜";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "行业";
 "market.top.section.header.news" = "发现";
 "market.top.volume.title" = "成交量";
 "market.top.market_cap.title" = "市值";
@@ -634,8 +634,8 @@
 "top_platform.title" = "%@ 星系";
 "top_platform.description" = "%@ 链上所有协议的市场上限";
 
-"market.search.recent" = "Recent";
-"market.search.popular" = "Popular";
+"market.search.recent" = "最近";
+"market.search.popular" = "流行";
 
 "market_discovery.title" = "发现";
 "market_discovery.filters" = "过滤器";
@@ -1670,12 +1670,12 @@
 // Watch Address
 
 "watch_address.title" = "观察地址";
-"watch_address.watch" = "Watch";
+"watch_address.watch" = "观察";
 "watch_address.address" = "地址";
-"watch_address.error.not_supported" = "Address format is not supported";
-"watch_address.error.non_public_key" = "Watching by private key is not allowed";
-"watch_address.error.not_supported_derived_type" = "Derived type is not supported";
-"watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
+"watch_address.error.not_supported" = "不支持的地址格式";
+"watch_address.error.non_public_key" = "不允许使用私钥进行观察";
+"watch_address.error.not_supported_derived_type" = "不支持的派生类型";
+"watch_address.watch_data.placeholder" = "输入您的EVM, TRON, TON或公共地址 (Bitcoin, Litecoin, 比特币现金) 或账户 xPubkey 。";
 "watch_address.choose_blockchain" = "选择区块链";
 "watch_address.choose_coin" = "选择代币";
 
