@@ -5,6 +5,7 @@ private let appIconSize: CGFloat = 47
 
 struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddressViewItemFactory>: View where Service.ServiceItem == Factory.Item {
     @ObservedObject var viewModel: ReceiveAddressViewModel<Service, Factory>
+    var onDismiss: (() -> ())?
 
     @State private var hasAppeared = false
     @State private var warningAlertPopup: ReceiveAddressModule.PopupWarningItem?
@@ -95,8 +96,12 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.done".localized) {
-                    presentationMode.wrappedValue.dismiss()
+                Button("button.cancel".localized) {
+                    if let onDismiss {
+                        onDismiss()
+                    } else {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
             }
         }

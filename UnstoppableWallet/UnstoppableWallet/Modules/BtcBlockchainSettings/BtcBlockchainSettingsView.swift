@@ -66,7 +66,7 @@ struct BtcBlockchainSettingsView: View {
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.done".localized) {
+                Button("button.cancel".localized) {
                     presentationMode.wrappedValue.dismiss()
                 }
             }
