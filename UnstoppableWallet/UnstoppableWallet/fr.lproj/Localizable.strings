@@ -1221,8 +1221,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "btc_blockchain_settings.restore_source.description" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
 "btc_blockchain_settings.restore_source.alert" = "Une fois la source de restauration modifiée, le portefeuille devra être resynchronisé avec la blockchain %@.";
 
-"btc_restore_mode.blockchair" = "Rapide, sans privé";
-"btc_restore_mode.hybrid" = "Slower, pas de privé";
+"btc_restore_mode.blockchair" = "Fast, Not Private";
+"btc_restore_mode.hybrid" = "Slow, Not Private";
 "btc_restore_mode.blockchain" = "Ralentissement, privé";
 
 "btc_transaction_sort_mode.shuffle" = "Mélanger";
