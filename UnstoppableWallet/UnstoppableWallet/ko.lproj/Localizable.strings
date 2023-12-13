@@ -1220,8 +1220,8 @@
 "btc_blockchain_settings.restore_source.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 "btc_blockchain_settings.restore_source.alert" = "복원 소스를 변경한 후 지갑은 %@ 블록체인과 자체적으로 다시 동기화해야 합니다.";
 
-"btc_restore_mode.blockchair" = "Fast, Not Private";
-"btc_restore_mode.hybrid" = "Slow, Not Private";
+"btc_restore_mode.blockchair" = "빠르게, 개인 정보 없음";
+"btc_restore_mode.hybrid" = "느리고 개인 정보 없음";
 "btc_restore_mode.blockchain" = "느리지만 개인 정보 보호";
 
 "btc_transaction_sort_mode.shuffle" = "셔플";
