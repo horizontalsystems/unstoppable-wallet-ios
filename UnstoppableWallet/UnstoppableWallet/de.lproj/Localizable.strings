@@ -1221,8 +1221,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "btc_blockchain_settings.restore_source.description" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
 "btc_blockchain_settings.restore_source.alert" = "Nach dem Ändern der Quelle wiederherstellen muss sich die Wallet mit der %@ Blockchain synchronisieren.";
 
-"btc_restore_mode.blockchair" = "Schnell, kein Privat";
-"btc_restore_mode.hybrid" = "Langsam, kein Privat";
+"btc_restore_mode.blockchair" = "Fast, Not Private";
+"btc_restore_mode.hybrid" = "Slow, Not Private";
 "btc_restore_mode.blockchain" = "Langsam, privat";
 
 "btc_transaction_sort_mode.shuffle" = "Zufällig";
