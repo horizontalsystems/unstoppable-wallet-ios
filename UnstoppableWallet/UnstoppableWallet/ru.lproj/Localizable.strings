@@ -627,7 +627,7 @@
 "market.top.top_losers" = "Падения";
 "market.top.top_collections" = "Топ NFT коллекции";
 "market.top.floor_price" = "Цена";
-"market.top.top_platforms" = "Топ платформаы";
+"market.top.top_platforms" = "Топ платформы";
 "market.top.protocols" = "Протоколы";
 
 "top_platforms.title" = "Рейтинг платформ";
