@@ -2,6 +2,7 @@
 "button.apply" = "적용";
 "button.cancel" = "취소";
 "button.close" = "가까운, 닫힌";
+"button.confirm" = "확인";
 "button.continue" = "계속";
 "button.done" = "완료";
 "button.reset" = "초기화";
@@ -365,6 +366,9 @@
 "deposit.qr_code_description.watch" = "%@의 시계 주소";
 "deposit.account" = "계정";
 
+"deposit.amount" = "양";
+"deposit.set_amount" = "금액 설정";
+"deposit.enter_amount" = "금액 입력";
 "deposit.not_active" = "비활성화됨";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
@@ -373,7 +377,7 @@
 "deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
 "deposit.zcash.restore.dont_have" = "아니요, 없어요";
 
-"deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
+"deposit.warning" = "네트워크 호환 토큰만 허용됩니다. 그 외에는 소멸됩니다.";
 
 "receive_network_select.title" = "회로망";
 "receive_network_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
@@ -403,6 +407,8 @@
 "send.max_button" = "최대";
 "send.next_button" = "다음";
 "send.error.invalid" = "무효";
+"send.error.invalid_blockchain" = "유효하지 않은 블록체인";
+"send.error.invalid_token" = "잘못된 토큰";
 "send.error.address" = "주소";
 "send.hodler_locktime" = "시간 자물쇠";
 "send.hodler_locktime_hour" = "1시간";
@@ -467,11 +473,12 @@
 // Donate
 
 "donate.list.title" = "기부하기";
-"donate.list.get_address" = "주소 받기";
+"donate.list.get_address" = "기부 주소 획득";
 "donate.list.get_address.title" = "구애";
 "donate.title" = "기부하기 %@";
 "donate.no_assets" = "당신은 기부할 자산이 없습니다.";
 "donate.support.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
+"donate.support.bottom_description" = "기부할 코인을 선택하세요";
 
 // CoinSelector
 
@@ -589,7 +596,7 @@
 "market.top.section.header.see_all" = "모두 보기";
 "market.top.section.header.top_gainers" = "최고 상승자";
 "market.top.section.header.top_losers" = "최고 하락자";
-"market.top.section.header.top_sectors" = "주요 부문";
+"market.top.section.header.sectors" = "분야";
 "market.top.section.header.news" = "뉴스";
 "market.top.volume.title" = "거래량";
 "market.top.market_cap.title" = "시가총액";
@@ -625,6 +632,9 @@
 "top_platform.title" = "%@ 생태계";
 "top_platform.description" = "%@ 체인상의 모든 프로토콜의 시가총액";
 
+"market.search.recent" = "최근의";
+"market.search.popular" = "인기있는";
+
 "market_discovery.title" = "탐색";
 "market_discovery.filters" = "필터";
 "market_discovery.browse_categories" = "카테고리 탐색";
@@ -632,9 +642,6 @@
 "market_discovery.not_found" = "검색 결과가 없습니다";
 
 "market_watchlist.empty.caption" = "관심 목록이 비어 있습니다.";
-
-"market.search.title" = "검색";
-"market.search.empty_text" = "검색 결과가 없습니다";
 
 "market.advanced_search.title" = "필터";
 "market.advanced_search.show_results" = "결과 보기";
@@ -868,7 +875,7 @@
 "coin_analytics.audits.issues" = "문제점";
 "coin_analytics.audits.no_reports" = "감사 보고서 없음";
 
-"coin_analytics.last_30d" = "Last 30d";
+"coin_analytics.last_30d" = "지난 30일";
 "coin_analytics.current" = "현재";
 
 "coin_analytics.overall_score" = "전체 점수";
@@ -1213,9 +1220,9 @@
 "btc_blockchain_settings.restore_source.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 "btc_blockchain_settings.restore_source.alert" = "복원 소스를 변경한 후 지갑은 %@ 블록체인과 자체적으로 다시 동기화해야 합니다.";
 
-"btc_restore_mode.blockchair" = "빠르고 비공개, 중앙집중화";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "느리고 비공개, 탈중앙화";
+"btc_restore_mode.blockchair" = "빠르게, 개인 정보 없음";
+"btc_restore_mode.hybrid" = "느리고 개인 정보 없음";
+"btc_restore_mode.blockchain" = "느리지만 개인 정보 보호";
 
 "btc_transaction_sort_mode.shuffle" = "셔플";
 "btc_transaction_sort_mode.shuffle.description" = "랜덤 인덱싱";
@@ -1644,7 +1651,7 @@
 "fee_settings.max_fee_rate" = "최대 수수료율";
 "fee_settings.max_fee_rate.info" = "이것은 사용자가 지불하려는 가스당 최대 총 가격입니다. 이것은 네트워크의 기본 수수료율과 최대 우선순위 수수료율을 포함해야 합니다. 여기에 표시된 값은 사용자가 선택한 다음 블록의 기본 수수료율과 최대 우선순위 수수료율을 기반으로 추천된 것입니다. 실제로 지불되는 수수료율은 일반적으로 더 낮을 것입니다. 현재 기본 수수료율보다 낮게 설정하면 수수료 지불이 제한될 수 있지만, 거래가 확인되기까지 더 긴 대기 시간이나 막힌 거래가 발생할 수 있습니다.";
 "fee_settings.tips" = "최대 우선 가스비";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips.info" = "사용자는 거래가 더 빨리 확인되도록 하는 동기를 위해 우선수수료를 지불합니다. 이를 때로는 팁이라고도 부릅니다. 최대 우선수수료율은 사용자가 기본 수수료율 위에 추가로 지불할 수 있는 최대 가스당 가격입니다. 여기에 표시된 값은 예측된 네트워크 상황을 기반으로 제안됩니다. 실제 우선수수료는 일반적으로 더 낮을 것입니다. 이 값을 0으로 설정하면 거래가 확인되기까지 긴 대기 시간이 발생할 수 있으며, 모든 사용자의 대기 중인 거래 대기열의 끝에 배치됩니다.";
 
 "fee_settings.errors.insufficient_balance" = "잔액이 부족합니다";
 "fee_settings.errors.unexpected_error" = "예기치 못한 오류";
@@ -1664,15 +1671,12 @@
 // Watch Address
 
 "watch_address.title" = "주소 관찰";
-"watch_address.watch" = "다음";
+"watch_address.watch" = "시계";
 "watch_address.address" = "주소";
-"watch_address.by" = "작성";
-"watch_address.watch_by" = "지켜보다";
-"watch_address.evm_address" = "EVM 주소";
-"watch_address.tron_address" = "TRON 주소";
-"watch_address.public_key" = "Account xPubKey";
-"watch_address.public_key.placeholder" = "Account Extended Public Key 입력";
-"watch_address.public_key.invalid_key" = "잘못된 암호입니다";
+"watch_address.error.not_supported" = "주소 형식은 지원되지 않습니다";
+"watch_address.error.non_public_key" = "개인 키로 감시하는 것은 허용되지 않습니다";
+"watch_address.error.not_supported_derived_type" = "파생된 유형은 지원되지 않습니다";
+"watch_address.watch_data.placeholder" = "귀하의 EVM, TRON, TON 또는 공용 주소 (비트코인, 라이트코인, 비트코인 캐시) 또는 계정 xPubKey을 입력하십시오.";
 "watch_address.choose_blockchain" = "블록체인 선택";
 "watch_address.choose_coin" = "코인 선택";
 
@@ -1811,7 +1815,7 @@
 "cex_deposit.network" = "회로망";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "최소  금액";
-"cex_deposit.warning_memo" = "메모(tag)는 필수입니다. 메모 없이는 코인을 잃을 수 있습니다.";
+"cex_deposit.warning_memo" = "필요한 메모 (태그)를 제공하고 호환되는 네트워크 토큰만 보내십시오. 그렇지 않으면 소멸됩니다.";
 "cex_deposit.copy_address" = "복사";
 "cex_deposit.share_address" = "공유";
 "cex_deposit.failed" = "입금 주소를 불러오지 못했습니다. 다시 시도해주세요.";

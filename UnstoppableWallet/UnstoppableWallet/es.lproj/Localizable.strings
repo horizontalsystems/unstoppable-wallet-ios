@@ -2,6 +2,7 @@
 "button.apply" = "Aplicar";
 "button.cancel" = "Cancelar";
 "button.close" = "Cerrar";
+"button.confirm" = "Confirmar";
 "button.continue" = "Continuar";
 "button.done" = "Listo";
 "button.reset" = "Reiniciar";
@@ -367,6 +368,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.qr_code_description.watch" = "Ver dirección de %@";
 "deposit.account" = "Account";
 
+"deposit.amount" = "Importe";
+"deposit.set_amount" = "Asignar cantidad";
+"deposit.enter_amount" = "Introducir cantidad";
 "deposit.not_active" = "inactivo";
 "deposit.not_active.title" = "Dirección no activa";
 "deposit.not_active.tron_description" = "Las cuentas recién creadas en la cadena de bloques TRON están inactivas y no se pueden consultar ni explorar. Necesitan ser activadas.\n\nPara activar una cuenta inactiva, transfiera tokens TRX o TRC-10 a su dirección. Para activar una nueva cuenta en la cadena Tron, se requiere una cuota de 1 TRX";
@@ -375,7 +379,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.zcash.restore.already_own" = "Sí, ya tengo";
 "deposit.zcash.restore.dont_have" = "No, no tengo";
 
-"deposit.warning" = "Enviar sólo %@ a esta dirección. Enviar otros tipos de tokens a esta dirección dará como resultado su pérdida definitiva.";
+"deposit.warning" = "Sólo tokens compatibles con la red. Otros se perderán.";
 
 "receive_network_select.title" = "La red";
 "receive_network_select.description" = "Elija una red y obtenga una dirección a recibir.";
@@ -405,6 +409,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.max_button" = "Máx.";
 "send.next_button" = "Siguiente";
 "send.error.invalid" = "Inválido";
+"send.error.invalid_blockchain" = "Blockchain inválido";
+"send.error.invalid_token" = "Token inválido";
 "send.error.address" = "Dirección";
 "send.hodler_locktime" = "Timelock";
 "send.hodler_locktime_hour" = "1 hora";
@@ -469,11 +475,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Donate
 
 "donate.list.title" = "Donar con";
-"donate.list.get_address" = "Obtener dirección";
+"donate.list.get_address" = "Obtener dirección de donación";
 "donate.list.get_address.title" = "Dirección";
 "donate.title" = "Donar %@";
 "donate.no_assets" = "No tiene activos para donar.";
 "donate.support.description" = "¡Junto con tu apoyo, podemos hacer esta aplicación aún mejor!";
+"donate.support.bottom_description" = "O selecciona una moneda para donar";
 
 // CoinSelector
 
@@ -591,7 +598,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.top.section.header.see_all" = "Ver Todos";
 "market.top.section.header.top_gainers" = "Máximos Ganadores";
 "market.top.section.header.top_losers" = "Máximos Perdedores";
-"market.top.section.header.top_sectors" = "Mejores Sectores";
+"market.top.section.header.sectors" = "Sectores";
 "market.top.section.header.news" = "Noticias";
 "market.top.volume.title" = "Volumen";
 "market.top.market_cap.title" = "Capitalización de Mercado";
@@ -627,6 +634,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "top_platform.title" = "Ecosistema %@";
 "top_platform.description" = "Límite de mercado de todos los protocolos en la cadena %@";
 
+"market.search.recent" = "Reciente";
+"market.search.popular" = "Popular";
+
 "market_discovery.title" = "Descubrimiento";
 "market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Navegar Categorías";
@@ -634,9 +644,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market_discovery.not_found" = "No se han encontrado resultados";
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
-
-"market.search.title" = "Buscar";
-"market.search.empty_text" = "No se han encontrado resultados";
 
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
@@ -1215,9 +1222,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "btc_blockchain_settings.restore_source.description" = "Elige la fuente que la aplicación Unstoppable debería usar para sincronizar la(s) cartera(s).";
 "btc_blockchain_settings.restore_source.alert" = "Después de cambiar la Fuente de Restauración, la cartera tendrá que resincronizarse con la cadena de bloques %@.";
 
-"btc_restore_mode.blockchair" = "Rápido, Privado, Centralizado";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "Lento, Privado, Descentralizado";
+"btc_restore_mode.blockchair" = "Rápido, sin privado";
+"btc_restore_mode.hybrid" = "Lento, sin privado";
+"btc_restore_mode.blockchain" = "Lento, sin privado";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Indexación aleatoria";
@@ -1664,15 +1671,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Watch Address
 
 "watch_address.title" = "Ver carteras";
-"watch_address.watch" = "Siguiente";
+"watch_address.watch" = "Ver";
 "watch_address.address" = "Dirección";
-"watch_address.by" = "Por";
-"watch_address.watch_by" = "Ver por";
-"watch_address.evm_address" = "Dirección EVM";
-"watch_address.tron_address" = "Dirección de TRON";
-"watch_address.public_key" = "Account xPubKey";
-"watch_address.public_key.placeholder" = "Introduzca Account Extended Public Key ";
-"watch_address.public_key.invalid_key" = "Clave no válida";
+"watch_address.error.not_supported" = "El formato de dirección no está soportado";
+"watch_address.error.non_public_key" = "No se permite la visualización por clave privada";
+"watch_address.error.not_supported_derived_type" = "El tipo derivado no está soportado";
+"watch_address.watch_data.placeholder" = "Introduzca su EVM, TRON, TON o Dirección Pública (Bitcoin, Litecoin, Bitcoin Cash) o Cuenta xPubKey.";
 "watch_address.choose_blockchain" = "Elegir Blockchain";
 "watch_address.choose_coin" = "Elegir moneda";
 
@@ -1811,7 +1815,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "cex_deposit.network" = "La red";
 "cex_deposit.memo" = "Memo (Etiqueta)";
 "cex_deposit.min_amount" = "Importe mínimo";
-"cex_deposit.warning_memo" = "Se requiere Memo (etiqueta) o perderá sus monedas.";
+"cex_deposit.warning_memo" = "Proporcionar memo requerido (Tag) y enviar sólo tokens compatibles con la red. Otros se perderán.";
 "cex_deposit.copy_address" = "Copiar";
 "cex_deposit.share_address" = "Compartir";
 "cex_deposit.failed" = "Error al cargar la dirección del depósito. Vuelva a intentarlo.";

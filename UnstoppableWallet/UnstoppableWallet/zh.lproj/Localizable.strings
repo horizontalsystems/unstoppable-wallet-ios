@@ -2,6 +2,7 @@
 "button.apply" = "应用";
 "button.cancel" = "取消";
 "button.close" = "关闭";
+"button.confirm" = "确认";
 "button.continue" = "继续";
 "button.done" = "完成";
 "button.reset" = "重置";
@@ -367,6 +368,9 @@
 "deposit.qr_code_description.watch" = "观看 %@ 的地址";
 "deposit.account" = "账户";
 
+"deposit.amount" = "金额";
+"deposit.set_amount" = "设定金额";
+"deposit.enter_amount" = "输入金额";
 "deposit.not_active" = "不活动";
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
@@ -375,7 +379,7 @@
 "deposit.zcash.restore.already_own" = "是的，我已经拥有了";
 "deposit.zcash.restore.dont_have" = "不，我没有";
 
-"deposit.warning" = "只发送 %@ 到此地址。向此地址发送其他类型的令牌将导致其最终丢失。";
+"deposit.warning" = "仅支持与网络兼容的代币，其他将会丧失。";
 
 "receive_network_select.title" = "網絡";
 "receive_network_select.description" = "选择一个网络并获取要接收的地址。";
@@ -405,6 +409,8 @@
 "send.max_button" = "最多";
 "send.next_button" = "下一步";
 "send.error.invalid" = "无效";
+"send.error.invalid_blockchain" = "无效的区块链";
+"send.error.invalid_token" = "无效代币";
 "send.error.address" = "地址";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 小时";
@@ -469,11 +475,12 @@
 // Donate
 
 "donate.list.title" = "捐赠方式";
-"donate.list.get_address" = "获取地址";
+"donate.list.get_address" = "获取捐赠地址";
 "donate.list.get_address.title" = "地址";
 "donate.title" = "捐赠%@";
 "donate.no_assets" = "您没有资产可以捐赠。";
 "donate.support.description" = "在你的支持下，我们可以使这个应用更好！";
+"donate.support.bottom_description" = "或选择一种币进行捐赠";
 
 // CoinSelector
 
@@ -591,7 +598,7 @@
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
 "market.top.section.header.top_losers" = "跌幅榜";
-"market.top.section.header.top_sectors" = "前列行业";
+"market.top.section.header.sectors" = "行业";
 "market.top.section.header.news" = "发现";
 "market.top.volume.title" = "成交量";
 "market.top.market_cap.title" = "市值";
@@ -627,6 +634,9 @@
 "top_platform.title" = "%@ 星系";
 "top_platform.description" = "%@ 链上所有协议的市场上限";
 
+"market.search.recent" = "最近";
+"market.search.popular" = "流行";
+
 "market_discovery.title" = "发现";
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "浏览类别";
@@ -634,9 +644,6 @@
 "market_discovery.not_found" = "未发现结果";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
-
-"market.search.title" = "搜索​​​​";
-"market.search.empty_text" = "未发现结果";
 
 "market.advanced_search.title" = "过滤器";
 "market.advanced_search.show_results" = "显示结果";
@@ -1214,9 +1221,9 @@
 "btc_blockchain_settings.restore_source.description" = "通过交易为恢复钱包选择数据源。";
 "btc_blockchain_settings.restore_source.alert" = "更改恢复源后，钱包必须将自身与 %@ 区块链重新同步。";
 
-"btc_restore_mode.blockchair" = "快速、私密、中心化";
-"btc_restore_mode.hybrid" = "API + Blockchain";
-"btc_restore_mode.blockchain" = "缓慢、私密、去中心化";
+"btc_restore_mode.blockchair" = "快速，不私密";
+"btc_restore_mode.hybrid" = "慢，无隐私";
+"btc_restore_mode.blockchain" = "慢，私密";
 
 "btc_transaction_sort_mode.shuffle" = "随机排序";
 "btc_transaction_sort_mode.shuffle.description" = "随机索引";
@@ -1663,15 +1670,12 @@
 // Watch Address
 
 "watch_address.title" = "观察地址";
-"watch_address.watch" = "下一步";
+"watch_address.watch" = "观察";
 "watch_address.address" = "地址";
-"watch_address.by" = "由";
-"watch_address.watch_by" = "观看者";
-"watch_address.evm_address" = "EVM 地址";
-"watch_address.tron_address" = "TRON地址";
-"watch_address.public_key" = "Account xPubKey";
-"watch_address.public_key.placeholder" = "輸入 Account Extended Public Key";
-"watch_address.public_key.invalid_key" = "错误密钥";
+"watch_address.error.not_supported" = "不支持的地址格式";
+"watch_address.error.non_public_key" = "不允许使用私钥进行观察";
+"watch_address.error.not_supported_derived_type" = "不支持的派生类型";
+"watch_address.watch_data.placeholder" = "输入您的EVM, TRON, TON或公共地址 (Bitcoin, Litecoin, 比特币现金) 或账户 xPubkey 。";
 "watch_address.choose_blockchain" = "选择区块链";
 "watch_address.choose_coin" = "选择代币";
 
@@ -1810,7 +1814,7 @@
 "cex_deposit.network" = "網絡";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "最小金额";
-"cex_deposit.warning_memo" = "Memo(标签)是必需的，否则您将丢失您的硬币。";
+"cex_deposit.warning_memo" = "提供必需的备忘录（标签），并仅发送兼容网络的代币。其他将会丢失。";
 "cex_deposit.copy_address" = "复制";
 "cex_deposit.share_address" = "分享";
 "cex_deposit.failed" = "加载存款地址失败。请重试。";
