@@ -41,6 +41,7 @@
 		11B35056B69A06C8CFF3CBB6 /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358967A086CFE9DBB152B /* BackupModule.swift */; };
 		11B3505A12674A5FF36D3CC8 /* MarketAdvancedSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C19608F6A314CF1F0C5 /* MarketAdvancedSearchService.swift */; };
 		11B3505A7E4B89E9A23C19F5 /* NftMetadataSyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B58E21336A3DF5A9B45 /* NftMetadataSyncRecord.swift */; };
+		11B3505B911DD28AC464A694 /* BackupManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A999428368A8FA264CA4 /* BackupManagerViewModel.swift */; };
 		11B35063C586D8E1365E9DFF /* SendEvmConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354950B1534AD045FDA3A /* SendEvmConfirmationViewController.swift */; };
 		11B3506409ACA603EE8869A6 /* CexDepositNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35799B0DCCF655F0766BF /* CexDepositNetwork.swift */; };
 		11B35066480B6EB9F124EBC0 /* ExtendedKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35564351D59D37278C723 /* ExtendedKeyService.swift */; };
@@ -2139,7 +2140,6 @@
 		ABC9A227648FF076E9518703 /* ContactBookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE12A5E8B9FB24FFE42F /* ContactBookHelper.swift */; };
 		ABC9A231F63CDD5EC0BB71EF /* ActionSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9A18EECD26A7A93D972 /* ActionSheetPresentationController.swift */; };
 		ABC9A23C433DC06FB7791285 /* WCSignMessageRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0576B804ABA38EF9843 /* WCSignMessageRequestViewModel.swift */; };
-		ABC9A23C735BD2271B6A262A /* RestoreManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A999428368A8FA264CA4 /* RestoreManagerViewModel.swift */; };
 		ABC9A23D99D437A8A42C47E8 /* MovingPresentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD7303620D3B0F8B7F6A /* MovingPresentAnimation.swift */; };
 		ABC9A2462F3F928644435B86 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
 		ABC9A251119A2486465B315E /* WalletConnectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1136889E6976E17B347 /* WalletConnectService.swift */; };
@@ -2409,7 +2409,7 @@
 		ABC9AA4B0A6C33CAD5F3B050 /* ChartIndicatorsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB3EC7A1FB0D6C9F7F89 /* ChartIndicatorsModule.swift */; };
 		ABC9AA66E5F1C6C5EC8B6A1F /* InteractiveTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A590FE90E377412D8CF7 /* InteractiveTransitionDelegate.swift */; };
 		ABC9AA78419B8BFEC23E8E02 /* TokenSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A791A47F4F1E71B51B3B /* TokenSelectView.swift */; };
-		ABC9AA802C533F489EB72FDE /* RestoreManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A999428368A8FA264CA4 /* RestoreManagerViewModel.swift */; };
+		ABC9AA802C533F489EB72FDE /* BackupManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A999428368A8FA264CA4 /* BackupManagerViewModel.swift */; };
 		ABC9AA80C5197F9CC6221FC8 /* WalletBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AECEEB35D57CB0965E79 /* WalletBackup.swift */; };
 		ABC9AA82FC637FD132FA3D36 /* WCSendEthereumTransactionRequestModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6F0F47E2EF665381BFC /* WCSendEthereumTransactionRequestModule.swift */; };
 		ABC9AA85AC9DC60A08211D16 /* SendZcashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8B3C65C9F0285483160 /* SendZcashViewController.swift */; };
@@ -4237,7 +4237,7 @@
 		ABC9A939DD222D4A2BD3D71C /* RestoreTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreTypeViewController.swift; sourceTree = "<group>"; };
 		ABC9A9628A708749A31EEA70 /* ProFeaturesAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProFeaturesAuthorizationManager.swift; sourceTree = "<group>"; };
 		ABC9A99184EE1D5D052C52E9 /* ContactBookSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookSettingsViewController.swift; sourceTree = "<group>"; };
-		ABC9A999428368A8FA264CA4 /* RestoreManagerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreManagerViewModel.swift; sourceTree = "<group>"; };
+		ABC9A999428368A8FA264CA4 /* BackupManagerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupManagerViewModel.swift; sourceTree = "<group>"; };
 		ABC9A9A18EECD26A7A93D972 /* ActionSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetPresentationController.swift; sourceTree = "<group>"; };
 		ABC9A9B35C58F6525F3B2D5C /* FullCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullCoin.swift; sourceTree = "<group>"; };
 		ABC9A9B9B3A81581BA7E4082 /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -8094,7 +8094,7 @@
 			children = (
 				ABC9AD42C324F58B5EE00610 /* BackupManagerModule.swift */,
 				ABC9AEA4B072067A9F10BE36 /* BackupManagerViewController.swift */,
-				ABC9A999428368A8FA264CA4 /* RestoreManagerViewModel.swift */,
+				ABC9A999428368A8FA264CA4 /* BackupManagerViewModel.swift */,
 			);
 			path = BackupManagerLegacy;
 			sourceTree = "<group>";
@@ -10179,7 +10179,7 @@
 				11B35BF002B002DE7B20DB0C /* SharedLocalStorage.swift in Sources */,
 				D350DDB52AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
 				11B359A79743E965870AE8B6 /* AppWidgetConstants.swift in Sources */,
-				ABC9AA802C533F489EB72FDE /* RestoreManagerViewModel.swift in Sources */,
+				ABC9AA802C533F489EB72FDE /* BackupManagerViewModel.swift in Sources */,
 				11B359F812683F62595AFEE2 /* DateFormatterCache.swift in Sources */,
 				11B35483AFC1088E56BC7F37 /* LanguageHourFormatter.swift in Sources */,
 				11B35B298DCBAA8AE9DADA34 /* LanguageSettingsModule.swift in Sources */,
@@ -11666,6 +11666,7 @@
 				ABC9AB982879DE0BAE6701EC /* BorderedEmptyCell.swift in Sources */,
 				11B358F04D8F15D43CB2BAA6 /* MarketCategoryView.swift in Sources */,
 				11B3580BC3B5D2CBC68854D2 /* UIWindow.swift in Sources */,
+				11B3505B911DD28AC464A694 /* BackupManagerViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11751,7 +11752,6 @@
 				D3BA259B2ADFAF23002B13EA /* IntentHandler.swift in Sources */,
 				11B35685AC079B7BC7D1A534 /* ApiProvider.swift in Sources */,
 				D350DDB42AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
-				ABC9A23C735BD2271B6A262A /* RestoreManagerViewModel.swift in Sources */,
 				11B356FD5BC2244A8CCC3178 /* WidgetConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
