@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import UIKit
+import WidgetKit
 
 class AppManager {
     private let accountManager: AccountManager
@@ -108,6 +109,8 @@ extension AppManager {
         walletConnectSocketConnectionService.willEnterForeground()
 
         nftMetadataSyncer.sync()
+
+        AppWidgetConstants.allKinds.forEach { WidgetCenter.shared.reloadTimelines(ofKind: $0) }
     }
 
     func willTerminate() {
