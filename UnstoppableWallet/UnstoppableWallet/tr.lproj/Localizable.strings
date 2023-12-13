@@ -369,8 +369,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.account" = "Account";
 
 "deposit.amount" = "Tutar";
-"deposit.set_amount" = "Set Amount";
-"deposit.enter_amount" = "Enter Amount";
+"deposit.set_amount" = "Miktarı Ayarla";
+"deposit.enter_amount" = "Miktarı Girin";
 "deposit.not_active" = "aktif değil";
 "deposit.not_active.title" = "Aktif Adres Değil";
 "deposit.not_active.tron_description" = "TRON blok zincirinde yeni oluşturulan hesaplar etkin değildir ve sorgulanamaz veya araştırılamaz. Etkinleştirilmeleri gerekiyor.\n\nTRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir. Tron zincirinde yeni bir hesabın etkinleştirilmesi 1 TRX ücret gerektirir";
@@ -379,7 +379,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.zcash.restore.already_own" = "Evet, zaten sahibim";
 "deposit.zcash.restore.dont_have" = "Hayır, bende yok";
 
-"deposit.warning" = "Network-compatible tokens only. Others will be lost.";
+"deposit.warning" = "Sadece ağ uyumlu jetonlar. Diğerleri kaybedilecek.";
 
 "receive_network_select.title" = "Ağ";
 "receive_network_select.description" = "Bir ağ seçin ve para yatırmak için bir adres alın.";
@@ -409,8 +409,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid" = "Geçersiz";
-"send.error.invalid_blockchain" = "Invalid Blockchain";
-"send.error.invalid_token" = "Invalid Token";
+"send.error.invalid_blockchain" = "Geçersiz Blok Zinciri";
+"send.error.invalid_token" = "Geçersiz Jeton";
 "send.error.address" = "Adres";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 saat";
@@ -475,12 +475,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Donate
 
 "donate.list.title" = "Bağış yapın";
-"donate.list.get_address" = "Get Donate Address";
+"donate.list.get_address" = "Bağış Adresini Al";
 "donate.list.get_address.title" = "Adresler";
 "donate.title" = "Bağış yapmak %@";
 "donate.no_assets" = "Bağışlayacak varlığınız yok.";
 "donate.support.description" = "Desteğinizle birlikte bu uygulamayı daha da iyi hale getirebiliriz!";
-"donate.support.bottom_description" = "Or select a coin to donate";
+"donate.support.bottom_description" = "Ya bağış yapmak için bir coin seçin";
 
 // CoinSelector
 
@@ -598,7 +598,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.top.section.header.see_all" = "Hepsini Gör";
 "market.top.section.header.top_gainers" = "En Kazançlılar";
 "market.top.section.header.top_losers" = "Çok Kaybedenler";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "Sektörler";
 "market.top.section.header.news" = "Haberler";
 "market.top.volume.title" = "Hacim";
 "market.top.market_cap.title" = "P. Değeri";
@@ -634,8 +634,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.description" = "%@ zincirindeki tüm protokollerin piyasa değeri";
 
-"market.search.recent" = "Recent";
-"market.search.popular" = "Popular";
+"market.search.recent" = "Son";
+"market.search.popular" = "Popüler";
 
 "market_discovery.title" = "Keşif";
 "market_discovery.filters" = "Filtreler";
@@ -1225,9 +1225,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "btc_blockchain_settings.restore_source.description" = "İşlemler yapılmış cüzdanı geri yüklemek için veri kaynağını seçin.";
 "btc_blockchain_settings.restore_source.alert" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.";
 
-"btc_restore_mode.blockchair" = "Fast, No Private";
-"btc_restore_mode.hybrid" = "Slow, No Private";
-"btc_restore_mode.blockchain" = "Slow, Private";
+"btc_restore_mode.blockchair" = "Hızlı, Gizli Değil";
+"btc_restore_mode.hybrid" = "Yavaş, Gizli Değil";
+"btc_restore_mode.blockchain" = "Yavaş, Özel";
 
 "btc_transaction_sort_mode.shuffle" = "Karıştır";
 "btc_transaction_sort_mode.shuffle.description" = "Rastgele Dizinleme";
@@ -1674,12 +1674,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Watch Address
 
 "watch_address.title" = "Cüzdan İzle";
-"watch_address.watch" = "Watch";
+"watch_address.watch" = "İzle";
 "watch_address.address" = "Adres";
-"watch_address.error.not_supported" = "Address format is not supported";
-"watch_address.error.non_public_key" = "Watching by private key is not allowed";
-"watch_address.error.not_supported_derived_type" = "Derived type is not supported";
-"watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
+"watch_address.error.not_supported" = "Adres formatı desteklenmiyor";
+"watch_address.error.non_public_key" = "Özel anahtarla izlemeye izin verilmiyor";
+"watch_address.error.not_supported_derived_type" = "Türetilmiş tür desteklenmiyor";
+"watch_address.watch_data.placeholder" = "EVM, TRON, TON veya Genel Adresinizi (Bitcoin, Litecoin, Bitcoin Cash) veya Hesap xPub Anahtarınızı Girin.";
 "watch_address.choose_blockchain" = "Blockchain Seç";
 "watch_address.choose_coin" = "Kripto Parayı Seç";
 
@@ -1822,7 +1822,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_deposit.network" = "Ağ";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. miktar";
-"cex_deposit.warning_memo" = "Provide required Memo (Tag) and send only network-compatible tokens. Others will be lost.";
+"cex_deposit.warning_memo" = "Gerekli Memo (Etiket) sağlayın ve yalnızca ağ uyumlu jetonları gönderin. Diğerleri kaybolur.";
 "cex_deposit.copy_address" = "Kopyala";
 "cex_deposit.share_address" = "Paylaş";
 "cex_deposit.failed" = "Para yatırma adresi yüklenemedi. Lütfen tekrar deneyiniz.";
