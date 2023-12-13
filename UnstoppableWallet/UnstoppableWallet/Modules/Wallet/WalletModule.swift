@@ -333,6 +333,7 @@ extension WalletModule {
         case address
         case swap
         case chart
+        case buy
     }
 
     struct ButtonItem {

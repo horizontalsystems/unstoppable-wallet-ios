@@ -177,3 +177,9 @@ protocol IErrorService: AnyObject {
 protocol IDynamicHeightCellDelegate: AnyObject {
     func onChangeHeight()
 }
+
+protocol IRamp: AnyObject {
+    var title: String { get }
+    var logoUrl: String { get }
+    func quote(token: MarketKit.Token, fiatAmount: Decimal, currencyCode: String) async throws -> RampQuote?
+}

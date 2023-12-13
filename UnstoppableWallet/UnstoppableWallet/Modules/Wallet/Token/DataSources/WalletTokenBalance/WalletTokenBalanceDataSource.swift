@@ -177,13 +177,17 @@ class WalletTokenBalanceDataSource: NSObject {
                 }
             }
             cell.actions[.swap] = { [weak self] in
-                if let viewController = SwapModule.viewController(tokenFrom: wallet.token) {
-                    let navigationController = ThemeNavigationController(rootViewController: viewController)
-                    self?.parentViewController?.present(navigationController, animated: true)
-                }
+                self?.parentViewController?.present(BuyView(token: wallet.token).toNavigationViewController(), animated: true)
+//                if let viewController = SwapModule.viewController(tokenFrom: wallet.token) {
+//                    let navigationController = ThemeNavigationController(rootViewController: viewController)
+//                    self?.parentViewController?.present(navigationController, animated: true)
+//                }
             }
             cell.actions[.receive] = { [weak self] in
                 self?.viewModel.onTapReceive()
+            }
+            cell.actions[.buy] = { [weak self] in
+                self?.parentViewController?.present(BuyView(token: wallet.token).toNavigationViewController(), animated: true)
             }
         }
         cell.actions[.chart] = { [weak self] in

@@ -1,10 +1,7 @@
 import Combine
 
 class BaseCurrencySettingsViewModel: ObservableObject {
-    private static let popularCurrencyCodes = ["USD", "EUR", "GBP", "JPY"]
-    private static let cryptoCurrencyCodes = ["BTC", "ETH", "BNB"]
-
-    private let currencyManager: CurrencyManager
+    private let currencyManager = App.shared.currencyManager
 
     var baseCurrency: Currency {
         didSet {
@@ -15,23 +12,9 @@ class BaseCurrencySettingsViewModel: ObservableObject {
     let popularCurrencies: [Currency]
     let otherCurrencies: [Currency]
 
-    init(currencyManager: CurrencyManager) {
-        self.currencyManager = currencyManager
-
+    init() {
         baseCurrency = currencyManager.baseCurrency
-
-        var popularCurrencies = [Currency]()
-        var currencies = currencyManager.currencies
-
-        currencies = currencies.filter { !Self.cryptoCurrencyCodes.contains($0.code) }
-
-        for code in Self.popularCurrencyCodes {
-            if let index = currencies.firstIndex(where: { $0.code == code }) {
-                popularCurrencies.append(currencies.remove(at: index))
-            }
-        }
-
-        self.popularCurrencies = popularCurrencies
-        otherCurrencies = currencies
+        popularCurrencies = currencyManager.popularCurrencies
+        otherCurrencies = currencyManager.otherCurrencies
     }
 }

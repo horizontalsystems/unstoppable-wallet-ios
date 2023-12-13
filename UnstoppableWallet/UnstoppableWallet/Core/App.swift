@@ -95,6 +95,8 @@ class App {
     let appBackupProvider: AppBackupProvider
     let cloudBackupManager: CloudBackupManager
 
+    let rampManager: RampManager
+
     let kitCleaner: KitCleaner
     let appManager: AppManager
 
@@ -302,6 +304,12 @@ class App {
             appBackupProvider: appBackupProvider,
             logger: logger
         )
+
+        let ramps: [IRamp] = [
+            RampRamp(),
+            TransakRamp(networkManager: networkManager, apiKey: "")
+        ]
+        rampManager = RampManager(ramps: ramps)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 

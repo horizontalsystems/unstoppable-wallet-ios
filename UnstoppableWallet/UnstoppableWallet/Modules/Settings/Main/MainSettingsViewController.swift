@@ -291,7 +291,7 @@ class MainSettingsViewController: ThemeViewController {
                 id: "base-currency",
                 height: .heightCell48,
                 action: { [weak self] in
-                    self?.navigationController?.pushViewController(BaseCurrencySettingsModule.view().toViewController(title: "settings.base_currency.title".localized), animated: true)
+                    self?.navigationController?.pushViewController(BaseCurrencySettingsView().toViewController(title: "settings.base_currency.title".localized), animated: true)
                 }
             ),
             StaticRow(

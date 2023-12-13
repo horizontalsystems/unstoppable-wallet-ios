@@ -18,6 +18,10 @@ extension Text {
         foregroundColor(color).font(.themeCaption)
     }
 
+    func textHeadline1(color: Color = .themeLeah) -> some View {
+        foregroundColor(color).font(.themeHeadline1)
+    }
+
     func themeBody(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
         textBody(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }
@@ -41,9 +45,7 @@ extension Text {
     }
 
     func themeHeadline1(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
-        frame(maxWidth: .infinity, alignment: alignment)
-            .foregroundColor(color)
-            .font(.themeHeadline1)
+        textHeadline1(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }
 
     func themeHeadline2(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {

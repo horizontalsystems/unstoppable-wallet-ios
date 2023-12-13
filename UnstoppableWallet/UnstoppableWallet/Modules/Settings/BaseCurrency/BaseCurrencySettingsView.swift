@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct BaseCurrencySettingsView: View {
-    @ObservedObject var viewModel: BaseCurrencySettingsViewModel
+    @StateObject private var viewModel = BaseCurrencySettingsViewModel()
 
     @Environment(\.presentationMode) private var presentationMode
-    @State var confirmationCurrency: Currency?
+    @State private var confirmationCurrency: Currency?
 
     var body: some View {
         ScrollableThemeView {

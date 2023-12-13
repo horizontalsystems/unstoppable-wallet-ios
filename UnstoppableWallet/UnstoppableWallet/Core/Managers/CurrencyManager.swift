@@ -3,6 +3,8 @@ import HsExtensions
 import WidgetKit
 
 class CurrencyManager {
+    private static let popularCurrencyCodes = ["USD", "EUR", "GBP", "JPY"]
+
     static let supportedCurrencies = [
         Currency(code: "ARS", symbol: "$", decimal: 2),
         Currency(code: "AUD", symbol: "A$", decimal: 2),
@@ -24,10 +26,6 @@ class CurrencyManager {
         Currency(code: "SGD", symbol: "S$", decimal: 2),
         Currency(code: "USD", symbol: "$", decimal: 2),
         Currency(code: "ZAR", symbol: "R", decimal: 2),
-
-        Currency(code: "BTC", symbol: "₿", decimal: 8),
-        Currency(code: "ETH", symbol: "Ξ", decimal: 8),
-        Currency(code: "BNB", symbol: "BNB", decimal: 8),
     ]
 
     private let keyBaseCurrencyCode = "base_currency_code"
@@ -50,5 +48,15 @@ class CurrencyManager {
         } else {
             baseCurrency = currencies.first(where: { $0.code == "USD" }) ?? currencies[0]
         }
+    }
+
+    var popularCurrencies: [Currency] {
+        Self.popularCurrencyCodes.compactMap { code in
+            currencies.first { $0.code == code }
+        }
+    }
+
+    var otherCurrencies: [Currency] {
+        currencies.filter { !Self.popularCurrencyCodes.contains($0.code) }
     }
 }

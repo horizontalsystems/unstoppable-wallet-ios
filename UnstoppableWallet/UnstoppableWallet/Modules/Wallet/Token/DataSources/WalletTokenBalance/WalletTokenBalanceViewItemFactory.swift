@@ -27,6 +27,8 @@ class WalletTokenBalanceViewItemFactory {
                 if AppConfig.swapEnabled, wallet.token.swappable {
                     buttons[.swap] = sendButtonState
                 }
+
+                buttons[.buy] = .enabled
             }
         case let .cexAsset(cexAsset):
             buttons[.withdraw] = cexAsset.withdrawEnabled ? .enabled : .disabled
