@@ -51,7 +51,7 @@ class ECashAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        super.init(abstractKit: eCashKit, wallet: wallet)
+        super.init(abstractKit: eCashKit, wallet: wallet, syncMode: syncMode)
 
         eCashKit.delegate = self
     }
