@@ -18,7 +18,7 @@ extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
     }
 
     var intervals: [HsTimePeriod] {
-        [.day1, .week1, .month1]
+        [.week1, .month1, .month3]
     }
 
     func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData {
