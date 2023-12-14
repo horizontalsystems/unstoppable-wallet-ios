@@ -8,7 +8,7 @@ class MarketOverviewTopPlatformsService {
     private let baseService: MarketOverviewService
     private var cancellables = Set<AnyCancellable>()
 
-    var timePeriod: HsTimePeriod = .day1 {
+    var timePeriod: HsTimePeriod = .week1 {
         didSet {
             sync()
         }
