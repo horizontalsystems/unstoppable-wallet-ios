@@ -93,7 +93,7 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>5N3KPh</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>23A344</string>
+	<string>23B81</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
 	<string>15A240d</string>
 	<key>INIntentDefinitionToolsVersion</key>
@@ -103,6 +103,8 @@
 		<dict>
 			<key>INIntentCategory</key>
 			<string>information</string>
+			<key>INIntentDescription</key>
+			<string>View coin price for selected coin</string>
 			<key>INIntentDescriptionID</key>
 			<string>OkcYOj</string>
 			<key>INIntentEligibleForWidgets</key>
@@ -181,6 +183,8 @@
 		<dict>
 			<key>INIntentCategory</key>
 			<string>information</string>
+			<key>INIntentDescription</key>
+			<string>See coin prices for coin list</string>
 			<key>INIntentDescriptionID</key>
 			<string>rCV9fg</string>
 			<key>INIntentEligibleForWidgets</key>
