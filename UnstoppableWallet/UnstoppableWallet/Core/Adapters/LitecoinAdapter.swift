@@ -80,7 +80,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        super.init(abstractKit: litecoinKit, wallet: wallet)
+        super.init(abstractKit: litecoinKit, wallet: wallet, syncMode: syncMode)
 
         litecoinKit.delegate = self
     }

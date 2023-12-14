@@ -15,6 +15,7 @@ class BitcoinBaseAdapter {
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
+    private let syncMode: BitcoinCore.SyncMode
     let transactionRecordsSubject = PublishSubject<[BitcoinTransactionRecord]>()
 
     private(set) var balanceState: AdapterState {
@@ -29,10 +30,11 @@ class BitcoinBaseAdapter {
     private let token: Token
     private let transactionSource: TransactionSource
 
-    init(abstractKit: AbstractKit, wallet: Wallet) {
+    init(abstractKit: AbstractKit, wallet: Wallet, syncMode: BitcoinCore.SyncMode) {
         self.abstractKit = abstractKit
         token = wallet.token
         transactionSource = wallet.transactionSource
+        self.syncMode = syncMode
 
         balanceState = .notSynced(error: AppError.unknownError)
     }
@@ -154,6 +156,14 @@ class BitcoinBaseAdapter {
     open func explorerUrl(transactionHash _: String) -> String? {
         fatalError("Must be overridden by subclass")
     }
+
+    private var showSyncedUntil: Bool {
+        if case .blockchair = syncMode {
+            return false
+        } else {
+            return true
+        }
+    }
 }
 
 extension BitcoinBaseAdapter: IAdapter {
@@ -225,7 +235,9 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
             balanceState = .notSynced(error: converted)
         case let .syncing(progress):
             let newProgress = Int(progress * 100)
-            let newDate = abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
+            let newDate = showSyncedUntil
+                ? abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
+                : nil
 
             if case let .syncing(currentProgress, currentDate) = balanceState, newProgress == currentProgress {
                 if let currentDate, let newDate, currentDate.isSameDay(as: newDate) {

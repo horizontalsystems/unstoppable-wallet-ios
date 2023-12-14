@@ -51,7 +51,7 @@ class DashAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        super.init(abstractKit: dashKit, wallet: wallet)
+        super.init(abstractKit: dashKit, wallet: wallet, syncMode: syncMode)
 
         dashKit.delegate = self
     }

@@ -62,7 +62,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        super.init(abstractKit: bitcoinKit, wallet: wallet)
+        super.init(abstractKit: bitcoinKit, wallet: wallet, syncMode: syncMode)
 
         bitcoinKit.delegate = self
     }
