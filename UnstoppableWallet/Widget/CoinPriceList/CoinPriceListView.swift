@@ -44,12 +44,14 @@ struct CoinPriceListView: View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
                 Text(entry.mode.title)
+                    .lineLimit(1)
                     .font(.themeSubhead1)
                     .foregroundColor(.themeLeah)
 
                 Spacer()
 
                 Text(title(sortType: entry.sortType))
+                    .lineLimit(1)
                     .font(.themeSubhead2)
                     .foregroundColor(.themeGray)
             }
