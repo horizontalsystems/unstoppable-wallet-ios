@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct SecondaryButtonStyle: ButtonStyle {
+struct SecondaryActiveButtonStyle: ButtonStyle {
     let style: Style
     let leftAccessory: Accessory
     let rightAccessory: Accessory
 
-    init(style: Style = .default, leftAccessory: Accessory = .none, rightAccessory: Accessory = .none) {
+    init(style: Style = .default, leftAccessory: Accessory = .none, rightAccessory: Accessory = .none, isActive _: Bool = false) {
         self.style = style
         self.leftAccessory = leftAccessory
         self.rightAccessory = rightAccessory
@@ -45,43 +45,42 @@ struct SecondaryButtonStyle: ButtonStyle {
         case `default`
         case transparent
 
-        func foregroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
+        func foregroundColor(isEnabled: Bool, isPressed _: Bool) -> Color {
             switch self {
-            case .default, .transparent: return isEnabled ? (isPressed ? .themeGray : .themeLeah) : .themeGray50
+            case .default, .transparent: return isEnabled ? .themeDark : .themeGray50
             }
         }
 
         func backgroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
             switch self {
-            case .default: return isEnabled ? (isPressed ? .themeSteel10 : .themeSteel20) : .themeSteel20
-            case .transparent: return .clear
+            case .default: return isEnabled ? (isPressed ? .themeYellow50 : .themeYellow) : .themeSteel20
+            case .transparent: return isEnabled ? (isPressed ? .themeYellow50 : .themeYellow) : .clear
             }
         }
     }
 
     enum Accessory {
-        static let pressedColor = Color.themeGray
-        static let enabledColor = Color.themeGray
+        static let enabledColor = Color.themeDark
         static let disabledColor = Color.themeGray50
 
         case none
         case dropDown
         case info
-        case custom(icon: String, pressedColor: Color = Self.pressedColor, activeColor: Color = Self.enabledColor, disabledColor: Color = Self.disabledColor)
+        case custom(icon: String, enabledColor: Color = Self.enabledColor, disabledColor: Color = Self.disabledColor)
 
         var icon: String? {
             switch self {
             case .none: return nil
             case .dropDown: return "arrow_small_down_20"
             case .info: return "circle_information_20"
-            case let .custom(icon, _, _, _): return icon
+            case let .custom(icon, _, _): return icon
             }
         }
 
-        func foregroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
+        func foregroundColor(isEnabled: Bool, isPressed _: Bool) -> Color {
             switch self {
-            case let .custom(_, pressed, enabled, disabled): return isEnabled ? (isPressed ? pressed : enabled) : disabled
-            default: return isEnabled ? (isPressed ? Self.pressedColor : Self.enabledColor) : Self.disabledColor
+            case let .custom(_, enabled, disabled): return isEnabled ? enabled : disabled
+            default: return isEnabled ? Self.enabledColor : Self.disabledColor
             }
         }
     }
