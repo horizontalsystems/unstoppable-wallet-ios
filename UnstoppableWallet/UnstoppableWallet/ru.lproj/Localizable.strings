@@ -902,8 +902,8 @@
 
 "coin_markets.empty" = "Нет доступных данных";
 "coin_markets.filter.all" = "Все";
-"coin_markets.filter.verified" = "Подтверждено";
-"coin_markets.verified" = "Подтверждено";
+"coin_markets.filter.verified" = "Проверено";
+"coin_markets.verified" = "Проверено";
 
 // Coin Page -> Tweets
 
