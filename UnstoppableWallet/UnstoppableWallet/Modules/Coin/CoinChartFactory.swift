@@ -50,22 +50,16 @@ class CoinChartFactory {
             return item
         }
 
-        let values = points.map(\.value)
-
+        let chartData = ChartData(items: items, startWindow: firstPoint.timestamp, endWindow: lastPoint.timestamp)
         return ChartModule.ViewItem(
             value: ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: item.rate)),
             valueDescription: nil,
             rightSideMode: .none,
-            chartData: ChartData(items: items, startWindow: firstPoint.timestamp, endWindow: lastPoint.timestamp),
+            chartData: chartData,
             indicators: item.indicators,
             chartTrend: lastPoint.value > firstPoint.value ? .up : .down,
             chartDiff: (lastPoint.value - firstPoint.value) / firstPoint.value * 100,
-            minValue: values.min().flatMap {
-                ValueFormatter.instance.formatFull(currency: currency, value: $0)
-            },
-            maxValue: values.max().flatMap {
-                ValueFormatter.instance.formatFull(currency: currency, value: $0)
-            }
+            limitFormatter: { value in ValueFormatter.instance.formatFull(currency: currency, value: value) }
         )
     }
 
