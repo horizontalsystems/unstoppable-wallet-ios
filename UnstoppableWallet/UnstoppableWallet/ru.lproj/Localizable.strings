@@ -598,8 +598,8 @@
 "market.project_has_no_coin" = "У этого проекта нет токена";
 
 "market.top.section.header.see_all" = "Посмотреть всё";
-"market.top.section.header.top_gainers" = "Взлеты";
-"market.top.section.header.top_losers" = "Падения";
+"market.top.section.header.top_gainers" = "Показывают рост";
+"market.top.section.header.top_losers" = "Теряют в цене";
 "market.top.section.header.sectors" = "Секторы";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объем";
