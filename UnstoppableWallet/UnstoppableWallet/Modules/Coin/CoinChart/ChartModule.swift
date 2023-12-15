@@ -14,8 +14,7 @@ enum ChartModule {
         let chartTrend: MovementTrend
         let chartDiff: Decimal?
 
-        let minValue: String?
-        let maxValue: String?
+        let limitFormatter: ((Decimal) -> String?)?
     }
 
     struct SelectedPointViewItem {

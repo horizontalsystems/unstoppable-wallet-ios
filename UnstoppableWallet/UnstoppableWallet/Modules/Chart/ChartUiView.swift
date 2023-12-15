@@ -281,8 +281,7 @@ class ChartUiView: UIView {
             if !chartView.isPressed {
                 chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
             }
-            chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, showIndicators: showIndicators, animated: true)
-            chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
+            chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, showIndicators: showIndicators, limitFormatter: viewItem.limitFormatter, animated: true)
         } else {
             currentValueWrapper.isHidden = true
             chartView.isHidden = true

@@ -11,7 +11,7 @@ class MetricChartFactory {
         dateFormatter.locale = currentLocale
     }
 
-    private func format(value: Decimal?, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
+    private static func format(value: Decimal?, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
         guard let value else {
             return nil
         }
@@ -78,7 +78,7 @@ extension MetricChartFactory {
 
         switch itemData.type {
         case .regular:
-            value = format(value: lastItem.value, valueType: valueType)
+            value = Self.format(value: lastItem.value, valueType: valueType)
             chartTrend = (lastItem.value - firstItem.value).isSignMinus ? .down : .up
             valueDiff = (lastItem.value - firstItem.value) / firstItem.value * 100
 
@@ -86,7 +86,7 @@ extension MetricChartFactory {
                 rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
             }
         case let .aggregated(aggregatedValue):
-            value = format(value: aggregatedValue, valueType: valueType)
+            value = Self.format(value: aggregatedValue, valueType: valueType)
             chartTrend = .neutral
         }
 
@@ -120,8 +120,7 @@ extension MetricChartFactory {
             indicators: indicators,
             chartTrend: chartTrend,
             chartDiff: valueDiff,
-            minValue: format(value: min, valueType: valueType),
-            maxValue: format(value: max, valueType: valueType)
+            limitFormatter: { value in Self.format(value: value, valueType: valueType) }
         )
     }
 
@@ -132,14 +131,14 @@ extension MetricChartFactory {
 
         let date = Date(timeIntervalSince1970: chartItem.timestamp)
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
-        let formattedValue = format(value: value, valueType: valueType)
+        let formattedValue = Self.format(value: value, valueType: valueType)
 
         var rightSideMode: ChartModule.RightSideMode = .none
 
         if let dominance = chartItem.indicators[ChartIndicator.LineConfiguration.dominanceId] {
             rightSideMode = .dominance(value: dominance, diff: nil)
         } else if let volume = chartItem.indicators[ChartData.volume] {
-            rightSideMode = .volume(value: format(value: volume, valueType: valueType))
+            rightSideMode = .volume(value: Self.format(value: volume, valueType: valueType))
         }
 
         return ChartModule.SelectedPointViewItem(
