@@ -41,14 +41,14 @@ extension MarketListTvlDecorator: IMarketListDecorator {
 
             var tvlChange: Decimal?
             switch service.priceChangePeriod {
-            case .day1: tvlChange = defiCoin.tvlChange1d
-            case .week1: tvlChange = defiCoin.tvlChange1w
-            case .week2: tvlChange = defiCoin.tvlChange2w
-            case .month1: tvlChange = defiCoin.tvlChange1m
-            case .month3: tvlChange = defiCoin.tvlChange3m
-            case .month6: tvlChange = defiCoin.tvlChange6m
-            case .year1: tvlChange = defiCoin.tvlChange1y
-            case .year2: ()
+            case .byPeriod(.day1): tvlChange = defiCoin.tvlChange1d
+            case .byPeriod(.week1): tvlChange = defiCoin.tvlChange1w
+            case .byPeriod(.week2): tvlChange = defiCoin.tvlChange2w
+            case .byPeriod(.month1): tvlChange = defiCoin.tvlChange1m
+            case .byPeriod(.month3): tvlChange = defiCoin.tvlChange3m
+            case .byPeriod(.month6): tvlChange = defiCoin.tvlChange6m
+            case .byPeriod(.year1): tvlChange = defiCoin.tvlChange1y
+            default: ()
             }
 
             switch service.marketTvlField {

@@ -10,7 +10,7 @@ enum TopPlatformModule {
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, favoritesManager: App.shared.favoritesManager)
 
         let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, topPlatform: topPlatform)
-        let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .week1)
+        let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .byPeriod(.week1))
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, factory: factory)
 

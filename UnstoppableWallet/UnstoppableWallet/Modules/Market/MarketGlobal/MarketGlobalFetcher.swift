@@ -12,6 +12,7 @@ class MarketGlobalFetcher {
         self.currencyManager = currencyManager
         self.metricsType = metricsType
     }
+
 }
 
 extension MarketGlobalFetcher: IMetricChartFetcher {
@@ -19,7 +20,11 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
         .compactCurrencyValue(currencyManager.baseCurrency)
     }
 
-    func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData {
+    func fetch(interval: HsPeriodType) async throws -> MetricChartModule.ItemData {
+        guard case let .byPeriod(interval) = interval else {
+            throw MetricChartModule.FetchError.onlyHsTimePeriod
+        }
+
         let points = try await marketKit.globalMarketPoints(currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)
 
         var dominancePoints = [Decimal]()

@@ -17,12 +17,12 @@ class ProChartFetcher {
 }
 
 extension ProChartFetcher: IMetricChartFetcher {
-    var intervals: [HsTimePeriod] {
+    var intervals: [HsPeriodType] {
         switch type {
         case .cexVolume, .dexVolume, .dexLiquidity, .activeAddresses, .txCount:
-            return [.week1, .week2, .month1, .month3, .month6, .year1]
+            return [HsTimePeriod.week1, .week2, .month1, .month3, .month6, .year1].periodTypes
         case .tvl:
-            return [.day1, .week1, .week2, .month1, .month3, .month6, .year1]
+            return [HsTimePeriod.day1, .week1, .week2, .month1, .month3, .month6, .year1].periodTypes
         }
     }
 
@@ -33,7 +33,11 @@ extension ProChartFetcher: IMetricChartFetcher {
         }
     }
 
-    func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData {
+    func fetch(interval: HsPeriodType) async throws -> MetricChartModule.ItemData {
+        guard case let .byPeriod(interval) = interval else {
+            throw MetricChartModule.FetchError.onlyHsTimePeriod
+        }
+
         switch type {
         case .cexVolume:
             let data = try await marketKit.cexVolumes(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)

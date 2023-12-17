@@ -45,7 +45,7 @@ class MarketGlobalTvlMetricService {
         }
     }
 
-    private(set) var priceChangePeriod: HsTimePeriod = .day1 {
+    private(set) var priceChangePeriod: HsPeriodType = .byPeriod(.day1) {
         didSet {
             syncIfPossible()
         }

@@ -56,9 +56,9 @@ enum MovementTrend {
 }
 
 protocol IChartViewModel {
+    var showAll: Bool { get }
     var intervals: [String] { get }
     var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> { get }
-    var intervalIndexDriver: Driver<Int> { get }
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> { get }
     var loadingDriver: Driver<Bool> { get }
     var indicatorsShownDriver: Driver<Bool> { get }
