@@ -9,7 +9,7 @@ enum CoinProChartModule {
 
         let chartService = MetricChartService(
             chartFetcher: chartFetcher,
-            interval: .month1
+            interval: .byPeriod(.month1)
         )
 
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)

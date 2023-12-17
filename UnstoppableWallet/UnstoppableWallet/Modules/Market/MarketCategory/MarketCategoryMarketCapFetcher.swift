@@ -19,11 +19,15 @@ extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
         .compactCurrencyValue(currencyManager.baseCurrency)
     }
 
-    var intervals: [HsTimePeriod] {
-        [.day1, .week1, .month1]
+    var intervals: [HsPeriodType] {
+        [HsTimePeriod.day1, .week1, .month1].periodTypes
     }
 
-    func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData {
+    func fetch(interval: HsPeriodType) async throws -> MetricChartModule.ItemData {
+        guard case let .byPeriod(interval) = interval else {
+            throw MetricChartModule.FetchError.onlyHsTimePeriod
+        }
+
         let points = try await marketKit.coinCategoryMarketCapChart(category: category, currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)
 
         let items = points.map { point -> MetricChartModule.Item in
