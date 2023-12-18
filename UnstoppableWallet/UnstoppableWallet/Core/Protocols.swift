@@ -12,7 +12,7 @@ import UIKit
 import UniswapKit
 import ZcashLightClientKit
 
-protocol IBaseAdapter {
+protocol IBaseAdapter: AnyObject {
     var isMainNet: Bool { get }
 }
 
@@ -34,6 +34,7 @@ protocol IBalanceAdapter: IBaseAdapter {
 
 protocol IDepositAdapter: IBaseAdapter {
     var receiveAddress: DepositAddress { get }
+    var usedAddresses: [UsedAddress]  { get }
     var receiveAddressStatus: DataStatus<DepositAddress> { get }
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> { get }
 }
@@ -46,6 +47,8 @@ extension IDepositAdapter {
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
         Just(receiveAddressStatus).eraseToAnyPublisher()
     }
+
+    var usedAddresses: [UsedAddress] { [] }
 }
 
 protocol ITransactionsAdapter {

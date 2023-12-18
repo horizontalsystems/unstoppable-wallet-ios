@@ -2264,6 +2264,7 @@
 		ABC9A57D1DA5481E44DEE8C0 /* PrimaryCircleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6EF6EB856EAAA8CFACB /* PrimaryCircleButtonStyle.swift */; };
 		ABC9A57DE6436FB8795F50E4 /* ContactBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2D87362E00FD9FB5688 /* ContactBookViewController.swift */; };
 		ABC9A57EB423CAD56190F36B /* ChartIndicatorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACE2CCBDF21572F5600C /* ChartIndicatorSettingsViewModel.swift */; };
+		ABC9A582FAB4466B5B25E013 /* UsedAddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A36DD54DEEDFAE3E8AFA /* UsedAddressesView.swift */; };
 		ABC9A59B465A9C59F93DFB96 /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9F6635146BEBFB432D1 /* ChartCell.swift */; };
 		ABC9A5A0C65184DF54C48C5A /* TechnicalIndicatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3EE670713BA4B6110F4 /* TechnicalIndicatorService.swift */; };
 		ABC9A5A4C6213D58CDA2EB73 /* ThemeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A830FE79DBF62FD63CC4 /* ThemeMode.swift */; };
@@ -2311,6 +2312,7 @@
 		ABC9A6F265D51BD94CB43209 /* WCWalletHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9BCCCE1CF80E10A174C /* WCWalletHandler.swift */; };
 		ABC9A6F88E51293F2605CACD /* ContactBookContactModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB2ED4E48D4FCEDBE769 /* ContactBookContactModule.swift */; };
 		ABC9A70AE588307EA1D3A414 /* SendConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2FD4A59DB53631435BA /* SendConfirmationService.swift */; };
+		ABC9A70FE468AB48CFF63201 /* UsedAddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A36DD54DEEDFAE3E8AFA /* UsedAddressesView.swift */; };
 		ABC9A712F6389F5C2B0D63E3 /* RestoreCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A06866150862CEDEB5DE /* RestoreCloudService.swift */; };
 		ABC9A724798E2748EAC06A36 /* AlphaPresentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5AD3B03F81313EBB4D6 /* AlphaPresentAnimation.swift */; };
 		ABC9A727EC8A3C74C9C1A31A /* WalletConnectMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3A694467493C6F4AACE /* WalletConnectMainViewController.swift */; };
@@ -4139,6 +4141,7 @@
 		ABC9A30A8F78E9C9AEE861F1 /* NftAssetCellFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetCellFactory.swift; sourceTree = "<group>"; };
 		ABC9A352F3EAA38107897CEF /* WalletTokenBalanceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTokenBalanceService.swift; sourceTree = "<group>"; };
 		ABC9A363B3AD4E8759B29FB0 /* WCSendEthereumTransactionRequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCSendEthereumTransactionRequestService.swift; sourceTree = "<group>"; };
+		ABC9A36DD54DEEDFAE3E8AFA /* UsedAddressesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsedAddressesView.swift; sourceTree = "<group>"; };
 		ABC9A37065F4A8459C416F0A /* BackupAppModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupAppModule.swift; sourceTree = "<group>"; };
 		ABC9A37521CD6E2CC5BA4E68 /* MarketCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketCardView.swift; sourceTree = "<group>"; };
 		ABC9A3758FE2D56036DF27FF /* ChartIndicatorsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorsRepository.swift; sourceTree = "<group>"; };
@@ -5644,6 +5647,7 @@
 				11B35E3DD6021EEB699A8EBF /* ReceiveService.swift */,
 				11B35CFED85A9315089223E3 /* ReceiveViewModel.swift */,
 				11B359D1A38D53951CEE6F84 /* ReceiveViewController.swift */,
+				ABC9A9CAD26B66100D866714 /* UsedAddresses */,
 			);
 			path = Receive;
 			sourceTree = "<group>";
@@ -7882,6 +7886,14 @@
 				ABC9AE7C2B9E59FFF7663BCD /* BackupManagerLegacy */,
 			);
 			path = BackupApp;
+			sourceTree = "<group>";
+		};
+		ABC9A9CAD26B66100D866714 /* UsedAddresses */ = {
+			isa = PBXGroup;
+			children = (
+				ABC9A36DD54DEEDFAE3E8AFA /* UsedAddressesView.swift */,
+			);
+			path = UsedAddresses;
 			sourceTree = "<group>";
 		};
 		ABC9AA15272B5421D314CDD9 /* AmountInput */ = {
@@ -10285,6 +10297,7 @@
 				11B358946C5E7A72712EACB2 /* MarketCategoryView.swift in Sources */,
 				11B35AF710C287EB89018342 /* UIWindow.swift in Sources */,
 				ABC9A341284773472DC4AF60 /* SecondaryActiveButtonStyle.swift in Sources */,
+				ABC9A582FAB4466B5B25E013 /* UsedAddressesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11673,6 +11686,7 @@
 				11B3580BC3B5D2CBC68854D2 /* UIWindow.swift in Sources */,
 				11B3505B911DD28AC464A694 /* BackupManagerViewModel.swift in Sources */,
 				ABC9AFAB60E13F58DC2F3D5D /* SecondaryActiveButtonStyle.swift in Sources */,
+				ABC9A70FE468AB48CFF63201 /* UsedAddressesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12428,7 +12442,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.1;
+				version = 2.3.1;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */ = {

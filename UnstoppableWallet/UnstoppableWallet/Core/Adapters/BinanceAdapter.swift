@@ -174,6 +174,12 @@ extension BinanceAdapter: ITransactionsAdapter {
             : "https://testnet-explorer.binance.org/tx/" + transactionHash
     }
 
+    func explorerUrl(address: String) -> String? {
+        binanceKit.networkType == .mainNet
+            ? "https://explorer.binance.org/address/" + address
+            : "https://testnet-explorer.binance.org/address/" + address
+    }
+
     func transactionsObservable(token _: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         let binanceChainFilter: TransactionFilterType?
         switch filter {

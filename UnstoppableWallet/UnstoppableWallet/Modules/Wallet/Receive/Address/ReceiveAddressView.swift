@@ -5,7 +5,7 @@ private let appIconSize: CGFloat = 47
 
 struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddressViewItemFactory>: View where Service.ServiceItem == Factory.Item {
     @ObservedObject var viewModel: ReceiveAddressViewModel<Service, Factory>
-    var onDismiss: (() -> ())?
+    var onDismiss: (() -> Void)?
 
     @State private var hasAppeared = false
     @State private var warningAlertPopup: ReceiveAddressModule.PopupWarningItem?
@@ -36,6 +36,19 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                         }
                         if let memo = viewItem.memo {
                             view(memo: memo)
+                        }
+
+                        if let usedAddresses = viewItem.usedAddresses {
+                            NavigationRow(destination: {
+                                UsedAddressesView(
+                                    coinName: viewModel.coinName,
+                                    usedAddresses: usedAddresses,
+                                    onDismiss: onDismiss ?? { presentationMode.wrappedValue.dismiss() }
+                                )
+                            }) {
+                                Text("deposit.used_addresses".localized).themeSubhead2()
+                                Image.disclosureIcon
+                            }
                         }
                     }
                 }
@@ -96,7 +109,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.cancel".localized) {
+                Button("button.done".localized) {
                     if let onDismiss {
                         onDismiss()
                     } else {
