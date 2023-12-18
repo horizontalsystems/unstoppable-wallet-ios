@@ -73,6 +73,10 @@ extension CexDepositService: IReceiveAddressService {
         "cex_deposit.title".localized(cexAsset.coinCode)
     }
 
+    var coinName: String {
+        cexAsset.name
+    }
+
     var coinCode: String {
         cexAsset.coinCode
     }

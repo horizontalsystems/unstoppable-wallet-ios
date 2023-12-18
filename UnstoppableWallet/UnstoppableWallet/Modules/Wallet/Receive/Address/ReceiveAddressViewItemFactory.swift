@@ -58,7 +58,8 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             qrItem: qrItem,
             amount: amountString,
             active: active,
-            memo: nil
+            memo: nil,
+            usedAddresses: item.usedAddresses.flatMap { $0.isEmpty ? nil : $0 }
         )
     }
 

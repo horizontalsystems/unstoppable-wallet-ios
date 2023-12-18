@@ -78,32 +78,6 @@ extension ReceiveAddressModule {
         }
     }
 
-    enum Item: Identifiable, Hashable {
-        case qrItem(QrItem)
-        case amount(value: String)
-        case status(value: String)
-        case memo(value: String)
-        case highlightedDescription(text: String, style: HighlightedDescriptionBaseView.Style = .yellow)
-
-        public var id: String {
-            switch self {
-            case let .qrItem(item): return "\(item.address)_\(item.networkName ?? "NA")"
-            case let .amount(value): return value
-            case let .status(value): return value
-            case let .memo(value): return value
-            case let .highlightedDescription(text, _): return text
-            }
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
-
-        static func == (lhs: Item, rhs: Item) -> Bool {
-            lhs.id == rhs.id
-        }
-    }
-
     struct HighlightedDescription {
         let text: String
         let style: HighlightedDescriptionBaseView.Style
@@ -116,5 +90,6 @@ extension ReceiveAddressModule {
         let amount: String?
         let active: Bool
         let memo: String?
+        let usedAddresses: [UsedAddress]?
     }
 }

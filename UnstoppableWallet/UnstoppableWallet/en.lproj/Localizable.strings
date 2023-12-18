@@ -370,8 +370,12 @@
 "deposit.set_amount" = "Set Amount";
 "deposit.enter_amount" = "Enter Amount";
 "deposit.not_active" = "Not active";
+"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "Not Active Address";
 "deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+
+"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
 
 "deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
 "deposit.zcash.restore.already_own" = "Yes, I already own";

@@ -157,6 +157,10 @@ class BitcoinBaseAdapter {
         fatalError("Must be overridden by subclass")
     }
 
+    open func explorerUrl(address _: String) -> String? {
+        fatalError("Must be overridden by subclass")
+    }
+
     private var showSyncedUntil: Bool {
         if case .blockchair = syncMode {
             return false
@@ -382,6 +386,13 @@ extension BitcoinBaseAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
         DepositAddress(abstractKit.receiveAddress())
     }
+
+    var usedAddresses: [UsedAddress] {
+        abstractKit.usedAddresses.map {
+            let url = explorerUrl(address: $0.address).flatMap { URL(string: $0) }
+            return UsedAddress(index: $0.index, address: $0.address, explorerUrl: url)
+        }
+    }
 }
 
 class DepositAddress {
@@ -391,3 +402,16 @@ class DepositAddress {
         address = receiveAddress
     }
 }
+
+public struct UsedAddress: Hashable {
+    let index: Int
+    let address: String
+    let explorerUrl: URL?
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(index)
+        hasher.combine(address)
+        hasher.combine(explorerUrl?.absoluteString)
+    }
+}
+
