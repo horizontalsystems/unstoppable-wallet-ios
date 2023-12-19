@@ -56,6 +56,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? ""
     }
 
+    static var appBundleIdentifier: String {
+        (Bundle.main.object(forInfoDictionaryKey: "CFBundleIdentifier") as? String) ?? ""
+    }
+
     static var marketApiUrl: String {
         (Bundle.main.object(forInfoDictionaryKey: "MarketApiUrl") as? String) ?? ""
     }

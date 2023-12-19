@@ -49,10 +49,12 @@ class WalletConnectService {
             name: info.name,
             description: info.description,
             url: info.url,
-            icons: info.icons
+            icons: info.icons,
+            redirect: AppMetadata.Redirect(native: "unstoppable.money://", universal: nil)
         )
 
-        Networking.configure(projectId: info.projectId, socketFactory: SocketFactory(), socketConnectionType: .manual)
+        Networking.configure(
+            groupIdentifier: "group.\(AppConfig.appBundleIdentifier)", projectId: info.projectId, socketFactory: SocketFactory(), socketConnectionType: .manual)
         Pair.configure(metadata: metadata)
         setUpAuthSubscribing()
 
@@ -176,7 +178,10 @@ extension WalletConnectService {
 
     // works with pending requests
     public var pendingRequests: [WalletConnectSign.Request] {
-        Sign.instance.getPendingRequests()
+        Sign.instance
+            .getPendingRequests()
+            .filter { _, context in context?.validation == .valid }
+            .map { $0.0 }
     }
 
     public var pendingRequestsUpdatedObservable: Observable<Void> {
