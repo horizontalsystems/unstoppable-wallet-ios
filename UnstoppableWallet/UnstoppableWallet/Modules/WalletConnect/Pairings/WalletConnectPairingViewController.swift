@@ -1,8 +1,8 @@
-import UIKit
+import ComponentKit
+import RxSwift
 import SectionsTableView
 import ThemeKit
-import RxSwift
-import ComponentKit
+import UIKit
 
 class WalletConnectPairingViewController: ThemeViewController {
     private let viewModel: WalletConnectPairingViewModel
@@ -21,7 +21,8 @@ class WalletConnectPairingViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -74,7 +75,7 @@ class WalletConnectPairingViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func cell(tableView: UITableView, viewItem: WalletConnectPairingViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: (() -> ())? = nil) -> RowProtocol {
+    private func cell(tableView: UITableView, viewItem: WalletConnectPairingViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: (() -> Void)? = nil) -> RowProtocol {
         let elements: [CellBuilderNew.CellElement] = [
             .image32 { component in
                 component.imageView.layer.cornerCurve = .continuous
@@ -93,62 +94,61 @@ class WalletConnectPairingViewController: ThemeViewController {
                     component.font = .subhead2
                     component.textColor = .themeGray
                     component.text = viewItem.description ?? "---"
-                }
+                },
             ]),
             .secondaryCircleButton { [weak self] component in
                 component.button.set(
-                        image: UIImage(named: "trash_20"),
-                        style: .red
+                    image: UIImage(named: "trash_20"),
+                    style: .red
                 )
                 component.onTap = {
                     self?.onTapDisconnect(topic: viewItem.topic)
                 }
-            }
+            },
         ]
 
         return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: tableView,
-                id: viewItem.title,
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell in cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast) },
-                action: action
+            rootElement: .hStack(elements),
+            tableView: tableView,
+            id: viewItem.title,
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell in cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast) },
+            action: action
         )
     }
 
     private func section(viewItems: [WalletConnectPairingViewModel.ViewItem]) -> SectionProtocol {
         Section(
-                id: "section-list",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin32),
-                rows: viewItems.enumerated().map { index, viewItem in
-                    cell(tableView: tableView,
-                            viewItem: viewItem,
-                            isFirst: index == 0,
-                            isLast: index == viewItems.count - 1
-                    )
-                }
+            id: "section-list",
+            headerState: .margin(height: .margin12),
+            footerState: .margin(height: .margin32),
+            rows: viewItems.enumerated().map { index, viewItem in
+                cell(tableView: tableView,
+                     viewItem: viewItem,
+                     isFirst: index == 0,
+                     isLast: index == viewItems.count - 1)
+            }
         )
     }
 
     private func disconnectAllSection() -> SectionProtocol {
         Section(
-                id: "button_section",
-                footerState: .margin(height: .margin32),
-                rows: [
-                    tableView.universalRow48(
-                            id: "delete_all",
-                            image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
-                            title: .body("wallet_connect.paired_dapps.disconnect_all".localized, color: .themeLucian),
-                            autoDeselect: true,
-                            isFirst: true,
-                            isLast: true,
-                            action: { [weak self] in
-                                self?.onTapDisconnectAll()
-                            }
-                    )
-                ]
+            id: "button_section",
+            footerState: .margin(height: .margin32),
+            rows: [
+                tableView.universalRow48(
+                    id: "delete_all",
+                    image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                    title: .body("wallet_connect.paired_dapps.disconnect_all".localized, color: .themeLucian),
+                    autoDeselect: true,
+                    isFirst: true,
+                    isLast: true,
+                    action: { [weak self] in
+                        self?.onTapDisconnectAll()
+                    }
+                ),
+            ]
         )
     }
 
@@ -159,11 +159,9 @@ class WalletConnectPairingViewController: ThemeViewController {
     private func onTapDisconnectAll() {
         viewModel.onDisconnectAll()
     }
-
 }
 
 extension WalletConnectPairingViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [section(viewItems: viewItems)]
         if viewItems.count > 1 {
@@ -171,5 +169,4 @@ extension WalletConnectPairingViewController: SectionsDataSource {
         }
         return sections
     }
-
 }

@@ -1,10 +1,10 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import MessageUI
 import ComponentKit
-import RxSwift
 import MarketKit
+import MessageUI
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class BalanceErrorViewController: ThemeActionSheetController {
     private let viewModel: BalanceErrorViewModel
@@ -21,7 +21,8 @@ class BalanceErrorViewController: ThemeActionSheetController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -34,9 +35,9 @@ class BalanceErrorViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
-                title: "balance_error.sync_error".localized,
-                viewController: self
+            image: .warning,
+            title: "balance_error.sync_error".localized,
+            viewController: self
         )
 
         let retryButton = PrimaryButton()
@@ -121,13 +122,10 @@ class BalanceErrorViewController: ThemeActionSheetController {
             self?.sourceViewController?.present(EvmNetworkModule.viewController(blockchain: blockchain), animated: true)
         }
     }
-
 }
 
 extension BalanceErrorViewController: MFMailComposeViewControllerDelegate {
-
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
         controller.dismiss(animated: true)
     }
-
 }

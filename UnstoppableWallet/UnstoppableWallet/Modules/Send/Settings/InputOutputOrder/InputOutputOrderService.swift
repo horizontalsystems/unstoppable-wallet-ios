@@ -1,6 +1,6 @@
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 class InputOutputOrderService {
     private let blockchainType: BlockchainType
@@ -12,7 +12,7 @@ class InputOutputOrderService {
     private let selectedItemRelay = BehaviorSubject<TransactionDataSortMode>(value: .bip69)
     private(set) var selectedItem: TransactionDataSortMode = .bip69 {
         didSet {
-            if (oldValue != selectedItem) {
+            if oldValue != selectedItem {
                 selectedItemRelay.onNext(selectedItem)
             }
         }
@@ -26,11 +26,9 @@ class InputOutputOrderService {
 
         setSelectedItemFromSettings()
     }
-
 }
 
 extension InputOutputOrderService {
-
     var selectedItemObservable: Observable<TransactionDataSortMode> {
         selectedItemRelay.asObservable()
     }
@@ -47,5 +45,4 @@ extension InputOutputOrderService {
     func setSelectedItemFromSettings() {
         selectedItem = initialItem
     }
-
 }

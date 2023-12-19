@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class FormValidatedView: UIView {
     private let wrapperView = UIView()
@@ -30,18 +30,17 @@ class FormValidatedView: UIView {
         }
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension FormValidatedView {
-
     func set(cautionType: CautionType?) {
         let borderColor: UIColor
 
-        if let cautionType = cautionType {
+        if let cautionType {
             borderColor = cautionType.borderColor
         } else {
             borderColor = .themeSteel20
@@ -50,7 +49,7 @@ extension FormValidatedView {
         wrapperView.layer.borderColor = borderColor.cgColor
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { contentView.onChangeHeight }
         set { contentView.onChangeHeight = newValue }
     }
@@ -61,10 +60,9 @@ extension FormValidatedView {
 
         return contentViewHeight + padding.height
     }
-
 }
 
 protocol IHeightControlView: UIView {
-    var onChangeHeight: (() -> ())? { get set }
+    var onChangeHeight: (() -> Void)? { get set }
     func height(containerWidth: CGFloat) -> CGFloat
 }

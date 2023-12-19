@@ -1,8 +1,8 @@
-import UIKit
+import ComponentKit
+import RxSwift
 import SectionsTableView
 import ThemeKit
-import RxSwift
-import ComponentKit
+import UIKit
 
 class SwapSelectProviderViewController: ThemeActionSheetController {
     private let viewModel: SwapSelectProviderViewModel
@@ -22,7 +22,8 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -35,9 +36,9 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob)),
-                title: "swap.switch_provider.title".localized,
-                viewController: self
+            image: .local(name: "arrow_swap_2_24", tint: .warning),
+            title: "swap.switch_provider.title".localized,
+            viewController: self
         )
 
         view.addSubview(tableView)
@@ -72,33 +73,30 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
 
         tableView.reload(animated: true)
     }
-
 }
 
 extension SwapSelectProviderViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "theme",
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        tableView.universalRow56(
-                                id: viewItem.title,
-                                image: .local(UIImage(named: viewItem.icon)),
-                                title: .body(viewItem.title),
-                                accessoryType: .check(viewItem.selected),
-                                hash: viewItem.selected.description,
-                                backgroundStyle: .bordered,
-                                isFirst: index == 0,
-                                isLast: index == viewItems.count - 1,
-                                action: { [weak self] in
-                                    self?.viewModel.onSelect(index: index)
-                                    self?.dismiss(animated: true)
-                                }
-                        )
-                    }
-            )
+                id: "theme",
+                rows: viewItems.enumerated().map { index, viewItem in
+                    tableView.universalRow56(
+                        id: viewItem.title,
+                        image: .local(UIImage(named: viewItem.icon)),
+                        title: .body(viewItem.title),
+                        accessoryType: .check(viewItem.selected),
+                        hash: viewItem.selected.description,
+                        backgroundStyle: .bordered,
+                        isFirst: index == 0,
+                        isLast: index == viewItems.count - 1,
+                        action: { [weak self] in
+                            self?.viewModel.onSelect(index: index)
+                            self?.dismiss(animated: true)
+                        }
+                    )
+                }
+            ),
         ]
     }
-
 }

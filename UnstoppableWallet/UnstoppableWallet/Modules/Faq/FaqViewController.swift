@@ -1,10 +1,10 @@
-import UIKit
-import SnapKit
-import ThemeKit
-import SectionsTableView
+import ComponentKit
 import HUD
 import RxSwift
-import ComponentKit
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class FaqViewController: ThemeViewController {
     private let viewModel: FaqViewModel
@@ -29,7 +29,8 @@ class FaqViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,9 +44,7 @@ class FaqViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
@@ -70,21 +69,21 @@ class FaqViewController: ThemeViewController {
         errorView.image = UIImage(named: "not_available_48")
 
         viewModel.sectionItemsDriver
-                .drive(onNext: { [weak self] in self?.sync(sectionItems: $0) })
-                .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] in self?.sync(sectionItems: $0) })
+            .disposed(by: disposeBag)
 
         viewModel.loadingDriver
-                .drive(onNext: { [weak self] loading in
-                    self?.setSpinner(visible: loading)
-                })
-                .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] loading in
+                self?.setSpinner(visible: loading)
+            })
+            .disposed(by: disposeBag)
 
         viewModel.errorDriver
-                .drive(onNext: { [weak self] error in
-                    self?.errorView.isHidden = error == nil
-                    self?.errorView.text = error?.smartDescription
-                })
-                .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] error in
+                self?.errorView.isHidden = error == nil
+                self?.errorView.text = error?.smartDescription
+            })
+            .disposed(by: disposeBag)
 
         tableView.buildSections()
     }
@@ -118,43 +117,41 @@ class FaqViewController: ThemeViewController {
         currentSection = index
         tableView.reload()
     }
-
 }
 
 extension FaqViewController: SectionsDataSource {
-
     private var transparentRow: RowProtocol {
         Row<EmptyCell>(id: "transparent_row", height: 20)
     }
 
     private func itemsSection(sectionIndex: Int, items: [FaqService.Item]) -> SectionProtocol {
         Section(
-                id: "items-\(sectionIndex)",
-                headerState: .static(view: sectionFilterView, height: .heightSingleLineCell),
-                footerState: .marginColor(height: .margin32, color: .clear),
-                rows: [transparentRow] + items.enumerated().map { index, item in
-                    let isFirst = index == 0
-                    let isLast = index == items.count - 1
+            id: "items-\(sectionIndex)",
+            headerState: .static(view: sectionFilterView, height: .heightSingleLineCell),
+            footerState: .marginColor(height: .margin32, color: .clear),
+            rows: [transparentRow] + items.enumerated().map { index, item in
+                let isFirst = index == 0
+                let isLast = index == items.count - 1
 
-                    return Row<FaqCell>(
-                            id: "faq-\(sectionIndex)-\(index)",
-                            dynamicHeight: { containerWidth in
-                                FaqCell.height(containerWidth: containerWidth, text: item.text, backgroundStyle: .lawrence)
-                            },
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                cell.title = item.text
-                            },
-                            action: { [weak self] _ in
-                                guard let url = item.url else {
-                                    return
-                                }
+                return Row<FaqCell>(
+                    id: "faq-\(sectionIndex)-\(index)",
+                    dynamicHeight: { containerWidth in
+                        FaqCell.height(containerWidth: containerWidth, text: item.text, backgroundStyle: .lawrence)
+                    },
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                        cell.title = item.text
+                    },
+                    action: { [weak self] _ in
+                        guard let url = item.url else {
+                            return
+                        }
 
-                                let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
-                                self?.navigationController?.pushViewController(module, animated: true)
-                            }
-                    )
-                }
+                        let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
+                        self?.navigationController?.pushViewController(module, animated: true)
+                    }
+                )
+            }
         )
     }
 
@@ -169,5 +166,4 @@ extension FaqViewController: SectionsDataSource {
 
         return sections
     }
-
 }

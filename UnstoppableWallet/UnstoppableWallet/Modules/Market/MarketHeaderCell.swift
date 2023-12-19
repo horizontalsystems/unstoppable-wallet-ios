@@ -40,7 +40,8 @@ class MarketHeaderCell: UITableViewCell {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -49,20 +50,17 @@ class MarketHeaderCell: UITableViewCell {
         descriptionLabel.text = description
 
         switch imageMode {
-        case .local(let image):
+        case let .local(image):
             rightImageView.image = image
-        case .remote(let imageUrl):
+        case let .remote(imageUrl):
             rightImageView.setImage(withUrlString: imageUrl, placeholder: nil)
         }
     }
-
 }
 
 extension MarketHeaderCell {
-
     enum ImageMode {
         case local(image: UIImage?)
         case remote(imageUrl: String)
     }
-
 }

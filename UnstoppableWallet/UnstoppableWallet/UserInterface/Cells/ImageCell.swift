@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
 import ComponentKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class ImageCell: UITableViewCell {
     private static let horizontalPadding: CGFloat = .margin16
@@ -21,7 +21,8 @@ class ImageCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -29,17 +30,14 @@ class ImageCell: UITableViewCell {
         get { customImageView.image }
         set { customImageView.image = newValue }
     }
-
 }
 
 extension ImageCell {
-
     static func height(containerWidth: CGFloat, imageSize: CGSize? = nil) -> CGFloat {
-        guard let imageSize = imageSize else {
-            return max(0, containerWidth - 2 * Self.horizontalPadding)
+        guard let imageSize else {
+            return max(0, containerWidth - 2 * horizontalPadding)
         }
 
         return imageSize.height
     }
-
 }

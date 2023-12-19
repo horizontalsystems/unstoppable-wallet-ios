@@ -1,8 +1,8 @@
 import Foundation
-import UIKit
 import MarketKit
+import UIKit
 
-struct AppConfig {
+enum AppConfig {
     static let label = "io.horizontalsystems.unstoppable"
     static let backupSalt = "unstoppable"
 
@@ -35,8 +35,9 @@ struct AppConfig {
         .arbitrumOne: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .gnosis: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .fantom: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .ton: "UQAYLATDlfKgn3cKZAgznvowhXzpqgxrIicesxJfo9f6PN3k",
         .tron: "TQzANCd363w5CjRWDtswm8Y5nFPAdnwekF",
-        .solana: "5gattKnvu5f1NDHBuZ6VfDXjRrJa9UcAArkZ3ys3e82F"
+        .solana: "5gattKnvu5f1NDHBuZ6VfDXjRrJa9UcAArkZ3ys3e82F",
     ]
 
     static var appVersion: String {
@@ -157,4 +158,7 @@ struct AppConfig {
         Bundle.main.object(forInfoDictionaryKey: "SwapEnabled") as? String == "true"
     }
 
+    static var blockchairApiKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "BlockchairApiKey") as? String) ?? ""
+    }
 }

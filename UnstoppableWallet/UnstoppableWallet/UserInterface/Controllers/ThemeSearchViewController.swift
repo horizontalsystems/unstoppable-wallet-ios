@@ -1,13 +1,21 @@
 import Combine
-import UIKit
 import HsExtensions
 import ThemeKit
+import UIKit
 
 class ThemeSearchViewController: KeyboardAwareViewController {
-    private let searchController = UISearchController(searchResultsController: nil)
+    let searchController = UISearchController(searchResultsController: nil)
+    private let automaticallyShowsCancelButton: Bool
+
     private var currentFilter: String?
 
     @PostPublished var filter: String?
+
+    init(scrollViews: [UIScrollView], automaticallyShowsCancelButton: Bool = false, accessoryView: UIView? = nil) {
+        self.automaticallyShowsCancelButton = automaticallyShowsCancelButton
+
+        super.init(scrollViews: scrollViews, accessoryView: accessoryView)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,15 +24,17 @@ class ThemeSearchViewController: KeyboardAwareViewController {
 
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.showsCancelButton = false
+        searchController.automaticallyShowsCancelButton = automaticallyShowsCancelButton
         searchController.searchResultsUpdater = self
         searchController.delegate = self
+        searchController.searchBar.setValue("button.cancel".localized, forKey: "cancelButtonText")
+        searchController.searchBar.placeholder = "placeholder.search".localized
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
-    override func dismiss(animated flag: Bool, completion: (() -> ())? = nil) {
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         if searchController.isActive {
             searchController.dismiss(animated: false)
         }
@@ -44,21 +54,17 @@ class ThemeSearchViewController: KeyboardAwareViewController {
             }
         }
     }
-
 }
 
 extension ThemeSearchViewController: UISearchControllerDelegate {
-
-    public func didPresentSearchController(_ searchController: UISearchController) {
+    public func didPresentSearchController(_: UISearchController) {
         DispatchQueue.main.async {
             self.searchController.searchBar.becomeFirstResponder()
         }
     }
-
 }
 
 extension ThemeSearchViewController: UISearchResultsUpdating {
-
     public func updateSearchResults(for searchController: UISearchController) {
         var filter = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces)
 
@@ -72,5 +78,4 @@ extension ThemeSearchViewController: UISearchResultsUpdating {
             self.filter = filter
         }
     }
-
 }

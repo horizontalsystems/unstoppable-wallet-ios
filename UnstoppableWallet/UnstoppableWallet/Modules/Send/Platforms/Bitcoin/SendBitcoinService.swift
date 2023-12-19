@@ -1,8 +1,8 @@
 import Foundation
-import MarketKit
-import RxSwift
-import RxRelay
 import HsToolKit
+import MarketKit
+import RxRelay
+import RxSwift
 
 class SendBitcoinService {
     private let disposeBag = DisposeBag()
@@ -36,7 +36,10 @@ class SendBitcoinService {
         self.mode = mode
 
         switch mode {
-        case .predefined(let address): addressService.set(text: address)
+        case let .prefilled(address, amount):
+            addressService.set(text: address)
+            if let amount { addressService.publishAmountRelay.accept(amount) }
+        case let .predefined(address): addressService.set(text: address)
         case .send: ()
         }
 
@@ -51,7 +54,7 @@ class SendBitcoinService {
         subscribe(scheduler, disposeBag, addressService.stateObservable) { [weak self] _ in self?.syncState() }
         subscribe(scheduler, disposeBag, feeRateService.statusObservable) { [weak self] _ in self?.syncState() }
 
-        if let timeLockErrorService = timeLockErrorService {
+        if let timeLockErrorService {
             subscribe(scheduler, disposeBag, timeLockErrorService.errorObservable) { [weak self] _ in
                 self?.syncState()
             }
@@ -60,8 +63,8 @@ class SendBitcoinService {
 
     private func syncState() {
         guard amountCautionService.amountCaution == nil,
-           !amountService.amount.isZero else {
-
+              !amountService.amount.isZero
+        else {
             state = .notReady
             return
         }
@@ -88,13 +91,10 @@ class SendBitcoinService {
 
         state = .ready
     }
-
 }
 
 extension SendBitcoinService: ISendBaseService {
-
     var stateObservable: Observable<SendBaseService.State> {
         stateRelay.asObservable()
     }
-
 }

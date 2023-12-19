@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
 import Chart
-import ThemeKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MarketMetricView: UIView {
     static let height: CGFloat = 104
@@ -14,12 +14,12 @@ class MarketMetricView: UIView {
     private let chartView: RateChartView
     private let button = UIButton()
 
-    var onTap: (() -> ())? {
+    var onTap: (() -> Void)? {
         didSet {
             button.isUserInteractionEnabled = onTap != nil
         }
     }
-    
+
     var alreadyHasData: Bool = false
 
     init(configuration: ChartConfiguration) {
@@ -90,7 +90,8 @@ class MarketMetricView: UIView {
         diffLabel.font = .subhead1
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -107,11 +108,9 @@ class MarketMetricView: UIView {
     @objc private func didTapButton() {
         onTap?()
     }
-
 }
 
 extension MarketMetricView {
-
     var title: String? {
         get { titleLabel.text }
         set { titleLabel.text = newValue }
@@ -139,7 +138,7 @@ extension MarketMetricView {
         diffLabel.set(value: diff)
 
         chartView.setCurve(colorType: trend.chartColorType)
-        if let chartData = chartData {
+        if let chartData {
             chartView.set(chartData: chartData, animated: alreadyHasData)
             alreadyHasData = true
         } else {
@@ -155,7 +154,7 @@ extension MarketMetricView {
         diffLabel.set(text: diff, color: diffColor)
 
         chartView.setCurve(colorType: trend.chartColorType)
-        if let chartData = chartData {
+        if let chartData {
             chartView.set(chartData: chartData, indicators: [], animated: alreadyHasData)
             alreadyHasData = true
         } else {
@@ -170,5 +169,4 @@ extension MarketMetricView {
 
         alreadyHasData = false
     }
-
 }

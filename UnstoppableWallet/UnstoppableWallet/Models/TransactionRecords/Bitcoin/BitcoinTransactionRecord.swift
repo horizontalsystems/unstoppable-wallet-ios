@@ -9,7 +9,8 @@ class BitcoinTransactionRecord: TransactionRecord {
     let memo: String?
 
     init(source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: TransactionValue?, failed: Bool,
-         lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool, memo: String?) {
+         lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool, memo: String?)
+    {
         self.lockInfo = lockInfo
         self.fee = fee
         self.conflictingHash = conflictingHash
@@ -17,31 +18,30 @@ class BitcoinTransactionRecord: TransactionRecord {
         self.memo = memo
 
         super.init(
-                source: source,
-                uid: uid,
-                transactionHash: transactionHash,
-                transactionIndex: transactionIndex,
-                blockHeight: blockHeight,
-                confirmationsThreshold: confirmationsThreshold,
-                date: date,
-                failed: failed
+            source: source,
+            uid: uid,
+            transactionHash: transactionHash,
+            transactionIndex: transactionIndex,
+            blockHeight: blockHeight,
+            confirmationsThreshold: confirmationsThreshold,
+            date: date,
+            failed: failed
         )
     }
 
     override func lockState(lastBlockTimestamp: Int?) -> TransactionLockState? {
-        guard let lockInfo = lockInfo else {
+        guard let lockInfo else {
             return nil
         }
 
         var locked = true
 
-        if let lastBlockTimestamp = lastBlockTimestamp {
+        if let lastBlockTimestamp {
             locked = Double(lastBlockTimestamp) < lockInfo.lockedUntil.timeIntervalSince1970
         }
 
         return TransactionLockState(locked: locked, date: lockInfo.lockedUntil)
     }
-
 }
 
 struct TransactionLockState {
@@ -50,9 +50,7 @@ struct TransactionLockState {
 }
 
 extension TransactionLockState: Equatable {
-
-    public static func ==(lhs: TransactionLockState, rhs: TransactionLockState) -> Bool {
+    public static func == (lhs: TransactionLockState, rhs: TransactionLockState) -> Bool {
         lhs.locked == rhs.locked && lhs.date == rhs.date
     }
-
 }

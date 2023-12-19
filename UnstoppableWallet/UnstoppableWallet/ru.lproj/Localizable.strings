@@ -2,6 +2,7 @@
 "button.apply" = "Применить";
 "button.cancel" = "Отменить";
 "button.close" = "Закрыть";
+"button.confirm" = "Подтвердить";
 "button.continue" = "Продолжить";
 "button.done" = "Готово";
 "button.reset" = "Сбросить";
@@ -112,6 +113,7 @@
 "access_camera.message" = "%@ требуется доступ к вашей камере для сканирования QR-кода.
 
 Перейдите в \"Настройки\" - > %@ и разрешите доступ к камере.";
+"access_camera.not_supported" = "Ваше устройство не поддерживает сканирование кода с предмета. Пожалуйста, используйте устройство с камерой.";
 "access_camera.settings" = "Настройки";
 
 // Restore
@@ -184,6 +186,7 @@
 "coin_settings.title" = "Настройки блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
+"sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Из блокчейна";
 "blockchain_settings.description" = "Выберите формат адреса для получения средств. Правильный формат должен быть выбран при восстановлении существующего кошелька.";
 
@@ -315,15 +318,11 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Идет синхронизация... %@";
 "balance.synced_through" = "до %@";
-"balance.add_coin" = "Добавить токен";
 "balance.invalid_api_key" = "Недействительный ключ API";
-"balance.empty.add_coins" = "Добавить токены";
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
-"balance.watch_empty.description" = "У кошелька с этим адресом нет баланса";
-"balance.sort_by" = "Сортировать";
 "balance.sort.header" = "Сортировать";
-"balance.sort.valueHighToLow" = "по балансу";
-"balance.sort.az" = "по названию";
+"balance.sort.valueHighToLow" = "Баланс";
+"balance.sort.az" = "Название";
 "balance.sort.price_change" = "по изменению цены (%)";
 
 "balance_error.change_source" = "Изменить источник";
@@ -371,6 +370,9 @@
 "deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
 "deposit.account" = "Account";
 
+"deposit.amount" = "Сумма";
+"deposit.set_amount" = "Установить сумму";
+"deposit.enter_amount" = "Ввести сумму";
 "deposit.not_active" = "Не активен";
 "deposit.not_active.title" = "Неактивный адрес";
 "deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
@@ -379,7 +381,7 @@
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
 "deposit.zcash.restore.dont_have" = "Нет, у меня нет";
 
-"deposit.warning" = "Отправка только %@ на этот адрес. Отправка других типов токенов на этот адрес приведет к их окончательной потере.";
+"deposit.warning" = "Только совместимые с сетью токены. Другие будут потеряны.";
 
 "receive_network_select.title" = "Сеть";
 "receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
@@ -409,6 +411,8 @@
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid" = "Неверно";
+"send.error.invalid_blockchain" = "Недействительный блокчейн";
+"send.error.invalid_token" = "Недействительный токен";
 "send.error.address" = "Адрес";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 час";
@@ -443,7 +447,7 @@
 "send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее заново как новую транзакцию с нулевой суммой к самому себе. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.cancel" = "Отменить транзакцию";
-"send.confirmation.nonce" = "Nonce";
+"send.confirmation.nonce" = "Memo";
 "send.confirmation.method" = "Метод";
 "send.amount_error.balance" = "Недостаточно средств";
 "send.address_error.own_address" = "Невозможно отправить TRX самому себе";
@@ -473,11 +477,12 @@
 // Donate
 
 "donate.list.title" = "Пожертвовать с помощью";
-"donate.list.get_address" = "Получить адрес";
+"donate.list.get_address" = "Получить адрес для пожертвования";
 "donate.list.get_address.title" = "Адреса";
 "donate.title" = "Пожертвовать %@";
 "donate.no_assets" = "У вас нет активов для пожертвования.";
 "donate.support.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
+"donate.support.bottom_description" = "Или выберите монету для пожертвования";
 
 // CoinSelector
 
@@ -593,15 +598,15 @@
 "market.project_has_no_coin" = "У этого проекта нет токена";
 
 "market.top.section.header.see_all" = "Посмотреть всё";
-"market.top.section.header.top_gainers" = "Взлеты";
-"market.top.section.header.top_losers" = "Падения";
-"market.top.section.header.top_sectors" = "Топ секторы";
+"market.top.section.header.top_gainers" = "Показывают рост";
+"market.top.section.header.top_losers" = "Теряют в цене";
+"market.top.section.header.sectors" = "Секторы";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объем";
 "market.top.market_cap.title" = "Цена";
 "market.top.diluted_market_cap.title" = "Dilluted MCap";
 
-"market.market_field.mcap" = "Рын. кап";
+"market.market_field.mcap" = "Цена";
 "market.market_field.vol" = "Объем";
 
 "market.tvl.market_field.value" = "USD";
@@ -622,7 +627,7 @@
 "market.top.top_losers" = "Падения";
 "market.top.top_collections" = "Топ NFT коллекции";
 "market.top.floor_price" = "Цена";
-"market.top.top_platforms" = "Топ платформаы";
+"market.top.top_platforms" = "Топ платформы";
 "market.top.protocols" = "Протоколы";
 
 "top_platforms.title" = "Рейтинг платформ";
@@ -631,6 +636,9 @@
 "top_platform.title" = "%@ Экосистема";
 "top_platform.description" = "Капитализация рынка всех протоколов на блокчейне %@ ";
 
+"market.search.recent" = "Недавние";
+"market.search.popular" = "Популярные";
+
 "market_discovery.title" = "Токены";
 "market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Обзор категорий";
@@ -638,9 +646,6 @@
 "market_discovery.not_found" = "Ничего не найдено";
 
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
-
-"market.search.title" = "Поиск";
-"market.search.empty_text" = "Ничего не найдено";
 
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать результаты";
@@ -657,7 +662,7 @@
 "market.advanced_search.liquidity" = "Ликвидность DEX";
 "market.advanced_search.blockchains" = "Блокчейны";
 "market.advanced_search.price_period" = "Ценовой период";
-"market.advanced_search.price_change" = "Изменение цены";
+"market.advanced_search.price_change" = "по изменению цены (%)";
 
 "market.advanced_search.outperformed_btc" = "Обошел BTC";
 "market.advanced_search.outperformed_eth" = "Обошел ETH";
@@ -704,7 +709,7 @@
 "market.global.total_market_cap.title" = "Полная рын. кап.";
 "market.global.total_market_cap.description" = "Общая рыночная стоимость всех криптовалют";
 
-"market.global.volume_24h.title" = "Объем Торгов (24ч)";
+"market.global.volume_24h.title" = "Объем торгов (24ч)";
 "market.global.volume_24h.description" = "24-часовой объем крипторынка";
 
 "market.global.defi_cap.title" = "Капитализация DeFi";
@@ -836,7 +841,7 @@
 "coin_analytics.holders.tracked_blockchains" = "Отслеживаемые блокчейны: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "в топ-10 держателей";
 "coin_analytics.holders.count" = "Всего держателей: %@";
-"coin_analytics.holders.see_all" = "See Everything!";
+"coin_analytics.holders.see_all" = "Посмотреть всё";
 
 "coin_analytics.project_tvl" = "Проект TVL";
 "coin_analytics.tvl_ratio" = "Рын.кап / Соотношение TVL ";
@@ -864,7 +869,7 @@
 
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.treasuries.filters" = "Фильтры";
-"coin_analytics.treasuries.filter.all" = "All of 'em";
+"coin_analytics.treasuries.filter.all" = "Все";
 "coin_analytics.treasuries.filter.public" = "Публичный";
 "coin_analytics.treasuries.filter.private" = "Приватный";
 "coin_analytics.treasuries.filter.etf" = "ETF";
@@ -896,6 +901,9 @@
 // Coin Page -> Markets
 
 "coin_markets.empty" = "Нет доступных данных";
+"coin_markets.filter.all" = "Все";
+"coin_markets.filter.verified" = "Проверено";
+"coin_markets.verified" = "Проверено";
 
 // Coin Page -> Tweets
 
@@ -935,10 +943,6 @@
 
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
-"transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Все блокчейны";
-"transactions.all_coins" = "Все токены";
-"transactions.choose_coin" = "Выберите токен";
 "transactions.filter_all" = "Все";
 "transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
@@ -966,7 +970,7 @@
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
 
-"transactions.types.all" = "All of 'em";
+"transactions.types.all" = "Все";
 "transactions.types.incoming" = "Получено";
 "transactions.types.outgoing" = "Отправлено";
 "transactions.types.swap" = "Обмены";
@@ -1009,6 +1013,7 @@
 "tx_info.you_paid" = "Вы заплатили";
 "tx_info.you_got" = "Вы получили";
 "tx_info.price" = "Цена";
+"tx_info.scam_warning" = "Эта транзакция подозрительна и может быть мошенничеством. Пожалуйста, не копируйте никакие адреса из этой транзакции.";
 
 // Settings
 
@@ -1034,7 +1039,7 @@
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "Базовая валюта";
-"settings.base_currency.other" = "Other stuff";
+"settings.base_currency.other" = "Другое";
 "settings.base_currency.disclaimer" = "Отказ от ответственности";
 "settings.base_currency.disclaimer.description" = "Данные об обменных курсах предоставляются сторонним сервисом - Coingecko.com.\n\nПриложение кошелька %@ не гарантирует, что эти значения всегда верны и соответствуют рыночным данным. Вероятность несоответствия выше, если вы выбираете базовую валюту отличную от %@.";
 "settings.base_currency.disclaimer.set" = "Установить";
@@ -1107,7 +1112,7 @@
 "backup_app.backup_list.title" = "Файл резервной копии";
 "backup_app.backup_list.description.restore" = "Список содержимого в файле резервной копии.";
 "backup_app.backup_list.header.wallets" = "Кошельки";
-"backup_app.backup_list.header.other" = "Other stuff";
+"backup_app.backup_list.header.other" = "Другое";
 "backup_app.backup_list.other.watch_account.title" = "Просмотр кошелька";
 "backup_app.backup_list.other.watchlist.title" = "Избранное";
 "backup_app.backup_list.other.contacts.title" = "Контакты";
@@ -1115,7 +1120,7 @@
 "backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
 
-"backup_app.backup.disclaimer.cloud.title" = "Резерв. копирование /nв iCloud";
+"backup_app.backup.disclaimer.cloud.title" = "Резерв. копирование в iCloud";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud - это облачный сервис для хранения данных, предоставляемый компанией Apple. Важно знать, что ваши данные резервной копии будут сохранены на серверах Apple.";
 "backup_app.backup.disclaimer.cloud.checkbox_label" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
 "backup_app.backup.disclaimer.file.title" = "Резерв. копирование в файл";
@@ -1218,8 +1223,9 @@
 "btc_blockchain_settings.restore_source.description" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 "btc_blockchain_settings.restore_source.alert" = "После изменения источника восстановления, кошелек должен будет повторно синхронизироваться с блокчейном %@.";
 
-"btc_restore_mode.recommended" = "Рекомендовано";
-"btc_restore_mode.more_private" = "Более приватно";
+"btc_restore_mode.blockchair" = "Быстро, не приватно";
+"btc_restore_mode.hybrid" = "Медленно, не приватно";
+"btc_restore_mode.blockchain" = "Медленно, приватно";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
@@ -1604,6 +1610,7 @@
 "evm_network.rpc_source" = "Источник RPC";
 "evm_network.added" = "Добавлен";
 "evm_network.add_new" = "Добавить новый";
+"evm_network.description" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 
 // Add RPC Source
 
@@ -1666,15 +1673,12 @@
 // Watch Address
 
 "watch_address.title" = "Просмотр кошелька";
-"watch_address.watch" = "Далее";
+"watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
-"watch_address.by" = "Из";
-"watch_address.watch_by" = "Смотреть из";
-"watch_address.evm_address" = "EVM адрес";
-"watch_address.tron_address" = "TRON адрес";
-"watch_address.public_key" = "Account xPubKey";
-"watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
-"watch_address.public_key.invalid_key" = "Неверный ключ";
+"watch_address.error.not_supported" = "Формат адреса не поддерживается";
+"watch_address.error.non_public_key" = "Просмотр по приватному ключу не разрешён";
+"watch_address.error.not_supported_derived_type" = "Неподдерживаемый тип";
+"watch_address.watch_data.placeholder" = "Введите ваш EVM, TRON, TON или публичный адрес (Bitcoin, Litecoin, Bitcoin Cash) или Account xPubKey.";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
 "watch_address.choose_coin" = "Выберите токен";
 
@@ -1813,7 +1817,7 @@
 "cex_deposit.network" = "Сеть";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Мин. сумма";
-"cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
+"cex_deposit.warning_memo" = "Укажите необходимое мемо (тэг) и отправьте только токены, совместимые с сетью. Другие токены будут потеряны.";
 "cex_deposit.copy_address" = "Копировать";
 "cex_deposit.share_address" = "Поделиться";
 "cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
@@ -1842,3 +1846,19 @@
 "cex_withdraw_confirm.network" = "Сеть";
 "cex_withdraw_confirm.withdraw" = "Вывод средств";
 "cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
+
+// No Passcode
+
+"no_passcode.info_text" = "Это приложение требует, чтобы на телефоне был включен пароль (блокировка экрана).\n\nВы можете включить его в настройках iOS.\n\nОбратите внимание, что если вы отключили PIN-код на уровне операционной системы, меры безопасности для безопасного хранения данных на вашем телефоне сделали ранее сохраненные данные недействительными. Вам нужно будет восстановить ключи вашего кошелька, чтобы вернуться к вашему кошельку.";
+"cannot_check_passcode.info_text" = "Невозможно проверить состояние кода доступа (блокировки экрана). Пожалуйста, перезапустите приложение.";
+"jailbreak.info_text" = "Команда Unstoppable рекомендует использовать приложение только на не рутированных (не взломанных) телефонах.\n\nОбратите внимание, что при использовании рутированного устройства приложение уже не может гарантировать безопасность ваших криптовалют от вредоносного программного обеспечения.";
+
+// Transaction Filter
+
+"transaction_filter.title" = "Фильтр";
+"transaction_filter.blockchain" = "Blockchain";
+"transaction_filter.all_blockchains" = "Все блокчейны";
+"transaction_filter.coin" = "Монета";
+"transaction_filter.all_coins" = "Все токены";
+"transaction_filter.hide_suspicious_txs" = "Скрыть подозрительные транзакции";
+"transaction_filter.hide_suspicious_txs.description" = "Скрытие входящих транзакций с незначительной суммой в стабильных монетах частично решает проблемы атаки на загрязнение адреса.";

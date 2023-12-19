@@ -1,13 +1,13 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class WalletTokenBalanceCustomAmountCell: BaseSelectableThemeCell {
-
-    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style _: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: .default, reuseIdentifier: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -17,7 +17,7 @@ class WalletTokenBalanceCustomAmountCell: BaseSelectableThemeCell {
         let elements: [CellBuilderNew.CellElement] = [
             .textElement(text: .subhead2(title), parameters: .allCompression),
             .margin8,
-            .image20 {  component in
+            .image20 { component in
                 component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
             },
             .textElement(text: .subhead2(amount, color: valueColor), parameters: [.rightAlignment]),
@@ -25,5 +25,4 @@ class WalletTokenBalanceCustomAmountCell: BaseSelectableThemeCell {
 
         CellBuilderNew.buildStatic(cell: self, rootElement: .hStack(elements))
     }
-
 }

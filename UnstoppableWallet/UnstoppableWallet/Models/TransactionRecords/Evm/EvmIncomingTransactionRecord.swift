@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 import MarketKit
 
 class EvmIncomingTransactionRecord: EvmTransactionRecord {
@@ -16,5 +16,4 @@ class EvmIncomingTransactionRecord: EvmTransactionRecord {
     override var mainValue: TransactionValue? {
         value
     }
-
 }

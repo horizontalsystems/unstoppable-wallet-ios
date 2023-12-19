@@ -1,7 +1,7 @@
-import UIKit
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import SectionsTableView
+import UIKit
 
 class MarketWatchlistViewController: MarketListViewController {
     weak var parentNavigationController: UINavigationController?
@@ -19,12 +19,13 @@ class MarketWatchlistViewController: MarketListViewController {
         self.viewModel = viewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
 
-        super.init(listViewModel: listViewModel)
+        super.init(listViewModel: listViewModel, apiTag: "market_watchlist")
 
         multiSortHeaderView.viewController = self
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -37,10 +38,7 @@ class MarketWatchlistViewController: MarketListViewController {
         viewModel.onLoad()
     }
 
-    override func showAddedToWatchlist() {
-    }
+    override func showAddedToWatchlist() {}
 
-    override func showRemovedFromWatchlist() {
-    }
-
+    override func showRemovedFromWatchlist() {}
 }

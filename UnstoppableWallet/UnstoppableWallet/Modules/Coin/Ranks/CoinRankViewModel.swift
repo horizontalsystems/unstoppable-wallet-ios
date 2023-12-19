@@ -1,10 +1,9 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
+import Foundation
 import MarketKit
-import CurrencyKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinRankViewModel {
     private let timePeriods: [HsTimePeriod] = [.day1, .week1, .month1]
@@ -16,15 +15,15 @@ class CoinRankViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
     private let sortDirectionRelay: BehaviorRelay<Bool>
-    private let scrollToTopRelay = PublishRelay<()>()
+    private let scrollToTopRelay = PublishRelay<Void>()
 
     init(service: CoinRankService) {
         self.service = service
         sortDirectionRelay = BehaviorRelay(value: service.sortDirectionAscending)
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -35,7 +34,7 @@ class CoinRankViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .loaded(let items, let reorder):
+        case let .loaded(items, reorder):
             viewItemsRelay.accept(viewItems(items: items))
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -57,14 +56,14 @@ class CoinRankViewModel {
         }
     }
 
-    private func viewItem(index: Int, item: CoinRankService.IndexedItem, currency: Currency) -> ViewItem {
+    private func viewItem(index _: Int, item: CoinRankService.IndexedItem, currency: Currency) -> ViewItem {
         ViewItem(
-                uid: item.coin.uid,
-                rank: "\(item.index)",
-                imageUrl: item.coin.imageUrl,
-                code: item.coin.code,
-                name: item.coin.name,
-                value: formatted(value: item.value, currency: currency)
+            uid: item.coin.uid,
+            rank: "\(item.index)",
+            imageUrl: item.coin.imageUrl,
+            code: item.coin.code,
+            name: item.coin.name,
+            value: formatted(value: item.value, currency: currency)
         )
     }
 
@@ -76,11 +75,9 @@ class CoinRankViewModel {
             return ValueFormatter.instance.formatShort(value: value)
         }
     }
-
 }
 
 extension CoinRankViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
     }
@@ -93,7 +90,7 @@ extension CoinRankViewModel {
         syncErrorRelay.asDriver()
     }
 
-    var scrollToTopSignal: Signal<()> {
+    var scrollToTopSignal: Signal<Void> {
         scrollToTopRelay.asSignal()
     }
 
@@ -147,7 +144,7 @@ extension CoinRankViewModel {
 
     var selectorItems: [String]? {
         switch service.type {
-        case .cexVolume, .dexVolume, .address, .txCount, .fee, .revenue: return timePeriods.map { $0.title }
+        case .cexVolume, .dexVolume, .address, .txCount, .fee, .revenue: return timePeriods.map(\.title)
         case .dexLiquidity, .holders: return nil
         }
     }
@@ -163,11 +160,9 @@ extension CoinRankViewModel {
     func onTapRetry() {
         service.sync()
     }
-
 }
 
 extension CoinRankViewModel {
-
     struct ViewItem {
         let uid: String
         let rank: String
@@ -176,5 +171,4 @@ extension CoinRankViewModel {
         let name: String
         let value: String?
     }
-
 }

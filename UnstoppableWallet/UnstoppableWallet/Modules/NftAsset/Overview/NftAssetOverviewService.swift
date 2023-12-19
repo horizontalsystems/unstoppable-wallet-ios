@@ -1,9 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import MarketKit
-import CurrencyKit
 import Kingfisher
+import MarketKit
+import RxRelay
+import RxSwift
 
 class NftAssetOverviewService {
     let providerCollectionUid: String
@@ -54,13 +53,13 @@ class NftAssetOverviewService {
         state = .loading
 
         nftMetadataManager.extendedAssetMetadataSingle(nftUid: nftUid, providerCollectionUid: providerCollectionUid)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] asset, collection in
-                    self?.handleFetched(asset: asset, collection: collection)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] asset, collection in
+                self?.handleFetched(asset: asset, collection: collection)
+            }, onError: { [weak self] error in
+                self?.state = .failed(error)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func handleFetched(asset: NftAssetMetadata, collection: NftCollectionMetadata) {
@@ -81,7 +80,7 @@ class NftAssetOverviewService {
         } else {
             KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
                 switch result {
-                case .success(let result):
+                case let .success(result):
                     self?.handleFetched(asset: asset, collection: collection, nftImage: .image(image: result.image))
                 case .failure:
                     self?.handleFetched(asset: asset, collection: collection, nftImage: nil)
@@ -103,7 +102,7 @@ class NftAssetOverviewService {
 
     private func handleUpdatedRecords() {
         queue.async {
-            guard case .completed(let item) = self.state else {
+            guard case let .completed(item) = self.state else {
                 return
             }
 
@@ -113,7 +112,7 @@ class NftAssetOverviewService {
     }
 
     private func _isOwned() -> Bool {
-        guard let adapter = adapter else {
+        guard let adapter else {
             return false
         }
 
@@ -124,7 +123,7 @@ class NftAssetOverviewService {
         var priceItems = [item.lastSale, item.average7d, item.average30d, item.collectionFloor] + item.offers
 
         if let saleItem = item.sale {
-            priceItems.append(contentsOf: saleItem.listings.map { $0.price })
+            priceItems.append(contentsOf: saleItem.listings.map(\.price))
         }
 
         return Set(priceItems.compactMap { $0?.nftPrice.token.coin.uid })
@@ -158,14 +157,12 @@ class NftAssetOverviewService {
 
         priceItem?.coinPrice = map[coinUid]
     }
-
 }
 
 extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
-
     func didUpdateBaseCurrency() {
         queue.async {
-            guard case .completed(let item) = self.state else {
+            guard case let .completed(item) = self.state else {
                 return
             }
 
@@ -176,7 +173,7 @@ extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
 
     func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
         queue.async {
-            guard case .completed(let item) = self.state else {
+            guard case let .completed(item) = self.state else {
                 return
             }
 
@@ -187,7 +184,6 @@ extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
 }
 
 extension NftAssetOverviewService {
-
     var stateObservable: Observable<DataStatus<Item>> {
         stateRelay.asObservable()
     }
@@ -201,11 +197,9 @@ extension NftAssetOverviewService {
             self.sync()
         }
     }
-
 }
 
 extension NftAssetOverviewService {
-
     class Item {
         let asset: NftAssetMetadata
         let collection: NftCollectionMetadata
@@ -232,13 +226,13 @@ extension NftAssetOverviewService {
             offers = asset.offers.map { PriceItem(nftPrice: $0) }
             sale = asset.saleInfo.map { saleInfo in
                 SaleItem(
-                        type: saleInfo.type,
-                        listings: saleInfo.listings.map { listing in
-                            SaleListingItem(
-                                    untilDate: listing.untilDate,
-                                    price: PriceItem(nftPrice: listing.price)
-                            )
-                        }
+                    type: saleInfo.type,
+                    listings: saleInfo.listings.map { listing in
+                        SaleListingItem(
+                            untilDate: listing.untilDate,
+                            price: PriceItem(nftPrice: listing.price)
+                        )
+                    }
                 )
             }
         }
@@ -314,5 +308,4 @@ extension NftAssetOverviewService {
             self.coinPrice = coinPrice
         }
     }
-
 }

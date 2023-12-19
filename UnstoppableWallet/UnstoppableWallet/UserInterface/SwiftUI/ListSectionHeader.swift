@@ -5,9 +5,8 @@ struct ListSectionHeader: View {
 
     var body: some View {
         Text(text.uppercased())
-                .themeSubhead1()
-                .frame(height: .margin32)
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
+            .themeSubhead1()
+            .frame(height: .margin32)
+            .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
     }
-
 }

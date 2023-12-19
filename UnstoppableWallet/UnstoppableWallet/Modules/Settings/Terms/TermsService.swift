@@ -7,13 +7,10 @@ class TermsService {
 
         termsAccepted = termsManager.termsAccepted
     }
-
 }
 
 extension TermsService {
-
     func setTermsAccepted() {
         termsManager.setTermsAccepted()
     }
-
 }

@@ -28,17 +28,17 @@ class EnabledWalletCache_v_0_36: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case tokenQueryId, accountId, balance, balanceLocked // todo: migration - remove coinSettingsId
+        case tokenQueryId, accountId, balance, balanceLocked // TODO: migration - remove coinSettingsId
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         tokenQueryId = row[Columns.tokenQueryId]
         accountId = row[Columns.accountId]
         balance = row[Columns.balance]
         balanceLocked = row[Columns.balanceLocked]
         balances = Data()
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -47,5 +47,4 @@ class EnabledWalletCache_v_0_36: Record {
         container[Columns.balance] = balance
         container[Columns.balanceLocked] = balanceLocked
     }
-
 }

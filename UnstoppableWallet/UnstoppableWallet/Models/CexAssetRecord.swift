@@ -37,7 +37,7 @@ class CexAssetRecord: Record {
         case accountId, id, name, freeBalance, lockedBalance, depositEnabled, withdrawEnabled, depositNetworks, withdrawNetworks, coinUid
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         accountId = row[Columns.accountId]
         id = row[Columns.id]
         name = row[Columns.name]
@@ -51,7 +51,7 @@ class CexAssetRecord: Record {
         withdrawNetworks = rawWithdrawNetworks.flatMap { [CexWithdrawNetworkRaw](JSONString: $0) } ?? []
         coinUid = row[Columns.coinUid]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -66,5 +66,4 @@ class CexAssetRecord: Record {
         container[Columns.withdrawNetworks] = withdrawNetworks.toJSONString()
         container[Columns.coinUid] = coinUid
     }
-
 }

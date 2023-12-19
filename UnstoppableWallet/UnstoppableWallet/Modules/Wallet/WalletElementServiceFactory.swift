@@ -13,19 +13,18 @@ struct WalletElementServiceFactory {
 
     func elementService(account: Account) -> IWalletElementService {
         switch account.type {
-        case .mnemonic, .evmPrivateKey, .evmAddress, .tronAddress, .hdExtendedKey:
+        case .mnemonic, .evmPrivateKey, .evmAddress, .tronAddress, .tonAddress, .btcAddress, .hdExtendedKey:
             let adapterService = WalletAdapterService(account: account, adapterManager: adapterManager)
             let elementService = WalletBlockchainElementService(
-                    account: account,
-                    adapterService: adapterService,
-                    walletManager: walletManager
+                account: account,
+                adapterService: adapterService,
+                walletManager: walletManager
             )
             adapterService.delegate = elementService
 
             return elementService
-        case .cex(let cexAccount):
+        case let .cex(cexAccount):
             return WalletCexElementService(account: account, provider: cexAccount.assetProvider, cexAssetManager: cexAssetManager)
         }
     }
-
 }

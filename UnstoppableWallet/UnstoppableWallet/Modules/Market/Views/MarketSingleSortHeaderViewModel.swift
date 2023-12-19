@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IMarketSingleSortHeaderService: AnyObject {
     var sortDirectionAscending: Bool { get set }
@@ -24,11 +24,9 @@ class MarketSingleSortHeaderViewModel {
 
         sortDirectionRelay = BehaviorRelay(value: service.sortDirectionAscending)
     }
-
 }
 
 extension MarketSingleSortHeaderViewModel {
-
     var allFields: [String] {
         decorator.allFields
     }
@@ -53,5 +51,4 @@ extension MarketSingleSortHeaderViewModel {
     func onSelectField(index: Int) {
         decorator.setCurrentField(index: index)
     }
-
 }

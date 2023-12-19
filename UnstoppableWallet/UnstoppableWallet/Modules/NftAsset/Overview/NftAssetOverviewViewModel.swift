@@ -1,9 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
-import CurrencyKit
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class NftAssetOverviewViewModel {
     private let service: NftAssetOverviewService
@@ -29,7 +28,7 @@ class NftAssetOverviewViewModel {
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .completed(let item):
+        case let .completed(item):
             viewItemRelay.accept(viewItem(item: item))
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -45,50 +44,50 @@ class NftAssetOverviewViewModel {
         let collection = item.collection
 
         return ViewItem(
-                nftImage: item.assetNftImage,
-                name: asset.name ?? "#\(service.nftUid.tokenId)",
-                providerCollectionUid: asset.providerCollectionUid,
-                collectionName: collection.name,
-                lastSale: priceViewItem(priceItem: item.lastSale),
-                average7d: priceViewItem(priceItem: item.average7d),
-                average30d: priceViewItem(priceItem: item.average30d),
-                collectionFloor: priceViewItem(priceItem: item.collectionFloor),
-                bestOffer: priceViewItem(priceItem: item.bestOffer),
-                sale: saleViewItem(saleItem: item.sale),
-                traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.totalSupply) },
-                description: asset.description,
-                contractAddress: service.nftUid.contractAddress,
-                tokenId: service.nftUid.tokenId,
-                schemaName: asset.contract.schema,
-                blockchain: service.nftUid.blockchainType.uid,
-                links: linkViewItems(asset: asset, collection: collection),
-                sendVisible: item.isOwned
+            nftImage: item.assetNftImage,
+            name: asset.name ?? "#\(service.nftUid.tokenId)",
+            providerCollectionUid: asset.providerCollectionUid,
+            collectionName: collection.name,
+            lastSale: priceViewItem(priceItem: item.lastSale),
+            average7d: priceViewItem(priceItem: item.average7d),
+            average30d: priceViewItem(priceItem: item.average30d),
+            collectionFloor: priceViewItem(priceItem: item.collectionFloor),
+            bestOffer: priceViewItem(priceItem: item.bestOffer),
+            sale: saleViewItem(saleItem: item.sale),
+            traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.totalSupply) },
+            description: asset.description,
+            contractAddress: service.nftUid.contractAddress,
+            tokenId: service.nftUid.tokenId,
+            schemaName: asset.contract.schema,
+            blockchain: service.nftUid.blockchainType.uid,
+            links: linkViewItems(asset: asset, collection: collection),
+            sendVisible: item.isOwned
         )
     }
 
     private func saleViewItem(saleItem: NftAssetOverviewService.SaleItem?) -> SaleViewItem? {
-        guard let saleItem = saleItem, let listing = saleItem.bestListing else {
+        guard let saleItem, let listing = saleItem.bestListing else {
             return nil
         }
 
         return SaleViewItem(
-                untilDate: "nft_asset.until_date".localized(DateHelper.instance.formatFullTime(from: listing.untilDate)),
-                type: saleItem.type,
-                price: PriceViewItem(
-                        coinValue: coinValue(priceItem: listing.price),
-                        fiatValue: fiatValue(priceItem: listing.price)
-                )
+            untilDate: "nft_asset.until_date".localized(DateHelper.instance.formatFullTime(from: listing.untilDate)),
+            type: saleItem.type,
+            price: PriceViewItem(
+                coinValue: coinValue(priceItem: listing.price),
+                fiatValue: fiatValue(priceItem: listing.price)
+            )
         )
     }
 
     private func priceViewItem(priceItem: NftAssetOverviewService.PriceItem?) -> PriceViewItem? {
-        guard let priceItem = priceItem else {
+        guard let priceItem else {
             return nil
         }
 
         return PriceViewItem(
-                coinValue: coinValue(priceItem: priceItem),
-                fiatValue: fiatValue(priceItem: priceItem)
+            coinValue: coinValue(priceItem: priceItem),
+            fiatValue: fiatValue(priceItem: priceItem)
         )
     }
 
@@ -109,7 +108,7 @@ class NftAssetOverviewViewModel {
     private func traitViewItem(index: Int, trait: NftAssetMetadata.Trait, totalSupply: Int?) -> TraitViewItem {
         var percentString: String?
 
-        if let totalSupply = totalSupply, trait.count != 0, totalSupply != 0 {
+        if let totalSupply, trait.count != 0, totalSupply != 0 {
             let percent = Double(trait.count) * 100.0 / Double(totalSupply)
             let rounded: Double
 
@@ -125,10 +124,10 @@ class NftAssetOverviewViewModel {
         }
 
         return TraitViewItem(
-                index: index,
-                type: trait.type.capitalized,
-                value: trait.value.capitalized,
-                percent: percentString.map { "\($0)%" }
+            index: index,
+            type: trait.type.capitalized,
+            value: trait.value.capitalized,
+            percent: percentString.map { "\($0)%" }
         )
     }
 
@@ -150,7 +149,6 @@ class NftAssetOverviewViewModel {
 
         return viewItems
     }
-
 }
 
 extension NftAssetOverviewViewModel {
@@ -187,7 +185,7 @@ extension NftAssetOverviewViewModel {
     }
 
     func onSelectTrait(index: Int) {
-        guard case .completed(let item) = service.state else {
+        guard case let .completed(item) = service.state else {
             return
         }
 
@@ -206,16 +204,14 @@ extension NftAssetOverviewViewModel {
         }
 
         let url = providerTraitLink
-                .replacingOccurrences(of: "$traitName", with: traitName)
-                .replacingOccurrences(of: "$traitValue", with: traitValue)
+            .replacingOccurrences(of: "$traitName", with: traitName)
+            .replacingOccurrences(of: "$traitValue", with: traitValue)
 
         openTraitRelay.accept(url)
     }
-
 }
 
 extension NftAssetOverviewViewModel {
-
     struct ViewItem {
         let nftImage: NftImage?
         let name: String
@@ -266,5 +262,4 @@ extension NftAssetOverviewViewModel {
         case discord
         case twitter
     }
-
 }

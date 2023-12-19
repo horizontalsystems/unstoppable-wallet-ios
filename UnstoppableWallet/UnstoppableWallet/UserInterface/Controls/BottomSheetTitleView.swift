@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class BottomSheetTitleView: UIView {
     private let imageView = UIImageView()
@@ -65,7 +65,8 @@ class BottomSheetTitleView: UIView {
         closeButton.addTarget(self, action: #selector(_onTapClose), for: .touchUpInside)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -78,7 +79,7 @@ class BottomSheetTitleView: UIView {
             maker.height.equalTo(subtitle != nil ? 72 : 60)
         }
 
-        if let image = image {
+        if let image {
             imageView.isHidden = false
 
             imageView.snp.updateConstraints { maker in
@@ -86,7 +87,13 @@ class BottomSheetTitleView: UIView {
             }
 
             switch image {
-            case .local(let image): imageView.image = image
+            case let .local(name, tint):
+                let image = name.flatMap { UIImage(named: $0) }
+                if let color = tint.uiColor {
+                    imageView.image = image?.withTintColor(color)
+                } else {
+                    imageView.image = image
+                }
             case let .remote(url, placeholder): imageView.setImage(withUrlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
             }
         } else {
@@ -96,7 +103,7 @@ class BottomSheetTitleView: UIView {
         titleLabel.font = subtitle != nil ? .body : .headline2
         titleLabel.text = title
 
-        if let subtitle = subtitle {
+        if let subtitle {
             subtitleLabel.isHidden = false
             subtitleLabel.text = subtitle
         } else {
@@ -105,14 +112,30 @@ class BottomSheetTitleView: UIView {
 
         self.viewController = viewController
     }
-
 }
 
 extension BottomSheetTitleView {
-
     enum Image {
-        case local(image: UIImage?)
-        case remote(url: String, placeholder: String?)
-    }
+        static let warning: Self = .local(name: "warning_2_24", tint: .warning)
+        static let info: Self = .local(name: "circle_information_24", tint: .gray)
+        static let trash: Self = .local(name: "trash_24", tint: .alert)
 
+        case local(name: String?, tint: TintType)
+        case remote(url: String, placeholder: String?)
+
+        enum TintType {
+            case none, gray, warning, alert
+        }
+    }
+}
+
+extension BottomSheetTitleView.Image.TintType {
+    var uiColor: UIColor? {
+        switch self {
+        case .none: return nil
+        case .gray: return .themeGray
+        case .warning: return .themeJacob
+        case .alert: return .themeLucian
+        }
+    }
 }

@@ -17,5 +17,4 @@ class DeepLinkService {
     func setDeepLinkShown() {
         deepLink = nil
     }
-
 }

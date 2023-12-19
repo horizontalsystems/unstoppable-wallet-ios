@@ -1,5 +1,5 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class ReferencedTweetView: UIView {
     private static let titleFont: UIFont = .caption
@@ -35,7 +35,8 @@ class ReferencedTweetView: UIView {
         bodyView.textColor = .themeLeah
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -49,5 +50,4 @@ class ReferencedTweetView: UIView {
 
         return ceil(Self.sideMargin + Self.titleFont.lineHeight + Self.insideMargin + textHeight + Self.sideMargin)
     }
-
 }

@@ -1,9 +1,9 @@
-import UIKit
-import SnapKit
-import ThemeKit
-import SectionsTableView
 import HUD
 import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class GuidesViewController: ThemeViewController {
     private let viewModel: IGuidesViewModel
@@ -27,7 +27,8 @@ class GuidesViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -41,9 +42,7 @@ class GuidesViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
@@ -68,32 +67,32 @@ class GuidesViewController: ThemeViewController {
         errorView.image = UIImage(named: "not_available_48")
 
         viewModel.filters
-                .drive(onNext: { [weak self] filters in
-                    self?.filterHeaderView.reload(filters: filters.map { filter in
-                        FilterView.ViewItem.item(title: filter)
-                    })
+            .drive(onNext: { [weak self] filters in
+                self?.filterHeaderView.reload(filters: filters.map { filter in
+                    FilterView.ViewItem.item(title: filter)
                 })
-                .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
 
         viewModel.viewItems
-                .drive(onNext: { [weak self] viewItems in
-                    self?.viewItems = viewItems
-                    self?.tableView.reloadData()
-                })
-                .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] viewItems in
+                self?.viewItems = viewItems
+                self?.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
 
         viewModel.isLoading
-                .drive(onNext: { [weak self] visible in
-                    self?.setSpinner(visible: visible)
-                })
-                .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] visible in
+                self?.setSpinner(visible: visible)
+            })
+            .disposed(by: disposeBag)
 
         viewModel.error
-                .drive(onNext: { [weak self] error in
-                    self?.errorView.isHidden = error == nil
-                    self?.errorView.text = error?.smartDescription
-                })
-                .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] error in
+                self?.errorView.isHidden = error == nil
+                self?.errorView.text = error?.smartDescription
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setSpinner(visible: Bool) {
@@ -105,12 +104,10 @@ class GuidesViewController: ThemeViewController {
             spinner.stopAnimating()
         }
     }
-
 }
 
 extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewItems.count
     }
 
@@ -118,19 +115,19 @@ extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.dequeueReusableCell(withIdentifier: String(describing: GuideCell.self), for: indexPath)
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? GuideCell {
             let index = indexPath.row
 
             cell.bind(
-                    viewItem: viewItems[index],
-                    first: index == 0,
-                    last: index == viewItems.count - 1
+                viewItem: viewItems[index],
+                first: index == 0,
+                last: index == viewItems.count - 1
             )
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewItem = viewItems[indexPath.row]
 
         guard let url = viewItem.url else {
@@ -145,19 +142,18 @@ extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
         let index = indexPath.row
 
         return GuideCell.height(
-                containerWidth: tableView.width,
-                viewItem: viewItems[index],
-                first: index == 0,
-                last: index == viewItems.count - 1
+            containerWidth: tableView.width,
+            viewItem: viewItems[index],
+            first: index == 0,
+            last: index == viewItems.count - 1
         )
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         filterHeaderView.headerHeight
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection _: Int) -> UIView? {
         filterHeaderView
     }
-
 }

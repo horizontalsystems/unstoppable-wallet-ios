@@ -3,7 +3,7 @@ import SwiftUI
 import ThemeKit
 import UIKit
 
-struct EvmNetworkModule {
+enum EvmNetworkModule {
     static func viewController(blockchain: Blockchain) -> UIViewController {
         let service = EvmNetworkService(blockchain: blockchain, evmSyncSourceManager: App.shared.evmSyncSourceManager)
         let viewModel = EvmNetworkViewModel(service: service)

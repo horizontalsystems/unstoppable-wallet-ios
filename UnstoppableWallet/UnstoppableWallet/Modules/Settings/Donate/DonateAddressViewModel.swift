@@ -21,5 +21,4 @@ class DonateAddressViewModel {
 
         self.viewItems = viewItems
     }
-
 }

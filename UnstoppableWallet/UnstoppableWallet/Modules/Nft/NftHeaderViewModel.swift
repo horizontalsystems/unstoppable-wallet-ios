@@ -1,13 +1,13 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class NftHeaderViewModel {
     private let service: NftService
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private let playHapticRelay = PublishRelay<()>()
+    private let playHapticRelay = PublishRelay<Void>()
 
     init(service: NftService) {
         self.service = service
@@ -22,11 +22,11 @@ class NftHeaderViewModel {
         let viewItem: ViewItem? = totalItem.flatMap { totalItem in
             let balanceHidden = service.balanceHidden
 
-            let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
+            let amount = balanceHidden ? BalanceHiddenManager.placeholder : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
 
             let convertedValue: String
             if balanceHidden {
-                convertedValue = "*****"
+                convertedValue = BalanceHiddenManager.placeholder
             } else if let value = totalItem.convertedValue, let formattedValue = ValueFormatter.instance.formatShort(coinValue: value) {
                 convertedValue = "≈ \(formattedValue)"
             } else {
@@ -34,10 +34,10 @@ class NftHeaderViewModel {
             }
 
             return ViewItem(
-                    amount: amount,
-                    amountExpired: balanceHidden ? false : totalItem.expired,
-                    convertedValue: convertedValue,
-                    convertedValueExpired: balanceHidden ? false : totalItem.convertedValueExpired
+                amount: amount,
+                amountExpired: balanceHidden ? false : totalItem.expired,
+                convertedValue: convertedValue,
+                convertedValueExpired: balanceHidden ? false : totalItem.convertedValueExpired
             )
         }
 
@@ -55,16 +55,14 @@ class NftHeaderViewModel {
         case .average30d: return "nft_collections.average_30d".localized
         }
     }
-
 }
 
 extension NftHeaderViewModel {
-
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
     }
 
-    var playHapticSignal: Signal<()> {
+    var playHapticSignal: Signal<Void> {
         playHapticRelay.asSignal()
     }
 
@@ -89,16 +87,13 @@ extension NftHeaderViewModel {
     func onSelectPriceType(index: Int) {
         service.mode = NftService.Mode.allCases[index]
     }
-
 }
 
 extension NftHeaderViewModel {
-
     struct ViewItem {
         let amount: String?
         let amountExpired: Bool
         let convertedValue: String?
         let convertedValueExpired: Bool
     }
-
 }

@@ -1,8 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
-import CurrencyKit
 import MarketKit
+import RxCocoa
+import RxSwift
 
 class SendAmountCautionViewModel {
     private let disposeBag = DisposeBag()
@@ -12,7 +11,7 @@ class SendAmountCautionViewModel {
     private let coinService: CoinService
 
     private let amountCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private(set) var amountCaution: Caution? = nil {
+    private(set) var amountCaution: Caution? {
         didSet {
             amountCautionRelay.accept(amountCaution)
         }
@@ -29,12 +28,12 @@ class SendAmountCautionViewModel {
     }
 
     private func sync(amountCaution: SendAmountCautionService.Caution?) {
-        guard let amountCaution = amountCaution else {
+        guard let amountCaution else {
             self.amountCaution = nil
             return
         }
 
-        var amountInfo: AmountInfo? = nil
+        var amountInfo: AmountInfo?
 
         switch switchService.amountType {
         case .coin:
@@ -56,13 +55,10 @@ class SendAmountCautionViewModel {
             self.amountCaution = Caution(text: "send.amount_error.minimum_amount".localized(amountInfo?.formattedFull ?? ""), type: .error)
         }
     }
-
 }
 
 extension SendAmountCautionViewModel {
-
     var amountCautionDriver: Driver<Caution?> {
         amountCautionRelay.asDriver()
     }
-
 }

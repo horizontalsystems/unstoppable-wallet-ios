@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class NftAdapterManager {
     private let walletManager: WalletManager
@@ -18,11 +18,11 @@ class NftAdapterManager {
         self.evmBlockchainManager = evmBlockchainManager
 
         walletManager.activeWalletDataUpdatedObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] walletData in
-                    self?.handleAdaptersReady(wallets: walletData.wallets)
-                })
-                .disposed(by: disposeBag)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] walletData in
+                self?.handleAdaptersReady(wallets: walletData.wallets)
+            })
+            .disposed(by: disposeBag)
 
         _initAdapters(wallets: walletManager.activeWallets)
     }
@@ -45,7 +45,7 @@ class NftAdapterManager {
             if evmBlockchainManager.blockchain(type: nftKey.blockchainType) != nil {
                 let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: nftKey.blockchainType).evmKitWrapper(account: nftKey.account, blockchainType: nftKey.blockchainType)
 
-                if let evmKitWrapper = evmKitWrapper, let nftKit = evmKitWrapper.nftKit {
+                if let evmKitWrapper, let nftKit = evmKitWrapper.nftKit {
                     newAdapterMap[nftKey] = EvmNftAdapter(blockchainType: nftKey.blockchainType, evmKitWrapper: evmKitWrapper, nftKit: nftKit)
                 }
             } else {
@@ -64,11 +64,9 @@ class NftAdapterManager {
             self._initAdapters(wallets: wallets)
         }
     }
-
 }
 
 extension NftAdapterManager {
-
     var adapterMap: [NftKey: INftAdapter] {
         queue.sync { _adapterMap }
     }
@@ -88,5 +86,4 @@ extension NftAdapterManager {
             }
         }
     }
-
 }

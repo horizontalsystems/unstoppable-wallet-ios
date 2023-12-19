@@ -1,10 +1,9 @@
-import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
-import CurrencyKit
-import MarketKit
 import Chart
+import Foundation
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketOverviewGlobalViewModel {
     private let service: MarketOverviewGlobalService
@@ -26,10 +25,10 @@ class MarketOverviewGlobalViewModel {
 
     private func viewItem(globalMarketData: MarketOverviewGlobalService.GlobalMarketData) -> GlobalMarketViewItem {
         GlobalMarketViewItem(
-                totalMarketCap: chartViewItem(item: globalMarketData.marketCap),
-                volume24h: chartViewItem(item: globalMarketData.volume24h),
-                defiCap: chartViewItem(item: globalMarketData.defiMarketCap),
-                defiTvl: chartViewItem(item: globalMarketData.defiTvl)
+            totalMarketCap: chartViewItem(item: globalMarketData.marketCap),
+            volume24h: chartViewItem(item: globalMarketData.volume24h),
+            defiCap: chartViewItem(item: globalMarketData.defiMarketCap),
+            defiTvl: chartViewItem(item: globalMarketData.defiTvl)
         )
     }
 
@@ -55,32 +54,28 @@ class MarketOverviewGlobalViewModel {
             }
 
             chartData = ChartData(
-                    items: chartItems,
-                    startWindow: firstPointItem.timestamp,
-                    endWindow: lastPointItem.timestamp
+                items: chartItems,
+                startWindow: firstPointItem.timestamp,
+                endWindow: lastPointItem.timestamp
             )
         }
 
         return ChartViewItem(
-                value: value,
-                diff: item.diff,
-                chartData: chartData,
-                chartTrend: trend
+            value: value,
+            diff: item.diff,
+            chartData: chartData,
+            chartTrend: trend
         )
     }
-
 }
 
 extension MarketOverviewGlobalViewModel {
-
     var viewItemDriver: Driver<GlobalMarketViewItem?> {
         viewItemRelay.asDriver()
     }
-
 }
 
 extension MarketOverviewGlobalViewModel {
-
     struct GlobalMarketViewItem {
         let totalMarketCap: ChartViewItem
         let volume24h: ChartViewItem
@@ -94,5 +89,4 @@ extension MarketOverviewGlobalViewModel {
         let chartData: ChartData?
         let chartTrend: MovementTrend
     }
-
 }

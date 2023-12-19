@@ -1,54 +1,49 @@
 import Foundation
 import RxSwift
-import StorageKit
-import LanguageKit
 
 class AccountRestoreWarningManager {
     private let accountManager: AccountManager
-    private let localStorage: ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
 
-    init(accountManager: AccountManager, localStorage: ILocalStorage) {
+    init(accountManager: AccountManager, userDefaultsStorage: UserDefaultsStorage) {
         self.accountManager = accountManager
-        self.localStorage = localStorage
+        self.userDefaultsStorage = userDefaultsStorage
     }
-
 }
 
 extension AccountRestoreWarningManager {
-
     var hasNonStandard: Bool {
-        !accountManager.accounts.filter { $0.nonStandard }.isEmpty
+        !accountManager.accounts.filter(\.nonStandard).isEmpty
     }
 
     var hasNonStandardObservable: Observable<Bool> {
-        accountManager.accountsObservable.map { !$0.filter { $0.nonStandard }.isEmpty }
+        accountManager.accountsObservable.map { !$0.filter(\.nonStandard).isEmpty }
     }
 
     var hasNonRecommended: Bool {
-        !accountManager.accounts.filter { $0.nonRecommended }.isEmpty
+        !accountManager.accounts.filter(\.nonRecommended).isEmpty
     }
 
     var hasNonRecommendedObservable: Observable<Bool> {
-        accountManager.accountsObservable.map { !$0.filter { $0.nonStandard }.isEmpty }
+        accountManager.accountsObservable.map { !$0.filter(\.nonStandard).isEmpty }
     }
 
     func removeIgnoreWarning(account: Account) {
-        localStorage.set(value: nil as Bool?, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
+        userDefaultsStorage.set(value: nil as Bool?, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
     }
 
     func setIgnoreWarning(account: Account) {
-        localStorage.set(value: true, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
+        userDefaultsStorage.set(value: true, for: AccountRestoreWarningFactory.keyAccountWarningPrefix + account.id)
     }
-
 }
 
 class AccountRestoreWarningFactory {
     static let keyAccountWarningPrefix = "wallet-ignore-non-recommended"
-    private let localStorage: ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let languageManager: LanguageManager
 
-    init(localStorage: ILocalStorage, languageManager: LanguageManager) {
-        self.localStorage = localStorage
+    init(userDefaultsStorage: UserDefaultsStorage, languageManager: LanguageManager) {
+        self.userDefaultsStorage = userDefaultsStorage
         self.languageManager = languageManager
     }
 
@@ -56,11 +51,11 @@ class AccountRestoreWarningFactory {
         if account.nonStandard {
             return CancellableTitledCaution(title: "note".localized, text: "restore.error.non_standard.description".localized, type: .error, cancellable: false)
         } else if account.nonRecommended {
-            if canIgnoreActiveAccountWarning, localStorage.value(for: Self.keyAccountWarningPrefix + account.id) ?? false {
+            if canIgnoreActiveAccountWarning, userDefaultsStorage.value(for: Self.keyAccountWarningPrefix + account.id) ?? false {
                 return nil
             }
 
-            return CancellableTitledCaution(title: "note".localized, text:  "restore.warning.non_recommended.description".localized, type: .warning, cancellable: canIgnoreActiveAccountWarning)
+            return CancellableTitledCaution(title: "note".localized, text: "restore.warning.non_recommended.description".localized, type: .warning, cancellable: canIgnoreActiveAccountWarning)
         }
         return nil
     }
@@ -77,5 +72,4 @@ class AccountRestoreWarningFactory {
 
         return URL(string: fileUrl, relativeTo: faqIndexUrl)
     }
-
 }

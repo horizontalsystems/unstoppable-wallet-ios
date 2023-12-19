@@ -1,8 +1,7 @@
-import RxSwift
-import RxRelay
-import MarketKit
 import HdWalletKit
-import LanguageKit
+import MarketKit
+import RxRelay
+import RxSwift
 
 class CreateAccountService {
     private let accountFactory: AccountFactory
@@ -36,11 +35,11 @@ class CreateAccountService {
 
     private func activateDefaultWallets(account: Account) throws {
         let tokenQueries = [
-            TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), //todo: make derivation supports accountType
+            TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), // TODO: make derivation supports accountType
             TokenQuery(blockchainType: .ethereum, tokenType: .native),
             TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
             TokenQuery(blockchainType: .ethereum, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDT
-            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .eip20(address: "0xe9e7cea3dedca5984780bafc599bd69add087d56")) // BUSD
+            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .eip20(address: "0xe9e7cea3dedca5984780bafc599bd69add087d56")), // BUSD
         ]
 
         var wallets = [Wallet]()
@@ -52,11 +51,9 @@ class CreateAccountService {
 
         walletManager.save(wallets: wallets)
     }
-
 }
 
 extension CreateAccountService {
-
     var wordCountObservable: Observable<Mnemonic.WordCount> {
         wordCountRelay.asObservable()
     }
@@ -97,11 +94,11 @@ extension CreateAccountService {
 
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let account = accountFactory.account(
-                type: accountType,
-                origin: .created,
-                backedUp: false,
-                fileBackedUp: false,
-                name: trimmedName.isEmpty ? defaultAccountName : trimmedName
+            type: accountType,
+            origin: .created,
+            backedUp: false,
+            fileBackedUp: false,
+            name: trimmedName.isEmpty ? defaultAccountName : trimmedName
         )
 
         accountManager.save(account: account)
@@ -109,14 +106,11 @@ extension CreateAccountService {
 
         accountManager.set(lastCreatedAccount: account)
     }
-
 }
 
 extension CreateAccountService {
-
     enum CreateError: Error {
         case emptyPassphrase
         case invalidConfirmation
     }
-
 }

@@ -1,12 +1,12 @@
+import ComponentKit
 import Foundation
-import UIKit
-import RxSwift
+import HUD
 import RxCocoa
+import RxSwift
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import SectionsTableView
-import ComponentKit
-import HUD
+import UIKit
 
 class CoinInvestorsViewController: ThemeViewController {
     private let viewModel: CoinInvestorsViewModel
@@ -26,7 +26,8 @@ class CoinInvestorsViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -83,55 +84,53 @@ class CoinInvestorsViewController: ThemeViewController {
 
         tableView.reload()
     }
-
 }
 
 extension CoinInvestorsViewController: SectionsDataSource {
-
     private func headerSection(index: Int, title: String, value: String) -> SectionProtocol {
         Section(
-                id: "header-\(index)",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin12),
-                rows: [
-                    tableView.universalRow48(
-                            id: "header-\(index)",
-                            title: .body(title, color: .themeJacob),
-                            value: .body(value),
-                            backgroundStyle: .transparent
-                    )
-                ]
+            id: "header-\(index)",
+            headerState: .margin(height: .margin12),
+            footerState: .margin(height: .margin12),
+            rows: [
+                tableView.universalRow48(
+                    id: "header-\(index)",
+                    title: .body(title, color: .themeJacob),
+                    value: .body(value),
+                    backgroundStyle: .transparent
+                ),
+            ]
         )
     }
 
     private func row(fundViewItem: CoinInvestorsViewModel.FundViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         tableView.universalRow56(
-                id: fundViewItem.uid,
-                image: .url(fundViewItem.logoUrl, placeholder: "placeholder_circle_32"),
-                title: .body(fundViewItem.name),
-                value: fundViewItem.isLead ? .subhead1("coin_analytics.funding.lead".localized, color: .themeRemus) : nil,
-                accessoryType: fundViewItem.url.isEmpty ? .none : .disclosure,
-                autoDeselect: true,
-                isFirst: isFirst,
-                isLast: isLast,
-                action: { [weak self] in
-                    self?.urlManager.open(url: fundViewItem.url, from: self)
-                }
+            id: fundViewItem.uid,
+            image: .url(fundViewItem.logoUrl, placeholder: "placeholder_circle_32"),
+            title: .body(fundViewItem.name),
+            value: fundViewItem.isLead ? .subhead1("coin_analytics.funding.lead".localized, color: .themeRemus) : nil,
+            accessoryType: fundViewItem.url.isEmpty ? .none : .disclosure,
+            autoDeselect: true,
+            isFirst: isFirst,
+            isLast: isLast,
+            action: { [weak self] in
+                self?.urlManager.open(url: fundViewItem.url, from: self)
+            }
         )
     }
 
     private func section(index: Int, fundViewItems: [CoinInvestorsViewModel.FundViewItem], isLast: Bool) -> SectionProtocol {
         Section(
-                id: "section-\(index)",
-                footerState: .margin(height: isLast ? .margin32 : 0),
-                rows: fundViewItems.enumerated().map { index, fundViewItem in
-                    row(fundViewItem: fundViewItem, isFirst: index == 0, isLast: index == fundViewItems.count - 1)
-                }
+            id: "section-\(index)",
+            footerState: .margin(height: isLast ? .margin32 : 0),
+            rows: fundViewItems.enumerated().map { index, fundViewItem in
+                row(fundViewItem: fundViewItem, isFirst: index == 0, isLast: index == fundViewItems.count - 1)
+            }
         )
     }
 
     func buildSections() -> [SectionProtocol] {
-        guard let viewItems = viewItems else {
+        guard let viewItems else {
             return []
         }
 
@@ -144,5 +143,4 @@ extension CoinInvestorsViewController: SectionsDataSource {
 
         return sections
     }
-
 }

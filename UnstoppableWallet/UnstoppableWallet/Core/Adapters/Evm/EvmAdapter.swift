@@ -1,8 +1,8 @@
-import EvmKit
-import RxSwift
 import BigInt
-import HsToolKit
 import Eip20Kit
+import EvmKit
+import HsToolKit
+import RxSwift
 import UniswapKit
 
 class EvmAdapter: BaseEvmAdapter {
@@ -11,20 +11,16 @@ class EvmAdapter: BaseEvmAdapter {
     init(evmKitWrapper: EvmKitWrapper) {
         super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
     }
-
 }
 
 extension EvmAdapter {
-
     static func clear(except excludedWalletIds: [String]) throws {
         try EvmKit.Kit.clear(exceptFor: excludedWalletIds)
     }
-
 }
 
 // IAdapter
 extension EvmAdapter: IAdapter {
-
     func start() {
         // started via EvmKitManager
     }
@@ -36,11 +32,9 @@ extension EvmAdapter: IAdapter {
     func refresh() {
         // refreshed via EvmKitManager
     }
-
 }
 
 extension EvmAdapter: IBalanceAdapter {
-
     var balanceState: AdapterState {
         convertToAdapterState(evmSyncState: evmKit.syncState)
     }
@@ -60,13 +54,10 @@ extension EvmAdapter: IBalanceAdapter {
             self?.balanceData(balance: $0.balance) ?? BalanceData(available: 0)
         }
     }
-
 }
 
 extension EvmAdapter: ISendEthereumAdapter {
-
     func transactionData(amount: BigUInt, address: EvmKit.Address) -> TransactionData {
         evmKit.transferTransactionData(to: address, value: amount)
     }
-
 }

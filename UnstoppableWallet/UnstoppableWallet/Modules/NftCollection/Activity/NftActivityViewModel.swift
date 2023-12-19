@@ -1,8 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
-import CurrencyKit
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class NftActivityViewModel {
     private let service: NftActivityService
@@ -45,10 +44,10 @@ class NftActivityViewModel {
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .loaded(let items, let allLoaded):
+        case let .loaded(items, allLoaded):
             let viewItem = ViewItem(
-                    eventViewItems: items.map { eventViewItem(item: $0) },
-                    allLoaded: allLoaded
+                eventViewItems: items.map { eventViewItem(item: $0) },
+                allLoaded: allLoaded
             )
 
             viewItemRelay.accept(viewItem)
@@ -87,27 +86,25 @@ class NftActivityViewModel {
         }
 
         return EventViewItem(
-                nftUid: event.nftUid,
-                type: type,
-                date: DateHelper.instance.formatFullTime(from: event.date),
-                imageUrl: event.previewImageUrl,
-                coinPrice: coinPrice,
-                fiatPrice: fiatPrice
+            nftUid: event.nftUid,
+            type: type,
+            date: DateHelper.instance.formatFullTime(from: event.date),
+            imageUrl: event.previewImageUrl,
+            coinPrice: coinPrice,
+            fiatPrice: fiatPrice
         )
     }
 
     private func title(eventType: NftEventMetadata.EventType?) -> String {
-        guard let eventType = eventType else {
+        guard let eventType else {
             return "nft.activity.event_type.all".localized
         }
 
         return "nft.activity.event_type.\(eventType)".localized
     }
-
 }
 
 extension NftActivityViewModel {
-
     var eventTypeDriver: Driver<String> {
         eventTypeRelay.asDriver()
     }
@@ -135,11 +132,11 @@ extension NftActivityViewModel {
 
         return service.contracts.enumerated().map { index, contract in
             SelectorModule.ViewItem(
-                    image: .url(blockchainType.imageUrl, placeholder: "placeholder_rectangle_32"),
-                    title: contract.name,
-                    subtitle: contract.address.shortened,
-                    badge: contract.schema,
-                    selected: service.contractIndex == index
+                image: .url(blockchainType.imageUrl, placeholder: "placeholder_rectangle_32"),
+                title: contract.name,
+                subtitle: contract.address.shortened,
+                badge: contract.schema,
+                selected: service.contractIndex == index
             )
         }
     }
@@ -179,11 +176,9 @@ extension NftActivityViewModel {
     func onReachBottom() {
         service.loadMore()
     }
-
 }
 
 extension NftActivityViewModel {
-
     struct ViewItem {
         let eventViewItems: [EventViewItem]
         let allLoaded: Bool
@@ -197,5 +192,4 @@ extension NftActivityViewModel {
         let coinPrice: String
         let fiatPrice: String?
     }
-
 }

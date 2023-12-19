@@ -1,13 +1,11 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import EvmKit
 import BigInt
+import EvmKit
+import Foundation
 import MarketKit
 import OneInchKit
+import RxCocoa
+import RxSwift
 import UniswapKit
-import EvmKit
-import BigInt
 
 class OneInchSendEvmTransactionService {
     private let disposeBag = DisposeBag()
@@ -23,7 +21,7 @@ class OneInchSendEvmTransactionService {
         }
     }
 
-    private(set) var dataState: SendEvmTransactionService.DataState = SendEvmTransactionService.DataState(transactionData: nil, additionalInfo: nil, decoration: nil, nonce: nil)
+    private(set) var dataState: SendEvmTransactionService.DataState = .init(transactionData: nil, additionalInfo: nil, decoration: nil, nonce: nil)
 
     private let sendStateRelay = PublishRelay<SendEvmTransactionService.SendState>()
     private(set) var sendState: SendEvmTransactionService.SendState = .idle {
@@ -41,10 +39,10 @@ class OneInchSendEvmTransactionService {
 
         // show initial info from parameters
         dataState = SendEvmTransactionService.DataState(
-                transactionData: nil,
-                additionalInfo: additionalInfo(parameters: oneInchFeeService.parameters),
-                decoration: nil,
-                nonce: nil
+            transactionData: nil,
+            additionalInfo: additionalInfo(parameters: oneInchFeeService.parameters),
+            decoration: nil,
+            nonce: nil
         )
     }
 
@@ -56,16 +54,16 @@ class OneInchSendEvmTransactionService {
         switch status {
         case .loading:
             state = .notReady(errors: [], warnings: [])
-        case .failed(let error):
+        case let .failed(error):
             state = .notReady(errors: [error], warnings: [])
-        case .completed(let fallibleTransaction):
+        case let .completed(fallibleTransaction):
             let transaction = fallibleTransaction.data
 
             dataState = SendEvmTransactionService.DataState(
-                    transactionData: transaction.transactionData,
-                    additionalInfo: additionalInfo(parameters: oneInchFeeService.parameters),
-                    decoration: evmKit.decorate(transactionData: transaction.transactionData),
-                    nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
+                transactionData: transaction.transactionData,
+                additionalInfo: additionalInfo(parameters: oneInchFeeService.parameters),
+                decoration: evmKit.decorate(transactionData: transaction.transactionData),
+                nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
             )
 
             if fallibleTransaction.errors.isEmpty {
@@ -88,11 +86,9 @@ class OneInchSendEvmTransactionService {
             )
         )
     }
-
 }
 
 extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
-
     var stateObservable: Observable<SendEvmTransactionService.State> {
         stateRelay.asObservable()
     }
@@ -105,12 +101,12 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
         evmKit.receiveAddress
     }
 
-    func methodName(input: Data) -> String? {
+    func methodName(input _: Data) -> String? {
         nil
     }
 
     func send() {
-        guard case .ready = state, case .completed(let fallibleTransaction) = settingsService.status else {
+        guard case .ready = state, case let .completed(fallibleTransaction) = settingsService.status else {
             return
         }
         let transaction = fallibleTransaction.data
@@ -118,18 +114,17 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
         sendState = .sending
 
         evmKitWrapper.sendSingle(
-                        transactionData: transaction.transactionData,
-                        gasPrice: transaction.gasData.price,
-                        gasLimit: transaction.gasData.limit,
-                        nonce: transaction.nonce
-                )
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] fullTransaction in
-                    self?.sendState = .sent(transactionHash: fullTransaction.transaction.hash)
-                }, onError: { error in
-                    self.sendState = .failed(error: error)
-                })
-                .disposed(by: disposeBag)
+            transactionData: transaction.transactionData,
+            gasPrice: transaction.gasData.price,
+            gasLimit: transaction.gasData.limit,
+            nonce: transaction.nonce
+        )
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+        .subscribe(onSuccess: { [weak self] fullTransaction in
+            self?.sendState = .sent(transactionHash: fullTransaction.transaction.hash)
+        }, onError: { error in
+            self.sendState = .failed(error: error)
+        })
+        .disposed(by: disposeBag)
     }
-
 }

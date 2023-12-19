@@ -1,8 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
-import CurrencyKit
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketOverviewTopCoinsViewModel {
     private let service: MarketOverviewTopCoinsService
@@ -23,11 +22,9 @@ class MarketOverviewTopCoinsViewModel {
     private func sync(marketInfos: [MarketInfo]?) {
         listViewItemsRelay.accept(marketInfos.map { $0.map { decorator.listViewItem(item: $0) } })
     }
-
 }
 
 extension MarketOverviewTopCoinsViewModel {
-
     var marketTop: MarketModule.MarketTop {
         service.marketTop
     }
@@ -35,17 +32,15 @@ extension MarketOverviewTopCoinsViewModel {
     var listType: MarketOverviewTopCoinsService.ListType {
         service.listType
     }
-
 }
 
 extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
-
     var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> {
         listViewItemsRelay.asDriver()
     }
 
     var selectorTitles: [String] {
-        MarketModule.MarketTop.allCases.map { $0.title }
+        MarketModule.MarketTop.allCases.map(\.title)
     }
 
     var selectorIndex: Int {
@@ -56,5 +51,4 @@ extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
         let marketTop = MarketModule.MarketTop.allCases[selectorIndex]
         service.set(marketTop: marketTop)
     }
-
 }

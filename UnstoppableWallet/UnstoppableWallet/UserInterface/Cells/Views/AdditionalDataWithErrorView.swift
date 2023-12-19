@@ -1,5 +1,5 @@
-import UIKit
 import HUD
+import UIKit
 
 class AdditionalDataWithErrorView: UIView {
     private let additionalDataView = AdditionalDataView()
@@ -33,7 +33,8 @@ class AdditionalDataWithErrorView: UIView {
         errorLabel.numberOfLines = 0
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -50,9 +51,7 @@ class AdditionalDataWithErrorView: UIView {
         errorLabel.text = error
     }
 
-
     func setValue(color: UIColor) {
         additionalDataView.setValue(color: color)
     }
-
 }

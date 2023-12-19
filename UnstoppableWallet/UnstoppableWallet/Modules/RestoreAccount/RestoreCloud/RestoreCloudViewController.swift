@@ -1,9 +1,9 @@
 import Combine
-import Foundation
-import UIKit
 import ComponentKit
+import Foundation
 import SectionsTableView
 import ThemeKit
+import UIKit
 
 class RestoreCloudViewController: ThemeViewController {
     private let viewModel: RestoreCloudViewModel
@@ -27,7 +27,8 @@ class RestoreCloudViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -57,30 +58,30 @@ class RestoreCloudViewController: ThemeViewController {
         emptyView.text = "restore.cloud.empty".localized
 
         viewModel.$walletViewItem
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] viewItem in
-                    self?.sync(type: .wallet, viewItem: viewItem)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] viewItem in
+                self?.sync(type: .wallet, viewItem: viewItem)
+            }
+            .store(in: &cancellables)
 
         viewModel.$fullBackupViewItem
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] viewItem in
-                    self?.sync(type: .full, viewItem: viewItem)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] viewItem in
+                self?.sync(type: .full, viewItem: viewItem)
+            }
+            .store(in: &cancellables)
 
         viewModel.restorePublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.restore(item: $0)
-                }.store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.restore(item: $0)
+            }.store(in: &cancellables)
 
         viewModel.deleteItemCompletedPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.deleteBackupCompleted(successful: $0)
-                }.store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.deleteBackupCompleted(successful: $0)
+            }.store(in: &cancellables)
 
         tableView.buildSections()
     }
@@ -120,9 +121,9 @@ class RestoreCloudViewController: ThemeViewController {
 
     private func deleteRowAction(id: String) -> RowAction {
         RowAction(pattern: .icon(
-                image: UIImage(named: "circle_minus_shifted_24"),
-                background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-        ), action: { [weak self] cell in
+            image: UIImage(named: "circle_minus_shifted_24"),
+            background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        ), action: { [weak self] _ in
             self?.viewModel.remove(id: id)
         })
     }
@@ -131,13 +132,13 @@ class RestoreCloudViewController: ThemeViewController {
         let rowAction = deleteRowAction(id: viewItem.uniqueId)
 
         return tableView.universalRow62(
-                id: viewItem.uniqueId,
-                title: .body(viewItem.name),
-                description: .subhead2(viewItem.description),
-                accessoryType: .disclosure,
-                rowActionProvider: { [ rowAction ] },
-                isFirst: rowInfo.isFirst,
-                isLast: rowInfo.isLast
+            id: viewItem.uniqueId,
+            title: .body(viewItem.name),
+            description: .subhead2(viewItem.description),
+            accessoryType: .disclosure,
+            rowActionProvider: { [rowAction] },
+            isFirst: rowInfo.isFirst,
+            isLast: rowInfo.isLast
         ) { [weak self] in
             self?.viewModel.didTap(id: viewItem.uniqueId)
         }
@@ -146,43 +147,40 @@ class RestoreCloudViewController: ThemeViewController {
     private func section(id: String, headerTitle: String? = nil, viewItems: [RestoreCloudViewModel.BackupViewItem]) -> SectionProtocol {
         let title = headerTitle ?? ""
         return Section(id: id,
-                headerState: title.isEmpty ? .margin(height: 0) : tableView.sectionHeader(text: title),
-                footerState: .margin(height: 24),
-                rows: viewItems.enumerated().map { index, viewItem in row(viewItem: viewItem, rowInfo: RowInfo(index: index, count: viewItems.count)) }
-        )
+                       headerState: title.isEmpty ? .margin(height: 0) : tableView.sectionHeader(text: title),
+                       footerState: .margin(height: 24),
+                       rows: viewItems.enumerated().map { index, viewItem in row(viewItem: viewItem, rowInfo: RowInfo(index: index, count: viewItems.count)) })
     }
 
     private var descriptionSection: SectionProtocol {
         Section(
-                id: "description",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin32),
-                rows: [
-                    tableView.descriptionRow(
-                            id: "description",
-                            text: "restore.cloud.description".localized,
-                            font: .subhead2,
-                            textColor: .themeGray,
-                            ignoreBottomMargin: true
-                    )
-                ]
+            id: "description",
+            headerState: .margin(height: .margin12),
+            footerState: .margin(height: .margin32),
+            rows: [
+                tableView.descriptionRow(
+                    id: "description",
+                    text: "restore.cloud.description".localized,
+                    font: .subhead2,
+                    textColor: .themeGray,
+                    ignoreBottomMargin: true
+                ),
+            ]
         )
     }
-
 }
 
 extension RestoreCloudViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         guard !walletViewItem.isEmpty || !fullBackupViewItem.isEmpty else {
             return []
         }
 
-        var sections = [ descriptionSection ]
+        var sections = [descriptionSection]
 
         if !walletViewItem.notImported.isEmpty {
             sections.append(
-                    section(id: "not_imported", headerTitle: "restore.cloud.wallets".localized, viewItems: viewModel.walletViewItem.notImported)
+                section(id: "not_imported", headerTitle: "restore.cloud.wallets".localized, viewItems: viewModel.walletViewItem.notImported)
             )
         }
 
@@ -200,5 +198,4 @@ extension RestoreCloudViewController: SectionsDataSource {
 
         return sections
     }
-
 }

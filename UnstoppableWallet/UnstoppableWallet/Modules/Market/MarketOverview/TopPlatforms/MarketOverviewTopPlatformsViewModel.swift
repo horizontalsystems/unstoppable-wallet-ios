@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketOverviewTopPlatformsViewModel {
     private let service: MarketOverviewTopPlatformsService
@@ -22,11 +22,9 @@ class MarketOverviewTopPlatformsViewModel {
     private func sync(topPlatforms: [TopPlatform]?) {
         listViewItemsRelay.accept(topPlatforms.map { $0.map { decorator.listViewItem(item: $0) } })
     }
-
 }
 
 extension MarketOverviewTopPlatformsViewModel {
-
     var timePeriod: HsTimePeriod {
         service.timePeriod
     }
@@ -34,17 +32,15 @@ extension MarketOverviewTopPlatformsViewModel {
     func topPlatform(uid: String) -> TopPlatform? {
         service.topPlatforms?.first { $0.blockchain.uid == uid }
     }
-
 }
 
 extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewModel {
-
     var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> {
         listViewItemsRelay.asDriver()
     }
 
     var selectorTitles: [String] {
-        MarketTopPlatformsModule.selectorValues.map { $0.title }
+        MarketTopPlatformsModule.selectorValues.map(\.title)
     }
 
     var selectorIndex: Int {
@@ -54,5 +50,4 @@ extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewMod
     func onSelect(selectorIndex: Int) {
         service.timePeriod = MarketTopPlatformsModule.selectorValues[selectorIndex]
     }
-
 }

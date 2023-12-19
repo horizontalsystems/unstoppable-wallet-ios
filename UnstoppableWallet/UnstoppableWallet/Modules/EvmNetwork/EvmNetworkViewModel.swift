@@ -1,16 +1,16 @@
-import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import EvmKit
+import Foundation
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class EvmNetworkViewModel {
     private let service: EvmNetworkService
     private let disposeBag = DisposeBag()
 
     private let stateRelay = BehaviorRelay<State>(value: State(defaultViewItems: [], customViewItems: []))
-    private let finishRelay = PublishRelay<()>()
+    private let finishRelay = PublishRelay<Void>()
 
     init(service: EvmNetworkService) {
         self.service = service
@@ -22,8 +22,8 @@ class EvmNetworkViewModel {
 
     private func sync(state: EvmNetworkService.State) {
         let state = State(
-                defaultViewItems: state.defaultItems.map { viewItem(item: $0) },
-                customViewItems: state.customItems.map { viewItem(item: $0) }
+            defaultViewItems: state.defaultItems.map { viewItem(item: $0) },
+            customViewItems: state.customItems.map { viewItem(item: $0) }
         )
 
         stateRelay.accept(state)
@@ -31,28 +31,26 @@ class EvmNetworkViewModel {
 
     private func viewItem(item: EvmNetworkService.Item) -> ViewItem {
         ViewItem(
-                name: item.syncSource.name,
-                url: url(rpcSource: item.syncSource.rpcSource)?.absoluteString,
-                selected: item.selected
+            name: item.syncSource.name,
+            url: url(rpcSource: item.syncSource.rpcSource)?.absoluteString,
+            selected: item.selected
         )
     }
 
     private func url(rpcSource: RpcSource) -> URL? {
         switch rpcSource {
-        case .http(let urls, _): return urls.first
-        case .webSocket(let url, _): return url
+        case let .http(urls, _): return urls.first
+        case let .webSocket(url, _): return url
         }
     }
-
 }
 
 extension EvmNetworkViewModel {
-
     var stateDriver: Driver<State> {
         stateRelay.asDriver()
     }
 
-    var finishSignal: Signal<()> {
+    var finishSignal: Signal<Void> {
         finishRelay.asSignal()
     }
 
@@ -79,11 +77,9 @@ extension EvmNetworkViewModel {
     func onRemoveCustom(index: Int) {
         service.removeCustom(index: index)
     }
-
 }
 
 extension EvmNetworkViewModel {
-
     struct State {
         let defaultViewItems: [ViewItem]
         let customViewItems: [ViewItem]
@@ -94,5 +90,4 @@ extension EvmNetworkViewModel {
         let url: String?
         let selected: Bool
     }
-
 }

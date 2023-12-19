@@ -15,6 +15,7 @@ class CexDepositService {
             stateUpdatedSubject.send(state)
         }
     }
+
     private let stateUpdatedSubject = PassthroughSubject<DataStatus<ServiceItem>, Never>()
 
     init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexDepositProvider) {
@@ -32,31 +33,31 @@ class CexDepositService {
             do {
                 let (address, memo) = try await provider.deposit(id: cexAsset.id, network: network?.id)
 
-                let minAmount = network.flatMap {network -> CoinValue? in
+                let minAmount = network.flatMap { network -> CoinValue? in
                     guard network.minAmount > 0 else {
                         return nil
                     }
 
                     return CoinValue(
-                            kind: .cexAsset(cexAsset: cexAsset),
-                            value: network.minAmount
+                        kind: .cexAsset(cexAsset: cexAsset),
+                        value: network.minAmount
                     )
                 }
 
                 let item = ServiceItem(
-                        address: address,
-                        coinCode: cexAsset.coinCode,
-                        imageUrl: cexAsset.coin?.imageUrl,
-                        memo: memo,
-                        networkName: network?.name,
-                        minAmount: minAmount
+                    address: address,
+                    coinCode: cexAsset.coinCode,
+                    imageUrl: cexAsset.coin?.imageUrl,
+                    memo: memo,
+                    networkName: network?.name,
+                    minAmount: minAmount
                 )
 
                 self?.state = .completed(item)
             } catch {
                 let error = ReceiveAddressModule.ErrorItem(
-                        icon: "sync_error_48",
-                        text: "cex_deposit.failed".localized
+                    icon: "sync_error_48",
+                    text: "cex_deposit.failed".localized
                 ) { [weak self] in
                     self?.load()
                 }
@@ -65,11 +66,9 @@ class CexDepositService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension CexDepositService: IReceiveAddressService {
-
     var title: String {
         "cex_deposit.title".localized(cexAsset.coinCode)
     }
@@ -81,11 +80,9 @@ extension CexDepositService: IReceiveAddressService {
     var statusUpdatedPublisher: AnyPublisher<DataStatus<ServiceItem>, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
-
 }
 
 extension CexDepositService {
-
     struct Item {
         let address: String
         let coinCode: String
@@ -104,5 +101,4 @@ extension CexDepositService {
             }
         }
     }
-
 }

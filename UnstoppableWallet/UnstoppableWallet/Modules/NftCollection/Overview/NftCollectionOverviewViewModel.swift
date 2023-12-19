@@ -1,5 +1,4 @@
 import Chart
-import CurrencyKit
 import Foundation
 import MarketKit
 import RxCocoa
@@ -30,7 +29,7 @@ class NftCollectionOverviewViewModel {
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .completed(let item):
+        case let .completed(item):
             viewItemRelay.accept(viewItem(item: item))
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
@@ -45,24 +44,24 @@ class NftCollectionOverviewViewModel {
         let collection = item.collection
 
         return ViewItem(
-                logoImageUrl: collection.imageUrl ?? collection.thumbnailImageUrl,
-                name: collection.name,
-                description: collection.description,
-                contracts: collection.contracts.map { contractViewItem(contract: $0) },
-                links: linkViewItems(collection: collection),
-                statsViewItems: statViewItem(collection: collection),
-                royalty: collection.royalty.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) },
-                inceptionDate: collection.inceptionDate.map {DateFormatter.cachedFormatter(format: "MMMM d, yyyy").string(from: $0) }
+            logoImageUrl: collection.imageUrl ?? collection.thumbnailImageUrl,
+            name: collection.name,
+            description: collection.description,
+            contracts: collection.contracts.map { contractViewItem(contract: $0) },
+            links: linkViewItems(collection: collection),
+            statsViewItems: statViewItem(collection: collection),
+            royalty: collection.royalty.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) },
+            inceptionDate: collection.inceptionDate.map { DateFormatter.cachedFormatter(format: "MMMM d, yyyy").string(from: $0) }
         )
     }
 
     private func contractViewItem(contract: NftContractMetadata) -> ContractViewItem {
         ContractViewItem(
-                iconUrl: service.blockchainType.imageUrl,
-                name: contract.name,
-                schema: contract.schema,
-                reference: contract.address,
-                explorerUrl: service.blockchain?.explorerUrl(reference: contract.address)
+            iconUrl: service.blockchainType.imageUrl,
+            name: contract.name,
+            schema: contract.schema,
+            reference: contract.address,
+            explorerUrl: service.blockchain?.explorerUrl(reference: contract.address)
         )
     }
 
@@ -102,33 +101,33 @@ class NftCollectionOverviewViewModel {
 
         let floorPriceViewItem = collection.floorPrice.map { floorPrice -> MarketCardView.ViewItem in
             let floorPriceInCurrency = coinService.rate
-                    .map {
-                        ValueFormatter.instance
-                                .formatShort(currency: $0.currency, value: $0.value * floorPrice.value)
-                    } ?? "n/a".localized
+                .map {
+                    ValueFormatter.instance
+                        .formatShort(currency: $0.currency, value: $0.value * floorPrice.value)
+                } ?? "n/a".localized
 
             return MarketCardView.ViewItem(
                 title: "nft_collection.overview.floor_price".localized,
                 value: string(nftPrice: floorPrice),
-                description:floorPriceInCurrency
+                description: floorPriceInCurrency
             )
-        } ??  MarketCardView.ViewItem(
-                title: "nft_collection.overview.floor_price".localized,
-                value: "---",
-                description:"n/a".localized
+        } ?? MarketCardView.ViewItem(
+            title: "nft_collection.overview.floor_price".localized,
+            value: "---",
+            description: "n/a".localized
         )
 
         let volumeDiff = collection.change1d
-                .flatMap { DiffLabel.formatted(value: $0) }
+            .flatMap { DiffLabel.formatted(value: $0) }
         let volumeColor = collection.change1d
-                .map { DiffLabel.color(value: $0) }
+            .map { DiffLabel.color(value: $0) }
 
         let volume24ViewItem = collection.volume1d.map { volume1d in
             MarketCardView.ViewItem(
-                    title: "nft_collection.overview.24h_volume".localized,
-                    value: string(nftPrice: volume1d),
-                    description: volumeDiff,
-                    descriptionColor: volumeColor
+                title: "nft_collection.overview.24h_volume".localized,
+                value: string(nftPrice: volume1d),
+                description: volumeDiff,
+                descriptionColor: volumeColor
             )
         }
 
@@ -140,17 +139,17 @@ class NftCollectionOverviewViewModel {
 
         let todaySellersViewItem = collection.sales1d.map { sales1d in
             MarketCardView.ViewItem(
-                    title: "nft_collection.overview.today_sellers".localized,
-                    value: "\(sales1d) NFT",
-                    description: additional
+                title: "nft_collection.overview.today_sellers".localized,
+                value: "\(sales1d) NFT",
+                description: additional
             )
         }
 
         return StatsViewItem(
-                countItems: ownerViewItem,
-                oneDayVolumeItems: volume24ViewItem,
-                floorPriceItems: floorPriceViewItem,
-                oneDaySalesItems: todaySellersViewItem
+            countItems: ownerViewItem,
+            oneDayVolumeItems: volume24ViewItem,
+            floorPriceItems: floorPriceViewItem,
+            oneDaySalesItems: todaySellersViewItem
         )
     }
 
@@ -162,7 +161,6 @@ class NftCollectionOverviewViewModel {
         let coinValue = CoinValue(kind: .token(token: price.token), value: price.value)
         return ValueFormatter.instance.formatShort(coinValue: coinValue)
     }
-
 }
 
 extension NftCollectionOverviewViewModel {

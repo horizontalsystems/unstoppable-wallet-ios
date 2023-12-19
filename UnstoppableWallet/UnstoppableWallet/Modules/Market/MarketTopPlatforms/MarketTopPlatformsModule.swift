@@ -1,11 +1,10 @@
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
-struct MarketTopPlatformsModule {
-
+enum MarketTopPlatformsModule {
     static func viewController(timePeriod: HsTimePeriod) -> UIViewController {
-        let service = MarketTopPlatformsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, timePeriod: timePeriod)
+        let service = MarketTopPlatformsService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, appManager: App.shared.appManager, timePeriod: timePeriod)
 
         let decorator = MarketListTopPlatformDecorator(service: service)
         let viewModel = MarketTopPlatformsViewModel(service: service)
@@ -34,15 +33,15 @@ struct MarketTopPlatformsModule {
     }
 
     static var selectorValues: [HsTimePeriod] {
-        [HsTimePeriod.day1,
-         HsTimePeriod.week1,
-         HsTimePeriod.month1]
+        [
+            HsTimePeriod.week1,
+            HsTimePeriod.month1,
+            HsTimePeriod.month3,
+        ]
     }
-
 }
 
-extension Array where Element == MarketKit.TopPlatform {
-
+extension [MarketKit.TopPlatform] {
     func sorted(sortType: MarketTopPlatformsModule.SortType, timePeriod: HsTimePeriod) -> [TopPlatform] {
         sorted { lhsPlatform, rhsPlatform in
             let lhsCap = lhsPlatform.marketCap
@@ -53,19 +52,19 @@ extension Array where Element == MarketKit.TopPlatform {
 
             switch sortType {
             case .highestCap, .lowestCap:
-                guard let lhsCap = lhsCap else {
+                guard let lhsCap else {
                     return true
                 }
-                guard let rhsCap = rhsCap else {
+                guard let rhsCap else {
                     return false
                 }
 
                 return sortType == .highestCap ? lhsCap > rhsCap : lhsCap < rhsCap
             case .topGainers, .topLosers:
-                guard let lhsChange = lhsChange else {
+                guard let lhsChange else {
                     return true
                 }
-                guard let rhsChange = rhsChange else {
+                guard let rhsChange else {
                     return false
                 }
 
@@ -73,5 +72,4 @@ extension Array where Element == MarketKit.TopPlatform {
             }
         }
     }
-
 }

@@ -1,9 +1,9 @@
-import UIKit
-import SnapKit
-import RxSwift
-import UIExtensions
-import ThemeKit
 import ComponentKit
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIExtensions
+import UIKit
 
 class NftActivityHeaderView: UIView {
     private let viewModel: NftActivityViewModel
@@ -49,14 +49,15 @@ class NftActivityHeaderView: UIView {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func onTapEventType() {
         let alertController = AlertRouter.module(
-                title: "nft.activity.event_types".localized,
-                viewItems: viewModel.eventTypeViewItems
+            title: "nft.activity.event_types".localized,
+            viewItems: viewModel.eventTypeViewItems
         ) { [weak self] index in
             self?.viewModel.onSelectEventType(index: index)
         }
@@ -66,15 +67,14 @@ class NftActivityHeaderView: UIView {
 
     @objc private func onTapContract() {
         let viewController = SelectorModule.bottomSingleSelectorViewController(
-                image: .local(image: UIImage(named: "paper_contract_24")?.withTintColor(.themeJacob)),
-                title: "nft.activity.contracts".localized,
-                viewItems: viewModel.contractViewItems,
-                onSelect: { [weak self] index in
-                    self?.viewModel.onSelectContract(index: index)
-                }
+            image: .local(name: "paper_contract_24", tint: .warning),
+            title: "nft.activity.contracts".localized,
+            viewItems: viewModel.contractViewItems,
+            onSelect: { [weak self] index in
+                self?.viewModel.onSelectContract(index: index)
+            }
         )
 
         self.viewController?.present(viewController, animated: true)
     }
-
 }

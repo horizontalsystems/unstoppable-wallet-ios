@@ -1,16 +1,13 @@
-import CurrencyKit
-import LanguageKit
 import MarketKit
 import RxSwift
-import StorageKit
 import ThemeKit
 import UIKit
 
-struct WalletModule {
+enum WalletModule {
     static func viewController() -> UIViewController {
         let coinPriceService = WalletCoinPriceService(
             tag: "wallet",
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )
 
@@ -34,13 +31,13 @@ struct WalletModule {
             rateAppManager: App.shared.rateAppManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
-            localStorage: StorageKit.LocalStorage.default
+            userDefaultsStorage: App.shared.userDefaultsStorage
         )
 
         coinPriceService.delegate = service
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-            localStorage: StorageKit.LocalStorage.default,
+            userDefaultsStorage: App.shared.userDefaultsStorage,
             languageManager: LanguageManager.shared
         )
 
@@ -54,14 +51,14 @@ struct WalletModule {
         return WalletViewController(viewModel: viewModel)
     }
 
-    static func sendTokenListViewController() -> UIViewController? {
+    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, mode: SendBaseService.Mode = .send) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil
         }
 
         let coinPriceService = WalletCoinPriceService(
             tag: "send-token-list",
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )
 
@@ -69,7 +66,9 @@ struct WalletModule {
         let elementService = WalletBlockchainElementService(
             account: account,
             adapterService: adapterService,
-            walletManager: App.shared.walletManager
+            walletManager: App.shared.walletManager,
+            allowedBlockchainTypes: allowedBlockchainTypes,
+            allowedTokenTypes: allowedTokenTypes
         )
         adapterService.delegate = elementService
 
@@ -79,6 +78,7 @@ struct WalletModule {
             cacheManager: App.shared.enabledWalletCacheManager,
             reachabilityManager: App.shared.reachabilityManager,
             balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            balanceHiddenManager: App.shared.balanceHiddenManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
             account: account
@@ -101,7 +101,7 @@ struct WalletModule {
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
         dataSource.viewController = viewController
         dataSource.onSelectWallet = { [weak viewController] wallet in
-            if let module = SendModule.controller(wallet: wallet) {
+            if let module = SendModule.controller(wallet: wallet, mode: mode) {
                 viewController?.navigationController?.pushViewController(module, animated: true)
             }
         }
@@ -116,7 +116,7 @@ struct WalletModule {
 
         let coinPriceService = WalletCoinPriceService(
             tag: "swap-token-list",
-            currencyKit: App.shared.currencyKit,
+            currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )
 
@@ -134,6 +134,7 @@ struct WalletModule {
             cacheManager: App.shared.enabledWalletCacheManager,
             reachabilityManager: App.shared.reachabilityManager,
             balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            balanceHiddenManager: App.shared.balanceHiddenManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
             account: account
@@ -171,7 +172,7 @@ struct WalletModule {
         if let account = App.shared.accountManager.activeAccount, !account.watchAccount, !account.cexAccount {
             let coinPriceService = WalletCoinPriceService(
                 tag: "send-token-list",
-                currencyKit: App.shared.currencyKit,
+                currencyManager: App.shared.currencyManager,
                 marketKit: App.shared.marketKit
             )
 
@@ -189,6 +190,7 @@ struct WalletModule {
                 cacheManager: App.shared.enabledWalletCacheManager,
                 reachabilityManager: App.shared.reachabilityManager,
                 balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                balanceHiddenManager: App.shared.balanceHiddenManager,
                 appManager: App.shared.appManager,
                 feeCoinProvider: App.shared.feeCoinProvider,
                 account: account
@@ -221,6 +223,7 @@ struct WalletModule {
         dataSourceChain.append(source: dataSource)
 
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
+        viewController.hideSearchBar = true
 
         descriptionDataSource.viewController = viewController
         dataSource.viewController = viewController

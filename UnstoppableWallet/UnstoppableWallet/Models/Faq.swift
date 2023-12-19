@@ -14,7 +14,6 @@ struct Faq: ImmutableMappable {
         text = try map.value("title")
         fileUrl = try map.value("markdown")
     }
-
 }
 
 struct FaqSection {

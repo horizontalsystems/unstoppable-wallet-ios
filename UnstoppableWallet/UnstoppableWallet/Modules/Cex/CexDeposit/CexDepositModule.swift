@@ -1,8 +1,7 @@
-import UIKit
 import ComponentKit
+import UIKit
 
-struct CexDepositModule {
-
+enum CexDepositModule {
     static func viewController(cexAsset: CexAsset) -> UIViewController? {
         if cexAsset.depositNetworks.isEmpty {
             return viewController(cexAsset: cexAsset, network: nil)
@@ -18,15 +17,14 @@ struct CexDepositModule {
             return nil
         }
 
-        guard case .cex(let cexAccount) = account.type else {
+        guard case let .cex(cexAccount) = account.type else {
             return nil
         }
 
         let service = CexDepositService(cexAsset: cexAsset, network: network, provider: cexAccount.depositProvider)
         let viewItemFactory = CexDepositViewItemFactory()
-        let viewModel = ReceiveAddressViewModel(service: service, viewItemFactory: viewItemFactory)
+        let viewModel = ReceiveAddressViewModel(service: service, viewItemFactory: viewItemFactory, decimalParser: AmountDecimalParser())
 
-        return ReceiveAddressViewController(viewModel: viewModel)
+        return ReceiveAddressView(viewModel: viewModel).toViewController()
     }
-
 }

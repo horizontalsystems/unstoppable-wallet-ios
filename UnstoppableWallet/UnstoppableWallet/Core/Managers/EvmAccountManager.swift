@@ -30,7 +30,7 @@ class EvmAccountManager {
         self.evmKitManager = evmKitManager
         self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
 
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
+        subscribe(ConcurrentDispatchQueueScheduler(qos: .userInitiated), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
     }
 
     private func handleEvmKitCreated() {
@@ -48,7 +48,7 @@ class EvmAccountManager {
 //        print("Subscribe: \(evmKitWrapper.evmKit.networkType)")
 
         evmKitWrapper.evmKit.allTransactionsPublisher
-            .receive(on: DispatchQueue.global(qos: .utility))
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self] fullTransactions, initial in
                 self?.handle(fullTransactions: fullTransactions, initial: initial)
             }
@@ -132,7 +132,7 @@ class EvmAccountManager {
             }
         }
 
-        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map { $0.tokenType })), account: account, evmKit: evmKitWrapper.evmKit)
+        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map(\.tokenType))), account: account, evmKit: evmKitWrapper.evmKit)
     }
 
     private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account, evmKit: EvmKit.Kit) {
@@ -144,7 +144,7 @@ class EvmAccountManager {
 //        print("SUSPICIOUS TOKEN TYPES: \(suspiciousTokenTypes.count): \n\(suspiciousTokenTypes.map { $0.id }.joined(separator: "\n"))")
 
         do {
-            let queries = (foundTokens.map { $0.tokenType } + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
+            let queries = (foundTokens.map(\.tokenType) + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
             let tokens = try queries.chunks(500).map { try marketKit.tokens(queries: $0) }.flatMap { $0 }
 
             var tokenInfos = [TokenInfo]()
@@ -194,7 +194,7 @@ class EvmAccountManager {
 //        print("Handle Tokens: \(tokenInfos.count)\n\(tokenInfos.map { $0.type.id }.joined(separator: " "))")
 
         let existingWallets = walletManager.activeWallets
-        let existingTokenTypeIds = existingWallets.map { $0.token.type.id }
+        let existingTokenTypeIds = existingWallets.map(\.token.type.id)
         let newTokenInfos = tokenInfos.filter { !existingTokenTypeIds.contains($0.type.id) }
 
 //        print("New Tokens: \(newTokenInfos.count)")
@@ -209,7 +209,7 @@ class EvmAccountManager {
         let userAddress = evmKit.address
         let dataProvider = DataProvider(evmKit: evmKit)
 
-        let task = Task(priority: .utility) { [weak self] in
+        let task = Task(priority: .userInitiated) { [weak self] in
             let tokenInfos: [(tokenInfo: TokenInfo, balance: BigUInt)] = await withTaskGroup(of: (TokenInfo, BigUInt).self) { group in
                 for tokenInfo in tokenInfos {
                     guard case let .eip20(address) = tokenInfo.type, let contractAddress = try? EvmKit.Address(hex: address) else {
@@ -217,7 +217,7 @@ class EvmAccountManager {
                     }
 
                     group.addTask {
-                        let balance = (try? await dataProvider.fetchBalance(contractAddress: contractAddress, address: userAddress)) ?? 0
+                        let balance = await (try? dataProvider.fetchBalance(contractAddress: contractAddress, address: userAddress)) ?? 0
                         return (tokenInfo, balance)
                     }
                 }
@@ -230,7 +230,7 @@ class EvmAccountManager {
                 return results
             }
 
-            let nonZeroBalanceTokens = tokenInfos.filter { $0.balance > 0 }.map { $0.tokenInfo }
+            let nonZeroBalanceTokens = tokenInfos.filter { $0.balance > 0 }.map(\.tokenInfo)
 
             self?.handle(processedTokenInfos: nonZeroBalanceTokens, account: account)
         }

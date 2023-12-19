@@ -23,5 +23,4 @@ struct AlertViewItem {
         self.selected = selected
         self.disabled = disabled
     }
-
 }

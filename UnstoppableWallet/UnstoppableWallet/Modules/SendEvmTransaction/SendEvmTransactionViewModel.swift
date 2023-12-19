@@ -1,14 +1,14 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import EvmKit
 import BigInt
-import UniswapKit
-import OneInchKit
 import Eip20Kit
-import NftKit
-import MarketKit
+import EvmKit
+import Foundation
 import HsExtensions
+import MarketKit
+import NftKit
+import OneInchKit
+import RxCocoa
+import RxSwift
+import UniswapKit
 
 class SendEvmTransactionViewModel {
     private let disposeBag = DisposeBag()
@@ -24,7 +24,7 @@ class SendEvmTransactionViewModel {
     private let sendEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let cautionsRelay = BehaviorRelay<[TitledCaution]>(value: [])
 
-    private let sendingRelay = PublishRelay<()>()
+    private let sendingRelay = PublishRelay<Void>()
     private let sendSuccessRelay = PublishRelay<Data>()
     private let sendFailedRelay = PublishRelay<String>()
 
@@ -52,10 +52,10 @@ class SendEvmTransactionViewModel {
 
     private func sync(state: SendEvmTransactionService.State) {
         switch state {
-        case .ready(let warnings):
+        case let .ready(warnings):
             cautionsRelay.accept(cautionsFactory.items(errors: [], warnings: warnings, baseCoinService: coinServiceFactory.baseCoinService))
             sendEnabledRelay.accept(true)
-        case .notReady(let errors, let warnings):
+        case let .notReady(errors, warnings):
             cautionsRelay.accept(cautionsFactory.items(errors: errors, warnings: warnings, baseCoinService: coinServiceFactory.baseCoinService))
             sendEnabledRelay.accept(false)
         }
@@ -99,19 +99,19 @@ class SendEvmTransactionViewModel {
         switch sendState {
         case .idle: ()
         case .sending: sendingRelay.accept(())
-        case .sent(let transactionHash): sendSuccessRelay.accept(transactionHash)
-        case .failed(let error): sendFailedRelay.accept(error.convertedError.smartDescription)
+        case let .sent(transactionHash): sendSuccessRelay.accept(transactionHash)
+        case let .failed(error): sendFailedRelay.accept(error.convertedError.smartDescription)
         }
     }
 
     private func items(dataState: SendEvmTransactionService.DataState) -> [SectionViewItem] {
-        if let decoration = dataState.decoration, let items = self.items(decoration: decoration, transactionData: dataState.transactionData, additionalInfo: dataState.additionalInfo, nonce: dataState.nonce) {
+        if let decoration = dataState.decoration, let items = items(decoration: decoration, transactionData: dataState.transactionData, additionalInfo: dataState.additionalInfo, nonce: dataState.nonce) {
             return items
         }
 
         if let additionalInfo = dataState.additionalInfo {
             switch additionalInfo {
-            case .oneInchSwap(let info):
+            case let .oneInchSwap(info):
                 return oneInchItems(oneInchSwapInfo: info)
             default: ()
             }
@@ -124,83 +124,83 @@ class SendEvmTransactionViewModel {
         return []
     }
 
-    private func items(decoration: TransactionDecoration, transactionData: TransactionData?, additionalInfo: SendEvmData.AdditionInfo?, nonce: Int?) -> [SectionViewItem]? {
+    private func items(decoration: TransactionDecoration, transactionData _: TransactionData?, additionalInfo: SendEvmData.AdditionInfo?, nonce: Int?) -> [SectionViewItem]? {
         switch decoration {
         case let decoration as OutgoingDecoration:
             return sendBaseCoinItems(
-                    to: decoration.to,
-                    value: decoration.value,
-                    sendInfo: additionalInfo?.sendInfo,
-                    nonce: nonce
+                to: decoration.to,
+                value: decoration.value,
+                sendInfo: additionalInfo?.sendInfo,
+                nonce: nonce
             )
 
         case let decoration as OutgoingEip20Decoration:
             return eip20TransferItems(
-                    to: decoration.to,
-                    value: decoration.value,
-                    contractAddress: decoration.contractAddress,
-                    nonce: nonce,
-                    sendInfo: additionalInfo?.sendInfo
+                to: decoration.to,
+                value: decoration.value,
+                contractAddress: decoration.contractAddress,
+                nonce: nonce,
+                sendInfo: additionalInfo?.sendInfo
             )
 
         case let decoration as Eip721SafeTransferFromDecoration:
             return nftTransferItems(
-                    to: decoration.to,
-                    value: 1,
-                    nonce: nonce,
-                    sendInfo: additionalInfo?.sendInfo,
-                    tokenId: decoration.tokenId
+                to: decoration.to,
+                value: 1,
+                nonce: nonce,
+                sendInfo: additionalInfo?.sendInfo,
+                tokenId: decoration.tokenId
             )
 
         case let decoration as Eip1155SafeTransferFromDecoration:
             return nftTransferItems(
-                    to: decoration.to,
-                    value: decoration.value,
-                    nonce: nonce,
-                    sendInfo: additionalInfo?.sendInfo,
-                    tokenId: decoration.tokenId
+                to: decoration.to,
+                value: decoration.value,
+                nonce: nonce,
+                sendInfo: additionalInfo?.sendInfo,
+                tokenId: decoration.tokenId
             )
 
         case let decoration as ApproveEip20Decoration:
             return eip20ApproveItems(
-                    spender: decoration.spender,
-                    value: decoration.value,
-                    contractAddress: decoration.contractAddress,
-                    additionalInfo: additionalInfo,
-                    nonce: nonce
+                spender: decoration.spender,
+                value: decoration.value,
+                contractAddress: decoration.contractAddress,
+                additionalInfo: additionalInfo,
+                nonce: nonce
             )
 
         case let decoration as SwapDecoration:
             return uniswapItems(
-                    amountIn: decoration.amountIn,
-                    amountOut: decoration.amountOut,
-                    tokenIn: decoration.tokenIn,
-                    tokenOut: decoration.tokenOut,
-                    recipient: decoration.recipient,
-                    deadline: decoration.deadline,
-                    swapInfo: additionalInfo?.swapInfo,
-                    nonce: nonce
+                amountIn: decoration.amountIn,
+                amountOut: decoration.amountOut,
+                tokenIn: decoration.tokenIn,
+                tokenOut: decoration.tokenOut,
+                recipient: decoration.recipient,
+                deadline: decoration.deadline,
+                swapInfo: additionalInfo?.swapInfo,
+                nonce: nonce
             )
 
         case let decoration as OneInchSwapDecoration:
             return oneInchItems(
-                    tokenIn: decoration.tokenIn,
-                    tokenOut: decoration.tokenOut,
-                    amountIn: decoration.amountIn,
-                    amountOut: decoration.amountOut,
-                    recipient: decoration.recipient,
-                    oneInchSwapInfo: additionalInfo?.oneInchSwapInfo,
-                    nonce: nonce
+                tokenIn: decoration.tokenIn,
+                tokenOut: decoration.tokenOut,
+                amountIn: decoration.amountIn,
+                amountOut: decoration.amountOut,
+                recipient: decoration.recipient,
+                oneInchSwapInfo: additionalInfo?.oneInchSwapInfo,
+                nonce: nonce
             )
 
         case let decoration as OneInchUnoswapDecoration:
             return oneInchItems(
-                    tokenIn: decoration.tokenIn,
-                    tokenOut: decoration.tokenOut,
-                    amountIn: decoration.amountIn,
-                    amountOut: decoration.amountOut,
-                    oneInchSwapInfo: additionalInfo?.oneInchSwapInfo,
-                    nonce: nonce
+                tokenIn: decoration.tokenIn,
+                tokenOut: decoration.tokenOut,
+                amountIn: decoration.amountIn,
+                amountOut: decoration.amountOut,
+                oneInchSwapInfo: additionalInfo?.oneInchSwapInfo,
+                nonce: nonce
             )
 
         case is OneInchUnknownSwapDecoration:
@@ -223,11 +223,11 @@ class SendEvmTransactionViewModel {
         let token = coinService.token
 
         return .amount(
-                iconUrl: token.coin.imageUrl,
-                iconPlaceholderImageName: token.placeholderImageName,
-                coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
-                currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
-                type: type
+            iconUrl: token.coin.imageUrl,
+            iconPlaceholderImageName: token.placeholderImageName,
+            coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
+            currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+            type: type
         )
     }
 
@@ -237,11 +237,11 @@ class SendEvmTransactionViewModel {
         let coinAmount = ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized
 
         return .amount(
-                iconUrl: token.coin.imageUrl,
-                iconPlaceholderImageName: token.placeholderImageName,
-                coinAmount: "\(coinAmount) \("swap.estimate_short".localized)",
-                currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
-                type: type
+            iconUrl: token.coin.imageUrl,
+            iconPlaceholderImageName: token.placeholderImageName,
+            coinAmount: "\(coinAmount) \("swap.estimate_short".localized)",
+            currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+            type: type
         )
     }
 
@@ -255,10 +255,10 @@ class SendEvmTransactionViewModel {
         }
 
         return .nftAmount(
-                iconUrl: iconUrl,
-                iconPlaceholderImageName: "placeholder_nft_32",
-                nftAmount: nftAmount,
-                type: type
+            iconUrl: iconUrl,
+            iconPlaceholderImageName: "placeholder_nft_32",
+            nftAmount: nftAmount,
+            type: type
         )
     }
 
@@ -266,9 +266,9 @@ class SendEvmTransactionViewModel {
         let amountData = coinService.amountData(value: value, sign: .plus)
 
         return .doubleAmount(
-                title: title,
-                coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
-                currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
+            title: title,
+            coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
+            currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
         )
     }
 
@@ -277,29 +277,29 @@ class SendEvmTransactionViewModel {
         let contactData = contactLabelService.contactData(for: toValue)
 
         var viewItems: [ViewItem] = [
-                .subhead(
-                        iconName: "arrow_medium_2_up_right_24",
-                        title: "send.confirmation.you_send".localized,
-                        value: coinServiceFactory.baseCoinService.token.coin.name
-                ),
-                amountViewItem(
-                        coinService: coinServiceFactory.baseCoinService,
-                        value: value,
-                        type: .neutral
-                ),
-                .address(
-                        title: "send.confirmation.to".localized,
-                        value: toValue,
-                        valueTitle: sendInfo?.domain ?? evmLabelManager.addressLabel(address: toValue),
-                        contactAddress: contactData.contactAddress
-                ),
-            ]
+            .subhead(
+                iconName: "arrow_medium_2_up_right_24",
+                title: "send.confirmation.you_send".localized,
+                value: coinServiceFactory.baseCoinService.token.coin.name
+            ),
+            amountViewItem(
+                coinService: coinServiceFactory.baseCoinService,
+                value: value,
+                type: .neutral
+            ),
+            .address(
+                title: "send.confirmation.to".localized,
+                value: toValue,
+                valueTitle: sendInfo?.domain ?? evmLabelManager.addressLabel(address: toValue),
+                contactAddress: contactData.contactAddress
+            ),
+        ]
 
         if let contactName = contactData.name {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
 
-        if let nonce = nonce {
+        if let nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
@@ -313,15 +313,15 @@ class SendEvmTransactionViewModel {
 
         var viewItems: [ViewItem] = [
             .subhead(
-                    iconName: "arrow_medium_2_up_right_24",
-                    title: "send.confirmation.you_send".localized,
-                    value: coinService.token.coin.name
+                iconName: "arrow_medium_2_up_right_24",
+                title: "send.confirmation.you_send".localized,
+                value: coinService.token.coin.name
             ),
             amountViewItem(
-                    coinService: coinService,
-                    value: value,
-                    type: .neutral
-            )
+                coinService: coinService,
+                value: value,
+                type: .neutral
+            ),
         ]
 
         let addressValue = to.eip55
@@ -330,16 +330,16 @@ class SendEvmTransactionViewModel {
         let contactData = contactLabelService.contactData(for: addressValue)
 
         viewItems.append(.address(
-                title: "send.confirmation.to".localized,
-                value: addressValue,
-                valueTitle: addressTitle,
-                contactAddress: contactData.contactAddress
-            )
+            title: "send.confirmation.to".localized,
+            value: addressValue,
+            valueTitle: addressTitle,
+            contactAddress: contactData.contactAddress
+        )
         )
         if let contactName = contactData.name {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
-        if let nonce = nonce {
+        if let nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
@@ -347,14 +347,13 @@ class SendEvmTransactionViewModel {
     }
 
     private func nftTransferItems(to: EvmKit.Address, value: BigUInt, nonce: Int?, sendInfo: SendEvmData.SendInfo?, tokenId: BigUInt) -> [SectionViewItem]? {
-
         var viewItems: [ViewItem] = [
             .subhead(
-                    iconName: "arrow_medium_2_up_right_24",
-                    title: "send.confirmation.you_send".localized,
-                    value: sendInfo?.assetShortMetadata?.displayName ?? "#\(tokenId.description)"
+                iconName: "arrow_medium_2_up_right_24",
+                title: "send.confirmation.you_send".localized,
+                value: sendInfo?.assetShortMetadata?.displayName ?? "#\(tokenId.description)"
             ),
-            nftAmountViewItem(value: value, type: .neutral, iconUrl: sendInfo?.assetShortMetadata?.previewImageUrl)
+            nftAmountViewItem(value: value, type: .neutral, iconUrl: sendInfo?.assetShortMetadata?.previewImageUrl),
         ]
 
         let addressValue = to.eip55
@@ -363,16 +362,16 @@ class SendEvmTransactionViewModel {
         let contactData = contactLabelService.contactData(for: addressValue)
 
         viewItems.append(.address(
-                title: "send.confirmation.to".localized,
-                value: addressValue,
-                valueTitle: addressTitle,
-                contactAddress: contactData.contactAddress
-            )
+            title: "send.confirmation.to".localized,
+            value: addressValue,
+            valueTitle: addressTitle,
+            contactAddress: contactData.contactAddress
+        )
         )
         if let contactName = contactData.name {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
-        if let nonce = nonce {
+        if let nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
@@ -384,21 +383,21 @@ class SendEvmTransactionViewModel {
             return nil
         }
 
-        let isRevokeAllowance = value == 0  // Check approved new value or revoked last allowance
+        let isRevokeAllowance = value == 0 // Check approved new value or revoked last allowance
         let amountItem: ViewItem
         if isRevokeAllowance {
             amountItem = .amount(
-                    iconUrl: coinService.token.coin.imageUrl,
-                    iconPlaceholderImageName: coinService.token.placeholderImageName,
-                    coinAmount: coinService.token.coin.code,
-                    currencyAmount: nil,
-                    type: .neutral
+                iconUrl: coinService.token.coin.imageUrl,
+                iconPlaceholderImageName: coinService.token.placeholderImageName,
+                coinAmount: coinService.token.coin.code,
+                currencyAmount: nil,
+                type: .neutral
             )
         } else {
             amountItem = amountViewItem(
-                    coinService: coinService,
-                    value: value,
-                    type: .neutral
+                coinService: coinService,
+                value: value,
+                type: .neutral
             )
         }
         let addressValue = spender.eip55
@@ -407,24 +406,24 @@ class SendEvmTransactionViewModel {
 
         var viewItems: [ViewItem] = [
             .subhead(
-                    iconName: "check_2_24",
-                    title: isRevokeAllowance ? "approve.confirmation.you_revoke".localized : "approve.confirmation.you_approve".localized,
-                    value: coinService.token.coin.name
+                iconName: "check_2_24",
+                title: isRevokeAllowance ? "approve.confirmation.you_revoke".localized : "approve.confirmation.you_approve".localized,
+                value: coinService.token.coin.name
             ),
             amountItem,
             .address(
-                    title: "approve.confirmation.spender".localized,
-                    value: addressValue,
-                    valueTitle: addressTitle,
-                    contactAddress: contactData.contactAddress
-            )
+                title: "approve.confirmation.spender".localized,
+                value: addressValue,
+                valueTitle: addressTitle,
+                contactAddress: contactData.contactAddress
+            ),
         ]
 
         if let contactName = contactData.name {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
 
-        if let nonce = nonce {
+        if let nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
@@ -435,7 +434,7 @@ class SendEvmTransactionViewModel {
         return sections
     }
 
-    private func uniswapItems(amountIn: SwapDecoration.Amount, amountOut: SwapDecoration.Amount, tokenIn: SwapDecoration.Token, tokenOut: SwapDecoration.Token, recipient: EvmKit.Address?, deadline: BigUInt?, swapInfo: SendEvmData.SwapInfo?, nonce: Int?) -> [SectionViewItem]? {
+    private func uniswapItems(amountIn: SwapDecoration.Amount, amountOut: SwapDecoration.Amount, tokenIn: SwapDecoration.Token, tokenOut: SwapDecoration.Token, recipient: EvmKit.Address?, deadline _: BigUInt?, swapInfo: SendEvmData.SwapInfo?, nonce: Int?) -> [SectionViewItem]? {
         guard let coinServiceIn = coinService(token: tokenIn), let coinServiceOut = coinService(token: tokenOut) else {
             return nil
         }
@@ -443,11 +442,11 @@ class SendEvmTransactionViewModel {
         var sections = [SectionViewItem]()
 
         var inViewItems: [ViewItem] = [
-            .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.token.coin.name)
+            .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.token.coin.name),
         ]
 
         switch amountIn {
-        case .exact(let value):
+        case let .exact(value):
             inViewItems.append(amountViewItem(coinService: coinServiceIn, value: value, type: .neutral))
         case .extremum:
             if let estimatedIn = swapInfo?.estimatedIn {
@@ -458,11 +457,11 @@ class SendEvmTransactionViewModel {
         sections.append(SectionViewItem(viewItems: inViewItems))
 
         var outViewItems: [ViewItem] = [
-            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.name)
+            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.name),
         ]
 
         switch amountOut {
-        case .exact(let value):
+        case let .exact(value):
             outViewItems.append(amountViewItem(coinService: coinServiceOut, value: value, type: .incoming))
         case .extremum:
             if let estimatedOut = swapInfo?.estimatedOut {
@@ -481,17 +480,17 @@ class SendEvmTransactionViewModel {
             otherViewItems.append(.value(title: "swap.advanced_settings.deadline".localized, value: deadline, type: .regular))
         }
 
-        if let recipient = recipient {
+        if let recipient {
             let addressValue = recipient.eip55
             let addressTitle = swapInfo?.recipientDomain ?? evmLabelManager.addressLabel(address: addressValue)
             let contactData = contactLabelService.contactData(for: addressValue)
 
             otherViewItems.append(.address(
-                    title: "swap.advanced_settings.recipient_address".localized,
-                    value: addressValue,
-                    valueTitle: addressTitle,
-                    contactAddress: contactData.contactAddress
-                )
+                title: "swap.advanced_settings.recipient_address".localized,
+                value: addressValue,
+                valueTitle: addressTitle,
+                contactAddress: contactData.contactAddress
+            )
             )
             if let contactName = contactData.name {
                 otherViewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
@@ -512,13 +511,13 @@ class SendEvmTransactionViewModel {
             otherViewItems.append(.value(title: "swap.price_impact".localized, value: priceImpact.value, type: type))
         }
 
-        if case .extremum(let value) = amountIn {
+        if case let .extremum(value) = amountIn {
             otherViewItems.append(doubleAmountViewItem(coinService: coinServiceIn, title: "swap.confirmation.maximum_sent".localized, value: value))
-        } else if case .extremum(let value) = amountOut {
+        } else if case let .extremum(value) = amountOut {
             otherViewItems.append(doubleAmountViewItem(coinService: coinServiceOut, title: "swap.confirmation.minimum_received".localized, value: value))
         }
 
-        if let nonce = nonce {
+        if let nonce {
             otherViewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
@@ -532,25 +531,25 @@ class SendEvmTransactionViewModel {
     private func oneInchItems(tokenIn: OneInchDecoration.Token, tokenOut: OneInchDecoration.Token?, amountIn: BigUInt, amountOut: OneInchDecoration.Amount, recipient: EvmKit.Address? = nil, oneInchSwapInfo: SendEvmData.OneInchSwapInfo?, nonce: Int?) -> [SectionViewItem]? {
         var coinServiceOut = tokenOut.flatMap { coinService(token: $0) }
 
-        if coinServiceOut == nil, let oneInchSwapInfo = oneInchSwapInfo {
+        if coinServiceOut == nil, let oneInchSwapInfo {
             coinServiceOut = coinService(token: oneInchSwapInfo.tokenTo)
         }
 
-        guard let coinServiceIn = coinService(token: tokenIn), let coinServiceOut = coinServiceOut else {
+        guard let coinServiceIn = coinService(token: tokenIn), let coinServiceOut else {
             return nil
         }
 
         var sections = [SectionViewItem]()
 
         sections.append(
-                SectionViewItem(viewItems: [
-                    .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.token.coin.code),
-                    amountViewItem(coinService: coinServiceIn, value: amountIn, type: .neutral)
-                ])
+            SectionViewItem(viewItems: [
+                .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.token.coin.code),
+                amountViewItem(coinService: coinServiceIn, value: amountIn, type: .neutral),
+            ])
         )
 
         var outViewItems: [ViewItem] = [
-            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.code)
+            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.code),
         ]
 
         switch amountOut {
@@ -561,22 +560,23 @@ class SendEvmTransactionViewModel {
             }
         }
 
-        if let nonce = nonce {
+        if let nonce {
             outViewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
         sections.append(SectionViewItem(viewItems: outViewItems))
 
         var additionalInfoItems = additionalSectionViewItem(oneInchSwapInfo: oneInchSwapInfo, recipient: recipient)
-        if let oneInchSwapInfo = oneInchSwapInfo, let item = swapPriceViewItem(
-                amountFrom: oneInchSwapInfo.amountFrom,
-                amountTo: oneInchSwapInfo.estimatedAmountTo,
-                tokenFrom: oneInchSwapInfo.tokenFrom,
-                tokenTo: oneInchSwapInfo.tokenTo) {
+        if let oneInchSwapInfo, let item = swapPriceViewItem(
+            amountFrom: oneInchSwapInfo.amountFrom,
+            amountTo: oneInchSwapInfo.estimatedAmountTo,
+            tokenFrom: oneInchSwapInfo.tokenFrom,
+            tokenTo: oneInchSwapInfo.tokenTo
+        ) {
             additionalInfoItems.append(item)
         }
 
-        if case .extremum(let value) = amountOut {
+        if case let .extremum(value) = amountOut {
             additionalInfoItems.append(doubleAmountViewItem(coinService: coinServiceOut, title: "swap.confirmation.minimum_received".localized, value: value))
         }
 
@@ -593,7 +593,7 @@ class SendEvmTransactionViewModel {
 
         sections.append(SectionViewItem(viewItems: [
             .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.token.coin.code),
-            amountViewItem(coinService: coinServiceIn, value: oneInchSwapInfo.amountFrom, type: .neutral)
+            amountViewItem(coinService: coinServiceIn, value: oneInchSwapInfo.amountFrom, type: .neutral),
         ]))
 
         let amountOutMinDecimal = oneInchSwapInfo.estimatedAmountTo * (1 - oneInchSwapInfo.slippage / 100)
@@ -601,7 +601,7 @@ class SendEvmTransactionViewModel {
 
         sections.append(SectionViewItem(viewItems: [
             .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.code),
-            estimatedAmountViewItem(coinService: coinServiceOut, value: oneInchSwapInfo.estimatedAmountTo, type: .incoming)
+            estimatedAmountViewItem(coinService: coinServiceOut, value: oneInchSwapInfo.estimatedAmountTo, type: .incoming),
         ]))
 
         var additionalInfoItems = additionalSectionViewItem(oneInchSwapInfo: oneInchSwapInfo, recipient: oneInchSwapInfo.recipient.flatMap { try? EvmKit.Address(hex: $0.raw) })
@@ -616,7 +616,7 @@ class SendEvmTransactionViewModel {
     }
 
     private func swapPriceViewItem(amountFrom: Decimal, amountTo: Decimal, tokenFrom: MarketKit.Token, tokenTo: MarketKit.Token) -> ViewItem? {
-        if !amountFrom.isZero && !amountTo.isZero {
+        if !amountFrom.isZero, !amountTo.isZero {
             let executionPrice = amountTo / amountFrom
             let reverted = amountTo < amountFrom
 
@@ -625,7 +625,6 @@ class SendEvmTransactionViewModel {
             return .value(title: "swap.price".localized, value: fullValue, type: .regular)
         }
         return nil
-
     }
 
     private func additionalSectionViewItem(oneInchSwapInfo: SendEvmData.OneInchSwapInfo?, recipient: EvmKit.Address?) -> [ViewItem] {
@@ -641,11 +640,11 @@ class SendEvmTransactionViewModel {
             let contactData = contactLabelService.contactData(for: addressValue)
 
             viewItems.append(.address(
-                    title: "swap.advanced_settings.recipient_address".localized,
-                    value: addressValue,
-                    valueTitle: addressTitle,
-                    contactAddress: contactData.contactAddress
-                )
+                title: "swap.advanced_settings.recipient_address".localized,
+                value: addressValue,
+                valueTitle: addressTitle,
+                contactAddress: contactData.contactAddress
+            )
             )
             if let contactName = contactData.name {
                 viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
@@ -661,23 +660,23 @@ class SendEvmTransactionViewModel {
 
         var viewItems: [ViewItem] = [
             amountViewItem(
-                    coinService: coinServiceFactory.baseCoinService,
-                    value: transactionData.value,
-                    type: .neutral
+                coinService: coinServiceFactory.baseCoinService,
+                value: transactionData.value,
+                type: .neutral
             ),
             .address(
-                    title: "send.confirmation.to".localized,
-                    value: toValue,
-                    valueTitle: evmLabelManager.addressLabel(address: toValue),
-                    contactAddress: contactData.contactAddress
-            )
+                title: "send.confirmation.to".localized,
+                value: toValue,
+                valueTitle: evmLabelManager.addressLabel(address: toValue),
+                contactAddress: contactData.contactAddress
+            ),
         ]
 
         if let contactName = contactData.name {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
 
-        if let nonce = nonce {
+        if let nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
@@ -698,25 +697,23 @@ class SendEvmTransactionViewModel {
     private func coinService(token: SwapDecoration.Token) -> CoinService? {
         switch token {
         case .evmCoin: return coinServiceFactory.baseCoinService
-        case .eip20Coin(let address, _): return coinServiceFactory.coinService(contractAddress: address)
+        case let .eip20Coin(address, _): return coinServiceFactory.coinService(contractAddress: address)
         }
     }
 
     private func coinService(token: OneInchDecoration.Token) -> CoinService? {
         switch token {
         case .evmCoin: return coinServiceFactory.baseCoinService
-        case .eip20Coin(let address, _): return coinServiceFactory.coinService(contractAddress: address)
+        case let .eip20Coin(address, _): return coinServiceFactory.coinService(contractAddress: address)
         }
     }
 
     private func coinService(token: MarketKit.Token) -> CoinService {
         coinServiceFactory.coinService(token: token)
     }
-
 }
 
 extension SendEvmTransactionViewModel {
-
     var sectionViewItemsDriver: Driver<[SectionViewItem]> {
         sectionViewItemsRelay.asDriver()
     }
@@ -729,7 +726,7 @@ extension SendEvmTransactionViewModel {
         cautionsRelay.asDriver()
     }
 
-    var sendingSignal: Signal<()> {
+    var sendingSignal: Signal<Void> {
         sendingRelay.asSignal()
     }
 
@@ -744,11 +741,9 @@ extension SendEvmTransactionViewModel {
     func send() {
         service.send()
     }
-
 }
 
 extension SendEvmTransactionViewModel {
-
     struct SectionViewItem {
         let viewItems: [ViewItem]
     }
@@ -762,5 +757,4 @@ extension SendEvmTransactionViewModel {
         case value(title: String, value: String, type: ValueType)
         case input(value: String)
     }
-
 }

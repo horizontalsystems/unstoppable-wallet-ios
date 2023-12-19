@@ -1,5 +1,5 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class NftAssetTitleCell: UITableViewCell {
     private static let horizontalMargin: CGFloat = .margin16
@@ -24,7 +24,8 @@ class NftAssetTitleCell: UITableViewCell {
         label.textColor = .themeLeah
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -32,14 +33,11 @@ class NftAssetTitleCell: UITableViewCell {
         get { label.text }
         set { label.text = newValue }
     }
-
 }
 
 extension NftAssetTitleCell {
-
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalMargin
         return text.height(forContainerWidth: textWidth, font: font)
     }
-
 }

@@ -1,5 +1,5 @@
-import Combine
 import Chart
+import Combine
 
 protocol IIndicatorDataSource {
     var chartIndicator: ChartIndicator { get }
@@ -19,12 +19,11 @@ protocol IIndicatorDataSource {
     var stateUpdatedPublisher: AnyPublisher<Void, Never> { get }
 }
 
-class IndicatorDataSource {
-
+enum IndicatorDataSource {
     enum State {
-    case notChanged
-    case success(ChartIndicator)
-    case failed([Caution])
+        case notChanged
+        case success(ChartIndicator)
+        case failed([Caution])
     }
 
     struct Caution {
@@ -35,11 +34,10 @@ class IndicatorDataSource {
     static func periodError(id: String, period: Int) -> Caution? {
         if period < 0 || period > IndicatorCalculator.maximumPeriod {
             return Caution(
-                    id: id,
-                    error: "chart_indicators.settings.period.error".localized(IndicatorCalculator.maximumPeriod)
+                id: id,
+                error: "chart_indicators.settings.period.error".localized(IndicatorCalculator.maximumPeriod)
             )
         }
         return nil
     }
-
 }

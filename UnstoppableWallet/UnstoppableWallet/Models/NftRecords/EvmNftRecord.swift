@@ -1,6 +1,6 @@
 import Foundation
-import NftKit
 import MarketKit
+import NftKit
 
 class EvmNftRecord: NftRecord {
     let type: NftType
@@ -20,5 +20,4 @@ class EvmNftRecord: NftRecord {
     override var nftUid: NftUid {
         .evm(blockchainType: blockchainType, contractAddress: contractAddress, tokenId: tokenId)
     }
-
 }

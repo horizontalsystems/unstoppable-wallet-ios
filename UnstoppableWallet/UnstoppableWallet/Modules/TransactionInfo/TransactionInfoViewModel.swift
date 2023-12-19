@@ -1,7 +1,6 @@
-import RxSwift
-import RxCocoa
 import MarketKit
-import CurrencyKit
+import RxCocoa
+import RxSwift
 
 class TransactionInfoViewModel {
     private let disposeBag = DisposeBag()
@@ -18,9 +17,8 @@ class TransactionInfoViewModel {
         self.contactLabelService = contactLabelService
 
         subscribe(disposeBag, service.transactionItemUpdatedObserver) { [weak self] in self?.updateTransactionItem(item: $0) }
-        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in
-            self?.reSyncServiceItem()
-        }
+        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncServiceItem() }
+        subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.reSyncServiceItem() }
     }
 
     private func reSyncServiceItem() {
@@ -28,15 +26,13 @@ class TransactionInfoViewModel {
     }
 
     private func updateTransactionItem(item: TransactionInfoService.Item) {
-        viewItemsRelay.accept(factory.items(item: item))
+        viewItemsRelay.accept(factory.items(item: item, balanceHidden: service.balanceHidden))
     }
-
 }
 
 extension TransactionInfoViewModel {
-
     var viewItems: [[TransactionInfoModule.ViewItem]] {
-        factory.items(item: service.item)
+        factory.items(item: service.item, balanceHidden: service.balanceHidden)
     }
 
     var viewItemsDriver: Signal<[[TransactionInfoModule.ViewItem]]> {
@@ -50,5 +46,4 @@ extension TransactionInfoViewModel {
     var transactionHash: String {
         service.item.record.transactionHash
     }
-
 }

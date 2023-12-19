@@ -1,30 +1,27 @@
-import Foundation
-import CurrencyKit
 import BigInt
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
 
 class CexCoinService {
     let cexAsset: CexAsset
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
 
-    init(cexAsset: CexAsset, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+    init(cexAsset: CexAsset, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
         self.cexAsset = cexAsset
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.marketKit = marketKit
     }
-
 }
 
 extension CexCoinService: ICoinService {
-
     var rate: CurrencyValue? {
         guard let coin = cexAsset.coin else {
             return nil
         }
 
-        let baseCurrency = currencyKit.baseCurrency
+        let baseCurrency = currencyManager.baseCurrency
 
         return marketKit.coinPrice(coinUid: coin.uid, currencyCode: baseCurrency.code).map { coinPrice in
             CurrencyValue(currency: baseCurrency, value: coinPrice.value)
@@ -62,5 +59,4 @@ extension CexCoinService: ICoinService {
     func amountData(value: BigUInt, sign: FloatingPointSign = .plus) -> AmountData {
         amountData(value: Decimal(bigUInt: value, decimals: CexAsset.decimals) ?? 0, sign: sign)
     }
-
 }

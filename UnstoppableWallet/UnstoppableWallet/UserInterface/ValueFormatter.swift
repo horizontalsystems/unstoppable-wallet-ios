@@ -1,11 +1,10 @@
 import Foundation
-import CurrencyKit
 
 class ValueFormatter {
     static let instance = ValueFormatter()
 
-    private let rawFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.raw-formatter", qos: .utility)
-    private let currencyFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.currency-formatter", qos: .utility)
+    private let rawFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.raw-formatter", qos: .userInitiated)
+    private let currencyFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.currency-formatter", qos: .userInitiated)
 
     private let rawFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -27,8 +26,8 @@ class ValueFormatter {
         let digits: Int
 
         switch value {
-        case pow(10, basePow)..<(2 * pow(10, basePow + 1)): digits = 2
-        case (2 * pow(10, basePow + 1))..<(2 * pow(10, basePow + 2)): digits = 1
+        case pow(10, basePow) ..< (2 * pow(10, basePow + 1)): digits = 2
+        case (2 * pow(10, basePow + 1)) ..< (2 * pow(10, basePow + 2)): digits = 1
         default: digits = 0
         }
 
@@ -36,11 +35,11 @@ class ValueFormatter {
     }
 
     private func fractionZeroCount(value: Decimal, maxCount: Int) -> Int {
-        guard value > 0 && value < 1 else {
+        guard value > 0, value < 1 else {
             return 0
         }
 
-        for count in 0..<maxCount {
+        for count in 0 ..< maxCount {
             if value * pow(10, count + 1) >= 1 {
                 return count
             }
@@ -63,43 +62,43 @@ class ValueFormatter {
         case 0:
             digits = 0
 
-        case 0..<0.0000_0001:
+        case 0 ..< 0.0000_0001:
             digits = 8
             value = 0.0000_0001
             tooSmall = true
 
-        case 0.0000_0001..<1:
+        case 0.0000_0001 ..< 1:
             let zeroCount = fractionZeroCount(value: value, maxCount: 8)
             digits = min(maxDigits, zeroCount + 4, 8)
 
-        case 1..<1.01:
+        case 1 ..< 1.01:
             digits = 4
 
-        case 1.01..<1.1:
+        case 1.01 ..< 1.1:
             digits = 3
 
-        case 1.1..<20:
+        case 1.1 ..< 20:
             digits = 2
 
-        case 20..<200:
+        case 20 ..< 200:
             digits = 1
 
-        case 200..<19_999.5:
+        case 200 ..< 19999.5:
             digits = 0
 
-        case 19_999.5..<edge(6):
+        case 19999.5 ..< edge(6):
             (digits, value) = digitsAndValue(value: value, basePow: 3)
             suffix = "number.thousand"
 
-        case edge(6)..<edge(9):
+        case edge(6) ..< edge(9):
             (digits, value) = digitsAndValue(value: value, basePow: 6)
             suffix = "number.million"
 
-        case edge(9)..<edge(12):
+        case edge(9) ..< edge(12):
             (digits, value) = digitsAndValue(value: value, basePow: 9)
             suffix = "number.billion"
 
-        case edge(12)..<edge(15):
+        case edge(12) ..< edge(15):
             (digits, value) = digitsAndValue(value: value, basePow: 12)
             suffix = "number.trillion"
 
@@ -119,20 +118,20 @@ class ValueFormatter {
         case 0:
             digits = 0
 
-        case 0..<1:
+        case 0 ..< 1:
             let zeroCount = fractionZeroCount(value: value, maxCount: maxDigits - 1)
             digits = min(maxDigits, zeroCount + 4)
 
-        case 1..<1.01:
+        case 1 ..< 1.01:
             digits = 4
 
-        case 1.01..<1.1:
+        case 1.01 ..< 1.1:
             digits = 3
 
-        case 1.1..<20:
+        case 1.1 ..< 20:
             digits = 2
 
-        case 20..<200:
+        case 20 ..< 200:
             digits = 1
 
         default:
@@ -145,15 +144,15 @@ class ValueFormatter {
     private func decorated(string: String, suffix: String? = nil, symbol: String? = nil, signValue: Decimal? = nil, tooSmall: Bool = false) -> String {
         var string = string
 
-        if let suffix = suffix {
+        if let suffix {
             string = suffix.localized(string)
         }
 
-        if let symbol = symbol {
+        if let symbol {
             string = "\(string) \(symbol)"
         }
 
-        if let signValue = signValue {
+        if let signValue {
             var sign = ""
             if !signValue.isZero {
                 sign = signValue.isSignMinus ? "-" : "+"
@@ -176,7 +175,7 @@ class ValueFormatter {
             return currencyFormatter.string(from: 1 as NSDecimalNumber)
         }
 
-        guard let pattern = pattern else {
+        guard let pattern else {
             return nil
         }
 
@@ -185,17 +184,15 @@ class ValueFormatter {
             return rawFormatter.string(from: value as NSDecimalNumber)
         }
 
-        guard let string = string else {
+        guard let string else {
             return nil
         }
 
         return pattern.replacingOccurrences(of: "1", with: decorated(string: string, suffix: suffix))
     }
-
 }
 
 extension ValueFormatter {
-
     func formatShort(value: Decimal) -> String? {
         let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value)
 
@@ -204,7 +201,7 @@ extension ValueFormatter {
             return rawFormatter.string(from: transformedValue as NSDecimalNumber)
         }
 
-        guard let string = string else {
+        guard let string else {
             return nil
         }
 
@@ -219,7 +216,7 @@ extension ValueFormatter {
             return rawFormatter.string(from: transformedValue as NSDecimalNumber)
         }
 
-        guard let string = string else {
+        guard let string else {
             return nil
         }
 
@@ -234,7 +231,7 @@ extension ValueFormatter {
             return rawFormatter.string(from: transformedValue as NSDecimalNumber)
         }
 
-        guard let string = string else {
+        guard let string else {
             return nil
         }
 
@@ -285,11 +282,10 @@ extension ValueFormatter {
             return rawFormatter.string(from: transformedValue as NSDecimalNumber)
         }
 
-        guard let string = string else {
+        guard let string else {
             return nil
         }
 
         return decorated(string: string, signValue: showSign ? percentValue : nil) + "%"
     }
-
 }

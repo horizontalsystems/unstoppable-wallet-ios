@@ -1,15 +1,15 @@
-import UIKit
-import ThemeKit
 import ComponentKit
 import SectionsTableView
+import ThemeKit
+import UIKit
 
 class SingleSelectorViewController: ThemeViewController {
     private let viewItems: [SelectorModule.ViewItem]
-    private let onSelect: (Int) -> ()
+    private let onSelect: (Int) -> Void
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(title: String, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> ()) {
+    init(title: String, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> Void) {
         self.viewItems = viewItems
         self.onSelect = onSelect
 
@@ -18,7 +18,8 @@ class SingleSelectorViewController: ThemeViewController {
         self.title = title
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -47,32 +48,29 @@ class SingleSelectorViewController: ThemeViewController {
         onSelect(index)
         dismiss(animated: true)
     }
-
 }
 
 extension SingleSelectorViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        SelectorModule.row(
-                                viewItem: viewItem,
-                                tableView: tableView,
-                                selected: viewItem.selected,
-                                backgroundStyle: .lawrence,
-                                index: index,
-                                isFirst: index == 0,
-                                isLast: index == viewItems.count - 1
-                        ) { [weak self] in
-                            self?.onSelect(index: index)
-                        }
+                id: "main",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    SelectorModule.row(
+                        viewItem: viewItem,
+                        tableView: tableView,
+                        selected: viewItem.selected,
+                        backgroundStyle: .lawrence,
+                        index: index,
+                        isFirst: index == 0,
+                        isLast: index == viewItems.count - 1
+                    ) { [weak self] in
+                        self?.onSelect(index: index)
                     }
-            )
+                }
+            ),
         ]
     }
-
 }

@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import HdWalletKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class RestoreMnemonicNonStandardViewModel {
     private let service: RestoreMnemonicNonStandardService
@@ -50,11 +50,9 @@ class RestoreMnemonicNonStandardViewModel {
     private var cursorItem: RestoreMnemonicNonStandardService.WordItem? {
         service.items.first { hasCursor(item: $0) }
     }
-
 }
 
 extension RestoreMnemonicNonStandardViewModel {
-
     var possibleWordsDriver: Driver<[String]> {
         possibleWordsRelay.asDriver()
     }
@@ -111,9 +109,9 @@ extension RestoreMnemonicNonStandardViewModel {
             }
         }
 
-        invalidRangesRelay.accept(nonCursorInvalidItems.map { $0.range })
+        invalidRangesRelay.accept(nonCursorInvalidItems.map(\.range))
 
-        if let cursorItem = cursorItem {
+        if let cursorItem {
             let possibleWords = service.possibleWords(string: cursorItem.word)
             possibleWordsRelay.accept(possibleWords)
         } else {
@@ -122,7 +120,7 @@ extension RestoreMnemonicNonStandardViewModel {
     }
 
     func onSelect(word: String) {
-        guard let cursorItem = cursorItem else {
+        guard let cursorItem else {
             return
         }
 
@@ -144,13 +142,13 @@ extension RestoreMnemonicNonStandardViewModel {
         passphraseCautionRelay.accept(nil)
 
         guard service.items.allSatisfy({ $0.type == .correct }) else {
-            invalidRangesRelay.accept(service.items.filter { $0.type != .correct }.map { $0.range })
+            invalidRangesRelay.accept(service.items.filter { $0.type != .correct }.map(\.range))
             return nil
         }
 
         do {
-            return try service.accountType(words: service.items.map { $0.word })
-        } catch RestoreMnemonicNonStandardService.ErrorList.errors(let errors) {
+            return try service.accountType(words: service.items.map(\.word))
+        } catch let RestoreMnemonicNonStandardService.ErrorList.errors(errors) {
             errors.forEach { error in
                 if case RestoreMnemonicNonStandardService.RestoreError.emptyPassphrase = error {
                     passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
@@ -164,7 +162,5 @@ extension RestoreMnemonicNonStandardViewModel {
         }
     }
 
-    func clear() {
-    }
-
+    func clear() {}
 }

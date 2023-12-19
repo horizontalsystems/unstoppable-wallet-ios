@@ -24,10 +24,10 @@ class CoinProvider {
     private var nativeFullCoins: [FullCoin] {
         do {
             let blockchainTypes = BlockchainType.supported.sorted()
-            let queries = blockchainTypes.map { $0.nativeTokenQueries }.flatMap { $0 }
+            let queries = blockchainTypes.map(\.nativeTokenQueries).flatMap { $0 }
             let coinUids = try marketKit
                 .tokens(queries: queries)
-                .map { $0.coin.uid }
+                .map(\.coin.uid)
 
             return try marketKit.fullCoins(coinUids: coinUids)
         } catch {
@@ -40,11 +40,9 @@ class CoinProvider {
             fullCoin.coin.code.localizedCaseInsensitiveContains(filter) || fullCoin.coin.name.localizedCaseInsensitiveContains(filter)
         }
     }
-
 }
 
 extension CoinProvider {
-
     func fetch(filter: String) -> [FullCoin] {
         guard !filter.isEmpty else {
             return predefined
@@ -61,31 +59,27 @@ extension CoinProvider {
             return []
         }
     }
-
 }
 
 extension CoinProvider {
-
     var predefinedCoins: [FullCoin] {
         // get all restored coins
         let activeWallets = walletManager.activeWallets
-        let walletCoins = activeWallets.map { $0.coin }
+        let walletCoins = activeWallets.map(\.coin)
 
         // found account full coins
-        var walletFullCoins = (try? marketKit.fullCoins(coinUids: walletCoins.map { $0.uid })) ?? []
+        var walletFullCoins = (try? marketKit.fullCoins(coinUids: walletCoins.map(\.uid))) ?? []
         walletFullCoins.append(contentsOf: custom)
 
         // get all native coins for supported blockchains
         let nativeFullCoins = nativeFullCoins
 
-
         // filter not supported by current account
         let predefined = (walletFullCoins + nativeFullCoins).removeDuplicates()
             .filter { fullCoin in
-            fullCoin.tokens.contains { accountType.supports(token: $0) }
-        }
+                fullCoin.tokens.contains { accountType.supports(token: $0) }
+            }
 
         return predefined
     }
-
 }

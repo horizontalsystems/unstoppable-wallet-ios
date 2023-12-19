@@ -1,11 +1,10 @@
-import UIKit
-import UIExtensions
 import HUD
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIExtensions
+import UIKit
 
 class KeyboardObservingViewController: UIViewController {
-
     let disposeBag = DisposeBag()
 
     var keyboardFrameDisposable: Disposable?
@@ -45,10 +44,9 @@ class KeyboardObservingViewController: UIViewController {
         }
     }
 
-    func enableContent(enabled: Bool) {
-    }
+    func enableContent(enabled _: Bool) {}
 
-//Handle keyboard auto open/close
+    // Handle keyboard auto open/close
 
     func onKeyboardFrameChange(_ notification: Notification) {
         let screenKeyboardFrame = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
@@ -61,7 +59,5 @@ class KeyboardObservingViewController: UIViewController {
         updateUI(keyboardHeight: keyboardHeight, duration: duration, options: UIView.AnimationOptions(rawValue: curve << 16))
     }
 
-    func updateUI(keyboardHeight: CGFloat, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = .curveLinear, completion: (() -> ())? = nil) {
-    }
-
+    func updateUI(keyboardHeight _: CGFloat, duration _: TimeInterval = 0.2, options _: UIView.AnimationOptions = .curveLinear, completion _: (() -> Void)? = nil) {}
 }

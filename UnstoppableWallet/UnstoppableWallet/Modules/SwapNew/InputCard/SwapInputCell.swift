@@ -1,9 +1,9 @@
+import ComponentKit
 import Foundation
-import UIKit
 import RxSwift
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class SwapInputCell: UITableViewCell {
     static let cellHeight: CGFloat = 180
@@ -20,7 +20,7 @@ class SwapInputCell: UITableViewCell {
 
     private let toInputCard: SwapInputCardView
 
-    var onSwitch: (() -> ())?
+    var onSwitch: (() -> Void)?
 
     weak var presentDelegate: IPresentDelegate? {
         didSet {
@@ -88,7 +88,8 @@ class SwapInputCell: UITableViewCell {
         cardView.bringSubviewToFront(switchButton)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -99,9 +100,6 @@ class SwapInputCell: UITableViewCell {
     @objc private func onTapSwitch() {
         onSwitch?()
     }
-
 }
 
-extension SwapInputCell {
-
-}
+extension SwapInputCell {}

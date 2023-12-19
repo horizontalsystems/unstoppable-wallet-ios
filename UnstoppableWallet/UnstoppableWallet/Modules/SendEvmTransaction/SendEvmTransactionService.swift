@@ -1,11 +1,11 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import EvmKit
 import BigInt
+import EvmKit
+import Foundation
 import MarketKit
-import UniswapKit
 import OneInchKit
+import RxCocoa
+import RxSwift
+import UniswapKit
 
 protocol ISendEvmTransactionService {
     var state: SendEvmTransactionService.State { get }
@@ -53,10 +53,10 @@ class SendEvmTransactionService {
         self.evmLabelManager = evmLabelManager
 
         dataState = DataState(
-                transactionData: sendData.transactionData,
-                additionalInfo: sendData.additionalInfo,
-                decoration: evmKitWrapper.evmKit.decorate(transactionData: sendData.transactionData),
-                nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
+            transactionData: sendData.transactionData,
+            additionalInfo: sendData.additionalInfo,
+            decoration: evmKitWrapper.evmKit.decorate(transactionData: sendData.transactionData),
+            nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
         )
 
         subscribe(disposeBag, settingsService.statusObservable) { [weak self] in self?.sync(status: $0) }
@@ -74,10 +74,10 @@ class SendEvmTransactionService {
         switch status {
         case .loading:
             state = .notReady(errors: [], warnings: [])
-        case .failed(let error):
+        case let .failed(error):
             syncDataState()
             state = .notReady(errors: [error], warnings: [])
-        case .completed(let fallibleTransaction):
+        case let .completed(fallibleTransaction):
             syncDataState(transaction: fallibleTransaction.data)
 
             let warnings = sendData.warnings + fallibleTransaction.warnings
@@ -94,17 +94,15 @@ class SendEvmTransactionService {
         let transactionData = transaction?.transactionData ?? sendData.transactionData
 
         dataState = DataState(
-                transactionData: transactionData,
-                additionalInfo: sendData.additionalInfo,
-                decoration: evmKit.decorate(transactionData: transactionData),
-                nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
+            transactionData: transactionData,
+            additionalInfo: sendData.additionalInfo,
+            decoration: evmKit.decorate(transactionData: transactionData),
+            nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
         )
     }
-
 }
 
 extension SendEvmTransactionService: ISendEvmTransactionService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -126,7 +124,7 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
     }
 
     func send() {
-        guard case .ready = state, case .completed(let fallibleTransaction) = settingsService.status else {
+        guard case .ready = state, case let .completed(fallibleTransaction) = settingsService.status else {
             return
         }
         let transaction = fallibleTransaction.data
@@ -134,24 +132,22 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
         sendState = .sending
 
         evmKitWrapper.sendSingle(
-                        transactionData: transaction.transactionData,
-                        gasPrice: transaction.gasData.price,
-                        gasLimit: transaction.gasData.limit,
-                        nonce: transaction.nonce
-                )
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] fullTransaction in
-                    self?.sendState = .sent(transactionHash: fullTransaction.transaction.hash)
-                }, onError: { error in
-                    self.sendState = .failed(error: error)
-                })
-                .disposed(by: disposeBag)
+            transactionData: transaction.transactionData,
+            gasPrice: transaction.gasData.price,
+            gasLimit: transaction.gasData.limit,
+            nonce: transaction.nonce
+        )
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+        .subscribe(onSuccess: { [weak self] fullTransaction in
+            self?.sendState = .sent(transactionHash: fullTransaction.transaction.hash)
+        }, onError: { error in
+            self.sendState = .failed(error: error)
+        })
+        .disposed(by: disposeBag)
     }
-
 }
 
 extension SendEvmTransactionService {
-
     enum State {
         case ready(warnings: [Warning])
         case notReady(errors: [Error], warnings: [Warning])
@@ -175,5 +171,4 @@ extension SendEvmTransactionService {
         case noTransactionData
         case insufficientBalance(requiredBalance: BigUInt)
     }
-
 }

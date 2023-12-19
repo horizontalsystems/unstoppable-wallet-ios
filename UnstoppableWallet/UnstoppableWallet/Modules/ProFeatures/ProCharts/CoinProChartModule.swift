@@ -1,33 +1,29 @@
-import UIKit
-import RxSwift
 import Chart
-import LanguageKit
 import MarketKit
+import RxSwift
+import UIKit
 
-class CoinProChartModule {
-
+enum CoinProChartModule {
     static func viewController(coin: Coin, type: ProChartType) -> UIViewController {
-        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, coin: coin, type: type)
+        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, coin: coin, type: type)
 
         let chartService = MetricChartService(
-                chartFetcher: chartFetcher,
-                interval: .month1
+            chartFetcher: chartFetcher,
+            interval: .month1
         )
 
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, factory: factory)
 
         return MetricChartViewController(
-                title: type.title,
-                viewModel: chartViewModel,
-                configuration: type.chartConfiguration
+            title: type.title,
+            viewModel: chartViewModel,
+            configuration: type.chartConfiguration
         ).toBottomSheet
     }
-
 }
 
 extension CoinProChartModule {
-
     enum ProChartType {
         case cexVolume
         case dexVolume
@@ -55,5 +51,4 @@ extension CoinProChartModule {
             }
         }
     }
-
 }

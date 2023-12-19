@@ -1,12 +1,11 @@
 import Foundation
-import MarketKit
-import CurrencyKit
 import HsExtensions
+import MarketKit
 
 class CoinRankService {
     let type: CoinRankModule.RankType
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: State = .loading
@@ -25,10 +24,10 @@ class CoinRankService {
 
     private var internalItems: [InternalItem]?
 
-    init(type: CoinRankModule.RankType, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(type: CoinRankModule.RankType, marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.type = type
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
 
         sync()
     }
@@ -38,9 +37,9 @@ class CoinRankService {
 
         state = .loading
 
-        Task { [weak self, marketKit, currencyKit, type] in
+        Task { [weak self, marketKit, currencyManager, type] in
             do {
-                let currencyCode = currencyKit.baseCurrency.code
+                let currencyCode = currencyManager.baseCurrency.code
                 let values: [Value]
 
                 switch type {
@@ -91,13 +90,13 @@ class CoinRankService {
             let resolvedValue: Decimal?
 
             switch internalItem.value {
-            case .multi(let value):
+            case let .multi(value):
                 switch timePeriod {
                 case .day1: resolvedValue = value.value1d
                 case .week1: resolvedValue = value.value7d
                 default: resolvedValue = value.value30d
                 }
-            case .single(let value):
+            case let .single(value):
                 resolvedValue = value.value
             }
 
@@ -117,19 +116,15 @@ class CoinRankService {
 
         state = .loaded(items: sortedIndexedItems, reorder: reorder)
     }
-
 }
 
 extension CoinRankService {
-
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
-
 }
 
 extension CoinRankService {
-
     private struct InternalItem {
         let coin: Coin
         let value: Value
@@ -141,8 +136,8 @@ extension CoinRankService {
 
         var coinUid: String {
             switch self {
-            case .multi(let value): return value.uid
-            case .single(let value): return value.uid
+            case let .multi(value): return value.uid
+            case let .single(value): return value.uid
             }
         }
     }
@@ -163,5 +158,4 @@ extension CoinRankService {
         let coin: Coin
         let value: Decimal
     }
-
 }

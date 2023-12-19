@@ -1,8 +1,8 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import Foundation
 import Hodler
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class TimeLockViewModel {
     private let disposeBag = DisposeBag()
@@ -21,11 +21,9 @@ class TimeLockViewModel {
     private func sync(lockTime: TimeLockService.Item) {
         valueRelay.accept(lockTime.title)
     }
-
 }
 
 extension TimeLockViewModel {
-
     var altered: Bool {
         service.lockTime != .none
     }
@@ -49,21 +47,17 @@ extension TimeLockViewModel {
         service.set(index: 0)
         alteredStateRelay.accept(())
     }
-
 }
 
 extension TimeLockViewModel: IDropDownListViewModel {
-
     var selectedItemDriver: Driver<String?> {
         valueRelay.asDriver()
     }
-
 }
 
 extension HodlerPlugin.LockTimeInterval {
-
     static func title(lockTimeInterval: HodlerPlugin.LockTimeInterval?) -> String {
-        guard let lockTimeInterval = lockTimeInterval else {
+        guard let lockTimeInterval else {
             return "send.hodler_locktime_off".localized
         }
 
@@ -74,5 +68,4 @@ extension HodlerPlugin.LockTimeInterval {
         case .year: return "send.hodler_locktime_year".localized
         }
     }
-
 }

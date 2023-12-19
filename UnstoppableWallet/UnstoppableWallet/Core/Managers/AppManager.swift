@@ -1,13 +1,15 @@
 import Foundation
 import RxSwift
-import StorageKit
+import UIKit
+import WidgetKit
 
 class AppManager {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
     private let lockManager: LockManager
-    private let keychainKit: IKeychainKit
+    private let keychainManager: KeychainManager
+    private let passcodeLockManager: PasscodeLockManager
     private let blurManager: BlurManager
     private let kitCleaner: KitCleaner
     private let debugBackgroundLogger: DebugLogger?
@@ -24,7 +26,7 @@ class AppManager {
     private let willEnterForegroundSubject = PublishSubject<Void>()
 
     init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
-         keychainKit: IKeychainKit, blurManager: BlurManager,
+         keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager, blurManager: BlurManager,
          kitCleaner: KitCleaner, debugLogger: DebugLogger?,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
@@ -35,7 +37,8 @@ class AppManager {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.lockManager = lockManager
-        self.keychainKit = keychainKit
+        self.keychainManager = keychainManager
+        self.passcodeLockManager = passcodeLockManager
         self.blurManager = blurManager
         self.kitCleaner = kitCleaner
         debugBackgroundLogger = debugLogger
@@ -48,13 +51,21 @@ class AppManager {
         self.walletConnectSocketConnectionService = walletConnectSocketConnectionService
         self.nftMetadataSyncer = nftMetadataSyncer
     }
+
+    private func warmUp() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            _ = UIImage.qrCodeImage(qrCodeString: "", size: .margin48)
+        }
+    }
 }
 
 extension AppManager {
     func didFinishLaunching() {
+        warmUp()
         debugBackgroundLogger?.logFinishLaunching()
 
-        keychainKit.handleLaunch()
+        keychainManager.handleLaunch()
+        passcodeLockManager.handleLaunch()
         accountManager.handleLaunch()
         walletManager.preloadWallets()
         kitCleaner.clear()
@@ -92,12 +103,14 @@ extension AppManager {
         debugBackgroundLogger?.logEnterForeground()
         willEnterForegroundSubject.onNext(())
 
-        keychainKit.handleForeground()
+        passcodeLockManager.handleForeground()
         lockManager.willEnterForeground()
         adapterManager.refresh()
         walletConnectSocketConnectionService.willEnterForeground()
 
         nftMetadataSyncer.sync()
+
+        AppWidgetConstants.allKinds.forEach { WidgetCenter.shared.reloadTimelines(ofKind: $0) }
     }
 
     func willTerminate() {

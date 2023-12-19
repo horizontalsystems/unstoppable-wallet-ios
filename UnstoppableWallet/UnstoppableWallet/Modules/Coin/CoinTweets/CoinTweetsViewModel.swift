@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class CoinTweetsViewModel {
     private let service: CoinTweetsService
@@ -27,12 +27,12 @@ class CoinTweetsViewModel {
             loadingRelay.accept(true)
             infoRelay.accept(nil)
             syncErrorRelay.accept(false)
-        case .completed(let tweets):
+        case let .completed(tweets):
             viewItemsRelay.accept(tweets.map { viewItem(tweet: $0) })
             loadingRelay.accept(false)
             infoRelay.accept(tweets.isEmpty ? "coin_tweets.no_tweets_yet".localized : nil)
             syncErrorRelay.accept(false)
-        case .failed(let error):
+        case let .failed(error):
             viewItemsRelay.accept(nil)
             loadingRelay.accept(false)
 
@@ -48,27 +48,25 @@ class CoinTweetsViewModel {
 
     private func viewItem(tweet: Tweet) -> ViewItem {
         ViewItem(
-                id: tweet.id,
-                title: tweet.user.name,
-                subTitle: "@\(tweet.user.username)",
-                username: tweet.user.username,
-                titleImageUrl: tweet.user.profileImageUrl,
-                text: tweet.text,
-                attachment: tweet.attachments.first,
-                date: DateHelper.instance.formatFullTime(from: tweet.date),
-                referencedTweet: tweet.referencedTweet.map { referencedTweet in
-                    ReferencedTweet(
-                            title: "coin_tweets.reference_type.\(referencedTweet.referenceType.rawValue)".localized(referencedTweet.tweet.user.username),
-                            text: referencedTweet.tweet.text
-                    )
-                }
+            id: tweet.id,
+            title: tweet.user.name,
+            subTitle: "@\(tweet.user.username)",
+            username: tweet.user.username,
+            titleImageUrl: tweet.user.profileImageUrl,
+            text: tweet.text,
+            attachment: tweet.attachments.first,
+            date: DateHelper.instance.formatFullTime(from: tweet.date),
+            referencedTweet: tweet.referencedTweet.map { referencedTweet in
+                ReferencedTweet(
+                    title: "coin_tweets.reference_type.\(referencedTweet.referenceType.rawValue)".localized(referencedTweet.tweet.user.username),
+                    text: referencedTweet.tweet.text
+                )
+            }
         )
     }
-
 }
 
 extension CoinTweetsViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
     }
@@ -96,11 +94,9 @@ extension CoinTweetsViewModel {
     func viewDidLoad() {
         service.fetch()
     }
-
 }
 
 extension CoinTweetsViewModel {
-
     struct ViewItem {
         let id: String
         let title: String
@@ -117,5 +113,4 @@ extension CoinTweetsViewModel {
         let title: String
         let text: String
     }
-
 }

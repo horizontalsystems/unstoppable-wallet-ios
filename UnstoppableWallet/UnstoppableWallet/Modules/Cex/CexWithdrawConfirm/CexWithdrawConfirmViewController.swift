@@ -1,9 +1,9 @@
 import Combine
-import UIKit
-import SnapKit
-import ThemeKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class CexWithdrawConfirmViewController: ThemeViewController {
     private let viewModel: CexWithdrawConfirmViewModel
@@ -23,7 +23,8 @@ class CexWithdrawConfirmViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -60,24 +61,24 @@ class CexWithdrawConfirmViewController: ThemeViewController {
         withdrawingButton.setTitle("cex_withdraw_confirm.withdraw".localized, for: .normal)
 
         viewModel.$sectionViewItems
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.sync(sectionViewItems: $0) }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.sync(sectionViewItems: $0) }
+            .store(in: &cancellables)
 
         viewModel.$withdrawing
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.sync(withdrawing: $0) }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.sync(withdrawing: $0) }
+            .store(in: &cancellables)
 
         viewModel.confirmWithdrawPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.confirmWithdraw(result: $0) }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.confirmWithdraw(result: $0) }
+            .store(in: &cancellables)
 
         viewModel.errorPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.show(error: $0) }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.show(error: $0) }
+            .store(in: &cancellables)
     }
 
     private func sync(sectionViewItems: [CexWithdrawConfirmViewModel.SectionViewItem]) {
@@ -96,13 +97,13 @@ class CexWithdrawConfirmViewController: ThemeViewController {
 
     private func show(error: String) {
         let viewController = BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
+            image: .warning,
             title: "cex_withdraw_confirm.withdraw_failed".localized,
             items: [
-                .highlightedDescription(text: error, style: .red)
+                .highlightedDescription(text: error, style: .red),
             ],
             buttons: [
-                .init(style: .yellow, title: "button.ok".localized)
+                .init(style: .yellow, title: "button.ok".localized),
             ]
         )
 
@@ -116,11 +117,9 @@ class CexWithdrawConfirmViewController: ThemeViewController {
     @objc private func onTapWithdraw() {
         viewModel.onTapWithdraw()
     }
-
 }
 
 extension CexWithdrawConfirmViewController: SectionsDataSource {
-
     private func row(viewItem: CexWithdrawConfirmViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
         case let .subhead(iconName, title, value):
@@ -128,7 +127,7 @@ extension CexWithdrawConfirmViewController: SectionsDataSource {
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .address(title, value, contactAddress):
-            var onAddToContact: (() -> ())? = nil
+            var onAddToContact: (() -> Void)? = nil
             if let contactAddress {
                 onAddToContact = { [weak self] in
                     ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
@@ -149,13 +148,12 @@ extension CexWithdrawConfirmViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         viewModel.sectionViewItems.enumerated().map { index, sectionViewItem in
             Section(
-                    id: "section_\(index)",
-                    headerState: .margin(height: index == 0 ? .margin12 : .margin16),
-                    rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
-                    }
+                id: "section_\(index)",
+                headerState: .margin(height: index == 0 ? .margin12 : .margin16),
+                rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
+                }
             )
         }
     }
-
 }

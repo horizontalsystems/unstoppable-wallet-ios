@@ -293,7 +293,7 @@ extension CoinOverviewViewController {
     private func linksSection(guideUrl: URL?, links: [CoinOverviewViewModel.LinkViewItem]) -> SectionProtocol {
         var guideRows = [RowProtocol]()
 
-        if let guideUrl = guideUrl {
+        if let guideUrl {
             let isLast = links.isEmpty
 
             let guideRow = linkRow(
@@ -483,7 +483,7 @@ extension CoinOverviewViewController {
                 .badge { (component: BadgeComponent) in
                     component.badgeView.set(style: .small)
 
-                    if let badge = badge {
+                    if let badge {
                         component.badgeView.text = badge
                         component.isHidden = false
                     } else {
@@ -552,7 +552,7 @@ extension CoinOverviewViewController: SectionsDataSource {
     public func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let viewItem = viewItem {
+        if let viewItem {
             sections.append(coinInfoSection(viewItem: viewItem.coinViewItem))
             sections.append(chartSection)
             sections.append(

@@ -1,11 +1,11 @@
-import UIKit
-import RxSwift
+import ComponentKit
 import RxCocoa
+import RxSwift
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import ComponentKit
-import SectionsTableView
 import UIExtensions
+import UIKit
 
 class CreateAccountSimpleViewController: KeyboardAwareViewController {
     private let viewModel: CreateAccountViewModel
@@ -27,7 +27,8 @@ class CreateAccountSimpleViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -99,36 +100,33 @@ class CreateAccountSimpleViewController: KeyboardAwareViewController {
     private func finish() {
         HudHelper.instance.show(banner: .created)
 
-        if let listener = listener {
+        if let listener {
             listener.handleCreateAccount()
         } else {
             dismiss(animated: true)
         }
     }
-
 }
 
 extension CreateAccountSimpleViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "margin",
-                    headerState: .margin(height: .margin12)
+                id: "margin",
+                headerState: .margin(height: .margin12)
             ),
             Section(
-                    id: "name",
-                    headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        )
-                    ]
-            )
+                id: "name",
+                headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: nameCell,
+                        id: "name",
+                        height: .heightSingleLineCell
+                    ),
+                ]
+            ),
         ]
     }
-
 }

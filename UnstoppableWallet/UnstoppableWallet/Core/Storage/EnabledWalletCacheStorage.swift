@@ -6,16 +6,13 @@ class EnabledWalletCacheStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension EnabledWalletCacheStorage {
-
     func enabledWalletCaches(accountId: String) -> [EnabledWalletCache] {
         try! dbPool.read { db in
             try EnabledWalletCache.filter(EnabledWalletCache.Columns.accountId == accountId).fetchAll(db)
         }
-
     }
 
     func save(enabledWalletCaches: [EnabledWalletCache]) {
@@ -31,5 +28,4 @@ extension EnabledWalletCacheStorage {
             try EnabledWalletCache.filter(EnabledWalletCache.Columns.accountId == accountId).deleteAll(db)
         }
     }
-
 }

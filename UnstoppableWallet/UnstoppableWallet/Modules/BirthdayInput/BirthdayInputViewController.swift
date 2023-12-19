@@ -1,16 +1,16 @@
-import UIKit
-import ThemeKit
 import ComponentKit
-import UIExtensions
-import SnapKit
 import MarketKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIExtensions
+import UIKit
 
 class BirthdayInputViewController: KeyboardAwareViewController {
     private let token: Token
 
-    var onEnterBirthdayHeight: ((Int?) -> ())?
-    var onCancel: (() -> ())?
+    var onEnterBirthdayHeight: ((Int?) -> Void)?
+    var onCancel: (() -> Void)?
 
     private let iconImageView = UIImageView()
     private let tableView = SectionsTableView(style: .grouped)
@@ -31,7 +31,8 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -100,15 +101,15 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         // show disclaimer
 
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "alert.warning".localized,
-                items: [
-                    .highlightedDescription(text: "restore_setting.download.disclaimer".localized)
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "button.continue".localized, actionType: .afterClose) { [ weak self] in self?.setOldTypeActive(showKeyboard: showKeyboard) },
-                    .init(style: .transparent, title: "button.cancel".localized)
-                ]
+            image: .warning,
+            title: "alert.warning".localized,
+            items: [
+                .highlightedDescription(text: "restore_setting.download.disclaimer".localized),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "button.continue".localized, actionType: .afterClose) { [weak self] in self?.setOldTypeActive(showKeyboard: showKeyboard) },
+                .init(style: .transparent, title: "button.cancel".localized),
+            ]
         )
 
         present(viewController, animated: true)
@@ -143,17 +144,17 @@ class BirthdayInputViewController: KeyboardAwareViewController {
 
     private func row(type: WalletType) -> RowProtocol {
         tableView.universalRow62(
-                id: "wallet_type_\(type.title)",
-                title: .body(type.title),
-                description: .subhead2(type.description),
-                accessoryType: .check(type == walletType),
-                hash: "wallet_type_\(type.title)_\(type == walletType)",
-                autoDeselect: true,
-                isFirst: type.rawValue == 0,
-                isLast: type.rawValue == WalletType.allCases.count - 1,
-                action: { [weak self] in
-                    self?.didTap(type: type)
-                }
+            id: "wallet_type_\(type.title)",
+            title: .body(type.title),
+            description: .subhead2(type.description),
+            accessoryType: .check(type == walletType),
+            hash: "wallet_type_\(type.title)_\(type == walletType)",
+            autoDeselect: true,
+            isFirst: type.rawValue == 0,
+            isLast: type.rawValue == WalletType.allCases.count - 1,
+            action: { [weak self] in
+                self?.didTap(type: type)
+            }
         )
     }
 

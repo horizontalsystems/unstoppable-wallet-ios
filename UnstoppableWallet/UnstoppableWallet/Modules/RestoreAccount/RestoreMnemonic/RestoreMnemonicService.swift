@@ -1,8 +1,7 @@
 import Foundation
 import HdWalletKit
-import RxSwift
 import RxRelay
-import LanguageKit
+import RxSwift
 
 class RestoreMnemonicService {
     private let languageManager: LanguageManager
@@ -39,11 +38,9 @@ class RestoreMnemonicService {
         case .portuguese: return "pt"
         }
     }
-
 }
 
 extension RestoreMnemonicService {
-
     var wordListLanguageObservable: Observable<Mnemonic.Language> {
         wordListLanguageRelay.asObservable()
     }
@@ -114,16 +111,14 @@ extension RestoreMnemonicService {
         }
 
         return .mnemonic(
-                words: words.map { $0.decomposedStringWithCompatibilityMapping },
-                salt: passphrase.decomposedStringWithCompatibilityMapping,
-                bip39Compliant: true
+            words: words.map(\.decomposedStringWithCompatibilityMapping),
+            salt: passphrase.decomposedStringWithCompatibilityMapping,
+            bip39Compliant: true
         )
     }
-
 }
 
 extension RestoreMnemonicService {
-
     enum WordItemType {
         case correct
         case incorrect
@@ -143,5 +138,4 @@ extension RestoreMnemonicService {
     enum ErrorList: Error {
         case errors([Error])
     }
-
 }

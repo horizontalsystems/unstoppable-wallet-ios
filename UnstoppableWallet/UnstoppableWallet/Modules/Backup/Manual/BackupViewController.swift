@@ -1,12 +1,12 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class BackupViewController: ThemeViewController {
     private let viewModel: BackupViewModel
-    var onComplete: (() -> ())?
+    var onComplete: (() -> Void)?
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -18,7 +18,8 @@ class BackupViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -83,11 +84,9 @@ class BackupViewController: ThemeViewController {
         visible = !visible
         tableView.reload()
     }
-
 }
 
 extension BackupViewController: SectionsDataSource {
-
     private func marginRow(id: String, height: CGFloat) -> RowProtocol {
         Row<EmptyCell>(id: id, height: height)
     }
@@ -98,46 +97,46 @@ extension BackupViewController: SectionsDataSource {
 
         var rows: [RowProtocol] = [
             Row<MnemonicPhraseCell>(
-                    id: "mnemonic",
-                    dynamicHeight: { width in
-                        MnemonicPhraseCell.height(containerWidth: width, words: words)
-                    },
-                    bind: { cell, _ in
-                        cell.set(state: state)
-                    },
-                    action: { [weak self] _ in
-                        self?.toggle()
-                    }
-            )
+                id: "mnemonic",
+                dynamicHeight: { width in
+                    MnemonicPhraseCell.height(containerWidth: width, words: words)
+                },
+                bind: { cell, _ in
+                    cell.set(state: state)
+                },
+                action: { [weak self] _ in
+                    self?.toggle()
+                }
+            ),
         ]
 
         let visible = visible
 
         if let passphrase = viewModel.passphrase {
             let passphraseRow = CellBuilderNew.row(
-                    rootElement: .hStack([
-                        .image24 { component in
-                            component.imageView.image = UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)
-                        },
-                        .text { component in
-                            component.font = .subhead2
-                            component.textColor = .themeGray
-                            component.text = "backup.passphrase".localized
-                        },
-                        .secondaryButton { component in
-                            component.button.set(style: .default)
-                            component.button.setTitle(visible ? passphrase : "*****", for: .normal)
-                            component.onTap = {
-                                CopyHelper.copyAndNotify(value: passphrase)
-                            }
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.imageView.image = UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)
+                    },
+                    .text { component in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = "backup.passphrase".localized
+                    },
+                    .secondaryButton { component in
+                        component.button.set(style: .default)
+                        component.button.setTitle(visible ? passphrase : BalanceHiddenManager.placeholder, for: .normal)
+                        component.onTap = {
+                            CopyHelper.copyAndNotify(value: passphrase)
                         }
-                    ]),
-                    tableView: tableView,
-                    id: "passphrase",
-                    height: .heightCell48,
-                    bind: { cell in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    }
+                    },
+                ]),
+                tableView: tableView,
+                id: "passphrase",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                }
             )
 
             rows.append(marginRow(id: "passphrase-margin", height: .margin24))
@@ -146,15 +145,14 @@ extension BackupViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "description",
-                    footerState: tableView.sectionFooter(text: "backup.description".localized)
+                id: "description",
+                footerState: tableView.sectionFooter(text: "backup.description".localized)
             ),
             Section(
-                    id: "main",
-                    footerState: .margin(height: .margin32),
-                    rows: rows
-            )
+                id: "main",
+                footerState: .margin(height: .margin32),
+                rows: rows
+            ),
         ]
     }
-
 }

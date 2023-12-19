@@ -1,5 +1,5 @@
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class OneInchSettingsViewModel {
     private let disposeBag = DisposeBag()
@@ -14,11 +14,11 @@ class OneInchSettingsViewModel {
         self.tradeService = tradeService
 
         service.stateObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.syncAction()
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] _ in
+                self?.syncAction()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func syncAction() {
@@ -39,11 +39,9 @@ class OneInchSettingsViewModel {
             }
         }
     }
-
 }
 
 extension OneInchSettingsViewModel {
-
     public var actionDriver: Driver<ActionState> {
         actionRelay.asDriver()
     }
@@ -55,14 +53,11 @@ extension OneInchSettingsViewModel {
         }
         return false
     }
-
 }
 
 extension OneInchSettingsViewModel {
-
     enum ActionState {
         case enabled
         case disabled(title: String)
     }
-
 }

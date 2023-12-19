@@ -1,15 +1,14 @@
 import Combine
-import RxSwift
-import RxRelay
-import MarketKit
-import CurrencyKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketTopService: IMarketMultiSortHeaderService {
     typealias Item = MarketInfo
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let disposeBag = DisposeBag()
     private var tasks = Set<AnyTask>()
 
@@ -34,13 +33,16 @@ class MarketTopService: IMarketMultiSortHeaderService {
     }
 
     let initialMarketFieldIndex: Int
+    private let apiTag: String
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, marketTop: MarketModule.MarketTop, sortingField: MarketModule.SortingField, marketField: MarketModule.MarketField) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, marketTop: MarketModule.MarketTop, sortingField: MarketModule.SortingField, marketField: MarketModule.MarketField) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.marketTop = marketTop
         self.sortingField = sortingField
         initialMarketFieldIndex = marketField.rawValue
+
+        apiTag = "market_top_\(marketTop.rawValue)_\(sortingField.raw)_\(marketField.raw)"
 
         syncMarketInfos()
     }
@@ -52,9 +54,9 @@ class MarketTopService: IMarketMultiSortHeaderService {
             internalState = .loading
         }
 
-        Task { [weak self, marketKit, currency] in
+        Task { [weak self, marketKit, currency, apiTag] in
             do {
-                let marketInfos = try await marketKit.marketInfos(top: 1000, currencyCode: currency.code)
+                let marketInfos = try await marketKit.marketInfos(top: 1000, currencyCode: currency.code, apiTag: apiTag)
                 self?.internalState = .loaded(marketInfos: marketInfos)
             } catch {
                 self?.internalState = .failed(error: error)
@@ -66,10 +68,10 @@ class MarketTopService: IMarketMultiSortHeaderService {
         switch internalState {
         case .loading:
             state = .loading
-        case .loaded(let marketInfos):
+        case let .loaded(marketInfos):
             let marketInfos: [MarketInfo] = Array(marketInfos.prefix(marketTop.rawValue))
             state = .loaded(items: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
-        case .failed(let error):
+        case let .failed(error):
             state = .failed(error: error)
         }
     }
@@ -81,11 +83,9 @@ class MarketTopService: IMarketMultiSortHeaderService {
 
         syncState(reorder: true)
     }
-
 }
 
 extension MarketTopService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
         $state
     }
@@ -93,45 +93,38 @@ extension MarketTopService: IMarketListService {
     func refresh() {
         syncMarketInfos()
     }
-
 }
 
 extension MarketTopService: IMarketListCoinUidService {
-
     func coinUid(index: Int) -> String? {
-        guard case .loaded(let marketInfos, _, _) = state, index < marketInfos.count else {
+        guard case let .loaded(marketInfos, _, _) = state, index < marketInfos.count else {
             return nil
         }
 
         return marketInfos[index].fullCoin.coin.uid
     }
-
 }
 
 extension MarketTopService: IMarketListDecoratorService {
-
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var priceChangeType: MarketModule.PriceChangeType {
         .day
     }
 
-    func onUpdate(marketFieldIndex: Int) {
-        if case .loaded(let marketInfos, _, _) = state {
+    func onUpdate(marketFieldIndex _: Int) {
+        if case let .loaded(marketInfos, _, _) = state {
             state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }
     }
-
 }
 
 extension MarketTopService {
-
     private enum State {
         case loading
         case loaded(marketInfos: [MarketInfo])
         case failed(error: Error)
     }
-
 }

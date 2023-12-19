@@ -19,7 +19,7 @@ class EnabledWallet_v_0_10: Record {
         case coinId, accountId, syncMode, walletOrder
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         coinId = row[Columns.coinId]
         accountId = row[Columns.accountId]
         order = row[Columns.walletOrder]
@@ -28,7 +28,7 @@ class EnabledWallet_v_0_10: Record {
             syncMode = SyncMode_v_0_24(rawValue: rawSyncMode)
         }
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -41,5 +41,4 @@ class EnabledWallet_v_0_10: Record {
     override class var databaseTableName: String {
         "enabled_wallets"
     }
-
 }

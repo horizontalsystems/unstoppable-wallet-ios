@@ -27,5 +27,4 @@ class AuthData: NSObject, NSCoding {
         aCoder.encode(walletId, forKey: AuthData.walletIdKey)
         aCoder.encode(words, forKey: AuthData.wordsKey)
     }
-
 }

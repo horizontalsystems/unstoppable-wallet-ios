@@ -1,11 +1,10 @@
-import Foundation
-import OneInchKit
-import RxSwift
+import BigInt
 import EvmKit
 import Foundation
-import MarketKit
-import BigInt
 import HsExtensions
+import MarketKit
+import OneInchKit
+import RxSwift
 
 class OneInchProvider {
     private let swapKit: OneInchKit.Kit
@@ -22,15 +21,13 @@ class OneInchProvider {
     private func address(token: MarketKit.Token) throws -> EvmKit.Address {
         switch token.type {
         case .native: return try EvmKit.Address(hex: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-        case .eip20(let address): return try EvmKit.Address(hex: address)
+        case let .eip20(address): return try EvmKit.Address(hex: address)
         default: throw SwapError.invalidAddress
         }
     }
-
 }
 
 extension OneInchProvider {
-
     var routerAddress: EvmKit.Address {
         swapKit.routerAddress
     }
@@ -45,16 +42,16 @@ extension OneInchProvider {
             let addressTo = try address(token: tokenOut)
 
             return swapKit.quoteSingle(
-                    fromToken: addressFrom,
-                    toToken: addressTo,
-                    amount: amountUnits,
-                    protocols: nil,
-                    gasPrice: nil,
-                    complexityLevel: nil,
-                    connectorTokens: nil,
-                    gasLimit: nil,
-                    mainRouteParts: nil,
-                    parts: nil
+                fromToken: addressFrom,
+                toToken: addressTo,
+                amount: amountUnits,
+                protocols: nil,
+                gasPrice: nil,
+                complexityLevel: nil,
+                connectorTokens: nil,
+                gasLimit: nil,
+                mainRouteParts: nil,
+                parts: nil
             )
         } catch {
             return Single.error(error)
@@ -71,34 +68,30 @@ extension OneInchProvider {
             let addressTo = try address(token: tokenTo)
 
             return swapKit.swapSingle(
-                    fromToken: addressFrom,
-                    toToken: addressTo,
-                    amount: amountUnits,
-                    slippage: slippage,
-                    protocols: nil,
-                    recipient: recipient,
-                    gasPrice: gasPrice,
-                    burnChi: nil,
-                    complexityLevel: nil,
-                    connectorTokens: nil,
-                    allowPartialFill: nil,
-                    gasLimit: nil,
-                    mainRouteParts: nil,
-                    parts: nil
+                fromToken: addressFrom,
+                toToken: addressTo,
+                amount: amountUnits,
+                slippage: slippage,
+                protocols: nil,
+                recipient: recipient,
+                gasPrice: gasPrice,
+                burnChi: nil,
+                complexityLevel: nil,
+                connectorTokens: nil,
+                allowPartialFill: nil,
+                gasLimit: nil,
+                mainRouteParts: nil,
+                parts: nil
             )
         } catch {
             return Single.error(error)
         }
-
     }
-
 }
 
 extension OneInchProvider {
-
     enum SwapError: Error {
         case invalidAddress
         case insufficientAmount
     }
-
 }

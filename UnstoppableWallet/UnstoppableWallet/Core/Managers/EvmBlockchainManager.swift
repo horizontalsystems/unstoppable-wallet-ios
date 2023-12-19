@@ -1,6 +1,6 @@
 import EvmKit
-import MarketKit
 import HsToolKit
+import MarketKit
 
 class EvmBlockchainManager {
     static let blockchainTypes: [BlockchainType] = [
@@ -24,7 +24,7 @@ class EvmBlockchainManager {
 
     var allBlockchains: [Blockchain] {
         do {
-            return try marketKit.blockchains(uids: EvmBlockchainManager.blockchainTypes.map { $0.uid })
+            return try marketKit.blockchains(uids: EvmBlockchainManager.blockchainTypes.map(\.uid))
         } catch {
             return []
         }
@@ -50,11 +50,9 @@ class EvmBlockchainManager {
 
         return (evmKitManager, evmAccountManager)
     }
-
 }
 
 extension EvmBlockchainManager {
-
     func blockchain(chainId: Int) -> Blockchain? {
         allBlockchains.first(where: { chain(blockchainType: $0.type).id == chainId })
     }
@@ -76,10 +74,10 @@ extension EvmBlockchainManager {
         case .ethereum:
             if testNetManager.testNetEnabled {
                 return Chain(
-                        id: 11155111,
-                        coinType: 1,
-                        syncInterval: 15,
-                        isEIP1559Supported: true
+                    id: 11_155_111,
+                    coinType: 1,
+                    syncInterval: 15,
+                    isEIP1559Supported: true
                 )
             } else {
                 return .ethereum
@@ -87,10 +85,10 @@ extension EvmBlockchainManager {
         case .binanceSmartChain:
             if testNetManager.testNetEnabled {
                 return Chain(
-                        id: 97,
-                        coinType: 1,
-                        syncInterval: 15,
-                        isEIP1559Supported: false
+                    id: 97,
+                    coinType: 1,
+                    syncInterval: 15,
+                    isEIP1559Supported: false
                 )
             } else {
                 return .binanceSmartChain
@@ -117,5 +115,4 @@ extension EvmBlockchainManager {
     func evmAccountManager(blockchainType: BlockchainType) -> EvmAccountManager {
         evmManagers(blockchainType: blockchainType).1
     }
-
 }

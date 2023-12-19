@@ -1,12 +1,8 @@
-import UIKit
-import ThemeKit
+import SwiftUI
 
-struct BaseCurrencySettingsModule {
-
-    static func viewController() -> UIViewController {
-        let service = BaseCurrencySettingsService(currencyKit: App.shared.currencyKit)
-        let viewModel = BaseCurrencySettingsViewModel(service: service)
-        return BaseCurrencySettingsViewController(viewModel: viewModel)
+enum BaseCurrencySettingsModule {
+    static func view() -> some View {
+        let viewModel = BaseCurrencySettingsViewModel(currencyManager: App.shared.currencyManager)
+        return BaseCurrencySettingsView(viewModel: viewModel)
     }
-
 }

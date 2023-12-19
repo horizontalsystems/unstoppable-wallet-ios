@@ -1,9 +1,8 @@
 import MarketKit
-import RxRelay
 import RxCocoa
+import RxRelay
 
 class SendBinanceFeeWarningViewModel {
-
     private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
     init(adapter: ISendBinanceAdapter, coinCode: String, feeToken: Token) {
@@ -15,13 +14,10 @@ class SendBinanceFeeWarningViewModel {
             cautionRelay.accept(TitledCaution(title: "fee_settings.errors.insufficient_balance".localized, text: text, type: .error))
         }
     }
-
 }
 
 extension SendBinanceFeeWarningViewModel: ITitledCautionViewModel {
-
     var cautionDriver: Driver<TitledCaution?> {
         cautionRelay.asDriver()
     }
-
 }

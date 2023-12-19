@@ -1,8 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
-import CurrencyKit
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class NftCollectionAssetsViewModel {
     private let service: NftCollectionAssetsService
@@ -26,10 +25,10 @@ class NftCollectionAssetsViewModel {
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .loaded(let items, let allLoaded):
+        case let .loaded(items, allLoaded):
             let viewItem = ViewItem(
-                    assetViewItems: items.map { assetViewItem(item: $0) },
-                    allLoaded: allLoaded
+                assetViewItems: items.map { assetViewItem(item: $0) },
+                allLoaded: allLoaded
             )
 
             viewItemRelay.accept(viewItem)
@@ -60,21 +59,19 @@ class NftCollectionAssetsViewModel {
         }
 
         return NftDoubleCell.ViewItem(
-                providerCollectionUid: asset.providerCollectionUid,
-                nftUid: asset.nftUid,
-                imageUrl: asset.previewImageUrl,
-                name: asset.displayName,
-                count: nil,
-                onSale: asset.saleInfo != nil,
-                coinPrice: coinPrice,
-                fiatPrice: fiatPrice
+            providerCollectionUid: asset.providerCollectionUid,
+            nftUid: asset.nftUid,
+            imageUrl: asset.previewImageUrl,
+            name: asset.displayName,
+            count: nil,
+            onSale: asset.saleInfo != nil,
+            coinPrice: coinPrice,
+            fiatPrice: fiatPrice
         )
     }
-
 }
 
 extension NftCollectionAssetsViewModel {
-
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
     }
@@ -98,14 +95,11 @@ extension NftCollectionAssetsViewModel {
     func onReachBottom() {
         service.loadMore()
     }
-
 }
 
 extension NftCollectionAssetsViewModel {
-
     struct ViewItem {
         let assetViewItems: [NftDoubleCell.ViewItem]
         let allLoaded: Bool
     }
-
 }

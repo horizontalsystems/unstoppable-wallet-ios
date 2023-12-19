@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import Foundation
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class InputOutputOrderViewModel {
     private let disposeBag = DisposeBag()
@@ -20,11 +20,9 @@ class InputOutputOrderViewModel {
     private func sync(selectedItem: TransactionDataSortMode) {
         selectedItemRelay.accept(selectedItem.title)
     }
-
 }
 
 extension InputOutputOrderViewModel {
-
     var altered: Bool {
         service.selectedItem != service.initialItem
     }
@@ -55,13 +53,10 @@ extension InputOutputOrderViewModel {
         service.setSelectedItemFromSettings()
         alteredStateRelay.accept(())
     }
-
 }
 
 extension InputOutputOrderViewModel: IDropDownListViewModel {
-
     var selectedItemDriver: Driver<String?> {
         selectedItemRelay.asDriver()
     }
-
 }

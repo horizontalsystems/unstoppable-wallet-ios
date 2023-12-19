@@ -1,5 +1,5 @@
-import Combine
 import Chart
+import Combine
 
 class MaIndicatorDataSource {
     private let typeId = "ma-type-list"
@@ -17,22 +17,22 @@ class MaIndicatorDataSource {
         let isChanged = defaultIndicator.period != indicator.period
         return [
             ChartIndicatorSettingsModule.TextField(
-                    id: "title-description",
-                    text: "chart_indicators.settings.ma.description".localized
+                id: "title-description",
+                text: "chart_indicators.settings.ma.description".localized
             ),
             ChartIndicatorSettingsModule.ListField(
-                    id: typeId,
-                    header: nil,
-                    title: "chart_indicators.settings.ma.type_title".localized,
-                    elements: maTypeElements,
-                    initial: element(of: type)
+                id: typeId,
+                header: nil,
+                title: "chart_indicators.settings.ma.type_title".localized,
+                elements: maTypeElements,
+                initial: element(of: type)
             ),
             ChartIndicatorSettingsModule.InputIntegerField(
-                    id: periodId,
-                    header: "chart_indicators.settings.ma.period_title".localized,
-                    placeholder: defaultIndicator.period.description,
-                    initial: isChanged ? indicator.period.description : nil
-            )
+                id: periodId,
+                header: "chart_indicators.settings.ma.period_title".localized,
+                placeholder: defaultIndicator.period.description,
+                initial: isChanged ? indicator.period.description : nil
+            ),
         ]
     }
 
@@ -88,21 +88,19 @@ class MaIndicatorDataSource {
         }
 
         state = .success(
-                MaIndicator(
-                        id: indicator.id,
-                        index: indicator.index,
-                        enabled: indicator.enabled,
-                        period: period,
-                        type: type,
-                        configuration: indicator.configuration
-                )
+            MaIndicator(
+                id: indicator.id,
+                index: indicator.index,
+                enabled: indicator.enabled,
+                period: period,
+                type: type,
+                configuration: indicator.configuration
+            )
         )
     }
-
 }
 
 extension MaIndicatorDataSource: IIndicatorDataSource {
-
     var chartIndicator: ChartIndicator {
         indicator
     }
@@ -114,12 +112,12 @@ extension MaIndicatorDataSource: IIndicatorDataSource {
 
     var isDefault: Bool {
         type == defaultIndicator.type &&
-        period == defaultIndicator.period
+            period == defaultIndicator.period
     }
 
     func set(id: String, value: Any?) {
         switch id {
-        case typeId:                     // change type
+        case typeId: // change type
             guard let maType = value as? MaIndicator.MaType else {
                 type = defaultIndicator.type
                 sync()
@@ -127,7 +125,7 @@ extension MaIndicatorDataSource: IIndicatorDataSource {
             }
             type = maType
             sync()
-        case periodId:                   // change period
+        case periodId: // change period
             guard let period = value as? String, let intValue = Int(period) else {
                 period = defaultIndicator.period
                 sync()
@@ -149,8 +147,7 @@ extension MaIndicatorDataSource: IIndicatorDataSource {
         itemsUpdatedSubject.eraseToAnyPublisher()
     }
 
-    var stateUpdatedPublisher: AnyPublisher<(), Never> {
+    var stateUpdatedPublisher: AnyPublisher<Void, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
-
 }

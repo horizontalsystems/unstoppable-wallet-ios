@@ -23,7 +23,7 @@ class WalletViewModel {
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
     private let playHapticRelay = PublishRelay<Void>()
     private let scrollToTopRelay = PublishRelay<Void>()
-    private let disableQrScannerRelay = PublishRelay<Bool>()
+    private let qrScanningRelay = PublishRelay<Bool>()
 
     @PostPublished private(set) var state: State = .list(viewItems: [])
     @PostPublished private(set) var headerViewItem: WalletModule.HeaderViewItem?
@@ -71,11 +71,7 @@ class WalletViewModel {
         case .noAccount: state = .noAccount
         case .loading: state = .loading
         case let .loaded(items):
-            if items.isEmpty, !service.cexAccount {
-                state = service.watchAccount ? .watchEmpty : .empty
-            } else {
-                state = .list(viewItems: items.map { _viewItem(item: $0) })
-            }
+            state = .list(viewItems: items.map { _viewItem(item: $0) })
         case let .failed(reason):
             switch reason {
             case .syncFailed: state = .syncFailed
@@ -84,7 +80,7 @@ class WalletViewModel {
         }
 
         switch service.state {
-        case let .loaded(items): qrScanVisible = !service.watchAccount && !items.isEmpty
+        case .loaded: qrScanVisible = !service.watchAccount
         default: qrScanVisible = false
         }
     }
@@ -94,7 +90,7 @@ class WalletViewModel {
         nftVisible = activeAccount?.type.supportsNft ?? false
 
         controlViewItem = activeAccount.map {
-            ControlViewItem(watchVisible: $0.watchAccount, coinManagerVisible: !$0.cexAccount && !$0.watchAccount)
+            ControlViewItem(watchVisible: $0.watchAccount, coinManagerVisible: !$0.cexAccount)
         }
 
         if let account = activeAccount {
@@ -189,7 +185,7 @@ extension WalletViewModel {
     }
 
     var disableQrScannerSignal: Signal<Bool> {
-        disableQrScannerRelay.asSignal()
+        qrScanningRelay.asSignal()
     }
 
     var sortTypeViewItems: [AlertViewItem] {
@@ -202,7 +198,7 @@ extension WalletViewModel {
     }
 
     var swipeActionsEnabled: Bool {
-        !service.watchAccount && !service.cexAccount
+        !service.cexAccount
     }
 
     var lastCreatedAccount: Account? {
@@ -290,12 +286,12 @@ extension WalletViewModel {
     func process(scanned: String) {
         Task { [weak self, eventHandler] in
             defer {
-                self?.disableQrScannerRelay.accept(false)
+                self?.qrScanningRelay.accept(false)
             }
 
             do {
-                self?.disableQrScannerRelay.accept(true)
-                try await eventHandler.handle(event: scanned, eventType: .walletConnectUri)
+                self?.qrScanningRelay.accept(true)
+                try await eventHandler.handle(event: scanned.trimmingCharacters(in: .whitespacesAndNewlines), eventType: [.walletConnectUri, .address])
             } catch {}
         }
     }
@@ -305,8 +301,6 @@ extension WalletViewModel {
     enum State: CustomStringConvertible {
         case list(viewItems: [BalanceViewItem])
         case noAccount
-        case empty
-        case watchEmpty
         case loading
         case syncFailed
         case invalidApiKey
@@ -315,8 +309,6 @@ extension WalletViewModel {
             switch self {
             case let .list(viewItems): return "list: \(viewItems.count) view items"
             case .noAccount: return "noAccount"
-            case .empty: return "empty"
-            case .watchEmpty: return "watchEmpty"
             case .loading: return "loading"
             case .syncFailed: return "syncFailed"
             case .invalidApiKey: return "invalidApiKey"

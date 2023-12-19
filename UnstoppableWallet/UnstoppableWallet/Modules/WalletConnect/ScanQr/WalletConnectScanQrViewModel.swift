@@ -1,18 +1,12 @@
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class WalletConnectScanQrViewModel {
     private let openErrorRelay = PublishRelay<Error>()
 
-    init() {
-    }
-
+    init() {}
 }
 
 extension WalletConnectScanQrViewModel {
-
-    func didScan(string: String) {
-
-    }
-
+    func didScan(string _: String) {}
 }

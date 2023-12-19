@@ -1,19 +1,18 @@
-import RxSwift
 import RxRelay
-import StorageKit
+import RxSwift
 
 class LaunchScreenManager {
     private let keyLaunchScreen = "launch-screen"
     private let keyShowMarket = "show-market-screen"
 
-    private let storage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
 
     private let launchScreenRelay = PublishRelay<LaunchScreen>()
     private let showMarketRelay = PublishRelay<Bool>()
 
     var launchScreen: LaunchScreen {
         get {
-            if let rawValue: String = storage.value(for: keyLaunchScreen), let launchScreen = LaunchScreen(rawValue: rawValue) {
+            if let rawValue: String = userDefaultsStorage.value(for: keyLaunchScreen), let launchScreen = LaunchScreen(rawValue: rawValue) {
                 // check if market hidden
                 if !showMarket {
                     return .auto
@@ -25,23 +24,23 @@ class LaunchScreenManager {
             return .auto
         }
         set {
-            storage.set(value: newValue.rawValue, for: keyLaunchScreen)
+            userDefaultsStorage.set(value: newValue.rawValue, for: keyLaunchScreen)
             launchScreenRelay.accept(newValue)
         }
     }
 
     var showMarket: Bool {
         get {
-            storage.value(for: keyShowMarket) ?? true
+            userDefaultsStorage.value(for: keyShowMarket) ?? true
         }
         set {
-            storage.set(value: newValue, for: keyShowMarket)
+            userDefaultsStorage.set(value: newValue, for: keyShowMarket)
             showMarketRelay.accept(newValue)
         }
     }
 
-    init(storage: StorageKit.ILocalStorage) {
-        self.storage = storage
+    init(userDefaultsStorage: UserDefaultsStorage) {
+        self.userDefaultsStorage = userDefaultsStorage
     }
 
     var launchScreenObservable: Observable<LaunchScreen> {
@@ -51,5 +50,4 @@ class LaunchScreenManager {
     var showMarketObservable: Observable<Bool> {
         showMarketRelay.asObservable()
     }
-
 }

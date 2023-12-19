@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
-import ThemeKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 protocol ICexWithdrawNetworkSelectDelegate: AnyObject {
     func onSelect(index: Int)
@@ -22,7 +22,8 @@ class CexWithdrawNetworkSelectViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -60,11 +61,9 @@ class CexWithdrawNetworkSelectViewController: ThemeViewController {
         delegate?.onSelect(index: index)
         dismiss(animated: true)
     }
-
 }
 
 extension CexWithdrawNetworkSelectViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
@@ -78,7 +77,7 @@ extension CexWithdrawNetworkSelectViewController: SectionsDataSource {
                         font: .subhead2,
                         textColor: .themeGray,
                         ignoreBottomMargin: true
-                    )
+                    ),
                 ]
             ),
             Section(
@@ -99,7 +98,7 @@ extension CexWithdrawNetworkSelectViewController: SectionsDataSource {
                                 component.isHidden = viewItem.enabled
                                 component.badgeView.set(style: .small)
                                 component.badgeView.text = "cex_coin_select.suspended".localized.uppercased()
-                            }
+                            },
                         ]),
                         tableView: tableView,
                         id: "cex-network-\(index)",
@@ -112,8 +111,7 @@ extension CexWithdrawNetworkSelectViewController: SectionsDataSource {
                         } : nil
                     )
                 }
-            )
+            ),
         ]
     }
-
 }

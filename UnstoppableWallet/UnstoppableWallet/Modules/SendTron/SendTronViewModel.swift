@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxCocoa
-import TronKit
 import MarketKit
+import RxCocoa
+import RxSwift
+import TronKit
 
 class SendTronViewModel {
     private let service: SendTronService
@@ -32,13 +32,13 @@ class SendTronViewModel {
     }
 
     private func sync(amountCaution: (error: Error?, warning: SendTronService.AmountWarning?)) {
-        var caution: Caution? = nil
+        var caution: Caution?
 
         if let error = amountCaution.error {
             caution = Caution(text: error.smartDescription, type: .error)
         } else if let warning = amountCaution.warning {
             switch warning {
-                case .coinNeededForFee: caution = Caution(text: "send.amount_warning.coin_needed_for_fee".localized(service.sendToken.coin.code), type: .warning)
+            case .coinNeededForFee: caution = Caution(text: "send.amount_warning.coin_needed_for_fee".localized(service.sendToken.coin.code), type: .warning)
             }
         }
 
@@ -46,7 +46,7 @@ class SendTronViewModel {
     }
 
     private func sync(addressError: Error?) {
-        var caution: Caution? = nil
+        var caution: Caution?
 
         if let error = addressError {
             caution = Caution(text: error.smartDescription, type: .error)
@@ -54,21 +54,19 @@ class SendTronViewModel {
 
         addressCautionRelay.accept(caution)
     }
-
 }
 
 extension SendTronViewModel {
-
     var title: String {
         switch service.mode {
-        case .send: return "send.title".localized(token.coin.code)
+        case .send, .prefilled: return "send.title".localized(token.coin.code)
         case .predefined: return "donate.title".localized(token.coin.code)
         }
     }
 
     var showAddress: Bool {
         switch service.mode {
-        case .send: return true
+        case .send, .prefilled: return true
         case .predefined: return false
         }
     }
@@ -94,32 +92,27 @@ extension SendTronViewModel {
     }
 
     func didTapProceed() {
-        guard case .ready(let sendData) = service.state else {
+        guard case let .ready(sendData) = service.state else {
             return
         }
 
         proceedRelay.accept(sendData)
     }
-
 }
 
 extension SendTronService.AmountError: LocalizedError {
-
     var errorDescription: String? {
         switch self {
-            case .insufficientBalance: return "send.amount_error.balance".localized
-            default: return "\(self)"
+        case .insufficientBalance: return "send.amount_error.balance".localized
+        default: return "\(self)"
         }
     }
-
 }
 
 extension SendTronService.AddressError: LocalizedError {
-
     var errorDescription: String? {
         switch self {
-            case .ownAddress: return "send.address_error.own_address".localized
+        case .ownAddress: return "send.address_error.own_address".localized
         }
     }
-
 }

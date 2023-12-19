@@ -24,12 +24,12 @@ class NftMetadataSyncRecord: Record {
         case lastSyncTimestamp
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         blockchainTypeUid = row[Columns.blockchainTypeUid]
         accountId = row[Columns.accountId]
         lastSyncTimestamp = row[Columns.lastSyncTimestamp]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -37,5 +37,4 @@ class NftMetadataSyncRecord: Record {
         container[Columns.accountId] = accountId
         container[Columns.lastSyncTimestamp] = lastSyncTimestamp
     }
-
 }

@@ -6,7 +6,6 @@ struct TwitterUsersResponse: ImmutableMappable {
     init(map: Map) throws {
         users = try map.value("data")
     }
-
 }
 
 struct TwitterUser: ImmutableMappable {

@@ -1,11 +1,11 @@
-import UIKit
-import ThemeKit
 import ComponentKit
+import ThemeKit
+import UIKit
 
 class AlertItemCell: BaseThemeCell {
     private let button = UIButton()
 
-    var onSelect: (() -> ())?
+    var onSelect: (() -> Void)?
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,7 +27,8 @@ class AlertItemCell: BaseThemeCell {
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -52,5 +53,4 @@ class AlertItemCell: BaseThemeCell {
             button.isSelected = newValue
         }
     }
-
 }

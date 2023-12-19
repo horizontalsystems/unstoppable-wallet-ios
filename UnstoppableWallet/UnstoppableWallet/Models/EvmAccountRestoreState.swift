@@ -21,12 +21,12 @@ class EvmAccountRestoreState: Record {
         case accountId, blockchainUid, restored
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         accountId = row[Columns.accountId]
         blockchainUid = row[Columns.blockchainUid]
         restored = row[Columns.restored]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -34,5 +34,4 @@ class EvmAccountRestoreState: Record {
         container[Columns.blockchainUid] = blockchainUid
         container[Columns.restored] = restored
     }
-
 }

@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class BrandFooterCell: UITableViewCell {
     private let brandFooterView = BrandFooterView()
@@ -17,7 +17,8 @@ class BrandFooterCell: UITableViewCell {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -25,13 +26,10 @@ class BrandFooterCell: UITableViewCell {
         get { brandFooterView.title }
         set { brandFooterView.title = newValue }
     }
-
 }
 
 extension BrandFooterCell {
-
     static func height(containerWidth: CGFloat, title: String) -> CGFloat {
         BrandFooterView.height(containerWidth: containerWidth, title: title)
     }
-
 }

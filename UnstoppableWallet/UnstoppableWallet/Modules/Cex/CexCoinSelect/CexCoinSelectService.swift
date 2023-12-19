@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import HsExtensions
 
 class CexCoinSelectService {
@@ -50,11 +50,9 @@ class CexCoinSelectService {
             lhsItem.cexAsset.coinCode.lowercased() < rhsItem.cexAsset.coinCode.lowercased()
         }
     }
-
 }
 
 extension CexCoinSelectService {
-
     var isEmpty: Bool {
         internalItems.isEmpty
     }
@@ -63,14 +61,11 @@ extension CexCoinSelectService {
         self.filter = filter
         syncItems()
     }
-
 }
 
 extension CexCoinSelectService {
-
     struct Item {
         let cexAsset: CexAsset
         let enabled: Bool
     }
-
 }

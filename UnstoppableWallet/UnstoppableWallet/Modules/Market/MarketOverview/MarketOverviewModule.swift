@@ -1,7 +1,6 @@
-struct MarketOverviewModule {
-
+enum MarketOverviewModule {
     static func viewController(presentDelegate: IPresentDelegate) -> MarketOverviewViewController {
-        let service = MarketOverviewService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
+        let service = MarketOverviewService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, appManager: App.shared.appManager)
 
         let globalService = MarketOverviewGlobalService(baseService: service)
         let globalViewModel = MarketOverviewGlobalViewModel(service: globalService)
@@ -17,19 +16,14 @@ struct MarketOverviewModule {
         let topLosersViewModel = MarketOverviewTopCoinsViewModel(service: topLosersService, decorator: topLosersDecorator)
         let topLosersDataSource = MarketOverviewTopCoinsDataSource(viewModel: topLosersViewModel, presentDelegate: presentDelegate)
 
-        let categoryService = MarketOverviewCategoryService(baseService: service)
-        let categoryViewModel = MarketOverviewCategoryViewModel(service: categoryService)
-        let categoryDataSource = MarketOverviewCategoryDataSource(viewModel: categoryViewModel, presentDelegate: presentDelegate)
-
-        let nftCollectionsService = MarketOverviewNftCollectionsService(baseService: service)
-        let nftCollectionsDecorator = MarketListNftCollectionDecorator(service: nftCollectionsService)
-        let nftCollectionsViewModel = MarketOverviewNftCollectionsViewModel(service: nftCollectionsService, decorator: nftCollectionsDecorator)
-        let nftCollectionsDataSource = MarketOverviewNftCollectionsDataSource(viewModel: nftCollectionsViewModel, presentDelegate: presentDelegate)
-
         let topPlatformsService = MarketOverviewTopPlatformsService(baseService: service)
         let topPlatformsDecorator = MarketListTopPlatformDecorator(service: topPlatformsService)
         let topPlatformsViewModel = MarketOverviewTopPlatformsViewModel(service: topPlatformsService, decorator: topPlatformsDecorator)
         let topPlatformsDataSource = MarketOverviewTopPlatformsDataSource(viewModel: topPlatformsViewModel, presentDelegate: presentDelegate)
+
+        let categoryService = MarketOverviewCategoryService(baseService: service)
+        let categoryViewModel = MarketOverviewCategoryViewModel(service: categoryService)
+        let categoryDataSource = MarketOverviewCategoryDataSource(viewModel: categoryViewModel, presentDelegate: presentDelegate)
 
         let viewModel = MarketOverviewViewModel(service: service)
 
@@ -37,10 +31,8 @@ struct MarketOverviewModule {
             marketOverviewDataSource,
             topGainersDataSource,
             topLosersDataSource,
+            topPlatformsDataSource,
             categoryDataSource,
-            nftCollectionsDataSource,
-            topPlatformsDataSource
         ])
     }
-
 }

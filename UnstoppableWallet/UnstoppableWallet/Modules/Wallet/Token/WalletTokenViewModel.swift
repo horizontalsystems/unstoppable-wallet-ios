@@ -8,11 +8,9 @@ class WalletTokenViewModel {
     init(service: WalletTokenService) {
         self.service = service
     }
-
 }
 
 extension WalletTokenViewModel {
-
     var title: String {
         var title = service.coinName
         if let badge = service.badge {
@@ -20,5 +18,4 @@ extension WalletTokenViewModel {
         }
         return title
     }
-
 }

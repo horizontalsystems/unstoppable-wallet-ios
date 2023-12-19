@@ -18,15 +18,14 @@ class ActiveAccount_v_0_36: Record {
         case uniqueId, accountId
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         accountId = row[Columns.accountId]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.uniqueId] = uniqueId
         container[Columns.accountId] = accountId
     }
-
 }

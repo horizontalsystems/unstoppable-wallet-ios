@@ -53,11 +53,11 @@ class LegacyGasPriceService {
         }
 
         status = .completed(FallibleData(
-                data: EvmFeeModule.GasPrices(
-                        recommended: .legacy(gasPrice: recommendedGasPrice),
-                        userDefined: .legacy(gasPrice: legacyGasPrice)
-                ),
-                errors: [], warnings: warnings
+            data: EvmFeeModule.GasPrices(
+                recommended: .legacy(gasPrice: recommendedGasPrice),
+                userDefined: .legacy(gasPrice: legacyGasPrice)
+            ),
+            errors: [], warnings: warnings
         ))
     }
 }
@@ -69,7 +69,6 @@ extension LegacyGasPriceService: IGasPriceService {
 }
 
 extension LegacyGasPriceService {
-
     var usingRecommendedObservable: Observable<Bool> {
         usingRecommendedRelay.asObservable()
     }
@@ -100,5 +99,4 @@ extension LegacyGasPriceService {
             )
             .disposed(by: disposeBag)
     }
-
 }

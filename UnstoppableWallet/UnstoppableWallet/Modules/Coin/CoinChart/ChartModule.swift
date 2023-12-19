@@ -1,11 +1,9 @@
-import Foundation
-import UIKit
-import RxCocoa
-import CurrencyKit
 import Chart
+import Foundation
+import RxCocoa
+import UIKit
 
-struct ChartModule {
-
+enum ChartModule {
     struct ViewItem {
         let value: String?
         let valueDescription: String?
@@ -40,7 +38,6 @@ struct ChartModule {
         case dominance(value: Decimal?, diff: Decimal?)
         case indicators(top: NSAttributedString?, bottom: NSAttributedString?)
     }
-
 }
 
 enum MovementTrend {

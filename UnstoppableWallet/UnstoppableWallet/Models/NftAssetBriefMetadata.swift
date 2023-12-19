@@ -29,14 +29,14 @@ class NftAssetBriefMetadata: Record {
         case previewImageUrl
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         nftUid = row[Columns.nftUid]
         providerCollectionUid = row[Columns.providerCollectionUid]
         name = row[Columns.name]
         imageUrl = row[Columns.imageUrl]
         previewImageUrl = row[Columns.previewImageUrl]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -46,5 +46,4 @@ class NftAssetBriefMetadata: Record {
         container[Columns.imageUrl] = imageUrl
         container[Columns.previewImageUrl] = previewImageUrl
     }
-
 }

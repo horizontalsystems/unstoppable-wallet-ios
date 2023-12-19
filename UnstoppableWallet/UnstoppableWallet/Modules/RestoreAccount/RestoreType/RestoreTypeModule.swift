@@ -1,7 +1,7 @@
 import ThemeKit
 import UIKit
 
-struct RestoreTypeModule {
+enum RestoreTypeModule {
     static func viewController(type: BackupModule.Source.Abstract, sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
         let viewModel = RestoreTypeViewModel(cloudAccountBackupManager: App.shared.cloudBackupManager, sourceType: type)
         let viewController = RestoreTypeViewController(viewModel: viewModel, returnViewController: returnViewController)

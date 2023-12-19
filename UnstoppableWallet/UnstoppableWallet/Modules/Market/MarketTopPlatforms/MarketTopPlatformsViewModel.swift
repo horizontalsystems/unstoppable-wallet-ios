@@ -10,5 +10,4 @@ class MarketTopPlatformsViewModel {
     func topPlatform(uid: String) -> TopPlatform? {
         service.topPlatforms?.first { $0.blockchain.uid == uid }
     }
-
 }

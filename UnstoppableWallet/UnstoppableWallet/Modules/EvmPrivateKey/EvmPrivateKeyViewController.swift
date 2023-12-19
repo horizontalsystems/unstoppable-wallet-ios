@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class EvmPrivateKeyViewController: ThemeViewController {
     private let viewModel: EvmPrivateKeyViewModel
@@ -17,7 +17,8 @@ class EvmPrivateKeyViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -34,9 +35,7 @@ class EvmPrivateKeyViewController: ThemeViewController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
@@ -79,11 +78,9 @@ class EvmPrivateKeyViewController: ThemeViewController {
         visible = !visible
         tableView.reload()
     }
-
 }
 
 extension EvmPrivateKeyViewController: SectionsDataSource {
-
     private func marginRow(id: String, height: CGFloat) -> RowProtocol {
         Row<EmptyCell>(id: id, height: height)
     }
@@ -97,46 +94,45 @@ extension EvmPrivateKeyViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "main",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.highlightedDescriptionRow(
-                                id: "warning",
-                                text: "recovery_phrase.warning".localized(AppConfig.appName)
-                        ),
-                        marginRow(id: "warning-bottom-margin", height: .margin12),
-                        CellBuilderNew.row(
-                                rootElement: .text { component in
-                                    component.font = visible ? textFont : .subhead2
-                                    component.textColor = visible ? .themeLeah : .themeGray
-                                    component.text = visible ? privateKey : "evm_private_key.tap_to_show".localized
-                                    component.textAlignment = visible ? .left : .center
-                                    component.numberOfLines = 0
-                                },
-                                layoutMargins: UIEdgeInsets(top: 0, left: .margin24, bottom: 0, right: .margin24),
-                                tableView: tableView,
-                                id: "private-key",
-                                dynamicHeight: { width in
-                                    CellBuilderNew.height(
-                                            containerWidth: width,
-                                            backgroundStyle: backgroundStyle,
-                                            text: privateKey,
-                                            font: textFont,
-                                            verticalPadding: .margin24,
-                                            elements: [.multiline]
-                                    )
-                                },
-                                bind: { cell in
-                                    cell.set(backgroundStyle: backgroundStyle, cornerRadius: .cornerRadius24, isFirst: true, isLast: true)
-                                    cell.selectionStyle = .none
-                                },
-                                action: { [weak self] in
-                                    self?.toggle()
-                                }
-                        )
-                    ]
-            )
+                id: "main",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.highlightedDescriptionRow(
+                        id: "warning",
+                        text: "recovery_phrase.warning".localized(AppConfig.appName)
+                    ),
+                    marginRow(id: "warning-bottom-margin", height: .margin12),
+                    CellBuilderNew.row(
+                        rootElement: .text { component in
+                            component.font = visible ? textFont : .subhead2
+                            component.textColor = visible ? .themeLeah : .themeGray
+                            component.text = visible ? privateKey : "evm_private_key.tap_to_show".localized
+                            component.textAlignment = visible ? .left : .center
+                            component.numberOfLines = 0
+                        },
+                        layoutMargins: UIEdgeInsets(top: 0, left: .margin24, bottom: 0, right: .margin24),
+                        tableView: tableView,
+                        id: "private-key",
+                        dynamicHeight: { width in
+                            CellBuilderNew.height(
+                                containerWidth: width,
+                                backgroundStyle: backgroundStyle,
+                                text: privateKey,
+                                font: textFont,
+                                verticalPadding: .margin24,
+                                elements: [.multiline]
+                            )
+                        },
+                        bind: { cell in
+                            cell.set(backgroundStyle: backgroundStyle, cornerRadius: .cornerRadius24, isFirst: true, isLast: true)
+                            cell.selectionStyle = .none
+                        },
+                        action: { [weak self] in
+                            self?.toggle()
+                        }
+                    ),
+                ]
+            ),
         ]
     }
-
 }

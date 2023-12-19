@@ -1,10 +1,10 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
 import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
 import TronKit
+import UIKit
 
 class SendTronViewController: ThemeViewController {
     private let tronKitWrapper: TronKitWrapper
@@ -41,7 +41,8 @@ class SendTronViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -138,11 +139,9 @@ class SendTronViewController: ThemeViewController {
         }
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension SendTronViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [
             Section(
@@ -153,7 +152,7 @@ extension SendTronViewController: SectionsDataSource {
                         cell: availableBalanceCell,
                         id: "available-balance",
                         height: availableBalanceCell.cellHeight
-                    )
+                    ),
                 ]
             ),
             Section(
@@ -171,48 +170,47 @@ extension SendTronViewController: SectionsDataSource {
                         dynamicHeight: { [weak self] width in
                             self?.amountCautionCell.height(containerWidth: width) ?? 0
                         }
-                    )
+                    ),
                 ]
-            )
+            ),
         ]
         if viewModel.showAddress {
             sections.append(
-                    Section(
-                            id: "recipient",
-                            headerState: .margin(height: .margin16),
-                            rows: [
-                                StaticRow(
-                                        cell: recipientCell,
-                                        id: "recipient-input",
-                                        dynamicHeight: { [weak self] width in
-                                            self?.recipientCell.height(containerWidth: width) ?? 0
-                                        }
-                                ),
-                                StaticRow(
-                                        cell: recipientCautionCell,
-                                        id: "recipient-caution",
-                                        dynamicHeight: { [weak self] width in
-                                            self?.recipientCautionCell.height(containerWidth: width) ?? 0
-                                        }
-                                )
-                            ]
-                    )
+                Section(
+                    id: "recipient",
+                    headerState: .margin(height: .margin16),
+                    rows: [
+                        StaticRow(
+                            cell: recipientCell,
+                            id: "recipient-input",
+                            dynamicHeight: { [weak self] width in
+                                self?.recipientCell.height(containerWidth: width) ?? 0
+                            }
+                        ),
+                        StaticRow(
+                            cell: recipientCautionCell,
+                            id: "recipient-caution",
+                            dynamicHeight: { [weak self] width in
+                                self?.recipientCautionCell.height(containerWidth: width) ?? 0
+                            }
+                        ),
+                    ]
+                )
             )
         }
         sections.append(
-                Section(
+            Section(
+                id: "button",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: buttonCell,
                         id: "button",
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            StaticRow(
-                                    cell: buttonCell,
-                                    id: "button",
-                                    height: PrimaryButtonCell.height
-                            )
-                        ]
-                )
+                        height: PrimaryButtonCell.height
+                    ),
+                ]
+            )
         )
         return sections
     }
-
 }

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BlockchainSettingsModule {
+enum BlockchainSettingsModule {
     static func view() -> some View {
         let viewModel = BlockchainSettingsViewModel(
             btcBlockchainManager: App.shared.btcBlockchainManager,

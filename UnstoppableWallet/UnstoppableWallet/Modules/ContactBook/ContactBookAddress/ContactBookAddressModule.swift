@@ -1,10 +1,9 @@
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
-class ContactBookAddressModule {
-
-    static func viewController(contactUid: String?, existAddresses: [ContactAddress], currentAddress: ContactAddress? = nil, onSaveAddress: @escaping (ContactAddress?) -> ()) -> UIViewController? {
+enum ContactBookAddressModule {
+    static func viewController(contactUid: String?, existAddresses: [ContactAddress], currentAddress: ContactAddress? = nil, onSaveAddress: @escaping (ContactAddress?) -> Void) -> UIViewController? {
         let service: ContactBookAddressService
         let addressService: AddressService
         if let currentAddress {
@@ -15,14 +14,14 @@ class ContactBookAddressModule {
             service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, contactBookManager: App.shared.contactManager, currentContactUid: contactUid, mode: .edit(currentAddress), blockchain: blockchain)
         } else {
             let blockchainUids = BlockchainType
-                    .supported
-                    .map { $0.uid }
-                    .filter { uid in
-                        !existAddresses.contains(where: { address in address.blockchainUid == uid })
-                    }
+                .supported
+                .map(\.uid)
+                .filter { uid in
+                    !existAddresses.contains(where: { address in address.blockchainUid == uid })
+                }
 
             let allBlockchains = ((try? App.shared.marketKit.blockchains(uids: blockchainUids)) ?? [])
-                    .sorted { $0.type.order < $1.type.order }
+                .sorted { $0.type.order < $1.type.order }
 
             guard let firstBlockchain = allBlockchains.first else {
                 return nil
@@ -36,14 +35,11 @@ class ContactBookAddressModule {
         let controller = ContactBookAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel, onUpdateAddress: onSaveAddress)
         return ThemeNavigationController(rootViewController: controller)
     }
-
 }
 
 extension ContactBookAddressModule {
-
     enum Mode {
         case create([ContactAddress])
         case edit(ContactAddress)
     }
-
 }

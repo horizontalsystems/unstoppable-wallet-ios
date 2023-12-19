@@ -1,9 +1,8 @@
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
-struct WalletTokenModule {
-
+enum WalletTokenModule {
     static func viewController(element: WalletModule.Element) -> UIViewController? {
         let service = WalletTokenService(element: element)
         let viewModel = WalletTokenViewModel(service: service)
@@ -11,8 +10,8 @@ struct WalletTokenModule {
         let dataSourceChain = DataSourceChain()
 
         let viewController = WalletTokenViewController(
-                viewModel: viewModel,
-                dataSource: dataSourceChain
+            viewModel: viewModel,
+            dataSource: dataSourceChain
         )
 
         guard let tokenBalanceDataSource = WalletTokenBalanceModule.dataSource(element: element) else {
@@ -29,5 +28,4 @@ struct WalletTokenModule {
 
         return viewController
     }
-
 }

@@ -1,11 +1,11 @@
-import UIKit
-import Foundation
-import RxSwift
-import RxCocoa
-import ThemeKit
 import ComponentKit
-import SectionsTableView
+import Foundation
 import Kingfisher
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class NftViewController: ThemeViewController {
     private let viewModel: NftViewModel
@@ -30,7 +30,8 @@ class NftViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -44,9 +45,7 @@ class NftViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
@@ -112,67 +111,65 @@ class NftViewController: ThemeViewController {
         let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: viewItem.nftUid)
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
-
 }
 
 extension NftViewController: SectionsDataSource {
-
     private func row(leftViewItem: NftDoubleCell.ViewItem, rightViewItem: NftDoubleCell.ViewItem?, isLast: Bool) -> RowProtocol {
         Row<NftDoubleCell>(
-                id: "token-\(leftViewItem.nftUid.uid)-\(rightViewItem?.nftUid.uid ?? "nil")",
-                hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
-                dynamicHeight: { width in
-                    NftDoubleCell.height(containerWidth: width, isLast: isLast)
-                },
-                bind: { cell, _ in
-                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem in
-                        self?.openAsset(viewItem: viewItem)
-                    }
+            id: "token-\(leftViewItem.nftUid.uid)-\(rightViewItem?.nftUid.uid ?? "nil")",
+            hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
+            dynamicHeight: { width in
+                NftDoubleCell.height(containerWidth: width, isLast: isLast)
+            },
+            bind: { cell, _ in
+                cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem in
+                    self?.openAsset(viewItem: viewItem)
                 }
+            }
         )
     }
 
-    private func row(viewItem: NftViewModel.ViewItem, expanded: Bool, index: Int) -> RowProtocol {
+    private func row(viewItem: NftViewModel.ViewItem, expanded: Bool, index _: Int) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image32 { (component: ImageComponent) -> () in
-                        component.imageView.cornerRadius = .cornerRadius4
-                        component.imageView.layer.cornerCurve = .continuous
-                        component.imageView.backgroundColor = .themeSteel20
-                        component.imageView.kf.setImage(
-                                with: viewItem.imageUrl.flatMap { URL(string: $0) },
-                                options: [.onlyLoadFirstFrame]
-                        )
-                    },
-                    .text { (component: TextComponent) -> () in
-                        component.font = .headline2
-                        component.textColor = .themeLeah
-                        component.text = viewItem.name
-                    },
-                    .text { (component: TextComponent) -> () in
-                        component.font = .subhead1
-                        component.textColor = .themeGray
-                        component.text = viewItem.count
-                        component.setContentHuggingPriority(.required, for: .horizontal)
-                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                    },
-                    .margin8,
-                    .image20 { (component: ImageComponent) -> () in
-                        component.imageView.image = UIImage(named: expanded ? "arrow_big_up_20" : "arrow_big_down_20")?.withTintColor(.themeGray)
-                    }
-                ]),
-                tableView: tableView,
-                id: "collection-\(viewItem.uid)",
-                hash: "\(viewItem.name)-\(viewItem.count)-\(expanded)",
-                height: .heightCell56,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent)
-                    cell.wrapperView.backgroundColor = .themeTyler
-                    cell.selectionStyle = .none
+            rootElement: .hStack([
+                .image32 { (component: ImageComponent) in
+                    component.imageView.cornerRadius = .cornerRadius4
+                    component.imageView.layer.cornerCurve = .continuous
+                    component.imageView.backgroundColor = .themeSteel20
+                    component.imageView.kf.setImage(
+                        with: viewItem.imageUrl.flatMap { URL(string: $0) },
+                        options: [.onlyLoadFirstFrame]
+                    )
                 },
-                action: { [weak self] in
-                    self?.viewModel.onTap(uid: viewItem.uid)
-                }
+                .text { (component: TextComponent) in
+                    component.font = .headline2
+                    component.textColor = .themeLeah
+                    component.text = viewItem.name
+                },
+                .text { (component: TextComponent) in
+                    component.font = .subhead1
+                    component.textColor = .themeGray
+                    component.text = viewItem.count
+                    component.setContentHuggingPriority(.required, for: .horizontal)
+                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                },
+                .margin8,
+                .image20 { (component: ImageComponent) in
+                    component.imageView.image = UIImage(named: expanded ? "arrow_big_up_20" : "arrow_big_down_20")?.withTintColor(.themeGray)
+                },
+            ]),
+            tableView: tableView,
+            id: "collection-\(viewItem.uid)",
+            hash: "\(viewItem.name)-\(viewItem.count)-\(expanded)",
+            height: .heightCell56,
+            bind: { cell in
+                cell.set(backgroundStyle: .transparent)
+                cell.wrapperView.backgroundColor = .themeTyler
+                cell.selectionStyle = .none
+            },
+            action: { [weak self] in
+                self?.viewModel.onTap(uid: viewItem.uid)
+            }
         )
     }
 
@@ -188,20 +185,20 @@ extension NftViewController: SectionsDataSource {
                 let doubleRowCount = viewItem.assetViewItems.count / 2
                 let hasSingleRow = viewItem.assetViewItems.count % 2 == 1
 
-                for i in 0..<doubleRowCount {
+                for i in 0 ..< doubleRowCount {
                     let row = row(
-                            leftViewItem: viewItem.assetViewItems[i * 2],
-                            rightViewItem: viewItem.assetViewItems[(i * 2) + 1],
-                            isLast: i == doubleRowCount - 1 && !hasSingleRow
+                        leftViewItem: viewItem.assetViewItems[i * 2],
+                        rightViewItem: viewItem.assetViewItems[(i * 2) + 1],
+                        isLast: i == doubleRowCount - 1 && !hasSingleRow
                     )
                     rows.append(row)
                 }
 
                 if let assetViewItem = viewItem.assetViewItems.last, hasSingleRow {
                     let row = row(
-                            leftViewItem: assetViewItem,
-                            rightViewItem: nil,
-                            isLast: true
+                        leftViewItem: assetViewItem,
+                        rightViewItem: nil,
+                        isLast: true
                     )
                     rows.append(row)
                 }
@@ -214,12 +211,11 @@ extension NftViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    headerState: viewItems.isEmpty ? .margin(height: 0) : .static(view: headerView, height: NftHeaderView.height),
-                    footerState: .marginColor(height: .margin32, color: .clear),
-                    rows: rows(viewItems: viewItems)
-            )
+                id: "main",
+                headerState: viewItems.isEmpty ? .margin(height: 0) : .static(view: headerView, height: NftHeaderView.height),
+                footerState: .marginColor(height: .margin32, color: .clear),
+                rows: rows(viewItems: viewItems)
+            ),
         ]
     }
-
 }

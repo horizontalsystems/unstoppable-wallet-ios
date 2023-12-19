@@ -1,11 +1,11 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
-import RxCocoa
-import HUD
 import ComponentKit
+import Foundation
+import HUD
+import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
@@ -15,13 +15,13 @@ class CoinPageViewController: ThemeViewController {
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private let overviewController: CoinOverviewViewController
-    private let marketsController: CoinMarketsViewController
+    private let marketsController: UIViewController
     private let analyticsController: CoinAnalyticsViewController
 //    private let tweetsController: CoinTweetsViewController
 
     private var favorite = false
 
-    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, analyticsController: CoinAnalyticsViewController, marketsController: CoinMarketsViewController) {
+    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, analyticsController: CoinAnalyticsViewController, marketsController: UIViewController) {
         self.viewModel = viewModel
         self.overviewController = overviewController
         self.analyticsController = analyticsController
@@ -31,7 +31,8 @@ class CoinPageViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,6 +44,7 @@ class CoinPageViewController: ThemeViewController {
         title = viewModel.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tabsView)
         tabsView.snp.makeConstraints { maker in
@@ -114,15 +116,14 @@ class CoinPageViewController: ThemeViewController {
         var items = [UIBarButtonItem]()
 
         let favoriteItem = UIBarButtonItem(
-                image: favorite ? UIImage(named: "filled_star_24") : UIImage(named: "star_24"),
-                style: .plain,
-                target: self,
-                action: #selector(onTapFavorite)
+            image: favorite ? UIImage(named: "filled_star_24") : UIImage(named: "star_24"),
+            style: .plain,
+            target: self,
+            action: #selector(onTapFavorite)
         )
         favoriteItem.tintColor = favorite ? .themeJacob : .themeGray
         items.append(favoriteItem)
 
         navigationItem.rightBarButtonItems = items
     }
-
 }

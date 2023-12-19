@@ -1,14 +1,13 @@
 import Foundation
-import UIKit
 import ThemeKit
+import UIKit
 
-struct ActivateSubscriptionModule {
-
+enum ActivateSubscriptionModule {
     static func viewController() -> UIViewController {
         let service = ActivateSubscriptionService(
-                marketKit: App.shared.marketKit,
-                subscriptionManager: App.shared.subscriptionManager,
-                accountManager: App.shared.accountManager
+            marketKit: App.shared.marketKit,
+            subscriptionManager: App.shared.subscriptionManager,
+            accountManager: App.shared.accountManager
         )
 
         let viewModel = ActivateSubscriptionViewModel(service: service)
@@ -16,5 +15,4 @@ struct ActivateSubscriptionModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }

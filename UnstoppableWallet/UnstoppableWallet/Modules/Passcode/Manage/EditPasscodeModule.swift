@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct EditPasscodeModule {
+enum EditPasscodeModule {
     static func editPasscodeView(showParentSheet: Binding<Bool>) -> some View {
         let viewModel = EditPasscodeViewModel(passcodeManager: App.shared.passcodeManager)
         return SetPasscodeView(viewModel: viewModel, showParentSheet: showParentSheet)

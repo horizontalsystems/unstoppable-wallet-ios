@@ -1,9 +1,8 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class WelcomeTextView: UIView {
-
     init(title: String, description: String) {
         super.init(frame: .zero)
 
@@ -35,8 +34,8 @@ class WelcomeTextView: UIView {
         descriptionLabel.text = description
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

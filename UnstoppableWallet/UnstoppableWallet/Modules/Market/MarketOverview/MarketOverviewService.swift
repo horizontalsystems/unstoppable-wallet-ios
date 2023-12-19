@@ -1,14 +1,13 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import CurrencyKit
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketOverviewService {
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let appManager: IAppManager
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
@@ -16,9 +15,9 @@ class MarketOverviewService {
 
     @PostPublished private(set) var state: DataStatus<Item> = .loading
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, appManager: IAppManager) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.appManager = appManager
     }
 
@@ -43,21 +42,19 @@ class MarketOverviewService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension MarketOverviewService {
-
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     func load() {
-        currencyKit.baseCurrencyUpdatedPublisher
-                .sink { [weak self] _ in
-                    self?.syncState()
-                }
-                .store(in: &cancellables)
+        currencyManager.$baseCurrency
+            .sink { [weak self] _ in
+                self?.syncState()
+            }
+            .store(in: &cancellables)
 
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncState() }
 
@@ -67,14 +64,11 @@ extension MarketOverviewService {
     func refresh() {
         syncState()
     }
-
 }
 
 extension MarketOverviewService {
-
     struct Item {
         let marketOverview: MarketOverview
         let topMovers: TopMovers
     }
-
 }

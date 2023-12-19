@@ -1,6 +1,6 @@
 import Foundation
-import ZcashLightClientKit
 import HsExtensions
+import ZcashLightClientKit
 
 class ZcashTransactionWrapper {
     let raw: Data?
@@ -34,12 +34,10 @@ class ZcashTransactionWrapper {
         fee = tx.fee
         self.memo = memo
     }
-
 }
 
 extension ZcashTransactionWrapper: Comparable {
-
-    public static func <(lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
+    public static func < (lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
         if lhs.timestamp != rhs.timestamp {
             return lhs.timestamp > rhs.timestamp
         } else {
@@ -47,24 +45,19 @@ extension ZcashTransactionWrapper: Comparable {
         }
     }
 
-    public static func ==(lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
+    public static func == (lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
         lhs.transactionHash == rhs.transactionHash
     }
-
 }
 
 extension ZcashTransactionWrapper: Hashable {
-
     public func hash(into hasher: inout Hasher) {
         hasher.combine(transactionHash)
     }
-
 }
 
 extension ZcashTransactionWrapper {
-
     var description: String {
         "TX(Zcash) === hash:\(transactionHash) : \(recipientAddress?.prefix(6) ?? "N/A") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
     }
-
 }

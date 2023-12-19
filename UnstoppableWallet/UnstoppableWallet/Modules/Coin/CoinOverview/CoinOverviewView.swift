@@ -1,5 +1,4 @@
-import CurrencyKit
-import SDWebImageSwiftUI
+import Kingfisher
 import SwiftUI
 
 struct CoinOverviewView: View {
@@ -28,10 +27,11 @@ struct CoinOverviewView: View {
                     ScrollView {
                         VStack(spacing: 0) {
                             HStack(spacing: .margin16) {
-                                WebImage(url: URL(string: coin.imageUrl))
-                                    .placeholder(Image("placeholder_circle_32"))
+                                KFImage.url(URL(string: coin.imageUrl))
                                     .resizable()
-                                    .scaledToFit()
+                                    .placeholder {
+                                        Circle().fill(Color.themeSteel20)
+                                    }
                                     .frame(width: .iconSize32, height: .iconSize32)
 
                                 Text(coin.name).themeBody()
@@ -122,7 +122,7 @@ struct CoinOverviewView: View {
     }
 
     private func format(value: Decimal?, coinCode: String) -> String? {
-        guard let value = value, !value.isZero else {
+        guard let value, !value.isZero else {
             return nil
         }
 
@@ -130,7 +130,7 @@ struct CoinOverviewView: View {
     }
 
     private func format(value: Decimal?, currency: Currency) -> String? {
-        guard let value = value, !value.isZero else {
+        guard let value, !value.isZero else {
             return nil
         }
 

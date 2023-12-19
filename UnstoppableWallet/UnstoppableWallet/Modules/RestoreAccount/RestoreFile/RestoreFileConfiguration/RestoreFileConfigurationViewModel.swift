@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 class RestoreFileConfigurationViewModel {
     private let cloudBackupManager: CloudBackupManager
@@ -32,10 +32,10 @@ class RestoreFileConfigurationViewModel {
         let description = alertSubtitle ?? account.type.detailedDescription
 
         return BackupAppModule.AccountItem(
-                accountId: account.id,
-                name: account.name,
-                description: description,
-                cautionType: cautionType
+            accountId: account.id,
+            name: account.name,
+            description: description,
+            cautionType: cautionType
         )
     }
 }
@@ -53,13 +53,13 @@ extension RestoreFileConfigurationViewModel {
         let contactAddressCount = rawBackup.contacts.count
         let watchAccounts = rawBackup
             .accounts
-            .filter { $0.account.watchAccount }
+            .filter(\.account.watchAccount)
 
         return BackupAppModule.items(
-                watchAccountCount: watchAccounts.count,
-                watchlistCount: rawBackup.watchlistIds.count,
-                contactAddressCount: contactAddressCount,
-                blockchainSourcesCount: rawBackup.customSyncSources.count
+            watchAccountCount: watchAccounts.count,
+            watchlistCount: rawBackup.watchlistIds.count,
+            contactAddressCount: contactAddressCount,
+            blockchainSourcesCount: rawBackup.customSyncSources.count
         )
     }
 

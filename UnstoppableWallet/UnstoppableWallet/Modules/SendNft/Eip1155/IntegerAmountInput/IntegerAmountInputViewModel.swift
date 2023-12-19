@@ -1,8 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
-import CurrencyKit
 import MarketKit
+import RxCocoa
+import RxSwift
 
 protocol IIntegerAmountInputService {
     var amount: Int { get }
@@ -25,7 +24,12 @@ class IntegerAmountInputViewModel {
     private var amountRelay = BehaviorRelay<String?>(value: nil)
     private var isMaxEnabledRelay = BehaviorRelay<Bool>(value: false)
 
-    let publishAmountRelay = PublishRelay<Decimal>()
+    var amountDisposeBag = DisposeBag()
+    var publishAmountRelay: BehaviorRelay<Decimal>? {
+        didSet {
+            registerAmountRelay()
+        }
+    }
 
     init(service: IIntegerAmountInputService, isMaxSupported: Bool = true) {
         self.service = service
@@ -33,7 +37,6 @@ class IntegerAmountInputViewModel {
 
         subscribe(disposeBag, service.amountObservable) { [weak self] in self?.sync(amount: $0) }
         subscribe(disposeBag, service.balanceObservable) { [weak self] in self?.sync(balance: $0) }
-        subscribe(disposeBag, publishAmountRelay.asObservable()) { [weak self] in self?.sync(publishedAmount: $0) }
 
         sync(amount: service.amount)
         sync(balance: service.balance)
@@ -56,30 +59,40 @@ class IntegerAmountInputViewModel {
         }
     }
 
-    private func sync(balance: Int?) {
+    private func sync(balance _: Int?) {
         queue.async { [weak self] in
             self?.updateMaxEnabled()
+        }
+    }
+
+    private func registerAmountRelay() {
+        guard let publishAmountRelay else {
+            return
+        }
+
+        amountDisposeBag = DisposeBag()
+        subscribe(amountDisposeBag, publishAmountRelay.asObservable()) { [weak self] amount in
+            self?.sync(publishedAmount: amount)
         }
     }
 
     private func updateMaxEnabled() {
         isMaxEnabledRelay.accept(isMaxSupported && (service.balance ?? 0) > 0)
     }
-
 }
 
 extension IntegerAmountInputViewModel {
-
     func isValid(amount: String?) -> Bool {
         guard let string = amount,
-            let _ = Int(string) else {
+              let _ = Int(string)
+        else {
             return false
         }
         return true
     }
 
     func equalValue(lhs: String?, rhs: String?) -> Bool {
-        lhs.map({ Int($0) }) == rhs.map({ Int($0) })
+        lhs.map { Int($0) } == rhs.map { Int($0) }
     }
 
     var amountDriver: Driver<String?> {
@@ -104,7 +117,6 @@ extension IntegerAmountInputViewModel {
         amountRelay.accept("\(balance)")
         service.onChange(amount: balance)
     }
-
 }
 
 extension IntegerAmountInputViewModel: IAmountPublishService {}

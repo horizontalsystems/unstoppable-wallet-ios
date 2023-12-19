@@ -1,11 +1,11 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 protocol IFormTextView: UIView {
-    var onChangeHeight: (() -> ())? { get set }
-    var onChangeText: ((String?) -> ())? { get set }
-    var onChangeEditing: ((Bool) -> ())? { get set }
+    var onChangeHeight: (() -> Void)? { get set }
+    var onChangeText: ((String?) -> Void)? { get set }
+    var onChangeEditing: ((Bool) -> Void)? { get set }
     var isValidText: ((String) -> Bool)? { get set }
 
     func becomeFirstResponder() -> Bool
@@ -30,9 +30,9 @@ class FormTextView: UIView, IFormTextView {
     private let textView = UITextView()
     private let placeholderLabel = UILabel()
 
-    var onChangeHeight: (() -> ())?
-    var onChangeText: ((String?) -> ())?
-    var onChangeEditing: ((Bool) -> ())?
+    var onChangeHeight: (() -> Void)?
+    var onChangeText: ((String?) -> Void)?
+    var onChangeEditing: ((Bool) -> Void)?
     var isValidText: ((String) -> Bool)?
 
     init() {
@@ -61,7 +61,8 @@ class FormTextView: UIView, IFormTextView {
         placeholderLabel.textColor = .themeGray50
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -97,11 +98,9 @@ class FormTextView: UIView, IFormTextView {
     private func syncPlaceholder() {
         placeholderLabel.isHidden = !textView.text.isEmpty
     }
-
 }
 
 extension FormTextView {
-
     var text: String? {
         get {
             textView.text
@@ -172,11 +171,9 @@ extension FormTextView {
             }
         }
     }
-
 }
 
 extension FormTextView: UITextViewDelegate {
-
     public func textViewDidChange(_ textView: UITextView) {
         onChangeText?(textView.text)
         syncPlaceholder()
@@ -186,7 +183,7 @@ extension FormTextView: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
 
-        if text.isEmpty || newText.isEmpty {       // allow backspacing in inputView
+        if text.isEmpty || newText.isEmpty { // allow backspacing in inputView
             return true
         }
 
@@ -199,20 +196,17 @@ extension FormTextView: UITextViewDelegate {
         return isValid
     }
 
-    public func textViewDidBeginEditing(_ textView: UITextView) {
+    public func textViewDidBeginEditing(_: UITextView) {
         onChangeEditing?(true)
     }
 
-    public func textViewDidEndEditing(_ textView: UITextView) {
+    public func textViewDidEndEditing(_: UITextView) {
         onChangeEditing?(false)
     }
-
 }
 
 extension FormTextView {
-
     func height(containerWidth: CGFloat) -> CGFloat {
         height(text: textView.text, width: containerWidth)
     }
-
 }

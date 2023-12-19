@@ -1,8 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
-import CurrencyKit
+import RxRelay
+import RxSwift
 
 class NftService {
     private let account: Account
@@ -96,20 +95,19 @@ class NftService {
             metadataMap[nftKey.blockchainType] = nftMetadataManager.addressMetadata(nftKey: nftKey)
 
             adapter.nftRecordsObservable
-                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onNext: { [weak self] records in
-                        self?.handleUpdated(records: records, blockchainType: nftKey.blockchainType)
-                    })
-                    .disposed(by: adapterDisposeBag)
-
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] records in
+                    self?.handleUpdated(records: records, blockchainType: nftKey.blockchainType)
+                })
+                .disposed(by: adapterDisposeBag)
         }
 
         nftMetadataManager.addressMetadataObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] nftKey, addressMetadata in
-                    self?.handleUpdated(addressMetadata: addressMetadata, nftKey: nftKey)
-                })
-                .disposed(by: adapterDisposeBag)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] nftKey, addressMetadata in
+                self?.handleUpdated(addressMetadata: addressMetadata, nftKey: nftKey)
+            })
+            .disposed(by: adapterDisposeBag)
 
         _syncNftItemMap()
     }
@@ -176,8 +174,8 @@ class NftService {
         _syncItems()
 
         coinPriceService.set(
-                coinUids: allCoinUids(items: items),
-                conversionCoinUids: Set(balanceConversionManager.conversionTokens.map { $0.coin.uid })
+            coinUids: allCoinUids(items: items),
+            conversionCoinUids: Set(balanceConversionManager.conversionTokens.map(\.coin.uid))
         )
     }
 
@@ -192,35 +190,33 @@ class NftService {
             let collectionMetadata = nftCollectionItem.metadata
 
             return Item(
-                    uid: providerCollectionUid,
-                    providerCollectionUid: collectionMetadata?.providerUid,
-                    imageUrl: collectionMetadata?.thumbnailImageUrl,
-                    name: collectionMetadata?.name ?? providerCollectionUid,
-                    count: nftCollectionItem.nftItems.map {
-                                $0.record.balance
-                            }
-                            .reduce(0, +),
-                    assetItems: nftCollectionItem.nftItems.map { nftItem in
-                        let record = nftItem.record
-                        let metadata = nftItem.assetMetadata
+                uid: providerCollectionUid,
+                providerCollectionUid: collectionMetadata?.providerUid,
+                imageUrl: collectionMetadata?.thumbnailImageUrl,
+                name: collectionMetadata?.name ?? providerCollectionUid,
+                count: nftCollectionItem.nftItems.map(\.record.balance)
+                    .reduce(0, +),
+                assetItems: nftCollectionItem.nftItems.map { nftItem in
+                    let record = nftItem.record
+                    let metadata = nftItem.assetMetadata
 
-                        var price: NftPrice?
+                    var price: NftPrice?
 
-                        switch mode {
-                        case .lastSale: price = metadata?.lastSalePrice
-                        case .average7d: price = collectionMetadata?.averagePrice7d
-                        case .average30d: price = collectionMetadata?.averagePrice30d
-                        }
-
-                        return AssetItem(
-                                nftUid: record.nftUid,
-                                imageUrl: metadata?.previewImageUrl,
-                                name: metadata?.name ?? "#\(record.nftUid.tokenId)",
-                                count: record.balance,
-                                onSale: metadata?.onSale ?? false,
-                                price: price
-                        )
+                    switch mode {
+                    case .lastSale: price = metadata?.lastSalePrice
+                    case .average7d: price = collectionMetadata?.averagePrice7d
+                    case .average30d: price = collectionMetadata?.averagePrice30d
                     }
+
+                    return AssetItem(
+                        nftUid: record.nftUid,
+                        imageUrl: metadata?.previewImageUrl,
+                        name: metadata?.name ?? "#\(record.nftUid.tokenId)",
+                        count: record.balance,
+                        onSale: metadata?.onSale ?? false,
+                        price: price
+                    )
+                }
             )
         }
 
@@ -250,10 +246,10 @@ class NftService {
         }
 
         totalItem = TotalItem(
-                currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total),
-                expired: false,
-                convertedValue: convertedValue,
-                convertedValueExpired: convertedValueExpired
+            currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total),
+            expired: false,
+            convertedValue: convertedValue,
+            convertedValueExpired: convertedValueExpired
         )
     }
 
@@ -262,11 +258,9 @@ class NftService {
             item.name.caseInsensitiveCompare(item2.name) == .orderedAscending
         }
     }
-
 }
 
 extension NftService: IWalletCoinPriceServiceDelegate {
-
     func didUpdateBaseCurrency() {
         queue.async {
             self.updatePriceItems(items: self.items, map: self.coinPriceService.itemMap(coinUids: Array(self.allCoinUids(items: self.items))))
@@ -282,11 +276,9 @@ extension NftService: IWalletCoinPriceServiceDelegate {
             self.syncTotalItem()
         }
     }
-
 }
 
 extension NftService {
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -314,11 +306,9 @@ extension NftService {
     func toggleConversionCoin() {
         balanceConversionManager.toggleConversionToken()
     }
-
 }
 
 extension NftService {
-
     struct NftCollectionItem {
         let metadata: NftCollectionShortMetadata?
         var nftItems: [NftItem]
@@ -364,7 +354,6 @@ extension NftService {
             self.onSale = onSale
             self.price = price
         }
-
     }
 
     struct TotalItem {
@@ -379,5 +368,4 @@ extension NftService {
         case average7d
         case average30d
     }
-
 }

@@ -1,7 +1,6 @@
 import Foundation
-import RxSwift
 import HsToolKit
-import LanguageKit
+import RxSwift
 
 class FaqService {
     private let repository: FaqRepository
@@ -26,19 +25,17 @@ class FaqService {
                 }
 
                 return Item(
-                        text: faq.text,
-                        url: URL(string: faq.fileUrl, relativeTo: faqIndexUrl)
+                    text: faq.text,
+                    url: URL(string: faq.fileUrl, relativeTo: faqIndexUrl)
                 )
             }
 
             return SectionItem(title: title, items: items)
         }
     }
-
 }
 
 extension FaqService {
-
     var faqObservable: Observable<DataStatus<[SectionItem]>> {
         repository.faqObservable.map { [weak self] dataState in
             dataState.map { [weak self] in
@@ -46,11 +43,9 @@ extension FaqService {
             }
         }
     }
-
 }
 
 extension FaqService {
-
     struct SectionItem {
         let title: String
         let items: [Item]
@@ -60,5 +55,4 @@ extension FaqService {
         let text: String
         let url: URL?
     }
-
 }

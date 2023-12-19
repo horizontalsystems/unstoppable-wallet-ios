@@ -1,12 +1,12 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
 import ComponentKit
-import RxSwift
-import RxCocoa
+import Foundation
 import HUD
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class CoinMajorHoldersViewController: ThemeViewController {
     private let viewModel: CoinMajorHoldersViewModel
@@ -26,7 +26,8 @@ class CoinMajorHoldersViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -88,43 +89,41 @@ class CoinMajorHoldersViewController: ThemeViewController {
         tableView.isHidden = stateViewItem == nil
         tableView.reload()
     }
-
 }
 
 extension CoinMajorHoldersViewController: SectionsDataSource {
-
     private func row(viewItem: CoinMajorHoldersViewModel.ViewItem, isLast: Bool) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .captionSB
-                        component.textColor = .themeGray
-                        component.text = viewItem.order
-                        component.textAlignment = .center
+            rootElement: .hStack([
+                .text { component in
+                    component.font = .captionSB
+                    component.textColor = .themeGray
+                    component.text = viewItem.order
+                    component.textAlignment = .center
 
-                        component.snp.remakeConstraints { maker in
-                            maker.width.equalTo(24)
-                        }
-                    },
-                    .vStackCentered([
-                        .textElement(text: .body(viewItem.percent)),
-                        .margin(1),
-                        .textElement(text: .subhead2(viewItem.quantity))
-                    ]),
-                    .secondaryButton { component in
-                        component.button.set(style: .default)
-                        component.button.setTitle(viewItem.labeledAddress, for: .normal)
-                        component.onTap = {
-                            CopyHelper.copyAndNotify(value: viewItem.address)
-                        }
+                    component.snp.remakeConstraints { maker in
+                        maker.width.equalTo(24)
                     }
+                },
+                .vStackCentered([
+                    .textElement(text: .body(viewItem.percent)),
+                    .margin(1),
+                    .textElement(text: .subhead2(viewItem.quantity)),
                 ]),
-                tableView: tableView,
-                id: viewItem.order,
-                height: 62,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-                }
+                .secondaryButton { component in
+                    component.button.set(style: .default)
+                    component.button.setTitle(viewItem.labeledAddress, for: .normal)
+                    component.onTap = {
+                        CopyHelper.copyAndNotify(value: viewItem.address)
+                    }
+                },
+            ]),
+            tableView: tableView,
+            id: viewItem.order,
+            height: 62,
+            bind: { cell in
+                cell.set(backgroundStyle: .transparent, isLast: isLast)
+            }
         )
     }
 
@@ -137,71 +136,69 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
 
         var sections: [SectionProtocol] = [
             Section(
-                    id: "info",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin12),
-                    rows: [
-                        Row<CoinMajorHolderChartCell>(
-                                id: "info",
-                                height: CoinMajorHolderChartCell.height,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .transparent, isFirst: true)
-                                    cell.bind(percent: stateViewItem.percent, count: stateViewItem.holdersCount)
-                                }
-                        ),
-
-                    ]
+                id: "info",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin12),
+                rows: [
+                    Row<CoinMajorHolderChartCell>(
+                        id: "info",
+                        height: CoinMajorHolderChartCell.height,
+                        bind: { cell, _ in
+                            cell.set(backgroundStyle: .transparent, isFirst: true)
+                            cell.bind(percent: stateViewItem.percent, count: stateViewItem.holdersCount)
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "chart",
-                    footerState: .margin(height: .margin24),
-                    rows: [
-                        Row<CoinAnalyticsHoldersCell>(
-                                id: "holders-pie",
-                                height: CoinAnalyticsHoldersCell.chartHeight,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .transparent, isFirst: true)
+                id: "chart",
+                footerState: .margin(height: .margin24),
+                rows: [
+                    Row<CoinAnalyticsHoldersCell>(
+                        id: "holders-pie",
+                        height: CoinAnalyticsHoldersCell.chartHeight,
+                        bind: { cell, _ in
+                            cell.set(backgroundStyle: .transparent, isFirst: true)
 
-                                    cell.bind(items: [
-                                        (stateViewItem.totalPercent, chartColor),
-                                        (stateViewItem.remainingPercent, chartColor.withAlphaComponent(0.5))
-                                    ])
-                                }
-                        )
-                    ]
+                            cell.bind(items: [
+                                (stateViewItem.totalPercent, chartColor),
+                                (stateViewItem.remainingPercent, chartColor.withAlphaComponent(0.5)),
+                            ])
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "holders",
-                    footerState: .margin(height: .margin32),
-                    rows: stateViewItem.viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, isLast: index == stateViewItem.viewItems.count - 1)
-                    }
-            )
+                id: "holders",
+                footerState: .margin(height: .margin32),
+                rows: stateViewItem.viewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, isLast: index == stateViewItem.viewItems.count - 1)
+                }
+            ),
         ]
 
         if let url = stateViewItem.holdersUrl {
             sections.append(
-                    Section(
+                Section(
+                    id: "url",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.universalRow48(
                             id: "url",
-                            footerState: .margin(height: .margin32),
-                            rows: [
-                                tableView.universalRow48(
-                                        id: "url",
-                                        title: .body("coin_analytics.holders.see_all".localized),
-                                        accessoryType: .disclosure,
-                                        autoDeselect: true,
-                                        isFirst: true,
-                                        isLast: true,
-                                        action: { [weak self] in
-                                            self?.urlManager.open(url: url, from: self)
-                                        }
-                                )
-                            ]
-                    )
+                            title: .body("coin_analytics.holders.see_all".localized),
+                            accessoryType: .disclosure,
+                            autoDeselect: true,
+                            isFirst: true,
+                            isLast: true,
+                            action: { [weak self] in
+                                self?.urlManager.open(url: url, from: self)
+                            }
+                        ),
+                    ]
+                )
             )
         }
 
         return sections
     }
-
 }

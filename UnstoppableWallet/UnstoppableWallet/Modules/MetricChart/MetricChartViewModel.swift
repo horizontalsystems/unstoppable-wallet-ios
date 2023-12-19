@@ -1,12 +1,11 @@
-import Foundation
-import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
-import MarketKit
 import Chart
-import CurrencyKit
+import Combine
+import Foundation
 import HUD
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class MetricChartViewModel {
     private let service: MetricChartService
@@ -25,12 +24,12 @@ class MetricChartViewModel {
         self.factory = factory
 
         service.$interval
-                .sink { [weak self] in self?.sync(interval: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(interval: $0) }
+            .store(in: &cancellables)
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(interval: service.interval)
         sync(state: service.state)
@@ -49,7 +48,7 @@ class MetricChartViewModel {
             loadingRelay.accept(false)
             errorRelay.accept(true)
             chartInfoRelay.accept(nil)
-        case .completed(let itemData):
+        case let .completed(itemData):
             loadingRelay.accept(false)
 
             if let viewItem = factory.convert(itemData: itemData, valueType: service.valueType) {
@@ -61,11 +60,9 @@ class MetricChartViewModel {
             }
         }
     }
-
 }
 
 extension MetricChartViewModel: IChartViewModel {
-
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
     }
@@ -112,28 +109,24 @@ extension MetricChartViewModel: IChartViewModel {
     func retry() {
         service.fetchChartData()
     }
-
 }
 
 extension MetricChartViewModel: IChartViewTouchDelegate {
+    public func touchDown() {}
 
-    public func touchDown() {
-    }
-
-    public func select(item: ChartItem, indicators: [ChartIndicator]) {
+    public func select(item: ChartItem, indicators _: [ChartIndicator]) {
         HapticGenerator.instance.notification(.feedback(.soft))
 
         pointSelectedItemRelay.accept(
-                factory.selectedPointViewItem(
-                        chartItem: item,
-                        firstChartItem: chartInfoRelay.value?.chartData.items.first,
-                        valueType: service.valueType
-                )
+            factory.selectedPointViewItem(
+                chartItem: item,
+                firstChartItem: chartInfoRelay.value?.chartData.items.first,
+                valueType: service.valueType
+            )
         )
     }
 
     public func touchUp() {
         pointSelectedItemRelay.accept(nil)
     }
-
 }

@@ -63,7 +63,7 @@ class RestoreSelectService {
 
     private func syncInternalItems() {
         do {
-            let tokenQueries = BlockchainType.supported.map { $0.nativeTokenQueries }.flatMap { $0 }
+            let tokenQueries = BlockchainType.supported.map(\.nativeTokenQueries).flatMap { $0 }
             let allTokens = try marketKit.tokens(queries: tokenQueries)
 
             tokens = allTokens.filter { accountType.supports(token: $0) }
@@ -91,7 +91,7 @@ class RestoreSelectService {
     }
 
     private func syncState() {
-        let blockchains = Set(tokens.map { $0.blockchain })
+        let blockchains = Set(tokens.map(\.blockchain))
         items = blockchains.sorted { $0.type.order < $1.type.order }.map { item(blockchain: $0) }
     }
 
@@ -162,7 +162,7 @@ extension RestoreSelectService {
                 handleApproveTokens(blockchain: token.blockchain, tokens: [token])
             }
         } else {
-            blockchainTokensService.approveTokens(blockchain: token.blockchain, tokens: tokens, enabledTokens: tokens.filter { $0.type.isDefault })
+            blockchainTokensService.approveTokens(blockchain: token.blockchain, tokens: tokens, enabledTokens: tokens.filter(\.type.isDefault))
         }
     }
 
@@ -208,7 +208,7 @@ extension RestoreSelectService {
             return
         }
 
-        for blockchainType in Set(enabledTokens.map { $0.blockchainType }) {
+        for blockchainType in Set(enabledTokens.map(\.blockchainType)) {
             evmAccountRestoreStateManager.setRestored(account: account, blockchainType: blockchainType)
         }
 

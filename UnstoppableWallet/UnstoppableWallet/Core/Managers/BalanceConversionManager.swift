@@ -1,7 +1,6 @@
 import MarketKit
 import RxRelay
 import RxSwift
-import StorageKit
 
 class BalanceConversionManager {
     private let tokenQueries = [
@@ -12,7 +11,7 @@ class BalanceConversionManager {
     private let keyBlockchainUid = "conversion-blockchain-uid"
 
     private let marketKit: MarketKit.Kit
-    private let localStorage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
 
     let conversionTokens: [Token]
 
@@ -20,12 +19,12 @@ class BalanceConversionManager {
     private(set) var conversionToken: Token? {
         didSet {
             conversionTokenRelay.accept(conversionToken)
-            localStorage.set(value: conversionToken?.blockchain.uid, for: keyBlockchainUid)
+            userDefaultsStorage.set(value: conversionToken?.blockchain.uid, for: keyBlockchainUid)
         }
     }
 
-    init(marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage) {
-        self.localStorage = localStorage
+    init(marketKit: MarketKit.Kit, userDefaultsStorage: UserDefaultsStorage) {
+        self.userDefaultsStorage = userDefaultsStorage
         self.marketKit = marketKit
 
         do {
@@ -37,10 +36,10 @@ class BalanceConversionManager {
             conversionTokens = []
         }
 
-        let blockchainUid: String? = localStorage.value(for: keyBlockchainUid)
+        let blockchainUid: String? = userDefaultsStorage.value(for: keyBlockchainUid)
         let blockchainType = blockchainUid.map { BlockchainType(uid: $0) }
 
-        if let blockchainType = blockchainType, let token = conversionTokens.first(where: { $0.blockchainType == blockchainType }) {
+        if let blockchainType, let token = conversionTokens.first(where: { $0.blockchainType == blockchainType }) {
             conversionToken = token
         } else {
             conversionToken = conversionTokens.first
@@ -54,7 +53,7 @@ extension BalanceConversionManager {
     }
 
     func toggleConversionToken() {
-        guard conversionTokens.count > 1, let conversionToken = conversionToken else {
+        guard conversionTokens.count > 1, let conversionToken else {
             return
         }
 

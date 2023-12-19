@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
 import EvmKit
 import MarketKit
+import RxRelay
+import RxSwift
 
 class EvmNetworkService {
     let blockchain: Blockchain
@@ -9,7 +9,7 @@ class EvmNetworkService {
     private var disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = State(defaultItems: [], customItems: []) {
+    private(set) var state: State = .init(defaultItems: [], customItems: []) {
         didSet {
             stateRelay.accept(state)
         }
@@ -30,8 +30,8 @@ class EvmNetworkService {
 
     private func syncState() {
         state = State(
-                defaultItems: items(syncSources: evmSyncSourceManager.defaultSyncSources(blockchainType: blockchain.type)),
-                customItems: items(syncSources: evmSyncSourceManager.customSyncSources(blockchainType: blockchain.type))
+            defaultItems: items(syncSources: evmSyncSourceManager.defaultSyncSources(blockchainType: blockchain.type)),
+            customItems: items(syncSources: evmSyncSourceManager.customSyncSources(blockchainType: blockchain.type))
         )
     }
 
@@ -40,8 +40,8 @@ class EvmNetworkService {
 
         return syncSources.map { syncSource in
             Item(
-                    syncSource: syncSource,
-                    selected: syncSource == currentSyncSource
+                syncSource: syncSource,
+                selected: syncSource == currentSyncSource
             )
         }
     }
@@ -55,11 +55,9 @@ class EvmNetworkService {
 
         syncState()
     }
-
 }
 
 extension EvmNetworkService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -75,11 +73,9 @@ extension EvmNetworkService {
     func removeCustom(index: Int) {
         evmSyncSourceManager.delete(syncSource: state.customItems[index].syncSource, blockchainType: blockchain.type)
     }
-
 }
 
 extension EvmNetworkService {
-
     struct State {
         let defaultItems: [Item]
         let customItems: [Item]
@@ -89,5 +85,4 @@ extension EvmNetworkService {
         let syncSource: EvmSyncSource
         let selected: Bool
     }
-
 }

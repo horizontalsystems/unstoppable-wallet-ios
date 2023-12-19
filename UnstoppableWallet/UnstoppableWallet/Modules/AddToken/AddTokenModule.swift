@@ -1,11 +1,10 @@
-import Foundation
-import UIKit
-import ThemeKit
 import EvmKit
+import Foundation
 import MarketKit
+import ThemeKit
+import UIKit
 
-struct AddTokenModule {
-
+enum AddTokenModule {
     static func viewController() -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil
@@ -15,20 +14,19 @@ struct AddTokenModule {
 
         for blockchain in App.shared.evmBlockchainManager.allBlockchains {
             if let service: IAddTokenBlockchainService = AddEvmTokenBlockchainService(
-                    blockchain: blockchain,
-                    networkManager: App.shared.networkManager,
-                    evmSyncSourceManager: App.shared.evmSyncSourceManager
+                blockchain: blockchain,
+                networkManager: App.shared.networkManager,
+                evmSyncSourceManager: App.shared.evmSyncSourceManager
             ) {
                 let item = Item(blockchain: blockchain, service: service)
                 items.append(item)
             }
-
         }
 
         if let blockchain = try? App.shared.marketKit.blockchain(uid: BlockchainType.binanceChain.uid), blockchain.type.supports(accountType: account.type) {
             let service: IAddTokenBlockchainService = AddBep2TokenBlockchainService(
-                    blockchain: blockchain,
-                    networkManager: App.shared.networkManager
+                blockchain: blockchain,
+                networkManager: App.shared.networkManager
             )
             let item = Item(blockchain: blockchain, service: service)
             items.append(item)
@@ -51,14 +49,11 @@ struct AddTokenModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }
 
 extension AddTokenModule {
-
     struct Item {
         let blockchain: Blockchain
         let service: IAddTokenBlockchainService
     }
-
 }

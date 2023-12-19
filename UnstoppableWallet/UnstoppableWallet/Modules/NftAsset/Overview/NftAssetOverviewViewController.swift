@@ -1,11 +1,11 @@
-import UIKit
-import SnapKit
-import RxSwift
-import RxCocoa
-import ThemeKit
 import ComponentKit
-import SectionsTableView
 import HUD
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class NftAssetOverviewViewController: ThemeViewController {
     private let viewModel: NftAssetOverviewViewModel
@@ -33,7 +33,8 @@ class NftAssetOverviewViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -69,9 +70,7 @@ class NftAssetOverviewViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
@@ -138,7 +137,7 @@ class NftAssetOverviewViewController: ThemeViewController {
     private func linkTitle(type: NftAssetOverviewViewModel.LinkType) -> String {
         switch type {
         case .website: return "nft_asset.links.website".localized
-        case .provider(let title): return title
+        case let .provider(title): return title
         case .discord: return "Discord"
         case .twitter: return "Twitter"
         }
@@ -181,7 +180,7 @@ class NftAssetOverviewViewController: ThemeViewController {
     }
 
     private func handleShare() {
-        if let providerUrl = providerUrl {
+        if let providerUrl {
             openShare(text: providerUrl)
         }
     }
@@ -197,7 +196,7 @@ class NftAssetOverviewViewController: ThemeViewController {
     }
 
     private var providerUrl: String? {
-        guard let viewItem = viewItem else {
+        guard let viewItem else {
             return nil
         }
 
@@ -211,7 +210,7 @@ class NftAssetOverviewViewController: ThemeViewController {
         return nil
     }
 
-    @objc private func onSaveToPhotos(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+    @objc private func onSaveToPhotos(_: UIImage, didFinishSavingWithError error: Error?, contextInfo _: UnsafeRawPointer) {
         if error == nil {
             HudHelper.instance.show(banner: .saved)
         } else {
@@ -224,118 +223,116 @@ class NftAssetOverviewViewController: ThemeViewController {
             (parentNavigationController ?? navigationController)?.pushViewController(module, animated: true)
         }
     }
-
 }
 
 extension NftAssetOverviewViewController: SectionsDataSource {
-
     private func headerRow(title: String) -> RowProtocol {
         tableView.headerInfoRow(id: "header-\(title)", title: title)
     }
 
     private func imageSection(ratio: CGFloat) -> SectionProtocol {
         Section(
-                id: "image",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: imageCell,
-                            id: "image",
-                            dynamicHeight: { width in
-                                NftAssetImageCell.height(containerWidth: width, ratio: ratio)
-                            }
-                    )
-                ]
+            id: "image",
+            headerState: .margin(height: .margin12),
+            footerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: imageCell,
+                    id: "image",
+                    dynamicHeight: { width in
+                        NftAssetImageCell.height(containerWidth: width, ratio: ratio)
+                    }
+                ),
+            ]
         )
     }
 
     private func titleSection(assetName: String, collectionName: String, providerCollectionUid: String) -> SectionProtocol {
         Section(
-                id: "title",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin12),
-                rows: [
-                    Row<NftAssetTitleCell>(
-                            id: "title",
-                            dynamicHeight: { width in
-                                NftAssetTitleCell.height(containerWidth: width, text: assetName)
-                            },
-                            bind: { cell, _ in
-                                cell.text = assetName
-                            }
-                    ),
-                    tableView.universalRow48(
-                            id: "collection",
-                            title: .body(collectionName, color: .themeJacob),
-                            accessoryType: .disclosure,
-                            backgroundStyle: .transparent,
-                            autoDeselect: true,
-                            isFirst: true,
-                            action: { [weak self] in
-                                self?.openCollection(providerUid: providerCollectionUid)
-                            }
-                    )
-                ]
+            id: "title",
+            headerState: .margin(height: .margin12),
+            footerState: .margin(height: .margin12),
+            rows: [
+                Row<NftAssetTitleCell>(
+                    id: "title",
+                    dynamicHeight: { width in
+                        NftAssetTitleCell.height(containerWidth: width, text: assetName)
+                    },
+                    bind: { cell, _ in
+                        cell.text = assetName
+                    }
+                ),
+                tableView.universalRow48(
+                    id: "collection",
+                    title: .body(collectionName, color: .themeJacob),
+                    accessoryType: .disclosure,
+                    backgroundStyle: .transparent,
+                    autoDeselect: true,
+                    isFirst: true,
+                    action: { [weak self] in
+                        self?.openCollection(providerUid: providerCollectionUid)
+                    }
+                ),
+            ]
         )
     }
 
-    private func buttonsSection(sendVisible: Bool) -> SectionProtocol {
+    private func buttonsSection(sendVisible _: Bool) -> SectionProtocol {
         Section(
-                id: "buttons",
-                footerState: .margin(height: .margin24),
-                rows: [
-                    Row<NftAssetButtonCell>(
-                            id: "buttons",
-                            height: .heightButton,
-                            bind: { [weak self] cell, _ in
-                                cell.bind(
-                                        onTapShare: { [weak self] in
-                                            self?.handleShare()
-                                        },
-                                        onTapSave: { [weak self] in
-                                            self?.handleSaveToPhotos()
-                                        }
-                                )
+            id: "buttons",
+            footerState: .margin(height: .margin24),
+            rows: [
+                Row<NftAssetButtonCell>(
+                    id: "buttons",
+                    height: .heightButton,
+                    bind: { [weak self] cell, _ in
+                        cell.bind(
+                            onTapShare: { [weak self] in
+                                self?.handleShare()
+                            },
+                            onTapSave: { [weak self] in
+                                self?.handleSaveToPhotos()
                             }
-                    )
-                ]
+                        )
+                    }
+                ),
+            ]
         )
     }
 
     private func priceRow(title: String, viewItem: NftAssetOverviewViewModel.PriceViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
+            rootElement: .hStack([
+                .text { (component: TextComponent) in
+                    component.font = .body
+                    component.textColor = .themeLeah
+                    component.text = title
+                },
+                .vStackCentered([
                     .text { (component: TextComponent) in
                         component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
+                        component.textColor = .themeJacob
+                        component.text = viewItem.coinValue
+                        component.textAlignment = .right
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
                     },
-                    .vStackCentered([
-                        .text { (component: TextComponent) in
-                            component.font = .body
-                            component.textColor = .themeJacob
-                            component.text = viewItem.coinValue
-                            component.textAlignment = .right
-                            component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                        },
-                        .margin(1),
-                        .text { (component: TextComponent) in
-                            component.font = .subhead2
-                            component.textColor = .themeGray
-                            component.text = viewItem.fiatValue
-                            component.textAlignment = .right
-                            component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                        }
-                    ])
+                    .margin(1),
+                    .text { (component: TextComponent) in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = viewItem.fiatValue
+                        component.textAlignment = .right
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                    },
                 ]),
-                tableView: tableView,
-                id: "price-\(title)",
-                hash: "\(viewItem.coinValue)-\(viewItem.fiatValue)-\(isLast)",
-                height: .heightDoubleLineCell,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                }
+            ]),
+            tableView: tableView,
+            id: "price-\(title)",
+            hash: "\(viewItem.coinValue)-\(viewItem.fiatValue)-\(isLast)",
+            height: .heightDoubleLineCell,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            }
         )
     }
 
@@ -360,41 +357,41 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         }
 
         return Section(
-                id: "stats",
-                footerState: .margin(height: viewItem.sale == nil && viewItem.bestOffer == nil ? .margin24 : .margin12),
-                rows: rows.enumerated().map { index, rowInfo in
-                    priceRow(
-                            title: rowInfo.0,
-                            viewItem: rowInfo.1,
-                            isFirst: index == 0,
-                            isLast: index == rows.count - 1
-                    )
-                }
+            id: "stats",
+            footerState: .margin(height: viewItem.sale == nil && viewItem.bestOffer == nil ? .margin24 : .margin12),
+            rows: rows.enumerated().map { index, rowInfo in
+                priceRow(
+                    title: rowInfo.0,
+                    viewItem: rowInfo.1,
+                    isFirst: index == 0,
+                    isLast: index == rows.count - 1
+                )
+            }
         )
     }
 
     private func saleRow(title: String, untilDate: String) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { (component: TextComponent) -> () in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    },
-                    .margin(1),
-                    .text { (component: TextComponent) -> () in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = untilDate
-                    }
-                ]),
-                tableView: tableView,
-                id: "sale-until",
-                hash: untilDate,
-                height: .heightDoubleLineCell,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true)
-                }
+            rootElement: .hStack([
+                .text { (component: TextComponent) in
+                    component.font = .body
+                    component.textColor = .themeLeah
+                    component.text = title
+                },
+                .margin(1),
+                .text { (component: TextComponent) in
+                    component.font = .subhead2
+                    component.textColor = .themeGray
+                    component.text = untilDate
+                },
+            ]),
+            tableView: tableView,
+            id: "sale-until",
+            hash: untilDate,
+            height: .heightDoubleLineCell,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: true)
+            }
         )
     }
 
@@ -404,20 +401,20 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         }
 
         return Section(
-                id: "sale",
-                footerState: .margin(height: viewItem.bestOffer == nil ? .margin24 : .margin12),
-                rows: [
-                    saleRow(
-                            title: saleTitle(type: saleViewItem.type),
-                            untilDate: saleViewItem.untilDate
-                    ),
-                    priceRow(
-                            title: salePriceTitle(type: saleViewItem.type),
-                            viewItem: saleViewItem.price,
-                            isFirst: false,
-                            isLast: true
-                    )
-                ]
+            id: "sale",
+            footerState: .margin(height: viewItem.bestOffer == nil ? .margin24 : .margin12),
+            rows: [
+                saleRow(
+                    title: saleTitle(type: saleViewItem.type),
+                    untilDate: saleViewItem.untilDate
+                ),
+                priceRow(
+                    title: salePriceTitle(type: saleViewItem.type),
+                    viewItem: saleViewItem.price,
+                    isFirst: false,
+                    isLast: true
+                ),
+            ]
         )
     }
 
@@ -427,16 +424,16 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         }
 
         return Section(
-                id: "best-offer",
-                footerState: .margin(height: .margin24),
-                rows: [
-                    priceRow(
-                            title: "nft_asset.best_offer".localized,
-                            viewItem: priceViewItem,
-                            isFirst: true,
-                            isLast: true
-                    )
-                ]
+            id: "best-offer",
+            footerState: .margin(height: .margin24),
+            rows: [
+                priceRow(
+                    title: "nft_asset.best_offer".localized,
+                    viewItem: priceViewItem,
+                    isFirst: true,
+                    isLast: true
+                ),
+            ]
         )
     }
 
@@ -474,27 +471,27 @@ extension NftAssetOverviewViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "traits-header",
-                    rows: [
-                        headerRow(title: "nft_asset.properties".localized)
-                    ]
+                id: "traits-header",
+                rows: [
+                    headerRow(title: "nft_asset.properties".localized),
+                ]
             ),
             Section(
-                    id: "traits",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin24),
-                    rows: [
-                        Row<TraitsCell>(
-                                id: "traits",
-                                height: TraitsCell.height(lines: lines),
-                                bind: { [weak self] cell, _ in
-                                    cell.bind(viewItems: sortedTraits, onSelect: { index in
-                                        self?.viewModel.onSelectTrait(index: index)
-                                    })
-                                }
-                        )
-                    ]
-            )
+                id: "traits",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin24),
+                rows: [
+                    Row<TraitsCell>(
+                        id: "traits",
+                        height: TraitsCell.height(lines: lines),
+                        bind: { [weak self] cell, _ in
+                            cell.bind(viewItems: sortedTraits, onSelect: { index in
+                                self?.viewModel.onSelectTrait(index: index)
+                            })
+                        }
+                    ),
+                ]
+            ),
         ]
     }
 
@@ -502,66 +499,66 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         descriptionTextCell.contentText = NSAttributedString(string: description, attributes: [.font: UIFont.subhead2, .foregroundColor: UIColor.themeGray])
 
         let descriptionRow = StaticRow(
-                cell: descriptionTextCell,
-                id: "description",
-                dynamicHeight: { [weak self] containerWidth in
-                    self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
-                }
+            cell: descriptionTextCell,
+            id: "description",
+            dynamicHeight: { [weak self] containerWidth in
+                self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
+            }
         )
 
         return Section(
-                id: "description",
-                footerState: .margin(height: .margin24),
-                rows: [
-                    headerRow(title: "nft_asset.description".localized),
-                    descriptionRow
-                ]
+            id: "description",
+            footerState: .margin(height: .margin24),
+            rows: [
+                headerRow(title: "nft_asset.description".localized),
+                descriptionRow,
+            ]
         )
     }
 
     private func contractAddressRow(value: String) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { (component: TextComponent) -> () in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "nft_asset.details.contract_address".localized
-                    },
-                    .secondaryCircleButton { (component: SecondaryCircleButtonComponent) -> () in
-                        component.button.set(image: UIImage(named: "copy_20"))
-                        component.onTap = {
-                            CopyHelper.copyAndNotify(value: value)
-                        }
-                    },
-                    .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) -> () in
-                        component.button.set(image: UIImage(named: "share_1_20"))
-                        component.onTap = {
-                            self?.openShare(text: value)
-                        }
-                    },
-                ]),
-                tableView: tableView,
-                id: "contract-address",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true)
-                }
+            rootElement: .hStack([
+                .text { (component: TextComponent) in
+                    component.font = .body
+                    component.textColor = .themeLeah
+                    component.text = "nft_asset.details.contract_address".localized
+                },
+                .secondaryCircleButton { (component: SecondaryCircleButtonComponent) in
+                    component.button.set(image: UIImage(named: "copy_20"))
+                    component.onTap = {
+                        CopyHelper.copyAndNotify(value: value)
+                    }
+                },
+                .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) in
+                    component.button.set(image: UIImage(named: "share_1_20"))
+                    component.onTap = {
+                        self?.openShare(text: value)
+                    }
+                },
+            ]),
+            tableView: tableView,
+            id: "contract-address",
+            height: .heightCell48,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: true)
+            }
         )
     }
 
     private func detailRow(title: String, value: String, isLast: Bool = false) -> RowProtocol {
         tableView.universalRow48(
-                id: "detail-\(title)",
-                title: .body(title),
-                value: .subhead1(value, color: .themeGray),
-                isLast: isLast
+            id: "detail-\(title)",
+            title: .body(title),
+            value: .subhead1(value, color: .themeGray),
+            isLast: isLast
         )
     }
 
     private func detailsSections(viewItem: NftAssetOverviewViewModel.ViewItem) -> [SectionProtocol] {
         var rows: [RowProtocol] = [
             contractAddressRow(value: viewItem.contractAddress),
-            detailRow(title: "nft_asset.details.token_id".localized, value: viewItem.tokenId)
+            detailRow(title: "nft_asset.details.token_id".localized, value: viewItem.tokenId),
         ]
 
         if let schemaName = viewItem.schemaName {
@@ -572,81 +569,82 @@ extension NftAssetOverviewViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "details-header",
-                    rows: [
-                        headerRow(title: "nft_asset.details".localized)
-                    ]
+                id: "details-header",
+                rows: [
+                    headerRow(title: "nft_asset.details".localized),
+                ]
             ),
             Section(
-                    id: "details",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin24),
-                    rows: rows
-            )
+                id: "details",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin24),
+                rows: rows
+            ),
         ]
     }
 
     private func linkRow(iconImage: UIImage?, title: String, url: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
         tableView.universalRow48(
-                id: "link-\(title)",
-                image: .local(iconImage?.withTintColor(.themeGray)),
-                title: .body(title),
-                accessoryType: .disclosure,
-                autoDeselect: true,
-                isFirst: isFirst,
-                isLast: isLast,
-                action: { [weak self] in
-                    self?.openLink(url: url)
-                })
+            id: "link-\(title)",
+            image: .local(iconImage?.withTintColor(.themeGray)),
+            title: .body(title),
+            accessoryType: .disclosure,
+            autoDeselect: true,
+            isFirst: isFirst,
+            isLast: isLast,
+            action: { [weak self] in
+                self?.openLink(url: url)
+            }
+        )
     }
 
     private func linksSections(links: [NftAssetOverviewViewModel.LinkViewItem]) -> [SectionProtocol] {
         [
             Section(
-                    id: "links-header",
-                    rows: [
-                        headerRow(title: "nft_asset.links".localized)
-                    ]
+                id: "links-header",
+                rows: [
+                    headerRow(title: "nft_asset.links".localized),
+                ]
             ),
             Section(
-                    id: "links",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin24),
-                    rows: links.enumerated().map { index, link in
-                        linkRow(
-                                iconImage: linkIcon(type: link.type),
-                                title: linkTitle(type: link.type),
-                                url: link.url,
-                                isFirst: index == 0,
-                                isLast: index == links.count - 1
-                        )
-                    }
-            )
+                id: "links",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin24),
+                rows: links.enumerated().map { index, link in
+                    linkRow(
+                        iconImage: linkIcon(type: link.type),
+                        title: linkTitle(type: link.type),
+                        url: link.url,
+                        isFirst: index == 0,
+                        isLast: index == links.count - 1
+                    )
+                }
+            ),
         ]
     }
 
     private func poweredBySection(text: String) -> SectionProtocol {
         Section(
-                id: "powered-by",
-                headerState: .margin(height: .margin8),
-                rows: [
-                    Row<BrandFooterCell>(
-                            id: "powered-by",
-                            dynamicHeight: { containerWidth in
-                                BrandFooterCell.height(containerWidth: containerWidth, title: text)
-                            },
-                            bind: { cell, _ in
-                                cell.title = text
-                            }
-                    )
-                ]
+            id: "powered-by",
+            headerState: .margin(height: .margin8),
+            rows: [
+                Row<BrandFooterCell>(
+                    id: "powered-by",
+                    dynamicHeight: { containerWidth in
+                        BrandFooterCell.height(containerWidth: containerWidth, title: text)
+                    },
+                    bind: { cell, _ in
+                        cell.title = text
+                    }
+                ),
+            ]
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let viewItem = viewItem {
+        if let viewItem {
             if let nftImage = viewItem.nftImage {
                 imageCell.bind(nftImage: nftImage)
                 sections.append(imageSection(ratio: nftImage.ratio))
@@ -686,5 +684,4 @@ extension NftAssetOverviewViewController: SectionsDataSource {
 
         return sections
     }
-
 }

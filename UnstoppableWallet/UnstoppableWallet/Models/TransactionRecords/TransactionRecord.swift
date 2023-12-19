@@ -26,7 +26,7 @@ class TransactionRecord {
     func status(lastBlockHeight: Int?) -> TransactionStatus {
         if failed {
             return .failed
-        } else if let blockHeight = blockHeight, let lastBlockHeight = lastBlockHeight {
+        } else if let blockHeight, let lastBlockHeight {
             let threshold = confirmationsThreshold ?? 1
             let confirmations = lastBlockHeight - blockHeight + 1
 
@@ -40,7 +40,7 @@ class TransactionRecord {
         return .pending
     }
 
-    func lockState(lastBlockTimestamp: Int?) -> TransactionLockState? {
+    func lockState(lastBlockTimestamp _: Int?) -> TransactionLockState? {
         nil
     }
 
@@ -48,11 +48,33 @@ class TransactionRecord {
         nil
     }
 
+    static func isSpam(transactionValues: [TransactionValue]) -> Bool {
+        for value in transactionValues {
+            switch value {
+            case let .coinValue(token, value):
+                let stableCoinUids = ["tether", "usd-coin", "dai", "binance-usd", "binance-peg-busd", "stasis-eurs"]
+
+                if stableCoinUids.contains(token.coin.uid) {
+                    if value > 0.01 {
+                        return false
+                    }
+                } else if value > 0 {
+                    return false
+                }
+            case let .nftValue(_, value, _, _):
+                if value > 0 {
+                    return false
+                }
+            default: ()
+            }
+        }
+
+        return true
+    }
 }
 
 extension TransactionRecord: Comparable {
-
-    public static func <(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
+    public static func < (lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
         guard lhs.date == rhs.date else {
             return lhs.date > rhs.date
         }
@@ -64,10 +86,9 @@ extension TransactionRecord: Comparable {
         return lhs.uid > rhs.uid
     }
 
-    public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
+    public static func == (lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
         lhs.uid == rhs.uid
     }
-
 }
 
 enum TransactionStatus {
@@ -89,25 +110,21 @@ enum TransactionStatus {
         default: return false
         }
     }
-
 }
 
 extension TransactionStatus: Equatable {
-
-    public static func ==(lhs: TransactionStatus, rhs: TransactionStatus) -> Bool {
+    public static func == (lhs: TransactionStatus, rhs: TransactionStatus) -> Bool {
         switch (lhs, rhs) {
         case (.failed, .failed): return true
         case (.pending, .pending): return true
-        case (let .processing(lhsProgress), let .processing(rhsProgress)): return lhsProgress == rhsProgress
+        case let (.processing(lhsProgress), .processing(rhsProgress)): return lhsProgress == rhsProgress
         case (.completed, .completed): return true
         default: return false
         }
     }
-
 }
 
 extension TransactionRecord {
-
     var nftUids: Set<NftUid> {
         var nftUids = Set<NftUid>()
 
@@ -118,21 +135,19 @@ extension TransactionRecord {
             }
 
         case let record as ContractCallTransactionRecord:
-            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap { $0.value.nftUid }))
+            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap(\.value.nftUid)))
 
         case let record as ExternalContractCallTransactionRecord:
-            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap { $0.value.nftUid }))
+            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap(\.value.nftUid)))
 
         default: ()
         }
 
         return nftUids
     }
-
 }
 
-extension Array where Element == TransactionRecord {
-
+extension [TransactionRecord] {
     var nftUids: Set<NftUid> {
         var nftUids = Set<NftUid>()
 
@@ -142,5 +157,4 @@ extension Array where Element == TransactionRecord {
 
         return nftUids
     }
-
 }

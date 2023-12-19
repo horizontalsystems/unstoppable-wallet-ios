@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 class ActivateSubscriptionViewModel {
     private let service: ActivateSubscriptionService
@@ -18,12 +18,12 @@ class ActivateSubscriptionViewModel {
         self.service = service
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         service.$activationState
-                .sink { [weak self] in self?.sync(activationState: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(activationState: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
         sync(activationState: service.activationState)
@@ -66,15 +66,13 @@ class ActivateSubscriptionViewModel {
             rejectEnabled = false
         }
     }
-
 }
 
 extension ActivateSubscriptionViewModel {
-
     var errorPublisher: AnyPublisher<String, Never> {
         service.activationErrorPublisher
-                .map { _ in "activate_subscription.failed_to_activate".localized }
-                .eraseToAnyPublisher()
+            .map { _ in "activate_subscription.failed_to_activate".localized }
+            .eraseToAnyPublisher()
     }
 
     var finishPublisher: AnyPublisher<Void, Never> {
@@ -88,15 +86,12 @@ extension ActivateSubscriptionViewModel {
     func onTapSign() {
         service.sign()
     }
-
 }
 
 extension ActivateSubscriptionViewModel {
-
     struct ViewItem {
         let walletName: String
         let address: String
         let message: String
     }
-
 }

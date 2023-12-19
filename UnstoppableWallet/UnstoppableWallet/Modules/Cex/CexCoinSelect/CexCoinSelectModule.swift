@@ -1,8 +1,7 @@
-import UIKit
 import ThemeKit
+import UIKit
 
-struct CexCoinSelectModule {
-
+enum CexCoinSelectModule {
     static func viewController(mode: Mode) -> UIViewController? {
         guard let service = CexCoinSelectService(accountManager: App.shared.accountManager, mode: mode, cexAssetManager: App.shared.cexAssetManager) else {
             return nil
@@ -13,14 +12,11 @@ struct CexCoinSelectModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }
 
 extension CexCoinSelectModule {
-
     enum Mode {
         case deposit
         case withdraw
     }
-
 }

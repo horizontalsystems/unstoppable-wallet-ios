@@ -1,27 +1,26 @@
-import UIKit
-import ThemeKit
-import EvmKit
 import BigInt
+import EvmKit
 import HsExtensions
+import ThemeKit
+import UIKit
 
-struct SwapApproveConfirmationModule {
-
+enum SwapApproveConfirmationModule {
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex, revokeAllowance: Bool = false, delegate: ISwapApproveDelegate?) -> UIViewController? {
         guard let evmKitWrapper = App.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil
         }
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
-                blockchainType: dex.blockchainType,
-                marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit,
-                coinManager: App.shared.coinManager
+            blockchainType: dex.blockchainType,
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager,
+            coinManager: App.shared.coinManager
         ) else {
             return nil
         }
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
-                evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory
+            evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory
         ) else {
             return nil
         }
@@ -42,10 +41,10 @@ struct SwapApproveConfirmationModule {
         }
 
         let service = SwapApproveService(
-                eip20Kit: eip20Adapter.eip20Kit,
-                amount: BigUInt(data.amount.hs.roundedString(decimal: data.token.decimals)) ?? 0,
-                spenderAddress: data.spenderAddress,
-                allowance: 0
+            eip20Kit: eip20Adapter.eip20Kit,
+            amount: BigUInt(data.amount.hs.roundedString(decimal: data.token.decimals)) ?? 0,
+            spenderAddress: data.spenderAddress,
+            allowance: 0
         )
 
         guard case let .approveAllowed(sendData) = service.state else {
@@ -59,6 +58,4 @@ struct SwapApproveConfirmationModule {
 
         return ThemeNavigationController(rootViewController: confirmationController)
     }
-
-
 }

@@ -1,8 +1,7 @@
-import Foundation
-import RxSwift
-import RxCocoa
 import BigInt
-import CurrencyKit
+import Foundation
+import RxCocoa
+import RxSwift
 
 protocol IAvailableBalanceService: AnyObject {
     var availableBalance: DataStatus<Decimal> { get }
@@ -53,7 +52,7 @@ class SendAvailableBalanceViewModel {
                     weakSelf.viewStateRelay.accept(.loading)
                 }
             case .failed: weakSelf.updateViewState(availableBalance: 0)
-            case .completed(let availableBalance): weakSelf.updateViewState(availableBalance: availableBalance)
+            case let .completed(availableBalance): weakSelf.updateViewState(availableBalance: availableBalance)
             }
         }
     }
@@ -71,22 +70,17 @@ class SendAvailableBalanceViewModel {
 
         viewStateRelay.accept(.loaded(value: value))
     }
-
 }
 
 extension SendAvailableBalanceViewModel: ISendAvailableBalanceViewModel {
-
     var viewStateDriver: Driver<ViewState> {
         viewStateRelay.asDriver()
     }
-
 }
 
 extension SendAvailableBalanceViewModel {
-
     enum ViewState {
         case loading
         case loaded(value: String?)
     }
-
 }

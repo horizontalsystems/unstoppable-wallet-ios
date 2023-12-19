@@ -5,8 +5,7 @@ struct ListSectionFooter: View {
 
     var body: some View {
         Text(text)
-                .themeSubhead2()
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: 0, trailing: .margin16))
+            .themeSubhead2()
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: 0, trailing: .margin16))
     }
-
 }

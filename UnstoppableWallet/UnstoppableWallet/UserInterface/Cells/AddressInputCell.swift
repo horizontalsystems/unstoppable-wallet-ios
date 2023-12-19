@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class AddressInputCell: UITableViewCell {
     private let addressInputView = AddressInputView()
@@ -17,14 +17,13 @@ class AddressInputCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension AddressInputCell {
-
     var inputPlaceholder: String? {
         get { addressInputView.inputPlaceholder }
         set { addressInputView.inputPlaceholder = newValue }
@@ -57,32 +56,32 @@ extension AddressInputCell {
         set { addressInputView.showContacts = newValue }
     }
 
-    var onTapContacts: (() -> ())? {
+    var onTapContacts: (() -> Void)? {
         get { addressInputView.onTapContacts }
         set { addressInputView.onTapContacts = newValue }
     }
 
-    var onChangeText: ((String?) -> ())? {
+    var onChangeText: ((String?) -> Void)? {
         get { addressInputView.onChangeText }
         set { addressInputView.onChangeText = newValue }
     }
 
-    var onFetchText: ((String?) -> ())? {
+    var onFetchText: ((String?) -> Void)? {
         get { addressInputView.onFetchText }
         set { addressInputView.onFetchText = newValue }
     }
 
-    var onChangeEditing: ((Bool) -> ())? {
+    var onChangeEditing: ((Bool) -> Void)? {
         get { addressInputView.onChangeEditing }
         set { addressInputView.onChangeEditing = newValue }
     }
 
-    var onOpenViewController: ((UIViewController) -> ())? {
+    var onOpenViewController: ((UIViewController) -> Void)? {
         get { addressInputView.onOpenViewController }
         set { addressInputView.onOpenViewController = newValue }
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { addressInputView.onChangeHeight }
         set { addressInputView.onChangeHeight = newValue }
     }
@@ -90,5 +89,4 @@ extension AddressInputCell {
     func height(containerWidth: CGFloat) -> CGFloat {
         addressInputView.height(containerWidth: containerWidth)
     }
-
 }

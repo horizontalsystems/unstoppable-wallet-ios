@@ -28,7 +28,7 @@ class EnabledWallet_v_0_25: Record {
         case coinId, coinSettingsId, accountId, coinName, coinCode, coinDecimals
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         coinId = row[Columns.coinId]
         coinSettingsId = row[Columns.coinSettingsId]
         accountId = row[Columns.accountId]
@@ -36,7 +36,7 @@ class EnabledWallet_v_0_25: Record {
         coinCode = row[Columns.coinCode]
         coinDecimals = row[Columns.coinDecimals]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -47,5 +47,4 @@ class EnabledWallet_v_0_25: Record {
         container[Columns.coinCode] = coinCode
         container[Columns.coinDecimals] = coinDecimals
     }
-
 }

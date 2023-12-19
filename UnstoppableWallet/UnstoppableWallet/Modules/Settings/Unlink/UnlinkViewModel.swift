@@ -1,33 +1,31 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class UnlinkViewModel {
     private let service: UnlinkService
 
     private let viewItemsRelay: BehaviorRelay<[ViewItem]>
     private let deleteEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let successRelay = PublishRelay<()>()
+    private let successRelay = PublishRelay<Void>()
 
     init(service: UnlinkService) {
         self.service = service
 
         viewItemsRelay = BehaviorRelay(value: [
             ViewItem(text: "settings_manage_keys.delete.confirmation_remove".localized),
-            ViewItem(text: "settings_manage_keys.delete.confirmation_loose".localized)
+            ViewItem(text: "settings_manage_keys.delete.confirmation_loose".localized),
         ])
 
         syncDeleteEnabled()
     }
 
     private func syncDeleteEnabled() {
-        deleteEnabledRelay.accept(viewItemsRelay.value.allSatisfy { $0.checked })
+        deleteEnabledRelay.accept(viewItemsRelay.value.allSatisfy(\.checked))
     }
-
 }
 
 extension UnlinkViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -36,7 +34,7 @@ extension UnlinkViewModel {
         deleteEnabledRelay.asDriver()
     }
 
-    var successSignal: Signal<()> {
+    var successSignal: Signal<Void> {
         successRelay.asSignal()
     }
 
@@ -56,11 +54,9 @@ extension UnlinkViewModel {
         service.deleteAccount()
         successRelay.accept(())
     }
-
 }
 
 extension UnlinkViewModel {
-
     struct ViewItem {
         let text: String
         var checked: Bool
@@ -70,5 +66,4 @@ extension UnlinkViewModel {
             checked = false
         }
     }
-
 }

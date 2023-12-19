@@ -1,12 +1,11 @@
-import RxSwift
-import RxRelay
-import RxCocoa
-import CurrencyKit
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IMarketListWatchViewModel: IMarketListViewModel {
-    var favoriteDriver: Driver<()> { get }
-    var unfavoriteDriver: Driver<()> { get }
+    var favoriteDriver: Driver<Void> { get }
+    var unfavoriteDriver: Driver<Void> { get }
     var failDriver: Driver<String> { get }
 
     func isFavorite(index: Int) -> Bool?
@@ -19,8 +18,8 @@ class MarketListWatchViewModel<Service: IMarketListService, Decorator: IMarketLi
 
     private let watchlistToggleService: MarketWatchlistToggleService
 
-    private let favoriteRelay = PublishRelay<()>()
-    private let unfavoriteRelay = PublishRelay<()>()
+    private let favoriteRelay = PublishRelay<Void>()
+    private let unfavoriteRelay = PublishRelay<Void>()
     private let failRelay = PublishRelay<String>()
 
     init(service: Service, watchlistToggleService: MarketWatchlistToggleService, decorator: Decorator) {
@@ -41,16 +40,14 @@ class MarketListWatchViewModel<Service: IMarketListService, Decorator: IMarketLi
             failRelay.accept("watch_coin.fail_to_find_uuid")
         }
     }
-
 }
 
 extension MarketListWatchViewModel: IMarketListWatchViewModel {
-
-    var favoriteDriver: Driver<()> {
+    var favoriteDriver: Driver<Void> {
         favoriteRelay.asDriver(onErrorJustReturn: ())
     }
 
-    var unfavoriteDriver: Driver<()> {
+    var unfavoriteDriver: Driver<Void> {
         unfavoriteRelay.asDriver(onErrorJustReturn: ())
     }
 
@@ -69,5 +66,4 @@ extension MarketListWatchViewModel: IMarketListWatchViewModel {
     func unfavorite(index: Int) {
         watchlistToggleService.unfavorite(index: index)
     }
-
 }

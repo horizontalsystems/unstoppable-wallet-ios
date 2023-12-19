@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxRelay
-import HsToolKit
 import Alamofire
+import Foundation
+import HsToolKit
+import RxRelay
+import RxSwift
 
 class MarkdownService {
     private let provider: IMarkdownContentProvider
@@ -23,17 +23,15 @@ class MarkdownService {
 
     private func fetchContent() {
         provider.contentSingle
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] content in
-                    self?.content = content
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] content in
+                self?.content = content
+            })
+            .disposed(by: disposeBag)
     }
-
 }
 
 extension MarkdownService {
-
     var contentObservable: Observable<String?> {
         contentRelay.asObservable()
     }
@@ -41,5 +39,4 @@ extension MarkdownService {
     var markdownUrl: URL? {
         provider.markdownUrl
     }
-
 }

@@ -54,7 +54,7 @@ class BlurManager {
     private func show() {
         logoImageView.image = UIImage(named: AppIconManager.currentAppIcon.imageName)
 
-        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let window = UIWindow.keyWindow
         let frame = window?.frame ?? UIScreen.main.bounds
 
         coverView.alpha = 1

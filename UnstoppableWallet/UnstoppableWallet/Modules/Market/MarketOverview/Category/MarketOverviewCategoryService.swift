@@ -1,9 +1,8 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import CurrencyKit
+import Foundation
 import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketOverviewCategoryService {
     private let baseService: MarketOverviewService
@@ -20,8 +19,8 @@ class MarketOverviewCategoryService {
         self.baseService = baseService
 
         baseService.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync()
     }
@@ -33,11 +32,9 @@ class MarketOverviewCategoryService {
             item.marketOverview.coinCategories
         }
     }
-
 }
 
 extension MarketOverviewCategoryService {
-
     var categoriesObservable: Observable<[CoinCategory]?> {
         categoriesRelay.asObservable()
     }
@@ -49,5 +46,4 @@ extension MarketOverviewCategoryService {
     func category(uid: String) -> CoinCategory? {
         categories?.first { $0.uid == uid }
     }
-
 }

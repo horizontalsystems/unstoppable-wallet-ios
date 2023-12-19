@@ -1,10 +1,10 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
-import RxSwift
+import Foundation
 import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class StepperAmountInputView: UIView {
     let disposeBag = DisposeBag()
@@ -29,7 +29,7 @@ class StepperAmountInputView: UIView {
     private let minusView = InputSecondaryCircleButtonWrapperView()
     private let plusView = InputSecondaryCircleButtonWrapperView()
 
-    var onChangeValue: ((Decimal) -> ())?
+    var onChangeValue: ((Decimal) -> Void)?
 
     init(allowFractionalNumbers: Bool) {
         fractionalsAllowed = allowFractionalNumbers
@@ -65,7 +65,8 @@ class StepperAmountInputView: UIView {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -96,8 +97,9 @@ class StepperAmountInputView: UIView {
     }
 
     private func decimalValue(of text: String?) -> Decimal {
-        guard let text = text, !text.isEmpty,
-              let decimal = Decimal(string: text, locale: .current) else {
+        guard let text, !text.isEmpty,
+              let decimal = Decimal(string: text, locale: .current)
+        else {
             return 0
         }
 
@@ -123,11 +125,9 @@ class StepperAmountInputView: UIView {
         set(valueOf: textValue(currentValue + 1))
         emitValueIfChanged()
     }
-
 }
 
 extension StepperAmountInputView {
-
     var value: Decimal? {
         get {
             currentValue
@@ -163,21 +163,17 @@ extension StepperAmountInputView {
             inputStackView.textColor = newValue
         }
     }
-
 }
 
 extension StepperAmountInputView: IHeightControlView { // required in FormValidatedView, but not used yet
-
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get {
             nil
         }
-        set {
-        }
+        set {}
     }
 
-    func height(containerWidth: CGFloat) -> CGFloat {
+    func height(containerWidth _: CGFloat) -> CGFloat {
         0
     }
-
 }

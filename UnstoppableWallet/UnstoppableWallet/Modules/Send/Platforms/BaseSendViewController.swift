@@ -1,10 +1,10 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class BaseSendViewController: ThemeViewController, SectionsDataSource {
     private let disposeBag = DisposeBag()
@@ -36,9 +36,8 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,
-         recipientViewModel: RecipientAddressViewModel
-    ) {
-
+         recipientViewModel: RecipientAddressViewModel)
+    {
         self.confirmationFactory = confirmationFactory
         self.feeSettingsFactory = feeSettingsFactory
 
@@ -55,7 +54,8 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -172,11 +172,9 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
         }
         return sections
     }
-
 }
 
 extension BaseSendViewController {
-
     func didLoad() {
         tableView.buildSections()
         isLoaded = true
@@ -195,74 +193,73 @@ extension BaseSendViewController {
 
     var availableBalanceSection: SectionProtocol {
         Section(
-                id: "available-balance",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: availableBalanceCell,
-                            id: "available-balance",
-                            height: availableBalanceCell.cellHeight
-                    )
-                ]
+            id: "available-balance",
+            headerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: availableBalanceCell,
+                    id: "available-balance",
+                    height: availableBalanceCell.cellHeight
+                ),
+            ]
         )
     }
 
     var amountSection: SectionProtocol {
         Section(
-                id: "amount",
-                headerState: .margin(height: .margin16),
-                rows: [
-                    StaticRow(
-                            cell: amountCell,
-                            id: "amount-input",
-                            height: amountCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: amountCautionCell,
-                            id: "amount-caution",
-                            dynamicHeight: { [weak self] width in
-                                self?.amountCautionCell.height(containerWidth: width) ?? 0
-                            }
-                    )
-                ]
+            id: "amount",
+            headerState: .margin(height: .margin16),
+            rows: [
+                StaticRow(
+                    cell: amountCell,
+                    id: "amount-input",
+                    height: amountCell.cellHeight
+                ),
+                StaticRow(
+                    cell: amountCautionCell,
+                    id: "amount-caution",
+                    dynamicHeight: { [weak self] width in
+                        self?.amountCautionCell.height(containerWidth: width) ?? 0
+                    }
+                ),
+            ]
         )
     }
 
     var recipientSection: SectionProtocol {
         Section(
-                id: "recipient",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: recipientCell,
-                            id: "recipient-input",
-                            dynamicHeight: { [weak self] width in
-                                self?.recipientCell.height(containerWidth: width) ?? 0
-                            }
-                    ),
-                    StaticRow(
-                            cell: recipientCautionCell,
-                            id: "recipient-caution",
-                            dynamicHeight: { [weak self] width in
-                                self?.recipientCautionCell.height(containerWidth: width) ?? 0
-                            }
-                    )
-                ]
+            id: "recipient",
+            headerState: .margin(height: .margin12),
+            rows: [
+                StaticRow(
+                    cell: recipientCell,
+                    id: "recipient-input",
+                    dynamicHeight: { [weak self] width in
+                        self?.recipientCell.height(containerWidth: width) ?? 0
+                    }
+                ),
+                StaticRow(
+                    cell: recipientCautionCell,
+                    id: "recipient-caution",
+                    dynamicHeight: { [weak self] width in
+                        self?.recipientCautionCell.height(containerWidth: width) ?? 0
+                    }
+                ),
+            ]
         )
     }
 
     var buttonSection: SectionProtocol {
         Section(
-                id: "button",
-                footerState: .margin(height: .margin32),
-                rows: [
-                    StaticRow(
-                            cell: buttonCell,
-                            id: "button",
-                            height: PrimaryButtonCell.height
-                    )
-                ]
+            id: "button",
+            footerState: .margin(height: .margin32),
+            rows: [
+                StaticRow(
+                    cell: buttonCell,
+                    id: "button",
+                    height: PrimaryButtonCell.height
+                ),
+            ]
         )
     }
-
 }

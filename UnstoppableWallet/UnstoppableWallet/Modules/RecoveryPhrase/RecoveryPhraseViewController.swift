@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class RecoveryPhraseViewController: ThemeViewController {
     private let viewModel: RecoveryPhraseViewModel
@@ -17,7 +17,8 @@ class RecoveryPhraseViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -34,9 +35,7 @@ class RecoveryPhraseViewController: ThemeViewController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
@@ -76,11 +75,9 @@ class RecoveryPhraseViewController: ThemeViewController {
         visible = !visible
         tableView.reload()
     }
-
 }
 
 extension RecoveryPhraseViewController: SectionsDataSource {
-
     private func marginRow(id: String, height: CGFloat) -> RowProtocol {
         Row<EmptyCell>(id: id, height: height)
     }
@@ -91,51 +88,51 @@ extension RecoveryPhraseViewController: SectionsDataSource {
 
         var rows: [RowProtocol] = [
             tableView.highlightedDescriptionRow(
-                    id: "warning",
-                    text: "recovery_phrase.warning".localized(AppConfig.appName)
+                id: "warning",
+                text: "recovery_phrase.warning".localized(AppConfig.appName)
             ),
             marginRow(id: "warning-bottom-margin", height: .margin12),
             Row<MnemonicPhraseCell>(
-                    id: "mnemonic",
-                    dynamicHeight: { width in
-                        MnemonicPhraseCell.height(containerWidth: width, words: words)
-                    },
-                    bind: { cell, _ in
-                        cell.set(state: state)
-                    },
-                    action: { [weak self] _ in
-                        self?.toggle()
-                    }
-            )
+                id: "mnemonic",
+                dynamicHeight: { width in
+                    MnemonicPhraseCell.height(containerWidth: width, words: words)
+                },
+                bind: { cell, _ in
+                    cell.set(state: state)
+                },
+                action: { [weak self] _ in
+                    self?.toggle()
+                }
+            ),
         ]
 
         let visible = visible
 
         if let passphrase = viewModel.passphrase {
             let passphraseRow = CellBuilderNew.row(
-                    rootElement: .hStack([
-                        .image24 { component in
-                            component.imageView.image = UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)
-                        },
-                        .text { component in
-                            component.font = .subhead2
-                            component.textColor = .themeGray
-                            component.text = "recovery_phrase.passphrase".localized
-                        },
-                        .secondaryButton { component in
-                            component.button.set(style: .default)
-                            component.button.setTitle(visible ? passphrase : "*****", for: .normal)
-                            component.onTap = {
-                                CopyHelper.copyAndNotify(value: passphrase)
-                            }
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.imageView.image = UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)
+                    },
+                    .text { component in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = "recovery_phrase.passphrase".localized
+                    },
+                    .secondaryButton { component in
+                        component.button.set(style: .default)
+                        component.button.setTitle(visible ? passphrase : BalanceHiddenManager.placeholder, for: .normal)
+                        component.onTap = {
+                            CopyHelper.copyAndNotify(value: passphrase)
                         }
-                    ]),
-                    tableView: tableView,
-                    id: "passphrase",
-                    height: .heightCell48,
-                    bind: { cell in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    }
+                    },
+                ]),
+                tableView: tableView,
+                id: "passphrase",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                }
             )
 
             rows.append(marginRow(id: "passphrase-margin", height: .margin24))
@@ -144,11 +141,10 @@ extension RecoveryPhraseViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "main",
-                    footerState: .margin(height: .margin32),
-                    rows: rows
-            )
+                id: "main",
+                footerState: .margin(height: .margin32),
+                rows: rows
+            ),
         ]
     }
-
 }

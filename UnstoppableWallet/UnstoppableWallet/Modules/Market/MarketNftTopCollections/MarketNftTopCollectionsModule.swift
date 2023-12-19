@@ -1,11 +1,10 @@
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
-struct MarketNftTopCollectionsModule {
-
+enum MarketNftTopCollectionsModule {
     static func viewController(timePeriod: HsTimePeriod) -> UIViewController {
-        let service = MarketNftTopCollectionsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, timePeriod: timePeriod)
+        let service = MarketNftTopCollectionsService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, timePeriod: timePeriod)
 
         let decorator = MarketListNftCollectionDecorator(service: service)
         let viewModel = MarketNftTopCollectionsViewModel(service: service)
@@ -38,19 +37,15 @@ struct MarketNftTopCollectionsModule {
          HsTimePeriod.week1,
          HsTimePeriod.month1]
     }
-
 }
 
 extension NftTopCollection {
-
     var uid: String {
         "\(blockchainType.uid)-\(providerUid)"
     }
-
 }
 
-extension Array where Element == NftTopCollection {
-
+extension [NftTopCollection] {
     func sorted(sortType: MarketNftTopCollectionsModule.SortType, timePeriod: HsTimePeriod) -> [NftTopCollection] {
         sorted { lhsCollection, rhsCollection in
             let lhsVolume = lhsCollection.volumes[timePeriod]?.value
@@ -61,19 +56,19 @@ extension Array where Element == NftTopCollection {
 
             switch sortType {
             case .highestVolume, .lowestVolume:
-                guard let lhsVolume = lhsVolume else {
+                guard let lhsVolume else {
                     return true
                 }
-                guard let rhsVolume = rhsVolume else {
+                guard let rhsVolume else {
                     return false
                 }
 
                 return sortType == .highestVolume ? lhsVolume > rhsVolume : lhsVolume < rhsVolume
             case .topGainers, .topLosers:
-                guard let lhsChange = lhsChange else {
+                guard let lhsChange else {
                     return true
                 }
-                guard let rhsChange = rhsChange else {
+                guard let rhsChange else {
                     return false
                 }
 
@@ -81,5 +76,4 @@ extension Array where Element == NftTopCollection {
             }
         }
     }
-
 }

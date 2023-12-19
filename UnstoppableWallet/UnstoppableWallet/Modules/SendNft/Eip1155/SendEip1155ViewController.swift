@@ -1,13 +1,13 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
+import ComponentKit
 import EvmKit
 import Kingfisher
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
 import UIExtensions
-import ComponentKit
+import UIKit
 
 class SendEip1155ViewController: KeyboardAwareViewController {
     private let evmKitWrapper: EvmKitWrapper
@@ -45,7 +45,8 @@ class SendEip1155ViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -102,8 +103,8 @@ class SendEip1155ViewController: KeyboardAwareViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if !keyboardShown && viewModel.showKeyboard {
-            DispatchQueue.main.async  {
+        if !keyboardShown, viewModel.showKeyboard {
+            DispatchQueue.main.async {
                 _ = self.amountCell.becomeFirstResponder()
             }
 
@@ -136,27 +137,25 @@ class SendEip1155ViewController: KeyboardAwareViewController {
         }
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension SendEip1155ViewController: SectionsDataSource {
-
     private func imageSection(nftImage: NftImage) -> SectionProtocol {
         Section(
-                id: "image",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin12),
-                rows: [
-                    Row<NftAssetImageCell>(
-                            id: "image",
-                            dynamicHeight: { width in
-                                NftAssetImageCell.height(containerWidth: width, maxHeight: 120, ratio: nftImage.ratio)
-                            },
-                            bind: { cell, _ in
-                                cell.bind(nftImage: nftImage, cornerRadius: .cornerRadius8)
-                            }
-                    )
-                ]
+            id: "image",
+            headerState: .margin(height: .margin12),
+            footerState: .margin(height: .margin12),
+            rows: [
+                Row<NftAssetImageCell>(
+                    id: "image",
+                    dynamicHeight: { width in
+                        NftAssetImageCell.height(containerWidth: width, maxHeight: 120, ratio: nftImage.ratio)
+                    },
+                    bind: { cell, _ in
+                        cell.bind(nftImage: nftImage, cornerRadius: .cornerRadius8)
+                    }
+                ),
+            ]
         )
     }
 
@@ -171,93 +170,92 @@ extension SendEip1155ViewController: SectionsDataSource {
         let name = viewModel.name
 
         sections.append(
-                Section(
-                        id: "title",
-                        rows: [
-                            CellBuilderNew.row(
-                                    rootElement: .text { component in
-                                        component.font = nameFont
-                                        component.textColor = .themeLeah
-                                        component.text = name
-                                        component.numberOfLines = 0
-                                        component.textAlignment = .center
-                                    },
-                                    tableView: tableView,
-                                    id: "name",
-                                    dynamicHeight: { width in
-                                        CellBuilderNew.height(
-                                                containerWidth: width,
-                                                backgroundStyle: .transparent,
-                                                text: name,
-                                                font: nameFont,
-                                                verticalPadding: .margin12,
-                                                elements: [.multiline]
-                                        )
-                                    },
-                                    bind: { cell in
-                                        cell.set(backgroundStyle: .transparent, isFirst: true)
-                                    }
+            Section(
+                id: "title",
+                rows: [
+                    CellBuilderNew.row(
+                        rootElement: .text { component in
+                            component.font = nameFont
+                            component.textColor = .themeLeah
+                            component.text = name
+                            component.numberOfLines = 0
+                            component.textAlignment = .center
+                        },
+                        tableView: tableView,
+                        id: "name",
+                        dynamicHeight: { width in
+                            CellBuilderNew.height(
+                                containerWidth: width,
+                                backgroundStyle: .transparent,
+                                text: name,
+                                font: nameFont,
+                                verticalPadding: .margin12,
+                                elements: [.multiline]
                             )
-                        ]
-                )
+                        },
+                        bind: { cell in
+                            cell.set(backgroundStyle: .transparent, isFirst: true)
+                        }
+                    ),
+                ]
+            )
         )
 
         sections.append(contentsOf: [
             Section(
-                    id: "available-balance",
-                    headerState: .margin(height: .margin4),
-                    rows: [
-                        StaticRow(
-                                cell: availableBalanceCell,
-                                id: "available-balance",
-                                height: availableBalanceCell.cellHeight
-                        )
-                    ]
+                id: "available-balance",
+                headerState: .margin(height: .margin4),
+                rows: [
+                    StaticRow(
+                        cell: availableBalanceCell,
+                        id: "available-balance",
+                        height: availableBalanceCell.cellHeight
+                    ),
+                ]
             ),
             Section(
-                    id: "amount",
-                    headerState: .margin(height: .margin8),
-                    rows: [
-                        StaticRow(
-                                cell: amountCell,
-                                id: "amount-input",
-                                height: amountCell.cellHeight
-                        ),
-                        StaticRow(
-                                cell: amountCautionCell,
-                                id: "amount-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.amountCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
-            )
+                id: "amount",
+                headerState: .margin(height: .margin8),
+                rows: [
+                    StaticRow(
+                        cell: amountCell,
+                        id: "amount-input",
+                        height: amountCell.cellHeight
+                    ),
+                    StaticRow(
+                        cell: amountCautionCell,
+                        id: "amount-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.amountCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
+            ),
         ])
 
         sections.append(
-                Section(
-                        id: "recipient",
-                        headerState: .margin(height: .margin12),
-                        rows: [
-                            StaticRow(
-                                    cell: recipientCell,
-                                    id: "recipient-input",
-                                    dynamicHeight: { [weak self] width in
-                                        self?.recipientCell.height(containerWidth: width) ?? 0
-                                    }
-                            ),
-                            StaticRow(
-                                    cell: recipientCautionCell,
-                                    id: "recipient-caution",
-                                    dynamicHeight: { [weak self] width in
-                                        self?.recipientCautionCell.height(containerWidth: width) ?? 0
-                                    }
-                            )
-                        ]
-                )
+            Section(
+                id: "recipient",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    StaticRow(
+                        cell: recipientCell,
+                        id: "recipient-input",
+                        dynamicHeight: { [weak self] width in
+                            self?.recipientCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: recipientCautionCell,
+                        id: "recipient-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.recipientCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
+            )
         )
 
         return sections
     }
-
 }

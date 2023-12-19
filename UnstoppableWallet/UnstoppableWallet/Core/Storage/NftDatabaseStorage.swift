@@ -76,44 +76,42 @@ class NftDatabaseStorage {
 
         return migrator
     }
-
 }
 
 extension NftDatabaseStorage {
-
     func collections(blockchainTypeUid: String, accountId: String) throws -> [NftCollectionRecord] {
         try dbPool.read { db in
             try NftCollectionRecord
-                    .filter(NftCollectionRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftCollectionRecord.Columns.accountId == accountId)
-                    .fetchAll(db)
+                .filter(NftCollectionRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftCollectionRecord.Columns.accountId == accountId)
+                .fetchAll(db)
         }
     }
 
     func assets(blockchainTypeUid: String, accountId: String) throws -> [NftAssetRecord] {
         try dbPool.read { db in
             try NftAssetRecord
-                    .filter(NftAssetRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftAssetRecord.Columns.accountId == accountId)
-                    .fetchAll(db)
+                .filter(NftAssetRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftAssetRecord.Columns.accountId == accountId)
+                .fetchAll(db)
         }
     }
 
     func asset(nftUid: NftUid) throws -> NftAssetRecord? {
         try dbPool.read { db in
             try NftAssetRecord
-                    .filter(NftAssetRecord.Columns.nftUid == nftUid)
-                    .fetchOne(db)
+                .filter(NftAssetRecord.Columns.nftUid == nftUid)
+                .fetchOne(db)
         }
     }
 
     func save(collections: [NftCollectionRecord], assets: [NftAssetRecord], blockchainTypeUid: String, accountId: String) throws {
         _ = try dbPool.write { db in
             try NftCollectionRecord
-                    .filter(NftCollectionRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftCollectionRecord.Columns.accountId == accountId)
-                    .deleteAll(db)
+                .filter(NftCollectionRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftCollectionRecord.Columns.accountId == accountId)
+                .deleteAll(db)
 
             try NftAssetRecord
-                    .filter(NftAssetRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftAssetRecord.Columns.accountId == accountId)
-                    .deleteAll(db)
+                .filter(NftAssetRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftAssetRecord.Columns.accountId == accountId)
+                .deleteAll(db)
 
             for collection in collections {
                 try collection.insert(db)
@@ -127,8 +125,8 @@ extension NftDatabaseStorage {
     func metadataSyncRecord(blockchainTypeUid: String, accountId: String) throws -> NftMetadataSyncRecord? {
         try dbPool.read { db in
             try NftMetadataSyncRecord
-                    .filter(NftMetadataSyncRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftMetadataSyncRecord.Columns.accountId == accountId)
-                    .fetchOne(db)
+                .filter(NftMetadataSyncRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftMetadataSyncRecord.Columns.accountId == accountId)
+                .fetchOne(db)
         }
     }
 
@@ -141,8 +139,8 @@ extension NftDatabaseStorage {
     func assetsBriefMetadata(nftUids: Set<NftUid>) throws -> [NftAssetBriefMetadata] {
         try dbPool.read { db in
             try NftAssetBriefMetadata
-                    .filter(nftUids.contains(NftAssetBriefMetadata.Columns.nftUid))
-                    .fetchAll(db)
+                .filter(nftUids.contains(NftAssetBriefMetadata.Columns.nftUid))
+                .fetchAll(db)
         }
     }
 
@@ -153,5 +151,4 @@ extension NftDatabaseStorage {
             }
         }
     }
-
 }

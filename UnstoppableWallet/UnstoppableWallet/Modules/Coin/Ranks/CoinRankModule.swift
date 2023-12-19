@@ -1,13 +1,12 @@
-import UIKit
 import ThemeKit
+import UIKit
 
-struct CoinRankModule {
-
+enum CoinRankModule {
     static func viewController(type: RankType) -> UIViewController {
         let service = CoinRankService(
-                type: type,
-                marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit
+            type: type,
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager
         )
 
         let viewModel = CoinRankViewModel(service: service)
@@ -15,11 +14,9 @@ struct CoinRankModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }
 
 extension CoinRankModule {
-
     enum RankType {
         case cexVolume
         case dexVolume
@@ -30,5 +27,4 @@ extension CoinRankModule {
         case fee
         case revenue
     }
-
 }

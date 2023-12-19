@@ -1,6 +1,6 @@
 import Foundation
 
-struct RestoreFileHelper {
+enum RestoreFileHelper {
     static func parse(url: URL) throws -> BackupModule.NamedSource {
         let data = try FileManager.default.contentsOfFile(coordinatingAccessAt: url)
         let filename = NSString(string: url.lastPathComponent).deletingPathExtension

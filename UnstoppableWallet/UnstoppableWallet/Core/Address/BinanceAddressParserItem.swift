@@ -1,7 +1,8 @@
-import Foundation
-import RxSwift
-import BitcoinCore
 import BinanceChainKit
+import BitcoinCore
+import Foundation
+import MarketKit
+import RxSwift
 
 class BinanceAddressParserItem {
     private let parserType: ParserType
@@ -13,22 +14,22 @@ class BinanceAddressParserItem {
     private func validate(address: String) -> Single<Address> {
         do {
             switch parserType {
-            case .adapter(let adapter):
+            case let .adapter(adapter):
                 try adapter.validate(address: address)
-                return Single.just(Address(raw: address, domain: nil))
-            case .validator(let validator):
+                return Single.just(Address(raw: address, domain: nil, blockchainType: blockchainType))
+            case let .validator(validator):
                 try validator.validate(address: address)
-                return Single.just(Address(raw: address, domain: nil))
+                return Single.just(Address(raw: address, domain: nil, blockchainType: blockchainType))
             }
 
         } catch {
             return Single.error(error)
         }
     }
-
 }
 
 extension BinanceAddressParserItem: IAddressParserItem {
+    var blockchainType: BlockchainType { .binanceChain }
 
     func handle(address: String) -> Single<Address> {
         validate(address: address)
@@ -36,17 +37,14 @@ extension BinanceAddressParserItem: IAddressParserItem {
 
     func isValid(address: String) -> Single<Bool> {
         validate(address: address)
-                .map { _ in true }
-                .catchErrorJustReturn(false)
+            .map { _ in true }
+            .catchErrorJustReturn(false)
     }
-
 }
 
 extension BinanceAddressParserItem {
-
     enum ParserType {
         case adapter(ISendBinanceAdapter)
         case validator(BinanceAddressValidator)
     }
-
 }

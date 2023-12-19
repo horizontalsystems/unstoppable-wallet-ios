@@ -1,8 +1,8 @@
-import UIKit
+import ComponentKit
 import MessageUI
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class LaunchErrorViewController: ThemeViewController {
     private let error: Error
@@ -13,7 +13,8 @@ class LaunchErrorViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -65,9 +66,9 @@ class LaunchErrorViewController: ThemeViewController {
 
     @objc private func onTapReport() {
         let errorString = """
-                          Raw Error: \(error)
-                          Localized Description: \(error.localizedDescription)
-                          """
+        Raw Error: \(error)
+        Localized Description: \(error.localizedDescription)
+        """
 
         if MFMailComposeViewController.canSendMail() {
             let controller = MFMailComposeViewController()
@@ -80,13 +81,10 @@ class LaunchErrorViewController: ThemeViewController {
             CopyHelper.copyAndNotify(value: errorString)
         }
     }
-
 }
 
 extension LaunchErrorViewController: MFMailComposeViewControllerDelegate {
-
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
         controller.dismiss(animated: true)
     }
-
 }

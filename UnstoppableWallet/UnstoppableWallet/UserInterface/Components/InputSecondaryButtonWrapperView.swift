@@ -1,13 +1,13 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class InputSecondaryButtonWrapperView: UIView, ISizeAwareView {
     private let style: SecondaryButton.Style
     let button = SecondaryButton()
 
-    var onTapButton: (() -> ())?
+    var onTapButton: (() -> Void)?
 
     init(style: SecondaryButton.Style) {
         self.style = style
@@ -25,7 +25,8 @@ class InputSecondaryButtonWrapperView: UIView, ISizeAwareView {
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -33,8 +34,7 @@ class InputSecondaryButtonWrapperView: UIView, ISizeAwareView {
         onTapButton?()
     }
 
-    func width(containerWidth: CGFloat) -> CGFloat {
+    func width(containerWidth _: CGFloat) -> CGFloat {
         SecondaryButton.width(title: button.title(for: .normal) ?? "", style: style, hasImage: false)
     }
-
 }

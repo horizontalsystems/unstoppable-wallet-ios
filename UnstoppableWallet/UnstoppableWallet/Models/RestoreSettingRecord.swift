@@ -23,13 +23,13 @@ class RestoreSettingRecord: Record {
         case accountId, blockchainUid, key, value
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         accountId = row[Columns.accountId]
         blockchainUid = row[Columns.blockchainUid]
         key = row[Columns.key]
         value = row[Columns.value]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -38,5 +38,4 @@ class RestoreSettingRecord: Record {
         container[Columns.key] = key
         container[Columns.value] = value
     }
-
 }

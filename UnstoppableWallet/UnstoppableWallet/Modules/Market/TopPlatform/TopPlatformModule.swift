@@ -1,18 +1,16 @@
-import UIKit
-import ThemeKit
-import MarketKit
 import Chart
-import LanguageKit
+import MarketKit
+import ThemeKit
+import UIKit
 
-struct TopPlatformModule {
-
-    static func viewController(topPlatform: TopPlatform) -> UIViewController {
-        let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit)
-        let listService = MarketFilteredListService(currencyKit: App.shared.currencyKit, provider: service)
+enum TopPlatformModule {
+    static func viewController(topPlatform: TopPlatform, apiTag: String) -> UIViewController {
+        let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit, apiTag: apiTag)
+        let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service)
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, favoritesManager: App.shared.favoritesManager)
 
-        let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, topPlatform: topPlatform)
-        let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .day1)
+        let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, topPlatform: topPlatform)
+        let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .week1)
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, factory: factory)
 
@@ -25,5 +23,4 @@ struct TopPlatformModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }

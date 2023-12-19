@@ -1,12 +1,11 @@
-import RxSwift
-import RxRelay
-import HsToolKit
-import UniswapKit
-import CurrencyKit
 import BigInt
 import EvmKit
 import Foundation
+import HsToolKit
 import MarketKit
+import RxRelay
+import RxSwift
+import UniswapKit
 
 class UniswapV3Service {
     let dex: SwapModule.Dex
@@ -29,7 +28,7 @@ class UniswapV3Service {
     private let errorsRelay = PublishRelay<[Error]>()
     private(set) var errors: [Error] = [] {
         didSet {
-            if oldValue.isEmpty && errors.isEmpty {
+            if oldValue.isEmpty, errors.isEmpty {
                 return
             }
             errorsRelay.accept(errors)
@@ -83,7 +82,7 @@ class UniswapV3Service {
         }
     }
 
-    private func onUpdateTrade(state: UniswapV3TradeService.State) {
+    private func onUpdateTrade(state _: UniswapV3TradeService.State) {
         syncState()
     }
 
@@ -93,7 +92,7 @@ class UniswapV3Service {
         pendingAllowanceService.set(token: token)
     }
 
-    private func onUpdate(amountIn: Decimal?) {
+    private func onUpdate(amountIn _: Decimal?) {
         syncState()
     }
 
@@ -106,9 +105,10 @@ class UniswapV3Service {
     }
 
     private func checkAllowanceError(allowance: CoinValue) -> Error? {
-        guard let balanceIn = balanceIn,
+        guard let balanceIn,
               balanceIn >= tradeService.amountIn,
-              tradeService.amountIn > allowance.value else {
+              tradeService.amountIn > allowance.value
+        else {
             return nil
         }
 
@@ -128,9 +128,9 @@ class UniswapV3Service {
         switch tradeService.state {
         case .loading:
             loading = true
-        case .ready(let trade):
+        case let .ready(trade):
             transactionData = try? tradeService.transactionData(tradeData: trade.tradeData)
-        case .notReady(let errors):
+        case let .notReady(errors):
             allErrors.append(contentsOf: errors)
         }
 
@@ -138,16 +138,16 @@ class UniswapV3Service {
             switch allowanceState {
             case .loading:
                 loading = true
-            case .ready(let allowance):
+            case let .ready(allowance):
                 if let error = checkAllowanceError(allowance: allowance) {
                     allErrors.append(error)
                 }
-            case .notReady(let error):
+            case let .notReady(error):
                 allErrors.append(error)
             }
         }
 
-        if let balanceIn = balanceIn {
+        if let balanceIn {
             if tradeService.amountIn > balanceIn {
                 allErrors.append(SwapModule.SwapError.insufficientBalanceIn)
             }
@@ -165,7 +165,7 @@ class UniswapV3Service {
 
         if loading {
             state = .loading
-        } else if let transactionData = transactionData, allErrors.isEmpty {
+        } else if let transactionData, allErrors.isEmpty {
             state = .ready(transactionData: transactionData)
         } else {
             state = .notReady
@@ -175,11 +175,9 @@ class UniswapV3Service {
     private func balance(token: MarketKit.Token) -> Decimal? {
         (adapterManager.adapter(for: token) as? IBalanceAdapter)?.balanceData.available
     }
-
 }
 
 extension UniswapV3Service: ISwapErrorProvider {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -196,32 +194,29 @@ extension UniswapV3Service: ISwapErrorProvider {
         balanceOutRelay.asObservable()
     }
 
-    func approveData(amount: Decimal? = nil)  -> SwapAllowanceService.ApproveData? {
+    func approveData(amount: Decimal? = nil) -> SwapAllowanceService.ApproveData? {
         let amount = amount ?? balanceIn
-        guard let amount = amount else {
+        guard let amount else {
             return nil
         }
 
         return allowanceService.approveData(dex: dex, amount: amount)
     }
-
 }
 
 extension UniswapV3Service {
-
     enum State: Equatable {
         case loading
         case ready(transactionData: TransactionData)
         case notReady
 
-        static func ==(lhs: State, rhs: State) -> Bool {
+        static func == (lhs: State, rhs: State) -> Bool {
             switch (lhs, rhs) {
             case (.loading, .loading): return true
-            case (.ready(let lhsTransactionData), .ready(let rhsTransactionData)): return lhsTransactionData == rhsTransactionData
+            case let (.ready(lhsTransactionData), .ready(rhsTransactionData)): return lhsTransactionData == rhsTransactionData
             case (.notReady, .notReady): return true
             default: return false
             }
         }
     }
-
 }

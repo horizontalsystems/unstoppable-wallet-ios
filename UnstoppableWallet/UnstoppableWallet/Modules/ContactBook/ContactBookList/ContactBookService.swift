@@ -1,8 +1,8 @@
-import Foundation
-import RxSwift
-import RxRelay
-import MarketKit
 import EvmKit
+import Foundation
+import MarketKit
+import RxRelay
+import RxSwift
 
 class ContactBookService {
     private let disposeBag = DisposeBag()
@@ -61,7 +61,7 @@ class ContactBookService {
 
         subscribe(disposeBag, contactManager.stateObservable) { [weak self] _ in self?.sync() }
         subscribe(disposeBag, contactManager.iCloudErrorObservable) { [weak self] error in
-            if error != nil, (self?.contactManager.remoteSync ?? false) {
+            if error != nil, self?.contactManager.remoteSync ?? false {
                 self?.iCloudAvailableErrorRelay.accept(true)
             } else {
                 self?.iCloudAvailableErrorRelay.accept(false)
@@ -75,15 +75,13 @@ class ContactBookService {
         if let contacts = contactManager.all {
             _contacts = contacts
         } else {
-            // todo: show alert ?
+            // TODO: show alert ?
             print("Can't load contacts!")
         }
     }
-
 }
 
 extension ContactBookService {
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -100,8 +98,8 @@ extension ContactBookService {
 
     func contactAddress(contactUid: String, blockchainUid: String) -> ContactAddress? {
         _contacts
-                .first(where: { contact in contact.uid == contactUid })?
-                .address(blockchainUid: blockchainUid)
+            .first(where: { contact in contact.uid == contactUid })?
+            .address(blockchainUid: blockchainUid)
     }
 
     func delete(contactUid: String) throws {
@@ -111,11 +109,9 @@ extension ContactBookService {
     func blockchainName(blockchainUid: String) -> String? {
         try? marketKit.blockchain(uid: blockchainUid)?.name
     }
-
 }
 
 extension ContactBookService {
-
     class Item: Comparable {
         let uid: String
         let name: String
@@ -125,11 +121,11 @@ extension ContactBookService {
             self.name = name
         }
 
-        static func <(lhs: Item, rhs: Item) -> Bool {
+        static func < (lhs: Item, rhs: Item) -> Bool {
             lhs.name < rhs.name
         }
 
-        static func ==(lhs: Item, rhs: Item) -> Bool {
+        static func == (lhs: Item, rhs: Item) -> Bool {
             lhs.uid == rhs.uid
         }
     }
@@ -138,7 +134,7 @@ extension ContactBookService {
         let blockchainAddress: String
 
         init(uid: String, name: String, address: String) {
-            self.blockchainAddress = address
+            blockchainAddress = address
             super.init(uid: uid, name: name)
         }
     }
@@ -151,5 +147,4 @@ extension ContactBookService {
             super.init(uid: uid, name: name)
         }
     }
-
 }

@@ -1,10 +1,10 @@
-import Foundation
 import EvmKit
-import UniswapKit
-import RxSwift
-import RxRelay
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
+import UniswapKit
 
 class UniswapTradeService: ISwapSettingProvider {
     private static let timerFramePerSecond = 30
@@ -99,11 +99,11 @@ class UniswapTradeService: ISwapSettingProvider {
         }
 
         evmKit.lastBlockHeightObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] blockNumber in
-                    self?.syncSwapData()
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] _ in
+                self?.syncSwapData()
+            })
+            .disposed(by: disposeBag)
 
         syncSwapData()
     }
@@ -113,21 +113,21 @@ class UniswapTradeService: ISwapSettingProvider {
         let countdownValue = Int(syncInterval) * Self.timerFramePerSecond
 
         Observable<Int>
-                .interval(.milliseconds(1000 / Self.timerFramePerSecond), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .map {
-                    countdownValue - $0
-                }
-                .takeUntil(.inclusive, predicate: { $0 == 0 })
-                .subscribe(onNext: { [weak self] value in
-                    self?.countdownTimerRelay.accept(Float(value) / Float(countdownValue))
-                }, onCompleted: { [weak self] in
-                    self?.syncSwapData()
-                })
-                .disposed(by: refreshTimerDisposeBag)
+            .interval(.milliseconds(1000 / Self.timerFramePerSecond), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .map {
+                countdownValue - $0
+            }
+            .takeUntil(.inclusive, predicate: { $0 == 0 })
+            .subscribe(onNext: { [weak self] value in
+                self?.countdownTimerRelay.accept(Float(value) / Float(countdownValue))
+            }, onCompleted: { [weak self] in
+                self?.syncSwapData()
+            })
+            .disposed(by: refreshTimerDisposeBag)
     }
 
     private func syncSwapData() {
-        guard let tokenIn = tokenIn, let tokenOut = tokenOut else {
+        guard let tokenIn, let tokenOut else {
             state = .notReady(errors: [])
             return
         }
@@ -136,7 +136,7 @@ class UniswapTradeService: ISwapSettingProvider {
         syncTimer()
 
 //        if swapData == nil {
-            state = .loading
+        state = .loading
 //        }
 
         Task { [weak self, uniswapProvider] in
@@ -151,7 +151,7 @@ class UniswapTradeService: ISwapSettingProvider {
     }
 
     @discardableResult private func syncTradeData() -> Bool {
-        guard let swapData = swapData else {
+        guard let swapData else {
             return false
         }
 
@@ -172,11 +172,11 @@ class UniswapTradeService: ISwapSettingProvider {
             if case UniswapKit.Kit.TradeError.tradeNotFound = error {
                 let wethAddressString = uniswapProvider.wethAddress.hex
 
-                if case .native = tokenIn?.type, case .eip20(let address) = tokenOut?.type, address == wethAddressString {
+                if case .native = tokenIn?.type, case let .eip20(address) = tokenOut?.type, address == wethAddressString {
                     error = UniswapModule.TradeError.wrapUnwrapNotAllowed
                 }
 
-                if case .native = tokenOut?.type, case .eip20(let address) = tokenIn?.type, address == wethAddressString {
+                if case .native = tokenOut?.type, case let .eip20(address) = tokenIn?.type, address == wethAddressString {
                     error = UniswapModule.TradeError.wrapUnwrapNotAllowed
                 }
             }
@@ -199,11 +199,9 @@ class UniswapTradeService: ISwapSettingProvider {
         let trade = Trade(tradeData: tradeData)
         state = .ready(trade: trade)
     }
-
 }
 
 extension UniswapTradeService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -316,11 +314,9 @@ extension UniswapTradeService {
 
         set(tokenIn: swapToken)
     }
-
 }
 
 extension UniswapTradeService {
-
     enum State {
         case loading
         case ready(trade: Trade)
@@ -343,13 +339,12 @@ extension UniswapTradeService {
 
             impactLevel = tradeData.priceImpact.map { priceImpact in
                 switch priceImpact {
-                case 0..<UniswapTradeService.normalPriceImpact: return .negligible
-                case UniswapTradeService.normalPriceImpact..<UniswapTradeService.warningPriceImpact: return .normal
-                case UniswapTradeService.warningPriceImpact..<UniswapTradeService.forbiddenPriceImpact: return .warning
+                case 0 ..< UniswapTradeService.normalPriceImpact: return .negligible
+                case UniswapTradeService.normalPriceImpact ..< UniswapTradeService.warningPriceImpact: return .normal
+                case UniswapTradeService.warningPriceImpact ..< UniswapTradeService.forbiddenPriceImpact: return .warning
                 default: return .forbidden
                 }
             }
         }
     }
-
 }

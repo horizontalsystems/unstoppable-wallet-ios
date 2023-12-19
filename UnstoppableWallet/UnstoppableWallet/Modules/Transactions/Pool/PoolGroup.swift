@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 
 class PoolGroup {
     private let pools: [Pool]
@@ -18,12 +18,12 @@ class PoolGroup {
     init(pools: [Pool]) {
         self.pools = pools
 
-        Observable.merge(pools.map { $0.syncingObservable })
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.syncState()
-                })
-                .disposed(by: disposeBag)
+        Observable.merge(pools.map(\.syncingObservable))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] _ in
+                self?.syncState()
+            })
+            .disposed(by: disposeBag)
 
         syncState()
     }
@@ -38,34 +38,31 @@ class PoolGroup {
 
         syncing = false
     }
-
 }
 
 extension PoolGroup {
-
     var syncingObservable: Observable<Bool> {
         syncingRelay.asObservable()
     }
 
-    var invalidatedObservable: Observable<()> {
-        Observable.merge(pools.map { $0.invalidatedObservable })
+    var invalidatedObservable: Observable<Void> {
+        Observable.merge(pools.map(\.invalidatedObservable))
     }
 
     var itemsUpdatedObservable: Observable<[TransactionItem]> {
-        Observable.merge(pools.map { $0.itemsUpdatedObservable })
+        Observable.merge(pools.map(\.itemsUpdatedObservable))
     }
 
     func itemsSingle(count: Int) -> Single<[TransactionItem]> {
         let singles = pools.map { pool in
             pool.itemsSingle(count: count)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
         }
 
         return Single.zip(singles)
-                .map { itemsArray in
-                    let allItems = itemsArray.flatMap { $0 }
-                    return Array(allItems.sorted().prefix(count))
-                }
+            .map { itemsArray in
+                let allItems = itemsArray.flatMap { $0 }
+                return Array(allItems.sorted().prefix(count))
+            }
     }
-
 }

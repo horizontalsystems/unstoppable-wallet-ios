@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class SimpleSheetTitleView: UIView {
     static let height: CGFloat = 40
@@ -8,7 +8,7 @@ class SimpleSheetTitleView: UIView {
     private let textLabel = UILabel()
     private let separatorView = UIView()
 
-    var onTapClose: (() -> ())?
+    var onTapClose: (() -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -36,7 +36,8 @@ class SimpleSheetTitleView: UIView {
         separatorView.backgroundColor = .themeSteel10
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -53,5 +54,4 @@ class SimpleSheetTitleView: UIView {
         get { textLabel.textColor }
         set { textLabel.textColor = newValue }
     }
-
 }

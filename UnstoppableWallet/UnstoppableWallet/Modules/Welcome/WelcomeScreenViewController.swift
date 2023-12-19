@@ -1,7 +1,7 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class WelcomeScreenViewController: ThemeViewController {
     private let scrollView = UIScrollView()
@@ -16,7 +16,7 @@ class WelcomeScreenViewController: ThemeViewController {
     private let slides = [
         Slide(title: "intro.unchain_assets.title".localized, description: "intro.unchain_assets.description".localized, image: "Intro - Unchain Assets"),
         Slide(title: "intro.go_borderless.title".localized, description: "intro.go_borderless.description".localized, image: "Intro - Go Borderless"),
-        Slide(title: "intro.stay_private.title".localized, description: "intro.stay_private.description".localized, image: "Intro - Stay Private")
+        Slide(title: "intro.stay_private.title".localized, description: "intro.stay_private.description".localized, image: "Intro - Stay Private"),
     ]
 
     override init() {
@@ -25,7 +25,8 @@ class WelcomeScreenViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -210,14 +211,12 @@ class WelcomeScreenViewController: ThemeViewController {
         if pageControl.currentPage < pageControl.numberOfPages - 1 {
             scrollView.setContentOffset(CGPoint(x: scrollView.width * CGFloat(pageControl.currentPage + 1), y: 0), animated: true)
         } else {
-            UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
+            UIWindow.keyWindow?.set(newRootController: MainModule.instance())
         }
     }
-
 }
 
 extension WelcomeScreenViewController: UIScrollViewDelegate {
-
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageIndex = Int(round(scrollView.contentOffset.x / view.frame.width))
 
@@ -232,9 +231,9 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
 
         let pagePercent = CGFloat(1) / CGFloat(slides.count - 1)
 
-        for i in 0..<slides.count {
+        for i in 0 ..< slides.count {
             let fi = CGFloat(i)
-            if currentPercent >= (fi - 1) * pagePercent && currentPercent <= (fi + 1) * pagePercent {
+            if currentPercent >= (fi - 1) * pagePercent, currentPercent <= (fi + 1) * pagePercent {
                 let offset: CGFloat = abs((fi * pagePercent) - currentPercent)
                 let percent: CGFloat = offset / pagePercent
 
@@ -244,15 +243,12 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
             }
         }
     }
-
 }
 
 extension WelcomeScreenViewController {
-
     private struct Slide {
         let title: String
         let description: String
         let image: String
     }
-
 }

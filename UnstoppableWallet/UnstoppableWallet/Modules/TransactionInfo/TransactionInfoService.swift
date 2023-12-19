@@ -1,4 +1,3 @@
-import CurrencyKit
 import EvmKit
 import MarketKit
 import RxSwift
@@ -7,9 +6,10 @@ class TransactionInfoService {
     private let disposeBag = DisposeBag()
 
     private let adapter: ITransactionsAdapter
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let rateService: HistoricalRateService
     private let nftMetadataService: NftMetadataService
+    private let balanceHiddenManager: BalanceHiddenManager
 
     private var transactionRecord: TransactionRecord
     private var rates = [RateKey: CurrencyValue]()
@@ -17,12 +17,13 @@ class TransactionInfoService {
 
     private let transactionInfoItemSubject = PublishSubject<Item>()
 
-    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyKit: CurrencyKit.Kit, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
+    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyManager: CurrencyManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
         self.transactionRecord = transactionRecord
         self.adapter = adapter
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.rateService = rateService
         self.nftMetadataService = nftMetadataService
+        self.balanceHiddenManager = balanceHiddenManager
 
         subscribe(disposeBag, adapter.transactionsObservable(token: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
         subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncItem() }
@@ -49,22 +50,22 @@ class TransactionInfoService {
 
         case let tx as ApproveTransactionRecord: tokens.append(tx.value.token)
         case let tx as ContractCallTransactionRecord:
-            tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
-            tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
+            tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
 
         case let tx as ExternalContractCallTransactionRecord:
-            tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
-            tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
+            tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
 
         case let tx as TronIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as TronOutgoingTransactionRecord: tokens.append(tx.value.token)
         case let tx as TronApproveTransactionRecord: tokens.append(tx.value.token)
         case let tx as TronContractCallTransactionRecord:
-            tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
-            tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
+            tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
         case let tx as TronExternalContractCallTransactionRecord:
-            tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
-            tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
+            tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
 
         case let tx as BitcoinIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BitcoinOutgoingTransactionRecord:
@@ -75,6 +76,14 @@ class TransactionInfoService {
         case let tx as BinanceChainOutgoingTransactionRecord:
             tokens.append(tx.fee.token)
             tokens.append(tx.value.token)
+
+        case let tx as TonIncomingTransactionRecord:
+            tokens.append(tx.transfer?.value.token)
+        case let tx as TonOutgoingTransactionRecord:
+            tokens.append(tx.fee?.token)
+            tx.transfers.forEach { tokens.append($0.value.token) }
+        case let tx as TonTransactionRecord:
+            tokens.append(tx.fee?.token)
 
         default: ()
         }
@@ -87,7 +96,7 @@ class TransactionInfoService {
             tokens.append(fee.token)
         }
 
-        return Array(Set(tokens.compactMap({ $0 })))
+        return Array(Set(tokens.compactMap { $0 }))
     }
 
     private func fetchRates() {
@@ -136,19 +145,25 @@ class TransactionInfoService {
     private func syncItem() {
         transactionInfoItemSubject.onNext(item)
     }
-
 }
 
 extension TransactionInfoService {
+    var balanceHiddenObservable: Observable<Bool> {
+        balanceHiddenManager.balanceHiddenObservable
+    }
+
+    var balanceHidden: Bool {
+        balanceHiddenManager.balanceHidden
+    }
 
     var item: Item {
         Item(
-                record: transactionRecord,
-                lastBlockInfo: adapter.lastBlockInfo,
-                rates: Dictionary(uniqueKeysWithValues: rates.map { key, value in (key.token.coin, value) }),
-                nftMetadata: nftMetadata,
-                explorerTitle: adapter.explorerTitle,
-                explorerUrl: adapter.explorerUrl(transactionHash: transactionRecord.transactionHash)
+            record: transactionRecord,
+            lastBlockInfo: adapter.lastBlockInfo,
+            rates: Dictionary(uniqueKeysWithValues: rates.map { key, value in (key.token.coin, value) }),
+            nftMetadata: nftMetadata,
+            explorerTitle: adapter.explorerTitle,
+            explorerUrl: adapter.explorerUrl(transactionHash: transactionRecord.transactionHash)
         )
     }
 
@@ -159,11 +174,9 @@ extension TransactionInfoService {
     func rawTransaction() -> String? {
         adapter.rawTransaction(hash: transactionRecord.transactionHash)
     }
-
 }
 
 extension TransactionInfoService {
-
     struct Item {
         let record: TransactionRecord
         let lastBlockInfo: LastBlockInfo?
@@ -172,5 +185,4 @@ extension TransactionInfoService {
         let explorerTitle: String
         let explorerUrl: String?
     }
-
 }

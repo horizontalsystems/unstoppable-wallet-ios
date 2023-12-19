@@ -42,7 +42,7 @@ class NftAssetRecord: Record {
         case lastSalePriceValue
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         blockchainTypeUid = row[Columns.blockchainTypeUid]
         accountId = row[Columns.accountId]
         nftUid = row[Columns.nftUid]
@@ -52,7 +52,7 @@ class NftAssetRecord: Record {
         onSale = row[Columns.onSale]
         lastSalePrice = NftPriceRecord(tokenQueryId: row[Columns.lastSalePriceTokenQueryId], value: row[Columns.lastSalePriceValue])
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -66,5 +66,4 @@ class NftAssetRecord: Record {
         container[Columns.lastSalePriceTokenQueryId] = lastSalePrice?.tokenQuery.id
         container[Columns.lastSalePriceValue] = lastSalePrice?.value
     }
-
 }

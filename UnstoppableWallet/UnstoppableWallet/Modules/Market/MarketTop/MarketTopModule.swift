@@ -1,19 +1,18 @@
-import UIKit
 import ThemeKit
+import UIKit
 
-struct MarketTopModule {
-
+enum MarketTopModule {
     static func viewController(marketTop: MarketModule.MarketTop = .top100, sortingField: MarketModule.SortingField = .highestCap, marketField: MarketModule.MarketField = .price) -> UIViewController {
         let service = MarketTopService(
-                marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit,
-                marketTop: marketTop,
-                sortingField: sortingField,
-                marketField: marketField
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager,
+            marketTop: marketTop,
+            sortingField: sortingField,
+            marketField: marketField
         )
         let watchlistToggleService = MarketWatchlistToggleService(
-                coinUidService: service,
-                favoritesManager: App.shared.favoritesManager
+            coinUidService: service,
+            favoritesManager: App.shared.favoritesManager
         )
 
         let decorator = MarketListMarketFieldDecorator(service: service)
@@ -24,5 +23,4 @@ struct MarketTopModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }

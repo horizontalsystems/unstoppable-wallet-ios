@@ -1,9 +1,8 @@
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
-struct CoinMajorHoldersModule {
-
+enum CoinMajorHoldersModule {
     static func viewController(coin: Coin, blockchain: Blockchain) -> UIViewController {
         let service = CoinMajorHoldersService(coin: coin, blockchain: blockchain, marketKit: App.shared.marketKit, evmLabelManager: App.shared.evmLabelManager)
         let viewModel = CoinMajorHoldersViewModel(service: service)
@@ -12,5 +11,4 @@ struct CoinMajorHoldersModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }

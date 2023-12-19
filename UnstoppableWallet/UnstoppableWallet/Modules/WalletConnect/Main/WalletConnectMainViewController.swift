@@ -1,17 +1,19 @@
-import UIKit
-import ThemeKit
-import RxSwift
-import RxCocoa
-import UIExtensions
+import ComponentKit
 import HUD
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import SnapKit
-import ComponentKit
+import ThemeKit
+import UIExtensions
+import UIKit
 
 class WalletConnectMainViewController: ThemeViewController {
-    private let viewModel: WalletConnectMainViewModel
     private let disposeBag = DisposeBag()
     private var pendingRequestDisposeBag = DisposeBag()
+
+    private let viewModel: WalletConnectMainViewModel
+    private let requestViewFactory: IWalletConnectRequestViewFactory
 
     private weak var sourceViewController: UIViewController?
 
@@ -28,6 +30,7 @@ class WalletConnectMainViewController: ThemeViewController {
             }
         }
     }
+
     private var pendingRequestViewItems = [WalletConnectMainPendingRequestViewModel.ViewItem]()
 
     private let spinner = HUDActivityView.create(with: .large48)
@@ -41,14 +44,16 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private var viewItem: WalletConnectMainViewModel.ViewItem?
 
-    init(viewModel: WalletConnectMainViewModel, sourceViewController: UIViewController?) {
+    init(viewModel: WalletConnectMainViewModel, requestViewFactory: IWalletConnectRequestViewFactory, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
+        self.requestViewFactory = requestViewFactory
         self.sourceViewController = sourceViewController
 
         super.init()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -195,31 +200,6 @@ class WalletConnectMainViewController: ThemeViewController {
         sourceViewController?.dismiss(animated: true)
     }
 
-    private func openSelectNetwork() {
-        let viewItems = viewModel.blockchainSelectorViewItems
-
-        let selectorViewItems = viewItems.map {
-            SelectorModule.ViewItem(
-                    image: .url($0.imageUrl, placeholder: "placeholder_rectangle_32"),
-                    title: $0.title,
-                    selected: $0.selected
-            )
-        }
-
-        let viewController = SelectorModule.bottomSingleSelectorViewController(
-                image: .local(image: UIImage(named: "blocks_24")?.withTintColor(.themeJacob)),
-                title: "wallet_connect.network".localized,
-                viewItems: selectorViewItems,
-                onSelect: { [weak self] index in
-                    self?.viewModel.onSelect(chainId: viewItems[index].chainId)
-                }
-        )
-
-        DispatchQueue.main.async {
-            self.present(viewController, animated: true)
-        }
-    }
-
     // pending requests section
 
     private func sync(pendingRequestViewItems: [WalletConnectMainPendingRequestViewModel.ViewItem]) {
@@ -237,18 +217,19 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func showPending(request: WalletConnectRequest) {
-        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectSessionManager.service, request: request) else {
+        let result = requestViewFactory.viewController(request: request)
+        switch result {
+        case .unsuccessful:
+            print("Can't create view")
             return
+        case let .controller(controller):
+            guard let controller else { return }
+            present(ThemeNavigationController(rootViewController: controller), animated: true)
         }
-
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
-
-
 }
 
 extension WalletConnectMainViewController: SectionsDataSource {
-
     private func pendingRequestCell(viewItem: WalletConnectMainPendingRequestViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         var elements: [CellBuilderNew.CellElement] = [
             .vStackCentered([
@@ -263,8 +244,8 @@ extension WalletConnectMainViewController: SectionsDataSource {
                     component.textColor = .themeGray
                     component.lineBreakMode = .byTruncatingMiddle
                     component.text = viewItem.subtitle
-                }
-            ])
+                },
+            ]),
         ]
 
         if viewItem.unsupported {
@@ -283,15 +264,15 @@ extension WalletConnectMainViewController: SectionsDataSource {
         }
 
         return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: tableView,
-                id: "request_item_\(viewItem.id)",
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
-                action: { [weak self] in self?.onSelect(requestId: viewItem.id) }
+            rootElement: .hStack(elements),
+            tableView: tableView,
+            id: "request_item_\(viewItem.id)",
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            },
+            action: { [weak self] in self?.onSelect(requestId: viewItem.id) }
         )
     }
 
@@ -300,23 +281,22 @@ extension WalletConnectMainViewController: SectionsDataSource {
             return nil
         }
         return Section(id: "pending-requests",
-                headerState: tableView.sectionHeader(text: "wallet_connect.list.pending_requests".localized),
-                footerState: .margin(height: .margin32),
-                rows: pendingRequestViewItems.enumerated().map { index, viewItem in
-                    pendingRequestCell(viewItem: viewItem, isFirst: index == 0, isLast: index == pendingRequestViewItems.count - 1)
-                }
-        )
+                       headerState: tableView.sectionHeader(text: "wallet_connect.list.pending_requests".localized),
+                       footerState: .margin(height: .margin32),
+                       rows: pendingRequestViewItems.enumerated().map { index, viewItem in
+                           pendingRequestCell(viewItem: viewItem, isFirst: index == 0, isLast: index == pendingRequestViewItems.count - 1)
+                       })
     }
 
     private func headerRow(imageUrl: String?, title: String) -> RowProtocol {
         Row<LogoHeaderCell>(
-                id: "header",
-                hash: "\(title)-\(imageUrl ?? "N/A")",
-                height: LogoHeaderCell.height,
-                bind: { cell, _ in
-                    cell.title = title
-                    cell.set(imageUrl: imageUrl)
-                }
+            id: "header",
+            hash: "\(title)-\(imageUrl ?? "N/A")",
+            height: LogoHeaderCell.height,
+            bind: { cell, _ in
+                cell.title = title
+                cell.set(imageUrl: imageUrl)
+            }
         )
     }
 
@@ -324,10 +304,10 @@ extension WalletConnectMainViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
         var rows = [RowProtocol]()
 
-        if let viewItem = viewItem {
+        if let viewItem {
             if let dAppMeta = viewItem.dAppMeta {
                 sections.append(Section(id: "dapp-meta",
-                        rows: [headerRow(imageUrl: dAppMeta.icon, title: dAppMeta.name)]))
+                                        rows: [headerRow(imageUrl: dAppMeta.icon, title: dAppMeta.name)]))
             }
 
             if let pendingRequestSection = pendingRequestSection() {
@@ -348,65 +328,22 @@ extension WalletConnectMainViewController: SectionsDataSource {
                 rowInfos.append(.value(title: "wallet_connect.active_account".localized, value: accountName, valueColor: nil))
             }
 
-            if viewItem.networkEditable {
-                if let address = viewItem.address {
-                    rowInfos.append(.value(title: "wallet_connect.address".localized, value: address, valueColor: nil))
-                }
-
-                if let network = viewItem.network {
-                    rowInfos.append(.network(value: network, editable: true))
-                }
-            } else {
-                if let network = viewItem.network, let address = viewItem.address {
-                    rowInfos.append(.value(title: network, value: address, valueColor: nil))
-                }
-            }
-
             for (index, rowInfo) in rowInfos.enumerated() {
                 let isFirst = index == 0
                 let isLast = index == rowInfos.count - 1
 
                 switch rowInfo {
                 case let .value(title, value, valueColor):
-                    rows.append(tableView.universalRow48(
+                    rows.append(
+                        tableView.universalRow48(
                             id: "value-\(index)",
                             title: .subhead2(title),
                             value: .subhead1(value, color: valueColor ?? .themeLeah),
                             hash: value,
                             isFirst: isFirst,
                             isLast: isLast
-                    ))
-                case let .network(value, editable):
-                    let row = tableView.universalRow48(
-                            id: "network-\(index)",
-                            title: .subhead2("wallet_connect.network".localized),
-                            value: .subhead1(value),
-                            accessoryType: .dropdown,
-                            hash: value,
-                            autoDeselect: true,
-                            isFirst: isFirst,
-                            isLast: isLast,
-                            action: editable ? { [weak self] in
-                                self?.openSelectNetwork()
-                            } : nil
+                        )
                     )
-                    rows.append(row)
-                case let .chain(title, value, selected, chainId):
-                    let row = tableView.universalRow48(
-                            id: "chain-\(index)",
-                            image: .local(selected ? UIImage(named: "checkbox_active_24") : UIImage(named: "checkbox_diactive_24")),
-                            title: .subhead2(title),
-                            value: .subhead1(value),
-                            hash: "\(selected)",
-                            autoDeselect: true,
-                            isFirst: isFirst,
-                            isLast: isLast,
-                            action: { [weak self] in
-                                self?.viewModel.onToggle(chainId: chainId)
-                            }
-                    )
-
-                    rows.append(row)
                 }
             }
 
@@ -418,15 +355,10 @@ extension WalletConnectMainViewController: SectionsDataSource {
         sections.append(Section(id: "wallet_connect", rows: rows))
         return sections
     }
-
 }
 
 extension WalletConnectMainViewController {
-
     enum RowInfo {
         case value(title: String, value: String, valueColor: UIColor?)
-        case network(value: String, editable: Bool)
-        case chain(title: String, value: String, selected: Bool, chainId: Int)
     }
-
 }

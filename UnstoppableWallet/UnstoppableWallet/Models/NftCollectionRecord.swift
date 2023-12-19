@@ -40,7 +40,7 @@ class NftCollectionRecord: Record {
         case averagePrice30dValue
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         blockchainTypeUid = row[Columns.blockchainTypeUid]
         accountId = row[Columns.accountId]
         providerUid = row[Columns.providerUid]
@@ -49,7 +49,7 @@ class NftCollectionRecord: Record {
         averagePrice7d = NftPriceRecord(tokenQueryId: row[Columns.averagePrice7dTokenQueryId], value: row[Columns.averagePrice7dValue])
         averagePrice30d = NftPriceRecord(tokenQueryId: row[Columns.averagePrice30dTokenQueryId], value: row[Columns.averagePrice30dValue])
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -63,5 +63,4 @@ class NftCollectionRecord: Record {
         container[Columns.averagePrice30dTokenQueryId] = averagePrice30d?.tokenQuery.id
         container[Columns.averagePrice30dValue] = averagePrice30d?.value
     }
-
 }

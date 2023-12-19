@@ -1,13 +1,12 @@
+import Combine
 import Foundation
 import HsToolKit
-import WalletConnectSign
-import WalletConnectUtils
-import WalletConnectRelay
-import Combine
-import RxSwift
 import RxCocoa
 import RxRelay
-
+import RxSwift
+import WalletConnectRelay
+import WalletConnectSign
+import WalletConnectUtils
 
 class WalletConnectSocketConnectionService {
     private static let retryInterval = 10
@@ -70,22 +69,20 @@ class WalletConnectSocketConnectionService {
         cancellables.forEach { cancellable in cancellable.cancel() }
         cancellables.removeAll()
 
-        guard let relayClient = relayClient else {
+        guard let relayClient else {
             return
         }
 
         relayClient.socketConnectionStatusPublisher
-                .sink { [weak self] status in
-                    self?.sync(status: status)
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] status in
+                self?.sync(status: status)
+            }
+            .store(in: &cancellables)
         retry()
     }
-
 }
 
 extension WalletConnectSocketConnectionService {
-
     func retry() {
         do {
             try relayClient?.connect()
@@ -113,11 +110,9 @@ extension WalletConnectSocketConnectionService {
     var statusObservable: Observable<Status> {
         statusRelay.asObservable()
     }
-
 }
 
 extension WalletConnectSocketConnectionService {
-
     enum Status {
         case disconnected
         case connecting
@@ -129,8 +124,5 @@ extension WalletConnectSocketConnectionService {
             case .disconnected: return self == .disconnected
             }
         }
-
     }
-
 }
-

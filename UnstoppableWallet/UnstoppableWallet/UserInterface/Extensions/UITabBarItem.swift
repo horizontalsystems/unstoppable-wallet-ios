@@ -1,7 +1,6 @@
 import UIKit
 
 extension UITabBarItem {
-
     func setDotBadge(visible: Bool, count: Int) {
         guard visible else {
             badgeValue = nil
@@ -18,5 +17,4 @@ extension UITabBarItem {
             setBadgeTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
         }
     }
-
 }

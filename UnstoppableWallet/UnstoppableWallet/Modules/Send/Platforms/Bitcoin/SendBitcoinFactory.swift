@@ -1,7 +1,6 @@
-import UIKit
-import MarketKit
 import HsToolKit
-import CurrencyKit
+import MarketKit
+import UIKit
 
 protocol ISendConfirmationFactory {
     func confirmationViewController() throws -> UIViewController
@@ -12,7 +11,6 @@ protocol ISendFeeSettingsFactory {
 }
 
 class BaseSendFactory {
-
     func values(fiatService: FiatService) throws -> (CoinValue, CurrencyValue?) {
         guard let token = fiatService.token else {
             throw ConfirmationError.noCoin
@@ -22,27 +20,27 @@ class BaseSendFactory {
         var currencyValue: CurrencyValue?
 
         switch fiatService.primaryInfo {
-        case .amount(let value):
+        case let .amount(value):
             coinValue = CoinValue(kind: .token(token: token), value: value)
-        case .amountInfo(let info):
-            guard let info = info else {
+        case let .amountInfo(info):
+            guard let info else {
                 throw ConfirmationError.noAmount
             }
 
             switch info {
-            case .coinValue(let value): coinValue = value
-            case .currencyValue(let value): currencyValue = value
+            case let .coinValue(value): coinValue = value
+            case let .currencyValue(value): currencyValue = value
             }
         }
 
         if let info = fiatService.secondaryAmountInfo {
             switch info {
-            case .coinValue(let value): coinValue = value
-            case .currencyValue(let value): currencyValue = value
+            case let .coinValue(value): coinValue = value
+            case let .currencyValue(value): currencyValue = value
             }
         }
 
-        guard let coinValue = coinValue else {
+        guard let coinValue else {
             throw ConfirmationError.noAmount
         }
 
@@ -50,17 +48,14 @@ class BaseSendFactory {
 
         return (negativeCoinValue, currencyValue)
     }
-
 }
 
 extension BaseSendFactory {
-
     enum ConfirmationError: Error {
         case noCoin
         case noAmount
         case noAddress
     }
-
 }
 
 class SendBitcoinFactory: BaseSendFactory {
@@ -107,11 +102,9 @@ class SendBitcoinFactory: BaseSendFactory {
 
         return viewItems
     }
-
 }
 
 extension SendBitcoinFactory: ISendConfirmationFactory {
-
     func confirmationViewController() throws -> UIViewController {
         let items = try items()
 
@@ -122,11 +115,9 @@ extension SendBitcoinFactory: ISendConfirmationFactory {
 
         return viewController
     }
-
 }
 
 extension SendBitcoinFactory: ISendFeeSettingsFactory {
-
     func feeSettingsViewController() throws -> UIViewController {
         var dataSources: [ISendSettingsDataSource] = []
 
@@ -141,7 +132,7 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
         let inputOutputOrderViewModel = InputOutputOrderViewModel(service: adapterService.inputOutputOrderService)
         dataSources.append(InputOutputOrderDataSource(viewModel: inputOutputOrderViewModel))
 
-        if let timeLockService = timeLockService {
+        if let timeLockService {
             let timeLockViewModel = TimeLockViewModel(service: timeLockService)
             dataSources.append(TimeLockDataSource(viewModel: timeLockViewModel))
         }
@@ -150,5 +141,4 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
 
         return viewController
     }
-
 }

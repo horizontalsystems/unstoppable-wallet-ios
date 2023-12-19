@@ -1,31 +1,30 @@
-import UIKit
 import ThemeKit
+import UIKit
 
-class ContactBookContactModule {
-
-    static func viewController(mode: Mode, onUpdateContact: (() -> ())? = nil) -> UIViewController? {
+enum ContactBookContactModule {
+    static func viewController(mode: Mode, onUpdateContact: (() -> Void)? = nil) -> UIViewController? {
         let service: ContactBookContactService
 
         switch mode {
         case .new:
             service = ContactBookContactService(
-                    contactManager: App.shared.contactManager,
-                    marketKit: App.shared.marketKit,
-                    contact: nil
+                contactManager: App.shared.contactManager,
+                marketKit: App.shared.marketKit,
+                contact: nil
             )
-        case .exist(let uid, let newAddresses):
+        case let .exist(uid, newAddresses):
             service = ContactBookContactService(
-                    contactManager: App.shared.contactManager,
-                    marketKit: App.shared.marketKit,
-                    contact: App.shared.contactManager.all?.first(where: { $0.uid == uid }),
-                    newAddresses: newAddresses
+                contactManager: App.shared.contactManager,
+                marketKit: App.shared.marketKit,
+                contact: App.shared.contactManager.all?.first(where: { $0.uid == uid }),
+                newAddresses: newAddresses
             )
         case let .add(address):
             service = ContactBookContactService(
-                    contactManager: App.shared.contactManager,
-                    marketKit: App.shared.marketKit,
-                    contact: nil,
-                    newAddresses: [address]
+                contactManager: App.shared.contactManager,
+                marketKit: App.shared.marketKit,
+                contact: nil,
+                newAddresses: [address]
             )
         }
 
@@ -34,15 +33,12 @@ class ContactBookContactModule {
         let controller = ContactBookContactViewController(viewModel: viewModel, onUpdateContact: onUpdateContact)
         return ThemeNavigationController(rootViewController: controller)
     }
-
 }
 
 extension ContactBookContactModule {
-
     enum Mode {
         case new
         case exist(String, [ContactAddress])
         case add(ContactAddress)
     }
-
 }

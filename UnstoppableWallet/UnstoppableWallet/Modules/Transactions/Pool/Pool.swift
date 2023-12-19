@@ -1,36 +1,36 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 
 class Pool {
-    private let provider: NonSpamPoolProvider
+    private let provider: IPoolProvider
     private let disposeBag = DisposeBag()
 
-    private let invalidatedRelay = PublishRelay<()>()
+    private let invalidatedRelay = PublishRelay<Void>()
     private let itemsUpdatedRelay = PublishRelay<[TransactionItem]>()
 
     private(set) var items = [TransactionItem]()
     private var invalidated = false
     private var allLoaded = false
 
-    private let queue = DispatchQueue(label: "\(AppConfig.label).pool")
+    private let queue = DispatchQueue(label: "\(AppConfig.label).pool", qos: .userInitiated)
 
-    init(provider: NonSpamPoolProvider) {
+    init(provider: IPoolProvider) {
         self.provider = provider
 
         provider.recordsObservable()
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] records in
-                    self?.handleUpdated(records: records)
-                })
-                .disposed(by: disposeBag)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] records in
+                self?.handleUpdated(records: records)
+            })
+            .disposed(by: disposeBag)
 
         provider.lastBlockUpdatedObservable()
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] in
-                    self?.handleUpdatedLastBlock()
-                })
-                .disposed(by: disposeBag)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] in
+                self?.handleUpdatedLastBlock()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func handleUpdated(records: [TransactionRecord]) {
@@ -78,7 +78,7 @@ class Pool {
 
             var updatedItems = [TransactionItem]()
 
-            for index in 0..<self.items.count {
+            for index in 0 ..< self.items.count {
                 let item = self.items[index]
                 var changed = false
 
@@ -94,7 +94,6 @@ class Pool {
                     self.items[index].lockState = newLockState
                     changed = true
                 }
-
 
                 if changed {
                     updatedItems.append(self.items[index])
@@ -120,18 +119,16 @@ class Pool {
 
         return records.map { record in
             TransactionItem(
-                    record: record,
-                    status: record.status(lastBlockHeight: lastBlockInfo?.height),
-                    lockState: record.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
+                record: record,
+                status: record.status(lastBlockHeight: lastBlockInfo?.height),
+                lockState: record.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
             )
         }
     }
-
 }
 
 extension Pool {
-
-    var invalidatedObservable: Observable<()> {
+    var invalidatedObservable: Observable<Void> {
         invalidatedRelay.asObservable()
     }
 
@@ -155,12 +152,12 @@ extension Pool {
                 invalidated = false
 
                 return provider.recordsSingle(from: nil, limit: count)
-                        .map { [weak self] records in
-                            self?.transactionItems(records: records) ?? []
-                        }
-                        .do(onSuccess: { [weak self] items in
-                            self?.handleFetched(items: items, requestedCount: count)
-                        })
+                    .map { [weak self] records in
+                        self?.transactionItems(records: records) ?? []
+                    }
+                    .do(onSuccess: { [weak self] items in
+                        self?.handleFetched(items: items, requestedCount: count)
+                    })
             } else if allLoaded {
                 return Single.just(items)
             } else {
@@ -174,17 +171,16 @@ extension Pool {
                 let lastItem = items.last
 
                 return provider.recordsSingle(from: lastItem?.record, limit: requiredCount)
-                        .map { [weak self] records in
-                            self?.transactionItems(records: records) ?? []
-                        }
-                        .map {
-                            items + $0
-                        }
-                        .do(onSuccess: { [weak self] items in
-                            self?.handleFetched(items: items, requestedCount: count)
-                        })
+                    .map { [weak self] records in
+                        self?.transactionItems(records: records) ?? []
+                    }
+                    .map {
+                        items + $0
+                    }
+                    .do(onSuccess: { [weak self] items in
+                        self?.handleFetched(items: items, requestedCount: count)
+                    })
             }
         }
     }
-
 }

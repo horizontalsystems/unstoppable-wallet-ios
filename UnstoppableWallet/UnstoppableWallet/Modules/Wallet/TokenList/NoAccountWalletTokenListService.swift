@@ -7,6 +7,9 @@ class NoAccountWalletTokenListService: IWalletTokenListService {
     let reachabilityManager: IReachabilityManager
     let balancePrimaryValueManager: BalancePrimaryValueManager
 
+    let balanceHiddenObservable: Observable<Bool> = Observable.just(false)
+    let balanceHidden: Bool = false
+
     var state: WalletTokenListService.State = .noAccount
     var stateUpdatedPublisher: AnyPublisher<WalletTokenListService.State, Never> {
         Just(state).eraseToAnyPublisher()
@@ -16,11 +19,9 @@ class NoAccountWalletTokenListService: IWalletTokenListService {
         self.reachabilityManager = reachabilityManager
         self.balancePrimaryValueManager = balancePrimaryValueManager
     }
-
 }
 
 extension NoAccountWalletTokenListService {
-
     var isReachable: Bool {
         reachabilityManager.isReachable
     }
@@ -37,8 +38,7 @@ extension NoAccountWalletTokenListService {
         .never()
     }
 
-    func item(element: WalletModule.Element) -> WalletTokenListService.Item? {
+    func item(element _: WalletModule.Element) -> WalletTokenListService.Item? {
         nil
     }
-
 }

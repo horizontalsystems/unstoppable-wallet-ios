@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class RestoreSettingsService {
     private let manager: RestoreSettingsManager
@@ -13,11 +13,9 @@ class RestoreSettingsService {
     init(manager: RestoreSettingsManager) {
         self.manager = manager
     }
-
 }
 
 extension RestoreSettingsService {
-
     var approveSettingsObservable: Observable<TokenWithSettings> {
         approveSettingsRelay.asObservable()
     }
@@ -33,7 +31,7 @@ extension RestoreSettingsService {
     func approveSettings(token: Token, account: Account? = nil) {
         let blockchainType = token.blockchainType
 
-        if let account = account, case .created = account.origin {
+        if let account, case .created = account.origin {
             var settings = RestoreSettings()
 
             for type in blockchainType.restoreSettingTypes {
@@ -46,10 +44,10 @@ extension RestoreSettingsService {
 
         let existingSettings = account.map { manager.settings(accountId: $0.id, blockchainType: blockchainType) } ?? [:]
 
-        if blockchainType.restoreSettingTypes.contains(.birthdayHeight) && existingSettings[.birthdayHeight] == nil {
+        if blockchainType.restoreSettingTypes.contains(.birthdayHeight), existingSettings[.birthdayHeight] == nil {
             let request = Request(
-                    token: token,
-                    type: .birthdayHeight
+                token: token,
+                type: .birthdayHeight
             )
 
             requestRelay.accept(request)
@@ -82,11 +80,9 @@ extension RestoreSettingsService {
     func settings(accountId: String, blockchainType: BlockchainType) -> RestoreSettings {
         manager.settings(accountId: accountId, blockchainType: blockchainType)
     }
-
 }
 
 extension RestoreSettingsService {
-
     struct TokenWithSettings {
         let token: Token
         let settings: RestoreSettings
@@ -100,5 +96,4 @@ extension RestoreSettingsService {
     enum RequestType {
         case birthdayHeight
     }
-
 }

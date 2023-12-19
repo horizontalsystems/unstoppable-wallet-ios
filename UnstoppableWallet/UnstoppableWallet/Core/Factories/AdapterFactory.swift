@@ -1,8 +1,8 @@
 import BitcoinCore
-import RxSwift
-import RxRelay
 import EvmKit
 import MarketKit
+import RxRelay
+import RxSwift
 
 class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
@@ -15,7 +15,8 @@ class AdapterFactory {
     private let evmLabelManager: EvmLabelManager
 
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, binanceKitManager: BinanceKitManager, btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager,
-         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager) {
+         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager)
+    {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
         self.binanceKitManager = binanceKitManager
@@ -66,16 +67,15 @@ class AdapterFactory {
 
         return try? Trc20Adapter(tronKitWrapper: tronKitWrapper, contractAddress: address, wallet: wallet)
     }
-
 }
 
 extension AdapterFactory {
-
     func evmTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
         let blockchainType = transactionSource.blockchainType
 
         if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper,
-           let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType) {
+           let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType)
+        {
             let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchainType)
             return EvmTransactionsAdapter(evmKitWrapper: evmKitWrapper, source: transactionSource, baseToken: baseToken, evmTransactionSource: syncSource.transactionSource, coinManager: coinManager, evmLabelManager: evmLabelManager)
         }
@@ -95,7 +95,6 @@ extension AdapterFactory {
 
     func adapter(wallet: Wallet) -> IAdapter? {
         switch (wallet.token.type, wallet.token.blockchain.type) {
-
         case (.derived, .bitcoin):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .bitcoin, accountOrigin: wallet.account.origin)
             return try? BitcoinAdapter(wallet: wallet, syncMode: syncMode)
@@ -129,19 +128,24 @@ extension AdapterFactory {
         case (.native, .ethereum), (.native, .binanceSmartChain), (.native, .polygon), (.native, .avalanche), (.native, .optimism), (.native, .arbitrumOne), (.native, .gnosis), (.native, .fantom):
             return evmAdapter(wallet: wallet)
 
-        case (.eip20(let address), .ethereum), (.eip20(let address), .binanceSmartChain), (.eip20(let address), .polygon), (.eip20(let address), .avalanche), (.eip20(let address), .optimism), (.eip20(let address), .arbitrumOne), (.eip20(let address), .gnosis), (.eip20(let address), .fantom):
+        case let (.eip20(address), .ethereum), let (.eip20(address), .binanceSmartChain), let (.eip20(address), .polygon), let (.eip20(address), .avalanche), let (.eip20(address), .optimism), let (.eip20(address), .arbitrumOne), let (.eip20(address), .gnosis), let (.eip20(address), .fantom):
             return eip20Adapter(address: address, wallet: wallet, coinManager: coinManager)
 
         case (.native, .tron):
             return tronAdapter(wallet: wallet)
 
-        case (.eip20(let address), .tron):
+        case let (.eip20(address), .tron):
             return trc20Adapter(address: address, wallet: wallet)
 
+        case (.native, .ton):
+            let query = TokenQuery(blockchainType: .ton, tokenType: .native)
+
+            if let baseToken = try? coinManager.token(query: query) {
+                return try? TonAdapter(wallet: wallet, baseToken: baseToken)
+            }
         default: ()
         }
 
         return nil
     }
-
 }

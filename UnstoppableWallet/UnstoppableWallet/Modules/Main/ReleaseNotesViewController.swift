@@ -1,15 +1,15 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class ReleaseNotesViewController: MarkdownViewController {
     private let urlManager: UrlManager
     private let presented: Bool
-    private let closeHandler: (() -> ())?
+    private let closeHandler: (() -> Void)?
 
     let bottomHolder = UIView()
 
-    init(viewModel: MarkdownViewModel, handleRelativeUrl: Bool, urlManager: UrlManager, presented: Bool, closeHandler: (() -> ())? = nil) {
+    init(viewModel: MarkdownViewModel, handleRelativeUrl: Bool, urlManager: UrlManager, presented: Bool, closeHandler: (() -> Void)? = nil) {
         self.urlManager = urlManager
         self.presented = presented
         self.closeHandler = closeHandler
@@ -19,7 +19,8 @@ class ReleaseNotesViewController: MarkdownViewController {
         navigationItem.largeTitleDisplayMode = .automatic
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -119,13 +120,10 @@ class ReleaseNotesViewController: MarkdownViewController {
     @objc private func onRedditTap() {
         urlManager.open(url: "https://www.reddit.com/r/\(AppConfig.appRedditAccount)", from: nil)
     }
-
 }
 
 extension ReleaseNotesViewController: UIAdaptivePresentationControllerDelegate {
-
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+    func presentationControllerDidDismiss(_: UIPresentationController) {
         closeHandler?()
     }
-
 }

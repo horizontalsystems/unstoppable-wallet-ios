@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import HsExtensions
 
 class ICloudBackupNameService {
@@ -14,11 +14,9 @@ class ICloudBackupNameService {
 
         set(name: account.name)
     }
-
 }
 
 extension ICloudBackupNameService {
-
     var initialName: String {
         account.name
     }
@@ -38,11 +36,9 @@ extension ICloudBackupNameService {
 
         state = .success(name: name)
     }
-
 }
 
 extension ICloudBackupNameService {
-
     enum State {
         case success(name: String)
         case failure(error: Error)
@@ -52,5 +48,4 @@ extension ICloudBackupNameService {
         case empty
         case alreadyExist
     }
-
 }

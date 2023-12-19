@@ -1,12 +1,11 @@
-import RxSwift
-import RxRelay
-import HsToolKit
-import UniswapKit
-import CurrencyKit
 import BigInt
 import EvmKit
 import Foundation
+import HsToolKit
 import MarketKit
+import RxRelay
+import RxSwift
+import UniswapKit
 
 class OneInchService {
     let dex: SwapModule.Dex
@@ -29,7 +28,7 @@ class OneInchService {
     private let errorsRelay = PublishRelay<[Error]>()
     private(set) var errors: [Error] = [] {
         didSet {
-            if oldValue.isEmpty && errors.isEmpty {
+            if oldValue.isEmpty, errors.isEmpty {
                 return
             }
             errorsRelay.accept(errors)
@@ -52,7 +51,7 @@ class OneInchService {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).swap_service")
 
-    init(dex: SwapModule.Dex, evmKit: EvmKit.Kit, tradeService: OneInchTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
+    init(dex: SwapModule.Dex, evmKit _: EvmKit.Kit, tradeService: OneInchTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
         self.dex = dex
         self.tradeService = tradeService
         self.allowanceService = allowanceService
@@ -83,7 +82,7 @@ class OneInchService {
         }
     }
 
-    private func onUpdateTrade(state: OneInchTradeService.State) {
+    private func onUpdateTrade(state _: OneInchTradeService.State) {
         syncState()
     }
 
@@ -93,7 +92,7 @@ class OneInchService {
         pendingAllowanceService.set(token: tokenIn)
     }
 
-    private func onUpdate(amountIn: Decimal?) {
+    private func onUpdate(amountIn _: Decimal?) {
         syncState()
     }
 
@@ -106,9 +105,10 @@ class OneInchService {
     }
 
     private func checkAllowanceError(allowance: CoinValue) -> Error? {
-        guard let balanceIn = balanceIn,
+        guard let balanceIn,
               balanceIn >= tradeService.amountIn,
-              tradeService.amountIn > allowance.value else {
+              tradeService.amountIn > allowance.value
+        else {
             return nil
         }
 
@@ -128,9 +128,9 @@ class OneInchService {
         switch tradeService.state {
         case .loading:
             loading = true
-        case .ready(let tradeParameters):
+        case let .ready(tradeParameters):
             parameters = tradeParameters
-        case .notReady(let errors):
+        case let .notReady(errors):
             allErrors.append(contentsOf: errors)
         }
 
@@ -138,16 +138,16 @@ class OneInchService {
             switch allowanceState {
             case .loading:
                 loading = true
-            case .ready(let allowance):
+            case let .ready(allowance):
                 if let error = checkAllowanceError(allowance: allowance) {
                     allErrors.append(error)
                 }
-            case .notReady(let error):
+            case let .notReady(error):
                 allErrors.append(error)
             }
         }
 
-        if let balanceIn = balanceIn {
+        if let balanceIn {
             if tradeService.amountIn > balanceIn {
                 allErrors.append(SwapModule.SwapError.insufficientBalanceIn)
             }
@@ -165,7 +165,7 @@ class OneInchService {
 
         if loading {
             state = .loading
-        } else if let parameters = parameters, allErrors.isEmpty {
+        } else if let parameters, allErrors.isEmpty {
             state = .ready(parameters: parameters)
         } else {
             state = .notReady
@@ -175,11 +175,9 @@ class OneInchService {
     private func balance(token: MarketKit.Token) -> Decimal? {
         (adapterManager.adapter(for: token) as? IBalanceAdapter)?.balanceData.available
     }
-
 }
 
 extension OneInchService: ISwapErrorProvider {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -196,19 +194,17 @@ extension OneInchService: ISwapErrorProvider {
         balanceOutRelay.asObservable()
     }
 
-    func approveData(amount: Decimal? = nil)  -> SwapAllowanceService.ApproveData? {
+    func approveData(amount: Decimal? = nil) -> SwapAllowanceService.ApproveData? {
         let amount = amount ?? balanceIn
-        guard let amount = amount else {
+        guard let amount else {
             return nil
         }
 
         return allowanceService.approveData(dex: dex, amount: amount)
     }
-
 }
 
 extension OneInchService {
-
     enum State: Equatable {
         case loading
         case ready(parameters: OneInchSwapParameters)
@@ -216,19 +212,18 @@ extension OneInchService {
 
         var parameters: OneInchSwapParameters? {
             switch self {
-            case .ready(let parameters): return parameters
+            case let .ready(parameters): return parameters
             default: return nil
             }
         }
 
-        static func ==(lhs: State, rhs: State) -> Bool {
+        static func == (lhs: State, rhs: State) -> Bool {
             switch (lhs, rhs) {
             case (.loading, .loading): return true
-            case (.ready(let lhsParams), .ready(let rhsParams)): return lhsParams == rhsParams
+            case let (.ready(lhsParams), .ready(rhsParams)): return lhsParams == rhsParams
             case (.notReady, .notReady): return true
             default: return false
             }
         }
     }
-
 }

@@ -6,15 +6,13 @@ class WalletConnectSessionStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension WalletConnectSessionStorage {
-
     func sessions(accountId: String?) -> [WalletConnectSession] {
         try! dbPool.read { db in
             var request = WalletConnectSession.all()
-            if let accountId = accountId {
+            if let accountId {
                 request = request.filter(WalletConnectSession.Columns.accountId == accountId)
             }
             return try request.fetchAll(db)
@@ -42,5 +40,4 @@ extension WalletConnectSessionStorage {
             try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId).deleteAll(db)
         }
     }
-
 }

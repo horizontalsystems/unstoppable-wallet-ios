@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class FormCautionCell: UITableViewCell {
     private let cautionView = FormCautionView()
@@ -18,19 +18,18 @@ class FormCautionCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension FormCautionCell {
-
     func set(caution: Caution?) {
         cautionView.set(caution: caution)
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { cautionView.onChangeHeight }
         set { cautionView.onChangeHeight = newValue }
     }
@@ -38,5 +37,4 @@ extension FormCautionCell {
     func height(containerWidth: CGFloat) -> CGFloat {
         cautionView.height(containerWidth: containerWidth)
     }
-
 }

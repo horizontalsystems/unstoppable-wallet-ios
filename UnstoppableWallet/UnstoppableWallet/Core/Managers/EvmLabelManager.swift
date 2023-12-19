@@ -1,6 +1,6 @@
+import EvmKit
 import Foundation
 import RxSwift
-import EvmKit
 
 class EvmLabelManager {
     private let keyMethodLabelsTimestamp = "evm-label-manager-method-labels-timestamp"
@@ -23,14 +23,14 @@ class EvmLabelManager {
         }
 
         provider.evmMethodLabelsSingle()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] labels in
-                    try? self?.storage.save(evmMethodLabels: labels)
-                    self?.saveMethodLabels(timestamp: timestamp)
-                }, onError: { error in
-                    print("Method Labels sync error: \(error)")
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] labels in
+                try? self?.storage.save(evmMethodLabels: labels)
+                self?.saveMethodLabels(timestamp: timestamp)
+            }, onError: { error in
+                print("Method Labels sync error: \(error)")
+            })
+            .disposed(by: disposeBag)
     }
 
     private func syncAddressLabels(timestamp: Int) {
@@ -39,14 +39,14 @@ class EvmLabelManager {
         }
 
         provider.evmAddressLabelsSingle()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] labels in
-                    try? self?.storage.save(evmAddressLabels: labels)
-                    self?.saveAddressLabels(timestamp: timestamp)
-                }, onError: { error in
-                    print("Address Labels sync error: \(error)")
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] labels in
+                try? self?.storage.save(evmAddressLabels: labels)
+                self?.saveAddressLabels(timestamp: timestamp)
+            }, onError: { error in
+                print("Address Labels sync error: \(error)")
+            })
+            .disposed(by: disposeBag)
     }
 
     private func saveMethodLabels(timestamp: Int) {
@@ -56,21 +56,19 @@ class EvmLabelManager {
     private func saveAddressLabels(timestamp: Int) {
         try? syncerStateStorage.save(value: String(timestamp), key: keyAddressLabelsTimestamp)
     }
-
 }
 
 extension EvmLabelManager {
-
     func sync() {
         provider.updateStatusSingle()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] status in
-                    self?.syncMethodLabels(timestamp: status.methodLabels)
-                    self?.syncAddressLabels(timestamp: status.addressLabels)
-                }, onError: { error in
-                    print("Update Status sync error: \(error)")
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] status in
+                self?.syncMethodLabels(timestamp: status.methodLabels)
+                self?.syncAddressLabels(timestamp: status.addressLabels)
+            }, onError: { error in
+                print("Update Status sync error: \(error)")
+            })
+            .disposed(by: disposeBag)
     }
 
     func methodLabel(input: Data) -> String? {
@@ -89,5 +87,4 @@ extension EvmLabelManager {
 
         return address.shortened
     }
-
 }

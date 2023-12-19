@@ -6,11 +6,9 @@ class PredefinedBlockchainService {
     init(restoreSettingsManager: RestoreSettingsManager) {
         self.restoreSettingsManager = restoreSettingsManager
     }
-
 }
 
 extension PredefinedBlockchainService {
-
     func prepareNew(account: Account, blockchainType: BlockchainType) {
         var restoreSettings: RestoreSettings = [:]
 
@@ -26,5 +24,4 @@ extension PredefinedBlockchainService {
             restoreSettingsManager.save(settings: restoreSettings, account: account, blockchainType: blockchainType)
         }
     }
-
 }

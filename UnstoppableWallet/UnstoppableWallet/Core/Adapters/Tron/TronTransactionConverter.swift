@@ -1,7 +1,7 @@
-import Foundation
-import TronKit
-import MarketKit
 import BigInt
+import Foundation
+import MarketKit
+import TronKit
 
 class TronTransactionConverter {
     private let coinManager: CoinManager
@@ -41,7 +41,7 @@ class TronTransactionConverter {
         if let token = try? coinManager.token(query: query) {
             let value = convertAmount(amount: value, decimals: token.decimals, sign: sign)
             return .coinValue(token: token, value: value)
-        } else if let tokenInfo = tokenInfo {
+        } else if let tokenInfo {
             let value = convertAmount(amount: value, decimals: tokenInfo.tokenDecimal, sign: sign)
             return .tokenValue(tokenName: tokenInfo.tokenName, tokenCode: tokenInfo.tokenSymbol, tokenDecimals: tokenInfo.tokenDecimal, value: value)
         }
@@ -88,98 +88,96 @@ class TronTransactionConverter {
 
         return [event]
     }
-
 }
 
 extension TronTransactionConverter {
-
     func transactionRecord(fromTransaction fullTransaction: FullTransaction) -> TronTransactionRecord {
         let transaction = fullTransaction.transaction
 
         switch fullTransaction.decoration {
-            case let decoration as NativeTransactionDecoration:
-                switch decoration.contract {
-                    case let transfer as TransferContract:
-                        if transfer.ownerAddress != tronKit.address {
-                            return TronIncomingTransactionRecord(
-                                source: source,
-                                transaction: transaction,
-                                baseToken: baseToken,
-                                from: transfer.ownerAddress.base58,
-                                value: baseCoinValue(value: transfer.amount, sign: .plus),
-                                spam: transfer.amount < 10
-                            )
-                        } else {
-                            return TronOutgoingTransactionRecord(
-                                source: source,
-                                transaction: transaction,
-                                baseToken: baseToken,
-                                to: transfer.toAddress.base58,
-                                value: baseCoinValue(value: transfer.amount, sign: .minus),
-                                sentToSelf: transfer.toAddress == tronKit.address
-                            )
-                        }
-
-                    default:
-                        return TronTransactionRecord(
-                            source: source,
-                            transaction: transaction,
-                            baseToken: baseToken,
-                            ownTransaction: transaction.ownTransaction(ownAddress: tronKit.address)
-                        )
-                }
-                
-            case let decoration as OutgoingEip20Decoration:
-                return TronOutgoingTransactionRecord(
-                    source: source,
-                    transaction: transaction,
-                    baseToken: baseToken,
-                    to: decoration.to.base58,
-                    value: eip20Value(tokenAddress: decoration.contractAddress, value: decoration.value, sign: .minus, tokenInfo: decoration.tokenInfo),
-                    sentToSelf: decoration.sentToSelf
-                )
-
-            case let decoration as ApproveEip20Decoration:
-                return TronApproveTransactionRecord(
-                    source: source,
-                    transaction: transaction,
-                    baseToken: baseToken,
-                    spender: decoration.spender.base58,
-                    value: eip20Value(tokenAddress: decoration.contractAddress, value: decoration.value, sign: .plus, tokenInfo: nil)
-                )
-
-            case let decoration as UnknownTransactionDecoration:
-                let address = tronKit.address
-
-                let internalTransactions = decoration.internalTransactions.filter { $0.to == address }
-
-                let trc0Transfers = decoration.events.compactMap { $0 as? Trc20TransferEvent }
-                let incomingTrc20Transfers = trc0Transfers.filter { $0.to == address && $0.from != address }
-                let outgoingTrc20Transfers = trc0Transfers.filter { $0.from == address }
-
-                if decoration.fromAddress == address, let contractAddress = decoration.toAddress {
-                    let value = decoration.value ?? 0
-
-                    return TronContractCallTransactionRecord(
+        case let decoration as NativeTransactionDecoration:
+            switch decoration.contract {
+            case let transfer as TransferContract:
+                if transfer.ownerAddress != tronKit.address {
+                    return TronIncomingTransactionRecord(
                         source: source,
                         transaction: transaction,
                         baseToken: baseToken,
-                        contractAddress: contractAddress.base58,
-                        method: decoration.data.flatMap { evmLabelManager.methodLabel(input: $0) },
-                        incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTrc20Transfers: incomingTrc20Transfers),
-                        outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingTrc20Transfers: outgoingTrc20Transfers)
+                        from: transfer.ownerAddress.base58,
+                        value: baseCoinValue(value: transfer.amount, sign: .plus),
+                        spam: transfer.amount < 10
                     )
-                } else if decoration.fromAddress != address && decoration.toAddress != address {
-                    return TronExternalContractCallTransactionRecord(
+                } else {
+                    return TronOutgoingTransactionRecord(
                         source: source,
                         transaction: transaction,
                         baseToken: baseToken,
-                        incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTrc20Transfers: incomingTrc20Transfers),
-                        outgoingEvents: transferEvents(outgoingTrc20Transfers: outgoingTrc20Transfers)
+                        to: transfer.toAddress.base58,
+                        value: baseCoinValue(value: transfer.amount, sign: .minus),
+                        sentToSelf: transfer.toAddress == tronKit.address
                     )
                 }
 
-            default: ()
+            default:
+                return TronTransactionRecord(
+                    source: source,
+                    transaction: transaction,
+                    baseToken: baseToken,
+                    ownTransaction: transaction.ownTransaction(ownAddress: tronKit.address)
+                )
+            }
+
+        case let decoration as OutgoingEip20Decoration:
+            return TronOutgoingTransactionRecord(
+                source: source,
+                transaction: transaction,
+                baseToken: baseToken,
+                to: decoration.to.base58,
+                value: eip20Value(tokenAddress: decoration.contractAddress, value: decoration.value, sign: .minus, tokenInfo: decoration.tokenInfo),
+                sentToSelf: decoration.sentToSelf
+            )
+
+        case let decoration as ApproveEip20Decoration:
+            return TronApproveTransactionRecord(
+                source: source,
+                transaction: transaction,
+                baseToken: baseToken,
+                spender: decoration.spender.base58,
+                value: eip20Value(tokenAddress: decoration.contractAddress, value: decoration.value, sign: .plus, tokenInfo: nil)
+            )
+
+        case let decoration as UnknownTransactionDecoration:
+            let address = tronKit.address
+
+            let internalTransactions = decoration.internalTransactions.filter { $0.to == address }
+
+            let trc0Transfers = decoration.events.compactMap { $0 as? Trc20TransferEvent }
+            let incomingTrc20Transfers = trc0Transfers.filter { $0.to == address && $0.from != address }
+            let outgoingTrc20Transfers = trc0Transfers.filter { $0.from == address }
+
+            if decoration.fromAddress == address, let contractAddress = decoration.toAddress {
+                let value = decoration.value ?? 0
+
+                return TronContractCallTransactionRecord(
+                    source: source,
+                    transaction: transaction,
+                    baseToken: baseToken,
+                    contractAddress: contractAddress.base58,
+                    method: decoration.data.flatMap { evmLabelManager.methodLabel(input: $0) },
+                    incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTrc20Transfers: incomingTrc20Transfers),
+                    outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingTrc20Transfers: outgoingTrc20Transfers)
+                )
+            } else if decoration.fromAddress != address, decoration.toAddress != address {
+                return TronExternalContractCallTransactionRecord(
+                    source: source,
+                    transaction: transaction,
+                    baseToken: baseToken,
+                    incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTrc20Transfers: incomingTrc20Transfers),
+                    outgoingEvents: transferEvents(outgoingTrc20Transfers: outgoingTrc20Transfers)
+                )
+            }
+
+        default: ()
         }
 
         return TronTransactionRecord(
@@ -189,5 +187,4 @@ extension TronTransactionConverter {
             ownTransaction: transaction.ownTransaction(ownAddress: tronKit.address)
         )
     }
-
 }

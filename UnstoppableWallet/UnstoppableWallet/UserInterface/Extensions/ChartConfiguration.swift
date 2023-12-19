@@ -1,11 +1,8 @@
-import UIKit
 import Chart
-import LanguageKit
-import CurrencyKit
 import ThemeKit
+import UIKit
 
 extension ChartConfiguration {
-
     static var baseChart: ChartConfiguration {
         ChartConfiguration().applyColors().applyBase()
     }
@@ -79,10 +76,10 @@ extension ChartConfiguration {
         curveType = .bars
         curveBottomInset = 18
 
-        trendUpGradient =  [.clear]
-        trendDownGradient =  [.clear]
-        pressedGradient =  [.clear]
-        neutralGradient =  [.clear]
+        trendUpGradient = [.clear]
+        trendDownGradient = [.clear]
+        pressedGradient = [.clear]
+        neutralGradient = [.clear]
 
         return self
     }
@@ -101,7 +98,7 @@ extension ChartConfiguration {
         return self
     }
 
-    @discardableResult private func applyColors(trendIgnore: Bool = false) -> Self {
+    @discardableResult private func applyColors(trendIgnore _: Bool = false) -> Self {
         borderColor = .themeSteel20
         backgroundColor = .clear
 
@@ -113,7 +110,7 @@ extension ChartConfiguration {
         trendUpGradient = [UIColor](repeatElement(UIColor(hex: 0x13D670), count: 3))
         trendDownGradient = [UIColor(hex: 0x7413D6), UIColor(hex: 0x7413D6), UIColor(hex: 0xFF0303)]
         pressedGradient = [UIColor](repeatElement(.themeLeah, count: 3))
-        neutralGradient = [UIColor](repeatElement(UIColor(hex: 0xFFa800), count: 3))
+        neutralGradient = [UIColor](repeatElement(UIColor(hex: 0xFFA800), count: 3))
         gradientLocations = [0, 0.05, 1]
         gradientAlphas = [0, 0, 0.3]
 
@@ -129,18 +126,15 @@ extension ChartConfiguration {
 
         return self
     }
-
 }
 
-extension ChartIndicator.LineConfiguration {
-
-    static public var dominance: Self {
+public extension ChartIndicator.LineConfiguration {
+    static var dominance: Self {
         Self(color: ChartColor(.themeYellowD.withAlphaComponent(0.5)), width: 1)
     }
 
-    static public var dominanceId: String {
+    static var dominanceId: String {
         let indicator = PrecalculatedIndicator(id: MarketGlobalModule.dominance, enabled: true, values: [], configuration: dominance)
         return indicator.json
     }
-
 }

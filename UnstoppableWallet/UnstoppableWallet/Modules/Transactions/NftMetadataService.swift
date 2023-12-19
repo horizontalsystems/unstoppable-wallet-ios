@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class NftMetadataService {
     private let nftMetadataManager: NftMetadataManager
@@ -19,11 +19,9 @@ class NftMetadataService {
         let map = Dictionary(uniqueKeysWithValues: assetsBriefMetadata.map { ($0.nftUid, $0) })
         assetsBriefMetadataRelay.accept(map)
     }
-
 }
 
 extension NftMetadataService {
-
     var assetsBriefMetadataObservable: Observable<[NftUid: NftAssetBriefMetadata]> {
         assetsBriefMetadataRelay.asObservable()
     }
@@ -35,11 +33,10 @@ extension NftMetadataService {
 
     func fetch(nftUids: Set<NftUid>) {
         nftMetadataManager.assetsBriefMetadataSingle(nftUids: nftUids)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] assetsBriefMetadata in
-                    self?.handle(assetsBriefMetadata: assetsBriefMetadata)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] assetsBriefMetadata in
+                self?.handle(assetsBriefMetadata: assetsBriefMetadata)
+            })
+            .disposed(by: disposeBag)
     }
-
 }

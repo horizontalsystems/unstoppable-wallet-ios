@@ -1,6 +1,5 @@
-import Foundation
 import Chart
-import CurrencyKit
+import Foundation
 import ThemeKit
 
 struct SettingsBackup: Codable {
@@ -41,7 +40,6 @@ struct SettingsBackup: Codable {
         case balanceAutoHide = "balance_auto_hide"
         case appIcon = "app_icon"
     }
-
 }
 
 extension SettingsBackup {

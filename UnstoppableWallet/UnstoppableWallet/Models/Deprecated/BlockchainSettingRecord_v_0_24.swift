@@ -24,12 +24,12 @@ class BlockchainSettingRecord_v_0_24: Record {
         case coinType, key, value
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         coinType = row[Columns.coinType]
         key = row[Columns.key]
         value = row[Columns.value]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -37,5 +37,4 @@ class BlockchainSettingRecord_v_0_24: Record {
         container[Columns.key] = key
         container[Columns.value] = value
     }
-
 }

@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class InputBadgeWrapperView: UIView, ISizeAwareView {
     let badgeView = BadgeView()
@@ -20,7 +20,8 @@ class InputBadgeWrapperView: UIView, ISizeAwareView {
         badgeView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -31,5 +32,4 @@ class InputBadgeWrapperView: UIView, ISizeAwareView {
 
         return text.size(containerWidth: containerWidth, font: badgeView.font).width
     }
-
 }

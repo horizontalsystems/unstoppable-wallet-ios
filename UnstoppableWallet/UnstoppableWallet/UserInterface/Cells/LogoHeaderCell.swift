@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class LogoHeaderCell: UITableViewCell {
     private static let logoSize: CGFloat = 72
@@ -79,13 +79,10 @@ class LogoHeaderCell: UITableViewCell {
     func set(imageUrl: String?) {
         logoImageView.kf.setImage(with: imageUrl.flatMap { URL(string: $0) }, placeholder: UIImage(named: "placeholder_rectangle_32"))
     }
-
 }
 
 extension LogoHeaderCell {
-
     static var height: CGFloat {
         logoSize + verticalMargin * 2
     }
-
 }

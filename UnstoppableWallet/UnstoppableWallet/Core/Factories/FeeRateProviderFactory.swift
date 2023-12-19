@@ -13,5 +13,4 @@ class FeeRateProviderFactory {
         default: return nil
         }
     }
-
 }

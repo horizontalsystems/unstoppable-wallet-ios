@@ -1,10 +1,10 @@
+import ComponentKit
 import Foundation
-import UIKit
+import MarketKit
 import RxSwift
 import SnapKit
 import ThemeKit
-import ComponentKit
-import MarketKit
+import UIKit
 
 class SwapInputCardView: UIView {
     static let lineHeight: CGFloat = 90
@@ -42,7 +42,7 @@ class SwapInputCardView: UIView {
 
         if isTopView {
             autocompleteView = SwapInputAccessoryView(frame: .zero)
-            autocompleteView?.onSelect = { [weak self] multi in self?.setBalance(multi: multi)  }
+            autocompleteView?.onSelect = { [weak self] multi in self?.setBalance(multi: multi) }
         }
 
         addSubview(amountTextView)
@@ -56,7 +56,7 @@ class SwapInputCardView: UIView {
         amountTextView.textColor = .themeLeah
         amountTextView.placeholder = "0.0"
         amountTextView.keyboardType = .decimalPad
-        amountTextView.onChangeEditing = { [weak self] in self?.sync(editing: $0)  }
+        amountTextView.onChangeEditing = { [weak self] in self?.sync(editing: $0) }
 
         addSubview(secondaryView)
         secondaryView.snp.makeConstraints { maker in
@@ -105,7 +105,8 @@ class SwapInputCardView: UIView {
         subscribe(disposeBag, amountInputViewModel.secondaryTextDriver) { [weak self] in self?.set(secondaryText: $0) }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -121,11 +122,9 @@ class SwapInputCardView: UIView {
     private func sync(editing: Bool) {
         viewModel.viewIsEditing = editing
     }
-
 }
 
 extension SwapInputCardView {
-
     private func set(readOnly: Bool) {
         amountTextView.isEditable = !readOnly
     }
@@ -145,7 +144,7 @@ extension SwapInputCardView {
             tokenSelectView.tokenImage.imageView.image = tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) } ?? UIImage(named: "placeholder_circle_32")
         }
 
-        if let tokenViewItem = tokenViewItem {
+        if let tokenViewItem {
             tokenSelectView.tokenButton.setTitle(tokenViewItem.title, for: .normal)
             tokenSelectView.tokenButton.setTitleColor(.themeLeah, for: .normal)
         } else {
@@ -154,7 +153,7 @@ extension SwapInputCardView {
         }
     }
 
-    private func sync(balance: String?) {
+    private func sync(balance _: String?) {
         syncAutocompleteHeight()
     }
 
@@ -165,7 +164,7 @@ extension SwapInputCardView {
     private func set(amount: String?) {
         syncAutocompleteHeight()
 
-        guard amountTextView.text != amount && !amountInputViewModel.equalValue(lhs: amountTextView.text, rhs: amount) else { //avoid issue with point ("1" and "1.")
+        guard amountTextView.text != amount, !amountInputViewModel.equalValue(lhs: amountTextView.text, rhs: amount) else { // avoid issue with point ("1" and "1.")
             return
         }
         amountTextView.text = amount
@@ -179,13 +178,10 @@ extension SwapInputCardView {
     private func set(secondaryText: String?) {
         secondaryView.text = secondaryText
     }
-
 }
 
 extension SwapInputCardView: ICoinSelectDelegate {
-
     func didSelect(token: Token) {
         viewModel.onSelect(token: token)
     }
-
 }

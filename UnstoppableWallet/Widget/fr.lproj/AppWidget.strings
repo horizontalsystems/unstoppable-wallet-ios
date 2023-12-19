@@ -1,0 +1,27 @@
+"6ebp42" = "Pièce sélectionnée";
+"8vJheC" = "Trier par";
+"qHGyuo" = "Cap. marché la plus forte";
+"tVjZ7W" = "Cap. marché la plus basse";
+"t6AKQ5" = "Volume le plus élevé";
+"C1LmDj" = "Volume le plus bas";
+"Rl3a0T" = "Les grands gagnants";
+"x1kK4T" = "Les gros perdants";
+
+"2puq80" = "Coin Price List";
+"Iodq3O-C1LmDj" = "Just to confirm, you wanted ‘Lowest Volume’?";
+"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Top Gainers’?";
+"Iodq3O-qHGyuo" = "Just to confirm, you wanted ‘Highest Cap’?";
+"Iodq3O-t6AKQ5" = "Just to confirm, you wanted ‘Highest Volume’?";
+"Iodq3O-tVjZ7W" = "Just to confirm, you wanted ‘Lowest Cap’?";
+"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Top Losers’?";
+"OkcYOj" = "View coin price for selected coin";
+"VXTxGF" = "Widget Coin";
+"ZBHf6A" = "Sort Type";
+"hrLfmt" = "Single Coin Price";
+"nj8Co9-C1LmDj" = "There are ${count} options matching ‘Lowest Volume’.";
+"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Top Gainers’.";
+"nj8Co9-qHGyuo" = "There are ${count} options matching ‘Highest Cap’.";
+"nj8Co9-t6AKQ5" = "There are ${count} options matching ‘Highest Volume’.";
+"nj8Co9-tVjZ7W" = "There are ${count} options matching ‘Lowest Cap’.";
+"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Top Losers’.";
+"rCV9fg" = "See coin prices for coin list";

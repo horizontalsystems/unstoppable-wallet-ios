@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class TermsViewModel {
     private let termCount = 5
@@ -15,14 +15,14 @@ class TermsViewModel {
         self.service = service
 
         if service.termsAccepted {
-            (0..<termCount).forEach { checkedIndices.insert($0) }
+            (0 ..< termCount).forEach { checkedIndices.insert($0) }
         }
 
         syncState()
     }
 
     private func syncState() {
-        let viewItems = (0..<termCount).map { index in
+        let viewItems = (0 ..< termCount).map { index in
             ViewItem(text: "terms.item.\(index + 1)".localized, checked: checkedIndices.contains(index))
         }
 
@@ -30,11 +30,9 @@ class TermsViewModel {
 
         buttonEnabledRelay.accept(checkedIndices.count == termCount)
     }
-
 }
 
 extension TermsViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -60,14 +58,11 @@ extension TermsViewModel {
     func onTapAgree() {
         service.setTermsAccepted()
     }
-
 }
 
 extension TermsViewModel {
-
     struct ViewItem {
         let text: String
         let checked: Bool
     }
-
 }

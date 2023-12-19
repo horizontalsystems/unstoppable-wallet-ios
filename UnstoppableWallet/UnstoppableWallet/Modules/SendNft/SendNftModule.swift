@@ -1,23 +1,23 @@
-import UIKit
-import ThemeKit
 import MarketKit
+import ThemeKit
+import UIKit
 
-class SendNftModule {
-
+enum SendNftModule {
     private static func addressService(blockchainType: BlockchainType) -> AddressService {
         let evmAddressParserItem = EvmAddressParser()
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, blockchainType: blockchainType)
 
         let addressParserChain = AddressParserChain()
-                .append(handler: evmAddressParserItem)
-                .append(handler: udnAddressParserItem)
+            .append(handler: evmAddressParserItem)
+            .append(handler: udnAddressParserItem)
 
         if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
-           let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem) {
+           let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
+        {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
-        let addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil)
         return AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: blockchainType)
     }
 
@@ -61,8 +61,9 @@ class SendNftModule {
 
         let evmBlockchainManager = App.shared.evmBlockchainManager
         guard let evmKitWrapper = try? evmBlockchainManager
-                .evmKitManager(blockchainType: nftUid.blockchainType)
-                .evmKitWrapper(account: account, blockchainType: nftUid.blockchainType) else {
+            .evmKitManager(blockchainType: nftUid.blockchainType)
+            .evmKitWrapper(account: account, blockchainType: nftUid.blockchainType)
+        else {
             return nil
         }
 
@@ -87,5 +88,4 @@ class SendNftModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }

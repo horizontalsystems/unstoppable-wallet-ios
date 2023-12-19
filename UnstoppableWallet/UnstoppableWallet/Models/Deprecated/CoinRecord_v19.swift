@@ -34,7 +34,7 @@ class CoinRecord_v19: Record {
         case coinId, title, code, decimal, tokenType, erc20Address, bep2Symbol
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         id = row[Columns.coinId]
         title = row[Columns.title]
         code = row[Columns.code]
@@ -43,7 +43,7 @@ class CoinRecord_v19: Record {
         erc20Address = row[Columns.erc20Address]
         bep2Symbol = row[Columns.bep2Symbol]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -55,5 +55,4 @@ class CoinRecord_v19: Record {
         container[Columns.erc20Address] = erc20Address
         container[Columns.bep2Symbol] = bep2Symbol
     }
-
 }

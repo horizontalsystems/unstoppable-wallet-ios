@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class WalletTokenCell: BaseSelectableThemeCell {
     static let height = BalanceTopView.height
@@ -17,11 +17,12 @@ class WalletTokenCell: BaseSelectableThemeCell {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTapError: (() -> ())?) {
+    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTapError: (() -> Void)?) {
         topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
         topView.layoutIfNeeded()
 
@@ -31,5 +32,4 @@ class WalletTokenCell: BaseSelectableThemeCell {
             }
         }
     }
-
 }

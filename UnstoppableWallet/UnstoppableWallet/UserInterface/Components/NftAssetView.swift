@@ -1,7 +1,7 @@
-import UIKit
+import Kingfisher
 import SnapKit
 import ThemeKit
-import Kingfisher
+import UIKit
 
 class NftAssetView: UIView {
     private static let imageMargin: CGFloat = .margin4
@@ -20,7 +20,7 @@ class NftAssetView: UIView {
     private let countWrapper = UIView()
     private let countLabel = UILabel()
 
-    var onTap: (() -> ())?
+    var onTap: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -141,7 +141,8 @@ class NftAssetView: UIView {
         fiatPriceLabel.textColor = .themeGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -195,14 +196,11 @@ class NftAssetView: UIView {
             imageView.image = nil
         }
     }
-
 }
 
 extension NftAssetView {
-
     static func height(containerWidth: CGFloat) -> CGFloat {
         let imageSize = containerWidth - imageMargin * 2
         return imageMargin + imageSize + bottomHeight
     }
-
 }

@@ -1,6 +1,6 @@
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 protocol ICoinToggleViewModel {
     var viewItemsDriver: Driver<[CoinToggleViewModel.ViewItem]> { get }
@@ -12,8 +12,7 @@ protocol ICoinToggleViewModel {
     func onUpdate(filter: String)
 }
 
-class CoinToggleViewModel {
-
+enum CoinToggleViewModel {
     struct ViewItem {
         let uid: String
         let imageUrl: String
@@ -28,5 +27,4 @@ class CoinToggleViewModel {
         case toggleVisible(enabled: Bool, hasSettings: Bool, hasInfo: Bool)
         case toggleHidden(notSupportedReason: String)
     }
-
 }

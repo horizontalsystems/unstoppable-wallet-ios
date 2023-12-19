@@ -1,9 +1,8 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import UniswapKit
-import CurrencyKit
 import EvmKit
+import Foundation
+import RxCocoa
+import RxSwift
+import UniswapKit
 
 class UniswapViewModel {
     private let disposeBag = DisposeBag()
@@ -11,7 +10,7 @@ class UniswapViewModel {
     public let service: UniswapService
     public let tradeService: UniswapTradeService
     public let switchService: AmountTypeSwitchService
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
 
@@ -39,13 +38,13 @@ class UniswapViewModel {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).swap_view_model")
 
-    init(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyKit: CurrencyKit.Kit, viewItemHelper: SwapViewItemHelper) {
+    init(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyManager: CurrencyManager, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.switchService = switchService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.viewItemHelper = viewItemHelper
 
         subscribeToService()
@@ -80,7 +79,7 @@ class UniswapViewModel {
     }
 
     private func handleObservable(errors: [Error]? = nil) {
-        if let errors = errors {
+        if let errors {
             sync(errors: errors)
         }
 
@@ -122,12 +121,13 @@ class UniswapViewModel {
         switch tradeState {
         case .loading:
             loading = true
-        case .ready(let trade):
+        case let .ready(trade):
             if let executionPrice = trade.tradeData.executionPrice, !executionPrice.isZero {
                 let prices = viewItemHelper.sortedPrices(
-                        executionPrice: executionPrice,
-                        invertedPrice: trade.tradeData.executionPriceInverted ?? (1 / executionPrice),
-                        tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)
+                    executionPrice: executionPrice,
+                    invertedPrice: trade.tradeData.executionPriceInverted ?? (1 / executionPrice),
+                    tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut
+                )
                 buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: prices?.0, revertedPrice: prices?.1))
             } else {
                 buyPriceRelay.accept(nil)
@@ -151,7 +151,7 @@ class UniswapViewModel {
 
         if case .ready = service.state {
             actionState = .enabled(title: "swap.proceed_button".localized)
-        } else if let error = service.errors.compactMap({ $0 as? SwapModule.SwapError}).first {
+        } else if let error = service.errors.compactMap({ $0 as? SwapModule.SwapError }).first {
             switch error {
             case .noBalanceIn: actionState = .disabled(title: "swap.not_available_button".localized)
             case .insufficientBalanceIn: actionState = .disabled(title: "swap.button_error.insufficient_balance".localized)
@@ -191,12 +191,12 @@ class UniswapViewModel {
         } else if case .notReady = tradeService.state {
             revokeWarning = nil
             approveStep = .notApproved
-        } else if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
+        } else if service.errors.contains(where: { $0 as? SwapModule.SwapError == .insufficientBalanceIn }) {
             approveStep = .notApproved
         } else if revokeWarning != nil {
             revokeAction = .enabled(title: "button.revoke".localized)
             approveStep = .revokeRequired
-        } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
+        } else if service.errors.contains(where: { $0 as? SwapModule.SwapError == .insufficientAllowance }) {
             approveAction = .enabled(title: "button.approve".localized)
             approveStep = .approveRequired
         } else if case .approved = pendingAllowanceService.state {
@@ -215,8 +215,8 @@ class UniswapViewModel {
 
     private func settingsViewItem(settings: UniswapSettings) -> SettingsViewItem {
         SettingsViewItem(slippage: viewItemHelper.slippage(settings.allowedSlippage),
-            deadline: viewItemHelper.deadline(settings.ttl),
-            recipient: settings.recipient?.title)
+                         deadline: viewItemHelper.deadline(settings.ttl),
+                         recipient: settings.recipient?.title)
     }
 
     private func sync(amountType: AmountTypeSwitchService.AmountType) {
@@ -229,13 +229,11 @@ class UniswapViewModel {
     private func sync(toggleAvailable: Bool) {
         isAmountToggleAvailableRelay.accept(toggleAvailable)
     }
-
 }
 
 extension UniswapViewModel {
-
     var amountTypeSelectorItems: [String] {
-        ["swap.amount_type.coin".localized, currencyKit.baseCurrency.code]
+        ["swap.amount_type.coin".localized, currencyManager.baseCurrency.code]
     }
 
     var amountTypeIndexDriver: Driver<Int> {
@@ -318,7 +316,7 @@ extension UniswapViewModel {
         tradeService.switchCoins()
     }
 
-    func onChangeAmountType(index: Int) {
+    func onChangeAmountType(index _: Int) {
         switchService.toggle()
     }
 
@@ -343,7 +341,7 @@ extension UniswapViewModel {
     }
 
     func onTapProceed() {
-        guard case .ready(let transactionData) = service.state else {
+        guard case let .ready(transactionData) = service.state else {
             return
         }
 
@@ -352,41 +350,40 @@ extension UniswapViewModel {
         }
 
         let swapInfo = SendEvmData.SwapInfo(
-                estimatedOut: tradeService.amountOut,
-                estimatedIn: tradeService.amountIn,
-                slippage: viewItemHelper.slippage(tradeService.settings.allowedSlippage),
-                deadline: viewItemHelper.deadline(tradeService.settings.ttl),
-                recipientDomain: tradeService.settings.recipient?.domain,
-                price: viewItemHelper.sortedPrices(
-                        executionPrice: trade.tradeData.executionPrice,
-                        invertedPrice: trade.tradeData.executionPriceInverted,
-                        tokenIn: tradeService.tokenIn,
-                        tokenOut: tradeService.tokenOut)?.0,
-                priceImpact: viewItemHelper.priceImpactViewItem(priceImpact: trade.tradeData.priceImpact, impactLevel: trade.impactLevel)
+            estimatedOut: tradeService.amountOut,
+            estimatedIn: tradeService.amountIn,
+            slippage: viewItemHelper.slippage(tradeService.settings.allowedSlippage),
+            deadline: viewItemHelper.deadline(tradeService.settings.ttl),
+            recipientDomain: tradeService.settings.recipient?.domain,
+            price: viewItemHelper.sortedPrices(
+                executionPrice: trade.tradeData.executionPrice,
+                invertedPrice: trade.tradeData.executionPriceInverted,
+                tokenIn: tradeService.tokenIn,
+                tokenOut: tradeService.tokenOut
+            )?.0,
+            priceImpact: viewItemHelper.priceImpactViewItem(priceImpact: trade.tradeData.priceImpact, impactLevel: trade.impactLevel)
         )
 
         var impactWarnings = [Warning]()
         var impactErrors = [Error]()
 
         switch trade.impactLevel {
-        case .warning:  impactWarnings = [UniswapModule.UniswapWarning.highPriceImpact]
-        case .forbidden:  impactErrors = [UniswapModule.UniswapError.forbiddenPriceImpact(provider: "Uniswap")] // we can use url from dex
+        case .warning: impactWarnings = [UniswapModule.UniswapWarning.highPriceImpact]
+        case .forbidden: impactErrors = [UniswapModule.UniswapError.forbiddenPriceImpact(provider: dexName)] // we can use url from dex
         default: ()
         }
         let sendEvmData = SendEvmData(
-                transactionData: transactionData,
-                additionalInfo: .uniswap(info: swapInfo),
-                warnings: impactWarnings,
-                errors: impactErrors
+            transactionData: transactionData,
+            additionalInfo: .uniswap(info: swapInfo),
+            warnings: impactWarnings,
+            errors: impactErrors
         )
 
         openConfirmRelay.accept(sendEvmData)
     }
-
 }
 
 extension UniswapViewModel {
-
     struct TradeViewItem {
         let executionPrice: String?
         let executionPriceInverted: String?
@@ -405,5 +402,4 @@ extension UniswapViewModel {
         case enabled(title: String)
         case disabled(title: String)
     }
-
 }

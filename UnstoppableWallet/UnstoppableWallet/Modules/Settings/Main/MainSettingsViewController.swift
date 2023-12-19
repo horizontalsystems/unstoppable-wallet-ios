@@ -282,7 +282,7 @@ class MainSettingsViewController: ThemeViewController {
                 id: "launch-screen",
                 height: .heightCell48,
                 action: { [weak self] in
-                    let viewController = AppearanceModule.view().toViewController(title: "appearance.title".localized)
+                    let viewController = AppearanceView().toViewController(title: "appearance.title".localized)
                     self?.navigationController?.pushViewController(viewController, animated: true)
                 }
             ),
@@ -291,7 +291,7 @@ class MainSettingsViewController: ThemeViewController {
                 id: "base-currency",
                 height: .heightCell48,
                 action: { [weak self] in
-                    self?.navigationController?.pushViewController(BaseCurrencySettingsModule.viewController(), animated: true)
+                    self?.navigationController?.pushViewController(BaseCurrencySettingsModule.view().toViewController(title: "settings.base_currency.title".localized), animated: true)
                 }
             ),
             StaticRow(
@@ -299,7 +299,7 @@ class MainSettingsViewController: ThemeViewController {
                 id: "language",
                 height: .heightCell48,
                 action: { [weak self] in
-                    let module = LanguageSettingsRouter.module { MainModule.instance(presetTab: .settings) }
+                    let module = LanguageSettingsModule.view().toViewController(title: "settings.language".localized)
                     self?.navigationController?.pushViewController(module, animated: true)
                 }
             ),
@@ -458,7 +458,7 @@ class MainSettingsViewController: ThemeViewController {
 
     private func handleContact() {
         let viewController = BottomSheetModule.viewController(
-            image: .local(image: UIImage(named: "at_24")?.withTintColor(.themeJacob)),
+            image: .local(name: "at_24", tint: .warning),
             title: "settings.contact.title".localized,
             items: [],
             buttons: [
@@ -482,9 +482,9 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
-            Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
+            Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "feedback", headerState: .margin(height: .margin32), rows: feedbackRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]

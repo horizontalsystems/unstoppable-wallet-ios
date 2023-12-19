@@ -15,5 +15,4 @@ class BinanceChainIncomingTransactionRecord: BinanceChainTransactionRecord {
     override var mainValue: TransactionValue? {
         value
     }
-
 }

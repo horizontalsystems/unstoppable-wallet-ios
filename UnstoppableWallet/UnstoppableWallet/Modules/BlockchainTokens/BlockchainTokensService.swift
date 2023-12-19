@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class BlockchainTokensService {
     private let approveTokensRelay = PublishRelay<(Blockchain, [Token])>()
@@ -12,7 +12,6 @@ class BlockchainTokensService {
 }
 
 extension BlockchainTokensService {
-
     var approveTokensObservable: Observable<(Blockchain, [Token])> {
         approveTokensRelay.asObservable()
     }
@@ -47,16 +46,13 @@ extension BlockchainTokensService {
 
         rejectApproveTokensRelay.accept(request.blockchain)
     }
-
 }
 
 extension BlockchainTokensService {
-
     struct Request {
         let blockchain: Blockchain
         let tokens: [Token]
         let enabledTokens: [Token]
         let allowEmpty: Bool
     }
-
 }

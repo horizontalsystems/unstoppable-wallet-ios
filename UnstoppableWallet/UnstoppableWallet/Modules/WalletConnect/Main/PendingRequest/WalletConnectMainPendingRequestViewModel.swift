@@ -1,8 +1,9 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class WalletConnectMainPendingRequestViewModel {
+    static let unsupported = "Unsupported"
     private let service: WalletConnectMainPendingRequestService
     private let disposeBag = DisposeBag()
 
@@ -25,21 +26,19 @@ class WalletConnectMainPendingRequestViewModel {
     private func sync(items: [WalletConnectMainPendingRequestService.Item]) {
         let viewItems = items.map { request in
             ViewItem(
-                    id: request.id,
-                    title: request.method.title,
-                    subtitle: service.blockchain(chainId: request.chainId) ?? "",
-                    imageUrl: request.sessionImageUrl,
-                    unsupported: request.method == .unsupported
+                id: request.id,
+                title: request.methodName ?? Self.unsupported,
+                subtitle: service.blockchain(chainId: request.chainId) ?? "",
+                imageUrl: request.sessionImageUrl,
+                unsupported: request.methodName == nil
             )
         }
 
         viewItemsRelay.accept(viewItems)
     }
-
 }
 
 extension WalletConnectMainPendingRequestViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -55,11 +54,9 @@ extension WalletConnectMainPendingRequestViewModel {
     func onReject(id: Int) {
         service.onReject(id: id)
     }
-
 }
 
 extension WalletConnectMainPendingRequestViewModel {
-
     struct ViewItem {
         let id: Int
         let title: String
@@ -67,19 +64,4 @@ extension WalletConnectMainPendingRequestViewModel {
         let imageUrl: String?
         let unsupported: Bool
     }
-
-}
-
-extension WalletConnectMainPendingRequestService.RequestMethod {
-
-    var title: String {
-        switch self {
-        case .ethSign: return "Sign Request"
-        case .personalSign: return "Personal Sign Request"
-        case .ethSignTypedData: return "Typed Sign Request"
-        case .ethSendTransaction: return "Approve Transaction"
-        case .unsupported: return "Unsupported"
-        }
-    }
-
 }

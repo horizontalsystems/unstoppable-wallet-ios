@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import ComponentKit
+import ThemeKit
+import UIKit
 
 class CheckboxView: UIView {
     private static let checkBoxLeadingMargin: CGFloat = .margin16
@@ -51,7 +51,8 @@ class CheckboxView: UIView {
         descriptionLabel.textColor = .themeLeah
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -69,16 +70,13 @@ class CheckboxView: UIView {
         get { !checkBoxImageView.isHidden }
         set { checkBoxImageView.isHidden = !newValue }
     }
-
 }
 
 extension CheckboxView {
-
     static func height(containerWidth: CGFloat, text: String, insets: UIEdgeInsets = .zero) -> CGFloat {
         let textWidth = containerWidth - insets.width - checkBoxLeadingMargin - checkBoxSize - textLeadingMargin - textTrailingMargin
         let textHeight = text.height(forContainerWidth: textWidth, font: textFont)
 
         return textHeight + 2 * textVerticalMargin
     }
-
 }

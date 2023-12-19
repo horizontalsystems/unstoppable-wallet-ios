@@ -17,5 +17,9 @@
 	<array>
 		<string>CloudDocuments</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.io.horizontalsystems.bank-wallet.dev</string>
+	</array>
 </dict>
 </plist>

@@ -1,6 +1,6 @@
-import RxSwift
-import MarketKit
 import HsToolKit
+import MarketKit
+import RxSwift
 import TronKit
 
 class TronAccountManager {
@@ -21,7 +21,7 @@ class TronAccountManager {
         self.tronKitManager = tronKitManager
         self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
 
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, tronKitManager.tronKitCreatedObservable) { [weak self] in self?.handleTronKitCreated() }
+        subscribe(ConcurrentDispatchQueueScheduler(qos: .userInitiated), disposeBag, tronKitManager.tronKitCreatedObservable) { [weak self] in self?.handleTronKitCreated() }
     }
 
     private func handleTronKitCreated() {
@@ -36,7 +36,7 @@ class TronAccountManager {
         }
 
         tronKitWrapper.tronKit.allTransactionsPublisher.asObservable()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] fullTransactions, initial in
                 self?.handle(fullTransactions: fullTransactions, initial: initial)
             })
@@ -63,36 +63,36 @@ class TronAccountManager {
 
         for fullTransaction in fullTransactions {
             switch fullTransaction.decoration {
-                case let decoration as NativeTransactionDecoration:
-                    if let transfer = decoration.contract as? TransferContract, transfer.ownerAddress != address {
-                        foundTokens.insert(FoundToken(tokenType: .native))
+            case let decoration as NativeTransactionDecoration:
+                if let transfer = decoration.contract as? TransferContract, transfer.ownerAddress != address {
+                    foundTokens.insert(FoundToken(tokenType: .native))
+                }
+
+            case let decoration as UnknownTransactionDecoration:
+                if decoration.internalTransactions.contains(where: { $0.to == address }) {
+                    foundTokens.insert(FoundToken(tokenType: .native))
+                }
+
+                for event in decoration.events {
+                    guard let transferEvent = event as? Trc20TransferEvent else {
+                        continue
                     }
 
-                case let decoration as UnknownTransactionDecoration:
-                    if decoration.internalTransactions.contains(where: { $0.to == address }) {
-                        foundTokens.insert(FoundToken(tokenType: .native))
-                    }
-
-                    for event in decoration.events {
-                        guard let transferEvent = event as? Trc20TransferEvent else {
-                            continue
+                    if transferEvent.to == address {
+                        let tokenType: TokenType = .eip20(address: transferEvent.contractAddress.base58)
+                        if let fromAddress = decoration.fromAddress, fromAddress == address {
+                            foundTokens.insert(FoundToken(tokenType: tokenType, tokenInfo: transferEvent.tokenInfo))
+                        } else {
+                            suspiciousTokenTypes.insert(tokenType)
                         }
-
-                        if transferEvent.to == address {
-                            let tokenType: TokenType = .eip20(address: transferEvent.contractAddress.base58)
-                            if let fromAddress = decoration.fromAddress, fromAddress == address {
-                                foundTokens.insert(FoundToken(tokenType: tokenType, tokenInfo: transferEvent.tokenInfo))
-                            } else {
-                                suspiciousTokenTypes.insert(tokenType)
-                            }
-                        }
                     }
+                }
 
-                default: ()
+            default: ()
             }
         }
 
-        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map { $0.tokenType })), account: account, tronKit: tronKitWrapper.tronKit)
+        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map(\.tokenType))), account: account, tronKit: tronKitWrapper.tronKit)
     }
 
     private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account, tronKit: TronKit.Kit) {
@@ -100,7 +100,7 @@ class TronAccountManager {
             return
         }
 
-        let queries = (foundTokens.map { $0.tokenType } + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
+        let queries = (foundTokens.map(\.tokenType) + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
 
         guard let tokens = try? marketKit.tokens(queries: queries) else {
             return
@@ -148,7 +148,7 @@ class TronAccountManager {
 
     private func handle(tokenInfos: [TokenInfo], account: Account, tronKit: TronKit.Kit) {
         let existingWallets = walletManager.activeWallets
-        let existingTokenTypeIds = existingWallets.map { $0.token.type.id }
+        let existingTokenTypeIds = existingWallets.map(\.token.type.id)
         let newTokenInfos = tokenInfos.filter { !existingTokenTypeIds.contains($0.type.id) }
 
         guard !newTokenInfos.isEmpty else {
@@ -183,11 +183,9 @@ class TronAccountManager {
 
         walletManager.save(enabledWallets: enabledWallets)
     }
-
 }
 
 extension TronAccountManager {
-
     struct TokenInfo {
         let type: TokenType
         let coinName: String
@@ -208,9 +206,8 @@ extension TronAccountManager {
             hasher.combine(tokenType)
         }
 
-        static func ==(lhs: FoundToken, rhs: FoundToken) -> Bool {
+        static func == (lhs: FoundToken, rhs: FoundToken) -> Bool {
             lhs.tokenType == rhs.tokenType
         }
     }
-
 }

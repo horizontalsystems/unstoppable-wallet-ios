@@ -39,13 +39,13 @@ class LogRecord: Record {
         case date, level, context, message
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         date = row[Columns.date]
         level = row[Columns.level]
         message = row[Columns.message]
         context = row[Columns.context]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -54,5 +54,4 @@ class LogRecord: Record {
         container[Columns.context] = context
         container[Columns.message] = message
     }
-
 }

@@ -3,11 +3,11 @@ import SwiftUI
 import ThemeKit
 
 class AppearanceViewModel: ObservableObject {
-    private let themeManager: ThemeManager
-    private let launchScreenManager: LaunchScreenManager
-    private let appIconManager: AppIconManager
-    private let balancePrimaryValueManager: BalancePrimaryValueManager
-    private let balanceConversionManager: BalanceConversionManager
+    private let themeManager = App.shared.themeManager
+    private let launchScreenManager = App.shared.launchScreenManager
+    private let appIconManager = App.shared.appIconManager
+    private let balancePrimaryValueManager = App.shared.balancePrimaryValueManager
+    private let balanceConversionManager = App.shared.balanceConversionManager
 
     let themeModes: [ThemeMode] = [.system, .dark, .light]
     let conversionTokens: [Token]
@@ -48,13 +48,7 @@ class AppearanceViewModel: ObservableObject {
         }
     }
 
-    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, appIconManager: AppIconManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager) {
-        self.themeManager = themeManager
-        self.launchScreenManager = launchScreenManager
-        self.appIconManager = appIconManager
-        self.balancePrimaryValueManager = balancePrimaryValueManager
-        self.balanceConversionManager = balanceConversionManager
-
+    init() {
         conversionTokens = balanceConversionManager.conversionTokens
 
         themMode = themeManager.themeMode

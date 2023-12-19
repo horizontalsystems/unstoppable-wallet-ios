@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 
 protocol IReceiveAddressService {
     associatedtype ServiceItem
@@ -9,57 +10,68 @@ protocol IReceiveAddressService {
 
 protocol IReceiveAddressViewItemFactory {
     associatedtype Item
-    func viewItem(item: Item) -> ReceiveAddressModule.ViewItem
+    func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem
+    func popup(item: Item) -> ReceiveAddressModule.PopupWarningItem?
+    func actions(item: Item) -> [ReceiveAddressModule.ActionType]
 }
 
-class ReceiveAddressViewModel<Service: IReceiveAddressService, Factory: IReceiveAddressViewItemFactory> where Factory.Item == Service.ServiceItem {
+class ReceiveAddressViewModel<Service: IReceiveAddressService, Factory: IReceiveAddressViewItemFactory>: ObservableObject where Factory.Item == Service.ServiceItem {
     private let service: Service
     private let viewItemFactory: Factory
+    private let decimalParser: AmountDecimalParser
     private var cancellables = Set<AnyCancellable>()
+    private var hasAppeared = false
 
-    @Published private(set) var spinnerVisible: Bool = false
-    @Published private(set) var errorViewItem: ReceiveAddressModule.ErrorItem? = nil
-    @Published private(set) var viewItem: ReceiveAddressModule.ViewItem?
+    @Published private(set) var state: DataStatus<ReceiveAddressModule.ViewItem> = .loading
+    @Published private(set) var popup: ReceiveAddressModule.PopupWarningItem?
+    @Published private(set) var actions: [ReceiveAddressModule.ActionType] = []
+    @Published private(set) var amount: Decimal = 0
 
-    init(service: Service, viewItemFactory: Factory) {
+    init(service: Service, viewItemFactory: Factory, decimalParser: AmountDecimalParser) {
         self.service = service
         self.viewItemFactory = viewItemFactory
+        self.decimalParser = decimalParser
 
         service.statusUpdatedPublisher
-                .sink { [weak self] in self?.sync(status: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
-        sync(status: service.state)
+        sync(state: service.state)
     }
 
-    private func sync(status: DataStatus<Service.ServiceItem>) {
-        switch status {
-        case .loading:
-            spinnerVisible = true
-            errorViewItem = nil
-            viewItem = nil
-        case .completed(let item):
-            spinnerVisible = false
-            errorViewItem = nil
-            viewItem = viewItemFactory.viewItem(item: item)
-        case .failed(let error):
-            spinnerVisible = false
-            switch error {
-            case let error as ReceiveAddressModule.ErrorItem:
-                errorViewItem = error
-            default:
-                errorViewItem = ReceiveAddressModule.ErrorItem(icon: "not_available_48", text: error.localizedDescription)
-            }
-            viewItem = nil
+    private func sync(state: DataStatus<Service.ServiceItem>) {
+        self.state = state.map { viewItemFactory.viewItem(item: $0, amount: amount == 0 ? nil : amount.description) }
+        syncPopup(state: state)
+        syncActions(state: state)
+    }
+
+    private func syncPopup(state: DataStatus<Service.ServiceItem>) {
+        if hasAppeared, let item = state.data {
+            let popup = viewItemFactory.popup(item: item)
+            self.popup = popup
         }
     }
 
+    private func syncActions(state: DataStatus<Service.ServiceItem>) {
+        if let item = state.data {
+            actions = viewItemFactory.actions(item: item)
+        }
+    }
 }
 
 extension ReceiveAddressViewModel {
-
     var title: String {
         service.title
     }
 
+    func set(amount: String) {
+        let value = decimalParser.parseAnyDecimal(from: amount) ?? 0
+        self.amount = value
+        sync(state: service.state)
+    }
+
+    func onFirstAppear() {
+        hasAppeared = true
+        syncPopup(state: service.state)
+    }
 }

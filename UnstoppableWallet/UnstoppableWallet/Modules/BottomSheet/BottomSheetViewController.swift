@@ -1,8 +1,7 @@
-import UIKit
-import ThemeKit
-import ActionSheet
 import ComponentKit
 import SectionsTableView
+import ThemeKit
+import UIKit
 
 class BottomSheetViewController: ThemeActionSheetController {
     private let items: [BottomSheetModule.Item]
@@ -25,7 +24,8 @@ class BottomSheetViewController: ThemeActionSheetController {
         titleView.bind(image: image, title: title, subtitle: subtitle, viewController: self)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -102,58 +102,57 @@ class BottomSheetViewController: ThemeActionSheetController {
         }
     }
 
-
     private func descriptionSection(index: Int, text: String) -> SectionProtocol {
         Section(
-                id: "section-\(index)",
-                rows: [
-                    tableView.descriptionRow(
-                            id: "description_\(index)",
-                            text: text,
-                            ignoreBottomMargin: true
-                    )
-                ]
+            id: "section-\(index)",
+            rows: [
+                tableView.descriptionRow(
+                    id: "description_\(index)",
+                    text: text,
+                    ignoreBottomMargin: true
+                ),
+            ]
         )
     }
 
     private func highlightedDescriptionSection(index: Int, style: HighlightedDescriptionBaseView.Style = .yellow, text: String) -> SectionProtocol {
         Section(
-                id: "section-\(index)",
-                rows: [
-                    tableView.highlightedDescriptionRow(
-                            id: "description_\(index)",
-                            style: style,
-                            text: text,
-                            ignoreBottomMargin: true
-                    )
-                ]
+            id: "section-\(index)",
+            rows: [
+                tableView.highlightedDescriptionRow(
+                    id: "description_\(index)",
+                    style: style,
+                    text: text,
+                    ignoreBottomMargin: true
+                ),
+            ]
         )
     }
 
     private func copyableValueSection(index: Int, title: String, value: String) -> SectionProtocol {
         Section(
-                id: "section-\(index)",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    CellBuilderNew.row(
-                            rootElement: .hStack([
-                                .textElement(text: .body(title)),
-                                .secondaryButton { component in
-                                    component.button.set(style: .default)
-                                    component.button.setTitle(value, for: .normal)
-                                    component.onTap = {
-                                        CopyHelper.copyAndNotify(value: value)
-                                    }
-                                }
-                            ]),
-                            tableView: tableView,
-                            id: "copyable-value-\(index)",
-                            height: .heightCell48,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .bordered, isFirst: true, isLast: true)
+            id: "section-\(index)",
+            headerState: .margin(height: .margin12),
+            rows: [
+                CellBuilderNew.row(
+                    rootElement: .hStack([
+                        .textElement(text: .body(title)),
+                        .secondaryButton { component in
+                            component.button.set(style: .default)
+                            component.button.setTitle(value, for: .normal)
+                            component.onTap = {
+                                CopyHelper.copyAndNotify(value: value)
                             }
-                    )
-                ]
+                        },
+                    ]),
+                    tableView: tableView,
+                    id: "copyable-value-\(index)",
+                    height: .heightCell48,
+                    bind: { cell in
+                        cell.set(backgroundStyle: .bordered, isFirst: true, isLast: true)
+                    }
+                ),
+            ]
         )
     }
 
@@ -162,67 +161,64 @@ class BottomSheetViewController: ThemeActionSheetController {
         let textFont: UIFont = .subhead1
 
         return Section(
-                id: "section-\(index)",
-                headerState: tableView.sectionHeader(text: "manage_wallets.contract_address".localized, height: 41),
-                rows: [
-                    CellBuilderNew.row(
-                            rootElement: .hStack([
-                                .imageElement(image: .url(imageUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
-                                .text { component in
-                                    component.font = textFont
-                                    component.textColor = .themeLeah
-                                    component.text = value
-                                    component.numberOfLines = 0
-                                },
-                                .secondaryCircleButton { [weak self] component in
-                                    if let explorerUrl = explorerUrl {
-                                        component.isHidden = false
-                                        component.button.set(image: UIImage(named: "globe_20"))
-                                        component.onTap = { self?.open(url: explorerUrl) }
-                                    } else {
-                                        component.isHidden = true
-                                    }
-                                }
-                            ]),
-                            tableView: tableView,
-                            id: "copyable-value-\(index)",
-                            dynamicHeight: { width in
-                                let height = CellBuilderNew.height(
-                                        containerWidth: width,
-                                        backgroundStyle: backgroundStyle,
-                                        text: value,
-                                        font: textFont,
-                                        verticalPadding: .margin12,
-                                        elements: explorerUrl != nil ? [.fixed(width: .iconSize32), .multiline, .fixed(width: SecondaryCircleButton.size)] : [.fixed(width: .iconSize32), .multiline]
-                                )
-
-                                return max(height, .heightCell56)
-                            },
-                            bind: { cell in
-                                cell.set(backgroundStyle: backgroundStyle, isFirst: true, isLast: true)
+            id: "section-\(index)",
+            headerState: tableView.sectionHeader(text: "manage_wallets.contract_address".localized, height: 41),
+            rows: [
+                CellBuilderNew.row(
+                    rootElement: .hStack([
+                        .imageElement(image: .url(imageUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
+                        .text { component in
+                            component.font = textFont
+                            component.textColor = .themeLeah
+                            component.text = value
+                            component.numberOfLines = 0
+                        },
+                        .secondaryCircleButton { [weak self] component in
+                            if let explorerUrl {
+                                component.isHidden = false
+                                component.button.set(image: UIImage(named: "globe_20"))
+                                component.onTap = { self?.open(url: explorerUrl) }
+                            } else {
+                                component.isHidden = true
                             }
-                    )
-                ]
+                        },
+                    ]),
+                    tableView: tableView,
+                    id: "copyable-value-\(index)",
+                    dynamicHeight: { width in
+                        let height = CellBuilderNew.height(
+                            containerWidth: width,
+                            backgroundStyle: backgroundStyle,
+                            text: value,
+                            font: textFont,
+                            verticalPadding: .margin12,
+                            elements: explorerUrl != nil ? [.fixed(width: .iconSize32), .multiline, .fixed(width: SecondaryCircleButton.size)] : [.fixed(width: .iconSize32), .multiline]
+                        )
+
+                        return max(height, .heightCell56)
+                    },
+                    bind: { cell in
+                        cell.set(backgroundStyle: backgroundStyle, isFirst: true, isLast: true)
+                    }
+                ),
+            ]
         )
     }
 
     private func open(url: String) {
         UrlManager(inApp: true).open(url: url, from: self)
     }
-
 }
 
 extension BottomSheetViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         items.enumerated().map { index, item in
             switch item {
-            case .description(let text): return descriptionSection(index: index, text: text)
+            case let .description(text): return descriptionSection(index: index, text: text)
             case let .highlightedDescription(text, style): return highlightedDescriptionSection(index: index, style: style, text: text)
             case let .copyableValue(title, value): return copyableValueSection(index: index, title: title, value: value)
             case let .contractAddress(imageUrl, value, explorerUrl): return contractAddressSection(index: index, imageUrl: imageUrl, value: value, explorerUrl: explorerUrl)
             }
         }
     }
-
 }

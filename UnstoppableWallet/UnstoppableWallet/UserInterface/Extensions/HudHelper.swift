@@ -1,10 +1,9 @@
-import Foundation
-import UIKit
 import ComponentKit
+import Foundation
 import HUD
+import UIKit
 
 extension HudHelper {
-
     enum BannerType {
         case addedToWatchlist
         case removedFromWatchlist
@@ -75,7 +74,7 @@ extension HudHelper {
         var color: UIColor {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
-            case .removedFromWallet, .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
+            case .removedFromWallet, .removedFromWatchlist, .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
             case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
@@ -103,7 +102,7 @@ extension HudHelper {
             case .disconnectingWalletConnect: return "alert.disconnecting".localized
             case .disconnectedWalletConnect: return "alert.disconnected".localized
             case .enabling: return "alert.enabling".localized
-            case .enabled(let count): return "alert.enabled_coins".localized(count)
+            case let .enabled(count): return "alert.enabled_coins".localized(count)
             case .sending: return "alert.sending".localized
             case .sent: return "alert.sent".localized
             case .swapping: return "alert.swapping".localized
@@ -112,9 +111,9 @@ extension HudHelper {
             case .approved: return "alert.approved".localized
             case .revoking: return "alert.revoking".localized
             case .revoked: return "alert.revoked".localized
-            case .success(let description): return description
-            case .attention(let description): return description
-            case .error(let description): return description
+            case let .success(description): return description
+            case let .attention(description): return description
+            case let .error(description): return description
             }
         }
 
@@ -145,7 +144,6 @@ extension HudHelper {
             default: return true
             }
         }
-
     }
 
     func show(banner: BannerType) {
@@ -167,15 +165,14 @@ extension HudHelper {
         config.cornerRadius = 28
 
         let viewItem = HUD.ViewItem(
-                icon: banner.icon,
-                iconColor: banner.color,
-                title: banner.title,
-                showingTime: banner.showingTime,
-                isLoading: banner.isLoading
+            icon: banner.icon,
+            iconColor: banner.color,
+            title: banner.title,
+            showingTime: banner.showingTime,
+            isLoading: banner.isLoading
         )
 
-        let statusBarStyle = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.windowScene?.statusBarManager?.statusBarStyle
+        let statusBarStyle = UIWindow.keyWindow?.windowScene?.statusBarManager?.statusBarStyle
         HUD.instance.show(config: config, viewItem: viewItem, statusBarStyle: statusBarStyle, forced: banner.forced)
     }
-
 }

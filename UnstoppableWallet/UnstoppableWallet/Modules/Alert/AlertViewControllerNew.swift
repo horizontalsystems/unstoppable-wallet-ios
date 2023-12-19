@@ -1,17 +1,16 @@
-import UIKit
-import ActionSheet
-import ThemeKit
 import SectionsTableView
+import ThemeKit
+import UIKit
 
 class AlertViewControllerNew: ThemeActionSheetController {
     private let alertTitle: String?
     private let viewItems: [ViewItem]
     private let reportAfterDismiss: Bool
-    private let onSelect: (Int) -> ()
+    private let onSelect: (Int) -> Void
 
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
 
-    private init(title: String?, viewItems: [ViewItem], reportAfterDismiss: Bool, onSelect: @escaping (Int) -> ()) {
+    private init(title: String?, viewItems: [ViewItem], reportAfterDismiss: Bool, onSelect: @escaping (Int) -> Void) {
         alertTitle = title
         self.viewItems = viewItems
         self.reportAfterDismiss = reportAfterDismiss
@@ -20,7 +19,8 @@ class AlertViewControllerNew: ThemeActionSheetController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,27 +43,27 @@ class AlertViewControllerNew: ThemeActionSheetController {
 
     private func titleRow(text: String) -> RowProtocol {
         Row<AlertTitleCell>(
-                id: "title",
-                height: AlertTitleCell.height,
-                bind: { cell, _ in
-                    cell.bind(text: text)
-                }
+            id: "title",
+            height: AlertTitleCell.height,
+            bind: { cell, _ in
+                cell.bind(text: text)
+            }
         )
     }
 
     private func itemRow(viewItem: ViewItem, index: Int) -> RowProtocol {
         Row<AlertItemCell>(
-                id: "item_\(index)",
-                hash: "\(viewItem.selected)",
-                height: .heightCell48,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent)
-                    cell.title = viewItem.text
-                    cell.isSelected = viewItem.selected
-                    cell.onSelect = { [weak self] in
-                        self?.handleSelect(index: index)
-                    }
+            id: "item_\(index)",
+            hash: "\(viewItem.selected)",
+            height: .heightCell48,
+            bind: { cell, _ in
+                cell.set(backgroundStyle: .transparent)
+                cell.title = viewItem.text
+                cell.isSelected = viewItem.selected
+                cell.onSelect = { [weak self] in
+                    self?.handleSelect(index: index)
                 }
+            }
         )
     }
 
@@ -77,11 +77,9 @@ class AlertViewControllerNew: ThemeActionSheetController {
             dismiss(animated: true)
         }
     }
-
 }
 
 extension AlertViewControllerNew: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var rows = [RowProtocol]()
 
@@ -93,11 +91,9 @@ extension AlertViewControllerNew: SectionsDataSource {
 
         return [Section(id: "main", rows: rows)]
     }
-
 }
 
 extension AlertViewControllerNew {
-
     struct ViewItem {
         let text: String
         let selected: Bool
@@ -107,14 +103,11 @@ extension AlertViewControllerNew {
             self.selected = selected
         }
     }
-
 }
 
 extension AlertViewControllerNew {
-
-    static func instance(title: String? = nil, viewItems: [ViewItem], reportAfterDismiss: Bool = false, onSelect: @escaping (Int) -> ()) -> UIViewController {
+    static func instance(title: String? = nil, viewItems: [ViewItem], reportAfterDismiss: Bool = false, onSelect: @escaping (Int) -> Void) -> UIViewController {
         let controller = AlertViewControllerNew(title: title, viewItems: viewItems, reportAfterDismiss: reportAfterDismiss, onSelect: onSelect)
         return controller.toAlert
     }
-
 }

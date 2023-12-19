@@ -1,114 +1,68 @@
+import Combine
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
-
-protocol IWatchSubViewModel: AnyObject {
-    var watchEnabled: Bool { get }
-    var watchEnabledObservable: Observable<Bool> { get }
-    var domainObservable: Observable<String?> { get }
-    func resolve() -> AccountType?
-}
+import HsExtensions
 
 class WatchViewModel {
     private let service: WatchService
-    private let tronService: WatchTronService
-    private let evmAddressViewModel: IWatchSubViewModel
-    private let tronAddressViewModel: IWatchSubViewModel
-    private let publicKeyViewModel: IWatchSubViewModel
-    private var disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
-    private let watchTypeRelay = BehaviorRelay<WatchModule.WatchType>(value: .evmAddress)
-    private let watchEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let nameRelay = PublishRelay<String>()
-    private let proceedRelay = PublishRelay<(WatchModule.WatchType, AccountType, String)>()
+    @PostPublished private(set) var watchEnabled: Bool = false
+    @PostPublished private(set) var name: String
+    @PostPublished private(set) var caution: Caution?
 
-    init(service: WatchService, tronService: WatchTronService, evmAddressViewModel: IWatchSubViewModel, tronAddressViewModel: IWatchSubViewModel, publicKeyViewModel: IWatchSubViewModel) {
+    private let proceedSubject = PassthroughSubject<(AccountType, String), Never>()
+
+    init(service: WatchService) {
         self.service = service
-        self.tronService = tronService
-        self.evmAddressViewModel = evmAddressViewModel
-        self.tronAddressViewModel = tronAddressViewModel
-        self.publicKeyViewModel = publicKeyViewModel
+        name = service.defaultAccountName
 
-        syncSubViewModel()
+        service.$state
+            .sink(receiveValue: { [weak self] in self?.sync(state: $0) })
+            .store(in: &cancellables)
+
+        sync(state: service.state)
     }
 
-    private var subViewModel: IWatchSubViewModel {
-        switch watchTypeRelay.value {
-        case .evmAddress: return evmAddressViewModel
-        case .tronAddress: return tronAddressViewModel
-        case .publicKey: return publicKeyViewModel
+    private func sync(state: WatchService.State) {
+        switch state {
+        case .ready: watchEnabled = true
+        case .notReady: watchEnabled = false
+        case let .error(error): caution = Caution(
+                text: (error as? LocalizedError)?.errorDescription ?? "watch_address.error.not_supported".localized,
+                type: .error
+            )
         }
-    }
-
-    private func syncSubViewModel() {
-        disposeBag = DisposeBag()
-        sync(watchEnabled: subViewModel.watchEnabled)
-        subscribe(disposeBag, subViewModel.watchEnabledObservable) { [weak self] in self?.sync(watchEnabled: $0) }
-        subscribe(disposeBag, subViewModel.domainObservable) { [weak self] in self?.sync(domain: $0) }
-    }
-
-    private func sync(watchEnabled: Bool) {
-        watchEnabledRelay.accept(watchEnabled)
     }
 
     private func sync(domain: String?) {
-        if let domain = domain, service.name == nil {
+        if let domain, service.name == nil {
             service.set(name: domain)
-            nameRelay.accept(domain)
+            name = domain
         }
     }
-
 }
 
 extension WatchViewModel {
-
-    var watchTypeDriver: Driver<WatchModule.WatchType> {
-        watchTypeRelay.asDriver()
-    }
-
-    var watchEnabledDriver: Driver<Bool> {
-        watchEnabledRelay.asDriver()
-    }
-
-    var proceedSignal: Signal<(WatchModule.WatchType, AccountType, String)> {
-        proceedRelay.asSignal()
-    }
-
     var defaultName: String {
         service.defaultAccountName
     }
 
-    var nameSignal: Signal<String> {
-        nameRelay.asSignal()
+    var proceedPublisher: AnyPublisher<(AccountType, String), Never> {
+        proceedSubject.eraseToAnyPublisher()
     }
 
-    var hasNextPage: Bool {
-        watchTypeRelay.value == .tronAddress
+    func onChange(text: String) {
+        service.set(text: text)
+        caution = nil
     }
 
     func onChange(name: String) {
         service.set(name: name)
     }
 
-    func onSelect(watchType: WatchModule.WatchType) {
-        guard watchTypeRelay.value != watchType else {
-            return
-        }
-
-        watchTypeRelay.accept(watchType)
-        syncSubViewModel()
-    }
-
     func onTapNext() {
-        if let accountType = subViewModel.resolve() {
-            let watchType = watchTypeRelay.value
-            if watchType == .tronAddress {
-                tronService.enableWatch(accountType: accountType, accountName: service.resolvedName)
-            }
-
-            proceedRelay.accept((watchType, accountType, service.resolvedName))
+        if let accountType = service.resolve() {
+            proceedSubject.send((accountType, service.resolvedName))
         }
     }
-
 }

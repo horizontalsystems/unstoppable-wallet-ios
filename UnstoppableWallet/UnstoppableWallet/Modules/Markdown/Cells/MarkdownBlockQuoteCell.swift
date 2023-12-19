@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class MarkdownBlockQuoteCell: UITableViewCell {
     private static let verticalMargin: CGFloat = .margin3x
@@ -38,7 +38,8 @@ class MarkdownBlockQuoteCell: UITableViewCell {
         lineView.backgroundColor = .themeRemus
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -52,11 +53,9 @@ class MarkdownBlockQuoteCell: UITableViewCell {
             maker.bottom.equalToSuperview().inset(tightBottom ? 0 : MarkdownBlockQuoteCell.verticalMargin)
         }
     }
-
 }
 
 extension MarkdownBlockQuoteCell {
-
     static func height(containerWidth: CGFloat, attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding
         let textHeight = attributedString.height(containerWidth: textWidth)
@@ -66,5 +65,4 @@ extension MarkdownBlockQuoteCell {
 
         return topMargin + textHeight + 2 * verticalPadding + bottomMargin
     }
-
 }

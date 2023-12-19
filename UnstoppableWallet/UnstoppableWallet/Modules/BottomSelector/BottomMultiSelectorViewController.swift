@@ -1,8 +1,7 @@
-import UIKit
-import ActionSheet
-import ThemeKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 protocol IBottomMultiSelectorDelegate: AnyObject {
     func bottomSelectorOnSelect(indexes: [Int])
@@ -31,10 +30,10 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
         }
 
         super.init()
-
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -102,41 +101,38 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             doneButton.isEnabled = !currentIndexes.isEmpty
         }
     }
-
 }
 
 extension BottomMultiSelectorViewController: SectionsDataSource {
-
     private var descriptionRows: [RowProtocol] {
         guard let description = config.description else {
             return []
         }
 
         return [
-            tableView.highlightedDescriptionRow(id: "description", text: description)
+            tableView.highlightedDescriptionRow(id: "description", text: description),
         ]
     }
 
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    headerState: .margin(height: config.description != nil ? 0 : .margin12),
-                    rows: descriptionRows + config.viewItems.enumerated().map { index, viewItem in
-                        SelectorModule.row(
-                                viewItem: viewItem,
-                                tableView: tableView,
-                                isOn: currentIndexes.contains(index),
-                                backgroundStyle: .bordered,
-                                index: index,
-                                isFirst: index == 0,
-                                isLast: index == config.viewItems.count - 1
-                        ) { [weak self] index, isOn in
-                            self?.onToggle(index: index, isOn: isOn)
-                        }
+                id: "main",
+                headerState: .margin(height: config.description != nil ? 0 : .margin12),
+                rows: descriptionRows + config.viewItems.enumerated().map { index, viewItem in
+                    SelectorModule.row(
+                        viewItem: viewItem,
+                        tableView: tableView,
+                        isOn: currentIndexes.contains(index),
+                        backgroundStyle: .bordered,
+                        index: index,
+                        isFirst: index == 0,
+                        isLast: index == config.viewItems.count - 1
+                    ) { [weak self] index, isOn in
+                        self?.onToggle(index: index, isOn: isOn)
                     }
-            )
+                }
+            ),
         ]
     }
-
 }

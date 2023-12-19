@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class ManageAccountsViewModel {
     private let service: ManageAccountsService
@@ -8,7 +8,7 @@ class ManageAccountsViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewStateRelay = BehaviorRelay<ViewState>(value: ViewState.empty)
-    private let finishRelay = PublishRelay<()>()
+    private let finishRelay = PublishRelay<Void>()
 
     init(service: ManageAccountsService, mode: ManageAccountsModule.Mode) {
         self.service = service
@@ -23,8 +23,8 @@ class ManageAccountsViewModel {
         let sortedItems = items.sorted { $0.account.name.lowercased() < $1.account.name.lowercased() }
 
         let viewState = ViewState(
-                regularViewItems: sortedItems.filter { !$0.account.watchAccount }.map { viewItem(item: $0) },
-                watchViewItems: sortedItems.filter { $0.account.watchAccount }.map { viewItem(item: $0) }
+            regularViewItems: sortedItems.filter { !$0.account.watchAccount }.map { viewItem(item: $0) },
+            watchViewItems: sortedItems.filter(\.account.watchAccount).map { viewItem(item: $0) }
         )
 
         viewStateRelay.accept(viewState)
@@ -40,25 +40,23 @@ class ManageAccountsViewModel {
 
         let showAlert = item.account.nonStandard || item.account.nonRecommended || item.hasAlert
         return ViewItem(
-                accountId: item.account.id,
-                title: item.account.name,
-                subtitle: alertSubtitle ?? item.account.type.detailedDescription,
-                isSubtitleWarning: alertSubtitle != nil,
-                selected: item.isActive,
-                alert: showAlert,
-                watchAccount: item.account.watchAccount
+            accountId: item.account.id,
+            title: item.account.name,
+            subtitle: alertSubtitle ?? item.account.type.detailedDescription,
+            isSubtitleWarning: alertSubtitle != nil,
+            selected: item.isActive,
+            alert: showAlert,
+            watchAccount: item.account.watchAccount
         )
     }
-
 }
 
 extension ManageAccountsViewModel {
-
     var viewStateDriver: Driver<ViewState> {
         viewStateRelay.asDriver()
     }
 
-    var finishSignal: Signal<()> {
+    var finishSignal: Signal<Void> {
         finishRelay.asSignal()
     }
 
@@ -81,11 +79,9 @@ extension ManageAccountsViewModel {
             finishRelay.accept(())
         }
     }
-
 }
 
 extension ManageAccountsViewModel {
-
     struct ViewState {
         let regularViewItems: [ViewItem]
         let watchViewItems: [ViewItem]
@@ -104,5 +100,4 @@ extension ManageAccountsViewModel {
         let alert: Bool
         let watchAccount: Bool
     }
-
 }

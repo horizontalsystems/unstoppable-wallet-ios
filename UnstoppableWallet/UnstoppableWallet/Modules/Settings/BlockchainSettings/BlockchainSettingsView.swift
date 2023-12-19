@@ -1,5 +1,5 @@
+import Kingfisher
 import MarketKit
-import SDWebImageSwiftUI
 import SwiftUI
 
 struct BlockchainSettingsView: View {
@@ -18,7 +18,7 @@ struct BlockchainSettingsView: View {
                         }) {
                             ItemView(
                                 blockchain: item.blockchain,
-                                value: item.restoreMode.title
+                                value: item.title
                             )
                         }
                     }
@@ -53,9 +53,8 @@ struct BlockchainSettingsView: View {
         let value: String
 
         var body: some View {
-            WebImage(url: URL(string: blockchain.type.imageUrl))
+            KFImage.url(URL(string: blockchain.type.imageUrl))
                 .resizable()
-                .scaledToFit()
                 .frame(width: .iconSize32, height: .iconSize32)
 
             VStack(spacing: 1) {

@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
+import ComponentKit
 import SectionsTableView
 import SnapKit
-import ComponentKit
+import ThemeKit
+import UIKit
 
 class CoinAnalyticsRatingScaleViewController: ThemeViewController {
     private let _title: String
@@ -19,7 +19,8 @@ class CoinAnalyticsRatingScaleViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -49,46 +50,43 @@ class CoinAnalyticsRatingScaleViewController: ThemeViewController {
     @objc private func onClose() {
         dismiss(animated: true)
     }
-
 }
 
 extension CoinAnalyticsRatingScaleViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "info",
-                    footerState: .margin(height: .margin12),
-                    rows: [
-                        MarkdownViewController.header1Row(id: "header", string: "coin_analytics.overall_score".localized),
-                        MarkdownViewController.header3Row(id: "sub-header", string: _title),
-                        MarkdownViewController.textRow(id: "description", string: _description)
-                    ]
+                id: "info",
+                footerState: .margin(height: .margin12),
+                rows: [
+                    MarkdownViewController.header1Row(id: "header", string: "coin_analytics.overall_score".localized),
+                    MarkdownViewController.header3Row(id: "sub-header", string: _title),
+                    MarkdownViewController.textRow(id: "description", string: _description),
+                ]
             ),
             Section(
-                    id: "items",
-                    footerState: .margin(height: .margin32),
-                    rows: CoinAnalyticsModule.Rating.allCases.enumerated().map { index, rating in
-                        let isFirst = index == 0
-                        let isLast = index == CoinAnalyticsModule.Rating.allCases.count - 1
+                id: "items",
+                footerState: .margin(height: .margin32),
+                rows: CoinAnalyticsModule.Rating.allCases.enumerated().map { index, rating in
+                    let isFirst = index == 0
+                    let isLast = index == CoinAnalyticsModule.Rating.allCases.count - 1
 
-                        return CellBuilderNew.row(
-                                rootElement: .hStack([
-                                    .imageElement(image: .local(rating.image), size: .image24),
-                                    .margin8,
-                                    .textElement(text: .subhead1(rating.title.uppercased(), color: rating.color)),
-                                    .textElement(text: .subhead1(scores[rating], color: rating.color)),
-                                ]),
-                                tableView: tableView,
-                                id: "rating-\(index)",
-                                height: .heightCell48,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                }
-                        )
-                    }
-            )
+                    return CellBuilderNew.row(
+                        rootElement: .hStack([
+                            .imageElement(image: .local(rating.image), size: .image24),
+                            .margin8,
+                            .textElement(text: .subhead1(rating.title.uppercased(), color: rating.color)),
+                            .textElement(text: .subhead1(scores[rating], color: rating.color)),
+                        ]),
+                        tableView: tableView,
+                        id: "rating-\(index)",
+                        height: .heightCell48,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                        }
+                    )
+                }
+            ),
         ]
     }
-
 }

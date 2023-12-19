@@ -4,13 +4,10 @@ class EvmPrivateKeyViewModel {
     init(service: EvmPrivateKeyService) {
         self.service = service
     }
-
 }
 
 extension EvmPrivateKeyViewModel {
-
     var privateKey: String {
         service.privateKey
     }
-
 }

@@ -1,10 +1,8 @@
-import UIKit
-import LanguageKit
 import MarketKit
 import ThemeKit
+import UIKit
 
-struct NftCollectionModule {
-
+enum NftCollectionModule {
     static func viewController(blockchainType: BlockchainType, providerCollectionUid: String) -> UIViewController? {
         let service = NftCollectionService()
         let viewModel = NftCollectionViewModel(service: service)
@@ -17,17 +15,15 @@ struct NftCollectionModule {
         let activityController = NftActivityModule.viewController(eventListType: .collection(blockchainType: blockchainType, providerUid: providerCollectionUid))
 
         return NftCollectionViewController(
-                viewModel: viewModel,
-                overviewController: overviewController,
-                assetsController: assetsController,
-                activityController: activityController
+            viewModel: viewModel,
+            overviewController: overviewController,
+            assetsController: assetsController,
+            activityController: activityController
         )
     }
-
 }
 
 extension NftCollectionModule {
-
     enum Tab: Int, CaseIterable {
         case overview
         case assets
@@ -41,5 +37,4 @@ extension NftCollectionModule {
             }
         }
     }
-
 }

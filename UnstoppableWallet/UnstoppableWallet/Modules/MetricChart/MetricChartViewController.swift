@@ -1,11 +1,11 @@
-import UIKit
-import RxSwift
-import ThemeKit
-import SectionsTableView
-import SnapKit
-import HUD
 import Chart
 import ComponentKit
+import HUD
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class MetricChartViewController: ThemeActionSheetController {
     private let viewModel: MetricChartViewModel
@@ -27,15 +27,16 @@ class MetricChartViewController: ThemeActionSheetController {
         chartCell = ChartCell(viewModel: viewModel, configuration: configuration)
 
         chartRow = StaticRow(
-                cell: chartCell,
-                id: "chartView",
-                height: chartCell.cellHeight
+            cell: chartCell,
+            id: "chartView",
+            height: chartCell.cellHeight
         )
 
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -48,9 +49,9 @@ class MetricChartViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "chart_2_24")?.withTintColor(.themeJacob)),
-                title: bottomSheetTitle,
-                viewController: self
+            image: .local(name: "chart_2_24", tint: .warning),
+            title: bottomSheetTitle,
+            viewController: self
         )
 
         view.addSubview(tableView)
@@ -80,25 +81,20 @@ class MetricChartViewController: ThemeActionSheetController {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-
 }
 
 extension MetricChartViewController {
-
     private var chartSection: SectionProtocol {
         Section(
-                id: "chart",
-                footerState: .margin(height: .margin16),
-                rows: [chartRow]
+            id: "chart",
+            footerState: .margin(height: .margin16),
+            rows: [chartRow]
         )
     }
-
 }
 
 extension MetricChartViewController: SectionsDataSource {
-
     public func buildSections() -> [SectionProtocol] {
         [chartSection]
     }
-
 }

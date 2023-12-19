@@ -21,8 +21,8 @@ class CexWithdrawConfirmViewModel {
         }
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
         syncSectionViewItems()
@@ -37,14 +37,14 @@ class CexWithdrawConfirmViewModel {
 
     private func syncSectionViewItems() {
         var sectionViewItems: [SectionViewItem] = [
-            SectionViewItem(viewItems: mainViewItems())
+            SectionViewItem(viewItems: mainViewItems()),
         ]
 
         if let network = service.network {
             sectionViewItems.append(
-                    SectionViewItem(viewItems: [
-                        .value(title: "cex_withdraw_confirm.network".localized, value: network.networkName, type: .regular)
-                    ])
+                SectionViewItem(viewItems: [
+                    .value(title: "cex_withdraw_confirm.network".localized, value: network.networkName, type: .regular),
+                ])
             )
         }
 
@@ -55,7 +55,7 @@ class CexWithdrawConfirmViewModel {
                     title: "cex_withdraw.fee".localized,
                     coinAmount: ValueFormatter.instance.formatFull(coinValue: feeData.coinValue) ?? "n/a".localized,
                     currencyAmount: feeData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
-                )
+                ),
             ])
         )
 
@@ -68,22 +68,22 @@ class CexWithdrawConfirmViewModel {
 
         var viewItems: [ViewItem] = [
             .subhead(
-                    iconName: "arrow_medium_2_up_right_24",
-                    title: "cex_withdraw_confirm.you_withdraw".localized,
-                    value: service.cexAsset.coinName
+                iconName: "arrow_medium_2_up_right_24",
+                title: "cex_withdraw_confirm.you_withdraw".localized,
+                value: service.cexAsset.coinName
             ),
             .amount(
-                    iconUrl: service.cexAsset.coin?.imageUrl,
-                    iconPlaceholderImageName: "placeholder_circle_32",
-                    coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
-                    currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
-                    type: .neutral
+                iconUrl: service.cexAsset.coin?.imageUrl,
+                iconPlaceholderImageName: "placeholder_circle_32",
+                coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
+                currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                type: .neutral
             ),
             .address(
-                    title: "send.confirmation.to".localized,
-                    value: service.address,
-                    contactAddress: contactData?.contactAddress
-            )
+                title: "send.confirmation.to".localized,
+                value: service.address,
+                contactAddress: contactData?.contactAddress
+            ),
         ]
 
         if let contactName = contactData?.name {
@@ -92,27 +92,23 @@ class CexWithdrawConfirmViewModel {
 
         return viewItems
     }
-
 }
 
 extension CexWithdrawConfirmViewModel {
-
     var confirmWithdrawPublisher: AnyPublisher<Any, Never> {
         service.confirmWithdrawPublisher
     }
 
     var errorPublisher: AnyPublisher<String, Never> {
-        service.errorPublisher.map { $0.smartDescription }.eraseToAnyPublisher()
+        service.errorPublisher.map(\.smartDescription).eraseToAnyPublisher()
     }
 
     func onTapWithdraw() {
         service.withdraw()
     }
-
 }
 
 extension CexWithdrawConfirmViewModel {
-
     struct SectionViewItem {
         let viewItems: [ViewItem]
     }
@@ -124,5 +120,4 @@ extension CexWithdrawConfirmViewModel {
         case value(title: String, value: String, type: ValueType)
         case feeValue(title: String, coinAmount: String, currencyAmount: String?)
     }
-
 }

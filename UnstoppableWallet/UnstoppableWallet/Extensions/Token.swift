@@ -1,12 +1,11 @@
 import MarketKit
 
 extension Token {
-
     var protocolName: String? {
         switch type {
         case .native:
             switch blockchainType {
-            case .ethereum, .binanceSmartChain, .tron: return nil
+            case .ethereum, .binanceSmartChain, .tron, .ton: return nil
             case .binanceChain: return "BEP2"
             default: return blockchain.name
             }
@@ -48,17 +47,15 @@ extension Token {
 
     var badge: String? {
         switch type {
-        case .derived(let derivation): return derivation.mnemonicDerivation.rawValue.uppercased()
-        case .addressType(let type): return type.bitcoinCashCoinType.title.uppercased()
+        case let .derived(derivation): return derivation.mnemonicDerivation.rawValue.uppercased()
+        case let .addressType(type): return type.bitcoinCashCoinType.title.uppercased()
         default: return protocolName?.uppercased()
         }
     }
-
 }
 
 extension Token: Comparable {
-
-    public static func <(lhs: Token, rhs: Token) -> Bool {
+    public static func < (lhs: Token, rhs: Token) -> Bool {
         let lhsTypeOrder = lhs.type.order
         let rhsTypeOrder = rhs.type.order
 
@@ -68,5 +65,4 @@ extension Token: Comparable {
 
         return lhs.blockchainType.order < rhs.blockchainType.order
     }
-
 }

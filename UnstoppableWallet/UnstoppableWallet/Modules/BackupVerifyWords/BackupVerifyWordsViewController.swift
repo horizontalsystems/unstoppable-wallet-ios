@@ -1,10 +1,10 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
-import RxCocoa
-import SectionsTableView
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class BackupVerifyWordsViewController: ThemeViewController {
     private let viewModel: BackupVerifyWordsViewModel
@@ -16,7 +16,7 @@ class BackupVerifyWordsViewController: ThemeViewController {
     private var isLoaded = false
     private var didAppear = false
 
-    var onComplete: (() -> ())?
+    var onComplete: (() -> Void)?
 
     init(viewModel: BackupVerifyWordsViewModel) {
         self.viewModel = viewModel
@@ -24,7 +24,8 @@ class BackupVerifyWordsViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -90,14 +91,12 @@ class BackupVerifyWordsViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func openPassphrase(account: Account) {
+    private func openPassphrase(account _: Account) {
         // may be implemented later
     }
-
 }
 
 extension BackupVerifyWordsViewController: SectionsDataSource {
-
     private func marginRow(id: String, height: CGFloat) -> RowProtocol {
         Row<EmptyCell>(id: id, height: height)
     }
@@ -107,18 +106,18 @@ extension BackupVerifyWordsViewController: SectionsDataSource {
 
         for (index, viewItem) in viewItem.inputViewItems.enumerated() {
             let row = CellBuilderNew.row(
-                    rootElement: .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = viewItem.text
-                    },
-                    tableView: tableView,
-                    id: "input-\(index)",
-                    height: .heightCell48,
-                    bind: { cell in
-                        cell.set(backgroundStyle: .bordered, isFirst: true, isLast: true)
-                        cell.wrapperView.borderColor = viewItem.selected ? .themeYellow50 : .themeSteel20
-                    }
+                rootElement: .text { component in
+                    component.font = .body
+                    component.textColor = .themeLeah
+                    component.text = viewItem.text
+                },
+                tableView: tableView,
+                id: "input-\(index)",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .bordered, isFirst: true, isLast: true)
+                    cell.wrapperView.borderColor = viewItem.selected ? .themeYellow50 : .themeSteel20
+                }
             )
 
             rows.append(row)
@@ -129,32 +128,31 @@ extension BackupVerifyWordsViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "description",
-                    footerState: tableView.sectionFooter(text: "backup_verify_words.description".localized)
+                id: "description",
+                footerState: tableView.sectionFooter(text: "backup_verify_words.description".localized)
             ),
             Section(
-                    id: "main",
-                    footerState: .margin(height: .margin16),
-                    rows: rows
+                id: "main",
+                footerState: .margin(height: .margin16),
+                rows: rows
             ),
             Section(
-                    id: "suggestions",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        Row<BackupMnemonicWordsCell>(
-                                id: "suggestions",
-                                dynamicHeight: { width in
-                                    BackupMnemonicWordsCell.height(containerWidth: width, viewItems: wordViewItems)
-                                },
-                                bind: { cell, _ in
-                                    cell.set(viewItems: wordViewItems) { [weak self] index in
-                                        self?.viewModel.onSelectWord(index: index)
-                                    }
-                                }
-                        )
-                    ]
-            )
+                id: "suggestions",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    Row<BackupMnemonicWordsCell>(
+                        id: "suggestions",
+                        dynamicHeight: { width in
+                            BackupMnemonicWordsCell.height(containerWidth: width, viewItems: wordViewItems)
+                        },
+                        bind: { cell, _ in
+                            cell.set(viewItems: wordViewItems) { [weak self] index in
+                                self?.viewModel.onSelectWord(index: index)
+                            }
+                        }
+                    ),
+                ]
+            ),
         ]
     }
-
 }

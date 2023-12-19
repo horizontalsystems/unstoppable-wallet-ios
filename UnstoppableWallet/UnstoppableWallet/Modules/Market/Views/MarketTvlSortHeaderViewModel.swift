@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class MarketTvlSortHeaderViewModel {
     private let service: MarketGlobalTvlMetricService
@@ -18,11 +18,9 @@ class MarketTvlSortHeaderViewModel {
         sortDirectionAscendingRelay = BehaviorRelay(value: service.sortDirectionAscending)
         marketTvlFieldRelay = BehaviorRelay(value: service.marketTvlField)
     }
-
 }
 
 extension MarketTvlSortHeaderViewModel {
-
     var platformFieldViewItems: [AlertViewItem] {
         MarketModule.MarketPlatformField.allCases.map { platformField in
             AlertViewItem(text: platformField.title, selected: service.marketPlatformField == platformField)
@@ -74,5 +72,4 @@ extension MarketTvlSortHeaderViewModel {
         service.marketPlatformField = MarketModule.MarketPlatformField.allCases[index]
         platformFieldRelay.accept(service.marketPlatformField.title)
     }
-
 }

@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 
 class TransactionAdapterManager {
     private let disposeBag = DisposeBag()
@@ -20,11 +20,11 @@ class TransactionAdapterManager {
         self.adapterFactory = adapterFactory
 
         adapterManager.adapterDataReadyObservable
-                .observeOn(SerialDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] adapterData in
-                    self?.initAdapters(adapterMap: adapterData.adapterMap)
-                })
-                .disposed(by: disposeBag)
+            .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] adapterData in
+                self?.initAdapters(adapterMap: adapterData.adapterMap)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func initAdapters(adapterMap: [Wallet: IAdapter]) {
@@ -47,7 +47,7 @@ class TransactionAdapterManager {
                 transactionsAdapter = adapter as? ITransactionsAdapter
             }
 
-            if let transactionsAdapter = transactionsAdapter {
+            if let transactionsAdapter {
                 newAdapterMap[source] = transactionsAdapter
             }
         }
@@ -57,11 +57,9 @@ class TransactionAdapterManager {
             self.adaptersReadyRelay.accept(())
         }
     }
-
 }
 
 extension TransactionAdapterManager {
-
     var adapterMap: [TransactionSource: ITransactionsAdapter] {
         queue.sync { _adapterMap }
     }
@@ -73,5 +71,4 @@ extension TransactionAdapterManager {
     func adapter(for source: TransactionSource) -> ITransactionsAdapter? {
         queue.sync { _adapterMap[source] }
     }
-
 }

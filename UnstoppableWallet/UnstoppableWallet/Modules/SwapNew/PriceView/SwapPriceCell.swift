@@ -1,7 +1,7 @@
-import Foundation
-import UIKit
 import ComponentKit
+import Foundation
 import HUD
+import UIKit
 
 class SwapPriceCell: BaseThemeCell {
     private static let buttonHeight: CGFloat = 28
@@ -9,18 +9,18 @@ class SwapPriceCell: BaseThemeCell {
     let titleLabel = UILabel()
     let priceButton = UIButton()
     let progressView = HUDProgressView(
-            progress: 1,
-            strokeLineWidth: 2,
-            radius: 7.5,
-            strokeColor: .themeJacob,
-            donutColor: .themeSteel20,
-            duration: 10
+        progress: 1,
+        strokeLineWidth: 2,
+        radius: 7.5,
+        strokeColor: .themeJacob,
+        donutColor: .themeSteel20,
+        duration: 10
     )
 
     private var isReverted = false
     private var viewItem: PriceViewItem?
 
-    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style _: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
@@ -66,7 +66,8 @@ class SwapPriceCell: BaseThemeCell {
         priceButton.setTitleColor(.themeDark, for: [.selected, .highlighted])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -79,11 +80,9 @@ class SwapPriceCell: BaseThemeCell {
     private func syncPrice() {
         priceButton.setTitle(isReverted ? viewItem?.revertedPrice : viewItem?.price, for: .normal)
     }
-
 }
 
 extension SwapPriceCell {
-
     func set(item: PriceViewItem?) {
         viewItem = item
 
@@ -93,14 +92,11 @@ extension SwapPriceCell {
     func set(progress: Float) {
         progressView.set(progress: progress)
     }
-
 }
 
 extension SwapPriceCell {
-
     struct PriceViewItem {
         let price: String?
         let revertedPrice: String?
     }
-
 }

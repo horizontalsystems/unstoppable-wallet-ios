@@ -1,16 +1,15 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import CurrencyKit
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class MarketTopPlatformsService {
     typealias Item = TopPlatform
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private var disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
@@ -22,16 +21,16 @@ class MarketTopPlatformsService {
 
     @PostPublished private(set) var state: MarketListServiceState<TopPlatform> = .loading
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager, timePeriod: HsTimePeriod) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, appManager: IAppManager, timePeriod: HsTimePeriod) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.timePeriod = timePeriod
 
-        currencyKit.baseCurrencyUpdatedPublisher
-                .sink { [weak self] _ in
-                    self?.sync()
-                }
-                .store(in: &cancellables)
+        currencyManager.$baseCurrency
+            .sink { [weak self] _ in
+                self?.sync()
+            }
+            .store(in: &cancellables)
 
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.sync() }
 
@@ -64,17 +63,15 @@ class MarketTopPlatformsService {
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let platforms, _, _) = internalState else {
+        guard case let .loaded(platforms, _, _) = internalState else {
             return
         }
 
         sync(topPlatforms: platforms, reorder: true)
     }
-
 }
 
 extension MarketTopPlatformsService {
-
     var topPlatforms: [TopPlatform]? {
         if case let .loaded(data, _, _) = state {
             return data
@@ -82,11 +79,9 @@ extension MarketTopPlatformsService {
 
         return nil
     }
-
 }
 
 extension MarketTopPlatformsService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
         $state
     }
@@ -94,13 +89,10 @@ extension MarketTopPlatformsService: IMarketListService {
     func refresh() {
         sync()
     }
-
 }
 
 extension MarketTopPlatformsService: IMarketListTopPlatformDecoratorService {
-
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
-
 }

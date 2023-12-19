@@ -1,7 +1,7 @@
-import UIKit
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
+import UIKit
 
 class RestoreSelectViewModel {
     private let service: RestoreSelectService
@@ -9,7 +9,7 @@ class RestoreSelectViewModel {
 
     private let viewItemsRelay = BehaviorRelay<[CoinToggleViewModel.ViewItem]>(value: [])
     private let disableBlockchainRelay = PublishRelay<String>()
-    private let successRelay = PublishRelay<()>()
+    private let successRelay = PublishRelay<Void>()
 
     init(service: RestoreSelectService) {
         self.service = service
@@ -22,24 +22,22 @@ class RestoreSelectViewModel {
 
     private func viewItem(item: RestoreSelectService.Item) -> CoinToggleViewModel.ViewItem {
         CoinToggleViewModel.ViewItem(
-                uid: item.blockchain.uid,
-                imageUrl: item.blockchain.type.imageUrl,
-                placeholderImageName: "placeholder_rectangle_32",
-                title: item.blockchain.name,
-                subtitle: item.blockchain.type.description,
-                badge: nil,
-                state: .toggleVisible(enabled: item.enabled, hasSettings: item.hasSettings, hasInfo: false)
+            uid: item.blockchain.uid,
+            imageUrl: item.blockchain.type.imageUrl,
+            placeholderImageName: "placeholder_rectangle_32",
+            title: item.blockchain.name,
+            subtitle: item.blockchain.type.description,
+            badge: nil,
+            state: .toggleVisible(enabled: item.enabled, hasSettings: item.hasSettings, hasInfo: false)
         )
     }
 
     private func sync(items: [RestoreSelectService.Item]) {
         viewItemsRelay.accept(items.map { viewItem(item: $0) })
     }
-
 }
 
 extension RestoreSelectViewModel: ICoinToggleViewModel {
-
     var viewItemsDriver: Driver<[CoinToggleViewModel.ViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -56,16 +54,12 @@ extension RestoreSelectViewModel: ICoinToggleViewModel {
         service.configure(blockchainUid: uid)
     }
 
-    func onTapInfo(uid: String) {
-    }
+    func onTapInfo(uid _: String) {}
 
-    func onUpdate(filter: String) {
-    }
-
+    func onUpdate(filter _: String) {}
 }
 
 extension RestoreSelectViewModel {
-
     var disableBlockchainSignal: Signal<String> {
         disableBlockchainRelay.asSignal()
     }
@@ -74,7 +68,7 @@ extension RestoreSelectViewModel {
         service.canRestoreObservable.asDriver(onErrorJustReturn: false)
     }
 
-    var successSignal: Signal<()> {
+    var successSignal: Signal<Void> {
         successRelay.asSignal()
     }
 
@@ -82,5 +76,4 @@ extension RestoreSelectViewModel {
         service.restore()
         successRelay.accept(())
     }
-
 }

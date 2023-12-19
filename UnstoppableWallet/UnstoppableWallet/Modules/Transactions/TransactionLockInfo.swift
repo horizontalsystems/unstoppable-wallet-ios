@@ -9,5 +9,4 @@ struct TransactionLockInfo {
         self.lockedUntil = lockedUntil
         self.originalAddress = originalAddress
     }
-
 }

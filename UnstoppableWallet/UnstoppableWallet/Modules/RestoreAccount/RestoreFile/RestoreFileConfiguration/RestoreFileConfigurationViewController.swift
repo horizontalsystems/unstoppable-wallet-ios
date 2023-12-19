@@ -23,6 +23,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
+    @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -74,7 +75,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
     }
 
     private func finish(success: Bool) {
-        UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance(presetTab: .balance))
+        UIWindow.keyWindow?.set(newRootController: MainModule.instance(presetTab: .balance))
 
         if success {
             HudHelper.instance.show(banner: .done)
@@ -87,17 +88,17 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
 
     private func showMergeAlert() {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "alert.notice".localized,
-                items: [
-                    .highlightedDescription(text: "backup_app.restore.notice.description".localized),
-                ],
-                buttons: [
-                    .init(style: .red, title: "backup_app.restore.notice.merge".localized, actionType: .afterClose) { [weak self] in
-                        self?.viewModel.restore()
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized, actionType: .afterClose),
-                ]
+            image: .warning,
+            title: "alert.notice".localized,
+            items: [
+                .highlightedDescription(text: "backup_app.restore.notice.description".localized),
+            ],
+            buttons: [
+                .init(style: .red, title: "backup_app.restore.notice.merge".localized, actionType: .afterClose) { [weak self] in
+                    self?.viewModel.restore()
+                },
+                .init(style: .transparent, title: "button.cancel".localized, actionType: .afterClose),
+            ]
         )
 
         present(viewController, animated: true)
@@ -118,19 +119,19 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
     private func row(item: BackupAppModule.Item, rowInfo: RowInfo) -> RowProtocol {
         if let description = item.description {
             return tableView.universalRow62(
-                    id: item.title,
-                    title: .body(item.title),
-                    description: .subhead2(description),
-                    isFirst: rowInfo.isFirst,
-                    isLast: rowInfo.isLast
+                id: item.title,
+                title: .body(item.title),
+                description: .subhead2(description),
+                isFirst: rowInfo.isFirst,
+                isLast: rowInfo.isLast
             )
         } else {
             return tableView.universalRow48(
-                    id: item.title,
-                    title: .body(item.title),
-                    value: .subhead1(item.value, color: .themeGray),
-                    isFirst: rowInfo.isFirst,
-                    isLast: rowInfo.isLast
+                id: item.title,
+                title: .body(item.title),
+                value: .subhead1(item.value, color: .themeGray),
+                isFirst: rowInfo.isFirst,
+                isLast: rowInfo.isLast
             )
         }
     }

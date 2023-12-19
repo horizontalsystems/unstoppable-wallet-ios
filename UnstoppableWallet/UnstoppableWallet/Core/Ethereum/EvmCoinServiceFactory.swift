@@ -1,21 +1,20 @@
-import CurrencyKit
 import BigInt
-import MarketKit
 import EvmKit
+import MarketKit
 import TronKit
 
 class EvmCoinServiceFactory {
     private let blockchainType: BlockchainType
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let coinManager: CoinManager
 
     let baseCoinService: CoinService
 
-    init?(blockchainType: BlockchainType, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, coinManager: CoinManager) {
+    init?(blockchainType: BlockchainType, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, coinManager: CoinManager) {
         self.blockchainType = blockchainType
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.coinManager = coinManager
 
         let query = TokenQuery(blockchainType: blockchainType, tokenType: .native)
@@ -24,7 +23,7 @@ class EvmCoinServiceFactory {
             return nil
         }
 
-        baseCoinService = CoinService(token: baseToken, currencyKit: currencyKit, marketKit: marketKit)
+        baseCoinService = CoinService(token: baseToken, currencyManager: currencyManager, marketKit: marketKit)
     }
 
     func coinService(contractAddress: EvmKit.Address) -> CoinService? {
@@ -48,7 +47,6 @@ class EvmCoinServiceFactory {
     }
 
     func coinService(token: Token) -> CoinService {
-        CoinService(token: token, currencyKit: currencyKit, marketKit: marketKit)
+        CoinService(token: token, currencyManager: currencyManager, marketKit: marketKit)
     }
-
 }

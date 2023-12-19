@@ -1,37 +1,37 @@
-import UIKit
-import SnapKit
-import ActionSheet
-import ThemeKit
-import HUD
 import ComponentKit
-import CurrencyKit
+import HUD
 import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class TransactionsViewController: ThemeViewController {
     private let viewModel: TransactionsViewModel
     private let dataSource: TransactionsTableViewDataSource
+    private let transactionFilterService: TransactionFilterService
     private let disposeBag = DisposeBag()
 
-    private let headerView: TransactionsHeaderView
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let typeFiltersView = FilterView(buttonStyle: .tab)
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
-    init(viewModel: TransactionsViewModel, dataSource: TransactionsTableViewDataSource) {
+    private let filterBadge = UIView()
+
+    init(viewModel: TransactionsViewModel, dataSource: TransactionsTableViewDataSource, transactionFilterService: TransactionFilterService) {
         self.viewModel = viewModel
         self.dataSource = dataSource
-        headerView = TransactionsHeaderView(viewModel: viewModel)
+        self.transactionFilterService = transactionFilterService
 
         super.init()
 
-        headerView.viewController = self
         tabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "filled_transaction_2n_24"), tag: 0)
         navigationItem.largeTitleDisplayMode = .never
 
         dataSource.viewController = self
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -39,14 +39,41 @@ class TransactionsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "transactions.title".localized
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.reset".localized, style: .plain, target: self, action: #selector(onTapReset))
+
+        let spinnerBarView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        spinnerBarView.addSubview(syncSpinner)
+
+        let filterBarView = UIView()
+        filterBarView.snp.makeConstraints { make in
+            make.size.equalTo(CGFloat.iconSize32)
+        }
+
+        let filterButton = UIButton()
+        filterBarView.addSubview(filterButton)
+        filterButton.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGFloat.iconSize24)
+        }
+
+        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeJacob), for: .normal)
+        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeYellow50), for: .highlighted)
+        filterButton.addTarget(self, action: #selector(onTapFilter), for: .touchUpInside)
+
+        filterBarView.addSubview(filterBadge)
+        filterBadge.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview()
+            make.size.equalTo(8)
+        }
+
+        filterBadge.cornerRadius = 4
+        filterBadge.backgroundColor = .themeLucian
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: spinnerBarView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: filterBarView)
 
         view.addSubview(tableView)
 
-        tableView.backgroundColor = .clear
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
@@ -66,20 +93,8 @@ class TransactionsViewController: ThemeViewController {
             self?.viewModel.onSelectTypeFilter(index: index)
         }
 
-        view.addSubview(headerView)
-        headerView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(typeFiltersView.snp.bottom)
-            maker.height.equalTo(CGFloat.heightSingleLineCell)
-        }
-
-        let holder = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        holder.addSubview(syncSpinner)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: holder)
-
         tableView.snp.makeConstraints { maker in
-            maker.top.equalTo(headerView.snp.bottom)
+            maker.top.equalTo(typeFiltersView.snp.bottom)
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
@@ -87,15 +102,14 @@ class TransactionsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.typeFilterIndexDriver) { [weak self] index in
             self?.typeFiltersView.select(index: index)
         }
-        subscribe(disposeBag, viewModel.resetEnabledDriver) { [weak self] in
-            self?.navigationItem.leftBarButtonItem?.isEnabled = $0
-        }
+        subscribe(disposeBag, viewModel.filterBadgeVisibleDriver) { [weak self] in self?.filterBadge.isHidden = !$0 }
 
         dataSource.prepare(tableView: tableView)
     }
 
-    @objc private func onTapReset() {
-        viewModel.onTapReset()
+    @objc private func onTapFilter() {
+        let viewController = TransactionFilterModule.view(transactionFilterService: transactionFilterService).toNavigationViewController()
+        present(viewController, animated: true)
     }
 
     private func sync(syncing: Bool) {
@@ -107,5 +121,4 @@ class TransactionsViewController: ThemeViewController {
             syncSpinner.stopAnimating()
         }
     }
-
 }

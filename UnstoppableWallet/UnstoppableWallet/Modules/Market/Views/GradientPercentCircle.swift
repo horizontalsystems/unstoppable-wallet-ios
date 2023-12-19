@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class GradientPercentCircle: UIView {
     static let width: CGFloat = 44
@@ -25,7 +25,8 @@ class GradientPercentCircle: UIView {
         layer.addSublayer(gradientLayer)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -73,14 +74,12 @@ class GradientPercentCircle: UIView {
             layer.removeAllAnimations()
         }
     }
-
 }
 
 extension GradientPercentCircle {
-
     public func set(value: CGFloat?, animated: Bool = true) {
         guard let percentValue = value else {
-            if currentValue != nil {                                // alpha change from current to nil (hide)
+            if currentValue != nil { // alpha change from current to nil (hide)
                 hide(layer: gradientLayer, animated: animated)
                 currentValue = nil
             }
@@ -89,15 +88,14 @@ extension GradientPercentCircle {
         }
         let value = percentValue / 100
 
-        guard currentValue != nil else {                    // alpha change from nil to new (show)
+        guard currentValue != nil else { // alpha change from nil to new (show)
             show(layer: gradientLayer, value: value, animated: animated)
             currentValue = value
 
             return
         }
 
-        move(layer: gradientLayer, toValue: value, animated: animated)   // move gradient position
+        move(layer: gradientLayer, toValue: value, animated: animated) // move gradient position
         currentValue = value
     }
-
 }

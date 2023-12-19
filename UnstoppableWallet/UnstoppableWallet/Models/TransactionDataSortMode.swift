@@ -9,5 +9,4 @@ enum TransactionDataSortMode: String, CaseIterable {
     var description: String {
         "btc_transaction_sort_mode.\(self).description".localized
     }
-
 }

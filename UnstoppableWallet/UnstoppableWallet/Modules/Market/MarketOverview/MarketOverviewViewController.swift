@@ -1,15 +1,15 @@
-import UIKit
-import RxSwift
-import RxCocoa
-import ThemeKit
-import SectionsTableView
+import Chart
 import ComponentKit
 import HUD
-import Chart
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 protocol IMarketOverviewDataSource {
     var isReady: Bool { get }
-    var updateObservable: Observable<()> { get }
+    var updateObservable: Observable<Void> { get }
     func sections(tableView: SectionsTableView) -> [SectionProtocol]
 }
 
@@ -31,7 +31,8 @@ class MarketOverviewViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -49,6 +50,7 @@ class MarketOverviewViewController: ThemeViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: MarketOverviewHeaderCell.self)
@@ -109,19 +111,16 @@ class MarketOverviewViewController: ThemeViewController {
     }
 
     func handleDataSourceUpdate() {
-        guard dataSources.allSatisfy({ $0.isReady }) else {
+        guard dataSources.allSatisfy(\.isReady) else {
             return
         }
 
         tableView.reload()
     }
-
 }
 
 extension MarketOverviewViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         dataSources.compactMap { $0.sections(tableView: tableView) }.flatMap { $0 }
     }
-
 }

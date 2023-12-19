@@ -1,6 +1,6 @@
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class GuidesViewModel {
     private let disposeBag = DisposeBag()
@@ -19,10 +19,10 @@ class GuidesViewModel {
         self.service = service
 
         service.categories
-                .subscribe(onNext: { [weak self] dataState in
-                    self?.handle(dataState: dataState)
-                })
-                .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] dataState in
+                self?.handle(dataState: dataState)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func handle(dataState: DataState<[GuideCategoryItem]>) {
@@ -32,15 +32,15 @@ class GuidesViewModel {
             loadingRelay.accept(false)
         }
 
-        if case .success(let categories) = dataState {
+        if case let .success(categories) = dataState {
             self.categories = categories
 
-            filterViewItemsRelay.accept(categories.map { $0.title })
+            filterViewItemsRelay.accept(categories.map(\.title))
 
             syncViewItems()
         }
 
-        if case .error(let error) = dataState {
+        if case let .error(error) = dataState {
             errorRelay.accept(error.convertedError)
         } else {
             errorRelay.accept(nil)
@@ -54,10 +54,10 @@ class GuidesViewModel {
 
         let viewItems = categories[currentCategoryIndex].items.map { item in
             GuideViewItem(
-                    title: item.title,
-                    date: item.date,
-                    imageUrl: item.imageUrl,
-                    url: item.url
+                title: item.title,
+                date: item.date,
+                imageUrl: item.imageUrl,
+                url: item.url
             )
         }
 
@@ -66,7 +66,6 @@ class GuidesViewModel {
 }
 
 extension GuidesViewModel: IGuidesViewModel {
-
     var filters: Driver<[String]> {
         filterViewItemsRelay.asDriver()
     }
@@ -88,5 +87,4 @@ extension GuidesViewModel: IGuidesViewModel {
 
         syncViewItems()
     }
-
 }

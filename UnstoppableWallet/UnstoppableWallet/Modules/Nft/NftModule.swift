@@ -1,13 +1,12 @@
-import UIKit
 import ThemeKit
+import UIKit
 
-struct NftModule {
-
+enum NftModule {
     static func viewController() -> UIViewController? {
         let coinPriceService = WalletCoinPriceService(
-                tag: "nft",
-                currencyKit: App.shared.currencyKit,
-                marketKit: App.shared.marketKit
+            tag: "nft",
+            currencyManager: App.shared.currencyManager,
+            marketKit: App.shared.marketKit
         )
 
         guard let account = App.shared.accountManager.activeAccount else {
@@ -15,13 +14,13 @@ struct NftModule {
         }
 
         let service = NftService(
-                account: account,
-                nftAdapterManager: App.shared.nftAdapterManager,
-                nftMetadataManager: App.shared.nftMetadataManager,
-                nftMetadataSyncer: App.shared.nftMetadataSyncer,
-                balanceHiddenManager: App.shared.balanceHiddenManager,
-                balanceConversionManager: App.shared.balanceConversionManager,
-                coinPriceService: coinPriceService
+            account: account,
+            nftAdapterManager: App.shared.nftAdapterManager,
+            nftMetadataManager: App.shared.nftMetadataManager,
+            nftMetadataSyncer: App.shared.nftMetadataSyncer,
+            balanceHiddenManager: App.shared.balanceHiddenManager,
+            balanceConversionManager: App.shared.balanceConversionManager,
+            coinPriceService: coinPriceService
         )
 
         coinPriceService.delegate = service
@@ -31,5 +30,4 @@ struct NftModule {
 
         return NftViewController(viewModel: viewModel, headerViewModel: headerViewModel)
     }
-
 }

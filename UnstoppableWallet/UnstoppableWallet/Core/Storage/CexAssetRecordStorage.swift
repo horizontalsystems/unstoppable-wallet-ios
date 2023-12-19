@@ -6,16 +6,14 @@ class CexAssetRecordStorage {
     init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
-
 }
 
 extension CexAssetRecordStorage {
-
     func balanceAssets(accountId: String) throws -> [CexAssetRecord] {
         try dbPool.read { db in
             try CexAssetRecord
-                    .filter(CexAssetRecord.Columns.accountId == accountId && (CexAssetRecord.Columns.freeBalance != 0 || CexAssetRecord.Columns.lockedBalance != 0))
-                    .fetchAll(db)
+                .filter(CexAssetRecord.Columns.accountId == accountId && (CexAssetRecord.Columns.freeBalance != 0 || CexAssetRecord.Columns.lockedBalance != 0))
+                .fetchAll(db)
         }
     }
 
@@ -40,5 +38,4 @@ extension CexAssetRecordStorage {
             try CexAssetRecord.filter(CexAssetRecord.Columns.accountId == accountId).deleteAll(db)
         }
     }
-
 }

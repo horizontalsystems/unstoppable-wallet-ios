@@ -1,22 +1,21 @@
 import UIKit
 
-struct NftAssetOverviewModule {
-
+enum NftAssetOverviewModule {
     static func viewController(providerCollectionUid: String, nftUid: NftUid) -> NftAssetOverviewViewController {
         let coinPriceService = WalletCoinPriceService(
-                tag: "nft-asset-overview",
-                currencyKit: App.shared.currencyKit,
-                marketKit: App.shared.marketKit
+            tag: "nft-asset-overview",
+            currencyManager: App.shared.currencyManager,
+            marketKit: App.shared.marketKit
         )
 
         let service = NftAssetOverviewService(
-                providerCollectionUid: providerCollectionUid,
-                nftUid: nftUid,
-                accountManager: App.shared.accountManager,
-                nftAdapterManager: App.shared.nftAdapterManager,
-                nftMetadataManager: App.shared.nftMetadataManager,
-                marketKit: App.shared.marketKit,
-                coinPriceService: coinPriceService
+            providerCollectionUid: providerCollectionUid,
+            nftUid: nftUid,
+            accountManager: App.shared.accountManager,
+            nftAdapterManager: App.shared.nftAdapterManager,
+            nftMetadataManager: App.shared.nftMetadataManager,
+            marketKit: App.shared.marketKit,
+            coinPriceService: coinPriceService
         )
 
         coinPriceService.delegate = service
@@ -24,7 +23,6 @@ struct NftAssetOverviewModule {
         let viewModel = NftAssetOverviewViewModel(service: service)
         return NftAssetOverviewViewController(viewModel: viewModel, urlManager: UrlManager(inApp: true))
     }
-
 }
 
 enum NftImage {
@@ -33,7 +31,7 @@ enum NftImage {
 
     var ratio: CGFloat {
         switch self {
-        case .image(let image): return image.size.height / image.size.width
+        case let .image(image): return image.size.height / image.size.width
         case .svg: return 1
         }
     }

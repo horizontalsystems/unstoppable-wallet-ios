@@ -1,10 +1,9 @@
-import Foundation
 import BigInt
+import Foundation
 
-fileprivate let max256ByteNumber = BigUInt(Data(hex: "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"))
+private let max256ByteNumber = BigUInt(Data(hex: "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"))
 
 extension Decimal {
-
     init?(bigUInt: BigUInt, decimals: Int) {
         guard let significand = Decimal(string: bigUInt.description) else {
             return nil
@@ -26,5 +25,4 @@ extension Decimal {
         let maxInDecimal = Decimal(sign: .plus, exponent: -decimals, significand: Decimal(string: max256ByteNumber.description)!)
         return maxInDecimal == self
     }
-
 }

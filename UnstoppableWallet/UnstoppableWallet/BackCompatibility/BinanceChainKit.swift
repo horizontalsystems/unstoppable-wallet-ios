@@ -1,26 +1,25 @@
-import Foundation
-import Combine
-import RxSwift
-import HsExtensions
 import BinanceChainKit
+import Combine
+import Foundation
+import HsExtensions
+import RxSwift
 
-extension BinanceChainKit {
+public extension BinanceChainKit {
+    internal struct DisposedError: Error {}
 
-    struct DisposedError: Error {}
-
-    public var lastBlockHeightObservable: Observable<Int?> {
+    var lastBlockHeightObservable: Observable<Int?> {
         $lastBlockHeight.asObservable()
     }
 
-    public var syncStateObservable: Observable<SyncState> {
+    var syncStateObservable: Observable<SyncState> {
         $syncState.asObservable()
     }
 
-    public func transactionsSingle(symbol: String, filterType: TransactionFilterType? = nil, fromTransactionHash: String? = nil, limit: Int? = nil) -> Single<[TransactionInfo]> {
+    func transactionsSingle(symbol: String, filterType: TransactionFilterType? = nil, fromTransactionHash: String? = nil, limit: Int? = nil) -> Single<[TransactionInfo]> {
         Single.just(transactions(symbol: symbol, filterType: filterType, fromTransactionHash: fromTransactionHash, limit: limit))
     }
 
-    public func sendSingle(symbol: String, to: String, amount: Decimal, memo: String) -> Single<String> {
+    func sendSingle(symbol: String, to: String, amount: Decimal, memo: String) -> Single<String> {
         Single<String>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -42,7 +41,7 @@ extension BinanceChainKit {
         }
     }
 
-    public func moveToBSCSingle(symbol: String, amount: Decimal) -> Single<String> {
+    func moveToBSCSingle(symbol: String, amount: Decimal) -> Single<String> {
         Single<String>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
@@ -63,17 +62,14 @@ extension BinanceChainKit {
             }
         }
     }
-
 }
 
-extension Asset {
-
-    public var balanceObservable: Observable<Decimal> {
+public extension Asset {
+    var balanceObservable: Observable<Decimal> {
         $balance.asObservable()
     }
 
-    public func transactionsObservable(filterType: TransactionFilterType? = nil) -> Observable<[TransactionInfo]> {
+    func transactionsObservable(filterType: TransactionFilterType? = nil) -> Observable<[TransactionInfo]> {
         transactionsPublisher(filterType: filterType).asObservable()
     }
-
 }

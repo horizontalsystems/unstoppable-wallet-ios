@@ -1,0 +1,27 @@
+"6ebp42" = "已选硬币";
+"8vJheC" = "排序方式为";
+"qHGyuo" = "市值由高到低";
+"tVjZ7W" = "市值由低到高";
+"t6AKQ5" = "成交量由高到低";
+"C1LmDj" = "成交量由低到高";
+"Rl3a0T" = "涨幅榜";
+"x1kK4T" = "跌幅榜";
+
+"2puq80" = "Coin Price List";
+"Iodq3O-C1LmDj" = "Just to confirm, you wanted ‘Lowest Volume’?";
+"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Top Gainers’?";
+"Iodq3O-qHGyuo" = "Just to confirm, you wanted ‘Highest Cap’?";
+"Iodq3O-t6AKQ5" = "Just to confirm, you wanted ‘Highest Volume’?";
+"Iodq3O-tVjZ7W" = "Just to confirm, you wanted ‘Lowest Cap’?";
+"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Top Losers’?";
+"OkcYOj" = "View coin price for selected coin";
+"VXTxGF" = "Widget Coin";
+"ZBHf6A" = "Sort Type";
+"hrLfmt" = "Single Coin Price";
+"nj8Co9-C1LmDj" = "There are ${count} options matching ‘Lowest Volume’.";
+"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Top Gainers’.";
+"nj8Co9-qHGyuo" = "There are ${count} options matching ‘Highest Cap’.";
+"nj8Co9-t6AKQ5" = "There are ${count} options matching ‘Highest Volume’.";
+"nj8Co9-tVjZ7W" = "There are ${count} options matching ‘Lowest Cap’.";
+"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Top Losers’.";
+"rCV9fg" = "See coin prices for coin list";

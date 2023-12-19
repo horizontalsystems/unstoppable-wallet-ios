@@ -34,16 +34,13 @@ enum BitcoinCashCoinType: String, CaseIterable {
     var recommended: String {
         self == Self.default ? "blockchain_type.recommended".localized : ""
     }
-
 }
 
 extension TokenType.AddressType {
-
     var bitcoinCashCoinType: BitcoinCashCoinType {
         switch self {
         case .type0: return .type0
         case .type145: return .type145
         }
     }
-
 }

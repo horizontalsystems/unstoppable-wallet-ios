@@ -1,45 +1,48 @@
-import SDWebImageSwiftUI
+import Kingfisher
 import SwiftUI
 
 struct BtcBlockchainSettingsView: View {
     @ObservedObject var viewModel: BtcBlockchainSettingsViewModel
 
     @Environment(\.presentationMode) private var presentationMode
-    @State private var infoPresented = false
 
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
-                VStack(spacing: .margin24) {
-                    HighlightedTextView(text: "btc_blockchain_settings.restore_source.alert".localized(viewModel.title))
-
-                    VStack(spacing: 0) {
-                        ListSectionInfoHeader(text: "btc_blockchain_settings.restore_source".localized) {
-                            infoPresented = true
-                        }
-                        .sheet(isPresented: $infoPresented) {
-                            InfoModule.restoreSourceInfo
-                        }
+                VStack(spacing: .margin32) {
+                    VStack(spacing: .margin32) {
+                        Text("btc_blockchain_settings.restore_source.description".localized)
+                            .themeSubhead2()
+                            .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
 
                         ListSection {
-                            ForEach(viewModel.restoreModes) { restoreMode in
+                            ForEach(viewModel.restoreModes, id: \.restoreMode.id) { restoreMode in
                                 ClickableRow(action: {
-                                    viewModel.selectedRestoreMode = restoreMode
+                                    viewModel.selectedRestoreMode = restoreMode.restoreMode
                                 }) {
+                                    switch restoreMode.icon {
+                                    case let .local(name):
+                                        Image(name)
+                                    case let .remote(url):
+                                        KFImage.url(URL(string: url))
+                                            .resizable()
+                                            .frame(width: .iconSize32, height: .iconSize32)
+                                    }
+
                                     VStack(spacing: 1) {
                                         Text(restoreMode.title).themeBody()
                                         Text(restoreMode.description).themeSubhead2()
                                     }
 
-                                    if restoreMode == viewModel.selectedRestoreMode {
+                                    if restoreMode.restoreMode == viewModel.selectedRestoreMode {
                                         Image.checkIcon
                                     }
                                 }
                             }
                         }
-
-                        ListSectionFooter(text: "btc_blockchain_settings.restore_source.description".localized)
                     }
+
+                    HighlightedTextView(text: "btc_blockchain_settings.restore_source.alert".localized(viewModel.title))
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             } bottomContent: {
@@ -53,12 +56,12 @@ struct BtcBlockchainSettingsView: View {
                 .disabled(!viewModel.saveEnabled)
             }
         }
-        .navigationBarTitle(viewModel.title)
+        .navigationTitle(viewModel.title)
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                WebImage(url: URL(string: viewModel.iconUrl))
+                KFImage.url(URL(string: viewModel.iconUrl))
                     .resizable()
-                    .scaledToFit()
                     .frame(width: .iconSize24, height: .iconSize24)
             }
 

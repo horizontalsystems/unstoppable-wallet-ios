@@ -22,22 +22,21 @@ class EvmMethodLabel: Record, ImmutableMappable {
     }
 
     required init(map: Map) throws {
-        methodId = (try map.value("method_id") as String).lowercased()
+        methodId = try (map.value("method_id") as String).lowercased()
         label = try map.value("label")
 
         super.init()
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         methodId = row[Columns.methodId]
         label = row[Columns.label]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.methodId] = methodId
         container[Columns.label] = label
     }
-
 }

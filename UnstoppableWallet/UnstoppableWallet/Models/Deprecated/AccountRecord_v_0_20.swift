@@ -33,7 +33,7 @@ class AccountRecord_v_0_20: Record {
         case id, name, type, origin, backedUp, wordsKey, saltKey, birthdayHeightKey, dataKey
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         id = row[Columns.id]
         name = row[Columns.name]
         type = row[Columns.type]
@@ -44,7 +44,7 @@ class AccountRecord_v_0_20: Record {
         birthdayHeightKey = row[Columns.birthdayHeightKey]
         dataKey = row[Columns.dataKey]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -58,5 +58,4 @@ class AccountRecord_v_0_20: Record {
         container[Columns.birthdayHeightKey] = birthdayHeightKey
         container[Columns.dataKey] = dataKey
     }
-
 }

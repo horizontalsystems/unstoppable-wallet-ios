@@ -8,13 +8,13 @@ on:
 jobs:
   build_and_deploy:
     name: Build and Deploy to TestFlight
-    runs-on: macos-12
+    runs-on: macos-13
 
     steps:
-      - name: Setup Xcode to 14.2
+      - name: Setup Xcode to 15.0
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '14.2'
+          xcode-version: '15.0'
 
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -41,20 +41,14 @@ jobs:
           lane: release
         env:
           BUILD_NUMBER: ${{ github.run_number }}
-          APP_STORE_CONNECT_TEAM_ID: ${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
           APP_ID: ${{ secrets.APP_ID }}
-          APP_IDENTIFIER_RELEASE: ${{ secrets.APP_IDENTIFIER_RELEASE }}
-          DEVELOPER_PORTAL_TEAM_ID: ${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}
-          FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           GIT_AUTHORIZATION: ${{ secrets.GIT_AUTHORIZATION }}
-          PROVISIONING_PROFILE_SPECIFIER_APPSTORE: ${{ secrets.PROVISIONING_PROFILE_SPECIFIER_APPSTORE }}
-          TEMP_KEYCHAIN_PASSWORD: ${{ secrets.TEMP_KEYCHAIN_PASSWORD }}
           TEMP_KEYCHAIN_USER: ${{ secrets.TEMP_KEYCHAIN_USER }}
-          APPLE_KEY_ID: ${{ secrets.APPLE_KEY_ID }}
+          TEMP_KEYCHAIN_PASSWORD: ${{ secrets.TEMP_KEYCHAIN_PASSWORD }}
           APPLE_ISSUER_ID: ${{ secrets.APPLE_ISSUER_ID }}
+          APPLE_KEY_ID: ${{ secrets.APPLE_KEY_ID }}
           APPLE_KEY_CONTENT: ${{ secrets.APPLE_KEY_CONTENT }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
           XCCONFIG_PROD_INFURA_PROJECT_ID: ${{ secrets.XCCONFIG_PROD_INFURA_PROJECT_ID }}
           XCCONFIG_PROD_INFURA_PROJECT_SECRET: ${{ secrets.XCCONFIG_PROD_INFURA_PROJECT_SECRET }}
@@ -74,3 +68,4 @@ jobs:
           XCCONFIG_PROD_TRONGRID_API_KEY: ${{ secrets.XCCONFIG_PROD_TRONGRID_API_KEY }}
           XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY: ${{ secrets.XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY }}
           XCCONFIG_PROD_ONE_INCH_API_KEY: ${{ secrets.XCCONFIG_PROD_ONE_INCH_API_KEY }}
+          XCCONFIG_PROD_BLOCKCHAIR_API_KEY: ${{ secrets.XCCONFIG_PROD_BLOCKCHAIR_API_KEY }}

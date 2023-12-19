@@ -22,22 +22,21 @@ class EvmAddressLabel: Record, ImmutableMappable {
     }
 
     required init(map: Map) throws {
-        address = (try map.value("address") as String).lowercased()
+        address = try (map.value("address") as String).lowercased()
         label = try map.value("label")
 
         super.init()
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         address = row[Columns.address]
         label = row[Columns.label]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.address] = address
         container[Columns.label] = label
     }
-
 }

@@ -1,10 +1,9 @@
-import RxSwift
 import RxRelay
-import StorageKit
+import RxSwift
 
 class AmountTypeSwitchService {
     private let amountTypeKey = "amount-type-switch-service-amount-type"
-    private let localStorage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let useLocalStorage: Bool
 
     private var toggleAvailableObservables = [Observable<Bool>]()
@@ -26,14 +25,14 @@ class AmountTypeSwitchService {
         }
     }
 
-    init(localStorage: StorageKit.ILocalStorage, useLocalStorage: Bool = true) {
-        let localStorageValue = localStorage.value(for: amountTypeKey).flatMap { AmountType(rawValue: $0) } ?? .coin
+    init(userDefaultsStorage: UserDefaultsStorage, useLocalStorage: Bool = true) {
+        let localStorageValue = userDefaultsStorage.value(for: amountTypeKey).flatMap { AmountType(rawValue: $0) } ?? .coin
         if useLocalStorage {
             amountType = localStorageValue
         } else {
             amountType = .coin
         }
-        self.localStorage = localStorage
+        self.userDefaultsStorage = userDefaultsStorage
         self.useLocalStorage = useLocalStorage
     }
 
@@ -41,34 +40,33 @@ class AmountTypeSwitchService {
         disposeBag = DisposeBag()
 
         Observable.combineLatest(toggleAvailableObservables)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] array in
-                    self?.syncToggleAvailable(array: array)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] array in
+                self?.syncToggleAvailable(array: array)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func syncToggleAvailable(array: [Bool]) {
         toggleAvailable = array.allSatisfy { $0 }
 
-        if !toggleAvailable && amountType == .currency { // reset input type if it was set to currency
+        if !toggleAvailable, amountType == .currency { // reset input type if it was set to currency
             amountType = .coin
         } else if toggleAvailable, useLocalStorage,
-                  let savedAmountType = localStorage.value(for: amountTypeKey).flatMap({ AmountType(rawValue: $0) }),
-                  savedAmountType == .currency && amountType == .coin {
+                  let savedAmountType = userDefaultsStorage.value(for: amountTypeKey).flatMap({ AmountType(rawValue: $0) }),
+                  savedAmountType == .currency, amountType == .coin
+        {
             amountType = .currency
         }
     }
-
 }
 
 extension AmountTypeSwitchService {
-
     func toggle() {
         if toggleAvailable {
             amountType = !amountType
             if useLocalStorage {
-                localStorage.set(value: amountType.rawValue, for: amountTypeKey)
+                userDefaultsStorage.set(value: amountType.rawValue, for: amountTypeKey)
             }
         }
     }
@@ -85,11 +83,9 @@ extension AmountTypeSwitchService {
         toggleAvailableObservables.append(toggleAllowedObservable)
         subscribeToObservables()
     }
-
 }
 
 extension AmountTypeSwitchService {
-
     enum AmountType: String {
         case coin
         case currency
@@ -97,7 +93,5 @@ extension AmountTypeSwitchService {
         static prefix func ! (lhs: Self) -> Self {
             lhs == .coin ? currency : coin
         }
-
     }
-
 }

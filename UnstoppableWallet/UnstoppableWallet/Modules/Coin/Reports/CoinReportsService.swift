@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 class CoinReportsService {
     private let coinUid: String
@@ -38,11 +38,9 @@ class CoinReportsService {
             }
         }.store(in: &tasks)
     }
-
 }
 
 extension CoinReportsService {
-
     var stateObservable: Observable<DataStatus<[CoinReport]>> {
         stateRelay.asObservable()
     }
@@ -50,5 +48,4 @@ extension CoinReportsService {
     func refresh() {
         fetch()
     }
-
 }

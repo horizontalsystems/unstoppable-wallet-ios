@@ -1,9 +1,8 @@
 import Combine
-import RxSwift
-import RxRelay
-import CurrencyKit
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxRelay
+import RxSwift
 
 struct NftCollectionItem {
     let index: Int
@@ -17,7 +16,7 @@ class MarketNftTopCollectionsService {
     private var tasks = Set<AnyTask>()
 
     private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
 
     private var internalState: MarketListServiceState<NftTopCollection> = .loading
 
@@ -26,9 +25,9 @@ class MarketNftTopCollectionsService {
     var sortType: MarketNftTopCollectionsModule.SortType = .highestVolume { didSet { syncIfPossible() } }
     var timePeriod: HsTimePeriod { didSet { syncIfPossible() } }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, timePeriod: HsTimePeriod) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, timePeriod: HsTimePeriod) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.timePeriod = timePeriod
 
         sync()
@@ -59,23 +58,21 @@ class MarketNftTopCollectionsService {
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let collections, _, _) = internalState else {
+        guard case let .loaded(collections, _, _) = internalState else {
             return
         }
 
         sync(collections: collections, reorder: true)
     }
-
 }
 
 extension MarketNftTopCollectionsService: IMarketListService {
-
     var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
         $state
     }
 
     func topCollection(uid: String) -> NftTopCollection? {
-        guard case .loaded(let collections, _, _) = internalState else {
+        guard case let .loaded(collections, _, _) = internalState else {
             return nil
         }
 
@@ -85,8 +82,6 @@ extension MarketNftTopCollectionsService: IMarketListService {
     func refresh() {
         sync()
     }
-
 }
 
-extension MarketNftTopCollectionsService: IMarketListNftTopCollectionDecoratorService {
-}
+extension MarketNftTopCollectionsService: IMarketListNftTopCollectionDecoratorService {}

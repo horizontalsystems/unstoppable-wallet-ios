@@ -1,68 +1,82 @@
 import Foundation
 
-import Foundation
-
 class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
     typealias Item = ReceiveAddressService.Item
 
-    func viewItem(item: Item) -> ReceiveAddressModule.ViewItem {
-        var sections = [[ReceiveAddressModule.Item]]()
-
-        let text = (item.watchAccount ? "deposit.qr_code_description.watch" : "deposit.qr_code_description").localized(item.coinCode)
-        let qrItem = ReceiveAddressModule.QrItem(
-                address: item.address.address,
-                text: text
+    func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem {
+        let description = ReceiveAddressModule.HighlightedDescription(
+            text: "deposit.warning".localized,
+            style: .yellow
         )
-        sections.append([.qrItem(qrItem)])
 
-        var viewItems = [ReceiveAddressModule.Item]()
-        viewItems.append(.value(title: "deposit.address".localized, value: item.address.address, copyable: false))
-
-        var title: String = "deposit.address_network".localized
-        var value: String = ""
+        var networkName = ""
         if let derivation = item.token.type.derivation {
-            title = "deposit.address_format".localized
-            value = derivation.addressType + " (\(derivation.title))"
+            networkName = "deposit.address_format".localized + ": "
+            networkName += derivation.addressType + " (\(derivation.title))"
         } else if let addressType = item.token.type.bitcoinCashCoinType {
-            title = "deposit.address_format".localized
-            value = addressType.description + " (\(addressType.title))"
+            networkName = "deposit.address_format".localized + ": "
+            networkName += addressType.description + " (\(addressType.title))"
         } else {
-            value = item.token.blockchain.name
+            networkName = "deposit.address_network".localized + ": "
+            networkName += item.token.blockchain.name
         }
         if !item.isMainNet {
-            value += " (TestNet)"
+            networkName += " (TestNet)"
         }
-        viewItems.append(.value(title: title, value: value, copyable: false))
 
-        var popupViewItem: ReceiveAddressModule.PopupWarningItem?
+        var uri = item.address.address
+        if let amount {
+            let parser = AddressUriParser(blockchainType: item.token.blockchainType, tokenType: item.token.type)
+            var addressUri = AddressUri(scheme: item.token.blockchainType.uriScheme ?? "")
+            addressUri.address = uri
+
+            addressUri.parameters[AddressUri.Field.amountField(blockchainType: item.token.blockchainType)] = amount
+            addressUri.parameters[.blockchainUid] = item.token.blockchainType.uid
+            addressUri.parameters[.tokenUid] = item.token.type.id
+
+            uri = parser.uri(addressUri)
+        }
+        let qrItem = ReceiveAddressModule.QrItem(
+            address: item.address.address,
+            uri: uri,
+            networkName: networkName
+        )
+        var amountString: String?
+        if let amount, let decimalValue = Decimal(string: amount) {
+            let coinValue = CoinValue(kind: .token(token: item.token), value: decimalValue)
+            amountString = coinValue.formattedFull
+        }
+
+        var active = true
         if let address = item.address as? ActivatedDepositAddress, !address.isActive {
-            viewItems.append(
-                    .infoValue(
-                            title: "deposit.account".localized,
-                            value: "deposit.not_active".localized,
-                            infoTitle: "deposit.not_active.title".localized,
-                            infoDescription: "deposit.not_active.tron_description".localized,
-                            style: .yellow
-                    )
-            )
-
-            popupViewItem = .init(
-                    title: "deposit.not_active.title".localized,
-                    description: .init(text: "deposit.not_active.tron_description".localized, style: .yellow),
-                    doneButtonTitle: "button.i_understand".localized
-            )
+            active = false
         }
-
-        sections.append(viewItems)
-
-        sections.append([.highlightedDescription(text: "deposit.warning".localized(item.coinCode), style: .yellow)])
-
 
         return .init(
-                address: item.address.address,
-                popup: popupViewItem,
-                sections: sections
+            copyValue: uri,
+            highlightedDescription: description,
+            qrItem: qrItem,
+            amount: amountString,
+            active: active,
+            memo: nil
         )
     }
 
+    func popup(item: Item) -> ReceiveAddressModule.PopupWarningItem? {
+        if let address = item.address as? ActivatedDepositAddress, !address.isActive {
+            return .init(
+                title: "deposit.not_active.title".localized,
+                description: .init(text: "deposit.not_active.tron_description".localized, style: .yellow),
+                doneButtonTitle: "button.i_understand".localized
+            )
+        }
+        return nil
+    }
+
+    func actions(item: Item) -> [ReceiveAddressModule.ActionType] {
+        if item.watchAccount {
+            return [.copy, .share]
+        }
+        return [.amount, .copy, .share]
+    }
 }

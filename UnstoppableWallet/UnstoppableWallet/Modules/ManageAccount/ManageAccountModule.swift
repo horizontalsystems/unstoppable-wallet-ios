@@ -1,9 +1,7 @@
-import LanguageKit
-import StorageKit
 import ThemeKit
 import UIKit
 
-struct ManageAccountModule {
+enum ManageAccountModule {
     static func viewController(accountId: String, sourceViewController: ManageAccountsViewController) -> UIViewController? {
         guard let service = ManageAccountService(
             accountId: accountId,
@@ -15,7 +13,7 @@ struct ManageAccountModule {
         }
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-            localStorage: StorageKit.LocalStorage.default,
+            userDefaultsStorage: App.shared.userDefaultsStorage,
             languageManager: LanguageManager.shared
         )
         let viewModel = ManageAccountViewModel(

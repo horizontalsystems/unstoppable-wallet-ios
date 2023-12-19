@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AppStatusModule {
+enum AppStatusModule {
     static func view() -> some View {
         let viewModel = AppStatusViewModel(
             systemInfoManager: App.shared.systemInfoManager,

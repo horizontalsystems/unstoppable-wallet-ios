@@ -17,5 +17,4 @@ class WalletConnectSession: Codable, FetchableRecord, PersistableRecord, TableRe
         static let accountId = Column(CodingKeys.accountId)
         static let topic = Column(CodingKeys.topic)
     }
-
 }

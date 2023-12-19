@@ -1,11 +1,10 @@
-import Combine
-import UIKit
-import RxSwift
-import RxCocoa
 import Chart
-import MarketKit
-import CurrencyKit
+import Combine
 import HsExtensions
+import MarketKit
+import RxCocoa
+import RxSwift
+import UIKit
 
 protocol IChartPointFetcher {
     var points: DataStatus<[ChartPoint]> { get }
@@ -18,11 +17,11 @@ class CoinChartService {
 
     private let marketKit: MarketKit.Kit
     private let localStorage: LocalStorage
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let indicatorRepository: IChartIndicatorsRepository
     private let coinUid: String
 
-    private let indicatorsShownUpdatedRelay = PublishRelay<()>()
+    private let indicatorsShownUpdatedRelay = PublishRelay<Void>()
     var indicatorsShown: Bool {
         get {
             localStorage.indicatorsShown
@@ -53,7 +52,7 @@ class CoinChartService {
         }
     }
 
-    private let intervalsUpdatedRelay = PublishRelay<()>()
+    private let intervalsUpdatedRelay = PublishRelay<Void>()
     private(set) var startTime: TimeInterval? {
         didSet {
             if startTime != oldValue {
@@ -65,19 +64,19 @@ class CoinChartService {
     private var coinPrice: CoinPrice?
     private var chartPointsMap = [HsPeriodType: ChartPointsItem]()
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, localStorage: LocalStorage, indicatorRepository: IChartIndicatorsRepository, coinUid: String) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, localStorage: LocalStorage, indicatorRepository: IChartIndicatorsRepository, coinUid: String) {
         self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.localStorage = localStorage
         self.indicatorRepository = indicatorRepository
         self.coinUid = coinUid
 
         periodType = .byCustomPoints(.day1, indicatorRepository.extendedPointCount)
         indicatorRepository.updatedPublisher
-                .sink { [weak self] in
-                    self?.fetchWithUpdatedIndicators()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] in
+                self?.fetchWithUpdatedIndicators()
+            }
+            .store(in: &cancellables)
     }
 
     private func fetchStartTime() {
@@ -102,7 +101,7 @@ class CoinChartService {
     }
 
     private func handle(fromTimestamp: TimeInterval, chartPoints: [ChartPoint], periodType: HsPeriodType) {
-        guard chartPoints.count >= 2, let firstPoint = chartPoints.first(where: { $0.timestamp >= fromTimestamp}), let lastPoint = chartPoints.last else {
+        guard chartPoints.count >= 2, let firstPoint = chartPoints.first(where: { $0.timestamp >= fromTimestamp }), let lastPoint = chartPoints.last else {
             state = .failed(ChartError.notEnoughPoints)
             return
         }
@@ -117,30 +116,28 @@ class CoinChartService {
         }
 
         let item = Item(
-                coinUid: coinUid,
-                rate: coinPrice.value,
-                rateDiff24h: coinPrice.diff,
-                timestamp: coinPrice.timestamp,
-                chartPointsItem: chartPointsItem,
-                indicators: indicatorRepository.indicators
+            coinUid: coinUid,
+            rate: coinPrice.value,
+            rateDiff24h: coinPrice.diff,
+            timestamp: coinPrice.timestamp,
+            chartPointsItem: chartPointsItem,
+            indicators: indicatorRepository.indicators
         )
 
         state = .completed(item)
     }
-
 }
 
 extension CoinChartService {
-
     var periodTypeObservable: Observable<HsPeriodType> {
         periodTypeRelay.asObservable()
     }
 
-    var indicatorsShownUpdatedObservable: Observable<()> {
+    var indicatorsShownUpdatedObservable: Observable<Void> {
         indicatorsShownUpdatedRelay.asObservable()
     }
 
-    var intervalsUpdatedObservable: Observable<()> {
+    var intervalsUpdatedObservable: Observable<Void> {
         intervalsUpdatedRelay.asObservable()
     }
 
@@ -149,7 +146,7 @@ extension CoinChartService {
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var validIntervals: [HsTimePeriod] {
@@ -162,7 +159,7 @@ extension CoinChartService {
 
     func fetchWithUpdatedIndicators() {
         switch periodType {
-        case .byCustomPoints(let interval, _):
+        case let .byCustomPoints(interval, _):
             let updatedType: HsPeriodType = .byCustomPoints(interval, indicatorRepository.extendedPointCount)
             if periodType == updatedType {
                 fetch()
@@ -181,11 +178,11 @@ extension CoinChartService {
         coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code)
 
         marketKit.coinPricePublisher(tag: "coin-chart-service", coinUid: coinUid, currencyCode: currency.code)
-                .sink { [weak self] coinPrice in
-                    self?.coinPrice = coinPrice
-                    self?.syncState()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] coinPrice in
+                self?.coinPrice = coinPrice
+                self?.syncState()
+            }
+            .store(in: &cancellables)
 
         fetch()
     }
@@ -204,23 +201,19 @@ extension CoinChartService {
             fetchChartInfo()
         }
     }
-
 }
 
 extension CoinChartService: IChartPointFetcher {
-
     var points: DataStatus<[ChartPoint]> {
         state.map { item in item.chartPointsItem.points }
     }
 
-    var pointsUpdatedPublisher: AnyPublisher<(), Never> {
+    var pointsUpdatedPublisher: AnyPublisher<Void, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
-
 }
 
 extension CoinChartService {
-
     struct Item {
         let coinUid: String
         let rate: Decimal
@@ -239,5 +232,4 @@ extension CoinChartService {
     enum ChartError: Error {
         case notEnoughPoints
     }
-
 }

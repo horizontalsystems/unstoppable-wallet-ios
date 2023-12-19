@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import HsExtensions
 
 class CexCoinSelectViewModel {
@@ -12,8 +12,8 @@ class CexCoinSelectViewModel {
         self.service = service
 
         service.$items
-                .sink { [weak self] in self?.sync(items: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(items: $0) }
+            .store(in: &cancellables)
 
         sync(items: service.items)
     }
@@ -21,19 +21,17 @@ class CexCoinSelectViewModel {
     private func sync(items: [CexCoinSelectService.Item]) {
         viewItems = items.map { item -> ViewItem in
             ViewItem(
-                    cexAsset: item.cexAsset,
-                    title: item.cexAsset.coinCode,
-                    subtitle: item.cexAsset.coinName,
-                    imageUrl: item.cexAsset.coin?.imageUrl,
-                    enabled: item.enabled
+                cexAsset: item.cexAsset,
+                title: item.cexAsset.coinCode,
+                subtitle: item.cexAsset.coinName,
+                imageUrl: item.cexAsset.coin?.imageUrl,
+                enabled: item.enabled
             )
         }
     }
-
 }
 
 extension CexCoinSelectViewModel {
-
     var isEmpty: Bool {
         service.isEmpty
     }
@@ -43,11 +41,9 @@ extension CexCoinSelectViewModel {
             self?.service.set(filter: filter?.trimmingCharacters(in: .whitespaces) ?? "")
         }
     }
-
 }
 
 extension CexCoinSelectViewModel {
-
     struct ViewItem {
         let cexAsset: CexAsset
         let title: String
@@ -55,5 +51,4 @@ extension CexCoinSelectViewModel {
         let imageUrl: String?
         let enabled: Bool
     }
-
 }

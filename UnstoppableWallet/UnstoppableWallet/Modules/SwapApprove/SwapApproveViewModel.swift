@@ -1,8 +1,8 @@
+import BigInt
+import EvmKit
 import Foundation
 import RxCocoa
 import RxSwift
-import EvmKit
-import BigInt
 
 class SwapApproveViewModel {
     private let maxCoinDecimals = 8
@@ -24,11 +24,11 @@ class SwapApproveViewModel {
         self.decimalParser = decimalParser
 
         service.stateObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] approveState in
-                    self?.handle(approveState: approveState)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] approveState in
+                self?.handle(approveState: approveState)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func handle(approveState: SwapApproveService.State) {
@@ -40,7 +40,7 @@ class SwapApproveViewModel {
 
         var amountCaution: Caution?
 
-        if case .approveNotAllowed(var errors) = approveState {
+        if case var .approveNotAllowed(errors) = approveState {
             if let balanceErrorIndex = errors.firstIndex(where: { $0 is SwapApproveService.TransactionAmountError }) {
                 let errorString = convert(error: errors.remove(at: balanceErrorIndex))
                 amountCaution = Caution(text: errorString, type: .error)
@@ -57,11 +57,9 @@ class SwapApproveViewModel {
 
         return error.convertedError.smartDescription
     }
-
 }
 
 extension SwapApproveViewModel {
-
     var initialAmount: String? {
         service.amount.map { coinService.monetaryValue(value: $0).description }
     }
@@ -89,17 +87,16 @@ extension SwapApproveViewModel {
 
     func onChange(amount: String?) {
         let amount = decimalParser.parseAnyDecimal(from: amount)
-                .map { coinService.fractionalMonetaryValue(value: $0) }
+            .map { coinService.fractionalMonetaryValue(value: $0) }
 
         service.set(amount: amount)
     }
 
     func proceed() {
-        guard case .approveAllowed(let transactionData) = service.state else {
+        guard case let .approveAllowed(transactionData) = service.state else {
             return
         }
 
         proceedRelay.accept(transactionData)
     }
-
 }

@@ -1,8 +1,8 @@
-import UIKit
-import SnapKit
-import SectionsTableView
-import ThemeKit
 import ComponentKit
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class DoubleSpendInfoViewController: ThemeViewController {
     private let transactionHash: String
@@ -17,7 +17,8 @@ class DoubleSpendInfoViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,66 +44,63 @@ class DoubleSpendInfoViewController: ThemeViewController {
     @objc private func onClose() {
         dismiss(animated: true)
     }
-
 }
 
 extension DoubleSpendInfoViewController: SectionsDataSource {
-
     private func row(id: String, title: String, value: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    },
-                    .secondaryButton { component in
-                        component.button.set(style: .default)
-                        component.button.setTitle(value.shortened, for: .normal)
-                        component.onTap = {
-                            CopyHelper.copyAndNotify(value: value)
-                        }
+            rootElement: .hStack([
+                .text { component in
+                    component.font = .subhead2
+                    component.textColor = .themeGray
+                    component.text = title
+                },
+                .secondaryButton { component in
+                    component.button.set(style: .default)
+                    component.button.setTitle(value.shortened, for: .normal)
+                    component.onTap = {
+                        CopyHelper.copyAndNotify(value: value)
                     }
-                ]),
-                tableView: tableView,
-                id: id,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                }
+                },
+            ]),
+            tableView: tableView,
+            id: id,
+            height: .heightCell48,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            }
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "alert",
-                    rows: [
-                        tableView.highlightedDescriptionRow(id: "alert", text: "double_spend_info.header".localized)
-                    ]
+                id: "alert",
+                rows: [
+                    tableView.highlightedDescriptionRow(id: "alert", text: "double_spend_info.header".localized),
+                ]
             ),
             Section(
-                    id: "hashes",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        row(
-                                id: "tx-hash",
-                                title: "double_spend_info.this_hash".localized,
-                                value: transactionHash,
-                                isFirst: true,
-                                isLast: false
-                        ),
-                        row(
-                                id: "conflicting-tx-hash",
-                                title: "double_spend_info.conflicting_hash".localized,
-                                value: conflictingTransactionHash,
-                                isFirst: false,
-                                isLast: true
-                        )
-                    ]
-            )
+                id: "hashes",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    row(
+                        id: "tx-hash",
+                        title: "double_spend_info.this_hash".localized,
+                        value: transactionHash,
+                        isFirst: true,
+                        isLast: false
+                    ),
+                    row(
+                        id: "conflicting-tx-hash",
+                        title: "double_spend_info.conflicting_hash".localized,
+                        value: conflictingTransactionHash,
+                        isFirst: false,
+                        isLast: true
+                    ),
+                ]
+            ),
         ]
     }
-
 }

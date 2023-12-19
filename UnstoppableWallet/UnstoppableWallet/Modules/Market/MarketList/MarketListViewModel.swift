@@ -1,10 +1,9 @@
 import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
-import CurrencyKit
-import MarketKit
 import HsExtensions
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 protocol IMarketListService {
     associatedtype Item
@@ -46,7 +45,7 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
     private let viewItemDataRelay = BehaviorRelay<MarketModule.ListViewItemData?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
-    private let scrollToTopRelay = PublishRelay<()>()
+    private let scrollToTopRelay = PublishRelay<Void>()
 
     init(service: Service, decorator: Decorator, itemLimit: Int? = nil) {
         self.service = service
@@ -54,8 +53,8 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
         self.itemLimit = itemLimit
 
         service.statePublisher
-                .sink { [weak self] in self?.sync(state: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(state: $0) }
+            .store(in: &cancellables)
 
         sync(state: service.state)
     }
@@ -66,7 +65,7 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
             viewItemDataRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .loaded(let items, let softUpdate, let reorder):
+        case let .loaded(items, softUpdate, reorder):
             let limitedItems = itemLimit.map { Array(items.prefix(upTo: $0)) } ?? items
             let data = MarketModule.ListViewItemData(viewItems: viewItems(items: Array(limitedItems)), softUpdate: softUpdate)
             viewItemDataRelay.accept(data)
@@ -92,11 +91,9 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
             return decorator.listViewItem(item: item)
         }
     }
-
 }
 
 extension MarketListViewModel: IMarketListViewModel {
-
     var viewItemDataDriver: Driver<MarketModule.ListViewItemData?> {
         viewItemDataRelay.asDriver()
     }
@@ -109,12 +106,11 @@ extension MarketListViewModel: IMarketListViewModel {
         syncErrorRelay.asDriver()
     }
 
-    var scrollToTopSignal: Signal<()> {
+    var scrollToTopSignal: Signal<Void> {
         scrollToTopRelay.asSignal()
     }
 
     func refresh() {
         service.refresh()
     }
-
 }

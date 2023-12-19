@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
 import HsToolKit
 import MarketKit
+import RxSwift
 
 class NftMetadataSyncer {
     private let syncThreshold: TimeInterval = 1 * 60 * 60 // 1 hour
@@ -18,12 +18,12 @@ class NftMetadataSyncer {
         self.nftStorage = nftStorage
 
         nftAdapterManager.adaptersUpdatedObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] adapterMap in
-                    self?.sync(adapterMap: adapterMap)
-                    self?.subscribeToAdapterRecords(adapterMap: adapterMap)
-                })
-                .disposed(by: disposeBag)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] adapterMap in
+                self?.sync(adapterMap: adapterMap)
+                self?.subscribeToAdapterRecords(adapterMap: adapterMap)
+            })
+            .disposed(by: disposeBag)
 
         subscribeToAdapterRecords(adapterMap: nftAdapterManager.adapterMap)
     }
@@ -33,11 +33,11 @@ class NftMetadataSyncer {
 
         for (nftKey, adapter) in adapterMap {
             adapter.nftRecordsObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onNext: { [weak self] _ in
-                        self?.sync(nftKey: nftKey, adapter: adapter, force: true)
-                    })
-                    .disposed(by: adapterDisposeBag)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] _ in
+                    self?.sync(nftKey: nftKey, adapter: adapter, force: true)
+                })
+                .disposed(by: adapterDisposeBag)
         }
     }
 
@@ -57,13 +57,13 @@ class NftMetadataSyncer {
         }
 
         nftMetadataManager.addressMetadataSingle(blockchainType: nftKey.blockchainType, address: adapter.userAddress)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] addressMetadata in
-                    self?.handle(addressMetadata: addressMetadata, nftKey: nftKey)
-                }, onError: { error in
-                    // todo
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] addressMetadata in
+                self?.handle(addressMetadata: addressMetadata, nftKey: nftKey)
+            }, onError: { _ in
+                // todo
+            })
+            .disposed(by: disposeBag)
     }
 
     private func handle(addressMetadata: NftAddressMetadata, nftKey: NftKey) {
@@ -72,11 +72,9 @@ class NftMetadataSyncer {
         nftStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, nftKey: nftKey)
         nftMetadataManager.handle(addressMetadata: addressMetadata, nftKey: nftKey)
     }
-
 }
 
 extension NftMetadataSyncer {
-
     func sync() {
         sync(adapterMap: nftAdapterManager.adapterMap)
     }
@@ -84,5 +82,4 @@ extension NftMetadataSyncer {
     func forceSync() {
         sync(adapterMap: nftAdapterManager.adapterMap, force: true)
     }
-
 }

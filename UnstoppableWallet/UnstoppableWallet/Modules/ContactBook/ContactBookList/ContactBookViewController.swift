@@ -1,11 +1,11 @@
 import Combine
-import UIKit
-import RxSwift
-import RxCocoa
-import SnapKit
 import ComponentKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
+import SnapKit
 import ThemeKit
+import UIKit
 
 class ContactBookViewController: ThemeSearchViewController {
     private let viewModel: ContactBookViewModel
@@ -32,7 +32,8 @@ class ContactBookViewController: ThemeSearchViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -85,10 +86,10 @@ class ContactBookViewController: ThemeSearchViewController {
         // show add button on empty screen only for edit mode
         if mode.editable {
             notFoundPlaceholder.addPrimaryButton(
-                    style: .yellow,
-                    title: "contacts.add_new_contact".localized,
-                    target: self,
-                    action: #selector(onCreateContact)
+                style: .yellow,
+                title: "contacts.add_new_contact".localized,
+                target: self,
+                action: #selector(onCreateContact)
             )
         }
 
@@ -97,10 +98,9 @@ class ContactBookViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.showBadgeDriver) { [weak self] in self?.manageBarButtonView.isBadgeHidden = !$0 }
 
         $filter
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
-                .store(in: &cancellables)
-
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+            .store(in: &cancellables)
 
         tableView.buildSections()
 
@@ -136,14 +136,14 @@ class ContactBookViewController: ThemeSearchViewController {
         switch mode {
         case .edit:
             onUpdateContact(contactUid: viewItem.uid)
-        case .select(_, let delegate):
+        case let .select(_, delegate):
             if let viewItem = viewItem as? ContactBookViewModel.SelectorViewItem {
                 delegate.onFetch(address: viewItem.address)
             }
             onClose()
-        case .addToContact(let address):
-            let updateContact: () -> () = { [weak self] in
-                let successAction: (() -> ())? = { [weak self] in
+        case let .addToContact(address):
+            let updateContact: () -> Void = { [weak self] in
+                let successAction: (() -> Void)? = { [weak self] in
                     self?.onClose()
                 }
                 self?.onUpdateContact(contactUid: viewItem.uid, newAddress: address, onUpdateContact: successAction)
@@ -152,30 +152,30 @@ class ContactBookViewController: ThemeSearchViewController {
             if let currentAddress = viewModel.contactAddress(contactUid: viewItem.uid, blockchainUid: address.blockchainUid) {
                 updateAfterAlert(new: address, old: currentAddress, onSuccess: updateContact)
             } else {
-               updateContact()
+                updateContact()
             }
         }
     }
 
-    private func updateAfterAlert(new: ContactAddress, old: ContactAddress, onSuccess: (() -> ())?) {
+    private func updateAfterAlert(new: ContactAddress, old: ContactAddress, onSuccess: (() -> Void)?) {
         let blockchainName = viewModel.blockchainName(blockchainUid: new.blockchainUid) ?? ""
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "alert.warning".localized,
-                items: [
-                    .highlightedDescription(text: "contacts.update_contact.already_has_address".localized(blockchainName, old.address.shortened, new.address.shortened))
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "contacts.update_contact.replace".localized, actionType: .afterClose) {
-                        onSuccess?()
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized)
-                ]
+            image: .warning,
+            title: "alert.warning".localized,
+            items: [
+                .highlightedDescription(text: "contacts.update_contact.already_has_address".localized(blockchainName, old.address.shortened, new.address.shortened)),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "contacts.update_contact.replace".localized, actionType: .afterClose) {
+                    onSuccess?()
+                },
+                .init(style: .transparent, title: "button.cancel".localized),
+            ]
         )
         present(viewController, animated: true)
     }
 
-    private func onUpdateContact(contactUid: String? = nil, newAddress: ContactAddress? = nil, onUpdateContact: (() -> ())? = nil) {
+    private func onUpdateContact(contactUid: String? = nil, newAddress: ContactAddress? = nil, onUpdateContact: (() -> Void)? = nil) {
         let mode: ContactBookContactModule.Mode
         let newAddresses = [newAddress].compactMap { $0 }
         if let contactUid {
@@ -191,7 +191,7 @@ class ContactBookViewController: ThemeSearchViewController {
     }
 
     private func onUpdate(viewItems: [ContactBookViewModel.ViewItem]) {
-        let animated = self.viewItems.map { $0.uid } == viewItems.map { $0.uid }
+        let animated = self.viewItems.map(\.uid) == viewItems.map(\.uid)
         self.viewItems = viewItems
 
         tableView.reload(animated: isLoaded && animated)
@@ -212,14 +212,13 @@ class ContactBookViewController: ThemeSearchViewController {
         case .none:
             notFoundPlaceholder.isHidden = true
         }
-
     }
 
     private func deleteRowAction(uid: String) -> RowAction {
         RowAction(pattern: .icon(
-                image: UIImage(named: "circle_minus_shifted_24"),
-                background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-        ), action: { [weak self] cell in
+            image: UIImage(named: "circle_minus_shifted_24"),
+            background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        ), action: { [weak self] _ in
             self?.removeContact(uid: uid)
         })
     }
@@ -231,24 +230,23 @@ class ContactBookViewController: ThemeSearchViewController {
             print("Can't remove contact \(error)")
         }
     }
-
 }
 
 extension ContactBookViewController: SectionsDataSource {
-
     private func cell(viewItem: ContactBookViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         let rowAction = deleteRowAction(uid: viewItem.uid)
 
         return tableView.universalRow62(
-                id: viewItem.uid,
-                title: .body(viewItem.title),
-                description: .subhead2(viewItem.subtitle),
-                accessoryType: .disclosure,
-                hash: viewItem.description + isFirst.description + isLast.description,
-                autoDeselect: true,
-                rowActionProvider:  { [ rowAction ] },
-                isFirst: isFirst,
-                isLast: isLast) { [weak self] in
+            id: viewItem.uid,
+            title: .body(viewItem.title),
+            description: .subhead2(viewItem.subtitle),
+            accessoryType: .disclosure,
+            hash: viewItem.description + isFirst.description + isLast.description,
+            autoDeselect: true,
+            rowActionProvider: { [rowAction] },
+            isFirst: isFirst,
+            isLast: isLast
+        ) { [weak self] in
             self?.onTap(viewItem: viewItem)
         }
     }
@@ -256,15 +254,14 @@ extension ContactBookViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "coins",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        let isLast = index == viewItems.count - 1
-                        return cell(viewItem: viewItem, isFirst: index == 0, isLast: isLast)
-                    }
-            )
+                id: "coins",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    let isLast = index == viewItems.count - 1
+                    return cell(viewItem: viewItem, isFirst: index == 0, isLast: isLast)
+                }
+            ),
         ]
     }
-
 }

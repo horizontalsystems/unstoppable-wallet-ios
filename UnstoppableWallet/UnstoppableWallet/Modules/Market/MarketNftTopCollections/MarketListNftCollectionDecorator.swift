@@ -13,11 +13,9 @@ class MarketListNftCollectionDecorator {
     init(service: IMarketListNftTopCollectionDecoratorService) {
         self.service = service
     }
-
 }
 
 extension MarketListNftCollectionDecorator: IMarketListDecorator {
-
     func listViewItem(item: NftCollectionItem) -> MarketModule.ListViewItem {
         let collection = item.collection
 
@@ -30,28 +28,26 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
             }
         }
 
-
         var volumeString = "n/a".localized
         let volume = collection.volumes[service.timePeriod]
         let diff = collection.changes[service.timePeriod]
 
-        if let volume = volume, let value = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: volume.token), value: volume.value)) {
+        if let volume, let value = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: volume.token), value: volume.value)) {
             volumeString = value
         }
         let dataValue: MarketModule.MarketDataValue = .diff(diff)
 
         return MarketModule.ListViewItem(
-                uid: collection.uid,
-                iconUrl: collection.thumbnailImageUrl ?? "",
-                iconShape: .square,
-                iconPlaceholderName: "placeholder_rectangle_32",
-                leftPrimaryValue: collection.name,
-                leftSecondaryValue: floorPriceString,
-                badge: "\(item.index)",
-                badgeSecondaryValue: nil,
-                rightPrimaryValue: volumeString,
-                rightSecondaryValue: dataValue
+            uid: collection.uid,
+            iconUrl: collection.thumbnailImageUrl ?? "",
+            iconShape: .square,
+            iconPlaceholderName: "placeholder_rectangle_32",
+            leftPrimaryValue: collection.name,
+            leftSecondaryValue: floorPriceString,
+            badge: "\(item.index)",
+            badgeSecondaryValue: nil,
+            rightPrimaryValue: volumeString,
+            rightSecondaryValue: dataValue
         )
     }
-
 }

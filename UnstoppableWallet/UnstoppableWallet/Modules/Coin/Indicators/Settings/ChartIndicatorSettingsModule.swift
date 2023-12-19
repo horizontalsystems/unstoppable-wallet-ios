@@ -1,13 +1,12 @@
-import UIKit
 import Chart
+import UIKit
 
-class ChartIndicatorSettingsModule {
-
-    static func viewController(indicator: ChartIndicator, onComplete: @escaping (ChartIndicator) -> ()) -> UIViewController? {
+enum ChartIndicatorSettingsModule {
+    static func viewController(indicator: ChartIndicator, onComplete: @escaping (ChartIndicator) -> Void) -> UIViewController? {
         let dataSource: IIndicatorDataSource
         let defaultIndicator = ChartIndicatorFactory
-                .defaultIndicators(subscribed: true)
-                .first { $0.id == indicator.id && $0.index == indicator.index }
+            .defaultIndicators(subscribed: true)
+            .first { $0.id == indicator.id && $0.index == indicator.index }
         switch indicator {
         case let indicator as MaIndicator:
             guard let defaultIndicator = defaultIndicator as? MaIndicator else {
@@ -32,11 +31,9 @@ class ChartIndicatorSettingsModule {
 
         return viewController
     }
-
 }
 
 extension ChartIndicatorSettingsModule {
-
     struct ValueItem {
         let id: String
         let value: Any?
@@ -95,5 +92,4 @@ extension ChartIndicatorSettingsModule {
             super.init(id: id)
         }
     }
-
 }

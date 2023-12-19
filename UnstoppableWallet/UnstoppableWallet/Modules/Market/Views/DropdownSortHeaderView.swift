@@ -1,9 +1,9 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 protocol IDropdownSortHeaderViewModel: AnyObject {
     var dropdownTitle: String { get }
@@ -67,14 +67,15 @@ class DropdownSortHeaderView: UITableViewHeaderFooterView {
         subscribe(disposeBag, viewModel.sortDirectionAscendingDriver) { [weak self] in self?.syncSortButton(ascending: $0) }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func onTapDropdownButton() {
         let alertController = AlertRouter.module(
-                title: viewModel.dropdownTitle,
-                viewItems: viewModel.dropdownViewItems
+            title: viewModel.dropdownTitle,
+            viewItems: viewModel.dropdownViewItems
         ) { [weak self] index in
             self?.viewModel.onSelectDropdown(index: index)
         }
@@ -93,5 +94,4 @@ class DropdownSortHeaderView: UITableViewHeaderFooterView {
     private func syncSortButton(ascending: Bool) {
         sortButton.set(image: UIImage(named: ascending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20"))
     }
-
 }

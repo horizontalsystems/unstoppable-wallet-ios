@@ -1,13 +1,13 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class TextFieldStackView: UIView {
     private let stackView = UIStackView()
     private let textField = UITextField()
 
-    var onChangeText: ((String?) -> ())?
-    var onReturn: (() -> ())?
+    var onChangeText: ((String?) -> Void)?
+    var onReturn: (() -> Void)?
     var onSpaceKey: (() -> Bool)?
     var isValidText: ((String?) -> Bool)?
 
@@ -36,7 +36,8 @@ class TextFieldStackView: UIView {
         stackView.addArrangedSubview(textField)
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -47,17 +48,15 @@ class TextFieldStackView: UIView {
     @objc private func textFieldDidChange() {
         onChangeText?(textField.text)
     }
-
 }
 
 extension TextFieldStackView: UITextFieldDelegate {
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_: UITextField) -> Bool {
         onReturn?()
         return true
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_: UITextField, shouldChangeCharactersIn _: NSRange, replacementString string: String) -> Bool {
         let isValid = isValidText?(string) ?? true
 
         if !isValid {
@@ -66,11 +65,9 @@ extension TextFieldStackView: UITextFieldDelegate {
 
         return isValid
     }
-
 }
 
 extension TextFieldStackView {
-
     var placeholder: String? {
         get { textField.placeholder }
         set { textField.placeholder = newValue }
@@ -104,7 +101,7 @@ extension TextFieldStackView {
     func prependSubview(_ view: UIView, customSpacing: CGFloat? = nil) {
         stackView.insertArrangedSubview(view, at: 0)
 
-        if let customSpacing = customSpacing {
+        if let customSpacing {
             stackView.setCustomSpacing(customSpacing, after: view)
         }
     }
@@ -112,5 +109,4 @@ extension TextFieldStackView {
     func appendSubview(_ view: UIView) {
         stackView.addArrangedSubview(view)
     }
-
 }

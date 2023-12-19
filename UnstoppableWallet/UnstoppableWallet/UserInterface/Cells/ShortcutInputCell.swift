@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class ShortcutInputCell: UITableViewCell {
     private let formValidatedView: FormValidatedView
@@ -9,7 +9,7 @@ class ShortcutInputCell: UITableViewCell {
     private var shortcutViews = [InputSecondaryButtonWrapperView]()
     private let deleteView = InputSecondaryCircleButtonWrapperView()
 
-    var onChangeText: ((String?) -> ())?
+    var onChangeText: ((String?) -> Void)?
 
     init() {
         formValidatedView = FormValidatedView(contentView: inputStackView)
@@ -36,7 +36,8 @@ class ShortcutInputCell: UITableViewCell {
         syncButtonStates()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -59,11 +60,9 @@ class ShortcutInputCell: UITableViewCell {
             shortcutViews.forEach { view in view.isHidden = false }
         }
     }
-
 }
 
 extension ShortcutInputCell {
-
     var inputPlaceholder: String? {
         get { inputStackView.placeholder }
         set { inputStackView.placeholder = newValue }
@@ -119,7 +118,7 @@ extension ShortcutInputCell {
         syncButtonStates()
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { formValidatedView.onChangeHeight }
         set { formValidatedView.onChangeHeight = newValue }
     }
@@ -132,7 +131,6 @@ extension ShortcutInputCell {
     func height(containerWidth: CGFloat) -> CGFloat {
         formValidatedView.height(containerWidth: containerWidth)
     }
-
 }
 
 struct InputShortcut {

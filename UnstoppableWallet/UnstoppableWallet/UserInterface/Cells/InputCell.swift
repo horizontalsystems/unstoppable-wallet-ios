@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class InputCell: UITableViewCell {
     private let anInputView: InputView
@@ -18,18 +18,17 @@ class InputCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func becomeFirstResponder() -> Bool {
         anInputView.becomeFirstResponder()
     }
-
 }
 
 extension InputCell {
-
     var inputPlaceholder: String? {
         get { anInputView.inputPlaceholder }
         set { anInputView.inputPlaceholder = newValue }
@@ -69,17 +68,17 @@ extension InputCell {
         anInputView.set(cautionType: cautionType)
     }
 
-    var onChangeText: ((String?) -> ())? {
+    var onChangeText: ((String?) -> Void)? {
         get { anInputView.onChangeText }
         set { anInputView.onChangeText = newValue }
     }
 
-    var onChangeEditing: ((Bool) -> ())? {
+    var onChangeEditing: ((Bool) -> Void)? {
         get { anInputView.onChangeEditing }
         set { anInputView.onChangeEditing = newValue }
     }
 
-    var onChangeHeight: (() -> ())? {
+    var onChangeHeight: (() -> Void)? {
         get { anInputView.onChangeHeight }
         set { anInputView.onChangeHeight = newValue }
     }
@@ -92,5 +91,4 @@ extension InputCell {
     func height(containerWidth: CGFloat) -> CGFloat {
         anInputView.height(containerWidth: containerWidth)
     }
-
 }

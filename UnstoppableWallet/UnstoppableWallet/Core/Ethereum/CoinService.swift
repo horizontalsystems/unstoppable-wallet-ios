@@ -1,8 +1,7 @@
-import Foundation
-import CurrencyKit
 import BigInt
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
 
 protocol ICoinService {
     var rate: CurrencyValue? { get }
@@ -16,21 +15,19 @@ protocol ICoinService {
 
 class CoinService {
     let token: Token
-    private let currencyKit: CurrencyKit.Kit
+    private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
 
-    init(token: Token, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+    init(token: Token, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
         self.token = token
-        self.currencyKit = currencyKit
+        self.currencyManager = currencyManager
         self.marketKit = marketKit
     }
-
 }
 
 extension CoinService: ICoinService {
-
     var rate: CurrencyValue? {
-        let baseCurrency = currencyKit.baseCurrency
+        let baseCurrency = currencyManager.baseCurrency
 
         return marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: baseCurrency.code).map { coinPrice in
             CurrencyValue(currency: baseCurrency, value: coinPrice.value)
@@ -58,15 +55,14 @@ extension CoinService: ICoinService {
 
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {
         AmountData(
-                coinValue: CoinValue(kind: .token(token: token), value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
-                currencyValue: rate.map {
-                    CurrencyValue(currency: $0.currency, value: $0.value * value)
-                }
+            coinValue: CoinValue(kind: .token(token: token), value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
+            currencyValue: rate.map {
+                CurrencyValue(currency: $0.currency, value: $0.value * value)
+            }
         )
     }
 
     func amountData(value: BigUInt, sign: FloatingPointSign = .plus) -> AmountData {
         amountData(value: Decimal(bigUInt: value, decimals: token.decimals) ?? 0, sign: sign)
     }
-
 }

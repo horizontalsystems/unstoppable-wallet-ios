@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class StepperAmountInputCell: UITableViewCell {
     private let formValidatedView: FormValidatedView
@@ -21,18 +21,17 @@ class StepperAmountInputCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func becomeFirstResponder() -> Bool {
         amountInputView.becomeFirstResponder()
     }
-
 }
 
 extension StepperAmountInputCell {
-
     var cellHeight: CGFloat {
         amountInputView.viewHeight
     }
@@ -42,7 +41,7 @@ extension StepperAmountInputCell {
         set { amountInputView.value = newValue }
     }
 
-    var onChangeValue: ((Decimal) -> ())? {
+    var onChangeValue: ((Decimal) -> Void)? {
         get { amountInputView.onChangeValue }
         set { amountInputView.onChangeValue = newValue }
     }
@@ -50,5 +49,4 @@ extension StepperAmountInputCell {
     func set(cautionType: CautionType?) {
         formValidatedView.set(cautionType: cautionType)
     }
-
 }

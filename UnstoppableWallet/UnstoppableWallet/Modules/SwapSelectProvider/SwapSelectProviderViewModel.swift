@@ -1,6 +1,6 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class SwapSelectProviderViewModel {
     private let service: SwapSelectProviderService
@@ -15,11 +15,11 @@ class SwapSelectProviderViewModel {
         self.service = service
 
         service.itemsObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] items in
-                    self?.sync(items: items)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] items in
+                self?.sync(items: items)
+            })
+            .disposed(by: disposeBag)
 
         sync(items: service.items)
     }
@@ -27,19 +27,17 @@ class SwapSelectProviderViewModel {
     private func sync(items: [SwapSelectProviderService.Item]) {
         let viewItems = items.map { item in
             ViewItem(
-                    title: item.provider.rawValue,
-                    icon: item.provider.icon,
-                    selected: item.selected
+                title: item.provider.rawValue,
+                icon: item.provider.icon,
+                selected: item.selected
             )
         }
 
         sectionViewItemsRelay.accept(viewItems)
     }
-
 }
 
 extension SwapSelectProviderViewModel {
-
     var selectedSignal: Signal<Void> {
         selectedRelay.asSignal()
     }
@@ -56,15 +54,12 @@ extension SwapSelectProviderViewModel {
         service.set(provider: service.items[index].provider)
         selectedRelay.accept(())
     }
-
 }
 
 extension SwapSelectProviderViewModel {
-
     struct ViewItem {
         let title: String
         let icon: String
         let selected: Bool
     }
-
 }

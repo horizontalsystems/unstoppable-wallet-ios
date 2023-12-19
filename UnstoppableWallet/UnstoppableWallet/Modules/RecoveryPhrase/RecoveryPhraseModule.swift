@@ -1,8 +1,7 @@
-import UIKit
 import ThemeKit
+import UIKit
 
-struct RecoveryPhraseModule {
-
+enum RecoveryPhraseModule {
     static func viewController(account: Account) -> UIViewController? {
         guard let service = RecoveryPhraseService(account: account) else {
             return nil
@@ -11,5 +10,4 @@ struct RecoveryPhraseModule {
         let viewModel = RecoveryPhraseViewModel(service: service)
         return RecoveryPhraseViewController(viewModel: viewModel)
     }
-
 }

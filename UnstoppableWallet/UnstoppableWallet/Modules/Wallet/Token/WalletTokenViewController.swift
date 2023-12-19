@@ -1,8 +1,8 @@
 import Combine
-import UIKit
 import ComponentKit
 import MarketKit
 import ThemeKit
+import UIKit
 
 class WalletTokenViewController: ThemeViewController {
     private let viewModel: WalletTokenViewModel
@@ -21,7 +21,8 @@ class WalletTokenViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -36,9 +37,7 @@ class WalletTokenViewController: ThemeViewController {
         }
 
         tableView.backgroundColor = .clear
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
@@ -58,5 +57,4 @@ class WalletTokenViewController: ThemeViewController {
 
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
-
 }

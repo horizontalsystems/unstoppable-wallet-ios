@@ -1,13 +1,12 @@
 import Foundation
 import RxRelay
 import RxSwift
-import StorageKit
 
 class MainService {
     private let keyTabIndex = "main-tab-index"
 
     private let localStorage: LocalStorage
-    private let storage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let launchScreenManager: LaunchScreenManager
     private let accountManager: AccountManager
     private let passcodeManager: PasscodeManager
@@ -38,9 +37,9 @@ class MainService {
 
     private var isColdStart: Bool = true
 
-    init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, appManager: IAppManager, passcodeManager: PasscodeManager, lockManager: LockManager, presetTab: MainModule.Tab?) {
+    init(localStorage: LocalStorage, userDefaultsStorage: UserDefaultsStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, appManager: IAppManager, passcodeManager: PasscodeManager, lockManager: LockManager, presetTab: MainModule.Tab?) {
         self.localStorage = localStorage
-        self.storage = storage
+        self.userDefaultsStorage = userDefaultsStorage
         self.launchScreenManager = launchScreenManager
         self.accountManager = accountManager
         self.passcodeManager = passcodeManager
@@ -102,13 +101,13 @@ extension MainService {
     }
 
     var initialTab: MainModule.Tab {
-        if let presetTab = presetTab {
+        if let presetTab {
             return presetTab
         }
 
         switch launchScreenManager.launchScreen {
         case .auto:
-            if let storedIndex: Int = storage.value(for: keyTabIndex), let storedTab = MainModule.Tab(rawValue: storedIndex) {
+            if let storedIndex: Int = userDefaultsStorage.value(for: keyTabIndex), let storedTab = MainModule.Tab(rawValue: storedIndex) {
                 switch storedTab {
                 case .settings: return .balance
                 default: return storedTab
@@ -130,7 +129,7 @@ extension MainService {
     }
 
     func set(tab: MainModule.Tab) {
-        storage.set(value: tab.rawValue, for: keyTabIndex)
+        userDefaultsStorage.set(value: tab.rawValue, for: keyTabIndex)
     }
 
     var activeAccount: Account? {

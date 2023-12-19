@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct DuressModeModule {
+enum DuressModeModule {
     static func view(showParentSheet: Binding<Bool>) -> some View {
         let viewModel = DuressModeViewModel(
             biometryManager: App.shared.biometryManager,

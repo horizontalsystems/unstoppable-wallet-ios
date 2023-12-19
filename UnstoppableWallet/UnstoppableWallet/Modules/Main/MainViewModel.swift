@@ -57,7 +57,7 @@ class MainViewModel {
         deepLinkService.setDeepLinkShown()
         Task {
             do {
-                try await eventHandler.handle(event: deepLink, eventType: .walletConnectDeepLink)
+                try await eventHandler.handle(event: deepLink, eventType: .deepLink)
             } catch {
                 print("Can't handle Deep Link \(error)")
             }

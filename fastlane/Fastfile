@@ -1,10 +1,6 @@
 default_platform(:ios)
 
 APP_ID = ENV["APP_ID"]
-APP_IDENTIFIER_DEV = ENV["APP_IDENTIFIER_DEV"]
-APP_IDENTIFIER_RELEASE = ENV["APP_IDENTIFIER_RELEASE"]
-PROVISIONING_PROFILE_SPECIFIER_DEV = ENV["PROVISIONING_PROFILE_SPECIFIER_DEV"]
-PROVISIONING_PROFILE_SPECIFIER_APPSTORE = ENV["PROVISIONING_PROFILE_SPECIFIER_APPSTORE"]
 TEMP_KEYCHAIN_USER = ENV["TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 APPLE_ISSUER_ID = ENV["APPLE_ISSUER_ID"]
@@ -31,6 +27,7 @@ XCCONFIG_DEV_OPEN_SEA_API_KEY = ENV["XCCONFIG_DEV_OPEN_SEA_API_KEY"]
 XCCONFIG_DEV_TRONGRID_API_KEY = ENV["XCCONFIG_DEV_TRONGRID_API_KEY"]
 XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY = ENV["XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY"]
 XCCONFIG_DEV_ONE_INCH_API_KEY = ENV["XCCONFIG_DEV_ONE_INCH_API_KEY"]
+XCCONFIG_DEV_BLOCKCHAIR_API_KEY = ENV["XCCONFIG_DEV_BLOCKCHAIR_API_KEY"]
 
 XCCONFIG_PROD_SWAP_ENABLED = ENV["XCCONFIG_PROD_SWAP_ENABLED"]
 XCCONFIG_PROD_INFURA_PROJECT_ID = ENV["XCCONFIG_PROD_INFURA_PROJECT_ID"]
@@ -51,6 +48,7 @@ XCCONFIG_PROD_OPEN_SEA_API_KEY = ENV["XCCONFIG_PROD_OPEN_SEA_API_KEY"]
 XCCONFIG_PROD_TRONGRID_API_KEY = ENV["XCCONFIG_PROD_TRONGRID_API_KEY"]
 XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY = ENV["XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY"]
 XCCONFIG_PROD_ONE_INCH_API_KEY = ENV["XCCONFIG_PROD_ONE_INCH_API_KEY"]
+XCCONFIG_PROD_BLOCKCHAIR_API_KEY = ENV["XCCONFIG_PROD_BLOCKCHAIR_API_KEY"]
 
 def delete_temp_keychain(name)
   delete_keychain(
@@ -132,6 +130,7 @@ def apply_dev_xcconfig
   update_dev_xcconfig('trongrid_api_key', XCCONFIG_DEV_TRONGRID_API_KEY)
   update_dev_xcconfig('unstoppable_domains_api_key', XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY)
   update_dev_xcconfig('one_inch_api_key', XCCONFIG_DEV_ONE_INCH_API_KEY)
+  update_dev_xcconfig('blockchair_api_key', XCCONFIG_DEV_BLOCKCHAIR_API_KEY)
 end
 
 def apply_prod_xcconfig(swap_enabled)
@@ -154,16 +153,7 @@ def apply_prod_xcconfig(swap_enabled)
   update_prod_xcconfig('trongrid_api_key', XCCONFIG_PROD_TRONGRID_API_KEY)
   update_prod_xcconfig('unstoppable_domains_api_key', XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY)
   update_prod_xcconfig('one_inch_api_key', XCCONFIG_PROD_ONE_INCH_API_KEY)
-end
-
-def force_update_devices(type, username)
-  match(
-    type: type,
-    username: username,
-    team_id: "HC4MCAXJ66",
-    app_identifier: "io.horizontalsystems.bank-wallet,io.horizontalsystems.bank-wallet.dev",
-    force_for_new_devices: true
-  )
+  update_prod_xcconfig('blockchair_api_key', XCCONFIG_PROD_BLOCKCHAIR_API_KEY)
 end
 
 def deploy_production
@@ -175,7 +165,9 @@ def deploy_production
     export_options: {
       compileBitcode: false,
       provisioningProfiles: {
-          APP_ID => PROVISIONING_PROFILE_SPECIFIER_APPSTORE
+          "io.horizontalsystems.bank-wallet" => "match AppStore io.horizontalsystems.bank-wallet",
+          "io.horizontalsystems.bank-wallet.widget" => "match AppStore io.horizontalsystems.bank-wallet.widget",
+          "io.horizontalsystems.bank-wallet.intent" => "match AppStore io.horizontalsystems.bank-wallet.intent"
       },
       iCloudContainerEnvironment: "Production"
     }
@@ -183,7 +175,7 @@ def deploy_production
 
   pilot(
     apple_id: "#{APP_ID}",
-    app_identifier: "#{APP_IDENTIFIER_RELEASE}",
+    app_identifier: "io.horizontalsystems.bank-wallet",
     skip_waiting_for_build_processing: true,
     skip_submission: true,
     distribute_external: false,
@@ -205,7 +197,7 @@ platform :ios do
 
     match(
       type: 'adhoc',
-      app_identifier: "#{APP_IDENTIFIER_DEV}",
+      app_identifier: ["io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.dev.intent"],
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
       readonly: true,
       keychain_name: keychain_name,
@@ -221,7 +213,9 @@ platform :ios do
       export_options: {
         compileBitcode: false,
         provisioningProfiles: {
-            APP_ID => PROVISIONING_PROFILE_SPECIFIER_DEV
+            "io.horizontalsystems.bank-wallet.dev" => "match AdHoc io.horizontalsystems.bank-wallet.dev",
+            "io.horizontalsystems.bank-wallet.dev.widget" => "match AdHoc io.horizontalsystems.bank-wallet.dev.widget",
+            "io.horizontalsystems.bank-wallet.dev.intent" => "match AdHoc io.horizontalsystems.bank-wallet.dev.intent"
         },
         iCloudContainerEnvironment: "Development"
       }
@@ -251,7 +245,7 @@ platform :ios do
 
     match(
       type: 'appstore',
-      app_identifier: "#{APP_IDENTIFIER_RELEASE}",
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"],
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
       readonly: true,
       keychain_name: keychain_name,
@@ -269,28 +263,23 @@ platform :ios do
     delete_temp_keychain(keychain_name)
   end
 
-  lane :new_device do |options|
-    force_update_devices("development", options[:username])
-    force_update_devices("adhoc", options[:username])
-  end
-
   lane :match_readonly do
     match(
       type: "development",
       readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
     )
 
     match(
       type: "adhoc",
       readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
     )
 
     match(
       type: "appstore",
       readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"]
     )
   end
 
@@ -299,21 +288,23 @@ platform :ios do
       type: "development",
       username: options[:username],
       team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"],
+      force_for_new_devices: true
     )
 
     match(
       type: "adhoc",
       username: options[:username],
       team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"],
+      force_for_new_devices: true
     )
 
     match(
       type: "appstore",
       username: options[:username],
       team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet"]
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"]
     )
   end
 

@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class ContactBookContactService {
     private let disposeBag = DisposeBag()
@@ -62,15 +62,15 @@ class ContactBookContactService {
 
     private func syncAddresses() {
         let addressItems = addresses.compactMap { address -> AddressItem? in
-                    var edited = true
-                    // check if old address same with new - set edited false
-                    if let oldAddresses = oldContact?.addresses,
-                        let oldAddress = oldAddresses.first(where: { $0.blockchainUid == address.blockchainUid  }) {
-                        edited = oldAddress.address != address.address
-                    }
-                    return blockchain(by: address).map { AddressItem(blockchain: $0, address: address.address, edited: edited) }
-                }.sorted { item, item2 in item.blockchain.type.order < item2.blockchain.type.order }
-
+            var edited = true
+            // check if old address same with new - set edited false
+            if let oldAddresses = oldContact?.addresses,
+               let oldAddress = oldAddresses.first(where: { $0.blockchainUid == address.blockchainUid })
+            {
+                edited = oldAddress.address != address.address
+            }
+            return blockchain(by: address).map { AddressItem(blockchain: $0, address: address.address, edited: edited) }
+        }.sorted { item, item2 in item.blockchain.type.order < item2.blockchain.type.order }
 
         addressItemsRelay.accept(addressItems)
     }
@@ -83,20 +83,20 @@ class ContactBookContactService {
 
         // check if all blockchains has addresses
         allBlockchainsUsedRelay.accept(
-                BlockchainType
-                   .supported
-                   .filter({ type in
-                       !usedBlockchainTypes.contains(type)
-                   }).count == 0
+            BlockchainType
+                .supported
+                .filter { type in
+                    !usedBlockchainTypes.contains(type)
+                }.count == 0
         )
     }
 
     private func sync() {
         // check if name already exist
         let otherContactNames = contactManager
-                .all?
-                .filter { (oldContact?.name ?? "") != $0.name }
-                .map { $0.name.lowercased() } ?? []
+            .all?
+            .filter { (oldContact?.name ?? "") != $0.name }
+            .map { $0.name.lowercased() } ?? []
 
         if otherContactNames.contains(contactName.lowercased()) {
             state = .error(ValidationError.nameExist)
@@ -116,11 +116,9 @@ class ContactBookContactService {
 
         state = .updated
     }
-
 }
 
 extension ContactBookContactService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -164,11 +162,9 @@ extension ContactBookContactService {
         }
         try contactManager.delete(uid)
     }
-
 }
 
 extension ContactBookContactService {
-
     struct AddressItem {
         let blockchain: Blockchain
         let address: String
@@ -189,5 +185,4 @@ extension ContactBookContactService {
     enum ValidationError: Error {
         case nameExist
     }
-
 }

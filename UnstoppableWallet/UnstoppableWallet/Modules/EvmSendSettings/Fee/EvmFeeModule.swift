@@ -1,11 +1,11 @@
-import UIKit
 import BigInt
 import EvmKit
-import RxSwift
 import RxCocoa
+import RxSwift
 import ThemeKit
+import UIKit
 
-struct EvmFeeModule {
+enum EvmFeeModule {
     private static let surchargePercent: Double = 10
 
     static func surcharged(gasLimit: Int) -> Int {
@@ -19,7 +19,7 @@ struct EvmFeeModule {
             var minRecommendedMaxFee: Int? = nil
             var minRecommendedTips: Int? = nil
 
-            if case .eip1559(let maxBaseFee, let maxTips) = gasPrice {
+            if case let .eip1559(maxBaseFee, maxTips) = gasPrice {
                 initialMaxBaseFee = maxBaseFee
                 initialMaxTips = maxTips
             }
@@ -34,7 +34,7 @@ struct EvmFeeModule {
             var initialGasPrice: Int? = nil
             var minRecommendedGasPrice: Int? = nil
 
-            if case .legacy(let gasPrice) = gasPrice {
+            if case let .legacy(gasPrice) = gasPrice {
                 initialGasPrice = gasPrice
             }
 
@@ -48,7 +48,6 @@ struct EvmFeeModule {
 }
 
 extension EvmFeeModule {
-
     enum GasDataError: Error {
         case insufficientBalance
     }
@@ -120,7 +119,6 @@ extension EvmFeeModule {
         let transactionData: TransactionData
         let gasData: GasData
     }
-
 }
 
 protocol IEvmFeeService {
@@ -156,25 +154,24 @@ struct RangeBounds {
         var upperBound = 0
 
         switch lower {
-        case .factor(let factor): lowerBound = Int(Float(center) * factor)
-        case .distance(let distance): lowerBound = center - distance
-        case .fixed(let value): lowerBound = value
+        case let .factor(factor): lowerBound = Int(Float(center) * factor)
+        case let .distance(distance): lowerBound = center - distance
+        case let .fixed(value): lowerBound = value
         }
 
         lowerBound = max(lowerBound, 0)
 
         switch upper {
-        case .factor(let factor): upperBound = Int(Float(center) * factor)
-        case .distance(let distance): upperBound = center + distance
-        case .fixed(let value): upperBound = value
+        case let .factor(factor): upperBound = Int(Float(center) * factor)
+        case let .distance(distance): upperBound = center + distance
+        case let .fixed(value): upperBound = value
         }
 
-        if let selected = selected {
+        if let selected {
             lowerBound = min(lowerBound, selected)
             upperBound = max(upperBound, selected)
         }
 
-        return lowerBound...upperBound
+        return lowerBound ... upperBound
     }
-
 }

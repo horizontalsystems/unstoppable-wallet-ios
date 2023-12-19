@@ -8,11 +8,9 @@ class RestoreService {
     init(accountFactory: AccountFactory) {
         self.accountFactory = accountFactory
     }
-
 }
 
 extension RestoreService {
-
     var defaultAccountName: String {
         accountFactory.nextAccountName
     }
@@ -21,5 +19,4 @@ extension RestoreService {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         return trimmedName.isEmpty ? defaultAccountName : trimmedName
     }
-
 }

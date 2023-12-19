@@ -1,6 +1,6 @@
+import EvmKit
 import Foundation
 import UniswapKit
-import EvmKit
 
 struct UniswapSettings {
     var allowedSlippage: Decimal
@@ -15,10 +15,9 @@ struct UniswapSettings {
 
     var tradeOptions: TradeOptions {
         TradeOptions(
-                allowedSlippage: allowedSlippage,
-                ttl: ttl,
-                recipient: recipient.flatMap { try? EvmKit.Address(hex: $0.raw) }
+            allowedSlippage: allowedSlippage,
+            ttl: ttl,
+            recipient: recipient.flatMap { try? EvmKit.Address(hex: $0.raw) }
         )
     }
-
 }

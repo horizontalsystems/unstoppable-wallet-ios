@@ -1,11 +1,11 @@
-import Foundation
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
-import RxCocoa
-import HUD
 import ComponentKit
+import Foundation
+import HUD
+import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class NftCollectionViewController: ThemeViewController {
     private let viewModel: NftCollectionViewModel
@@ -29,7 +29,8 @@ class NftCollectionViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -92,5 +93,4 @@ class NftCollectionViewController: ThemeViewController {
         case .activity: return activityController
         }
     }
-
 }

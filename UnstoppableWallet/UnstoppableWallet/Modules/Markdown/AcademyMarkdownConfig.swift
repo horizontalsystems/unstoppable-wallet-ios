@@ -1,15 +1,14 @@
-import Foundation
-import UIKit
-import ThemeKit
 import Down
+import Foundation
+import ThemeKit
+import UIKit
 
-struct AcademyMarkdownConfig {
-
+enum AcademyMarkdownConfig {
     private static let colors = StaticColorCollection(
-            heading1: .themeLeah,
-            heading2: .themeJacob,
-            heading3: .themeJacob,
-            body: .themeBran
+        heading1: .themeLeah,
+        heading2: .themeJacob,
+        heading3: .themeJacob,
+        body: .themeBran
     )
 
     private static let paragraphStyles: StaticParagraphStyleCollection = {
@@ -30,17 +29,16 @@ struct AcademyMarkdownConfig {
 
     static var config: DownStylerConfiguration {
         let fonts = StaticFontCollection(
-                heading1: .title2,
-                heading2: .title3,
-                heading3: .headline2,
-                body: .body
+            heading1: .title2,
+            heading2: .title3,
+            heading3: .headline2,
+            body: .body
         )
 
         return DownStylerConfiguration(
-                fonts: fonts,
-                colors: colors,
-                paragraphStyles: paragraphStyles
+            fonts: fonts,
+            colors: colors,
+            paragraphStyles: paragraphStyles
         )
     }
-
 }

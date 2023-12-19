@@ -1,22 +1,20 @@
-import StorageKit
 import EvmKit
 
 class ProFeaturesStorage {
-    private let secureStorage: ISecureStorage
+    private let keychainStorage: KeychainStorage
 
-    init(secureStorage: ISecureStorage) {
-        self.secureStorage = secureStorage
+    init(keychainStorage: KeychainStorage) {
+        self.keychainStorage = keychainStorage
     }
-
 }
 
 extension ProFeaturesStorage {
-
     func getAll() -> [ProFeaturesAuthorizationManager.NftType: SessionKey] {
         var keys = [ProFeaturesAuthorizationManager.NftType: SessionKey]()
         for type in ProFeaturesAuthorizationManager.NftType.allCases {
-            if let raw: String = secureStorage.value(for: type.rawValue),
-               let sessionKey = SessionKey(raw: raw) {
+            if let raw: String = keychainStorage.value(for: type.rawValue),
+               let sessionKey = SessionKey(raw: raw)
+            {
                 keys[type] = sessionKey
             }
         }
@@ -25,38 +23,36 @@ extension ProFeaturesStorage {
     }
 
     func get(type: ProFeaturesAuthorizationManager.NftType) -> SessionKey? {
-        let raw: String? = secureStorage.value(for: type.rawValue)
+        let raw: String? = keychainStorage.value(for: type.rawValue)
         return raw.flatMap { SessionKey(raw: $0) }
     }
 
     func save(type: ProFeaturesAuthorizationManager.NftType, key: SessionKey) {
-        try? secureStorage.set(value: key.rawValue, for: type.rawValue)
+        try? keychainStorage.set(value: key.rawValue, for: type.rawValue)
     }
 
     func delete(accountId: String) {
         let keys = getAll()
         for key in keys {
             if key.value.accountId == accountId {
-                try? secureStorage.removeValue(for: key.key.rawValue)
+                try? keychainStorage.removeValue(for: key.key.rawValue)
             }
         }
     }
 
     func clear(type: ProFeaturesAuthorizationManager.NftType?) {
-        if let type = type {
-            try? secureStorage.removeValue(for: type.rawValue)
+        if let type {
+            try? keychainStorage.removeValue(for: type.rawValue)
             return
         }
 
         for type in ProFeaturesAuthorizationManager.NftType.allCases {
-            try? secureStorage.removeValue(for: type.rawValue)
+            try? keychainStorage.removeValue(for: type.rawValue)
         }
     }
-
 }
 
 extension ProFeaturesStorage {
-
     struct SessionKey: CustomStringConvertible {
         private static let separator: Character = "_"
 
@@ -84,8 +80,5 @@ extension ProFeaturesStorage {
         var rawValue: String {
             [accountId, address, sessionKey].joined(separator: String(SessionKey.separator))
         }
-
     }
-
 }
-

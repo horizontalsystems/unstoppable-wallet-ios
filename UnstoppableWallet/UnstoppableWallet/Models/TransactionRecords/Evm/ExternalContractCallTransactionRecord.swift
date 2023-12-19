@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 import MarketKit
 
 class ExternalContractCallTransactionRecord: EvmTransactionRecord {
@@ -10,18 +10,7 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
-        var spam = true
-
-        for event in incomingEvents + outgoingEvents {
-            switch event.value {
-            case .coinValue(_, let value), .nftValue(_, let value, _, _):
-                if value > 0 {
-                    spam = false
-                }
-                break
-            default: ()
-            }
-        }
+        let spam = TransactionRecord.isSpam(transactionValues: (incomingEvents + outgoingEvents).map(\.value))
 
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, spam: spam)
     }
@@ -41,5 +30,4 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord {
             return nil
         }
     }
-
 }

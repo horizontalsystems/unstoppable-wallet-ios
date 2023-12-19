@@ -1,11 +1,11 @@
-import UIKit
-import SnapKit
-import RxSwift
-import RxCocoa
-import ThemeKit
 import ComponentKit
-import SectionsTableView
 import HUD
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class NftActivityViewController: ThemeViewController {
     private let viewModel: NftActivityViewModel
@@ -37,7 +37,8 @@ class NftActivityViewController: ThemeViewController {
         headerView.viewController = self
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -56,9 +57,7 @@ class NftActivityViewController: ThemeViewController {
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
@@ -121,19 +120,17 @@ class NftActivityViewController: ThemeViewController {
         spinnerWrapper.isHidden = viewItem != nil
         emptyView.isHidden = !(viewItem.map { $0.eventViewItems.isEmpty && $0.allLoaded } ?? false)
     }
-
 }
 
 extension NftActivityViewController: SectionsDataSource {
-
     private func row(eventViewItem viewItem: NftActivityViewModel.EventViewItem, index: Int, isLast: Bool) -> RowProtocol {
         cellFactory.row(tableView: tableView, viewItem: viewItem, index: index, onReachBottom: isLast ? { [weak self] in self?.viewModel.onReachBottom() } : nil)
     }
 
     private func spinnerRow() -> RowProtocol {
         Row<SpinnerCell>(
-                id: "spinner",
-                height: 24
+            id: "spinner",
+            height: 24
         )
     }
 
@@ -141,27 +138,27 @@ extension NftActivityViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
         var rows = [RowProtocol]()
 
-        if let viewItem = viewItem {
+        if let viewItem {
             rows = viewItem.eventViewItems.enumerated().map { index, eventViewItem in
                 row(eventViewItem: eventViewItem, index: index, isLast: index == viewItem.eventViewItems.count - 1)
             }
         }
 
         let mainSection = Section(
-                id: "main",
-                footerState: .marginColor(height: .margin12, color: .clear),
-                rows: rows
+            id: "main",
+            footerState: .marginColor(height: .margin12, color: .clear),
+            rows: rows
         )
 
         sections.append(mainSection)
 
-        if let viewItem = viewItem, !viewItem.allLoaded {
+        if let viewItem, !viewItem.allLoaded {
             let spinnerSection = Section(
-                    id: "spinner",
-                    footerState: .marginColor(height: .margin32, color: .clear),
-                    rows: [
-                        spinnerRow()
-                    ]
+                id: "spinner",
+                footerState: .marginColor(height: .margin32, color: .clear),
+                rows: [
+                    spinnerRow(),
+                ]
             )
 
             sections.append(spinnerSection)
@@ -169,5 +166,4 @@ extension NftActivityViewController: SectionsDataSource {
 
         return sections
     }
-
 }

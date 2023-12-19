@@ -1,5 +1,5 @@
-import Combine
 import Chart
+import Combine
 
 class MacdIndicatorDataSource {
     private let fastPeriodId = "fast-period-input"
@@ -9,26 +9,26 @@ class MacdIndicatorDataSource {
     var fields: [ChartIndicatorSettingsModule.Field] {
         [
             ChartIndicatorSettingsModule.TextField(
-                    id: "title-description",
-                    text: "chart_indicators.settings.macd.description".localized
+                id: "title-description",
+                text: "chart_indicators.settings.macd.description".localized
             ),
             ChartIndicatorSettingsModule.InputIntegerField(
-                    id: fastPeriodId,
-                    header: "chart_indicators.settings.macd.fast_period_title".localized,
-                    placeholder: defaultIndicator.fast.description,
-                    initial: defaultIndicator.fast != indicator.fast ? indicator.fast.description : nil
+                id: fastPeriodId,
+                header: "chart_indicators.settings.macd.fast_period_title".localized,
+                placeholder: defaultIndicator.fast.description,
+                initial: defaultIndicator.fast != indicator.fast ? indicator.fast.description : nil
             ),
             ChartIndicatorSettingsModule.InputIntegerField(
-                    id: slowPeriodId,
-                    header: "chart_indicators.settings.macd.slow_period_title".localized,
-                    placeholder: defaultIndicator.slow.description,
-                    initial: defaultIndicator.slow != indicator.slow ? indicator.slow.description : nil
+                id: slowPeriodId,
+                header: "chart_indicators.settings.macd.slow_period_title".localized,
+                placeholder: defaultIndicator.slow.description,
+                initial: defaultIndicator.slow != indicator.slow ? indicator.slow.description : nil
             ),
             ChartIndicatorSettingsModule.InputIntegerField(
-                    id: signalPeriodId,
-                    header: "chart_indicators.settings.macd.signal_period_title".localized,
-                    placeholder: defaultIndicator.signal.description,
-                    initial: defaultIndicator.signal != indicator.signal ? indicator.signal.description : nil
+                id: signalPeriodId,
+                header: "chart_indicators.settings.macd.signal_period_title".localized,
+                placeholder: defaultIndicator.signal.description,
+                initial: defaultIndicator.signal != indicator.signal ? indicator.signal.description : nil
             ),
         ]
     }
@@ -105,41 +105,39 @@ class MacdIndicatorDataSource {
         }
 
         state = .success(
-                MacdIndicator(
-                        id: indicator.id,
-                        index: indicator.index,
-                        enabled: indicator.enabled,
-                        fast: fastPeriod,
-                        slow: slowPeriod,
-                        signal: signalPeriod,
-                        configuration: indicator.configuration
-                )
+            MacdIndicator(
+                id: indicator.id,
+                index: indicator.index,
+                enabled: indicator.enabled,
+                fast: fastPeriod,
+                slow: slowPeriod,
+                signal: signalPeriod,
+                configuration: indicator.configuration
+            )
         )
     }
-
 }
 
 extension MacdIndicatorDataSource: IIndicatorDataSource {
-
     var chartIndicator: ChartIndicator {
         indicator
     }
 
     var notEdited: Bool {
         indicator.fast == fastPeriod &&
-        indicator.slow == slowPeriod &&
-        indicator.signal == signalPeriod
+            indicator.slow == slowPeriod &&
+            indicator.signal == signalPeriod
     }
 
     var isDefault: Bool {
         fastPeriod == defaultIndicator.fast &&
-        slowPeriod == defaultIndicator.slow &&
-        signalPeriod == defaultIndicator.signal
+            slowPeriod == defaultIndicator.slow &&
+            signalPeriod == defaultIndicator.signal
     }
 
     func set(id: String, value: Any?) {
         switch id {
-        case fastPeriodId:                   // change period
+        case fastPeriodId: // change period
             guard let period = value as? String, let intValue = Int(period) else {
                 fastPeriod = defaultIndicator.fast
                 sync()
@@ -147,7 +145,7 @@ extension MacdIndicatorDataSource: IIndicatorDataSource {
             }
             fastPeriod = intValue
             sync()
-        case slowPeriodId:                   // change period
+        case slowPeriodId: // change period
             guard let period = value as? String, let intValue = Int(period) else {
                 slowPeriod = defaultIndicator.slow
                 sync()
@@ -155,7 +153,7 @@ extension MacdIndicatorDataSource: IIndicatorDataSource {
             }
             slowPeriod = intValue
             sync()
-        case signalPeriodId:                   // change period
+        case signalPeriodId: // change period
             guard let period = value as? String, let intValue = Int(period) else {
                 signalPeriod = defaultIndicator.signal
                 sync()
@@ -178,8 +176,7 @@ extension MacdIndicatorDataSource: IIndicatorDataSource {
         itemsUpdatedSubject.eraseToAnyPublisher()
     }
 
-    var stateUpdatedPublisher: AnyPublisher<(), Never> {
+    var stateUpdatedPublisher: AnyPublisher<Void, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
-
 }

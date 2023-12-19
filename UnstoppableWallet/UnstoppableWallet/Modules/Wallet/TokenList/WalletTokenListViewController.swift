@@ -1,16 +1,18 @@
 import Combine
-import UIKit
-import DeepDiff
-import RxSwift
-import RxCocoa
 import ComponentKit
+import DeepDiff
 import HUD
 import MarketKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import ThemeKit
+import UIKit
 
 class WalletTokenListViewController: ThemeSearchViewController {
     private let viewModel: WalletTokenListViewModel
+
+    var hideSearchBar: Bool = false
 
     let tableView = UITableView(frame: .zero, style: .plain)
     private let dataSource: ISectionDataSource
@@ -25,7 +27,8 @@ class WalletTokenListViewController: ThemeSearchViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -36,6 +39,9 @@ class WalletTokenListViewController: ThemeSearchViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.searchController?.searchBar.placeholder = "add_token.coin_name".localized
+        if hideSearchBar {
+            navigationItem.searchController = nil
+        }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -43,9 +49,7 @@ class WalletTokenListViewController: ThemeSearchViewController {
         }
 
         tableView.backgroundColor = .clear
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.tableFooterView = UIView(frame: .zero)
@@ -70,5 +74,4 @@ class WalletTokenListViewController: ThemeSearchViewController {
     @objc func onTapClose() {
         dismiss(animated: true)
     }
-
 }

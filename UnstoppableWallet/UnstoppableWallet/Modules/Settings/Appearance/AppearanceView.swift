@@ -1,9 +1,9 @@
-import SDWebImageSwiftUI
+import Kingfisher
 import SwiftUI
 import ThemeKit
 
 struct AppearanceView: View {
-    @ObservedObject var viewModel: AppearanceViewModel
+    @StateObject var viewModel = AppearanceViewModel()
 
     var body: some View {
         ScrollableThemeView {
@@ -66,9 +66,8 @@ struct AppearanceView: View {
                             ClickableRow(action: {
                                 viewModel.conversionToken = token
                             }) {
-                                WebImage(url: URL(string: token.coin.imageUrl))
+                                KFImage.url(URL(string: token.coin.imageUrl))
                                     .resizable()
-                                    .scaledToFit()
                                     .frame(width: .iconSize32, height: .iconSize32)
 
                                 Text(token.coin.code).themeBody()

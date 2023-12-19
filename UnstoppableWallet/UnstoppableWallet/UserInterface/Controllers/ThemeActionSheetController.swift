@@ -1,15 +1,15 @@
 import UIKit
-import ActionSheet
 
 class ThemeActionSheetController: UIViewController {
     public weak var actionSheetView: ActionSheetView?
-    public var onInteractiveDismiss: (() -> ())?
+    public var onInteractiveDismiss: (() -> Void)?
 
     init() {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -19,7 +19,7 @@ class ThemeActionSheetController: UIViewController {
         view.backgroundColor = .themeLawrence
     }
 
-    override func dismiss(animated flag: Bool, completion: (() -> ())? = nil) {
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         actionSheetView?.contentWillDismissed()
         super.dismiss(animated: flag, completion: completion)
     }

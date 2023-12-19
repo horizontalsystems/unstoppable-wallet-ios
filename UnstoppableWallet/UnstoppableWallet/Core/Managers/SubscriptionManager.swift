@@ -1,13 +1,12 @@
 import Foundation
 import HsExtensions
-import StorageKit
-import MarketKit
 import HsToolKit
+import MarketKit
 
 class SubscriptionManager {
     private let keyAuthToken = "subscription-auth-token"
 
-    private let localStorage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
     private let marketKit: MarketKit.Kit
 
     private var authToken: String? {
@@ -18,8 +17,8 @@ class SubscriptionManager {
 
     @DistinctPublished private(set) var isAuthenticated: Bool
 
-    init(localStorage: StorageKit.ILocalStorage, marketKit: MarketKit.Kit) {
-        self.localStorage = localStorage
+    init(userDefaultsStorage: UserDefaultsStorage, marketKit: MarketKit.Kit) {
+        self.userDefaultsStorage = userDefaultsStorage
         self.marketKit = marketKit
 
 //        authToken = localStorage.value(for: keyAuthToken)
@@ -33,14 +32,12 @@ class SubscriptionManager {
     private func invalidateAuthToken() {
         marketKit.set(proAuthToken: nil)
         authToken = nil
-        localStorage.set(value: authToken, for: keyAuthToken)
+        userDefaultsStorage.set(value: authToken, for: keyAuthToken)
     }
-
 }
 
 extension SubscriptionManager {
-
-    func fetch<T>(request: () async throws -> T, onSuccess: (T) -> (), onInvalidAuthToken: () -> (), onFailure: (Error) -> ()) async throws {
+    func fetch<T>(request: () async throws -> T, onSuccess: (T) -> Void, onInvalidAuthToken _: () -> Void, onFailure: (Error) -> Void) async throws {
         do {
             let result = try await request()
             onSuccess(result)
@@ -56,10 +53,9 @@ extension SubscriptionManager {
         }
     }
 
-    func set(authToken: String) {
+    func set(authToken _: String) {
 //        marketKit.set(proAuthToken: authToken)
 //        self.authToken = authToken
 //        localStorage.set(value: authToken, for: keyAuthToken)
     }
-
 }

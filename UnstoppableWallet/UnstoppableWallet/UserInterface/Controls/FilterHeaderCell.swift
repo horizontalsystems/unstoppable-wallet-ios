@@ -1,7 +1,7 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
+import SnapKit
+import ThemeKit
+import UIKit
 
 class FilterHeaderCell: UICollectionViewCell {
     private let button = SecondaryButton()
@@ -18,7 +18,8 @@ class FilterHeaderCell: UICollectionViewCell {
         button.isUserInteractionEnabled = false
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
@@ -39,13 +40,10 @@ class FilterHeaderCell: UICollectionViewCell {
         button.setTitle(title, for: .normal)
         button.isSelected = selected
     }
-
 }
 
 extension FilterHeaderCell {
-
     static func width(title: String, style: SecondaryButton.Style) -> CGFloat {
         SecondaryButton.width(title: title, style: style, hasImage: false)
     }
-
 }

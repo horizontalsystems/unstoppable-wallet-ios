@@ -1,14 +1,14 @@
-import UIKit
-import ThemeKit
-import OneInchKit
-import HUD
-import RxSwift
-import RxCocoa
-import SectionsTableView
 import ComponentKit
+import HUD
+import OneInchKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class OneInchDataSource {
-    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian]
+    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian, .themeLucian]
 
     private let disposeBag = DisposeBag()
 
@@ -32,11 +32,11 @@ class OneInchDataSource {
     private let proceedButton = PrimaryButton()
     private let proceed2Button = PrimaryButton()
 
-    var onOpen: ((_ viewController: UIViewController, _ viaPush: Bool) -> ())? = nil
-    var onOpenSelectProvider: (() -> ())? = nil
-    var onOpenSettings: (() -> ())? = nil
-    var onClose: (() -> ())? = nil
-    var onReload: (() -> ())? = nil
+    var onOpen: ((_ viewController: UIViewController, _ viaPush: Bool) -> Void)?
+    var onOpenSelectProvider: (() -> Void)?
+    var onOpenSettings: (() -> Void)?
+    var onClose: (() -> Void)?
+    var onReload: (() -> Void)?
 
     weak var tableView: UITableView?
 
@@ -68,26 +68,27 @@ class OneInchDataSource {
         initCells()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func initCells() {
         revokeButton.set(style: .yellow)
-        revokeButton.addTarget(self, action: #selector((onTapRevokeButton)), for: .touchUpInside)
+        revokeButton.addTarget(self, action: #selector(onTapRevokeButton), for: .touchUpInside)
         buttonStackCell.add(view: revokeButton)
 
-        approve1Button.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
+        approve1Button.addTarget(self, action: #selector(onTapApproveButton), for: .touchUpInside)
         buttonStackCell.add(view: approve1Button)
 
         errorCell.set(backgroundStyle: .transparent, isFirst: true)
 
         proceedButton.set(style: .yellow)
-        proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
+        proceedButton.addTarget(self, action: #selector(onTapProceedButton), for: .touchUpInside)
         buttonStackCell.add(view: proceedButton)
 
         proceed2Button.set(style: .yellow, accessoryType: .icon(image: UIImage(named: "numbers_2_24")))
-        proceed2Button.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
+        proceed2Button.addTarget(self, action: #selector(onTapProceedButton), for: .touchUpInside)
         buttonStackCell.add(view: proceed2Button)
 
         subscribeToViewModel()
@@ -112,7 +113,7 @@ class OneInchDataSource {
         subscribe(disposeBag, viewModel.amountTypeIndexDriver) { [weak self] in self?.settingsHeaderView.setSelector(index: $0) }
         subscribe(disposeBag, viewModel.isAmountTypeAvailableDriver) { [weak self] in self?.settingsHeaderView.setSelector(isEnabled: $0) }
 
-        subscribe(disposeBag, allowanceViewModel.allowanceDriver) { [weak self] in self?.handle(allowance: $0)  }
+        subscribe(disposeBag, allowanceViewModel.allowanceDriver) { [weak self] in self?.handle(allowance: $0) }
     }
 
     func viewDidAppear() {
@@ -124,7 +125,7 @@ class OneInchDataSource {
 
         CellBuilderNew.buildStatic(cell: availableBalanceCell, rootElement: .hStack([
             .textElement(text: .subhead2("send.available_balance".localized), parameters: .highHugging),
-            .textElement(text: .subhead2(balance, color: .themeLeah), parameters: .rightAlignment)
+            .textElement(text: .subhead2(balance, color: .themeLeah), parameters: .rightAlignment),
         ]))
 
         onReload?()
@@ -152,7 +153,7 @@ class OneInchDataSource {
                     self?.showInfo(description: InfoDescription(title: "swap.allowance".localized, text: "swap.dex_info.content_allowance".localized))
                 }
             },
-            .textElement(text: .subhead2(allowance, color: .themeLucian), parameters: .rightAlignment)
+            .textElement(text: .subhead2(allowance, color: .themeLucian), parameters: .rightAlignment),
         ]))
 
         onReload?()
@@ -171,7 +172,7 @@ class OneInchDataSource {
     private func handle(error: String?) {
         self.error = error
 
-        if let error = error {
+        if let error {
             errorCell.isVisible = true
             errorCell.bind(caution: TitledCaution(title: "alert.error".localized, text: error, type: .error))
         } else {
@@ -204,11 +205,11 @@ class OneInchDataSource {
         switch actionState {
         case .hidden:
             button.isHidden = true
-        case .enabled(let title):
+        case let .enabled(title):
             button.isHidden = false
             button.isEnabled = true
             button.setTitle(title, for: .normal)
-        case .disabled(let title):
+        case let .disabled(title):
             button.isHidden = false
             button.isEnabled = false
             button.setTitle(title, for: .normal)
@@ -277,41 +278,43 @@ class OneInchDataSource {
 
         let cellViewItems = [
             InfoCellViewItem(
-                    id: "buy-price",
-                    cell: buyPriceCell,
-                    isVisible: noAlerts && lastBuyPrice != nil),
+                id: "buy-price",
+                cell: buyPriceCell,
+                isVisible: noAlerts && lastBuyPrice != nil
+            ),
             InfoCellViewItem(
-                    id: "allowance",
-                    cell: allowanceCell,
-                    isVisible: noAlerts && lastAllowance != nil),
+                id: "allowance",
+                cell: allowanceCell,
+                isVisible: noAlerts && lastAllowance != nil
+            ),
             InfoCellViewItem(
-                    id: "available-balance",
-                    cell: availableBalanceCell,
-                    isVisible: noAlerts && lastAvailableBalance != nil && lastBuyPrice == nil && lastAllowance == nil),
+                id: "available-balance",
+                cell: availableBalanceCell,
+                isVisible: noAlerts && lastAvailableBalance != nil && lastBuyPrice == nil && lastAllowance == nil
+            ),
             InfoCellViewItem(
-                    id: "price-impact",
-                    cell: priceImpactCell,
-                    isVisible: noAlerts && lastPriceImpact != nil && lastAllowance == nil),
+                id: "price-impact",
+                cell: priceImpactCell,
+                isVisible: noAlerts && lastPriceImpact != nil && lastAllowance == nil
+            ),
         ]
 
         let firstIndex = cellViewItems.firstIndex(where: { $0.isVisible }) ?? -1
         let lastIndex = cellViewItems.lastIndex(where: { $0.isVisible }) ?? -1
 
-
         let rows = cellViewItems.enumerated().map { index, viewItem in
             viewItem.cell.set(backgroundStyle: .externalBorderOnly, isFirst: firstIndex == index, isLast: lastIndex == index)
             return StaticRow(
-                    cell: viewItem.cell,
-                    id: viewItem.id,
-                    height: viewItem.isVisible ? .heightSingleLineCell : 0
+                cell: viewItem.cell,
+                id: viewItem.id,
+                height: viewItem.isVisible ? .heightSingleLineCell : 0
             )
         }
 
-
         return Section(
-                id: "info",
-                headerState: .margin(height: noAlerts ? .margin12 : 0),
-                rows: rows
+            id: "info",
+            headerState: .margin(height: noAlerts ? .margin12 : 0),
+            rows: rows
         )
     }
 
@@ -322,107 +325,98 @@ class OneInchDataSource {
 }
 
 extension OneInchDataSource: ISwapDataSource {
-
     var state: SwapModule.DataSourceState {
         SwapModule.DataSourceState(
-                tokenFrom: viewModel.tradeService.tokenIn,
-                tokenTo: viewModel.tradeService.tokenOut,
-                amountFrom: viewModel.tradeService.amountIn,
-                amountTo: viewModel.tradeService.amountOut,
-                exactFrom: false)
+            tokenFrom: viewModel.tradeService.tokenIn,
+            tokenTo: viewModel.tradeService.tokenOut,
+            amountFrom: viewModel.tradeService.amountIn,
+            amountTo: viewModel.tradeService.amountOut,
+            exactFrom: false
+        )
     }
 
     var buildSections: [SectionProtocol] {
         var sections = [SectionProtocol]()
 
         sections.append(Section(
-                id: "header",
-                headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsHeaderView.height),
-                rows: [
-                ]
+            id: "header",
+            headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsHeaderView.height),
+            rows: [
+            ]
         ))
 
         sections.append(Section(
-                id: "main",
-                headerState: .margin(height: .margin8),
-                rows: [
-                    StaticRow(
-                            cell: inputCell,
-                            id: "input-card",
-                            height: SwapInputCell.cellHeight
-                    )
-                ]
+            id: "main",
+            headerState: .margin(height: .margin8),
+            rows: [
+                StaticRow(
+                    cell: inputCell,
+                    id: "input-card",
+                    height: SwapInputCell.cellHeight
+                ),
+            ]
         ))
 
         sections.append(infoSection)
 
         let hasAlert = warningCell.descriptionText != nil || error != nil
         sections.append(Section(id: "error",
-                headerState: .margin(height: hasAlert ? .margin12 : 0),
-                rows: [
-                    StaticRow(
-                            cell: warningCell,
-                            id: "warning",
-                            dynamicHeight: { [weak self] width in
-                                if self?.error != nil {
-                                    return 0
-                                }
-                                return self?.warningCell.height(containerWidth: width) ?? 0
-                            }
-                    ),
-                    StaticRow(
-                            cell: errorCell,
-                            id: "error",
-                            dynamicHeight: { [weak self] width in
-                                self?.errorCell.cellHeight(containerWidth: width) ?? 0
-                            }
-                    )
-                ]
-        ))
+                                headerState: .margin(height: hasAlert ? .margin12 : 0),
+                                rows: [
+                                    StaticRow(
+                                        cell: warningCell,
+                                        id: "warning",
+                                        dynamicHeight: { [weak self] width in
+                                            if self?.error != nil {
+                                                return 0
+                                            }
+                                            return self?.warningCell.height(containerWidth: width) ?? 0
+                                        }
+                                    ),
+                                    StaticRow(
+                                        cell: errorCell,
+                                        id: "error",
+                                        dynamicHeight: { [weak self] width in
+                                            self?.errorCell.cellHeight(containerWidth: width) ?? 0
+                                        }
+                                    ),
+                                ]))
         sections.append(Section(
-                id: "buttons",
-                headerState: .margin(height: .margin16),
-                footerState: .margin(height: .margin32),
-                rows: [
-                    StaticRow(
-                            cell: buttonStackCell,
-                            id: "button",
-                            height: .heightButton
-                    )
-                ]
+            id: "buttons",
+            headerState: .margin(height: .margin16),
+            footerState: .margin(height: .margin32),
+            rows: [
+                StaticRow(
+                    cell: buttonStackCell,
+                    id: "button",
+                    height: .heightButton
+                ),
+            ]
         ))
 
         return sections
     }
-
 }
 
 extension OneInchDataSource: IPresentDelegate {
-
     func present(viewController: UIViewController) {
         onOpen?(viewController, false)
     }
-
 }
 
 extension OneInchDataSource: ISwapApproveDelegate {
-
     func didApprove() {
         viewModel.didApprove()
     }
-
 }
 
 extension OneInchDataSource: IDynamicHeightCellDelegate {
-
     func onChangeHeight() {
         onReload?()
     }
-
 }
 
 extension OneInchDataSource {
-
     struct InfoCellViewItem {
         let id: String
         let cell: BaseThemeCell
@@ -433,5 +427,4 @@ extension OneInchDataSource {
         let title: String
         let text: String
     }
-
 }

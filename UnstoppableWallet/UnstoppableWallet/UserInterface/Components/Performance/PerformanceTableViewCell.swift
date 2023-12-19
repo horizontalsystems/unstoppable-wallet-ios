@@ -1,9 +1,9 @@
-import UIKit
+import ComponentKit
+import RxCocoa
+import RxSwift
 import SnapKit
 import ThemeKit
-import RxSwift
-import RxCocoa
-import ComponentKit
+import UIKit
 
 class PerformanceTableViewCell: BaseThemeCell {
     private let disposeBag = DisposeBag()
@@ -41,7 +41,8 @@ class PerformanceTableViewCell: BaseThemeCell {
         collectionView.registerCell(forClass: PerformanceContentCollectionViewCell.self)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -49,16 +50,14 @@ class PerformanceTableViewCell: BaseThemeCell {
         self.viewItems = viewItems
         collectionView.reloadData()
     }
-
 }
 
 extension PerformanceTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in _: UICollectionView) -> Int {
         viewItems.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewItems[section].count
     }
 
@@ -69,24 +68,24 @@ extension PerformanceTableViewCell: UICollectionViewDelegateFlowLayout, UICollec
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let verticalFirst = indexPath.section == 0
         let horizontalFirst = indexPath.item == 0
         let viewItem = viewItems[indexPath.section][indexPath.item]
         switch viewItem {
-        case .title(let title), .subtitle(let title), .content(let title): bindSideCell(title: title, type: viewItem, cell: cell, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
-        case .value(let amount): bindContentCell(amount: amount, cell: cell, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
+        case let .title(title), let .subtitle(title), let .content(title): bindSideCell(title: title, type: viewItem, cell: cell, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
+        case let .value(amount): bindContentCell(amount: amount, cell: cell, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let minWidth = collectionView.frame.size.width / 4
         let currentWidth = collectionView.frame.size.width / CGFloat(viewItems[indexPath.section].count)
 
         return CGSize(width: max(minWidth, currentWidth), height: Self.gridRowHeight)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         0
     }
 
@@ -102,13 +101,10 @@ extension PerformanceTableViewCell: UICollectionViewDelegateFlowLayout, UICollec
             cell.set(value: amount, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
         }
     }
-
 }
 
 extension PerformanceTableViewCell {
-
     static func height(viewItems: [[CoinOverviewViewModel.PerformanceViewItem]]) -> CGFloat {
         CGFloat(viewItems.count) * gridRowHeight
     }
-
 }

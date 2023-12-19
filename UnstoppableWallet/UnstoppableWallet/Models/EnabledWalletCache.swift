@@ -31,12 +31,12 @@ class EnabledWalletCache: Record {
         case tokenQueryId, accountId, balances
     }
 
-    required init(row: Row) {
+    required init(row: Row) throws {
         tokenQueryId = row[Columns.tokenQueryId]
         accountId = row[Columns.accountId]
         balances = row[Columns.balances]
 
-        super.init(row: row)
+        try super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
@@ -44,5 +44,4 @@ class EnabledWalletCache: Record {
         container[Columns.accountId] = accountId
         container[Columns.balances] = balances
     }
-
 }

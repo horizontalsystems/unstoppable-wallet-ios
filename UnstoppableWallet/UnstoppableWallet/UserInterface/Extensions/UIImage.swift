@@ -1,13 +1,13 @@
-import UIKit
 import MarketKit
+import UIKit
 
 extension UIImage {
-
     static func qrCodeImage(qrCodeString: String, size: CGFloat) -> UIImage? {
         let data = qrCodeString.data(using: .utf8)
 
         let filter = CIFilter(name: "CIQRCodeGenerator")!
         filter.setValue(data, forKey: "inputMessage")
+        filter.setValue("Q", forKey: "inputCorrectionLevel")
 
         guard let outputImage = filter.outputImage else {
             return nil
@@ -38,5 +38,4 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return image
     }
-
 }

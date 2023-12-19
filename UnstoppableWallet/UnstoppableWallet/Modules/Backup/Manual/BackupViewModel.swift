@@ -4,11 +4,9 @@ class BackupViewModel {
     init(service: BackupService) {
         self.service = service
     }
-
 }
 
 extension BackupViewModel {
-
     var account: Account {
         service.account
     }
@@ -20,5 +18,4 @@ extension BackupViewModel {
     var passphrase: String? {
         service.salt.isEmpty ? nil : service.salt
     }
-
 }

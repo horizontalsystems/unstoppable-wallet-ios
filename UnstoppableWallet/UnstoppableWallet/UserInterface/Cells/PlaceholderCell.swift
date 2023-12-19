@@ -1,7 +1,7 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class PlaceholderCell: BaseThemeCell {
     private let placeholderView = PlaceholderView()
@@ -15,7 +15,8 @@ class PlaceholderCell: BaseThemeCell {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -36,5 +37,4 @@ class PlaceholderCell: BaseThemeCell {
     func removeAllButtons() {
         placeholderView.removeAllButtons()
     }
-
 }

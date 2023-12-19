@@ -1,10 +1,10 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 protocol IAmountPublishService: AnyObject {
-    var publishAmountRelay: PublishRelay<Decimal> { get }
+    var publishAmountRelay: BehaviorRelay<Decimal>? { get set }
 }
 
 class AddressService {
@@ -21,9 +21,11 @@ class AddressService {
     private(set) var blockchainType: BlockchainType?
     private let contactBookManager: ContactBookManager?
 
+    private let showUriErrorRelay = PublishRelay<Error>()
+
     private let showContactsRelay = PublishRelay<Bool>()
     var showContacts: Bool {
-        guard let contactBookManager, let blockchainType = blockchainType else {
+        guard let contactBookManager, let blockchainType else {
             return false
         }
 
@@ -32,7 +34,14 @@ class AddressService {
 
     private var text: String = ""
 
-    weak var amountPublishService: IAmountPublishService?
+    let publishAmountRelay = BehaviorRelay<Decimal>(value: 0)
+
+    weak var amountPublishService: IAmountPublishService? {
+        didSet {
+            amountPublishService?.publishAmountRelay = publishAmountRelay
+        }
+    }
+
     weak var customErrorService: IErrorService? {
         didSet {
             register(customErrorService: customErrorService)
@@ -59,15 +68,15 @@ class AddressService {
         self.contactBookManager = contactBookManager
 
         switch mode {
-            case .blockchainType:
-            addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
+        case .blockchainType:
+            addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil) // TODO: Check if tokenType is nesessary
             addressParserChain = blockchainType.flatMap { AddressParserFactory.parserChain(blockchainType: $0) }
-        case .parsers(let uriParser, let parserChain):
+        case let .parsers(uriParser, parserChain):
             addressUriParser = uriParser
             addressParserChain = parserChain
         }
 
-        if let initialAddress = initialAddress {
+        if let initialAddress {
             state = .success(initialAddress)
         } else {
             state = .empty
@@ -82,7 +91,7 @@ class AddressService {
     private func register(customErrorService: IErrorService?) {
         customErrorDisposeBag = DisposeBag()
 
-        if let customErrorService = customErrorService {
+        if let customErrorService {
             subscribe(disposeBag, customErrorService.errorObservable) { [weak self] in
                 self?.sync(customError: $0)
             }
@@ -94,7 +103,7 @@ class AddressService {
     }
 
     private func sync(address: Address?) {
-        guard let address = address else {
+        guard let address else {
             state = .empty
             return
         }
@@ -110,20 +119,22 @@ class AddressService {
 
         switch error {
         case .validationError: state = .validationError(blockchainName: blockchainType.flatMap { try? marketKit.blockchain(uid: $0.uid) }?.name)
-        case .fetchError(let error): state = .fetchError(error)
+        case let .fetchError(error): state = .fetchError(error)
         }
     }
-
 }
 
 extension AddressService {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable().observeOn(scheduler)
     }
 
     var customErrorObservable: Observable<Error?> {
         customErrorRelay.asObservable().observeOn(scheduler)
+    }
+
+    var showUriErrorObservable: Observable<Error> {
+        showUriErrorRelay.asObservable().observeOn(scheduler)
     }
 
     var showContactsObservable: Observable<Bool> {
@@ -137,7 +148,7 @@ extension AddressService {
             return
         }
 
-        guard let addressParserChain = addressParserChain else {
+        guard let addressParserChain else {
             sync(address: Address(raw: text))
             return
         }
@@ -156,31 +167,38 @@ extension AddressService {
     }
 
     func handleFetched(text: String) -> String {
-        let addressData = addressUriParser.parse(paymentAddress: text.trimmingCharacters(in: .whitespaces))
-
-        if let amount = addressData.amount {
-            amountPublishService?.publishAmountRelay.accept(Decimal(amount))
+        do {
+            let result = try addressUriParser.parse(url: text.trimmingCharacters(in: .whitespaces))
+            if let amount = result.amount {
+                publishAmountRelay.accept(amount)
+            }
+            set(text: result.address)
+            return result.address
+        } catch {
+            switch error {
+            case AddressUriParser.ParseError.noUri, AddressUriParser.ParseError.wrongUri:
+                let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                set(text: text)
+                return text
+            default:
+                showUriErrorRelay.accept(error)
+                return ""
+            }
         }
-
-        set(text: addressData.address)
-
-        return addressData.address
     }
 
     func change(blockchainType: BlockchainType) {
         self.blockchainType = blockchainType
 
-        addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
+        addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil)
         addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType)
 
         set(text: text)
         showContactsRelay.accept(showContacts)
     }
-
 }
 
 extension AddressService {
-
     enum State {
         case loading
         case empty
@@ -201,16 +219,19 @@ extension AddressService {
             }
             return false
         }
-
     }
 
     enum AddressError: Error {
         case invalidAddress(blockchainName: String?)
     }
 
+    enum UriError: Error {
+        case invalidBlockchainType
+        case invalidTokenType
+    }
+
     enum Mode {
         case blockchainType
         case parsers(AddressUriParser, AddressParserChain)
     }
-
 }

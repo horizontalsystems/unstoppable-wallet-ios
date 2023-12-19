@@ -1,8 +1,7 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class PasteboardManager {
-
     var value: String? {
         UIPasteboard.general.string
     }
@@ -10,14 +9,11 @@ class PasteboardManager {
     func set(value: String) {
         UIPasteboard.general.string = value
     }
-
 }
 
-class CopyHelper {
-
+enum CopyHelper {
     static func copyAndNotify(value: String) {
         UIPasteboard.general.string = value
         HudHelper.instance.show(banner: .copied)
     }
-
 }

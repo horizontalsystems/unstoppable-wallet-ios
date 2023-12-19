@@ -39,14 +39,14 @@ public class PseudoAccessoryView: UIView {
         self.heightConstraint = heightConstraint
         self.heightConstraint?.constant = heightValue
 
-        if let superview = superview {
+        if let superview {
 //            delegate?.pseudoAccessoryView(self, keyboardFrameDidChange: superview.frame)
             superview.addObserver(self, forKeyPath: keyPathSelector, context: nil)
         }
     }
 
-    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if let superview = superview, object as? UIView == superview, keyPath == keyPathSelector, superview.frame != oldFrame {
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change _: [NSKeyValueChangeKey: Any]?, context _: UnsafeMutableRawPointer?) {
+        if let superview, object as? UIView == superview, keyPath == keyPathSelector, superview.frame != oldFrame {
             oldFrame = superview.frame
             delegate?.pseudoAccessoryView(self, keyboardFrameDidChange: superview.frame)
         }
@@ -55,5 +55,4 @@ public class PseudoAccessoryView: UIView {
     deinit {
         superview?.removeObserver(self, forKeyPath: keyPathSelector)
     }
-
 }

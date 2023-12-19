@@ -1,8 +1,8 @@
-import UIKit
+import Chart
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
-import Chart
+import UIKit
 
 class CoinAnalyticsHoldersCell: BaseThemeCell {
     static let chartHeight: CGFloat = 40
@@ -13,7 +13,8 @@ class CoinAnalyticsHoldersCell: BaseThemeCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -68,5 +69,4 @@ class CoinAnalyticsHoldersCell: BaseThemeCell {
 
         currentStackView = stackView
     }
-
 }

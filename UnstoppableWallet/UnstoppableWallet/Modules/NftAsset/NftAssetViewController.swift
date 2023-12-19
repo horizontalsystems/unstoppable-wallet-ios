@@ -1,10 +1,10 @@
-import UIKit
-import ThemeKit
-import SnapKit
-import RxSwift
-import RxCocoa
-import HUD
 import ComponentKit
+import HUD
+import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class NftAssetViewController: ThemeViewController {
     private let tabsView = FilterView(buttonStyle: .tab)
@@ -22,7 +22,8 @@ class NftAssetViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -83,5 +84,4 @@ class NftAssetViewController: ThemeViewController {
         case .activity: return activityController
         }
     }
-
 }

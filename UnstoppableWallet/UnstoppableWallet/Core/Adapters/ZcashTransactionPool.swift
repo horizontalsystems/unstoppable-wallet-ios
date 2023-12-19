@@ -22,7 +22,7 @@ class ZcashTransactionPool {
             confirmedTransactions = confirmedTransactions.filter { !$0.isSentTransaction }
             pendingTransactions = pendingTransactions.filter { !$0.isSentTransaction }
         case .outgoing:
-            confirmedTransactions = confirmedTransactions.filter { $0.isSentTransaction }
+            confirmedTransactions = confirmedTransactions.filter(\.isSentTransaction)
             pendingTransactions = pendingTransactions.filter { !$0.isSentTransaction }
         default:
             confirmedTransactions = []
@@ -43,14 +43,14 @@ class ZcashTransactionPool {
     }
 
     private func transactionWithAdditional(tx: ZcashTransaction.Overview, lastBlockHeight: Int) async throws -> ZcashTransactionWrapper? {
-        let memos: [Memo] = (try? await synchronizer.getMemos(for: tx)) ?? []
+        let memos: [Memo] = await (try? synchronizer.getMemos(for: tx)) ?? []
         let firstMemo = memos
             .compactMap { $0.toString() }
             .first
 
         let recipients = await synchronizer.getRecipients(for: tx)
         let firstAddress = recipients
-            .filter { $0.hasAddress }
+            .filter(\.hasAddress)
             .first
 
         return ZcashTransactionWrapper(tx: tx, memo: firstMemo, recipient: firstAddress, lastBlockHeight: lastBlockHeight)
@@ -65,7 +65,7 @@ class ZcashTransactionPool {
 //        let pending = await synchronizer.pendingTransactions
 
 //        pendingTransactions = await Set(zcashTransactions(pending, lastBlockHeight: 0))
-        confirmedTransactions = Set(await zcashTransactions(overviews, lastBlockHeight: 0))
+        confirmedTransactions = await Set(zcashTransactions(overviews, lastBlockHeight: 0))
     }
 
     func sync(transactions: [ZcashTransaction.Overview], lastBlockHeight: Int) async -> [ZcashTransactionWrapper] {

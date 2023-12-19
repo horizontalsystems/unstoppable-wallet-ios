@@ -1,4 +1,3 @@
-import CurrencyKit
 import MarketKit
 
 class MarketListMarketFieldDecorator {
@@ -16,13 +15,11 @@ class MarketListMarketFieldDecorator {
         self.service = service
         marketField = MarketModule.MarketField.allCases[service.initialMarketFieldIndex]
     }
-
 }
 
 extension MarketListMarketFieldDecorator: IMarketSingleSortHeaderDecorator {
-
     var allFields: [String] {
-        MarketModule.MarketField.allCases.map { $0.title }
+        MarketModule.MarketField.allCases.map(\.title)
     }
 
     var currentFieldIndex: Int {
@@ -32,11 +29,9 @@ extension MarketListMarketFieldDecorator: IMarketSingleSortHeaderDecorator {
     func setCurrentField(index: Int) {
         marketField = MarketModule.MarketField.allCases[index]
     }
-
 }
 
 extension MarketListMarketFieldDecorator: IMarketListDecorator {
-
     func listViewItem(item marketInfo: MarketInfo) -> MarketModule.ListViewItem {
         let currency = service.currency
 
@@ -51,17 +46,16 @@ extension MarketListMarketFieldDecorator: IMarketListDecorator {
         }
 
         return MarketModule.ListViewItem(
-                uid: marketInfo.fullCoin.coin.uid,
-                iconUrl: marketInfo.fullCoin.coin.imageUrl,
-                iconShape: .full,
-                iconPlaceholderName: "placeholder_circle_32",
-                leftPrimaryValue: marketInfo.fullCoin.coin.code,
-                leftSecondaryValue: marketInfo.fullCoin.coin.name,
-                badge: marketInfo.marketCapRank.map { "\($0)" },
-                badgeSecondaryValue: nil,
-                rightPrimaryValue: price,
-                rightSecondaryValue: dataValue
+            uid: marketInfo.fullCoin.coin.uid,
+            iconUrl: marketInfo.fullCoin.coin.imageUrl,
+            iconShape: .full,
+            iconPlaceholderName: "placeholder_circle_32",
+            leftPrimaryValue: marketInfo.fullCoin.coin.code,
+            leftSecondaryValue: marketInfo.fullCoin.coin.name,
+            badge: marketInfo.marketCapRank.map { "\($0)" },
+            badgeSecondaryValue: nil,
+            rightPrimaryValue: price,
+            rightSecondaryValue: dataValue
         )
     }
-
 }

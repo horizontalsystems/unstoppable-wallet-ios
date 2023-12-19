@@ -1,0 +1,8 @@
+framework module TonKitKmm {
+    umbrella header "TonKitKmm.h"
+
+    export *
+    module * { export * }
+
+    use Foundation
+}

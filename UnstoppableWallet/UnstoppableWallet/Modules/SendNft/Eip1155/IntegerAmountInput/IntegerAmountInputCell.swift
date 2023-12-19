@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class IntegerAmountInputCell: UITableViewCell {
     private let formValidatedView: FormValidatedView
@@ -21,18 +21,17 @@ class IntegerAmountInputCell: UITableViewCell {
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func becomeFirstResponder() -> Bool {
         formAmountInputView.becomeFirstResponder()
     }
-
 }
 
 extension IntegerAmountInputCell {
-
     var cellHeight: CGFloat {
         formAmountInputView.viewHeight
     }
@@ -40,5 +39,4 @@ extension IntegerAmountInputCell {
     func set(cautionType: CautionType?) {
         formValidatedView.set(cautionType: cautionType)
     }
-
 }

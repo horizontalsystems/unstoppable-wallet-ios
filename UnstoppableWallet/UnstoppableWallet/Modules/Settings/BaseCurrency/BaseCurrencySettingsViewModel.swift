@@ -1,83 +1,37 @@
-import UIKit
-import RxSwift
-import RxRelay
-import RxCocoa
-import CurrencyKit
+import Combine
 
-class BaseCurrencySettingsViewModel {
-    private let service: BaseCurrencySettingsService
+class BaseCurrencySettingsViewModel: ObservableObject {
+    private static let popularCurrencyCodes = ["USD", "EUR", "GBP", "JPY"]
+    private static let cryptoCurrencyCodes = ["BTC", "ETH", "BNB"]
 
-    private(set) var popularViewItems = [ViewItem]()
-    private(set) var cryptoViewItems = [ViewItem]()
-    private(set) var otherViewItems = [ViewItem]()
+    private let currencyManager: CurrencyManager
 
-    private let disclaimerRelay = PublishRelay<String>()
-    private let finishRelay = PublishRelay<Void>()
-
-    private var currentCode: String?
-
-    init(service: BaseCurrencySettingsService) {
-        self.service = service
-
-        let baseCurrency = service.baseCurrency
-
-        popularViewItems = service.popularCurrencies.map { viewItem(currency: $0, selected: $0 == baseCurrency) }
-        cryptoViewItems = service.cryptoCurrencies.map { viewItem(currency: $0, selected: $0 == baseCurrency) }
-        otherViewItems = service.otherCurrencies.map { viewItem(currency: $0, selected: $0 == baseCurrency) }
-    }
-
-    private func viewItem(currency: Currency, selected: Bool) -> ViewItem {
-        ViewItem(
-                icon: CurrencyKit.Kit.currencyIcon(code: currency.code),
-                code: currency.code,
-                symbol: currency.symbol,
-                selected: selected
-        )
-    }
-
-}
-
-extension BaseCurrencySettingsViewModel {
-
-    var disclaimerSignal: Signal<String> {
-        disclaimerRelay.asSignal()
-    }
-
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
-    }
-
-    func onSelect(viewItem: ViewItem) {
-        let code = viewItem.code
-        let popularCurrencyCodes = service.popularCurrencies.map { $0.code }
-
-        if popularCurrencyCodes.contains(code) {
-            service.setBaseCurrency(code: code)
-            finishRelay.accept(())
-        } else {
-            currentCode = code
-            disclaimerRelay.accept(popularCurrencyCodes.joined(separator: ", "))
+    var baseCurrency: Currency {
+        didSet {
+            currencyManager.baseCurrency = baseCurrency
         }
     }
 
-    func onAcceptDisclaimer() {
-        guard let code = currentCode else {
-            return
+    let popularCurrencies: [Currency]
+    let otherCurrencies: [Currency]
+
+    init(currencyManager: CurrencyManager) {
+        self.currencyManager = currencyManager
+
+        baseCurrency = currencyManager.baseCurrency
+
+        var popularCurrencies = [Currency]()
+        var currencies = currencyManager.currencies
+
+        currencies = currencies.filter { !Self.cryptoCurrencyCodes.contains($0.code) }
+
+        for code in Self.popularCurrencyCodes {
+            if let index = currencies.firstIndex(where: { $0.code == code }) {
+                popularCurrencies.append(currencies.remove(at: index))
+            }
         }
 
-        service.setBaseCurrency(code: code)
-        finishRelay.accept(())
+        self.popularCurrencies = popularCurrencies
+        otherCurrencies = currencies
     }
-
-}
-
-extension BaseCurrencySettingsViewModel {
-
-    struct ViewItem {
-        let icon: UIImage?
-        let code: String
-        let symbol: String
-        let selected: Bool
-    }
-
 }

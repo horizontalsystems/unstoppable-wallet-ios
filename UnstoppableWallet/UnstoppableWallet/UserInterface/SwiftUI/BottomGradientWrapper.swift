@@ -13,7 +13,7 @@ struct BottomGradientWrapper<Content: View, BottomContent: View>: View {
 
                 VStack {
                     Spacer()
-                    LinearGradient(colors: [.themeTyler, .clear], startPoint: .bottom, endPoint: .top)
+                    LinearGradient(colors: [.themeTyler, Color.themeTyler.opacity(0)], startPoint: .bottom, endPoint: .top)
                         .frame(maxWidth: .infinity)
                         .frame(height: .margin16)
                 }

@@ -31,5 +31,4 @@ enum Cex: String, CaseIterable {
         case .binance: return RestoreBinanceModule.viewController(returnViewController: returnViewController)
         }
     }
-
 }

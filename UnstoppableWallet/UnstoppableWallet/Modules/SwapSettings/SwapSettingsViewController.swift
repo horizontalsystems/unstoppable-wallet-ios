@@ -1,12 +1,12 @@
-import UIKit
-import ThemeKit
-import UniswapKit
-import HUD
-import RxSwift
-import RxCocoa
-import SectionsTableView
 import ComponentKit
+import HUD
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
 import UIExtensions
+import UIKit
+import UniswapKit
 
 class SwapSettingsViewController: KeyboardAwareViewController {
     private let animationDuration: TimeInterval = 0.2
@@ -31,7 +31,8 @@ class SwapSettingsViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -104,19 +105,16 @@ class SwapSettingsViewController: KeyboardAwareViewController {
             self.tableView.endUpdates()
         }
     }
-
 }
 
 extension SwapSettingsViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let dataSource = dataSource {
+        if let dataSource {
             sections.append(contentsOf: dataSource.buildSections(tableView: tableView))
         }
 
         return sections
     }
-
 }

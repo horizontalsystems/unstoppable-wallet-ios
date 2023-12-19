@@ -1,7 +1,7 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import Foundation
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class FeeRateViewModel {
     private let disposeBag = DisposeBag()
@@ -29,7 +29,7 @@ class FeeRateViewModel {
     }
 
     private func syncCaution() {
-        var caution: TitledCaution? = nil
+        var caution: TitledCaution?
 
         if let amountCaution = amountCautionViewModel.amountCaution {
             caution = amountCaution
@@ -41,21 +41,19 @@ class FeeRateViewModel {
     }
 
     private func sync(feeRateStatus: DataStatus<Int>) {
-        if case .completed(let feeRate) = feeRateStatus {
+        if case let .completed(feeRate) = feeRateStatus {
             feeRateRelay.accept(Decimal(feeRate))
         } else {
             feeRateRelay.accept(nil)
         }
     }
 
-    private func sync(usingRecommended: Bool) {
-        alteredStateRelay.accept(Void())
+    private func sync(usingRecommended _: Bool) {
+        alteredStateRelay.accept(())
     }
-
 }
 
 extension FeeRateViewModel {
-
     var altered: Bool {
         !service.usingRecommended
     }
@@ -79,5 +77,4 @@ extension FeeRateViewModel {
     var cautionDriver: Driver<TitledCaution?> {
         cautionRelay.asDriver()
     }
-
 }

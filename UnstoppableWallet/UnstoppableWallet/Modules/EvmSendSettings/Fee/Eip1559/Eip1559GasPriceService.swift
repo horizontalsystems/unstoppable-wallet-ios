@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 import RxRelay
 import RxSwift
 
@@ -100,9 +100,7 @@ class Eip1559GasPriceService {
     }
 
     private func handle(feeHistory: FeeHistory) {
-        let tipsConsidered = feeHistory.reward.compactMap {
-            $0.first
-        }
+        let tipsConsidered = feeHistory.reward.compactMap(\.first)
         let baseFeesConsidered = feeHistory.baseFeePerGas.suffix(2)
 
         guard !baseFeesConsidered.isEmpty, !tipsConsidered.isEmpty else {
@@ -111,12 +109,12 @@ class Eip1559GasPriceService {
         }
 
         recommendedTips = tipsConsidered.reduce(0, +) / tipsConsidered.count
-        if let minRecommendedTips = minRecommendedTips {
+        if let minRecommendedTips {
             recommendedTips = max(recommendedTips, minRecommendedTips)
         }
 
         recommendedMaxFee = baseFeesConsidered.max() ?? 0 + recommendedTips
-        if let minRecommendedMaxFee = minRecommendedMaxFee {
+        if let minRecommendedMaxFee {
             recommendedMaxFee = max(recommendedMaxFee, minRecommendedMaxFee)
         }
 
@@ -170,5 +168,4 @@ extension Eip1559GasPriceService {
         usingRecommended = true
         sync()
     }
-
 }

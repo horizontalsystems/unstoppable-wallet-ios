@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class RestoreNonStandardViewModel {
     private let service: RestoreService
@@ -13,11 +13,9 @@ class RestoreNonStandardViewModel {
         self.service = service
         self.mnemonicViewModel = mnemonicViewModel
     }
-
 }
 
 extension RestoreNonStandardViewModel {
-
     var proceedSignal: Signal<(String, AccountType)> {
         proceedRelay.asSignal()
     }
@@ -35,5 +33,4 @@ extension RestoreNonStandardViewModel {
             proceedRelay.accept((service.resolvedName, accountType))
         }
     }
-
 }

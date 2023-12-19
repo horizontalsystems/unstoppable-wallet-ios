@@ -18,11 +18,9 @@ class BalanceErrorService {
             item = .evm(blockchain: blockchain)
         }
     }
-
 }
 
 extension BalanceErrorService {
-
     var coinName: String {
         wallet.coin.name
     }
@@ -38,14 +36,11 @@ extension BalanceErrorService {
     func refreshWallet() {
         adapterManager.refresh(wallet: wallet)
     }
-
 }
 
 extension BalanceErrorService {
-
     enum Item {
         case btc(blockchain: Blockchain)
         case evm(blockchain: Blockchain)
     }
-
 }

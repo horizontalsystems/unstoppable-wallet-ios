@@ -1,10 +1,9 @@
 import Foundation
 
 extension FileManager {
-
     func fileExists(coordinatingAccessAt fileURL: URL) throws -> (exists: Bool, isDirectory: Bool) {
         var isDir: ObjCBool = false
-        var exists: Bool = false
+        var exists = false
         try coordinate(readingItemAt: fileURL) { url in
             exists = fileExists(atPath: url.path, isDirectory: &isDir)
         }

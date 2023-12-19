@@ -1,7 +1,16 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
+
+protocol IPoolProvider {
+    var syncing: Bool { get }
+    var syncingObservable: Observable<Bool> { get }
+    var lastBlockInfo: LastBlockInfo? { get }
+    func recordsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]>
+    func recordsObservable() -> Observable<[TransactionRecord]>
+    func lastBlockUpdatedObservable() -> Observable<Void>
+}
 
 class PoolProvider {
     private let adapter: ITransactionsAdapter
@@ -22,19 +31,17 @@ class PoolProvider {
         self.source = source
 
         adapter.syncingObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] in
-                    self?.syncing = adapter.syncing
-                })
-                .disposed(by: disposeBag)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] in
+                self?.syncing = adapter.syncing
+            })
+            .disposed(by: disposeBag)
 
         syncing = adapter.syncing
     }
-
 }
 
-extension PoolProvider {
-
+extension PoolProvider: IPoolProvider {
     var syncingObservable: Observable<Bool> {
         syncingRelay.asObservable()
     }
@@ -54,5 +61,4 @@ extension PoolProvider {
     func lastBlockUpdatedObservable() -> Observable<Void> {
         adapter.lastBlockUpdatedObservable
     }
-
 }

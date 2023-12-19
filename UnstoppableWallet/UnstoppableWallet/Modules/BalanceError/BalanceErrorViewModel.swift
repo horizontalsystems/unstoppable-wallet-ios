@@ -1,24 +1,22 @@
-import UIKit
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
+import UIKit
 
 class BalanceErrorViewModel {
     private let service: BalanceErrorService
 
     private let openBtcBlockchainRelay = PublishRelay<Blockchain>()
     private let openEvmBlockchainRelay = PublishRelay<Blockchain>()
-    private let finishRelay = PublishRelay<()>()
+    private let finishRelay = PublishRelay<Void>()
 
     init(service: BalanceErrorService) {
         self.service = service
     }
-
 }
 
 extension BalanceErrorViewModel {
-
     var openBtcBlockchainSignal: Signal<Blockchain> {
         openBtcBlockchainRelay.asSignal()
     }
@@ -27,7 +25,7 @@ extension BalanceErrorViewModel {
         openEvmBlockchainRelay.asSignal()
     }
 
-    var finishSignal: Signal<()> {
+    var finishSignal: Signal<Void> {
         finishRelay.asSignal()
     }
 
@@ -55,11 +53,10 @@ extension BalanceErrorViewModel {
         }
 
         switch item {
-        case .btc(let blockchain):
+        case let .btc(blockchain):
             openBtcBlockchainRelay.accept(blockchain)
-        case .evm(let blockchain):
+        case let .evm(blockchain):
             openEvmBlockchainRelay.accept(blockchain)
         }
     }
-
 }

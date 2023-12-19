@@ -1,9 +1,9 @@
-import UIKit
-import SnapKit
-import SectionsTableView
-import RxSwift
-import ThemeKit
 import ComponentKit
+import RxSwift
+import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
     private let disposeBag = DisposeBag()
@@ -21,7 +21,8 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -58,7 +59,6 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         subscribe(disposeBag, viewModel.sendingSignal) { HudHelper.instance.show(banner: .sending) }
         subscribe(disposeBag, viewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess() }
         subscribe(disposeBag, viewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
-
     }
 
     private func sync(viewItems: [[SendConfirmationViewModel.ViewItem]]) {
@@ -88,7 +88,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .address(title, value, valueTitle, contactAddress):
-            var onAddToContact: (() -> ())? = nil
+            var onAddToContact: (() -> Void)? = nil
             if let contactAddress {
                 onAddToContact = { [weak self] in
                     ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
@@ -99,24 +99,22 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, title: title, value: value, type: type)
         }
     }
-
 }
 
 extension SendConfirmationViewController {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
         viewItems.enumerated().forEach { index, viewItems in
             sections.append(
-                    Section(
-                            id: "section-\(index)",
-                            headerState: .margin(height: .margin12),
-                            rows: viewItems.enumerated().map { index, viewItem in
-                                row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == viewItems.count - 1))
-                            }))
+                Section(
+                    id: "section-\(index)",
+                    headerState: .margin(height: .margin12),
+                    rows: viewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == viewItems.count - 1))
+                    }
+                ))
         }
 
         return sections
     }
-
 }

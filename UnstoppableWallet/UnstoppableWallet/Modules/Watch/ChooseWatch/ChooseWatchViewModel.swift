@@ -1,33 +1,26 @@
 import Foundation
 import MarketKit
-import RxSwift
-import RxRelay
 import RxCocoa
-
-protocol IChooseWatchService {
-    var items: [WatchModule.Item] { get }
-    func watch(enabledUids: [String])
-}
+import RxRelay
+import RxSwift
 
 class ChooseWatchViewModel {
     private var disposeBag = DisposeBag()
-    private let service: IChooseWatchService
+    private let service: ChooseWatchService
     private let watchRelay = PublishRelay<Void>()
     private let watchEnabledRelay = BehaviorRelay<Bool>(value: false)
 
-    private var enabledBlockchainUids = [String]()
+    private var enabledUids = [String]()
     private let viewItems: [CoinToggleViewModel.ViewItem]
-    private let watchType: WatchModule.WatchType
 
-    init(service: IChooseWatchService, watchType: WatchModule.WatchType) {
+    init(service: ChooseWatchService) {
         self.service = service
-        self.watchType = watchType
 
-        viewItems = service.items.map { item in
-            switch item {
-            case let .coin(token):
-                return CoinToggleViewModel.ViewItem(
-                    uid: token.type.id,
+        switch service.items {
+        case let .coins(tokens):
+            viewItems = tokens.map { token in
+                CoinToggleViewModel.ViewItem(
+                    uid: token.tokenQuery.id,
                     imageUrl: token.coin.imageUrl,
                     placeholderImageName: "placeholder_circle_32",
                     title: token.coin.code,
@@ -35,9 +28,10 @@ class ChooseWatchViewModel {
                     badge: token.badge,
                     state: .toggleVisible(enabled: false, hasSettings: false, hasInfo: false)
                 )
-
-            case let .blockchain(blockchain):
-                return CoinToggleViewModel.ViewItem(
+            }
+        case let .blockchains(blockchains):
+            viewItems = blockchains.map { blockchain in
+                CoinToggleViewModel.ViewItem(
                     uid: blockchain.uid,
                     imageUrl: blockchain.type.imageUrl,
                     placeholderImageName: blockchain.type.placeholderImageName(tokenProtocol: .native),
@@ -49,16 +43,13 @@ class ChooseWatchViewModel {
             }
         }
     }
-
 }
 
 extension ChooseWatchViewModel {
-
     var title: String {
-        switch watchType {
-        case .evmAddress: return "watch_address.choose_blockchain".localized
-        case .publicKey: return "watch_address.choose_coin".localized
-        case .tronAddress: return ""
+        switch service.items {
+        case .blockchains: return "watch_address.choose_blockchain".localized
+        case .coins: return "watch_address.choose_coin".localized
         }
     }
 
@@ -71,38 +62,35 @@ extension ChooseWatchViewModel {
     }
 
     func onTapWatch() {
-        service.watch(enabledUids: enabledBlockchainUids)
+        service.watch(enabledUids: enabledUids)
         watchRelay.accept(())
     }
-
 }
 
 extension ChooseWatchViewModel: ICoinToggleViewModel {
-
     var viewItemsDriver: Driver<[CoinToggleViewModel.ViewItem]> {
         Driver.just(viewItems)
     }
 
     func onEnable(uid: String) {
-        if enabledBlockchainUids.isEmpty {
+        if enabledUids.isEmpty {
             watchEnabledRelay.accept(true)
         }
 
-        enabledBlockchainUids.append(uid)
+        enabledUids.append(uid)
     }
 
     func onDisable(uid: String) {
-        if let index = enabledBlockchainUids.firstIndex(of: uid) {
-            enabledBlockchainUids.remove(at: index)
+        if let index = enabledUids.firstIndex(of: uid) {
+            enabledUids.remove(at: index)
 
-            if enabledBlockchainUids.isEmpty {
+            if enabledUids.isEmpty {
                 watchEnabledRelay.accept(false)
             }
         }
     }
 
-    func onTapSettings(uid: String) { }
-    func onTapInfo(uid: String) { }
-    func onUpdate(filter: String) {}
-
+    func onTapSettings(uid _: String) {}
+    func onTapInfo(uid _: String) {}
+    func onUpdate(filter _: String) {}
 }

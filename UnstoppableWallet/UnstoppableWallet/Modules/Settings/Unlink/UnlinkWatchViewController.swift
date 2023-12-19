@@ -1,9 +1,8 @@
-import UIKit
-import ActionSheet
-import ThemeKit
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
+import ThemeKit
+import UIKit
 
 class UnlinkWatchViewController: ThemeActionSheetController {
     private let viewModel: UnlinkViewModel
@@ -15,7 +14,8 @@ class UnlinkWatchViewController: ThemeActionSheetController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -30,9 +30,9 @@ class UnlinkWatchViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
-                title: "settings_manage_keys.delete.title".localized,
-                viewController: self
+            image: .warning,
+            title: "settings_manage_keys.delete.title".localized,
+            viewController: self
         )
 
         let descriptionView = HighlightedDescriptionView()
@@ -67,5 +67,4 @@ class UnlinkWatchViewController: ThemeActionSheetController {
     @objc private func onTapDeleteButton() {
         viewModel.onTapDelete()
     }
-
 }

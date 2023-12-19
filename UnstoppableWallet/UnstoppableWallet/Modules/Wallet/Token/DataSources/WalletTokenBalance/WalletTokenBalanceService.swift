@@ -1,8 +1,7 @@
 import Combine
 import Foundation
-import RxSwift
-import CurrencyKit
 import HsExtensions
+import RxSwift
 
 class WalletTokenBalanceService {
     private let disposeBag = DisposeBag()
@@ -25,7 +24,8 @@ class WalletTokenBalanceService {
     init(coinPriceService: WalletCoinPriceService, elementService: IWalletElementService,
          appManager: IAppManager, cloudAccountBackupManager: CloudBackupManager,
          balanceHiddenManager: BalanceHiddenManager, reachabilityManager: IReachabilityManager,
-         account: Account, element: WalletModule.Element) {
+         account: Account, element: WalletModule.Element)
+    {
         self.coinPriceService = coinPriceService
         self.elementService = elementService
         self.cloudAccountBackupManager = cloudAccountBackupManager
@@ -59,11 +59,11 @@ class WalletTokenBalanceService {
         let priceItemMap = coinPriceService.itemMap(coinUids: [element.priceCoinUid].compactMap { $0 })
 
         let item = BalanceItem(
-                element: element,
-                isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
-                watchAccount: account.watchAccount,
-                balanceData: elementService.balanceData(element: element) ?? fallbackBalanceData,
-                state: elementService.state(element: element) ?? fallbackAdapterState
+            element: element,
+            isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
+            watchAccount: account.watchAccount,
+            balanceData: elementService.balanceData(element: element) ?? fallbackBalanceData,
+            state: elementService.state(element: element) ?? fallbackAdapterState
         )
 
         if let priceCoinUid = element.priceCoinUid {
@@ -88,11 +88,9 @@ class WalletTokenBalanceService {
     var isReachable: Bool {
         reachabilityManager.isReachable
     }
-
 }
 
 extension WalletTokenBalanceService {
-
     var itemUpdatedPublisher: AnyPublisher<Void, Never> {
         itemUpdatedSubject.eraseToAnyPublisher()
     }
@@ -112,11 +110,9 @@ extension WalletTokenBalanceService {
     func toggleBalanceHidden() {
         balanceHiddenManager.toggleBalanceHidden()
     }
-
 }
 
 extension WalletTokenBalanceService {
-
     class BalanceItem {
         let element: WalletModule.Element
         var isMainNet: Bool
@@ -133,18 +129,16 @@ extension WalletTokenBalanceService {
             self.state = state
         }
     }
-
 }
 
 extension WalletTokenBalanceService: IWalletElementServiceDelegate {
-
-    func didUpdate(elementState: WalletModule.ElementState, elementService: IWalletElementService) {
+    func didUpdate(elementState _: WalletModule.ElementState, elementService _: IWalletElementService) {
         queue.async { [weak self] in
             self?._sync()
         }
     }
 
-    func didUpdateElements(elementService: IWalletElementService) {}
+    func didUpdateElements(elementService _: IWalletElementService) {}
 
     func didUpdate(isMainNet: Bool, element: WalletModule.Element) {
         guard element == self.element else {
@@ -175,12 +169,10 @@ extension WalletTokenBalanceService: IWalletElementServiceDelegate {
             self?.itemUpdatedSubject.send()
         }
     }
-
 }
 
 extension WalletTokenBalanceService: IWalletCoinPriceServiceDelegate {
-
-    private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item], items: [BalanceItem]) {
+    private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item], items _: [BalanceItem]) {
         queue.async { [weak self] in
             if let priceCoinUid = self?.element.priceCoinUid {
                 self?.item?.priceItem = priceItemMap[priceCoinUid]
@@ -190,6 +182,5 @@ extension WalletTokenBalanceService: IWalletCoinPriceServiceDelegate {
     }
 
     func didUpdateBaseCurrency() {}
-    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {}
-
+    func didUpdate(itemsMap _: [String: WalletCoinPriceService.Item]) {}
 }

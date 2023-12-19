@@ -1,15 +1,15 @@
-import UIKit
-import Foundation
-import RxSwift
-import RxCocoa
-import SectionsTableView
 import ComponentKit
+import Foundation
+import RxCocoa
+import RxSwift
+import SectionsTableView
 import ThemeKit
+import UIKit
 
 class ContactBookContactViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: ContactBookContactViewModel
-    private let onUpdateContact: (() -> ())?
+    private let onUpdateContact: (() -> Void)?
     private let deleteContactHidden: Bool
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -28,7 +28,7 @@ class ContactBookContactViewController: KeyboardAwareViewController {
     private var addressViewItems: [ContactBookContactViewModel.AddressViewItem] = []
     private var addAddressHidden: Bool = false
 
-    init(viewModel: ContactBookContactViewModel, onUpdateContact: (() -> ())? = nil) {
+    init(viewModel: ContactBookContactViewModel, onUpdateContact: (() -> Void)? = nil) {
         self.viewModel = viewModel
         self.onUpdateContact = onUpdateContact
         deleteContactHidden = !viewModel.editExisting
@@ -36,7 +36,8 @@ class ContactBookContactViewController: KeyboardAwareViewController {
         super.init(scrollViews: [tableView])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -104,17 +105,17 @@ class ContactBookContactViewController: KeyboardAwareViewController {
     @objc private func onCloseConfirmation() {
         if contactWasChanged {
             let viewController = BottomSheetModule.viewController(
-                    image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                    title: "alert.warning".localized,
-                    items: [
-                        .highlightedDescription(text: "contacts.contact.dismiss_changes.description".localized)
-                    ],
-                    buttons: [
-                        .init(style: .red, title: "contacts.contact.dismiss_changes.discard_changes".localized, actionType: .afterClose) { [ weak self] in
-                            self?.onClose()
-                        },
-                        .init(style: .transparent, title: "contacts.contact.dismiss_changes.keep_editing".localized)
-                    ]
+                image: .warning,
+                title: "alert.warning".localized,
+                items: [
+                    .highlightedDescription(text: "contacts.contact.dismiss_changes.description".localized),
+                ],
+                buttons: [
+                    .init(style: .red, title: "contacts.contact.dismiss_changes.discard_changes".localized, actionType: .afterClose) { [weak self] in
+                        self?.onClose()
+                    },
+                    .init(style: .transparent, title: "contacts.contact.dismiss_changes.keep_editing".localized),
+                ]
             )
             present(viewController, animated: true)
         } else {
@@ -135,23 +136,23 @@ class ContactBookContactViewController: KeyboardAwareViewController {
             onUpdate()
         } catch {
             print("Can't update \(error)")
-            // todo: show error alert!
+            // TODO: show error alert!
         }
     }
 
     private func onTapDeleteContact() {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "contacts.contact.delete_alert.title".localized,
-                items: [
-                    .highlightedDescription(text: "contacts.contact.delete_alert.description".localized)
-                ],
-                buttons: [
-                    .init(style: .red, title: "contacts.contact.delete_alert.delete".localized, actionType: .afterClose) { [ weak self] in
-                        self?.acceptDeleteContact()
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized)
-                ]
+            image: .warning,
+            title: "contacts.contact.delete_alert.title".localized,
+            items: [
+                .highlightedDescription(text: "contacts.contact.delete_alert.description".localized),
+            ],
+            buttons: [
+                .init(style: .red, title: "contacts.contact.delete_alert.delete".localized, actionType: .afterClose) { [weak self] in
+                    self?.acceptDeleteContact()
+                },
+                .init(style: .transparent, title: "button.cancel".localized),
+            ]
         )
 
         present(viewController, animated: true)
@@ -163,12 +164,12 @@ class ContactBookContactViewController: KeyboardAwareViewController {
             onUpdate()
         } catch {
             print("Can't remove \(error)")
-            // todo: show error alert!
+            // TODO: show error alert!
         }
     }
 
     private func onTapUpdateAddress(address: ContactAddress? = nil) {
-        let onSaveAddress: (ContactAddress?) -> () = { [weak self] updatedAddress in
+        let onSaveAddress: (ContactAddress?) -> Void = { [weak self] updatedAddress in
             if let updatedAddress {
                 self?.viewModel.updateContact(address: updatedAddress)
             } else {
@@ -181,100 +182,97 @@ class ContactBookContactViewController: KeyboardAwareViewController {
 
         present(controller, animated: true)
     }
-
 }
 
 extension ContactBookContactViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [
             Section(
-                    id: "name",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                dynamicHeight: { [weak self] width in
-                                    self?.nameCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: nameCautionCell,
-                                id: "name-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.nameCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
-            )]
+                id: "name",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: nameCell,
+                        id: "name",
+                        dynamicHeight: { [weak self] width in
+                            self?.nameCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                    StaticRow(
+                        cell: nameCautionCell,
+                        id: "name-caution",
+                        dynamicHeight: { [weak self] width in
+                            self?.nameCautionCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
+            ),
+        ]
         if !addressViewItems.isEmpty {
             sections.append(
-                    Section(
-                        id: "addresses",
-                        footerState: .margin(height: .margin32),
-                        rows: addressViewItems.enumerated().map({ (index, viewItem) -> RowProtocol in
-                            CellComponent.blockchainAddress(
-                                    tableView: tableView,
-                                    rowInfo: RowInfo(index: index, count: addressViewItems.count),
-                                    imageUrl: viewItem.blockchainImageUrl,
-                                    title: viewItem.blockchainName,
-                                    value: viewItem.address,
-                                    editType: viewItem.edited ? .edited : .original
-                            ) { [weak self] in
-                                self?.onTapUpdateAddress(address: ContactAddress(blockchainUid: viewItem.blockchainUid, address: viewItem.address))
-                            }
-                        })
-                    )
+                Section(
+                    id: "addresses",
+                    footerState: .margin(height: .margin32),
+                    rows: addressViewItems.enumerated().map { index, viewItem -> RowProtocol in
+                        CellComponent.blockchainAddress(
+                            tableView: tableView,
+                            rowInfo: RowInfo(index: index, count: addressViewItems.count),
+                            imageUrl: viewItem.blockchainImageUrl,
+                            title: viewItem.blockchainName,
+                            value: viewItem.address,
+                            editType: viewItem.edited ? .edited : .original
+                        ) { [weak self] in
+                            self?.onTapUpdateAddress(address: ContactAddress(blockchainUid: viewItem.blockchainUid, address: viewItem.address))
+                        }
+                    }
+                )
             )
         }
         var cells = [RowProtocol]()
         if !addAddressHidden {
             cells.append(
-                    tableView.universalRow48(
-                            id: "add_address",
-                            image: .local(UIImage(named: "plus_24")?.withTintColor(.themeJacob)),
-                            title: .body("contacts.contact.add_address".localized, color: .themeJacob),
-                            autoDeselect: true,
-                            isFirst: true,
-                            isLast: deleteContactHidden,
-                            action: { [weak self] in
-                                self?.onTapUpdateAddress()
-                            }
-                    )
+                tableView.universalRow48(
+                    id: "add_address",
+                    image: .local(UIImage(named: "plus_24")?.withTintColor(.themeJacob)),
+                    title: .body("contacts.contact.add_address".localized, color: .themeJacob),
+                    autoDeselect: true,
+                    isFirst: true,
+                    isLast: deleteContactHidden,
+                    action: { [weak self] in
+                        self?.onTapUpdateAddress()
+                    }
+                )
             )
         }
         if !deleteContactHidden {
             cells.append(
-                    tableView.universalRow48(
-                            id: "delete_contact",
-                            image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
-                            title: .body("contacts.contact.delete".localized, color: .themeLucian),
-                            autoDeselect: true,
-                            isFirst: addAddressHidden,
-                            isLast: true,
-                            action: { [weak self] in
-                                self?.onTapDeleteContact()
-                            }
-                    )
+                tableView.universalRow48(
+                    id: "delete_contact",
+                    image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                    title: .body("contacts.contact.delete".localized, color: .themeLucian),
+                    autoDeselect: true,
+                    isFirst: addAddressHidden,
+                    isLast: true,
+                    action: { [weak self] in
+                        self?.onTapDeleteContact()
+                    }
+                )
             )
         }
 
         if !cells.isEmpty {
             sections.append(Section(id: "actions",
-                    footerState: .margin(height: .margin32),
-                    rows: cells)
+                                    footerState: .margin(height: .margin32),
+                                    rows: cells)
             )
         }
 
         return sections
     }
-
 }
 
 extension ContactBookContactViewController: IDynamicHeightCellDelegate {
-
     func onChangeHeight() {
         guard isLoaded else {
             return
@@ -285,5 +283,4 @@ extension ContactBookContactViewController: IDynamicHeightCellDelegate {
             self?.tableView.endUpdates()
         }
     }
-
 }

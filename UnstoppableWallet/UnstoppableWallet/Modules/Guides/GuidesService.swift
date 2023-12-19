@@ -1,8 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import HsToolKit
-import LanguageKit
+import RxRelay
+import RxSwift
 
 class GuidesService {
     private let disposeBag = DisposeBag()
@@ -23,8 +22,8 @@ class GuidesService {
         let guides = category.guides(language: languageManager.currentLanguage, fallbackLanguage: LanguageManager.fallbackLanguage)
 
         return GuideCategoryItem(
-                title: title,
-                items: guides.map { guideItem(guide: $0) }
+            title: title,
+            items: guides.map { guideItem(guide: $0) }
         )
     }
 
@@ -32,10 +31,10 @@ class GuidesService {
         let guidesIndexUrl = AppConfig.guidesIndexUrl
 
         return GuideItem(
-                title: guide.title,
-                imageUrl: guide.imageUrl.flatMap { URL(string: $0, relativeTo: guidesIndexUrl) },
-                date: guide.date,
-                url: URL(string: guide.fileUrl, relativeTo: guidesIndexUrl)
+            title: guide.title,
+            imageUrl: guide.imageUrl.flatMap { URL(string: $0, relativeTo: guidesIndexUrl) },
+            date: guide.date,
+            url: URL(string: guide.fileUrl, relativeTo: guidesIndexUrl)
         )
     }
 
@@ -44,15 +43,14 @@ class GuidesService {
             switch dataState {
             case .loading:
                 return .loading
-            case .success(let categories):
+            case let .success(categories):
                 let categoryItems = categories.compactMap {
                     self?.categoryItem(category: $0)
                 }
                 return .success(result: categoryItems)
-            case .error(let error):
+            case let .error(error):
                 return .error(error: error)
             }
         }
     }
-
 }

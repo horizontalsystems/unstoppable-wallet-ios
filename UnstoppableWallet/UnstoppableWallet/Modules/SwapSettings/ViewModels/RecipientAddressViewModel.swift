@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxSwift
 
 protocol IRecipientAddressService {
     var addressState: AddressService.State { get }
@@ -24,6 +24,7 @@ open class RecipientAddressViewModel {
     let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let setTextRelay = BehaviorRelay<String?>(value: nil)
     private let showContactsRelay = BehaviorRelay<Bool>(value: false)
+    private let showUriErrorRelay = PublishRelay<String>()
 
     private var editing = false
 
@@ -35,11 +36,14 @@ open class RecipientAddressViewModel {
             self?.serialSync(state: state)
         }
 
-        subscribeSerial(disposeBag, service.customErrorObservable) { [weak self] error in
+        subscribeSerial(disposeBag, service.customErrorObservable) { [weak self] _ in
             self?.serialSync()
         }
         subscribe(disposeBag, service.showContactsObservable) { [weak self] showContacts in
             self?.showContactsRelay.accept(showContacts)
+        }
+        subscribe(disposeBag, service.showUriErrorObservable) { [weak self] error in
+            self?.showUriErrorRelay.accept(error.localizedDescription)
         }
 
         showContactsRelay.accept(service.showContacts)
@@ -57,7 +61,7 @@ open class RecipientAddressViewModel {
 
         // force provide error if customError is exist
         if let customError = customError ?? service.customError {
-           state = .fetchError(customError)
+            state = .fetchError(customError)
         }
 
         switch state {
@@ -73,22 +77,23 @@ open class RecipientAddressViewModel {
             isLoadingRelay.accept(true)
 
             handlerDelegate?.set(address: nil)
-        case .validationError(let blockchainName):
+        case let .validationError(blockchainName):
             cautionRelay.accept(editing ? nil : Caution(
-                    text: AddressService.AddressError.invalidAddress(blockchainName: blockchainName).smartDescription,
-                    type: .error)
+                text: AddressService.AddressError.invalidAddress(blockchainName: blockchainName).smartDescription,
+                type: .error
+            )
             )
             isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
 
             handlerDelegate?.set(address: nil)
-        case .fetchError(let error):
+        case let .fetchError(error):
             cautionRelay.accept(Caution(text: error.convertedError.smartDescription, type: .error))
             isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
 
             handlerDelegate?.set(address: nil)
-        case .success(let address):
+        case let .success(address):
             setTextRelay.accept(address.title)
             cautionRelay.accept(nil)
             isSuccessRelay.accept(true)
@@ -96,13 +101,10 @@ open class RecipientAddressViewModel {
 
             handlerDelegate?.set(address: address)
         }
-
     }
-
 }
 
 extension RecipientAddressViewModel {
-
     var isSuccessDriver: Driver<Bool> {
         isSuccessRelay.asDriver()
     }
@@ -123,6 +125,10 @@ extension RecipientAddressViewModel {
         showContactsRelay.asDriver()
     }
 
+    var showUriErrorDriver: Driver<String> {
+        showUriErrorRelay.asDriver(onErrorJustReturn: "")
+    }
+
     var contactBlockchainType: BlockchainType? {
         service.blockchainType
     }
@@ -140,18 +146,28 @@ extension RecipientAddressViewModel {
         self.editing = editing
         serialSync(state: service.state)
     }
-
 }
 
 extension AddressService.AddressError: LocalizedError {
-
     var errorDescription: String? {
         switch self {
-        case .invalidAddress(let blockchainName):
+        case let .invalidAddress(blockchainName):
             return ["send.error.invalid".localized, blockchainName, "send.error.address".localized]
-                    .compactMap { $0 }
-                    .joined(separator: " ")
+                .compactMap { $0 }
+                .joined(separator: " ")
         }
     }
+}
 
+extension AddressUriParser.ParseError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .invalidBlockchainType:
+            return "send.error.invalid_blockchain".localized
+        case .invalidTokenType:
+            return "send.error.invalid_token".localized
+        case .wrongUri, .noUri:
+            return "alert.cant_recognize".localized
+        }
+    }
 }

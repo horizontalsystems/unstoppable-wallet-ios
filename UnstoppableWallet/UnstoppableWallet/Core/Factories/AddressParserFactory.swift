@@ -1,30 +1,31 @@
-import MarketKit
-import BitcoinKit
-import BitcoinCore
-import DashKit
-import LitecoinKit
-import BitcoinCashKit
 import BinanceChainKit
-import ZcashLightClientKit
+import BitcoinCashKit
+import BitcoinCore
+import BitcoinKit
+import DashKit
 import ECashKit
+import LitecoinKit
+import MarketKit
+import ZcashLightClientKit
 
-class AddressParserFactory {
+enum AddressParserFactory {
+    static let uriBlockchainTypes: [BlockchainType] = [
+        .bitcoin,
+        .bitcoinCash,
+        .ecash,
+        .litecoin,
+        .dash,
+        .zcash,
+        .ethereum,
+        .binanceChain,
+        .tron,
+    ]
 
-    static func parser(blockchainType: BlockchainType?) -> AddressUriParser {
-        switch blockchainType {
-        case .bitcoin: return AddressUriParser(validScheme: "bitcoin", removeScheme: true)
-        case .litecoin: return AddressUriParser(validScheme: "litecoin", removeScheme: true)
-        case .bitcoinCash: return AddressUriParser(validScheme: "bitcoincash", removeScheme: false)
-        case .ecash: return AddressUriParser(validScheme: "ecash", removeScheme: false)
-        case .dash: return AddressUriParser(validScheme: "dash", removeScheme: true)
-        case .ethereum: return AddressUriParser(validScheme: "ethereum", removeScheme: true)
-        case .binanceChain: return AddressUriParser(validScheme: "binance", removeScheme: true)
-        case .zcash: return AddressUriParser(validScheme: "zcash", removeScheme: true)
-        default: return AddressUriParser(validScheme: nil, removeScheme: false)
-        }
+    static func parser(blockchainType: BlockchainType?, tokenType: TokenType?) -> AddressUriParser {
+        AddressUriParser(blockchainType: blockchainType, tokenType: tokenType)
     }
 
-    static func parserChain(blockchainType: BlockchainType) -> AddressParserChain {
+    static func parserChainHandlers(blockchainType: BlockchainType, withEns: Bool = true) -> [IAddressParserItem] {
         switch blockchainType {
         case .bitcoin, .dash, .litecoin, .bitcoinCash, .ecash:
             let scriptConverter = ScriptConverter()
@@ -56,61 +57,75 @@ class AddressParserFactory {
                 addressConverterChain.prepend(addressConverter: specificAddressConverter)
             }
 
-            let bitcoinTypeParserItem = BitcoinAddressParserItem(parserType: .converter(addressConverterChain))
+            let bitcoinTypeParserItem = BitcoinAddressParserItem(blockchainType: blockchainType, parserType: .converter(addressConverterChain))
 
-            let udnAddressParserItem = UdnAddressParserItem.item(
+            var handlers = [IAddressParserItem]()
+            handlers.append(bitcoinTypeParserItem)
+            if withEns {
+                let udnAddressParserItem = UdnAddressParserItem.item(
                     rawAddressParserItem: bitcoinTypeParserItem,
-                    blockchainType: blockchainType)
-
-            let addressParserChain = AddressParserChain()
-                    .append(handler: bitcoinTypeParserItem)
-                    .append(handler: udnAddressParserItem)
-
-            if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
-               let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: bitcoinTypeParserItem) {
-                addressParserChain.append(handler: ensAddressParserItem)
+                    blockchainType: blockchainType
+                )
+                handlers.append(udnAddressParserItem)
+                if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+                   let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: bitcoinTypeParserItem)
+                {
+                    handlers.append(ensAddressParserItem)
+                }
             }
 
-            return addressParserChain
+            return handlers
         case .ethereum, .gnosis, .fantom, .polygon, .arbitrumOne, .avalanche, .optimism, .binanceSmartChain:
-            let evmAddressParserItem = EvmAddressParser()
+            let evmAddressParserItem = EvmAddressParser(blockchainType: blockchainType)
 
-            let udnAddressParserItem = UdnAddressParserItem.item(
+            var handlers = [IAddressParserItem]()
+            handlers.append(evmAddressParserItem)
+            if withEns {
+                let udnAddressParserItem = UdnAddressParserItem.item(
                     rawAddressParserItem: evmAddressParserItem,
-                    blockchainType: blockchainType)
+                    blockchainType: blockchainType
+                )
+                handlers.append(udnAddressParserItem)
 
-            let addressParserChain = AddressParserChain()
-                    .append(handler: evmAddressParserItem)
-                    .append(handler: udnAddressParserItem)
-
-            if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
-               let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem) {
-                addressParserChain.append(handler: ensAddressParserItem)
+                if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+                   let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
+                {
+                    handlers.append(ensAddressParserItem)
+                }
             }
 
-            return addressParserChain
+            return handlers
         case .tron:
-            return AddressParserChain().append(handler: TronAddressParser())
+            return [TronAddressParser()]
         case .binanceChain:
             let network = BinanceChainKit.NetworkType.mainNet
             let validator = BinanceAddressValidator(prefix: network.addressPrefix)
 
             let binanceParserItem = BinanceAddressParserItem(parserType: .validator(validator))
-            let addressParserChain = AddressParserChain()
-                    .append(handler: binanceParserItem)
-
-            return addressParserChain
+            return [binanceParserItem]
         case .zcash:
             let network = ZcashNetworkBuilder.network(for: .mainnet)
             let validator = ZcashAddressValidator(network: network)
             let zcashParserItem = ZcashAddressParserItem(parserType: .validator(validator))
-            let addressParserChain = AddressParserChain()
-                    .append(handler: zcashParserItem)
 
-            return addressParserChain
-        case .solana: return AddressParserChain()
-        case .unsupported: return AddressParserChain()
+            return [zcashParserItem]
+        case .solana: return []
+        case .ton:
+            return [TonAddressParserItem()]
+        case .unsupported: return []
+        }
+    }
+
+    static func parserChain(blockchainType: BlockchainType?, withEns: Bool = true) -> AddressParserChain {
+        if let blockchainType {
+            return AddressParserChain().append(handlers: parserChainHandlers(blockchainType: blockchainType, withEns: withEns))
         }
 
+        var handlers = [IAddressParserItem]()
+        for blockchainType in BlockchainType.supported {
+            handlers.append(contentsOf: parserChainHandlers(blockchainType: blockchainType, withEns: withEns))
+        }
+
+        return AddressParserChain().append(handlers: handlers)
     }
 }

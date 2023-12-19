@@ -1,7 +1,7 @@
-import RxSwift
-import RxCocoa
 import EvmKit
 import MarketKit
+import RxCocoa
+import RxSwift
 
 protocol ISendBaseService {
     var token: Token { get }
@@ -15,7 +15,7 @@ class SendViewModel {
     private let disposeBag = DisposeBag()
 
     private let proceedEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let proceedRelay = PublishRelay<()>()
+    private let proceedRelay = PublishRelay<Void>()
 
     private var firstLoaded: Bool = false
 
@@ -40,16 +40,14 @@ class SendViewModel {
             proceedEnabledRelay.accept(false)
         }
     }
-
 }
 
 extension SendViewModel {
-
     var proceedEnableDriver: Driver<Bool> {
         proceedEnabledRelay.asDriver()
     }
 
-    var proceedSignal: Signal<()> {
+    var proceedSignal: Signal<Void> {
         proceedRelay.asSignal()
     }
 
@@ -59,14 +57,14 @@ extension SendViewModel {
 
     var title: String {
         switch service.mode {
-        case .send: return "send.title".localized(token.coin.code)
+        case .send, .prefilled: return "send.title".localized(token.coin.code)
         case .predefined: return "donate.title".localized(token.coin.code)
         }
     }
 
     var showAddress: Bool {
         switch service.mode {
-        case .send: return true
+        case .send, .prefilled: return true
         case .predefined: return false
         }
     }
@@ -78,5 +76,4 @@ extension SendViewModel {
 
         proceedRelay.accept(())
     }
-
 }

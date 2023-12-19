@@ -1,7 +1,7 @@
 import Foundation
+import RxCocoa
 import RxRelay
 import RxSwift
-import RxCocoa
 
 class ContactBookSettingsViewModel {
     private let disposeBag = DisposeBag()
@@ -9,13 +9,13 @@ class ContactBookSettingsViewModel {
 
     private let featureEnabledRelay = BehaviorRelay<Bool>(value: false)
 
-    private let showConfirmationRelay = PublishRelay<()>()
+    private let showConfirmationRelay = PublishRelay<Void>()
     private let showSyncErrorRelay = BehaviorRelay<Bool>(value: false)
 
     private let showRestoreAlertRelay = PublishRelay<[BackupContact]>()
-    private let showParsingErrorRelay = PublishRelay<()>()
-    private let showSuccessfulRestoreRelay = PublishRelay<()>()
-    private let showRestoreErrorRelay = PublishRelay<()>()
+    private let showParsingErrorRelay = PublishRelay<Void>()
+    private let showSuccessfulRestoreRelay = PublishRelay<Void>()
+    private let showRestoreErrorRelay = PublishRelay<Void>()
 
     init(service: ContactBookSettingsService) {
         self.service = service
@@ -36,23 +36,22 @@ class ContactBookSettingsViewModel {
             showSyncErrorRelay.accept(false)
         }
     }
-
 }
-extension ContactBookSettingsViewModel {
 
+extension ContactBookSettingsViewModel {
     var showRestoreAlertSignal: Signal<[BackupContact]> {
         showRestoreAlertRelay.asSignal()
     }
 
-    var showParsingErrorSignal: Signal<()> {
+    var showParsingErrorSignal: Signal<Void> {
         showParsingErrorRelay.asSignal()
     }
 
-    var showSuccessfulRestoreSignal: Signal<()> {
+    var showSuccessfulRestoreSignal: Signal<Void> {
         showSuccessfulRestoreRelay.asSignal()
     }
 
-    var showRestoreErrorSignal: Signal<()> {
+    var showRestoreErrorSignal: Signal<Void> {
         showRestoreErrorRelay.asSignal()
     }
 
@@ -68,7 +67,7 @@ extension ContactBookSettingsViewModel {
         featureEnabledRelay.asDriver()
     }
 
-    var showConfirmationSignal: Signal<()> {
+    var showConfirmationSignal: Signal<Void> {
         showConfirmationRelay.asSignal()
     }
 
@@ -105,5 +104,4 @@ extension ContactBookSettingsViewModel {
     func createBackupFile() throws -> URL {
         try service.createBackupFile()
     }
-
 }

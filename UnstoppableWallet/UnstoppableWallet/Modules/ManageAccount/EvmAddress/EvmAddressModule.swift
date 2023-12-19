@@ -1,7 +1,6 @@
 import UIKit
 
-struct EvmAddressModule {
-
+enum EvmAddressModule {
     static func viewController(accountType: AccountType) -> UIViewController? {
         guard let service = EvmAddressService(accountType: accountType, evmBlockchainManager: App.shared.evmBlockchainManager) else {
             return nil
@@ -10,5 +9,4 @@ struct EvmAddressModule {
         let viewModel = EvmAddressViewModel(service: service)
         return EvmAddressViewController(viewModel: viewModel)
     }
-
 }

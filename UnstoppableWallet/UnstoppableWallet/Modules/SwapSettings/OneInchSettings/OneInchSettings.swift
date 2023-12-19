@@ -1,6 +1,6 @@
+import EvmKit
 import Foundation
 import UniswapKit
-import EvmKit
 
 struct OneInchSettings {
     var allowedSlippage: Decimal
@@ -10,5 +10,4 @@ struct OneInchSettings {
         self.allowedSlippage = allowedSlippage
         self.recipient = recipient
     }
-
 }

@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
+import MarketKit
 import RxCocoa
 import RxRelay
-import MarketKit
+import RxSwift
 
 class SendBitcoinAmountInputService {
     weak var availableBalanceService: IAvailableBalanceService?
@@ -18,14 +18,13 @@ class SendBitcoinAmountInputService {
         }
     }
 
-    init(token: Token) {
+    init(token: Token, amount: Decimal = 0) {
         self.token = token
+        self.amount = amount
     }
-
 }
 
 extension SendBitcoinAmountInputService: IAmountInputService {
-
     var amountObservable: Observable<Decimal> {
         amountRelay.asObservable()
     }
@@ -35,13 +34,11 @@ extension SendBitcoinAmountInputService: IAmountInputService {
     }
 
     var balanceObservable: Observable<Decimal?> {
-        guard let availableBalanceService = availableBalanceService else {
+        guard let availableBalanceService else {
             return .just(nil)
         }
 
-        return availableBalanceService.availableBalanceObservable.map {
-            $0.data
-        }
+        return availableBalanceService.availableBalanceObservable.map(\.data)
     }
 
     var tokenObservable: Observable<Token?> {
@@ -51,5 +48,4 @@ extension SendBitcoinAmountInputService: IAmountInputService {
     func onChange(amount: Decimal) {
         self.amount = amount
     }
-
 }

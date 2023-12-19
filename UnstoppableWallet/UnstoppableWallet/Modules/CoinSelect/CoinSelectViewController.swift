@@ -1,12 +1,12 @@
+import Alamofire
 import Combine
-import UIKit
+import ComponentKit
+import MarketKit
+import RxSwift
 import SectionsTableView
 import SnapKit
 import ThemeKit
-import RxSwift
-import MarketKit
-import ComponentKit
-import Alamofire
+import UIKit
 
 class CoinSelectViewController: ThemeSearchViewController {
     private let viewModel: CoinSelectViewModel
@@ -24,7 +24,8 @@ class CoinSelectViewController: ThemeSearchViewController {
         super.init(scrollViews: [tableView])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -44,13 +45,11 @@ class CoinSelectViewController: ThemeSearchViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
-
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.handle(viewItems: $0) }
         $filter
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.viewModel.apply(filter: $0) }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.viewModel.apply(filter: $0) }
+            .store(in: &cancellables)
     }
 
     @objc func onTapClose() {
@@ -67,72 +66,69 @@ class CoinSelectViewController: ThemeSearchViewController {
 
         tableView.reload()
     }
-
 }
 
 extension CoinSelectViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "coins",
-                    headerState: .margin(height: .margin3x),
-                    footerState: .margin(height: .margin8x),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        let isLast = index == viewItems.count - 1
+                id: "coins",
+                headerState: .margin(height: .margin3x),
+                footerState: .margin(height: .margin8x),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    let isLast = index == viewItems.count - 1
 
-                        return CellBuilderNew.row(
-                                rootElement: .hStack([
-                                    .image32 { component in
-                                        component.setImage(urlString: viewItem.token.coin.imageUrl, placeholder: UIImage(named: viewItem.token.placeholderImageName))
+                    return CellBuilderNew.row(
+                        rootElement: .hStack([
+                            .image32 { component in
+                                component.setImage(urlString: viewItem.token.coin.imageUrl, placeholder: UIImage(named: viewItem.token.placeholderImageName))
+                            },
+                            .vStackCentered([
+                                .hStack([
+                                    .text { component in
+                                        component.font = .body
+                                        component.textColor = .themeLeah
+                                        component.text = viewItem.token.coin.code
                                     },
-                                    .vStackCentered([
-                                        .hStack([
-                                            .text { component in
-                                                component.font = .body
-                                                component.textColor = .themeLeah
-                                                component.text = viewItem.token.coin.code
-                                            },
-                                            .text { component in
-                                                component.font = .body
-                                                component.textColor = .themeLeah
-                                                component.textAlignment = .right
-                                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                                                component.text = viewItem.balance
-                                            }
-                                        ]),
-                                        .margin(3),
-                                        .hStack([
-                                            .text { component in
-                                                component.font = .subhead2
-                                                component.textColor = .themeGray
-                                                component.text = viewItem.token.coin.name
-                                            },
-                                            .text { component in
-                                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                                                component.setContentHuggingPriority(.required, for: .horizontal)
-                                                component.textAlignment = .right
-                                                component.font = .subhead2
-                                                component.textColor = .themeGray
-                                                component.text = viewItem.fiatBalance
-                                            }
-                                        ])
-                                    ])
+                                    .text { component in
+                                        component.font = .body
+                                        component.textColor = .themeLeah
+                                        component.textAlignment = .right
+                                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                        component.text = viewItem.balance
+                                    },
                                 ]),
-                                tableView: tableView,
-                                id: "coin_\(index)",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-                                },
-                                action: { [weak self] in
-                                    self?.onSelect(token: viewItem.token)
-                                }
-                        )
-                    }
-            )
+                                .margin(3),
+                                .hStack([
+                                    .text { component in
+                                        component.font = .subhead2
+                                        component.textColor = .themeGray
+                                        component.text = viewItem.token.coin.name
+                                    },
+                                    .text { component in
+                                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                        component.setContentHuggingPriority(.required, for: .horizontal)
+                                        component.textAlignment = .right
+                                        component.font = .subhead2
+                                        component.textColor = .themeGray
+                                        component.text = viewItem.fiatBalance
+                                    },
+                                ]),
+                            ]),
+                        ]),
+                        tableView: tableView,
+                        id: "coin_\(index)",
+                        height: .heightDoubleLineCell,
+                        autoDeselect: true,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .transparent, isLast: isLast)
+                        },
+                        action: { [weak self] in
+                            self?.onSelect(token: viewItem.token)
+                        }
+                    )
+                }
+            ),
         ]
     }
-
 }

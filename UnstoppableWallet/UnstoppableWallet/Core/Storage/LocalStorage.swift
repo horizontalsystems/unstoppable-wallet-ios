@@ -1,6 +1,5 @@
 import Foundation
 import MarketKit
-import StorageKit
 
 class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"
@@ -20,83 +19,83 @@ class LocalStorage {
     private let keyIndicatorsShown = "indicators-shown"
     private let keyTelegramSupportRequested = "telegram-support-requested"
 
-    private let storage: StorageKit.ILocalStorage
+    private let userDefaultsStorage: UserDefaultsStorage
 
-    init(storage: StorageKit.ILocalStorage) {
-        self.storage = storage
+    init(userDefaultsStorage: UserDefaultsStorage) {
+        self.userDefaultsStorage = userDefaultsStorage
     }
 }
 
 extension LocalStorage {
     var debugLog: String? {
-        get { storage.value(for: debugLogKey) }
-        set { storage.set(value: newValue, for: debugLogKey) }
+        get { userDefaultsStorage.value(for: debugLogKey) }
+        set { userDefaultsStorage.set(value: newValue, for: debugLogKey) }
     }
 
     var agreementAccepted: Bool {
-        get { storage.value(for: agreementAcceptedKey) ?? false }
-        set { storage.set(value: newValue, for: agreementAcceptedKey) }
+        get { userDefaultsStorage.value(for: agreementAcceptedKey) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: agreementAcceptedKey) }
     }
 
     var mainShownOnce: Bool {
-        get { storage.value(for: mainShownOnceKey) ?? false }
-        set { storage.set(value: newValue, for: mainShownOnceKey) }
+        get { userDefaultsStorage.value(for: mainShownOnceKey) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: mainShownOnceKey) }
     }
 
     var jailbreakShownOnce: Bool {
-        get { storage.value(for: jailbreakShownOnceKey) ?? false }
-        set { storage.set(value: newValue, for: jailbreakShownOnceKey) }
+        get { userDefaultsStorage.value(for: jailbreakShownOnceKey) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: jailbreakShownOnceKey) }
     }
 
     var lockTimeEnabled: Bool {
-        get { storage.value(for: keyLockTimeEnabled) ?? false }
-        set { storage.set(value: newValue, for: keyLockTimeEnabled) }
+        get { userDefaultsStorage.value(for: keyLockTimeEnabled) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyLockTimeEnabled) }
     }
 
     var remoteContactsSync: Bool {
-        get { storage.value(for: keyRemoteContactSync) ?? false }
-        set { storage.set(value: newValue, for: keyRemoteContactSync) }
+        get { userDefaultsStorage.value(for: keyRemoteContactSync) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyRemoteContactSync) }
     }
 
     var appLaunchCount: Int {
-        get { storage.value(for: keyAppLaunchCount) ?? 0 }
-        set { storage.set(value: newValue, for: keyAppLaunchCount) }
+        get { userDefaultsStorage.value(for: keyAppLaunchCount) ?? 0 }
+        set { userDefaultsStorage.set(value: newValue, for: keyAppLaunchCount) }
     }
 
     var rateAppLastRequestDate: Date? {
-        get { storage.value(for: keyRateAppLastRequestDate) }
-        set { storage.set(value: newValue, for: keyRateAppLastRequestDate) }
+        get { userDefaultsStorage.value(for: keyRateAppLastRequestDate) }
+        set { userDefaultsStorage.set(value: newValue, for: keyRateAppLastRequestDate) }
     }
 
     var zcashAlwaysPendingRewind: Bool {
-        get { storage.value(for: keyZCashRewind) ?? false }
-        set { storage.set(value: newValue, for: keyZCashRewind) }
+        get { userDefaultsStorage.value(for: keyZCashRewind) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyZCashRewind) }
     }
 
     func defaultProvider(blockchainType: BlockchainType) -> SwapModule.Dex.Provider {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
-        let raw: String? = storage.value(for: key)
+        let raw: String? = userDefaultsStorage.value(for: key)
         return (raw.flatMap { SwapModule.Dex.Provider(rawValue: $0) }) ?? blockchainType.allowedProviders[0]
     }
 
     func setDefaultProvider(blockchainType: BlockchainType, provider: SwapModule.Dex.Provider) {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
-        storage.set(value: provider.rawValue, for: key)
+        userDefaultsStorage.set(value: provider.rawValue, for: key)
     }
 
     var chartIndicators: Data? {
-        get { storage.value(for: keyUserChartIndicatorsSync) }
-        set { storage.set(value: newValue, for: keyUserChartIndicatorsSync) }
+        get { userDefaultsStorage.value(for: keyUserChartIndicatorsSync) }
+        set { userDefaultsStorage.set(value: newValue, for: keyUserChartIndicatorsSync) }
     }
 
     var indicatorsShown: Bool {
-        get { storage.value(for: keyIndicatorsShown) ?? true }
-        set { storage.set(value: newValue, for: keyIndicatorsShown) }
+        get { userDefaultsStorage.value(for: keyIndicatorsShown) ?? true }
+        set { userDefaultsStorage.set(value: newValue, for: keyIndicatorsShown) }
     }
 
     var telegramSupportRequested: Bool {
-        get { storage.value(for: keyTelegramSupportRequested) ?? false }
-        set { storage.set(value: newValue, for: keyTelegramSupportRequested) }
+        get { userDefaultsStorage.value(for: keyTelegramSupportRequested) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyTelegramSupportRequested) }
     }
 }
 

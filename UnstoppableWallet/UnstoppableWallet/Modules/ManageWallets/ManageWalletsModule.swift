@@ -1,16 +1,15 @@
-import UIKit
 import ThemeKit
+import UIKit
 
-struct ManageWalletsModule {
-
+enum ManageWalletsModule {
     static func viewController() -> UIViewController? {
         let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module()
 
         guard let service = ManageWalletsService(
-                marketKit: App.shared.marketKit,
-                walletManager: App.shared.walletManager,
-                accountManager: App.shared.accountManager,
-                restoreSettingsService: restoreSettingsService
+            marketKit: App.shared.marketKit,
+            walletManager: App.shared.walletManager,
+            accountManager: App.shared.accountManager,
+            restoreSettingsService: restoreSettingsService
         ) else {
             return nil
         }
@@ -20,5 +19,4 @@ struct ManageWalletsModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }

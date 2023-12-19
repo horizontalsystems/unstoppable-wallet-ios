@@ -12,5 +12,4 @@ class NftRecord {
     var nftUid: NftUid {
         fatalError("Should be overridden")
     }
-
 }

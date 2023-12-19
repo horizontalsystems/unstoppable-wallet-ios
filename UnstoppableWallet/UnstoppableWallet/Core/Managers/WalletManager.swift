@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import RxRelay
+import RxSwift
 
 class WalletManager {
     private let accountManager: AccountManager
@@ -38,7 +38,7 @@ class WalletManager {
         }
 
         do {
-            cachedActiveWalletData = WalletData(wallets: try storage.wallets(account: activeAccount), account: activeAccount)
+            cachedActiveWalletData = try WalletData(wallets: storage.wallets(account: activeAccount), account: activeAccount)
         } catch {
             // todo
             cachedActiveWalletData = WalletData(wallets: [], account: activeAccount)
@@ -50,11 +50,9 @@ class WalletManager {
     private func reloadWallets() {
         queue.async { [weak self] in self?._reloadWallets() }
     }
-
 }
 
 extension WalletManager {
-
     var activeWalletData: WalletData {
         queue.sync { cachedActiveWalletData }
     }
@@ -101,14 +99,11 @@ extension WalletManager {
     func clearWallets() {
         storage.clearWallets()
     }
-
 }
 
 extension WalletManager {
-
     struct WalletData {
         let wallets: [Wallet]
         let account: Account?
     }
-
 }

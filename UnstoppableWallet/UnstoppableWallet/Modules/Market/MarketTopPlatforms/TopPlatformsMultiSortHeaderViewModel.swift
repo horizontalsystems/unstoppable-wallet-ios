@@ -8,14 +8,13 @@ class TopPlatformsMultiSortHeaderViewModel {
         self.service = service
         self.decorator = decorator
     }
-
 }
 
 extension TopPlatformsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel {
-
     var sortItems: [String] {
-        MarketTopPlatformsModule.SortType.allCases.map { $0.title }
+        MarketTopPlatformsModule.SortType.allCases.map(\.title)
     }
+
     var sortIndex: Int {
         MarketTopPlatformsModule.SortType.allCases.firstIndex(of: service.sortType) ?? 0
     }
@@ -23,13 +22,15 @@ extension TopPlatformsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel 
     var leftSelectorItems: [String] {
         []
     }
+
     var leftSelectorIndex: Int {
         0
     }
 
     var rightSelectorItems: [String] {
-        MarketTopPlatformsModule.selectorValues.map { $0.title }
+        MarketTopPlatformsModule.selectorValues.map(\.title)
     }
+
     var rightSelectorIndex: Int {
         MarketTopPlatformsModule.selectorValues.firstIndex(of: service.timePeriod) ?? 0
     }
@@ -38,11 +39,9 @@ extension TopPlatformsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel 
         service.sortType = MarketTopPlatformsModule.SortType.allCases[index]
     }
 
-    func onSelectLeft(index: Int) {
-    }
+    func onSelectLeft(index _: Int) {}
 
     func onSelectRight(index: Int) {
         service.timePeriod = MarketTopPlatformsModule.selectorValues[index]
     }
-
 }

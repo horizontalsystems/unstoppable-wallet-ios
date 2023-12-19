@@ -1,9 +1,8 @@
-import UIKit
-import RxSwift
 import Chart
-import LanguageKit
+import RxSwift
+import UIKit
 
-struct MarketGlobalModule {
+enum MarketGlobalModule {
     static let dominance = "dominance"
 
     enum MetricsType {
@@ -44,7 +43,5 @@ struct MarketGlobalModule {
             case .tvlInDefi: return .price
             }
         }
-
     }
-
 }

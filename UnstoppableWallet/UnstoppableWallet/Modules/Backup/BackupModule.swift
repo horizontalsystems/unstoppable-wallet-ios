@@ -1,9 +1,8 @@
-import UIKit
 import ThemeKit
+import UIKit
 
-struct BackupModule {
-
-    static func manualViewController(account: Account, onComplete: (() -> ())? = nil) -> UIViewController? {
+enum BackupModule {
+    static func manualViewController(account: Account, onComplete: (() -> Void)? = nil) -> UIViewController? {
         guard let service = BackupService(account: account) else {
             return nil
         }
@@ -21,7 +20,6 @@ struct BackupModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }
 
 extension BackupModule {

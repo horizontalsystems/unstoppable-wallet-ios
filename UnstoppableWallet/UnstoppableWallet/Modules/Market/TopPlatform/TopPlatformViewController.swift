@@ -1,7 +1,7 @@
-import UIKit
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import SectionsTableView
+import UIKit
 
 class TopPlatformViewController: MarketListViewController {
     private let viewModel: TopPlatformViewModel
@@ -22,17 +22,18 @@ class TopPlatformViewController: MarketListViewController {
 
         chartCell = ChartCell(viewModel: chartViewModel, configuration: .baseChart)
         chartRow = StaticRow(
-                cell: chartCell,
-                id: "chartView",
-                height: chartCell.cellHeight
+            cell: chartCell,
+            id: "chartView",
+            height: chartCell.cellHeight
         )
 
-        super.init(listViewModel: listViewModel)
+        super.init(listViewModel: listViewModel, apiTag: "market_top_platform")
 
         multiSortHeaderView.viewController = self
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -54,16 +55,16 @@ class TopPlatformViewController: MarketListViewController {
 
     override func topSections(loaded: Bool) -> [SectionProtocol] {
         var sections = [Section(
-                id: "header",
-                rows: [
-                    Row<TopPlatformHeaderCell>(
-                            id: "header",
-                            height: TopPlatformHeaderCell.height,
-                            bind: { [weak self] cell, _ in
-                                self?.bind(cell: cell)
-                            }
-                    )
-                ]
+            id: "header",
+            rows: [
+                Row<TopPlatformHeaderCell>(
+                    id: "header",
+                    height: TopPlatformHeaderCell.height,
+                    bind: { [weak self] cell, _ in
+                        self?.bind(cell: cell)
+                    }
+                ),
+            ]
         )]
 
         if loaded {
@@ -75,10 +76,9 @@ class TopPlatformViewController: MarketListViewController {
 
     private func bind(cell: TopPlatformHeaderCell) {
         cell.set(
-                title: viewModel.title,
-                description: viewModel.description,
-                imageUrl: viewModel.imageUrl
+            title: viewModel.title,
+            description: viewModel.description,
+            imageUrl: viewModel.imageUrl
         )
     }
-
 }

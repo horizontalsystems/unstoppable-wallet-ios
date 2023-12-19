@@ -9,8 +9,7 @@ struct TransactionSource: Hashable {
         hasher.combine(meta)
     }
 
-    static func ==(lhs: TransactionSource, rhs: TransactionSource) -> Bool {
+    static func == (lhs: TransactionSource, rhs: TransactionSource) -> Bool {
         lhs.blockchainType == rhs.blockchainType && lhs.meta == rhs.meta
     }
-
 }

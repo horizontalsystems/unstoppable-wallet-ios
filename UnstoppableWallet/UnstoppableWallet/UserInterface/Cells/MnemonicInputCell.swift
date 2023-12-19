@@ -1,10 +1,10 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 class MnemonicInputCell: TextInputCell {
-    var onChangeMnemonicText: ((String, Int) -> ())?
-    var onChangeEntering: (() -> ())?
+    var onChangeMnemonicText: ((String, Int) -> Void)?
+    var onChangeEntering: (() -> Void)?
 
     private(set) var entering = false {
         didSet {
@@ -39,15 +39,13 @@ class MnemonicInputCell: TextInputCell {
         super.set(text: text)
         onChangeMnemonicText?(text, text.count)
     }
-
 }
 
 extension MnemonicInputCell {
-
     func set(invalidRanges: [NSRange]) {
         let attributedString = NSMutableAttributedString(string: textView.text, attributes: [
             .foregroundColor: textViewTextColor,
-            .font: textViewFont
+            .font: textViewFont,
         ])
 
         for range in invalidRanges {
@@ -78,5 +76,4 @@ extension MnemonicInputCell {
 
         onChangeMnemonicText?(text, cursorOffset)
     }
-
 }

@@ -1,10 +1,9 @@
-import UIKit
 import MarketKit
+import UIKit
 
-struct MarketAdvancedSearchResultModule {
-
+enum MarketAdvancedSearchResultModule {
     static func viewController(marketInfos: [MarketInfo], priceChangeType: MarketModule.PriceChangeType) -> UIViewController {
-        let service = MarketAdvancedSearchResultService(marketInfos: marketInfos, currencyKit: App.shared.currencyKit, priceChangeType: priceChangeType)
+        let service = MarketAdvancedSearchResultService(marketInfos: marketInfos, currencyManager: App.shared.currencyManager, priceChangeType: priceChangeType)
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: service, favoritesManager: App.shared.favoritesManager)
 
         let decorator = MarketListMarketFieldDecorator(service: service)
@@ -13,5 +12,4 @@ struct MarketAdvancedSearchResultModule {
 
         return MarketAdvancedSearchResultViewController(listViewModel: listViewModel, headerViewModel: headerViewModel)
     }
-
 }

@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class TransactionDateHeaderView: UITableViewHeaderFooterView {
     private let label = UILabel()
@@ -20,13 +20,13 @@ class TransactionDateHeaderView: UITableViewHeaderFooterView {
         label.textColor = .themeGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("not implemented")
     }
 
     var text: String? {
         get { label.text }
-        set { label.text = newValue }
+        set { label.text = newValue?.uppercased() }
     }
-
 }

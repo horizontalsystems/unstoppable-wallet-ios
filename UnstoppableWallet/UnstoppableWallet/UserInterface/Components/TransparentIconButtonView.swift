@@ -1,10 +1,10 @@
-import UIKit
 import SnapKit
+import UIKit
 
 public class TransparentIconButtonView: UIView, ISizeAwareView {
     public let button = UIButton()
 
-    public var onTap: (() -> ())?
+    public var onTap: (() -> Void)?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,7 +20,8 @@ public class TransparentIconButtonView: UIView, ISizeAwareView {
         button.addTarget(self, action: #selector(_onTap), for: .touchUpInside)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -32,8 +33,7 @@ public class TransparentIconButtonView: UIView, ISizeAwareView {
         button.setImage(image?.withTintColor(.themeGray), for: .normal)
     }
 
-    func width(containerWidth: CGFloat) -> CGFloat {
+    func width(containerWidth _: CGFloat) -> CGFloat {
         20
     }
-
 }

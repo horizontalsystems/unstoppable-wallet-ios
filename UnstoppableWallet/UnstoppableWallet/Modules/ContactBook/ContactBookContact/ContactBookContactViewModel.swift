@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class ContactBookContactViewModel {
     private let disposeBag = DisposeBag()
@@ -49,28 +49,26 @@ class ContactBookContactViewModel {
 
     private func sync(addressItems: [ContactBookContactService.AddressItem]) {
         addressViewItems = addressItems.sorted { item, item2 in
-                    if item.edited != item2.edited {
-                        return item.edited
-                    }
-                    return item.blockchain.type.order < item2.blockchain.type.order
-                }
-                .map { viewItem(item: $0) }
+            if item.edited != item2.edited {
+                return item.edited
+            }
+            return item.blockchain.type.order < item2.blockchain.type.order
+        }
+        .map { viewItem(item: $0) }
     }
 
     private func viewItem(item: ContactBookContactService.AddressItem) -> AddressViewItem {
         AddressViewItem(
-                blockchainUid: item.blockchain.uid,
-                blockchainImageUrl: item.blockchain.type.imageUrl,
-                blockchainName: item.blockchain.name,
-                address: item.address,
-                edited: item.edited
+            blockchainUid: item.blockchain.uid,
+            blockchainImageUrl: item.blockchain.type.imageUrl,
+            blockchainName: item.blockchain.name,
+            address: item.address,
+            edited: item.edited
         )
     }
-
 }
 
 extension ContactBookContactViewModel {
-
     var existAddresses: [ContactAddress] {
         service.addresses
     }
@@ -130,11 +128,9 @@ extension ContactBookContactViewModel {
     func delete() throws {
         try service.delete()
     }
-
 }
 
 extension ContactBookContactViewModel {
-
     struct AddressViewItem {
         let blockchainUid: String
         let blockchainImageUrl: String
@@ -147,5 +143,4 @@ extension ContactBookContactViewModel {
         let name: String
         let addresses: [AddressViewItem]
     }
-
 }

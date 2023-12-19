@@ -7,11 +7,11 @@ struct SecondaryCircleButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-                .padding(.margin4)
-                .foregroundColor(style.foregroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
-                .background(style.backgroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
-                .clipShape(Circle())
-                .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+            .padding(.margin4)
+            .foregroundColor(style.foregroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
+            .background(style.backgroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
+            .clipShape(Circle())
+            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
     }
 
     enum Style {

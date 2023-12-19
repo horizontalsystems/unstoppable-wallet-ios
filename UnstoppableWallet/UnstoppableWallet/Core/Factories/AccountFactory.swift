@@ -30,7 +30,7 @@ extension AccountFactory {
     }
 
     var nextWatchAccountName: String {
-        let watchAccounts = accountManager.accounts.filter { $0.watchAccount }
+        let watchAccounts = accountManager.accounts.filter(\.watchAccount)
         let order = watchAccounts.count + 1
 
         return "Watch Wallet \(order)"

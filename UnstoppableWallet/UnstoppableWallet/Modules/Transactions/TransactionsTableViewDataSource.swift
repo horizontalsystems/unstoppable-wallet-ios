@@ -1,9 +1,9 @@
 import Combine
-import UIKit
-import SnapKit
-import RxSwift
-import ThemeKit
 import ComponentKit
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class TransactionsTableViewDataSource: NSObject {
     private let viewModel: BaseTransactionsViewModel
@@ -66,7 +66,7 @@ class TransactionsTableViewDataSource: NSObject {
         }
     }
 
-    private func sync(syncing: Bool) {
+    private func sync(syncing _: Bool) {
         // todo
     }
 
@@ -76,21 +76,21 @@ class TransactionsTableViewDataSource: NSObject {
                 component.set(progress: viewItem.progress)
 
                 switch viewItem.iconType {
-                case .icon(let imageUrl, let placeholderImageName):
+                case let .icon(imageUrl, placeholderImageName):
                     component.setImage(
-                            urlString: imageUrl,
-                            placeholder: UIImage(named: placeholderImageName)
+                        urlString: imageUrl,
+                        placeholder: UIImage(named: placeholderImageName)
                     )
-                case .localIcon(let imageName):
+                case let .localIcon(imageName):
                     component.set(image: imageName.flatMap { UIImage(named: $0)?.withTintColor(.themeLeah) })
                 case let .doubleIcon(frontType, frontUrl, frontPlaceholder, backType, backUrl, backPlaceholder):
                     component.setDoubleImage(
-                            frontType: frontType,
-                            frontUrl: frontUrl,
-                            frontPlaceholder: UIImage(named: frontPlaceholder),
-                            backType: backType,
-                            backUrl: backUrl,
-                            backPlaceholder: UIImage(named: backPlaceholder)
+                        frontType: frontType,
+                        frontUrl: frontUrl,
+                        frontPlaceholder: UIImage(named: frontPlaceholder),
+                        backType: backType,
+                        backUrl: backUrl,
+                        backPlaceholder: UIImage(named: backPlaceholder)
                     )
                 case .failedIcon:
                     component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian), contentMode: .center)
@@ -130,7 +130,7 @@ class TransactionsTableViewDataSource: NSObject {
                         } else {
                             component.isHidden = true
                         }
-                    }
+                    },
                 ]),
                 .margin(1),
                 .hStack([
@@ -151,16 +151,14 @@ class TransactionsTableViewDataSource: NSObject {
                         } else {
                             component.isHidden = true
                         }
-                    }
-                ])
-            ])
-        ])
+                    },
+                ]),
+            ]),
+        ]) { component in component.alpha = viewItem.spam ? 0.25 : 1 }
     }
-
 }
 
 extension TransactionsTableViewDataSource: ISectionDataSource {
-
     func prepare(tableView: UITableView) {
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.estimatedRowHeight = 0
@@ -181,7 +179,7 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
         loaded = true
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         if sectionViewItems.isEmpty {
             return 1
         } else {
@@ -189,7 +187,7 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         if sectionViewItems.isEmpty {
             return 1
         } else if section < sectionViewItems.count {
@@ -206,11 +204,11 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
             return tableView.dequeueReusableCell(withIdentifier: String(describing: PlaceholderCell.self), for: originalIndexPath)
         } else if indexPath.section < sectionViewItems.count {
             return CellBuilderNew.preparedCell(
-                    tableView: tableView,
-                    indexPath: originalIndexPath,
-                    selectable: true,
-                    rootElement: rootElement(viewItem: sectionViewItems[indexPath.section].viewItems[indexPath.row]),
-                    layoutMargins: UIEdgeInsets(top: 0, left: .margin6, bottom: 0, right: .margin16)
+                tableView: tableView,
+                indexPath: originalIndexPath,
+                selectable: true,
+                rootElement: rootElement(viewItem: sectionViewItems[indexPath.section].viewItems[indexPath.row]),
+                layoutMargins: UIEdgeInsets(top: 0, left: .margin6, bottom: 0, right: .margin16)
             )
         } else if indexPath.section == numberOfSections(in: tableView) - 1 {
             return tableView.dequeueReusableCell(withIdentifier: String(describing: EmptyCell.self), for: originalIndexPath)
@@ -219,7 +217,7 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if sectionViewItems.isEmpty {
             if let cell = cell as? PlaceholderCell {
                 cell.set(backgroundStyle: .transparent, isFirst: true)
@@ -259,7 +257,7 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         section < sectionViewItems.count ? .heightSingleLineCell : 0
     }
 
@@ -271,12 +269,11 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let view = view as? TransactionDateHeaderView else {
             return
         }
 
         view.text = sectionViewItems[section].title
     }
-
 }

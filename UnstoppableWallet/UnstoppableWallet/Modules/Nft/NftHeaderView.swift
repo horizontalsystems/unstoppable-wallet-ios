@@ -1,10 +1,10 @@
-import UIKit
-import RxSwift
-import RxCocoa
-import ThemeKit
-import SnapKit
 import ComponentKit
 import HUD
+import RxCocoa
+import RxSwift
+import SnapKit
+import ThemeKit
+import UIKit
 
 class NftHeaderView: UITableViewHeaderFooterView {
     static var height: CGFloat = HeaderAmountView.height + .heightCell48
@@ -85,12 +85,13 @@ class NftHeaderView: UITableViewHeaderFooterView {
         subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func sync(viewItem: NftHeaderViewModel.ViewItem?) {
-        guard let viewItem = viewItem else {
+        guard let viewItem else {
             return
         }
 
@@ -101,5 +102,4 @@ class NftHeaderView: UITableViewHeaderFooterView {
     private func playHaptic() {
         HapticGenerator.instance.notification(.feedback(.soft))
     }
-
 }

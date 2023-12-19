@@ -1,11 +1,11 @@
-import Foundation
-import UIKit
-import MarketKit
-import RxSwift
-import RxRelay
-import EvmKit
 import BigInt
+import EvmKit
+import Foundation
 import Kingfisher
+import MarketKit
+import RxRelay
+import RxSwift
+import UIKit
 
 class SendEip1155Service {
     let nftUid: NftUid
@@ -27,7 +27,7 @@ class SendEip1155Service {
     private var addressData: AddressData?
 
     private let amountCautionRelay = PublishRelay<Error?>()
-    private var amountCaution: Error? = nil {
+    private var amountCaution: Error? {
         didSet {
             amountCautionRelay.accept(amountCaution)
         }
@@ -35,7 +35,7 @@ class SendEip1155Service {
 
     init(nftUid: NftUid, balance: Int, adapter: INftAdapter, addressService: AddressService, nftMetadataManager: NftMetadataManager) {
         self.nftUid = nftUid
-        self.nftBalance = balance
+        nftBalance = balance
         self.adapter = adapter
         self.addressService = addressService
 
@@ -47,9 +47,9 @@ class SendEip1155Service {
 
     private func sync(addressState: AddressService.State) {
         switch addressState {
-        case .success(let address):
+        case let .success(address):
             do {
-                addressData = AddressData(evmAddress: try EvmKit.Address(hex: address.raw), domain: address.domain)
+                addressData = try AddressData(evmAddress: EvmKit.Address(hex: address.raw), domain: address.domain)
             } catch {
                 addressData = nil
             }
@@ -60,7 +60,7 @@ class SendEip1155Service {
     }
 
     private func syncState() {
-        if case .success = addressService.state, let nftAmount = nftAmount, let addressData = addressData {
+        if case .success = addressService.state, let nftAmount, let addressData {
             guard let transactionData = adapter.transferEip1155TransactionData(contractAddress: nftUid.contractAddress, to: addressData.evmAddress, tokenId: nftUid.tokenId, value: Decimal(nftAmount)) else {
                 state = .notReady
                 return
@@ -95,11 +95,9 @@ class SendEip1155Service {
             return nil
         }
     }
-
 }
 
 extension SendEip1155Service {
-
     var availableBalance: DataStatus<Int> {
         .completed(nftBalance)
     }
@@ -107,11 +105,9 @@ extension SendEip1155Service {
     var availableBalanceObservable: Observable<DataStatus<Int>> {
         Observable.just(availableBalance)
     }
-
 }
 
 extension SendEip1155Service {
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -119,13 +115,11 @@ extension SendEip1155Service {
     var amountCautionObservable: Observable<Error?> {
         amountCautionRelay.asObservable()
     }
-
 }
 
 extension SendEip1155Service: IIntegerAmountInputService {
-
     var amount: Int {
-        if nftBalance == 1 {    // if balance == 1 just put it in amount cell
+        if nftBalance == 1 { // if balance == 1 just put it in amount cell
             return nftBalance
         }
 
@@ -160,11 +154,9 @@ extension SendEip1155Service: IIntegerAmountInputService {
 
         syncState()
     }
-
 }
 
 extension SendEip1155Service {
-
     enum State {
         case ready(sendData: SendEvmData)
         case notReady
@@ -178,5 +170,4 @@ extension SendEip1155Service {
         let evmAddress: EvmKit.Address
         let domain: String?
     }
-
 }

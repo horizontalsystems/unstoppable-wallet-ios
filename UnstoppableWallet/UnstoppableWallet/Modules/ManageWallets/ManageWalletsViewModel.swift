@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class ManageWalletsViewModel {
     private let service: ManageWalletsService
@@ -28,14 +28,14 @@ class ManageWalletsViewModel {
         let token = item.token
 
         return ViewItem(
-                uid: String(item.token.hashValue),
-                imageUrl: token.coin.imageUrl,
-                placeholderImageName: token.placeholderImageName,
-                title: token.coin.code,
-                subtitle: token.coin.name,
-                badge: item.token.badge,
-                enabled: item.enabled,
-                hasInfo: item.hasInfo
+            uid: String(item.token.hashValue),
+            imageUrl: token.coin.imageUrl,
+            placeholderImageName: token.placeholderImageName,
+            title: token.coin.code,
+            subtitle: token.coin.name,
+            badge: item.token.badge,
+            enabled: item.enabled,
+            hasInfo: item.hasInfo
         )
     }
 
@@ -43,11 +43,9 @@ class ManageWalletsViewModel {
         viewItemsRelay.accept(items.map { viewItem(item: $0) })
         notFoundVisibleRelay.accept(items.isEmpty)
     }
-
 }
 
 extension ManageWalletsViewModel {
-
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -90,12 +88,11 @@ extension ManageWalletsViewModel {
         }
 
         let coinViewItem = CoinViewItem(
-                coinImageUrl: infoItem.token.coin.imageUrl,
-                coinPlaceholderImageName: infoItem.token.placeholderImageName,
-                coinName: infoItem.token.coin.name,
-                coinCode: infoItem.token.coin.code
+            coinImageUrl: infoItem.token.coin.imageUrl,
+            coinPlaceholderImageName: infoItem.token.placeholderImageName,
+            coinName: infoItem.token.coin.name,
+            coinCode: infoItem.token.coin.code
         )
-
 
         switch infoItem.type {
         case .derivation:
@@ -103,7 +100,7 @@ extension ManageWalletsViewModel {
             showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.derivation_description".localized(coinName, AppConfig.appName, coinName)))
         case .bitcoinCashCoinType:
             showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.bitcoin_cash_coin_type_description".localized(AppConfig.appName)))
-        case .birthdayHeight(let height):
+        case let .birthdayHeight(height):
             showBirthdayHeightRelay.accept(BirthdayHeightViewItem(coin: coinViewItem, height: String(height)))
         case let .contractAddress(value, explorerUrl):
             showContractRelay.accept(ContractViewItem(coin: coinViewItem, blockchainImageUrl: infoItem.token.blockchainType.imageUrl, value: value, explorerUrl: explorerUrl))
@@ -115,11 +112,9 @@ extension ManageWalletsViewModel {
             self?.service.set(filter: filter)
         }
     }
-
 }
 
 extension ManageWalletsViewModel {
-
     struct ViewItem {
         let uid: String
         let imageUrl: String
@@ -154,5 +149,4 @@ extension ManageWalletsViewModel {
         let value: String
         let explorerUrl: String?
     }
-
 }

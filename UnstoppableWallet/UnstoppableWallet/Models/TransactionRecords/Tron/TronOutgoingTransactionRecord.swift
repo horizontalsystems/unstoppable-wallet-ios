@@ -1,6 +1,6 @@
 import Foundation
-import TronKit
 import MarketKit
+import TronKit
 
 class TronOutgoingTransactionRecord: TronTransactionRecord {
     let to: String
@@ -18,5 +18,4 @@ class TronOutgoingTransactionRecord: TronTransactionRecord {
     override var mainValue: TransactionValue? {
         value
     }
-
 }

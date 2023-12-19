@@ -1,11 +1,11 @@
-import UIKit
-import ThemeKit
-import UniswapKit
-import HUD
-import RxSwift
-import RxCocoa
-import SectionsTableView
 import ComponentKit
+import HUD
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
+import UniswapKit
 
 class SwapViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
@@ -27,7 +27,8 @@ class SwapViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -45,9 +46,7 @@ class SwapViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
@@ -107,10 +106,10 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc func onOpenSettings() {
-        guard  let viewController = SwapSettingsModule.viewController(
-                dataSourceManager: dataSourceManager,
-                dexManager: viewModel.dexManager) else {
-
+        guard let viewController = SwapSettingsModule.viewController(
+            dataSourceManager: dataSourceManager,
+            dexManager: viewModel.dexManager
+        ) else {
             return
         }
 
@@ -133,20 +132,16 @@ class SwapViewController: ThemeViewController {
             tableView.endUpdates()
         }
     }
-
 }
 
 extension SwapViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let dataSource = dataSource {
+        if let dataSource {
             sections.append(contentsOf: dataSource.buildSections)
         }
 
         return sections
     }
-
 }
-

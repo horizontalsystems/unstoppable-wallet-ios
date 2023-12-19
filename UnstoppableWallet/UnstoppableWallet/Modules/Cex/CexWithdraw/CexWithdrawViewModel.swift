@@ -1,10 +1,9 @@
-import Foundation
-import RxSwift
-import RxCocoa
-import HsExtensions
-import Combine
-import CurrencyKit
 import BigInt
+import Combine
+import Foundation
+import HsExtensions
+import RxCocoa
+import RxSwift
 
 class CexWithdrawViewModel {
     private var cancellables = Set<AnyCancellable>()
@@ -21,7 +20,7 @@ class CexWithdrawViewModel {
     init(service: CexWithdrawService, coinService: CexCoinService) {
         self.service = service
         self.coinService = coinService
-        self.selectedNetwork = service.selectedNetwork.networkName
+        selectedNetwork = service.selectedNetwork.networkName
 
         networkViewItems = service.networks.enumerated().map { index, network in
             NetworkViewItem(index: index, title: network.networkName, imageUrl: network.blockchain?.type.imageUrl, enabled: network.enabled)
@@ -36,7 +35,7 @@ class CexWithdrawViewModel {
     }
 
     private func proceed(sendData: CexWithdrawModule.SendData?) {
-        if let sendData = sendData {
+        if let sendData {
             proceedSubject.send(sendData)
         }
     }
@@ -51,7 +50,7 @@ class CexWithdrawViewModel {
     }
 
     private func sync(amountError: Error?) {
-        var caution: Caution? = nil
+        var caution: Caution?
 
         if let error = amountError {
             caution = Caution(text: error.smartDescription, type: .error)
@@ -59,11 +58,9 @@ class CexWithdrawViewModel {
 
         amountCaution = caution
     }
-
 }
 
 extension CexWithdrawViewModel {
-
     var coinCode: String {
         service.cexAsset.coinCode
     }
@@ -91,11 +88,9 @@ extension CexWithdrawViewModel {
     func didTapProceed() {
         service.proceed()
     }
-
 }
 
 extension CexWithdrawViewModel {
-
     struct FeeAmount {
         let coinAmount: String
         let currencyAmount: String?
@@ -107,5 +102,4 @@ extension CexWithdrawViewModel {
         let imageUrl: String?
         let enabled: Bool
     }
-
 }

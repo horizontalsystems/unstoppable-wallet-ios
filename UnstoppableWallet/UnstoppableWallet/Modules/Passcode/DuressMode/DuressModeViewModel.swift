@@ -13,7 +13,7 @@ class DuressModeViewModel: ObservableObject {
 
         let sortedAccounts = accountManager.accounts.sorted { $0.name.lowercased() < $1.name.lowercased() }
         regularAccounts = sortedAccounts.filter { !$0.watchAccount }
-        watchAccounts = sortedAccounts.filter { $0.watchAccount }
+        watchAccounts = sortedAccounts.filter(\.watchAccount)
     }
 
     var biometryType: BiometryType? {

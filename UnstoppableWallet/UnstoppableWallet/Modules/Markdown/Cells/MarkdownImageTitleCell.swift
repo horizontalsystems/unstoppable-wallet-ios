@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 class MarkdownImageTitleCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin3x
@@ -25,22 +25,20 @@ class MarkdownImageTitleCell: UITableViewCell {
         label.textColor = .themeGray
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func bind(text: String) {
         label.text = text
     }
-
 }
 
 extension MarkdownImageTitleCell {
-
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding
         let textHeight = text.height(forContainerWidth: textWidth, font: labelFont)
         return textHeight + 2 * verticalPadding
     }
-
 }

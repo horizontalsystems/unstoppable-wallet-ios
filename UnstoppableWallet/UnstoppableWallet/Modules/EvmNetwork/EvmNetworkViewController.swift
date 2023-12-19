@@ -1,8 +1,8 @@
-import UIKit
+import ComponentKit
+import RxSwift
 import SectionsTableView
 import ThemeKit
-import RxSwift
-import ComponentKit
+import UIKit
 
 class EvmNetworkViewController: ThemeViewController {
     private let viewModel: EvmNetworkViewModel
@@ -23,7 +23,8 @@ class EvmNetworkViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -31,6 +32,7 @@ class EvmNetworkViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = viewModel.title
+        navigationItem.largeTitleDisplayMode = .always
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapDone))
@@ -84,106 +86,105 @@ class EvmNetworkViewController: ThemeViewController {
         let module = AddEvmSyncSourceModule.viewController(blockchainType: viewModel.blockchainType)
         present(module, animated: true)
     }
-
 }
 
 extension EvmNetworkViewController: SectionsDataSource {
-
     private func customRowActions(index: Int) -> [RowAction] {
         [
             RowAction(
-                    pattern: .icon(image: UIImage(named: "circle_minus_shifted_24"), background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)),
-                    action: { [weak self] _ in
-                        self?.viewModel.onRemoveCustom(index: index)
-                    }
-            )
+                pattern: .icon(image: UIImage(named: "circle_minus_shifted_24"), background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)),
+                action: { [weak self] _ in
+                    self?.viewModel.onRemoveCustom(index: index)
+                }
+            ),
         ]
     }
 
-    private func row(id: String, viewItem: EvmNetworkViewModel.ViewItem, rowActionProvider: (() -> [RowAction])? = nil, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
+    private func row(id: String, viewItem: EvmNetworkViewModel.ViewItem, rowActionProvider: (() -> [RowAction])? = nil, isFirst: Bool, isLast: Bool, action: @escaping () -> Void) -> RowProtocol {
         tableView.universalRow62(
-                id: id,
-                title: .body(viewItem.name),
-                description: .subhead2(viewItem.url),
-                accessoryType: .check(viewItem.selected),
-                hash: "\(viewItem.selected)-\(isFirst)-\(isLast)",
-                autoDeselect: true,
-                rowActionProvider: rowActionProvider,
-                isFirst: isFirst,
-                isLast: isLast,
-                action: action
+            id: id,
+            title: .body(viewItem.name),
+            description: .subhead2(viewItem.url),
+            accessoryType: .check(viewItem.selected),
+            hash: "\(viewItem.selected)-\(isFirst)-\(isLast)",
+            autoDeselect: true,
+            rowActionProvider: rowActionProvider,
+            isFirst: isFirst,
+            isLast: isLast,
+            action: action
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
-                    id: "default",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: customViewItems.isEmpty ? .margin32 : .margin24),
-                    rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "evm_network.rpc_source".localized) { [weak self] in
-                            self?.openRpcSourceInfo()
+                id: "description",
+                footerState: .margin(height: .margin24),
+                rows: [
+                    tableView.descriptionRow(id: "description-row", text: "evm_network.description".localized, font: .subhead2, textColor: .themeGray),
+                ]
+            ),
+            Section(
+                id: "default",
+                footerState: .margin(height: customViewItems.isEmpty ? .margin32 : .margin24),
+                rows: defaultViewItems.enumerated().map { index, viewItem in
+                    row(
+                        id: "default-\(index)",
+                        viewItem: viewItem,
+                        isFirst: index == 0,
+                        isLast: index == defaultViewItems.count - 1,
+                        action: { [weak self] in
+                            self?.viewModel.onSelectDefault(index: index)
                         }
-                    ] + defaultViewItems.enumerated().map { index, viewItem in
-                        row(
-                                id: "default-\(index)",
-                                viewItem: viewItem,
-                                isFirst: index == 0,
-                                isLast: index == defaultViewItems.count - 1,
-                                action: { [weak self] in
-                                    self?.viewModel.onSelectDefault(index: index)
-                                }
-                        )
-                    }
-            )
+                    )
+                }
+            ),
         ]
 
         if !customViewItems.isEmpty {
             sections.append(
-                    Section(
-                            id: "custom",
-                            headerState: tableView.sectionHeader(text: "evm_network.added".localized),
-                            footerState: .margin(height: .margin32),
-                            rows: customViewItems.enumerated().map { index, viewItem in
-                                row(
-                                        id: "custom-\(index)",
-                                        viewItem: viewItem,
-                                        rowActionProvider: { [weak self] in
-                                            self?.customRowActions(index: index) ?? []
-                                        },
-                                        isFirst: index == 0,
-                                        isLast: index == customViewItems.count - 1,
-                                        action: { [weak self] in
-                                            self?.viewModel.onSelectCustom(index: index)
-                                        }
-                                )
+                Section(
+                    id: "custom",
+                    headerState: tableView.sectionHeader(text: "evm_network.added".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: customViewItems.enumerated().map { index, viewItem in
+                        row(
+                            id: "custom-\(index)",
+                            viewItem: viewItem,
+                            rowActionProvider: { [weak self] in
+                                self?.customRowActions(index: index) ?? []
+                            },
+                            isFirst: index == 0,
+                            isLast: index == customViewItems.count - 1,
+                            action: { [weak self] in
+                                self?.viewModel.onSelectCustom(index: index)
                             }
-                    )
+                        )
+                    }
+                )
             )
         }
 
         sections.append(
-                Section(
+            Section(
+                id: "add-new",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.universalRow48(
                         id: "add-new",
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            tableView.universalRow48(
-                                    id: "add-new",
-                                    image: .local(UIImage(named: "plus_24")?.withTintColor(.themeJacob)),
-                                    title: .body("evm_network.add_new".localized, color: .themeJacob),
-                                    autoDeselect: true,
-                                    isFirst: true,
-                                    isLast: true,
-                                    action: { [weak self] in
-                                        self?.openAddNew()
-                                    }
-                            )
-                        ]
-                )
+                        image: .local(UIImage(named: "plus_24")?.withTintColor(.themeJacob)),
+                        title: .body("evm_network.add_new".localized, color: .themeJacob),
+                        autoDeselect: true,
+                        isFirst: true,
+                        isLast: true,
+                        action: { [weak self] in
+                            self?.openAddNew()
+                        }
+                    ),
+                ]
+            )
         )
 
         return sections
     }
-
 }

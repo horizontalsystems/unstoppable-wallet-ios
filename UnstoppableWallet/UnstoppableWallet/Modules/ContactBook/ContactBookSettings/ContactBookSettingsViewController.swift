@@ -1,9 +1,9 @@
-import UIKit
-import UniformTypeIdentifiers
-import SectionsTableView
-import ThemeKit
 import ComponentKit
 import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
+import UniformTypeIdentifiers
 
 class ContactBookSettingsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
@@ -21,7 +21,8 @@ class ContactBookSettingsViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -74,17 +75,17 @@ class ContactBookSettingsViewController: ThemeViewController {
 
     private func showRestoreAlert(contacts: [BackupContact]) {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "alert.warning".localized,
-                items: [
-                    .highlightedDescription(text: "contacts.restore.overwrite_alert.description".localized)
-                ],
-                buttons: [
-                    .init(style: .red, title: "contacts.restore.overwrite_alert.replace".localized, actionType: .afterClose) { [weak self] in
-                        self?.viewModel.replace(contacts: contacts)
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized)
-                ]
+            image: .warning,
+            title: "alert.warning".localized,
+            items: [
+                .highlightedDescription(text: "contacts.restore.overwrite_alert.description".localized),
+            ],
+            buttons: [
+                .init(style: .red, title: "contacts.restore.overwrite_alert.replace".localized, actionType: .afterClose) { [weak self] in
+                    self?.viewModel.replace(contacts: contacts)
+                },
+                .init(style: .transparent, title: "button.cancel".localized),
+            ]
         )
         present(viewController, animated: true)
     }
@@ -99,16 +100,16 @@ class ContactBookSettingsViewController: ThemeViewController {
 
     private func showMergeConfirmation() {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "alert.warning".localized,
-                items: [
-                    .highlightedDescription(text: "contacts.settings.merge_disclaimer".localized)
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "button.continue".localized) { [ weak self] in self?.viewModel.onConfirm() },
-                    .init(style: .transparent, title: "button.cancel".localized) { [weak self] in self?.bottomSelectorOnDismiss() }
-                ],
-                delegate: self
+            image: .warning,
+            title: "alert.warning".localized,
+            items: [
+                .highlightedDescription(text: "contacts.settings.merge_disclaimer".localized),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "button.continue".localized) { [weak self] in self?.viewModel.onConfirm() },
+                .init(style: .transparent, title: "button.cancel".localized) { [weak self] in self?.bottomSelectorOnDismiss() },
+            ],
+            delegate: self
         )
 
         present(viewController, animated: true)
@@ -120,21 +121,19 @@ class ContactBookSettingsViewController: ThemeViewController {
         }
     }
 
-    private func checkICloudAvailable() {
-
-    }
+    private func checkICloudAvailable() {}
 
     private func activationElements(on: Bool, warning: Bool, animated: Bool = false) -> CellBuilderNew.CellElement {
         var elements = tableView.universalImage24Elements(
-                title: .body("contacts.settings.icloud_sync".localized),
-                accessoryType: .switch(
-                        isOn: on,
-                        animated: animated
-                ) { [weak self] isOn in
-                    self?.viewModel.onToggle(isOn: isOn)
-                }
+            title: .body("contacts.settings.icloud_sync".localized),
+            accessoryType: .switch(
+                isOn: on,
+                animated: animated
+            ) { [weak self] isOn in
+                self?.viewModel.onToggle(isOn: isOn)
+            }
         )
-        elements.insert(.image20 { (component: ImageComponent) -> () in
+        elements.insert(.image20 { (component: ImageComponent) in
             component.isHidden = !(on && warning)
             component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
         }, at: 2)
@@ -152,13 +151,9 @@ class ContactBookSettingsViewController: ThemeViewController {
 
     private func onTapRestore() {
         let documentPicker: UIDocumentPickerViewController
-        if #available(iOS 14.0, *) {
-            let types = UTType.types(tag: "json", tagClass: UTTagClass.filenameExtension, conformingTo: nil)
-            documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: types)
-        } else {
-            documentPicker = UIDocumentPickerViewController(documentTypes: ["*.json"], in: .import)
-        }
+        let types = UTType.types(tag: "json", tagClass: UTTagClass.filenameExtension, conformingTo: nil)
 
+        documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: types)
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
         present(documentPicker, animated: true, completion: nil)
@@ -175,96 +170,89 @@ class ContactBookSettingsViewController: ThemeViewController {
             HudHelper.instance.show(banner: .error(string: "contacts.restore.storage_error".localized))
         }
     }
-
 }
 
 extension ContactBookSettingsViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         let backupVisible = viewModel.hasContacts
 
         var manageRows: [RowProtocol] = [
             tableView.universalRow48(
-                    id: "restore",
-                    image: .local(UIImage(named: "download_24")?.withTintColor(.themeJacob)),
-                    title: .body("contacts.settings.restore_contacts".localized, color: .themeJacob),
-                    autoDeselect: true,
-                    isFirst: true,
-                    isLast: !backupVisible,
-                    action: { [weak self] in
-                        self?.onTapRestore()
-                    }
-            )
+                id: "restore",
+                image: .local(UIImage(named: "download_24")?.withTintColor(.themeJacob)),
+                title: .body("contacts.settings.restore_contacts".localized, color: .themeJacob),
+                autoDeselect: true,
+                isFirst: true,
+                isLast: !backupVisible,
+                action: { [weak self] in
+                    self?.onTapRestore()
+                }
+            ),
         ]
 
         if backupVisible {
             manageRows.append(
-                    tableView.universalRow48(
-                            id: "backup",
-                            image: .local(UIImage(named: "icloud_24")?.withTintColor(.themeJacob)),
-                            title: .body("contacts.settings.backup_contacts".localized, color: .themeJacob),
-                            autoDeselect: true,
-                            isLast: true,
-                            action: { [weak self] in
-                                self?.onTapBackup()
-                            }
-                    )
+                tableView.universalRow48(
+                    id: "backup",
+                    image: .local(UIImage(named: "icloud_24")?.withTintColor(.themeJacob)),
+                    title: .body("contacts.settings.backup_contacts".localized, color: .themeJacob),
+                    autoDeselect: true,
+                    isLast: true,
+                    action: { [weak self] in
+                        self?.onTapBackup()
+                    }
+                )
             )
         }
 
         var sections: [SectionProtocol] = [
             Section(
-                    id: "manage-contacts",
-                    headerState: .margin(height: .margin12),
-                    rows: manageRows
+                id: "manage-contacts",
+                headerState: .margin(height: .margin12),
+                rows: manageRows
             ),
             Section(
-                    id: "activate_section",
-                    headerState: .margin(height: .margin32),
-                    footerState: tableView.sectionFooter(text: "contacts.settings.description".localized),
-                    rows: [
-                        CellBuilderNew.row(
-                                rootElement: activationElements(on: viewModel.featureEnabled, warning: lostSynchronization),
-                                tableView: tableView,
-                                id: "activate-icloud-contacts",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                }
-                        )
-                    ]
-            )
+                id: "activate_section",
+                headerState: .margin(height: .margin32),
+                footerState: tableView.sectionFooter(text: "contacts.settings.description".localized),
+                rows: [
+                    CellBuilderNew.row(
+                        rootElement: activationElements(on: viewModel.featureEnabled, warning: lostSynchronization),
+                        tableView: tableView,
+                        id: "activate-icloud-contacts",
+                        height: .heightCell48,
+                        autoDeselect: true,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                        }
+                    ),
+                ]
+            ),
         ]
 
         if lostSynchronization {
             sections.append(Section(
-                    id: "lost_sync_section",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.highlightedDescriptionRow(id: "lost_connection", style: .red, text: "contacts.settings.lost_synchronization.description".localized)
-                    ]
+                id: "lost_sync_section",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.highlightedDescriptionRow(id: "lost_connection", style: .red, text: "contacts.settings.lost_synchronization.description".localized),
+                ]
             ))
         }
         return sections
     }
-
 }
 
 extension ContactBookSettingsViewController: IBottomSheetDismissDelegate {
-
     func bottomSelectorOnDismiss() {
         setToggle(on: false)
     }
-
 }
 
 extension ContactBookSettingsViewController: UIDocumentPickerDelegate {
-
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+    func documentPicker(_: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         if let jsonUrl = urls.first {
             viewModel.didPick(url: jsonUrl)
         }
     }
-
 }

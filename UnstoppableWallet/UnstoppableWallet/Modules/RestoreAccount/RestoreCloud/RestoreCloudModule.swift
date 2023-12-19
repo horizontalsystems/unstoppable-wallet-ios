@@ -1,13 +1,12 @@
-import UIKit
-import RxSwift
 import MarketKit
+import RxSwift
+import UIKit
 
-struct RestoreCloudModule {
-
+enum RestoreCloudModule {
     static func viewController(returnViewController: UIViewController?) -> UIViewController {
         let service = RestoreCloudService(
-                cloudAccountBackupManager: App.shared.cloudBackupManager,
-                accountManager: App.shared.accountManager
+            cloudAccountBackupManager: App.shared.cloudBackupManager,
+            accountManager: App.shared.accountManager
         )
         let viewModel = RestoreCloudViewModel(service: service)
         return RestoreCloudViewController(viewModel: viewModel, returnViewController: returnViewController)
@@ -35,7 +34,6 @@ struct RestoreCloudModule {
         let isFileBackedUp: Bool
         let showSelectCoins: Bool
     }
-
 }
 
 extension RestoreCloudModule {

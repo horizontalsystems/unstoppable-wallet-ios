@@ -2,123 +2,69 @@ import MarketKit
 import ThemeKit
 import UIKit
 
-struct WatchModule {
+enum WatchModule {
     static func viewController(sourceViewController: UIViewController? = nil) -> UIViewController {
-        let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native))
-
-        let evmAddressParserItem = EvmAddressParser()
-        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: "ETH", token: ethereumToken)
         let addressParserChain = AddressParserChain()
-            .append(handler: evmAddressParserItem)
-            .append(handler: udnAddressParserItem)
-
-        if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
-           let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem) {
-            addressParserChain.append(handler: ensAddressParserItem)
-        }
-
-        let addressUriParser = AddressParserFactory.parser(blockchainType: .ethereum)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: nil, blockchainType: .ethereum)
-
-        let evmAddressService = WatchEvmAddressService(addressService: addressService)
-        let evmAddressViewModel = WatchEvmAddressViewModel(service: evmAddressService)
-
-        let tronAddressParserChain = AddressParserChain().append(handler: TronAddressParser())
-        let tronAddressService = AddressService(
-            mode: .parsers(AddressParserFactory.parser(blockchainType: .tron), tronAddressParserChain),
-            marketKit: App.shared.marketKit, contactBookManager: nil, blockchainType: .tron
-        )
-        let watchTronAddressService = WatchTronAddressService(addressService: tronAddressService)
-        let tronAddressViewModel = WatchTronAddressViewModel(service: watchTronAddressService)
-
-        let publicKeyService = WatchPublicKeyService()
-        let publicKeyViewModel = WatchPublicKeyViewModel(service: publicKeyService)
-
-        let service = WatchService(accountFactory: App.shared.accountFactory)
-        let tronService = WatchTronService(accountFactory: App.shared.accountFactory, accountManager: App.shared.accountManager,
-                                           walletManager: App.shared.walletManager, marketKit: App.shared.marketKit)
-        let viewModel = WatchViewModel(
-            service: service,
-            tronService: tronService,
-            evmAddressViewModel: evmAddressViewModel,
-            tronAddressViewModel: tronAddressViewModel,
-            publicKeyViewModel: publicKeyViewModel
+        addressParserChain.append(handlers:
+            AddressParserFactory.parserChainHandlers(blockchainType: .ethereum, withEns: true)
+                + BtcBlockchainManager.blockchainTypes.flatMap {
+                    AddressParserFactory.parserChainHandlers(blockchainType: $0, withEns: false)
+                }
+                + AddressParserFactory.parserChainHandlers(blockchainType: .tron)
+                + AddressParserFactory.parserChainHandlers(blockchainType: .ton)
         )
 
-        let evmRecipientAddressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
-        let tronRecipientAddressViewModel = RecipientAddressViewModel(service: tronAddressService, handlerDelegate: nil)
-
-        let viewController = WatchViewController(
-            viewModel: viewModel,
-            evmAddressViewModel: evmRecipientAddressViewModel,
-            tronAddressViewModel: tronRecipientAddressViewModel,
-            publicKeyViewModel: publicKeyViewModel,
-            sourceViewController: sourceViewController
+        let service = WatchService(
+            accountFactory: App.shared.accountFactory,
+            addressParserChain: addressParserChain,
+            uriParser: AddressParserFactory.parser(blockchainType: nil, tokenType: nil)
         )
+        let viewModel = WatchViewModel(service: service)
+        let viewController = WatchViewController(viewModel: viewModel, sourceViewController: sourceViewController)
 
         return ThemeNavigationController(rootViewController: viewController)
     }
 
-    static func viewController(sourceViewController: UIViewController? = nil, watchType: WatchType, accountType: AccountType, name: String) -> UIViewController? {
-        let service: IChooseWatchService
+    static func viewController(sourceViewController: UIViewController? = nil, accountType: AccountType, name: String) -> UIViewController? {
+        let service = ChooseWatchService(
+            accountType: accountType,
+            accountName: name,
+            accountFactory: App.shared.accountFactory,
+            accountManager: App.shared.accountManager,
+            walletManager: App.shared.walletManager,
+            marketKit: App.shared.marketKit,
+            evmBlockchainManager: App.shared.evmBlockchainManager
+        )
 
-        switch watchType {
-        case .evmAddress:
-            service = ChooseBlockchainService(
-                accountType: accountType,
-                accountName: name,
-                accountFactory: App.shared.accountFactory,
-                accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManager,
-                evmBlockchainManager: App.shared.evmBlockchainManager,
-                marketKit: App.shared.marketKit
-            )
-
-        case .tronAddress:
+        if case let .coins(tokens) = service.items, tokens.count <= 1 {
             return nil
+        } else {
+            let viewModel = ChooseWatchViewModel(service: service)
 
-        case .publicKey:
-            service = ChooseCoinService(
-                accountType: accountType,
-                accountName: name,
-                accountFactory: App.shared.accountFactory,
-                accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManager,
-                marketKit: App.shared.marketKit
-            )
+            return ChooseWatchViewController(viewModel: viewModel, sourceViewController: sourceViewController)
         }
+    }
 
-        let viewModel = ChooseWatchViewModel(service: service, watchType: watchType)
+    static func watch(accountType: AccountType, name: String) {
+        let service = ChooseWatchService(
+            accountType: accountType,
+            accountName: name,
+            accountFactory: App.shared.accountFactory,
+            accountManager: App.shared.accountManager,
+            walletManager: App.shared.walletManager,
+            marketKit: App.shared.marketKit,
+            evmBlockchainManager: App.shared.evmBlockchainManager
+        )
 
-        return ChooseWatchViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+        if case let .coins(tokens) = service.items, tokens.count <= 1 {
+            service.watch(enabledUids: tokens.map(\.tokenQuery.id))
+        }
     }
 }
 
 extension WatchModule {
-    enum WatchType: CaseIterable {
-        case evmAddress
-        case tronAddress
-        case publicKey
-
-        var title: String {
-            switch self {
-            case .evmAddress: return "watch_address.evm_address".localized
-            case .tronAddress: return "watch_address.tron_address".localized
-            case .publicKey: return "watch_address.public_key".localized
-            }
-        }
-
-        var subtitle: String {
-            switch self {
-            case .evmAddress: return "(Ethereum, Binance, …)"
-            case .tronAddress: return "(TRX, Tron tokens, …)"
-            case .publicKey: return "(Bitcoin, Litecoin, …)"
-            }
-        }
-    }
-
-    enum Item {
-        case coin(token: Token)
-        case blockchain(blockchain: Blockchain)
+    enum Items {
+        case coins(tokens: [Token])
+        case blockchains(blockchains: [Blockchain])
     }
 }

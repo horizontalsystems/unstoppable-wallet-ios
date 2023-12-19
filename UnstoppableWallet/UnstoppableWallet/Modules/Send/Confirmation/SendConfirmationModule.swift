@@ -1,4 +1,3 @@
-import CurrencyKit
 
 protocol ISendConfirmationViewItemNew {}
 
@@ -14,7 +13,6 @@ struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
         self.receiver = receiver
         self.isAccount = isAccount
     }
-
 }
 
 struct SendConfirmationFeeViewItem: ISendConfirmationViewItemNew {

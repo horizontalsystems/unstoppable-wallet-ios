@@ -1,7 +1,7 @@
-import UIKit
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import SectionsTableView
+import UIKit
 
 class MarketNftTopCollectionsViewController: MarketListViewController {
     private let viewModel: MarketNftTopCollectionsViewModel
@@ -15,12 +15,13 @@ class MarketNftTopCollectionsViewController: MarketListViewController {
         self.viewModel = viewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
 
-        super.init(listViewModel: listViewModel)
+        super.init(listViewModel: listViewModel, apiTag: "")
 
         multiSortHeaderView.viewController = self
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -37,24 +38,24 @@ class MarketNftTopCollectionsViewController: MarketListViewController {
         dismiss(animated: true)
     }
 
-    override func topSections(loaded: Bool) -> [SectionProtocol] {
+    override func topSections(loaded _: Bool) -> [SectionProtocol] {
         [
             Section(
-                    id: "header",
-                    rows: [
-                        Row<MarketHeaderCell>(
-                                id: "header",
-                                height: MarketHeaderCell.height,
-                                bind: { cell, _ in
-                                    cell.set(
-                                            title: "top_nft_collections.title".localized,
-                                            description: "top_nft_collections.description".localized,
-                                            imageMode: .remote(imageUrl: "nft".headerImageUrl)
-                                    )
-                                }
-                        )
-                    ]
-            )
+                id: "header",
+                rows: [
+                    Row<MarketHeaderCell>(
+                        id: "header",
+                        height: MarketHeaderCell.height,
+                        bind: { cell, _ in
+                            cell.set(
+                                title: "top_nft_collections.title".localized,
+                                description: "top_nft_collections.description".localized,
+                                imageMode: .remote(imageUrl: "nft".headerImageUrl)
+                            )
+                        }
+                    ),
+                ]
+            ),
         ]
     }
 
@@ -67,5 +68,4 @@ class MarketNftTopCollectionsViewController: MarketListViewController {
             present(ThemeNavigationController(rootViewController: module), animated: true)
         }
     }
-
 }

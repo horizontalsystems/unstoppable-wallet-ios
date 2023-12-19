@@ -1,10 +1,9 @@
-import UIKit
-import ActionSheet
-import ThemeKit
-import SectionsTableView
-import RxSwift
-import RxCocoa
 import ComponentKit
+import RxCocoa
+import RxSwift
+import SectionsTableView
+import ThemeKit
+import UIKit
 
 class UnlinkViewController: ThemeActionSheetController {
     private let viewModel: UnlinkViewModel
@@ -23,7 +22,8 @@ class UnlinkViewController: ThemeActionSheetController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -36,9 +36,9 @@ class UnlinkViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                image: .local(image: UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
-                title: "settings_manage_keys.delete.title".localized,
-                viewController: self
+            image: .trash,
+            title: "settings_manage_keys.delete.title".localized,
+            viewController: self
         )
 
         view.addSubview(tableView)
@@ -90,39 +90,37 @@ class UnlinkViewController: ThemeActionSheetController {
 }
 
 extension UnlinkViewController: SectionsDataSource {
-
     private func checkboxRow(viewItem: UnlinkViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<CheckboxCell>(
-                id: "checkbox_\(index)",
-                hash: "\(viewItem.checked)",
-                autoDeselect: true,
-                dynamicHeight: { width in
-                    CheckboxCell.height(containerWidth: width, text: viewItem.text, backgroundStyle: .lawrence)
-                },
-                bind: { cell, _ in
-                    cell.bind(
-                            text: viewItem.text,
-                            checked: viewItem.checked,
-                            backgroundStyle: .bordered,
-                            isFirst: isFirst,
-                            isLast: isLast
-                    )
-                },
-                action: { [weak self] _ in
-                    self?.viewModel.onTap(index: index)
-                }
+            id: "checkbox_\(index)",
+            hash: "\(viewItem.checked)",
+            autoDeselect: true,
+            dynamicHeight: { width in
+                CheckboxCell.height(containerWidth: width, text: viewItem.text, backgroundStyle: .lawrence)
+            },
+            bind: { cell, _ in
+                cell.bind(
+                    text: viewItem.text,
+                    checked: viewItem.checked,
+                    backgroundStyle: .bordered,
+                    isFirst: isFirst,
+                    isLast: isLast
+                )
+            },
+            action: { [weak self] _ in
+                self?.viewModel.onTap(index: index)
+            }
         )
     }
 
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        checkboxRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
-                    }
-            )
+                id: "main",
+                rows: viewItems.enumerated().map { index, viewItem in
+                    checkboxRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
+                }
+            ),
         ]
     }
-
 }

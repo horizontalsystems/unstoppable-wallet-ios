@@ -9,5 +9,4 @@ class EvmUpdateStatus: ImmutableMappable {
         methodLabels = try map.value("evm_method_labels")
         addressLabels = try map.value("address_labels")
     }
-
 }
