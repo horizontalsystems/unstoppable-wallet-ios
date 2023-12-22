@@ -8760,7 +8760,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1430;
-				ORGANIZATIONNAME = Grouvi;
+				ORGANIZATIONNAME = "Horizontal Systems";
 				TargetAttributes = {
 					D38404E1218317DF007D50AD = {
 						SystemCapabilities = {
@@ -12092,7 +12092,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12129,7 +12128,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12162,7 +12160,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12197,7 +12194,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12234,7 +12230,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12271,7 +12266,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12304,7 +12298,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12339,7 +12332,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Grouvi. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
