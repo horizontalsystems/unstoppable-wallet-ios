@@ -43,7 +43,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
 
                 Spacer().frame(height: 52)
 
-                LazyVGrid(columns: viewModel.actions.map { _ in GridItem(.flexible()) }, spacing: .margin16) {
+                LazyVGrid(columns: viewModel.actions.map { _ in GridItem(.flexible(), alignment: .top) }, spacing: .margin16) {
                     ForEach(viewModel.actions, id: \.self) { action in
                         actionView(type: action)
                     }
