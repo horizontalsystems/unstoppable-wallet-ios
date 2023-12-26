@@ -2764,7 +2764,6 @@
 		D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6828F02DF30066C366 /* BitcoinCashKit */; };
 		D3604E6C28F02E3F0066C366 /* LitecoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6B28F02E3F0066C366 /* LitecoinKit */; };
 		D3604E7028F03AC80066C366 /* MarketKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6F28F03AC80066C366 /* MarketKit */; };
-		D3604E7928F03B9F0066C366 /* ModuleKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E7828F03B9F0066C366 /* ModuleKit */; };
 		D3604E7F28F03C1D0066C366 /* Chart in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E7E28F03C1D0066C366 /* Chart */; };
 		D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8128F03C6B0066C366 /* FeeRateKit */; };
 		D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8428F03CDC0066C366 /* BinanceChainKit */; };
@@ -2773,7 +2772,6 @@
 		D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8B28F03DBF0066C366 /* BitcoinCashKit */; };
 		D3604E8E28F03DBF0066C366 /* LitecoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8D28F03DBF0066C366 /* LitecoinKit */; };
 		D3604E9028F03DC00066C366 /* MarketKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8F28F03DC00066C366 /* MarketKit */; };
-		D3604E9628F03DC00066C366 /* ModuleKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9528F03DC00066C366 /* ModuleKit */; };
 		D3604E9A28F03DC00066C366 /* Chart in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9928F03DC00066C366 /* Chart */; };
 		D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9B28F03DC00066C366 /* FeeRateKit */; };
 		D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9D28F03DC00066C366 /* BinanceChainKit */; };
@@ -2938,12 +2936,10 @@
 		D3C187CF290FCF2D00FE1900 /* ThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187CE290FCF2D00FE1900 /* ThemeKit */; };
 		D3C187D2290FCF3D00FE1900 /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187D1290FCF3D00FE1900 /* ComponentKit */; };
 		D3C187D5290FCF7D00FE1900 /* HUD in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187D4290FCF7D00FE1900 /* HUD */; };
-		D3C187D8290FCF9C00FE1900 /* LanguageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187D7290FCF9C00FE1900 /* LanguageKit */; };
 		D3C187DB290FCFBC00FE1900 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187DA290FCFBC00FE1900 /* SectionsTableView */; };
 		D3C187E0290FD00E00FE1900 /* ThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187DF290FD00E00FE1900 /* ThemeKit */; };
 		D3C187E2290FD00E00FE1900 /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E1290FD00E00FE1900 /* ComponentKit */; };
 		D3C187E4290FD00E00FE1900 /* HUD in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E3290FD00E00FE1900 /* HUD */; };
-		D3C187E6290FD00E00FE1900 /* LanguageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E5290FD00E00FE1900 /* LanguageKit */; };
 		D3C187E8290FD00E00FE1900 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E7290FD00E00FE1900 /* SectionsTableView */; };
 		D3E1D00B2990D9BE00C68F00 /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D3E1D00A2990D9BE00C68F00 /* Hodler */; };
 		D3E1D00D2990DA0400C68F00 /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D3E1D00C2990DA0400C68F00 /* Hodler */; };
@@ -4539,8 +4535,6 @@
 				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
 				D3C187E2290FD00E00FE1900 /* ComponentKit in Frameworks */,
 				D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */,
-				D3604E9628F03DC00066C366 /* ModuleKit in Frameworks */,
-				D3C187E6290FD00E00FE1900 /* LanguageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4589,8 +4583,6 @@
 				D3C187D2290FCF3D00FE1900 /* ComponentKit in Frameworks */,
 				D3E1D00B2990D9BE00C68F00 /* Hodler in Frameworks */,
 				D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */,
-				D3604E7928F03B9F0066C366 /* ModuleKit in Frameworks */,
-				D3C187D8290FCF9C00FE1900 /* LanguageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8577,7 +8569,6 @@
 				D3604E8B28F03DBF0066C366 /* BitcoinCashKit */,
 				D3604E8D28F03DBF0066C366 /* LitecoinKit */,
 				D3604E8F28F03DC00066C366 /* MarketKit */,
-				D3604E9528F03DC00066C366 /* ModuleKit */,
 				D3604E9928F03DC00066C366 /* Chart */,
 				D3604E9B28F03DC00066C366 /* FeeRateKit */,
 				D3604E9D28F03DC00066C366 /* BinanceChainKit */,
@@ -8590,7 +8581,6 @@
 				D3C187DF290FD00E00FE1900 /* ThemeKit */,
 				D3C187E1290FD00E00FE1900 /* ComponentKit */,
 				D3C187E3290FD00E00FE1900 /* HUD */,
-				D3C187E5290FD00E00FE1900 /* LanguageKit */,
 				D3C187E7290FD00E00FE1900 /* SectionsTableView */,
 				D339A93E29126D2A00B895BE /* HsCryptoKit */,
 				D3E1D00C2990DA0400C68F00 /* Hodler */,
@@ -8640,7 +8630,6 @@
 				D3604E6828F02DF30066C366 /* BitcoinCashKit */,
 				D3604E6B28F02E3F0066C366 /* LitecoinKit */,
 				D3604E6F28F03AC80066C366 /* MarketKit */,
-				D3604E7828F03B9F0066C366 /* ModuleKit */,
 				D3604E7E28F03C1D0066C366 /* Chart */,
 				D3604E8128F03C6B0066C366 /* FeeRateKit */,
 				D3604E8428F03CDC0066C366 /* BinanceChainKit */,
@@ -8653,7 +8642,6 @@
 				D3C187CE290FCF2D00FE1900 /* ThemeKit */,
 				D3C187D1290FCF3D00FE1900 /* ComponentKit */,
 				D3C187D4290FCF7D00FE1900 /* HUD */,
-				D3C187D7290FCF9C00FE1900 /* LanguageKit */,
 				D3C187DA290FCFBC00FE1900 /* SectionsTableView */,
 				D339A93C29126D0F00B895BE /* HsCryptoKit */,
 				6BDA29AC29D6F384003847ED /* ECashKit */,
@@ -8809,7 +8797,6 @@
 				D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit.Swift" */,
 				D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit.Swift" */,
 				D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit.Swift" */,
-				D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */,
 				D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */,
 				D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit.Swift" */,
 				D3604E8328F03CDC0066C366 /* XCRemoteSwiftPackageReference "BinanceChainKit.Swift" */,
@@ -8822,7 +8809,6 @@
 				D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit.Swift" */,
 				D3C187D0290FCF3D00FE1900 /* XCRemoteSwiftPackageReference "ComponentKit.Swift" */,
 				D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD.Swift" */,
-				D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit.Swift" */,
 				D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView.Swift" */,
 				D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit.Swift" */,
 				6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore.Swift" */,
@@ -12573,14 +12559,6 @@
 				version = 2.4.1;
 			};
 		};
-		D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/ModuleKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.0;
-			};
-		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/Chart.Swift";
@@ -12731,14 +12709,6 @@
 			requirement = {
 				kind = exactVersion;
 				version = 2.0.0;
-			};
-		};
-		D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit.Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/LanguageKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
 			};
 		};
 		D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView.Swift" */ = {
@@ -12918,11 +12888,6 @@
 			package = D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit.Swift" */;
 			productName = MarketKit;
 		};
-		D3604E7828F03B9F0066C366 /* ModuleKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */;
-			productName = ModuleKit;
-		};
 		D3604E7E28F03C1D0066C366 /* Chart */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */;
@@ -12962,11 +12927,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit.Swift" */;
 			productName = MarketKit;
-		};
-		D3604E9528F03DC00066C366 /* ModuleKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */;
-			productName = ModuleKit;
 		};
 		D3604E9928F03DC00066C366 /* Chart */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -13143,11 +13103,6 @@
 			package = D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD.Swift" */;
 			productName = HUD;
 		};
-		D3C187D7290FCF9C00FE1900 /* LanguageKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit.Swift" */;
-			productName = LanguageKit;
-		};
 		D3C187DA290FCFBC00FE1900 /* SectionsTableView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView.Swift" */;
@@ -13167,11 +13122,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD.Swift" */;
 			productName = HUD;
-		};
-		D3C187E5290FD00E00FE1900 /* LanguageKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit.Swift" */;
-			productName = LanguageKit;
 		};
 		D3C187E7290FD00E00FE1900 /* SectionsTableView */ = {
 			isa = XCSwiftPackageProductDependency;
