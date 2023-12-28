@@ -38,7 +38,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                             view(memo: memo)
                         }
 
-                        if let usedAddresses = viewItem.usedAddresses {
+                        if let usedAddresses = viewItem.usedAddresses, !usedAddresses.isEmpty {
                             NavigationRow(destination: {
                                 UsedAddressesView(
                                     coinName: viewModel.coinName,

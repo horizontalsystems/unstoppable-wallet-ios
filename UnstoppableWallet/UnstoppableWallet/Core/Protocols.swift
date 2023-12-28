@@ -1,5 +1,6 @@
 import Alamofire
 import BigInt
+import BitcoinCore
 import Combine
 import EvmKit
 import GRDB
@@ -34,9 +35,9 @@ protocol IBalanceAdapter: IBaseAdapter {
 
 protocol IDepositAdapter: IBaseAdapter {
     var receiveAddress: DepositAddress { get }
-    var usedAddresses: [UsedAddress]  { get }
     var receiveAddressStatus: DataStatus<DepositAddress> { get }
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> { get }
+    func usedAddresses(change: Bool) -> [UsedAddress]
 }
 
 extension IDepositAdapter {
@@ -48,7 +49,7 @@ extension IDepositAdapter {
         Just(receiveAddressStatus).eraseToAnyPublisher()
     }
 
-    var usedAddresses: [UsedAddress] { [] }
+    func usedAddresses(change: Bool) -> [UsedAddress] { [] }
 }
 
 protocol ITransactionsAdapter {
@@ -70,7 +71,7 @@ protocol ISendBitcoinAdapter {
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
-    func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
+    func sendInfo(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) throws -> SendInfo
     func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
 }
 

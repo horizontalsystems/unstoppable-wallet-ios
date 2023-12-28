@@ -52,6 +52,7 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             active = false
         }
 
+        let notEmpty = item.usedAddresses?.contains { _, value in !value.isEmpty } ?? false
         return .init(
             copyValue: uri,
             highlightedDescription: description,
@@ -59,7 +60,7 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             amount: amountString,
             active: active,
             memo: nil,
-            usedAddresses: item.usedAddresses.flatMap { $0.isEmpty ? nil : $0 }
+            usedAddresses: notEmpty ? item.usedAddresses : nil
         )
     }
 

@@ -301,14 +301,15 @@ extension BitcoinBaseAdapter {
         try validate(address: address, pluginData: [:])
     }
 
-    func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
-        do {
-            let amount = convertToSatoshi(value: amount)
-            let fee = try abstractKit.fee(for: amount, toAddress: address, feeRate: feeRate, pluginData: pluginData)
-            return Decimal(fee) / coinRate
-        } catch {
-            return 0
-        }
+    func sendInfo(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws -> SendInfo {
+        let amount = convertToSatoshi(value: amount)
+        let info = try abstractKit.sendInfo(for: amount, toAddress: address, feeRate: feeRate, pluginData: pluginData)
+        return SendInfo(
+            unspentOutputs: info.unspentOutputs,
+            fee: Decimal(info.fee) / coinRate,
+            changeValue: info.changeValue.map { Decimal($0) / coinRate },
+            changeAddress: info.changeAddress?.stringValue
+        )
     }
 
     func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
@@ -387,11 +388,11 @@ extension BitcoinBaseAdapter: IDepositAdapter {
         DepositAddress(abstractKit.receiveAddress())
     }
 
-    var usedAddresses: [UsedAddress] {
-        abstractKit.usedAddresses.map {
+    func usedAddresses(change: Bool) -> [UsedAddress] {
+        abstractKit.usedAddresses(change: change).map {
             let url = explorerUrl(address: $0.address).flatMap { URL(string: $0) }
             return UsedAddress(index: $0.index, address: $0.address, explorerUrl: url)
-        }
+        }.sorted { $0.index < $1.index }
     }
 }
 
@@ -415,3 +416,9 @@ public struct UsedAddress: Hashable {
     }
 }
 
+struct SendInfo {
+    public let unspentOutputs: [UnspentOutput]
+    public let fee: Decimal
+    public let changeValue: Decimal?
+    public let changeAddress: String?
+}
