@@ -2,8 +2,10 @@ import SwiftUI
 
 struct UsedAddressesView: View {
     let coinName: String
-    let usedAddresses: [UsedAddress]
-    var onDismiss: (() -> ())?
+    let usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]
+    var onDismiss: (() -> Void)?
+
+    @State private var currentTabIndex: Int = ReceiveAddressModule.AddressType.external.rawValue
 
     @Environment(\.presentationMode) private var presentationMode
     @State private var linkUrl: URL?
@@ -15,21 +17,31 @@ struct UsedAddressesView: View {
                     .textSubhead2()
                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
 
-                ListSection {
-                    ForEach(usedAddresses, id: \.self) { address in
-                        ListRow {
-                            HStack(spacing: .margin16) {
-                                Text("\(address.index + 1)").textSubhead2()
-                                Text(address.address).textSubhead2(color: .themeLeah)
-                                Button(action: { linkUrl = address.explorerUrl }) {
-                                    Image("globe_20").renderingMode(.template)
-                                }
-                                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+                TabHeaderView(
+                    tabs: usedAddresses.map { key, _ in key }.sorted().map { $0.title },
+                    currentTabIndex: $currentTabIndex
+                )
 
-                                Button(action: { CopyHelper.copyAndNotify(value: address.address) }) {
-                                    Image("copy_20").renderingMode(.template)
+                ListSection {
+                    if let key = ReceiveAddressModule.AddressType(rawValue: currentTabIndex), let addresses = usedAddresses[key] {
+                        ForEach(addresses, id: \.self) { address in
+                            ListRow {
+                                HStack(spacing: .margin16) {
+                                    Text("\(address.index + 1)")
+                                        .textSubhead2()
+                                        .frame(width: width(index: addresses.last?.index ?? 0 + 1), alignment: .leading)
+                                    Text(address.address).textSubhead2(color: .themeLeah)
+                                    Spacer()
+                                    Button(action: { linkUrl = address.explorerUrl }) {
+                                        Image("globe_20").renderingMode(.template)
+                                    }
+                                    .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+
+                                    Button(action: { CopyHelper.copyAndNotify(value: address.address) }) {
+                                        Image("copy_20").renderingMode(.template)
+                                    }
+                                    .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                                 }
-                                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                             }
                         }
                     }
@@ -55,5 +67,11 @@ struct UsedAddressesView: View {
             }
         }
         .accentColor(.themeJacob)
+    }
+
+    private func width(index: Int) -> CGFloat {
+        let count = index.description.count
+        let maxValue = String(repeating: "9", count: count)
+        return maxValue.size(containerWidth: .greatestFiniteMagnitude, font: .subhead2).width
     }
 }

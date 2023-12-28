@@ -58,14 +58,22 @@ class ReceiveAddressService {
         let isMainNet = adapter.isMainNet
         adapter.receiveAddressPublisher
             .sink { [weak self, weak adapter] status in
-                self?.updateStatus(status: status, usedAddresses: adapter?.usedAddresses, isMainNet: isMainNet)
+                var usedAddresses = [ReceiveAddressModule.AddressType: [UsedAddress]]()
+                usedAddresses[.external] = adapter?.usedAddresses(change: false) ?? []
+                usedAddresses[.change] = adapter?.usedAddresses(change: true) ?? []
+
+                self?.updateStatus(status: status, usedAddresses: usedAddresses, isMainNet: isMainNet)
             }
             .store(in: &cancellables)
 
-        updateStatus(status: adapter.receiveAddressStatus, usedAddresses: adapter.usedAddresses, isMainNet: isMainNet)
+        var usedAddresses = [ReceiveAddressModule.AddressType: [UsedAddress]]()
+        usedAddresses[.external] = adapter.usedAddresses(change: false)
+        usedAddresses[.change] = adapter.usedAddresses(change: true)
+
+        updateStatus(status: adapter.receiveAddressStatus, usedAddresses: usedAddresses, isMainNet: isMainNet)
     }
 
-    private func updateStatus(status: DataStatus<DepositAddress>, usedAddresses: [UsedAddress]?, isMainNet: Bool) {
+    private func updateStatus(status: DataStatus<DepositAddress>, usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?, isMainNet: Bool) {
         state = status.map { address in
             Item(
                 address: address,
@@ -97,7 +105,7 @@ extension ReceiveAddressService: IReceiveAddressService {
 extension ReceiveAddressService {
     struct Item {
         let address: DepositAddress
-        let usedAddresses: [UsedAddress]?
+        let usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?
         let token: Token
         let isMainNet: Bool
         let watchAccount: Bool

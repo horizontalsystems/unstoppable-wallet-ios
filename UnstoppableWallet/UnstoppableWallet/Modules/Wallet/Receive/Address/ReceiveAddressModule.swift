@@ -83,6 +83,20 @@ extension ReceiveAddressModule {
         let style: HighlightedDescriptionBaseView.Style
     }
 
+    enum AddressType: Int, Comparable {
+        case external
+        case change
+
+        var title: String {
+            switch self {
+            case .external: return "receive_used_addresses.external".localized
+            case .change: return "receive_used_addresses.change".localized
+            }
+        }
+
+        static func <(lhs: AddressType, rhs: AddressType) -> Bool { lhs.rawValue < rhs.rawValue }
+    }
+
     struct ViewItem {
         let copyValue: String
         let highlightedDescription: HighlightedDescription
@@ -90,6 +104,6 @@ extension ReceiveAddressModule {
         let amount: String?
         let active: Bool
         let memo: String?
-        let usedAddresses: [UsedAddress]?
+        let usedAddresses: [AddressType: [UsedAddress]]?
     }
 }

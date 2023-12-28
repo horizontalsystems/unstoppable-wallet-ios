@@ -127,8 +127,8 @@ class SendBitcoinAdapterService {
 
     private func update(feeRate: Int, amount: Decimal, address: String?, pluginData: [UInt8: IBitcoinPluginData], updatedFrom: UpdatedField) {
         queue.async { [weak self] in
-            if let fee = self?.adapter.fee(amount: amount, feeRate: feeRate, address: address, pluginData: pluginData) {
-                self?.feeState = .completed(fee)
+            if let sendInfo = try? self?.adapter.sendInfo(amount: amount, feeRate: feeRate, address: address, pluginData: pluginData) {
+                self?.feeState = .completed(sendInfo.fee)
             }
             if updatedFrom != .amount,
                let availableBalance = self?.adapter.availableBalance(feeRate: feeRate, address: address, pluginData: pluginData)
