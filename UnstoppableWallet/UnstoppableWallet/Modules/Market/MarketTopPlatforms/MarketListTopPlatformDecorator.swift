@@ -21,7 +21,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
     func listViewItem(item: MarketKit.TopPlatform) -> MarketModule.ListViewItem {
         let currency = service.currency
 
-        let protocols = item.protocolsCount.map { "market.top.protocols".localized + " \($0)" } ?? ""
+        let protocols = item.protocolsCount.map { "market.top.protocols".localized(String($0)) } ?? ""
 
         let marketCap = item.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized
 
