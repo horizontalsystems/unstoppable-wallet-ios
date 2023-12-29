@@ -39,7 +39,7 @@ enum MarketModule {
                     component.imageView.cornerRadius = listViewItem.iconShape.radius
                     component.imageView.layer.cornerCurve = .continuous
                     component.imageView.kf.setImage(
-                        with: URL(string: listViewItem.iconUrl),
+                        with: listViewItem.iconUrl.flatMap { URL(string: $0) },
                         placeholder: UIImage(named: listViewItem.iconPlaceholderName),
                         options: [.onlyLoadFirstFrame]
                     )
@@ -329,7 +329,7 @@ extension MarketModule { // ViewModel Items
 
     struct ListViewItem {
         let uid: String?
-        let iconUrl: String
+        let iconUrl: String?
         let iconShape: IconShape
         let iconPlaceholderName: String
         let leftPrimaryValue: String

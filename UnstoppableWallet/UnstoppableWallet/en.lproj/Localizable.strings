@@ -630,8 +630,12 @@
 "market.top.top_losers" = "Top Losers";
 "market.top.top_collections" = "Top NFT Collections";
 "market.top.floor_price" = "Floor:";
+"market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.protocols" = "Protocols: %@";
+
+"top_pairs.title" = "Top Market Pairs";
+"top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
