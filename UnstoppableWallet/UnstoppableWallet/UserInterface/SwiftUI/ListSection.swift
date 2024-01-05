@@ -31,7 +31,7 @@ struct ListSection<Content: View>: View {
                             HorizontalDivider()
                         }
                     }
-                case .transparent:
+                case .transparent, .borderedLawrence:
                     HorizontalDivider()
 
                     ForEach(children) { child in

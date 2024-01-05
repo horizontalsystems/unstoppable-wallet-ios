@@ -128,6 +128,9 @@ enum SendModule {
         )
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
+        // UnspentOutputs
+        let unspentOutputsViewModel = UnspentOutputsViewModel(sendInfoService: bitcoinAdapterService)
+
         // Fee
         let feeViewModel = SendFeeViewModel(service: feeService)
         let feeCautionViewModel = SendFeeCautionViewModel(service: feeRateService)
@@ -148,11 +151,13 @@ enum SendModule {
         let viewController = SendBitcoinViewController(
             confirmationFactory: sendFactory,
             feeSettingsFactory: sendFactory,
+            outputSelectorFactory: sendFactory,
             viewModel: viewModel,
             availableBalanceViewModel: availableBalanceViewModel,
             amountInputViewModel: amountInputViewModel,
             amountCautionViewModel: amountCautionViewModel,
             recipientViewModel: recipientViewModel,
+            unspentOutputsViewModel: unspentOutputsViewModel,
             feeViewModel: feeViewModel,
             feeCautionViewModel: feeCautionViewModel
         )
