@@ -1,8 +1,18 @@
+import BitcoinCore
+import Combine
 import Foundation
 import HsToolKit
 import RxCocoa
 import RxRelay
 import RxSwift
+
+protocol ISendInfoValueService: AnyObject {
+    var unspentOutputs: [UnspentOutputInfo] { get }
+    var customOutputs: [UnspentOutputInfo]? { get }
+    var customOutputsUpdatedPublisher: AnyPublisher<Void, Never> { get }
+    var sendInfoState: DataStatus<SendInfo> { get }
+    var sendInfoStateObservable: Observable<DataStatus<SendInfo>> { get }
+}
 
 protocol ISendXFeeValueService: AnyObject {
     var feeState: DataStatus<Decimal> { get }
@@ -33,13 +43,31 @@ class SendBitcoinAdapterService {
 
     let inputOutputOrderService: InputOutputOrderService
 
+    let customOutputsUpdatedSubject = PassthroughSubject<(), Never>()
+    var customOutputs: [UnspentOutputInfo]? {
+        didSet {
+            if customOutputs != oldValue {
+                sync()
+                customOutputsUpdatedSubject.send()
+            }
+        }
+    }
+
     // Outputs
-    let feeStateRelay = BehaviorRelay<DataStatus<Decimal>>(value: .loading)
+    let feeRelay = BehaviorRelay<DataStatus<Decimal>>(value: .loading)
     var feeState: DataStatus<Decimal> = .loading {
         didSet {
             if !feeState.equalTo(oldValue) {
-                feeStateRelay.accept(feeState)
+                feeRelay.accept(feeState)
             }
+        }
+    }
+
+    let sendInfoRelay = BehaviorRelay<DataStatus<SendInfo>>(value: .loading)
+    var sendInfoState: DataStatus<SendInfo> = .loading {
+        didSet {
+            feeState = sendInfoState.map(\.fee)
+            sendInfoRelay.accept(sendInfoState)
         }
     }
 
@@ -111,13 +139,13 @@ class SendBitcoinAdapterService {
         switch feeRateStatus {
         case .loading:
             guard !amount.isZero else { // force update fee for bitcoin, when clear amount to zero value
-                feeState = .completed(0)
+                sendInfoState = .completed(SendInfo.empty)
                 return
             }
 
-            feeState = .loading
+            sendInfoState = .loading
         case let .failed(error):
-            feeState = .failed(error)
+            sendInfoState = .failed(error)
         case let .completed(_feeRate):
             feeRate = _feeRate
         }
@@ -127,11 +155,18 @@ class SendBitcoinAdapterService {
 
     private func update(feeRate: Int, amount: Decimal, address: String?, pluginData: [UInt8: IBitcoinPluginData], updatedFrom: UpdatedField) {
         queue.async { [weak self] in
-            if let sendInfo = try? self?.adapter.sendInfo(amount: amount, feeRate: feeRate, address: address, pluginData: pluginData) {
-                self?.feeState = .completed(sendInfo.fee)
+            do {
+                if let sendInfo = try self?.adapter
+                    .sendInfo(amount: amount, feeRate: feeRate, address: address, unspentOutputs: self?.customOutputs, pluginData: pluginData)
+                {
+                    self?.sendInfoState = .completed(sendInfo)
+                }
+            } catch {
+                self?.sendInfoState = .failed(error)
             }
+
             if updatedFrom != .amount,
-               let availableBalance = self?.adapter.availableBalance(feeRate: feeRate, address: address, pluginData: pluginData)
+               let availableBalance = self?.adapter.availableBalance(feeRate: feeRate, address: address, unspentOutputs: self?.customOutputs, pluginData: pluginData)
             {
                 self?.availableBalance = .completed(availableBalance)
             }
@@ -149,9 +184,21 @@ class SendBitcoinAdapterService {
     }
 }
 
-extension SendBitcoinAdapterService: ISendXFeeValueService, IAvailableBalanceService, ISendXSendAmountBoundsService {
+extension SendBitcoinAdapterService: ISendInfoValueService, ISendXFeeValueService, IAvailableBalanceService, ISendXSendAmountBoundsService {
+    var unspentOutputs: [UnspentOutputInfo] {
+        adapter.unspentOutputs
+    }
+
+    var customOutputsUpdatedPublisher: AnyPublisher<(), Never> {
+        customOutputsUpdatedSubject.eraseToAnyPublisher()
+    }
+
     var feeStateObservable: Observable<DataStatus<Decimal>> {
-        feeStateRelay.asObservable()
+        feeRelay.asObservable()
+    }
+
+    var sendInfoStateObservable: Observable<DataStatus<SendInfo>> {
+        sendInfoRelay.asObservable()
     }
 
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
@@ -193,6 +240,7 @@ extension SendBitcoinAdapterService: ISendService {
             amount: amountInputService.amount,
             address: address.raw,
             feeRate: feeRate,
+            unspentOutputs: customOutputs,
             pluginData: pluginData,
             sortMode: sortMode,
             logger: logger

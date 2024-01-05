@@ -67,12 +67,13 @@ protocol ITransactionsAdapter {
 protocol ISendBitcoinAdapter {
     var blockchainType: BlockchainType { get }
     var balanceData: BalanceData { get }
-    func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
+    func availableBalance(feeRate: Int, address: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
-    func sendInfo(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) throws -> SendInfo
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
+    var unspentOutputs: [UnspentOutputInfo] { get }
+    func sendInfo(amount: Decimal, feeRate: Int, address: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) throws -> SendInfo
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
 }
 
 protocol ISendDashAdapter {

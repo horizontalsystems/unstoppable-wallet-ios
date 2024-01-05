@@ -473,6 +473,10 @@
 
 "send.lock_time" = "TimeLock";
 
+"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.change" = "Change";
+
 "approve.confirmation.you_approve" = "You Approve";
 "approve.confirmation.you_revoke" = "You Revoke";
 "approve.confirmation.spender" = "Spender";

@@ -276,8 +276,8 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
 }
 
 extension BitcoinBaseAdapter {
-    func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
-        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, feeRate: feeRate, pluginData: pluginData)) ?? 0
+    func availableBalance(feeRate: Int, address: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
+        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)) ?? 0
         return Decimal(amount) / coinRate
     }
 
@@ -301,18 +301,23 @@ extension BitcoinBaseAdapter {
         try validate(address: address, pluginData: [:])
     }
 
-    func sendInfo(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws -> SendInfo {
+    func sendInfo(amount: Decimal, feeRate: Int, address: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws -> SendInfo {
         let amount = convertToSatoshi(value: amount)
-        let info = try abstractKit.sendInfo(for: amount, toAddress: address, feeRate: feeRate, pluginData: pluginData)
+
+        let info = try abstractKit.sendInfo(for: amount, toAddress: address, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)
         return SendInfo(
-            unspentOutputs: info.unspentOutputs,
+            unspentOutputs: info.unspentOutputs.map { $0.info },
             fee: Decimal(info.fee) / coinRate,
             changeValue: info.changeValue.map { Decimal($0) / coinRate },
             changeAddress: info.changeAddress?.stringValue
         )
     }
 
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
+    var unspentOutputs: [UnspentOutputInfo] {
+        abstractKit.unspentOutputs
+    }
+
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
         let sortType = convertToKitSortMode(sort: sortMode)
 
@@ -320,7 +325,7 @@ extension BitcoinBaseAdapter {
             do {
                 if let adapter = self {
                     logger.debug("Sending to \(String(reflecting: adapter.abstractKit))", save: true)
-                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, sortType: sortType, pluginData: pluginData)
+                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, sortType: sortType, unspentOutputs: unspentOutputs, pluginData: pluginData)
                 }
                 observer(.success(()))
             } catch {
@@ -417,7 +422,9 @@ public struct UsedAddress: Hashable {
 }
 
 struct SendInfo {
-    public let unspentOutputs: [UnspentOutput]
+    static let empty: Self = .init(unspentOutputs: [], fee: 0, changeValue: nil, changeAddress: nil)
+
+    public let unspentOutputs: [UnspentOutputInfo]
     public let fee: Decimal
     public let changeValue: Decimal?
     public let changeAddress: String?
