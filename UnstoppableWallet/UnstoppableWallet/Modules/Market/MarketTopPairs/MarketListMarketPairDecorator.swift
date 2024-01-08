@@ -20,7 +20,7 @@ extension MarketListMarketPairDecorator: IMarketListDecorator {
         let currency = service.currency
 
         let volume = item.volume.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized
-        let price = item.price.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized
+        let price = item.price.flatMap { ValueFormatter.instance.formatShort(value: $0, decimalCount: 8, symbol: item.target) } ?? "n/a".localized
 
         return MarketModule.ListViewItem(
             uid: item.uid,
