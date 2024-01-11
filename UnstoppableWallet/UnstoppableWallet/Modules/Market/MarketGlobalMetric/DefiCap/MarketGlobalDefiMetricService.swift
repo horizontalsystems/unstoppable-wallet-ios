@@ -20,7 +20,7 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
         }
     }
 
-    let initialMarketFieldIndex: Int = 1
+    let initialIndex: Int = 1
 
     init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.marketKit = marketKit
@@ -103,7 +103,7 @@ extension MarketGlobalDefiMetricService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketFieldIndex _: Int) {
+    func onUpdate(index _: Int) {
         if case let .loaded(items, _, _) = state {
             state = .loaded(items: items, softUpdate: false, reorder: false)
         }

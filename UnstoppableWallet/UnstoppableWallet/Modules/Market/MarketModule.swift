@@ -218,7 +218,9 @@ extension MarketModule {
         }
     }
 
-    enum PriceChangeType: CaseIterable {
+    enum PriceChangeType: Int, CaseIterable {
+        static let sortingTypes: [Self] = [.day, .week, .month]
+
         case day
         case week
         case week2
@@ -235,6 +237,15 @@ extension MarketModule {
             case .month6: return "market.advanced_search.month6".localized
             case .year: return "market.advanced_search.year".localized
             }
+        }
+
+        var shortTitle: String {
+            switch self {
+            case .week: return "market.advanced_search.week.short".localized
+            case .month: return "market.advanced_search.month.short".localized
+            default: return "market.advanced_search.day.short".localized
+            }
+
         }
     }
 

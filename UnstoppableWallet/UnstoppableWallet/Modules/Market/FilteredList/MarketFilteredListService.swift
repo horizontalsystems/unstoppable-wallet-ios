@@ -79,7 +79,7 @@ extension MarketFilteredListService: IMarketListCoinUidService {
 }
 
 extension MarketFilteredListService: IMarketListDecoratorService {
-    var initialMarketFieldIndex: Int {
+    var initialIndex: Int {
         0
     }
 
@@ -91,7 +91,7 @@ extension MarketFilteredListService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketFieldIndex _: Int) {
+    func onUpdate(index _: Int) {
         if case let .loaded(marketInfos, _, _) = state {
             state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }
