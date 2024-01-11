@@ -24,7 +24,12 @@ class SendMemoInputService {
         }
     }
 
-    var memo: String?
+    private let memoRelay = BehaviorRelay<String?>(value: nil)
+    var memo: String? {
+        didSet {
+            memoRelay.accept(memo)
+        }
+    }
 
     init(maxSymbols: Int) {
         self.maxSymbols = maxSymbols
@@ -47,6 +52,10 @@ class SendMemoInputService {
 extension SendMemoInputService {
     var isAvailableObservable: Observable<Bool> {
         isAvailableRelay.asObservable()
+    }
+
+    var memoObservable: Observable<String?> {
+        memoRelay.asObservable()
     }
 
     func set(text: String?) {

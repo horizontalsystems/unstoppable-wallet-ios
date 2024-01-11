@@ -62,6 +62,8 @@ enum SendModule {
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType, tokenType: token.type)
         let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
 
+        let memoService = SendMemoInputService(maxSymbols: 80)
+
         // Fee
         let feeRateService = FeeRateService(provider: feeRateProvider)
         let feeFiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, amount: mode.amount ?? 0)
@@ -82,6 +84,7 @@ enum SendModule {
             feeRateService: feeRateService,
             amountInputService: amountInputService,
             addressService: addressService,
+            memoService: memoService,
             inputOutputOrderService: inputOutputOrderService,
             timeLockService: timeLockService,
             btcBlockchainManager: App.shared.btcBlockchainManager,
@@ -108,6 +111,7 @@ enum SendModule {
 
         addressService.customErrorService = timeLockErrorService
 
+//        memoService.availableService = service
         feeService.feeValueService = bitcoinAdapterService
 
         // ViewModels
@@ -127,6 +131,7 @@ enum SendModule {
             coinService: coinService
         )
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
+        let memoViewModel = SendMemoInputViewModel(service: memoService)
 
         // UnspentOutputs
         let unspentOutputsViewModel = UnspentOutputsViewModel(sendInfoService: bitcoinAdapterService)
@@ -139,6 +144,7 @@ enum SendModule {
             fiatService: fiatService,
             amountCautionService: amountCautionService,
             addressService: addressService,
+            memoService: memoService,
             feeFiatService: feeFiatService,
             feeService: feeService,
             feeRateService: feeRateService,
@@ -157,6 +163,7 @@ enum SendModule {
             amountInputViewModel: amountInputViewModel,
             amountCautionViewModel: amountCautionViewModel,
             recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel,
             unspentOutputsViewModel: unspentOutputsViewModel,
             feeViewModel: feeViewModel,
             feeCautionViewModel: feeCautionViewModel

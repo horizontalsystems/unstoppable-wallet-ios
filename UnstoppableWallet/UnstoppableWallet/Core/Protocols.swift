@@ -67,13 +67,13 @@ protocol ITransactionsAdapter {
 protocol ISendBitcoinAdapter {
     var blockchainType: BlockchainType { get }
     var balanceData: BalanceData { get }
-    func availableBalance(feeRate: Int, address: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
+    func availableBalance(feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     var unspentOutputs: [UnspentOutputInfo] { get }
-    func sendInfo(amount: Decimal, feeRate: Int, address: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) throws -> SendInfo
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
+    func sendInfo(amount: Decimal, feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) throws -> SendInfo
+    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
 }
 
 protocol ISendDashAdapter {
@@ -93,7 +93,7 @@ protocol ISendEthereumAdapter {
 protocol ISendTronAdapter {
     var tronKitWrapper: TronKitWrapper { get }
     var balanceData: BalanceData { get }
-    func contract(amount: BigUInt, address: TronKit.Address) -> TronKit.Contract
+    func contract(amount: BigUInt, address: TronKit.Address, memo: String?) -> TronKit.Contract
     func accountActive(address: TronKit.Address) async -> Bool
 }
 

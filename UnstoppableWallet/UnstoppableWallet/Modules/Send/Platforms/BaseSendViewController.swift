@@ -25,6 +25,8 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
+    private let memoCell: SendMemoInputCell
+
     private let buttonCell = PrimaryButtonCell()
 
     private var isLoaded = false
@@ -36,7 +38,9 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,
-         recipientViewModel: RecipientAddressViewModel)
+         recipientViewModel: RecipientAddressViewModel,
+         memoViewModel: SendMemoInputViewModel
+    )
     {
         self.confirmationFactory = confirmationFactory
         self.feeSettingsFactory = feeSettingsFactory
@@ -51,6 +55,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
 
+        memoCell = SendMemoInputCell(viewModel: memoViewModel, topInset: .margin12)
         super.init()
     }
 
@@ -108,6 +113,10 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
         }
 
         recipientCautionCell.onChangeHeight = { [weak self] in
+            self?.reloadTable()
+        }
+
+        memoCell.onChangeHeight = { [weak self] in
             self?.reloadTable()
         }
 
@@ -246,6 +255,21 @@ extension BaseSendViewController {
                     }
                 ),
             ]
+        )
+    }
+
+    var memoSection: SectionProtocol {
+        Section(
+                id: "memo",
+                rows: [
+                    StaticRow(
+                            cell: memoCell,
+                            id: "memo-input",
+                            dynamicHeight: { [weak self] width in
+                                self?.memoCell.height(containerWidth: width) ?? 0
+                            }
+                    ),
+                ]
         )
     }
 

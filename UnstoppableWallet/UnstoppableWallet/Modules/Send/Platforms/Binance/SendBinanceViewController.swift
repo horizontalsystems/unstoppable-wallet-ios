@@ -10,8 +10,6 @@ class SendBinanceViewController: BaseSendViewController {
 
     private let feeWarningViewModel: ITitledCautionViewModel
 
-    private let memoCell: SendMemoInputCell
-
     private let feeCell: FeeCell
     private let feeCautionCell = TitledHighlightedDescriptionCell()
 
@@ -27,8 +25,6 @@ class SendBinanceViewController: BaseSendViewController {
     {
         self.feeWarningViewModel = feeWarningViewModel
 
-        memoCell = SendMemoInputCell(viewModel: memoViewModel)
-
         feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         super.init(
@@ -37,7 +33,8 @@ class SendBinanceViewController: BaseSendViewController {
             availableBalanceViewModel: availableBalanceViewModel,
             amountInputViewModel: amountInputViewModel,
             amountCautionViewModel: amountCautionViewModel,
-            recipientViewModel: recipientViewModel
+            recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel
         )
     }
 
@@ -73,20 +70,6 @@ class SendBinanceViewController: BaseSendViewController {
     private func openInfo(title: String, description: String) {
         let viewController = BottomSheetModule.description(title: title, text: description)
         present(viewController, animated: true)
-    }
-
-    var memoSection: SectionProtocol {
-        Section(
-            id: "memo",
-            headerState: .margin(height: .margin12),
-            rows: [
-                StaticRow(
-                    cell: memoCell,
-                    id: "memo-input",
-                    height: .heightSingleLineCell
-                ),
-            ]
-        )
     }
 
     var feeSection: SectionProtocol {

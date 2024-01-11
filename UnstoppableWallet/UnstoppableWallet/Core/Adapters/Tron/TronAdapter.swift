@@ -55,7 +55,7 @@ extension TronAdapter: IBalanceAdapter {
 }
 
 extension TronAdapter: ISendTronAdapter {
-    func contract(amount: BigUInt, address: TronKit.Address) -> Contract {
+    func contract(amount: BigUInt, address: TronKit.Address, memo: String?) -> Contract {
         tronKit.transferContract(toAddress: address, value: Int(amount))
     }
 }

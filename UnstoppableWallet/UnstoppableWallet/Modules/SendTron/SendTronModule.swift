@@ -13,8 +13,15 @@ enum SendTronModule {
             contactBookManager: App.shared.contactManager,
             blockchainType: .tron
         )
+        let memoService = SendMemoInputService(maxSymbols: 120)
 
-        let service = SendTronService(token: token, mode: mode, adapter: adapter, addressService: addressService)
+        let service = SendTronService(
+                token: token,
+                mode: mode,
+                adapter: adapter,
+                addressService: addressService,
+                memoService: memoService
+        )
         let switchService = AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage)
         let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
 
@@ -33,14 +40,17 @@ enum SendTronModule {
         )
         addressService.amountPublishService = amountViewModel
 
+
         let recipientViewModel = TronRecipientAddressViewModel(service: addressService, handlerDelegate: nil, sendService: service)
+        let memoViewModel = SendMemoInputViewModel(service: memoService)
 
         let viewController = SendTronViewController(
             tronKitWrapper: adapter.tronKitWrapper,
             viewModel: viewModel,
             availableBalanceViewModel: availableBalanceViewModel,
             amountViewModel: amountViewModel,
-            recipientViewModel: recipientViewModel
+            recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel
         )
 
         return viewController
