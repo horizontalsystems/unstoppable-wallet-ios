@@ -51,7 +51,7 @@ extension MarketAdvancedSearchResultService: IMarketListCoinUidService {
 }
 
 extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
-    var initialMarketFieldIndex: Int {
+    var initialIndex: Int {
         0
     }
 
@@ -59,7 +59,7 @@ extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
         currencyManager.baseCurrency
     }
 
-    func onUpdate(marketFieldIndex _: Int) {
+    func onUpdate(index _: Int) {
         if case let .loaded(marketInfos, _, _) = state {
             state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }

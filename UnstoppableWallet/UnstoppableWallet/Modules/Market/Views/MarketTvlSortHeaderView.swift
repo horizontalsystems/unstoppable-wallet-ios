@@ -110,6 +110,6 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
     }
 
     private func syncSortButton(ascending: Bool) {
-        sortButton.set(image: UIImage(named: ascending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20"))
+        sortButton.set(image: UIImage(named: ascending ? "sort_l2h_20" : "sort_h2l_20"))
     }
 }

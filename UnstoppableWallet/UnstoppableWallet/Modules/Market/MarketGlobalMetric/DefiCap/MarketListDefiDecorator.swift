@@ -7,13 +7,13 @@ class MarketListDefiDecorator {
 
     var marketField: MarketModule.MarketField {
         didSet {
-            service.onUpdate(marketFieldIndex: marketField.rawValue)
+            service.onUpdate(index: marketField.rawValue)
         }
     }
 
     init(service: IMarketListDecoratorService) {
         self.service = service
-        marketField = MarketModule.MarketField.allCases[service.initialMarketFieldIndex]
+        marketField = MarketModule.MarketField.allCases[service.initialIndex]
     }
 }
 

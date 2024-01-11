@@ -715,6 +715,10 @@
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
+"market.advanced_search.day.short" = "24H";
+"market.advanced_search.week.short" = "7D";
+"market.advanced_search.month.short" = "1M";
+
 "market.advanced_search_results.title" = "Results";
 
 "market.global.total_market_cap.title" = "Total Market Cap";

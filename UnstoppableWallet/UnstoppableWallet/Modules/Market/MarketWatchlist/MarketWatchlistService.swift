@@ -4,11 +4,11 @@ import MarketKit
 import RxRelay
 import RxSwift
 
-class MarketWatchlistService: IMarketMultiSortHeaderService {
+class MarketWatchlistService: IMarketSingleSortHeaderService {
     typealias Item = MarketInfo
 
-    private let keySortingField = "market-watchlist-sorting-field"
-    private let keyMarketField = "market-watchlist-market-field"
+    private let keySortDirectionField = "market-watchlist-sort-direction-field"
+    private let keyPriceChangeField = "market-watchlist-price-change-field"
 
     private let marketKit: MarketKit.Kit
     private let currencyManager: CurrencyManager
@@ -21,14 +21,14 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
 
     @PostPublished private(set) var state: MarketListServiceState<MarketInfo> = .loading
 
-    var sortingField: MarketModule.SortingField {
+    private var coinUids = [String]()
+
+    var sortDirectionAscending: Bool {
         didSet {
+            userDefaultsStorage.set(value: sortDirectionAscending, for: keySortDirectionField)
             syncIfPossible()
-            userDefaultsStorage.set(value: sortingField.rawValue, for: keySortingField)
         }
     }
-
-    private var coinUids = [String]()
 
     init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, favoritesManager: FavoritesManager, appManager: IAppManager, userDefaultsStorage: UserDefaultsStorage) {
         self.marketKit = marketKit
@@ -37,11 +37,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
         self.appManager = appManager
         self.userDefaultsStorage = userDefaultsStorage
 
-        if let rawValue: Int = userDefaultsStorage.value(for: keySortingField), let sortingField = MarketModule.SortingField(rawValue: rawValue) {
-            self.sortingField = sortingField
-        } else {
-            sortingField = .highestCap
-        }
+        sortDirectionAscending = userDefaultsStorage.value(for: keySortDirectionField) ?? false
     }
 
     private func syncCoinUids() {
@@ -84,6 +80,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     }
 
     private func sync(marketInfos: [MarketInfo], reorder: Bool = false) {
+        let sortingField: MarketModule.SortingField = sortDirectionAscending ? .topLosers : .topGainers
         state = .loaded(items: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
     }
 
@@ -130,8 +127,8 @@ extension MarketWatchlistService: IMarketListCoinUidService {
 }
 
 extension MarketWatchlistService: IMarketListDecoratorService {
-    var initialMarketFieldIndex: Int {
-        userDefaultsStorage.value(for: keyMarketField) ?? 0
+    var initialIndex: Int {
+        userDefaultsStorage.value(for: keyPriceChangeField) ?? 0
     }
 
     var currency: Currency {
@@ -139,14 +136,12 @@ extension MarketWatchlistService: IMarketListDecoratorService {
     }
 
     var priceChangeType: MarketModule.PriceChangeType {
-        .day
+        MarketModule.PriceChangeType.sortingTypes.at(index: initialIndex) ?? .day
     }
 
-    func onUpdate(marketFieldIndex: Int) {
-        if case let .loaded(marketInfos, _, _) = state {
-            state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
-        }
+    func onUpdate(index: Int) {
+        userDefaultsStorage.set(value: index, for: keyPriceChangeField)
 
-        userDefaultsStorage.set(value: marketFieldIndex, for: keyMarketField)
+        syncIfPossible()
     }
 }

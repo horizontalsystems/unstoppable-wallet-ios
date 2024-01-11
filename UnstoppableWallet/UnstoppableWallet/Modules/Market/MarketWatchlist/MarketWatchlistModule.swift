@@ -14,9 +14,9 @@ enum MarketWatchlistModule {
             favoritesManager: App.shared.favoritesManager
         )
 
-        let decorator = MarketListMarketFieldDecorator(service: service)
+        let decorator = MarketWatchlistDecorator(service: service)
         let viewModel = MarketWatchlistViewModel(service: service)
-        let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
+        let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: decorator)
         let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
 
         return MarketWatchlistViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)

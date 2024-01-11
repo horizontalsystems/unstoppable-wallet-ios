@@ -1,37 +1,36 @@
 import MarketKit
 
-class MarketListMarketFieldDecorator {
+class MarketWatchlistDecorator {
     typealias Item = MarketInfo
 
     private let service: IMarketListDecoratorService
 
-    var marketField: MarketModule.MarketField {
-        didSet {
-            service.onUpdate(index: marketField.rawValue)
-        }
-    }
+    var priceChangeType: MarketModule.PriceChangeType
 
     init(service: IMarketListDecoratorService) {
         self.service = service
-        marketField = MarketModule.MarketField.allCases[service.initialIndex]
+
+        priceChangeType = MarketModule.PriceChangeType.sortingTypes.at(index: service.initialIndex) ?? .day
     }
+
 }
 
-extension MarketListMarketFieldDecorator: IMarketSingleSortHeaderDecorator {
+extension MarketWatchlistDecorator: IMarketSingleSortHeaderDecorator {
     var allFields: [String] {
-        MarketModule.MarketField.allCases.map(\.title)
+        MarketModule.PriceChangeType.sortingTypes.map(\.shortTitle)
     }
 
     var currentFieldIndex: Int {
-        MarketModule.MarketField.allCases.firstIndex(of: marketField) ?? 0
+        MarketModule.PriceChangeType.sortingTypes.firstIndex(of: priceChangeType) ?? 0
     }
 
     func setCurrentField(index: Int) {
-        marketField = MarketModule.MarketField.allCases[index]
+        priceChangeType = MarketModule.PriceChangeType.sortingTypes.at(index: index) ?? .day
+        service.onUpdate(index: index)
     }
 }
 
-extension MarketListMarketFieldDecorator: IMarketListDecorator {
+extension MarketWatchlistDecorator: IMarketListDecorator {
     func listViewItem(item marketInfo: MarketInfo) -> MarketModule.ListViewItem {
         let currency = service.currency
 
@@ -39,11 +38,7 @@ extension MarketListMarketFieldDecorator: IMarketListDecorator {
 
         let dataValue: MarketModule.MarketDataValue
 
-        switch marketField {
-        case .price: dataValue = .diff(marketInfo.priceChangeValue(type: service.priceChangeType))
-        case .volume: dataValue = .volume(marketInfo.totalVolume.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized)
-        case .marketCap: dataValue = .marketCap(marketInfo.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized)
-        }
+        dataValue = .diff(marketInfo.priceChangeValue(type: priceChangeType))
 
         return MarketModule.ListViewItem(
             uid: marketInfo.fullCoin.coin.uid,

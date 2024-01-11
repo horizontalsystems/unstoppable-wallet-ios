@@ -32,7 +32,7 @@ class MarketTopService: IMarketMultiSortHeaderService {
         }
     }
 
-    let initialMarketFieldIndex: Int
+    let initialIndex: Int
     private let apiTag: String
 
     init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, marketTop: MarketModule.MarketTop, sortingField: MarketModule.SortingField, marketField: MarketModule.MarketField) {
@@ -40,7 +40,7 @@ class MarketTopService: IMarketMultiSortHeaderService {
         self.currencyManager = currencyManager
         self.marketTop = marketTop
         self.sortingField = sortingField
-        initialMarketFieldIndex = marketField.rawValue
+        initialIndex = marketField.rawValue
 
         apiTag = "market_top_\(marketTop.rawValue)_\(sortingField.raw)_\(marketField.raw)"
 
@@ -114,7 +114,7 @@ extension MarketTopService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketFieldIndex _: Int) {
+    func onUpdate(index _: Int) {
         if case let .loaded(marketInfos, _, _) = state {
             state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }
