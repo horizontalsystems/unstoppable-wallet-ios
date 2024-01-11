@@ -276,9 +276,14 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
 }
 
 extension BitcoinBaseAdapter {
-    func availableBalance(feeRate: Int, address: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
+    func availableBalance(feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
+        var additionalFeeForMemo = 0
+        if let memo, !memo.isEmpty {
+            additionalFeeForMemo = memo.count * feeRate
+        }
+
         let amount = (try? abstractKit.maxSpendableValue(toAddress: address, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)) ?? 0
-        return Decimal(amount) / coinRate
+        return Decimal(amount - additionalFeeForMemo) / coinRate
     }
 
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal? {
@@ -301,13 +306,17 @@ extension BitcoinBaseAdapter {
         try validate(address: address, pluginData: [:])
     }
 
-    func sendInfo(amount: Decimal, feeRate: Int, address: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws -> SendInfo {
+    func sendInfo(amount: Decimal, feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws -> SendInfo {
         let amount = convertToSatoshi(value: amount)
 
         let info = try abstractKit.sendInfo(for: amount, toAddress: address, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)
+        var additionalFeeForMemo = 0
+        if let memo, !memo.isEmpty {
+            additionalFeeForMemo = memo.count * feeRate
+        }
         return SendInfo(
             unspentOutputs: info.unspentOutputs.map { $0.info },
-            fee: Decimal(info.fee) / coinRate,
+            fee: Decimal(info.fee + additionalFeeForMemo) / coinRate,
             changeValue: info.changeValue.map { Decimal($0) / coinRate },
             changeAddress: info.changeAddress?.stringValue
         )
@@ -317,7 +326,7 @@ extension BitcoinBaseAdapter {
         abstractKit.unspentOutputs
     }
 
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
+    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
         let sortType = convertToKitSortMode(sort: sortMode)
 

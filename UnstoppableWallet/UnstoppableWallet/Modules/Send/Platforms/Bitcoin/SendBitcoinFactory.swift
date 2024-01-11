@@ -71,17 +71,19 @@ class SendBitcoinFactory: BaseSendFactory {
     private let feeRateService: FeeRateService
     private let addressService: AddressService
     private let timeLockService: TimeLockService?
+    private let memoService: SendMemoInputService
     private let adapterService: SendBitcoinAdapterService
     private let logger: Logger
     private let token: Token
 
-    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: FeeRateService, timeLockService: TimeLockService?, adapterService: SendBitcoinAdapterService, logger: Logger, token: Token) {
+    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: FeeRateService, timeLockService: TimeLockService?, adapterService: SendBitcoinAdapterService, logger: Logger, token: Token) {
         self.fiatService = fiatService
         self.amountCautionService = amountCautionService
         self.feeFiatService = feeFiatService
         self.feeService = feeService
         self.feeRateService = feeRateService
         self.addressService = addressService
+        self.memoService = memoService
         self.timeLockService = timeLockService
         self.adapterService = adapterService
         self.logger = logger
@@ -99,6 +101,11 @@ class SendBitcoinFactory: BaseSendFactory {
         let (feeCoinValue, feeCurrencyValue) = try values(fiatService: feeFiatService)
 
         viewItems.append(SendConfirmationAmountViewItem(coinValue: coinValue, currencyValue: currencyValue, receiver: address))
+
+        if memoService.isAvailable, let memo = memoService.memo, !memo.isEmpty {
+            viewItems.append(SendConfirmationMemoViewItem(memo: memo))
+        }
+
         viewItems.append(SendConfirmationFeeViewItem(coinValue: feeCoinValue, currencyValue: feeCurrencyValue))
 
         if (timeLockService?.lockTime ?? .none) != TimeLockService.Item.none {

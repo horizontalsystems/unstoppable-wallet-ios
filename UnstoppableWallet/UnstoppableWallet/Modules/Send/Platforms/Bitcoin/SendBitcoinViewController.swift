@@ -24,6 +24,7 @@ class SendBitcoinViewController: BaseSendViewController {
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
+         memoViewModel: SendMemoInputViewModel,
          unspentOutputsViewModel: UnspentOutputsViewModel,
          feeViewModel: SendFeeViewModel,
          feeCautionViewModel: ITitledCautionViewModel)
@@ -41,7 +42,8 @@ class SendBitcoinViewController: BaseSendViewController {
             availableBalanceViewModel: availableBalanceViewModel,
             amountInputViewModel: amountInputViewModel,
             amountCautionViewModel: amountCautionViewModel,
-            recipientViewModel: recipientViewModel
+            recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel
         )
     }
 
@@ -125,6 +127,7 @@ class SendBitcoinViewController: BaseSendViewController {
     override func buildSections() -> [SectionProtocol] {
         var sections = super.buildSections()
         sections.append(contentsOf: [
+            memoSection,
             feeSection,
             feeCautionSection,
             buttonSection,

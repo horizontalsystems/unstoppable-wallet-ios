@@ -13,6 +13,7 @@ class SendTronService {
     private let disposeBag = DisposeBag()
     private let adapter: ISendTronAdapter
     private let addressService: AddressService
+    private let memoService: SendMemoInputService
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady {
@@ -40,11 +41,12 @@ class SendTronService {
 
     private let activeAddressRelay = PublishRelay<Bool>()
 
-    init(token: Token, mode: SendBaseService.Mode, adapter: ISendTronAdapter, addressService: AddressService) {
+    init(token: Token, mode: SendBaseService.Mode, adapter: ISendTronAdapter, addressService: AddressService, memoService: SendMemoInputService) {
         sendToken = token
         self.mode = mode
         self.adapter = adapter
         self.addressService = addressService
+        self.memoService = memoService
 
         switch mode {
         case let .prefilled(address, amount):
@@ -55,6 +57,7 @@ class SendTronService {
         }
 
         subscribe(disposeBag, addressService.stateObservable) { [weak self] in self?.sync(addressState: $0) }
+        subscribe(disposeBag, memoService.memoObservable) { [weak self] _ in self?.syncState() }
     }
 
     private func sync(addressState: AddressService.State) {
@@ -73,7 +76,7 @@ class SendTronService {
 
     private func syncState() {
         if amountCaution.error == nil, case .success = addressService.state, let tronAmount, let addressData {
-            let contract = adapter.contract(amount: tronAmount, address: addressData.tronAddress)
+            let contract = adapter.contract(amount: tronAmount, address: addressData.tronAddress, memo: memoService.memo)
             state = .ready(contract: contract)
         } else {
             state = .notReady

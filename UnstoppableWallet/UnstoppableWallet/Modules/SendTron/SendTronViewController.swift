@@ -22,12 +22,14 @@ class SendTronViewController: ThemeViewController {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
+    private let memoCell: SendMemoInputCell
+
     private let buttonCell = PrimaryButtonCell()
 
     private var isLoaded = false
     private var keyboardShown = false
 
-    init(tronKitWrapper: TronKitWrapper, viewModel: SendTronViewModel, availableBalanceViewModel: ISendAvailableBalanceViewModel, amountViewModel: AmountInputViewModel, recipientViewModel: RecipientAddressViewModel) {
+    init(tronKitWrapper: TronKitWrapper, viewModel: SendTronViewModel, availableBalanceViewModel: ISendAvailableBalanceViewModel, amountViewModel: AmountInputViewModel, recipientViewModel: RecipientAddressViewModel, memoViewModel: SendMemoInputViewModel) {
         self.tronKitWrapper = tronKitWrapper
         self.viewModel = viewModel
 
@@ -37,6 +39,8 @@ class SendTronViewController: ThemeViewController {
 
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
+
+        memoCell = SendMemoInputCell(viewModel: memoViewModel)
 
         super.init()
     }
@@ -83,6 +87,10 @@ class SendTronViewController: ThemeViewController {
         recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+
+        memoCell.onChangeHeight = { [weak self] in
+            self?.reloadTable()
+        }
 
         buttonCell.set(style: .yellow)
         buttonCell.title = "send.next_button".localized
@@ -142,8 +150,23 @@ class SendTronViewController: ThemeViewController {
 }
 
 extension SendTronViewController: SectionsDataSource {
+
+    var memoSection: SectionProtocol {
+        Section(
+                id: "memo",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    StaticRow(
+                            cell: memoCell,
+                            id: "memo-input",
+                            height: .heightSingleLineCell
+                    ),
+                ]
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
-        var sections = [
+        var sections: [SectionProtocol] = [
             Section(
                 id: "available-balance",
                 headerState: .margin(height: .margin12),
@@ -198,6 +221,7 @@ extension SendTronViewController: SectionsDataSource {
                 )
             )
         }
+        sections.append(memoSection)
         sections.append(
             Section(
                 id: "button",
