@@ -158,6 +158,10 @@ enum AppConfig {
         Bundle.main.object(forInfoDictionaryKey: "SwapEnabled") as? String == "true"
     }
 
+    static var donateEnabled: Bool {
+        Bundle.main.object(forInfoDictionaryKey: "DonateEnabled") as? String == "true"
+    }
+
     static var blockchairApiKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "BlockchairApiKey") as? String) ?? ""
     }
