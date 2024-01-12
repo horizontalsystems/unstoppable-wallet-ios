@@ -477,8 +477,7 @@ class MainSettingsViewController: ThemeViewController {
 extension MainSettingsViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "donate", headerState: .margin(height: .margin12), rows: donateRows),
-            Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
+            Section(id: "account", headerState: .margin(height: AppConfig.donateEnabled ? .margin32 : .margin12), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
@@ -487,6 +486,10 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "feedback", headerState: .margin(height: .margin32), rows: feedbackRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
+
+        if AppConfig.donateEnabled {
+            sections.insert(Section(id: "donate", headerState: .margin(height: .margin12), rows: donateRows), at: 0)
+        }
 
         if showTestNetSwitcher {
             sections.append(

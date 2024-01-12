@@ -32,7 +32,10 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
 
             addressUri.parameters[AddressUri.Field.amountField(blockchainType: item.token.blockchainType)] = amount
             addressUri.parameters[.blockchainUid] = item.token.blockchainType.uid
-            addressUri.parameters[.tokenUid] = item.token.type.id
+            switch item.token.type {
+            case .addressType, .derived: ()
+            default: addressUri.parameters[.tokenUid] = item.token.type.id
+            }
 
             uri = parser.uri(addressUri)
         }
