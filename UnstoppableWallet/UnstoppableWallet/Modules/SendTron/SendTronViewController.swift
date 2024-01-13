@@ -154,12 +154,13 @@ extension SendTronViewController: SectionsDataSource {
     var memoSection: SectionProtocol {
         Section(
                 id: "memo",
-                headerState: .margin(height: .margin12),
                 rows: [
                     StaticRow(
                             cell: memoCell,
                             id: "memo-input",
-                            height: .heightSingleLineCell
+                            dynamicHeight: { [weak self] width in
+                                self?.memoCell.height(containerWidth: width) ?? 0
+                            }
                     ),
                 ]
         )
