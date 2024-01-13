@@ -41,9 +41,8 @@ class OutputSelectorViewModel: ObservableObject {
 
         switch adapterService.sendInfoState {
         case .loading: ()
-        case let .failed(error):
+        case let .failed:
             changeViewItem = nil
-            print(error.localizedDescription)
         case let .completed(sendInfo):
             // create change viewItem
             if let address = sendInfo.changeAddress, let value = sendInfo.changeValue {
