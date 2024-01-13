@@ -50,7 +50,13 @@ class BitcoinBaseAdapter {
             }
         }
 
+        var memo: String? = nil
         for output in transaction.outputs {
+            // get last memo (we use last output for memo op_return)
+            if output.memo != nil {
+                memo = output.memo
+            }
+
             guard output.value > 0 else {
                 continue
             }
@@ -64,6 +70,7 @@ class BitcoinBaseAdapter {
                     originalAddress: hodlerOutputData.addressString
                 )
             }
+
             if anyNotMineToAddress == nil, let address = output.address, !output.mine {
                 anyNotMineToAddress = address
             }
@@ -86,7 +93,8 @@ class BitcoinBaseAdapter {
                 conflictingHash: transaction.conflictingHash,
                 showRawTransaction: transaction.status == .new || transaction.status == .invalid,
                 amount: Decimal(transaction.amount) / coinRate,
-                from: anyNotMineFromAddress
+                from: anyNotMineFromAddress,
+                memo: memo
             )
         case .outgoing:
             return BitcoinOutgoingTransactionRecord(
@@ -105,7 +113,8 @@ class BitcoinBaseAdapter {
                 showRawTransaction: transaction.status == .new || transaction.status == .invalid,
                 amount: Decimal(transaction.amount) / coinRate,
                 to: anyNotMineToAddress,
-                sentToSelf: false
+                sentToSelf: false,
+                memo: memo
             )
         case .sentToSelf:
             return BitcoinOutgoingTransactionRecord(
@@ -124,7 +133,8 @@ class BitcoinBaseAdapter {
                 showRawTransaction: transaction.status == .new || transaction.status == .invalid,
                 amount: Decimal(transaction.amount) / coinRate,
                 to: anyNotMineToAddress,
-                sentToSelf: true
+                sentToSelf: true,
+                memo: memo
             )
         }
     }
@@ -277,13 +287,8 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
 
 extension BitcoinBaseAdapter {
     func availableBalance(feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
-        var additionalFeeForMemo = 0
-        if let memo, !memo.isEmpty {
-            additionalFeeForMemo = memo.count * feeRate
-        }
-
-        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)) ?? 0
-        return Decimal(amount - additionalFeeForMemo) / coinRate
+        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, memo: memo, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)) ?? 0
+        return Decimal(amount) / coinRate
     }
 
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal? {
@@ -309,14 +314,10 @@ extension BitcoinBaseAdapter {
     func sendInfo(amount: Decimal, feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws -> SendInfo {
         let amount = convertToSatoshi(value: amount)
 
-        let info = try abstractKit.sendInfo(for: amount, toAddress: address, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)
-        var additionalFeeForMemo = 0
-        if let memo, !memo.isEmpty {
-            additionalFeeForMemo = memo.count * feeRate
-        }
+        let info = try abstractKit.sendInfo(for: amount, toAddress: address, memo: memo, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)
         return SendInfo(
             unspentOutputs: info.unspentOutputs.map { $0.info },
-            fee: Decimal(info.fee + additionalFeeForMemo) / coinRate,
+            fee: Decimal(info.fee) / coinRate,
             changeValue: info.changeValue.map { Decimal($0) / coinRate },
             changeAddress: info.changeAddress?.stringValue
         )
@@ -334,7 +335,7 @@ extension BitcoinBaseAdapter {
             do {
                 if let adapter = self {
                     logger.debug("Sending to \(String(reflecting: adapter.abstractKit))", save: true)
-                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, sortType: sortType, unspentOutputs: unspentOutputs, pluginData: pluginData)
+                    _ = try adapter.abstractKit.send(to: address, memo: memo, value: satoshiAmount, feeRate: feeRate, sortType: sortType, unspentOutputs: unspentOutputs, pluginData: pluginData)
                 }
                 observer(.success(()))
             } catch {
