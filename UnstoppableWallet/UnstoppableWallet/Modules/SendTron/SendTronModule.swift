@@ -39,7 +39,7 @@ enum SendTronModule {
             decimalParser: AmountDecimalParser()
         )
         addressService.amountPublishService = amountViewModel
-
+        memoService.availableService = service
 
         let recipientViewModel = TronRecipientAddressViewModel(service: addressService, handlerDelegate: nil, sendService: service)
         let memoViewModel = SendMemoInputViewModel(service: memoService)

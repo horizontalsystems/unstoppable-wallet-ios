@@ -230,3 +230,13 @@ extension SendTronService {
         let domain: String?
     }
 }
+
+extension SendTronService: IMemoAvailableService {
+    var isAvailable: Bool {
+        false
+    }
+
+    var isAvailableObservable: Observable<Bool> {
+        Observable.empty()
+    }
+}
