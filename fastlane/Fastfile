@@ -29,7 +29,6 @@ XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY = ENV["XCCONFIG_DEV_UNSTOPPABLE_DOMAINS
 XCCONFIG_DEV_ONE_INCH_API_KEY = ENV["XCCONFIG_DEV_ONE_INCH_API_KEY"]
 XCCONFIG_DEV_BLOCKCHAIR_API_KEY = ENV["XCCONFIG_DEV_BLOCKCHAIR_API_KEY"]
 
-XCCONFIG_PROD_SWAP_ENABLED = ENV["XCCONFIG_PROD_SWAP_ENABLED"]
 XCCONFIG_PROD_INFURA_PROJECT_ID = ENV["XCCONFIG_PROD_INFURA_PROJECT_ID"]
 XCCONFIG_PROD_INFURA_PROJECT_SECRET = ENV["XCCONFIG_PROD_INFURA_PROJECT_SECRET"]
 XCCONFIG_PROD_ETHERSCAN_API_KEY = ENV["XCCONFIG_PROD_ETHERSCAN_API_KEY"]
@@ -133,8 +132,9 @@ def apply_dev_xcconfig
   update_dev_xcconfig('blockchair_api_key', XCCONFIG_DEV_BLOCKCHAIR_API_KEY)
 end
 
-def apply_prod_xcconfig(swap_enabled)
+def apply_prod_xcconfig(swap_enabled, donate_enabled)
   update_prod_xcconfig('swap_enabled', swap_enabled)
+  update_prod_xcconfig('donate_enabled', donate_enabled)
   update_prod_xcconfig('infura_project_id', XCCONFIG_PROD_INFURA_PROJECT_ID)
   update_prod_xcconfig('infura_project_secret', XCCONFIG_PROD_INFURA_PROJECT_SECRET)
   update_prod_xcconfig('etherscan_api_key', XCCONFIG_PROD_ETHERSCAN_API_KEY)
@@ -241,7 +241,7 @@ platform :ios do
     api_key = app_store_api_key
 
     prepare_environment(false)
-    apply_prod_xcconfig('false')
+    apply_prod_xcconfig('false', 'false')
 
     match(
       type: 'appstore',
@@ -256,7 +256,7 @@ platform :ios do
     deploy_production
 
     prepare_environment(true)
-    apply_prod_xcconfig('true')
+    apply_prod_xcconfig('true', 'true')
 
     deploy_production
 

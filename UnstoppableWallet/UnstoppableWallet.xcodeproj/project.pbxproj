@@ -11899,7 +11899,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.37;
+				MARKETING_VERSION = 0.37.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = true;
@@ -11971,7 +11971,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.37;
+				MARKETING_VERSION = 0.37.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = false;
 				SDKROOT = iphoneos;
@@ -12422,7 +12422,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.1;
+				version = 2.2.2;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */ = {
