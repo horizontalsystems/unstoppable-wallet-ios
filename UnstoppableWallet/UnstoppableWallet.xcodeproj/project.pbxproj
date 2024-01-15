@@ -12422,7 +12422,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.2;
+				version = 2.2.3;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */ = {
