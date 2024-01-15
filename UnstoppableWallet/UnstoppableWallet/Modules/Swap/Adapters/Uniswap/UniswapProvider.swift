@@ -5,14 +5,18 @@ import UniswapKit
 
 class UniswapProvider {
     private let swapKit: UniswapKit.Kit
+    private let evmKit: EvmKit.Kit
+    private let rpcSource: RpcSource
 
-    init(swapKit: UniswapKit.Kit) {
+    init(swapKit: UniswapKit.Kit, evmKit: EvmKit.Kit, rpcSource: RpcSource) {
         self.swapKit = swapKit
+        self.evmKit = evmKit
+        self.rpcSource = rpcSource
     }
 
     private func uniswapToken(token: MarketKit.Token) throws -> UniswapKit.Token {
         switch token.type {
-        case .native: return swapKit.etherToken
+        case .native: return try swapKit.etherToken(chain: evmKit.chain)
         case let .eip20(address): return try swapKit.token(contractAddress: EvmKit.Address(hex: address), decimals: token.decimals)
         default: throw TokenError.unsupportedToken
         }
@@ -21,18 +25,18 @@ class UniswapProvider {
 
 extension UniswapProvider {
     var routerAddress: EvmKit.Address {
-        swapKit.routerAddress
+        try! swapKit.routerAddress(chain: evmKit.chain)
     }
 
     var wethAddress: EvmKit.Address {
-        swapKit.etherToken.address
+        try! swapKit.etherToken(chain: evmKit.chain).address
     }
 
     func swapData(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) async throws -> SwapData {
         let uniswapTokenIn = try uniswapToken(token: tokenIn)
         let uniswapTokenOut = try uniswapToken(token: tokenOut)
 
-        return try await swapKit.swapData(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut)
+        return try await swapKit.swapData(rpcSource: rpcSource, chain: evmKit.chain, tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut)
     }
 
     func tradeData(swapData: SwapData, amount: Decimal, tradeType: TradeType, tradeOptions: TradeOptions) throws -> TradeData {
@@ -45,7 +49,7 @@ extension UniswapProvider {
     }
 
     func transactionData(tradeData: TradeData) throws -> TransactionData {
-        try swapKit.transactionData(tradeData: tradeData)
+        try swapKit.transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, tradeData: tradeData)
     }
 }
 

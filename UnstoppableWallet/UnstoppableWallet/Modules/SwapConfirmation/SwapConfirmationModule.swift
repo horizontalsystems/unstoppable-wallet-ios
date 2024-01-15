@@ -38,12 +38,13 @@ enum SwapConfirmationModule {
 
         let evmKit = evmKitWrapper.evmKit
         guard let apiKey = AppConfig.oneInchApiKey,
-              let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKit, apiKey: apiKey)
+              let swapKit = try? OneInchKit.Kit.instance(apiKey: apiKey),
+              let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: dex.blockchainType)?.rpcSource
         else {
             return nil
         }
 
-        let oneInchProvider = OneInchProvider(swapKit: swapKit)
+        let oneInchProvider = OneInchProvider(swapKit: swapKit, evmKit: evmKit, rpcSource: rpcSource)
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: dex.blockchainType,
