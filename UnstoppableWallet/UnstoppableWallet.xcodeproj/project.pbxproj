@@ -12590,7 +12590,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BinanceChainKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.1;
+				version = 2.0.2;
 			};
 		};
 		D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit.Swift" */ = {
