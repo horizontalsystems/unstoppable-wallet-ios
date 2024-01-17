@@ -4,9 +4,11 @@ import TonKitKmm
 
 class TonTransactionRecord: TransactionRecord {
     let fee: TransactionValue?
+    let memo: String?
 
     init(source: TransactionSource, transaction: TonTransaction, feeToken: Token) {
         fee = transaction.fee.map { .coinValue(token: feeToken, value: TonAdapter.amount(kitAmount: $0)) }
+        memo = transaction.memo
 
         super.init(
             source: source,
