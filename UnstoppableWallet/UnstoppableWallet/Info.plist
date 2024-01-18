@@ -53,6 +53,8 @@
 	<string>${default_words}</string>
 	<key>DefiYieldApiKey</key>
 	<string>$(defiyield_api_key)</string>
+	<key>DonateEnabled</key>
+	<string>${donate_enabled}</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
 	<key>FtmscanApiKey</key>
