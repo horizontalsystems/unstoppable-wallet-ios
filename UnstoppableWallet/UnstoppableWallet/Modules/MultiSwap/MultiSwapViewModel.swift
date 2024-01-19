@@ -15,6 +15,8 @@ class MultiSwapViewModel: ObservableObject {
     private let providers: [IMultiSwapProvider]
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
+    private let walletManager = App.shared.walletManager
+    private let adapterManager = App.shared.adapterManager
 
     @Published var currency: Currency
 
@@ -31,11 +33,13 @@ class MultiSwapViewModel: ObservableObject {
             }
 
             if let internalTokenIn {
+                availableBalance = walletManager.activeWallets.first { $0.token == internalTokenIn }.flatMap { adapterManager.balanceAdapter(for: $0)?.balanceData.available }
                 rateIn = marketKit.coinPrice(coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)?.value
                 rateInCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] price in self?.rateIn = price.value }
             } else {
+                availableBalance = nil
                 rateIn = nil
                 rateInCancellable = nil
             }
@@ -92,6 +96,8 @@ class MultiSwapViewModel: ObservableObject {
             syncQuotes()
         }
     }
+
+    @Published var availableBalance: Decimal?
 
     @Published var rateIn: Decimal? {
         didSet {
@@ -391,6 +397,14 @@ extension MultiSwapViewModel {
     func flipPrice() {
         priceFlipped.toggle()
         syncPrice()
+    }
+
+    func setAmountIn(percent: Int) {
+        guard let availableBalance else {
+            return
+        }
+
+        amountIn = availableBalance * Decimal(percent) / 100
     }
 
     func swap() {}

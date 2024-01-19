@@ -14,6 +14,8 @@ struct MultiSwapView: View {
 
     @State private var progress: Double = 0
 
+    @FocusState var isInputActive: Bool
+
     var body: some View {
         ThemeNavigationView {
             ThemeView {
@@ -42,34 +44,49 @@ struct MultiSwapView: View {
                             .disabled(viewModel.currentQuote == nil || viewModel.loading)
                             .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
-                            if viewModel.price != nil || viewModel.currentQuote != nil {
+                            if viewModel.currentQuote == nil,
+                               let availableBalance = viewModel.availableBalance,
+                               let tokenIn = viewModel.tokenIn,
+                               let formatted = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: tokenIn), value: availableBalance))
+                            {
                                 ListSection {
-                                    if let currentQuote = viewModel.currentQuote {
-                                        HStack(spacing: .margin8) {
-                                            Button(action: {
-                                                quotesPresented = true
-                                            }) {
-                                                HStack(spacing: .margin8) {
-                                                    Image(currentQuote.provider.icon)
-                                                        .resizable()
-                                                        .scaledToFit()
-                                                        .frame(width: .iconSize24, height: .iconSize24)
-
-                                                    Text(currentQuote.provider.name).textSubhead1(color: .themeLeah)
-                                                    Image("arrow_small_down_20").themeIcon(color: .themeGray)
-                                                }
-                                            }
-
-                                            Spacer()
-
-                                            Button(action: {}) {
-                                                Image("manage_2_20").renderingMode(.template)
-                                            }
-                                            .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
-                                        }
-                                        .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
-                                        .frame(height: 40)
+                                    HStack(spacing: .margin8) {
+                                        Text("Available Balance").textSubhead2()
+                                        Spacer()
+                                        Text(formatted).textSubhead2(color: .themeLeah)
                                     }
+                                    .frame(height: 40)
+                                    .padding(.horizontal, .margin16)
+                                }
+                                .themeListStyle(.bordered)
+                            }
+
+                            if let currentQuote = viewModel.currentQuote {
+                                ListSection {
+                                    HStack(spacing: .margin8) {
+                                        Button(action: {
+                                            quotesPresented = true
+                                        }) {
+                                            HStack(spacing: .margin8) {
+                                                Image(currentQuote.provider.icon)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: .iconSize24, height: .iconSize24)
+
+                                                Text(currentQuote.provider.name).textSubhead1(color: .themeLeah)
+                                                Image("arrow_small_down_20").themeIcon(color: .themeGray)
+                                            }
+                                        }
+
+                                        Spacer()
+
+                                        Button(action: {}) {
+                                            Image("manage_2_20").renderingMode(.template)
+                                        }
+                                        .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
+                                    }
+                                    .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
+                                    .frame(height: 40)
 
                                     if let price = viewModel.price {
                                         VStack(spacing: 0) {
@@ -90,7 +107,7 @@ struct MultiSwapView: View {
                                             .frame(height: 40)
                                             .padding(.horizontal, .margin16)
 
-                                            if let currentQuote = viewModel.currentQuote, !currentQuote.quote.fields.isEmpty {
+                                            if !currentQuote.quote.fields.isEmpty {
                                                 ForEach(currentQuote.quote.fields) { (field: MultiSwapQuote.Field) in
                                                     HStack(spacing: .margin8) {
                                                         if let memo = field.memo {
@@ -112,7 +129,7 @@ struct MultiSwapView: View {
 
                                                         if let settingId = field.settingId {
                                                             Button(action: {
-                                                                self.presentedSettingId = settingId
+                                                                presentedSettingId = settingId
                                                             }) {
                                                                 if field.modified {
                                                                     Image("manage_2_20").themeIcon(color: .themeJacob)
@@ -192,6 +209,7 @@ struct MultiSwapView: View {
                     .foregroundColor(.themeLeah)
                     .font(.themeHeadline1)
                     .keyboardType(.decimalPad)
+                    .focused($isInputActive)
 
                 if viewModel.rateIn != nil {
                     HStack(spacing: 0) {
@@ -201,9 +219,46 @@ struct MultiSwapView: View {
                             .foregroundColor(.themeGray)
                             .font(.themeBody)
                             .keyboardType(.decimalPad)
+                            .focused($isInputActive)
                     }
                 } else {
                     Text("").textBody()
+                }
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    HStack(spacing: 0) {
+                        if viewModel.availableBalance != nil {
+                            ForEach(1 ... 4, id: \.self) { multiplier in
+                                let percent = multiplier * 25
+
+                                Button(action: {
+                                    viewModel.setAmountIn(percent: percent)
+                                }) {
+                                    Text("\(percent)%").textSubhead1(color: .themeLeah)
+                                }
+                                .frame(maxWidth: .infinity)
+
+                                RoundedRectangle(cornerRadius: 0.5, style: .continuous)
+                                    .fill(Color.themeSteel20)
+                                    .frame(width: 1)
+                                    .frame(maxHeight: .infinity)
+                            }
+                        } else {
+                            Spacer()
+                        }
+
+                        Button(action: {
+                            isInputActive = false
+                        }) {
+                            Image(systemName: "keyboard.chevron.compact.down")
+                                .font(.themeSubhead1)
+                                .foregroundColor(.themeLeah)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .padding(.horizontal, -16)
+                    .frame(maxWidth: .infinity)
                 }
             }
 
