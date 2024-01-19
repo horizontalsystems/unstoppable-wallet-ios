@@ -305,7 +305,7 @@ struct MultiSwapView: View {
                     Text("0").themeHeadline1(color: .themeGray, alignment: .leading)
                 }
 
-                Text(viewModel.fiatAmountOutString ?? "").themeBody(color: .themeGray, alignment: .leading)
+                Text(viewModel.fiatAmountOut.map { "\(viewModel.currency.symbol)\($0.description)" } ?? "").themeBody(color: .themeGray, alignment: .leading)
             }
 
             Spacer()

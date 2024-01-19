@@ -218,7 +218,7 @@ class MultiSwapViewModel: ObservableObject {
     }
 
     @Published var amountOutString: String?
-    @Published var fiatAmountOutString: String?
+    @Published var fiatAmountOut: Decimal?
 
     @Published var price: String?
     private var priceFlipped = false
@@ -296,12 +296,12 @@ class MultiSwapViewModel: ObservableObject {
         let rateOut = currentQuote != nil ? rateOut : 0
 
         guard let rateOut else {
-            fiatAmountOutString = nil
+            fiatAmountOut = nil
             return
         }
 
         let amount = currentQuote?.quote.amountOut ?? 0
-        fiatAmountOutString = "\(currency.symbol)\((amount * rateOut).rounded(decimal: 2).description)"
+        fiatAmountOut = (amount * rateOut).rounded(decimal: 2)
     }
 
     private func syncQuotes() {
