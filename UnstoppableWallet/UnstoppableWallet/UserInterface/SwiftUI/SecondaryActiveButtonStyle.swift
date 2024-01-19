@@ -5,7 +5,7 @@ struct SecondaryActiveButtonStyle: ButtonStyle {
     let leftAccessory: Accessory
     let rightAccessory: Accessory
 
-    init(style: Style = .default, leftAccessory: Accessory = .none, rightAccessory: Accessory = .none, isActive _: Bool = false) {
+    init(style: Style = .default, leftAccessory: Accessory = .none, rightAccessory: Accessory = .none) {
         self.style = style
         self.leftAccessory = leftAccessory
         self.rightAccessory = rightAccessory
