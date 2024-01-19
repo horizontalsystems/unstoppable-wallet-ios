@@ -113,7 +113,7 @@ class Eip1559GasPriceService {
             recommendedTips = max(recommendedTips, minRecommendedTips)
         }
 
-        recommendedMaxFee = baseFeesConsidered.max() ?? 0 + recommendedTips
+        recommendedMaxFee = (baseFeesConsidered.max() ?? 0) + recommendedTips
         if let minRecommendedMaxFee {
             recommendedMaxFee = max(recommendedMaxFee, minRecommendedMaxFee)
         }
