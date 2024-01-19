@@ -12,34 +12,12 @@ struct MultiSwapConfirmView: View {
                 ScrollView {
                     VStack(spacing: .margin16) {
                         ListSection {
-                            ListRow {
-                                Image("arrow_medium_2_up_right_24").themeIcon()
-                                Text("You Send").textBody()
-                                Spacer()
-
-                                if let tokenIn = viewModel.tokenIn {
-                                    Text(tokenIn.coin.name).textSubhead1()
-                                }
-                            }
-
                             if let tokenIn = viewModel.tokenIn, let amountIn = viewModel.amountIn {
-                                tokenRow(token: tokenIn, amount: amountIn, convertedString: viewModel.fiatAmountString)
-                            }
-                        }
-
-                        ListSection {
-                            ListRow {
-                                Image("arrow_medium_2_down_left_24").themeIcon()
-                                Text("You Get").textBody()
-                                Spacer()
-
-                                if let tokenOut = viewModel.tokenOut {
-                                    Text(tokenOut.coin.name).textSubhead1()
-                                }
+                                tokenRow(title: "You Send", token: tokenIn, amount: amountIn, fiatAmount: viewModel.fiatAmountIn)
                             }
 
                             if let tokenOut = viewModel.tokenOut, let amountOut = viewModel.currentQuote?.quote.amountOut {
-                                tokenRow(token: tokenOut, amount: amountOut, convertedString: viewModel.fiatAmountOutString)
+                                tokenRow(title: "You Get", token: tokenOut, amount: amountOut, fiatAmount: viewModel.fiatAmountOut)
                             }
                         }
 
@@ -81,7 +59,7 @@ struct MultiSwapConfirmView: View {
         }
     }
 
-    @ViewBuilder private func tokenRow(token: Token, amount: Decimal, convertedString: String?) -> some View {
+    @ViewBuilder private func tokenRow(title: String, token: Token, amount: Decimal, fiatAmount: Decimal?) -> some View {
         ListRow {
             KFImage.url(URL(string: token.coin.imageUrl))
                 .resizable()
@@ -89,16 +67,30 @@ struct MultiSwapConfirmView: View {
                     Circle().fill(Color.themeSteel20)
                 }
                 .clipShape(Circle())
-                .frame(width: .iconSize32, height: .iconSize32)
+                .frame(width: .iconSize24, height: .iconSize24)
 
-            if let formatted = ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: token), value: amount)) {
-                Text(formatted).textSubhead1(color: .themeLeah)
-            }
+            VStack(spacing: 1) {
+                HStack(spacing: .margin4) {
+                    Text(title).textSubhead2(color: .themeLeah)
 
-            Spacer()
+                    Spacer()
 
-            if let convertedString {
-                Text(convertedString).textSubhead1()
+                    if let formatted = ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: token), value: amount)) {
+                        Text(formatted).textSubhead1(color: .themeLeah)
+                    }
+                }
+
+                HStack(spacing: .margin4) {
+                    if let protocolName = token.protocolName {
+                        Text(protocolName).textCaption()
+                    }
+
+                    Spacer()
+
+                    if let fiatAmount, let formatted = ValueFormatter.instance.formatFull(currency: viewModel.currency, value: fiatAmount) {
+                        Text(formatted).textCaption()
+                    }
+                }
             }
         }
     }
