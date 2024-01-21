@@ -7,7 +7,7 @@ protocol IMultiSwapProvider {
     var name: String { get }
     var icon: String { get }
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote
+    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> IMultiSwapQuote
     func view(settingId: String) -> AnyView
 }
 
