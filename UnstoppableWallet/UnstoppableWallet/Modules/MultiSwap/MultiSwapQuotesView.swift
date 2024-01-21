@@ -40,7 +40,7 @@ struct MultiSwapQuotesView: View {
                                         Text("n/a").textSubhead2(color: .themeGray50)
                                     }
 
-                                    if let fee = quote.quote.fee, let formatted = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: fee.token), value: fee.amount)) {
+                                    if let fee = quote.quote.fee, let formatted = ValueFormatter.instance.formatShort(coinValue: fee) {
                                         Text(formatted).textSubhead2(color: .themeGray)
                                     } else {
                                         Text("n/a").textSubhead2(color: .themeGray50)

@@ -413,6 +413,6 @@ extension MultiSwapViewModel {
 extension MultiSwapViewModel {
     struct Quote {
         let provider: IMultiSwapProvider
-        let quote: MultiSwapQuote
+        let quote: IMultiSwapQuote
     }
 }
