@@ -6,6 +6,8 @@ import OneInchKit
 import SwiftUI
 
 struct OneInchMultiSwapProvider {
+    static let defaultSlippage: Decimal = 1
+
     private let kit: OneInchKit.Kit
     private let storage: MultiSwapSettingStorage
     private let marketKit = App.shared.marketKit
@@ -54,7 +56,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> MultiSwapQuote {
+    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -80,46 +82,12 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             gasPrice: gasPrice
         )
 
-        guard let amountOut = quote.amountOut else {
-            throw SwapError.invalidAmountOut
-        }
-
-        var fee: MultiSwapQuote.TokenAmount?
-
-        do {
-            guard let feeToken = try marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native)) else {
-                throw FeeError.noFeeToken
-            }
-
-            guard let amount = Decimal(bigUInt: BigUInt(quote.estimateGas) * BigUInt(gasPrice.max), decimals: feeToken.decimals) else {
-                throw FeeError.invalidAmount
-            }
-
-            fee = MultiSwapQuote.TokenAmount(token: feeToken, amount: amount)
-        } catch {
-            print("Fee Error: \(error)")
-        }
-
-        var fields = [MultiSwapQuote.Field]()
-
-        fields.append(
-            MultiSwapQuote.Field(
-                title: "Network Fee",
-                memo: .init(title: "Network Fee", text: "Network Fee description"),
-                value: "$0.98",
-                settingId: "network_fee"
-            )
+        return try Quote(
+            quote: quote,
+            feeToken: marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native)),
+            gasPrice: gasPrice,
+            slippage: 2.5
         )
-
-        fields.append(
-            MultiSwapQuote.Field(
-                title: "Slippage",
-                value: "3%",
-                valueLevel: .warning
-            )
-        )
-
-        return MultiSwapQuote(amountOut: amountOut, fee: fee, fields: fields)
     }
 
     func view(settingId: String) -> AnyView {
@@ -134,11 +102,64 @@ extension OneInchMultiSwapProvider {
     enum SwapError: Error {
         case invalidAddress
         case invalidAmountIn
-        case invalidAmountOut
     }
+}
 
-    enum FeeError: Error {
-        case noFeeToken
-        case invalidAmount
+extension OneInchMultiSwapProvider {
+    struct Quote: IMultiSwapQuote {
+        private let quote: OneInchKit.Quote
+        private let feeToken: MarketKit.Token?
+        private let gasPrice: GasPrice?
+        private let slippage: Decimal
+
+        init(quote: OneInchKit.Quote, feeToken: MarketKit.Token?, gasPrice: GasPrice?, slippage: Decimal) {
+            self.quote = quote
+            self.feeToken = feeToken
+            self.gasPrice = gasPrice
+            self.slippage = slippage
+        }
+
+        var amountOut: Decimal {
+            quote.amountOut ?? 0
+        }
+
+        var fee: CoinValue? {
+            guard let feeToken, let gasPrice else {
+                return nil
+            }
+
+            guard let amount = Decimal(bigUInt: BigUInt(quote.estimateGas) * BigUInt(gasPrice.max), decimals: feeToken.decimals) else {
+                return nil
+            }
+
+            return CoinValue(kind: .token(token: feeToken), value: amount)
+        }
+
+        var mainFields: [MultiSwapMainField] {
+            var fields = [MultiSwapMainField]()
+
+            if let fee, let formatted = ValueFormatter.instance.formatShort(coinValue: fee) {
+                fields.append(
+                    MultiSwapMainField(
+                        title: "Network Fee",
+                        memo: .init(title: "Network Fee", text: "Network Fee description"),
+                        value: formatted,
+                        settingId: "network_fee"
+                    )
+                )
+            }
+
+            if slippage != OneInchMultiSwapProvider.defaultSlippage {
+                fields.append(
+                    MultiSwapMainField(
+                        title: "Slippage",
+                        value: "\(slippage.description)%",
+                        valueLevel: .warning
+                    )
+                )
+            }
+
+            return fields
+        }
     }
 }

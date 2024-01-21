@@ -107,8 +107,8 @@ struct MultiSwapView: View {
                                             .frame(height: 40)
                                             .padding(.horizontal, .margin16)
 
-                                            if !currentQuote.quote.fields.isEmpty {
-                                                ForEach(currentQuote.quote.fields) { (field: MultiSwapQuote.Field) in
+                                            if !currentQuote.quote.mainFields.isEmpty {
+                                                ForEach(currentQuote.quote.mainFields) { (field: MultiSwapMainField) in
                                                     HStack(spacing: .margin8) {
                                                         if let memo = field.memo {
                                                             Button(action: {
@@ -347,7 +347,7 @@ struct MultiSwapView: View {
         }
     }
 
-    private func color(valueLevel: MultiSwapQuote.Field.ValueLevel) -> Color {
+    private func color(valueLevel: MultiSwapMainField.ValueLevel) -> Color {
         switch valueLevel {
         case .regular: return .themeLeah
         case .warning: return .themeJacob
