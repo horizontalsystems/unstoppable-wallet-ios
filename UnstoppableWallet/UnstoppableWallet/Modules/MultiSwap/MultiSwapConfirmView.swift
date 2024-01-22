@@ -21,8 +21,8 @@ struct MultiSwapConfirmView: View {
                             }
                         }
 
-                        if let price = viewModel.price {
-                            ListSection {
+                        ListSection {
+                            if let price = viewModel.price {
                                 ListRow {
                                     Text("Price").textSubhead2()
 
@@ -32,6 +32,26 @@ struct MultiSwapConfirmView: View {
                                         viewModel.flipPrice()
                                     }) {
                                         Text(price).textSubhead1(color: .themeLeah)
+                                    }
+                                }
+                            }
+
+                            if let firstSection = viewModel.currentQuote?.quote.firstSection, !firstSection.isEmpty {
+                                ForEach(firstSection.indices, id: \.self) { index in
+                                    fieldRow(field: firstSection[index])
+                                }
+                            }
+                        }
+
+                        if let sections = viewModel.currentQuote?.quote.otherSections, !sections.isEmpty {
+                            ForEach(sections.indices, id: \.self) { sectionIndex in
+                                let section = sections[sectionIndex]
+
+                                if !section.isEmpty {
+                                    ListSection {
+                                        ForEach(section.indices, id: \.self) { index in
+                                            fieldRow(field: section[index])
+                                        }
                                     }
                                 }
                             }
@@ -91,6 +111,37 @@ struct MultiSwapConfirmView: View {
                         Text(formatted).textCaption()
                     }
                 }
+            }
+        }
+    }
+
+    @ViewBuilder private func fieldRow(field: MultiSwapConfirmField) -> some View {
+        switch field {
+        case let .value(title, memo, coinValue, currencyValue):
+            ListRow {
+                Text(title).textSubhead2()
+
+                Spacer()
+
+                if let formatted = ValueFormatter.instance.formatShort(coinValue: coinValue) {
+                    Text(formatted).textSubhead1(color: .themeLeah)
+                }
+            }
+        case let .levelValue(title, value, level):
+            ListRow {
+                Text(title).textSubhead2()
+
+                Spacer()
+
+                Text(value).textSubhead1(color: .themeLeah)
+            }
+        case let .address(title, value):
+            ListRow {
+                Text(title).textSubhead2()
+
+                Spacer()
+
+                Text(value).textSubhead1(color: .themeLeah)
             }
         }
     }
