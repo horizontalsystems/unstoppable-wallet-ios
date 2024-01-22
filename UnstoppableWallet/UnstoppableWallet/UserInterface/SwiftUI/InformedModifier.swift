@@ -9,16 +9,12 @@ struct Informed: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        HStack(spacing: .margin8) {
+        Button(action: {
+            descriptionPresented = true
+        }, label: {
             content
-
-            Button(action: {
-                descriptionPresented = true
-            }, label: {
-                Image("circle_information_20").renderingMode(.template)
-            })
-            .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
-        }
+        })
+        .buttonStyle(SecondaryButtonStyle(style: .transparent, rightAccessory: .info))
         .bottomSheet(isPresented: $descriptionPresented) {
             AlertView(
                 image: .info,
