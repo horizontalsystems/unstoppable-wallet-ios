@@ -136,5 +136,9 @@ extension BaseUniswapMultiSwapProvider {
         var confirmFieldSections: [[MultiSwapConfirmField]] {
             []
         }
+
+        var settingsModified: Bool {
+            false
+        }
     }
 }

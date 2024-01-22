@@ -6,6 +6,7 @@ protocol IMultiSwapQuote {
     var fee: CoinValue? { get }
     var mainFields: [MultiSwapMainField] { get }
     var confirmFieldSections: [[MultiSwapConfirmField]] { get }
+    var settingsModified: Bool { get }
 }
 
 extension IMultiSwapQuote {

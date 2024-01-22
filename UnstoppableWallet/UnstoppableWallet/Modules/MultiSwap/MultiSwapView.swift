@@ -84,7 +84,11 @@ struct MultiSwapView: View {
                                         Button(action: {
                                             settingsPresented = true
                                         }) {
-                                            Image("manage_2_20").renderingMode(.template)
+                                            if currentQuote.quote.settingsModified {
+                                                Image("manage_2_20").themeIcon(color: .themeJacob)
+                                            } else {
+                                                Image("manage_2_20").renderingMode(.template)
+                                            }
                                         }
                                         .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
                                     }
@@ -138,9 +142,9 @@ struct MultiSwapView: View {
                                                                 presentedSettingId = settingId
                                                             }) {
                                                                 if field.modified {
-                                                                    Image("manage_2_20").themeIcon(color: .themeJacob)
+                                                                    Image("edit_20").themeIcon(color: .themeJacob)
                                                                 } else {
-                                                                    Image("manage_2_20").renderingMode(.template)
+                                                                    Image("edit_20").renderingMode(.template)
                                                                 }
                                                             }
                                                             .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
