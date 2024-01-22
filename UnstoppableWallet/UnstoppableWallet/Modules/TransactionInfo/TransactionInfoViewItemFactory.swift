@@ -541,14 +541,25 @@ class TransactionInfoViewItemFactory {
                 sections.append(receiveSection(source: record.source, transactionValue: transfer.value, from: transfer.address, rates: item.rates, balanceHidden: balanceHidden))
             }
 
+            if let memo = record.memo, !memo.isEmpty {
+                sections.append([.memo(text: memo)])
+            }
         case let record as TonOutgoingTransactionRecord:
             for transfer in record.transfers {
                 sections.append(sendSection(source: record.source, transactionValue: transfer.value, to: transfer.address, rates: item.rates, balanceHidden: balanceHidden))
             }
 
+            if let memo = record.memo, !memo.isEmpty {
+                sections.append([.memo(text: memo)])
+            }
+
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: $0, rate: _rate($0))) }
 
         case let record as TonTransactionRecord:
+            if let memo = record.memo, !memo.isEmpty {
+                sections.append([.memo(text: memo)])
+            }
+
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: $0, rate: _rate($0))) }
 
         default: ()

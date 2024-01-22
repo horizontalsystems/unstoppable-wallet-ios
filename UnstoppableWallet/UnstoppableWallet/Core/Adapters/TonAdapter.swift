@@ -312,8 +312,8 @@ extension TonAdapter: ISendTonAdapter {
         return Self.amount(kitAmount: kitAmount)
     }
 
-    func send(recipient: String, amount: Decimal) async throws {
+    func send(recipient: String, amount: Decimal, memo: String?) async throws {
         let rawAmount = amount * Self.coinRate
-        try await tonKit.send(recipient: recipient, amount: rawAmount.description)
+        try await tonKit.send(recipient: recipient, amount: rawAmount.description, memo: memo)
     }
 }

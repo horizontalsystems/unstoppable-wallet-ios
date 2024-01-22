@@ -137,10 +137,11 @@ extension SendTonService: ISendService {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
+        let memo = memoService.memo
         return Single.create { [adapter] observer in
             let task = Task { [adapter] in
                 do {
-                    try await adapter.send(recipient: address.raw, amount: amount)
+                    try await adapter.send(recipient: address.raw, amount: amount, memo: memo)
                     observer(.success(()))
                 } catch {
                     observer(.error(error))
@@ -168,7 +169,7 @@ extension SendTonService: IAvailableBalanceService {
 
 extension SendTonService: IMemoAvailableService {
     var isAvailable: Bool {
-        false
+        true
     }
 
     var isAvailableObservable: Observable<Bool> {
