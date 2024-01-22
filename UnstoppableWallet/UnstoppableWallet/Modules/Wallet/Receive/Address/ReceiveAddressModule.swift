@@ -4,12 +4,11 @@ import UIKit
 
 enum ReceiveAddressModule {
     static func view(wallet: Wallet, onDismiss: (() -> ())? = nil) -> some View {
-        Eip1559FeeSettingsView(viewModel: Eip1559FeeSettingsViewModel())
-//        let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
-//        let depositViewItemFactory = ReceiveAddressViewItemFactory()
-//
-//        let viewModel = ReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())
-//        return ReceiveAddressView<ReceiveAddressService, ReceiveAddressViewItemFactory>(viewModel: viewModel, onDismiss: onDismiss)
+        let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
+        let depositViewItemFactory = ReceiveAddressViewItemFactory()
+
+        let viewModel = ReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())
+        return ReceiveAddressView<ReceiveAddressService, ReceiveAddressViewItemFactory>(viewModel: viewModel, onDismiss: onDismiss)
     }
 }
 

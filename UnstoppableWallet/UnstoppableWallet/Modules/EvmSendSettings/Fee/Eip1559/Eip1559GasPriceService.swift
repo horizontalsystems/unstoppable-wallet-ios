@@ -4,15 +4,12 @@ import RxRelay
 import RxSwift
 
 class Eip1559GasPriceService {
-    private static let feeHistoryBlocksCount = 10
-    private static let feeHistoryRewardPercentile = [50]
-
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
 
     private var disposeBag = DisposeBag()
 
     private let evmKit: EvmKit.Kit
-    private var feeHistoryProvider: EIP1559GasPriceProvider
+    private var provider: EIP1559GasPriceProvider
 
     private let minRecommendedMaxFee: Int?
     private let minRecommendedTips: Int?
@@ -49,7 +46,7 @@ class Eip1559GasPriceService {
         self.minRecommendedMaxFee = minRecommendedMaxFee
         self.minRecommendedTips = minRecommendedTips
 
-        feeHistoryProvider = EIP1559GasPriceProvider(evmKit: evmKit)
+        provider = EIP1559GasPriceProvider(evmKit: evmKit)
         evmKit.lastBlockHeightObservable
             .subscribe(onNext: { [weak self] _ in
                 self?.updateFeeHistory()
@@ -66,9 +63,9 @@ class Eip1559GasPriceService {
     }
 
     private func updateFeeHistory() {
-        feeHistoryProvider.feeHistorySingle(blocksCount: Self.feeHistoryBlocksCount, rewardPercentile: Self.feeHistoryRewardPercentile)
-            .subscribe(onSuccess: { [weak self] history in
-                self?.handle(feeHistory: history)
+        provider.gasPriceSingle()
+            .subscribe(onSuccess: { [weak self] gasPrice in
+                self?.handle(gasPrice: gasPrice)
             }, onError: { [weak self] error in
                 self?.status = .failed(error)
             })
@@ -99,23 +96,17 @@ class Eip1559GasPriceService {
         ))
     }
 
-    private func handle(feeHistory: FeeHistory) {
-        let tipsConsidered = feeHistory.reward.compactMap(\.first)
-        let baseFeesConsidered = feeHistory.baseFeePerGas.suffix(2)
-
-        guard !baseFeesConsidered.isEmpty, !tipsConsidered.isEmpty else {
-            status = .failed(EIP1559GasPriceProvider.FeeHistoryError.notAvailable)
+    private func handle(gasPrice: GasPrice) {
+        guard case .eip1559(let maxFeePerGas, let maxPriorityFeePerGas) = gasPrice else {
+            status = .failed(EvmFeeModule.GasDataError.unknownError)
             return
         }
 
-        recommendedTips = tipsConsidered.reduce(0, +) / tipsConsidered.count
-        if let minRecommendedTips {
-            recommendedTips = max(recommendedTips, minRecommendedTips)
-        }
-
-        recommendedMaxFee = (baseFeesConsidered.max() ?? 0) + recommendedTips
-        if let minRecommendedMaxFee {
-            recommendedMaxFee = max(recommendedMaxFee, minRecommendedMaxFee)
+        recommendedTips = maxPriorityFeePerGas
+        recommendedMaxFee = maxFeePerGas
+        if let minRecommendedTips, let minRecommendedMaxFee {
+            recommendedTips = max(maxPriorityFeePerGas, minRecommendedTips)
+            recommendedMaxFee = max(maxFeePerGas - maxPriorityFeePerGas + recommendedTips, minRecommendedMaxFee)
         }
 
         if usingRecommended {

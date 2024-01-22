@@ -38,20 +38,17 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
         maxFeeRateCautionState = .none
     }
 
-    private func validateMaxFee() {
-    }
+    private func validateMaxFee() {}
 
-    private func validateNonce() {
-    }
-
+    private func validateNonce() {}
 }
 
 extension Eip1559FeeSettingsViewModel {
     private func updateByStep(value: String?, direction: StepChangeButtonsViewDirection) -> Decimal? {
-        guard let decimal = value.flatMap({ decimalParser.parseAnyDecimal(from: $0)}) else {
+        guard let decimal = value.flatMap({ decimalParser.parseAnyDecimal(from: $0) }) else {
             return nil
         }
-        // todo: we can recognize the smallest significand digit, and increase/decrease by smallest interval
+        // TODO: we can recognize the smallest significand digit, and increase/decrease by smallest interval
         switch direction {
         case .down: return max(decimal - 1, 0)
         case .up: return decimal + 1

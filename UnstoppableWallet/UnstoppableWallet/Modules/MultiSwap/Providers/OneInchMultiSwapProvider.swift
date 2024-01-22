@@ -1,6 +1,7 @@
 import BigInt
 import EvmKit
 import Foundation
+import HsToolKit
 import MarketKit
 import OneInchKit
 import SwiftUI
@@ -12,6 +13,7 @@ struct OneInchMultiSwapProvider {
     private let storage: MultiSwapSettingStorage
     private let marketKit = App.shared.marketKit
     private let evmBlockchainManager = App.shared.evmBlockchainManager
+    private let networkManager = NetworkManager()
 
     init(kit: OneInchKit.Kit, storage: MultiSwapSettingStorage) {
         self.kit = kit
@@ -67,14 +69,19 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.invalidAmountIn
         }
 
+        guard let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
+            throw SwapError.notSupportedBlockchainType
+        }
+
         let gasPrice: GasPrice
         if chain.isEIP1559Supported {
-            gasPrice = .eip1559(maxFeePerGas: 25_000_000_000, maxPriorityFeePerGas: 1_000_000_000)
+            gasPrice = try await EIP1559GasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
         } else {
-            gasPrice = .legacy(gasPrice: 3_000_000_000)
+            gasPrice = try await LegacyGasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
         }
 
         let quote = try await kit.quote(
+            networkManager: networkManager,
             chain: chain,
             fromToken: addressFrom,
             toToken: addressTo,
@@ -92,7 +99,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
 
     func view(settingId: String) -> AnyView {
         switch settingId {
-        case "network_fee": AnyView(Text("Network Fee"))
+        case "network_fee": AnyView(EvmFeeSettingsModule.view())
         default: AnyView(EmptyView())
         }
     }
@@ -102,6 +109,8 @@ extension OneInchMultiSwapProvider {
     enum SwapError: Error {
         case invalidAddress
         case invalidAmountIn
+        case invalidAmountOut
+        case notSupportedBlockchainType
     }
 }
 

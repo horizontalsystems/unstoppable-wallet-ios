@@ -2,6 +2,7 @@ import BigInt
 import EvmKit
 import Foundation
 import HsExtensions
+import HsToolKit
 import MarketKit
 import OneInchKit
 import RxSwift
@@ -10,6 +11,7 @@ class OneInchProvider {
     private let swapKit: OneInchKit.Kit
     private let evmKit: EvmKit.Kit
     private let rpcSource: RpcSource
+    private let networkManager = NetworkManager()
 
     init(swapKit: OneInchKit.Kit, evmKit: EvmKit.Kit, rpcSource: RpcSource) {
         self.swapKit = swapKit
@@ -46,6 +48,7 @@ extension OneInchProvider {
             let addressTo = try address(token: tokenOut)
 
             return swapKit.quoteSingle(
+                networkManager: networkManager,
                 chain: evmKit.chain,
                 fromToken: addressFrom,
                 toToken: addressTo,
@@ -73,6 +76,7 @@ extension OneInchProvider {
             let addressTo = try address(token: tokenTo)
 
             return swapKit.swapSingle(
+                networkManager: networkManager,
                 chain: evmKit.chain,
                 receiveAddress: evmKit.receiveAddress,
                 fromToken: addressFrom,
