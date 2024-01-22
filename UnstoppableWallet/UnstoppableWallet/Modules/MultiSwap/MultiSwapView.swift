@@ -347,7 +347,7 @@ struct MultiSwapView: View {
         }
     }
 
-    private func color(valueLevel: MultiSwapMainField.ValueLevel) -> Color {
+    private func color(valueLevel: MultiSwapValueLevel) -> Color {
         switch valueLevel {
         case .regular: return .themeLeah
         case .warning: return .themeJacob

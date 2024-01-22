@@ -132,5 +132,9 @@ extension BaseUniswapV3MultiSwapProvider {
 
             return fields
         }
+
+        var confirmFieldSections: [[MultiSwapConfirmField]] {
+            []
+        }
     }
 }
