@@ -210,5 +210,9 @@ extension OneInchMultiSwapProvider {
 
             return sections
         }
+
+        var settingsModified: Bool {
+            true
+        }
     }
 }
