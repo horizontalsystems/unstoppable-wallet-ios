@@ -98,9 +98,14 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         )
     }
 
-    func view(settingId: String) -> AnyView {
+    func settingsView() -> AnyView {
+        let view = ThemeNavigationView { Text("1Inch Settings View") }
+        return AnyView(view)
+    }
+
+    func settingView(settingId: String) -> AnyView {
         switch settingId {
-        case "network_fee": return AnyView(EvmFeeSettingsModule.view())
+        case "network_fee": return AnyView(ThemeNavigationView { EvmFeeSettingsModule.view() })
         default: return AnyView(EmptyView())
         }
     }

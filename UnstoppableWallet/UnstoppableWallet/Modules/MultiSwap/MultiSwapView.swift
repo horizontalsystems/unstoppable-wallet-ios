@@ -10,6 +10,7 @@ struct MultiSwapView: View {
     @State private var selectTokenOutPresented = false
     @State private var quotesPresented = false
     @State private var confirmPresented = false
+    @State private var settingsPresented = false
     @State private var presentedSettingId: String?
 
     @State private var progress: Double = 0
@@ -80,13 +81,18 @@ struct MultiSwapView: View {
 
                                         Spacer()
 
-                                        Button(action: {}) {
+                                        Button(action: {
+                                            settingsPresented = true
+                                        }) {
                                             Image("manage_2_20").renderingMode(.template)
                                         }
                                         .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
                                     }
                                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
                                     .frame(height: 40)
+                                    .sheet(isPresented: $settingsPresented) {
+                                        currentQuote.provider.settingsView()
+                                    }
 
                                     if let price = viewModel.price {
                                         VStack(spacing: 0) {
@@ -151,7 +157,7 @@ struct MultiSwapView: View {
                                 .themeListStyle(.bordered)
                                 .sheet(item: $presentedSettingId) { settingId in
                                     if let currentQuote = viewModel.currentQuote {
-                                        currentQuote.provider.view(settingId: settingId)
+                                        currentQuote.provider.settingView(settingId: settingId)
                                     } else {
                                         Text("NO")
                                     }
