@@ -91,6 +91,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
 
         return try Quote(
             quote: quote,
+            tokenOut: tokenOut,
             feeToken: marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native)),
             gasPrice: gasPrice,
             slippage: 2.5
@@ -117,12 +118,14 @@ extension OneInchMultiSwapProvider {
 extension OneInchMultiSwapProvider {
     struct Quote: IMultiSwapQuote {
         private let quote: OneInchKit.Quote
+        private let tokenOut: MarketKit.Token
         private let feeToken: MarketKit.Token?
         private let gasPrice: GasPrice?
         private let slippage: Decimal
 
-        init(quote: OneInchKit.Quote, feeToken: MarketKit.Token?, gasPrice: GasPrice?, slippage: Decimal) {
+        init(quote: OneInchKit.Quote, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, gasPrice: GasPrice?, slippage: Decimal) {
             self.quote = quote
+            self.tokenOut = tokenOut
             self.feeToken = feeToken
             self.gasPrice = gasPrice
             self.slippage = slippage
@@ -169,6 +172,38 @@ extension OneInchMultiSwapProvider {
             }
 
             return fields
+        }
+
+        var confirmFieldSections: [[MultiSwapConfirmField]] {
+            var sections = [[MultiSwapConfirmField]]()
+
+            let minAmountOut = amountOut * (1 - slippage / 100)
+
+            sections.append(
+                [
+                    .value(
+                        title: "Minimum Received",
+                        memo: nil,
+                        coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
+                        currencyValue: nil
+                    ),
+                ]
+            )
+
+            if let fee {
+                sections.append(
+                    [
+                        .value(
+                            title: "Network Fee",
+                            memo: .init(title: "Network Fee", text: "Network Fee description"),
+                            coinValue: fee,
+                            currencyValue: nil
+                        ),
+                    ]
+                )
+            }
+
+            return sections
         }
     }
 }
