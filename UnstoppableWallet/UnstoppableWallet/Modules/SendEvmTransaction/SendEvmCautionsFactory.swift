@@ -5,6 +5,14 @@ class SendEvmCautionsFactory {
         for error in errors {
             if let error = error as? EvmFeeModule.GasDataError {
                 switch error {
+                case .unknownError:
+                    return [
+                        TitledCaution(
+                            title: "alert.unknown_error".localized,
+                            text: "",
+                            type: .error
+                        )
+                    ]
                 case .insufficientBalance:
                     return [
                         TitledCaution(

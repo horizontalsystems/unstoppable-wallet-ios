@@ -49,6 +49,7 @@ enum EvmFeeModule {
 
 extension EvmFeeModule {
     enum GasDataError: Error {
+        case unknownError
         case insufficientBalance
     }
 
