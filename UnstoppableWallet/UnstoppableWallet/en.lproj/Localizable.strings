@@ -590,6 +590,8 @@
 
 "swap.dex_info.link_button" = "%@ Site";
 
+
+
 // Market
 
 "market.tab_bar_item" = "Markets";
@@ -1644,6 +1646,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
 
 "fee_settings" = "Advanced";
+"fee_settings.title" = "Fee Settings";
 "fee_settings.fee" = "Fee";
 "fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
 "fee_settings.fee_rate" = "Fee Rate";

@@ -2,6 +2,7 @@ import MarketKit
 import OneInchKit
 import SwiftUI
 import UniswapKit
+import EvmKit
 
 enum MultiSwapModule {
     static func view(token: MarketKit.Token? = nil) -> some View {
@@ -21,8 +22,8 @@ enum MultiSwapModule {
             providers.append(PancakeV3MultiSwapProvider(kit: kit))
         }
 
-        if let apiKey = AppConfig.oneInchApiKey, let kit = try? OneInchKit.Kit.instance(apiKey: apiKey) {
-            providers.append(OneInchMultiSwapProvider(kit: kit, storage: storage))
+        if let apiKey = AppConfig.oneInchApiKey {
+            providers.append(OneInchMultiSwapProvider(kit: OneInchKit.Kit.instance(apiKey: apiKey), storage: storage))
         }
 
         let viewModel = MultiSwapViewModel(providers: providers, token: token)
