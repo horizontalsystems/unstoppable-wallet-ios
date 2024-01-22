@@ -24,6 +24,8 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var resetEnabled = false
+
     private func validateMaxFeeRate() {
         guard let decimal = decimalParser.parseAnyDecimal(from: maxFeeRate) else {
             maxFeeRateCautionState = .caution(.init(text: "Can't recognize", type: .error))
@@ -59,5 +61,20 @@ extension Eip1559FeeSettingsViewModel {
         if let newValue = updateByStep(value: maxFeeRate, direction: direction) {
             maxFeeRate = newValue.description
         }
+    }
+
+    func stepChangeMaxFee(_ direction: StepChangeButtonsViewDirection) {
+        if let newValue = updateByStep(value: maxFee, direction: direction) {
+            maxFee = newValue.description
+        }
+    }
+
+    func stepChangeNonce(_ direction: StepChangeButtonsViewDirection) {
+        if let newValue = updateByStep(value: nonce, direction: direction) {
+            nonce = newValue.description
+        }
+    }
+
+    func onReset() {
     }
 }
