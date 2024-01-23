@@ -3,7 +3,7 @@ import MarketKit
 
 protocol IMultiSwapQuote {
     var amountOut: Decimal { get }
-    var fee: CoinValue? { get }
+    var feeQuote: MultiSwapFeeQuote? { get }
     var mainFields: [MultiSwapMainField] { get }
     var confirmFieldSections: [[MultiSwapConfirmField]] { get }
     var settingsModified: Bool { get }

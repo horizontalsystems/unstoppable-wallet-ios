@@ -38,10 +38,15 @@ class MultiSwapViewModel: ObservableObject {
                 rateInCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] price in self?.rateIn = price.value }
+
+                feeService = EvmMultiSwapFeeService(blockchainType: internalTokenIn.blockchainType)
+                feeToken = try? marketKit.token(query: TokenQuery(blockchainType: internalTokenIn.blockchainType, tokenType: .native))
             } else {
                 availableBalance = nil
                 rateIn = nil
                 rateInCancellable = nil
+                feeService = nil
+                feeToken = nil
             }
         }
     }
@@ -236,6 +241,9 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
+    @Published var feeService: IMultiSwapFeeService?
+    @Published var feeToken: Token?
+
     init(providers: [IMultiSwapProvider], token: Token? = nil) {
         self.providers = providers
         currency = currencyManager.baseCurrency
@@ -330,12 +338,16 @@ class MultiSwapViewModel: ObservableObject {
             loading = true
         }
 
-        quotesTask = Task { [weak self] in
+        quotesTask = Task { [weak self, feeService] in
+            try await feeService?.sync()
+
+            let feeData = feeService?.feeData
+
             let optionalQuotes: [Quote?] = await withTaskGroup(of: Quote?.self) { group in
                 for provider in validProviders {
                     group.addTask {
                         do {
-                            let quote = try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn)
+                            let quote = try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn, feeData: feeData)
                             return Quote(provider: provider, quote: quote)
                         } catch {
                             print("QUOTE ERROR: \(provider.id): \(error)")
