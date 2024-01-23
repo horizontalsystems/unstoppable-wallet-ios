@@ -116,12 +116,10 @@ struct Eip1559FeeSettingsView: View {
     }
 
     @ViewBuilder private func headerRow(title: String, description: AlertView.InfoDescription) -> some View {
-        HStack(spacing: .margin8) {
-            Text(title).textSubhead1()
-            Spacer()
-            EmptyView().modifier(Informed(description: description))
-        }
-        .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: 0))
+        Text(title)
+            .textSubhead1()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .modifier(Informed(description: description))
     }
 
     @ViewBuilder private func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<CautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> ()) -> some View {
