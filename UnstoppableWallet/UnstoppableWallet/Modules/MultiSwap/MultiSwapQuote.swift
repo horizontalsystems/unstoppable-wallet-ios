@@ -30,15 +30,15 @@ struct MultiSwapTokenAmount {
 
 struct MultiSwapMainField: Identifiable {
     let title: String
-    let memo: MultiSwapMemo?
+    let description: AlertView.InfoDescription?
     let value: String
     let valueLevel: MultiSwapValueLevel
     let settingId: String?
     let modified: Bool
 
-    init(title: String, memo: MultiSwapMemo? = nil, value: String, valueLevel: MultiSwapValueLevel = .regular, settingId: String? = nil, modified: Bool = false) {
+    init(title: String, description: AlertView.InfoDescription? = nil, value: String, valueLevel: MultiSwapValueLevel = .regular, settingId: String? = nil, modified: Bool = false) {
         self.title = title
-        self.memo = memo
+        self.description = description
         self.value = value
         self.valueLevel = valueLevel
         self.settingId = settingId
@@ -50,11 +50,6 @@ struct MultiSwapMainField: Identifiable {
     }
 }
 
-struct MultiSwapMemo {
-    let title: String
-    let text: String
-}
-
 enum MultiSwapValueLevel {
     case regular
     case warning
@@ -62,7 +57,7 @@ enum MultiSwapValueLevel {
 }
 
 enum MultiSwapConfirmField {
-    case value(title: String, memo: MultiSwapMemo?, coinValue: CoinValue, currencyValue: CurrencyValue?)
+    case value(title: String, description: AlertView.InfoDescription?, coinValue: CoinValue, currencyValue: CurrencyValue?)
     case levelValue(title: String, value: String, level: MultiSwapValueLevel)
     case address(title: String, value: String)
 }

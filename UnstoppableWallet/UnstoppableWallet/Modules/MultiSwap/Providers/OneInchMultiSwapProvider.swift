@@ -159,7 +159,7 @@ extension OneInchMultiSwapProvider {
                 fields.append(
                     MultiSwapMainField(
                         title: "Network Fee",
-                        memo: .init(title: "Network Fee", text: "Network Fee description"),
+                        description: .init(title: "Network Fee", description: "Network Fee description"),
                         value: formatted,
                         settingId: "network_fee"
                     )
@@ -188,7 +188,7 @@ extension OneInchMultiSwapProvider {
                 [
                     .value(
                         title: "Minimum Received",
-                        memo: nil,
+                        description: nil,
                         coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
                         currencyValue: nil
                     ),
@@ -200,7 +200,7 @@ extension OneInchMultiSwapProvider {
                     [
                         .value(
                             title: "Network Fee",
-                            memo: .init(title: "Network Fee", text: "Network Fee description"),
+                            description: .init(title: "Network Fee", description: "Network Fee description"),
                             coinValue: fee,
                             currencyValue: nil
                         ),
