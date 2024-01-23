@@ -120,17 +120,13 @@ struct MultiSwapView: View {
                                             if !currentQuote.quote.mainFields.isEmpty {
                                                 ForEach(currentQuote.quote.mainFields) { (field: MultiSwapMainField) in
                                                     HStack(spacing: .margin8) {
-                                                        if let memo = field.memo {
-                                                            Button(action: {
-                                                                print(memo)
-                                                            }) {
-                                                                HStack(spacing: .margin8) {
-                                                                    Text(field.title).textSubhead2()
-                                                                    Image("circle_information_20").themeIcon()
-                                                                }
-                                                            }
+                                                        if let description = field.description {
+                                                            Text(field.title)
+                                                                .textSubhead2()
+                                                                .modifier(Informed(description: description))
                                                         } else {
-                                                            Text(field.title).textSubhead2()
+                                                            Text(field.title)
+                                                                .textSubhead2()
                                                         }
 
                                                         Spacer()
@@ -142,9 +138,9 @@ struct MultiSwapView: View {
                                                                 presentedSettingId = settingId
                                                             }) {
                                                                 if field.modified {
-                                                                    Image("edit_20").themeIcon(color: .themeJacob)
+                                                                    Image("edit2_20").themeIcon(color: .themeJacob)
                                                                 } else {
-                                                                    Image("edit_20").renderingMode(.template)
+                                                                    Image("edit2_20").renderingMode(.template)
                                                                 }
                                                             }
                                                             .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
