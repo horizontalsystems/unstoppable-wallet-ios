@@ -13,7 +13,7 @@ struct OneInchMultiSwapProvider {
     private let storage: MultiSwapSettingStorage
     private let marketKit = App.shared.marketKit
     private let evmBlockchainManager = App.shared.evmBlockchainManager
-    private let networkManager = NetworkManager()
+    private let networkManager = App.shared.networkManager
 
     init(kit: OneInchKit.Kit, storage: MultiSwapSettingStorage) {
         self.kit = kit
@@ -58,7 +58,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
+    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, feeData: MultiSwapFeeData?) async throws -> IMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -69,15 +69,8 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.invalidAmountIn
         }
 
-        guard let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
-            throw SwapError.notSupportedBlockchainType
-        }
-
-        let gasPrice: GasPrice
-        if chain.isEIP1559Supported {
-            gasPrice = try await EIP1559GasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
-        } else {
-            gasPrice = try await LegacyGasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
+        guard let feeData, case let .evm(gasPrice) = feeData else {
+            throw SwapError.noFeeData
         }
 
         let quote = try await kit.quote(
@@ -89,23 +82,25 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             gasPrice: gasPrice
         )
 
-        return try Quote(
+        return Quote(
             quote: quote,
             tokenOut: tokenOut,
-            feeToken: marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native)),
-            gasPrice: gasPrice,
             slippage: 2.5
         )
     }
 
     func settingsView() -> AnyView {
-        let view = ThemeNavigationView { Text("1Inch Settings View") }
+        let view = ThemeNavigationView {
+            Text("1Inch Settings View")
+        }
         return AnyView(view)
     }
 
     func settingView(settingId: String) -> AnyView {
         switch settingId {
-        case "network_fee": return AnyView(ThemeNavigationView { EvmFeeSettingsModule.view() })
+        case "network_fee": return AnyView(ThemeNavigationView {
+                EvmFeeSettingsModule.view()
+            })
         default: return AnyView(EmptyView())
         }
     }
@@ -115,8 +110,7 @@ extension OneInchMultiSwapProvider {
     enum SwapError: Error {
         case invalidAddress
         case invalidAmountIn
-        case invalidAmountOut
-        case notSupportedBlockchainType
+        case noFeeData
     }
 }
 
@@ -124,15 +118,11 @@ extension OneInchMultiSwapProvider {
     struct Quote: IMultiSwapQuote {
         private let quote: OneInchKit.Quote
         private let tokenOut: MarketKit.Token
-        private let feeToken: MarketKit.Token?
-        private let gasPrice: GasPrice?
         private let slippage: Decimal
 
-        init(quote: OneInchKit.Quote, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, gasPrice: GasPrice?, slippage: Decimal) {
+        init(quote: OneInchKit.Quote, tokenOut: MarketKit.Token, slippage: Decimal) {
             self.quote = quote
             self.tokenOut = tokenOut
-            self.feeToken = feeToken
-            self.gasPrice = gasPrice
             self.slippage = slippage
         }
 
@@ -140,31 +130,12 @@ extension OneInchMultiSwapProvider {
             quote.amountOut ?? 0
         }
 
-        var fee: CoinValue? {
-            guard let feeToken, let gasPrice else {
-                return nil
-            }
-
-            guard let amount = Decimal(bigUInt: BigUInt(quote.estimateGas) * BigUInt(gasPrice.max), decimals: feeToken.decimals) else {
-                return nil
-            }
-
-            return CoinValue(kind: .token(token: feeToken), value: amount)
+        var feeQuote: MultiSwapFeeQuote? {
+            .evm(gasLimit: quote.estimateGas)
         }
 
         var mainFields: [MultiSwapMainField] {
             var fields = [MultiSwapMainField]()
-
-            if let fee, let formatted = ValueFormatter.instance.formatShort(coinValue: fee) {
-                fields.append(
-                    MultiSwapMainField(
-                        title: "Network Fee",
-                        description: .init(title: "Network Fee", description: "Network Fee description"),
-                        value: formatted,
-                        settingId: "network_fee"
-                    )
-                )
-            }
 
             if slippage != OneInchMultiSwapProvider.defaultSlippage {
                 fields.append(
@@ -194,19 +165,6 @@ extension OneInchMultiSwapProvider {
                     ),
                 ]
             )
-
-            if let fee {
-                sections.append(
-                    [
-                        .value(
-                            title: "Network Fee",
-                            description: .init(title: "Network Fee", description: "Network Fee description"),
-                            coinValue: fee,
-                            currencyValue: nil
-                        ),
-                    ]
-                )
-            }
 
             return sections
         }

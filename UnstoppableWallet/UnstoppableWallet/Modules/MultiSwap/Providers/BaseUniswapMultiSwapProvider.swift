@@ -24,7 +24,7 @@ class BaseUniswapMultiSwapProvider {
         }
     }
 
-    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
+    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, feeData: MultiSwapFeeData?) async throws -> IMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -38,29 +38,19 @@ class BaseUniswapMultiSwapProvider {
         let swapData = try await kit.swapData(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut)
         let tradeData = try kit.bestTradeExactIn(swapData: swapData, amountIn: amountIn)
 
-        var resolvedGasPrice: GasPrice?
         var estimatedGas: Int?
 
-        if let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit {
+        if let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit,
+           let feeData, case let .evm(gasPrice) = feeData
+        {
             do {
                 let transactionData = try kit.transactionData(receiveAddress: evmKit.receiveAddress, chain: chain, tradeData: tradeData)
-
-                let gasPrice: GasPrice
-                if chain.isEIP1559Supported {
-                    gasPrice = .eip1559(maxFeePerGas: 25_000_000_000, maxPriorityFeePerGas: 1_000_000_000)
-                } else {
-                    gasPrice = .legacy(gasPrice: 3_000_000_000)
-                }
-
-                resolvedGasPrice = gasPrice
                 estimatedGas = try await evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
             } catch {}
         }
 
-        return try Quote(
+        return Quote(
             tradeData: tradeData,
-            feeToken: marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: .native)),
-            gasPrice: resolvedGasPrice,
             estimatedGas: estimatedGas,
             slippage: 1.5
         )
@@ -77,15 +67,11 @@ extension BaseUniswapMultiSwapProvider {
 extension BaseUniswapMultiSwapProvider {
     struct Quote: IMultiSwapQuote {
         private let tradeData: TradeData
-        private let feeToken: MarketKit.Token?
-        private let gasPrice: GasPrice?
         private let estimatedGas: Int?
         private let slippage: Decimal
 
-        init(tradeData: TradeData, feeToken: MarketKit.Token?, gasPrice: GasPrice?, estimatedGas: Int?, slippage: Decimal) {
+        init(tradeData: TradeData, estimatedGas: Int?, slippage: Decimal) {
             self.tradeData = tradeData
-            self.feeToken = feeToken
-            self.gasPrice = gasPrice
             self.estimatedGas = estimatedGas
             self.slippage = slippage
         }
@@ -94,31 +80,16 @@ extension BaseUniswapMultiSwapProvider {
             tradeData.amountOut ?? 0
         }
 
-        var fee: CoinValue? {
-            guard let feeToken, let gasPrice, let estimatedGas else {
+        var feeQuote: MultiSwapFeeQuote? {
+            guard let estimatedGas else {
                 return nil
             }
 
-            guard let amount = Decimal(bigUInt: BigUInt(estimatedGas) * BigUInt(gasPrice.max), decimals: feeToken.decimals) else {
-                return nil
-            }
-
-            return CoinValue(kind: .token(token: feeToken), value: amount)
+            return .evm(gasLimit: estimatedGas)
         }
 
         var mainFields: [MultiSwapMainField] {
             var fields = [MultiSwapMainField]()
-
-            if let fee, let formatted = ValueFormatter.instance.formatShort(coinValue: fee) {
-                fields.append(
-                    MultiSwapMainField(
-                        title: "Network Fee",
-                        description: .init(title: "Network Fee", description: "Network Fee description"),
-                        value: formatted,
-                        settingId: "network_fee"
-                    )
-                )
-            }
 
             if slippage != BaseUniswapMultiSwapProvider.defaultSlippage {
                 fields.append(
