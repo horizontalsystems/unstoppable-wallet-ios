@@ -113,7 +113,7 @@ extension BaseUniswapV3MultiSwapProvider {
                 fields.append(
                     MultiSwapMainField(
                         title: "Network Fee",
-                        memo: .init(title: "Network Fee", text: "Network Fee description"),
+                        description: .init(title: "Network Fee", description: "Network Fee description"),
                         value: formatted,
                         settingId: "network_fee"
                     )
