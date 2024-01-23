@@ -12,9 +12,12 @@ struct Informed: ViewModifier {
         Button(action: {
             descriptionPresented = true
         }, label: {
-            content
+            HStack(spacing: .margin8) {
+                content
+                Image("circle_information_20").themeIcon()
+            }
+            .padding(EdgeInsets(top: 5.5, leading: .margin16, bottom: 5.5, trailing: .margin16))
         })
-        .buttonStyle(SecondaryButtonStyle(style: .transparent, rightAccessory: .info))
         .bottomSheet(isPresented: $descriptionPresented) {
             AlertView(
                 image: .info,
