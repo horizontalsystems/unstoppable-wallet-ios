@@ -91,9 +91,8 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
     }
 
     func settingsView(tokenIn _: MarketKit.Token, tokenOut _: MarketKit.Token) -> AnyView {
-        let view = ThemeNavigationView {
-            Text("1Inch Settings View")
-        }
+        let viewModel = OneInchMultiSwapSettingsViewModel(storage: storage)
+        let view = ThemeNavigationView { OneInchMultiSwapSettingsView(viewModel: viewModel) }
         return AnyView(view)
     }
 
