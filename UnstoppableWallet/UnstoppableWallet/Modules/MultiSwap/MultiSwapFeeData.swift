@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import SwiftUI
 
 enum MultiSwapFeeData {
     case evm(gasPrice: GasPrice)
@@ -14,8 +15,10 @@ enum MultiSwapFeeQuote {
 
 protocol IMultiSwapFeeService {
     var feeData: MultiSwapFeeData? { get }
+    var modified: Bool { get }
     func sync() async throws
     func fee(quote: MultiSwapFeeQuote, token: Token) -> CoinValue?
+    func settingsView() -> AnyView
 }
 
 class EvmMultiSwapFeeService: IMultiSwapFeeService {
@@ -42,6 +45,10 @@ class EvmMultiSwapFeeService: IMultiSwapFeeService {
         return .evm(gasPrice: gasPrice)
     }
 
+    var modified: Bool {
+        true
+    }
+
     func sync() async throws {
         if chain.isEIP1559Supported {
             gasPrice = try await EIP1559GasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
@@ -58,5 +65,9 @@ class EvmMultiSwapFeeService: IMultiSwapFeeService {
         let amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, token.decimals)
 
         return CoinValue(kind: .token(token: token), value: amount)
+    }
+
+    func settingsView() -> AnyView {
+        AnyView(EvmFeeSettingsModule.view())
     }
 }
