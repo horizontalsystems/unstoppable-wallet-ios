@@ -6273,6 +6273,7 @@
 				11B35E1144E3EF63ACEE8F75 /* TokenSelect */,
 				D0B462F12B5A470F0027815D /* FeeSettings */,
 				11B351194A83D6866E612CF7 /* MultiSwapTransactionSettings.swift */,
+				ABC9A8880D69657A7187D71D /* AddressView */,
 			);
 			path = MultiSwap;
 			sourceTree = "<group>";
@@ -8037,6 +8038,13 @@
 				ABC9AA751C8B09F90F716231 /* RestoreCloudViewController.swift */,
 			);
 			path = RestoreCloud;
+			sourceTree = "<group>";
+		};
+		ABC9A8880D69657A7187D71D /* AddressView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddressView;
 			sourceTree = "<group>";
 		};
 		ABC9A917A409708B8B2BEA71 /* EthereumTransaction */ = {

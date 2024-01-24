@@ -2,6 +2,7 @@ import ComponentKit
 import SnapKit
 import ThemeKit
 import UIKit
+import SwiftUI
 
 class ScanQrViewController: ThemeViewController {
     private let scanView: ScanQrView
@@ -102,4 +103,28 @@ extension ScanQrViewController: IScanQrCodeDelegate {
         scanView.stop()
         onFetch(string: string)
     }
+}
+
+struct ScanQrViewNew: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let reportAfterDismiss: Bool
+    let pasteEnabled: Bool
+
+    var didFetch: ((String) -> Void)?
+
+    init(reportAfterDismiss: Bool = false, pasteEnabled: Bool = false, didFetch: ((String) -> Void)?) {
+        self.reportAfterDismiss = reportAfterDismiss
+        self.pasteEnabled = pasteEnabled
+        self.didFetch = didFetch
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        let controller = ScanQrViewController(reportAfterDismiss: reportAfterDismiss, pasteEnabled: pasteEnabled)
+        controller.didFetch = didFetch
+
+        return controller
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
