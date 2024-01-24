@@ -11,6 +11,7 @@ struct MultiSwapView: View {
     @State private var quotesPresented = false
     @State private var confirmPresented = false
     @State private var settingsPresented = false
+    @State private var feeSettingsPresented = false
     @State private var presentedSettingId: String?
 
     @State private var progress: Double = 0
@@ -98,8 +99,8 @@ struct MultiSwapView: View {
                                         currentQuote.provider.settingsView()
                                     }
 
-                                    if let price = viewModel.price {
-                                        VStack(spacing: 0) {
+                                    VStack(spacing: 0) {
+                                        if let price = viewModel.price {
                                             HStack(spacing: .margin8) {
                                                 Text("Price").textSubhead2()
 
@@ -116,45 +117,83 @@ struct MultiSwapView: View {
                                             }
                                             .frame(height: 40)
                                             .padding(.horizontal, .margin16)
+                                        }
 
-                                            if !currentQuote.quote.mainFields.isEmpty {
-                                                ForEach(currentQuote.quote.mainFields) { (field: MultiSwapMainField) in
-                                                    HStack(spacing: .margin8) {
-                                                        if let description = field.description {
-                                                            Text(field.title)
-                                                                .textSubhead2()
-                                                                .modifier(Informed(description: description))
-                                                        } else {
-                                                            Text(field.title)
-                                                                .textSubhead2()
-                                                        }
+                                        if let feeQuote = currentQuote.quote.feeQuote,
+                                           let feeToken = viewModel.feeToken,
+                                           let feeService = viewModel.feeService,
+                                           let fee = feeService.fee(quote: feeQuote, token: feeToken),
+                                           let formatted = ValueFormatter.instance.formatShort(coinValue: fee)
+                                        {
+                                            HStack(spacing: .margin8) {
+                                                Text("Network Fee")
+                                                    .textSubhead2()
+                                                    .modifier(Informed(description: .init(title: "Network Fee", description: "Network Fee Description")))
 
-                                                        Spacer()
+                                                Spacer()
 
-                                                        Text(field.value).textSubhead2(color: color(valueLevel: field.valueLevel))
+                                                Text(formatted).textSubhead2(color: .themeLeah)
 
-                                                        if let settingId = field.settingId {
-                                                            Button(action: {
-                                                                presentedSettingId = settingId
-                                                            }) {
-                                                                if field.modified {
-                                                                    Image("edit2_20").themeIcon(color: .themeJacob)
-                                                                } else {
-                                                                    Image("edit2_20").renderingMode(.template)
-                                                                }
-                                                            }
-                                                            .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
-                                                        }
+                                                Button(action: {
+                                                    feeSettingsPresented = true
+                                                }) {
+                                                    if feeService.modified {
+                                                        Image("edit2_20").themeIcon(color: .themeJacob)
+                                                    } else {
+                                                        Image("edit2_20").renderingMode(.template)
                                                     }
-                                                    .frame(height: 40)
-                                                    .padding(.leading, .margin16)
-                                                    .padding(.trailing, field.settingId == nil ? .margin16 : .margin12)
                                                 }
+                                                .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
+                                            }
+                                            .frame(height: 40)
+                                            .padding(.leading, .margin16)
+                                            .padding(.trailing, .margin12)
+                                        }
+
+                                        if !currentQuote.quote.mainFields.isEmpty {
+                                            ForEach(currentQuote.quote.mainFields) { (field: MultiSwapMainField) in
+                                                HStack(spacing: .margin8) {
+                                                    if let description = field.description {
+                                                        Text(field.title)
+                                                            .textSubhead2()
+                                                            .modifier(Informed(description: description))
+                                                    } else {
+                                                        Text(field.title)
+                                                            .textSubhead2()
+                                                    }
+
+                                                    Spacer()
+
+                                                    Text(field.value).textSubhead2(color: color(valueLevel: field.valueLevel))
+
+                                                    if let settingId = field.settingId {
+                                                        Button(action: {
+                                                            presentedSettingId = settingId
+                                                        }) {
+                                                            if field.modified {
+                                                                Image("edit2_20").themeIcon(color: .themeJacob)
+                                                            } else {
+                                                                Image("edit2_20").renderingMode(.template)
+                                                            }
+                                                        }
+                                                        .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
+                                                    }
+                                                }
+                                                .frame(height: 40)
+                                                .padding(.leading, .margin16)
+                                                .padding(.trailing, field.settingId == nil ? .margin16 : .margin12)
                                             }
                                         }
                                     }
                                 }
                                 .themeListStyle(.bordered)
+                                .sheet(isPresented: $feeSettingsPresented) {
+                                    if let feeService = viewModel.feeService {
+                                        feeService.settingsView()
+                                    } else {
+                                        Text("NO")
+                                    }
+                                }
                                 .sheet(item: $presentedSettingId) { settingId in
                                     if let currentQuote = viewModel.currentQuote {
                                         currentQuote.provider.settingView(settingId: settingId)
