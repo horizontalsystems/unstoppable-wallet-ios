@@ -146,7 +146,6 @@ struct MultiSwapView: View {
                                                 .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
                                             }
                                             .frame(height: 40)
-                                            .padding(.leading, .margin16)
                                             .padding(.trailing, .margin12)
                                         }
 
@@ -203,8 +202,8 @@ struct MultiSwapView: View {
                                 }
                             }
 
-                            if viewModel.tokenIn != nil, viewModel.tokenOut != nil, viewModel.amountIn != nil, viewModel.quotes.isEmpty, !viewModel.loading {
-                                Text("No Routes Available")
+                            if viewModel.tokenIn != nil && viewModel.tokenOut != nil && !viewModel.loading && (viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty)) {
+                                HighlightedTextView(text: "These tokens cannot be swapped", style: .red)
                             }
                         }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))

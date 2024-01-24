@@ -22,11 +22,15 @@ class MultiSwapViewModel: ObservableObject {
 
     private var enteringFiat = false
 
+    @Published var validProviders = [IMultiSwapProvider]()
+
     private var internalTokenIn: Token? {
         didSet {
             guard internalTokenIn != oldValue else {
                 return
             }
+
+            syncValidProviders()
 
             if internalTokenIn != tokenIn {
                 tokenIn = internalTokenIn
@@ -71,6 +75,8 @@ class MultiSwapViewModel: ObservableObject {
             guard internalTokenOut != oldValue else {
                 return
             }
+
+            syncValidProviders()
 
             if internalTokenOut != tokenOut {
                 tokenOut = internalTokenOut
@@ -258,6 +264,14 @@ class MultiSwapViewModel: ObservableObject {
         syncFiatAmountOut()
     }
 
+    private func syncValidProviders() {
+        if let internalTokenIn, let internalTokenOut {
+            validProviders = providers.filter { $0.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut) }
+        } else {
+            validProviders = []
+        }
+    }
+
     private func handleTimerTick() {
         quoteTimeLeft = max(0, quoteTimeLeft - 0.1)
 
@@ -324,8 +338,6 @@ class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        let validProviders = providers.filter { $0.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut) }
-
         guard !validProviders.isEmpty else {
             if loading {
                 loading = false
@@ -338,7 +350,7 @@ class MultiSwapViewModel: ObservableObject {
             loading = true
         }
 
-        quotesTask = Task { [weak self, feeService] in
+        quotesTask = Task { [weak self, feeService, validProviders] in
             try await feeService?.sync()
 
             let feeData = feeService?.feeData

@@ -68,6 +68,6 @@ class EvmMultiSwapFeeService: IMultiSwapFeeService {
     }
 
     func settingsView() -> AnyView {
-        AnyView(EvmFeeSettingsModule.view())
+        AnyView(ThemeNavigationView { EvmFeeSettingsModule.view() })
     }
 }
