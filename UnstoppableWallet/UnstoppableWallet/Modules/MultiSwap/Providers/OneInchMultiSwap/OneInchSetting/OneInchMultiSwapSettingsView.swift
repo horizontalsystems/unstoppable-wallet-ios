@@ -7,46 +7,78 @@ struct OneInchMultiSwapSettingsView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
-        ThemeView {
-            BottomGradientWrapper {
+        ScrollableThemeView {
                 VStack(spacing: .margin24) {
                     VStack(spacing: 0) {
-                        headerRow(title: OneInchMultiSwapSettingsViewModel.Section.slippage.title)
-                        inputNumberWithShortCuts(
-                            placeholder: "Def_Value",
-                            text: $viewModel.slippage,
-                            cautionState: $viewModel.slippageCautionState
+                        headerRow(title: OneInchMultiSwapSettingsViewModel.Section.address.title)
+                        inputWithShortCuts(
+                            placeholder: viewModel.initialAddress,
+                            shortCuts: viewModel.addressShortCuts,
+                            text: $viewModel.address,
+                            cautionState: $viewModel.addressCautionState,
+                            onTap: { viewModel.onTapAddress(index: $0) },
+                            onTapDelete: { viewModel.address = "" }
                         )
+
+                        Text(OneInchMultiSwapSettingsViewModel.Section.address.footer)
+                            .themeSubhead2()
+                            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+                    }
+
+                    VStack(spacing: 0) {
+                        headerRow(title: OneInchMultiSwapSettingsViewModel.Section.slippage.title)
+                        inputWithShortCuts(
+                            placeholder: viewModel.initialSlippage.description,
+                            shortCuts: viewModel.slippageShortCuts,
+                            text: $viewModel.slippage,
+                            cautionState: $viewModel.slippageCautionState,
+                            onTap: { viewModel.slippage = viewModel.slippage(at: $0).description },
+                            onTapDelete: { viewModel.slippage = "" }
+                        )
+
+                        Text(OneInchMultiSwapSettingsViewModel.Section.slippage.footer)
+                            .themeSubhead2()
+                            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
                     }
                 }
-            } bottomContent: {
-                Button(action: {
-                    viewModel.onApply()
-                }) {
-                    Text("button.apply".localized)
-                }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(!viewModel.applyEnabled)
-            }
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .animation(.default, value: viewModel.address)
+        .animation(.default, value: viewModel.addressCautionState)
         .animation(.default, value: viewModel.slippage)
         .navigationTitle("swap.advanced_settings".localized)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $viewModel.qrScanPresented) {
+            ScanQrViewNew { s in
+                viewModel.didFetch(s)
+            }
+        }
         .toolbar {
-            Button("button.cancel".localized.uppercased()) {
-                presentationMode.wrappedValue.dismiss()
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("button.reset".localized) {
+                    viewModel.onReset()
+                }
+                .disabled(!viewModel.resetEnabled)
+            }
+
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("button.done".localized) {
+                    viewModel.onDone()
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .disabled(!viewModel.doneEnabled)
             }
         }
     }
 
     @ViewBuilder private func headerRow(title: String) -> some View {
-        Text(title.uppercased())
-            .textSubhead1()
-            .frame(alignment: .leading)
+        HStack {
+            Text(title).textSubhead1()
+            Spacer()
+        }
+        .padding(EdgeInsets(top: .margin6, leading: .margin16, bottom: .margin6, trailing: .margin16))
     }
 
-    @ViewBuilder private func inputNumberWithShortCuts(placeholder: String = "", text: Binding<String>, cautionState: Binding<CautionState>) -> some View {
+    @ViewBuilder private func inputWithShortCuts(placeholder: String = "", shortCuts: [ShortCutButtonType], text: Binding<String>, cautionState: Binding<CautionState>, onTap: @escaping (Int) -> (), onTapDelete: @escaping () -> ()) -> some View {
         InputTextRow(vertical: .margin8) {
             ShortCutButtonsView(
                 content: {
@@ -55,16 +87,15 @@ struct OneInchMultiSwapSettingsView: View {
                         text: text
                     )
                     .font(.themeBody)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.decimalPad)
                     .autocorrectionDisabled()
             },
             text: text,
-            items: ["0.1%", "1%"],
+            items: shortCuts,
             onTap: {
-                print("Tapped button number \($0)")
-                viewModel.slippage = "54"
+                onTap($0)
             }, onTapDelete: {
-                viewModel.slippage = ""
+                onTapDelete()
             })
         }
         .modifier(CautionBorder(cautionState: cautionState))

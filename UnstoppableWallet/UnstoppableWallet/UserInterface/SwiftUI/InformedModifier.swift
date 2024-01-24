@@ -1,12 +1,8 @@
 import SwiftUI
 
 struct Informed: ViewModifier {
-    private let description: AlertView.InfoDescription
+    let description: AlertView.InfoDescription
     @State private var descriptionPresented: Bool = false
-
-    init(description: AlertView.InfoDescription) {
-        self.description = description
-    }
 
     func body(content: Content) -> some View {
         Button(action: {
@@ -17,7 +13,7 @@ struct Informed: ViewModifier {
                 Image("circle_information_20").themeIcon()
             }
             .padding(EdgeInsets(top: 5.5, leading: .margin16, bottom: 5.5, trailing: .margin16))
-        })
+    })
         .bottomSheet(isPresented: $descriptionPresented) {
             AlertView(
                 image: .info,
@@ -30,3 +26,4 @@ struct Informed: ViewModifier {
         }
     }
 }
+

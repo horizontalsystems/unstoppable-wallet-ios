@@ -1,22 +1,24 @@
 import Foundation
 
 struct MultiSwapSettingStorage {
-    private var modifiedSettings = [Setting: Any]()
+    private var modifiedSettings = [String: Any]()
 
-    var legacyGasPrice: Int? {
-        get { modifiedSettings[.legacyGasPrice] as? Int }
-        set { modifiedSettings[.legacyGasPrice] = newValue }
+    func value<T>(for key: String) -> T? {
+        modifiedSettings[key] as? T
     }
 
-    var slippage: Int? {
-        get { modifiedSettings[.slippage] as? Int }
-        set { modifiedSettings[.slippage] = newValue }
+    mutating func set(value: (some Any)?, for key: String) {
+        if let value {
+            modifiedSettings[key] = value
+        } else {
+            modifiedSettings[key] = nil
+        }
     }
 }
 
 extension MultiSwapSettingStorage {
-    enum Setting {
-        case legacyGasPrice
-        case slippage
+    enum LegacySetting {
+        static let address = "recipient"
+        static let slippage = "slippage"
     }
 }
