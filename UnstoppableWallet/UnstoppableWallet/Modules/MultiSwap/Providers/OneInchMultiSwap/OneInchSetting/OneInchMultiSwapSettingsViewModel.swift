@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 class OneInchMultiSwapSettingsViewModel: ObservableObject {
     private let decimalParser = AmountDecimalParser()
@@ -11,61 +12,153 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var slippageCautionState: CautionState = .none
+    @Published var slippageCautionState: CautionState = .none {
+        didSet {
+            syncButtons()
+        }
+    }
+
     @Published var slippage: String = "" {
         didSet {
             validateSlippage()
         }
     }
 
-    @Published var applyEnabled = false
+    @Published var resetEnabled = false
+    @Published var doneEnabled = true
+
+    @Published var qrScanPresented = false
 
     init(storage: MultiSwapSettingStorage) {
         self.storage = storage
     }
 
-    private func validateAddress() {
-    }
+    private func validateAddress() {}
 
     private func validateSlippage() {
+        guard !slippage.isEmpty else {
+            slippageCautionState = .none
+            return
+        }
+
         guard let decimal = decimalParser.parseAnyDecimal(from: slippage) else {
-            slippageCautionState = .caution(.init(text: "Can't recognize", type: .error))
+            slippageCautionState = .caution(.init(text: MultiSwapSlippage.SlippageError.invalid.localizedDescription, type: .error))
             return
         }
 
-        if decimal > 50 {
-            slippageCautionState = .caution(.init(text: "Your transaction may be frontrun", type: .warning))
-            return
-        }
+        slippageCautionState = MultiSwapSlippage.validate(slippage: decimal)
+    }
 
-        slippageCautionState = .none
+    private func syncButtons() {
+        if slippageCautionState == .none, addressCautionState == .none {
+            doneEnabled = true
+        } else {
+            doneEnabled = false
+        }
     }
 }
 
 extension OneInchMultiSwapSettingsViewModel {
-    private func updateByStep(value: String?, direction: StepChangeButtonsViewDirection) -> Decimal? {
-        guard let decimal = value.flatMap({ decimalParser.parseAnyDecimal(from: $0) }) else {
-            return nil
-        }
-        // TODO: we can recognize the smallest significand digit, and increase/decrease by smallest interval
-        switch direction {
-        case .down: return max(decimal - 1, 0)
-        case .up: return decimal + 1
+    var initialAddress: String {
+        storage.value(for: MultiSwapSettingStorage.LegacySetting.address) ?? ""
+    }
+
+    var initialSlippage: Decimal {
+        storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.defaultSlippage
+    }
+
+
+    var addressShortCuts: [ShortCutButtonType] {
+        [.icon("qr_scan_20"), .text("button.paste".localized)]
+    }
+
+    func onTapAddress(index: Int) {
+        switch index {
+        case 0: //qr_scan
+            qrScanPresented = true
+        case 1: //paste
+            if let text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
+                address = text
+            }
+        default: () //do_nothing
         }
     }
 
-    func stepChangeSlippage(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: slippage, direction: direction) {
-            slippage = newValue.description
-        }
+    var slippageShortCuts: [ShortCutButtonType] {
+        MultiSwapSlippage.recommendedSlippages.map { $0.description + "%" }.map { .text($0) }
     }
 
-    func onApply() {
+    func slippage(at index: Int) -> Decimal {
+        MultiSwapSlippage.recommendedSlippages.at(index: index) ??
+                MultiSwapSlippage.recommendedSlippages[0]
     }
+
+    func didFetch(_ string: String) {
+        address = string
+    }
+
+    func onReset() {
+        address = ""
+        slippage = ""
+    }
+
+    func onDone() {}
 }
 
 extension OneInchMultiSwapSettingsViewModel {
     enum Section: Int {
         case address, slippage
+    }
+}
+
+enum MultiSwapSlippage {
+    static let defaultSlippage: Decimal = 1
+    static let recommendedSlippages: [Decimal] = [0.1, 3]
+    static var limitSlippageBounds: ClosedRange<Decimal> { 0.01 ... 50 }
+    static let usualHighestSlippage: Decimal = 5
+
+    enum SlippageError: Error, LocalizedError {
+        case invalid
+        case zeroValue
+        case tooLow(min: Decimal)
+        case tooHigh(max: Decimal)
+
+        var errorDescription: String? {
+            switch self {
+            case .invalid: return "swap.advanced_settings.error.invalid_slippage".localized
+            case .tooLow: return "swap.advanced_settings.error.lower_slippage".localized
+            case let .tooHigh(max): return "swap.advanced_settings.error.higher_slippage".localized(max.description)
+            default: return nil
+            }
+        }
+    }
+
+    static func validate(slippage: Decimal) -> CautionState {
+        if slippage == .zero {
+            return .caution(.init(
+                text: MultiSwapSlippage.SlippageError.invalid.localizedDescription,
+                type: .error
+            )
+            )
+        }
+        if slippage > MultiSwapSlippage.limitSlippageBounds.upperBound {
+            return .caution(.init(
+                text: SwapSettingsModule.SlippageError.tooHigh(
+                    max: MultiSwapSlippage.limitSlippageBounds.upperBound
+                ).localizedDescription,
+                type: .error
+            )
+            )
+        }
+        if slippage < MultiSwapSlippage.limitSlippageBounds.lowerBound {
+            return .caution(.init(
+                text: SwapSettingsModule.SlippageError.tooLow(
+                    min: MultiSwapSlippage.limitSlippageBounds.lowerBound
+                ).localizedDescription,
+                type: .error
+            )
+            )
+        }
+        return .none
     }
 }

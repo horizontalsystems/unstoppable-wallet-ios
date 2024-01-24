@@ -179,7 +179,7 @@ struct MultiSwapView: View {
                                                     }
                                                 }
                                                 .frame(height: 40)
-                                                .padding(.leading, .margin16)
+                                                .padding(.leading, field.description == nil ? .margin16 : 0)
                                                 .padding(.trailing, field.settingId == nil ? .margin16 : .margin12)
                                             }
                                         }
