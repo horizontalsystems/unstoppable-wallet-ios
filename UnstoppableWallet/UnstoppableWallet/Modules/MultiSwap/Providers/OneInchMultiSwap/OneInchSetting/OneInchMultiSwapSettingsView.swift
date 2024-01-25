@@ -8,50 +8,46 @@ struct OneInchMultiSwapSettingsView: View {
 
     var body: some View {
         ScrollableThemeView {
-                VStack(spacing: .margin24) {
-                    VStack(spacing: 0) {
-                        headerRow(title: OneInchMultiSwapSettingsViewModel.Section.address.title)
-                        inputWithShortCuts(
-                            placeholder: viewModel.initialAddress,
-                            shortCuts: viewModel.addressShortCuts,
-                            text: $viewModel.address,
-                            cautionState: $viewModel.addressCautionState,
-                            onTap: { viewModel.onTapAddress(index: $0) },
-                            onTapDelete: { viewModel.address = "" }
-                        )
+            VStack(spacing: .margin24) {
+                VStack(spacing: 0) {
+                    headerRow(title: OneInchMultiSwapSettingsViewModel.Section.address.title)
 
-                        Text(OneInchMultiSwapSettingsViewModel.Section.address.footer)
-                            .themeSubhead2()
-                            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                    }
+                    AddressViewNew(
+                        initial: .init(
+                            blockchainType: viewModel.blockchainType,
+                            address: nil,
+                            useContacts: true
+                        ),
+                        result: $viewModel.addressResult
+                    )
 
-                    VStack(spacing: 0) {
-                        headerRow(title: OneInchMultiSwapSettingsViewModel.Section.slippage.title)
-                        inputWithShortCuts(
-                            placeholder: viewModel.initialSlippage.description,
-                            shortCuts: viewModel.slippageShortCuts,
-                            text: $viewModel.slippage,
-                            cautionState: $viewModel.slippageCautionState,
-                            onTap: { viewModel.slippage = viewModel.slippage(at: $0).description },
-                            onTapDelete: { viewModel.slippage = "" }
-                        )
-
-                        Text(OneInchMultiSwapSettingsViewModel.Section.slippage.footer)
-                            .themeSubhead2()
-                            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                    }
+                    Text(OneInchMultiSwapSettingsViewModel.Section.address.footer)
+                        .themeSubhead2()
+                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
                 }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+
+                VStack(spacing: 0) {
+                    headerRow(title: OneInchMultiSwapSettingsViewModel.Section.slippage.title)
+                    inputWithShortCuts(
+                        placeholder: viewModel.initialSlippage.description,
+                        shortCuts: viewModel.slippageShortCuts,
+                        text: $viewModel.slippage,
+                        cautionState: $viewModel.slippageCautionState,
+                        onTap: { viewModel.slippage = viewModel.slippage(at: $0).description },
+                        onTapDelete: { viewModel.slippage = "" }
+                    )
+
+                    Text(OneInchMultiSwapSettingsViewModel.Section.slippage.footer)
+                        .themeSubhead2()
+                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+                }
+            }
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .animation(.default, value: viewModel.addressCautionState)
         .animation(.default, value: viewModel.slippage)
         .navigationTitle("swap.advanced_settings".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $viewModel.qrScanPresented) {
-            ScanQrViewNew { s in
-                viewModel.didFetch(s)
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("button.reset".localized) {
@@ -78,9 +74,9 @@ struct OneInchMultiSwapSettingsView: View {
         .padding(EdgeInsets(top: .margin6, leading: .margin16, bottom: .margin6, trailing: .margin16))
     }
 
-    @ViewBuilder private func inputWithShortCuts(placeholder: String = "", shortCuts: [ShortCutButtonType], text: Binding<String>, cautionState: Binding<CautionState>, onTap: @escaping (Int) -> (), onTapDelete: @escaping () -> ()) -> some View {
+    @ViewBuilder private func inputWithShortCuts(placeholder: String = "", shortCuts: [ShortCutButtonType], text: Binding<String>, cautionState: Binding<CautionState>, onTap: @escaping (Int) -> Void, onTapDelete: @escaping () -> Void) -> some View {
         InputTextRow(vertical: .margin8) {
-            ShortCutButtonsView(
+            ShortcutButtonsView(
                 content: {
                     InputTextView(
                         placeholder: placeholder,
@@ -89,14 +85,15 @@ struct OneInchMultiSwapSettingsView: View {
                     .font(.themeBody)
                     .keyboardType(.decimalPad)
                     .autocorrectionDisabled()
-            },
-            text: text,
-            items: shortCuts,
-            onTap: {
-                onTap($0)
-            }, onTapDelete: {
-                onTapDelete()
-            })
+                },
+                showDelete: .init(get: { !text.wrappedValue.isEmpty }, set: { _ in }),
+                items: shortCuts,
+                onTap: {
+                    onTap($0)
+                }, onTapDelete: {
+                    onTapDelete()
+                }
+            )
         }
         .modifier(CautionBorder(cautionState: cautionState))
         .modifier(CautionPrompt(cautionState: cautionState))
