@@ -1,18 +1,25 @@
 import SwiftUI
 
-struct ShortCutButtonsView<Content: View>: View {
+struct ShortcutButtonsView<Content: View>: View {
     @ViewBuilder let content: Content
 
-    var text: Binding<String>
+    @Binding var showDelete: Bool
     let items: [ShortCutButtonType]
-    let onTap: (Int) -> ()
-    let onTapDelete: () -> ()
+    let onTap: (Int) -> Void
+    let onTapDelete: () -> Void
 
     var body: some View {
         HStack(spacing: .margin8) {
             content
 
-            if text.wrappedValue.isEmpty {
+            if showDelete {
+                Button(action: {
+                    onTapDelete()
+                }, label: {
+                    Image("trash_20").renderingMode(.template)
+                })
+                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+            } else {
                 ForEach(Array(items.enumerated()), id: \.offset) { index, item in
                     switch item {
                     case let .text(title):
@@ -28,16 +35,9 @@ struct ShortCutButtonsView<Content: View>: View {
                         }, label: {
                             Image(name).renderingMode(.template)
                         })
-                        .buttonStyle( SecondaryCircleButtonStyle(style: .default))
+                        .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                     }
                 }
-            } else {
-                Button(action: {
-                    onTapDelete()
-                }, label: {
-                    Image("trash_20").renderingMode(.template)
-                })
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             }
         }
     }
