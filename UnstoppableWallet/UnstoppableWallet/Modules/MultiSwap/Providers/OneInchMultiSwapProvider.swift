@@ -58,7 +58,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, feeData: MultiSwapFeeData?) async throws -> IMultiSwapQuote {
+    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -69,7 +69,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.invalidAmountIn
         }
 
-        guard let feeData, case let .evm(gasPrice) = feeData else {
+        guard let transactionSettings, case let .evm(gasPrice, _) = transactionSettings else {
             throw SwapError.noFeeData
         }
 
