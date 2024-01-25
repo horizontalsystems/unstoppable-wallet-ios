@@ -25,7 +25,7 @@ class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
         try kit.routerAddress(chain: chain)
     }
 
-    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, feeData: MultiSwapFeeData?) async throws -> IMultiSwapQuote {
+    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -42,7 +42,7 @@ class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
         var estimatedGas: Int?
 
         if let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit,
-           let feeData, case let .evm(gasPrice) = feeData
+           let transactionSettings, case let .evm(gasPrice, _) = transactionSettings
         {
             do {
                 let transactionData = try kit.transactionData(receiveAddress: evmKit.receiveAddress, chain: chain, tradeData: tradeData)

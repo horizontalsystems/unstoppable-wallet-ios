@@ -3,8 +3,8 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-enum MultiSwapFeeData {
-    case evm(gasPrice: GasPrice)
+enum MultiSwapTransactionSettings {
+    case evm(gasPrice: GasPrice, nonce: Int)
     case bitcoin(satoshiPerByte: Int)
 }
 
@@ -13,20 +13,21 @@ enum MultiSwapFeeQuote {
     case bitcoin(bytes: Int)
 }
 
-protocol IMultiSwapFeeService {
-    var feeData: MultiSwapFeeData? { get }
+protocol IMultiSwapTransactionService {
+    var transactionSettings: MultiSwapTransactionSettings? { get }
     var modified: Bool { get }
     func sync() async throws
     func fee(quote: MultiSwapFeeQuote, token: Token) -> CoinValue?
     func settingsView() -> AnyView
 }
 
-class EvmMultiSwapFeeService: IMultiSwapFeeService {
+class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
     private let chain: Chain
     private let rpcSource: RpcSource
     private let networkManager = App.shared.networkManager
 
     private(set) var gasPrice: GasPrice?
+    private(set) var nonce: Int?
 
     init?(blockchainType: BlockchainType) {
         guard let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
@@ -37,12 +38,12 @@ class EvmMultiSwapFeeService: IMultiSwapFeeService {
         self.rpcSource = rpcSource
     }
 
-    var feeData: MultiSwapFeeData? {
-        guard let gasPrice else {
+    var transactionSettings: MultiSwapTransactionSettings? {
+        guard let gasPrice, let nonce else {
             return nil
         }
 
-        return .evm(gasPrice: gasPrice)
+        return .evm(gasPrice: gasPrice, nonce: nonce)
     }
 
     var modified: Bool {
@@ -55,6 +56,8 @@ class EvmMultiSwapFeeService: IMultiSwapFeeService {
         } else {
             gasPrice = try await LegacyGasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
         }
+
+        nonce = 0
     }
 
     func fee(quote: MultiSwapFeeQuote, token: Token) -> CoinValue? {

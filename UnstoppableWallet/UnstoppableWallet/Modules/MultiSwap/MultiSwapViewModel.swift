@@ -43,13 +43,13 @@ class MultiSwapViewModel: ObservableObject {
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] price in self?.rateIn = price.value }
 
-                feeService = EvmMultiSwapFeeService(blockchainType: internalTokenIn.blockchainType)
+                transactionService = EvmMultiSwapTransactionService(blockchainType: internalTokenIn.blockchainType)
                 feeToken = try? marketKit.token(query: TokenQuery(blockchainType: internalTokenIn.blockchainType, tokenType: .native))
             } else {
                 availableBalance = nil
                 rateIn = nil
                 rateInCancellable = nil
-                feeService = nil
+                transactionService = nil
                 feeToken = nil
             }
         }
@@ -247,7 +247,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published var feeService: IMultiSwapFeeService?
+    @Published var transactionService: IMultiSwapTransactionService?
     @Published var feeToken: Token?
 
     init(providers: [IMultiSwapProvider], token: Token? = nil) {
@@ -350,16 +350,16 @@ class MultiSwapViewModel: ObservableObject {
             loading = true
         }
 
-        quotesTask = Task { [weak self, feeService, validProviders] in
-            try await feeService?.sync()
+        quotesTask = Task { [weak self, transactionService, validProviders] in
+            try await transactionService?.sync()
 
-            let feeData = feeService?.feeData
+            let transactionSettings = transactionService?.transactionSettings
 
             let optionalQuotes: [Quote?] = await withTaskGroup(of: Quote?.self) { group in
                 for provider in validProviders {
                     group.addTask {
                         do {
-                            let quote = try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn, feeData: feeData)
+                            let quote = try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
                             return Quote(provider: provider, quote: quote)
                         } catch {
                             print("QUOTE ERROR: \(provider.id): \(error)")

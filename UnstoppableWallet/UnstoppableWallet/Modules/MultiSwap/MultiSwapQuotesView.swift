@@ -42,7 +42,7 @@ struct MultiSwapQuotesView: View {
 
                                     if let feeQuote = quote.quote.feeQuote,
                                        let feeToken = viewModel.feeToken,
-                                       let fee = viewModel.feeService?.fee(quote: feeQuote, token: feeToken),
+                                       let fee = viewModel.transactionService?.fee(quote: feeQuote, token: feeToken),
                                        let formatted = ValueFormatter.instance.formatShort(coinValue: fee)
                                     {
                                         Text(formatted).textSubhead2(color: .themeGray)
