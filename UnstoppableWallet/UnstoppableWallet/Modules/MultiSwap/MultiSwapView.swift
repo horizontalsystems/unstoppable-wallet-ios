@@ -96,7 +96,7 @@ struct MultiSwapView: View {
                                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
                                     .frame(height: 40)
                                     .sheet(isPresented: $settingsPresented) {
-                                        currentQuote.provider.settingsView()
+                                        currentQuote.provider.settingsView(quote: currentQuote.quote)
                                     }
 
                                     VStack(spacing: 0) {
