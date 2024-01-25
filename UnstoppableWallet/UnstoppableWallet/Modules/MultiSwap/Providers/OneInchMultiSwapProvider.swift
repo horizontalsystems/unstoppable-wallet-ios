@@ -90,15 +90,10 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         )
     }
 
-    func settingsView(quote: IMultiSwapQuote) -> AnyView {
-        guard let quote = quote as? Quote else {
-            return AnyView(EmptyView())
-        }
-
+    func settingsView() -> AnyView {
         let view = ThemeNavigationView {
-            Text("1Inch Settings View: \(String(describing: quote))")
+            Text("1Inch Settings View")
         }
-
         return AnyView(view)
     }
 
