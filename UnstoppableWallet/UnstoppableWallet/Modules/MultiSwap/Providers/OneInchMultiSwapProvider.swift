@@ -90,7 +90,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         )
     }
 
-    func settingsView() -> AnyView {
+    func settingsView(tokenIn _: MarketKit.Token, tokenOut _: MarketKit.Token) -> AnyView {
         let view = ThemeNavigationView {
             Text("1Inch Settings View")
         }

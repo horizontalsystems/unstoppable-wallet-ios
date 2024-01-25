@@ -63,7 +63,7 @@ struct MultiSwapView: View {
                                 .themeListStyle(.bordered)
                             }
 
-                            if let currentQuote = viewModel.currentQuote {
+                            if let currentQuote = viewModel.currentQuote, let tokenIn = viewModel.tokenIn, let tokenOut = viewModel.tokenOut {
                                 ListSection {
                                     HStack(spacing: .margin8) {
                                         Button(action: {
@@ -96,7 +96,7 @@ struct MultiSwapView: View {
                                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
                                     .frame(height: 40)
                                     .sheet(isPresented: $settingsPresented) {
-                                        currentQuote.provider.settingsView()
+                                        currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut)
                                     }
 
                                     VStack(spacing: 0) {
@@ -202,7 +202,7 @@ struct MultiSwapView: View {
                                 }
                             }
 
-                            if viewModel.tokenIn != nil && viewModel.tokenOut != nil && !viewModel.loading && (viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty)) {
+                            if viewModel.tokenIn != nil, viewModel.tokenOut != nil, !viewModel.loading, viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty) {
                                 HighlightedTextView(text: "These tokens cannot be swapped", style: .red)
                             }
                         }
