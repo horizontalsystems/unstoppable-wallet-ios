@@ -121,8 +121,8 @@ struct MultiSwapView: View {
 
                                         if let feeQuote = currentQuote.quote.feeQuote,
                                            let feeToken = viewModel.feeToken,
-                                           let feeService = viewModel.feeService,
-                                           let fee = feeService.fee(quote: feeQuote, token: feeToken),
+                                           let transactionService = viewModel.transactionService,
+                                           let fee = transactionService.fee(quote: feeQuote, token: feeToken),
                                            let formatted = ValueFormatter.instance.formatShort(coinValue: fee)
                                         {
                                             HStack(spacing: .margin8) {
@@ -137,7 +137,7 @@ struct MultiSwapView: View {
                                                 Button(action: {
                                                     feeSettingsPresented = true
                                                 }) {
-                                                    if feeService.modified {
+                                                    if transactionService.modified {
                                                         Image("edit2_20").themeIcon(color: .themeJacob)
                                                     } else {
                                                         Image("edit2_20").renderingMode(.template)
@@ -187,7 +187,7 @@ struct MultiSwapView: View {
                                 }
                                 .themeListStyle(.bordered)
                                 .sheet(isPresented: $feeSettingsPresented) {
-                                    if let feeService = viewModel.feeService {
+                                    if let feeService = viewModel.transactionService {
                                         feeService.settingsView()
                                     } else {
                                         Text("NO")
