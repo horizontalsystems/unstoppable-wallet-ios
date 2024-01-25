@@ -1,9 +1,13 @@
 import Foundation
+import MarketKit
 import UIKit
 
 class OneInchMultiSwapSettingsViewModel: ObservableObject {
     private let decimalParser = AmountDecimalParser()
     let storage: MultiSwapSettingStorage
+
+    @Published var blockchainType: BlockchainType? = nil
+    @Published var addressResult: AddressInput.Result = .idle
 
     @Published var addressCautionState: CautionState = .none
     @Published var address: String = "" {
