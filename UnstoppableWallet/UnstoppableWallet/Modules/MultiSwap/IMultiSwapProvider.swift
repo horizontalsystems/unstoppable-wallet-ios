@@ -8,12 +8,12 @@ protocol IMultiSwapProvider {
     var icon: String { get }
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote
-    func settingsView() -> AnyView
+    func settingsView(tokenIn: Token, tokenOut: Token) -> AnyView
     func settingView(settingId: String) -> AnyView
 }
 
 extension IMultiSwapProvider {
-    func settingsView() -> AnyView {
+    func settingsView(tokenIn _: Token, tokenOut _: Token) -> AnyView {
         AnyView(Text("Settings View"))
     }
 
