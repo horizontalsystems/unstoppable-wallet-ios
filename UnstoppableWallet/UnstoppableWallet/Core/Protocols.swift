@@ -107,6 +107,7 @@ protocol ISendTonAdapter {
 protocol IErc20Adapter {
     var pendingTransactions: [TransactionRecord] { get }
     func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
+    func allowance(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) async throws -> Decimal
 }
 
 protocol ISendBinanceAdapter {
