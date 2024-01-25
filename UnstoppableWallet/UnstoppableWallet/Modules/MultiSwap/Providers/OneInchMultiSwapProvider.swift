@@ -6,18 +6,14 @@ import MarketKit
 import OneInchKit
 import SwiftUI
 
-struct OneInchMultiSwapProvider {
-    static let defaultSlippage: Decimal = 1
-
+class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let kit: OneInchKit.Kit
-    private let storage: MultiSwapSettingStorage
-    private let marketKit = App.shared.marketKit
-    private let evmBlockchainManager = App.shared.evmBlockchainManager
     private let networkManager = App.shared.networkManager
 
     init(kit: OneInchKit.Kit, storage: MultiSwapSettingStorage) {
         self.kit = kit
-        self.storage = storage
+
+        super.init(storage: storage)
     }
 
     private func address(token: MarketKit.Token) throws -> EvmKit.Address {
@@ -31,6 +27,10 @@ struct OneInchMultiSwapProvider {
     private func rawAmount(amount: Decimal, token: MarketKit.Token) -> BigUInt? {
         let rawAmountString = (amount * pow(10, token.decimals)).hs.roundedString(decimal: 0)
         return BigUInt(rawAmountString)
+    }
+
+    override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
+        try OneInchKit.Kit.routerAddress(chain: chain)
     }
 }
 
@@ -82,10 +82,11 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             gasPrice: gasPrice
         )
 
-        return Quote(
+        return await Quote(
             quote: quote,
             tokenOut: tokenOut,
-            slippage: 2.5
+            slippage: 2.5,
+            allowanceState: allowanceState(token: tokenIn, amount: amountIn)
         )
     }
 
@@ -115,27 +116,25 @@ extension OneInchMultiSwapProvider {
 }
 
 extension OneInchMultiSwapProvider {
-    struct Quote: IMultiSwapQuote {
+    class Quote: BaseEvmMultiSwapProvider.Quote {
         private let quote: OneInchKit.Quote
         private let tokenOut: MarketKit.Token
         private let slippage: Decimal
 
-        init(quote: OneInchKit.Quote, tokenOut: MarketKit.Token, slippage: Decimal) {
+        init(quote: OneInchKit.Quote, tokenOut: MarketKit.Token, slippage: Decimal, allowanceState: AllowanceState) {
             self.quote = quote
             self.tokenOut = tokenOut
             self.slippage = slippage
+
+            super.init(estimatedGas: quote.estimateGas, allowanceState: allowanceState)
         }
 
-        var amountOut: Decimal {
+        override var amountOut: Decimal {
             quote.amountOut ?? 0
         }
 
-        var feeQuote: MultiSwapFeeQuote? {
-            .evm(gasLimit: quote.estimateGas)
-        }
-
-        var mainFields: [MultiSwapMainField] {
-            var fields = [MultiSwapMainField]()
+        override var mainFields: [MultiSwapMainField] {
+            var fields = super.mainFields
 
             if slippage != OneInchMultiSwapProvider.defaultSlippage {
                 fields.append(
@@ -150,8 +149,8 @@ extension OneInchMultiSwapProvider {
             return fields
         }
 
-        var confirmFieldSections: [[MultiSwapConfirmField]] {
-            var sections = [[MultiSwapConfirmField]]()
+        override var confirmFieldSections: [[MultiSwapConfirmField]] {
+            var sections = super.confirmFieldSections
 
             let minAmountOut = amountOut * (1 - slippage / 100)
 
@@ -167,10 +166,6 @@ extension OneInchMultiSwapProvider {
             )
 
             return sections
-        }
-
-        var settingsModified: Bool {
-            true
         }
     }
 }

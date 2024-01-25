@@ -1,6 +1,6 @@
 import MarketKit
 
-class UniswapMultiSwapProvider: BaseUniswapMultiSwapProvider, IMultiSwapProvider {
+class UniswapV2MultiSwapProvider: BaseUniswapV2MultiSwapProvider, IMultiSwapProvider {
     var id: String {
         "uniswap"
     }

@@ -4,10 +4,10 @@ import Foundation
 import MarketKit
 import UniswapKit
 
-class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
-    private let kit: UniswapKit.KitV3
+class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
+    private let kit: UniswapKit.Kit
 
-    init(kit: UniswapKit.KitV3, storage: MultiSwapSettingStorage) {
+    init(kit: UniswapKit.Kit, storage: MultiSwapSettingStorage) {
         self.kit = kit
 
         super.init(storage: storage)
@@ -22,7 +22,7 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
     }
 
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
-        kit.routerAddress(chain: chain)
+        try kit.routerAddress(chain: chain)
     }
 
     func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, feeData: MultiSwapFeeData?) async throws -> IMultiSwapQuote {
@@ -31,13 +31,13 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
 
         let kitTokenIn = try kitToken(chain: chain, token: tokenIn)
         let kitTokenOut = try kitToken(chain: chain, token: tokenOut)
-        let tradeOptions = TradeOptions()
 
         guard let rpcSource = evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
             throw SwapError.noHttpRpcSource
         }
 
-        let bestTrade = try await kit.bestTradeExactIn(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut, amountIn: amountIn, options: tradeOptions)
+        let swapData = try await kit.swapData(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut)
+        let tradeData = try kit.bestTradeExactIn(swapData: swapData, amountIn: amountIn)
 
         var estimatedGas: Int?
 
@@ -45,13 +45,13 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
            let feeData, case let .evm(gasPrice) = feeData
         {
             do {
-                let transactionData = try kit.transactionData(receiveAddress: evmKit.receiveAddress, chain: chain, bestTrade: bestTrade, tradeOptions: tradeOptions)
+                let transactionData = try kit.transactionData(receiveAddress: evmKit.receiveAddress, chain: chain, tradeData: tradeData)
                 estimatedGas = try await evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
             } catch {}
         }
 
         return await Quote(
-            bestTrade: bestTrade,
+            tradeData: tradeData,
             slippage: 1.5,
             estimatedGas: estimatedGas,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
@@ -59,18 +59,18 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
     }
 }
 
-extension BaseUniswapV3MultiSwapProvider {
+extension BaseUniswapV2MultiSwapProvider {
     class Quote: BaseUniswapMultiSwapProvider.Quote {
-        private let bestTrade: TradeDataV3
+        private let tradeData: TradeData
 
-        init(bestTrade: TradeDataV3, slippage: Decimal, estimatedGas: Int?, allowanceState: AllowanceState) {
-            self.bestTrade = bestTrade
+        init(tradeData: TradeData, slippage: Decimal, estimatedGas: Int?, allowanceState: AllowanceState) {
+            self.tradeData = tradeData
 
             super.init(slippage: slippage, estimatedGas: estimatedGas, allowanceState: allowanceState)
         }
 
         override var amountOut: Decimal {
-            bestTrade.amountOut ?? 0
+            tradeData.amountOut ?? 0
         }
     }
 }
