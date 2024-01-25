@@ -1,6 +1,6 @@
 import MarketKit
 
-class PancakeMultiSwapProvider: BaseUniswapMultiSwapProvider, IMultiSwapProvider {
+class PancakeV2MultiSwapProvider: BaseUniswapV2MultiSwapProvider, IMultiSwapProvider {
     var id: String {
         "pancake"
     }

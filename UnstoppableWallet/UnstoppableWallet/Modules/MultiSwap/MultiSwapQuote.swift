@@ -7,6 +7,7 @@ protocol IMultiSwapQuote {
     var mainFields: [MultiSwapMainField] { get }
     var confirmFieldSections: [[MultiSwapConfirmField]] { get }
     var settingsModified: Bool { get }
+    var canSwap: Bool { get }
 }
 
 extension IMultiSwapQuote {

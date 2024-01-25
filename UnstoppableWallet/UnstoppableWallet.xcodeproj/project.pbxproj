@@ -22,6 +22,7 @@
 		11B3502E7AA00ACFE8EE8CD9 /* FormTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35392439DBC8C06DCCB60 /* FormTextView.swift */; };
 		11B35030E4C9A4157CE5FF43 /* WidgetProd.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 11B35DDE879F1628BB2CE523 /* WidgetProd.entitlements */; };
 		11B350340029D15D3BC15C3B /* RestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3518EEF5AFC1C55FD07BA /* RestoreViewModel.swift */; };
+		11B3503403F029E9432BE89A /* BaseUniswapV2MultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A102692DA01F91413D /* BaseUniswapV2MultiSwapProvider.swift */; };
 		11B3503456D10F362D8CC855 /* RestoreSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35336293A4473DD9F5C8B /* RestoreSettingsModule.swift */; };
 		11B350354CCA9BDDC05A9CBA /* WalletConnectSessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355C1E3C922BAE804AAF9 /* WalletConnectSessionStorage.swift */; };
 		11B350388CD7F33B10BD3F4B /* AdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3583932F270503C1DF3F0 /* AdapterFactory.swift */; };
@@ -331,6 +332,7 @@
 		11B3535EF39FCD22171AC21C /* FaqService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352B4E116BEC01B972A39 /* FaqService.swift */; };
 		11B3536008462BFF8CA245BE /* PublicKeysViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C285327E4099656DBA8 /* PublicKeysViewModel.swift */; };
 		11B353656027333CBE1C33AE /* CexWithdrawNetworkSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351C522855F29C6B038D3 /* CexWithdrawNetworkSelectViewController.swift */; };
+		11B35365C9531E9FFB57341B /* BaseEvmMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354C7121EEBFD71BFD3C3 /* BaseEvmMultiSwapProvider.swift */; };
 		11B3536884FEE247C144B395 /* Blockchain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3595BAB29E195A1317DD1 /* Blockchain.swift */; };
 		11B3537251E7878C7307657D /* CexAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359198B26152903D5CA14 /* CexAccount.swift */; };
 		11B3537EE13B3EFB2E979821 /* BadgeViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352BD333C9D69ECB82884 /* BadgeViewNew.swift */; };
@@ -429,7 +431,7 @@
 		11B35481F59793CD9C95B324 /* CreatePasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3590ACA8DFA4196E8EC33 /* CreatePasscodeViewModel.swift */; };
 		11B35483AFC1088E56BC7F37 /* LanguageHourFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B15E0AE668C9AF10161 /* LanguageHourFormatter.swift */; };
 		11B354865DA8CA6A1442D577 /* AppStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35496770FA251785E5581 /* AppStatusViewModel.swift */; };
-		11B35490732E5F84656F339A /* PancakeMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564500A3378D6EB2A477 /* PancakeMultiSwapProvider.swift */; };
+		11B35490732E5F84656F339A /* PancakeV2MultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564500A3378D6EB2A477 /* PancakeV2MultiSwapProvider.swift */; };
 		11B354908D10B00AF7FF0AA3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35847887E070CA535F890 /* UserDefaultsStorage.swift */; };
 		11B35494E4BA9BF6A3DAA6D6 /* NftMetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E2ACF02E2C35EFAE9FA /* NftMetadataService.swift */; };
 		11B354A1F79EDA1E58E50418 /* WalletTokenListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357D222B4819BE881E182 /* WalletTokenListViewController.swift */; };
@@ -989,6 +991,7 @@
 		11B35A949C780AD4E30CCDB7 /* MultiSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355B6EFCAB40DC5ACEA3D /* MultiSelectorViewController.swift */; };
 		11B35A95CB02F027266BA1FD /* SimpleActivateModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35178643181B9CE1D6C8B /* SimpleActivateModule.swift */; };
 		11B35AA23549136DA1611174 /* CoinMajorHolderChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358E9F753650F0B6BD4B9 /* CoinMajorHolderChartCell.swift */; };
+		11B35AA3B53A6EBC5CCA7F08 /* BaseEvmMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354C7121EEBFD71BFD3C3 /* BaseEvmMultiSwapProvider.swift */; };
 		11B35AA627F0357B3FB5F9E8 /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351B200B193534D0A66BF /* ListRow.swift */; };
 		11B35AA67F08317C748062D3 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B56BE1EA9891306D6EB /* CreateAccountViewModel.swift */; };
 		11B35AACC2CDF424714B33D3 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350BD364F07D1AC759865 /* NSAttributedString.swift */; };
@@ -1118,6 +1121,7 @@
 		11B35C22C95B08142C13B14D /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35920D0AD623C5E4A4460 /* LanguageSettingsViewModel.swift */; };
 		11B35C25B0DA607BFD446E9D /* AddressInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35420B8191814543CBFA8 /* AddressInputCell.swift */; };
 		11B35C25C220A84A08A3CEBA /* EvmAddressModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564687A53021953267B3 /* EvmAddressModule.swift */; };
+		11B35C2D31DE8081AC572B27 /* BaseUniswapV2MultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A102692DA01F91413D /* BaseUniswapV2MultiSwapProvider.swift */; };
 		11B35C2D75133B8F13101A24 /* BalancePrimaryValueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566DC3A97A5CC3E2C729 /* BalancePrimaryValueManager.swift */; };
 		11B35C2EB8D6EC593915640F /* CexDepositModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35011026CE084AE40FE6F /* CexDepositModule.swift */; };
 		11B35C2ED09C6D5660BB1236 /* MarketWatchlistToggleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3562819DF141457837340 /* MarketWatchlistToggleService.swift */; };
@@ -1161,7 +1165,7 @@
 		11B35C95EA77972246D5F3BD /* CexAssetRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AD211091A7C8619CEA2 /* CexAssetRecordStorage.swift */; };
 		11B35CA25E02E397E167EEC3 /* QrCodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356F4578E266268264021 /* QrCodeCell.swift */; };
 		11B35CA3524A5FEA07135535 /* MultiSwapConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F8063B95C6571AA517 /* MultiSwapConfirmView.swift */; };
-		11B35CA4F61231F536BE9A24 /* PancakeMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564500A3378D6EB2A477 /* PancakeMultiSwapProvider.swift */; };
+		11B35CA4F61231F536BE9A24 /* PancakeV2MultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564500A3378D6EB2A477 /* PancakeV2MultiSwapProvider.swift */; };
 		11B35CA6259EDA3708695416 /* FaqUrlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35759E226171A4969E66E /* FaqUrlHelper.swift */; };
 		11B35CA725B9BAD70E40197F /* MarketTopPairsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355C615D9FE4290671D5D /* MarketTopPairsModule.swift */; };
 		11B35CA92AA402BE72B4F5D6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352648C452D611F1EDF61 /* Image.swift */; };
@@ -1189,7 +1193,7 @@
 		11B35CDC811A92DFAAF2C923 /* ListSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C0CB7083E2738D356C /* ListSectionHeader.swift */; };
 		11B35CE67B7F5C5A5244C951 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B6D6FCA3745DE0750BD /* MainService.swift */; };
 		11B35CF897C3C30DACC27693 /* NftStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3502AEB7EF95A590A7B1B /* NftStorage.swift */; };
-		11B35CFBC57B9DF24CE0665C /* UniswapMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E65AAA33943BAD2F1D /* UniswapMultiSwapProvider.swift */; };
+		11B35CFBC57B9DF24CE0665C /* UniswapV2MultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E65AAA33943BAD2F1D /* UniswapV2MultiSwapProvider.swift */; };
 		11B35CFD84BE04CC93DE7DF9 /* UnlinkWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35592753D3F2A9CCA5809 /* UnlinkWatchViewController.swift */; };
 		11B35CFE221F95141FAEB880 /* CoinProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3534997B5CD413DBDB7C7 /* CoinProvider.swift */; };
 		11B35D0542ACB56A31C61143 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3572B7C2F16CD51F37FF0 /* UIImage.swift */; };
@@ -1395,7 +1399,7 @@
 		11B35EFAFFA1E30F7765FEB2 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B6D6FCA3745DE0750BD /* MainService.swift */; };
 		11B35F09A49A90BF058CA500 /* ReceiveSelectCoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350575488360C1A598DF3 /* ReceiveSelectCoinViewModel.swift */; };
 		11B35F0D313E455BCF24C42B /* PriceChangeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357889F003A0B33D9DF27 /* PriceChangeType.swift */; };
-		11B35F0FF89A5B636C2EFE48 /* UniswapMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E65AAA33943BAD2F1D /* UniswapMultiSwapProvider.swift */; };
+		11B35F0FF89A5B636C2EFE48 /* UniswapV2MultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E65AAA33943BAD2F1D /* UniswapV2MultiSwapProvider.swift */; };
 		11B35F1152FB1004E554B922 /* MarketOverviewMetricsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DCCC2D8CD00EF6A9A77 /* MarketOverviewMetricsCell.swift */; };
 		11B35F134E5EF8572BF330CB /* NavigationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3578FB80AA013BD351A26 /* NavigationRow.swift */; };
 		11B35F1440C5946E9C3D94ED /* Auditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D8AF9D337A98530548D /* Auditor.swift */; };
@@ -3145,7 +3149,7 @@
 		11B350D8D6E2FAD43FFCA8BB /* PrivateKeysViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeysViewController.swift; sourceTree = "<group>"; };
 		11B350DD8FFDB14904D23AE0 /* RestoreSettingsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSettingsStorage.swift; sourceTree = "<group>"; };
 		11B350E1584E954D281FA87D /* NftAssetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetView.swift; sourceTree = "<group>"; };
-		11B350E65AAA33943BAD2F1D /* UniswapMultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapMultiSwapProvider.swift; sourceTree = "<group>"; };
+		11B350E65AAA33943BAD2F1D /* UniswapV2MultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapV2MultiSwapProvider.swift; sourceTree = "<group>"; };
 		11B350E6966203DF2855369A /* NftCollectionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftCollectionRecord.swift; sourceTree = "<group>"; };
 		11B350EE043CD96E484F9524 /* FiatService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiatService.swift; sourceTree = "<group>"; };
 		11B350F5D363E9B1D6C9120F /* FormCautionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormCautionCell.swift; sourceTree = "<group>"; };
@@ -3338,6 +3342,7 @@
 		11B354C3C105D13E1B382178 /* BottomSheetTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetTitleView.swift; sourceTree = "<group>"; };
 		11B354C4B46DF1A50103F026 /* ActiveAccountStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveAccountStorage.swift; sourceTree = "<group>"; };
 		11B354C4EB27186435736BBA /* BalancePrimaryValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalancePrimaryValue.swift; sourceTree = "<group>"; };
+		11B354C7121EEBFD71BFD3C3 /* BaseEvmMultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEvmMultiSwapProvider.swift; sourceTree = "<group>"; };
 		11B354D96A80987DAB3B64A6 /* RestoreBinanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreBinanceViewController.swift; sourceTree = "<group>"; };
 		11B354E3FDE8CA30D8983EB4 /* ThemeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeList.swift; sourceTree = "<group>"; };
 		11B354E55E901615862E7CD4 /* PrimaryButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonCell.swift; sourceTree = "<group>"; };
@@ -3388,7 +3393,7 @@
 		11B3562819DF141457837340 /* MarketWatchlistToggleService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketWatchlistToggleService.swift; sourceTree = "<group>"; };
 		11B356300F9A6A12C29450E7 /* DateFormatterCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterCache.swift; sourceTree = "<group>"; };
 		11B3563ED22080EE222848A5 /* MarkdownImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownImageCell.swift; sourceTree = "<group>"; };
-		11B3564500A3378D6EB2A477 /* PancakeMultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PancakeMultiSwapProvider.swift; sourceTree = "<group>"; };
+		11B3564500A3378D6EB2A477 /* PancakeV2MultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PancakeV2MultiSwapProvider.swift; sourceTree = "<group>"; };
 		11B3564687A53021953267B3 /* EvmAddressModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmAddressModule.swift; sourceTree = "<group>"; };
 		11B3564CFEC257DB52301CFC /* SimpleActivateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleActivateViewModel.swift; sourceTree = "<group>"; };
 		11B3564E87C69B2989E6A3D2 /* EvmSyncSourceStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmSyncSourceStorage.swift; sourceTree = "<group>"; };
@@ -3505,6 +3510,7 @@
 		11B358967A086CFE9DBB152B /* BackupModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupModule.swift; sourceTree = "<group>"; };
 		11B3589893A8995F86F08B1C /* BtcBlockchainSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtcBlockchainSettingsModule.swift; sourceTree = "<group>"; };
 		11B3589B8D488ED1F6912287 /* SelectorButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorButtonStyle.swift; sourceTree = "<group>"; };
+		11B358A102692DA01F91413D /* BaseUniswapV2MultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUniswapV2MultiSwapProvider.swift; sourceTree = "<group>"; };
 		11B358A22655004017228F65 /* CoinRankModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinRankModule.swift; sourceTree = "<group>"; };
 		11B358A294479046C42D2E6B /* PublicKeysService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicKeysService.swift; sourceTree = "<group>"; };
 		11B358A78367D108DD529C1B /* MarkdownHeader3Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownHeader3Cell.swift; sourceTree = "<group>"; };
@@ -5831,12 +5837,14 @@
 			isa = PBXGroup;
 			children = (
 				11B356AB309DA670267151B3 /* OneInchMultiSwapProvider.swift */,
-				11B350E65AAA33943BAD2F1D /* UniswapMultiSwapProvider.swift */,
+				11B350E65AAA33943BAD2F1D /* UniswapV2MultiSwapProvider.swift */,
 				11B35C4595DF6D3C4228DDEE /* PancakeV3MultiSwapProvider.swift */,
-				11B3564500A3378D6EB2A477 /* PancakeMultiSwapProvider.swift */,
+				11B3564500A3378D6EB2A477 /* PancakeV2MultiSwapProvider.swift */,
 				11B351FAE6B01F29FC37B3C2 /* BaseUniswapV3MultiSwapProvider.swift */,
 				11B35912C37850929316F49C /* UniswapV3MultiSwapProvider.swift */,
 				11B35D67C8EEB29CB302973A /* BaseUniswapMultiSwapProvider.swift */,
+				11B354C7121EEBFD71BFD3C3 /* BaseEvmMultiSwapProvider.swift */,
+				11B358A102692DA01F91413D /* BaseUniswapV2MultiSwapProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -10519,15 +10527,17 @@
 				11B3542DB7195238D606D057 /* MultiSwapConfirmView.swift in Sources */,
 				11B35ED4BE062F70D930F92C /* MultiSwapSettingStorage.swift in Sources */,
 				11B35BC282D8CA0137ECB0FA /* OneInchMultiSwapProvider.swift in Sources */,
-				11B35CFBC57B9DF24CE0665C /* UniswapMultiSwapProvider.swift in Sources */,
+				11B35CFBC57B9DF24CE0665C /* UniswapV2MultiSwapProvider.swift in Sources */,
 				11B35DC168B3102FB2293CE4 /* PancakeV3MultiSwapProvider.swift in Sources */,
-				11B35490732E5F84656F339A /* PancakeMultiSwapProvider.swift in Sources */,
+				11B35490732E5F84656F339A /* PancakeV2MultiSwapProvider.swift in Sources */,
 				11B35CC202B611609C8445A4 /* BaseUniswapV3MultiSwapProvider.swift in Sources */,
 				11B35A33693733CDCBACD727 /* UniswapV3MultiSwapProvider.swift in Sources */,
 				11B35991B877DCF82D6E51B5 /* BaseUniswapMultiSwapProvider.swift in Sources */,
 				11B3570C71E4B47382D2DA4B /* MultiSwapTokenSelectView.swift in Sources */,
 				11B357EC10CF3DB905D9F19E /* MultiSwapTokenSelectViewModel.swift in Sources */,
 				11B3560740B5C6D04D096F74 /* MultiSwapFeeData.swift in Sources */,
+				11B35AA3B53A6EBC5CCA7F08 /* BaseEvmMultiSwapProvider.swift in Sources */,
+				11B35C2D31DE8081AC572B27 /* BaseUniswapV2MultiSwapProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11947,15 +11957,17 @@
 				11B35CA3524A5FEA07135535 /* MultiSwapConfirmView.swift in Sources */,
 				11B356075F51B38338958A4A /* MultiSwapSettingStorage.swift in Sources */,
 				11B35B8556A449EE684FF5C2 /* OneInchMultiSwapProvider.swift in Sources */,
-				11B35F0FF89A5B636C2EFE48 /* UniswapMultiSwapProvider.swift in Sources */,
+				11B35F0FF89A5B636C2EFE48 /* UniswapV2MultiSwapProvider.swift in Sources */,
 				11B356B6D73ADF1B1567CB47 /* PancakeV3MultiSwapProvider.swift in Sources */,
-				11B35CA4F61231F536BE9A24 /* PancakeMultiSwapProvider.swift in Sources */,
+				11B35CA4F61231F536BE9A24 /* PancakeV2MultiSwapProvider.swift in Sources */,
 				11B352D47A0F5A3E4AF8F948 /* BaseUniswapV3MultiSwapProvider.swift in Sources */,
 				11B35FB2259B3BB16AFE5624 /* UniswapV3MultiSwapProvider.swift in Sources */,
 				11B35BD170E89520DF7D384E /* BaseUniswapMultiSwapProvider.swift in Sources */,
 				11B353FEF0B59658B61D77C6 /* MultiSwapTokenSelectView.swift in Sources */,
 				11B35E10073AE1D08E0FF272 /* MultiSwapTokenSelectViewModel.swift in Sources */,
 				11B35B6838F0083BC8B1006D /* MultiSwapFeeData.swift in Sources */,
+				11B35365C9531E9FFB57341B /* BaseEvmMultiSwapProvider.swift in Sources */,
+				11B3503403F029E9432BE89A /* BaseUniswapV2MultiSwapProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
