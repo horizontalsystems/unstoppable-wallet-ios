@@ -9,6 +9,7 @@ extension BaseUniswapMultiSwapProvider {
     enum SwapError: Error {
         case invalidToken
         case noHttpRpcSource
+        case invalidQuote
     }
 }
 

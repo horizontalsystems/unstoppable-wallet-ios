@@ -36,14 +36,14 @@ struct MultiSwapView: View {
                                 confirmPresented = true
                             }) {
                                 HStack(spacing: .margin8) {
-                                    if viewModel.loading {
+                                    if viewModel.quoting {
                                         ProgressView()
                                     }
 
-                                    Text(viewModel.loading ? "Loading" : "Next")
+                                    Text(viewModel.quoting ? "Loading" : "Next")
                                 }
                             }
-                            .disabled(viewModel.currentQuote == nil || viewModel.loading)
+                            .disabled(viewModel.currentQuote == nil || viewModel.quoting)
                             .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
                             if viewModel.currentQuote == nil,
@@ -67,6 +67,7 @@ struct MultiSwapView: View {
                                 ListSection {
                                     HStack(spacing: .margin8) {
                                         Button(action: {
+                                            viewModel.stopAutoQuoting()
                                             quotesPresented = true
                                         }) {
                                             HStack(spacing: .margin8) {
@@ -83,6 +84,7 @@ struct MultiSwapView: View {
                                         Spacer()
 
                                         Button(action: {
+                                            viewModel.stopAutoQuoting()
                                             settingsPresented = true
                                         }) {
                                             if currentQuote.quote.settingsModified {
@@ -95,7 +97,7 @@ struct MultiSwapView: View {
                                     }
                                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
                                     .frame(height: 40)
-                                    .sheet(isPresented: $settingsPresented) {
+                                    .sheet(isPresented: $settingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
                                         currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut)
                                     }
 
@@ -135,6 +137,7 @@ struct MultiSwapView: View {
                                                 Text(formatted).textSubhead2(color: .themeLeah)
 
                                                 Button(action: {
+                                                    viewModel.stopAutoQuoting()
                                                     feeSettingsPresented = true
                                                 }) {
                                                     if transactionService.modified {
@@ -186,7 +189,7 @@ struct MultiSwapView: View {
                                     }
                                 }
                                 .themeListStyle(.bordered)
-                                .sheet(isPresented: $feeSettingsPresented) {
+                                .sheet(isPresented: $feeSettingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
                                     if let feeService = viewModel.transactionService {
                                         feeService.settingsView()
                                     } else {
@@ -202,12 +205,12 @@ struct MultiSwapView: View {
                                 }
                             }
 
-                            if viewModel.tokenIn != nil, viewModel.tokenOut != nil, !viewModel.loading, viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty) {
+                            if viewModel.tokenIn != nil, viewModel.tokenOut != nil, !viewModel.quoting, viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty) {
                                 HighlightedTextView(text: "These tokens cannot be swapped", style: .red)
                             }
                         }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-                        .sheet(isPresented: $quotesPresented) {
+                        .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
                             MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
                         }
                     }
@@ -243,6 +246,9 @@ struct MultiSwapView: View {
                     }
                 }
             }
+        }
+        .onReceive(viewModel.finishSubject) {
+            presentationMode.wrappedValue.dismiss()
         }
     }
 

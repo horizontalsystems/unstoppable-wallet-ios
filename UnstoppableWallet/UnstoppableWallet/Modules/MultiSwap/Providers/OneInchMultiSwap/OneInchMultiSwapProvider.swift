@@ -104,6 +104,17 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         default: return AnyView(EmptyView())
         }
     }
+
+    func swap(quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws {
+        guard let quote = quote as? Quote else {
+            throw SwapError.invalidQuote
+        }
+
+        print(String(describing: quote))
+        print(String(describing: transactionSettings))
+
+        try await Task.sleep(nanoseconds: 3_000_000_000)
+    }
 }
 
 extension OneInchMultiSwapProvider {
@@ -111,6 +122,7 @@ extension OneInchMultiSwapProvider {
         case invalidAddress
         case invalidAmountIn
         case noFeeData
+        case invalidQuote
     }
 }
 
