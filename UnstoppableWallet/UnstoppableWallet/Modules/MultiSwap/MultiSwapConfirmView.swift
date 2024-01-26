@@ -63,8 +63,15 @@ struct MultiSwapConfirmView: View {
                 Button(action: {
                     viewModel.swap()
                 }) {
-                    Text("Swap")
+                    HStack(spacing: .margin8) {
+                        if viewModel.swapping {
+                            ProgressView()
+                        }
+
+                        Text(viewModel.swapping ? "Swapping" : "Swap")
+                    }
                 }
+                .disabled(viewModel.swapping)
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .padding(.vertical, .margin16)
                 .padding(.horizontal, .margin16)

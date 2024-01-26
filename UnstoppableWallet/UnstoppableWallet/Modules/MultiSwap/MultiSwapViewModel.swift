@@ -8,6 +8,7 @@ class MultiSwapViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var quotesTask: AnyTask?
+    private var swapTask: AnyTask?
     private var rateInCancellable: AnyCancellable?
     private var rateOutCancellable: AnyCancellable?
     private var timer: Timer?
@@ -63,6 +64,11 @@ class MultiSwapViewModel: ObservableObject {
 
             amountIn = nil
             internalTokenIn = tokenIn
+
+            if internalTokenOut == tokenIn {
+                internalTokenOut = nil
+            }
+
             priceFlipped = false
             internalUserSelectedProviderId = nil
 
@@ -101,6 +107,12 @@ class MultiSwapViewModel: ObservableObject {
             }
 
             internalTokenOut = tokenOut
+
+            if internalTokenIn == tokenOut {
+                amountIn = nil
+                internalTokenIn = nil
+            }
+
             priceFlipped = false
             internalUserSelectedProviderId = nil
 
@@ -206,7 +218,7 @@ class MultiSwapViewModel: ObservableObject {
             }
 
             internalUserSelectedProviderId = userSelectedProviderId
-            syncCurrentQuote()
+            syncQuotes()
         }
     }
 
@@ -234,7 +246,8 @@ class MultiSwapViewModel: ObservableObject {
     @Published var price: String?
     private var priceFlipped = false
 
-    @Published var loading = false
+    @Published var quoting = false
+    @Published var swapping = false
 
     @Published var quoteTimerActive = false
     var quoteTimeLeft: Double = 0 {
@@ -249,6 +262,8 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var transactionService: IMultiSwapTransactionService?
     @Published var feeToken: Token?
+
+    var finishSubject = PassthroughSubject<Void, Never>()
 
     init(providers: [IMultiSwapProvider], token: Token? = nil) {
         self.providers = providers
@@ -326,28 +341,28 @@ class MultiSwapViewModel: ObservableObject {
         fiatAmountOut = (amount * rateOut).rounded(decimal: 2)
     }
 
-    private func syncQuotes() {
+    func syncQuotes() {
         quotesTask = nil
         quotes = []
 
         guard let internalTokenIn, let internalTokenOut, let amountIn, amountIn != 0 else {
-            if loading {
-                loading = false
+            if quoting {
+                quoting = false
             }
 
             return
         }
 
         guard !validProviders.isEmpty else {
-            if loading {
-                loading = false
+            if quoting {
+                quoting = false
             }
 
             return
         }
 
-        if !loading {
-            loading = true
+        if !quoting {
+            quoting = true
         }
 
         quotesTask = Task { [weak self, transactionService, validProviders] in
@@ -381,7 +396,7 @@ class MultiSwapViewModel: ObservableObject {
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, quotes] in
-                    self?.loading = false
+                    self?.quoting = false
                     self?.quotes = quotes
                 }
             }
@@ -431,7 +446,39 @@ extension MultiSwapViewModel {
         amountIn = availableBalance * Decimal(percent) / 100
     }
 
-    func swap() {}
+    func stopAutoQuoting() {
+        timer?.invalidate()
+        quoteTimeLeft = 0
+    }
+
+    func syncQuotesIfRequired() {
+        if !quoting {
+            syncQuotes()
+        }
+    }
+
+    func swap() {
+        guard let currentQuote else {
+            return
+        }
+
+        swapping = true
+
+        quotesTask = Task { [weak self, transactionService] in
+            do {
+                try await currentQuote.provider.swap(quote: currentQuote.quote, transactionSettings: transactionService?.transactionSettings)
+
+                await MainActor.run { [weak self] in
+                    self?.finishSubject.send()
+                }
+            } catch {
+                await MainActor.run { [weak self] in
+                    self?.swapping = false
+                }
+            }
+        }
+        .erased()
+    }
 }
 
 extension MultiSwapViewModel {
