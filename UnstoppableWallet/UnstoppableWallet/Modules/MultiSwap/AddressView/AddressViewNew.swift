@@ -6,11 +6,14 @@ struct AddressViewNew: View {
     private let placeholder = "send.address_or_domain_placeholder".localized
 
     @StateObject private var viewModel: AddressViewModelNew
+    @Binding var text: String
 
-    init(initial: AddressInput.Initial, result: Binding<AddressInput.Result>) {
+    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>) {
+        _text = text
         _viewModel = StateObject(wrappedValue:
             AddressViewModelNew(
                 initial: initial,
+                text: text,
                 result: result
             )
         )
@@ -20,11 +23,13 @@ struct AddressViewNew: View {
         InputTextRow(vertical: .margin8) {
             ShortcutButtonsView(
                 content: {
-                    textField(placeholder: placeholder,
-                            text: $viewModel.text
+                    textField(
+                        placeholder: placeholder,
+                        text: $text
                     )
                     .font(.themeBody)
                     .autocorrectionDisabled()
+                    .modifier(RightChecking(state: $viewModel.checkingState))
                 },
                 showDelete: .init(get: { !viewModel.text.isEmpty }, set: { _ in }),
                 items: viewModel.shortcuts,
@@ -40,9 +45,14 @@ struct AddressViewNew: View {
                 viewModel.didFetch(qrText: $0)
             }
         }
+        .sheet(isPresented: $viewModel.contactsPresented) {
+            if let blockchainType = viewModel.blockchainType {
+                ContactBookView(mode: .select(blockchainType, viewModel), presented: true)
+            }
+        }
     }
 
-    @ViewBuilder func textField(placeholder: String, text: Binding<String>) -> some View {
+    @ViewBuilder func textField(placeholder: String, text: Binding<String> /* , onChange: @escaping (String) -> () */ ) -> some View {
         if #available(iOS 16, *) {
             TextField(
                 placeholder,

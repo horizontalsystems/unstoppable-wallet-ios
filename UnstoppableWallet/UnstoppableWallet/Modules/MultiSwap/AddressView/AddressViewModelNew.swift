@@ -5,30 +5,34 @@ import SwiftUI
 import RxSwift
 
 class AddressViewModelNew: ObservableObject {
-    let shortcuts: [ShortCutButtonType] = [
-        .icon("qr_scan_20"),
-        .text("button.paste".localized),
-    ]
-
     private var addressParserDisposeBag = DisposeBag()
 
     private var addressUriParser: AddressUriParser
     private let parserChain: AddressParserChain
 
+    let blockchainType: BlockchainType?
     private let contactBookManager: ContactBookManager = App.shared.contactManager
-    private let useContacts: Bool
+    private let showContacts: Bool
 
-    @Published var text: String {
+    private var expectedTextValue: String? = nil
+    @Binding var text: String {
         didSet {
+            if text == oldValue { return }
+            print("Published var text changed to: \(text)")
             sync()
         }
     }
 
-    @Published var cautionState: CautionState = .none
     @Binding var result: AddressInput.Result {
         didSet {
             switch result {
-            case let .valid(val): print("Address: \(val.address.title) : \(val.address.blockchainType)")
+            case .loading: checkingState = .loading
+            case .valid: checkingState = .checked
+            default: checkingState = .idle
+            }
+
+            switch result {
+            case let .valid(val): print("Address: \(val.address.title) : \(val.address.blockchainType) || \(val.uri?.address) + \(val.uri?.amount?.description)")
             case let .invalid(val): print("Address: \(val.text) : \(val.error.localizedDescription)")
             case .idle: print("idle")
             case .loading: print("loading...")
@@ -36,21 +40,38 @@ class AddressViewModelNew: ObservableObject {
         }
     }
 
-    @Published var qrScanPresented = false
-    @Published var doneEnabled = true
+    @Published var checkingState: RightChecking.State = .idle
 
-    init(initial: AddressInput.Initial, result: Binding<AddressInput.Result>) {
+    @Published var contactsPresented = false
+    @Published var qrScanPresented = false
+
+    init(initial: AddressInput.Initial,  text: Binding<String>, result: Binding<AddressInput.Result>) {
+        _result = result
+        _text = text
+
         addressUriParser = AddressParserFactory.parser(blockchainType: initial.blockchainType, tokenType: nil)
         parserChain = AddressParserFactory.parserChain(blockchainType: initial.blockchainType)
 
-        useContacts = initial.useContacts
-        text = initial.address?.title ?? ""
+        blockchainType = initial.blockchainType
 
-        _result = result
+        // show contact book if initial shows and we have contacts for defined blockchain
+        if let blockchainType, initial.showContacts {
+            showContacts = !contactBookManager.contacts(blockchainUid: blockchainType.uid).isEmpty
+        } else {
+            showContacts = false
+        }
+
         sync()
     }
 
     private func sync() {
+        print("==> Sync new text value")
+        if text == expectedTextValue {   // avoid double sync already updated text from 'uri'
+            print("==> Avoid sync because already synced form uri")
+            return
+        }
+        expectedTextValue = nil
+
         guard !text.isEmpty else {
             result = .idle
             return
@@ -62,6 +83,12 @@ class AddressViewModelNew: ObservableObject {
         // check uri
         do {
             let uri = try checkUri(text: text)
+
+            if let uri {    // we must show address from uri
+                print("==> Change text from uri using only address")
+                expectedTextValue = uri.address
+                self.text = uri.address
+            }
 
             // get address from uri or all text
             let address = uri?.address ?? text
@@ -111,8 +138,16 @@ class AddressViewModelNew: ObservableObject {
 }
 
 extension AddressViewModelNew {
+    //Shortcut section
+    var shortcuts: [ShortCutButtonType] {
+        let items: [ShortCutButtonType] = showContacts ? [.icon("user_20")] : []
+        return items + [.icon("qr_scan_20"), .text("button.paste".localized)]
+    }
+
     func onTap(index: Int) {
-        switch index {
+        let updatedIndex = index - (showContacts ? 1 : 0)
+        switch updatedIndex {
+        case -1: contactsPresented = true
         case 0: qrScanPresented = true
         case 1:
             if let text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
@@ -127,25 +162,24 @@ extension AddressViewModelNew {
     }
 
     func didFetch(qrText: String) {
-        text = "skldcjds aflkjsdfh shdfjdslfksdjhf dsfhjasdlkdsjfh dshfjasdlfkjhsd fТ"
-//        Task {
-//            try await Task.sleep(nanoseconds: 1_000_000_000)
-//            await MainActor.run {
-//            }
-//        }
+        text = qrText
+    }
+}
+
+extension AddressViewModelNew: ContactBookSelectorDelegate {
+    func onFetch(address: String) {
+        text = address
     }
 }
 
 enum AddressInput {
     struct Initial {
         let blockchainType: BlockchainType?
-        let address: Address?
-        let useContacts: Bool
+        let showContacts: Bool
 
-        init(blockchainType: BlockchainType? = nil, address: Address? = nil, useContacts: Bool) {
+        init(blockchainType: BlockchainType? = nil, showContacts: Bool) {
             self.blockchainType = blockchainType
-            self.address = address
-            self.useContacts = useContacts
+            self.showContacts = showContacts
         }
     }
 

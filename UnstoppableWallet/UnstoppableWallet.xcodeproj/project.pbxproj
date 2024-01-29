@@ -2264,6 +2264,7 @@
 		ABC9A37B5FAB65E7AB66547E /* BackupManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEA4B072067A9F10BE36 /* BackupManagerViewController.swift */; };
 		ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A819E6708797C571CA0B /* RawFullBackup.swift */; };
 		ABC9A38390F78983E4DBD25D /* Eip155ProposalHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACED8C1A430EB4EB097F /* Eip155ProposalHandler.swift */; };
+		ABC9A38568F5D28F0F48E44D /* RightCheckingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A38EBD625694033572A2 /* RightCheckingView.swift */; };
 		ABC9A3B155B3F6E7E0F2CB07 /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */; };
 		ABC9A3BC9A18F74818EF5C17 /* MetadataMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA2491ADC4E5E089CD42 /* MetadataMonitor.swift */; };
 		ABC9A3C13073DDFABF8C0679 /* RestoreCloudViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5FE0EDA53E4D9B85DE1 /* RestoreCloudViewModel.swift */; };
@@ -2530,6 +2531,7 @@
 		ABC9ABD7C7746ABF50DD646F /* ChartIndicatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6DE5C760A5D0C90B70E /* ChartIndicatorFactory.swift */; };
 		ABC9ABD7DA0C144C545EE228 /* WalletTokenBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB2DC4C4412EFE6BEFF7 /* WalletTokenBalanceCell.swift */; };
 		ABC9ABD9B19AD5D97E332EBE /* SendBinanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF15BD67548E6D755CA0 /* SendBinanceViewController.swift */; };
+		ABC9ABE0119C5E5EB43A9964 /* RightCheckingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A38EBD625694033572A2 /* RightCheckingView.swift */; };
 		ABC9ABE2B6B19113D7C5EDA3 /* ContactBookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE12A5E8B9FB24FFE42F /* ContactBookHelper.swift */; };
 		ABC9ABE3189E497EC732B331 /* BackupCloudPassphraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5544C221860C10BF131 /* BackupCloudPassphraseViewModel.swift */; };
 		ABC9ABE3F52BF2307533D8FB /* InputTextRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7FA830E64B8DCA1A69A /* InputTextRow.swift */; };
@@ -4267,6 +4269,7 @@
 		ABC9A37BB33AB95DE917BEB6 /* ActionSheetAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetAnimator.swift; sourceTree = "<group>"; };
 		ABC9A38082BD2EBE1BC8E11E /* WalletTokenService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTokenService.swift; sourceTree = "<group>"; };
 		ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudHelper.swift; sourceTree = "<group>"; };
+		ABC9A38EBD625694033572A2 /* RightCheckingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightCheckingView.swift; sourceTree = "<group>"; };
 		ABC9A39A33712A1429D623D5 /* RestorePassphraseModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorePassphraseModule.swift; sourceTree = "<group>"; };
 		ABC9A3A694467493C6F4AACE /* WalletConnectMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectMainViewController.swift; sourceTree = "<group>"; };
 		ABC9A3AB799024C8FC2C7DD8 /* SendConfirmationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationViewModel.swift; sourceTree = "<group>"; };
@@ -5277,6 +5280,7 @@
 				ABC9AE7F145C402C91AAB5A3 /* ShortcutButtonsView.swift */,
 				ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */,
 				D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */,
+				ABC9A38EBD625694033572A2 /* RightCheckingView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -10600,6 +10604,7 @@
 				ABC9A74FE783CB5ED04997D0 /* OneInchMultiSwapSettingsViewModel.swift in Sources */,
 				ABC9AB1EDE7C8FE1E5362BC8 /* OneInchMultiSwapProvider.swift in Sources */,
 				ABC9AF8E2B0AC66EE65B81B9 /* BaseEvmMultiSwapProvider.swift in Sources */,
+				ABC9ABE0119C5E5EB43A9964 /* RightCheckingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12037,6 +12042,7 @@
 				ABC9A9AC8D3D3D793D11FD09 /* OneInchMultiSwapSettingsViewModel.swift in Sources */,
 				ABC9A47F9948B8C688F6BBB3 /* OneInchMultiSwapProvider.swift in Sources */,
 				ABC9AC3E675F159901A28E6F /* BaseEvmMultiSwapProvider.swift in Sources */,
+				ABC9A38568F5D28F0F48E44D /* RightCheckingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
