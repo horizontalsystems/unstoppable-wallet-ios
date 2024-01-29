@@ -1,6 +1,7 @@
 import ComponentKit
 import MarketKit
 import MobileCoreServices
+import SwiftUI
 import ThemeKit
 import UIKit
 
@@ -111,4 +112,23 @@ extension ContactBookModule {
         case restore
         case backup
     }
+}
+
+struct ContactBookView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let mode: ContactBookModule.Mode
+    let presented: Bool
+
+    init(mode: ContactBookModule.Mode, presented: Bool) {
+        self.mode = mode
+        self.presented = presented
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        //todo: must provide any VC
+        ContactBookModule.viewController(mode: mode, presented: presented) ?? UIViewController()
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

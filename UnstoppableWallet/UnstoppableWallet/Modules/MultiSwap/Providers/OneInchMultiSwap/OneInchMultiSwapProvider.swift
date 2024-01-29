@@ -90,8 +90,8 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         )
     }
 
-    func settingsView(tokenIn _: MarketKit.Token, tokenOut _: MarketKit.Token) -> AnyView {
-        let viewModel = OneInchMultiSwapSettingsViewModel(storage: storage)
+    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token) -> AnyView {
+        let viewModel = OneInchMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
         let view = ThemeNavigationView { OneInchMultiSwapSettingsView(viewModel: viewModel) }
         return AnyView(view)
     }
