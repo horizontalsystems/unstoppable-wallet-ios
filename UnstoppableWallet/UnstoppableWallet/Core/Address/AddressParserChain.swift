@@ -75,8 +75,15 @@ extension AddressParserChain {
         let error: Error?
     }
 
-    enum ParserError: Error {
+    enum ParserError: Error, LocalizedError {
         case validationError
         case fetchError(Error)
+
+        public var errorDescription: String? {
+            switch self {
+            case .validationError: return "swap.advanced_settings.error.invalid_address".localized
+            case let .fetchError(error): return "swap.advanced_settings.error.invalid_address".localized
+            }
+        }
     }
 }

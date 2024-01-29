@@ -5,14 +5,22 @@ import UIKit
 class OneInchMultiSwapSettingsViewModel: ObservableObject {
     private let decimalParser = AmountDecimalParser()
     let storage: MultiSwapSettingStorage
+    let blockchainType: BlockchainType
 
-    @Published var blockchainType: BlockchainType? = nil
-    @Published var addressResult: AddressInput.Result = .idle
+    @Published var addressResult: AddressInput.Result = .idle {
+        didSet {
+            switch addressResult {
+            case let .invalid(failure): addressCautionState = .caution(.init(text: failure.error.localizedDescription, type: .error))
+            default: addressCautionState = .none
+            }
+        }
+    }
 
     @Published var addressCautionState: CautionState = .none
     @Published var address: String = "" {
         didSet {
-            validateAddress()
+            if address == oldValue { return }
+            print("Set new value for address: \(address)")
         }
     }
 
@@ -28,16 +36,17 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var resetEnabled = false
+    @Published var resetEnabled = true
     @Published var doneEnabled = true
 
     @Published var qrScanPresented = false
 
-    init(storage: MultiSwapSettingStorage) {
+    init(storage: MultiSwapSettingStorage, blockchainType: BlockchainType) {
         self.storage = storage
-    }
+        self.blockchainType = blockchainType
 
-    private func validateAddress() {}
+        address = initialAddress ?? ""
+    }
 
     private func validateSlippage() {
         guard !slippage.isEmpty else {
@@ -63,29 +72,12 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
 }
 
 extension OneInchMultiSwapSettingsViewModel {
-    var initialAddress: String {
-        storage.value(for: MultiSwapSettingStorage.LegacySetting.address) ?? ""
+    var initialAddress: String? {
+        "0x6150096B0D2ebCec98d1C981788c61d8B9ca3B22"//storage.value(for: MultiSwapSettingStorage.LegacySetting.address)
     }
 
     var initialSlippage: Decimal {
         storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.defaultSlippage
-    }
-
-
-    var addressShortCuts: [ShortCutButtonType] {
-        [.icon("qr_scan_20"), .text("button.paste".localized)]
-    }
-
-    func onTapAddress(index: Int) {
-        switch index {
-        case 0: //qr_scan
-            qrScanPresented = true
-        case 1: //paste
-            if let text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
-                address = text
-            }
-        default: () //do_nothing
-        }
     }
 
     var slippageShortCuts: [ShortCutButtonType] {
@@ -97,12 +89,8 @@ extension OneInchMultiSwapSettingsViewModel {
                 MultiSwapSlippage.recommendedSlippages[0]
     }
 
-    func didFetch(_ string: String) {
-        address = string
-    }
-
     func onReset() {
-        address = ""
+        address = "" //initialAddress ?? ""
         slippage = ""
     }
 

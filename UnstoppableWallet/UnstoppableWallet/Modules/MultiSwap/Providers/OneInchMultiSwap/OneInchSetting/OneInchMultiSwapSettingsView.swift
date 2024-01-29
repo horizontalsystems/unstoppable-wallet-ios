@@ -15,11 +15,13 @@ struct OneInchMultiSwapSettingsView: View {
                     AddressViewNew(
                         initial: .init(
                             blockchainType: viewModel.blockchainType,
-                            address: nil,
-                            useContacts: true
+                            showContacts: true
                         ),
+                        text: $viewModel.address,
                         result: $viewModel.addressResult
                     )
+                    .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
+                    .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
 
                     Text(OneInchMultiSwapSettingsViewModel.Section.address.footer)
                         .themeSubhead2()
