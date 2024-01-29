@@ -18,10 +18,7 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
 
     @Published var addressCautionState: CautionState = .none
     @Published var address: String = "" {
-        didSet {
-            if address == oldValue { return }
-            print("Set new value for address: \(address)")
-        }
+        didSet { print("OneInchMultiSwapSettingsViewModel didSet: \(address)")}
     }
 
     @Published var slippageCautionState: CautionState = .none {
@@ -45,7 +42,8 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
         self.storage = storage
         self.blockchainType = blockchainType
 
-        address = initialAddress ?? ""
+        print("Set Initial value: on INIT : MaxFuck")
+//        address = initialAddress ?? ""
     }
 
     private func validateSlippage() {

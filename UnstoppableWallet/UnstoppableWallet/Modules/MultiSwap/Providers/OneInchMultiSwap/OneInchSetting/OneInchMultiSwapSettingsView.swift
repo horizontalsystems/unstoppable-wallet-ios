@@ -12,6 +12,7 @@ struct OneInchMultiSwapSettingsView: View {
                 VStack(spacing: 0) {
                     headerRow(title: OneInchMultiSwapSettingsViewModel.Section.address.title)
 
+//                    AnotherView(text: $viewModel.address)
                     AddressViewNew(
                         initial: .init(
                             blockchainType: viewModel.blockchainType,
@@ -99,6 +100,44 @@ struct OneInchMultiSwapSettingsView: View {
         }
         .modifier(CautionBorder(cautionState: cautionState))
         .modifier(CautionPrompt(cautionState: cautionState))
+    }
+}
+
+class AnotherViewModel: ObservableObject {
+    @Published var text: String {
+        willSet {
+            print("Will set Text: \(text)")
+            updateAddress(newValue)
+        }
+        didSet {
+            print("Did set Text: \(text)")
+        }
+    }
+    var updateAddress: (String)->()
+
+
+    init(text: Binding<String>) {
+        self.text = text.wrappedValue
+        print("Init Text : \(text)")
+        updateAddress = { text.wrappedValue = $0 }
+    }
+}
+
+struct AnotherView: View {
+    @Binding var text: String
+    @StateObject var viewModel: AnotherViewModel
+
+    init(text: Binding<String>) {
+        _text = text
+        print("Init Another View. Text \(text.wrappedValue)")
+        _viewModel = StateObject(wrappedValue: AnotherViewModel(text: text))
+    }
+
+    var body: some View {
+        TextField(
+                "abc",
+                text: $viewModel.text
+        )
     }
 }
 
