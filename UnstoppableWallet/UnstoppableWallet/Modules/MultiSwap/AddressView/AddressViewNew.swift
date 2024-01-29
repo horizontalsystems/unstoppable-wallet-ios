@@ -5,13 +5,12 @@ struct AddressViewNew: View {
     private let maxLineLimit = 6
     private let placeholder = "send.address_or_domain_placeholder".localized
 
-    @StateObject private var viewModel: AddressViewModelNew
-    @Binding var text: String
+    @StateObject var viewModel: AddressViewModelNew
 
     init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>) {
-        _text = text
-        _viewModel = StateObject(wrappedValue:
-            AddressViewModelNew(
+        print("Address View INIT. text = \(text.wrappedValue)")
+        _viewModel = StateObject(
+            wrappedValue: AddressViewModelNew(
                 initial: initial,
                 text: text,
                 result: result
@@ -25,7 +24,7 @@ struct AddressViewNew: View {
                 content: {
                     textField(
                         placeholder: placeholder,
-                        text: $text
+                        text: $viewModel.text
                     )
                     .font(.themeBody)
                     .autocorrectionDisabled()

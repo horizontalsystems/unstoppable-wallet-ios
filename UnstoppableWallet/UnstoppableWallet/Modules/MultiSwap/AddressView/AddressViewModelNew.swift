@@ -15,11 +15,11 @@ class AddressViewModelNew: ObservableObject {
     private let showContacts: Bool
 
     private var expectedTextValue: String? = nil
-    @Binding var text: String {
-        didSet {
-            if text == oldValue { return }
-            print("Published var text changed to: \(text)")
-            sync()
+    var updateText: (String) -> ()
+    @Published var text: String {
+        willSet {
+            print("Will set Text: \(text)")
+            updateText(newValue)
         }
     }
 
@@ -32,11 +32,14 @@ class AddressViewModelNew: ObservableObject {
             }
 
             switch result {
-            case let .valid(val): print("Address: \(val.address.title) : \(val.address.blockchainType) || \(val.uri?.address) + \(val.uri?.amount?.description)")
-            case let .invalid(val): print("Address: \(val.text) : \(val.error.localizedDescription)")
+            case let .valid(val):
+                print("Address: \(val.address.title) : \(val.address.blockchainType) || \(val.uri?.address) + \(val.uri?.amount?.description)")
+            case let .invalid(val):
+                print("Address: \(val.text) : \(val.error.localizedDescription)")
             case .idle: print("idle")
             case .loading: print("loading...")
             }
+            print("Checking State: \(checkingState)")
         }
     }
 
@@ -47,8 +50,10 @@ class AddressViewModelNew: ObservableObject {
 
     init(initial: AddressInput.Initial,  text: Binding<String>, result: Binding<AddressInput.Result>) {
         _result = result
-        _text = text
+        self.text = text.wrappedValue
+        updateText = { text.wrappedValue = $0 }
 
+        print("Init ViewModel. /Text: \(text.wrappedValue)")
         addressUriParser = AddressParserFactory.parser(blockchainType: initial.blockchainType, tokenType: nil)
         parserChain = AddressParserFactory.parserChain(blockchainType: initial.blockchainType)
 
