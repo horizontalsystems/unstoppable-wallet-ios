@@ -261,18 +261,27 @@ struct MultiSwapView: View {
                     .keyboardType(.decimalPad)
                     .focused($isInputActive)
 
-                if viewModel.rateIn != nil {
-                    HStack(spacing: 0) {
-                        Text(viewModel.currency.symbol).textBody(color: .themeGray)
+                if viewModel.tokenIn != nil {
+                    if viewModel.rateIn != nil {
+                        HStack(spacing: 0) {
+                            Text(viewModel.currency.symbol).textBody(color: .themeGray)
 
-                        TextField("", text: $viewModel.fiatAmountString, prompt: Text("0").foregroundColor(.themeGray))
-                            .foregroundColor(.themeGray)
-                            .font(.themeBody)
-                            .keyboardType(.decimalPad)
-                            .focused($isInputActive)
+                            TextField("", text: $viewModel.fiatAmountString, prompt: Text("0").foregroundColor(.themeGray))
+                                .foregroundColor(.themeGray)
+                                .font(.themeBody)
+                                .keyboardType(.decimalPad)
+                                .focused($isInputActive)
+                                .frame(height: 20)
+                        }
+                    } else {
+                        Text("Rate not available")
+                            .themeSubhead2(color: .themeGray50, alignment: .leading)
+                            .frame(height: 20)
                     }
                 } else {
-                    Text("").textBody()
+                    Text("\(viewModel.currency.symbol)0")
+                        .themeBody(color: .themeGray50, alignment: .leading)
+                        .frame(height: 20)
                 }
             }
             .toolbar {
@@ -355,7 +364,21 @@ struct MultiSwapView: View {
                     Text("0").themeHeadline1(color: .themeGray, alignment: .leading)
                 }
 
-                Text(viewModel.fiatAmountOut.map { "\(viewModel.currency.symbol)\($0.description)" } ?? "").themeBody(color: .themeGray, alignment: .leading)
+                if viewModel.tokenOut != nil {
+                    if viewModel.rateOut != nil {
+                        Text("\(viewModel.currency.symbol)\((viewModel.fiatAmountOut ?? 0).description)")
+                            .themeBody(color: .themeGray, alignment: .leading)
+                            .frame(height: 20)
+                    } else {
+                        Text("Rate not available")
+                            .themeSubhead2(color: .themeGray50, alignment: .leading)
+                            .frame(height: 20)
+                    }
+                } else {
+                    Text("\(viewModel.currency.symbol)0")
+                        .themeBody(color: .themeGray50, alignment: .leading)
+                        .frame(height: 20)
+                }
             }
 
             Spacer()
@@ -372,13 +395,15 @@ struct MultiSwapView: View {
     @ViewBuilder private func selectorButton(token: Token?, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: .margin8) {
-                KFImage.url(token.flatMap { URL(string: $0.coin.imageUrl) })
-                    .resizable()
-                    .placeholder {
-                        Circle().fill(Color.themeSteel20)
-                    }
-                    .clipShape(Circle())
-                    .frame(width: .iconSize32, height: .iconSize32)
+                KFImage.url(token.flatMap {
+                    URL(string: $0.coin.imageUrl)
+                })
+                .resizable()
+                .placeholder {
+                    Circle().fill(Color.themeSteel20)
+                }
+                .clipShape(Circle())
+                .frame(width: .iconSize32, height: .iconSize32)
 
                 if let token {
                     VStack(alignment: .leading, spacing: 1) {
