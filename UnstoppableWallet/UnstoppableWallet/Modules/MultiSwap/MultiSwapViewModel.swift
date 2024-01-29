@@ -128,7 +128,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    private var rateOut: Decimal? {
+    @Published var rateOut: Decimal? {
         didSet {
             syncFiatAmountOut()
         }
@@ -330,15 +330,12 @@ class MultiSwapViewModel: ObservableObject {
     }
 
     private func syncFiatAmountOut() {
-        let rateOut = currentQuote != nil ? rateOut : 0
-
-        guard let rateOut else {
+        guard let rateOut, let currentQuote else {
             fiatAmountOut = nil
             return
         }
 
-        let amount = currentQuote?.quote.amountOut ?? 0
-        fiatAmountOut = (amount * rateOut).rounded(decimal: 2)
+        fiatAmountOut = (currentQuote.quote.amountOut * rateOut).rounded(decimal: 2)
     }
 
     func syncQuotes() {
