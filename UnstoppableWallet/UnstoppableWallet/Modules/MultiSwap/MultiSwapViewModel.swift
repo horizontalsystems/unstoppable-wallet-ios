@@ -11,6 +11,7 @@ class MultiSwapViewModel: ObservableObject {
     private var swapTask: AnyTask?
     private var rateInCancellable: AnyCancellable?
     private var rateOutCancellable: AnyCancellable?
+    private var feeTokenRateCancellable: AnyCancellable?
     private var timer: Timer?
 
     private let providers: [IMultiSwapProvider]
@@ -261,7 +262,26 @@ class MultiSwapViewModel: ObservableObject {
     }
 
     @Published var transactionService: IMultiSwapTransactionService?
-    @Published var feeToken: Token?
+
+    @Published var feeToken: Token? {
+        didSet {
+            guard feeToken != oldValue else {
+                return
+            }
+
+            if let feeToken {
+                feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
+                feeTokenRateCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: feeToken.coin.uid, currencyCode: currency.code)
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] price in self?.feeTokenRate = price.value }
+            } else {
+                feeTokenRate = nil
+                feeTokenRateCancellable = nil
+            }
+        }
+    }
+
+    @Published var feeTokenRate: Decimal?
 
     var finishSubject = PassthroughSubject<Void, Never>()
 
