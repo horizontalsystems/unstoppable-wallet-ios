@@ -2704,6 +2704,8 @@
 		D008CA67267C8E1800001E0A /* ApproveTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D008CA65267C8E1800001E0A /* ApproveTransactionRecord.swift */; };
 		D009290D2B15EB2500C0861C /* ChooseWatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D009290C2B15EB2500C0861C /* ChooseWatchService.swift */; };
 		D009290E2B15EB2500C0861C /* ChooseWatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D009290C2B15EB2500C0861C /* ChooseWatchService.swift */; };
+		D00DAE452B626C2900F48E1D /* GasPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00DAE442B626C2900F48E1D /* GasPrice.swift */; };
+		D00DAE462B626C2900F48E1D /* GasPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00DAE442B626C2900F48E1D /* GasPrice.swift */; };
 		D01517EE2B10A69E00FECCBC /* WatchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01517ED2B10A69E00FECCBC /* WatchModule.swift */; };
 		D01517EF2B10A69E00FECCBC /* WatchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01517ED2B10A69E00FECCBC /* WatchModule.swift */; };
 		D023D2632A249E59004F65B0 /* TronKit in Frameworks */ = {isa = PBXBuildFile; productRef = D023D2622A249E59004F65B0 /* TronKit */; };
@@ -2738,6 +2740,8 @@
 		D02A67D8272A7460009B2C1C /* CoinTweetsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */; };
 		D04D98EA268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04D98EB268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
+		D04DD5412B68C0EF00219B87 /* HighlightedTiltledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */; };
+		D04DD5422B68C0EF00219B87 /* HighlightedTiltledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */; };
 		D0532CBE2B149DEE0015DF40 /* WatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0532CBD2B149DEE0015DF40 /* WatchViewModel.swift */; };
 		D0532CBF2B149DEE0015DF40 /* WatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0532CBD2B149DEE0015DF40 /* WatchViewModel.swift */; };
 		D0532CC12B149E110015DF40 /* WatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0532CC02B149E110015DF40 /* WatchViewController.swift */; };
@@ -2804,8 +2808,8 @@
 		D09D76992A2F3682004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
 		D0A980A92B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AA2B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
-		D0B462F62B5A75360027815D /* EvmFeeSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B462F52B5A75360027815D /* EvmFeeSettingsModule.swift */; };
-		D0B462F72B5A75360027815D /* EvmFeeSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B462F52B5A75360027815D /* EvmFeeSettingsModule.swift */; };
+		D0A980AF2B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */; };
+		D0A980B02B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */; };
 		D0C226102A66A3BC007101F7 /* PersonalSupportModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C2260F2A66A3BC007101F7 /* PersonalSupportModule.swift */; };
 		D0C226112A66A3BD007101F7 /* PersonalSupportModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C2260F2A66A3BC007101F7 /* PersonalSupportModule.swift */; };
 		D0C226132A66A3DB007101F7 /* PersonalSupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C226122A66A3DB007101F7 /* PersonalSupportViewController.swift */; };
@@ -4498,6 +4502,7 @@
 		D008CA65267C8E1800001E0A /* ApproveTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveTransactionRecord.swift; sourceTree = "<group>"; };
 		D008CA69267C8E5E00001E0A /* ContractCallTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractCallTransactionRecord.swift; sourceTree = "<group>"; };
 		D009290C2B15EB2500C0861C /* ChooseWatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWatchService.swift; sourceTree = "<group>"; };
+		D00DAE442B626C2900F48E1D /* GasPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPrice.swift; sourceTree = "<group>"; };
 		D01517ED2B10A69E00FECCBC /* WatchModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchModule.swift; sourceTree = "<group>"; };
 		D023D2662A24BBC6004F65B0 /* TronAddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronAddressParser.swift; sourceTree = "<group>"; };
 		D023D2692A24CD16004F65B0 /* BaseTronAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTronAdapter.swift; sourceTree = "<group>"; };
@@ -4514,6 +4519,7 @@
 		D02A67BA272A7460009B2C1C /* CoinTweetsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsService.swift; sourceTree = "<group>"; };
 		D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsModule.swift; sourceTree = "<group>"; };
 		D04D98E9268055A2001A3135 /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
+		D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedTiltledTextView.swift; sourceTree = "<group>"; };
 		D0532CBD2B149DEE0015DF40 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
 		D0532CC02B149E110015DF40 /* WatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewController.swift; sourceTree = "<group>"; };
 		D0532CC32B149E450015DF40 /* WatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchService.swift; sourceTree = "<group>"; };
@@ -4547,7 +4553,7 @@
 		D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewModel.swift; sourceTree = "<group>"; };
 		D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationService.swift; sourceTree = "<group>"; };
 		D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepChangeButtonsView.swift; sourceTree = "<group>"; };
-		D0B462F52B5A75360027815D /* EvmFeeSettingsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmFeeSettingsModule.swift; sourceTree = "<group>"; };
+		D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0C2260F2A66A3BC007101F7 /* PersonalSupportModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportModule.swift; sourceTree = "<group>"; };
 		D0C226122A66A3DB007101F7 /* PersonalSupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportViewController.swift; sourceTree = "<group>"; };
 		D0C226152A66A6F3007101F7 /* PersonalSupportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportService.swift; sourceTree = "<group>"; };
@@ -5133,6 +5139,7 @@
 				ABC9A830FE79DBF62FD63CC4 /* ThemeMode.swift */,
 				ABC9A3DFC1E03CB2E6C12F2C /* Encodable.swift */,
 				11B35D813B2B43683404CCD6 /* Kmm.swift */,
+				D00DAE442B626C2900F48E1D /* GasPrice.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5270,6 +5277,7 @@
 				11B358DF5802EBA3CC7782A7 /* CircularProgressView.swift */,
 				ABC9AE7F145C402C91AAB5A3 /* ShortcutButtonsView.swift */,
 				ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */,
+				D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -5856,7 +5864,6 @@
 		11B35733E1033052E6CA46C3 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
-				11B356AB309DA670267151B3,
 				11B350E65AAA33943BAD2F1D /* UniswapV2MultiSwapProvider.swift */,
 				11B35C4595DF6D3C4228DDEE /* PancakeV3MultiSwapProvider.swift */,
 				11B3564500A3378D6EB2A477 /* PancakeV2MultiSwapProvider.swift */,
@@ -7623,14 +7630,6 @@
 			path = Indicators;
 			sourceTree = "<group>";
 		};
-		ABC9A0A6C9DC50283A17E79B /* OneInchMultiSwap */ = {
-			isa = PBXGroup;
-			children = (
-				ABC9AF7289C00C311B3D9758,
-			);
-			path = OneInchMultiSwap;
-			sourceTree = "<group>";
-		};
 		ABC9A0C84F2BFCCECF03B045 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -8145,7 +8144,6 @@
 		ABC9AA5D0FB82A3820CF27BF /* OneInchMultiSwap */ = {
 			isa = PBXGroup;
 			children = (
-				ABC9A49CE63639ACDF9985C2,
 				ABC9ADC5E5E083CFC3B5CA6E /* OneInchSetting */,
 				ABC9ABED1E5FD1DE2F90D0AD /* OneInchMultiSwapProvider.swift */,
 			);
@@ -8666,7 +8664,7 @@
 			children = (
 				ABC9ABCA9E26E2B6A5E0D43E /* Eip1559FeeSettingsView.swift */,
 				ABC9A8E02C3486492E3B12F2 /* Eip1559FeeSettingsViewModel.swift */,
-				D0B462F52B5A75360027815D /* EvmFeeSettingsModule.swift */,
+				D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */,
 			);
 			path = FeeSettings;
 			sourceTree = "<group>";
@@ -9420,6 +9418,7 @@
 				58AAA98A15442365CFE776F3 /* KeyboardAwareViewController.swift in Sources */,
 				D36DE0CA272FD864000BC916 /* UniswapProvider.swift in Sources */,
 				D00267BA2A57E6CE00D6B2D5 /* ResendPastInputCell.swift in Sources */,
+				D0A980B02B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */,
 				D0C226142A66A3DB007101F7 /* PersonalSupportViewController.swift in Sources */,
 				11B35A4D9BD4B8C29FBAFACF /* AboutModule.swift in Sources */,
 				3A73FC9C258B1AF700FE4D34 /* MarketWatchlistViewController.swift in Sources */,
@@ -9624,7 +9623,6 @@
 				D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
 				58AAA2CEB9DB7E34921D7778 /* SwapDeadlineViewModel.swift in Sources */,
 				58AAAF041A3FE53A28893E74 /* RecipientAddressViewModel.swift in Sources */,
-				D0B462F72B5A75360027815D /* EvmFeeSettingsModule.swift in Sources */,
 				D36DE0E2272FD887000BC916 /* OneInchProvider.swift in Sources */,
 				D36DE100272FD92F000BC916 /* SwapSelectProviderViewModel.swift in Sources */,
 				58AAAAEDC64AE5716BC07673 /* SwapSlippageViewModel.swift in Sources */,
@@ -9723,6 +9721,7 @@
 				58AAA937A06DD40BD9A64C71 /* MarketGlobalMetricViewController.swift in Sources */,
 				58AAAB9BE155C6F7630BCE31 /* MarketSingleSortHeaderView.swift in Sources */,
 				58AAA76E5789D2C9EAC9A2B6 /* MarketSingleSortHeaderViewModel.swift in Sources */,
+				D00DAE462B626C2900F48E1D /* GasPrice.swift in Sources */,
 				11B35C2ED09C6D5660BB1236 /* MarketWatchlistToggleService.swift in Sources */,
 				11B35F28C21E228AB3158716 /* MarketOverviewMetricsCell.swift in Sources */,
 				11B357FDC1C6BD6C39FE6853 /* MarketAdvancedSearchResultModule.swift in Sources */,
@@ -10222,6 +10221,7 @@
 				ABC9A8CBDB7CF4E781896C49 /* RestoreTypeModule.swift in Sources */,
 				ABC9A8FAB37E2049DC58FF14 /* RestoreTypeViewModel.swift in Sources */,
 				ABC9A029AFF2F178AF5AD11B /* RestoreTypeViewController.swift in Sources */,
+				D04DD5422B68C0EF00219B87 /* HighlightedTiltledTextView.swift in Sources */,
 				ABC9A3C13073DDFABF8C0679 /* RestoreCloudViewModel.swift in Sources */,
 				ABC9A8A74C527C4E01EBB8A5 /* RestoreCloudModule.swift in Sources */,
 				ABC9A712F6389F5C2B0D63E3 /* RestoreCloudService.swift in Sources */,
@@ -10584,7 +10584,6 @@
 				11B35D098F3E0435A3C4512B /* MultiSwapQuote.swift in Sources */,
 				11B3542DB7195238D606D057 /* MultiSwapConfirmView.swift in Sources */,
 				11B35ED4BE062F70D930F92C /* MultiSwapSettingStorage.swift in Sources */,
-				11B35BC282D8CA0137ECB0FA,
 				11B35CFBC57B9DF24CE0665C /* UniswapV2MultiSwapProvider.swift in Sources */,
 				11B35DC168B3102FB2293CE4 /* PancakeV3MultiSwapProvider.swift in Sources */,
 				11B35490732E5F84656F339A /* PancakeV2MultiSwapProvider.swift in Sources */,
@@ -10858,6 +10857,7 @@
 				D00267B92A57E6CE00D6B2D5 /* ResendPastInputCell.swift in Sources */,
 				D0C226132A66A3DB007101F7 /* PersonalSupportViewController.swift in Sources */,
 				11B3550424326606B055D7E5 /* AboutModule.swift in Sources */,
+				D0A980AF2B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */,
 				3A73FC99258B1AF600FE4D34 /* MarketWatchlistViewController.swift in Sources */,
 				11B35959AAF414186CE39698 /* AddTokenViewModel.swift in Sources */,
 				11B35A90F19DE20ABE21F423 /* AddTokenService.swift in Sources */,
@@ -11062,7 +11062,6 @@
 				58AAA49049C7EA04AABC41E9 /* SwapSlippageViewModel.swift in Sources */,
 				58AAA9ABBBA6A19CBC351D52 /* AddressResolutionProvider.swift in Sources */,
 				D0D5BCBC2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
-				D0B462F62B5A75360027815D /* EvmFeeSettingsModule.swift in Sources */,
 				58AAA10B748931BA5FA867DA /* SwapViewModel.swift in Sources */,
 				58AAA9475B1C057E82B25C76 /* OneInchFeeService.swift in Sources */,
 				58AAA6371183D7FB9606FEDA /* OneInchSendEvmTransactionService.swift in Sources */,
@@ -11161,6 +11160,7 @@
 				58AAA2960B54658E2614D72E /* MarketGlobalMetricService.swift in Sources */,
 				58AAA996622FCD647B51A3C5 /* MarketGlobalMetricModule.swift in Sources */,
 				58AAA5C000029E9EB74C46C4 /* MarketGlobalMetricViewController.swift in Sources */,
+				D00DAE452B626C2900F48E1D /* GasPrice.swift in Sources */,
 				58AAA004F244AFFC352ADCEF /* MarketSingleSortHeaderView.swift in Sources */,
 				58AAA35AF4F4454E0E9C7C60 /* MarketSingleSortHeaderViewModel.swift in Sources */,
 				11B353CB3021FA5266D07607 /* MarketWatchlistToggleService.swift in Sources */,
@@ -11660,6 +11660,7 @@
 				ABC9A1EC656488FF79F458EC /* RestoreCloudViewModel.swift in Sources */,
 				ABC9A4929EFBFAD0B595A4E8 /* RestoreCloudModule.swift in Sources */,
 				ABC9AFA5222E61F7999E2A88 /* RestoreCloudService.swift in Sources */,
+				D04DD5412B68C0EF00219B87 /* HighlightedTiltledTextView.swift in Sources */,
 				ABC9A324BB7E7FF8758A92C3 /* RestoreCloudViewController.swift in Sources */,
 				11B35E276D1C91193B687718 /* WalletService.swift in Sources */,
 				11B359E7632FC042278ED912 /* ContactBookManager.swift in Sources */,
@@ -12022,7 +12023,6 @@
 				11B355D89EADD907D4FC3273 /* MultiSwapQuote.swift in Sources */,
 				11B35CA3524A5FEA07135535 /* MultiSwapConfirmView.swift in Sources */,
 				11B356075F51B38338958A4A /* MultiSwapSettingStorage.swift in Sources */,
-				11B35B8556A449EE684FF5C2,
 				11B35F0FF89A5B636C2EFE48 /* UniswapV2MultiSwapProvider.swift in Sources */,
 				11B356B6D73ADF1B1567CB47 /* PancakeV3MultiSwapProvider.swift in Sources */,
 				11B35CA4F61231F536BE9A24 /* PancakeV2MultiSwapProvider.swift in Sources */,
@@ -12861,7 +12861,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.13;
+				version = 2.0.14;
 			};
 		};
 		D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit.Swift" */ = {

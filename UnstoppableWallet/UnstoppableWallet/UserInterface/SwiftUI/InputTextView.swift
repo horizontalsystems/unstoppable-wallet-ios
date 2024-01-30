@@ -94,6 +94,24 @@ struct CautionBorder: ViewModifier {
     }
 }
 
+struct FieldCautionBorder: ViewModifier {
+    let cornerRadius: CGFloat
+    @Binding var cautionState: FieldCautionState
+
+    init(cornerRadius: CGFloat = .cornerRadius8, cautionState: Binding<FieldCautionState>) {
+        self.cornerRadius = cornerRadius
+        _cautionState = cautionState
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(cautionState.color, lineWidth: .heightOneDp)
+            )
+    }
+}
+
 struct CautionPrompt: ViewModifier {
     @Binding var cautionState: CautionState
 
