@@ -14,6 +14,8 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         self.kit = kit
 
         super.init(storage: storage)
+
+        print("INIT PROVIDER!")
     }
 
     private func address(token: MarketKit.Token) throws -> EvmKit.Address {

@@ -8,7 +8,7 @@ struct AddressViewNew: View {
     @StateObject var viewModel: AddressViewModelNew
 
     init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>) {
-        print("Address View INIT. text = \(text.wrappedValue)")
+//        print("Address View INIT. text = \(text.wrappedValue)")
         _viewModel = StateObject(
             wrappedValue: AddressViewModelNew(
                 initial: initial,
@@ -28,6 +28,7 @@ struct AddressViewNew: View {
                     )
                     .font(.themeBody)
                     .autocorrectionDisabled()
+                    .autocapitalization(.none)
                     .modifier(RightChecking(state: $viewModel.checkingState))
                 },
                 showDelete: .init(get: { !viewModel.internalText.isEmpty }, set: { _ in }),
@@ -51,7 +52,7 @@ struct AddressViewNew: View {
         }
     }
 
-    @ViewBuilder func textField(placeholder: String, text: Binding<String> /* , onChange: @escaping (String) -> () */ ) -> some View {
+    @ViewBuilder func textField(placeholder: String, text: Binding<String>) -> some View {
         if #available(iOS 16, *) {
             TextField(
                 placeholder,
