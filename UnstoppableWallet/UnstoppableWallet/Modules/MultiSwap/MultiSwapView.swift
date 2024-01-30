@@ -46,19 +46,16 @@ struct MultiSwapView: View {
                             .disabled(viewModel.currentQuote == nil || viewModel.quoting)
                             .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
-                            if viewModel.currentQuote == nil,
-                               let availableBalance = viewModel.availableBalance,
-                               let tokenIn = viewModel.tokenIn,
-                               let formatted = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: tokenIn), value: availableBalance))
-                            {
+                            if let balanceValue = balanceValue() {
                                 ListSection {
                                     HStack(spacing: .margin8) {
                                         Text("Available Balance").textSubhead2()
                                         Spacer()
-                                        Text(formatted).textSubhead2(color: .themeLeah)
+                                        Text(balanceValue).textSubhead2(color: .themeLeah)
                                     }
-                                    .frame(height: 40)
+                                    .padding(.vertical, .margin12)
                                     .padding(.horizontal, .margin16)
+                                    .frame(minHeight: 40)
                                 }
                                 .themeListStyle(.bordered)
                             }
@@ -88,9 +85,9 @@ struct MultiSwapView: View {
                                             settingsPresented = true
                                         }) {
                                             if currentQuote.quote.settingsModified {
-                                                Image("manage_2_20").themeIcon(color: .themeJacob)
+                                                Image("edit2_20").themeIcon(color: .themeJacob)
                                             } else {
-                                                Image("manage_2_20").renderingMode(.template)
+                                                Image("edit2_20").renderingMode(.template)
                                             }
                                         }
                                         .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
@@ -137,20 +134,6 @@ struct MultiSwapView: View {
                                             } else {
                                                 Text("n/a".localized).textSubhead2(color: .themeGray50)
                                             }
-
-                                            if let transactionService = viewModel.transactionService {
-                                                Button(action: {
-                                                    viewModel.stopAutoQuoting()
-                                                    feeSettingsPresented = true
-                                                }) {
-                                                    if transactionService.modified {
-                                                        Image("edit2_20").themeIcon(color: .themeJacob)
-                                                    } else {
-                                                        Image("edit2_20").renderingMode(.template)
-                                                    }
-                                                }
-                                                .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
-                                            }
                                         }
                                         .frame(height: 40)
                                         .padding(.trailing, .margin12)
@@ -192,13 +175,6 @@ struct MultiSwapView: View {
                                     }
                                 }
                                 .themeListStyle(.bordered)
-                                .sheet(isPresented: $feeSettingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
-                                    if let feeService = viewModel.transactionService {
-                                        feeService.settingsView()
-                                    } else {
-                                        Text("NO")
-                                    }
-                                }
                                 .sheet(item: $presentedSettingId) { settingId in
                                     if let currentQuote = viewModel.currentQuote {
                                         currentQuote.provider.settingView(settingId: settingId)
@@ -216,6 +192,13 @@ struct MultiSwapView: View {
                         .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
                             MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
                         }
+                        .sheet(isPresented: $feeSettingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
+                            if let feeService = viewModel.transactionService {
+                                feeService.settingsView()
+                            } else {
+                                Text("NO")
+                            }
+                        }
                     }
 
                     NavigationLink(
@@ -230,6 +213,12 @@ struct MultiSwapView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
+                    Button("button.cancel".localized) {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
+
+                ToolbarItem(placement: .navigationBarTrailing) {
                     if viewModel.quoteTimerActive {
                         CircularProgressView(progress: progress)
                             .onAppear {
@@ -244,9 +233,13 @@ struct MultiSwapView: View {
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.cancel".localized) {
-                        presentationMode.wrappedValue.dismiss()
+                    Button(action: {
+                        viewModel.stopAutoQuoting()
+                        feeSettingsPresented = true
+                    }) {
+                        Image("manage_2_20").renderingMode(.template)
                     }
+                    .disabled(viewModel.transactionService == nil)
                 }
             }
         }
@@ -445,6 +438,24 @@ struct MultiSwapView: View {
 
         if let feeTokenRate = viewModel.feeTokenRate,
            let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: fee.value * feeTokenRate)
+        {
+            result += " (≈ \(formatted))"
+        }
+
+        return result
+    }
+
+    private func balanceValue() -> String? {
+        guard viewModel.currentQuote == nil,
+              let availableBalance = viewModel.availableBalance,
+              let tokenIn = viewModel.tokenIn,
+              var result = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: tokenIn), value: availableBalance))
+        else {
+            return nil
+        }
+
+        if let rateIn = viewModel.rateIn,
+           let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: availableBalance * rateIn)
         {
             result += " (≈ \(formatted))"
         }
