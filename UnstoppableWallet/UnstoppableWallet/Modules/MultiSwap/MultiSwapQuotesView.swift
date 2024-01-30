@@ -34,20 +34,16 @@ struct MultiSwapQuotesView: View {
                                 Spacer()
 
                                 VStack(alignment: .trailing, spacing: 1) {
-                                    if let tokenOut = viewModel.tokenOut, let formatted = ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: tokenOut), value: quote.quote.amountOut)) {
-                                        Text(formatted).textSubhead2(color: .themeLeah)
+                                    if let quoteValue = quoteValue(quote: quote) {
+                                        Text(quoteValue).textCaption(color: .themeLeah)
                                     } else {
-                                        Text("n/a").textSubhead2(color: .themeGray50)
+                                        Text("n/a").textCaption(color: .themeGray50)
                                     }
 
-                                    if let feeQuote = quote.quote.feeQuote,
-                                       let feeToken = viewModel.feeToken,
-                                       let fee = viewModel.transactionService?.fee(quote: feeQuote, token: feeToken),
-                                       let formatted = ValueFormatter.instance.formatShort(coinValue: fee)
-                                    {
-                                        Text(formatted).textSubhead2(color: .themeGray)
+                                    if let feeValue = feeValue(quote: quote) {
+                                        Text("Fee: \(feeValue)").textCaption(color: .themeGray)
                                     } else {
-                                        Text("n/a").textSubhead2(color: .themeGray50)
+                                        Text("Fee: \("n/a".localized)").textCaption(color: .themeGray50)
                                     }
                                 }
                             }
@@ -67,5 +63,40 @@ struct MultiSwapQuotesView: View {
                 }
             }
         }
+    }
+
+    private func quoteValue(quote: MultiSwapViewModel.Quote) -> String? {
+        guard let tokenOut = viewModel.tokenOut,
+              var result = ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: tokenOut), value: quote.quote.amountOut))
+        else {
+            return nil
+        }
+
+        if let rateOut = viewModel.rateOut,
+           let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: quote.quote.amountOut * rateOut)
+        {
+            result += " (≈ \(formatted))"
+        }
+
+        return result
+    }
+
+    private func feeValue(quote: MultiSwapViewModel.Quote) -> String? {
+        guard let feeQuote = quote.quote.feeQuote,
+              let feeToken = viewModel.feeToken,
+              let transactionService = viewModel.transactionService,
+              let fee = transactionService.fee(quote: feeQuote, token: feeToken),
+              var result = ValueFormatter.instance.formatShort(coinValue: fee)
+        else {
+            return nil
+        }
+
+        if let feeTokenRate = viewModel.feeTokenRate,
+           let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: fee.value * feeTokenRate)
+        {
+            result += " (≈ \(formatted))"
+        }
+
+        return result
     }
 }
