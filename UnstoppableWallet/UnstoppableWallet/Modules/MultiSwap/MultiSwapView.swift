@@ -112,45 +112,34 @@ struct MultiSwapView: View {
                                                     viewModel.flipPrice()
                                                 }) {
                                                     HStack(spacing: .margin8) {
-                                                        Text(price).textSubhead2(color: .themeLeah)
+                                                        Text(price)
+                                                            .textSubhead2(color: .themeLeah)
+                                                            .multilineTextAlignment(.trailing)
+
                                                         Image("arrow_swap_3_20").themeIcon()
                                                     }
                                                 }
                                             }
-                                            .frame(height: 40)
+                                            .padding(.vertical, 10)
                                             .padding(.horizontal, .margin16)
+                                            .frame(minHeight: 40)
                                         }
 
-                                        if let feeQuote = currentQuote.quote.feeQuote,
-                                           let feeToken = viewModel.feeToken,
-                                           let transactionService = viewModel.transactionService,
-                                           let fee = transactionService.fee(quote: feeQuote, token: feeToken),
-                                           let formatted = ValueFormatter.instance.formatShort(coinValue: fee)
-                                        {
-                                            HStack(spacing: .margin8) {
-                                                Text("Network Fee")
-                                                    .textSubhead2()
-                                                    .modifier(Informed(description: .init(title: "Network Fee", description: "Network Fee Description")))
+                                        HStack(spacing: .margin8) {
+                                            Text("Network Fee")
+                                                .textSubhead2()
+                                                .modifier(Informed(description: .init(title: "Network Fee", description: "Network Fee Description")))
 
-                                                Spacer()
+                                            Spacer()
 
-                                                Text(formatted).textSubhead2(color: .themeLeah)
-
-                                                Button(action: {
-                                                    viewModel.stopAutoQuoting()
-                                                    feeSettingsPresented = true
-                                                }) {
-                                                    if transactionService.modified {
-                                                        Image("edit2_20").themeIcon(color: .themeJacob)
-                                                    } else {
-                                                        Image("edit2_20").renderingMode(.template)
-                                                    }
-                                                }
-                                                .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
+                                            if let feeValue = feeValue(quote: currentQuote) {
+                                                Text(feeValue).textSubhead2(color: .themeLeah)
+                                            } else {
+                                                Text("n/a".localized).textSubhead2(color: .themeGray50)
                                             }
-                                            .frame(height: 40)
-                                            .padding(.trailing, .margin12)
                                         }
+                                        .frame(height: 40)
+                                        .padding(.trailing, .margin12)
 
                                         if !currentQuote.quote.mainFields.isEmpty {
                                             ForEach(currentQuote.quote.mainFields) { (field: MultiSwapMainField) in
@@ -428,5 +417,24 @@ struct MultiSwapView: View {
         case .warning: return .themeJacob
         case .error: return .themeLucian
         }
+    }
+
+    private func feeValue(quote: MultiSwapViewModel.Quote) -> String? {
+        guard let feeQuote = quote.quote.feeQuote,
+              let feeToken = viewModel.feeToken,
+              let transactionService = viewModel.transactionService,
+              let fee = transactionService.fee(quote: feeQuote, token: feeToken),
+              var result = ValueFormatter.instance.formatShort(coinValue: fee)
+        else {
+            return nil
+        }
+
+        if let feeTokenRate = viewModel.feeTokenRate,
+           let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: fee.value * feeTokenRate)
+        {
+            result += " (≈ \(formatted))"
+        }
+
+        return result
     }
 }
