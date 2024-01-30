@@ -56,6 +56,15 @@ extension EvmFeeModule {
     enum GasDataWarning: Warning {
         case riskOfGettingStuck
         case overpricing
+
+        var titledCaution: TitledCaution {
+            switch self {
+            case .riskOfGettingStuck:
+                return TitledCaution(title: "fee_settings.warning.risk_of_getting_stuck".localized, text: "fee_settings.warning.risk_of_getting_stuck.info".localized, type: .warning)
+            case .overpricing:
+                return TitledCaution(title: "fee_settings.warning.overpricing".localized, text: "fee_settings.warning.overpricing.info".localized, type: .warning)
+            }
+        }
     }
 
     struct GasPrices {

@@ -1,34 +1,22 @@
 import Foundation
+import MarketKit
 import SwiftUI
 
 struct Eip1559FeeSettingsView: View {
     @ObservedObject var viewModel: Eip1559FeeSettingsViewModel
+    @Environment(\.presentationMode) private var presentationMode
+
+    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory) {
+        viewModel = Eip1559FeeSettingsViewModel(service: service, feeViewItemFactory: feeViewItemFactory)
+    }
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 ListSection {
                     row(viewItem: ViewItem(
-                        title: Section.fee.title,
-                        value: "$0.98",
-                        subValue: "12 ETH"
-                    ), description: .init(
-                        title: Section.fee.title,
-                        description: Section.fee.info
-                    ))
-
-                    row(viewItem: ViewItem(
-                        title: Section.gasLimit.title,
-                        value: "12,412",
-                        subValue: nil
-                    ), description: .init(
-                        title: Section.gasLimit.title,
-                        description: Section.gasLimit.info
-                    ))
-
-                    row(viewItem: ViewItem(
                         title: Section.baseFee.title,
-                        value: "46 GWei",
+                        value: viewModel.baseFee,
                         subValue: nil
                     ), description: .init(
                         title: Section.baseFee.title,
@@ -38,31 +26,33 @@ struct Eip1559FeeSettingsView: View {
 
                 VStack(spacing: 0) {
                     headerRow(
-                        title: Section.maxFeeRate.title,
+                        title: Section.maxFee.title,
                         description: .init(
-                            title: Section.maxFeeRate.title,
-                            description: Section.maxFeeRate.info)
+                            title: Section.maxFee.title,
+                            description: Section.maxFee.info
+                        )
                     )
                     inputNumberWithSteps(
-                            placeholder: "Def_Value",
-                            text: $viewModel.maxFeeRate,
-                            cautionState: $viewModel.maxFeeRateCautionState,
-                            onTap: viewModel.stepChangeMaxFeeRate
+                        placeholder: "",
+                        text: $viewModel.maxFee,
+                        cautionState: $viewModel.maxFeeCautionState,
+                        onTap: viewModel.stepChangeMaxFee
                     )
                 }
 
                 VStack(spacing: 0) {
                     headerRow(
-                        title: Section.maxPriority.title,
+                        title: Section.maxTips.title,
                         description: .init(
-                            title: Section.maxPriority.title,
-                            description: Section.maxPriority.info)
+                            title: Section.maxTips.title,
+                            description: Section.maxTips.info
+                        )
                     )
                     inputNumberWithSteps(
-                            placeholder: "Def_Value",
-                            text: $viewModel.maxFee,
-                            cautionState: $viewModel.maxFeeCautionState,
-                            onTap: viewModel.stepChangeMaxFee
+                        placeholder: "",
+                        text: $viewModel.maxTips,
+                        cautionState: $viewModel.maxTipsCautionState,
+                        onTap: viewModel.stepChangeMaxTips
                     )
                 }
 
@@ -71,27 +61,41 @@ struct Eip1559FeeSettingsView: View {
                         title: Section.nonce.title,
                         description: .init(
                             title: Section.nonce.title,
-                            description: Section.nonce.info)
+                            description: Section.nonce.info
+                        )
                     )
                     inputNumberWithSteps(
-                            placeholder: "Def_Value",
-                            text: $viewModel.nonce,
-                            cautionState: $viewModel.nonceCautionState,
-                            onTap: viewModel.stepChangeNonce
+                        placeholder: "",
+                        text: $viewModel.nonce,
+                        cautionState: $viewModel.nonceCautionState,
+                        onTap: viewModel.stepChangeNonce
                     )
+                }
+
+                if let caution = viewModel.cautionState.caution {
+                    VStack(spacing: 32) {
+                        HighlightedTitledTextView(caution: caution)
+                    }
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .animation(.default, value: viewModel.maxFeeRateCautionState)
         .animation(.default, value: viewModel.maxFeeCautionState)
+        .animation(.default, value: viewModel.maxTipsCautionState)
         .animation(.default, value: viewModel.nonceCautionState)
-        .navigationTitle("fee_settings.title".localized)
+        .navigationTitle("fee_settings".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            Button("button.reset".localized.uppercased()) {
-                viewModel.onReset()
-            }.disabled(!viewModel.resetEnabled)
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("button.reset".localized) {
+                    viewModel.onReset()
+                }.disabled(!viewModel.resetEnabled)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("button.done".localized) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
         }
     }
 
@@ -122,7 +126,7 @@ struct Eip1559FeeSettingsView: View {
             .modifier(Informed(description: description))
     }
 
-    @ViewBuilder private func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<CautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> ()) -> some View {
+    @ViewBuilder private func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> ()) -> some View {
         InputTextRow(vertical: .margin8) {
             StepChangeButtonsView(content: {
                 InputTextView(
@@ -134,8 +138,7 @@ struct Eip1559FeeSettingsView: View {
                 .autocorrectionDisabled()
             }, onTap: onTap)
         }
-        .modifier(CautionBorder(cautionState: cautionState))
-        .modifier(CautionPrompt(cautionState: cautionState))
+        .modifier(FieldCautionBorder(cautionState: cautionState))
     }
 }
 
@@ -147,27 +150,22 @@ extension Eip1559FeeSettingsView {
     }
 
     enum Section: Int {
-        case fee, gasLimit, baseFee
-        case maxFeeRate, maxPriority, nonce
+        case baseFee, maxFee, maxTips, nonce
 
         var title: String {
             switch self {
-            case .fee: return "fee_settings.network_fee".localized
-            case .gasLimit: return "fee_settings.gas_limit".localized
             case .baseFee: return "fee_settings.base_fee".localized
-            case .maxFeeRate: return "fee_settings.max_fee_rate".localized
-            case .maxPriority: return "fee_settings.tips".localized
+            case .maxFee: return "fee_settings.max_fee_rate".localized
+            case .maxTips: return "fee_settings.tips".localized
             case .nonce: return "evm_send_settings.nonce".localized
             }
         }
 
         var info: String {
             switch self {
-            case .fee: return "fee_settings.network_fee.info".localized
-            case .gasLimit: return "fee_settings.gas_limit.info".localized
             case .baseFee: return "fee_settings.base_fee.info".localized
-            case .maxFeeRate: return "fee_settings.max_fee_rate.info".localized
-            case .maxPriority: return "fee_settings.tips.info".localized
+            case .maxFee: return "fee_settings.max_fee_rate.info".localized
+            case .maxTips: return "fee_settings.tips.info".localized
             case .nonce: return "evm_send_settings.nonce.info".localized
             }
         }

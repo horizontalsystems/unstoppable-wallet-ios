@@ -94,5 +94,13 @@ extension NonceService {
 extension NonceService {
     enum NonceError: Error {
         case alreadyInUse
+
+        var titledCaution: TitledCaution {
+            TitledCaution(
+                title: "evm_send_settings.nonce.errors.already_in_use".localized,
+                text: "evm_send_settings.nonce.errors.already_in_use.info".localized,
+                type: .error
+            )
+        }
     }
 }
