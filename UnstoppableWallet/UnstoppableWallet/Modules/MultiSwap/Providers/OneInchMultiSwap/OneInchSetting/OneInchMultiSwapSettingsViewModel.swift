@@ -4,21 +4,29 @@ import UIKit
 
 class OneInchMultiSwapSettingsViewModel: ObservableObject {
     private let decimalParser = AmountDecimalParser()
-    let storage: MultiSwapSettingStorage
+    var storage: MultiSwapSettingStorage
     let blockchainType: BlockchainType
 
     @Published var addressResult: AddressInput.Result = .idle {
         didSet {
-            switch addressResult {
-            case let .invalid(failure): addressCautionState = .caution(.init(text: failure.error.localizedDescription, type: .error))
-            default: addressCautionState = .none
-            }
+//            print("OneInchVM set result: \(addressResult)")
+            syncAddressCautionState()
+            syncButtons()
+        }
+    }
+
+    @Published var isAddressActive: Bool = false {
+        didSet {
+//            print("OneInchVM set isAddressAcrive: \(addressResult)")
+            syncAddressCautionState()
         }
     }
 
     @Published var addressCautionState: CautionState = .none
     @Published var address: String = "" {
-        didSet { print("OneInchMultiSwapSettingsViewModel didSet: \(address)")}
+        didSet {
+//            print("OneInchMultiSwapSettingsViewModel didSet: \(address)")
+        }
     }
 
     @Published var slippageCautionState: CautionState = .none {
@@ -33,8 +41,12 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var resetEnabled = true
-    @Published var doneEnabled = true
+    @Published var resetEnabled = false
+    @Published var doneEnabled = false {
+        didSet {
+//            print("DONE: \(doneEnabled) ")
+        }
+    }
 
     @Published var qrScanPresented = false
 
@@ -42,8 +54,20 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
         self.storage = storage
         self.blockchainType = blockchainType
 
-        print("Set Initial value: on INIT : MaxFuck")
+//        print("Set Initial value: on INIT")
         address = initialAddress
+    }
+
+    private func syncAddressCautionState() {
+        guard !isAddressActive else {
+            addressCautionState = .none
+            return
+        }
+//        print("When SYNC syncAddressCautionState - Result: \(addressResult)")
+        switch addressResult {
+        case let .invalid(failure): addressCautionState = .caution(.init(text: failure.error.localizedDescription, type: .error))
+        default: addressCautionState = .none
+        }
     }
 
     private func validateSlippage() {
@@ -61,17 +85,41 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
     }
 
     private func syncButtons() {
-        if slippageCautionState == .none, addressCautionState == .none {
-            doneEnabled = true
-        } else {
+        guard slippageCautionState == .none,
+           addressCautionState == .none else {
             doneEnabled = false
+            return
         }
+
+        var dataChanged = false
+        switch addressResult {
+        case .idle: dataChanged = !initialAddress.isEmpty
+        case let .valid(success):
+            if success.address.title.lowercased() != initialAddress.lowercased() {
+                dataChanged = true
+            }
+        default: ()
+        }
+
+        if let slippage = decimalParser.parseAnyDecimal(from: slippage),
+           slippage != initialSlippage {
+            dataChanged = true
+        }
+
+        doneEnabled = dataChanged
+    }
+
+    func changeAddressFocus(active: Bool) {
+        isAddressActive = active
     }
 }
 
 extension OneInchMultiSwapSettingsViewModel {
     var initialAddress: String {
-        "0x6150096B0D2ebCec98d1C981788c61d8B9ca3B22"//storage.value(for: MultiSwapSettingStorage.LegacySetting.address)
+        if let address: Address = storage.value(for: MultiSwapSettingStorage.LegacySetting.address) {
+            return address.title
+        }
+        return ""
     }
 
     var initialSlippage: Decimal {
@@ -92,7 +140,22 @@ extension OneInchMultiSwapSettingsViewModel {
         slippage = ""
     }
 
-    func onDone() {}
+    func onDone() {
+        let address: Address?
+        switch addressResult {
+        case let .valid(success):
+            address = success.address
+        default: address = nil
+        }
+
+        storage.set(value: address, for: MultiSwapSettingStorage.LegacySetting.address)
+
+        if let slippage = decimalParser.parseAnyDecimal(from: slippage),
+           slippage != initialSlippage {
+
+            storage.set(value: slippage, for: MultiSwapSettingStorage.LegacySetting.slippage)
+        }
+    }
 }
 
 extension OneInchMultiSwapSettingsViewModel {

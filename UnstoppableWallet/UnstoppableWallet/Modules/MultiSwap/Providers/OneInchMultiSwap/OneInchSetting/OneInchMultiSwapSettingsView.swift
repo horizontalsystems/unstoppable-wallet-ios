@@ -3,6 +3,11 @@ import SwiftUI
 
 struct OneInchMultiSwapSettingsView: View {
     @ObservedObject var viewModel: OneInchMultiSwapSettingsViewModel
+    @FocusState var isAddressFocused: Bool {
+        didSet {
+            print("Set focused: \(isAddressFocused)")
+        }
+    }
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -20,6 +25,10 @@ struct OneInchMultiSwapSettingsView: View {
                         text: $viewModel.address,
                         result: $viewModel.addressResult
                     )
+                    .focused($isAddressFocused)
+                    .onChange(of: isAddressFocused) { active in
+                        viewModel.changeAddressFocus(active: active)
+                    }
                     .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
                     .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
 
