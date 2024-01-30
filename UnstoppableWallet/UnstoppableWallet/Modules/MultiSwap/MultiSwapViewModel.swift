@@ -38,14 +38,14 @@ class MultiSwapViewModel: ObservableObject {
                 tokenIn = internalTokenIn
             }
 
-            if let internalTokenIn {
+            if let internalTokenIn, let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchainType: internalTokenIn.blockchainType).evmKitWrapper?.evmKit {
                 availableBalance = walletManager.activeWallets.first { $0.token == internalTokenIn }.flatMap { adapterManager.balanceAdapter(for: $0)?.balanceData.available }
                 rateIn = marketKit.coinPrice(coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)?.value
                 rateInCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] price in self?.rateIn = price.value }
 
-                transactionService = EvmMultiSwapTransactionService(blockchainType: internalTokenIn.blockchainType)
+                transactionService = EvmMultiSwapTransactionService(blockchainType: internalTokenIn.blockchainType, userAddress: evmKit.receiveAddress)
                 feeToken = try? marketKit.token(query: TokenQuery(blockchainType: internalTokenIn.blockchainType, tokenType: .native))
             } else {
                 availableBalance = nil
