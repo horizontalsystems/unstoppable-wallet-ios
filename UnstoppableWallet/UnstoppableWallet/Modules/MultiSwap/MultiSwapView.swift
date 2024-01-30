@@ -137,6 +137,20 @@ struct MultiSwapView: View {
                                             } else {
                                                 Text("n/a".localized).textSubhead2(color: .themeGray50)
                                             }
+
+                                            if let transactionService = viewModel.transactionService {
+                                                Button(action: {
+                                                    viewModel.stopAutoQuoting()
+                                                    feeSettingsPresented = true
+                                                }) {
+                                                    if transactionService.modified {
+                                                        Image("edit2_20").themeIcon(color: .themeJacob)
+                                                    } else {
+                                                        Image("edit2_20").renderingMode(.template)
+                                                    }
+                                                }
+                                                .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
+                                            }
                                         }
                                         .frame(height: 40)
                                         .padding(.trailing, .margin12)
