@@ -49,7 +49,7 @@ extension IDepositAdapter {
         Just(receiveAddressStatus).eraseToAnyPublisher()
     }
 
-    func usedAddresses(change: Bool) -> [UsedAddress] { [] }
+    func usedAddresses(change _: Bool) -> [UsedAddress] { [] }
 }
 
 protocol ITransactionsAdapter {
@@ -173,7 +173,13 @@ extension IPresentDelegate {
     }
 }
 
-protocol Warning {}
+protocol Warning {
+    var titledCaution: TitledCaution { get }
+}
+
+extension Warning {
+    var titledCaution: TitledCaution { TitledCaution(title: "", text: "", type: .warning) }
+}
 
 protocol IErrorService: AnyObject {
     var error: Error? { get }

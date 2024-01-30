@@ -24,6 +24,34 @@ enum CautionState: Equatable {
     }
 }
 
+enum TitledCautionState: Equatable {
+    case none
+    case caution(TitledCaution)
+
+    var caution: TitledCaution? {
+        switch self {
+        case let .caution(caution): return caution
+        default: return nil
+        }
+    }
+}
+
+enum FieldCautionState: Equatable {
+    case none
+    case caution(CautionType)
+
+    var color: Color {
+        switch self {
+        case .none: return Color.clear
+        case let .caution(type):
+            switch type {
+            case .warning: return .themeJacob
+            case .error: return .themeLucian
+            }
+        }
+    }
+}
+
 struct Caution: Equatable {
     let text: String
     let type: CautionType
@@ -42,8 +70,8 @@ enum CautionType: Equatable {
 
     var borderColor: UIColor {
         switch self {
-        case .error: return .themeRed50
-        case .warning: return .themeYellow50
+        case .error: return .themeLucian
+        case .warning: return .themeYellowD
         }
     }
 

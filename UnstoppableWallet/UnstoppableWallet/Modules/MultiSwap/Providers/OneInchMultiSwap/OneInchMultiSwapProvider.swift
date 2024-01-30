@@ -98,9 +98,6 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
 
     func settingView(settingId: String) -> AnyView {
         switch settingId {
-        case "network_fee": return AnyView(ThemeNavigationView {
-                EvmFeeSettingsModule.view()
-            })
         default: return AnyView(EmptyView())
         }
     }

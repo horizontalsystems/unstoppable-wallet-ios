@@ -23,16 +23,7 @@ class SendEvmCautionsFactory {
                     ]
                 }
             } else if let error = error as? NonceService.NonceError {
-                switch error {
-                case .alreadyInUse:
-                    return [
-                        TitledCaution(
-                            title: "evm_send_settings.nonce.errors.already_in_use".localized,
-                            text: "evm_send_settings.nonce.errors.already_in_use.info".localized(baseCoinService.token.coin.code),
-                            type: .error
-                        ),
-                    ]
-                }
+                return [error.titledCaution]
             } else if let error = error as? UniswapModule.UniswapError {
                 switch error {
                 case let .forbiddenPriceImpact(provider):
@@ -47,12 +38,7 @@ class SendEvmCautionsFactory {
 
         for warning in warnings {
             if let warning = warning as? EvmFeeModule.GasDataWarning {
-                switch warning {
-                case .riskOfGettingStuck:
-                    warningCautions.append(TitledCaution(title: "fee_settings.warning.risk_of_getting_stuck".localized, text: "fee_settings.warning.risk_of_getting_stuck.info".localized, type: .warning))
-                case .overpricing:
-                    warningCautions.append(TitledCaution(title: "fee_settings.warning.overpricing".localized, text: "fee_settings.warning.overpricing.info".localized, type: .warning))
-                }
+                warningCautions.append(warning.titledCaution)
             } else if let warning = warning as? UniswapModule.UniswapWarning {
                 switch warning {
                 case .highPriceImpact:
