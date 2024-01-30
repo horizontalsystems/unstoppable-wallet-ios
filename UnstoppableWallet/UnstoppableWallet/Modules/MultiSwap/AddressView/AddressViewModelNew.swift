@@ -15,11 +15,16 @@ class AddressViewModelNew: ObservableObject {
     private let showContacts: Bool
 
     private var expectedTextValue: String? = nil
+
     var updateText: (String) -> ()
-    @Published var text: String {
-        willSet {
-            print("Will set Text: \(text)")
-            updateText(newValue)
+    @Published var internalText: String {
+        didSet {
+            print("==> Try set Text from internal to Publisher: \(internalText)")
+            if internalText == oldValue { return }
+            print("==> Set! Text from internal to Publisher: \(internalText)")
+
+            updateText(oldValue)
+            sync()
         }
     }
 
@@ -48,10 +53,13 @@ class AddressViewModelNew: ObservableObject {
     @Published var contactsPresented = false
     @Published var qrScanPresented = false
 
-    init(initial: AddressInput.Initial,  text: Binding<String>, result: Binding<AddressInput.Result>) {
+    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>) {
         _result = result
-        self.text = text.wrappedValue
-        updateText = { text.wrappedValue = $0 }
+        internalText = text.wrappedValue
+        updateText = {
+            if text.wrappedValue == $0 { return }
+            text.wrappedValue = $0
+        }
 
         print("Init ViewModel. /Text: \(text.wrappedValue)")
         addressUriParser = AddressParserFactory.parser(blockchainType: initial.blockchainType, tokenType: nil)
@@ -71,20 +79,20 @@ class AddressViewModelNew: ObservableObject {
 
     private func sync() {
         print("==> Sync new text value")
-        if text == expectedTextValue {   // avoid double sync already updated text from 'uri'
+        if internalText == expectedTextValue {   // avoid double sync already updated text from 'uri'
             print("==> Avoid sync because already synced form uri")
             return
         }
         expectedTextValue = nil
 
-        guard !text.isEmpty else {
+        guard !internalText.isEmpty else {
             result = .idle
             return
         }
 
-        result = .loading(text)
+        result = .loading(internalText)
 
-        let text = text
+        let text = internalText
         // check uri
         do {
             let uri = try checkUri(text: text)
@@ -92,7 +100,7 @@ class AddressViewModelNew: ObservableObject {
             if let uri {    // we must show address from uri
                 print("==> Change text from uri using only address")
                 expectedTextValue = uri.address
-                self.text = uri.address
+                self.internalText = uri.address
             }
 
             // get address from uri or all text
@@ -156,24 +164,24 @@ extension AddressViewModelNew {
         case 0: qrScanPresented = true
         case 1:
             if let text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
-                self.text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                self.internalText = text.trimmingCharacters(in: .whitespacesAndNewlines)
             }
         default: ()
         }
     }
 
     func onTapDelete() {
-        text = ""
+        internalText = ""
     }
 
     func didFetch(qrText: String) {
-        text = qrText
+        internalText = qrText
     }
 }
 
 extension AddressViewModelNew: ContactBookSelectorDelegate {
     func onFetch(address: String) {
-        text = address
+        internalText = address
     }
 }
 
