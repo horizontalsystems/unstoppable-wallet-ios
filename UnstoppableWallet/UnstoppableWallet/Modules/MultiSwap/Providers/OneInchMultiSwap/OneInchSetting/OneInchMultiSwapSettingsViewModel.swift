@@ -43,7 +43,7 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
         self.blockchainType = blockchainType
 
         print("Set Initial value: on INIT : MaxFuck")
-//        address = initialAddress ?? ""
+        address = initialAddress
     }
 
     private func validateSlippage() {
@@ -70,7 +70,7 @@ class OneInchMultiSwapSettingsViewModel: ObservableObject {
 }
 
 extension OneInchMultiSwapSettingsViewModel {
-    var initialAddress: String? {
+    var initialAddress: String {
         "0x6150096B0D2ebCec98d1C981788c61d8B9ca3B22"//storage.value(for: MultiSwapSettingStorage.LegacySetting.address)
     }
 
@@ -88,7 +88,7 @@ extension OneInchMultiSwapSettingsViewModel {
     }
 
     func onReset() {
-        address = "" //initialAddress ?? ""
+        // how to set address!
         slippage = ""
     }
 

@@ -24,13 +24,13 @@ struct AddressViewNew: View {
                 content: {
                     textField(
                         placeholder: placeholder,
-                        text: $viewModel.text
+                        text: $viewModel.internalText
                     )
                     .font(.themeBody)
                     .autocorrectionDisabled()
                     .modifier(RightChecking(state: $viewModel.checkingState))
                 },
-                showDelete: .init(get: { !viewModel.text.isEmpty }, set: { _ in }),
+                showDelete: .init(get: { !viewModel.internalText.isEmpty }, set: { _ in }),
                 items: viewModel.shortcuts,
                 onTap: {
                     viewModel.onTap(index: $0)
