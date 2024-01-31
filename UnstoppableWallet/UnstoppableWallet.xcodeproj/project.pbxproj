@@ -2776,6 +2776,8 @@
 		D061A5332AA846FA009AAD57 /* SecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */; };
 		D06669022A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
+		D06B302C2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
+		D06B302D2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
 		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DE2A2DDA09006F141F /* SendTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DD2A2DDA09006F141F /* SendTronService.swift */; };
@@ -4539,6 +4541,7 @@
 		D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTronTokenBlockchainService.swift; sourceTree = "<group>"; };
 		D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsView.swift; sourceTree = "<group>"; };
 		D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronRecipientAddressViewModel.swift; sourceTree = "<group>"; };
+		D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsViewModel.swift; sourceTree = "<group>"; };
 		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
 		D07157DD2A2DDA09006F141F /* SendTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronService.swift; sourceTree = "<group>"; };
 		D07157E02A2DDA17006F141F /* SendTronViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewModel.swift; sourceTree = "<group>"; };
@@ -8669,6 +8672,7 @@
 				ABC9ABCA9E26E2B6A5E0D43E /* Eip1559FeeSettingsView.swift */,
 				ABC9A8E02C3486492E3B12F2 /* Eip1559FeeSettingsViewModel.swift */,
 				D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */,
+				D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */,
 			);
 			path = FeeSettings;
 			sourceTree = "<group>";
@@ -10569,6 +10573,7 @@
 				11B35FF14C4B775E570375EC /* MarketTopPairsViewModel.swift in Sources */,
 				11B358634BEC799056209B93 /* MarketTopPairsModule.swift in Sources */,
 				ABC9A9E7E67D0C8A7B2114B8 /* UnspentOutputsViewModel.swift in Sources */,
+				D06B302D2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */,
 				ABC9A929CE4DC2F1569658D6 /* UnspentOutputsCell.swift in Sources */,
 				ABC9A8F9505D4D88B12A62DD /* OutputSelectorView.swift in Sources */,
 				ABC9A8238E06BFE3B14C5D35 /* OutputSelectorViewModel.swift in Sources */,
@@ -12009,6 +12014,7 @@
 				11B35C72EF5FB79182EAB119 /* MarketTopPairsViewModel.swift in Sources */,
 				11B35CA725B9BAD70E40197F /* MarketTopPairsModule.swift in Sources */,
 				ABC9A22DF26B2A8C66B723BC /* UnspentOutputsViewModel.swift in Sources */,
+				D06B302C2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */,
 				ABC9A4AE1AE901132578CC28 /* UnspentOutputsCell.swift in Sources */,
 				ABC9A2EC06D3C1EB5B9A03D3 /* OutputSelectorView.swift in Sources */,
 				ABC9A8A33E0A2697BB1583EB /* OutputSelectorViewModel.swift in Sources */,
