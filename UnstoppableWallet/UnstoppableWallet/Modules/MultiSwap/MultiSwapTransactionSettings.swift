@@ -23,6 +23,7 @@ protocol IMultiSwapTransactionService {
 
 class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
+    private static let legacyGasPriceSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
 
     private let userAddress: EvmKit.Address
     private let blockchainType: BlockchainType
@@ -77,20 +78,30 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         var warnings = [Warning]()
         var errors = [Error]()
 
-        if case let .eip1559(recommendedMaxFee, recommendedTips) = recommendedGasPrice,
-           case let .eip1559(maxFee, tips) = gasPrice {
-            let recommendedBaseFee = recommendedMaxFee - recommendedTips
-            let actualTips = min(maxFee - recommendedBaseFee, tips)
-            let tipsSafeRange = Self.tipsSafeRangeBounds.range(around: recommendedTips)
+        switch (recommendedGasPrice, gasPrice) {
+            case (let .eip1559(recommendedMaxFee, recommendedTips), let .eip1559(maxFee, tips)):
+                let recommendedBaseFee = recommendedMaxFee - recommendedTips
+                let actualTips = min(maxFee - recommendedBaseFee, tips)
+                let tipsSafeRange = Self.tipsSafeRangeBounds.range(around: recommendedTips)
 
-            if actualTips < tipsSafeRange.lowerBound {
-                warnings.append(EvmFeeModule.GasDataWarning.riskOfGettingStuck)
-            }
+                if actualTips < tipsSafeRange.lowerBound {
+                    warnings.append(EvmFeeModule.GasDataWarning.riskOfGettingStuck)
+                }
 
-            if actualTips > tipsSafeRange.upperBound {
-                warnings.append(EvmFeeModule.GasDataWarning.overpricing)
-            }
+                if actualTips > tipsSafeRange.upperBound {
+                    warnings.append(EvmFeeModule.GasDataWarning.overpricing)
+                }
+            case let (.legacy(_recommendedGasPrice), .legacy(_gasPrice)):
+                let gasPriceSafeRange = Self.legacyGasPriceSafeRangeBounds.range(around: _recommendedGasPrice)
 
+                if _gasPrice < gasPriceSafeRange.lowerBound {
+                    warnings.append(EvmFeeModule.GasDataWarning.riskOfGettingStuck)
+                }
+
+                if _gasPrice > gasPriceSafeRange.upperBound {
+                    warnings.append(EvmFeeModule.GasDataWarning.overpricing)
+                }
+            default: ()
         }
 
         if let nonce, let minimumNonce, nonce < minimumNonce {
@@ -135,7 +146,8 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
             let view = Eip1559FeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
             return AnyView(ThemeNavigationView { view })
         } else {
-            return AnyView(LegacyFeeSettingsView())
+            let view = LegacyFeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
+            return AnyView(ThemeNavigationView { view })
         }
     }
 
