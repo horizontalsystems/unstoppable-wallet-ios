@@ -792,6 +792,7 @@
 "coin_analytics.period.4h" = "4 hours";
 "coin_analytics.period.1d" = "1 day";
 "coin_analytics.period.1w" = "1 week";
+"coin_analytics.period.1m" = "1 month";
 
 "coin_analytics.details" = "Details";
 
@@ -1388,6 +1389,7 @@
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "ALL";
 
 "chart.market_cap" = "Market Cap";
