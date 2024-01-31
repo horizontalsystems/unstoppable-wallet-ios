@@ -5275,7 +5275,6 @@
 				ABC9ABB793A6494225FF73B7 /* Alert.swift */,
 				ABC9AC701F3F7FE0A21AFBF9 /* InformedModifier.swift */,
 				ABC9ABF7E87EF486BB21B0B6 /* SecondaryActiveButtonStyle.swift */,
-				ABC9A62E1B0F6E3585B9DACB,
 				11B358DF5802EBA3CC7782A7 /* CircularProgressView.swift */,
 				ABC9AE7F145C402C91AAB5A3 /* ShortcutButtonsView.swift */,
 				ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */,
@@ -10578,7 +10577,6 @@
 				ABC9A160495EB67472B97E61 /* MarketWatchlistDecorator.swift in Sources */,
 				ABC9A00DA1F4148859D9D1AB /* Eip1559FeeSettingsView.swift in Sources */,
 				ABC9A252B1848D5A2E46C071 /* Eip1559FeeSettingsViewModel.swift in Sources */,
-				ABC9A4732EEF75CACC3D8536,
 				11B35E433AC4217552A8D668 /* MultiSwapView.swift in Sources */,
 				11B3573416D73003798074F8 /* MultiSwapViewModel.swift in Sources */,
 				11B352907977D6279AD3D96B /* IMultiSwapProvider.swift in Sources */,
@@ -12018,7 +12016,6 @@
 				ABC9A2DA629CF38FD7B893EC /* MarketWatchlistDecorator.swift in Sources */,
 				ABC9A8310AFE013E16F3DBAC /* Eip1559FeeSettingsView.swift in Sources */,
 				ABC9A1798D6E2E4C868DA366 /* Eip1559FeeSettingsViewModel.swift in Sources */,
-				ABC9A36D2F73D335BACEBF2C,
 				11B3594BEB2E05413B0DB30F /* MultiSwapView.swift in Sources */,
 				11B35A0D09133EF1B891B429 /* MultiSwapViewModel.swift in Sources */,
 				11B358EC68642C5A57ACB803 /* IMultiSwapProvider.swift in Sources */,
@@ -12979,7 +12976,7 @@
 			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.5;
+				version = 2.0.8;
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
