@@ -166,39 +166,14 @@ class CoinChartFactory {
             rightSideMode: rightSideMode
         )
     }
-
-    static func gridInterval(fromTimestamp: TimeInterval) -> Int {
-        guard let hoursCount = Calendar.current.dateComponents([.hour], from: Date(timeIntervalSince1970: fromTimestamp), to: Date()).hour else {
-            return ChartIntervalConverter.convert(interval: .year1)
-        }
-
-        // try to split interval by 4 chunks
-        switch hoursCount {
-        case 120 ... Int.max: return hoursCount / 4
-        case 60 ..< 120: return 24
-        case 28 ..< 60: return 12
-        default: return 4
-        }
-    }
 }
 
-extension HsPeriodType {
-    public func `in`(_ intervals: [HsTimePeriod]) -> Bool {
+public extension HsPeriodType {
+    func `in`(_ intervals: [HsTimePeriod]) -> Bool {
         switch self {
         case let .byPeriod(interval): return intervals.contains(interval)
         case let .byCustomPoints(interval, _): return intervals.contains(interval)
         case .byStartTime: return false
-        }
-    }
-
-    var gridInterval: Int {
-        switch self {
-        case let .byPeriod(interval):
-            return ChartIntervalConverter.convert(interval: interval)
-        case let .byCustomPoints(interval, _):
-            return ChartIntervalConverter.convert(interval: interval)
-        case let .byStartTime(startTime):
-            return CoinChartFactory.gridInterval(fromTimestamp: startTime)
         }
     }
 }

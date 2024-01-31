@@ -1898,7 +1898,6 @@
 		58AAA410C9996BA929E3CEEF /* InfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD7AC450FEF913E5417F /* InfoModule.swift */; };
 		58AAA415B26725FEF4A1128D /* DoubleSpendInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72BD42697A894C2383C /* DoubleSpendInfoViewController.swift */; };
 		58AAA431B5939F7961B65CCF /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB126AA1B83DD40C426F /* CALayer.swift */; };
-		58AAA44FC19684B426489776 /* ChartIntervalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CCC7252ECFFDC51578 /* ChartIntervalConverter.swift */; };
 		58AAA48687661E27807E9DF1 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0ED0FCFACF791EC865C /* FavoritesManager.swift */; };
 		58AAA488935A7DE6CF7C592D /* MarketGlobalMetricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7B3EA0C8B9FDEC41837 /* MarketGlobalMetricService.swift */; };
 		58AAA48ED47FD19F368385FA /* MetricChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAD2AA132E9B13726D8B /* MetricChartViewController.swift */; };
@@ -1926,7 +1925,6 @@
 		58AAA5C000029E9EB74C46C4 /* MarketGlobalMetricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA02D981360FF0CC50A19 /* MarketGlobalMetricViewController.swift */; };
 		58AAA5D1FB4312F714C1D097 /* OneInchSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA78B50AEDADC56B9DEBD /* OneInchSettingsModule.swift */; };
 		58AAA5EF1B46CAFB40139AD2 /* MarketPostModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA42A6EB5242006547A92 /* MarketPostModule.swift */; };
-		58AAA5FDC26FC291E9E82928 /* ChartIntervalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CCC7252ECFFDC51578 /* ChartIntervalConverter.swift */; };
 		58AAA604A4728EF375F8937D /* OneInchSettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0D499D632E44F7BE172 /* OneInchSettingsDataSource.swift */; };
 		58AAA60557D3A9E3AE7372E0 /* MarketListDefiDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFE702C2E51EEE209C56 /* MarketListDefiDecorator.swift */; };
 		58AAA626C0B12976749A948E /* MarketTvlSortHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4A4F31EAB9164B33299 /* MarketTvlSortHeaderView.swift */; };
@@ -4137,7 +4135,6 @@
 		58AAA8AD6794AD2AAF462B7B /* CoinCardModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinCardModule.swift; sourceTree = "<group>"; };
 		58AAA8B7E47FF3B010851E58 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		58AAA8CB22CEF84A71CF044F /* MetricChartService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricChartService.swift; sourceTree = "<group>"; };
-		58AAA8CCC7252ECFFDC51578 /* ChartIntervalConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIntervalConverter.swift; sourceTree = "<group>"; };
 		58AAA8E1106E31D68FD9181D /* MarketGlobalTvlMetricViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketGlobalTvlMetricViewController.swift; sourceTree = "<group>"; };
 		58AAA8F53B1A92A391DB1CFF /* CoinChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinChartViewModel.swift; sourceTree = "<group>"; };
 		58AAA8FDCCC09B609C7D0FEA /* MarketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketViewController.swift; sourceTree = "<group>"; };
@@ -5162,7 +5159,6 @@
 				11B354B43B5120F594318FDA /* PermissionsHelper.swift */,
 				11B35EFB45ECC2D403CA6C89 /* ValueFormatter.swift */,
 				58AAAE622FCAB8C2400A3149 /* GradientLayer.swift */,
-				58AAA8CCC7252ECFFDC51578 /* ChartIntervalConverter.swift */,
 				58AAA16E4AB334B67FFD891A /* LockDelegate.swift */,
 				1A564BCC9DD29DB5455669A5 /* HighlightedDescriptionBaseView.swift */,
 				1A564CB28708314AE0A69424 /* TitledHighlightedDescriptionView.swift */,
@@ -5279,7 +5275,7 @@
 				ABC9ABB793A6494225FF73B7 /* Alert.swift */,
 				ABC9AC701F3F7FE0A21AFBF9 /* InformedModifier.swift */,
 				ABC9ABF7E87EF486BB21B0B6 /* SecondaryActiveButtonStyle.swift */,
-				ABC9A62E1B0F6E3585B9DACB /* StepChangeButtonsView.swift */,
+				ABC9A62E1B0F6E3585B9DACB,
 				11B358DF5802EBA3CC7782A7 /* CircularProgressView.swift */,
 				ABC9AE7F145C402C91AAB5A3 /* ShortcutButtonsView.swift */,
 				ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */,
@@ -9292,7 +9288,6 @@
 				1A564F73B7FE144D39DEA34F /* UIDevice.swift in Sources */,
 				1A5648D7D29951DC4762B392 /* AppVersion.swift in Sources */,
 				1A5649F72A0116C66DCBA153 /* AppVersionManager.swift in Sources */,
-				58AAA44FC19684B426489776 /* ChartIntervalConverter.swift in Sources */,
 				2FA5D2FE81DA1FB5A63C2D7C /* BitcoinCore+Hodler.swift in Sources */,
 				3A73FC6A258B1AD200FE4D34 /* MarketModule.swift in Sources */,
 				2FA5DA5C9188AA17B01953E7 /* SelectableValueView.swift in Sources */,
@@ -10583,7 +10578,7 @@
 				ABC9A160495EB67472B97E61 /* MarketWatchlistDecorator.swift in Sources */,
 				ABC9A00DA1F4148859D9D1AB /* Eip1559FeeSettingsView.swift in Sources */,
 				ABC9A252B1848D5A2E46C071 /* Eip1559FeeSettingsViewModel.swift in Sources */,
-				ABC9A4732EEF75CACC3D8536 /* StepChangeButtonsView.swift in Sources */,
+				ABC9A4732EEF75CACC3D8536,
 				11B35E433AC4217552A8D668 /* MultiSwapView.swift in Sources */,
 				11B3573416D73003798074F8 /* MultiSwapViewModel.swift in Sources */,
 				11B352907977D6279AD3D96B /* IMultiSwapProvider.swift in Sources */,
@@ -10601,7 +10596,7 @@
 				11B35991B877DCF82D6E51B5 /* BaseUniswapMultiSwapProvider.swift in Sources */,
 				11B3570C71E4B47382D2DA4B /* MultiSwapTokenSelectView.swift in Sources */,
 				11B357EC10CF3DB905D9F19E /* MultiSwapTokenSelectViewModel.swift in Sources */,
-				11B3560740B5C6D04D096F74 /* MultiSwapFeeData.swift in Sources */,
+				11B3560740B5C6D04D096F74 /* MultiSwapTransactionSettings.swift in Sources */,
 				11B3560740B5C6D04D096F74 /* MultiSwapTransactionSettings.swift in Sources */,
 				11B35C2D31DE8081AC572B27 /* BaseUniswapV2MultiSwapProvider.swift in Sources */,
 				ABC9AEAC5703842A1475E208 /* ShortcutButtonsView.swift in Sources */,
@@ -10731,7 +10726,6 @@
 				1A5646C3220E1735309D2927 /* AppVersion.swift in Sources */,
 				1A5648ACB0A6B11E0E39A1B0 /* AppVersionManager.swift in Sources */,
 				D02A67BF272A7460009B2C1C /* TweetsProvider.swift in Sources */,
-				58AAA5FDC26FC291E9E82928 /* ChartIntervalConverter.swift in Sources */,
 				2FA5D2A2E81E947B2CF15889 /* BitcoinCore+Hodler.swift in Sources */,
 				D36DE0E1272FD887000BC916 /* OneInchProvider.swift in Sources */,
 				2FA5DCD660736071655E8059 /* SelectableValueView.swift in Sources */,
@@ -12024,7 +12018,7 @@
 				ABC9A2DA629CF38FD7B893EC /* MarketWatchlistDecorator.swift in Sources */,
 				ABC9A8310AFE013E16F3DBAC /* Eip1559FeeSettingsView.swift in Sources */,
 				ABC9A1798D6E2E4C868DA366 /* Eip1559FeeSettingsViewModel.swift in Sources */,
-				ABC9A36D2F73D335BACEBF2C /* StepChangeButtonsView.swift in Sources */,
+				ABC9A36D2F73D335BACEBF2C,
 				11B3594BEB2E05413B0DB30F /* MultiSwapView.swift in Sources */,
 				11B35A0D09133EF1B891B429 /* MultiSwapViewModel.swift in Sources */,
 				11B358EC68642C5A57ACB803 /* IMultiSwapProvider.swift in Sources */,
@@ -12042,7 +12036,7 @@
 				11B35BD170E89520DF7D384E /* BaseUniswapMultiSwapProvider.swift in Sources */,
 				11B353FEF0B59658B61D77C6 /* MultiSwapTokenSelectView.swift in Sources */,
 				11B35E10073AE1D08E0FF272 /* MultiSwapTokenSelectViewModel.swift in Sources */,
-				11B35B6838F0083BC8B1006D /* MultiSwapFeeData.swift in Sources */,
+				11B35B6838F0083BC8B1006D /* MultiSwapTransactionSettings.swift in Sources */,
 				11B35B6838F0083BC8B1006D /* MultiSwapTransactionSettings.swift in Sources */,
 				11B3503403F029E9432BE89A /* BaseUniswapV2MultiSwapProvider.swift in Sources */,
 				ABC9A41BF96061D136A1D397 /* ShortcutButtonsView.swift in Sources */,
@@ -12937,7 +12931,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.4.3;
+				version = 2.4.4;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */ = {

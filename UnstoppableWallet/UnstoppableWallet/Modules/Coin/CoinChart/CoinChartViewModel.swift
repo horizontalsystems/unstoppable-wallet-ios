@@ -179,6 +179,7 @@ extension HsTimePeriod {
         case .month6: return "chart.time_duration.halfyear".localized
         case .year1: return "chart.time_duration.year".localized
         case .year2: return "chart.time_duration.year2".localized
+        case .year5: return "chart.time_duration.year5".localized
         }
     }
 }

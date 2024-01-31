@@ -551,6 +551,7 @@ extension HsPointTimePeriod {
         case .hour4: return "coin_analytics.period.4h".localized
         case .day1: return "coin_analytics.period.1d".localized
         case .week1: return "coin_analytics.period.1w".localized
+        case .month1: return "coin_analytics.period.1m".localized
         }
     }
 }
