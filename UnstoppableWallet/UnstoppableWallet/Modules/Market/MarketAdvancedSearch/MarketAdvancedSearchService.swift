@@ -81,6 +81,54 @@ class MarketAdvancedSearchService {
         }
     }
 
+    private let listedOnTopExchangesRelay = PublishRelay<Bool>()
+    var listedOnTopExchanges: Bool = false {
+        didSet {
+            guard listedOnTopExchanges != oldValue else {
+                return
+            }
+
+            listedOnTopExchangesRelay.accept(listedOnTopExchanges)
+            syncState()
+        }
+    }
+
+    private let goodCexVolumeRelay = PublishRelay<Bool>()
+    var goodCexVolume: Bool = false {
+        didSet {
+            guard goodCexVolume != oldValue else {
+                return
+            }
+
+            goodCexVolumeRelay.accept(goodCexVolume)
+            syncState()
+        }
+    }
+
+    private let goodDexVolumeRelay = PublishRelay<Bool>()
+    var goodDexVolume: Bool = false {
+        didSet {
+            guard goodDexVolume != oldValue else {
+                return
+            }
+
+            goodDexVolumeRelay.accept(goodDexVolume)
+            syncState()
+        }
+    }
+
+    private let goodDistributionRelay = PublishRelay<Bool>()
+    var goodDistribution: Bool = false {
+        didSet {
+            guard goodDistribution != oldValue else {
+                return
+            }
+
+            goodDistributionRelay.accept(goodDistribution)
+            syncState()
+        }
+    }
+
     private let blockchainsRelay = PublishRelay<[Blockchain]>()
     var blockchains: [Blockchain] = [] {
         didSet {
@@ -234,6 +282,10 @@ class MarketAdvancedSearchService {
         canReset = coinListCount != .top250
             || marketCap != .none
             || volume != .none
+            || listedOnTopExchanges != false
+            || goodCexVolume != false
+            || goodDexVolume != false
+            || goodDistribution != false
             || blockchains != []
             || priceChangeType != .day
             || priceChange != .none
@@ -303,6 +355,10 @@ class MarketAdvancedSearchService {
 
             return inBounds(value: marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
                 inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
+                (!listedOnTopExchanges || marketInfo.listedOnTopExchanges == true) &&
+                (!goodCexVolume || marketInfo.solidCex == true) &&
+                (!goodDexVolume || marketInfo.solidDex == true) &&
+                (!goodDistribution || marketInfo.goodDistribution == true) &&
                 inBlockchain(tokens: marketInfo.fullCoin.tokens) &&
                 inBounds(value: priceChangeValue, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
                 (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
@@ -329,6 +385,22 @@ extension MarketAdvancedSearchService {
 
     var volumeObservable: Observable<ValueFilter> {
         volumeRelay.asObservable()
+    }
+
+    var listedOnTopExchangesObservable: Observable<Bool> {
+        listedOnTopExchangesRelay.asObservable()
+    }
+
+    var goodCexVolumeObservable: Observable<Bool> {
+        goodCexVolumeRelay.asObservable()
+    }
+
+    var goodDexVolumeObservable: Observable<Bool> {
+        goodDexVolumeRelay.asObservable()
+    }
+
+    var goodDistributionObservable: Observable<Bool> {
+        goodDistributionRelay.asObservable()
     }
 
     var blockchainsObservable: Observable<[Blockchain]> {
@@ -371,6 +443,12 @@ extension MarketAdvancedSearchService {
         coinListCount = .top250
         marketCap = .none
         volume = .none
+
+        listedOnTopExchanges = false
+        goodDexVolume = false
+        goodCexVolume = false
+        goodDistribution = false
+
         blockchains = []
         priceChangeType = .day
         priceChange = .none
