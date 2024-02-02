@@ -672,6 +672,13 @@
 "market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
+
+"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
+"market.advanced_search.good_cex_volume" = "Good CEX Volume";
+"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+
 "market.advanced_search.liquidity" = "DEX Liquidity";
 "market.advanced_search.blockchains" = "Blockchains";
 "market.advanced_search.price_period" = "Price Period";
@@ -915,6 +922,12 @@
 "coin_analytics.rank" = "Rank";
 "coin_analytics.30_day_rank" = "30-Day Rank";
 "coin_analytics.30_day_volume" = "30-Day Volume";
+
+"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
+"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
+"coin_analytics.analysis.attention_required" = "Attention Required";
 
 // Coin Page -> Markets
 

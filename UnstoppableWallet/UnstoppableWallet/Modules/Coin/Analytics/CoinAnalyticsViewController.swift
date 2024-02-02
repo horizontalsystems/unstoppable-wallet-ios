@@ -92,6 +92,7 @@ class CoinAnalyticsViewController: ThemeViewController {
 
         tableView.registerCell(forClass: MarketWideCardCell.self)
         tableView.registerCell(forClass: CoinAnalyticsHoldersCell.self)
+        tableView.registerCell(forClass: CoinAnalyticsIssueCell.self)
         tableView.registerCell(forClass: IndicatorAdviceCell.self)
         tableView.sectionDataSource = self
 
@@ -1170,6 +1171,51 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
+    private func issueBlockchainsSection(viewItems: [CoinAnalyticsViewModel.IssueBlockchainViewItem]) -> SectionProtocol {
+        var rows: [RowProtocol] = [
+            CellBuilderNew.row(
+                rootElement: .text { component in
+                    component.text = "coin_analytics.analysis.title".localized
+                    component.font = .subhead1
+                    component.textColor = .themeGray
+                },
+                tableView: tableView,
+                id: "issues-header",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true)
+                    cell.selectionStyle = .none
+                }
+            ),
+        ]
+
+        for (index, viewItem) in viewItems.enumerated() {
+            let isLast = index == viewItems.count - 1
+
+            rows.append(
+                Row<CoinAnalyticsIssueCell>(
+                    id: "issues-\(viewItem.blockchain.uid)",
+                    height: CoinAnalyticsIssueCell.height(viewItem: viewItem),
+                    autoDeselect: true,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isLast: isLast)
+
+                        cell.bind(viewItem: viewItem)
+                    },
+                    action: { _ in
+                    }
+                )
+            )
+        }
+
+        return Section(
+            id: "issues",
+            headerState: .margin(height: .margin12),
+            footerState: tableView.sectionFooter(text: "coin_analytics.analysis.footer".localized, bottomMargin: .margin12),
+            rows: rows
+        )
+    }
+
     private func otherDataSection(investors: Previewable<String>?, treasuries: Previewable<String>?, reports: Previewable<String>?, auditAddresses: Previewable<[String]>?) -> SectionProtocol? {
         let items: [Any?] = [investors, treasuries, reports, auditAddresses]
         let rowCount = items.compactMap { $0 }.count
@@ -1294,6 +1340,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
             if let viewItem = viewItem.revenue {
                 sections.append(revenueSection(viewItem: viewItem))
+            }
+
+            if let viewItems = viewItem.issueBlockchains {
+                sections.append(issueBlockchainsSection(viewItems: viewItems))
             }
 
             if let otherDataSection = otherDataSection(

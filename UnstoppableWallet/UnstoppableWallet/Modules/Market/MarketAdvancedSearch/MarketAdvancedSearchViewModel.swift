@@ -13,6 +13,10 @@ class MarketAdvancedSearchViewModel {
     private let coinListViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let marketCapViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let volumeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
+    private let listedOnTopExchangesRelay = BehaviorRelay<Bool>(value: false)
+    private let goodCexVolumeRelay = BehaviorRelay<Bool>(value: false)
+    private let goodDexVolumeRelay = BehaviorRelay<Bool>(value: false)
+    private let goodDistributionRelay = BehaviorRelay<Bool>(value: false)
     private let blockchainsViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let priceChangeTypeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let priceChangeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
@@ -35,6 +39,10 @@ class MarketAdvancedSearchViewModel {
         subscribe(disposeBag, service.coinListObservable) { [weak self] in self?.sync(coinList: $0) }
         subscribe(disposeBag, service.marketCapObservable) { [weak self] in self?.sync(marketCap: $0) }
         subscribe(disposeBag, service.volumeObservable) { [weak self] in self?.sync(volume: $0) }
+        subscribe(disposeBag, service.listedOnTopExchangesObservable) { [weak self] in self?.listedOnTopExchangesRelay.accept($0) }
+        subscribe(disposeBag, service.goodCexVolumeObservable) { [weak self] in self?.goodCexVolumeRelay.accept($0) }
+        subscribe(disposeBag, service.goodDexVolumeObservable) { [weak self] in self?.goodDexVolumeRelay.accept($0) }
+        subscribe(disposeBag, service.goodDistributionObservable) { [weak self] in self?.goodDistributionRelay.accept($0) }
         subscribe(disposeBag, service.blockchainsObservable) { [weak self] in self?.sync(blockchains: $0) }
         subscribe(disposeBag, service.priceChangeTypeObservable) { [weak self] in self?.sync(priceChangeType: $0) }
         subscribe(disposeBag, service.priceChangeObservable) { [weak self] in self?.sync(priceChange: $0) }
@@ -151,6 +159,22 @@ extension MarketAdvancedSearchViewModel {
         volumeViewItemRelay.asDriver()
     }
 
+    var listedOnTopExchangesDriver: Driver<Bool> {
+        listedOnTopExchangesRelay.asDriver()
+    }
+
+    var goodCexVolumeDriver: Driver<Bool> {
+        goodCexVolumeRelay.asDriver()
+    }
+
+    var goodDexVolumeDriver: Driver<Bool> {
+        goodDexVolumeRelay.asDriver()
+    }
+
+    var goodDistributionDriver: Driver<Bool> {
+        goodDistributionRelay.asDriver()
+    }
+
     var blockchainsViewItemDriver: Driver<ViewItem> {
         blockchainsViewItemRelay.asDriver()
     }
@@ -249,6 +273,22 @@ extension MarketAdvancedSearchViewModel {
 
     func setVolume(at index: Int) {
         service.volume = valueFilters[index]
+    }
+
+    func setListedOnTopExchanges(isOn: Bool) {
+        service.listedOnTopExchanges = isOn
+    }
+
+    func setGoodCexVolume(isOn: Bool) {
+        service.goodCexVolume = isOn
+    }
+
+    func setGoodDexVolume(isOn: Bool) {
+        service.goodDexVolume = isOn
+    }
+
+    func setGoodDistribution(isOn: Bool) {
+        service.goodDistribution = isOn
     }
 
     func setBlockchains(indexes: [Int]) {

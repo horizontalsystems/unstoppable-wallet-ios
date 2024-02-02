@@ -270,6 +270,34 @@ class CoinAnalyticsViewModel {
         )
     }
 
+    private func issueBlockchainViewItems(issueBlockchains: [Analytics.IssueBlockchain]) -> [IssueBlockchainViewItem]? {
+        let blockchains = service.blockchains(uids: issueBlockchains.map(\.blockchain))
+
+        let viewItems: [IssueBlockchainViewItem] = issueBlockchains.compactMap { issueBlockchain in
+            guard let blockchain = blockchains.first(where: { $0.uid == issueBlockchain.blockchain }) else {
+                return nil
+            }
+
+            return IssueBlockchainViewItem(
+                blockchain: blockchain,
+                allItems: issueBlockchain.issues.map { issue in
+                    IssueViewItem(
+                        title: issue.title ?? issue.description ?? "",
+                        description: issue.title != nil ? issue.description : nil,
+                        level: .init(impact: issue.issues?.first?.impact),
+                        issues: issue.issues.map { $0.compactMap(\.description) } ?? []
+                    )
+                }
+            )
+        }
+
+        guard !viewItems.isEmpty else {
+            return nil
+        }
+
+        return viewItems.sorted { $0.blockchain.type.order < $1.blockchain.type.order }
+    }
+
     private func viewItem(analytics: Analytics) -> ViewItem {
         ViewItem(
             cexVolume: rankCardViewItem(
@@ -335,7 +363,8 @@ class CoinAnalyticsViewModel {
                 .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
                 .map { .regular(value: $0) },
             auditAddresses: service.auditAddresses
-                .map { .regular(value: $0) }
+                .map { .regular(value: $0) },
+            issueBlockchains: analytics.issueBlockchains.flatMap { issueBlockchainViewItems(issueBlockchains: $0) }
         )
     }
 
@@ -355,7 +384,8 @@ class CoinAnalyticsViewModel {
             reports: data.reports ? .preview : nil,
             investors: data.fundsInvested ? .preview : nil,
             treasuries: data.treasuries ? .preview : nil,
-            auditAddresses: service.auditAddresses != nil ? .preview : nil
+            auditAddresses: service.auditAddresses != nil ? .preview : nil,
+            issueBlockchains: nil
         )
     }
 }
@@ -442,6 +472,7 @@ extension CoinAnalyticsViewModel {
         let investors: Previewable<String>?
         let treasuries: Previewable<String>?
         let auditAddresses: Previewable<[String]>?
+        let issueBlockchains: [IssueBlockchainViewItem]?
 
         var isEmpty: Bool {
             let items: [Any?] = [cexVolume, dexVolume, dexLiquidity, activeAddresses, transactionCount, holders, tvl, revenue, reports, investors, treasuries]
@@ -495,6 +526,48 @@ extension CoinAnalyticsViewModel {
         let name: String
         let value: String?
         let percent: Decimal
+    }
+
+    struct IssueBlockchainViewItem {
+        let blockchain: Blockchain
+        let allItems: [IssueViewItem]
+
+        var highRiskCount: Int {
+            allItems.filter { $0.level == .highRisk }.count
+        }
+
+        var mediumRiskCount: Int {
+            allItems.filter { $0.level == .mediumRisk }.count
+        }
+
+        var lowRiskCount: Int {
+            allItems.filter { $0.level == .attentionRequired || $0.level == .informational }.count
+        }
+    }
+
+    struct IssueViewItem {
+        let title: String
+        let description: String?
+        let level: Level
+        let issues: [String]
+
+        enum Level {
+            case highRisk
+            case mediumRisk
+            case attentionRequired
+            case informational
+            case regular
+
+            init(impact: String?) {
+                switch impact {
+                case "Critical", "High": self = .highRisk
+                case "Medium": self = .mediumRisk
+                case "Low": self = .attentionRequired
+                case "Informational": self = .informational
+                default: self = .regular
+                }
+            }
+        }
     }
 
     struct TvlViewItem {

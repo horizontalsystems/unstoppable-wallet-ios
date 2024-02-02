@@ -69,6 +69,7 @@
 		11B3508A67A63E5580A177FD /* BackupVerifyWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A6399E5264BFFA32F08 /* BackupVerifyWordsViewController.swift */; };
 		11B3509106E7CD9E054A7802 /* EnabledWalletCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D2FC6A2DABFE73D1025 /* EnabledWalletCache.swift */; };
 		11B350918797E615D4FF6677 /* BlockchainSettingRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353FA8AE18587D516754B /* BlockchainSettingRecordStorage.swift */; };
+		11B3509313AD643A228F5022 /* CoinAnalyticsIssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3592BF746F5A37951D340 /* CoinAnalyticsIssueCell.swift */; };
 		11B350938ACDA1EEF888E846 /* LanguageHourFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B15E0AE668C9AF10161 /* LanguageHourFormatter.swift */; };
 		11B3509603841DEF2FC02F24 /* PublicKeysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F5A3CC8C229C0849756 /* PublicKeysViewController.swift */; };
 		11B3509F4BE82888A15D88E8 /* AddEvmSyncSourceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F8A77664848396B7567 /* AddEvmSyncSourceService.swift */; };
@@ -1107,6 +1108,7 @@
 		11B35BF725773F2C13275E53 /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3515BDAF15B6F7EEAB609 /* DescriptionCell.swift */; };
 		11B35BFAA00FEB4747CEBCB1 /* TextDropDownAndSettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3598D3D2FCEB51E0A0760 /* TextDropDownAndSettingsHeaderView.swift */; };
 		11B35BFCE745A340714F1DE7 /* BadgeViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352BD333C9D69ECB82884 /* BadgeViewNew.swift */; };
+		11B35BFFB56EA4955808B3E8 /* CoinAnalyticsIssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3592BF746F5A37951D340 /* CoinAnalyticsIssueCell.swift */; };
 		11B35C0124622249C2B6134F /* GuidesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3536CE69BFC7513A9DFDF /* GuidesService.swift */; };
 		11B35C1154D256BDAEC61BFC /* TermsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB9BA551F2F1AF7739D /* TermsManager.swift */; };
 		11B35C16BE16B6AEEA0690EC /* AlertModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C9F199E2A1D297480A4 /* AlertModule.swift */; };
@@ -3549,6 +3551,7 @@
 		11B35920D0AD623C5E4A4460 /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
 		11B35921FBDF6F9BBAA88803 /* TextFieldStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldStackView.swift; sourceTree = "<group>"; };
 		11B3592A5323E54639864FC7 /* CreateAccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountService.swift; sourceTree = "<group>"; };
+		11B3592BF746F5A37951D340 /* CoinAnalyticsIssueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinAnalyticsIssueCell.swift; sourceTree = "<group>"; };
 		11B3592E4DA65E72C0BC6BEB /* TransactionTypeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTypeFilter.swift; sourceTree = "<group>"; };
 		11B35932B642378F85D6ACCD /* CoinAuditsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinAuditsService.swift; sourceTree = "<group>"; };
 		11B35932F9CB49520CF1EC66 /* CoinMarketsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinMarketsViewModel.swift; sourceTree = "<group>"; };
@@ -6416,6 +6419,7 @@
 				11B359CE35C7483CCB956D13 /* CoinAnalyticsHoldersCell.swift */,
 				11B35FDC67CE58FBE44A4107 /* CoinAnalyticsRatingScaleViewController.swift */,
 				ABC9A3513B75BB6271C87BFE /* TechnicalIndicators */,
+				11B3592BF746F5A37951D340 /* CoinAnalyticsIssueCell.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -10606,6 +10610,7 @@
 				ABC9AB1EDE7C8FE1E5362BC8 /* OneInchMultiSwapProvider.swift in Sources */,
 				ABC9AF8E2B0AC66EE65B81B9 /* BaseEvmMultiSwapProvider.swift in Sources */,
 				ABC9ABE0119C5E5EB43A9964 /* RightCheckingView.swift in Sources */,
+				11B35BFFB56EA4955808B3E8 /* CoinAnalyticsIssueCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12045,6 +12050,7 @@
 				ABC9A47F9948B8C688F6BBB3 /* OneInchMultiSwapProvider.swift in Sources */,
 				ABC9AC3E675F159901A28E6F /* BaseEvmMultiSwapProvider.swift in Sources */,
 				ABC9A38568F5D28F0F48E44D /* RightCheckingView.swift in Sources */,
+				11B3509313AD643A228F5022 /* CoinAnalyticsIssueCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12928,7 +12934,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.4.4;
+				version = 2.4.5;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */ = {
