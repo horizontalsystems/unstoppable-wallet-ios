@@ -285,9 +285,10 @@ class CoinAnalyticsViewModel {
                         title: issue.title ?? issue.description ?? "",
                         description: issue.title != nil ? issue.description : nil,
                         level: .init(impact: issue.issues?.first?.impact),
+                        type: issue.issue,
                         issues: issue.issues.map { $0.compactMap(\.description) } ?? []
                     )
-                }
+                }.sorted { $0.level.rawValue < $1.level.rawValue }
             )
         }
 
@@ -543,15 +544,24 @@ extension CoinAnalyticsViewModel {
         var lowRiskCount: Int {
             allItems.filter { $0.level == .attentionRequired || $0.level == .informational }.count
         }
+
+        var coreItems: [IssueViewItem] {
+            allItems.filter { $0.type == "core" }
+        }
+
+        var generalItems: [IssueViewItem] {
+            allItems.filter { $0.type == "general" }
+        }
     }
 
     struct IssueViewItem {
         let title: String
         let description: String?
         let level: Level
+        let type: String?
         let issues: [String]
 
-        enum Level {
+        enum Level: Int {
             case highRisk
             case mediumRisk
             case attentionRequired
