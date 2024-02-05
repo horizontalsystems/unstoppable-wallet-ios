@@ -434,6 +434,7 @@
 		11B35490732E5F84656F339A /* PancakeV2MultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564500A3378D6EB2A477 /* PancakeV2MultiSwapProvider.swift */; };
 		11B354908D10B00AF7FF0AA3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35847887E070CA535F890 /* UserDefaultsStorage.swift */; };
 		11B35494E4BA9BF6A3DAA6D6 /* NftMetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E2ACF02E2C35EFAE9FA /* NftMetadataService.swift */; };
+		11B35498BAB60D962C9C1172 /* QuickSwapMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35872F09BBF1A59575DBA /* QuickSwapMultiSwapProvider.swift */; };
 		11B354A1F79EDA1E58E50418 /* WalletTokenListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357D222B4819BE881E182 /* WalletTokenListViewController.swift */; };
 		11B354A3BC2968C083771FC1 /* BlockchainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F0A42CE7144C82D634 /* BlockchainSettingsModule.swift */; };
 		11B354A6D78AA69DC3B8E496 /* SwapApproveConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356940B04C8486835FDAA /* SwapApproveConfirmationViewController.swift */; };
@@ -1243,6 +1244,7 @@
 		11B35D722A70E8B4776AB5A8 /* AddBep2TokenBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35102BB1E66987670CD1F /* AddBep2TokenBlockchainService.swift */; };
 		11B35D7420EF4FB9C4DDF0B9 /* BrandFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E930EFEBA58B8F1FDC4 /* BrandFooterView.swift */; };
 		11B35D7520519FBE9A899C2D /* TransactionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D6BAEC40B3DA7A1FE95 /* TransactionSource.swift */; };
+		11B35D7803627484253F8BAA /* QuickSwapMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35872F09BBF1A59575DBA /* QuickSwapMultiSwapProvider.swift */; };
 		11B35D7BE3B34B0171EC90A8 /* ManageAccountsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359F01A63378AFAAEE113 /* ManageAccountsModule.swift */; };
 		11B35D7D957404BF85E985CF /* BinanceKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D0672D73C973EBE5E1B /* BinanceKitManager.swift */; };
 		11B35D80781966668550C8B9 /* NftMetadataSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DA9FF23D110A042EDD6 /* NftMetadataSyncer.swift */; };
@@ -3531,6 +3533,7 @@
 		11B3586E4CACC415DC6404C7 /* TokenProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
 		11B3586FDC91E3742847B7E0 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		11B35872950C107E4810AB6B /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		11B35872F09BBF1A59575DBA /* QuickSwapMultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSwapMultiSwapProvider.swift; sourceTree = "<group>"; };
 		11B3587A6A05EFF1036F6C4B /* SecondaryButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondaryButtonCell.swift; sourceTree = "<group>"; };
 		11B358830357DB1F87FCA006 /* BtcBlockchainSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtcBlockchainSettingsViewModel.swift; sourceTree = "<group>"; };
 		11B35888BDB55DCFD0ECF655 /* AppVersionRecordStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionRecordStorage.swift; sourceTree = "<group>"; };
@@ -5890,6 +5893,7 @@
 				11B358A102692DA01F91413D /* BaseUniswapV2MultiSwapProvider.swift */,
 				ABC9AA5D0FB82A3820CF27BF /* OneInchMultiSwap */,
 				ABC9A62B4EE008E0D87CD22E /* BaseEvmMultiSwapProvider.swift */,
+				11B35872F09BBF1A59575DBA /* QuickSwapMultiSwapProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -10639,6 +10643,7 @@
 				ABC9ABE0119C5E5EB43A9964 /* RightCheckingView.swift in Sources */,
 				11B35BFFB56EA4955808B3E8 /* CoinAnalyticsIssueCell.swift in Sources */,
 				11B35D24064D9CE75ACCD59A /* CoinAnalyticsIssuesView.swift in Sources */,
+				11B35498BAB60D962C9C1172 /* QuickSwapMultiSwapProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12083,6 +12088,7 @@
 				ABC9A38568F5D28F0F48E44D /* RightCheckingView.swift in Sources */,
 				11B3509313AD643A228F5022 /* CoinAnalyticsIssueCell.swift in Sources */,
 				11B3598300402F09E04EFCCE /* CoinAnalyticsIssuesView.swift in Sources */,
+				11B35D7803627484253F8BAA /* QuickSwapMultiSwapProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
