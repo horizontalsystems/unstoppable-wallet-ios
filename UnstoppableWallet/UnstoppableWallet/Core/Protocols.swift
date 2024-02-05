@@ -73,7 +73,7 @@ protocol ISendBitcoinAdapter {
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     var unspentOutputs: [UnspentOutputInfo] { get }
     func sendInfo(amount: Decimal, feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) throws -> SendInfo
-    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, rbfEnabled: Bool, logger: HsToolKit.Logger) -> Single<Void>
 }
 
 protocol ISendDashAdapter {

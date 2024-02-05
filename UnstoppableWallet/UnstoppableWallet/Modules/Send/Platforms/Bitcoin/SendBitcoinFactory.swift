@@ -108,6 +108,10 @@ class SendBitcoinFactory: BaseSendFactory {
 
         viewItems.append(SendConfirmationFeeViewItem(coinValue: feeCoinValue, currencyValue: feeCurrencyValue))
 
+        if !App.shared.btcBlockchainManager.transactionRbfEnabled(blockchainType: token.blockchainType) {
+            viewItems.append(SendConfirmationDisabledRbfViewItem())
+        }
+
         if (timeLockService?.lockTime ?? .none) != TimeLockService.Item.none {
             viewItems.append(SendConfirmationLockUntilViewItem(lockValue: timeLockService?.lockTime.title ?? "n/a".localized))
         }
@@ -143,6 +147,9 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
 
         let inputOutputOrderViewModel = InputOutputOrderViewModel(service: adapterService.inputOutputOrderService)
         dataSources.append(InputOutputOrderDataSource(viewModel: inputOutputOrderViewModel))
+
+        let rbfViewModel = RbfViewModel(service: adapterService.rbfService)
+        dataSources.append(RbfDataSource(viewModel: rbfViewModel))
 
         if let timeLockService {
             let timeLockViewModel = TimeLockViewModel(service: timeLockService)

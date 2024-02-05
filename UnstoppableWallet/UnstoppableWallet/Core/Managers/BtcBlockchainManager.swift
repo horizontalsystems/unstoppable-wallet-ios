@@ -74,9 +74,17 @@ extension BtcBlockchainManager {
         storage.btcTransactionSortMode(blockchainType: blockchainType) ?? .shuffle
     }
 
+    func transactionRbfEnabled(blockchainType: BlockchainType) -> Bool {
+        storage.btcTransactionRbfEnabled(blockchainType: blockchainType) ?? true
+    }
+
     func save(transactionSortMode: TransactionDataSortMode, blockchainType: BlockchainType) {
         storage.save(btcTransactionSortMode: transactionSortMode, blockchainType: blockchainType)
         transactionSortModeUpdatedRelay.accept(blockchainType)
+    }
+
+    func save(rbfEnabled: Bool, blockchainType: BlockchainType) {
+        storage.save(btcRbfEnabled: rbfEnabled, blockchainType: blockchainType)
     }
 }
 

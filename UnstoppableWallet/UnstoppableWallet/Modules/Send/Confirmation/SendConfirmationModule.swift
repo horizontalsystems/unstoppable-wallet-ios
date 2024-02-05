@@ -27,3 +27,5 @@ struct SendConfirmationMemoViewItem: ISendConfirmationViewItemNew {
 struct SendConfirmationLockUntilViewItem: ISendConfirmationViewItemNew {
     let lockValue: String
 }
+
+struct SendConfirmationDisabledRbfViewItem: ISendConfirmationViewItemNew {}

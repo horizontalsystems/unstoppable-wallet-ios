@@ -2834,6 +2834,12 @@
 		D0DA7413272A6F180072BE86 /* UnicodeURL in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA7412272A6F180072BE86 /* UnicodeURL */; };
 		D0EC34DB2A4450B100BB308B /* HCaptcha in Frameworks */ = {isa = PBXBuildFile; productRef = D0EC34DA2A4450B100BB308B /* HCaptcha */; };
 		D0EC34DD2A4450D200BB308B /* HCaptcha in Frameworks */ = {isa = PBXBuildFile; productRef = D0EC34DC2A4450D200BB308B /* HCaptcha */; };
+		D0F132A12B6B98E100C7310E /* RbfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A02B6B98E100C7310E /* RbfService.swift */; };
+		D0F132A22B6B98E100C7310E /* RbfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A02B6B98E100C7310E /* RbfService.swift */; };
+		D0F132A42B6B98F500C7310E /* RbfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A32B6B98F500C7310E /* RbfViewModel.swift */; };
+		D0F132A52B6B98F500C7310E /* RbfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A32B6B98F500C7310E /* RbfViewModel.swift */; };
+		D0F132A72B6B990500C7310E /* RbfDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A62B6B990500C7310E /* RbfDataSource.swift */; };
+		D0F132A82B6B990500C7310E /* RbfDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A62B6B990500C7310E /* RbfDataSource.swift */; };
 		D31C4760238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4763238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
@@ -4571,6 +4577,9 @@
 		D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsswordInputCell.swift; sourceTree = "<group>"; };
 		D0EE557D2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D0EE557E2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D0F132A02B6B98E100C7310E /* RbfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfService.swift; sourceTree = "<group>"; };
+		D0F132A32B6B98F500C7310E /* RbfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfViewModel.swift; sourceTree = "<group>"; };
+		D0F132A62B6B990500C7310E /* RbfDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfDataSource.swift; sourceTree = "<group>"; };
 		D31C4759238BF175008CB818 /* MnemonicDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicDerivation.swift; sourceTree = "<group>"; };
 		D31C475A238BF175008CB818 /* FeeRateState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateState.swift; sourceTree = "<group>"; };
 		D3285F4520BD158E00644076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -6926,6 +6935,7 @@
 		2FA5D1C5F34C09BA38AC37B2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D0F1329F2B6B98C800C7310E /* Rbf */,
 				2FA5D8F373C6F4F9839B2767 /* FeeRate */,
 				2FA5D04441C8926DBEB858AF /* InputOutputOrder */,
 				2FA5DBA036136CC1EA0DD0DD /* TimeLock */,
@@ -8705,6 +8715,16 @@
 			path = CoinOverview;
 			sourceTree = "<group>";
 		};
+		D0F1329F2B6B98C800C7310E /* Rbf */ = {
+			isa = PBXGroup;
+			children = (
+				D0F132A02B6B98E100C7310E /* RbfService.swift */,
+				D0F132A32B6B98F500C7310E /* RbfViewModel.swift */,
+				D0F132A62B6B990500C7310E /* RbfDataSource.swift */,
+			);
+			path = Rbf;
+			sourceTree = "<group>";
+		};
 		D0F43D87237030F800016EF5 /* Compatibility */ = {
 			isa = PBXGroup;
 			children = (
@@ -9645,6 +9665,7 @@
 				11B35228CD314AB9DC68DDAA /* EnabledWalletCacheManager.swift in Sources */,
 				2FA5DEC4C3A9705DA2A1B6C5 /* BitcoinIncomingTransactionRecord.swift in Sources */,
 				2FA5DA8B816A4B089A4F01AF /* BitcoinOutgoingTransactionRecord.swift in Sources */,
+				D0F132A52B6B98F500C7310E /* RbfViewModel.swift in Sources */,
 				2FA5DF5CF3AAC5AC79F18818 /* BitcoinTransactionRecord.swift in Sources */,
 				2FA5DBACDF09BE11FB7C40A7 /* ContractCallTransactionRecord.swift in Sources */,
 				2FA5D6BF7186A35B9A086231 /* ContractCreationTransactionRecord.swift in Sources */,
@@ -9868,6 +9889,7 @@
 				11B35DAAB6F16932C504A9B8 /* NftCollectionAssetsViewModel.swift in Sources */,
 				11B35A0F3111451717192084 /* NftCollectionAssetsService.swift in Sources */,
 				11B358164F9FBBE78CBC806A /* NftActivityModule.swift in Sources */,
+				D0F132A82B6B990500C7310E /* RbfDataSource.swift in Sources */,
 				11B357ED24AA2E6ED1AE51FD /* NftActivityViewController.swift in Sources */,
 				11B35BDC20A4965D1793B97A /* NftActivityViewModel.swift in Sources */,
 				D061A5332AA846FA009AAD57 /* SecuritySettingsView.swift in Sources */,
@@ -10205,6 +10227,7 @@
 				11B35BC602EA104EE1C0540C /* BinanceChainKit.swift in Sources */,
 				11B35DE5BD5716307300AD2F /* OneInchKit.swift in Sources */,
 				ABC9ADDC1F55F835C68DB4C7 /* UniswapV3Provider.swift in Sources */,
+				D0F132A22B6B98E100C7310E /* RbfService.swift in Sources */,
 				ABC9A3CC73251E7F83A94181 /* UniswapV3TradeService.swift in Sources */,
 				ABC9A4686BB11B772E834BCD /* UniswapV3Service.swift in Sources */,
 				ABC9AAEF5D444F5BCB9D0CE2 /* UniswapV3ViewModel.swift in Sources */,
@@ -11086,6 +11109,7 @@
 				2FA5D7A5F46AA14B704A0E91 /* BitcoinOutgoingTransactionRecord.swift in Sources */,
 				2FA5D9ACFE04A94BF156FAD6 /* BitcoinTransactionRecord.swift in Sources */,
 				2FA5DA0DBBA1904CEF51F5F2 /* ContractCallTransactionRecord.swift in Sources */,
+				D0F132A42B6B98F500C7310E /* RbfViewModel.swift in Sources */,
 				2FA5D0588EFCA934B4CAC162 /* ContractCreationTransactionRecord.swift in Sources */,
 				2FA5DC0554CE24AE27663585 /* EvmTransactionRecord.swift in Sources */,
 				2FA5DE81BBA97B8B6F30A779 /* EvmTransactionConverter.swift in Sources */,
@@ -11309,6 +11333,7 @@
 				11B3562466F0ADD109244158 /* NftCollectionAssetsModule.swift in Sources */,
 				11B351FD918D612D27EB6D08 /* NftCollectionAssetsViewController.swift in Sources */,
 				11B35DA4CB435537AD4148D7 /* NftCollectionAssetsViewModel.swift in Sources */,
+				D0F132A72B6B990500C7310E /* RbfDataSource.swift in Sources */,
 				11B35AB6026D794BAFEC094E /* NftCollectionAssetsService.swift in Sources */,
 				11B358AA46441AF0A7DCAA89 /* NftActivityModule.swift in Sources */,
 				11B35EBDDAB95E919600AE72 /* NftActivityViewController.swift in Sources */,
@@ -11646,6 +11671,7 @@
 				ABC9AC900545DC0DD2201DEE /* UniswapV3TradeService.swift in Sources */,
 				ABC9ACCD1ED14FA216AF1E65 /* UniswapV3Service.swift in Sources */,
 				ABC9AF6EEA62130037D23942 /* UniswapV3ViewModel.swift in Sources */,
+				D0F132A12B6B98E100C7310E /* RbfService.swift in Sources */,
 				ABC9A69C4D41D6E8B5DFBA97 /* UniswapV3DataSource.swift in Sources */,
 				ABC9A767A49B686B3A3AC154 /* UniswapV3Module.swift in Sources */,
 				11B35B3134F108B2DB60D80B /* SubscriptionManager.swift in Sources */,
@@ -12804,7 +12830,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.4.4;
+				version = 2.4.5;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */ = {
