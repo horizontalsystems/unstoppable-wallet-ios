@@ -444,6 +444,7 @@
 "send.confirmation.total" = "Total";
 "send.confirmation.fee" = "Fee";
 "send.confirmation.time_lock" = "Time Lock";
+"send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.slide_to_send" = "Slide to Send";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
@@ -452,6 +453,7 @@
 "send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Method";
+"send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "Not Enough Balance";
 "send.address_error.own_address" = "Cannot transfer TRX to yourself";
 "send.amount_error.maximum_amount" = "Maximum amount %@";
@@ -1669,6 +1671,8 @@
 "fee_settings.inputs_outputs" = "Inputs/Outputs";
 "fee_settings.transaction_settings" = "Transaction Settings";
 "fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "Time Lock";
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 

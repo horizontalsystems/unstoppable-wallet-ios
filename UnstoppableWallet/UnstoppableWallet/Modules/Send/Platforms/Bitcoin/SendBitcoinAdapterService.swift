@@ -43,8 +43,9 @@ class SendBitcoinAdapterService {
     private let adapter: ISendBitcoinAdapter
 
     let inputOutputOrderService: InputOutputOrderService
+    let rbfService: RbfService
 
-    let customOutputsUpdatedSubject = PassthroughSubject<(), Never>()
+    let customOutputsUpdatedSubject = PassthroughSubject<Void, Never>()
     var customOutputs: [UnspentOutputInfo]? {
         didSet {
             if customOutputs != oldValue {
@@ -100,7 +101,7 @@ class SendBitcoinAdapterService {
     }
 
     init(feeRateService: FeeRateService, amountInputService: IAmountInputService, addressService: AddressService, memoService: SendMemoInputService,
-         inputOutputOrderService: InputOutputOrderService, timeLockService: TimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter)
+         inputOutputOrderService: InputOutputOrderService, rbfService: RbfService, timeLockService: TimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter)
     {
         self.feeRateService = feeRateService
         self.amountInputService = amountInputService
@@ -108,6 +109,7 @@ class SendBitcoinAdapterService {
         self.memoService = memoService
         self.timeLockService = timeLockService
         self.inputOutputOrderService = inputOutputOrderService
+        self.rbfService = rbfService
         self.btcBlockchainManager = btcBlockchainManager
         self.adapter = adapter
 
@@ -195,7 +197,7 @@ extension SendBitcoinAdapterService: ISendInfoValueService, ISendXFeeValueServic
         adapter.unspentOutputs
     }
 
-    var customOutputsUpdatedPublisher: AnyPublisher<(), Never> {
+    var customOutputsUpdatedPublisher: AnyPublisher<Void, Never> {
         customOutputsUpdatedSubject.eraseToAnyPublisher()
     }
 
@@ -242,6 +244,7 @@ extension SendBitcoinAdapterService: ISendService {
         }
 
         let sortMode = btcBlockchainManager.transactionSortMode(blockchainType: adapter.blockchainType)
+        let rbfEnabled = btcBlockchainManager.transactionRbfEnabled(blockchainType: adapter.blockchainType)
         return adapter.sendSingle(
             amount: amountInputService.amount,
             address: address.raw,
@@ -250,6 +253,7 @@ extension SendBitcoinAdapterService: ISendService {
             unspentOutputs: customOutputs,
             pluginData: pluginData,
             sortMode: sortMode,
+            rbfEnabled: rbfEnabled,
             logger: logger
         )
     }

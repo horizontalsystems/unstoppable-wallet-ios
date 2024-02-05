@@ -327,7 +327,7 @@ extension BitcoinBaseAdapter {
         abstractKit.unspentOutputs
     }
 
-    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
+    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, rbfEnabled: Bool, logger: Logger) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
         let sortType = convertToKitSortMode(sort: sortMode)
 
@@ -335,7 +335,7 @@ extension BitcoinBaseAdapter {
             do {
                 if let adapter = self {
                     logger.debug("Sending to \(String(reflecting: adapter.abstractKit))", save: true)
-                    _ = try adapter.abstractKit.send(to: address, memo: memo, value: satoshiAmount, feeRate: feeRate, sortType: sortType, unspentOutputs: unspentOutputs, pluginData: pluginData)
+                    _ = try adapter.abstractKit.send(to: address, memo: memo, value: satoshiAmount, feeRate: feeRate, sortType: sortType, rbfEnabled: rbfEnabled, unspentOutputs: unspentOutputs, pluginData: pluginData)
                 }
                 observer(.success(()))
             } catch {
