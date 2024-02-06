@@ -69,7 +69,7 @@ extension SlippageAddressMultiSwapSettingsViewModel {
 
     func slippage(at index: Int) -> Decimal {
         MultiSwapSlippage.recommended.at(index: index) ??
-                MultiSwapSlippage.recommended[0]
+            MultiSwapSlippage.recommended[0]
     }
 }
 
@@ -98,26 +98,26 @@ enum MultiSwapSlippage {
     static func validate(slippage: Decimal) -> CautionState {
         if slippage == .zero {
             return .caution(.init(
-                    text: MultiSwapSlippage.SlippageError.invalid.localizedDescription,
-                    type: .error
+                text: MultiSwapSlippage.SlippageError.invalid.localizedDescription,
+                type: .error
             )
             )
         }
         if slippage > MultiSwapSlippage.limitBounds.upperBound {
             return .caution(.init(
-                    text: SwapSettingsModule.SlippageError.tooHigh(
-                            max: MultiSwapSlippage.limitBounds.upperBound
-                    ).localizedDescription,
-                    type: .error
+                text: SwapSettingsModule.SlippageError.tooHigh(
+                    max: MultiSwapSlippage.limitBounds.upperBound
+                ).localizedDescription,
+                type: .error
             )
             )
         }
         if slippage < MultiSwapSlippage.limitBounds.lowerBound {
             return .caution(.init(
-                    text: SwapSettingsModule.SlippageError.tooLow(
-                            min: MultiSwapSlippage.limitBounds.lowerBound
-                    ).localizedDescription,
-                    type: .error
+                text: SwapSettingsModule.SlippageError.tooLow(
+                    min: MultiSwapSlippage.limitBounds.lowerBound
+                ).localizedDescription,
+                type: .error
             )
             )
         }
@@ -128,13 +128,13 @@ enum MultiSwapSlippage {
         let initial = initial ?? `default`
 
         if value.isEmpty {
-            return .init(doneEnabled: initial != MultiSwapSlippage.`default`, resetEnabled: false)
+            return .init(valid: true, changed: initial != MultiSwapSlippage.default, resetEnabled: false)
         }
 
         if let slippage = AmountDecimalParser().parseAnyDecimal(from: value) {
-            return .init(doneEnabled: slippage != initial, resetEnabled: true)
+            return .init(valid: true, changed: slippage != initial, resetEnabled: true)
         } else {
-            return .init(doneEnabled: false, resetEnabled: true)
+            return .init(valid: false, changed: false, resetEnabled: true)
         }
     }
 }

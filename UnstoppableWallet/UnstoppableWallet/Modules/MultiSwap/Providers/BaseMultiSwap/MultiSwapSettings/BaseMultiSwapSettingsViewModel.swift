@@ -16,7 +16,10 @@ class BaseMultiSwapSettingsViewModel: ObservableObject {
     func syncButtons() {
         let fields = fields
 
-        doneEnabled = fields.map { $0.doneEnabled }.contains(true)
+        let allValid = fields.map { $0.valid }.allSatisfy { $0 }
+        let anyChanged = fields.map { $0.changed }.contains(true)
+
+        doneEnabled = allValid && anyChanged
         resetEnabled = fields.map { $0.resetEnabled }.contains(true)
     }
 
@@ -26,7 +29,8 @@ class BaseMultiSwapSettingsViewModel: ObservableObject {
 
 extension BaseMultiSwapSettingsViewModel {
     struct FieldState {
-        let doneEnabled: Bool
+        let valid: Bool
+        let changed: Bool
         let resetEnabled: Bool
     }
 }

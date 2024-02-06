@@ -87,20 +87,20 @@ enum MultiSwapAddress {
     static func state(initial: String?, value: AddressInput.Result) -> BaseMultiSwapSettingsViewModel.FieldState {
         let initial = initial ?? `default`
 
+        var valid = false
         var done = false
-        var reset = false
 
+        let reset = value.text.lowercased() != MultiSwapAddress.default
         switch value {
-        case .idle: done = !initial.isEmpty
-        case .invalid: reset = true
-        case let .loading(address):
-            done = false
-            reset = !address.isEmpty
+        case .idle:
+            valid = true
+            done = !initial.isEmpty
         case let .valid(address):
-            reset = true
+            valid = true
             done = address.address.title.lowercased() != initial.lowercased()
+        default: ()
         }
 
-        return .init(doneEnabled: done, resetEnabled: reset)
+        return .init(valid: valid, changed: done, resetEnabled: reset)
     }
 }

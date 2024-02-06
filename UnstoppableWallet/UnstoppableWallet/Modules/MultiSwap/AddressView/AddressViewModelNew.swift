@@ -196,5 +196,14 @@ enum AddressInput {
         case loading(String)
         case valid(Success)
         case invalid(Failure)
+
+        var text: String {
+            switch self {
+            case .idle: return ""
+            case let .loading(text): return text
+            case let .valid(success): return success.address.title
+            case let .invalid(failure): return failure.text
+            }
+        }
     }
 }
