@@ -1259,9 +1259,9 @@
 "btc_blockchain_settings.restore_source.description" = "Choose the source Unstoppable app should use for synchronizing wallet(s).";
 "btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
 
-"btc_restore_mode.blockchair" = "Fast";
-"btc_restore_mode.hybrid" = "Slow";
-"btc_restore_mode.blockchain" = "Very Slow. Highest Privacy.";
+"btc_restore_mode.blockchair" = "Very Fast";
+"btc_restore_mode.hybrid" = "Fast";
+"btc_restore_mode.blockchain" = "Slow. Highest Privacy.";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
