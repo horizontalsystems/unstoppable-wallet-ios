@@ -182,6 +182,12 @@ struct MultiSwapView: View {
                                         Text("NO")
                                     }
                                 }
+
+                                if let transactionService = viewModel.transactionService, !transactionService.cautions.isEmpty {
+                                    ForEach(transactionService.cautions.indices, id: \.self) { index in
+                                        HighlightedTextView(caution: transactionService.cautions[index])
+                                    }
+                                }
                             }
 
                             if viewModel.tokenIn != nil, viewModel.tokenOut != nil, !viewModel.quoting, viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty) {
