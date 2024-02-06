@@ -307,7 +307,9 @@ struct MultiSwapView: View {
             HStack(spacing: .margin8) {
                 Text("Available Balance").textSubhead2()
                 Spacer()
-                Text(value).textSubhead2(color: .themeLeah)
+                Text(value)
+                    .textSubhead2(color: .themeLeah)
+                    .multilineTextAlignment(.trailing)
             }
             .padding(.vertical, .margin12)
             .padding(.horizontal, .margin16)
@@ -385,8 +387,8 @@ struct MultiSwapView: View {
             }
             .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
         }
-        .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
-        .frame(height: 40)
+        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin12))
+        .frame(minHeight: 40)
         .sheet(isPresented: $settingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
             currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut)
         }
@@ -410,7 +412,7 @@ struct MultiSwapView: View {
                 }
             }
         }
-        .padding(.vertical, 10)
+        .padding(.vertical, .margin12)
         .padding(.horizontal, .margin16)
         .frame(minHeight: 40)
     }
@@ -424,13 +426,16 @@ struct MultiSwapView: View {
             Spacer()
 
             if let feeValue = feeValue(quote: currentQuote) {
-                Text(feeValue).textSubhead2(color: .themeLeah)
+                Text(feeValue)
+                    .textSubhead2(color: .themeLeah)
+                    .multilineTextAlignment(.trailing)
             } else {
                 Text("n/a".localized).textSubhead2(color: .themeGray50)
             }
         }
-        .frame(height: 40)
+        .padding(.vertical, .margin12)
         .padding(.trailing, .margin12)
+        .frame(height: 40)
     }
 
     @ViewBuilder private func providerFieldView(field: MultiSwapMainField) -> some View {
@@ -446,7 +451,9 @@ struct MultiSwapView: View {
 
             Spacer()
 
-            Text(field.value).textSubhead2(color: color(valueLevel: field.valueLevel))
+            Text(field.value)
+                .textSubhead2(color: color(valueLevel: field.valueLevel))
+                .multilineTextAlignment(.trailing)
 
             if let settingId = field.settingId {
                 Button(action: {
@@ -461,9 +468,10 @@ struct MultiSwapView: View {
                 .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
             }
         }
-        .frame(height: 40)
+        .padding(.vertical, .margin12)
         .padding(.leading, field.description == nil ? .margin16 : 0)
         .padding(.trailing, field.settingId == nil ? .margin16 : .margin12)
+        .frame(minHeight: 40)
     }
 
     private func feeValue(quote: MultiSwapViewModel.Quote) -> String? {

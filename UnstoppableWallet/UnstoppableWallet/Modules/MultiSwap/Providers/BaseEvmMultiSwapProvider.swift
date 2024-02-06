@@ -3,8 +3,6 @@ import Foundation
 import MarketKit
 
 class BaseEvmMultiSwapProvider {
-    static let defaultSlippage: Decimal = 1
-
     private let adapterManager = App.shared.adapterManager
     let evmBlockchainManager = App.shared.evmBlockchainManager
     let storage: MultiSwapSettingStorage
@@ -117,6 +115,10 @@ extension BaseEvmMultiSwapProvider {
             }
 
             return fields
+        }
+
+        var cautions: [CautionNew] {
+            []
         }
 
         var confirmFieldSections: [[MultiSwapConfirmField]] {

@@ -26,7 +26,7 @@ extension BaseUniswapMultiSwapProvider {
         override var mainFields: [MultiSwapMainField] {
             var fields = super.mainFields
 
-            if slippage != BaseUniswapMultiSwapProvider.defaultSlippage {
+            if slippage != MultiSwapSlippage.default {
                 fields.append(
                     MultiSwapMainField(
                         title: "Slippage",

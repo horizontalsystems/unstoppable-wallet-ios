@@ -35,13 +35,17 @@ struct MultiSwapQuotesView: View {
 
                                 VStack(alignment: .trailing, spacing: 1) {
                                     if let quoteValue = quoteValue(quote: quote) {
-                                        Text(quoteValue).textCaption(color: .themeLeah)
+                                        Text(quoteValue)
+                                            .textCaption(color: .themeLeah)
+                                            .multilineTextAlignment(.trailing)
                                     } else {
                                         Text("n/a").textCaption(color: .themeGray50)
                                     }
 
                                     if let feeValue = feeValue(quote: quote) {
-                                        Text("Fee: \(feeValue)").textCaption(color: .themeGray)
+                                        Text("Fee: \(feeValue)")
+                                            .textCaption(color: .themeGray)
+                                            .multilineTextAlignment(.trailing)
                                     } else {
                                         Text("Fee: \("n/a".localized)").textCaption(color: .themeGray50)
                                     }

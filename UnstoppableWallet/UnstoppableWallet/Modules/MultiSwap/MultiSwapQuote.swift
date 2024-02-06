@@ -5,6 +5,7 @@ protocol IMultiSwapQuote {
     var amountOut: Decimal { get }
     var feeQuote: MultiSwapFeeQuote? { get }
     var mainFields: [MultiSwapMainField] { get }
+    var cautions: [CautionNew] { get }
     var confirmFieldSections: [[MultiSwapConfirmField]] { get }
     var settingsModified: Bool { get }
     var canSwap: Bool { get }

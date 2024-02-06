@@ -85,7 +85,8 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         return await Quote(
             quote: quote,
             tokenOut: tokenOut,
-            slippage: 2.5,
+            recipient: storage.value(for: MultiSwapSettingStorage.LegacySetting.address),
+            slippage: storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
         )
     }
@@ -136,11 +137,13 @@ extension OneInchMultiSwapProvider {
     class Quote: BaseEvmMultiSwapProvider.Quote {
         private let quote: OneInchKit.Quote
         private let tokenOut: MarketKit.Token
+        private let recipient: Address?
         private let slippage: Decimal
 
-        init(quote: OneInchKit.Quote, tokenOut: MarketKit.Token, slippage: Decimal, allowanceState: AllowanceState) {
+        init(quote: OneInchKit.Quote, tokenOut: MarketKit.Token, recipient: Address?, slippage: Decimal, allowanceState: AllowanceState) {
             self.quote = quote
             self.tokenOut = tokenOut
+            self.recipient = recipient
             self.slippage = slippage
 
             super.init(estimatedGas: quote.estimateGas, allowanceState: allowanceState)
@@ -153,17 +156,35 @@ extension OneInchMultiSwapProvider {
         override var mainFields: [MultiSwapMainField] {
             var fields = super.mainFields
 
-            if slippage != OneInchMultiSwapProvider.defaultSlippage {
+            if let recipient {
+                fields.append(
+                    MultiSwapMainField(
+                        title: "Recipient",
+                        value: recipient.title,
+                        valueLevel: .regular
+                    )
+                )
+            }
+
+            if slippage != MultiSwapSlippage.default {
                 fields.append(
                     MultiSwapMainField(
                         title: "Slippage",
                         value: "\(slippage.description)%",
-                        valueLevel: .warning
+                        valueLevel: .warning // get level from slippage value
                     )
                 )
             }
 
             return fields
+        }
+
+        override var cautions: [CautionNew] {
+            var cautions = super.cautions
+
+            // append slippage cautions here
+
+            return cautions
         }
 
         override var confirmFieldSections: [[MultiSwapConfirmField]] {
