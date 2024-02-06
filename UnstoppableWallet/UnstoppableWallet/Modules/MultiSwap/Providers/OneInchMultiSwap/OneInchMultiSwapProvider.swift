@@ -14,8 +14,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         self.kit = kit
 
         super.init(storage: storage)
-
-        print("INIT PROVIDER!")
     }
 
     private func address(token: MarketKit.Token) throws -> EvmKit.Address {
@@ -93,7 +91,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
     }
 
     func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token) -> AnyView {
-        let viewModel = OneInchMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
+        let viewModel = SlippageAddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
         let view = ThemeNavigationView { OneInchMultiSwapSettingsView(viewModel: viewModel) }
         return AnyView(view)
     }

@@ -16,7 +16,6 @@ struct DebounceTextField: View {
         editView()
             .disableAutocorrection(true)
             .onChange(of: value) { value in
-                print("OnChange Value: \(value)")
                 publisher.send(value)
             }
             .onReceive(
@@ -25,7 +24,6 @@ struct DebounceTextField: View {
                     scheduler: DispatchQueue.main
                 )
             ) { value in
-                print("OnReceive Value: \(value)")
                 if let valueChanged {
                     valueChanged(value)
                 }

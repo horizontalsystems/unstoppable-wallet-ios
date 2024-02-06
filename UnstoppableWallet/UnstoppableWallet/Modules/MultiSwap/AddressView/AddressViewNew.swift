@@ -7,15 +7,14 @@ struct AddressViewNew: View {
 
     @StateObject var viewModel: AddressViewModelNew
 
-    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>) {
-//        print("Address View INIT. text = \(text.wrappedValue)")
-        _viewModel = StateObject(
-            wrappedValue: AddressViewModelNew(
-                initial: initial,
-                text: text,
-                result: result
-            )
-        )
+    @Binding var text: String
+    @Binding var result: AddressInput.Result
+
+    init(initial: AddressInput.Initial, text: Binding<String>, result : Binding<AddressInput.Result>) {
+        _viewModel = StateObject(wrappedValue: AddressViewModelNew(initial: initial))
+
+        _text = text
+        _result = result
     }
 
     var body: some View {
@@ -24,14 +23,32 @@ struct AddressViewNew: View {
                 content: {
                     textField(
                         placeholder: placeholder,
-                        text: $viewModel.internalText
+                        text: $viewModel.text
                     )
+                    .onAppear {
+                        viewModel.text = text
+                    }
+                    .onChange(of: text) { newText in
+                        if newText != viewModel.text {
+                            viewModel.text = newText
+                        }
+                    }
+                    .onChange(of: viewModel.text) { newText in
+                        if newText != text {
+                            text = newText
+                        }
+                    }
+                    .onChange(of: viewModel.result) { newResult in
+                        if newResult != result {
+                            result = newResult
+                        }
+                    }
                     .font(.themeBody)
                     .autocorrectionDisabled()
                     .autocapitalization(.none)
                     .modifier(RightChecking(state: $viewModel.checkingState))
                 },
-                showDelete: .init(get: { !viewModel.internalText.isEmpty }, set: { _ in }),
+                showDelete: .init(get: { !viewModel.text.isEmpty }, set: { _ in }),
                 items: viewModel.shortcuts,
                 onTap: {
                     viewModel.onTap(index: $0)

@@ -16,25 +16,16 @@ class AddressViewModelNew: ObservableObject {
 
     private var expectedTextValue: String? = nil
 
-    var updateText: (String) -> Void
-    @Published var internalText: String {
+    @Published var text: String = "" {
         didSet {
-//            print("==> Try set Text from internal to Publisher: \(internalText)")
-            if internalText == oldValue { return }
-//            print("==> Set! Text from internal to Publisher: \(internalText)")
-
-            updateText(internalText)
+            if text == oldValue { return }
             sync()
         }
     }
 
-    var updateResult: (AddressInput.Result) -> Void
-    @Published var internalResult: AddressInput.Result {
+    @Published var result: AddressInput.Result = .idle {
         didSet {
-//            print("==> Try set Result from internal to Publisher: \(internalResult)")
-            if internalResult == oldValue { return }
-//            print("==> Set! Result from internal to Publisher: \(internalResult)")
-            updateResult(internalResult)
+            if result == oldValue { return }
             syncCheckingState()
         }
     }
@@ -44,19 +35,7 @@ class AddressViewModelNew: ObservableObject {
     @Published var contactsPresented = false
     @Published var qrScanPresented = false
 
-    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>) {
-        internalResult = result.wrappedValue
-        updateResult = {
-            if result.wrappedValue == $0 { return }
-            result.wrappedValue = $0
-        }
-        internalText = text.wrappedValue
-        updateText = {
-            if text.wrappedValue == $0 { return }
-            text.wrappedValue = $0
-        }
-
-//        print("Init ViewModel. /Text: \(text.wrappedValue)")
+    init(initial: AddressInput.Initial) {
         addressUriParser = AddressParserFactory.parser(blockchainType: initial.blockchainType, tokenType: nil)
         parserChain = AddressParserFactory.parserChain(blockchainType: initial.blockchainType)
 
@@ -73,35 +52,33 @@ class AddressViewModelNew: ObservableObject {
     }
 
     private func sync() {
-//        print("==> Sync new text value")
-        if internalText == expectedTextValue { // avoid double sync already updated text from 'uri'
-            print("==> Avoid sync because already synced form uri")
+        if text == expectedTextValue { // avoid double sync already updated text from 'uri'
             return
         }
         expectedTextValue = nil
 
-        guard !internalText.isEmpty else {
-            internalResult = .idle
+        addressParserDisposeBag = DisposeBag()
+
+        guard !text.isEmpty else {
+            result = .idle
             return
         }
 
-        internalResult = .loading(internalText)
+        result = .loading(text)
 
-        let text = internalText
+        let text = text
         // check uri
         do {
             let uri = try checkUri(text: text)
 
             if let uri { // we must show address from uri
-//                print("==> Change text from uri using only address")
                 expectedTextValue = uri.address
-                internalText = uri.address
+                self.text = uri.address
             }
 
             // get address from uri or all text
             let address = uri?.address ?? text
             // try to parse by chain this address/text
-            addressParserDisposeBag = DisposeBag()
             parserChain
                 .handle(address: address)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -112,39 +89,29 @@ class AddressViewModelNew: ObservableObject {
                 )
                 .disposed(by: addressParserDisposeBag)
         } catch {
-            internalResult = .invalid(.init(text: text, error: error))
+            result = .invalid(.init(text: text, error: error))
         }
     }
 
     private func syncCheckingState() {
-        switch internalResult {
+        switch result {
         case .loading: checkingState = .loading
         case .valid: checkingState = .checked
         default: checkingState = .idle
         }
-
-//        switch internalResult {
-//        case let .valid(val):
-//            print("Address: \(val.address.title) : \(val.address.blockchainType) || \(val.uri?.address) + \(val.uri?.amount?.description)")
-//        case let .invalid(val):
-//            print("Address: \(val.text) : \(val.error.localizedDescription)")
-//        case .idle: print("idle")
-//        case .loading: print("loading...")
-//        }
-//        print("Checking State: \(checkingState)")
     }
 
     private func sync(_ address: Address?, uri: AddressUri?) {
         guard let address else {
-            internalResult = .idle
+            result = .idle
             return
         }
 
-        internalResult = .valid(.init(address: address, uri: uri))
+        result = .valid(.init(address: address, uri: uri))
     }
 
     private func sync(_ error: Error, text: String) {
-        internalResult = .invalid(.init(text: text, error: error))
+        result = .invalid(.init(text: text, error: error))
     }
 
     private func checkUri(text: String) throws -> AddressUri? {
@@ -177,24 +144,24 @@ extension AddressViewModelNew {
         case 0: qrScanPresented = true
         case 1:
             if let text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
-                internalText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                self.text = text.trimmingCharacters(in: .whitespacesAndNewlines)
             }
         default: ()
         }
     }
 
     func onTapDelete() {
-        internalText = ""
+        text = ""
     }
 
     func didFetch(qrText: String) {
-        internalText = qrText
+        text = qrText
     }
 }
 
 extension AddressViewModelNew: ContactBookSelectorDelegate {
     func onFetch(address: String) {
-        internalText = address
+        text = address
     }
 }
 
