@@ -9,15 +9,11 @@ class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFi
     var storage: MultiSwapSettingStorage
     var syncSubject = PassthroughSubject<Void, Never>()
 
-    @Published var slippageCautionState: CautionState = .none {
-        didSet {
-            sync()
-        }
-    }
-
+    @Published var slippageCautionState: CautionState = .none
     @Published var slippage: String = "" {
         didSet {
             if slippage == oldValue { return }
+            syncSubject.send()
             validateSlippage()
         }
     }
@@ -126,6 +122,10 @@ enum MultiSwapSlippage {
             )
             )
         }
+        if slippage > MultiSwapSlippage.usualHighest {
+            return .caution(.init(text: "swap.advanced_settings.warning.unusual_slippage".localized, type: .warning))
+        }
+
         return .none
     }
 
@@ -137,9 +137,23 @@ enum MultiSwapSlippage {
         }
 
         if let slippage = AmountDecimalParser().parseAnyDecimal(from: value) {
-            return .init(valid: true, changed: slippage != initial, resetEnabled: true)
+            let valid = slippage < Self.limitBounds.upperBound
+            return .init(valid: valid, changed: slippage != initial, resetEnabled: true)
         } else {
             return .init(valid: false, changed: false, resetEnabled: true)
+        }
+    }
+}
+
+extension CautionState {
+    var valueLevel: MultiSwapValueLevel {
+        switch self {
+        case .none: return .regular
+        case let .caution(caution):
+            switch caution.type {
+            case .warning: return .warning
+            case .error: return .error
+            }
         }
     }
 }
