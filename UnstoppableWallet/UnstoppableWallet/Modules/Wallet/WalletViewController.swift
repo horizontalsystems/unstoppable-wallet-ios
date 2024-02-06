@@ -238,14 +238,10 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc private func onTapQrScan() {
-        let viewModel = SlippageAddressMultiSwapSettingsViewModel(storage: MultiSwapSettingStorage(), blockchainType: .binanceSmartChain)
-        let view = OneInchMultiSwapSettingsView(viewModel: viewModel)
-        present(view.toNavigationViewController(), animated: true)
+        let viewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
+        viewController.didFetch = { [weak self] in self?.viewModel.process(scanned: $0) }
 
-//        let viewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
-//        viewController.didFetch = { [weak self] in self?.viewModel.process(scanned: $0) }
-//
-//        present(viewController, animated: true)
+        present(viewController, animated: true)
     }
 
     @objc private func onTapRetry() {

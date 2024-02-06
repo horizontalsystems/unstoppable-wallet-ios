@@ -2,7 +2,7 @@ import SwiftUI
 import MarketKit
 
 struct MultiSwapSlippageView: View {
-    @ObservedObject var viewModel: SlippageAddressMultiSwapSettingsViewModel
+    @ObservedObject var viewModel: SlippageMultiSwapSettingsViewModel
 
     var body: some View {
         VStack(spacing: 0) {
