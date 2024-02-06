@@ -21,198 +21,42 @@ struct MultiSwapView: View {
     var body: some View {
         ThemeNavigationView {
             ThemeView {
-                VStack {
-                    ScrollView {
-                        VStack(spacing: .margin12) {
-                            VStack(spacing: .margin8) {
-                                boxIn().padding(.horizontal, .margin16)
-                                boxSeparator()
-                                boxOut().padding(.horizontal, .margin16)
-                            }
-                            .padding(.vertical, 20)
-                            .modifier(ThemeListStyleModifier(themeListStyle: .lawrence))
+                ScrollView {
+                    VStack(spacing: .margin12) {
+                        amountsView()
+                        nextButtonView()
 
-                            Button(action: {
-                                confirmPresented = true
-                            }) {
-                                HStack(spacing: .margin8) {
-                                    if viewModel.quoting {
-                                        ProgressView()
-                                    }
-
-                                    Text(viewModel.quoting ? "Loading" : "Next")
-                                }
-                            }
-                            .disabled(viewModel.currentQuote == nil || viewModel.quoting)
-                            .buttonStyle(PrimaryButtonStyle(style: .yellow))
-
-                            if let balanceValue = balanceValue() {
-                                ListSection {
-                                    HStack(spacing: .margin8) {
-                                        Text("Available Balance").textSubhead2()
-                                        Spacer()
-                                        Text(balanceValue).textSubhead2(color: .themeLeah)
-                                    }
-                                    .padding(.vertical, .margin12)
-                                    .padding(.horizontal, .margin16)
-                                    .frame(minHeight: 40)
-                                }
-                                .themeListStyle(.bordered)
-                            }
-
-                            if let currentQuote = viewModel.currentQuote, let tokenIn = viewModel.tokenIn, let tokenOut = viewModel.tokenOut {
-                                ListSection {
-                                    HStack(spacing: .margin8) {
-                                        Button(action: {
-                                            viewModel.stopAutoQuoting()
-                                            quotesPresented = true
-                                        }) {
-                                            HStack(spacing: .margin8) {
-                                                Image(currentQuote.provider.icon)
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: .iconSize24, height: .iconSize24)
-
-                                                Text(currentQuote.provider.name).textSubhead1(color: .themeLeah)
-                                                Image("arrow_small_down_20").themeIcon(color: .themeGray)
-                                            }
-                                        }
-
-                                        Spacer()
-
-                                        Button(action: {
-                                            viewModel.stopAutoQuoting()
-                                            settingsPresented = true
-                                        }) {
-                                            if currentQuote.quote.settingsModified {
-                                                Image("edit2_20").themeIcon(color: .themeJacob)
-                                            } else {
-                                                Image("edit2_20").renderingMode(.template)
-                                            }
-                                        }
-                                        .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
-                                    }
-                                    .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
-                                    .frame(height: 40)
-                                    .sheet(isPresented: $settingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
-                                        currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut)
-                                    }
-
-                                    VStack(spacing: 0) {
-                                        if let price = viewModel.price {
-                                            HStack(spacing: .margin8) {
-                                                Text("Price").textSubhead2()
-
-                                                Spacer()
-
-                                                Button(action: {
-                                                    viewModel.flipPrice()
-                                                }) {
-                                                    HStack(spacing: .margin8) {
-                                                        Text(price)
-                                                            .textSubhead2(color: .themeLeah)
-                                                            .multilineTextAlignment(.trailing)
-
-                                                        Image("arrow_swap_3_20").themeIcon()
-                                                    }
-                                                }
-                                            }
-                                            .padding(.vertical, 10)
-                                            .padding(.horizontal, .margin16)
-                                            .frame(minHeight: 40)
-                                        }
-
-                                        HStack(spacing: .margin8) {
-                                            Text("Network Fee")
-                                                .textSubhead2()
-                                                .modifier(Informed(description: .init(title: "Network Fee", description: "Network Fee Description")))
-
-                                            Spacer()
-
-                                            if let feeValue = feeValue(quote: currentQuote) {
-                                                Text(feeValue).textSubhead2(color: .themeLeah)
-                                            } else {
-                                                Text("n/a".localized).textSubhead2(color: .themeGray50)
-                                            }
-                                        }
-                                        .frame(height: 40)
-                                        .padding(.trailing, .margin12)
-
-                                        if !currentQuote.quote.mainFields.isEmpty {
-                                            ForEach(currentQuote.quote.mainFields) { (field: MultiSwapMainField) in
-                                                HStack(spacing: .margin8) {
-                                                    if let description = field.description {
-                                                        Text(field.title)
-                                                            .textSubhead2()
-                                                            .modifier(Informed(description: description))
-                                                    } else {
-                                                        Text(field.title)
-                                                            .textSubhead2()
-                                                    }
-
-                                                    Spacer()
-
-                                                    Text(field.value).textSubhead2(color: color(valueLevel: field.valueLevel))
-
-                                                    if let settingId = field.settingId {
-                                                        Button(action: {
-                                                            presentedSettingId = settingId
-                                                        }) {
-                                                            if field.modified {
-                                                                Image("edit2_20").themeIcon(color: .themeJacob)
-                                                            } else {
-                                                                Image("edit2_20").renderingMode(.template)
-                                                            }
-                                                        }
-                                                        .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
-                                                    }
-                                                }
-                                                .frame(height: 40)
-                                                .padding(.leading, field.description == nil ? .margin16 : 0)
-                                                .padding(.trailing, field.settingId == nil ? .margin16 : .margin12)
-                                            }
-                                        }
-                                    }
-                                }
-                                .themeListStyle(.bordered)
-                                .sheet(item: $presentedSettingId) { settingId in
-                                    if let currentQuote = viewModel.currentQuote {
-                                        currentQuote.provider.settingView(settingId: settingId)
-                                    } else {
-                                        Text("NO")
-                                    }
-                                }
-
-                                if let transactionService = viewModel.transactionService, !transactionService.cautions.isEmpty {
-                                    ForEach(transactionService.cautions.indices, id: \.self) { index in
-                                        HighlightedTextView(caution: transactionService.cautions[index])
-                                    }
-                                }
-                            }
-
-                            if viewModel.tokenIn != nil, viewModel.tokenOut != nil, !viewModel.quoting, viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty) {
-                                HighlightedTextView(text: "These tokens cannot be swapped", style: .red)
-                            }
+                        if let balanceValue = balanceValue() {
+                            availableBalanceView(value: balanceValue)
                         }
-                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-                        .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
-                            MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
+
+                        if let currentQuote = viewModel.currentQuote, let tokenIn = viewModel.tokenIn, let tokenOut = viewModel.tokenOut {
+                            quoteView(currentQuote: currentQuote, tokenIn: tokenIn, tokenOut: tokenOut)
+                            transactionServiceCautionsView()
                         }
-                        .sheet(isPresented: $feeSettingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
-                            if let feeService = viewModel.transactionService {
-                                feeService.settingsView()
-                            } else {
-                                Text("NO")
-                            }
+
+                        if viewModel.tokenIn != nil, viewModel.tokenOut != nil, !viewModel.quoting, viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty) {
+                            HighlightedTextView(text: "These tokens cannot be swapped", style: .red)
                         }
                     }
-
-                    NavigationLink(
-                        destination: MultiSwapConfirmView(viewModel: viewModel, isPresented: $confirmPresented),
-                        isActive: $confirmPresented
-                    ) {
-                        EmptyView()
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                    .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
+                        MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
                     }
+                    .sheet(isPresented: $feeSettingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
+                        if let feeService = viewModel.transactionService {
+                            feeService.settingsView()
+                        } else {
+                            Text("NO")
+                        }
+                    }
+                }
+
+                NavigationLink(
+                    destination: MultiSwapConfirmView(viewModel: viewModel, isPresented: $confirmPresented),
+                    isActive: $confirmPresented
+                ) {
+                    EmptyView()
                 }
             }
             .navigationTitle("swap.title".localized)
@@ -254,7 +98,17 @@ struct MultiSwapView: View {
         }
     }
 
-    @ViewBuilder private func boxIn() -> some View {
+    @ViewBuilder private func amountsView() -> some View {
+        VStack(spacing: .margin8) {
+            boxInView().padding(.horizontal, .margin16)
+            boxSeparatorView()
+            boxOutView().padding(.horizontal, .margin16)
+        }
+        .padding(.vertical, 20)
+        .modifier(ThemeListStyleModifier(themeListStyle: .lawrence))
+    }
+
+    @ViewBuilder private func boxInView() -> some View {
         HStack(spacing: .margin8) {
             VStack(spacing: 3) {
                 TextField("", text: $viewModel.amountString, prompt: Text("0").foregroundColor(.themeGray))
@@ -334,7 +188,7 @@ struct MultiSwapView: View {
         }
     }
 
-    @ViewBuilder private func boxSeparator() -> some View {
+    @ViewBuilder private func boxSeparatorView() -> some View {
         HStack(spacing: 0) {
             Rectangle()
                 .fill(Color.themeSteel20)
@@ -355,7 +209,7 @@ struct MultiSwapView: View {
         }
     }
 
-    @ViewBuilder private func boxOut() -> some View {
+    @ViewBuilder private func boxOutView() -> some View {
         HStack(spacing: .margin8) {
             VStack(spacing: 3) {
                 if let amountOutString = viewModel.amountOutString {
@@ -430,6 +284,186 @@ struct MultiSwapView: View {
         case .warning: return .themeJacob
         case .error: return .themeLucian
         }
+    }
+
+    @ViewBuilder private func nextButtonView() -> some View {
+        Button(action: {
+            confirmPresented = true
+        }) {
+            HStack(spacing: .margin8) {
+                if viewModel.quoting {
+                    ProgressView()
+                }
+
+                Text(viewModel.quoting ? "Loading" : "Next")
+            }
+        }
+        .disabled(viewModel.currentQuote == nil || viewModel.quoting)
+        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+    }
+
+    @ViewBuilder private func availableBalanceView(value: String) -> some View {
+        ListSection {
+            HStack(spacing: .margin8) {
+                Text("Available Balance").textSubhead2()
+                Spacer()
+                Text(value).textSubhead2(color: .themeLeah)
+            }
+            .padding(.vertical, .margin12)
+            .padding(.horizontal, .margin16)
+            .frame(minHeight: 40)
+        }
+        .themeListStyle(.bordered)
+    }
+
+    @ViewBuilder private func quoteView(currentQuote: MultiSwapViewModel.Quote, tokenIn: Token, tokenOut: Token) -> some View {
+        ListSection {
+            providerView(currentQuote: currentQuote, tokenIn: tokenIn, tokenOut: tokenOut)
+
+            VStack(spacing: 0) {
+                if let price = viewModel.price {
+                    priceView(value: price)
+                }
+
+                networkFeeView(currentQuote: currentQuote)
+
+                if !currentQuote.quote.mainFields.isEmpty {
+                    ForEach(currentQuote.quote.mainFields) { field in
+                        providerFieldView(field: field)
+                    }
+                }
+            }
+        }
+        .themeListStyle(.bordered)
+        .sheet(item: $presentedSettingId) { settingId in
+            if let currentQuote = viewModel.currentQuote {
+                currentQuote.provider.settingView(settingId: settingId)
+            } else {
+                Text("NO")
+            }
+        }
+    }
+
+    @ViewBuilder private func transactionServiceCautionsView() -> some View {
+        if let transactionService = viewModel.transactionService, !transactionService.cautions.isEmpty {
+            ForEach(transactionService.cautions.indices, id: \.self) { index in
+                HighlightedTextView(caution: transactionService.cautions[index])
+            }
+        } else {
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder private func providerView(currentQuote: MultiSwapViewModel.Quote, tokenIn: Token, tokenOut: Token) -> some View {
+        HStack(spacing: .margin8) {
+            Button(action: {
+                viewModel.stopAutoQuoting()
+                quotesPresented = true
+            }) {
+                HStack(spacing: .margin8) {
+                    Image(currentQuote.provider.icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: .iconSize24, height: .iconSize24)
+
+                    Text(currentQuote.provider.name).textSubhead1(color: .themeLeah)
+                    Image("arrow_small_down_20").themeIcon(color: .themeGray)
+                }
+            }
+
+            Spacer()
+
+            Button(action: {
+                viewModel.stopAutoQuoting()
+                settingsPresented = true
+            }) {
+                if currentQuote.quote.settingsModified {
+                    Image("edit2_20").themeIcon(color: .themeJacob)
+                } else {
+                    Image("edit2_20").renderingMode(.template)
+                }
+            }
+            .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
+        }
+        .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin12))
+        .frame(height: 40)
+        .sheet(isPresented: $settingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
+            currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut)
+        }
+    }
+
+    @ViewBuilder private func priceView(value: String) -> some View {
+        HStack(spacing: .margin8) {
+            Text("Price").textSubhead2()
+
+            Spacer()
+
+            Button(action: {
+                viewModel.flipPrice()
+            }) {
+                HStack(spacing: .margin8) {
+                    Text(value)
+                        .textSubhead2(color: .themeLeah)
+                        .multilineTextAlignment(.trailing)
+
+                    Image("arrow_swap_3_20").themeIcon()
+                }
+            }
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, .margin16)
+        .frame(minHeight: 40)
+    }
+
+    @ViewBuilder private func networkFeeView(currentQuote: MultiSwapViewModel.Quote) -> some View {
+        HStack(spacing: .margin8) {
+            Text("Network Fee")
+                .textSubhead2()
+                .modifier(Informed(description: .init(title: "Network Fee", description: "Network Fee Description")))
+
+            Spacer()
+
+            if let feeValue = feeValue(quote: currentQuote) {
+                Text(feeValue).textSubhead2(color: .themeLeah)
+            } else {
+                Text("n/a".localized).textSubhead2(color: .themeGray50)
+            }
+        }
+        .frame(height: 40)
+        .padding(.trailing, .margin12)
+    }
+
+    @ViewBuilder private func providerFieldView(field: MultiSwapMainField) -> some View {
+        HStack(spacing: .margin8) {
+            if let description = field.description {
+                Text(field.title)
+                    .textSubhead2()
+                    .modifier(Informed(description: description))
+            } else {
+                Text(field.title)
+                    .textSubhead2()
+            }
+
+            Spacer()
+
+            Text(field.value).textSubhead2(color: color(valueLevel: field.valueLevel))
+
+            if let settingId = field.settingId {
+                Button(action: {
+                    presentedSettingId = settingId
+                }) {
+                    if field.modified {
+                        Image("edit2_20").themeIcon(color: .themeJacob)
+                    } else {
+                        Image("edit2_20").renderingMode(.template)
+                    }
+                }
+                .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
+            }
+        }
+        .frame(height: 40)
+        .padding(.leading, field.description == nil ? .margin16 : 0)
+        .padding(.trailing, field.settingId == nil ? .margin16 : .margin12)
     }
 
     private func feeValue(quote: MultiSwapViewModel.Quote) -> String? {
