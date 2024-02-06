@@ -1,13 +1,17 @@
+import Combine
 import Foundation
 import MarketKit
 import UIKit
 
-class AddressMultiSwapSettingsViewModel: BaseMultiSwapSettingsViewModel {
+class AddressMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsField {
+    var storage: MultiSwapSettingStorage
     let blockchainType: BlockchainType
+
+    var syncSubject = PassthroughSubject<Void, Never>()
 
     @Published var addressResult: AddressInput.Result = .idle {
         didSet {
-            syncButtons()
+            syncSubject.send()
         }
     }
 
@@ -25,8 +29,8 @@ class AddressMultiSwapSettingsViewModel: BaseMultiSwapSettingsViewModel {
     @Published var address: String = ""
 
     init(storage: MultiSwapSettingStorage, blockchainType: BlockchainType) {
+        self.storage = storage
         self.blockchainType = blockchainType
-        super.init(storage: storage)
 
         if let initialAddress {
             address = initialAddress.title
@@ -45,18 +49,15 @@ class AddressMultiSwapSettingsViewModel: BaseMultiSwapSettingsViewModel {
         }
     }
 
-    override var fields: [BaseMultiSwapSettingsViewModel.FieldState] {
-        super.fields + [MultiSwapAddress.state(initial: initialAddress?.title, value: addressResult)]
+    var state: BaseMultiSwapSettingsViewModel.FieldState {
+        MultiSwapAddress.state(initial: initialAddress?.title, value: addressResult)
     }
 
-    override func onReset() {
-        super.onReset()
+    func onReset() {
         address = ""
     }
 
-    override func onDone() {
-        super.onDone()
-
+    func onDone() {
         let address: Address?
         switch addressResult {
         case let .valid(success):
@@ -73,6 +74,10 @@ class AddressMultiSwapSettingsViewModel: BaseMultiSwapSettingsViewModel {
 }
 
 extension AddressMultiSwapSettingsViewModel {
+    var syncPublisher: AnyPublisher<Void, Never> {
+        syncSubject.eraseToAnyPublisher()
+    }
+
     var initialAddress: Address? {
         if let address: Address = storage.value(for: MultiSwapSettingStorage.LegacySetting.address) {
             return address

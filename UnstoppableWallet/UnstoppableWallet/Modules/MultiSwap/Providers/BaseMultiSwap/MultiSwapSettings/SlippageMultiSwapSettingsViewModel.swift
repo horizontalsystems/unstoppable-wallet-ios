@@ -1,24 +1,29 @@
+import Combine
 import Foundation
 import MarketKit
 import UIKit
 
-class SlippageAddressMultiSwapSettingsViewModel: AddressMultiSwapSettingsViewModel {
+class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsField {
     private let decimalParser = AmountDecimalParser()
+
+    var storage: MultiSwapSettingStorage
+    var syncSubject = PassthroughSubject<Void, Never>()
 
     @Published var slippageCautionState: CautionState = .none {
         didSet {
-            syncButtons()
+            sync()
         }
     }
 
     @Published var slippage: String = "" {
         didSet {
+            if slippage == oldValue { return }
             validateSlippage()
         }
     }
 
-    override init(storage: MultiSwapSettingStorage, blockchainType: BlockchainType) {
-        super.init(storage: storage, blockchainType: blockchainType)
+    init(storage: MultiSwapSettingStorage) {
+        self.storage = storage
 
         slippage = initialSlippage?.description ?? ""
     }
@@ -37,19 +42,15 @@ class SlippageAddressMultiSwapSettingsViewModel: AddressMultiSwapSettingsViewMod
         slippageCautionState = MultiSwapSlippage.validate(slippage: decimal)
     }
 
-    override var fields: [BaseMultiSwapSettingsViewModel.FieldState] {
-        super.fields + [MultiSwapSlippage.state(initial: initialSlippage, value: slippage)]
+    var state: BaseMultiSwapSettingsViewModel.FieldState {
+        MultiSwapSlippage.state(initial: initialSlippage, value: slippage)
     }
 
-    override func onReset() {
-        super.onReset()
-
+    func onReset() {
         slippage = ""
     }
 
-    override func onDone() {
-        super.onDone()
-
+    func onDone() {
         if slippage.isEmpty {
             storage.set(value: nil, for: MultiSwapSettingStorage.LegacySetting.slippage)
         } else if let slippage = decimalParser.parseAnyDecimal(from: slippage), slippage != initialSlippage {
@@ -58,7 +59,11 @@ class SlippageAddressMultiSwapSettingsViewModel: AddressMultiSwapSettingsViewMod
     }
 }
 
-extension SlippageAddressMultiSwapSettingsViewModel {
+extension SlippageMultiSwapSettingsViewModel {
+    var syncPublisher: AnyPublisher<Void, Never> {
+        syncSubject.eraseToAnyPublisher()
+    }
+
     var initialSlippage: Decimal? {
         storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage)
     }

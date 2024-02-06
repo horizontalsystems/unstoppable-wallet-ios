@@ -2246,7 +2246,7 @@
 		ABC9A3103BC1D3CC7E9D80BD /* ActionSheetTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACC91C29905F8E7A2046 /* ActionSheetTapView.swift */; };
 		ABC9A3114AEA853305A33586 /* WalletConnectListModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC09A586D88BAB3B9C67 /* WalletConnectListModule.swift */; };
 		ABC9A3160546BCE6ECD32669 /* IntegerAmountInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6D56EBB7FFAD68CFD66 /* IntegerAmountInputViewModel.swift */; };
-		ABC9A318507A815204BE5607 /* SlippageAddressMultiSwapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9B8B833DBF1A58CB6CC /* SlippageAddressMultiSwapSettingsViewModel.swift */; };
+		ABC9A318507A815204BE5607 /* SlippageMultiSwapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9B8B833DBF1A58CB6CC /* SlippageMultiSwapSettingsViewModel.swift */; };
 		ABC9A3187D032F44CD4E8986 /* MarketCardTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC7983E4A81E421AB639 /* MarketCardTitleView.swift */; };
 		ABC9A319C96E086B528A3563 /* AddressViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF54E3A4A3C8362CCC96 /* AddressViewModelNew.swift */; };
 		ABC9A32176DC914BBB4E9BFF /* WalletConnectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A52AC277ED7563F2707F /* WalletConnectListViewModel.swift */; };
@@ -2496,7 +2496,7 @@
 		ABC9AA66E5F1C6C5EC8B6A1F /* InteractiveTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A590FE90E377412D8CF7 /* InteractiveTransitionDelegate.swift */; };
 		ABC9AA70F3B1EFA37CBB7011 /* BaseFiatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4F694842544B8E9D421 /* BaseFiatService.swift */; };
 		ABC9AA78419B8BFEC23E8E02 /* TokenSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A791A47F4F1E71B51B3B /* TokenSelectView.swift */; };
-		ABC9AA7EF428BA17CC53A7B1 /* SlippageAddressMultiSwapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9B8B833DBF1A58CB6CC /* SlippageAddressMultiSwapSettingsViewModel.swift */; };
+		ABC9AA7EF428BA17CC53A7B1 /* SlippageMultiSwapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9B8B833DBF1A58CB6CC /* SlippageMultiSwapSettingsViewModel.swift */; };
 		ABC9AA802C533F489EB72FDE /* BackupManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A999428368A8FA264CA4 /* BackupManagerViewModel.swift */; };
 		ABC9AA80C5197F9CC6221FC8 /* WalletBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AECEEB35D57CB0965E79 /* WalletBackup.swift */; };
 		ABC9AA82FC637FD132FA3D36 /* WCSendEthereumTransactionRequestModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6F0F47E2EF665381BFC /* WCSendEthereumTransactionRequestModule.swift */; };
@@ -4397,7 +4397,7 @@
 		ABC9A999428368A8FA264CA4 /* BackupManagerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupManagerViewModel.swift; sourceTree = "<group>"; };
 		ABC9A9A18EECD26A7A93D972 /* ActionSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetPresentationController.swift; sourceTree = "<group>"; };
 		ABC9A9B35C58F6525F3B2D5C /* FullCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullCoin.swift; sourceTree = "<group>"; };
-		ABC9A9B8B833DBF1A58CB6CC /* SlippageAddressMultiSwapSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlippageAddressMultiSwapSettingsViewModel.swift; sourceTree = "<group>"; };
+		ABC9A9B8B833DBF1A58CB6CC /* SlippageMultiSwapSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlippageMultiSwapSettingsViewModel.swift; sourceTree = "<group>"; };
 		ABC9A9B9B3A81581BA7E4082 /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		ABC9A9BCCCE1CF80E10A174C /* WCWalletHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCWalletHandler.swift; sourceTree = "<group>"; };
 		ABC9A9C09ECB9B0CCBAD8C21 /* SendEip1155ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEip1155ViewController.swift; sourceTree = "<group>"; };
@@ -8099,7 +8099,7 @@
 			children = (
 				ABC9AD92B11EC22239913F57 /* BaseMultiSwapSettingsViewModel.swift */,
 				ABC9A289CABC5FCA1102A01A /* AddressMultiSwapSettingsViewModel.swift */,
-				ABC9A9B8B833DBF1A58CB6CC /* SlippageAddressMultiSwapSettingsViewModel.swift */,
+				ABC9A9B8B833DBF1A58CB6CC /* SlippageMultiSwapSettingsViewModel.swift */,
 				ABC9AB7A9358C5EA5C2D34B5 /* MultiSwapAddressView.swift */,
 				ABC9ADCE6C6975672E185951 /* MultiSwapRecipientView.swift */,
 			);
@@ -10677,7 +10677,7 @@
 				11B35498BAB60D962C9C1172 /* QuickSwapMultiSwapProvider.swift in Sources */,
 				ABC9AEE62B3F962E69F50F74 /* BaseMultiSwapSettingsViewModel.swift in Sources */,
 				ABC9A9947CE0F2F01FE1F6BA /* AddressMultiSwapSettingsViewModel.swift in Sources */,
-				ABC9A318507A815204BE5607 /* SlippageAddressMultiSwapSettingsViewModel.swift in Sources */,
+				ABC9A318507A815204BE5607 /* SlippageMultiSwapSettingsViewModel.swift in Sources */,
 				ABC9A43C01AF8078DF32D246 /* MultiSwapAddressView.swift in Sources */,
 				ABC9AFED164965D301F27D1F /* MultiSwapRecipientView.swift in Sources */,
 			);
@@ -12126,7 +12126,7 @@
 				11B35D7803627484253F8BAA /* QuickSwapMultiSwapProvider.swift in Sources */,
 				ABC9ADED4F2601F68604A180 /* BaseMultiSwapSettingsViewModel.swift in Sources */,
 				ABC9A06464454A2E0D2E4CD5 /* AddressMultiSwapSettingsViewModel.swift in Sources */,
-				ABC9AA7EF428BA17CC53A7B1 /* SlippageAddressMultiSwapSettingsViewModel.swift in Sources */,
+				ABC9AA7EF428BA17CC53A7B1 /* SlippageMultiSwapSettingsViewModel.swift in Sources */,
 				ABC9A529895ECA82E309EFBB /* MultiSwapAddressView.swift in Sources */,
 				ABC9AFFCAC47238A626A97C3 /* MultiSwapRecipientView.swift in Sources */,
 			);

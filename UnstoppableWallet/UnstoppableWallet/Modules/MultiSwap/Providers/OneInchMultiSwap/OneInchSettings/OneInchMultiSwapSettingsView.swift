@@ -2,19 +2,22 @@ import Foundation
 import SwiftUI
 
 struct OneInchMultiSwapSettingsView: View {
-    @ObservedObject var viewModel: SlippageAddressMultiSwapSettingsViewModel
+    @ObservedObject var viewModel: BaseMultiSwapSettingsViewModel
+    @ObservedObject var addressViewModel: AddressMultiSwapSettingsViewModel
+    @ObservedObject var slippageViewModel: SlippageMultiSwapSettingsViewModel
+
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
-                MultiSwapAddressView(viewModel: viewModel)
-                MultiSwapSlippageView(viewModel: viewModel)
+                MultiSwapAddressView(viewModel: addressViewModel)
+                MultiSwapSlippageView(viewModel: slippageViewModel)
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .animation(.default, value: viewModel.addressCautionState)
-        .animation(.default, value: viewModel.slippageCautionState)
+        .animation(.default, value: addressViewModel.addressCautionState)
+        .animation(.default, value: slippageViewModel.slippageCautionState)
         .navigationTitle("swap.advanced_settings".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

@@ -91,8 +91,17 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
     }
 
     func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token) -> AnyView {
-        let viewModel = SlippageAddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
-        let view = ThemeNavigationView { OneInchMultiSwapSettingsView(viewModel: viewModel) }
+        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
+        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
+        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
+        let view = ThemeNavigationView {
+            OneInchMultiSwapSettingsView(
+                viewModel: viewModel,
+                addressViewModel: addressViewModel,
+                slippageViewModel: slippageViewModel
+            )
+        }
+
         return AnyView(view)
     }
 
