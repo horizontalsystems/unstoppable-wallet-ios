@@ -9,6 +9,15 @@ struct HighlightedTextView: View {
         self.style = style
     }
 
+    init(caution: CautionNew) {
+        text = caution.text
+
+        switch caution.type {
+        case .warning: style = .warning
+        case .error: style = .alert
+        }
+    }
+
     init(text: String, style: HighlightedDescriptionBaseView.Style) {
         self.text = text
         switch style {

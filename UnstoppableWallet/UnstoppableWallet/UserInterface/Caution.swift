@@ -110,3 +110,15 @@ class CancellableTitledCaution: TitledCaution {
         super.init(title: title, text: text, type: type)
     }
 }
+
+struct CautionNew: Equatable {
+    let title: String?
+    let text: String
+    let type: CautionType
+
+    init(title: String? = nil, text: String, type: CautionType) {
+        self.title = title
+        self.text = text
+        self.type = type
+    }
+}

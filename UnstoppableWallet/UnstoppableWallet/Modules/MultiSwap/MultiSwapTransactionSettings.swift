@@ -16,6 +16,7 @@ enum MultiSwapFeeQuote {
 protocol IMultiSwapTransactionService {
     var transactionSettings: MultiSwapTransactionSettings? { get }
     var modified: Bool { get }
+    var cautions: [CautionNew] { get }
     func sync() async throws
     func fee(quote: MultiSwapFeeQuote, token: Token) -> CoinValue?
     func settingsView() -> AnyView?
@@ -55,6 +56,20 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         !(usingRecommendedGasPrice && usingRecommendedNonce)
     }
 
+    var cautions: [CautionNew] {
+        var cautions = [CautionNew]()
+
+        for warning in warnings {
+            cautions.append(.init(title: warning.titledCaution.title, text: warning.titledCaution.text, type: warning.titledCaution.type))
+        }
+
+        for error in errors {
+            cautions.append(.init(text: error.smartDescription, type: .error))
+        }
+
+        return cautions
+    }
+
     var transactionSettings: MultiSwapTransactionSettings? {
         guard let gasPrice, let nonce else {
             return nil
@@ -79,29 +94,29 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         var errors = [Error]()
 
         switch (recommendedGasPrice, gasPrice) {
-            case (let .eip1559(recommendedMaxFee, recommendedTips), let .eip1559(maxFee, tips)):
-                let recommendedBaseFee = recommendedMaxFee - recommendedTips
-                let actualTips = min(maxFee - recommendedBaseFee, tips)
-                let tipsSafeRange = Self.tipsSafeRangeBounds.range(around: recommendedTips)
+        case (let .eip1559(recommendedMaxFee, recommendedTips), let .eip1559(maxFee, tips)):
+            let recommendedBaseFee = recommendedMaxFee - recommendedTips
+            let actualTips = min(maxFee - recommendedBaseFee, tips)
+            let tipsSafeRange = Self.tipsSafeRangeBounds.range(around: recommendedTips)
 
-                if actualTips < tipsSafeRange.lowerBound {
-                    warnings.append(EvmFeeModule.GasDataWarning.riskOfGettingStuck)
-                }
+            if actualTips < tipsSafeRange.lowerBound {
+                warnings.append(EvmFeeModule.GasDataWarning.riskOfGettingStuck)
+            }
 
-                if actualTips > tipsSafeRange.upperBound {
-                    warnings.append(EvmFeeModule.GasDataWarning.overpricing)
-                }
-            case let (.legacy(_recommendedGasPrice), .legacy(_gasPrice)):
-                let gasPriceSafeRange = Self.legacyGasPriceSafeRangeBounds.range(around: _recommendedGasPrice)
+            if actualTips > tipsSafeRange.upperBound {
+                warnings.append(EvmFeeModule.GasDataWarning.overpricing)
+            }
+        case let (.legacy(_recommendedGasPrice), .legacy(_gasPrice)):
+            let gasPriceSafeRange = Self.legacyGasPriceSafeRangeBounds.range(around: _recommendedGasPrice)
 
-                if _gasPrice < gasPriceSafeRange.lowerBound {
-                    warnings.append(EvmFeeModule.GasDataWarning.riskOfGettingStuck)
-                }
+            if _gasPrice < gasPriceSafeRange.lowerBound {
+                warnings.append(EvmFeeModule.GasDataWarning.riskOfGettingStuck)
+            }
 
-                if _gasPrice > gasPriceSafeRange.upperBound {
-                    warnings.append(EvmFeeModule.GasDataWarning.overpricing)
-                }
-            default: ()
+            if _gasPrice > gasPriceSafeRange.upperBound {
+                warnings.append(EvmFeeModule.GasDataWarning.overpricing)
+            }
+        default: ()
         }
 
         if let nonce, let minimumNonce, nonce < minimumNonce {
