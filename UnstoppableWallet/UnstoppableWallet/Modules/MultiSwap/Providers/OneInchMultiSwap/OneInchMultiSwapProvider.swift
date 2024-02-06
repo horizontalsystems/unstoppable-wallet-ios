@@ -171,7 +171,7 @@ extension OneInchMultiSwapProvider {
                     MultiSwapMainField(
                         title: "Slippage",
                         value: "\(slippage.description)%",
-                        valueLevel: .warning // get level from slippage value
+                        valueLevel: MultiSwapSlippage.validate(slippage: slippage).valueLevel
                     )
                 )
             }
@@ -182,7 +182,10 @@ extension OneInchMultiSwapProvider {
         override var cautions: [CautionNew] {
             var cautions = super.cautions
 
-            // append slippage cautions here
+            switch MultiSwapSlippage.validate(slippage: slippage) {
+            case .none: ()
+            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+            }
 
             return cautions
         }

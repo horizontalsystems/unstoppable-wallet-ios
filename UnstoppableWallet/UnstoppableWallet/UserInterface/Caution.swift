@@ -55,6 +55,10 @@ enum FieldCautionState: Equatable {
 struct Caution: Equatable {
     let text: String
     let type: CautionType
+
+    func cautionNew(title: String? = nil) -> CautionNew {
+        .init(title: title, text: text, type: type)
+    }
 }
 
 enum CautionType: Equatable {
