@@ -185,7 +185,7 @@
 
 "coin_settings.title" = "Настройки блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендованный)";
 "sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Из блокчейна";
 "blockchain_settings.description" = "Выберите формат адреса для получения средств. Правильный формат должен быть выбран при восстановлении существующего кошелька.";
@@ -644,7 +644,7 @@
 "market.top.floor_price" = "Цена";
 "market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "Топ платформы";
-"market.top.protocols" = "Протоколы";
+"market.top.protocols" = "Протоколы: %@";
 
 "top_pairs.title" = "Top Market Pairs";
 "top_pairs.description" = "Top trading pairs by volume in every exchanges";
@@ -730,8 +730,8 @@
 "market.advanced_search.month6" = "6 месяцев";
 "market.advanced_search.year" = "1 год";
 
-"market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
+"market.advanced_search.day.short" = "24ч";
+"market.advanced_search.week.short" = "7Д";
 "market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Результаты";
@@ -990,8 +990,8 @@
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Получить";
-"transactions.send" = "Отправить";
+"transactions.receive" = "Получено";
+"transactions.send" = "Отправлено";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
 "transactions.approve" = "Разрешить";
@@ -1403,15 +1403,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.day" = "24ч";
+"chart.time_duration.week" = "7Д";
 "chart.time_duration.week2" = "2Н";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halfyear" = "6М";
 "chart.time_duration.year" = "1Г";
 "chart.time_duration.year2" = "2Г";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year5" = "5Г";
 "chart.time_duration.all" = "ВСЕ";
 
 "chart.market_cap" = "Рын. капитализация";
@@ -1670,7 +1670,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
 "fee_settings" = "Доп. настройки";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "Настройки комиссии";
 "fee_settings.fee" = "Комиссия";
 "fee_settings.fee.info" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Эти сборы выше, когда в сети происходит много транзакций.";
 "fee_settings.fee_rate" = "Комиссия";
