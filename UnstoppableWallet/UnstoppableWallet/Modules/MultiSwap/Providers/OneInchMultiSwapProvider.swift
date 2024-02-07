@@ -96,7 +96,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
         let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
         let view = ThemeNavigationView {
-            OneInchMultiSwapSettingsView(
+            RecipientAndSlippageMultiSwapSettingsView(
                 viewModel: viewModel,
                 addressViewModel: addressViewModel,
                 slippageViewModel: slippageViewModel

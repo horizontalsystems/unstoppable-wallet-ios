@@ -2,6 +2,7 @@ import BigInt
 import EvmKit
 import Foundation
 import MarketKit
+import SwiftUI
 import UniswapKit
 
 class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
@@ -36,8 +37,20 @@ class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
             throw SwapError.noHttpRpcSource
         }
 
+        let recipient: Address? = storage.value(for: MultiSwapSettingStorage.LegacySetting.address)
+        let slippage: Decimal = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
+
+        let kitRecipient = try recipient.map { try EvmKit.Address(hex: $0.raw) }
+
+        let tradeOptions = TradeOptions(
+                allowedSlippage: slippage,
+                ttl: TradeOptions.defaultTtl,
+                recipient: kitRecipient,
+                feeOnTransfer: false
+        )
+
         let swapData = try await kit.swapData(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut)
-        let tradeData = try kit.bestTradeExactIn(swapData: swapData, amountIn: amountIn)
+        let tradeData = try kit.bestTradeExactIn(swapData: swapData, amountIn: amountIn, options: tradeOptions)
 
         var estimatedGas: Int?
 
@@ -52,10 +65,26 @@ class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
 
         return await Quote(
             tradeData: tradeData,
-            slippage: 1.5,
+            recipient: recipient,
+            slippage: slippage,
             estimatedGas: estimatedGas,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
         )
+    }
+
+    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token) -> AnyView {
+        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
+        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
+        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
+        let view = ThemeNavigationView {
+            RecipientAndSlippageMultiSwapSettingsView(
+                viewModel: viewModel,
+                addressViewModel: addressViewModel,
+                slippageViewModel: slippageViewModel
+            )
+        }
+
+        return AnyView(view)
     }
 
     func swap(quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws {
@@ -74,10 +103,10 @@ extension BaseUniswapV2MultiSwapProvider {
     class Quote: BaseUniswapMultiSwapProvider.Quote {
         private let tradeData: TradeData
 
-        init(tradeData: TradeData, slippage: Decimal, estimatedGas: Int?, allowanceState: AllowanceState) {
+        init(tradeData: TradeData, recipient: Address?, slippage: Decimal, estimatedGas: Int?, allowanceState: AllowanceState) {
             self.tradeData = tradeData
 
-            super.init(slippage: slippage, estimatedGas: estimatedGas, allowanceState: allowanceState)
+            super.init(recipient: recipient, slippage: slippage, estimatedGas: estimatedGas, allowanceState: allowanceState)
         }
 
         override var amountOut: Decimal {
