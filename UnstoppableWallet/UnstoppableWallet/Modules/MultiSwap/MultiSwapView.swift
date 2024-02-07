@@ -32,6 +32,7 @@ struct MultiSwapView: View {
 
                         if let currentQuote = viewModel.currentQuote, let tokenIn = viewModel.tokenIn, let tokenOut = viewModel.tokenOut {
                             quoteView(currentQuote: currentQuote, tokenIn: tokenIn, tokenOut: tokenOut)
+                            quoteCautionsView(currentQuote: currentQuote)
                             transactionServiceCautionsView()
                         }
 
@@ -343,6 +344,16 @@ struct MultiSwapView: View {
             } else {
                 Text("NO")
             }
+        }
+    }
+
+    @ViewBuilder private func quoteCautionsView(currentQuote: MultiSwapViewModel.Quote) -> some View {
+        if !currentQuote.quote.cautions.isEmpty {
+            ForEach(currentQuote.quote.cautions.indices, id: \.self) { index in
+                HighlightedTextView(caution: currentQuote.quote.cautions[index])
+            }
+        } else {
+            EmptyView()
         }
     }
 
