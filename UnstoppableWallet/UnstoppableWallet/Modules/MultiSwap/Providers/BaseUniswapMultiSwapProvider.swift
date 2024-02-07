@@ -15,9 +15,11 @@ extension BaseUniswapMultiSwapProvider {
 
 extension BaseUniswapMultiSwapProvider {
     class Quote: BaseEvmMultiSwapProvider.Quote {
+        private let recipient: Address?
         private let slippage: Decimal
 
-        init(slippage: Decimal, estimatedGas: Int?, allowanceState: AllowanceState) {
+        init(recipient: Address?, slippage: Decimal, estimatedGas: Int?, allowanceState: AllowanceState) {
+            self.recipient = recipient
             self.slippage = slippage
 
             super.init(estimatedGas: estimatedGas, allowanceState: allowanceState)
@@ -26,17 +28,38 @@ extension BaseUniswapMultiSwapProvider {
         override var mainFields: [MultiSwapMainField] {
             var fields = super.mainFields
 
+            if let recipient {
+                fields.append(
+                    MultiSwapMainField(
+                        title: "Recipient",
+                        value: recipient.title,
+                        valueLevel: .regular
+                    )
+                )
+            }
+
             if slippage != MultiSwapSlippage.default {
                 fields.append(
                     MultiSwapMainField(
                         title: "Slippage",
                         value: "\(slippage.description)%",
-                        valueLevel: .warning
+                        valueLevel: MultiSwapSlippage.validate(slippage: slippage).valueLevel
                     )
                 )
             }
 
             return fields
+        }
+
+        override var cautions: [CautionNew] {
+            var cautions = super.cautions
+
+            switch MultiSwapSlippage.validate(slippage: slippage) {
+            case .none: ()
+            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+            }
+
+            return cautions
         }
     }
 }

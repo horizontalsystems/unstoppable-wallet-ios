@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct OneInchMultiSwapSettingsView: View {
+struct RecipientAndSlippageMultiSwapSettingsView: View {
     @ObservedObject var viewModel: BaseMultiSwapSettingsViewModel
     @ObservedObject var addressViewModel: AddressMultiSwapSettingsViewModel
     @ObservedObject var slippageViewModel: SlippageMultiSwapSettingsViewModel
