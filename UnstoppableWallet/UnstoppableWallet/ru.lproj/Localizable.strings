@@ -619,7 +619,7 @@
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объем";
 "market.top.market_cap.title" = "Цена";
-"market.top.diluted_market_cap.title" = "Dilluted MCap";
+"market.top.diluted_market_cap.title" = "Diluted MCap";
 
 "market.market_field.mcap" = "Цена";
 "market.market_field.vol" = "Объем";
@@ -765,7 +765,7 @@
 "coin_overview.market_cap" = "Рын. капитализация";
 "coin_overview.circulating_supply" = "В обороте";
 "coin_overview.total_supply" = "Макс.выпуск";
-"coin_overview.diluted_market_cap" = "Dilluted MCap";
+"coin_overview.diluted_market_cap" = "Diluted MCap";
 "coin_overview.genesis_date" = "Дата старта";
 "coin_overview.trading_volume" = "Объем торговли";
 
