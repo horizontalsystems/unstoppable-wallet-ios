@@ -143,38 +143,43 @@ struct MultiSwapView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
-                    HStack(spacing: 0) {
-                        if viewModel.availableBalance != nil {
-                            ForEach(1 ... 4, id: \.self) { multiplier in
-                                let percent = multiplier * 25
+                    if isInputActive {
+                        HStack(spacing: 0) {
+                            if viewModel.availableBalance != nil {
+                                ForEach(1 ... 4, id: \.self) { multiplier in
+                                    let percent = multiplier * 25
 
-                                Button(action: {
-                                    viewModel.setAmountIn(percent: percent)
-                                }) {
-                                    Text("\(percent)%").textSubhead1(color: .themeLeah)
+                                    Button(action: {
+                                        viewModel.setAmountIn(percent: percent)
+                                        isInputActive = false
+                                    }) {
+                                        Text("\(percent)%").textSubhead1(color: .themeLeah)
+                                    }
+                                    .frame(maxWidth: .infinity)
+
+                                    RoundedRectangle(cornerRadius: 0.5, style: .continuous)
+                                        .fill(Color.themeSteel20)
+                                        .frame(width: 1)
+                                        .frame(maxHeight: .infinity)
                                 }
-                                .frame(maxWidth: .infinity)
-
-                                RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                                    .fill(Color.themeSteel20)
-                                    .frame(width: 1)
-                                    .frame(maxHeight: .infinity)
+                            } else {
+                                Spacer()
                             }
-                        } else {
-                            Spacer()
-                        }
 
-                        Button(action: {
-                            isInputActive = false
-                        }) {
-                            Image(systemName: "keyboard.chevron.compact.down")
-                                .font(.themeSubhead1)
-                                .foregroundColor(.themeLeah)
+                            Button(action: {
+                                isInputActive = false
+                            }) {
+                                Image(systemName: "keyboard.chevron.compact.down")
+                                    .font(.themeSubhead1)
+                                    .foregroundColor(.themeLeah)
+                            }
+                            .frame(maxWidth: .infinity)
                         }
+                        .padding(.horizontal, -16)
                         .frame(maxWidth: .infinity)
+                    } else {
+                        EmptyView()
                     }
-                    .padding(.horizontal, -16)
-                    .frame(maxWidth: .infinity)
                 }
             }
 
