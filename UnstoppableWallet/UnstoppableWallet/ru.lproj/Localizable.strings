@@ -374,8 +374,15 @@
 "deposit.set_amount" = "Установить сумму";
 "deposit.enter_amount" = "Ввести сумму";
 "deposit.not_active" = "Не активен";
+"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "Неактивный адрес";
 "deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
+
+"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+
+"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
@@ -441,6 +448,7 @@
 "send.confirmation.total" = "Итого";
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
+"send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.resend_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее повторно с более высокой комиссией. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
@@ -449,6 +457,7 @@
 "send.confirmation.cancel" = "Отменить транзакцию";
 "send.confirmation.nonce" = "Memo";
 "send.confirmation.method" = "Метод";
+"send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "Недостаточно средств";
 "send.address_error.own_address" = "Невозможно отправить TRX самому себе";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
@@ -469,6 +478,10 @@
 "send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
 "send.lock_time" = "TimeLock";
+
+"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.change" = "Change";
 
 "approve.confirmation.you_approve" = "Вы разрешаете";
 "approve.confirmation.you_revoke" = "Вы отменяете";
@@ -583,6 +596,8 @@
 
 "swap.dex_info.link_button" = "%@ Сайт";
 
+
+
 // Market
 
 "market.tab_bar_item" = "Рынки";
@@ -623,12 +638,16 @@
 "market.top.lowest_cap" = "Наименьшая кап.";
 "market.top.highest_volume" = "Наивысший объем";
 "market.top.lowest_volume" = "Наименьший объем";
-"market.top.top_gainers" = "Взлеты";
-"market.top.top_losers" = "Падения";
+"market.top.top_gainers" = "Показывают рост";
+"market.top.top_losers" = "Теряют в цене";
 "market.top.top_collections" = "Топ NFT коллекции";
 "market.top.floor_price" = "Цена";
+"market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "Топ платформы";
 "market.top.protocols" = "Протоколы";
+
+"top_pairs.title" = "Top Market Pairs";
+"top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "Рейтинг платформ";
 "top_platforms.description" = "Лучшие ведущие блокчейн-платформы кумулятивного рынка проектов";
@@ -659,6 +678,13 @@
 "market.advanced_search.choose_set" = "Выбор набора";
 "market.advanced_search.market_cap" = "Рын. капитализация";
 "market.advanced_search.volume" = "Объем торговли";
+
+"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
+"market.advanced_search.good_cex_volume" = "Good CEX Volume";
+"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+
 "market.advanced_search.liquidity" = "Ликвидность DEX";
 "market.advanced_search.blockchains" = "Блокчейны";
 "market.advanced_search.price_period" = "Ценовой период";
@@ -703,6 +729,10 @@
 "market.advanced_search.month" = "1 месяц";
 "market.advanced_search.month6" = "6 месяцев";
 "market.advanced_search.year" = "1 год";
+
+"market.advanced_search.day.short" = "24H";
+"market.advanced_search.week.short" = "7D";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Результаты";
 
@@ -775,6 +805,7 @@
 "coin_analytics.period.4h" = "4 часа";
 "coin_analytics.period.1d" = "1 день";
 "coin_analytics.period.1w" = "1 неделя";
+"coin_analytics.period.1m" = "1 месяц";
 
 "coin_analytics.details" = "Подробности";
 
@@ -898,12 +929,21 @@
 "coin_analytics.30_day_rank" = "Рейтинг на 30д";
 "coin_analytics.30_day_volume" = "Объем за 30д";
 
+"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
+"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
+"coin_analytics.analysis.attention_required" = "Attention Required";
+"coin_analytics.analysis.token_detectors" = "Token Detectors";
+"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.issues" = "Issues: %@";
+
 // Coin Page -> Markets
 
 "coin_markets.empty" = "Нет доступных данных";
 "coin_markets.filter.all" = "Все";
-"coin_markets.filter.verified" = "Проверено";
-"coin_markets.verified" = "Проверено";
+"coin_markets.filter.verified" = "Подтверждено";
+"coin_markets.verified" = "Подтверждено";
 
 // Coin Page -> Tweets
 
@@ -1363,14 +1403,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24ч";
-"chart.time_duration.week" = "7Д";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2Н";
-"chart.time_duration.month" = "1М";
+"chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halfyear" = "6М";
 "chart.time_duration.year" = "1Г";
 "chart.time_duration.year2" = "2Г";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "ВСЕ";
 
 "chart.market_cap" = "Рын. капитализация";
@@ -1629,6 +1670,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
 "fee_settings" = "Доп. настройки";
+"fee_settings.title" = "Fee Settings";
 "fee_settings.fee" = "Комиссия";
 "fee_settings.fee.info" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Эти сборы выше, когда в сети происходит много транзакций.";
 "fee_settings.fee_rate" = "Комиссия";
@@ -1636,6 +1678,8 @@
 "fee_settings.inputs_outputs" = "Вводы/Выводы";
 "fee_settings.transaction_settings" = "Настройки транзакций";
 "fee_settings.transaction_settings.description" = "Затрудните отслеживание Биткойн-транзакций, изменив их структурирование.";
+"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
 ";
