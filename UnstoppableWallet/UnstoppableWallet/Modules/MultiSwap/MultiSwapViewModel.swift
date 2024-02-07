@@ -394,7 +394,7 @@ class MultiSwapViewModel: ObservableObject {
                             let quote = try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
                             return Quote(provider: provider, quote: quote)
                         } catch {
-                            print("QUOTE ERROR: \(provider.id): \(error)")
+//                            print("QUOTE ERROR: \(provider.id): \(error)")
                             return nil
                         }
                     }
