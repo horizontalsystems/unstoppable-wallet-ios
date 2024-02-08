@@ -519,7 +519,7 @@
 "swap.approving_button" = "Разрешение...";
 "swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и разрешить новую сумму";
 "swap.revoking_button" = "Отмена...";
-"swap.not_available_button" = "Balance n/a";
+"swap.not_available_button" = "Баланс n/a";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Эта служба не позволяет wrapping/unwrapping. Пожалуйста, попробуйте другой сервис обмена. Рекомендуется 1inch";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
