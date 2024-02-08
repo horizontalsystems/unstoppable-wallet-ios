@@ -86,7 +86,7 @@
 
 "version" = "Sürüm %@";
 
-"n/a" = "N/A";
+"n/a" = "n/a";
 
 "sync_error" = "Senkronizasyon hatası. Tekrar deneyin.";
 
@@ -517,7 +517,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.approving_button" = "Onaylanıyor...";
 "swap.revoke_warning" = "%@ alışverişi yapabilir veya yeni tutarı iptal edip onaylamanız gerekir";
 "swap.revoking_button" = "İptal ediliyor...";
-"swap.not_available_button" = "Bakiye N/A";
+"swap.not_available_button" = "Balance n/a";
 "swap.trade_error.not_found" = "Bu token swap edilemez";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Bu hizmet sarmaya/paketlemeye izin vermiyor. Lütfen başka bir takas hizmetini deneyin. 1inch önerilir";
 "swap.button_error.insufficient_balance" = "Yetersiz bakiye";
@@ -988,12 +988,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.completed" = "Tamamlandı";
 "transactions.failed" = "Başarısız";
 
-"transactions.receive" = "Al";
-"transactions.send" = "Gönder";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
+"transactions.receive" = "Alındı";
+"transactions.send" = "Gönderildi";
+"transactions.burn" = "Burned";
+"transactions.mint" = "Minted";
 "transactions.approve" = "Onayla";
-"transactions.swap" = "Takas";
+"transactions.swap" = "Takas Edildi";
 "transactions.contract_call" = "Sözleşme Çağrısı";
 "transactions.contract_creation" = "Sözleşme Oluşturma";
 "transactions.external_call" = "Harici Çağrı";
