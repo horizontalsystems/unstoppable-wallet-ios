@@ -24,7 +24,7 @@ struct MultiSwapView: View {
                 ScrollView {
                     VStack(spacing: .margin12) {
                         amountsView()
-                        nextButtonView()
+                        buttonView()
 
                         if let balanceValue = balanceValue() {
                             availableBalanceView(value: balanceValue)
@@ -34,10 +34,6 @@ struct MultiSwapView: View {
                             quoteView(currentQuote: currentQuote, tokenIn: tokenIn, tokenOut: tokenOut)
                             quoteCautionsView(currentQuote: currentQuote)
                             transactionServiceCautionsView()
-                        }
-
-                        if viewModel.tokenIn != nil, viewModel.tokenOut != nil, !viewModel.quoting, viewModel.validProviders.isEmpty || (viewModel.amountIn != nil && viewModel.quotes.isEmpty) {
-                            HighlightedTextView(text: "These tokens cannot be swapped", style: .red)
                         }
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
@@ -292,19 +288,21 @@ struct MultiSwapView: View {
         }
     }
 
-    @ViewBuilder private func nextButtonView() -> some View {
+    @ViewBuilder private func buttonView() -> some View {
+        let (title, disabled, showProgress) = buttonState()
+
         Button(action: {
             confirmPresented = true
         }) {
             HStack(spacing: .margin8) {
-                if viewModel.quoting {
+                if showProgress {
                     ProgressView()
                 }
 
-                Text(viewModel.quoting ? "Loading" : "Next")
+                Text(title)
             }
         }
-        .disabled(viewModel.currentQuote == nil || viewModel.quoting)
+        .disabled(disabled)
         .buttonStyle(PrimaryButtonStyle(style: .yellow))
     }
 
@@ -525,5 +523,37 @@ struct MultiSwapView: View {
         }
 
         return result
+    }
+
+    private func buttonState() -> (String, Bool, Bool) {
+        let title: String
+        var disabled = true
+        var showProgress = false
+
+        if viewModel.quoting {
+            title = "Loading"
+            showProgress = true
+        } else if viewModel.tokenIn == nil {
+            title = "Select Token In"
+        } else if viewModel.tokenOut == nil {
+            title = "Select Token Out"
+        } else if viewModel.validProviders.isEmpty {
+            title = "No Providers"
+        } else if viewModel.amountIn == nil {
+            title = "Enter Amount"
+        } else if viewModel.currentQuote == nil {
+            title = "No Quotes"
+        } else if viewModel.availableBalance == nil {
+            title = "Balance n/a"
+        } else if let availableBalance = viewModel.availableBalance, let amountIn = viewModel.amountIn, amountIn > availableBalance {
+            title = "Insufficient Balance"
+        } else if let currentQuote = viewModel.currentQuote, feeValue(quote: currentQuote) == nil {
+            title = "Network Fee Error"
+        } else {
+            title = "Next"
+            disabled = false
+        }
+
+        return (title, disabled, showProgress)
     }
 }
