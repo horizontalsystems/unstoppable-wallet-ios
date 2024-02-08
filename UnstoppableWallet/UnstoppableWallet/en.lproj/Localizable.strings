@@ -86,7 +86,7 @@
 
 "version" = "Version %@";
 
-"n/a" = "N/A";
+"n/a" = "n/a";
 
 "sync_error" = "Sync error. Try again.";
 
@@ -515,7 +515,7 @@
 "swap.approving_button" = "Approving...";
 "swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
 "swap.revoking_button" = "Revoking...";
-"swap.not_available_button" = "Balance N/A";
+"swap.not_available_button" = "Balance n/a";
 "swap.trade_error.not_found" = "Can't swap these tokens";
 "swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
@@ -986,12 +986,12 @@
 "transactions.completed" = "Completed";
 "transactions.failed" = "Failed";
 
-"transactions.receive" = "Receive";
-"transactions.send" = "Send";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
-"transactions.approve" = "Approve";
-"transactions.swap" = "Swap";
+"transactions.receive" = "Received";
+"transactions.send" = "Sent";
+"transactions.burn" = "Burned";
+"transactions.mint" = "Minted";
+"transactions.approve" = "Approved";
+"transactions.swap" = "Swaped";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
 "transactions.external_call" = "External Call";
