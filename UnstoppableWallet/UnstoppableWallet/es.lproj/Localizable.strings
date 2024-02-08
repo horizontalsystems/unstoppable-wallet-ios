@@ -86,7 +86,7 @@
 
 "version" = "Versión %@";
 
-"n/a" = "N/A";
+"n/a" = "n/a";
 
 "sync_error" = "Error de sincronización. Inténtalo de nuevo.";
 
@@ -517,7 +517,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.approving_button" = "Aprobando...";
 "swap.revoke_warning" = "Puedes cambiar %@o necesitas revocar y aprobar la nueva cantidad";
 "swap.revoking_button" = "Revocando...";
-"swap.not_available_button" = "Saldo N/A";
+"swap.not_available_button" = "Balance n/a";
 "swap.trade_error.not_found" = "No se pueden permutar estos tokens";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Este servicio no permite envolver/desenvolver. Por favor, prueba con otro servicio de intercambio. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
@@ -988,12 +988,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.completed" = "Finalizado";
 "transactions.failed" = "Falla";
 
-"transactions.receive" = "Recibir";
-"transactions.send" = "Enviar";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
+"transactions.receive" = "Recibido";
+"transactions.send" = "Enviado";
+"transactions.burn" = "Burned";
+"transactions.mint" = "Minted";
 "transactions.approve" = "Aprobar";
-"transactions.swap" = "Permutar";
+"transactions.swap" = "Cambiado";
 "transactions.contract_call" = "Llamada de Contrato";
 "transactions.contract_creation" = "Creación de Contrato";
 "transactions.external_call" = "Llamada externa";
