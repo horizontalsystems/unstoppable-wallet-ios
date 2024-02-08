@@ -88,6 +88,34 @@ extension BaseUniswapMultiSwapProvider {
         case invalidQuote
         case invalidTrade
     }
+
+    enum PriceImpactLevel {
+        case negligible
+        case normal
+        case warning
+        case forbidden
+
+        private static let normalPriceImpact: Decimal = 1
+        private static let warningPriceImpact: Decimal = 5
+        private static let forbiddenPriceImpact: Decimal = 20
+
+        init(priceImpact: Decimal) {
+            switch priceImpact {
+            case 0 ..< Self.normalPriceImpact: self = .negligible
+            case Self.normalPriceImpact ..< Self.warningPriceImpact: self = .normal
+            case Self.warningPriceImpact ..< Self.forbiddenPriceImpact: self = .warning
+            default: self = .forbidden
+            }
+        }
+
+        var valueLevel: MultiSwapValueLevel {
+            switch self {
+            case .warning: return .warning
+            case .forbidden: return .error
+            default: return .regular
+            }
+        }
+    }
 }
 
 extension BaseUniswapMultiSwapProvider {
@@ -110,6 +138,16 @@ extension BaseUniswapMultiSwapProvider {
 
         override var mainFields: [MultiSwapMainField] {
             var fields = super.mainFields
+
+            if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
+                fields.append(
+                    MultiSwapMainField(
+                        title: "Price Impact",
+                        value: "\(priceImpact)%",
+                        valueLevel: PriceImpactLevel(priceImpact: priceImpact).valueLevel
+                    )
+                )
+            }
 
             if let recipient {
                 fields.append(
@@ -145,6 +183,16 @@ extension BaseUniswapMultiSwapProvider {
             return cautions
         }
 
+        override var canSwap: Bool {
+            var canSwap = true
+
+            if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) == .forbidden {
+                canSwap = false
+            }
+
+            return super.canSwap && canSwap
+        }
+
         enum Trade {
             case v2(tradeData: TradeData)
             case v3(bestTrade: TradeDataV3)
@@ -153,6 +201,13 @@ extension BaseUniswapMultiSwapProvider {
                 switch self {
                 case let .v2(tradeData): return tradeData.amountOut
                 case let .v3(bestTrade): return bestTrade.amountOut
+                }
+            }
+
+            var priceImpact: Decimal? {
+                switch self {
+                case let .v2(tradeData): return tradeData.priceImpact
+                case let .v3(bestTrade): return bestTrade.priceImpact
                 }
             }
         }
