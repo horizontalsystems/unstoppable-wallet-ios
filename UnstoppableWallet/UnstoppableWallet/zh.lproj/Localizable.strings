@@ -86,7 +86,7 @@
 
 "version" = "版本%@";
 
-"n/a" = "不可用";
+"n/a" = "n/a";
 
 "sync_error" = "同步错误。请再试一次.";
 
@@ -517,7 +517,7 @@
 "swap.approving_button" = "审批中...";
 "swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 "swap.revoking_button" = "正在取消...";
-"swap.not_available_button" = "余额 N/A";
+"swap.not_available_button" = "Balance n/a";
 "swap.trade_error.not_found" = "无法交换代币";
 "swap.trade_error.wrap_unwrap_not_allowed" = "此服务不允许包装/拆包。请尝试另一个交换服务。推荐1英寸。";
 "swap.button_error.insufficient_balance" = "余额不足";
@@ -988,12 +988,12 @@
 "transactions.completed" = "已完成";
 "transactions.failed" = "失败";
 
-"transactions.receive" = "接收";
-"transactions.send" = "发送​​";
-"transactions.burn" = "燃烧";
-"transactions.mint" = "薄荷绿";
+"transactions.receive" = "已收到";
+"transactions.send" = "已发送";
+"transactions.burn" = "Burned";
+"transactions.mint" = "Minted";
 "transactions.approve" = "批准";
-"transactions.swap" = "掉期交易";
+"transactions.swap" = "已交换";
 "transactions.contract_call" = "合约调用";
 "transactions.contract_creation" = "合约创建";
 "transactions.external_call" = "外部呼叫";
