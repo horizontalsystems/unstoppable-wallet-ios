@@ -86,7 +86,7 @@
 
 "version" = "버전 %@";
 
-"n/a" = "해당 없음 ";
+"n/a" = "n/a";
 
 "sync_error" = "동기화 오류입니다. 다시 시도하십시오.";
 
@@ -515,7 +515,7 @@
 "swap.approving_button" = "승인 중...";
 "swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
 "swap.revoking_button" = "철회...";
-"swap.not_available_button" = "균형 N/A";
+"swap.not_available_button" = "Balance n/a";
 "swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
 "swap.trade_error.wrap_unwrap_not_allowed" = "이 서비스는 래핑/언래핑을 허용하지 않습니다. 다른 스왑 서비스를 사용해 보십시오. 1inch 권장";
 "swap.button_error.insufficient_balance" = "잔액이 부족합니다";
@@ -987,12 +987,12 @@
 "transactions.completed" = "완료됨";
 "transactions.failed" = "실패";
 
-"transactions.receive" = "수령";
-"transactions.send" = "전송";
-"transactions.burn" = "번";
-"transactions.mint" = "민트";
-"transactions.approve" = "승인";
-"transactions.swap" = "스왑";
+"transactions.receive" = "수령됨";
+"transactions.send" = "전송됨";
+"transactions.burn" = "Burned";
+"transactions.mint" = "Minted";
+"transactions.approve" = "승인됨";
+"transactions.swap" = "스왑됨";
 "transactions.contract_call" = "계약 콜";
 "transactions.contract_creation" = "계약 생성";
 "transactions.external_call" = "외부 콜";
