@@ -551,7 +551,7 @@ struct MultiSwapView: View {
             title = "Network Fee Error"
         } else {
             title = "Next"
-            disabled = false
+            disabled = viewModel.currentQuote.map { !$0.quote.canSwap } ?? false
         }
 
         return (title, disabled, showProgress)
