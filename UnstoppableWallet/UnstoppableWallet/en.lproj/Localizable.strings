@@ -991,7 +991,7 @@
 "transactions.burn" = "Burned";
 "transactions.mint" = "Minted";
 "transactions.approve" = "Approved";
-"transactions.swap" = "Swaped";
+"transactions.swap" = "Swapped";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
 "transactions.external_call" = "External Call";
