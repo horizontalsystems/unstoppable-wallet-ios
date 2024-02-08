@@ -86,7 +86,7 @@
 
 "version" = "Version %@";
 
-"n/a" = "S. O.";
+"n/a" = "n/a";
 
 "sync_error" = "Erreur de synchronisation. Réessayez.";
 
@@ -517,7 +517,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.approving_button" = "En cours d'approbation...";
 "swap.revoke_warning" = "Vous pouvez échanger %@, ou vous devez révoquer et approuver le nouveau montant";
 "swap.revoking_button" = "Révocation en cours...";
-"swap.not_available_button" = "Solde N/A";
+"swap.not_available_button" = "Balance n/a";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Ce service n'autorise pas l'emballage/décompression. S'il vous plaît, essayez un autre service de swap. 1Inch recommandé";
 "swap.button_error.insufficient_balance" = "Solde insuffisant";
@@ -988,12 +988,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "transactions.completed" = "Terminé";
 "transactions.failed" = "Échec";
 
-"transactions.receive" = "Recevoir";
-"transactions.send" = "Envoyer";
-"transactions.burn" = "Brûlure";
-"transactions.mint" = "Mint";
-"transactions.approve" = "Approuver";
-"transactions.swap" = "Echanger";
+"transactions.receive" = "Reçue";
+"transactions.send" = "Envoyée";
+"transactions.burn" = "Burned";
+"transactions.mint" = "Minted";
+"transactions.approve" = "Approuvé";
+"transactions.swap" = "Échangé";
 "transactions.contract_call" = "Appel de contrat";
 "transactions.contract_creation" = "Création du contrat";
 "transactions.external_call" = "Appel externe";
