@@ -143,7 +143,7 @@ extension BaseUniswapMultiSwapProvider {
                 fields.append(
                     MultiSwapMainField(
                         title: "Price Impact",
-                        value: "\(priceImpact)%",
+                        value: "-\(priceImpact.rounded(decimal: 2))%",
                         valueLevel: PriceImpactLevel(priceImpact: priceImpact).valueLevel
                     )
                 )
