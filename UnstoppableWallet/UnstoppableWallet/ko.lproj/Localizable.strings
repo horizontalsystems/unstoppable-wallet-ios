@@ -370,8 +370,15 @@
 "deposit.set_amount" = "금액 설정";
 "deposit.enter_amount" = "금액 입력";
 "deposit.not_active" = "비활성화됨";
+"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
+
+"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+
+"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
 "deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
@@ -437,6 +444,7 @@
 "send.confirmation.total" = "합계";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.time_lock" = "TimeLock";
+"send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
@@ -445,6 +453,7 @@
 "send.confirmation.cancel" = "트랜잭션 취소";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "메소드";
+"send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "잔고 부족";
 "send.address_error.own_address" = "TRX를 자신에게 전송할 수 없습니다";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
@@ -465,6 +474,10 @@
 "send.stuck_warning" = "경고! 갇힐 위험";
 
 "send.lock_time" = "시간 자물쇠";
+
+"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.change" = "Change";
 
 "approve.confirmation.you_approve" = "승인합니다";
 "approve.confirmation.you_revoke" = "당신은 취소";
@@ -579,6 +592,8 @@
 
 "swap.dex_info.link_button" = "%@ 사이트";
 
+
+
 // Market
 
 "market.tab_bar_item" = "시장";
@@ -623,8 +638,12 @@
 "market.top.top_losers" = "최고 하락자";
 "market.top.top_collections" = "주요 NFT 컬렉션";
 "market.top.floor_price" = "바닥:";
+"market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "주요 플랫폼";
 "market.top.protocols" = "프로토콜";
+
+"top_pairs.title" = "Top Market Pairs";
+"top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "플랫폼 순위";
 "top_platforms.description" = "상위에 구축된 프로젝트들의 누적 시장을 기준으로 한 선도적인 블록체인 플랫폼.";
@@ -655,6 +674,13 @@
 "market.advanced_search.choose_set" = "설정 선택";
 "market.advanced_search.market_cap" = "총 시가 총액";
 "market.advanced_search.volume" = "거래량";
+
+"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
+"market.advanced_search.good_cex_volume" = "Good CEX Volume";
+"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+
 "market.advanced_search.liquidity" = "DEX 유동성";
 "market.advanced_search.blockchains" = "블록체인";
 "market.advanced_search.price_period" = "가격 기간";
@@ -699,6 +725,10 @@
 "market.advanced_search.month" = "1 개월";
 "market.advanced_search.month6" = "6 개월";
 "market.advanced_search.year" = "일년";
+
+"market.advanced_search.day.short" = "24H";
+"market.advanced_search.week.short" = "7D";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "결과";
 
@@ -772,6 +802,7 @@
 "coin_analytics.period.4h" = "4 시간";
 "coin_analytics.period.1d" = "1 일";
 "coin_analytics.period.1w" = "1주일";
+"coin_analytics.period.1m" = "1 개월";
 
 "coin_analytics.details" = "상세 정보";
 
@@ -895,6 +926,15 @@
 "coin_analytics.30_day_rank" = "30일 순위";
 "coin_analytics.30_day_volume" = "30일 거래량";
 
+"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
+"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
+"coin_analytics.analysis.attention_required" = "Attention Required";
+"coin_analytics.analysis.token_detectors" = "Token Detectors";
+"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.issues" = "Issues: %@";
+
 // Coin Page -> Markets
 
 "coin_markets.empty" = "데이터 없음";
@@ -948,11 +988,11 @@
 "transactions.failed" = "실패";
 
 "transactions.receive" = "수령";
-"transactions.send" = "전송";
+"transactions.send" = "전송됨";
 "transactions.burn" = "번";
 "transactions.mint" = "민트";
-"transactions.approve" = "승인";
-"transactions.swap" = "스왑";
+"transactions.approve" = "승인됨";
+"transactions.swap" = "스왑됨";
 "transactions.contract_call" = "계약 콜";
 "transactions.contract_creation" = "계약 생성";
 "transactions.external_call" = "외부 콜";
@@ -968,7 +1008,7 @@
 "transactions.yesterday" = "어제";
 
 "transactions.types.all" = "전체";
-"transactions.types.incoming" = "수령됨";
+"transactions.types.incoming" = "수령";
 "transactions.types.outgoing" = "전송됨";
 "transactions.types.swap" = "스왑";
 "transactions.types.approve" = "승인";
@@ -1360,14 +1400,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24시";
-"chart.time_duration.week" = "7일";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2주";
-"chart.time_duration.month" = "1개월";
+"chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3개월";
 "chart.time_duration.halfyear" = "6개월";
 "chart.time_duration.year" = "1년";
 "chart.time_duration.year2" = "2년";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "모든";
 
 "chart.market_cap" = "총 시가 총액";
@@ -1628,6 +1669,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "이 nonce를 사용하여 실행된 트랜잭션이 이미 존재합니다.";
 
 "fee_settings" = "고급의";
+"fee_settings.title" = "Fee Settings";
 "fee_settings.fee" = "수수료";
 "fee_settings.fee.info" = "블록체인은 거래를 보낼 때 사용자로부터 네트워크 수수료를 지불하도록 요구합니다. 이 수수료는 네트워크에서 많은 거래가 이루어질 때 더 높아집니다.";
 "fee_settings.fee_rate" = "수수료율";
@@ -1635,6 +1677,8 @@
 "fee_settings.inputs_outputs" = "입력/출력";
 "fee_settings.transaction_settings" = "거래 설정";
 "fee_settings.transaction_settings.description" = "트랜잭션이 구조화되는 방식을 변경하여 Bitcoin 트랜잭션을 추적하기 어렵게 만드십시오.";
+"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
 
