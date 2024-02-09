@@ -726,9 +726,9 @@
 "market.advanced_search.month6" = "6 개월";
 "market.advanced_search.year" = "일년";
 
-"market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
-"market.advanced_search.month.short" = "1M";
+"market.advanced_search.day.short" = "24시";
+"market.advanced_search.week.short" = "7일";
+"market.advanced_search.month.short" = "1개월";
 
 "market.advanced_search_results.title" = "결과";
 
@@ -1400,10 +1400,10 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.day" = "24시";
+"chart.time_duration.week" = "7일";
 "chart.time_duration.week2" = "2주";
-"chart.time_duration.month" = "1M";
+"chart.time_duration.month" = "1개월";
 "chart.time_duration.month3" = "3개월";
 "chart.time_duration.halfyear" = "6개월";
 "chart.time_duration.year" = "1년";
