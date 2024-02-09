@@ -372,15 +372,15 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.set_amount" = "Définir le montant";
 "deposit.enter_amount" = "Entrez le montant";
 "deposit.not_active" = "non actif";
-"deposit.used_addresses" = "Used Addresses";
+"deposit.used_addresses" = "Adresses utilisées";
 "deposit.not_active.title" = "Adresse non-active";
 "deposit.not_active.tron_description" = "Les comptes récemment créés sur la blockchain TRON sont inactifs et ne peuvent pas être interrogés ou explorés. Ils doivent être activés.\n\nLe transfert de jetons TRX ou TRC-10 vers une adresse de compte inactive activera le compte. Pour activer un nouveau compte sur la chaîne Tron, des frais de 1 TRX sont nécessaires";
 
-"deposit.used_addresses.title" = "Used Addresses";
-"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+"deposit.used_addresses.title" = "Adresses utilisées";
+"deposit.used_addresses.description" = "Les adresses %@ changent pour des raisons de confidentialité et de sécurité. Ci-dessous, une liste des adresses utilisées dans ce portefeuille:";
 
-"receive_used_addresses.external" = "Receive Addresses";
-"receive_used_addresses.change" = "Change Addresses";
+"receive_used_addresses.external" = "Adresses de réception";
+"receive_used_addresses.change" = "Adresses de changement";
 
 "deposit.zcash.restore.description" = "Avez-vous déjà possédé des pièces de monnaie ZEC?";
 "deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
@@ -729,7 +729,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market.advanced_search.year" = "1 An";
 
 "market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
+"market.advanced_search.week.short" = "7J";
 "market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Résultat";
@@ -872,9 +872,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.holders.count" = "Nombre total de détenteurs : %@";
 "coin_analytics.holders.see_all" = "Tout Afficher";
 
-"coin_analytics.project_tvl" = "Project TVL";
+"coin_analytics.project_tvl" = "Projet TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
+"coin_analytics.project_tvl.info_title" = "Projet TVL (valeur totale verrouillée)";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (ou Acsets Under Management) dans les contrats intelligents du projet.";
 "coin_analytics.project_tvl.info2" = "Graphique montrant la variation valeur totale verrouillée dans les contrats intelligents du projet sur une période de 1 an.";
 "coin_analytics.project_tvl.info3" = "Rang du token en fonction de la valeur totale verrouillée actuelle.";
@@ -899,7 +899,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.treasuries.filters" = "Filtres";
 "coin_analytics.treasuries.filter.all" = "Tout";
-"coin_analytics.treasuries.filter.public" = "Public";
+"coin_analytics.treasuries.filter.public" = "Publique";
 "coin_analytics.treasuries.filter.private" = "Privé";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
@@ -927,7 +927,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.30_day_rank" = "Classement sur 30 jours";
 "coin_analytics.30_day_volume" = "Volume sur 30 jours";
 
-"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.title" = "Analyse des contrats intelligents";
 "coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
 "coin_analytics.analysis.high_risk_items" = "High Risk Items";
 "coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
@@ -1402,14 +1402,14 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Key Types
 
 "chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.week" = "7J";
 "chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3 M";
 "chart.time_duration.halfyear" = "6 m.";
 "chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2A";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year5" = "5A";
 "chart.time_duration.all" = "TOUS";
 
 "chart.market_cap" = "Cap. marché";
@@ -1668,7 +1668,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "evm_send_settings.nonce.errors.already_in_use.info" = "Une transaction exécutée avec ce nonce existe déjà.";
 
 "fee_settings" = "Avancé";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "Paramètres des frais";
 "fee_settings.fee" = "Frais";
 "fee_settings.fee.info" = "Les blockchains requièrent que les usagers paient des frais de réseau lorsqu'ils envoient des transactions. Ces frais sont plus élevés lorsque de nombreuses transactions empruntent le réseau.";
 "fee_settings.fee_rate" = "Taux de frais";
@@ -1677,7 +1677,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "fee_settings.transaction_settings" = "Paramètres de transaction";
 "fee_settings.transaction_settings.description" = "Rendez vos Bitcoin transactions plus difficiles à suivre en modifiant la façon dont les transactions sont structurées.";
 "fee_settings.replace_by_fee" = "Replace by Fee";
-"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
+"fee_settings.replace_by_fee.description" = "Ce choix vous permet de renvoyer une transaction bloquée en augmentant le montant des frais.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "Le TimeLock ne fonctionne que pour les envois vers les adresses du BIP44 (commençant par 1)";
 
