@@ -372,8 +372,15 @@
 "deposit.set_amount" = "设定金额";
 "deposit.enter_amount" = "输入金额";
 "deposit.not_active" = "不活动";
+"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
+
+"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+
+"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "您以前是否拥有过任何ZEC硬币？";
 "deposit.zcash.restore.already_own" = "是的，我已经拥有了";
@@ -439,6 +446,7 @@
 "send.confirmation.total" = "总额";
 "send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "TimeLock";
+"send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
@@ -447,6 +455,7 @@
 "send.confirmation.cancel" = "取消交易";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
+"send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "余额不足";
 "send.address_error.own_address" = "无法将 TRX 转移给自己";
 "send.amount_error.maximum_amount" = "最大金额 %@";
@@ -467,6 +476,10 @@
 "send.stuck_warning" = "警告！有被骗的风险";
 
 "send.lock_time" = "TimeLock";
+
+"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.change" = "Change";
 
 "approve.confirmation.you_approve" = "您批准";
 "approve.confirmation.you_revoke" = "您已取消";
@@ -581,6 +594,8 @@
 
 "swap.dex_info.link_button" = "%@ 站点";
 
+
+
 // Market
 
 "market.tab_bar_item" = "市场";
@@ -625,8 +640,12 @@
 "market.top.top_losers" = "跌幅榜";
 "market.top.top_collections" = "前列 NFT 收藏";
 "market.top.floor_price" = "底部：";
+"market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "前列平台";
 "market.top.protocols" = "协议";
+
+"top_pairs.title" = "Top Market Pairs";
+"top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "平台排名";
 "top_platforms.description" = "通过建立在顶部的项目的累积市场来领导区块链平台。";
@@ -657,6 +676,13 @@
 "market.advanced_search.choose_set" = "可选集合";
 "market.advanced_search.market_cap" = "市场价值";
 "market.advanced_search.volume" = "成交量";
+
+"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
+"market.advanced_search.good_cex_volume" = "Good CEX Volume";
+"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+
 "market.advanced_search.liquidity" = "DEX流动性";
 "market.advanced_search.blockchains" = "区块链";
 "market.advanced_search.price_period" = "价格区间";
@@ -701,6 +727,10 @@
 "market.advanced_search.month" = "1月";
 "market.advanced_search.month6" = "6 个月";
 "market.advanced_search.year" = "1 年";
+
+"market.advanced_search.day.short" = "24H";
+"market.advanced_search.week.short" = "7D";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "搜索结果";
 
@@ -773,6 +803,7 @@
 "coin_analytics.period.4h" = "4 小时";
 "coin_analytics.period.1d" = "1天";
 "coin_analytics.period.1w" = "1周";
+"coin_analytics.period.1m" = "1 个月";
 
 "coin_analytics.details" = "详细信息";
 
@@ -896,6 +927,15 @@
 "coin_analytics.30_day_rank" = "30天排名";
 "coin_analytics.30_day_volume" = "30天交易量";
 
+"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
+"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
+"coin_analytics.analysis.attention_required" = "Attention Required";
+"coin_analytics.analysis.token_detectors" = "Token Detectors";
+"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.issues" = "Issues: %@";
+
 // Coin Page -> Markets
 
 "coin_markets.empty" = "没有可用数据";
@@ -949,11 +989,11 @@
 "transactions.failed" = "失败";
 
 "transactions.receive" = "接收";
-"transactions.send" = "发送​​";
+"transactions.send" = "已发送";
 "transactions.burn" = "燃烧";
 "transactions.mint" = "薄荷绿";
 "transactions.approve" = "批准";
-"transactions.swap" = "掉期交易";
+"transactions.swap" = "已交换";
 "transactions.contract_call" = "合约调用";
 "transactions.contract_creation" = "合约创建";
 "transactions.external_call" = "外部呼叫";
@@ -969,7 +1009,7 @@
 "transactions.yesterday" = "昨天";
 
 "transactions.types.all" = "所有";
-"transactions.types.incoming" = "已收到";
+"transactions.types.incoming" = "接收";
 "transactions.types.outgoing" = "已发送";
 "transactions.types.swap" = "掉期交易";
 "transactions.types.approve" = "批准";
@@ -1361,14 +1401,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24小时";
-"chart.time_duration.week" = "7天";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2星期";
-"chart.time_duration.month" = "1个月";
+"chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3个月";
 "chart.time_duration.halfyear" = "6个月";
 "chart.time_duration.year" = "1年";
 "chart.time_duration.year2" = "2年";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "所有";
 
 "chart.market_cap" = "市场价值";
@@ -1627,6 +1668,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "使用此nonce执行的交易已存在。";
 
 "fee_settings" = "高级";
+"fee_settings.title" = "Fee Settings";
 "fee_settings.fee" = "费用";
 "fee_settings.fee.info" = "区块链要求用户在发送交易时支付网络费用。当大量交易在网络上进行时，这笔费用将更高。";
 "fee_settings.fee_rate" = "费率";
@@ -1634,6 +1676,8 @@
 "fee_settings.inputs_outputs" = "输入/输出";
 "fee_settings.transaction_settings" = "交易设置";
 "fee_settings.transaction_settings.description" = "通过更改建构交易的方式使您的比特币交易更难被追踪。";
+"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "时间锁（TimeLock）只适用于发送到BIP44地址（从1开始）";
 
