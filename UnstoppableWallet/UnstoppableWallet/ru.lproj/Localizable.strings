@@ -668,7 +668,7 @@
 
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать результаты";
-"market.advanced_search.empty_results" = "Сбросить результаты";
+"market.advanced_search.empty_results" = "Нет результатов";
 "market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24ч";
 
