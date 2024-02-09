@@ -721,15 +721,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.more_50_b" = "> 50B";
 "market.advanced_search.more_500_b" = "> 500B";
 
-"market.advanced_search.day" = "1 Day";
+"market.advanced_search.day" = "1 Tag";
 "market.advanced_search.week" = "1Week";
-"market.advanced_search.week2" = "2 Weeks";
+"market.advanced_search.week2" = "2 Wochen";
 "market.advanced_search.month" = "1 Monat";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.month6" = "6 Monate";
+"market.advanced_search.year" = "1 Jahr";
 
-"market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
+"market.advanced_search.day.short" = "24Std";
+"market.advanced_search.week.short" = "7T";
 "market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Ergebnisse";
@@ -767,12 +767,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_overview.genesis_date" = "Startdatum";
 "coin_overview.trading_volume" = "Handelsvolumen";
 
-"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.hour24" = "1 Tag";
 "coin_overview.roi.day7" = "1Week";
-"coin_overview.roi.day14" = "2 Weeks";
+"coin_overview.roi.day14" = "2 Wochen";
 "coin_overview.roi.day30" = "1 Monat";
 "coin_overview.roi.day200" = "6 Monate";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.year1" = "1 Jahr";
 
 "coin_overview.overview" = "Übersicht";
 "coin_overview.description_warning" = "Dies ist eine von KI generierte Beschreibung, basierend auf dem bereitgestellten Referenzmaterial für die angegebene Kryptowährung. Sie kann Fehler enthalten.";
@@ -1401,15 +1401,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.day" = "24Std";
+"chart.time_duration.week" = "7T";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2J";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year5" = "5J";
 "chart.time_duration.all" = "ALLE";
 
 "chart.market_cap" = "Marktkappe";
