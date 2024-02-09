@@ -61,8 +61,7 @@ struct MultiSwapQuotesView: View {
             .navigationTitle("Providers")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button("button.done".localized) {
-                    viewModel.syncQuotes()
+                Button("button.cancel".localized) {
                     isPresented = false
                 }
             }

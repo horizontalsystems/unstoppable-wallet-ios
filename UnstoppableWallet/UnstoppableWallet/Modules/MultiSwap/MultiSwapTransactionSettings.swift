@@ -19,7 +19,7 @@ protocol IMultiSwapTransactionService {
     var cautions: [CautionNew] { get }
     func sync() async throws
     func fee(quote: MultiSwapFeeQuote, token: Token) -> CoinValue?
-    func settingsView() -> AnyView?
+    func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView?
 }
 
 class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
@@ -156,12 +156,12 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         return CoinValue(kind: .token(token: token), value: amount)
     }
 
-    func settingsView() -> AnyView? {
+    func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView? {
         if chain.isEIP1559Supported {
-            let view = Eip1559FeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
+            let view = Eip1559FeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale), onChangeSettings: onChangeSettings)
             return AnyView(ThemeNavigationView { view })
         } else {
-            let view = LegacyFeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
+            let view = LegacyFeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale), onChangeSettings: onChangeSettings)
             return AnyView(ThemeNavigationView { view })
         }
     }

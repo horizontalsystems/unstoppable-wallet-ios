@@ -5,6 +5,7 @@ struct RecipientAndSlippageMultiSwapSettingsView: View {
     @ObservedObject var viewModel: BaseMultiSwapSettingsViewModel
     @ObservedObject var addressViewModel: AddressMultiSwapSettingsViewModel
     @ObservedObject var slippageViewModel: SlippageMultiSwapSettingsViewModel
+    var onChangeSettings: () -> ()
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -31,6 +32,7 @@ struct RecipientAndSlippageMultiSwapSettingsView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.done".localized) {
                     viewModel.onDone()
+                    onChangeSettings()
                     presentationMode.wrappedValue.dismiss()
                 }
                 .disabled(!viewModel.doneEnabled)

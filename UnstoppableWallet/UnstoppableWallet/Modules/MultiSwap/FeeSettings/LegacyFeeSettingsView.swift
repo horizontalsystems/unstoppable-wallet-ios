@@ -4,10 +4,12 @@ import SwiftUI
 
 struct LegacyFeeSettingsView: View {
     @ObservedObject var viewModel: LegacyFeeSettingsViewModel
+    var onChangeSettings: () -> Void
     @Environment(\.presentationMode) private var presentationMode
 
-    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory) {
+    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory, onChangeSettings: @escaping () -> Void) {
         viewModel = LegacyFeeSettingsViewModel(service: service, feeViewItemFactory: feeViewItemFactory)
+        self.onChangeSettings = onChangeSettings
     }
 
     var body: some View {
@@ -65,6 +67,7 @@ struct LegacyFeeSettingsView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.done".localized) {
+                    onChangeSettings()
                     presentationMode.wrappedValue.dismiss()
                 }
             }
@@ -98,7 +101,7 @@ struct LegacyFeeSettingsView: View {
             .modifier(Informed(description: description))
     }
 
-    @ViewBuilder private func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> ()) -> some View {
+    @ViewBuilder private func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {
         InputTextRow(vertical: .margin8) {
             StepChangeButtonsView(content: {
                 InputTextView(
@@ -126,15 +129,15 @@ extension LegacyFeeSettingsView {
 
         var title: String {
             switch self {
-                case .gasPrice: return "fee_settings.gas_price".localized
-                case .nonce: return "evm_send_settings.nonce".localized
+            case .gasPrice: return "fee_settings.gas_price".localized
+            case .nonce: return "evm_send_settings.nonce".localized
             }
         }
 
         var info: String {
             switch self {
-                case .gasPrice: return "fee_settings.gas_price.info".localized
-                case .nonce: return "evm_send_settings.nonce.info".localized
+            case .gasPrice: return "fee_settings.gas_price.info".localized
+            case .nonce: return "evm_send_settings.nonce.info".localized
             }
         }
     }

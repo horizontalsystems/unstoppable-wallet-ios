@@ -230,13 +230,13 @@ class MultiSwapViewModel: ObservableObject {
             syncCurrentQuote()
 
             timer?.invalidate()
-            quoteTimeLeft = 0
+            nextQuoteTime = nil
 
             if !quotes.isEmpty {
-                quoteTimeLeft = Double(autoRefreshDuration)
+                nextQuoteTime = Date().timeIntervalSince1970 + autoRefreshDuration
 
-                timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-                    self?.handleTimerTick()
+                timer = Timer.scheduledTimer(withTimeInterval: autoRefreshDuration, repeats: false) { [weak self] _ in
+                    self?.syncQuotes()
                 }
             }
         }
@@ -255,15 +255,8 @@ class MultiSwapViewModel: ObservableObject {
     @Published var quoting = false
     @Published var swapping = false
 
-    @Published var quoteTimerActive = false
-    var quoteTimeLeft: Double = 0 {
-        didSet {
-            let newQuoteTimerActive = quoteTimeLeft > 0
-
-            if quoteTimerActive != newQuoteTimerActive {
-                quoteTimerActive = newQuoteTimerActive
-            }
-        }
+    var nextQuoteTime: Double? {
+        didSet {}
     }
 
     @Published var transactionService: IMultiSwapTransactionService?
@@ -311,14 +304,6 @@ class MultiSwapViewModel: ObservableObject {
             validProviders = providers.filter { $0.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut) }
         } else {
             validProviders = []
-        }
-    }
-
-    private func handleTimerTick() {
-        quoteTimeLeft = max(0, quoteTimeLeft - 0.1)
-
-        if quoteTimeLeft == 0 {
-            syncQuotes()
         }
     }
 
@@ -481,12 +466,21 @@ extension MultiSwapViewModel {
 
     func stopAutoQuoting() {
         timer?.invalidate()
-        quoteTimeLeft = 0
     }
 
-    func syncQuotesIfRequired() {
-        if !quoting {
+    func autoQuoteIfRequired() {
+        guard !quoting, let nextQuoteTime else {
+            return
+        }
+
+        let now = Date().timeIntervalSince1970
+
+        if now > nextQuoteTime {
             syncQuotes()
+        } else {
+            timer = Timer.scheduledTimer(withTimeInterval: nextQuoteTime - now, repeats: false) { [weak self] _ in
+                self?.syncQuotes()
+            }
         }
     }
 
