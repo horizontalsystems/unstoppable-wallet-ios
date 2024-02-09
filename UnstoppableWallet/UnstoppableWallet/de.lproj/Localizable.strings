@@ -372,8 +372,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.set_amount" = "Setze Betrag";
 "deposit.enter_amount" = "Betrag eingeben";
 "deposit.not_active" = "nicht aktiv";
+"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "Keine aktive Adresse";
 "deposit.not_active.tron_description" = "Neu erstellte Konten in der TRON-Blockchain sind inaktiv und können nicht abgefragt oder untersucht werden. Sie müssen aktiviert werden.\n\nDie Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren. Zur Aktivierung eines neuen Kontos auf der Tron-Kette ist eine Gebühr von 1 TRX erforderlich";
+
+"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+
+"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "Hast du schon einmal im Besitz von ZEC-Münzen?";
 "deposit.zcash.restore.already_own" = "Ja, ich besitze bereits";
@@ -439,6 +446,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.total" = "Insgesamt";
 "send.confirmation.fee" = "Gebühr";
 "send.confirmation.time_lock" = "TimeLock";
+"send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.slide_to_send" = "Zum Senden wischen";
 "send.confirmation.sending" = "Wird gesendet";
 "send.confirmation.resend_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch erneutes Senden mit einer höheren Gebühr ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
@@ -447,6 +455,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.cancel" = "Transaktion abbrechen";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Methode";
+"send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "Nicht genügend Guthaben";
 "send.address_error.own_address" = "TRX kann nicht auf sich selbst übertragen werden";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
@@ -467,6 +476,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.stuck_warning" = "Warnung! Gefahr des Festklemmens";
 
 "send.lock_time" = "TimeLock";
+
+"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.change" = "Change";
 
 "approve.confirmation.you_approve" = "Sie genehmigen";
 "approve.confirmation.you_revoke" = "Du widerrufen";
@@ -581,6 +594,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "swap.dex_info.link_button" = "%@ Seite";
 
+
+
 // Market
 
 "market.tab_bar_item" = "Märkte";
@@ -625,8 +640,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.top.top_losers" = "Top Losers";
 "market.top.top_collections" = "Top NFT Collections";
 "market.top.floor_price" = "Stockwerk:";
+"market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
+
+"top_pairs.title" = "Top Market Pairs";
+"top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "Plattform-Rang";
 "top_platforms.description" = "Leading blockchain platforms by the cumulative market of projects built on top.";
@@ -657,6 +676,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.choose_set" = "Satz auswählen";
 "market.advanced_search.market_cap" = "Marktkappe";
 "market.advanced_search.volume" = "Handelsvolumen";
+
+"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
+"market.advanced_search.good_cex_volume" = "Good CEX Volume";
+"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+
 "market.advanced_search.liquidity" = "DEX-Liquidität";
 "market.advanced_search.blockchains" = "Blockchains";
 "market.advanced_search.price_period" = "Preiszeitraum";
@@ -701,6 +727,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.month" = "1 Monat";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
+
+"market.advanced_search.day.short" = "24H";
+"market.advanced_search.week.short" = "7D";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Ergebnisse";
 
@@ -773,6 +803,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.period.4h" = "4 Stunden";
 "coin_analytics.period.1d" = "1 Tag";
 "coin_analytics.period.1w" = "1 Woche";
+"coin_analytics.period.1m" = "1 Monat";
 
 "coin_analytics.details" = "Info";
 
@@ -896,6 +927,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.30_day_rank" = "30-Tage Rang";
 "coin_analytics.30_day_volume" = "30-Tage Lautstärke";
 
+"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
+"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
+"coin_analytics.analysis.attention_required" = "Attention Required";
+"coin_analytics.analysis.token_detectors" = "Token Detectors";
+"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.issues" = "Issues: %@";
+
 // Coin Page -> Markets
 
 "coin_markets.empty" = "Keine Daten verfügbar";
@@ -949,11 +989,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transactions.failed" = "Fehlgeschlagen";
 
 "transactions.receive" = "Empfangen";
-"transactions.send" = "Senden";
+"transactions.send" = "Gesendet";
 "transactions.burn" = "Burn";
 "transactions.mint" = "Mint";
-"transactions.approve" = "Genehmigen";
-"transactions.swap" = "Swap";
+"transactions.approve" = "Bestätigt";
+"transactions.swap" = "Swapped";
 "transactions.contract_call" = "Vertragsaufruf";
 "transactions.contract_creation" = "Vertragserstellung";
 "transactions.external_call" = "Externe Anrufe";
@@ -969,7 +1009,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transactions.yesterday" = "Gestern";
 
 "transactions.types.all" = "Alle";
-"transactions.types.incoming" = "Erhalten";
+"transactions.types.incoming" = "Empfangen";
 "transactions.types.outgoing" = "Gesendet";
 "transactions.types.swap" = "Swaps";
 "transactions.types.approve" = "Genehmigungen";
@@ -1361,14 +1401,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Key Types
 
-"chart.time_duration.day" = "24Std";
-"chart.time_duration.week" = "7T";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2J";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "ALLE";
 
 "chart.market_cap" = "Marktkappe";
@@ -1627,6 +1668,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "evm_send_settings.nonce.errors.already_in_use.info" = "Eine ausgeführte Transaktion mit diesem nonce existiert bereits.";
 
 "fee_settings" = "Erweitert";
+"fee_settings.title" = "Fee Settings";
 "fee_settings.fee" = "Gebühr";
 "fee_settings.fee.info" = "Blockchains verlangen, dass Nutzer Netzwerkgebühren beim Versenden von Transaktionen bezahlen. Die Gebühren sind höher, wenn viele Transaktionen im Netzwerk stattfinden.";
 "fee_settings.fee_rate" = "Gebührenrate";
@@ -1634,6 +1676,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "fee_settings.inputs_outputs" = "Ein-/Ausgänge";
 "fee_settings.transaction_settings" = "Transaktionseinstellungen";
 "fee_settings.transaction_settings.description" = "Machen Sie Ihre Bitcoin-Transaktionen schwieriger nachvollziehbar, indem Sie die Transaktionsstruktur verändern.";
+"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funktioniert nur beim Senden an BIP44 Adressen (ab 1)";
 
