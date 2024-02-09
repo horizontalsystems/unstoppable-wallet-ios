@@ -372,8 +372,15 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.set_amount" = "Definir Quantidade";
 "deposit.enter_amount" = "Inserir Quantidade";
 "deposit.not_active" = "Não ativo";
+"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "Endereço não ativo";
 "deposit.not_active.tron_description" = "Contas recém-criadas no blockchain TRON estão inativas e não podem ser consultadas ou exploradas. Elas precisam ser ativadas.\n\nPara ativar uma nova conta na cadeia Tron, é necessário transferir tokens TRX ou TRC-10 para um endereço de conta inativo, juntamente com uma taxa de ativação de 1 TRX";
+
+"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+
+"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "Já possui alguma moeda ZEC?";
 "deposit.zcash.restore.already_own" = "Sim, eu já possuo";
@@ -439,6 +446,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.total" = "Total";
 "send.confirmation.fee" = "Taxa";
 "send.confirmation.time_lock" = "TimeLock";
+"send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.slide_to_send" = "Deslize para enviar";
 "send.confirmation.sending" = "Enviando";
 "send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
@@ -447,6 +455,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.cancel" = "Cancelar transação";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Método";
+"send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "Saldo insuficiente";
 "send.address_error.own_address" = "Não é possível transferir TRX para si mesmo";
 "send.amount_error.maximum_amount" = "Valor máximo: %@";
@@ -467,6 +476,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.stuck_warning" = "Atenção! Risco de ficar preso";
 
 "send.lock_time" = "TravaTempo";
+
+"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.change" = "Change";
 
 "approve.confirmation.you_approve" = "Você concorda";
 "approve.confirmation.you_revoke" = "Você revoga";
@@ -581,6 +594,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "swap.dex_info.link_button" = "%@ Site";
 
+
+
 // Market
 
 "market.tab_bar_item" = "Mercados";
@@ -625,8 +640,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.top.top_losers" = "Maiores Quedas";
 "market.top.top_collections" = "Principais Coleções NFT";
 "market.top.floor_price" = "Andar:";
+"market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "Melhores Plataformas";
 "market.top.protocols" = "Protocolos";
+
+"top_pairs.title" = "Top Market Pairs";
+"top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "Classificação de Plataformas";
 "top_platforms.description" = "Liderança de plataformas de blockchain por mercado cumulativo de projetos construídos no topo.";
@@ -657,6 +676,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.choose_set" = "Escolha o Conjunto";
 "market.advanced_search.market_cap" = "Capitalização de Mercado";
 "market.advanced_search.volume" = "Volume de Operações";
+
+"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
+"market.advanced_search.good_cex_volume" = "Good CEX Volume";
+"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+
 "market.advanced_search.liquidity" = "Liquidez DEX";
 "market.advanced_search.blockchains" = "Blockchains";
 "market.advanced_search.price_period" = "Período de Preço";
@@ -701,6 +727,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.month" = "1 Mês";
 "market.advanced_search.month6" = "6 Meses";
 "market.advanced_search.year" = "1 Ano";
+
+"market.advanced_search.day.short" = "24H";
+"market.advanced_search.week.short" = "7D";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Resultados";
 
@@ -773,6 +803,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.period.4h" = "4 horas";
 "coin_analytics.period.1d" = "1 dia";
 "coin_analytics.period.1w" = "1 semana";
+"coin_analytics.period.1m" = "1 mês";
 
 "coin_analytics.details" = "Detalhes";
 
@@ -896,6 +927,15 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.30_day_rank" = "Classificação 30-Dias";
 "coin_analytics.30_day_volume" = "Volume 30 Dias";
 
+"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
+"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
+"coin_analytics.analysis.attention_required" = "Attention Required";
+"coin_analytics.analysis.token_detectors" = "Token Detectors";
+"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.issues" = "Issues: %@";
+
 // Coin Page -> Markets
 
 "coin_markets.empty" = "Não há dados disponíveis";
@@ -949,11 +989,11 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.failed" = "Falhou";
 
 "transactions.receive" = "Receber";
-"transactions.send" = "Enviar";
+"transactions.send" = "Enviado";
 "transactions.burn" = "Queimar";
 "transactions.mint" = "Mint";
-"transactions.approve" = "Aprovar";
-"transactions.swap" = "Trocar";
+"transactions.approve" = "Aprovado";
+"transactions.swap" = "Trocado";
 "transactions.contract_call" = "Chamada de Contrato";
 "transactions.contract_creation" = "Criação de contrato";
 "transactions.external_call" = "Ligação Externa";
@@ -969,7 +1009,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.yesterday" = "Ontem";
 
 "transactions.types.all" = "Todos";
-"transactions.types.incoming" = "Recebido";
+"transactions.types.incoming" = "Receber";
 "transactions.types.outgoing" = "Enviado";
 "transactions.types.swap" = "Trocas";
 "transactions.types.approve" = "Aprovações";
@@ -1369,6 +1409,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1A";
 "chart.time_duration.year2" = "2A";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "TODOS";
 
 "chart.market_cap" = "Capitalização de Mercado";
@@ -1627,6 +1668,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "evm_send_settings.nonce.errors.already_in_use.info" = "Já existe uma transação executada agora.";
 
 "fee_settings" = "Avançado";
+"fee_settings.title" = "Fee Settings";
 "fee_settings.fee" = "Taxa";
 "fee_settings.fee.info" = "Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são mais altas quando muitas transações estão ocorrendo na rede.";
 "fee_settings.fee_rate" = "Taxa de tarifa";
@@ -1634,6 +1676,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "fee_settings.inputs_outputs" = "Entrada/Saída";
 "fee_settings.transaction_settings" = "Configurações de transação";
 "fee_settings.transaction_settings.description" = "Torne suas %@ transações mais difíceis de rastrear, mudando a maneira como as transações são estruturadas.";
+"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
 
