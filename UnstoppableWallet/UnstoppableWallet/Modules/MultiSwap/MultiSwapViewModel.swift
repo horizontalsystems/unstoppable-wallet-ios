@@ -243,7 +243,11 @@ class MultiSwapViewModel: ObservableObject {
     }
 
     @Published var amountOutString: String?
-    @Published var fiatAmountOut: Decimal?
+    @Published var fiatAmountOut: Decimal? {
+        didSet {
+            syncPriceImpact()
+        }
+    }
 
     @Published var price: String?
     private var priceFlipped = false
@@ -283,6 +287,8 @@ class MultiSwapViewModel: ObservableObject {
     }
 
     @Published var feeTokenRate: Decimal?
+
+    @Published var priceImpact: Decimal?
 
     var finishSubject = PassthroughSubject<Void, Never>()
 
@@ -357,6 +363,15 @@ class MultiSwapViewModel: ObservableObject {
         }
 
         fiatAmountOut = (currentQuote.quote.amountOut * rateOut).rounded(decimal: 2)
+    }
+
+    func syncPriceImpact() {
+        guard let fiatAmountIn, let fiatAmountOut else {
+            priceImpact = nil
+            return
+        }
+
+        priceImpact = (fiatAmountOut * 100 / fiatAmountIn) - 100
     }
 
     func syncQuotes() {
@@ -503,5 +518,33 @@ extension MultiSwapViewModel {
     struct Quote {
         let provider: IMultiSwapProvider
         let quote: IMultiSwapQuote
+    }
+
+    enum PriceImpactLevel {
+        case negligible
+        case normal
+        case warning
+        case forbidden
+
+        private static let normalPriceImpact: Decimal = 1
+        private static let warningPriceImpact: Decimal = 5
+        private static let forbiddenPriceImpact: Decimal = 20
+
+        init(priceImpact: Decimal) {
+            switch priceImpact {
+            case 0 ..< Self.normalPriceImpact: self = .negligible
+            case Self.normalPriceImpact ..< Self.warningPriceImpact: self = .normal
+            case Self.warningPriceImpact ..< Self.forbiddenPriceImpact: self = .warning
+            default: self = .forbidden
+            }
+        }
+
+        var valueLevel: MultiSwapValueLevel {
+            switch self {
+            case .warning: return .warning
+            case .forbidden: return .error
+            default: return .regular
+            }
+        }
     }
 }

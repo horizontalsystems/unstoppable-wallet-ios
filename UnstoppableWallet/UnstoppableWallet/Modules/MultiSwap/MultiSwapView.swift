@@ -224,9 +224,25 @@ struct MultiSwapView: View {
 
                 if viewModel.tokenOut != nil {
                     if viewModel.rateOut != nil {
-                        Text("\(viewModel.currency.symbol)\((viewModel.fiatAmountOut ?? 0).description)")
-                            .themeBody(color: .themeGray, alignment: .leading)
-                            .frame(height: 20)
+                        HStack(spacing: .margin8) {
+                            Text("\(viewModel.currency.symbol)\((viewModel.fiatAmountOut ?? 0).description)")
+                                .textBody(color: .themeGray)
+                                .frame(height: 20)
+
+                            if let priceImpact = viewModel.priceImpact, priceImpact < 0 {
+                                let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
+
+                                switch level {
+                                case .negligible:
+                                    EmptyView()
+                                default:
+                                    Text("(\(priceImpact.rounded(decimal: 2).description)%)")
+                                        .textSubhead1(color: color(valueLevel: level.valueLevel))
+                                }
+                            }
+
+                            Spacer()
+                        }
                     } else {
                         Text("Rate not available")
                             .themeSubhead2(color: .themeGray50, alignment: .leading)
