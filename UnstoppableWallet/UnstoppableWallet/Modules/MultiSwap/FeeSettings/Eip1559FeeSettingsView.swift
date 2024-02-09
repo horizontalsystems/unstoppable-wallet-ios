@@ -4,10 +4,12 @@ import SwiftUI
 
 struct Eip1559FeeSettingsView: View {
     @ObservedObject var viewModel: Eip1559FeeSettingsViewModel
+    var onChangeSettings: () -> Void
     @Environment(\.presentationMode) private var presentationMode
 
-    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory) {
+    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory, onChangeSettings: @escaping () -> Void) {
         viewModel = Eip1559FeeSettingsViewModel(service: service, feeViewItemFactory: feeViewItemFactory)
+        self.onChangeSettings = onChangeSettings
     }
 
     var body: some View {
@@ -93,6 +95,7 @@ struct Eip1559FeeSettingsView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.done".localized) {
+                    onChangeSettings()
                     presentationMode.wrappedValue.dismiss()
                 }
             }
@@ -126,7 +129,7 @@ struct Eip1559FeeSettingsView: View {
             .modifier(Informed(description: description))
     }
 
-    @ViewBuilder private func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> ()) -> some View {
+    @ViewBuilder private func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {
         InputTextRow(vertical: .margin8) {
             StepChangeButtonsView(content: {
                 InputTextView(

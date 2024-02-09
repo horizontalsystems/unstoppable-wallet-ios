@@ -91,7 +91,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         )
     }
 
-    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token) -> AnyView {
+    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
         let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
         let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
         let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
@@ -99,7 +99,8 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             RecipientAndSlippageMultiSwapSettingsView(
                 viewModel: viewModel,
                 addressViewModel: addressViewModel,
-                slippageViewModel: slippageViewModel
+                slippageViewModel: slippageViewModel,
+                onChangeSettings: onChangeSettings
             )
         }
 

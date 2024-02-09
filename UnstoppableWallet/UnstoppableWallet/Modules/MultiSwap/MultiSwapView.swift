@@ -37,12 +37,12 @@ struct MultiSwapView: View {
                         }
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-                    .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
+                    .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
                         MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
                     }
-                    .sheet(isPresented: $feeSettingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
+                    .sheet(isPresented: $feeSettingsPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
                         if let feeService = viewModel.transactionService {
-                            feeService.settingsView()
+                            feeService.settingsView { viewModel.syncQuotes() }
                         } else {
                             Text("NO")
                         }
@@ -66,11 +66,12 @@ struct MultiSwapView: View {
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if viewModel.quoteTimerActive {
+                    if let nextQuoteTime = viewModel.nextQuoteTime {
                         CircularProgressView(progress: progress)
                             .onAppear {
-                                progress = viewModel.quoteTimeLeft / viewModel.autoRefreshDuration
-                                withAnimation(.linear(duration: viewModel.quoteTimeLeft)) {
+                                let timeLeft = max(0, nextQuoteTime - Date().timeIntervalSince1970)
+                                progress = timeLeft / viewModel.autoRefreshDuration
+                                withAnimation(.linear(duration: timeLeft)) {
                                     progress = 0
                                 }
                             }
@@ -419,8 +420,10 @@ struct MultiSwapView: View {
         }
         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin12))
         .frame(minHeight: 40)
-        .sheet(isPresented: $settingsPresented, onDismiss: { viewModel.syncQuotesIfRequired() }) {
-            currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut)
+        .sheet(isPresented: $settingsPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
+            currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut) {
+                viewModel.syncQuotes()
+            }
         }
     }
 
