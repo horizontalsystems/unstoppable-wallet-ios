@@ -457,7 +457,7 @@
 "send.confirmation.cancel" = "Отменить транзакцию";
 "send.confirmation.nonce" = "Memo";
 "send.confirmation.method" = "Метод";
-"send.confirmation.replace_by_fee.disabled" = "Disabled";
+"send.confirmation.replace_by_fee.disabled" = "Выкл.";
 "send.amount_error.balance" = "Недостаточно средств";
 "send.address_error.own_address" = "Невозможно отправить TRX самому себе";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
@@ -730,8 +730,8 @@
 "market.advanced_search.month6" = "6 месяцев";
 "market.advanced_search.year" = "1 год";
 
-"market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
+"market.advanced_search.day.short" = "24ч";
+"market.advanced_search.week.short" = "7Д";
 "market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Результаты";
@@ -1403,15 +1403,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.day" = "24ч";
+"chart.time_duration.week" = "7Д";
 "chart.time_duration.week2" = "2Н";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halfyear" = "6М";
 "chart.time_duration.year" = "1Г";
 "chart.time_duration.year2" = "2Г";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year5" = "5Г";
 "chart.time_duration.all" = "ВСЕ";
 
 "chart.market_cap" = "Рын. капитализация";
@@ -1670,7 +1670,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
 "fee_settings" = "Доп. настройки";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "Настройки комиссии";
 "fee_settings.fee" = "Комиссия";
 "fee_settings.fee.info" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Эти сборы выше, когда в сети происходит много транзакций.";
 "fee_settings.fee_rate" = "Комиссия";
