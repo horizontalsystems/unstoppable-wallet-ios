@@ -121,7 +121,15 @@ extension BaseEvmMultiSwapProvider {
             []
         }
 
-        var confirmFieldSections: [[MultiSwapConfirmField]] {
+        func confirmationPriceSectionFields(tokenIn _: Token, tokenOut _: Token, currency _: Currency, rateIn _: Decimal?, rateOut _: Decimal?) -> [MultiSwapConfirmField] {
+            []
+        }
+
+        func confirmationFeeSectionFields(tokenIn _: Token, tokenOut _: Token, currency _: Currency, rateIn _: Decimal?, rateOut _: Decimal?) -> [MultiSwapConfirmField] {
+            []
+        }
+
+        func confirmationOtherSections(tokenIn _: Token, tokenOut _: Token, currency _: Currency, rateIn _: Decimal?, rateOut _: Decimal?) -> [[MultiSwapConfirmField]] {
             []
         }
 

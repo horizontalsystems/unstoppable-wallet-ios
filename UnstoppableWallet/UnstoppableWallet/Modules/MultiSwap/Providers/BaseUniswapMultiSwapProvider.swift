@@ -184,6 +184,52 @@ extension BaseUniswapMultiSwapProvider {
             return cautions
         }
 
+        override func confirmationPriceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [MultiSwapConfirmField] {
+            var fields = super.confirmationPriceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, rateIn: rateIn, rateOut: rateOut)
+
+            if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
+                fields.append(
+                    .levelValue(
+                        title: "Price Impact",
+                        value: "-\(priceImpact.rounded(decimal: 2))%",
+                        level: PriceImpactLevel(priceImpact: priceImpact).valueLevel
+                    )
+                )
+            }
+
+            if let recipient {
+                fields.append(
+                    .address(
+                        title: "Recipient",
+                        value: recipient.raw
+                    )
+                )
+            }
+
+            if slippage != MultiSwapSlippage.default {
+                fields.append(
+                    .levelValue(
+                        title: "Slippage",
+                        value: "\(slippage.description)%",
+                        level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+                    )
+                )
+            }
+
+            let minAmountOut = amountOut * (1 - slippage / 100)
+
+            fields.append(
+                .value(
+                    title: "Minimum Received",
+                    description: nil,
+                    coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
+                    currencyValue: rateOut.map { CurrencyValue(currency: currency, value: minAmountOut * $0) }
+                )
+            )
+
+            return fields
+        }
+
         override var canSwap: Bool {
             var canSwap = true
 

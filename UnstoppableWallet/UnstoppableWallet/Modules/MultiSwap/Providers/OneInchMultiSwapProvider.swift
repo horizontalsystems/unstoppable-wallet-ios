@@ -84,7 +84,6 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
 
         return await Quote(
             quote: quote,
-            tokenOut: tokenOut,
             recipient: storage.value(for: MultiSwapSettingStorage.LegacySetting.address),
             slippage: storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
@@ -137,13 +136,11 @@ extension OneInchMultiSwapProvider {
 extension OneInchMultiSwapProvider {
     class Quote: BaseEvmMultiSwapProvider.Quote {
         private let quote: OneInchKit.Quote
-        private let tokenOut: MarketKit.Token
         private let recipient: Address?
         private let slippage: Decimal
 
-        init(quote: OneInchKit.Quote, tokenOut: MarketKit.Token, recipient: Address?, slippage: Decimal, allowanceState: AllowanceState) {
+        init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, allowanceState: AllowanceState) {
             self.quote = quote
-            self.tokenOut = tokenOut
             self.recipient = recipient
             self.slippage = slippage
 
@@ -191,23 +188,40 @@ extension OneInchMultiSwapProvider {
             return cautions
         }
 
-        override var confirmFieldSections: [[MultiSwapConfirmField]] {
-            var sections = super.confirmFieldSections
+        override func confirmationPriceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [MultiSwapConfirmField] {
+            var fields = super.confirmationPriceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, rateIn: rateIn, rateOut: rateOut)
+
+            if let recipient {
+                fields.append(
+                    .address(
+                        title: "Recipient",
+                        value: recipient.raw
+                    )
+                )
+            }
+
+            if slippage != MultiSwapSlippage.default {
+                fields.append(
+                    .levelValue(
+                        title: "Slippage",
+                        value: "\(slippage.description)%",
+                        level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+                    )
+                )
+            }
 
             let minAmountOut = amountOut * (1 - slippage / 100)
 
-            sections.append(
-                [
-                    .value(
-                        title: "Minimum Received",
-                        description: nil,
-                        coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
-                        currencyValue: nil
-                    ),
-                ]
+            fields.append(
+                .value(
+                    title: "Minimum Received",
+                    description: nil,
+                    coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
+                    currencyValue: rateOut.map { CurrencyValue(currency: currency, value: minAmountOut * $0) }
+                )
             )
 
-            return sections
+            return fields
         }
     }
 }
