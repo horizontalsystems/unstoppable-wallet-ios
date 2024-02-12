@@ -49,11 +49,20 @@ struct MultiSwapView: View {
                     }
                 }
 
-                NavigationLink(
-                    destination: MultiSwapConfirmView(viewModel: viewModel, isPresented: $confirmPresented),
-                    isActive: $confirmPresented
-                ) {
-                    EmptyView()
+                if let tokenIn = viewModel.tokenIn, let tokenOut = viewModel.tokenOut, let amountIn = viewModel.amountIn, let currentQuote = viewModel.currentQuote, let transactionService = viewModel.transactionService {
+                    NavigationLink(
+                        destination: MultiSwapConfirmationView(
+                            tokenIn: tokenIn,
+                            tokenOut: tokenOut,
+                            amountIn: amountIn,
+                            provider: currentQuote.provider,
+                            transactionService: transactionService,
+                            isPresented: $confirmPresented
+                        ),
+                        isActive: $confirmPresented
+                    ) {
+                        EmptyView()
+                    }
                 }
             }
             .navigationTitle("swap.title".localized)
@@ -309,6 +318,7 @@ struct MultiSwapView: View {
         let (title, disabled, showProgress) = buttonState()
 
         Button(action: {
+            viewModel.stopAutoQuoting()
             confirmPresented = true
         }) {
             HStack(spacing: .margin8) {
@@ -468,7 +478,7 @@ struct MultiSwapView: View {
         }
         .padding(.vertical, .margin12)
         .padding(.trailing, .margin12)
-        .frame(height: 40)
+        .frame(minHeight: 40)
     }
 
     @ViewBuilder private func providerFieldView(field: MultiSwapMainField) -> some View {

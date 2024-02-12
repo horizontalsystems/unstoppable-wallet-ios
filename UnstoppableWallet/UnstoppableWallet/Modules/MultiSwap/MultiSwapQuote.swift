@@ -6,23 +6,11 @@ protocol IMultiSwapQuote {
     var feeQuote: MultiSwapFeeQuote? { get }
     var mainFields: [MultiSwapMainField] { get }
     var cautions: [CautionNew] { get }
-    var confirmFieldSections: [[MultiSwapConfirmField]] { get }
+    func confirmationPriceSectionFields(tokenIn: Token, tokenOut: Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [MultiSwapConfirmField]
+    func confirmationFeeSectionFields(tokenIn: Token, tokenOut: Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [MultiSwapConfirmField]
+    func confirmationOtherSections(tokenIn: Token, tokenOut: Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [[MultiSwapConfirmField]]
     var settingsModified: Bool { get }
     var canSwap: Bool { get }
-}
-
-extension IMultiSwapQuote {
-    var firstSection: [MultiSwapConfirmField] {
-        confirmFieldSections.first ?? []
-    }
-
-    var otherSections: [[MultiSwapConfirmField]] {
-        var sections = confirmFieldSections
-        if !sections.isEmpty {
-            sections.removeFirst()
-        }
-        return sections
-    }
 }
 
 struct MultiSwapTokenAmount {
