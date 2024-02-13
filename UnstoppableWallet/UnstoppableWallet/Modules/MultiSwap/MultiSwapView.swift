@@ -14,8 +14,6 @@ struct MultiSwapView: View {
     @State private var feeSettingsPresented = false
     @State private var presentedSettingId: String?
 
-    @State private var progress: Double = 0
-
     @FocusState var isInputActive: Bool
 
     var body: some View {
@@ -63,6 +61,11 @@ struct MultiSwapView: View {
                     ) {
                         EmptyView()
                     }
+                    .onChange(of: confirmPresented) { presented in
+                        if !presented {
+                            viewModel.autoQuoteIfRequired()
+                        }
+                    }
                 }
             }
             .navigationTitle("swap.title".localized)
@@ -76,14 +79,7 @@ struct MultiSwapView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if let nextQuoteTime = viewModel.nextQuoteTime {
-                        CircularProgressView(progress: progress)
-                            .onAppear {
-                                let timeLeft = max(0, nextQuoteTime - Date().timeIntervalSince1970)
-                                progress = timeLeft / viewModel.autoRefreshDuration
-                                withAnimation(.linear(duration: timeLeft)) {
-                                    progress = 0
-                                }
-                            }
+                        MultiSwapCircularProgressView(nextQuoteTime: nextQuoteTime, autoRefreshDuration: viewModel.autoRefreshDuration)
                     } else {
                         EmptyView()
                     }

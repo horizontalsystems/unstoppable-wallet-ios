@@ -220,7 +220,7 @@ class MultiSwapViewModel: ObservableObject {
             }
 
             internalUserSelectedProviderId = userSelectedProviderId
-            syncQuotes()
+            syncCurrentQuote()
         }
     }
 
@@ -254,9 +254,7 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var quoting = false
 
-    var nextQuoteTime: Double? {
-        didSet {}
-    }
+    var nextQuoteTime: Double?
 
     @Published var transactionService: IMultiSwapTransactionService?
 
