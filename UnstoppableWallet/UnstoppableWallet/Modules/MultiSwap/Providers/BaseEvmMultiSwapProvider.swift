@@ -67,7 +67,7 @@ extension BaseEvmMultiSwapProvider {
 
 extension BaseEvmMultiSwapProvider {
     class Quote: IMultiSwapQuote {
-        private let estimatedGas: Int?
+        let estimatedGas: Int?
         private let allowanceState: AllowanceState
 
         init(estimatedGas: Int?, allowanceState: AllowanceState) {

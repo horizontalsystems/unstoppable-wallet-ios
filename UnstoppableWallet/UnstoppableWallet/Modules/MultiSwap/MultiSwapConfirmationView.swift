@@ -31,6 +31,9 @@ struct MultiSwapConfirmationView: View {
                 isPresented = false
             }
         }
+        .onReceive(viewModel.finishSubject) {
+            isPresented = false
+        }
     }
 
     @ViewBuilder private func quoteView(quote: IMultiSwapQuote) -> some View {
@@ -61,7 +64,13 @@ struct MultiSwapConfirmationView: View {
                                     Button(action: {
                                         viewModel.flipPrice()
                                     }) {
-                                        Text(price).textSubhead1(color: .themeLeah)
+                                        HStack(spacing: .margin8) {
+                                            Text(price)
+                                                .textSubhead1(color: .themeLeah)
+                                                .multilineTextAlignment(.trailing)
+
+                                            Image("arrow_swap_3_20").themeIcon()
+                                        }
                                     }
                                 }
                             }
@@ -152,18 +161,17 @@ struct MultiSwapConfirmationView: View {
             }
 
             Button(action: {
-//                viewModel.swap()
+                viewModel.swap()
             }) {
                 HStack(spacing: .margin8) {
-//                    if viewModel.swapping {
-//                        ProgressView()
-//                    }
+                    if viewModel.swapping {
+                        ProgressView()
+                    }
 
-//                    Text(viewModel.swapping ? "Swapping" : "Swap")
-                    Text("Swap")
+                    Text(viewModel.swapping ? "Swapping" : "Swap")
                 }
             }
-//            .disabled(viewModel.swapping)
+            .disabled(viewModel.swapping)
             .buttonStyle(PrimaryButtonStyle(style: .yellow))
             .padding(.vertical, .margin16)
             .padding(.horizontal, .margin16)

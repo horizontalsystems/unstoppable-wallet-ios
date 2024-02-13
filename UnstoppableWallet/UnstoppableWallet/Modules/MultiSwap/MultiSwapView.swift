@@ -100,9 +100,6 @@ struct MultiSwapView: View {
                 }
             }
         }
-        .onReceive(viewModel.finishSubject) {
-            presentationMode.wrappedValue.dismiss()
-        }
     }
 
     @ViewBuilder private func amountsView() -> some View {

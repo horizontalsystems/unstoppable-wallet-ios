@@ -112,13 +112,45 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func swap(quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws {
+    func swap(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws {
         guard let quote = quote as? Quote else {
             throw SwapError.invalidQuote
         }
 
-        print(String(describing: quote))
-        print(String(describing: transactionSettings))
+        guard let amount = rawAmount(amount: amountIn, token: tokenIn) else {
+            throw SwapError.invalidAmountIn
+        }
+
+        guard let transactionSettings, case let .evm(gasPrice, _) = transactionSettings else {
+            throw SwapError.noFeeData
+        }
+
+        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
+            throw SwapError.noEvmKitWrapper
+        }
+
+        let evmKit = evmKitWrapper.evmKit
+
+        let swap = try await kit.swap(
+            networkManager: networkManager,
+            chain: evmKit.chain,
+            receiveAddress: evmKit.receiveAddress,
+            fromToken: address(token: tokenIn),
+            toToken: address(token: tokenOut),
+            amount: amount,
+            slippage: quote.slippage,
+            recipient: quote.recipient.flatMap { try? EvmKit.Address(hex: $0.raw) },
+            gasPrice: gasPrice,
+            gasLimit: quote.quote.estimateGas
+        )
+
+        let transactionData = TransactionData(to: swap.transaction.to, value: swap.transaction.value, input: swap.transaction.data)
+
+//        _ = try await evmKitWrapper.send(
+//            transactionData: transactionData,
+//            gasPrice: swap.transaction.gasPrice,
+//            gasLimit: swap.transaction.gasLimit
+//        )
 
         try await Task.sleep(nanoseconds: 3_000_000_000)
     }
@@ -130,14 +162,15 @@ extension OneInchMultiSwapProvider {
         case invalidAmountIn
         case noFeeData
         case invalidQuote
+        case noEvmKitWrapper
     }
 }
 
 extension OneInchMultiSwapProvider {
     class Quote: BaseEvmMultiSwapProvider.Quote {
-        private let quote: OneInchKit.Quote
-        private let recipient: Address?
-        private let slippage: Decimal
+        let quote: OneInchKit.Quote
+        let recipient: Address?
+        let slippage: Decimal
 
         init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, allowanceState: AllowanceState) {
             self.quote = quote

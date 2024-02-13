@@ -10,7 +10,7 @@ protocol IMultiSwapProvider {
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote
     func settingsView(tokenIn: Token, tokenOut: Token, onChangeSettings: @escaping () -> ()) -> AnyView
     func settingView(settingId: String) -> AnyView
-    func swap(quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws
+    func swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws
 }
 
 extension IMultiSwapProvider {

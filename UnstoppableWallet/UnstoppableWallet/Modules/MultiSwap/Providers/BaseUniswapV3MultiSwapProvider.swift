@@ -36,15 +36,4 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
         kit.routerAddress(chain: chain)
     }
-
-    func swap(quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws {
-        guard let quote = quote as? Quote else {
-            throw SwapError.invalidQuote
-        }
-
-        print(String(describing: quote))
-        print(String(describing: transactionSettings))
-
-        try await Task.sleep(nanoseconds: 3_000_000_000)
-    }
 }

@@ -45,19 +45,22 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         let trade = try await trade(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut, amountIn: amountIn, tradeOptions: tradeOptions)
 
+        var resolvedTransactionData: TransactionData?
         var estimatedGas: Int?
 
-        if let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit,
+        if let evmKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit,
            let transactionSettings, case let .evm(gasPrice, _) = transactionSettings
         {
             do {
-                let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: chain, trade: trade, tradeOptions: tradeOptions)
-                estimatedGas = try await evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
+                let txData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: chain, trade: trade, tradeOptions: tradeOptions)
+                resolvedTransactionData = txData
+                estimatedGas = try await evmKit.fetchEstimateGas(transactionData: txData, gasPrice: gasPrice)
             } catch {}
         }
 
         return await Quote(
             trade: trade,
+            transactionData: resolvedTransactionData,
             recipient: recipient,
             slippage: slippage,
             estimatedGas: estimatedGas,
@@ -80,6 +83,36 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         return AnyView(view)
     }
+
+    func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws {
+        guard let quote = quote as? Quote else {
+            throw SwapError.invalidQuote
+        }
+
+        guard let transactionSettings, case let .evm(gasPrice, _) = transactionSettings else {
+            throw SwapError.noFeeData
+        }
+
+        guard let gasLimit = quote.estimatedGas else {
+            throw SwapError.noGasLimit
+        }
+
+        guard let transactionData = quote.transactionData else {
+            throw SwapError.noTransactionData
+        }
+
+        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
+            throw SwapError.noEvmKitWrapper
+        }
+
+//        _ = try await evmKitWrapper.send(
+//            transactionData: transactionData,
+//            gasPrice: gasPrice,
+//            gasLimit: gasLimit
+//        )
+
+        try await Task.sleep(nanoseconds: 3_000_000_000)
+    }
 }
 
 extension BaseUniswapMultiSwapProvider {
@@ -88,6 +121,10 @@ extension BaseUniswapMultiSwapProvider {
         case noHttpRpcSource
         case invalidQuote
         case invalidTrade
+        case noFeeData
+        case noGasLimit
+        case noTransactionData
+        case noEvmKitWrapper
     }
 
     enum PriceImpactLevel {
@@ -122,11 +159,13 @@ extension BaseUniswapMultiSwapProvider {
 extension BaseUniswapMultiSwapProvider {
     class Quote: BaseEvmMultiSwapProvider.Quote {
         private let trade: Trade
+        let transactionData: TransactionData?
         private let recipient: Address?
         private let slippage: Decimal
 
-        init(trade: Trade, recipient: Address?, slippage: Decimal, estimatedGas: Int?, allowanceState: AllowanceState) {
+        init(trade: Trade, transactionData: TransactionData?, recipient: Address?, slippage: Decimal, estimatedGas: Int?, allowanceState: AllowanceState) {
             self.trade = trade
+            self.transactionData = transactionData
             self.recipient = recipient
             self.slippage = slippage
 
