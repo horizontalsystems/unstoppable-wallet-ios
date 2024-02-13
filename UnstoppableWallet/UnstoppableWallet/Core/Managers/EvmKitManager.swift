@@ -175,6 +175,16 @@ class EvmKitWrapper {
                 }
             }
     }
+
+    func send(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) async throws -> FullTransaction {
+        guard let signer else {
+            throw SignerError.signerNotSupported
+        }
+
+        let rawTransaction = try await evmKit.fetchRawTransaction(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
+        let signature = try signer.signature(rawTransaction: rawTransaction)
+        return try await evmKit.send(rawTransaction: rawTransaction, signature: signature)
+    }
 }
 
 extension EvmKitManager {

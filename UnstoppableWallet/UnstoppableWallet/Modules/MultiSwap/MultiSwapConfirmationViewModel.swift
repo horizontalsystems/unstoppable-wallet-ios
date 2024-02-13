@@ -11,6 +11,7 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     private var rateOutCancellable: AnyCancellable?
     private var feeTokenRateCancellable: AnyCancellable?
     private var quoteTask: AnyTask?
+    private var swapTask: AnyTask?
 
     let tokenIn: Token
     let tokenOut: Token
@@ -34,6 +35,9 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 
     @Published var price: String?
     private var priceFlipped = false
+
+    @Published var swapping = false
+    let finishSubject = PassthroughSubject<Void, Never>()
 
     init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, transactionService: IMultiSwapTransactionService) {
         self.tokenIn = tokenIn
@@ -115,5 +119,28 @@ extension MultiSwapConfirmationViewModel {
     func flipPrice() {
         priceFlipped.toggle()
         syncPrice()
+    }
+
+    func swap() {
+        guard let quote else {
+            return
+        }
+
+        swapping = true
+
+        swapTask = Task { [weak self, tokenIn, tokenOut, amountIn, provider, transactionService] in
+            do {
+                try await provider.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, transactionSettings: transactionService.transactionSettings)
+
+                await MainActor.run { [weak self] in
+                    self?.finishSubject.send()
+                }
+            } catch {
+                await MainActor.run { [weak self] in
+                    self?.swapping = false
+                }
+            }
+        }
+        .erased()
     }
 }

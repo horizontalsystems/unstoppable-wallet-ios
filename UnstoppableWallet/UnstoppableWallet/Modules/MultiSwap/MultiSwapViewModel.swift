@@ -253,7 +253,6 @@ class MultiSwapViewModel: ObservableObject {
     private var priceFlipped = false
 
     @Published var quoting = false
-    @Published var swapping = false
 
     var nextQuoteTime: Double? {
         didSet {}
@@ -282,8 +281,6 @@ class MultiSwapViewModel: ObservableObject {
     @Published var feeTokenRate: Decimal?
 
     @Published var priceImpact: Decimal?
-
-    var finishSubject = PassthroughSubject<Void, Never>()
 
     init(providers: [IMultiSwapProvider], token: Token? = nil) {
         self.providers = providers
@@ -482,29 +479,6 @@ extension MultiSwapViewModel {
                 self?.syncQuotes()
             }
         }
-    }
-
-    func swap() {
-        guard let currentQuote else {
-            return
-        }
-
-        swapping = true
-
-        quotesTask = Task { [weak self, transactionService] in
-            do {
-                try await currentQuote.provider.swap(quote: currentQuote.quote, transactionSettings: transactionService?.transactionSettings)
-
-                await MainActor.run { [weak self] in
-                    self?.finishSubject.send()
-                }
-            } catch {
-                await MainActor.run { [weak self] in
-                    self?.swapping = false
-                }
-            }
-        }
-        .erased()
     }
 }
 
