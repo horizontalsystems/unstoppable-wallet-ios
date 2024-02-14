@@ -62,6 +62,8 @@ class CoinAnalyticsIssueCell: BaseSelectableThemeCell {
             make.top.equalTo(iconView.snp.bottom).offset(CGFloat.margin12)
         }
 
+        stackView.axis = .vertical
+
         stackView.addArrangedSubview(highRiskView)
         stackView.addArrangedSubview(mediumRiskView)
         stackView.addArrangedSubview(attentionRequiredView)

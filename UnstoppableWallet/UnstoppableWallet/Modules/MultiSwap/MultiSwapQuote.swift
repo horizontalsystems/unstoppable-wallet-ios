@@ -10,7 +10,7 @@ protocol IMultiSwapQuote {
     func confirmationFeeSectionFields(tokenIn: Token, tokenOut: Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [MultiSwapConfirmField]
     func confirmationOtherSections(tokenIn: Token, tokenOut: Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [[MultiSwapConfirmField]]
     var settingsModified: Bool { get }
-    var canSwap: Bool { get }
+    var customButtonState: MultiSwapButtonState? { get }
 }
 
 struct MultiSwapTokenAmount {
@@ -50,4 +50,18 @@ enum MultiSwapConfirmField {
     case value(title: String, description: AlertView.InfoDescription?, coinValue: CoinValue, currencyValue: CurrencyValue?)
     case levelValue(title: String, value: String, level: MultiSwapValueLevel)
     case address(title: String, value: String)
+}
+
+struct MultiSwapButtonState {
+    let title: String
+    let disabled: Bool
+    let showProgress: Bool
+    let preSwapStepId: String?
+
+    init(title: String, disabled: Bool = false, showProgress: Bool = false, preSwapStepId: String? = nil) {
+        self.title = title
+        self.disabled = disabled
+        self.showProgress = showProgress
+        self.preSwapStepId = preSwapStepId
+    }
 }

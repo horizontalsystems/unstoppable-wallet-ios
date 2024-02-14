@@ -269,14 +269,12 @@ extension BaseUniswapMultiSwapProvider {
             return fields
         }
 
-        override var canSwap: Bool {
-            var canSwap = true
-
+        override var customButtonState: MultiSwapButtonState? {
             if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) == .forbidden {
-                canSwap = false
+                return .init(title: "High Price Impact", disabled: true)
             }
 
-            return super.canSwap && canSwap
+            return super.customButtonState
         }
 
         enum Trade {
