@@ -10,6 +10,8 @@ import SwiftUI
 import ThemeKit
 import UIKit
 
+import EvmKit
+
 class WalletViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
 
@@ -238,10 +240,27 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc private func onTapQrScan() {
-        let viewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
-        viewController.didFetch = { [weak self] in self?.viewModel.process(scanned: $0) }
+        guard let token = try? App.shared.marketKit.token(query: TokenQuery(
+            blockchainType: .polygon, tokenType: .eip20(address: "0xe111178a87a3bff0c8d18decba5798827539ae99")
+        )) else {
+            return
+        }
 
-        present(viewController, animated: true)
+        let viewModel = MultiSwapApproveViewModel(
+            token: token,
+            amount: 140,
+            spenderAddress: try! EvmKit.Address(hex: "0x1111111254eeb25477b68fb85ed929f73a960582")
+        ) {
+            print("Approve")
+        }
+
+        let view = MultiSwapApproveView(viewModel: viewModel)
+        present(view.toNavigationViewController(), animated: true)
+
+//        let viewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
+//        viewController.didFetch = { [weak self] in self?.viewModel.process(scanned: $0) }
+//
+//        present(viewController, animated: true)
     }
 
     @objc private func onTapRetry() {

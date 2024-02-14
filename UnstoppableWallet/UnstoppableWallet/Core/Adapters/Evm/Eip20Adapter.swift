@@ -93,3 +93,9 @@ extension Eip20Adapter: IErc20Adapter {
         return Decimal(sign: .plus, exponent: -decimals, significand: significand)
     }
 }
+
+extension Eip20Adapter: IApproveDataProvider {
+    func approveTransactionData(spenderAddress: EvmKit.Address, amount: BigUInt) -> TransactionData {
+        eip20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
+    }
+}

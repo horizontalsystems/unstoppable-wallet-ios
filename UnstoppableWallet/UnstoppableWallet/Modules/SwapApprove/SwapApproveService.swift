@@ -44,13 +44,7 @@ class SwapApproveService {
 
         if errors.isEmpty {
             let eip20KitTransactionData = eip20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
-            let transactionData = TransactionData(
-                to: eip20KitTransactionData.to,
-                value: eip20KitTransactionData.value,
-                input: eip20KitTransactionData.input
-            )
-
-            state = .approveAllowed(transactionData: transactionData)
+            state = .approveAllowed(transactionData: eip20KitTransactionData)
         } else {
             state = .approveNotAllowed(errors: errors)
         }

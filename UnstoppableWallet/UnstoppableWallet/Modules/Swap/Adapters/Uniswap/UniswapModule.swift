@@ -20,6 +20,7 @@ class UniswapModule {
         }
 
         let uniswapRepository = UniswapProvider(swapKit: swapKit, evmKit: evmKit, rpcSource: rpcSource)
+        print("OneInchProvider router Address: \(uniswapRepository.routerAddress.hex)")
 
         tradeService = UniswapTradeService(
             uniswapProvider: uniswapRepository,

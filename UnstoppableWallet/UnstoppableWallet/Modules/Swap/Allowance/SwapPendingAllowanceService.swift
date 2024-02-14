@@ -18,6 +18,7 @@ class SwapPendingAllowanceService {
     private(set) var state: State = .notAllowed {
         didSet {
             if oldValue != state {
+                print("PENDING ALLOWANCE : \(state)")
                 stateRelay.accept(state)
             }
         }

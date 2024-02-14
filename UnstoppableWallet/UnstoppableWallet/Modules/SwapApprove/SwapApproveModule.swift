@@ -16,6 +16,7 @@ enum SwapApproveModule {
             marketKit: App.shared.marketKit
         )
 
+        print("Approve Module Spender Address: \(data.spenderAddress.raw)))")
         let service = SwapApproveService(
             eip20Kit: eip20Adapter.eip20Kit,
             amount: BigUInt(data.amount.hs.roundedString(decimal: data.token.decimals)) ?? 0,
