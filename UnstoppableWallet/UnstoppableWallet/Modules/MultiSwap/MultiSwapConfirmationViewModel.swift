@@ -4,6 +4,8 @@ import HsExtensions
 import MarketKit
 
 class MultiSwapConfirmationViewModel: ObservableObject {
+    let quoteExpirationDuration: Int = 10
+
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
 
@@ -12,6 +14,7 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     private var feeTokenRateCancellable: AnyCancellable?
     private var quoteTask: AnyTask?
     private var swapTask: AnyTask?
+    private var timer: AnyCancellable?
 
     let tokenIn: Token
     let tokenOut: Token
@@ -28,10 +31,23 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     @Published var quote: IMultiSwapQuote? {
         didSet {
             syncPrice()
+
+            timer?.cancel()
+
+            if quote != nil {
+                quoteTimeLeft = quoteExpirationDuration
+
+                timer = Timer.publish(every: 1, on: .main, in: .common)
+                    .autoconnect()
+                    .sink { [weak self] _ in
+                        self?.handleTimerTick()
+                    }
+            }
         }
     }
 
     @Published var quoting = false
+    @Published var quoteTimeLeft: Int = 0
 
     @Published var price: String?
     private var priceFlipped = false
@@ -70,28 +86,12 @@ class MultiSwapConfirmationViewModel: ObservableObject {
         syncQuote()
     }
 
-    private func syncQuote() {
-        quoteTask = nil
-        quote = nil
+    private func handleTimerTick() {
+        quoteTimeLeft -= 1
 
-        if !quoting {
-            quoting = true
+        if quoteTimeLeft == 0 {
+            timer?.cancel()
         }
-
-        quoteTask = Task { [weak self, tokenIn, tokenOut, amountIn, provider, transactionService] in
-            try await transactionService.sync()
-
-            let transactionSettings = transactionService.transactionSettings
-            let quote = try await provider.quote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
-
-            if !Task.isCancelled {
-                await MainActor.run { [weak self, quote] in
-                    self?.quoting = false
-                    self?.quote = quote
-                }
-            }
-        }
-        .erased()
     }
 
     private func syncPrice() {
@@ -116,6 +116,30 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 }
 
 extension MultiSwapConfirmationViewModel {
+    func syncQuote() {
+        quoteTask = nil
+        quote = nil
+
+        if !quoting {
+            quoting = true
+        }
+
+        quoteTask = Task { [weak self, tokenIn, tokenOut, amountIn, provider, transactionService] in
+            try await transactionService.sync()
+
+            let transactionSettings = transactionService.transactionSettings
+            let quote = try await provider.quote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
+
+            if !Task.isCancelled {
+                await MainActor.run { [weak self, quote] in
+                    self?.quoting = false
+                    self?.quote = quote
+                }
+            }
+        }
+        .erased()
+    }
+
     func flipPrice() {
         priceFlipped.toggle()
         syncPrice()

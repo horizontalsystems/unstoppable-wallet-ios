@@ -253,8 +253,7 @@ class MultiSwapViewModel: ObservableObject {
     private var priceFlipped = false
 
     @Published var quoting = false
-
-    var nextQuoteTime: Double?
+    @Published var nextQuoteTime: Double?
 
     @Published var transactionService: IMultiSwapTransactionService?
 

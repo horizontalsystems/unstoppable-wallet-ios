@@ -20,7 +20,9 @@ struct MultiSwapConfirmationView: View {
 
     var body: some View {
         ThemeView {
-            if let quote = viewModel.quote {
+            if viewModel.quoting {
+                ProgressView()
+            } else if let quote = viewModel.quote {
                 quoteView(quote: quote)
             }
         }
@@ -161,20 +163,28 @@ struct MultiSwapConfirmationView: View {
             }
 
             Button(action: {
-                viewModel.swap()
+                if viewModel.quoteTimeLeft > 0 {
+                    viewModel.swap()
+                } else {
+                    viewModel.syncQuote()
+                }
             }) {
                 HStack(spacing: .margin8) {
                     if viewModel.swapping {
                         ProgressView()
                     }
 
-                    Text(viewModel.swapping ? "Swapping" : "Swap")
+                    Text(viewModel.quoteTimeLeft > 0 ? (viewModel.swapping ? "Swapping" : "Swap") : "Refresh")
                 }
             }
             .disabled(viewModel.swapping)
             .buttonStyle(PrimaryButtonStyle(style: .yellow))
             .padding(.vertical, .margin16)
             .padding(.horizontal, .margin16)
+
+            Text(bottomText())
+                .textSubhead1()
+                .padding(.bottom, .margin8)
         }
     }
 
@@ -266,6 +276,16 @@ struct MultiSwapConfirmationView: View {
                 }
                 .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             }
+        }
+    }
+
+    private func bottomText() -> String {
+        if viewModel.swapping {
+            return "Please wait"
+        } else if viewModel.quoteTimeLeft > 0 {
+            return "Quote expires in \(viewModel.quoteTimeLeft)"
+        } else {
+            return "Quote expired"
         }
     }
 
