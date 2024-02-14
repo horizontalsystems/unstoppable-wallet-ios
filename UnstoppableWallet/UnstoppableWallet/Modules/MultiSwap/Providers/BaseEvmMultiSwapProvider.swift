@@ -1,8 +1,11 @@
 import EvmKit
 import Foundation
 import MarketKit
+import SwiftUI
 
 class BaseEvmMultiSwapProvider {
+    private static let unlockStepId = "unlock"
+
     private let adapterManager = App.shared.adapterManager
     let evmBlockchainManager = App.shared.evmBlockchainManager
     let storage: MultiSwapSettingStorage
@@ -52,6 +55,10 @@ class BaseEvmMultiSwapProvider {
         } catch {
             return .unknown
         }
+    }
+
+    func preSwapView(stepId: String) -> AnyView {
+        AnyView(Text("Evm Allowance View"))
     }
 }
 
@@ -137,10 +144,12 @@ extension BaseEvmMultiSwapProvider {
             false
         }
 
-        var canSwap: Bool {
+        var customButtonState: MultiSwapButtonState? {
             switch allowanceState {
-            case .notRequired, .allowed: return true
-            default: return false
+            case .notEnough: return .init(title: "Unlock", preSwapStepId: BaseEvmMultiSwapProvider.unlockStepId)
+            case .pending: return .init(title: "Unlocking...", disabled: true, showProgress: true)
+            case .unknown: return .init(title: "Allowance Error", disabled: true)
+            default: return nil
             }
         }
     }

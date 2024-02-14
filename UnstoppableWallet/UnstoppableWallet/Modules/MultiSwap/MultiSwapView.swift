@@ -12,6 +12,7 @@ struct MultiSwapView: View {
     @State private var confirmPresented = false
     @State private var settingsPresented = false
     @State private var feeSettingsPresented = false
+    @State private var preSwapStepId: String?
     @State private var presentedSettingId: String?
 
     @FocusState var isInputActive: Bool
@@ -41,8 +42,11 @@ struct MultiSwapView: View {
                     .sheet(isPresented: $feeSettingsPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
                         if let feeService = viewModel.transactionService {
                             feeService.settingsView { viewModel.syncQuotes() }
-                        } else {
-                            Text("NO")
+                        }
+                    }
+                    .sheet(item: $preSwapStepId, onDismiss: { viewModel.autoQuoteIfRequired() }) { stepId in
+                        if let currentQuote = viewModel.currentQuote {
+                            currentQuote.provider.preSwapView(stepId: stepId)
                         }
                     }
                 }
@@ -80,8 +84,6 @@ struct MultiSwapView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if let nextQuoteTime = viewModel.nextQuoteTime {
                         MultiSwapCircularProgressView(nextQuoteTime: nextQuoteTime, autoRefreshDuration: viewModel.autoRefreshDuration)
-                    } else {
-                        EmptyView()
                     }
                 }
 
@@ -176,8 +178,6 @@ struct MultiSwapView: View {
                         }
                         .padding(.horizontal, -16)
                         .frame(maxWidth: .infinity)
-                    } else {
-                        EmptyView()
                     }
                 }
             }
@@ -308,11 +308,16 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func buttonView() -> some View {
-        let (title, disabled, showProgress) = buttonState()
+        let (title, disabled, showProgress, preSwapStepId) = buttonState()
 
         Button(action: {
             viewModel.stopAutoQuoting()
-            confirmPresented = true
+
+            if let preSwapStepId {
+                self.preSwapStepId = preSwapStepId
+            } else {
+                confirmPresented = true
+            }
         }) {
             HStack(spacing: .margin8) {
                 if showProgress {
@@ -364,8 +369,6 @@ struct MultiSwapView: View {
         .sheet(item: $presentedSettingId) { settingId in
             if let currentQuote = viewModel.currentQuote {
                 currentQuote.provider.settingView(settingId: settingId)
-            } else {
-                Text("NO")
             }
         }
     }
@@ -375,8 +378,6 @@ struct MultiSwapView: View {
             ForEach(currentQuote.quote.cautions.indices, id: \.self) { index in
                 HighlightedTextView(caution: currentQuote.quote.cautions[index])
             }
-        } else {
-            EmptyView()
         }
     }
 
@@ -385,8 +386,6 @@ struct MultiSwapView: View {
             ForEach(transactionService.cautions.indices, id: \.self) { index in
                 HighlightedTextView(caution: transactionService.cautions[index])
             }
-        } else {
-            EmptyView()
         }
     }
 
@@ -547,10 +546,11 @@ struct MultiSwapView: View {
         return result
     }
 
-    private func buttonState() -> (String, Bool, Bool) {
+    private func buttonState() -> (String, Bool, Bool, String?) {
         let title: String
         var disabled = true
         var showProgress = false
+        var preSwapStepId: String?
 
         if viewModel.quoting {
             title = "Loading"
@@ -569,13 +569,18 @@ struct MultiSwapView: View {
             title = "Balance n/a"
         } else if let availableBalance = viewModel.availableBalance, let amountIn = viewModel.amountIn, amountIn > availableBalance {
             title = "Insufficient Balance"
+        } else if let currentQuote = viewModel.currentQuote, let state = currentQuote.quote.customButtonState {
+            title = state.title
+            disabled = state.disabled
+            showProgress = state.showProgress
+            preSwapStepId = state.preSwapStepId
         } else if let currentQuote = viewModel.currentQuote, feeValue(quote: currentQuote) == nil {
             title = "Network Fee Error"
         } else {
             title = "Next"
-            disabled = viewModel.currentQuote.map { !$0.quote.canSwap } ?? false
+            disabled = false
         }
 
-        return (title, disabled, showProgress)
+        return (title, disabled, showProgress, preSwapStepId)
     }
 }

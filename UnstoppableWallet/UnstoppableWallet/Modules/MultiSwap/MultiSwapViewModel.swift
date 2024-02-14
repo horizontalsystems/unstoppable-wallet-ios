@@ -4,7 +4,7 @@ import HsExtensions
 import MarketKit
 
 class MultiSwapViewModel: ObservableObject {
-    let autoRefreshDuration: Double = 30
+    let autoRefreshDuration: Double = 20
 
     private var cancellables = Set<AnyCancellable>()
     private var quotesTask: AnyTask?
