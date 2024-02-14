@@ -110,6 +110,10 @@ protocol IErc20Adapter {
     func allowance(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) async throws -> Decimal
 }
 
+protocol IApproveDataProvider {
+    func approveTransactionData(spenderAddress: EvmKit.Address, amount: BigUInt) -> TransactionData
+}
+
 protocol ISendBinanceAdapter {
     var availableBalance: Decimal { get }
     var availableBinanceBalance: Decimal { get }
