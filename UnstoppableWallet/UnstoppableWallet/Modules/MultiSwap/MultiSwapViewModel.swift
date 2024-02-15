@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import HsExtensions
 import MarketKit
+import RxSwift
 
 class MultiSwapViewModel: ObservableObject {
     let autoRefreshDuration: Double = 20
@@ -13,6 +14,8 @@ class MultiSwapViewModel: ObservableObject {
     private var rateOutCancellable: AnyCancellable?
     private var feeTokenRateCancellable: AnyCancellable?
     private var timer: Timer?
+
+    private var balanceDisposeBag = DisposeBag()
 
     private let providers: [IMultiSwapProvider]
     private let currencyManager = App.shared.currencyManager
@@ -40,7 +43,6 @@ class MultiSwapViewModel: ObservableObject {
             }
 
             if let internalTokenIn {
-                availableBalance = walletManager.activeWallets.first { $0.token == internalTokenIn }.flatMap { adapterManager.balanceAdapter(for: $0)?.balanceData.available }
                 rateIn = marketKit.coinPrice(coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)?.value
                 rateInCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)
                     .receive(on: DispatchQueue.main)
@@ -49,11 +51,37 @@ class MultiSwapViewModel: ObservableObject {
                 transactionService = transactionServiceFactory.transactionService(blockchainType: internalTokenIn.blockchainType)
                 feeToken = try? marketKit.token(query: TokenQuery(blockchainType: internalTokenIn.blockchainType, tokenType: .native))
             } else {
-                availableBalance = nil
                 rateIn = nil
                 rateInCancellable = nil
                 transactionService = nil
                 feeToken = nil
+            }
+
+            balanceDisposeBag = .init()
+
+            if let internalTokenIn,
+               let wallet = walletManager.activeWallets.first(where: { $0.token == internalTokenIn }),
+               let adapter = adapterManager.balanceAdapter(for: wallet)
+            {
+                adapterState = adapter.balanceState
+                availableBalance = adapter.balanceData.available
+
+                adapter.balanceStateUpdatedObservable
+                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .subscribe { [weak self] state in
+                        self?.adapterState = state
+                    }
+                    .disposed(by: balanceDisposeBag)
+
+                adapter.balanceDataUpdatedObservable
+                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .subscribe { [weak self] balanceData in
+                        self?.availableBalance = balanceData.available
+                    }
+                    .disposed(by: balanceDisposeBag)
+            } else {
+                adapterState = nil
+                availableBalance = nil
             }
         }
     }
@@ -122,6 +150,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
+    @Published var adapterState: AdapterState?
     @Published var availableBalance: Decimal?
 
     @Published var rateIn: Decimal? {
@@ -389,7 +418,7 @@ class MultiSwapViewModel: ObservableObject {
                             let quote = try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
                             return Quote(provider: provider, quote: quote)
                         } catch {
-//                            print("QUOTE ERROR: \(provider.id): \(error)")
+                            print("QUOTE ERROR: \(provider.id): \(error)")
                             return nil
                         }
                     }

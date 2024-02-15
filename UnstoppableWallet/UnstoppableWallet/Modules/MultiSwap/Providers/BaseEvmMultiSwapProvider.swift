@@ -122,7 +122,7 @@ extension BaseEvmMultiSwapProvider {
                         MultiSwapMainField(
                             title: "Allowance",
                             value: "\(formatted)",
-                            valueLevel: .regular
+                            valueLevel: .error
                         )
                     )
                 }
@@ -132,7 +132,7 @@ extension BaseEvmMultiSwapProvider {
                         MultiSwapMainField(
                             title: "Pending Allowance",
                             value: "\(formatted)",
-                            valueLevel: .regular
+                            valueLevel: .warning
                         )
                     )
                 }

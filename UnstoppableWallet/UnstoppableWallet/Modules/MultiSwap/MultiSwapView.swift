@@ -573,8 +573,13 @@ struct MultiSwapView: View {
             title = "Enter Amount"
         } else if viewModel.currentQuote == nil {
             title = "No Quotes"
-        } else if viewModel.availableBalance == nil {
-            title = "Balance n/a"
+        } else if viewModel.adapterState == nil {
+            title = "Token Not Enabled"
+        } else if let adapterState = viewModel.adapterState, adapterState.syncing {
+            title = "Syncing"
+            showProgress = true
+        } else if let adapterState = viewModel.adapterState, !adapterState.isSynced {
+            title = "Not Synced"
         } else if let availableBalance = viewModel.availableBalance, let amountIn = viewModel.amountIn, amountIn > availableBalance {
             title = "Insufficient Balance"
         } else if let currentQuote = viewModel.currentQuote, let state = currentQuote.quote.customButtonState {
