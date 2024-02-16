@@ -73,10 +73,6 @@ class WalletConnectListViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.showDisconnectingSignal) { HudHelper.instance.show(banner: .disconnectingWalletConnect) }
         subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.show(banner: .disconnectedWalletConnect) }
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
-
-        if viewModel.emptyList {
-            startNewConnection()
-        }
     }
 
     private func sync(viewItems: [WalletConnectListViewModel.ViewItem]? = nil, pairingCount: Int? = nil) {
