@@ -28,6 +28,7 @@
 "button.more" = "Mostrar más";
 "button.i_understand" = "Entiendo";
 "button.learn_more" = "Aprender más";
+"button.unlock" = "Desbloquear";
 
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
@@ -514,6 +515,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.approve.title" = "Aprobación de Swap";
 "swap.approve.description" = "Para intercambiar un token dado en tu nombre debes conceder permiso a un contrato inteligente. Este permiso establece la cantidad que puede ser utilizada por un contrato inteligente. Esto no afecta su saldo, requiere una pequeña comisión para ejecutar la transacción de aprobación.\n\nSi bien se puede hacer bajo demanda antes de cada operación, para nosotros es más barato aprobar una cantidad más alta por adelantado en operaciones futuras.";
 "swap.approve.amount_error.already_approved" = "Usted ya tiene una concesión para esta cantidad";
+"swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Aprobando...";
 "swap.revoke_warning" = "Puedes cambiar %@o necesitas revocar y aprobar la nueva cantidad";
 "swap.revoking_button" = "Revocando...";
