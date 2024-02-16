@@ -28,6 +28,7 @@
 "button.more" = "Mehr anzeigen";
 "button.i_understand" = "Ich stimme zu";
 "button.learn_more" = "Learn More";
+"button.unlock" = "Entsperren";
 
 "alert" = "Alarm";
 "alert.copied" = "Kopiert";
@@ -514,6 +515,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.approve.title" = "Genehmigen tauschen";
 "swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, in Ihrem Namen gegebene Token einzutauschen. Diese Erlaubnis legt einen Betrag fest, der von einem intelligenten Vertrag verwendet werden kann. Sie wirkt sich nicht auf Ihr Guthaben aus, erfordert jedoch eine geringe Gebühr für die Ausführung der Genehmigungstransaktion.\n\nEs kann zwar vor jedem Handel auf Anfrage erfolgen, es ist jedoch günstiger, bei zukünftigen Handelsgeschäften einen höheren Betrag im Voraus für uns zu genehmigen.";
 "swap.approve.amount_error.already_approved" = "Sie haben bereits eine Vergütung für diesen Betrag";
+"swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Wird bestätigt...";
 "swap.revoke_warning" = "Sie können %@tauschen, oder Sie müssen den neuen Betrag widerrufen und genehmigen";
 "swap.revoking_button" = "Widerrufen...";
