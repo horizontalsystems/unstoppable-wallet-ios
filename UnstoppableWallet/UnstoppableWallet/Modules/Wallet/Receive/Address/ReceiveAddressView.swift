@@ -24,7 +24,9 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 ProgressView()
             case let .completed(viewItem):
                 VStack(spacing: .margin12) {
-                    HighlightedTextView(text: viewItem.highlightedDescription.text, style: viewItem.highlightedDescription.style)
+                    if let description = viewItem.highlightedDescription {
+                        HighlightedTextView(text: description.text, style: description.style)
+                    }
 
                     ListSection {
                         qrView(item: viewItem.qrItem)

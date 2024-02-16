@@ -99,7 +99,7 @@ extension ReceiveAddressModule {
 
     struct ViewItem {
         let copyValue: String
-        let highlightedDescription: HighlightedDescription
+        let highlightedDescription: HighlightedDescription?
         let qrItem: QrItem
         let amount: String?
         let active: Bool
