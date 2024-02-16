@@ -69,9 +69,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.invalidAmountIn
         }
 
-        guard let transactionSettings, case let .evm(gasPrice, _) = transactionSettings else {
-            throw SwapError.noFeeData
-        }
+        let gasPrice = transactionSettings?.gasPrice
 
         let quote = try await kit.quote(
             networkManager: networkManager,
@@ -86,6 +84,8 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             quote: quote,
             recipient: storage.value(for: MultiSwapSettingStorage.LegacySetting.address),
             slippage: storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default,
+            gasPrice: gasPrice,
+            nonce: transactionSettings?.nonce,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
         )
     }
@@ -112,7 +112,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func swap(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws {
+    func swap(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, quote: IMultiSwapQuote) async throws {
         guard let quote = quote as? Quote else {
             throw SwapError.invalidQuote
         }
@@ -121,8 +121,8 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.invalidAmountIn
         }
 
-        guard let transactionSettings, case let .evm(gasPrice, _) = transactionSettings else {
-            throw SwapError.noFeeData
+        guard let gasPrice = quote.gasPrice else {
+            throw SwapError.noGasPrice
         }
 
         guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
@@ -146,13 +146,14 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
 
         let transactionData = TransactionData(to: swap.transaction.to, value: swap.transaction.value, input: swap.transaction.data)
 
+        try await Task.sleep(nanoseconds: 2_000_000_000)
+
 //        _ = try await evmKitWrapper.send(
 //            transactionData: transactionData,
 //            gasPrice: swap.transaction.gasPrice,
-//            gasLimit: swap.transaction.gasLimit
+//            gasLimit: swap.transaction.gasLimit,
+//            nonce: quote.nonce
 //        )
-
-        try await Task.sleep(nanoseconds: 3_000_000_000)
     }
 }
 
@@ -160,8 +161,8 @@ extension OneInchMultiSwapProvider {
     enum SwapError: Error {
         case invalidAddress
         case invalidAmountIn
-        case noFeeData
         case invalidQuote
+        case noGasPrice
         case noEvmKitWrapper
     }
 }
@@ -172,20 +173,31 @@ extension OneInchMultiSwapProvider {
         let recipient: Address?
         let slippage: Decimal
 
-        init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, allowanceState: AllowanceState) {
+        init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, gasPrice: GasPrice?, nonce: Int?, allowanceState: AllowanceState) {
             self.quote = quote
             self.recipient = recipient
             self.slippage = slippage
 
-            super.init(estimatedGas: quote.estimateGas, allowanceState: allowanceState)
+            super.init(gasPrice: gasPrice, gasLimit: quote.estimateGas, nonce: nonce, allowanceState: allowanceState)
         }
 
         override var amountOut: Decimal {
             quote.amountOut ?? 0
         }
 
-        override var mainFields: [MultiSwapMainField] {
-            var fields = super.mainFields
+        override var cautions: [CautionNew] {
+            var cautions = super.cautions
+
+            switch MultiSwapSlippage.validate(slippage: slippage) {
+            case .none: ()
+            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+            }
+
+            return cautions
+        }
+
+        override func mainFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapMainField] {
+            var fields = super.mainFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
 
             if let recipient {
                 fields.append(
@@ -210,19 +222,8 @@ extension OneInchMultiSwapProvider {
             return fields
         }
 
-        override var cautions: [CautionNew] {
-            var cautions = super.cautions
-
-            switch MultiSwapSlippage.validate(slippage: slippage) {
-            case .none: ()
-            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-            }
-
-            return cautions
-        }
-
-        override func confirmationPriceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [MultiSwapConfirmField] {
-            var fields = super.confirmationPriceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, rateIn: rateIn, rateOut: rateOut)
+        override func confirmationPriceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField] {
+            var fields = super.confirmationPriceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
 
             if let recipient {
                 fields.append(
@@ -250,7 +251,7 @@ extension OneInchMultiSwapProvider {
                     title: "Minimum Received",
                     description: nil,
                     coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
-                    currencyValue: rateOut.map { CurrencyValue(currency: currency, value: minAmountOut * $0) }
+                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) }
                 )
             )
 

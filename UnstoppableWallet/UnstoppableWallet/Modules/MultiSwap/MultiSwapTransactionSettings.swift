@@ -6,11 +6,20 @@ import SwiftUI
 enum MultiSwapTransactionSettings {
     case evm(gasPrice: GasPrice, nonce: Int)
     case bitcoin(satoshiPerByte: Int)
-}
 
-enum MultiSwapFeeQuote {
-    case evm(gasLimit: Int)
-    case bitcoin(bytes: Int)
+    var gasPrice: GasPrice? {
+        switch self {
+        case let .evm(gasPrice, _): return gasPrice
+        default: return nil
+        }
+    }
+
+    var nonce: Int? {
+        switch self {
+        case let .evm(_, nonce): return nonce
+        default: return nil
+        }
+    }
 }
 
 protocol IMultiSwapTransactionService {
@@ -18,7 +27,6 @@ protocol IMultiSwapTransactionService {
     var modified: Bool { get }
     var cautions: [CautionNew] { get }
     func sync() async throws
-    func fee(quote: MultiSwapFeeQuote, token: Token) -> CoinValue?
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView?
 }
 
@@ -144,16 +152,6 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         if usingRecommendedNonce {
             nonce = nextNonce
         }
-    }
-
-    func fee(quote: MultiSwapFeeQuote, token: Token) -> CoinValue? {
-        guard let gasPrice, case let .evm(gasLimit) = quote else {
-            return nil
-        }
-
-        let amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, token.decimals)
-
-        return CoinValue(kind: .token(token: token), value: amount)
     }
 
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView? {
