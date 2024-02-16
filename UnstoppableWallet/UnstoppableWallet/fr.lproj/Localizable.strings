@@ -28,6 +28,7 @@
 "button.more" = "Afficher plus";
 "button.i_understand" = "J’ai Compris";
 "button.learn_more" = "En savoir plus";
+"button.unlock" = "Déverrouiller";
 
 "alert" = "Alerte";
 "alert.copied" = "Copié";
@@ -514,6 +515,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.approve.title" = "Swap approuvé";
 "swap.approve.description" = "Vous devez accorder la permission à un contrat intelligent pour le swap d'un token donné en votre nom. Cette autorisation définit le montant qui peut être utilisé par un contrat intelligent. Elle n'affecte pas votre solde mais nécessite une petite somme pour exécuter une transaction d'autorisation. \n\nBien que cela puisse être fait à la demande avant chaque échange, il est plus économique d'approuver un montant plus élevé à l'avance pour les échanges ultérieurs.";
 "swap.approve.amount_error.already_approved" = "Vous avez déjà une provision pour ce montant";
+"swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "En cours d'approbation...";
 "swap.revoke_warning" = "Vous pouvez échanger %@, ou vous devez révoquer et approuver le nouveau montant";
 "swap.revoking_button" = "Révocation en cours...";
