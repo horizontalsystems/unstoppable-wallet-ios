@@ -152,9 +152,9 @@ extension MultiSwapConfirmationViewModel {
 
         swapping = true
 
-        swapTask = Task { [weak self, tokenIn, tokenOut, amountIn, provider, transactionService] in
+        swapTask = Task { [weak self, tokenIn, tokenOut, amountIn, provider] in
             do {
-                try await provider.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, transactionSettings: transactionService.transactionSettings)
+                try await provider.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote)
 
                 await MainActor.run { [weak self] in
                     self?.finishSubject.send()

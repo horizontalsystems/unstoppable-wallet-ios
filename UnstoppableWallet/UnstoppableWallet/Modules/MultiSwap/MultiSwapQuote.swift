@@ -3,14 +3,13 @@ import MarketKit
 
 protocol IMultiSwapQuote {
     var amountOut: Decimal { get }
-    var feeQuote: MultiSwapFeeQuote? { get }
-    var mainFields: [MultiSwapMainField] { get }
-    var cautions: [CautionNew] { get }
-    func confirmationPriceSectionFields(tokenIn: Token, tokenOut: Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [MultiSwapConfirmField]
-    func confirmationFeeSectionFields(tokenIn: Token, tokenOut: Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [MultiSwapConfirmField]
-    func confirmationOtherSections(tokenIn: Token, tokenOut: Token, currency: Currency, rateIn: Decimal?, rateOut: Decimal?) -> [[MultiSwapConfirmField]]
-    var settingsModified: Bool { get }
     var customButtonState: MultiSwapButtonState? { get }
+    var settingsModified: Bool { get }
+    var cautions: [CautionNew] { get }
+    func feeData(feeToken: Token?, currency: Currency, feeTokenRate: Decimal?) -> AmountData?
+    func mainFields(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapMainField]
+    func confirmationPriceSectionFields(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField]
+    func confirmationOtherSections(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]]
 }
 
 struct MultiSwapTokenAmount {
@@ -42,6 +41,7 @@ struct MultiSwapMainField: Identifiable {
 
 enum MultiSwapValueLevel {
     case regular
+    case notAvailable
     case warning
     case error
 }

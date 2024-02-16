@@ -50,9 +50,11 @@ struct MultiSwapConfirmationView: View {
                     let priceSectionFields = quote.confirmationPriceSectionFields(
                         tokenIn: viewModel.tokenIn,
                         tokenOut: viewModel.tokenOut,
+                        feeToken: viewModel.feeToken,
                         currency: viewModel.currency,
-                        rateIn: viewModel.rateIn,
-                        rateOut: viewModel.rateOut
+                        tokenInRate: viewModel.rateIn,
+                        tokenOutRate: viewModel.rateOut,
+                        feeTokenRate: viewModel.feeTokenRate
                     )
 
                     if viewModel.price != nil || !priceSectionFields.isEmpty {
@@ -85,54 +87,14 @@ struct MultiSwapConfirmationView: View {
                         }
                     }
 
-                    ListSection {
-                        ListRow(padding: EdgeInsets(top: .margin12, leading: 0, bottom: .margin12, trailing: .margin16)) {
-                            Text("Network Fee")
-                                .textSubhead2()
-                                .modifier(Informed(description: .init(title: "Network Fee", description: "Network Fee Description")))
-
-                            Spacer()
-
-                            if let fee = fee(quote: quote), let feeValue = ValueFormatter.instance.formatShort(coinValue: fee) {
-                                VStack(alignment: .trailing, spacing: 1) {
-                                    Text(feeValue)
-                                        .textSubhead1(color: .themeLeah)
-                                        .multilineTextAlignment(.trailing)
-
-                                    if let feeTokenRate = viewModel.feeTokenRate,
-                                       let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: fee.value * feeTokenRate)
-                                    {
-                                        Text(formatted)
-                                            .textCaption()
-                                            .multilineTextAlignment(.trailing)
-                                    }
-                                }
-                            } else {
-                                Text("n/a".localized).textSubhead2(color: .themeGray50)
-                            }
-                        }
-
-                        let feeSectionFields = quote.confirmationFeeSectionFields(
-                            tokenIn: viewModel.tokenIn,
-                            tokenOut: viewModel.tokenOut,
-                            currency: viewModel.currency,
-                            rateIn: viewModel.rateIn,
-                            rateOut: viewModel.rateOut
-                        )
-
-                        if !feeSectionFields.isEmpty {
-                            ForEach(feeSectionFields.indices, id: \.self) { index in
-                                fieldRow(field: feeSectionFields[index])
-                            }
-                        }
-                    }
-
                     let otherSections = quote.confirmationOtherSections(
                         tokenIn: viewModel.tokenIn,
                         tokenOut: viewModel.tokenOut,
+                        feeToken: viewModel.feeToken,
                         currency: viewModel.currency,
-                        rateIn: viewModel.rateIn,
-                        rateOut: viewModel.rateOut
+                        tokenInRate: viewModel.rateIn,
+                        tokenOutRate: viewModel.rateOut,
+                        feeTokenRate: viewModel.feeTokenRate
                     )
 
                     if !otherSections.isEmpty {
@@ -289,17 +251,10 @@ struct MultiSwapConfirmationView: View {
         }
     }
 
-    private func fee(quote: IMultiSwapQuote) -> CoinValue? {
-        guard let feeQuote = quote.feeQuote, let feeToken = viewModel.feeToken else {
-            return nil
-        }
-
-        return viewModel.transactionService.fee(quote: feeQuote, token: feeToken)
-    }
-
     private func color(valueLevel: MultiSwapValueLevel) -> Color {
         switch valueLevel {
         case .regular: return .themeLeah
+        case .notAvailable: return .themeGray50
         case .warning: return .themeJacob
         case .error: return .themeLucian
         }

@@ -48,4 +48,18 @@ struct AmountData {
 
         return parts.joined(separator: "  |  ")
     }
+
+    var formattedShort: String {
+        var result = ""
+
+        if let formatted = ValueFormatter.instance.formatShort(coinValue: coinValue) {
+            result += formatted
+        }
+
+        if let currencyValue, let formatted = ValueFormatter.instance.formatShort(currencyValue: currencyValue) {
+            result += " (≈ \(formatted))"
+        }
+
+        return result
+    }
 }

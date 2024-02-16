@@ -310,6 +310,7 @@ struct MultiSwapView: View {
     private func color(valueLevel: MultiSwapValueLevel) -> Color {
         switch valueLevel {
         case .regular: return .themeLeah
+        case .notAvailable: return .themeGray50
         case .warning: return .themeJacob
         case .error: return .themeLucian
         }
@@ -364,10 +365,18 @@ struct MultiSwapView: View {
                     priceView(value: price)
                 }
 
-                networkFeeView(currentQuote: currentQuote)
+                let mainFields = currentQuote.quote.mainFields(
+                    tokenIn: tokenIn,
+                    tokenOut: tokenOut,
+                    feeToken: viewModel.feeToken,
+                    currency: viewModel.currency,
+                    tokenInRate: viewModel.rateIn,
+                    tokenOutRate: viewModel.rateOut,
+                    feeTokenRate: viewModel.feeTokenRate
+                )
 
-                if !currentQuote.quote.mainFields.isEmpty {
-                    ForEach(currentQuote.quote.mainFields) { field in
+                if !mainFields.isEmpty {
+                    ForEach(mainFields) { field in
                         providerFieldView(field: field)
                     }
                 }
@@ -460,27 +469,6 @@ struct MultiSwapView: View {
         .frame(minHeight: 40)
     }
 
-    @ViewBuilder private func networkFeeView(currentQuote: MultiSwapViewModel.Quote) -> some View {
-        HStack(spacing: .margin8) {
-            Text("Network Fee")
-                .textSubhead2()
-                .modifier(Informed(description: .init(title: "Network Fee", description: "Network Fee Description")))
-
-            Spacer()
-
-            if let feeValue = feeValue(quote: currentQuote) {
-                Text(feeValue)
-                    .textSubhead2(color: .themeLeah)
-                    .multilineTextAlignment(.trailing)
-            } else {
-                Text("n/a".localized).textSubhead2(color: .themeGray50)
-            }
-        }
-        .padding(.vertical, .margin12)
-        .padding(.trailing, .margin12)
-        .frame(minHeight: 40)
-    }
-
     @ViewBuilder private func providerFieldView(field: MultiSwapMainField) -> some View {
         HStack(spacing: .margin8) {
             if let description = field.description {
@@ -515,25 +503,6 @@ struct MultiSwapView: View {
         .padding(.leading, field.description == nil ? .margin16 : 0)
         .padding(.trailing, field.settingId == nil ? .margin16 : .margin12)
         .frame(minHeight: 40)
-    }
-
-    private func feeValue(quote: MultiSwapViewModel.Quote) -> String? {
-        guard let feeQuote = quote.quote.feeQuote,
-              let feeToken = viewModel.feeToken,
-              let transactionService = viewModel.transactionService,
-              let fee = transactionService.fee(quote: feeQuote, token: feeToken),
-              var result = ValueFormatter.instance.formatShort(coinValue: fee)
-        else {
-            return nil
-        }
-
-        if let feeTokenRate = viewModel.feeTokenRate,
-           let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: fee.value * feeTokenRate)
-        {
-            result += " (≈ \(formatted))"
-        }
-
-        return result
     }
 
     private func balanceValue() -> String? {
@@ -587,8 +556,6 @@ struct MultiSwapView: View {
             disabled = state.disabled
             showProgress = state.showProgress
             preSwapStepId = state.preSwapStepId
-        } else if let currentQuote = viewModel.currentQuote, feeValue(quote: currentQuote) == nil {
-            title = "Network Fee Error"
         } else {
             title = "Next"
             disabled = false
