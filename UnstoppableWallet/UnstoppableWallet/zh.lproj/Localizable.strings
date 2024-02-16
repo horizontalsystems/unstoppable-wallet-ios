@@ -28,6 +28,7 @@
 "button.more" = "显示更多";
 "button.i_understand" = "我理解";
 "button.learn_more" = "了解更多";
+"button.unlock" = "解锁​​​​";
 
 "alert" = "警报";
 "alert.copied" = "已复制";
@@ -514,6 +515,7 @@
 "swap.approve.title" = "互兑批准";
 "swap.approve.description" = "您应为智能合约授予权限，以代表您互兑给定的代币。此权限设定了智能合约可以使用的金额。它不会影响您的余额，但需要小额费用以执行批准交易。\n\n虽然这可以在每一次交易之前按需完成，但是预先对将来的交易批准较大的金额将使成本更低。";
 "swap.approve.amount_error.already_approved" = "您已经有了此金额的限额";
+"swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "审批中...";
 "swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 "swap.revoking_button" = "正在取消...";
