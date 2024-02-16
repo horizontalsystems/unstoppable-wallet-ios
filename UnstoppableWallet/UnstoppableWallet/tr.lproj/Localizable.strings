@@ -28,6 +28,7 @@
 "button.more" = "Daha Fazlası";
 "button.i_understand" = "Anlıyorum";
 "button.learn_more" = "Daha fazla bilgi edin";
+"button.unlock" = "Kilidi Aç";
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
@@ -514,6 +515,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.approve.title" = "Takas Onayı";
 "swap.approve.description" = "Verilen jetonu sizin adınıza swap yapmak için bir akıllı sözleşmeye izin vermelisiniz. Bu izin, akıllı sözleşme tarafından kullanılabilecek tutarı belirler. Bakiyenizi etkilemez ancak onay işlemini gerçekleştirmek için küçük bir ücret gerekir.\n\nHer alım satımdan önce talep üzerine yapılabilirken, ileriki alım satımlarda bizim için önceden daha yüksek tutarı onaylamanız durumunda çok daha ucuz olur.";
 "swap.approve.amount_error.already_approved" = "Bu miktar için zaten bir ödeneğiniz var";
+"swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Onaylanıyor...";
 "swap.revoke_warning" = "%@ alışverişi yapabilir veya yeni tutarı iptal edip onaylamanız gerekir";
 "swap.revoking_button" = "İptal ediliyor...";
