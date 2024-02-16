@@ -4,10 +4,13 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
     typealias Item = ReceiveAddressService.Item
 
     func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem {
-        let description = ReceiveAddressModule.HighlightedDescription(
-            text: "deposit.warning".localized,
-            style: .yellow
-        )
+        var description: ReceiveAddressModule.HighlightedDescription?
+        if item.watchAccount {
+            description = .init(
+                    text: "deposit.warning.watch_account".localized,
+                    style: .yellow
+            )
+        }
 
         var networkName = ""
         if let derivation = item.token.type.derivation {
