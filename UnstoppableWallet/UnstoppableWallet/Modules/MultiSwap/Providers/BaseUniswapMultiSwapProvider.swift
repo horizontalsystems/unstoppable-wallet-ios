@@ -188,6 +188,10 @@ extension BaseUniswapMultiSwapProvider {
             return super.customButtonState
         }
 
+        override var settingsModified: Bool {
+            super.settingsModified || recipient != nil || slippage != MultiSwapSlippage.default
+        }
+
         override var cautions: [CautionNew] {
             var cautions = super.cautions
 
