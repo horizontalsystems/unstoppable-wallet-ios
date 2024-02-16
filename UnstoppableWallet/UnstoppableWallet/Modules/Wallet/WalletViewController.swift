@@ -10,8 +10,6 @@ import SwiftUI
 import ThemeKit
 import UIKit
 
-import EvmKit
-
 class WalletViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
 
