@@ -4,11 +4,11 @@ import EvmKit
 import Foundation
 import MarketKit
 import RxSwift
+import SwiftUI
 
 class MultiSwapApproveViewModel: ObservableObject {
     private let disposeBag = DisposeBag()
 
-    let infinity: BigUInt = .init(2).power(256) - 1
     let token: Token
 
     private let coinService: CoinService
@@ -21,10 +21,14 @@ class MultiSwapApproveViewModel: ObservableObject {
     var approveData: TransactionData?
 
     @Published var status: String?
-    @Published var unlockEnabled: Bool = false
+    @Published var unlockEnabled = false
     @Published var useInfinity = false
+    @Published var confirmData: TransactionData?
+    @Published var dismissed = false
 
-    init(token: Token, amount: BigUInt, spenderAddress: EvmKit.Address, onApprove _: @escaping () -> Void) {
+    var presented: Binding<Bool>
+
+    init(token: Token, amount: BigUInt, spenderAddress: EvmKit.Address, presented: Binding<Bool>) {
         let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchainType: token.blockchainType).evmKitWrapper?.evmKit
         allowanceService = evmKit.map {
             SwapAllowanceService(
@@ -35,6 +39,7 @@ class MultiSwapApproveViewModel: ObservableObject {
         }
         allowanceService?.set(token: token)
 
+        self.presented = presented
         pendingAllowanceService = allowanceService.map {
             SwapPendingAllowanceService(
                 spenderAddress: spenderAddress,
@@ -63,7 +68,7 @@ class MultiSwapApproveViewModel: ObservableObject {
     }
 
     private func syncState() {
-        let amount = useInfinity ? infinity : amount
+        let amount = useInfinity ? BigUInt.infinity : amount
 
         approveData = nil
         status = nil
@@ -115,12 +120,20 @@ extension MultiSwapApproveViewModel {
         return ValueFormatter.instance.formatFull(coinValue: coinValue) ?? coinService.monetaryValue(value: amount).description
     }
 
-    func onApprove() {}
+    func onApprove() {
+        confirmData = approveData
+    }
 
     func set(infinity: Bool) {
         if useInfinity == infinity { return }
         useInfinity = infinity
         syncState()
+    }
+}
+
+extension MultiSwapApproveViewModel: ISwapApproveDelegate {
+    func didApprove() {
+        presented.wrappedValue = false
     }
 }
 
@@ -130,4 +143,14 @@ extension MultiSwapApproveViewModel {
         case approveNotAllowed(errors: [String])
         case approveAllowed(transactionData: TransactionData)
     }
+}
+
+extension TransactionData: Identifiable {
+    public var id: String {
+        [to.raw.hs.hex, value.description, input.description].joined()
+    }
+}
+
+extension BigUInt {
+    static let infinity: Self = .init(2).power(256) - 1
 }

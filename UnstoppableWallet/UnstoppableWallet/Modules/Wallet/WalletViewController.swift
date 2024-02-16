@@ -240,27 +240,10 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc private func onTapQrScan() {
-        guard let token = try? App.shared.marketKit.token(query: TokenQuery(
-            blockchainType: .polygon, tokenType: .eip20(address: "0xe111178a87a3bff0c8d18decba5798827539ae99")
-        )) else {
-            return
-        }
+        let viewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
+        viewController.didFetch = { [weak self] in self?.viewModel.process(scanned: $0) }
 
-        let viewModel = MultiSwapApproveViewModel(
-            token: token,
-            amount: 140,
-            spenderAddress: try! EvmKit.Address(hex: "0x1111111254eeb25477b68fb85ed929f73a960582")
-        ) {
-            print("Approve")
-        }
-
-        let view = MultiSwapApproveView(viewModel: viewModel)
-        present(view.toNavigationViewController(), animated: true)
-
-//        let viewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
-//        viewController.didFetch = { [weak self] in self?.viewModel.process(scanned: $0) }
-//
-//        present(viewController, animated: true)
+        present(viewController, animated: true)
     }
 
     @objc private func onTapRetry() {

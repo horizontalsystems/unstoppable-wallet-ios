@@ -10,7 +10,7 @@ protocol IMultiSwapProvider {
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote
     func settingsView(tokenIn: Token, tokenOut: Token, onChangeSettings: @escaping () -> Void) -> AnyView
     func settingView(settingId: String) -> AnyView
-    func preSwapView(stepId: String) -> AnyView
+    func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut: Token, amount: Decimal) -> AnyView
     func swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: IMultiSwapQuote, transactionSettings: MultiSwapTransactionSettings?) async throws
 }
 
@@ -23,7 +23,7 @@ extension IMultiSwapProvider {
         AnyView(Text("Setting View: \(settingId)"))
     }
 
-    func preSwapView(stepId: String) -> AnyView {
+    func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut: Token, amount: Decimal) -> AnyView {
         AnyView(Text("Pre Swap View"))
     }
 }
