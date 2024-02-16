@@ -45,8 +45,16 @@ struct MultiSwapView: View {
                         }
                     }
                     .sheet(item: $preSwapStepId, onDismiss: { viewModel.autoQuoteIfRequired() }) { stepId in
-                        if let currentQuote = viewModel.currentQuote {
-                            currentQuote.provider.preSwapView(stepId: stepId)
+                        if let currentQuote = viewModel.currentQuote,
+                           let tokenIn = viewModel.tokenIn,
+                           let tokenOut = viewModel.tokenOut,
+                           let amount = viewModel.amountIn {
+                            currentQuote.provider.preSwapView(
+                                stepId: $preSwapStepId,
+                                tokenIn: tokenIn,
+                                tokenOut: tokenOut,
+                                amount: amount
+                            )
                         }
                     }
                 }

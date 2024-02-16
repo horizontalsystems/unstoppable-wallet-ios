@@ -4,6 +4,8 @@ import RxSwift
 import SnapKit
 import ThemeKit
 import UIKit
+import MarketKit
+import SwiftUI
 
 class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
     private let approveButton = PrimaryButton()
@@ -48,4 +50,33 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
 
         super.handleSendSuccess(transactionHash: transactionHash)
     }
+}
+
+struct SwapApproveConfirmationView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let sendData: SendEvmData
+    let blockchainType: BlockchainType
+    weak var delegate: ISwapApproveDelegate?
+
+    init(sendData: SendEvmData, blockchainType: BlockchainType, delegate: ISwapApproveDelegate?) {
+        self.sendData = sendData
+        self.blockchainType = blockchainType
+        self.delegate = delegate
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        do {
+            let viewController = try SwapApproveConfirmationModule.viewController(
+                sendData: sendData,
+                blockchainType: blockchainType,
+                delegate: delegate
+            )
+            return ThemeNavigationController(rootViewController:viewController)
+        } catch {
+            return ThemeNavigationController(rootViewController: ErrorViewController(text: error.localizedDescription))
+        }
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

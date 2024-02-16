@@ -25,6 +25,10 @@ struct CoinValue {
     var formattedFull: String? {
         ValueFormatter.instance.formatFull(coinValue: self)
     }
+
+    var infinity: String {
+        "∞ \(kind.symbol)"
+    }
 }
 
 extension CoinValue {

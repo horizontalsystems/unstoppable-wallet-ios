@@ -3,6 +3,7 @@ import SwiftUI
 
 struct MultiSwapApproveView: View {
     @ObservedObject var viewModel: MultiSwapApproveViewModel
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ThemeView {
@@ -34,6 +35,8 @@ struct MultiSwapApproveView: View {
                     if let status = viewModel.status {
                         HighlightedTextView(text: status, style: .yellow)
                     }
+
+                    Spacer()
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             } bottomContent: {
@@ -42,25 +45,24 @@ struct MultiSwapApproveView: View {
                 }) {
                     Text("button.unlock".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(!viewModel.unlockEnabled)
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .disabled(!viewModel.unlockEnabled)
             }
+        }
+        .sheet(item: $viewModel.confirmData) { data in
+            SwapApproveConfirmationView(
+                    sendData: .init(transactionData: data, additionalInfo: nil, warnings: []),
+                    blockchainType: viewModel.token.blockchainType,
+                    delegate: viewModel
+            )
+                .navigationTitle("confirm".localized)
+                .ignoresSafeArea()
+        }
+        .onChange(of: viewModel.dismissed) { _ in
+            dismiss()
         }
         .navigationTitle("confirm".localized)
         .navigationBarTitleDisplayMode(.inline)
-//        .toolbar {
-//            ToolbarItem(placement: .navigationBarLeading) {
-//                KFImage.url(URL(string: viewModel.iconUrl))
-//                    .resizable()
-//                    .frame(width: .iconSize24, height: .iconSize24)
-//            }
-//
-//            ToolbarItem(placement: .navigationBarTrailing) {
-//                Button("button.cancel".localized) {
-//                    presentationMode.wrappedValue.dismiss()
-//                }
-//            }
-//        }
     }
 
     @ViewBuilder func row(text: String, selected: Binding<Bool>) -> some View {
