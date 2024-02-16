@@ -388,6 +388,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.zcash.restore.dont_have" = "Nein, ich habe nicht";
 
 "deposit.warning" = "Nur Netzwerk-kompatible Tokens. Andere gehen verloren.";
+"deposit.warning.watch_account" = "This address is the address of the watched account";
 
 "receive_network_select.title" = "Netzwerk";
 "receive_network_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse.";
