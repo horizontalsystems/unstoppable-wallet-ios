@@ -388,6 +388,7 @@
 "deposit.zcash.restore.dont_have" = "不，我没有";
 
 "deposit.warning" = "仅支持与网络兼容的代币，其他将会丧失。";
+"deposit.warning.watch_account" = "This address is the address of the watched account";
 
 "receive_network_select.title" = "網絡";
 "receive_network_select.description" = "选择一个网络并获取要接收的地址。";
