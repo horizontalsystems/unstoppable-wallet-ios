@@ -44,11 +44,12 @@ struct MultiSwapView: View {
                             feeService.settingsView { viewModel.syncQuotes() }
                         }
                     }
-                    .sheet(item: $preSwapStepId, onDismiss: { viewModel.autoQuoteIfRequired() }) { stepId in
+                    .sheet(item: $preSwapStepId, onDismiss: { viewModel.autoQuoteIfRequired() }) { _ in
                         if let currentQuote = viewModel.currentQuote,
                            let tokenIn = viewModel.tokenIn,
                            let tokenOut = viewModel.tokenOut,
-                           let amount = viewModel.amountIn {
+                           let amount = viewModel.amountIn
+                        {
                             currentQuote.provider.preSwapView(
                                 stepId: $preSwapStepId,
                                 tokenIn: tokenIn,
@@ -61,14 +62,16 @@ struct MultiSwapView: View {
 
                 if let tokenIn = viewModel.tokenIn, let tokenOut = viewModel.tokenOut, let amountIn = viewModel.amountIn, let currentQuote = viewModel.currentQuote, let transactionService = viewModel.transactionService {
                     NavigationLink(
-                        destination: MultiSwapConfirmationView(
-                            tokenIn: tokenIn,
-                            tokenOut: tokenOut,
-                            amountIn: amountIn,
-                            provider: currentQuote.provider,
-                            transactionService: transactionService,
-                            isPresented: $confirmPresented
-                        ),
+                        destination: LazyView {
+                            MultiSwapConfirmationView(
+                                tokenIn: tokenIn,
+                                tokenOut: tokenOut,
+                                amountIn: amountIn,
+                                provider: currentQuote.provider,
+                                transactionService: transactionService,
+                                isPresented: $confirmPresented
+                            )
+                        },
                         isActive: $confirmPresented
                     ) {
                         EmptyView()
@@ -391,9 +394,11 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func quoteCautionsView(currentQuote: MultiSwapViewModel.Quote) -> some View {
-        if !currentQuote.quote.cautions.isEmpty {
-            ForEach(currentQuote.quote.cautions.indices, id: \.self) { index in
-                HighlightedTextView(caution: currentQuote.quote.cautions[index])
+        let cautions = currentQuote.quote.cautions(feeToken: viewModel.feeToken)
+
+        if !cautions.isEmpty {
+            ForEach(cautions.indices, id: \.self) { index in
+                HighlightedTextView(caution: cautions[index])
             }
         }
     }

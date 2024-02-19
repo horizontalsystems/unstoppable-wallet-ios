@@ -121,7 +121,7 @@ extension BaseEvmMultiSwapProvider {
             false
         }
 
-        var cautions: [CautionNew] {
+        func cautions(feeToken: Token?) -> [CautionNew] {
             []
         }
 

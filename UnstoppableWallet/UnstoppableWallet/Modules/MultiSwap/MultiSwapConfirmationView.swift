@@ -111,7 +111,7 @@ struct MultiSwapConfirmationView: View {
                         }
                     }
 
-                    let cautions = viewModel.transactionService.cautions + quote.cautions
+                    let cautions = viewModel.transactionService.cautions + quote.cautions(feeToken: viewModel.feeToken)
 
                     if !cautions.isEmpty {
                         VStack(spacing: .margin12) {

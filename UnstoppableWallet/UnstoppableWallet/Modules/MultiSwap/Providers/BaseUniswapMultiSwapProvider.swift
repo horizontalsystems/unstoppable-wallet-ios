@@ -48,6 +48,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         let gasPrice = transactionSettings?.gasPrice
         var txData: TransactionData?
         var gasLimit: Int?
+        var estimateError: Error?
 
         if let evmKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit, let gasPrice {
             do {
@@ -55,7 +56,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
                 txData = transactionData
                 gasLimit = try await evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
             } catch {
-                print("UNISWAP ESTIMATE ERROR: \(error)")
+                estimateError = error
             }
         }
 
@@ -64,6 +65,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             transactionData: txData,
             recipient: recipient,
             slippage: slippage,
+            estimateError: estimateError,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
             nonce: transactionSettings?.nonce,
@@ -166,12 +168,14 @@ extension BaseUniswapMultiSwapProvider {
         let transactionData: TransactionData?
         let recipient: Address?
         let slippage: Decimal
+        let estimateError: Error?
 
-        init(trade: Trade, transactionData: TransactionData?, recipient: Address?, slippage: Decimal, gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?, allowanceState: AllowanceState) {
+        init(trade: Trade, transactionData: TransactionData?, recipient: Address?, slippage: Decimal, estimateError: Error?, gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?, allowanceState: AllowanceState) {
             self.trade = trade
             self.transactionData = transactionData
             self.recipient = recipient
             self.slippage = slippage
+            self.estimateError = estimateError
 
             super.init(gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce, allowanceState: allowanceState)
         }
@@ -185,6 +189,21 @@ extension BaseUniswapMultiSwapProvider {
                 return .init(title: "High Price Impact", disabled: true)
             }
 
+            if let estimateError {
+                let title: String
+
+                if case let AppError.ethereum(reason) = estimateError.convertedError {
+                    switch reason {
+                    case .insufficientBalanceWithFee: title = "Insufficient Fee Balance"
+                    default: title = "Next"
+                    }
+                } else {
+                    title = "Next"
+                }
+
+                return .init(title: title, disabled: true)
+            }
+
             return super.customButtonState
         }
 
@@ -192,8 +211,45 @@ extension BaseUniswapMultiSwapProvider {
             super.settingsModified || recipient != nil || slippage != MultiSwapSlippage.default
         }
 
-        override var cautions: [CautionNew] {
-            var cautions = super.cautions
+        override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
+            var cautions = super.cautions(feeToken: feeToken)
+
+            if let estimateError {
+                let title: String
+                let text: String
+
+                if case let AppError.ethereum(reason) = estimateError.convertedError {
+                    switch reason {
+                    case .insufficientBalanceWithFee:
+                        title = "fee_settings.errors.insufficient_balance".localized
+                        text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken?.coin.code ?? "")
+                    case let .executionReverted(message):
+                        title = "fee_settings.errors.unexpected_error".localized
+                        text = message
+                    case .lowerThanBaseGasLimit:
+                        title = "fee_settings.errors.low_max_fee".localized
+                        text = "fee_settings.errors.low_max_fee.info".localized
+                    case .nonceAlreadyInBlock:
+                        title = "fee_settings.errors.nonce_already_in_block".localized
+                        text = "ethereum_transaction.error.nonce_already_in_block".localized
+                    case .replacementTransactionUnderpriced:
+                        title = "fee_settings.errors.replacement_transaction_underpriced".localized
+                        text = "ethereum_transaction.error.replacement_transaction_underpriced".localized
+                    case .transactionUnderpriced:
+                        title = "fee_settings.errors.transaction_underpriced".localized
+                        text = "ethereum_transaction.error.transaction_underpriced".localized
+                    case .tipsHigherThanMaxFee:
+                        title = "fee_settings.errors.tips_higher_than_max_fee".localized
+                        text = "ethereum_transaction.error.tips_higher_than_max_fee".localized
+                    }
+
+                } else {
+                    title = "ethereum_transaction.error.title".localized
+                    text = estimateError.convertedError.smartDescription
+                }
+
+                cautions.append(CautionNew(title: title, text: text, type: .error))
+            }
 
             switch MultiSwapSlippage.validate(slippage: slippage) {
             case .none: ()
