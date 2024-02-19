@@ -80,10 +80,22 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
             gasPrice: gasPrice
         )
 
+        var insufficientFeeBalance = false
+
+        if let evmKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit, let gasPrice {
+            let evmBalance = evmKit.accountState?.balance ?? 0
+            let txAmount = tokenIn.type.isNative ? amount : 0
+            let feeAmount = BigUInt(quote.estimateGas * gasPrice.max)
+            let totalAmount = txAmount + feeAmount
+
+            insufficientFeeBalance = totalAmount > evmBalance
+        }
+
         return await Quote(
             quote: quote,
             recipient: storage.value(for: MultiSwapSettingStorage.LegacySetting.address),
             slippage: storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default,
+            insufficientFeeBalance: insufficientFeeBalance,
             gasPrice: gasPrice,
             nonce: transactionSettings?.nonce,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
@@ -172,11 +184,13 @@ extension OneInchMultiSwapProvider {
         let quote: OneInchKit.Quote
         let recipient: Address?
         let slippage: Decimal
+        let insufficientFeeBalance: Bool
 
-        init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, gasPrice: GasPrice?, nonce: Int?, allowanceState: AllowanceState) {
+        init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, insufficientFeeBalance: Bool, gasPrice: GasPrice?, nonce: Int?, allowanceState: AllowanceState) {
             self.quote = quote
             self.recipient = recipient
             self.slippage = slippage
+            self.insufficientFeeBalance = insufficientFeeBalance
 
             super.init(gasPrice: gasPrice, gasLimit: quote.estimateGas, nonce: nonce, allowanceState: allowanceState)
         }
@@ -185,12 +199,32 @@ extension OneInchMultiSwapProvider {
             quote.amountOut ?? 0
         }
 
+        override var customButtonState: MultiSwapButtonState? {
+            var customButtonState: MultiSwapButtonState?
+
+            if insufficientFeeBalance {
+                customButtonState = .init(title: "Insufficient Fee Balance", disabled: true)
+            }
+
+            return super.customButtonState ?? customButtonState
+        }
+
         override var settingsModified: Bool {
             super.settingsModified || recipient != nil || slippage != MultiSwapSlippage.default
         }
 
-        override var cautions: [CautionNew] {
-            var cautions = super.cautions
+        override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
+            var cautions = super.cautions(feeToken: feeToken)
+
+            if insufficientFeeBalance {
+                cautions.append(
+                    .init(
+                        title: "fee_settings.errors.insufficient_balance".localized,
+                        text: "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken?.coin.code ?? ""),
+                        type: .error
+                    )
+                )
+            }
 
             switch MultiSwapSlippage.validate(slippage: slippage) {
             case .none: ()
