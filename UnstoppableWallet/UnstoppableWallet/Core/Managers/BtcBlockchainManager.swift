@@ -59,7 +59,7 @@ extension BtcBlockchainManager {
             : restoreMode(blockchainType: blockchainType)
 
         switch _restoreMode {
-        case .blockchair: return .blockchair(key: AppConfig.blockchairApiKey)
+        case .blockchair: return .blockchair
         case .hybrid: return .api
         case .blockchain: return .full
         }

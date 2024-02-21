@@ -161,8 +161,4 @@ enum AppConfig {
     static var donateEnabled: Bool {
         Bundle.main.object(forInfoDictionaryKey: "DonateEnabled") as? String == "true"
     }
-
-    static var blockchairApiKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "BlockchairApiKey") as? String) ?? ""
-    }
 }
