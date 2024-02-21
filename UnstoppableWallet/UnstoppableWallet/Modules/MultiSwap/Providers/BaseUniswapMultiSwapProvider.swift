@@ -242,7 +242,6 @@ extension BaseUniswapMultiSwapProvider {
                         title = "fee_settings.errors.tips_higher_than_max_fee".localized
                         text = "ethereum_transaction.error.tips_higher_than_max_fee".localized
                     }
-
                 } else {
                     title = "ethereum_transaction.error.title".localized
                     text = estimateError.convertedError.smartDescription
