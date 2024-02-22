@@ -12,6 +12,10 @@ class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
         super.init(storage: storage)
     }
 
+    override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
+        try kit.routerAddress(chain: chain)
+    }
+
     override func kitToken(chain: Chain, token: MarketKit.Token) throws -> UniswapKit.Token {
         switch token.type {
         case .native: return try kit.etherToken(chain: chain)
@@ -32,9 +36,5 @@ class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
         }
 
         return try kit.transactionData(receiveAddress: receiveAddress, chain: chain, tradeData: tradeData)
-    }
-
-    override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
-        try kit.routerAddress(chain: chain)
     }
 }

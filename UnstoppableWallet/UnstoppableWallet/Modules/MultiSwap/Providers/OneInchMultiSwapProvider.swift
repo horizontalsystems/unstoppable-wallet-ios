@@ -16,38 +16,19 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         super.init(storage: storage)
     }
 
-    private func address(token: MarketKit.Token) throws -> EvmKit.Address {
-        switch token.type {
-        case .native: return try EvmKit.Address(hex: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-        case let .eip20(address): return try EvmKit.Address(hex: address)
-        default: throw SwapError.invalidAddress
-        }
-    }
-
-    private func rawAmount(amount: Decimal, token: MarketKit.Token) -> BigUInt? {
-        let rawAmountString = (amount * pow(10, token.decimals)).hs.roundedString(decimal: 0)
-        return BigUInt(rawAmountString)
-    }
-
-    override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
-        try OneInchKit.Kit.routerAddress(chain: chain)
-    }
-}
-
-extension OneInchMultiSwapProvider: IMultiSwapProvider {
-    var id: String {
+    override var id: String {
         "1inch"
     }
 
-    var name: String {
+    override var name: String {
         "1Inch"
     }
 
-    var icon: String {
+    override var icon: String {
         "1inch_32"
     }
 
-    func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
+    override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
         guard tokenIn.blockchainType == tokenOut.blockchainType else {
             return false
         }
@@ -58,7 +39,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
+    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -102,29 +83,7 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
         )
     }
 
-    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
-        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
-        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
-        let view = ThemeNavigationView {
-            RecipientAndSlippageMultiSwapSettingsView(
-                viewModel: viewModel,
-                addressViewModel: addressViewModel,
-                slippageViewModel: slippageViewModel,
-                onChangeSettings: onChangeSettings
-            )
-        }
-
-        return AnyView(view)
-    }
-
-    func settingView(settingId: String) -> AnyView {
-        switch settingId {
-        default: return AnyView(EmptyView())
-        }
-    }
-
-    func swap(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, quote: IMultiSwapQuote) async throws {
+    override func swap(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, quote: IMultiSwapQuote) async throws {
         guard let quote = quote as? Quote else {
             throw SwapError.invalidQuote
         }
@@ -166,6 +125,47 @@ extension OneInchMultiSwapProvider: IMultiSwapProvider {
 //            gasLimit: swap.transaction.gasLimit,
 //            nonce: quote.nonce
 //        )
+    }
+
+    override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
+        try OneInchKit.Kit.routerAddress(chain: chain)
+    }
+
+    private func address(token: MarketKit.Token) throws -> EvmKit.Address {
+        switch token.type {
+        case .native: return try EvmKit.Address(hex: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        case let .eip20(address): return try EvmKit.Address(hex: address)
+        default: throw SwapError.invalidAddress
+        }
+    }
+
+    private func rawAmount(amount: Decimal, token: MarketKit.Token) -> BigUInt? {
+        let rawAmountString = (amount * pow(10, token.decimals)).hs.roundedString(decimal: 0)
+        return BigUInt(rawAmountString)
+    }
+}
+
+extension OneInchMultiSwapProvider {
+    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
+        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
+        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
+        let view = ThemeNavigationView {
+            RecipientAndSlippageMultiSwapSettingsView(
+                viewModel: viewModel,
+                addressViewModel: addressViewModel,
+                slippageViewModel: slippageViewModel,
+                onChangeSettings: onChangeSettings
+            )
+        }
+
+        return AnyView(view)
+    }
+
+    func settingView(settingId: String) -> AnyView {
+        switch settingId {
+        default: return AnyView(EmptyView())
+        }
     }
 }
 

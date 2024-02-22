@@ -8,19 +8,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     let marketKit = App.shared.marketKit
     let evmSyncSourceManager = App.shared.evmSyncSourceManager
 
-    func kitToken(chain _: Chain, token _: MarketKit.Token) throws -> UniswapKit.Token {
-        fatalError("Must be implemented in subclass")
-    }
-
-    func trade(rpcSource _: RpcSource, chain _: Chain, tokenIn _: UniswapKit.Token, tokenOut _: UniswapKit.Token, amountIn _: Decimal, tradeOptions _: TradeOptions) async throws -> Quote.Trade {
-        fatalError("Must be implemented in subclass")
-    }
-
-    func transactionData(receiveAddress _: EvmKit.Address, chain _: Chain, trade _: Quote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
-        fatalError("Must be implemented in subclass")
-    }
-
-    func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
+    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -73,23 +61,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
-    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
-        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
-        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
-        let view = ThemeNavigationView {
-            RecipientAndSlippageMultiSwapSettingsView(
-                viewModel: viewModel,
-                addressViewModel: addressViewModel,
-                slippageViewModel: slippageViewModel,
-                onChangeSettings: onChangeSettings
-            )
-        }
-
-        return AnyView(view)
-    }
-
-    func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapQuote) async throws {
+    override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapQuote) async throws {
         guard let quote = quote as? Quote else {
             throw SwapError.invalidQuote
         }
@@ -118,6 +90,36 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 //            gasLimit: gasLimit,
 //            nonce: quote.nonce
 //        )
+    }
+
+    func kitToken(chain _: Chain, token _: MarketKit.Token) throws -> UniswapKit.Token {
+        fatalError("Must be implemented in subclass")
+    }
+
+    func trade(rpcSource _: RpcSource, chain _: Chain, tokenIn _: UniswapKit.Token, tokenOut _: UniswapKit.Token, amountIn _: Decimal, tradeOptions _: TradeOptions) async throws -> Quote.Trade {
+        fatalError("Must be implemented in subclass")
+    }
+
+    func transactionData(receiveAddress _: EvmKit.Address, chain _: Chain, trade _: Quote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
+        fatalError("Must be implemented in subclass")
+    }
+}
+
+extension BaseUniswapMultiSwapProvider {
+    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
+        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
+        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
+        let view = ThemeNavigationView {
+            RecipientAndSlippageMultiSwapSettingsView(
+                viewModel: viewModel,
+                addressViewModel: addressViewModel,
+                slippageViewModel: slippageViewModel,
+                onChangeSettings: onChangeSettings
+            )
+        }
+
+        return AnyView(view)
     }
 }
 
