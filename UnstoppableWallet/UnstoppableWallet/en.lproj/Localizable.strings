@@ -1902,5 +1902,7 @@
 "transaction_filter.all_blockchains" = "All Blockchains";
 "transaction_filter.coin" = "Coin";
 "transaction_filter.all_coins" = "All Coins";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
 "transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";

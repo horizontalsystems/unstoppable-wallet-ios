@@ -7,6 +7,7 @@ class TransactionFilterViewModel: ObservableObject {
 
     @Published var blockchain: Blockchain?
     @Published var token: Token?
+    @Published var contact: Contact?
     @Published var scamFilterEnabled: Bool
     @Published var resetEnabled: Bool
 
@@ -22,6 +23,7 @@ class TransactionFilterViewModel: ObservableObject {
             .sink { [weak self] filter in
                 self?.blockchain = filter.blockchain
                 self?.token = filter.token
+                self?.contact = filter.contact
                 self?.scamFilterEnabled = filter.scamFilterEnabled
                 self?.resetEnabled = filter.hasChanges
             }
@@ -36,6 +38,10 @@ class TransactionFilterViewModel: ObservableObject {
         service.allTokens
     }
 
+    var contacts: [Contact] {
+        service.allContacts.by(blockchainUid: service.transactionFilter.blockchain?.uid)
+    }
+
     func set(blockchain: Blockchain?) {
         var newFilter = service.transactionFilter
         newFilter.set(blockchain: blockchain)
@@ -45,6 +51,12 @@ class TransactionFilterViewModel: ObservableObject {
     func set(token: Token?) {
         var newFilter = service.transactionFilter
         newFilter.set(token: token)
+        service.transactionFilter = newFilter
+    }
+
+    func set(contact: Contact?) {
+        var newFilter = service.transactionFilter
+        newFilter.set(contact: contact)
         service.transactionFilter = newFilter
     }
 

@@ -6,6 +6,7 @@ class TransactionFilterService {
     @DistinctPublished var transactionFilter = TransactionFilter()
     var allBlockchains = [Blockchain]()
     var allTokens = [Token]()
+    var allContacts = [Contact]()
 
     func handle(wallets: [Wallet]) {
         allBlockchains = Array(Set(wallets.map(\.token.blockchain)))
@@ -31,6 +32,12 @@ class TransactionFilterService {
 
         if let token = newFilter.token, !allTokens.contains(token) {
             newFilter.set(token: nil)
+        }
+
+        allContacts = App.shared.contactManager.contacts(blockchainUid: newFilter.blockchain?.uid)
+
+        if let contact = newFilter.contact, !allContacts.contains(contact) {
+            newFilter.set(contact: nil)
         }
 
         transactionFilter = newFilter
