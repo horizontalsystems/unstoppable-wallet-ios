@@ -6,6 +6,7 @@ struct TransactionFilterView: View {
     @Environment(\.presentationMode) private var presentationMode
     @State private var blockchainSelectPresented = false
     @State private var tokenSelectPresented = false
+    @State private var contactSelectPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -50,6 +51,27 @@ struct TransactionFilterView: View {
                 }
                 .sheet(isPresented: $tokenSelectPresented) {
                     ThemeNavigationView { TransactionTokenSelectView(viewModel: viewModel) }
+                }
+
+                ListSection {
+                    ClickableRow(spacing: .margin8, action: {
+                        contactSelectPresented = true
+                    }) {
+                        Text("transaction_filter.contact".localized).textBody()
+
+                        Spacer()
+
+                        if let contact = viewModel.contact {
+                            Text(contact.name).textSubhead1(color: .themeLeah)
+                        } else {
+                            Text("transaction_filter.all_contacts".localized).textSubhead1()
+                        }
+
+                        Image("arrow_small_down_20").themeIcon()
+                    }
+                }
+                .sheet(isPresented: $contactSelectPresented) {
+                    ThemeNavigationView { TransactionContactSelectView(viewModel: viewModel) }
                 }
 
                 VStack(spacing: 0) {

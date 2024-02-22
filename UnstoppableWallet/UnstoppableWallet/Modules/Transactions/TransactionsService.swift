@@ -48,6 +48,10 @@ class TransactionsService: BaseTransactionsService {
         }
     }
 
+    override var contactFilter: Contact? {
+        filterService.transactionFilter.contact
+    }
+
     override var scamFilterEnabled: Bool {
         filterService.transactionFilter.scamFilterEnabled
     }
