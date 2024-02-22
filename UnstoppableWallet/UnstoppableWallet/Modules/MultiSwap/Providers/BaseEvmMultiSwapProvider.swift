@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-class BaseEvmMultiSwapProvider {
+class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     private static let unlockStepId = "unlock"
 
     private let adapterManager = App.shared.adapterManager
@@ -14,14 +14,28 @@ class BaseEvmMultiSwapProvider {
         self.storage = storage
     }
 
-    private func pendingAllowance(pendingTransactions: [TransactionRecord]) -> Decimal? {
-        for transaction in pendingTransactions {
-            if let approve = transaction as? ApproveTransactionRecord, let value = approve.value.decimalValue {
-                return value
-            }
-        }
+    var id: String {
+        fatalError("Must be implemented in subclass")
+    }
 
-        return nil
+    var name: String {
+        fatalError("Must be implemented in subclass")
+    }
+
+    var icon: String {
+        fatalError("Must be implemented in subclass")
+    }
+
+    func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
+        fatalError("Must be implemented in subclass")
+    }
+
+    func quote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
+        fatalError("Must be implemented in subclass")
+    }
+
+    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapQuote) async throws {
+        fatalError("Must be implemented in subclass")
     }
 
     func spenderAddress(chain _: Chain) throws -> EvmKit.Address {
@@ -57,6 +71,18 @@ class BaseEvmMultiSwapProvider {
         }
     }
 
+    private func pendingAllowance(pendingTransactions: [TransactionRecord]) -> Decimal? {
+        for transaction in pendingTransactions {
+            if let approve = transaction as? ApproveTransactionRecord, let value = approve.value.decimalValue {
+                return value
+            }
+        }
+
+        return nil
+    }
+}
+
+extension BaseEvmMultiSwapProvider {
     func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut _: Token, amount: Decimal) -> AnyView {
         if stepId.wrappedValue == Self.unlockStepId {
             let amount = tokenIn.fractionalMonetaryValue(value: amount)
@@ -121,7 +147,7 @@ extension BaseEvmMultiSwapProvider {
             false
         }
 
-        func cautions(feeToken: Token?) -> [CautionNew] {
+        func cautions(feeToken _: Token?) -> [CautionNew] {
             []
         }
 

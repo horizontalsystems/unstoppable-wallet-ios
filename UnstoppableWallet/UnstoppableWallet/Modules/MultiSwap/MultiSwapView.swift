@@ -404,9 +404,9 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func transactionServiceCautionsView() -> some View {
-        if let transactionService = viewModel.transactionService, !transactionService.cautions.isEmpty {
-            ForEach(transactionService.cautions.indices, id: \.self) { index in
-                HighlightedTextView(caution: transactionService.cautions[index])
+        if let cautions = viewModel.transactionService?.cautions, !cautions.isEmpty {
+            ForEach(cautions.indices, id: \.self) { index in
+                HighlightedTextView(caution: cautions[index])
             }
         }
     }
