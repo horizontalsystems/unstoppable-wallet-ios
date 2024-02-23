@@ -24,6 +24,11 @@ class TransactionsService: BaseTransactionsService {
         subscribe(disposeBag, walletManager.activeWalletDataUpdatedObservable) { [weak self] activeWalletData in
             self?.filterService.handle(wallets: activeWalletData.wallets)
         }
+
+        subscribe(disposeBag, App.shared.contactManager.stateObservable) { [weak self] _ in
+            self?.filterService.handleContacts(filter: nil)
+        }
+
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in
             self?.syncPoolGroup()
         }
@@ -48,7 +53,7 @@ class TransactionsService: BaseTransactionsService {
         }
     }
 
-    override var contactFilter: Contact? {
+    override var contact: Contact? {
         filterService.transactionFilter.contact
     }
 

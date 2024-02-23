@@ -16,6 +16,7 @@ class TransactionFilterViewModel: ObservableObject {
 
         blockchain = service.transactionFilter.blockchain
         token = service.transactionFilter.token
+        contact = service.transactionFilter.contact
         scamFilterEnabled = service.transactionFilter.scamFilterEnabled
         resetEnabled = service.transactionFilter.hasChanges
 
@@ -39,7 +40,7 @@ class TransactionFilterViewModel: ObservableObject {
     }
 
     var contacts: [Contact] {
-        service.allContacts.by(blockchainUid: service.transactionFilter.blockchain?.uid)
+        service.allContacts.sorted { $0.name < $1.name }.by(blockchainUid: service.transactionFilter.blockchain?.uid)
     }
 
     func set(blockchain: Blockchain?) {
