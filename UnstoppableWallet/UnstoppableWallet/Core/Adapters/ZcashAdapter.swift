@@ -665,7 +665,7 @@ extension ZcashAdapter: ITransactionsAdapter {
         network.networkType == .mainnet ? "https://blockchair.com/zcash/transaction/" + transactionHash : nil
     }
 
-    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
             .map { transactions in
                 transactions.compactMap { transaction -> TransactionRecord? in
@@ -680,7 +680,7 @@ extension ZcashAdapter: ITransactionsAdapter {
             .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         transactionPool?.transactionsSingle(from: from, filter: filter, limit: limit).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
         } ?? .just([])

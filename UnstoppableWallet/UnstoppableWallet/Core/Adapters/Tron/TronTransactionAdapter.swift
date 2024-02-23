@@ -67,14 +67,14 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
         tronKit.transactionsPublisher(tagQueries: [tagQuery(token: token, filter: filter)]).asObservable()
             .map { [weak self] in
                 $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
             }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         let transactions = tronKit.transactions(tagQueries: [tagQuery(token: token, filter: filter)], fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
 
         return Single.just(transactions.compactMap { transactionConverter.transactionRecord(fromTransaction: $0) })

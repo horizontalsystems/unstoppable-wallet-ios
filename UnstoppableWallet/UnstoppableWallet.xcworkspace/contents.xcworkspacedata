@@ -4,7 +4,4 @@
    <FileRef
       location = "container:UnstoppableWallet.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:../../EvmKit.Swift">
-   </FileRef>
 </Workspace>

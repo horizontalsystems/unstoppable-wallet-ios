@@ -269,7 +269,7 @@ extension TonAdapter: ITransactionsAdapter {
         "https://tonscan.org/tx/\(transactionHash)"
     }
 
-    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject
             .map { transactionRecords in
                 transactionRecords.compactMap { transaction -> TransactionRecord? in
@@ -284,7 +284,7 @@ extension TonAdapter: ITransactionsAdapter {
             .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         switch filter {
         case .all: return transactionsSingle(from: from, type: nil, limit: limit)
         case .incoming: return transactionsSingle(from: from, type: TransactionType.incoming, limit: limit)

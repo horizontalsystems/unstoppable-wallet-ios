@@ -25,7 +25,7 @@ class TransactionInfoService {
         self.nftMetadataService = nftMetadataService
         self.balanceHiddenManager = balanceHiddenManager
 
-        subscribe(disposeBag, adapter.transactionsObservable(token: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
+        subscribe(disposeBag, adapter.transactionsObservable(token: nil, filter: .all, address: nil)) { [weak self] in self?.sync(transactionRecords: $0) }
         subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncItem() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }

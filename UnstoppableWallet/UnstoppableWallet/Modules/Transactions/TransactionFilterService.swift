@@ -34,12 +34,16 @@ class TransactionFilterService {
             newFilter.set(token: nil)
         }
 
-        allContacts = App.shared.contactManager.contacts(blockchainUid: newFilter.blockchain?.uid)
+        handleContacts(filter: newFilter)
 
         if let contact = newFilter.contact, !allContacts.contains(contact) {
             newFilter.set(contact: nil)
         }
 
         transactionFilter = newFilter
+    }
+
+    func handleContacts(filter: TransactionFilter?) {
+        allContacts = App.shared.contactManager.contacts(blockchainUid: (filter ?? transactionFilter).blockchain?.uid)
     }
 }
