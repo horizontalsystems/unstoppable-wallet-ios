@@ -14,33 +14,43 @@ struct MultiSwapTokenSelectView: View {
                 VStack(spacing: 0) {
                     SearchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
 
-                    ThemeList(items: viewModel.tokens) { token in
+                    ThemeList(items: viewModel.items) { item in
                         ClickableRow(action: {
-                            self.token = token
+                            token = item.token
                             isPresented = false
                         }) {
-                            KFImage.url(URL(string: token.coin.imageUrl))
+                            KFImage.url(URL(string: item.token.coin.imageUrl))
                                 .resizable()
                                 .placeholder {
-                                    Image(token.placeholderImageName)
+                                    Image(item.token.placeholderImageName)
                                 }
                                 .frame(width: .iconSize32, height: .iconSize32)
 
                             VStack(spacing: 1) {
                                 HStack(spacing: .margin8) {
-                                    Text(token.coin.code).textBody()
+                                    Text(item.token.coin.code).textBody()
 
-                                    if let badge = token.badge {
+                                    if let badge = item.token.badge {
                                         BadgeViewNew(text: badge)
+                                    }
+
+                                    if let balance = item.balance {
+                                        Spacer()
+
+                                        Text(balance).textBody()
                                     }
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                                Text(token.coin.name).themeSubhead2()
-                            }
+                                HStack(spacing: .margin8) {
+                                    Text(item.token.coin.name).themeSubhead2()
 
-                            if self.token == token {
-                                Image.checkIcon
+                                    if let fiatBalance = item.fiatBalance {
+                                        Spacer()
+
+                                        Text(fiatBalance).textSubhead2()
+                                    }
+                                }
                             }
                         }
                     }

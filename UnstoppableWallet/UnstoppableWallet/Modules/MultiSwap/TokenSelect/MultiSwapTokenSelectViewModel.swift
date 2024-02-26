@@ -8,32 +8,35 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
     private let marketKit = App.shared.marketKit
     private let accountManager = App.shared.accountManager
-    private let wallets = App.shared.walletManager.activeWallets
+    private let adapterManager = App.shared.adapterManager
+    private let currencyManager = App.shared.currencyManager
+    private let walletManager = App.shared.walletManager
 
     @Published var searchText: String = "" {
         didSet {
-            syncTokens()
+            syncItems()
         }
     }
 
-    @Published var tokens: [Token] = []
+    @Published var items: [Item] = []
 
     init() {
-        syncTokens()
+        syncItems()
     }
 
-    private func syncTokens() {
+    private func syncItems() {
         syncTask = nil
 
         let filter = searchText.trimmingCharacters(in: .whitespaces)
 
         guard let account = accountManager.activeAccount else {
-            tokens = []
+            items = []
             return
         }
 
-        syncTask = Task { [weak self, marketKit, wallets] in
-            let result: [Token]
+        syncTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager] in
+            let wallets = walletManager.activeWallets
+            let resultTokens: [Token]
 
             do {
                 if filter.isEmpty {
@@ -48,23 +51,23 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     let featuredTokens = tokens.filter { account.type.supports(token: $0) }
                     let enabledTokens = wallets.map(\.token)
 
-                    result = (enabledTokens + featuredTokens).removeDuplicates()
+                    resultTokens = (enabledTokens + featuredTokens).removeDuplicates()
                 } else if let ethAddress = try? EvmKit.Address(hex: filter) {
                     let address = ethAddress.hex
                     let tokens = try marketKit.tokens(reference: address)
 
-                    result = tokens.filter { account.type.supports(token: $0) }
+                    resultTokens = tokens.filter { account.type.supports(token: $0) }
                 } else {
                     let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100)
                     let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
-                    result = tokens.filter { account.type.supports(token: $0) }
+                    resultTokens = tokens.filter { account.type.supports(token: $0) }
                 }
             } catch {
-                result = []
+                resultTokens = []
             }
 
-            let sortedResult = result.sorted { lhsToken, rhsToken in
+            let sortedResult = resultTokens.sorted { lhsToken, rhsToken in
                 let lhsEnabled = wallets.contains { $0.token == lhsToken }
                 let rhsEnabled = wallets.contains { $0.token == rhsToken }
 
@@ -102,12 +105,48 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 return lhsToken.badge ?? "" < rhsToken.badge ?? ""
             }
 
+            let currency = currencyManager.baseCurrency
+            let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
+
+            let items = sortedResult.map { token in
+                var balance: String?
+                var fiatBalance: String?
+
+                if let wallet = wallets.first(where: { $0.token == token }),
+                   let availableBalance = adapterManager.balanceAdapter(for: wallet)?.balanceData.available
+                {
+                    balance = ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: token), value: availableBalance))
+
+                    if let coinPrice = coinPriceMap[token.coin.uid] {
+                        fiatBalance = ValueFormatter.instance.formatFull(currency: currency, value: availableBalance * coinPrice.value)
+                    }
+                }
+
+                return Item(
+                    token: token,
+                    balance: balance,
+                    fiatBalance: fiatBalance
+                )
+            }
+
             if !Task.isCancelled {
                 await MainActor.run { [weak self] in
-                    self?.tokens = sortedResult
+                    self?.items = items
                 }
             }
         }
         .erased()
+    }
+}
+
+extension MultiSwapTokenSelectViewModel {
+    struct Item: Hashable {
+        let token: Token
+        let balance: String?
+        let fiatBalance: String?
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(token)
+        }
     }
 }
