@@ -1899,10 +1899,14 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "筛选器";
+"transaction_filter.title" = "联系人";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "所有区块链";
 "transaction_filter.coin" = "硬币";
 "transaction_filter.all_coins" = "所有硬币";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
 "transaction_filter.hide_suspicious_txs.description" = "隐藏到达的沙尘群交易，这部分解决了地址中毒攻击问题。";
