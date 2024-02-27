@@ -10,44 +10,56 @@ struct TransactionContactSelectView: View {
 
     var body: some View {
         ThemeView {
-            VStack(spacing: 0) {
-                SearchBar(text: $searchText, prompt: "placeholder.search".localized)
+            VStack(spacing: .margin12) {
+                if !viewModel.contacts.isEmpty {
+                    SearchBar(text: $searchText, prompt: "placeholder.search".localized)
+                }
 
-                ScrollableThemeView {
-                    ListSection {
-                        ClickableRow(action: {
-                            viewModel.set(token: nil)
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image("user_24").themeIcon()
-                            Text("transaction_filter.all_contacts").themeBody()
+                Text("transaction_filter.description".localized(
+                    viewModel.allowedBlockchainForContacts.map(\.name).joined(separator: ", ")
+                ))
+                .themeSubhead2()
+                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
 
-                            if viewModel.contact == nil {
-                                Image.checkIcon
-                            }
-                        }
-
-                        ForEach(searchResults, id: \.self) { contact in
+                if !viewModel.contacts.isEmpty {
+                    ScrollableThemeView {
+                        ListSection {
                             ClickableRow(action: {
-                                viewModel.set(contact: contact)
+                                viewModel.set(token: nil)
                                 presentationMode.wrappedValue.dismiss()
                             }) {
-                                Image("user_24").themeIcon()
+                                Image("paper_contract_24").themeIcon()
+                                Text("transaction_filter.all_contacts").themeBody()
 
-                                Text(contact.name).textBody()
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                                if viewModel.contact == contact {
+                                if viewModel.contact == nil {
                                     Image.checkIcon
                                 }
                             }
+
+                            ForEach(searchResults, id: \.self) { contact in
+                                ClickableRow(action: {
+                                    viewModel.set(contact: contact)
+                                    presentationMode.wrappedValue.dismiss()
+                                }) {
+                                    Image("user_24").themeIcon()
+
+                                    Text(contact.name).textBody()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                                    if viewModel.contact == contact {
+                                        Image.checkIcon
+                                    }
+                                }
+                            }
                         }
+                            .themeListStyle(.transparent)
+                            .padding(.bottom, .margin32)
                     }
-                    .themeListStyle(.transparent)
-                    .padding(.bottom, .margin32)
+                } else {
+                    PlaceholderViewNew(image: Image("not_found_48"), text: "no suitable contacts".localized)
                 }
             }
-            .navigationTitle("transaction_filter.coin".localized)
+            .navigationTitle("transaction_filter.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {

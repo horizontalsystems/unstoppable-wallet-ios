@@ -1897,7 +1897,9 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "Contacts";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "All Blockchains";
 "transaction_filter.coin" = "Coin";
