@@ -58,6 +58,7 @@ protocol ITransactionsAdapter {
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var explorerTitle: String { get }
+    var additionalTokenQueries: [TokenQuery] { get }
     func explorerUrl(transactionHash: String) -> String?
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]>
     func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]>

@@ -7,10 +7,7 @@ enum TransactionsModule {
         let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
-        let filterService = TransactionFilterService()
-
         let service = TransactionsService(
-            filterService: filterService,
             walletManager: App.shared.walletManager,
             adapterManager: App.shared.transactionAdapterManager,
             rateService: rateService,
@@ -23,7 +20,7 @@ enum TransactionsModule {
         let viewModel = TransactionsViewModel(service: service, contactLabelService: contactLabelService, factory: viewItemFactory)
         let dataSource = TransactionsTableViewDataSource(viewModel: viewModel)
 
-        return TransactionsViewController(viewModel: viewModel, dataSource: dataSource, transactionFilterService: filterService)
+        return TransactionsViewController(viewModel: viewModel, dataSource: dataSource)
     }
 
     static func dataSource(token: Token) -> TransactionsTableViewDataSource {
@@ -81,9 +78,9 @@ struct TransactionFilter: Equatable {
             return
         }
 
-        if !TransactionFilterService.allowedBlockchainForContacts.contains(blockchain.type) {
-            self.contact = nil
-        }
+//        if !TransactionFilterService.allowedBlockchainForContacts.contains(blockchain.type) {
+//            self.contact = nil
+//        }
 
         if !contact.addresses.contains(where: { $0.blockchainUid == blockchain.uid}) {
             self.contact = nil

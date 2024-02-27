@@ -661,6 +661,10 @@ extension ZcashAdapter: ITransactionsAdapter {
         "blockchair.com"
     }
 
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
+
     func explorerUrl(transactionHash: String) -> String? {
         network.networkType == .mainnet ? "https://blockchair.com/zcash/transaction/" + transactionHash : nil
     }

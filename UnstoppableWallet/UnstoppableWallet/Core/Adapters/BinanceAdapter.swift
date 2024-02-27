@@ -168,6 +168,10 @@ extension BinanceAdapter: ITransactionsAdapter {
         "binance.org"
     }
 
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
+
     func explorerUrl(transactionHash: String) -> String? {
         binanceKit.networkType == .mainNet
             ? "https://explorer.binance.org/tx/" + transactionHash

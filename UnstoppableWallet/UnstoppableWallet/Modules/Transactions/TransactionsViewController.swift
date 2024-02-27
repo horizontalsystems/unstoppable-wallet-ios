@@ -8,7 +8,6 @@ import UIKit
 class TransactionsViewController: ThemeViewController {
     private let viewModel: TransactionsViewModel
     private let dataSource: TransactionsTableViewDataSource
-    private let transactionFilterService: TransactionFilterService
     private let disposeBag = DisposeBag()
 
     private let tableView = UITableView(frame: .zero, style: .plain)
@@ -17,10 +16,9 @@ class TransactionsViewController: ThemeViewController {
 
     private let filterBadge = UIView()
 
-    init(viewModel: TransactionsViewModel, dataSource: TransactionsTableViewDataSource, transactionFilterService: TransactionFilterService) {
+    init(viewModel: TransactionsViewModel, dataSource: TransactionsTableViewDataSource) {
         self.viewModel = viewModel
         self.dataSource = dataSource
-        self.transactionFilterService = transactionFilterService
 
         super.init()
 
@@ -108,7 +106,7 @@ class TransactionsViewController: ThemeViewController {
     }
 
     @objc private func onTapFilter() {
-        let viewController = TransactionFilterModule.view(transactionFilterService: transactionFilterService).toNavigationViewController()
+        let viewController = TransactionFilterModule.view(transactionsService: viewModel.service).toNavigationViewController()
         present(viewController, animated: true)
     }
 

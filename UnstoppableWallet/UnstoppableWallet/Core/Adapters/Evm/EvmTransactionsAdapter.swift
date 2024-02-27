@@ -63,6 +63,29 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         evmTransactionSource.name
     }
 
+    var additionalTokenQueries: [TokenQuery] {
+        evmKit.tagTokens().compactMap { tagToken in
+            var tokenType: TokenType?
+
+            switch tagToken.protocol {
+            case .native:
+                tokenType = .native
+            case .eip20:
+                if let contractAddress = tagToken.contractAddress {
+                    tokenType = .eip20(address: contractAddress.hex)
+                }
+            default:
+                ()
+            }
+
+            guard let tokenType else {
+                return nil
+            }
+
+            return TokenQuery(blockchainType: evmKitWrapper.blockchainType, tokenType: tokenType)
+        }
+    }
+
     func explorerUrl(transactionHash: String) -> String? {
         evmTransactionSource.transactionUrl(hash: transactionHash)
     }
