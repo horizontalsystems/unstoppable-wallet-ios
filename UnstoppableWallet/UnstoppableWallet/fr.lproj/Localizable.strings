@@ -1899,10 +1899,14 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filtre";
+"transaction_filter.title" = "Contacts";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Toutes les blockchains";
 "transaction_filter.coin" = "Coin";
 "transaction_filter.all_coins" = "Toutes les pièces";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Masquer les transactions suspectes";
 "transaction_filter.hide_suspicious_txs.description" = "Masquer les transactions entrantes avec des montants infimes en stablecoins, cela résout partiellement les problèmes d'attaques de poisoning d'adresse.";
