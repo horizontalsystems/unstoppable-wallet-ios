@@ -360,6 +360,10 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         lastBlockUpdatedSubject.asObservable()
     }
 
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
+
     func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
             .map { transactions in

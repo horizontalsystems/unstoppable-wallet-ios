@@ -2,7 +2,7 @@ import Combine
 import MarketKit
 
 class TransactionFilterViewModel: ObservableObject {
-    private let service: TransactionFilterService
+    private let service: TransactionsService
     private var cancellables = Set<AnyCancellable>()
 
     @Published var blockchain: Blockchain?
@@ -12,7 +12,7 @@ class TransactionFilterViewModel: ObservableObject {
     @Published var scamFilterEnabled: Bool
     @Published var resetEnabled: Bool
 
-    init(service: TransactionFilterService) {
+    init(service: TransactionsService) {
         self.service = service
 
         blockchain = service.transactionFilter.blockchain
@@ -32,37 +32,12 @@ class TransactionFilterViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    var blockchains: [Blockchain] {
-        service.allBlockchains
-    }
-
-    var tokens: [Token] {
-        service.allTokens
-    }
-
-    var contacts: [Contact] {
-        // check if selected blockchain unsupported for contact search
-        if let type = service.transactionFilter.blockchain?.type, !TransactionFilterService.allowedBlockchainForContacts.contains(type) {
-            return []
-        }
-
-        // filter contacts by blockchain(if exist) and sort
-        return service
-            .allContacts
-            .sorted { $0.name < $1.name }
-            .by(blockchainUid: service.transactionFilter.blockchain?.uid)   // filter contacts by concrete address
-    }
-
-    var allowedBlockchainForContacts: [Blockchain] {
-        service.allowedBlockchainForContacts
-    }
-
     func set(blockchain: Blockchain?) {
         var newFilter = service.transactionFilter
         newFilter.set(blockchain: blockchain)
         service.transactionFilter = newFilter
 
-        service.handleContacts()
+//        service.handleContacts()
         contact = newFilter.contact
     }
 
@@ -71,7 +46,7 @@ class TransactionFilterViewModel: ObservableObject {
         newFilter.set(token: token)
         service.transactionFilter = newFilter
 
-        service.handleContacts()
+//        service.handleContacts()
         contact = newFilter.contact
     }
 
@@ -92,7 +67,7 @@ class TransactionFilterViewModel: ObservableObject {
         newFilter.reset()
         service.transactionFilter = newFilter
 
-        service.handleContacts()
+//        service.handleContacts()
         contact = nil
     }
 }

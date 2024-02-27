@@ -2,28 +2,32 @@ import Kingfisher
 import SwiftUI
 
 struct TransactionBlockchainSelectView: View {
-    @ObservedObject var viewModel: TransactionFilterViewModel
+    @ObservedObject var viewModel: TransactionBlockchainSelectViewModel
 
     @Environment(\.presentationMode) private var presentationMode
+
+    init(transactionFilterViewModel: TransactionFilterViewModel) {
+        _viewModel = ObservedObject(wrappedValue: TransactionBlockchainSelectViewModel(transactionFilterViewModel: transactionFilterViewModel))
+    }
 
     var body: some View {
         ScrollableThemeView {
             ListSection {
                 ClickableRow(action: {
-                    viewModel.set(blockchain: nil)
+                    viewModel.set(currentBlockchain: nil)
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Image("blocks_24").themeIcon()
                     Text("transaction_filter.all_blockchains").themeBody()
 
-                    if viewModel.blockchain == nil {
+                    if viewModel.currentBlockchain == nil {
                         Image.checkIcon
                     }
                 }
 
                 ForEach(viewModel.blockchains, id: \.uid) { blockchain in
                     ClickableRow(action: {
-                        viewModel.set(blockchain: blockchain)
+                        viewModel.set(currentBlockchain: blockchain)
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         KFImage.url(URL(string: blockchain.type.imageUrl))
@@ -32,7 +36,7 @@ struct TransactionBlockchainSelectView: View {
 
                         Text(blockchain.name).themeBody()
 
-                        if viewModel.blockchain == blockchain {
+                        if viewModel.currentBlockchain == blockchain {
                             Image.checkIcon
                         }
                     }

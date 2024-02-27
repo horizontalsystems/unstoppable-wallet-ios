@@ -59,6 +59,10 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
         "Tronscan"
     }
 
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
+
     func explorerUrl(transactionHash: String) -> String? {
         switch tronKit.network {
         case .mainNet: return "https://tronscan.org/#/transaction/\(transactionHash)"

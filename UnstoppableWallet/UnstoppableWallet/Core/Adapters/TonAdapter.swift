@@ -265,6 +265,10 @@ extension TonAdapter: ITransactionsAdapter {
         "tonscan.org"
     }
 
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
+
     func explorerUrl(transactionHash: String) -> String? {
         "https://tonscan.org/tx/\(transactionHash)"
     }

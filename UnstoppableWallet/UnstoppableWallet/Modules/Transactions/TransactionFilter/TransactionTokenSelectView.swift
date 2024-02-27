@@ -3,10 +3,14 @@ import MarketKit
 import SwiftUI
 
 struct TransactionTokenSelectView: View {
-    @ObservedObject var viewModel: TransactionFilterViewModel
+    @ObservedObject var viewModel: TransactionTokenSelectViewModel
 
     @Environment(\.presentationMode) private var presentationMode
     @State private var searchText: String = ""
+
+    init(transactionFilterViewModel: TransactionFilterViewModel) {
+        _viewModel = ObservedObject(wrappedValue: TransactionTokenSelectViewModel(transactionFilterViewModel: transactionFilterViewModel))
+    }
 
     var body: some View {
         ThemeView {
@@ -16,20 +20,20 @@ struct TransactionTokenSelectView: View {
                 ScrollableThemeView {
                     ListSection {
                         ClickableRow(action: {
-                            viewModel.set(token: nil)
+                            viewModel.set(currentToken: nil)
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             Image("circle_coin_24").themeIcon()
                             Text("transaction_filter.all_coins").themeBody()
 
-                            if viewModel.token == nil {
+                            if viewModel.currentToken == nil {
                                 Image.checkIcon
                             }
                         }
 
                         ForEach(searchResults, id: \.self) { token in
                             ClickableRow(action: {
-                                viewModel.set(token: token)
+                                viewModel.set(currentToken: token)
                                 presentationMode.wrappedValue.dismiss()
                             }) {
                                 KFImage.url(URL(string: token.coin.imageUrl))
@@ -50,7 +54,7 @@ struct TransactionTokenSelectView: View {
                                     Text(token.coin.name).themeSubhead2()
                                 }
 
-                                if viewModel.token == token {
+                                if viewModel.currentToken == token {
                                     Image.checkIcon
                                 }
                             }

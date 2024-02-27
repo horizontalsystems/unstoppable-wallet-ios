@@ -1,40 +1,30 @@
 import Combine
 import Foundation
+import HsExtensions
 import MarketKit
 import RxSwift
 
 class TransactionsService: BaseTransactionsService {
-    let filterService: TransactionFilterService
     private let walletManager: WalletManager
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
-    init(filterService: TransactionFilterService, walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
-        self.filterService = filterService
+    @DistinctPublished var transactionFilter = TransactionFilter() {
+        didSet {
+            syncPoolGroup()
+        }
+    }
+
+    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
         self.walletManager = walletManager
 
         super.init(rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: balanceHiddenManager)
-
-        filterService.$transactionFilter
-            .sink { [weak self] _ in
-                self?.syncPoolGroup()
-            }
-            .store(in: &cancellables)
-
-        subscribe(disposeBag, walletManager.activeWalletDataUpdatedObservable) { [weak self] activeWalletData in
-            self?.filterService.handle(wallets: activeWalletData.wallets)
-        }
-
-        subscribe(disposeBag, App.shared.contactManager.stateObservable) { [weak self] _ in
-            self?.filterService.handleContacts()
-        }
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in
             self?.syncPoolGroup()
         }
 
         _syncPoolGroup()
-        filterService.handle(wallets: walletManager.activeWallets)
     }
 
     private func syncPoolGroup() {
@@ -44,9 +34,9 @@ class TransactionsService: BaseTransactionsService {
     }
 
     override var _poolGroupType: PoolGroupFactory.PoolGroupType {
-        if let token = filterService.transactionFilter.token {
+        if let token = transactionFilter.token {
             return .token(token: token)
-        } else if let blockchain = filterService.transactionFilter.blockchain {
+        } else if let blockchain = transactionFilter.blockchain {
             return .blockchain(blockchainType: blockchain.type, wallets: walletManager.activeWallets)
         } else {
             return .all(wallets: walletManager.activeWallets)
@@ -54,10 +44,10 @@ class TransactionsService: BaseTransactionsService {
     }
 
     override var contact: Contact? {
-        filterService.transactionFilter.contact
+        transactionFilter.contact
     }
 
     override var scamFilterEnabled: Bool {
-        filterService.transactionFilter.scamFilterEnabled
+        transactionFilter.scamFilterEnabled
     }
 }

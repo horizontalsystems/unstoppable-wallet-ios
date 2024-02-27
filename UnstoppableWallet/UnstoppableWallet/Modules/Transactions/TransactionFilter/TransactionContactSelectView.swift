@@ -3,10 +3,14 @@ import MarketKit
 import SwiftUI
 
 struct TransactionContactSelectView: View {
-    @ObservedObject var viewModel: TransactionFilterViewModel
+    @ObservedObject var viewModel: TransactionContactSelectViewModel
 
     @Environment(\.presentationMode) private var presentationMode
     @State private var searchText: String = ""
+
+    init(transactionFilterViewModel: TransactionFilterViewModel) {
+        _viewModel = ObservedObject(wrappedValue: TransactionContactSelectViewModel(transactionFilterViewModel: transactionFilterViewModel))
+    }
 
     var body: some View {
         ThemeView {
@@ -16,7 +20,7 @@ struct TransactionContactSelectView: View {
                 }
 
                 Text("transaction_filter.description".localized(
-                    viewModel.allowedBlockchainForContacts.map(\.name).joined(separator: ", ")
+                    viewModel.allowedBlockchainsForContact.map(\.name).joined(separator: ", ")
                 ))
                 .themeSubhead2()
                 .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
@@ -25,20 +29,20 @@ struct TransactionContactSelectView: View {
                     ScrollableThemeView {
                         ListSection {
                             ClickableRow(action: {
-                                viewModel.set(token: nil)
+                                viewModel.set(currentContact: nil)
                                 presentationMode.wrappedValue.dismiss()
                             }) {
                                 Image("paper_contract_24").themeIcon()
                                 Text("transaction_filter.all_contacts").themeBody()
 
-                                if viewModel.contact == nil {
+                                if viewModel.currentContact == nil {
                                     Image.checkIcon
                                 }
                             }
 
                             ForEach(searchResults, id: \.self) { contact in
                                 ClickableRow(action: {
-                                    viewModel.set(contact: contact)
+                                    viewModel.set(currentContact: contact)
                                     presentationMode.wrappedValue.dismiss()
                                 }) {
                                     Image("user_24").themeIcon()
@@ -46,7 +50,7 @@ struct TransactionContactSelectView: View {
                                     Text(contact.name).textBody()
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                                    if viewModel.contact == contact {
+                                    if viewModel.currentContact == contact {
                                         Image.checkIcon
                                     }
                                 }

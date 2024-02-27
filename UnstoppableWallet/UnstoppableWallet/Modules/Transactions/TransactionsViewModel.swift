@@ -4,7 +4,7 @@ import RxRelay
 import RxSwift
 
 class TransactionsViewModel: BaseTransactionsViewModel {
-    private let service: TransactionsService
+    let service: TransactionsService
     private var cancellables = Set<AnyCancellable>()
 
     private let filterBadgeVisibleRelay = BehaviorRelay<Bool>(value: false)
@@ -14,11 +14,11 @@ class TransactionsViewModel: BaseTransactionsViewModel {
 
         super.init(service: service, contactLabelService: contactLabelService, factory: factory)
 
-        service.filterService.$transactionFilter
+        service.$transactionFilter
             .sink { [weak self] in self?.sync(transactionFilter: $0) }
             .store(in: &cancellables)
 
-        sync(transactionFilter: service.filterService.transactionFilter)
+        sync(transactionFilter: service.transactionFilter)
     }
 
     private func sync(transactionFilter: TransactionFilter) {
