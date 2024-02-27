@@ -1899,10 +1899,14 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filtern";
+"transaction_filter.title" = "Kontakte";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Alle Blockchains";
 "transaction_filter.coin" = "Coin";
 "transaction_filter.all_coins" = "Alle Coins";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Verdächtige Txs ausblenden";
 "transaction_filter.hide_suspicious_txs.description" = "Das Verstecken eingehender Transaktionen mit dem Staub in Stablecoins löst teilweise die Adressenvergiftungsprobleme.";
