@@ -1907,10 +1907,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filtre";
+"transaction_filter.title" = "Kişiler";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Tüm Blockchain'ler";
 "transaction_filter.coin" = "Coin";
 "transaction_filter.all_coins" = "Tüm Koinler";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Şüpheli İşlemleri Gizle";
 "transaction_filter.hide_suspicious_txs.description" = "Gelen işlemleri, stablecoin'lerdeki toz miktarı ile gizlemek, adres zehirleme saldırısı sorunlarını kısmen çözer.";
