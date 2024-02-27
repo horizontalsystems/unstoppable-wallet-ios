@@ -1902,10 +1902,14 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "Фильтр";
+"transaction_filter.title" = "Контакты";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Все блокчейны";
 "transaction_filter.coin" = "Монета";
 "transaction_filter.all_coins" = "Все токены";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Скрыть подозрительные транзакции";
 "transaction_filter.hide_suspicious_txs.description" = "Скрытие входящих транзакций с незначительной суммой в стабильных монетах частично решает проблемы атаки на загрязнение адреса.";
