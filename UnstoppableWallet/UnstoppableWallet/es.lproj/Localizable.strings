@@ -1900,10 +1900,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filtro";
+"transaction_filter.title" = "Contactos";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Todos los bloqueos";
 "transaction_filter.coin" = "Moneda";
 "transaction_filter.all_coins" = "Todas";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Ocultar Transacciones Sospechosas";
 "transaction_filter.hide_suspicious_txs.description" = "Ocultando transacciones entrantes con montos mínimos en stablecoins, esto resuelve parcialmente los problemas de ataques de envenenamiento de direcciones.";
