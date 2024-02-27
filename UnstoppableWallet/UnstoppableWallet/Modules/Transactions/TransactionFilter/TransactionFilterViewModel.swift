@@ -8,6 +8,7 @@ class TransactionFilterViewModel: ObservableObject {
     @Published var blockchain: Blockchain?
     @Published var token: Token?
     @Published var contact: Contact?
+
     @Published var scamFilterEnabled: Bool
     @Published var resetEnabled: Bool
 
@@ -40,19 +41,38 @@ class TransactionFilterViewModel: ObservableObject {
     }
 
     var contacts: [Contact] {
-        service.allContacts.sorted { $0.name < $1.name }.by(blockchainUid: service.transactionFilter.blockchain?.uid)
+        // check if selected blockchain unsupported for contact search
+        if let type = service.transactionFilter.blockchain?.type, !TransactionFilterService.allowedBlockchainForContacts.contains(type) {
+            return []
+        }
+
+        // filter contacts by blockchain(if exist) and sort
+        return service
+            .allContacts
+            .sorted { $0.name < $1.name }
+            .by(blockchainUid: service.transactionFilter.blockchain?.uid)   // filter contacts by concrete address
+    }
+
+    var allowedBlockchainForContacts: [Blockchain] {
+        service.allowedBlockchainForContacts
     }
 
     func set(blockchain: Blockchain?) {
         var newFilter = service.transactionFilter
         newFilter.set(blockchain: blockchain)
         service.transactionFilter = newFilter
+
+        service.handleContacts()
+        contact = newFilter.contact
     }
 
     func set(token: Token?) {
         var newFilter = service.transactionFilter
         newFilter.set(token: token)
         service.transactionFilter = newFilter
+
+        service.handleContacts()
+        contact = newFilter.contact
     }
 
     func set(contact: Contact?) {
@@ -71,5 +91,8 @@ class TransactionFilterViewModel: ObservableObject {
         var newFilter = service.transactionFilter
         newFilter.reset()
         service.transactionFilter = newFilter
+
+        service.handleContacts()
+        contact = nil
     }
 }

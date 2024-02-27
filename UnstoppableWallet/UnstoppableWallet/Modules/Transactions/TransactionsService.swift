@@ -26,7 +26,7 @@ class TransactionsService: BaseTransactionsService {
         }
 
         subscribe(disposeBag, App.shared.contactManager.stateObservable) { [weak self] _ in
-            self?.filterService.handleContacts(filter: nil)
+            self?.filterService.handleContacts()
         }
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in

@@ -3,6 +3,9 @@ import HsExtensions
 import MarketKit
 
 class TransactionFilterService {
+    static let allowedBlockchainForContacts: [BlockchainType] =
+        EvmBlockchainManager.blockchainTypes
+
     @DistinctPublished var transactionFilter = TransactionFilter()
     var allBlockchains = [Blockchain]()
     var allTokens = [Token]()
@@ -43,7 +46,26 @@ class TransactionFilterService {
         transactionFilter = newFilter
     }
 
-    func handleContacts(filter: TransactionFilter?) {
-        allContacts = App.shared.contactManager.contacts(blockchainUid: (filter ?? transactionFilter).blockchain?.uid)
+    var allowedBlockchainForContacts: [Blockchain] {
+        do {
+            return try App.shared.marketKit.blockchains(uids: Self.allowedBlockchainForContacts.map(\.uid))
+        } catch {
+            return []
+        }
+    }
+
+    func handleContacts(filter: TransactionFilter? = nil) {
+        allContacts = (App
+            .shared
+            .contactManager
+            .all ?? [])
+            .filter { // filter only contacts with allowed addresses(blockchains)
+                $0.addresses.contains {
+                    TransactionFilterService
+                        .allowedBlockchainForContacts
+                        .map(\.uid)
+                        .contains($0.blockchainUid)
+                }
+            }
     }
 }

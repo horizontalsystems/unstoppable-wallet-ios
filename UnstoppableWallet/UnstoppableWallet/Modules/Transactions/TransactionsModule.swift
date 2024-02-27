@@ -77,7 +77,15 @@ struct TransactionFilter: Equatable {
     }
 
     private mutating func updateContact() {
-        if let blockchain, let contact, !contact.addresses.contains(where: { $0.blockchainUid == blockchain.uid}) {
+        guard let blockchain, let contact else {
+            return
+        }
+
+        if !TransactionFilterService.allowedBlockchainForContacts.contains(blockchain.type) {
+            self.contact = nil
+        }
+
+        if !contact.addresses.contains(where: { $0.blockchainUid == blockchain.uid}) {
             self.contact = nil
         }
     }
