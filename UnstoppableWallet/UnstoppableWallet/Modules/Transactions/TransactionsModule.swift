@@ -78,12 +78,16 @@ struct TransactionFilter: Equatable {
             return
         }
 
-//        if !TransactionFilterService.allowedBlockchainForContacts.contains(blockchain.type) {
-//            self.contact = nil
-//        }
-
-        if !contact.addresses.contains(where: { $0.blockchainUid == blockchain.uid}) {
+        // reset contact if selected blockchain not allowed for search by contact
+        guard TransactionContactSelectViewModel.allowedBlockchainUids.contains(blockchain.type.uid) else {
             self.contact = nil
+            return
+        }
+
+        // reset contact if it's doesnt have address for selected blockchain
+        guard contact.has(blockchainUId: blockchain.uid) else {
+            self.contact = nil
+            return
         }
     }
 

@@ -16,7 +16,7 @@ class TronTransactionsAdapter: BaseTronAdapter {
         super.init(tronKitWrapper: tronKitWrapper, decimals: TronAdapter.decimals)
     }
 
-    private func tagQuery(token: MarketKit.Token?, filter: TransactionTypeFilter) -> TransactionTagQuery {
+    private func tagQuery(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> TransactionTagQuery {
         var type: TransactionTag.TagType?
         var `protocol`: TransactionTag.TagProtocol?
         var contractAddress: TronKit.Address?
@@ -42,7 +42,7 @@ class TronTransactionsAdapter: BaseTronAdapter {
         case .approve: type = .approve
         }
 
-        return TransactionTagQuery(type: type, protocol: `protocol`, contractAddress: contractAddress)
+        return TransactionTagQuery(type: type, protocol: `protocol`, contractAddress: contractAddress, address: address)
     }
 }
 
@@ -72,14 +72,16 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
     }
 
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
-        tronKit.transactionsPublisher(tagQueries: [tagQuery(token: token, filter: filter)]).asObservable()
+        let address = address.flatMap { try? TronKit.Address(address: $0) }?.hex
+        return tronKit.transactionsPublisher(tagQueries: [tagQuery(token: token, filter: filter, address: address)]).asObservable()
             .map { [weak self] in
                 $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
             }
     }
 
     func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
-        let transactions = tronKit.transactions(tagQueries: [tagQuery(token: token, filter: filter)], fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
+        let address = address.flatMap { try? TronKit.Address(address: $0) }?.hex
+        let transactions = tronKit.transactions(tagQueries: [tagQuery(token: token, filter: filter, address: address)], fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
 
         return Single.just(transactions.compactMap { transactionConverter.transactionRecord(fromTransaction: $0) })
     }

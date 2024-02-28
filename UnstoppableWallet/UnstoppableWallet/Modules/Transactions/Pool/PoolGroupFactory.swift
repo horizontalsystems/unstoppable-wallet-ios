@@ -10,7 +10,7 @@ class PoolGroupFactory {
 
             for wallet in wallets {
                 // filter by contact, but contact don't have address for blockchainType
-                let address = contact?.address(blockchainUid: wallet.token.blockchainType.uid)?.address.lowercased()
+                let address = contact?.address(blockchainUid: wallet.token.blockchainType.uid)?.address
                 if contact != nil, address == nil {
                     continue
                 }
