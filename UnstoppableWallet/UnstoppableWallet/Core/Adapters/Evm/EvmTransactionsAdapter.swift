@@ -91,13 +91,13 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
     }
 
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
-        evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address)]).map { [weak self] in
+        evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())]).map { [weak self] in
             $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
         }
     }
 
     func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
-        evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address)], fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
+        evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())], fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
             .map { [weak self] transactions -> [TransactionRecord] in
                 transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
             }

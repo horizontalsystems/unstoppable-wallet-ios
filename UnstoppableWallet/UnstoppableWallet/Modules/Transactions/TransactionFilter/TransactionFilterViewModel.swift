@@ -36,18 +36,12 @@ class TransactionFilterViewModel: ObservableObject {
         var newFilter = service.transactionFilter
         newFilter.set(blockchain: blockchain)
         service.transactionFilter = newFilter
-
-//        service.handleContacts()
-        contact = newFilter.contact
     }
 
     func set(token: Token?) {
         var newFilter = service.transactionFilter
         newFilter.set(token: token)
         service.transactionFilter = newFilter
-
-//        service.handleContacts()
-        contact = newFilter.contact
     }
 
     func set(contact: Contact?) {
@@ -66,8 +60,5 @@ class TransactionFilterViewModel: ObservableObject {
         var newFilter = service.transactionFilter
         newFilter.reset()
         service.transactionFilter = newFilter
-
-//        service.handleContacts()
-        contact = nil
     }
 }
