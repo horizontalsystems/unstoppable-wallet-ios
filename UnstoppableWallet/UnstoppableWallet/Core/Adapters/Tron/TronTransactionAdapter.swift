@@ -60,7 +60,26 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
     }
 
     var additionalTokenQueries: [TokenQuery] {
-        []
+        tronKit.tagTokens().compactMap { tagToken in
+            var tokenType: TokenType?
+
+            switch tagToken.protocol {
+            case .native:
+                tokenType = .native
+            case .eip20:
+                if let contractAddress = tagToken.contractAddress {
+                    tokenType = .eip20(address: contractAddress.base58)
+                }
+            default:
+                ()
+            }
+
+            guard let tokenType else {
+                return nil
+            }
+
+            return TokenQuery(blockchainType: tronKitWrapper.blockchainType, tokenType: tokenType)
+        }
     }
 
     func explorerUrl(transactionHash: String) -> String? {
