@@ -39,7 +39,7 @@ class ZcashAdapter {
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
-    private let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
+    private let transactionSubject = PublishSubject<[ZcashTransactionWrapper]>()
     private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     private var started = false
@@ -171,9 +171,7 @@ class ZcashAdapter {
 
                 if !wrapped.isEmpty {
                     self?.logger?.log(level: .debug, message: "Send to pool all transactions \(wrapped.count)")
-                    self?.transactionRecordsSubject.onNext(wrapped.compactMap {
-                        self?.transactionRecord(fromTransaction: $0)
-                    })
+                    self?.transactionSubject.onNext(wrapped)
                 }
 
                 let shielded = await (try? synchronizer.getShieldedBalance(accountIndex: 0).decimalValue.decimalValue) ?? 0
@@ -304,9 +302,7 @@ class ZcashAdapter {
             let lastBlockHeight = max(inRange.upperBound, lastBlockHeight)
             Task {
                 let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
-                transactionRecordsSubject.onNext(newTxs.map {
-                    transactionRecord(fromTransaction: $0)
-                })
+                transactionSubject.onNext(newTxs)
             }
         case let .minedTransaction(pendingEntity):
             logger?.log(level: .debug, message: "found pending tx: v =\(pendingEntity.value.decimalValue.decimalString) : fee = \(pendingEntity.fee?.decimalString() ?? "N/A")")
@@ -338,9 +334,7 @@ class ZcashAdapter {
     private func update(transactions: [ZcashTransaction.Overview]) async throws {
         let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
         logger?.log(level: .debug, message: "pool will update txs: \(newTxs.count)")
-        transactionRecordsSubject.onNext(newTxs.map {
-            transactionRecord(fromTransaction: $0)
-        })
+        transactionSubject.onNext(newTxs)
     }
 
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
@@ -670,13 +664,21 @@ extension ZcashAdapter: ITransactionsAdapter {
     }
 
     func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
-        transactionRecordsSubject.asObservable()
-            .map { transactions in
+        transactionSubject.asObservable()
+            .map { [weak self] transactions in
                 transactions.compactMap { transaction -> TransactionRecord? in
-                    switch (transaction, filter) {
-                    case (_, .all): return transaction
-                    case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
-                    case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
+                    if let address, let recipient = transaction.recipientAddress, address.lowercased() != recipient.lowercased() {
+                        return nil
+                    }
+
+                    guard let record = self?.transactionRecord(fromTransaction: transaction) else {
+                        return nil
+                    }
+
+                    switch (record, filter) {
+                    case (_, .all): return record
+                    case (is BitcoinIncomingTransactionRecord, .incoming): return record
+                    case (is BitcoinOutgoingTransactionRecord, .outgoing): return record
                     default: return nil
                     }
                 }
@@ -685,7 +687,7 @@ extension ZcashAdapter: ITransactionsAdapter {
     }
 
     func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
-        transactionPool?.transactionsSingle(from: from, filter: filter, limit: limit).map { [weak self] txs in
+        transactionPool?.transactionsSingle(from: from, filter: filter, address: address, limit: limit).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
         } ?? .just([])
     }
