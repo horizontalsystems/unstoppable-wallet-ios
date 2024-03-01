@@ -6,12 +6,14 @@ struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
     let currencyValue: CurrencyValue?
     let receiver: Address
     let isAccount: Bool
+    let sentToSelf: Bool
 
-    init(coinValue: CoinValue, currencyValue: CurrencyValue?, receiver: Address, isAccount: Bool = false) {
+    init(coinValue: CoinValue, currencyValue: CurrencyValue?, receiver: Address, isAccount: Bool = false, sentToSelf: Bool = false) {
         self.coinValue = coinValue
         self.currencyValue = currencyValue
         self.receiver = receiver
         self.isAccount = isAccount
+        self.sentToSelf = sentToSelf
     }
 }
 
@@ -29,3 +31,7 @@ struct SendConfirmationLockUntilViewItem: ISendConfirmationViewItemNew {
 }
 
 struct SendConfirmationDisabledRbfViewItem: ISendConfirmationViewItemNew {}
+
+struct ReplacedTransactionHashViewItem: ISendConfirmationViewItemNew {
+    let hashes: [String]
+}

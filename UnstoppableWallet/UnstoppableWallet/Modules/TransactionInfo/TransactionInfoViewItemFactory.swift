@@ -510,6 +510,13 @@ class TransactionInfoViewItemFactory {
                 feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: fee, rate: _rate(fee)))
             }
 
+            if actionEnabled, record.replaceable {
+                sections.append([
+                    .option(option: .resend(type: .speedUp)),
+                    .option(option: .resend(type: .cancel)),
+                ])
+            }
+
         case let record as BinanceChainIncomingTransactionRecord:
             sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden))
 

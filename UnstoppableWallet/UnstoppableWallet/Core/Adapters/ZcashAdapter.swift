@@ -384,7 +384,8 @@ class ZcashAdapter {
                 amount: abs(transaction.value.decimalValue.decimalValue),
                 to: transaction.recipientAddress,
                 sentToSelf: false,
-                memo: transaction.memo
+                memo: transaction.memo,
+                replaceable: false
             )
         }
     }
