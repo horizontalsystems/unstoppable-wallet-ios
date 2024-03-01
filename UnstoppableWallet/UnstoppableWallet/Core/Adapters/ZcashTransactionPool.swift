@@ -13,7 +13,7 @@ class ZcashTransactionPool {
         self.synchronizer = synchronizer
     }
 
-    private func transactions(filter: TransactionTypeFilter) -> [ZcashTransactionWrapper] {
+    private func transactions(filter: TransactionTypeFilter, address: String?) -> [ZcashTransactionWrapper] {
         var confirmedTransactions = confirmedTransactions
         var pendingTransactions = pendingTransactions
         switch filter {
@@ -29,7 +29,14 @@ class ZcashTransactionPool {
             pendingTransactions = []
         }
 
-        return Array(confirmedTransactions.union(pendingTransactions)).sorted()
+        var allTransactions = confirmedTransactions.union(pendingTransactions)
+        if let address {
+            allTransactions = allTransactions.filter { tx in
+                tx.recipientAddress?.lowercased() == address.lowercased()
+            }
+        }
+
+        return Array(allTransactions).sorted()
     }
 
     private func zcashTransactions(_ transactions: [ZcashTransaction.Overview], lastBlockHeight: Int) async -> [ZcashTransactionWrapper] {
@@ -76,17 +83,17 @@ class ZcashTransactionPool {
     }
 
     func transaction(by hash: String) -> ZcashTransactionWrapper? {
-        transactions(filter: .all).first { $0.transactionHash == hash }
+        transactions(filter: .all, address: nil).first { $0.transactionHash == hash }
     }
 }
 
 extension ZcashTransactionPool {
     var all: [ZcashTransactionWrapper] {
-        transactions(filter: .all)
+        transactions(filter: .all, address: nil)
     }
 
-    func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, limit: Int) -> RxSwift.Single<[ZcashTransactionWrapper]> {
-        let transactions = transactions(filter: filter)
+    func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, address: String?, limit: Int) -> RxSwift.Single<[ZcashTransactionWrapper]> {
+        let transactions = transactions(filter: filter, address: address)
 
         guard let transaction = from else {
             return Single.just(Array(transactions.prefix(limit)))
