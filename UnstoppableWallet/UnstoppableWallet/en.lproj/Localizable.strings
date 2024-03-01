@@ -437,6 +437,7 @@
 
 "send.confirmation.you_send" = "You Send";
 "send.confirmation.to" = "To";
+"send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "Contact Name";
 "send.confirmation.domain" = "Domain";
 "send.confirmation.address" = "Address";
@@ -447,11 +448,16 @@
 "send.confirmation.fee" = "Fee";
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
+"send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.slide_to_resend" = "Resend";
+"send.confirmation.slide_to_cancel" = "Cancel Transaction";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.resend" = "Resend";
 "send.confirmation.cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new 0 amount transaction to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Method";

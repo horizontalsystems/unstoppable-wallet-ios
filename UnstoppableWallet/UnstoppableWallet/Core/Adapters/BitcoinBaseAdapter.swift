@@ -27,7 +27,7 @@ class BitcoinBaseAdapter {
 
     private(set) var syncing: Bool = true
 
-    private let token: Token
+    let token: Token
     private let transactionSource: TransactionSource
 
     init(abstractKit: AbstractKit, wallet: Wallet, syncMode: BitcoinCore.SyncMode) {
@@ -67,7 +67,8 @@ class BitcoinBaseAdapter {
             {
                 lockInfo = TransactionLockInfo(
                     lockedUntil: Date(timeIntervalSince1970: Double(approximateUnlockTime)),
-                    originalAddress: hodlerOutputData.addressString
+                    originalAddress: hodlerOutputData.addressString,
+                    lockTimeInterval: hodlerOutputData.lockTimeInterval
                 )
             }
 
@@ -114,7 +115,8 @@ class BitcoinBaseAdapter {
                 amount: Decimal(transaction.amount) / coinRate,
                 to: anyNotMineToAddress,
                 sentToSelf: false,
-                memo: memo
+                memo: memo,
+                replaceable: transaction.rbfEnabled && transaction.blockHeight == nil && transaction.conflictingHash == nil
             )
         case .sentToSelf:
             return BitcoinOutgoingTransactionRecord(
@@ -132,9 +134,10 @@ class BitcoinBaseAdapter {
                 conflictingHash: transaction.conflictingHash,
                 showRawTransaction: transaction.status == .new || transaction.status == .invalid,
                 amount: Decimal(transaction.amount) / coinRate,
-                to: anyNotMineToAddress,
+                to: transaction.outputs.first(where: { !$0.changeOutput })?.address ?? transaction.outputs.first?.address,
                 sentToSelf: true,
-                memo: memo
+                memo: memo,
+                replaceable: transaction.rbfEnabled && transaction.blockHeight == nil && transaction.conflictingHash == nil
             )
         }
     }
@@ -399,6 +402,28 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
 
     func rawTransaction(hash: String) -> String? {
         abstractKit.rawTransaction(transactionHash: hash)
+    }
+
+    func speedUpTransactionInfo(transactionHash: String) -> (originalTransactionSize: Int, feeRange: Range<Int>)? {
+        abstractKit.speedUpTransactionInfo(transactionHash: transactionHash)
+    }
+
+    func cancelTransactionInfo(transactionHash: String) -> (originalTransactionSize: Int, feeRange: Range<Int>)? {
+        abstractKit.cancelTransactionInfo(transactionHash: transactionHash)
+    }
+
+    func speedUpTransaction(transactionHash: String, minFee: Int) throws -> (replacment: ReplacementTransaction, record: BitcoinTransactionRecord) {
+        let replacment = try abstractKit.speedUpTransaction(transactionHash: transactionHash, minFee: minFee)
+        return (replacment: replacment, record: transactionRecord(fromTransaction: replacment.info))
+    }
+
+    func cancelTransaction(transactionHash: String, minFee: Int) throws -> (replacment: ReplacementTransaction, record: BitcoinTransactionRecord) {
+        let replacment = try abstractKit.cancelTransaction(transactionHash: transactionHash, minFee: minFee)
+        return (replacment: replacment, record: transactionRecord(fromTransaction: replacment.info))
+    }
+
+    func send(replacementTransaction: ReplacementTransaction) throws -> FullTransaction {
+        try abstractKit.send(replacementTransaction: replacementTransaction)
     }
 }
 

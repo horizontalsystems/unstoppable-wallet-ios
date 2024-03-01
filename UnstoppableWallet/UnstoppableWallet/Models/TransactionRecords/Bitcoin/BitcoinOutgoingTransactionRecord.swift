@@ -5,14 +5,16 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
     let value: TransactionValue
     let to: String?
     let sentToSelf: Bool
+    let replaceable: Bool
 
     init(token: Token, source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
-         amount: Decimal, to: String?, sentToSelf: Bool, memo: String? = nil)
+         amount: Decimal, to: String?, sentToSelf: Bool, memo: String? = nil, replaceable: Bool)
     {
         value = .coinValue(token: token, value: Decimal(sign: .minus, exponent: amount.exponent, significand: amount.significand))
         self.to = to
         self.sentToSelf = sentToSelf
+        self.replaceable = replaceable
 
         super.init(
             source: source,

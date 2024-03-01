@@ -106,7 +106,7 @@ enum SendEvmConfirmationModule {
         return controller
     }
 
-    static func resendViewController(adapter: ITransactionsAdapter, type: ResendEvmTransactionType, transactionHash: String) throws -> UIViewController {
+    static func resendViewController(adapter: ITransactionsAdapter, type: ResendTransactionType, transactionHash: String) throws -> UIViewController {
         guard let adapter = adapter as? EvmTransactionsAdapter, let fullTransaction = adapter.evmKit.transaction(hash: Data(hex: transactionHash.hs.stripHexPrefix())) else {
             throw CreateModuleError.wrongTransaction
         }
@@ -181,7 +181,7 @@ extension SendEvmConfirmationModule {
     }
 }
 
-enum ResendEvmTransactionType {
+enum ResendTransactionType {
     case speedUp
     case cancel
 }

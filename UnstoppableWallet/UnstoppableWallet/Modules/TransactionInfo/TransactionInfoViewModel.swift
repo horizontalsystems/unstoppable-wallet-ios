@@ -46,4 +46,8 @@ extension TransactionInfoViewModel {
     var transactionHash: String {
         service.item.record.transactionHash
     }
+
+    var transactionRecord: TransactionRecord {
+        service.item.record
+    }
 }
