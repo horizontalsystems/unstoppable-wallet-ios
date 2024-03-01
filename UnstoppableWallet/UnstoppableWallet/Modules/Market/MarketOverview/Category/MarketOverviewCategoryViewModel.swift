@@ -56,6 +56,9 @@ extension MarketOverviewCategoryViewModel {
     func category(uid: String) -> CoinCategory? {
         service.category(uid: uid)
     }
+
+    var marketTop: MarketModule.MarketTop { service.marketTop }
+    var listType: MarketOverviewTopCoinsService.ListType { service.listType }
 }
 
 extension MarketOverviewCategoryViewModel {
