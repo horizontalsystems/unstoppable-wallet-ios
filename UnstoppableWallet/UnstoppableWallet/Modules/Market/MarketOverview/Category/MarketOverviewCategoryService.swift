@@ -8,6 +8,9 @@ class MarketOverviewCategoryService {
     private let baseService: MarketOverviewService
     private var cancellables = Set<AnyCancellable>()
 
+    let marketTop: MarketModule.MarketTop = .top100
+    let listType: MarketOverviewTopCoinsService.ListType
+
     private let categoriesRelay = PublishRelay<[CoinCategory]?>()
     private(set) var categories: [CoinCategory]? {
         didSet {
@@ -15,7 +18,8 @@ class MarketOverviewCategoryService {
         }
     }
 
-    init(baseService: MarketOverviewService) {
+    init(listType: MarketOverviewTopCoinsService.ListType, baseService: MarketOverviewService) {
+        self.listType = listType
         self.baseService = baseService
 
         baseService.$state

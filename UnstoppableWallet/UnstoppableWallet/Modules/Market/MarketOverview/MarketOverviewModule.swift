@@ -26,7 +26,7 @@ enum MarketOverviewModule {
         let topPlatformsViewModel = MarketOverviewTopPlatformsViewModel(service: topPlatformsService, decorator: topPlatformsDecorator)
         let topPlatformsDataSource = MarketOverviewTopPlatformsDataSource(viewModel: topPlatformsViewModel, presentDelegate: presentDelegate)
 
-        let categoryService = MarketOverviewCategoryService(baseService: service)
+        let categoryService = MarketOverviewCategoryService(listType: .topGainers, baseService: service)
         let categoryViewModel = MarketOverviewCategoryViewModel(service: categoryService)
         let categoryDataSource = MarketOverviewCategoryDataSource(viewModel: categoryViewModel, presentDelegate: presentDelegate)
 
