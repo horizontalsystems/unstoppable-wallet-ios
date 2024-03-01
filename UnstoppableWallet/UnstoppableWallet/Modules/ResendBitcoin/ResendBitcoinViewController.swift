@@ -42,10 +42,10 @@ class ResendBitcoinViewController: KeyboardAwareViewController, SectionsDataSour
         tableView.delaysContentTouches = false
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
+            maker.edges.equalToSuperview()
         }
 
-        bottomWrapper.add(to: self, under: tableView)
+        bottomWrapper.add(to: self)
         bottomWrapper.addSubview(sendButton)
 
         topDescription = viewModel.replaceType == .speedUp ? "send.confirmation.resend_description".localized : "send.confirmation.btc_cancel_description".localized
