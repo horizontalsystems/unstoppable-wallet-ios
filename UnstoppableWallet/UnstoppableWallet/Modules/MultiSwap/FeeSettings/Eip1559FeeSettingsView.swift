@@ -4,18 +4,26 @@ import SwiftUI
 
 struct Eip1559FeeSettingsView: View {
     @ObservedObject var viewModel: Eip1559FeeSettingsViewModel
-    var onChangeSettings: () -> Void
-    @Environment(\.presentationMode) private var presentationMode
+    @Binding var feeQuote: MultiSwapFeeQuote?
+    @Binding var quoting: Bool
+    var feeToken: Token
+    @Binding var feeTokenRate: Decimal?
 
-    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory, onChangeSettings: @escaping () -> Void) {
-        viewModel = Eip1559FeeSettingsViewModel(service: service, feeViewItemFactory: feeViewItemFactory)
-        self.onChangeSettings = onChangeSettings
-    }
+    @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 ListSection {
+                    row(
+                        viewItem: .init(
+                            title: "Network Fee",
+                            value: feeValue,
+                            subValue: nil
+                        ),
+                        description: .init(title: "", description: "")
+                    )
+
                     row(viewItem: ViewItem(
                         title: Section.baseFee.title,
                         value: viewModel.baseFee,
@@ -95,7 +103,6 @@ struct Eip1559FeeSettingsView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.done".localized) {
-                    onChangeSettings()
                     presentationMode.wrappedValue.dismiss()
                 }
             }
@@ -142,6 +149,17 @@ struct Eip1559FeeSettingsView: View {
             }, onTap: onTap)
         }
         .modifier(FieldCautionBorder(cautionState: cautionState))
+    }
+
+    private var feeValue: String {
+        guard let gasLimit = feeQuote?.gasLimit, let gasPrice = viewModel.service.gasPrice else {
+            return "n/a".localized
+        }
+
+        let amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, feeToken.decimals)
+        let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
+
+        return ValueFormatter.instance.formatShort(coinValue: coinValue) ?? ""
     }
 }
 

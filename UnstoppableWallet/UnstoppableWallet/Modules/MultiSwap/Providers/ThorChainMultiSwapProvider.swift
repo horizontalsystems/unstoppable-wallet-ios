@@ -35,7 +35,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         return tokens.contains(tokenIn) && tokens.contains(tokenOut)
     }
 
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings _: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
+    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -69,7 +69,11 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         return Quote(swapQuote: swapQuote)
     }
 
-    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapQuote) async throws {
+    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: MultiSwapTransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+        fatalError("confirmationQuote(quote:tokenIn:tokenOut:amountIn:transactionSettings:) has not been implemented")
+    }
+
+    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {
         try await Task.sleep(nanoseconds: 2_000_000_000) // todo
     }
 
@@ -202,23 +206,11 @@ extension ThorChainMultiSwapProvider {
             false
         }
 
-        func cautions(feeToken _: Token?) -> [CautionNew] {
+        func fields(tokenIn _: Token, tokenOut _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?) -> [MultiSwapMainField] {
             []
         }
 
-        func feeData(feeToken _: Token?, currency _: Currency, feeTokenRate _: Decimal?) -> AmountData? {
-            nil
-        }
-
-        func mainFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [MultiSwapMainField] {
-            []
-        }
-
-        func confirmationPriceSectionFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [MultiSwapConfirmField] {
-            []
-        }
-
-        func confirmationOtherSections(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [[MultiSwapConfirmField]] {
+        func cautions() -> [CautionNew] {
             []
         }
     }

@@ -30,11 +30,15 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    func quote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
+    func quote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal) async throws -> IMultiSwapQuote {
         fatalError("Must be implemented in subclass")
     }
 
-    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapQuote) async throws {
+    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: MultiSwapTransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+        fatalError("Must be implemented in subclass")
+    }
+
+    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {
         fatalError("Must be implemented in subclass")
     }
 
@@ -118,15 +122,9 @@ extension BaseEvmMultiSwapProvider {
 
 extension BaseEvmMultiSwapProvider {
     class Quote: IMultiSwapQuote {
-        let gasPrice: GasPrice?
-        let gasLimit: Int?
-        let nonce: Int?
         let allowanceState: AllowanceState
 
-        init(gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?, allowanceState: AllowanceState) {
-            self.gasPrice = gasPrice
-            self.gasLimit = gasLimit
-            self.nonce = nonce
+        init(allowanceState: AllowanceState) {
             self.allowanceState = allowanceState
         }
 
@@ -147,35 +145,12 @@ extension BaseEvmMultiSwapProvider {
             false
         }
 
-        func cautions(feeToken _: Token?) -> [CautionNew] {
+        func cautions() -> [CautionNew] {
             []
         }
 
-        func feeData(feeToken: Token?, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-            guard let gasPrice, let gasLimit, let feeToken else {
-                return nil
-            }
-
-            let amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, feeToken.decimals)
-            let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
-            let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
-
-            return AmountData(coinValue: coinValue, currencyValue: currencyValue)
-        }
-
-        func mainFields(tokenIn _: Token, tokenOut _: Token, feeToken: Token?, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapMainField] {
+        func fields(tokenIn _: Token, tokenOut _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?) -> [MultiSwapMainField] {
             var fields = [MultiSwapMainField]()
-
-            let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
-
-            fields.append(
-                MultiSwapMainField(
-                    title: "Network Fee",
-                    description: .init(title: "Network Fee", description: "Network Fee Description"),
-                    value: feeData?.formattedShort ?? "n/a".localized,
-                    valueLevel: feeData != nil ? .regular : .notAvailable
-                )
-            )
 
             switch allowanceState {
             case let .notEnough(amount):
@@ -203,12 +178,52 @@ extension BaseEvmMultiSwapProvider {
 
             return fields
         }
+    }
 
-        func confirmationPriceSectionFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [MultiSwapConfirmField] {
+    class ConfirmationQuote: IMultiSwapConfirmationQuote {
+        let gasPrice: GasPrice?
+        let gasLimit: Int?
+        let nonce: Int?
+
+        init(gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?) {
+            self.gasPrice = gasPrice
+            self.gasLimit = gasLimit
+            self.nonce = nonce
+        }
+
+        var amountOut: Decimal {
+            fatalError("Must be implemented in subclass")
+        }
+
+        var feeQuote: MultiSwapFeeQuote? {
+            gasLimit.map { .evm(gasLimit: $0) }
+        }
+
+        var canSwap: Bool {
+            gasPrice != nil && gasLimit != nil
+        }
+
+        func cautions(feeToken _: Token) -> [CautionNew] {
             []
         }
 
-        func confirmationOtherSections(tokenIn _: Token, tokenOut _: Token, feeToken: Token?, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]] {
+        private func feeData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
+            guard let gasPrice, let gasLimit else {
+                return nil
+            }
+
+            let amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, feeToken.decimals)
+            let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
+            let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
+
+            return AmountData(coinValue: coinValue, currencyValue: currencyValue)
+        }
+
+        func priceSectionFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [MultiSwapConfirmField] {
+            []
+        }
+
+        func otherSections(tokenIn _: Token, tokenOut _: Token, feeToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]] {
             var sections = [[MultiSwapConfirmField]]()
 
             if let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) {

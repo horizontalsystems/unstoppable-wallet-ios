@@ -1,3 +1,4 @@
+import Combine
 import EvmKit
 import Foundation
 import MarketKit
@@ -22,12 +23,25 @@ enum MultiSwapTransactionSettings {
     }
 }
 
+enum MultiSwapFeeQuote {
+    case evm(gasLimit: Int)
+    case bitcoin(bytes: Int)
+
+    var gasLimit: Int? {
+        switch self {
+        case let .evm(gasLimit): return gasLimit
+        default: return nil
+        }
+    }
+}
+
 protocol IMultiSwapTransactionService {
     var transactionSettings: MultiSwapTransactionSettings? { get }
     var modified: Bool { get }
     var cautions: [CautionNew] { get }
+    var updatePublisher: AnyPublisher<Void, Never> { get }
     func sync() async throws
-    func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView?
+    func settingsView(feeQuote: Binding<MultiSwapFeeQuote?>, quoting: Binding<Bool>, feeToken: Token, feeTokenRate: Binding<Decimal?>) -> AnyView?
 }
 
 class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
@@ -39,6 +53,8 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
     private let chain: Chain
     private let rpcSource: RpcSource
     private let networkManager = App.shared.networkManager
+
+    private let updateSubject = PassthroughSubject<Void, Never>()
 
     private(set) var usingRecommendedGasPrice: Bool = true
     private(set) var recommendedGasPrice: GasPrice?
@@ -76,6 +92,10 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         }
 
         return cautions
+    }
+
+    var updatePublisher: AnyPublisher<Void, Never> {
+        updateSubject.eraseToAnyPublisher()
     }
 
     var transactionSettings: MultiSwapTransactionSettings? {
@@ -154,12 +174,19 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         }
     }
 
-    func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView? {
+    func settingsView(feeQuote: Binding<MultiSwapFeeQuote?>, quoting: Binding<Bool>, feeToken: Token, feeTokenRate: Binding<Decimal?>) -> AnyView? {
         if chain.isEIP1559Supported {
-            let view = Eip1559FeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale), onChangeSettings: onChangeSettings)
+            let viewModel = Eip1559FeeSettingsViewModel(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
+            let view = Eip1559FeeSettingsView(
+                viewModel: viewModel,
+                feeQuote: feeQuote,
+                quoting: quoting,
+                feeToken: feeToken,
+                feeTokenRate: feeTokenRate
+            )
             return AnyView(ThemeNavigationView { view })
         } else {
-            let view = LegacyFeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale), onChangeSettings: onChangeSettings)
+            let view = LegacyFeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
             return AnyView(ThemeNavigationView { view })
         }
     }
@@ -167,6 +194,8 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
     func set(gasPrice: GasPrice) {
         self.gasPrice = gasPrice
         usingRecommendedGasPrice = (gasPrice == recommendedGasPrice)
+
+        updateSubject.send()
     }
 
     func set(nonce: Int) {

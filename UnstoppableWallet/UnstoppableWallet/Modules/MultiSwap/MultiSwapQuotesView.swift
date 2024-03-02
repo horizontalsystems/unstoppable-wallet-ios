@@ -34,20 +34,18 @@ struct MultiSwapQuotesView: View {
                                 Spacer()
 
                                 VStack(alignment: .trailing, spacing: 1) {
-                                    if let quoteValue = quoteValue(quote: quote) {
-                                        Text(quoteValue)
+                                    if let value = quoteCoinValue(quote: quote) {
+                                        Text(value)
                                             .textCaption(color: .themeLeah)
                                             .multilineTextAlignment(.trailing)
                                     } else {
                                         Text("n/a").textCaption(color: .themeGray50)
                                     }
 
-                                    if let feeData = quote.quote.feeData(feeToken: viewModel.feeToken, currency: viewModel.currency, feeTokenRate: viewModel.feeTokenRate) {
-                                        Text("Fee: \(feeData.formattedShort)")
+                                    if let value = quoteCurrencyValue(quote: quote) {
+                                        Text(value)
                                             .textCaption(color: .themeGray)
                                             .multilineTextAlignment(.trailing)
-                                    } else {
-                                        Text("Fee: \("n/a".localized)").textCaption(color: .themeGray50)
                                     }
                                 }
                             }
@@ -68,19 +66,19 @@ struct MultiSwapQuotesView: View {
         }
     }
 
-    private func quoteValue(quote: MultiSwapViewModel.Quote) -> String? {
-        guard let tokenOut = viewModel.tokenOut,
-              var result = ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: tokenOut), value: quote.quote.amountOut))
-        else {
+    private func quoteCoinValue(quote: MultiSwapViewModel.Quote) -> String? {
+        guard let tokenOut = viewModel.tokenOut else {
             return nil
         }
 
-        if let rateOut = viewModel.rateOut,
-           let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: quote.quote.amountOut * rateOut)
-        {
-            result += " (≈ \(formatted))"
+        return ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: tokenOut), value: quote.quote.amountOut))
+    }
+
+    private func quoteCurrencyValue(quote: MultiSwapViewModel.Quote) -> String? {
+        guard let rateOut = viewModel.rateOut else {
+            return nil
         }
 
-        return result
+        return ValueFormatter.instance.formatShort(currency: viewModel.currency, value: quote.quote.amountOut * rateOut)
     }
 }
