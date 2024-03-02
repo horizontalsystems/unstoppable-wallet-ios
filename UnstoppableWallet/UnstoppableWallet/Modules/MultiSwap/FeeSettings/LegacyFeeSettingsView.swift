@@ -4,12 +4,10 @@ import SwiftUI
 
 struct LegacyFeeSettingsView: View {
     @ObservedObject var viewModel: LegacyFeeSettingsViewModel
-    var onChangeSettings: () -> Void
     @Environment(\.presentationMode) private var presentationMode
 
-    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory, onChangeSettings: @escaping () -> Void) {
+    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory) {
         viewModel = LegacyFeeSettingsViewModel(service: service, feeViewItemFactory: feeViewItemFactory)
-        self.onChangeSettings = onChangeSettings
     }
 
     var body: some View {
@@ -67,7 +65,6 @@ struct LegacyFeeSettingsView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.done".localized) {
-                    onChangeSettings()
                     presentationMode.wrappedValue.dismiss()
                 }
             }

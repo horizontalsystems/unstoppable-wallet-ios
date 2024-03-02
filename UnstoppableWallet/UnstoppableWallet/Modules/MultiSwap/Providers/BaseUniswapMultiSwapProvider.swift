@@ -8,61 +8,41 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     let marketKit = App.shared.marketKit
     let evmSyncSourceManager = App.shared.evmSyncSourceManager
 
-    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapQuote {
+    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
+        try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+    }
+
+    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+        let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+
         let blockchainType = tokenIn.blockchainType
-        let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
-
-        let kitTokenIn = try kitToken(chain: chain, token: tokenIn)
-        let kitTokenOut = try kitToken(chain: chain, token: tokenOut)
-
-        guard let rpcSource = evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
-            throw SwapError.noHttpRpcSource
-        }
-
-        let recipient: Address? = storage.value(for: MultiSwapSettingStorage.LegacySetting.address)
-        let slippage: Decimal = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
-
-        let kitRecipient = try recipient.map { try EvmKit.Address(hex: $0.raw) }
-
-        let tradeOptions = TradeOptions(
-            allowedSlippage: slippage,
-            ttl: TradeOptions.defaultTtl,
-            recipient: kitRecipient,
-            feeOnTransfer: false
-        )
-
-        let trade = try await trade(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut, amountIn: amountIn, tradeOptions: tradeOptions)
-
         let gasPrice = transactionSettings?.gasPrice
         var txData: TransactionData?
         var gasLimit: Int?
-        var estimateError: Error?
+        var transactionError: Error?
 
         if let evmKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit, let gasPrice {
             do {
-                let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: chain, trade: trade, tradeOptions: tradeOptions)
+                let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, trade: quote.trade, tradeOptions: quote.tradeOptions)
                 txData = transactionData
                 gasLimit = try await evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
             } catch {
-                estimateError = error
+                transactionError = error
             }
         }
 
-        return await Quote(
-            trade: trade,
+        return ConfirmationQuote(
+            quote: quote,
             transactionData: txData,
-            recipient: recipient,
-            slippage: slippage,
-            estimateError: estimateError,
+            transactionError: transactionError,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
-            nonce: transactionSettings?.nonce,
-            allowanceState: allowanceState(token: tokenIn, amount: amountIn)
+            nonce: transactionSettings?.nonce
         )
     }
 
-    override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapQuote) async throws {
-        guard let quote = quote as? Quote else {
+    override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
+        guard let quote = quote as? ConfirmationQuote else {
             throw SwapError.invalidQuote
         }
 
@@ -102,6 +82,39 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
     func transactionData(receiveAddress _: EvmKit.Address, chain _: Chain, trade _: Quote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
         fatalError("Must be implemented in subclass")
+    }
+
+    private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> Quote {
+        let blockchainType = tokenIn.blockchainType
+        let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
+
+        let kitTokenIn = try kitToken(chain: chain, token: tokenIn)
+        let kitTokenOut = try kitToken(chain: chain, token: tokenOut)
+
+        guard let rpcSource = evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
+            throw SwapError.noHttpRpcSource
+        }
+
+        let recipient: Address? = storage.value(for: MultiSwapSettingStorage.LegacySetting.address)
+        let slippage: Decimal = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
+
+        let kitRecipient = try recipient.map { try EvmKit.Address(hex: $0.raw) }
+
+        let tradeOptions = TradeOptions(
+            allowedSlippage: slippage,
+            ttl: TradeOptions.defaultTtl,
+            recipient: kitRecipient,
+            feeOnTransfer: false
+        )
+
+        let trade = try await trade(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut, amountIn: amountIn, tradeOptions: tradeOptions)
+
+        return await Quote(
+            trade: trade,
+            tradeOptions: tradeOptions,
+            recipient: recipient,
+            allowanceState: allowanceState(token: tokenIn, amount: amountIn)
+        )
     }
 }
 
@@ -167,19 +180,15 @@ extension BaseUniswapMultiSwapProvider {
 extension BaseUniswapMultiSwapProvider {
     class Quote: BaseEvmMultiSwapProvider.Quote {
         let trade: Trade
-        let transactionData: TransactionData?
+        let tradeOptions: TradeOptions
         let recipient: Address?
-        let slippage: Decimal
-        let estimateError: Error?
 
-        init(trade: Trade, transactionData: TransactionData?, recipient: Address?, slippage: Decimal, estimateError: Error?, gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?, allowanceState: AllowanceState) {
+        init(trade: Trade, tradeOptions: TradeOptions, recipient: Address?, allowanceState: AllowanceState) {
             self.trade = trade
-            self.transactionData = transactionData
+            self.tradeOptions = tradeOptions
             self.recipient = recipient
-            self.slippage = slippage
-            self.estimateError = estimateError
 
-            super.init(gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce, allowanceState: allowanceState)
+            super.init(allowanceState: allowanceState)
         }
 
         override var amountOut: Decimal {
@@ -191,77 +200,15 @@ extension BaseUniswapMultiSwapProvider {
                 return .init(title: "High Price Impact", disabled: true)
             }
 
-            if let estimateError {
-                let title: String
-
-                if case let AppError.ethereum(reason) = estimateError.convertedError {
-                    switch reason {
-                    case .insufficientBalanceWithFee: title = "Insufficient Fee Balance"
-                    default: title = "Next"
-                    }
-                } else {
-                    title = "Next"
-                }
-
-                return .init(title: title, disabled: true)
-            }
-
             return super.customButtonState
         }
 
         override var settingsModified: Bool {
-            super.settingsModified || recipient != nil || slippage != MultiSwapSlippage.default
+            super.settingsModified || recipient != nil || tradeOptions.allowedSlippage != MultiSwapSlippage.default
         }
 
-        override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
-            var cautions = super.cautions(feeToken: feeToken)
-
-            if let estimateError {
-                let title: String
-                let text: String
-
-                if case let AppError.ethereum(reason) = estimateError.convertedError {
-                    switch reason {
-                    case .insufficientBalanceWithFee:
-                        title = "fee_settings.errors.insufficient_balance".localized
-                        text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken?.coin.code ?? "")
-                    case let .executionReverted(message):
-                        title = "fee_settings.errors.unexpected_error".localized
-                        text = message
-                    case .lowerThanBaseGasLimit:
-                        title = "fee_settings.errors.low_max_fee".localized
-                        text = "fee_settings.errors.low_max_fee.info".localized
-                    case .nonceAlreadyInBlock:
-                        title = "fee_settings.errors.nonce_already_in_block".localized
-                        text = "ethereum_transaction.error.nonce_already_in_block".localized
-                    case .replacementTransactionUnderpriced:
-                        title = "fee_settings.errors.replacement_transaction_underpriced".localized
-                        text = "ethereum_transaction.error.replacement_transaction_underpriced".localized
-                    case .transactionUnderpriced:
-                        title = "fee_settings.errors.transaction_underpriced".localized
-                        text = "ethereum_transaction.error.transaction_underpriced".localized
-                    case .tipsHigherThanMaxFee:
-                        title = "fee_settings.errors.tips_higher_than_max_fee".localized
-                        text = "ethereum_transaction.error.tips_higher_than_max_fee".localized
-                    }
-                } else {
-                    title = "ethereum_transaction.error.title".localized
-                    text = estimateError.convertedError.smartDescription
-                }
-
-                cautions.append(CautionNew(title: title, text: text, type: .error))
-            }
-
-            switch MultiSwapSlippage.validate(slippage: slippage) {
-            case .none: ()
-            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-            }
-
-            return cautions
-        }
-
-        override func mainFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapMainField] {
-            var fields = super.mainFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+        override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
+            var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate)
 
             if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
                 fields.append(
@@ -283,6 +230,8 @@ extension BaseUniswapMultiSwapProvider {
                 )
             }
 
+            let slippage = tradeOptions.allowedSlippage
+
             if slippage != MultiSwapSlippage.default {
                 fields.append(
                     MultiSwapMainField(
@@ -296,10 +245,106 @@ extension BaseUniswapMultiSwapProvider {
             return fields
         }
 
-        override func confirmationPriceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField] {
-            var fields = super.confirmationPriceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+        override func cautions() -> [CautionNew] {
+            var cautions = super.cautions()
 
-            if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
+            switch MultiSwapSlippage.validate(slippage: tradeOptions.allowedSlippage) {
+            case .none: ()
+            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+            }
+
+            return cautions
+        }
+
+        enum Trade {
+            case v2(tradeData: TradeData)
+            case v3(bestTrade: TradeDataV3)
+
+            var amountOut: Decimal? {
+                switch self {
+                case let .v2(tradeData): return tradeData.amountOut
+                case let .v3(bestTrade): return bestTrade.amountOut
+                }
+            }
+
+            var priceImpact: Decimal? {
+                switch self {
+                case let .v2(tradeData): return tradeData.priceImpact
+                case let .v3(bestTrade): return bestTrade.priceImpact
+                }
+            }
+        }
+    }
+
+    class ConfirmationQuote: BaseEvmMultiSwapProvider.ConfirmationQuote {
+        let quote: Quote
+        let transactionData: TransactionData?
+        let transactionError: Error?
+
+        init(quote: Quote, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?) {
+            self.quote = quote
+            self.transactionData = transactionData
+            self.transactionError = transactionError
+
+            super.init(gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
+        }
+
+        override var amountOut: Decimal {
+            quote.trade.amountOut ?? 0
+        }
+
+        override var canSwap: Bool {
+            super.canSwap && transactionData != nil
+        }
+
+        override func cautions(feeToken: MarketKit.Token) -> [CautionNew] {
+            var cautions = super.cautions(feeToken: feeToken)
+
+            if let transactionError {
+                let title: String
+                let text: String
+
+                if case let AppError.ethereum(reason) = transactionError.convertedError {
+                    switch reason {
+                    case .insufficientBalanceWithFee:
+                        title = "fee_settings.errors.insufficient_balance".localized
+                        text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken.coin.code)
+                    case let .executionReverted(message):
+                        title = "fee_settings.errors.unexpected_error".localized
+                        text = message
+                    case .lowerThanBaseGasLimit:
+                        title = "fee_settings.errors.low_max_fee".localized
+                        text = "fee_settings.errors.low_max_fee.info".localized
+                    case .nonceAlreadyInBlock:
+                        title = "fee_settings.errors.nonce_already_in_block".localized
+                        text = "ethereum_transaction.error.nonce_already_in_block".localized
+                    case .replacementTransactionUnderpriced:
+                        title = "fee_settings.errors.replacement_transaction_underpriced".localized
+                        text = "ethereum_transaction.error.replacement_transaction_underpriced".localized
+                    case .transactionUnderpriced:
+                        title = "fee_settings.errors.transaction_underpriced".localized
+                        text = "ethereum_transaction.error.transaction_underpriced".localized
+                    case .tipsHigherThanMaxFee:
+                        title = "fee_settings.errors.tips_higher_than_max_fee".localized
+                        text = "ethereum_transaction.error.tips_higher_than_max_fee".localized
+                    }
+                } else {
+                    title = "ethereum_transaction.error.title".localized
+                    text = transactionError.convertedError.smartDescription
+                }
+
+                cautions.append(CautionNew(title: title, text: text, type: .error))
+            }
+
+            cautions.append(contentsOf: quote.cautions())
+
+            return cautions
+        }
+
+        override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField] {
+            var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+
+            if let priceImpact = quote.trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
                 fields.append(
                     .levelValue(
                         title: "Price Impact",
@@ -309,14 +354,16 @@ extension BaseUniswapMultiSwapProvider {
                 )
             }
 
-            if let recipient {
+            if let recipient = quote.recipient {
                 fields.append(
                     .address(
                         title: "Recipient",
-                        value: recipient.raw
+                        value: recipient.title
                     )
                 )
             }
+
+            let slippage = quote.tradeOptions.allowedSlippage
 
             if slippage != MultiSwapSlippage.default {
                 fields.append(
@@ -340,25 +387,6 @@ extension BaseUniswapMultiSwapProvider {
             )
 
             return fields
-        }
-
-        enum Trade {
-            case v2(tradeData: TradeData)
-            case v3(bestTrade: TradeDataV3)
-
-            var amountOut: Decimal? {
-                switch self {
-                case let .v2(tradeData): return tradeData.amountOut
-                case let .v3(bestTrade): return bestTrade.amountOut
-                }
-            }
-
-            var priceImpact: Decimal? {
-                switch self {
-                case let .v2(tradeData): return tradeData.priceImpact
-                case let .v3(bestTrade): return bestTrade.priceImpact
-                }
-            }
         }
     }
 }

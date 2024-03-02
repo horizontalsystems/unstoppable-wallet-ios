@@ -1,9 +1,13 @@
 import SwiftUI
 
 struct LazyView<Content: View>: View {
-    var content: () -> Content
+    let content: () -> Content
 
-    var body: some View {
+    init(@ViewBuilder _ content: @escaping () -> Content) {
+        self.content = content
+    }
+
+    var body: Content {
         content()
     }
 }

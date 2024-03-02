@@ -6,31 +6,37 @@ struct MultiSwapConfirmationView: View {
     @StateObject var viewModel: MultiSwapConfirmationViewModel
     @Binding var isPresented: Bool
 
-    init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, transactionService: IMultiSwapTransactionService, isPresented: Binding<Bool>) {
-        let viewModel = MultiSwapConfirmationViewModel(
-            tokenIn: tokenIn,
-            tokenOut: tokenOut,
-            amountIn: amountIn,
-            provider: provider,
-            transactionService: transactionService
-        )
-        _viewModel = StateObject(wrappedValue: viewModel)
-        _isPresented = isPresented
-    }
+    @State private var feeSettingsPresented = false
 
     var body: some View {
         ThemeView {
             if viewModel.quoting {
-                ProgressView()
+                VStack(spacing: .margin12) {
+                    ProgressView()
+                    Text("Quoting...").textSubhead2()
+                }
             } else if let quote = viewModel.quote {
                 quoteView(quote: quote)
             }
         }
+        .sheet(isPresented: $feeSettingsPresented) {
+            viewModel.transactionService.settingsView(
+                feeQuote: Binding<MultiSwapFeeQuote?>(get: { viewModel.quote?.feeQuote }, set: { _ in }),
+                quoting: $viewModel.quoting,
+                feeToken: viewModel.feeToken,
+                feeTokenRate: $viewModel.feeTokenRate
+            )
+        }
         .navigationTitle("Confirm")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            Button("button.cancel".localized) {
-                isPresented = false
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    feeSettingsPresented = true
+                }) {
+                    Image("manage_2_20").renderingMode(.template)
+                }
+                .disabled(viewModel.quoting)
             }
         }
         .onReceive(viewModel.finishSubject) {
@@ -38,7 +44,7 @@ struct MultiSwapConfirmationView: View {
         }
     }
 
-    @ViewBuilder private func quoteView(quote: IMultiSwapQuote) -> some View {
+    @ViewBuilder private func quoteView(quote: IMultiSwapConfirmationQuote) -> some View {
         VStack {
             ScrollView {
                 VStack(spacing: .margin16) {
@@ -47,7 +53,7 @@ struct MultiSwapConfirmationView: View {
                         tokenRow(title: "You Get", token: viewModel.tokenOut, amount: quote.amountOut, rate: viewModel.rateOut)
                     }
 
-                    let priceSectionFields = quote.confirmationPriceSectionFields(
+                    let priceSectionFields = quote.priceSectionFields(
                         tokenIn: viewModel.tokenIn,
                         tokenOut: viewModel.tokenOut,
                         feeToken: viewModel.feeToken,
@@ -87,7 +93,7 @@ struct MultiSwapConfirmationView: View {
                         }
                     }
 
-                    let otherSections = quote.confirmationOtherSections(
+                    let otherSections = quote.otherSections(
                         tokenIn: viewModel.tokenIn,
                         tokenOut: viewModel.tokenOut,
                         feeToken: viewModel.feeToken,
@@ -140,7 +146,7 @@ struct MultiSwapConfirmationView: View {
                 }
             }
             .disabled(viewModel.swapping)
-            .buttonStyle(PrimaryButtonStyle(style: .yellow))
+            .buttonStyle(PrimaryButtonStyle(style: viewModel.quoteTimeLeft > 0 ? .yellow : .gray))
             .padding(.vertical, .margin16)
             .padding(.horizontal, .margin16)
 
@@ -242,7 +248,9 @@ struct MultiSwapConfirmationView: View {
     }
 
     private func bottomText() -> String {
-        if viewModel.swapping {
+        if let quote = viewModel.quote, !quote.canSwap {
+            return "Invalid Quote"
+        } else if viewModel.swapping {
             return "Please wait"
         } else if viewModel.quoteTimeLeft > 0 {
             return "Quote expires in \(viewModel.quoteTimeLeft)"

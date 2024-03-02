@@ -8,13 +8,12 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
+    private let transactionServiceFactory = MultiSwapTransactionServiceFactory()
 
-    private var rateInCancellable: AnyCancellable?
-    private var rateOutCancellable: AnyCancellable?
-    private var feeTokenRateCancellable: AnyCancellable?
     private var quoteTask: AnyTask?
     private var swapTask: AnyTask?
     private var timer: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
 
     let tokenIn: Token
     let tokenOut: Token
@@ -22,19 +21,19 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     let provider: IMultiSwapProvider
     let transactionService: IMultiSwapTransactionService
     let currency: Currency
-    let feeToken: Token?
+    let feeToken: Token
 
     @Published var rateIn: Decimal?
     @Published var rateOut: Decimal?
     @Published var feeTokenRate: Decimal?
 
-    @Published var quote: IMultiSwapQuote? {
+    @Published var quote: IMultiSwapConfirmationQuote? {
         didSet {
             syncPrice()
 
             timer?.cancel()
 
-            if quote != nil {
+            if let quote, quote.canSwap {
                 quoteTimeLeft = quoteExpirationDuration
 
                 timer = Timer.publish(every: 1, on: .main, in: .common)
@@ -55,33 +54,43 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     @Published var swapping = false
     let finishSubject = PassthroughSubject<Void, Never>()
 
-    init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, transactionService: IMultiSwapTransactionService) {
+    init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider) {
         self.tokenIn = tokenIn
         self.tokenOut = tokenOut
         self.amountIn = amountIn
         self.provider = provider
-        self.transactionService = transactionService
+
+        transactionService = transactionServiceFactory.transactionService(blockchainType: tokenIn.blockchainType)
 
         currency = currencyManager.baseCurrency
 
-        feeToken = try? marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
-
-        if let feeToken {
-            feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
-            feeTokenRateCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: feeToken.coin.uid, currencyCode: currency.code)
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] price in self?.feeTokenRate = price.value }
+        guard let feeToken = try? marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native)) else {
+            fatalError("No fee token for \(tokenIn.blockchainType.uid)")
         }
 
+        self.feeToken = feeToken
+
+        transactionService.updatePublisher
+            .sink { [weak self] in self?.syncQuote() }
+            .store(in: &cancellables)
+
+        feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
+        marketKit.coinPricePublisher(tag: "swap", coinUid: feeToken.coin.uid, currencyCode: currency.code)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] price in self?.feeTokenRate = price.value }
+            .store(in: &cancellables)
+
         rateIn = marketKit.coinPrice(coinUid: tokenIn.coin.uid, currencyCode: currency.code)?.value
-        rateInCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: tokenIn.coin.uid, currencyCode: currency.code)
+        marketKit.coinPricePublisher(tag: "swap", coinUid: tokenIn.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] price in self?.rateIn = price.value }
+            .store(in: &cancellables)
 
         rateOut = marketKit.coinPrice(coinUid: tokenOut.coin.uid, currencyCode: currency.code)?.value
-        rateOutCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: tokenOut.coin.uid, currencyCode: currency.code)
+        marketKit.coinPricePublisher(tag: "swap", coinUid: tokenOut.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] price in self?.rateOut = price.value }
+            .store(in: &cancellables)
 
         syncQuote()
     }
@@ -128,7 +137,7 @@ extension MultiSwapConfirmationViewModel {
             try await transactionService.sync()
 
             let transactionSettings = transactionService.transactionSettings
-            let quote = try await provider.quote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
+            let quote = try await provider.confirmationQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, quote] in

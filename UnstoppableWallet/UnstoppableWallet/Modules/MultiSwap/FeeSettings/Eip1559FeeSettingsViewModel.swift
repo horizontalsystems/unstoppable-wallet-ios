@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 
 class Eip1559FeeSettingsViewModel: ObservableObject {
-    private let service: EvmMultiSwapTransactionService
+    let service: EvmMultiSwapTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
     private let decimalParser = AmountDecimalParser()
 
