@@ -437,6 +437,7 @@
 
 "send.confirmation.you_send" = "보냅니다";
 "send.confirmation.to" = "에게";
+"send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "담당자 이름";
 "send.confirmation.domain" = "도메인";
 "send.confirmation.address" = "주소";
@@ -447,11 +448,16 @@
 "send.confirmation.fee" = "수수료";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
+"send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
+"send.confirmation.slide_to_resend" = "재전송";
+"send.confirmation.slide_to_cancel" = "트랜잭션 취소";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.resend" = "재전송";
 "send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
+"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.speed_up" = "가속";
 "send.confirmation.cancel" = "트랜잭션 취소";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "메소드";
