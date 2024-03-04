@@ -71,6 +71,11 @@
 "alert.revoked" = "철회됨";
 "alert.cant_recognize" = "인식할 수 없음";
 
+"alert.fee_too_low" = "Fee Too Low";
+"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.unable_to_replace" = "Unable to replace";
+"alert.already_replaced" = "Already replaced";
+
 "no_results_found" = "검색 결과가 없습니다";
 "action.loading" = "로딩중";
 "placeholder.search" = "검색";
