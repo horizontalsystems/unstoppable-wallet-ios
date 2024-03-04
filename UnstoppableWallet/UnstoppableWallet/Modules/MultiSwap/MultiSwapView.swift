@@ -37,17 +37,24 @@ struct MultiSwapView: View {
                     .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
                         MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
                     }
-                    .sheet(item: $preSwapStepId, onDismiss: { viewModel.autoQuoteIfRequired() }) { _ in
+                    .sheet(item: $preSwapStepId, onDismiss: { viewModel.autoQuoteIfRequired() }) { stepId in
                         if let currentQuote = viewModel.currentQuote,
                            let tokenIn = viewModel.tokenIn,
                            let tokenOut = viewModel.tokenOut,
                            let amount = viewModel.amountIn
                         {
+                            let isPresented = Binding<Bool>(get: {
+                                preSwapStepId == stepId
+                            }, set: { newValue in
+                                if !newValue { preSwapStepId = nil }
+                            })
+
                             currentQuote.provider.preSwapView(
-                                stepId: $preSwapStepId,
+                                stepId: stepId,
                                 tokenIn: tokenIn,
                                 tokenOut: tokenOut,
-                                amount: amount
+                                amount: amount,
+                                isPresented: isPresented
                             )
                         }
                     }
