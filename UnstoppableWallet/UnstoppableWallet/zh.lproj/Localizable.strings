@@ -71,6 +71,11 @@
 "alert.revoked" = "已注销";
 "alert.cant_recognize" = "无法识别";
 
+"alert.fee_too_low" = "Fee Too Low";
+"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.unable_to_replace" = "Unable to replace";
+"alert.already_replaced" = "Already replaced";
+
 "no_results_found" = "未发现结果";
 "action.loading" = "正在加载...";
 "placeholder.search" = "搜索​​​​";
