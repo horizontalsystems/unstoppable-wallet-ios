@@ -11,6 +11,6 @@ protocol IMultiSwapProvider {
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapConfirmationQuote
     func settingsView(tokenIn: Token, tokenOut: Token, onChangeSettings: @escaping () -> Void) -> AnyView
     func settingView(settingId: String) -> AnyView
-    func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut: Token, amount: Decimal) -> AnyView
+    func preSwapView(stepId: String, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>) -> AnyView
     func swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: IMultiSwapConfirmationQuote) async throws
 }

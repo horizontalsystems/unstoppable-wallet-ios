@@ -38,33 +38,27 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    func settingsView(tokenIn: Token, tokenOut: Token, onChangeSettings: @escaping () -> ()) -> AnyView {
+    func settingsView(tokenIn _: Token, tokenOut _: Token, onChangeSettings _: @escaping () -> Void) -> AnyView {
         fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
     }
 
-    func settingView(settingId: String) -> AnyView {
+    func settingView(settingId _: String) -> AnyView {
         fatalError("settingView(settingId:) has not been implemented")
     }
 
-    func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut _: Token, amount: Decimal) -> AnyView {
-        if stepId.wrappedValue == Self.unlockStepId {
+    func preSwapView(stepId: String, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>) -> AnyView {
+        if stepId == Self.unlockStepId {
             let amount = tokenIn.fractionalMonetaryValue(value: amount)
             let chain = evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType)
             do {
                 let spenderAddress = try spenderAddress(chain: chain)
-
-                let approvePresented = Binding<Bool>(get: {
-                    stepId.wrappedValue == Self.unlockStepId
-                }, set: { newValue in
-                    if !newValue { stepId.wrappedValue = nil } else {}
-                })
-
-                let viewModel = MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress, presented: approvePresented)
+                let viewModel = MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress, presented: isPresented)
                 return AnyView(ThemeNavigationView { MultiSwapApproveView(viewModel: viewModel) })
             } catch {
                 return AnyView(Text("Can't Create Evm Allowance View"))
             }
         }
+
         return AnyView(Text("Evm Allowance View"))
     }
 
