@@ -2,6 +2,7 @@ import Alamofire
 import Foundation
 import MarketKit
 import ObjectMapper
+import SwiftUI
 
 class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private let baseUrl = "https://thornode.ninerealms.com"
@@ -71,6 +72,18 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
 
     func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: MultiSwapTransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         fatalError("confirmationQuote(quote:tokenIn:tokenOut:amountIn:transactionSettings:) has not been implemented")
+    }
+
+    func settingsView(tokenIn _: Token, tokenOut _: Token, onChangeSettings _: @escaping () -> Void) -> AnyView {
+        fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
+    }
+
+    func settingView(settingId _: String) -> AnyView {
+        fatalError("settingView(settingId:) has not been implemented")
+    }
+
+    func preSwapView(stepId _: Binding<String?>, tokenIn _: Token, tokenOut _: Token, amount _: Decimal) -> AnyView {
+        fatalError("preSwapView(stepId:tokenIn:tokenOut:amount:) has not been implemented")
     }
 
     func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {

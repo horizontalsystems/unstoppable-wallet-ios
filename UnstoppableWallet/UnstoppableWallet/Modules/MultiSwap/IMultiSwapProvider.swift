@@ -14,17 +14,3 @@ protocol IMultiSwapProvider {
     func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut: Token, amount: Decimal) -> AnyView
     func swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: IMultiSwapConfirmationQuote) async throws
 }
-
-extension IMultiSwapProvider {
-    func settingsView(tokenIn _: Token, tokenOut _: Token, onChangeSettings _: @escaping () -> Void) -> AnyView {
-        AnyView(Text("Settings View"))
-    }
-
-    func settingView(settingId: String) -> AnyView {
-        AnyView(Text("Setting View: \(settingId)"))
-    }
-
-    func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut: Token, amount: Decimal) -> AnyView {
-        AnyView(Text("Pre Swap View"))
-    }
-}

@@ -85,6 +85,22 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
+    override func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
+        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
+        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
+        let view = ThemeNavigationView {
+            RecipientAndSlippageMultiSwapSettingsView(
+                viewModel: viewModel,
+                addressViewModel: addressViewModel,
+                slippageViewModel: slippageViewModel,
+                onChangeSettings: onChangeSettings
+            )
+        }
+
+        return AnyView(view)
+    }
+
     override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
         guard let quote = quote as? ConfirmationQuote else {
             throw SwapError.invalidQuote
@@ -158,24 +174,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
     private var slippage: Decimal {
         storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
-    }
-}
-
-extension OneInchMultiSwapProvider {
-    func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
-        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
-        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
-        let view = ThemeNavigationView {
-            RecipientAndSlippageMultiSwapSettingsView(
-                viewModel: viewModel,
-                addressViewModel: addressViewModel,
-                slippageViewModel: slippageViewModel,
-                onChangeSettings: onChangeSettings
-            )
-        }
-
-        return AnyView(view)
     }
 }
 

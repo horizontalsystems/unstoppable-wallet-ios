@@ -38,6 +38,36 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
+    func settingsView(tokenIn: Token, tokenOut: Token, onChangeSettings: @escaping () -> ()) -> AnyView {
+        fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
+    }
+
+    func settingView(settingId: String) -> AnyView {
+        fatalError("settingView(settingId:) has not been implemented")
+    }
+
+    func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut _: Token, amount: Decimal) -> AnyView {
+        if stepId.wrappedValue == Self.unlockStepId {
+            let amount = tokenIn.fractionalMonetaryValue(value: amount)
+            let chain = evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType)
+            do {
+                let spenderAddress = try spenderAddress(chain: chain)
+
+                let approvePresented = Binding<Bool>(get: {
+                    stepId.wrappedValue == Self.unlockStepId
+                }, set: { newValue in
+                    if !newValue { stepId.wrappedValue = nil } else {}
+                })
+
+                let viewModel = MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress, presented: approvePresented)
+                return AnyView(ThemeNavigationView { MultiSwapApproveView(viewModel: viewModel) })
+            } catch {
+                return AnyView(Text("Can't Create Evm Allowance View"))
+            }
+        }
+        return AnyView(Text("Evm Allowance View"))
+    }
+
     func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {
         fatalError("Must be implemented in subclass")
     }
@@ -83,30 +113,6 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         }
 
         return nil
-    }
-}
-
-extension BaseEvmMultiSwapProvider {
-    func preSwapView(stepId: Binding<String?>, tokenIn: Token, tokenOut _: Token, amount: Decimal) -> AnyView {
-        if stepId.wrappedValue == Self.unlockStepId {
-            let amount = tokenIn.fractionalMonetaryValue(value: amount)
-            let chain = evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType)
-            do {
-                let spenderAddress = try spenderAddress(chain: chain)
-
-                let approvePresented = Binding<Bool>(get: {
-                    stepId.wrappedValue == Self.unlockStepId
-                }, set: { newValue in
-                    if !newValue { stepId.wrappedValue = nil } else {}
-                })
-
-                let viewModel = MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress, presented: approvePresented)
-                return AnyView(ThemeNavigationView { MultiSwapApproveView(viewModel: viewModel) })
-            } catch {
-                return AnyView(Text("Can't Create Evm Allowance View"))
-            }
-        }
-        return AnyView(Text("Evm Allowance View"))
     }
 }
 
