@@ -441,6 +441,7 @@
 
 "send.confirmation.you_send" = "Вы отправляете";
 "send.confirmation.to" = "Кому";
+"send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
@@ -451,11 +452,16 @@
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
+"send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
+"send.confirmation.slide_to_resend" = "Отправить повторно";
+"send.confirmation.slide_to_cancel" = "Отменить транзакцию";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.resend_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее повторно с более высокой комиссией. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее заново как новую транзакцию с нулевой суммой к самому себе. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
+"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.speed_up" = "Ускорить";
 "send.confirmation.cancel" = "Отменить транзакцию";
 "send.confirmation.nonce" = "Memo";
 "send.confirmation.method" = "Метод";
