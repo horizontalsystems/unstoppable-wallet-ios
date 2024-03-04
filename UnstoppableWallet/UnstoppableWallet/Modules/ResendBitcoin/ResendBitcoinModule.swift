@@ -1,3 +1,4 @@
+import BitcoinCore
 import UIKit
 
 enum ResendBitcoinModule {
@@ -44,15 +45,20 @@ enum ResendBitcoinModule {
 extension ResendBitcoinModule {
     enum CreateModuleError: LocalizedError {
         case wrongTransaction
-        case cantCreateFeeRateProvider
-        case cantCreateFeeSettingsModule
-        case alreadyInBlock
 
         var errorDescription: String? {
-            switch self {
-                case .wrongTransaction, .cantCreateFeeRateProvider, .cantCreateFeeSettingsModule: return "alert.unknown_error".localized
-                case .alreadyInBlock: return "tx_info.transaction.already_in_block".localized
-            }
+            return "alert.unknown_error".localized
+        }
+    }
+}
+
+extension ReplacementTransactionBuildError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+            case .feeTooLow: return "alert.fee_too_low".localized
+            case .rbfNotEnabled: return "alert.rbf_not_Enabled".localized
+            case .invalidTransaction, .noPreviousOutput, .unableToReplace: return "alert.unable_to_replace".localized
+            case .alreadyReplaced: return "alert.already_replaced".localized
         }
     }
 }
