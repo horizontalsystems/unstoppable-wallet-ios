@@ -51,7 +51,7 @@ class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        sendButton.set(style: .yellow, accessoryType: .icon(image: UIImage(named: "arrow_medium_2_up_right_24")))
+        sendButton.set(style: .yellow)
         sendButton.setTitle("balance.send".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
 
@@ -71,7 +71,7 @@ class BalanceButtonsView: UIView {
             maker.width.equalTo(sendButton)
         }
 
-        receiveButton.set(style: .gray, accessoryType: .icon(image: UIImage(named: "arrow_medium_2_down_left_24")))
+        receiveButton.set(style: .gray)
         receiveButton.setTitle("balance.receive".localized, for: .normal)
         receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 
@@ -128,6 +128,12 @@ class BalanceButtonsView: UIView {
     }
 
     func bind(buttons: [WalletModule.Button: ButtonState], sendAction: (() -> Void)?, withdrawAction: (() -> Void)?, receiveAction: (() -> Void)?, depositAction: (() -> Void)?, swapAction: (() -> Void)?, chartAction: (() -> Void)?) {
+        let buttonCount = buttons.filter { _, value in value != .hidden }.count
+        let showIcons = (1...2).contains(buttonCount)
+
+        sendButton.set(style: .yellow, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_up_right_24")) : .none)
+        receiveButton.set(style: .gray, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_down_left_24")) : .none)
+
         sendButton.isEnabled = buttons[.send] == .enabled
         withdrawButton.isEnabled = buttons[.withdraw] == .enabled
         receiveButton.isEnabled = buttons[.receive] == .enabled
@@ -139,8 +145,8 @@ class BalanceButtonsView: UIView {
 
         sendButtonWrapper.isHidden = (buttons[.send] ?? .hidden) == .hidden
         withdrawButtonWrapper.isHidden = (buttons[.withdraw] ?? .hidden) == .hidden
-        receiveButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count > 2
-        receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count <= 2
+        receiveButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttonCount > 3
+        receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttonCount <= 3
         depositButtonWrapper.isHidden = (buttons[.deposit] ?? .hidden) == .hidden
         addressButton.isHidden = (buttons[.address] ?? .hidden) == .hidden
         swapButtonWrapper.isHidden = (buttons[.swap] ?? .hidden) == .hidden
