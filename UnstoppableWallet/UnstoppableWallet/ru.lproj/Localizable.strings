@@ -71,6 +71,11 @@
 "alert.revoked" = "Отменен";
 "alert.cant_recognize" = "Не удалось распознать";
 
+"alert.fee_too_low" = "Fee Too Low";
+"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.unable_to_replace" = "Unable to replace";
+"alert.already_replaced" = "Already replaced";
+
 "no_results_found" = "Ничего не найдено";
 "action.loading" = "загрузка...";
 "placeholder.search" = "Поиск";
