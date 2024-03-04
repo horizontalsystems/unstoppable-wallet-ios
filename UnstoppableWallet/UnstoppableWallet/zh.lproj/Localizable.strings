@@ -439,6 +439,7 @@
 
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.to" = "接收人";
+"send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "联系人姓名";
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
@@ -449,11 +450,16 @@
 "send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
+"send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "滑动发送";
+"send.confirmation.slide_to_resend" = "重新发送";
+"send.confirmation.slide_to_cancel" = "取消交易";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.resend" = "重新发送";
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
+"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.speed_up" = "加速";
 "send.confirmation.cancel" = "取消交易";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
