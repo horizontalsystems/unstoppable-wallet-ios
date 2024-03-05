@@ -208,9 +208,13 @@ struct MultiSwapConfirmationView: View {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 1) {
-                    if let formatted = ValueFormatter.instance.formatShort(coinValue: coinValue) {
+                    if let coinValue, let formatted = ValueFormatter.instance.formatShort(coinValue: coinValue) {
                         Text(formatted)
                             .textSubhead1(color: .themeLeah)
+                            .multilineTextAlignment(.trailing)
+                    } else {
+                        Text("n/a".localized)
+                            .textSubhead1()
                             .multilineTextAlignment(.trailing)
                     }
 

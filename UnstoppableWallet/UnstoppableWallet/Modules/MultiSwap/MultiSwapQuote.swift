@@ -53,7 +53,7 @@ enum MultiSwapValueLevel {
 }
 
 enum MultiSwapConfirmField {
-    case value(title: String, description: AlertView.InfoDescription?, coinValue: CoinValue, currencyValue: CurrencyValue?)
+    case value(title: String, description: AlertView.InfoDescription?, coinValue: CoinValue?, currencyValue: CurrencyValue?)
     case levelValue(title: String, value: String, level: MultiSwapValueLevel)
     case address(title: String, value: String)
 }
