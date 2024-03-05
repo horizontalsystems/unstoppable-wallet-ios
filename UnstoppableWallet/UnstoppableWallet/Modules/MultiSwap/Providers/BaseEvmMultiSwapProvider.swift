@@ -226,18 +226,18 @@ extension BaseEvmMultiSwapProvider {
         func otherSections(tokenIn _: Token, tokenOut _: Token, feeToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]] {
             var sections = [[MultiSwapConfirmField]]()
 
-            if let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) {
-                sections.append(
-                    [
-                        .value(
-                            title: "Network Fee",
-                            description: .init(title: "Network Fee", description: "Network Fee Description"),
-                            coinValue: feeData.coinValue,
-                            currencyValue: feeData.currencyValue
-                        ),
-                    ]
-                )
-            }
+            let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
+
+            sections.append(
+                [
+                    .value(
+                        title: "Network Fee",
+                        description: .init(title: "Network Fee", description: "Network Fee Description"),
+                        coinValue: feeData?.coinValue,
+                        currencyValue: feeData?.currencyValue
+                    ),
+                ]
+            )
 
             return sections
         }
