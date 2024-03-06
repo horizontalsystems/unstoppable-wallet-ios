@@ -16,7 +16,6 @@ class SwapAllowanceService {
     private let stateRelay = PublishRelay<State?>()
     private(set) var state: State? {
         didSet {
-            print("SWAP ALLOWANCE : \(state)")
             if oldValue != state {
                 stateRelay.accept(state)
             }

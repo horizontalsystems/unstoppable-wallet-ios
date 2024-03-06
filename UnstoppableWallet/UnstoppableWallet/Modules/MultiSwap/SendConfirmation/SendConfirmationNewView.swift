@@ -2,27 +2,27 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
-struct MultiSwapConfirmationView: View {
-    @StateObject var viewModel: MultiSwapConfirmationViewModel
-    @Binding var isPresented: Bool
+struct SendConfirmationNewView: View {
+    @StateObject var viewModel: SendConfirmationNewViewModel
+    @Binding var isParentPresented: Bool
 
     @State private var feeSettingsPresented = false
 
     var body: some View {
         ThemeView {
-            if viewModel.quoting {
+            if viewModel.syncing {
                 VStack(spacing: .margin12) {
                     ProgressView()
-                    Text("Quoting...").textSubhead2()
+                    Text("Syncing...").textSubhead2()
                 }
-            } else if let quote = viewModel.quote {
-                quoteView(quote: quote)
+            } else if let data = viewModel.data {
+                dataView(data: data)
             }
         }
         .sheet(isPresented: $feeSettingsPresented) {
             viewModel.transactionService.settingsView(
-                feeData: Binding<FeeData?>(get: { viewModel.quote?.feeData }, set: { _ in }),
-                loading: $viewModel.quoting,
+                feeData: Binding<FeeData?>(get: { viewModel.data?.feeData }, set: { _ in }),
+                loading: $viewModel.syncing,
                 feeToken: viewModel.feeToken,
                 currency: viewModel.currency,
                 feeTokenRate: $viewModel.feeTokenRate
@@ -37,76 +37,23 @@ struct MultiSwapConfirmationView: View {
                 }) {
                     Image("manage_2_20").renderingMode(.template)
                 }
-                .disabled(viewModel.quoting)
+                .disabled(viewModel.syncing)
             }
         }
         .onReceive(viewModel.finishSubject) {
-            isPresented = false
+            isParentPresented = false
         }
     }
 
-    @ViewBuilder private func quoteView(quote: IMultiSwapConfirmationQuote) -> some View {
+    @ViewBuilder private func dataView(data: ISendConfirmationData) -> some View {
         VStack {
             ScrollView {
                 VStack(spacing: .margin16) {
-                    ListSection {
-                        tokenRow(title: "You Send", token: viewModel.tokenIn, amount: viewModel.amountIn, rate: viewModel.rateIn)
-                        tokenRow(title: "You Get", token: viewModel.tokenOut, amount: quote.amountOut, rate: viewModel.rateOut)
-                    }
+                    let sections = data.sections(feeToken: viewModel.feeToken, currency: viewModel.currency, feeTokenRate: viewModel.feeTokenRate)
 
-                    let priceSectionFields = quote.priceSectionFields(
-                        tokenIn: viewModel.tokenIn,
-                        tokenOut: viewModel.tokenOut,
-                        feeToken: viewModel.feeToken,
-                        currency: viewModel.currency,
-                        tokenInRate: viewModel.rateIn,
-                        tokenOutRate: viewModel.rateOut,
-                        feeTokenRate: viewModel.feeTokenRate
-                    )
-
-                    if viewModel.price != nil || !priceSectionFields.isEmpty {
-                        ListSection {
-                            if let price = viewModel.price {
-                                ListRow {
-                                    Text("Price").textSubhead2()
-
-                                    Spacer()
-
-                                    Button(action: {
-                                        viewModel.flipPrice()
-                                    }) {
-                                        HStack(spacing: .margin8) {
-                                            Text(price)
-                                                .textSubhead1(color: .themeLeah)
-                                                .multilineTextAlignment(.trailing)
-
-                                            Image("arrow_swap_3_20").themeIcon()
-                                        }
-                                    }
-                                }
-                            }
-
-                            if !priceSectionFields.isEmpty {
-                                ForEach(priceSectionFields.indices, id: \.self) { index in
-                                    fieldRow(field: priceSectionFields[index])
-                                }
-                            }
-                        }
-                    }
-
-                    let otherSections = quote.otherSections(
-                        tokenIn: viewModel.tokenIn,
-                        tokenOut: viewModel.tokenOut,
-                        feeToken: viewModel.feeToken,
-                        currency: viewModel.currency,
-                        tokenInRate: viewModel.rateIn,
-                        tokenOutRate: viewModel.rateOut,
-                        feeTokenRate: viewModel.feeTokenRate
-                    )
-
-                    if !otherSections.isEmpty {
-                        ForEach(otherSections.indices, id: \.self) { sectionIndex in
-                            let section = otherSections[sectionIndex]
+                    if !sections.isEmpty {
+                        ForEach(sections.indices, id: \.self) { sectionIndex in
+                            let section = sections[sectionIndex]
 
                             if !section.isEmpty {
                                 ListSection {
@@ -118,7 +65,7 @@ struct MultiSwapConfirmationView: View {
                         }
                     }
 
-                    let cautions = viewModel.transactionService.cautions + quote.cautions(feeToken: viewModel.feeToken)
+                    let cautions = viewModel.transactionService.cautions + data.cautions(feeToken: viewModel.feeToken)
 
                     if !cautions.isEmpty {
                         VStack(spacing: .margin12) {
@@ -132,28 +79,20 @@ struct MultiSwapConfirmationView: View {
             }
 
             Button(action: {
-                if viewModel.quoteTimeLeft > 0 {
-                    viewModel.swap()
-                } else {
-                    viewModel.syncQuote()
-                }
+                viewModel.send()
             }) {
                 HStack(spacing: .margin8) {
-                    if viewModel.swapping {
+                    if viewModel.sending {
                         ProgressView()
                     }
 
-                    Text(viewModel.quoteTimeLeft > 0 ? (viewModel.swapping ? "Swapping" : "Swap") : "Refresh")
+                    Text(viewModel.sending ? "Sending" : "Send")
                 }
             }
-            .disabled(viewModel.swapping)
-            .buttonStyle(PrimaryButtonStyle(style: viewModel.quoteTimeLeft > 0 ? .yellow : .gray))
+            .disabled(viewModel.sending)
+            .buttonStyle(PrimaryButtonStyle(style: .yellow))
             .padding(.vertical, .margin16)
             .padding(.horizontal, .margin16)
-
-            Text(bottomText())
-                .textSubhead1()
-                .padding(.bottom, .margin8)
         }
     }
 
@@ -193,8 +132,40 @@ struct MultiSwapConfirmationView: View {
         }
     }
 
-    @ViewBuilder private func fieldRow(field: MultiSwapConfirmField) -> some View {
+    @ViewBuilder private func fieldRow(field: SendConfirmField) -> some View {
         switch field {
+        case let .amount(title, token, coinValue, currencyValue, type):
+            ListRow {
+                KFImage.url(URL(string: token.coin.imageUrl))
+                    .resizable()
+                    .placeholder {
+                        Circle().fill(Color.themeSteel20)
+                    }
+                    .clipShape(Circle())
+                    .frame(width: .iconSize24, height: .iconSize24)
+
+                VStack(spacing: 1) {
+                    HStack(spacing: .margin4) {
+                        Text(title).textSubhead2(color: .themeLeah)
+
+                        Spacer()
+
+                        Text(coinValue).textSubhead1(color: .themeLeah)
+                    }
+
+                    HStack(spacing: .margin4) {
+                        if let protocolName = token.protocolName {
+                            Text(protocolName).textCaption()
+                        }
+
+                        Spacer()
+
+                        if let currencyValue {
+                            Text(currencyValue).textCaption()
+                        }
+                    }
+                }
+            }
         case let .value(title, description, coinValue, currencyValue):
             ListRow(padding: EdgeInsets(top: .margin12, leading: description == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
                 if let description {
@@ -209,8 +180,8 @@ struct MultiSwapConfirmationView: View {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 1) {
-                    if let coinValue, let formatted = ValueFormatter.instance.formatShort(coinValue: coinValue) {
-                        Text(formatted)
+                    if let coinValue {
+                        Text(coinValue)
                             .textSubhead1(color: .themeLeah)
                             .multilineTextAlignment(.trailing)
                     } else {
@@ -219,8 +190,8 @@ struct MultiSwapConfirmationView: View {
                             .multilineTextAlignment(.trailing)
                     }
 
-                    if let currencyValue, let formatted = ValueFormatter.instance.formatShort(currencyValue: currencyValue) {
-                        Text(formatted)
+                    if let currencyValue {
+                        Text(currencyValue)
                             .textCaption()
                             .multilineTextAlignment(.trailing)
                     }
@@ -232,7 +203,7 @@ struct MultiSwapConfirmationView: View {
                 Spacer()
                 Text(value).textSubhead1(color: color(valueLevel: level))
             }
-        case let .address(title, value):
+        case let .address(title, value, _, _):
             ListRow {
                 Text(title).textSubhead2()
 
@@ -252,22 +223,10 @@ struct MultiSwapConfirmationView: View {
         }
     }
 
-    private func bottomText() -> String {
-        if let quote = viewModel.quote, !quote.canSwap {
-            return "Invalid Quote"
-        } else if viewModel.swapping {
-            return "Please wait"
-        } else if viewModel.quoteTimeLeft > 0 {
-            return "Quote expires in \(viewModel.quoteTimeLeft)"
-        } else {
-            return "Quote expired"
-        }
-    }
-
-    private func color(valueLevel: MultiSwapValueLevel) -> Color {
+    private func color(valueLevel: SendConfirmField.ValueLevel) -> Color {
         switch valueLevel {
         case .regular: return .themeLeah
-        case .notAvailable: return .themeGray50
+//        case .notAvailable: return .themeGray50
         case .warning: return .themeJacob
         case .error: return .themeLucian
         }

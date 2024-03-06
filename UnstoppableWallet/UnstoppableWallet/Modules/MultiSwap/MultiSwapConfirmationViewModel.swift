@@ -8,7 +8,7 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
-    private let transactionServiceFactory = MultiSwapTransactionServiceFactory()
+    private let transactionServiceFactory = TransactionServiceFactory()
 
     private var quoteTask: AnyTask?
     private var swapTask: AnyTask?
@@ -19,7 +19,7 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     let tokenOut: Token
     let amountIn: Decimal
     let provider: IMultiSwapProvider
-    let transactionService: IMultiSwapTransactionService
+    let transactionService: ITransactionService
     let currency: Currency
     let feeToken: Token
 
@@ -134,10 +134,20 @@ extension MultiSwapConfirmationViewModel {
         }
 
         quoteTask = Task { [weak self, tokenIn, tokenOut, amountIn, provider, transactionService] in
-            try await transactionService.sync()
+            var quote: IMultiSwapConfirmationQuote?
 
-            let transactionSettings = transactionService.transactionSettings
-            let quote = try await provider.confirmationQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
+            do {
+                try await transactionService.sync()
+
+                quote = try await provider.confirmationQuote(
+                    tokenIn: tokenIn,
+                    tokenOut: tokenOut,
+                    amountIn: amountIn,
+                    transactionSettings: transactionService.transactionSettings
+                )
+            } catch {
+                print(error)
+            }
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, quote] in

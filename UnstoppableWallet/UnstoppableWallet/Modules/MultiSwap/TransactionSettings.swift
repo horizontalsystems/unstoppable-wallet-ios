@@ -4,7 +4,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-enum MultiSwapTransactionSettings {
+enum TransactionSettings {
     case evm(gasPrice: GasPrice, nonce: Int)
     case bitcoin(satoshiPerByte: Int)
 
@@ -23,7 +23,7 @@ enum MultiSwapTransactionSettings {
     }
 }
 
-enum MultiSwapFeeQuote {
+enum FeeData {
     case evm(gasLimit: Int)
     case bitcoin(bytes: Int)
 
@@ -35,16 +35,16 @@ enum MultiSwapFeeQuote {
     }
 }
 
-protocol IMultiSwapTransactionService {
-    var transactionSettings: MultiSwapTransactionSettings? { get }
+protocol ITransactionService {
+    var transactionSettings: TransactionSettings? { get }
     var modified: Bool { get }
     var cautions: [CautionNew] { get }
     var updatePublisher: AnyPublisher<Void, Never> { get }
     func sync() async throws
-    func settingsView(feeQuote: Binding<MultiSwapFeeQuote?>, quoting: Binding<Bool>, feeToken: Token, feeTokenRate: Binding<Decimal?>) -> AnyView?
+    func settingsView(feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) -> AnyView?
 }
 
-class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
+class EvmTransactionService: ITransactionService {
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
     private static let legacyGasPriceSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
 
@@ -98,7 +98,7 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         updateSubject.eraseToAnyPublisher()
     }
 
-    var transactionSettings: MultiSwapTransactionSettings? {
+    var transactionSettings: TransactionSettings? {
         guard let gasPrice, let nonce else {
             return nil
         }
@@ -174,14 +174,15 @@ class EvmMultiSwapTransactionService: IMultiSwapTransactionService {
         }
     }
 
-    func settingsView(feeQuote: Binding<MultiSwapFeeQuote?>, quoting: Binding<Bool>, feeToken: Token, feeTokenRate: Binding<Decimal?>) -> AnyView? {
+    func settingsView(feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) -> AnyView? {
         if chain.isEIP1559Supported {
             let viewModel = Eip1559FeeSettingsViewModel(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
             let view = Eip1559FeeSettingsView(
                 viewModel: viewModel,
-                feeQuote: feeQuote,
-                quoting: quoting,
+                feeData: feeData,
+                loading: loading,
                 feeToken: feeToken,
+                currency: currency,
                 feeTokenRate: feeTokenRate
             )
             return AnyView(ThemeNavigationView { view })

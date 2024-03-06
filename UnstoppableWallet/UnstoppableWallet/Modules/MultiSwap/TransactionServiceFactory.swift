@@ -1,12 +1,12 @@
 import MarketKit
 
-struct MultiSwapTransactionServiceFactory {
+struct TransactionServiceFactory {
     private let evmBlockchainManager = App.shared.evmBlockchainManager
 
-    func transactionService(blockchainType: BlockchainType) -> IMultiSwapTransactionService {
+    func transactionService(blockchainType: BlockchainType) -> ITransactionService {
         if EvmBlockchainManager.blockchainTypes.contains(blockchainType),
            let evmKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit,
-           let transactionService = EvmMultiSwapTransactionService(blockchainType: blockchainType, userAddress: evmKit.receiveAddress)
+           let transactionService = EvmTransactionService(blockchainType: blockchainType, userAddress: evmKit.receiveAddress)
         {
             return transactionService
         }

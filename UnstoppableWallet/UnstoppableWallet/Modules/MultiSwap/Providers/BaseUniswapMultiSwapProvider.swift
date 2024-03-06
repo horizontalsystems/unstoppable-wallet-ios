@@ -12,7 +12,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
     }
 
-    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: MultiSwapTransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
 
         let blockchainType = tokenIn.blockchainType

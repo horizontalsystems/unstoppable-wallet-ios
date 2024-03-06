@@ -34,7 +34,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: MultiSwapTransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         fatalError("Must be implemented in subclass")
     }
 
@@ -46,14 +46,14 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("settingView(settingId:) has not been implemented")
     }
 
-    func preSwapView(stepId: String, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>) -> AnyView {
+    func preSwapView(stepId: String, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>) -> AnyView {
         if stepId == Self.unlockStepId {
-            let amount = tokenIn.fractionalMonetaryValue(value: amount)
-            let chain = evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType)
             do {
+                let chain = evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType)
                 let spenderAddress = try spenderAddress(chain: chain)
-                let viewModel = MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress, presented: isPresented)
-                return AnyView(ThemeNavigationView { MultiSwapApproveView(viewModel: viewModel) })
+                let viewModel = try MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress)
+                let view = ThemeNavigationView { MultiSwapApproveView(viewModel: viewModel, isPresented: isPresented) }
+                return AnyView(view)
             } catch {
                 return AnyView(Text("Can't Create Evm Allowance View"))
             }
@@ -195,7 +195,7 @@ extension BaseEvmMultiSwapProvider {
             fatalError("Must be implemented in subclass")
         }
 
-        var feeQuote: MultiSwapFeeQuote? {
+        var feeData: FeeData? {
             gasLimit.map { .evm(gasLimit: $0) }
         }
 

@@ -70,7 +70,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         return Quote(swapQuote: swapQuote)
     }
 
-    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: MultiSwapTransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         fatalError("confirmationQuote(quote:tokenIn:tokenOut:amountIn:transactionSettings:) has not been implemented")
     }
 

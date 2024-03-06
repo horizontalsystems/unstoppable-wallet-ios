@@ -3,11 +3,11 @@ import Foundation
 import MarketKit
 
 class Eip1559FeeSettingsViewModel: ObservableObject {
-    let service: EvmMultiSwapTransactionService
+    let service: EvmTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
     private let decimalParser = AmountDecimalParser()
 
-    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory) {
+    init(service: EvmTransactionService, feeViewItemFactory: FeeViewItemFactory) {
         self.service = service
         self.feeViewItemFactory = feeViewItemFactory
 
