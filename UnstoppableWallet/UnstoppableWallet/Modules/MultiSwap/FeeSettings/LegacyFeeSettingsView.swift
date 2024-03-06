@@ -6,7 +6,7 @@ struct LegacyFeeSettingsView: View {
     @ObservedObject var viewModel: LegacyFeeSettingsViewModel
     @Environment(\.presentationMode) private var presentationMode
 
-    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory) {
+    init(service: EvmTransactionService, feeViewItemFactory: FeeViewItemFactory) {
         viewModel = LegacyFeeSettingsViewModel(service: service, feeViewItemFactory: feeViewItemFactory)
     }
 

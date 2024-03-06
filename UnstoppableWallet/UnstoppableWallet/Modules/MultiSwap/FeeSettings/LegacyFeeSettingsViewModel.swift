@@ -3,11 +3,11 @@ import Foundation
 import MarketKit
 
 class LegacyFeeSettingsViewModel: ObservableObject {
-    private let service: EvmMultiSwapTransactionService
+    private let service: EvmTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
     private let decimalParser = AmountDecimalParser()
 
-    init(service: EvmMultiSwapTransactionService, feeViewItemFactory: FeeViewItemFactory) {
+    init(service: EvmTransactionService, feeViewItemFactory: FeeViewItemFactory) {
         self.service = service
         self.feeViewItemFactory = feeViewItemFactory
 

@@ -4,9 +4,10 @@ import SwiftUI
 
 struct Eip1559FeeSettingsView: View {
     @ObservedObject var viewModel: Eip1559FeeSettingsViewModel
-    @Binding var feeQuote: MultiSwapFeeQuote?
-    @Binding var quoting: Bool
+    @Binding var feeData: FeeData?
+    @Binding var loading: Bool
     var feeToken: Token
+    var currency: Currency
     @Binding var feeTokenRate: Decimal?
 
     @Environment(\.presentationMode) private var presentationMode
@@ -152,7 +153,7 @@ struct Eip1559FeeSettingsView: View {
     }
 
     private var feeValue: String {
-        guard let gasLimit = feeQuote?.gasLimit, let gasPrice = viewModel.service.gasPrice else {
+        guard let gasLimit = feeData?.gasLimit, let gasPrice = viewModel.service.gasPrice else {
             return "n/a".localized
         }
 

@@ -11,11 +11,18 @@ protocol IMultiSwapQuote {
 
 protocol IMultiSwapConfirmationQuote {
     var amountOut: Decimal { get }
-    var feeQuote: MultiSwapFeeQuote? { get }
+    var feeData: FeeData? { get }
     var canSwap: Bool { get }
     func cautions(feeToken: Token) -> [CautionNew]
     func priceSectionFields(tokenIn: Token, tokenOut: Token, feeToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField]
     func otherSections(tokenIn: Token, tokenOut: Token, feeToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]]
+}
+
+protocol ISendConfirmationData {
+    var feeData: FeeData? { get }
+    var canSend: Bool { get }
+    func cautions(feeToken: Token) -> [CautionNew]
+    func sections(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [[SendConfirmField]]
 }
 
 struct MultiSwapTokenAmount {
@@ -56,6 +63,32 @@ enum MultiSwapConfirmField {
     case value(title: String, description: AlertView.InfoDescription?, coinValue: CoinValue?, currencyValue: CurrencyValue?)
     case levelValue(title: String, value: String, level: MultiSwapValueLevel)
     case address(title: String, value: String)
+}
+
+enum SendConfirmField {
+    case amount(title: String, token: Token, coinValue: String, currencyValue: String?, type: AmountType)
+    case value(title: String, description: AlertView.InfoDescription?, coinValue: String?, currencyValue: String?)
+    case levelValue(title: String, value: String, level: ValueLevel)
+    case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?)
+
+    enum AmountType {
+        case incoming
+        case outgoing
+        case neutral
+
+        var sign: FloatingPointSign {
+            switch self {
+            case .incoming, .neutral: return .plus
+            case .outgoing: return .minus
+            }
+        }
+    }
+
+    enum ValueLevel {
+        case regular
+        case warning
+        case error
+    }
 }
 
 struct MultiSwapButtonState {
