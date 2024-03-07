@@ -548,6 +548,22 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.minimum_short" = "(min)";
 "swap.maximum_short" = "(max)";
 
+"swap.rate_not_available" = "Rate not available";
+"swap.select" = "Auswählen";
+"swap.quoting" = "Quoting";
+"swap.select_token_in" = "Select Token In";
+"swap.select_token_out" = "Select Token Out";
+"swap.no_providers" = "No Providers";
+"swap.enter_amount" = "Betrag eingeben";
+"swap.no_quotes" = "No Quotes";
+"swap.token_not_enabled" = "Token Not Enabled";
+"swap.token_syncing" = "Token Syncing";
+"swap.token_not_synced" = "Token Not Synced";
+"swap.insufficient_balance" = "Unzureichendes Guthaben";
+
+"swap.quotes.providers" = "Providers";
+"swap.quotes.best_price" = "Best Price";
+
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slippage-Toleranz";
