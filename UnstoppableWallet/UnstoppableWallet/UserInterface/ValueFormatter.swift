@@ -9,7 +9,7 @@ class ValueFormatter {
     private let rawFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.roundingMode = .halfUp
+        formatter.roundingMode = .down
         formatter.minimumFractionDigits = 0
         return formatter
     }()

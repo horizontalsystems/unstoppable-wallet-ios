@@ -37,7 +37,9 @@ struct MultiSwapTokenSelectView: View {
                                     if let balance = item.balance {
                                         Spacer()
 
-                                        Text(balance).textBody()
+                                        Text(balance)
+                                            .textBody()
+                                            .multilineTextAlignment(.trailing)
                                     }
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -48,7 +50,9 @@ struct MultiSwapTokenSelectView: View {
                                     if let fiatBalance = item.fiatBalance {
                                         Spacer()
 
-                                        Text(fiatBalance).textSubhead2()
+                                        Text(fiatBalance)
+                                            .textSubhead2()
+                                            .multilineTextAlignment(.trailing)
                                     }
                                 }
                             }
