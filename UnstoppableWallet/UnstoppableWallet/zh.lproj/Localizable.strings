@@ -818,15 +818,55 @@
 "coin_overview.whitepaper" = "白皮书";
 
 // Coin Page -> Analytics
+"technical_advice.over.bought" = "overbought";
+"technical_advice.over.sold" = "oversold";
+"technical_advice.down" = "down";
+"technical_advice.up" = "up";
 
+"technical_advice.over.main" = "The actions with the asset are risky.";
+"technical_advice.over.indicators.signal_date" = "Starting from the %@";
+"technical_advice.over.indicators" = "The asset is outside the Bollinger Band channel and %@.";
+"technical_advice.over.rsi" = " RSI = %@, This also indicates that the asset is %@.";
+"technical_advice.over.advice" = " There might be a strong %@ward movement, so it's better to wait for the asset price to return to the channel.";
+
+"technical_advice.strong.indicators" = "The asset was %@, but now it has returned to the Bollinger Band channel. This indicates a possible trend reversal.";
+"technical_advice.strong.rsi" = " Meanwhile, the RSI is %@, which still indicates that it is %@.";
+"technical_advice.strong.advice" = " This could be a very strong signal to enter the market. Keep in mind that there may be several attempts of %@ward movement after returning to the channel, so do not forget about risk management.";
+
+"technical_advice.stable.rsi" = " Meanwhile, the RSI is %@, which also indicates a trend reversal (RSI crossed the boundary at 70%).";
+"technical_advice.stable.advice" = "The price is returning to neutral levels, however, there is still potential for upward movement. Keep in mind that RSI = 50 and the middle of the Bollinger Bands are strong resistances and possible trend reversal points. Do not forget about risk management.";
+
+"technical_advice.neutral.rsi" = "RSI = %@ also confirms the absence of a strong trend.";
+"technical_advice.neutral.indicators" = "The asset was in the overbought/oversold zone, but at the moment the price has returned to the Bollinger Band channel in the neutral zone. The RSI is %@ also confirms the absence of a strong trend, so overall the asset price is moving towards averaging and further movement is possible in any direction.";
+"technical_advice.neutral.advice" = " In general, the asset price is moving towards averaging and further movement is possible in any direction.";
+
+"technical_advice.other.title" = "Please note:";
+
+"technical_advice.ema.above" = "above";
+"technical_advice.ema.below" = "below";
+"technical_advice.ema.growth" = "growth";
+"technical_advice.ema.decrease" = "decrease";
+"technical_advice.ema.advice" = "EMA 200. Determines the overall sentiment and trend. The daily price of the asset is located %@ the EMA (%@). This means that globally the asset is set for %@.";
+
+"technical_advice.macd.positive" = "above";
+"technical_advice.macd.negative" = "below";
+"technical_advice.macd.advice" = "MACD. Assesses the strength of the trend considering the average price change. The daily value of the histogram is %@ (%@). The price of the asset globally may move %@.";
+
+"coin_analytics.indicators.title" = "Trading Assistant";
+"coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
+"coin_analytics.indicators.info.title" = "Technical Indicators";
+"coin_analytics.indicators.info.description" = "We use the Bollinger Bands + RSI strategy to determine trading signals. All calculations are based on daily candlesticks and provide advice for a moderately long term. The essence of the strategy is that the asset price should reach an extreme, breaking out of the Bollinger Bands channel, and the RSI should be in the overbought/oversold zone. After the price returns to the channel, there is a high probability of the price returning to the mean values or attempting to break the channel from the other side. Note that the strategy may give several false signals during strong market movements before a correct signal appears.\n\nPlease remember that it is very important to apply risk management to trading and remember to cut losses if the market situation changes! ";
+"coin_analytics.indicators.hide_details" = "Hide Details";
+"coin_analytics.indicators.show_details" = "Show Details";
 "coin_analytics.indicators.summary" = "总结";
-"coin_analytics.indicators.title" = "技术指标";
 "coin_analytics.indicators.no_data" = "无数据";
-"coin_analytics.indicators.strong_buy" = "强烈建议买入";
-"coin_analytics.indicators.buy" = "购买";
+"coin_analytics.indicators.oversold" = "Very Risky to Trade";
+"coin_analytics.indicators.strong_buy" = "Buy Signal";
+"coin_analytics.indicators.buy" = "Good Time to Buy";
 "coin_analytics.indicators.neutral" = "中性";
-"coin_analytics.indicators.sell" = "出售";
-"coin_analytics.indicators.strong_sell" = "强烈建议卖出";
+"coin_analytics.indicators.sell" = "Good Time to Sell";
+"coin_analytics.indicators.strong_sell" = "Sell Signal";
+"coin_analytics.indicators.overbought" = "Very Risky to Trade";
 "coin_analytics.period" = "句号";
 "coin_analytics.period.select_title" = "选择时间段";
 "coin_analytics.period.1h" = "1 小时";
@@ -839,7 +879,7 @@
 
 "coin_analytics.not_available" = "此项目没有分析数据";
 
-"coin_analytics.technical_indicators" = "技术指标";
+"coin_analytics.technical_indicators" = "Technical Indicators";
 "coin_analytics.technical_indicators.info1" = "概述：这是对资产技术手段的一般概述，考虑到各种技术指标和时间框架。 它根据这些指标提供了一个协商一致的观点(购买、出售或中立)。";
 "coin_analytics.technical_indicators.info2" = "移动平均值：这些是通用的技术指标，可使价格数据平滑使用，从而产生一个趋势跟踪指标。 它们显示了特定时期内的平均价格。 多个类型的MA：\n\n简单移动平均值(SMA)：这个计算了选定的价格范围的平均值。 通常按该范围内的周期数结算价格。\n\n指数移动平均值(EMA)：这使得对最近的价格更加权重，从而对最近的价格变化作出更快的反应。";
 "coin_analytics.technical_indicators.info3" = "Oscillators：这些是技术指标，随着时间的推移在波段内(在中心线以下或在设定的层次之间)波动。 它们的目的是帮助查明市场上买卖过多和销售过剩的条件。 这里有一些常见的顾问：\n\n相对力量指数(RSI)：这将衡量价格变动的速度和变化。 它通常被用来查明买入或卖出过多的情况。\n\n移动平均汇合差(MACD)：用于识别潜在的买卖信号。 它在其信号线上方(购买)或下方(出售)时，会触发技术信号。";
