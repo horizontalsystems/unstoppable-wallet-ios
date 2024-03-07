@@ -548,6 +548,22 @@
 "swap.minimum_short" = "(分钟)";
 "swap.maximum_short" = "(最大金额)";
 
+"swap.rate_not_available" = "Rate not available";
+"swap.select" = "选择";
+"swap.quoting" = "Quoting";
+"swap.select_token_in" = "Select Token In";
+"swap.select_token_out" = "Select Token Out";
+"swap.no_providers" = "No Providers";
+"swap.enter_amount" = "输入金额";
+"swap.no_quotes" = "No Quotes";
+"swap.token_not_enabled" = "Token Not Enabled";
+"swap.token_syncing" = "Token Syncing";
+"swap.token_not_synced" = "Token Not Synced";
+"swap.insufficient_balance" = "可用额度不足";
+
+"swap.quotes.providers" = "Providers";
+"swap.quotes.best_price" = "Best Price";
+
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "下跌容忍度";
