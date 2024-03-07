@@ -451,6 +451,8 @@ extension MultiSwapViewModel {
             return
         }
 
+        enteringFiat = false
+
         amountIn = availableBalance * Decimal(percent) / 100
     }
 

@@ -9,7 +9,7 @@ struct MultiSwapQuotesView: View {
             ScrollableThemeView {
                 VStack {
                     ForEach(viewModel.quotes, id: \.provider.id) { (quote: MultiSwapViewModel.Quote) in
-                        ListSection {
+                        ListSection(selected: quote.provider.id == viewModel.currentQuote?.provider.id) {
                             ClickableRow(action: {
                                 viewModel.userSelectedProviderId = quote.provider.id
                                 isPresented = false
@@ -23,11 +23,7 @@ struct MultiSwapQuotesView: View {
                                     Text(quote.provider.name).textSubhead2(color: .themeLeah)
 
                                     if quote.provider.id == viewModel.bestQuote?.provider.id {
-                                        Text("Best Price").textSubhead2(color: .themeRemus)
-                                    }
-
-                                    if quote.provider.id == viewModel.currentQuote?.provider.id {
-                                        Text("Current").textSubhead2(color: .themeJacob)
+                                        Text("swap.quotes.best_price".localized).textSubhead2(color: .themeRemus)
                                     }
                                 }
 
@@ -36,10 +32,10 @@ struct MultiSwapQuotesView: View {
                                 VStack(alignment: .trailing, spacing: 1) {
                                     if let value = quoteCoinValue(quote: quote) {
                                         Text(value)
-                                            .textCaption(color: .themeLeah)
+                                            .textSubhead2(color: .themeLeah)
                                             .multilineTextAlignment(.trailing)
                                     } else {
-                                        Text("n/a").textCaption(color: .themeGray50)
+                                        Text("n/a".localized).textSubhead2(color: .themeGray50)
                                     }
 
                                     if let value = quoteCurrencyValue(quote: quote) {
@@ -56,7 +52,7 @@ struct MultiSwapQuotesView: View {
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
-            .navigationTitle("Providers")
+            .navigationTitle("swap.quotes.providers".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {

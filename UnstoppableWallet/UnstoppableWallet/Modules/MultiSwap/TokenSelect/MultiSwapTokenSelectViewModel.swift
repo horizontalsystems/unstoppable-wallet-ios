@@ -115,10 +115,10 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 if let wallet = wallets.first(where: { $0.token == token }),
                    let availableBalance = adapterManager.balanceAdapter(for: wallet)?.balanceData.available
                 {
-                    balance = ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: token), value: availableBalance))
+                    balance = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: token), value: availableBalance))
 
                     if let coinPrice = coinPriceMap[token.coin.uid] {
-                        fiatBalance = ValueFormatter.instance.formatFull(currency: currency, value: availableBalance * coinPrice.value)
+                        fiatBalance = ValueFormatter.instance.formatShort(currency: currency, value: availableBalance * coinPrice.value)
                     }
                 }
 

@@ -3,14 +3,20 @@ import SwiftUI
 struct ListSection<Content: View>: View {
     @Environment(\.themeListStyle) var themeListStyle
 
-    @ViewBuilder let content: Content
+    private let selected: Bool
+    private let content: Content
+
+    init(selected: Bool = false, @ViewBuilder content: () -> Content) {
+        self.selected = selected
+        self.content = content()
+    }
 
     var body: some View {
         VStack(spacing: 0) {
             _VariadicView.Tree(Layout(themeListStyle: themeListStyle)) {
                 content
             }
-            .modifier(ThemeListStyleModifier(themeListStyle: themeListStyle))
+            .modifier(ThemeListStyleModifier(themeListStyle: themeListStyle, selected: selected))
         }
     }
 

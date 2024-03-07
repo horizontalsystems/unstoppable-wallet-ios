@@ -4,7 +4,7 @@ import SwiftUI
 
 struct MultiSwapConfirmationView: View {
     @StateObject var viewModel: MultiSwapConfirmationViewModel
-    @Binding var isPresented: Bool
+    @Binding var swapPresentationMode: PresentationMode
 
     @State private var feeSettingsPresented = false
 
@@ -41,7 +41,7 @@ struct MultiSwapConfirmationView: View {
             }
         }
         .onReceive(viewModel.finishSubject) {
-            isPresented = false
+            swapPresentationMode.dismiss()
         }
     }
 
@@ -179,9 +179,7 @@ struct MultiSwapConfirmationView: View {
                 }
 
                 HStack(spacing: .margin4) {
-                    if let protocolName = token.protocolName {
-                        Text(protocolName).textCaption()
-                    }
+                    Text((token.protocolName ?? "coin_platforms.native".localized).uppercased()).textCaption()
 
                     Spacer()
 
