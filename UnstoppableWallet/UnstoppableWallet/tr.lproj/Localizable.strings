@@ -548,6 +548,22 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.minimum_short" = "(dk)";
 "swap.maximum_short" = "(azami)";
 
+"swap.rate_not_available" = "Rate not available";
+"swap.select" = "Seç";
+"swap.quoting" = "Quoting";
+"swap.select_token_in" = "Select Token In";
+"swap.select_token_out" = "Select Token Out";
+"swap.no_providers" = "No Providers";
+"swap.enter_amount" = "Miktarı Girin";
+"swap.no_quotes" = "No Quotes";
+"swap.token_not_enabled" = "Token Not Enabled";
+"swap.token_syncing" = "Token Syncing";
+"swap.token_not_synced" = "Token Not Synced";
+"swap.insufficient_balance" = "Yetersiz Bakiye";
+
+"swap.quotes.providers" = "Providers";
+"swap.quotes.best_price" = "Best Price";
+
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slipaj Toleransı";
