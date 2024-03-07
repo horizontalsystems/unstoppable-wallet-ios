@@ -4,21 +4,47 @@ import SwiftUI
 
 struct LegacyFeeSettingsView: View {
     @ObservedObject var viewModel: LegacyFeeSettingsViewModel
-    @Environment(\.presentationMode) private var presentationMode
+    @Binding var feeData: FeeData?
+    @Binding var loading: Bool
+    var feeToken: Token
+    var currency: Currency
+    @Binding var feeTokenRate: Decimal?
 
-    init(service: EvmTransactionService, feeViewItemFactory: FeeViewItemFactory) {
-        viewModel = LegacyFeeSettingsViewModel(service: service, feeViewItemFactory: feeViewItemFactory)
-    }
+    @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
+                let (feeCoinValue, feeCurrencyValue) = FeeSettings.feeAmount(
+                    feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate, loading: loading,
+                    gasLimit: feeData?.gasLimit, gasPrice: viewModel.actualGasPrice
+                )
+
+                ListSection {
+                    row(
+                        viewItem: .init(
+                            title: "fee_settings.network_fee".localized,
+                            value: feeCoinValue,
+                            subValue: feeCurrencyValue
+                        ),
+                        description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
+                    )
+                    row(
+                        viewItem: .init(
+                            title: "fee_settings.gas_limit".localized,
+                            value: feeData?.gasLimit?.description,
+                            subValue: nil
+                        ),
+                        description: .init(title: "fee_settings.gas_limit".localized, description: "fee_settings.gas_limit.info".localized)
+                    )
+                }
+
                 VStack(spacing: 0) {
                     headerRow(
-                        title: Section.gasPrice.title,
+                        title: "fee_settings.gas_price".localized,
                         description: .init(
-                            title: Section.gasPrice.title,
-                            description: Section.gasPrice.info
+                            title: "fee_settings.gas_price".localized,
+                            description: "fee_settings.gas_price.info".localized
                         )
                     )
                     inputNumberWithSteps(
@@ -31,10 +57,10 @@ struct LegacyFeeSettingsView: View {
 
                 VStack(spacing: 0) {
                     headerRow(
-                        title: Section.nonce.title,
+                        title: "evm_send_settings.nonce".localized,
                         description: .init(
-                            title: Section.nonce.title,
-                            description: Section.nonce.info
+                            title: "evm_send_settings.nonce".localized,
+                            description: "evm_send_settings.nonce.info".localized
                         )
                     )
                     inputNumberWithSteps(
@@ -71,7 +97,7 @@ struct LegacyFeeSettingsView: View {
         }
     }
 
-    @ViewBuilder private func row(viewItem: ViewItem, description: AlertView.InfoDescription) -> some View {
+    @ViewBuilder private func row(viewItem: FeeSettings.ViewItem, description: AlertView.InfoDescription) -> some View {
         HStack(spacing: .margin8) {
             Text(viewItem.title)
                 .textSubhead2()
@@ -79,11 +105,15 @@ struct LegacyFeeSettingsView: View {
 
             Spacer()
 
-            VStack(spacing: 1) {
-                Text(viewItem.value).textSubhead1(color: .themeLeah)
+            VStack(alignment: .trailing, spacing: 1) {
+                if let value = viewItem.value {
+                    Text(value).textSubhead1(color: .themeLeah)
 
-                if let subValue = viewItem.subValue {
-                    Text(subValue).textSubhead2()
+                    if let subValue = viewItem.subValue {
+                        Text(subValue).textSubhead2()
+                    }
+                } else {
+                    ProgressView().progressViewStyle(.circular)
                 }
             }
         }
@@ -111,31 +141,5 @@ struct LegacyFeeSettingsView: View {
             }, onTap: onTap)
         }
         .modifier(FieldCautionBorder(cautionState: cautionState))
-    }
-}
-
-extension LegacyFeeSettingsView {
-    struct ViewItem {
-        let title: String
-        let value: String
-        let subValue: String?
-    }
-
-    enum Section: Int {
-        case gasPrice, nonce
-
-        var title: String {
-            switch self {
-            case .gasPrice: return "fee_settings.gas_price".localized
-            case .nonce: return "evm_send_settings.nonce".localized
-            }
-        }
-
-        var info: String {
-            switch self {
-            case .gasPrice: return "fee_settings.gas_price.info".localized
-            case .nonce: return "evm_send_settings.nonce.info".localized
-            }
-        }
     }
 }

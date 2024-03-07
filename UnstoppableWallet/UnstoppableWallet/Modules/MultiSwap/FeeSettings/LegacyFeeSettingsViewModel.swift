@@ -90,6 +90,10 @@ class LegacyFeeSettingsViewModel: ObservableObject {
 }
 
 extension LegacyFeeSettingsViewModel {
+    var actualGasPrice: GasPrice? {
+        service.gasPrice
+    }
+
     func stepChangeGasPrice(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: gasPrice, direction: direction) {
             gasPrice = newValue.description
