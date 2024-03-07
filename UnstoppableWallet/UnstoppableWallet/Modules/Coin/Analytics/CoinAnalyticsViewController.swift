@@ -90,6 +90,7 @@ class CoinAnalyticsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
 
+        tableView.registerCell(forClass: TechnicalIndicatorCell.self)
         tableView.registerCell(forClass: MarketWideCardCell.self)
         tableView.registerCell(forClass: CoinAnalyticsHoldersCell.self)
         tableView.registerCell(forClass: CoinAnalyticsIssueCell.self)
@@ -146,6 +147,19 @@ class CoinAnalyticsViewController: ThemeViewController {
     private func formatUsd(value: Int, number: String) -> String {
         let string = currencyFormatter.string(from: value as NSNumber) ?? ""
         return number.localized(string)
+    }
+
+    private func onTapDetails() {
+        viewModel.onTapDetails()
+    }
+
+    private func onTapTechnicalIndicatorInfo() {
+        let viewController = InfoModule.viewController(viewItems: [
+            .header1(text: "coin_analytics.indicators.info.title".localized),
+            .text(text: "coin_analytics.indicators.info.description".localized),
+        ])
+
+        parentNavigationController?.present(viewController, animated: true)
     }
 
     private func openTechnicalIndicatorInfo() {
@@ -610,6 +624,28 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 action: action
             )
         }
+    }
+
+    private func technicalAdviceSection(viewItem: CoinAnalyticsViewModel.TechnicalAdviceViewItem) -> SectionProtocol {
+        let row = Row<TechnicalIndicatorCell>(
+                id: "technical-indicator",
+                dynamicHeight: { width in
+                    TechnicalIndicatorCell.height(width: width, viewItem: viewItem)
+                },
+                bind: { [weak self] cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                    cell.bind(viewItem: viewItem)
+
+                    cell.onTapDetails = { self?.onTapDetails() }
+                    cell.onTapInfo = { self?.onTapTechnicalIndicatorInfo() }
+                }
+        )
+
+        return Section(
+                id: "technical-indicator",
+                headerState: .margin(height: .margin12),
+                rows: [row]
+        )
     }
 
     private func cexVolumeSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
@@ -1304,8 +1340,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem {
-            if let indicatorViewItem {
-                sections.append(indicatorSection(viewItem: indicatorViewItem))
+            if let viewItem = viewItem.technicalAdvice {
+                sections.append(technicalAdviceSection(viewItem: viewItem))
             }
 
             if let viewItem = viewItem.cexVolume {

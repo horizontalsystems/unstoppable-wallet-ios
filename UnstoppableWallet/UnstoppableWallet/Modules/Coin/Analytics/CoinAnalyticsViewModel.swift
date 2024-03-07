@@ -22,6 +22,12 @@ class CoinAnalyticsViewModel {
     private let indicatorViewItemsSubject = CurrentValueSubject<IndicatorViewItem, Never>(.empty)
     private let subscriptionInfoSubject = PassthroughSubject<Void, Never>()
 
+    private var detailsShowed: Bool = false {
+        didSet {
+            sync()
+        }
+    }
+
     private let ratioFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -160,6 +166,19 @@ class CoinAnalyticsViewModel {
             value: valueString ?? "n/a".localized,
             chartData: chartData,
             chartTrend: first.value < last.value ? .up : .down
+        )
+    }
+
+    private func viewItem(technicalAdvice: TechnicalAdvice?) -> TechnicalAdviceViewItem? {
+        guard let technicalAdvice, let advice = technicalAdvice.advice else {
+            return nil
+        }
+
+        return TechnicalAdviceViewItem(
+            title: advice.title,
+            sliderIndex: advice.sliderIndex,
+            details: coinIndicatorViewItemFactory.advice(technicalAdvice: technicalAdvice),
+            detailsShowed: detailsShowed
         )
     }
 
@@ -365,7 +384,8 @@ class CoinAnalyticsViewModel {
                 .map { .regular(value: $0) },
             auditAddresses: service.auditAddresses
                 .map { .regular(value: $0) },
-            issueBlockchains: analytics.issueBlockchains.flatMap { issueBlockchainViewItems(issueBlockchains: $0) }
+            issueBlockchains: analytics.issueBlockchains.flatMap { issueBlockchainViewItems(issueBlockchains: $0) },
+            technicalAdvice: viewItem(technicalAdvice: analytics.technicalAdvice)
         )
     }
 
@@ -386,7 +406,8 @@ class CoinAnalyticsViewModel {
             investors: data.fundsInvested ? .preview : nil,
             treasuries: data.treasuries ? .preview : nil,
             auditAddresses: service.auditAddresses != nil ? .preview : nil,
-            issueBlockchains: nil
+            issueBlockchains: nil,
+            technicalAdvice: nil
         )
     }
 }
@@ -454,6 +475,10 @@ extension CoinAnalyticsViewModel {
     func onTapRetry() {
         service.sync()
     }
+
+    func onTapDetails() {
+        detailsShowed.toggle()
+    }
 }
 
 extension CoinAnalyticsViewModel {
@@ -474,9 +499,10 @@ extension CoinAnalyticsViewModel {
         let treasuries: Previewable<String>?
         let auditAddresses: Previewable<[String]>?
         let issueBlockchains: [IssueBlockchainViewItem]?
+        let technicalAdvice: TechnicalAdviceViewItem?
 
         var isEmpty: Bool {
-            let items: [Any?] = [cexVolume, dexVolume, dexLiquidity, activeAddresses, transactionCount, holders, tvl, revenue, reports, investors, treasuries]
+            let items: [Any?] = [cexVolume, dexVolume, dexLiquidity, activeAddresses, transactionCount, holders, tvl, revenue, reports, investors, treasuries, technicalAdvice]
             return items.compactMap { $0 }.isEmpty
         }
     }
@@ -494,6 +520,13 @@ extension CoinAnalyticsViewModel {
         let value: String
         let chartData: ChartData
         let chartTrend: MovementTrend
+    }
+
+    struct TechnicalAdviceViewItem {
+        let title: String
+        let sliderIndex: Int
+        let details: String
+        let detailsShowed: Bool
     }
 
     struct RankCardViewItem {

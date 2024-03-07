@@ -2166,6 +2166,7 @@
 		ABC9A097A0BDD99777D5374D /* DonateDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD0848221B0EC25C37F3 /* DonateDescriptionCell.swift */; };
 		ABC9A09E0B614E5B4E32B7F9 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACEC3169A9F01B55921A /* InputTextView.swift */; };
 		ABC9A0A3A52AD41643D67D3D /* SingleLineFormTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A03401172C4C65D66764 /* SingleLineFormTextView.swift */; };
+		ABC9A0A78E18F832D2549CB2 /* TechnicalIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF67BEFF4C94C0CF7922 /* TechnicalIndicatorCell.swift */; };
 		ABC9A0B37693470DAD0FFE20 /* WalletConnectMainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD18F3E73F96DD6C4FA9 /* WalletConnectMainService.swift */; };
 		ABC9A0B58626A1E0C4248162 /* SendEip1155Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC6A0B950C0AABD5A93E /* SendEip1155Service.swift */; };
 		ABC9A0B5A5577704AC99F47B /* ChartIndicatorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3AF18834CE9E569C89E /* ChartIndicatorsViewModel.swift */; };
@@ -2343,6 +2344,7 @@
 		ABC9A51979D2047BEF45A2AE /* TokenSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A791A47F4F1E71B51B3B /* TokenSelectView.swift */; };
 		ABC9A51E36466E414AF24C67 /* WalletConnectMainPendingRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8D8072033A5AC7E4897 /* WalletConnectMainPendingRequestViewModel.swift */; };
 		ABC9A51F2E7EB0B477EBE708 /* SendZcashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE6D2CD14194802E7976 /* SendZcashService.swift */; };
+		ABC9A5280FD23BAD3166BE3B /* SliderGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF66B301786439C8D606 /* SliderGradientView.swift */; };
 		ABC9A529895ECA82E309EFBB /* MultiSwapAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB7A9358C5EA5C2D34B5 /* MultiSwapAddressView.swift */; };
 		ABC9A52E08E5C57665C07DBC /* PseudoAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */; };
 		ABC9A5361D9712C95F456376 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A04464757686EA543527 /* Extensions.swift */; };
@@ -2354,6 +2356,7 @@
 		ABC9A556361B2644555659D8 /* SendConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA7F2ECF212EF8B70470 /* SendConfirmationViewController.swift */; };
 		ABC9A55A98D2FB37A3351FF1 /* WalletTokenBalanceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A099EB5948C650A265EA /* WalletTokenBalanceDataSource.swift */; };
 		ABC9A55FD66CB6374F2D520D /* SendZcashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8B3C65C9F0285483160 /* SendZcashViewController.swift */; };
+		ABC9A565DE76B57BE559DBCA /* TechnicalIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF67BEFF4C94C0CF7922 /* TechnicalIndicatorCell.swift */; };
 		ABC9A57D1DA5481E44DEE8C0 /* PrimaryCircleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6EF6EB856EAAA8CFACB /* PrimaryCircleButtonStyle.swift */; };
 		ABC9A57DE6436FB8795F50E4 /* ContactBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2D87362E00FD9FB5688 /* ContactBookViewController.swift */; };
 		ABC9A57EB423CAD56190F36B /* ChartIndicatorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACE2CCBDF21572F5600C /* ChartIndicatorSettingsViewModel.swift */; };
@@ -2462,6 +2465,7 @@
 		ABC9A88848665A3482D51724 /* ContactBookAddressModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4674CCDED7C12EB5C09 /* ContactBookAddressModule.swift */; };
 		ABC9A8916A5DFA7A33F4FF79 /* SendBinanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF15BD67548E6D755CA0 /* SendBinanceViewController.swift */; };
 		ABC9A89499016C8AC8341238 /* NftCollectionCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8CF40E995105E7F38AC /* NftCollectionCellFactory.swift */; };
+		ABC9A89C6D89CC91E2C96893 /* SliderGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF66B301786439C8D606 /* SliderGradientView.swift */; };
 		ABC9A8A33E0A2697BB1583EB /* OutputSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A497D453D525F56BB753 /* OutputSelectorViewModel.swift */; };
 		ABC9A8A507E8AF95CB00379A /* MultiSwapApproveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A952569E5DBD20B48F47 /* MultiSwapApproveViewModel.swift */; };
 		ABC9A8A74C527C4E01EBB8A5 /* RestoreCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A45E29D1773EF27A0074 /* RestoreCloudModule.swift */; };
@@ -4565,6 +4569,8 @@
 		ABC9AF395EA01B43D6D77C43 /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		ABC9AF54E3A4A3C8362CCC96 /* AddressViewModelNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewModelNew.swift; sourceTree = "<group>"; };
 		ABC9AF628790F13411CB3D1C /* WCSignMessagePayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCSignMessagePayload.swift; sourceTree = "<group>"; };
+		ABC9AF66B301786439C8D606 /* SliderGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderGradientView.swift; sourceTree = "<group>"; };
+		ABC9AF67BEFF4C94C0CF7922 /* TechnicalIndicatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TechnicalIndicatorCell.swift; sourceTree = "<group>"; };
 		ABC9AF6AA02DA39787C053F0 /* BackupCloudPassphraseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudPassphraseService.swift; sourceTree = "<group>"; };
 		ABC9AF6C15800AF8C37C3516 /* RestoreFileConfigurationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreFileConfigurationViewModel.swift; sourceTree = "<group>"; };
 		ABC9AF846ED14C22CEFFF531 /* ActionStyleNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionStyleNew.swift; sourceTree = "<group>"; };
@@ -7868,6 +7874,8 @@
 				ABC9AACC40370E1E0CFC7639 /* IndicatorAdviceCell.swift */,
 				ABC9A044BFF4E76CD17835CA /* IndicatorAdviceView.swift */,
 				ABC9A10A83A43DCAFA709472 /* CoinDetailAdviceViewController.swift */,
+				ABC9AF66B301786439C8D606 /* SliderGradientView.swift */,
+				ABC9AF67BEFF4C94C0CF7922 /* TechnicalIndicatorCell.swift */,
 			);
 			path = TechnicalIndicators;
 			sourceTree = "<group>";
@@ -10785,6 +10793,8 @@
 				11B35EFEEB7F361BD5FCCC3D /* SendConfirmationNewView.swift in Sources */,
 				11B3525F2CAA4B98F29705A7 /* SendConfirmationNewViewModel.swift in Sources */,
 				11B3565DC90BD451F8DE7120 /* SendEvmHandler.swift in Sources */,
+				ABC9A5280FD23BAD3166BE3B /* SliderGradientView.swift in Sources */,
+				ABC9A565DE76B57BE559DBCA /* TechnicalIndicatorCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12253,6 +12263,8 @@
 				11B3541A3A7BDE85240F71A0 /* SendConfirmationNewView.swift in Sources */,
 				11B35563DA099AE8ABE34F8D /* SendConfirmationNewViewModel.swift in Sources */,
 				11B3550846F2DD60D3778FE5 /* SendEvmHandler.swift in Sources */,
+				ABC9A89C6D89CC91E2C96893 /* SliderGradientView.swift in Sources */,
+				ABC9A0A78E18F832D2549CB2 /* TechnicalIndicatorCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13144,7 +13156,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.4.5;
+				version = 2.5.0;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */ = {
