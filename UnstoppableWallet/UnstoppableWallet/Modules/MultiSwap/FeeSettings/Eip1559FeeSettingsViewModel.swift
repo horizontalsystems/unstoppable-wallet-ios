@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 
 class Eip1559FeeSettingsViewModel: ObservableObject {
-    let service: EvmTransactionService
+    private let service: EvmTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
     private let decimalParser = AmountDecimalParser()
 
@@ -108,6 +108,10 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
 }
 
 extension Eip1559FeeSettingsViewModel {
+    var gasPrice: GasPrice? {
+        service.gasPrice
+    }
+
     func stepChangeMaxFee(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: maxFee, direction: direction) {
             maxFee = newValue.description

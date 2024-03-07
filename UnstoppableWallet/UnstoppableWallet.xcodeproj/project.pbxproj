@@ -2888,6 +2888,8 @@
 		D0F132A52B6B98F500C7310E /* RbfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A32B6B98F500C7310E /* RbfViewModel.swift */; };
 		D0F132A72B6B990500C7310E /* RbfDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A62B6B990500C7310E /* RbfDataSource.swift */; };
 		D0F132A82B6B990500C7310E /* RbfDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A62B6B990500C7310E /* RbfDataSource.swift */; };
+		D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9F5162B99857700C3190A /* FeeSettings.swift */; };
+		D0F9F5182B99857700C3190A /* FeeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9F5162B99857700C3190A /* FeeSettings.swift */; };
 		D31C4760238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4763238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
@@ -4649,6 +4651,7 @@
 		D0F132A02B6B98E100C7310E /* RbfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfService.swift; sourceTree = "<group>"; };
 		D0F132A32B6B98F500C7310E /* RbfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfViewModel.swift; sourceTree = "<group>"; };
 		D0F132A62B6B990500C7310E /* RbfDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfDataSource.swift; sourceTree = "<group>"; };
+		D0F9F5162B99857700C3190A /* FeeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeSettings.swift; sourceTree = "<group>"; };
 		D31C4759238BF175008CB818 /* MnemonicDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicDerivation.swift; sourceTree = "<group>"; };
 		D31C475A238BF175008CB818 /* FeeRateState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateState.swift; sourceTree = "<group>"; };
 		D3285F4520BD158E00644076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -8803,6 +8806,7 @@
 				ABC9A8E02C3486492E3B12F2 /* Eip1559FeeSettingsViewModel.swift */,
 				D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */,
 				D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */,
+				D0F9F5162B99857700C3190A /* FeeSettings.swift */,
 			);
 			path = FeeSettings;
 			sourceTree = "<group>";
@@ -10583,6 +10587,7 @@
 				ABC9A2D3D28955B8AD82AFC3 /* BackupTypeView.swift in Sources */,
 				ABC9AD1F6A6A7C97E4120F2F /* BackupAppViewModel.swift in Sources */,
 				ABC9A7EF7780159AC6B946FC /* BackupPasswordView.swift in Sources */,
+				D0F9F5182B99857700C3190A /* FeeSettings.swift in Sources */,
 				ABC9AEF231332C7B8756E8A9 /* BackupListView.swift in Sources */,
 				ABC9A8AC5E635D9CB1704568 /* BackupDisclaimerView.swift in Sources */,
 				ABC9A437473D0E77F9DBEB42 /* RestoreAppViewModel.swift in Sources */,
@@ -12050,6 +12055,7 @@
 				ABC9A66D7B34C6547C2469E9 /* BackupTypeView.swift in Sources */,
 				ABC9AC763748CC31D45FB6BD /* BackupAppViewModel.swift in Sources */,
 				ABC9A04FAB83D7A8D251DA90 /* BackupPasswordView.swift in Sources */,
+				D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */,
 				ABC9A0CE0155F89F12350DFC /* BackupListView.swift in Sources */,
 				ABC9A4465982823773CE1B50 /* BackupDisclaimerView.swift in Sources */,
 				ABC9AA18996E714C955E7E13 /* RestoreAppViewModel.swift in Sources */,

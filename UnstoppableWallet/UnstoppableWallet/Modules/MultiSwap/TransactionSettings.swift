@@ -187,7 +187,15 @@ class EvmTransactionService: ITransactionService {
             )
             return AnyView(ThemeNavigationView { view })
         } else {
-            let view = LegacyFeeSettingsView(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
+            let viewModel = LegacyFeeSettingsViewModel(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
+            let view = LegacyFeeSettingsView(
+                viewModel: viewModel,
+                feeData: feeData,
+                loading: loading,
+                feeToken: feeToken,
+                currency: currency,
+                feeTokenRate: feeTokenRate
+            )
             return AnyView(ThemeNavigationView { view })
         }
     }
@@ -209,5 +217,6 @@ class EvmTransactionService: ITransactionService {
         usingRecommendedNonce = true
         nonce = nextNonce
         gasPrice = recommendedGasPrice
+        updateSubject.send()
     }
 }
