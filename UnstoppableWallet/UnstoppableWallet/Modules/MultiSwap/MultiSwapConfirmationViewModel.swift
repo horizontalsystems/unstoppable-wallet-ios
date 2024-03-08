@@ -19,9 +19,9 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     let tokenOut: Token
     let amountIn: Decimal
     let provider: IMultiSwapProvider
-    let transactionService: ITransactionService
+    let transactionService: ITransactionService?
     let currency: Currency
-    let feeToken: Token
+    let feeToken: Token?
 
     @Published var rateIn: Decimal?
     @Published var rateOut: Decimal?
@@ -64,21 +64,19 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 
         currency = currencyManager.baseCurrency
 
-        guard let feeToken = try? marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native)) else {
-            fatalError("No fee token for \(tokenIn.blockchainType.uid)")
-        }
+        feeToken = try? marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
 
-        self.feeToken = feeToken
-
-        transactionService.updatePublisher
+        transactionService?.updatePublisher
             .sink { [weak self] in self?.syncQuote() }
             .store(in: &cancellables)
 
-        feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
-        marketKit.coinPricePublisher(tag: "swap", coinUid: feeToken.coin.uid, currencyCode: currency.code)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] price in self?.feeTokenRate = price.value }
-            .store(in: &cancellables)
+        if let feeToken {
+            feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
+            marketKit.coinPricePublisher(tag: "swap", coinUid: feeToken.coin.uid, currencyCode: currency.code)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] price in self?.feeTokenRate = price.value }
+                .store(in: &cancellables)
+        }
 
         rateIn = marketKit.coinPrice(coinUid: tokenIn.coin.uid, currencyCode: currency.code)?.value
         marketKit.coinPricePublisher(tag: "swap", coinUid: tokenIn.coin.uid, currencyCode: currency.code)
@@ -126,6 +124,10 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 
 extension MultiSwapConfirmationViewModel {
     func syncQuote() {
+        guard let transactionService else {
+            return
+        }
+
         quoteTask = nil
         quote = nil
 

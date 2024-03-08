@@ -4,8 +4,6 @@ import MarketKit
 import SwiftUI
 
 class BaseEvmMultiSwapProvider: IMultiSwapProvider {
-    private static let unlockStepId = "unlock"
-
     private let adapterManager = App.shared.adapterManager
     let evmBlockchainManager = App.shared.evmBlockchainManager
     let storage: MultiSwapSettingStorage
@@ -46,20 +44,14 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("settingView(settingId:) has not been implemented")
     }
 
-    func preSwapView(stepId: String, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>) -> AnyView {
-        if stepId == Self.unlockStepId {
-            do {
-                let chain = evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType)
-                let spenderAddress = try spenderAddress(chain: chain)
-                let viewModel = try MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress)
-                let view = ThemeNavigationView { MultiSwapApproveView(viewModel: viewModel, isPresented: isPresented) }
-                return AnyView(view)
-            } catch {
-                return AnyView(Text("Can't Create Evm Allowance View"))
-            }
+    func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>) -> AnyView {
+        switch step {
+        case let unlockStep as UnlockStep:
+            let view = ThemeNavigationView { MultiSwapApproveView(tokenIn: tokenIn, amount: amount, spenderAddress: unlockStep.spenderAddress, isPresented: isPresented) }
+            return AnyView(view)
+        default:
+            return AnyView(Text("Invalid Pre Swap Step"))
         }
-
-        return AnyView(Text("Evm Allowance View"))
     }
 
     func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {
@@ -79,29 +71,29 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
             return .unknown
         }
 
-        if let pendingAllowance = pendingAllowance(pendingTransactions: adapter.pendingTransactions) {
-            return .pending(amount: CoinValue(kind: .token(token: token), value: pendingAllowance))
-        }
-
-        let chain = evmBlockchainManager.chain(blockchainType: token.blockchainType)
-
         do {
+            let chain = evmBlockchainManager.chain(blockchainType: token.blockchainType)
             let spenderAddress = try spenderAddress(chain: chain)
+
+            if let pendingAllowance = pendingAllowance(pendingTransactions: adapter.pendingTransactions, spenderAddress: spenderAddress) {
+                return .pending(amount: CoinValue(kind: .token(token: token), value: pendingAllowance))
+            }
+
             let allowance = try await adapter.allowance(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
 
             if amount <= allowance {
                 return .allowed
             } else {
-                return .notEnough(amount: CoinValue(kind: .token(token: token), value: allowance))
+                return .notEnough(amount: CoinValue(kind: .token(token: token), value: allowance), spenderAddress: spenderAddress)
             }
         } catch {
             return .unknown
         }
     }
 
-    private func pendingAllowance(pendingTransactions: [TransactionRecord]) -> Decimal? {
+    private func pendingAllowance(pendingTransactions: [TransactionRecord], spenderAddress: EvmKit.Address) -> Decimal? {
         for transaction in pendingTransactions {
-            if let approve = transaction as? ApproveTransactionRecord, let value = approve.value.decimalValue {
+            if let record = transaction as? ApproveTransactionRecord, record.spender == spenderAddress.eip55, let value = record.value.decimalValue {
                 return value
             }
         }
@@ -114,9 +106,21 @@ extension BaseEvmMultiSwapProvider {
     enum AllowanceState {
         case notRequired
         case pending(amount: CoinValue)
-        case notEnough(amount: CoinValue)
+        case notEnough(amount: CoinValue, spenderAddress: EvmKit.Address)
         case allowed
         case unknown
+    }
+
+    class UnlockStep: MultiSwapPreSwapStep {
+        let spenderAddress: EvmKit.Address
+
+        init(spenderAddress: EvmKit.Address) {
+            self.spenderAddress = spenderAddress
+        }
+
+        override var id: String {
+            "evm_unlock"
+        }
     }
 }
 
@@ -134,7 +138,7 @@ extension BaseEvmMultiSwapProvider {
 
         var customButtonState: MultiSwapButtonState? {
             switch allowanceState {
-            case .notEnough: return .init(title: "Unlock", preSwapStepId: BaseEvmMultiSwapProvider.unlockStepId)
+            case let .notEnough(_, spenderAddress): return .init(title: "Unlock", preSwapStep: UnlockStep(spenderAddress: spenderAddress))
             case .pending: return .init(title: "Unlocking...", disabled: true, showProgress: true)
             case .unknown: return .init(title: "Allowance Error", disabled: true)
             default: return nil
@@ -153,7 +157,7 @@ extension BaseEvmMultiSwapProvider {
             var fields = [MultiSwapMainField]()
 
             switch allowanceState {
-            case let .notEnough(amount):
+            case let .notEnough(amount, _):
                 if let formatted = ValueFormatter.instance.formatShort(coinValue: amount) {
                     fields.append(
                         MultiSwapMainField(
@@ -203,7 +207,7 @@ extension BaseEvmMultiSwapProvider {
             gasPrice != nil && gasLimit != nil
         }
 
-        func cautions(feeToken _: Token) -> [CautionNew] {
+        func cautions(feeToken _: Token?) -> [CautionNew] {
             []
         }
 
@@ -219,25 +223,27 @@ extension BaseEvmMultiSwapProvider {
             return AmountData(coinValue: coinValue, currencyValue: currencyValue)
         }
 
-        func priceSectionFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [MultiSwapConfirmField] {
+        func priceSectionFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [MultiSwapConfirmField] {
             []
         }
 
-        func otherSections(tokenIn _: Token, tokenOut _: Token, feeToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]] {
+        func otherSections(tokenIn _: Token, tokenOut _: Token, feeToken: Token?, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]] {
             var sections = [[MultiSwapConfirmField]]()
 
-            let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
+            if let feeToken {
+                let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
 
-            sections.append(
-                [
-                    .value(
-                        title: "Network Fee",
-                        description: .init(title: "Network Fee", description: "Network Fee Description"),
-                        coinValue: feeData?.coinValue,
-                        currencyValue: feeData?.currencyValue
-                    ),
-                ]
-            )
+                sections.append(
+                    [
+                        .value(
+                            title: "Network Fee",
+                            description: .init(title: "Network Fee", description: "Network Fee Description"),
+                            coinValue: feeData?.coinValue,
+                            currencyValue: feeData?.currencyValue
+                        ),
+                    ]
+                )
+            }
 
             return sections
         }

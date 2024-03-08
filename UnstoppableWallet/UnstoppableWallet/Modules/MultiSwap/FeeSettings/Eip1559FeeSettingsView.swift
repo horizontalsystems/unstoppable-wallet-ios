@@ -3,14 +3,23 @@ import MarketKit
 import SwiftUI
 
 struct Eip1559FeeSettingsView: View {
-    @ObservedObject var viewModel: Eip1559FeeSettingsViewModel
-    @Binding var feeData: FeeData?
-    @Binding var loading: Bool
-    var feeToken: Token
-    var currency: Currency
-    @Binding var feeTokenRate: Decimal?
+    @StateObject private var viewModel: Eip1559FeeSettingsViewModel
+    @Binding private var feeData: FeeData?
+    @Binding private var loading: Bool
+    private var feeToken: Token
+    private var currency: Currency
+    @Binding private var feeTokenRate: Decimal?
 
     @Environment(\.presentationMode) private var presentationMode
+
+    init(service: EvmTransactionService, blockchainType: BlockchainType, feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) {
+        _viewModel = .init(wrappedValue: Eip1559FeeSettingsViewModel(service: service, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale)))
+        _feeData = feeData
+        _loading = loading
+        self.feeToken = feeToken
+        self.currency = currency
+        _feeTokenRate = feeTokenRate
+    }
 
     var body: some View {
         ScrollableThemeView {

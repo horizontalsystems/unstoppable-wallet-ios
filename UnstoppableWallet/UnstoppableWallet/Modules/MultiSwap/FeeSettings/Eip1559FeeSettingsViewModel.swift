@@ -85,8 +85,8 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
         }
         // TODO: we can recognize the smallest significand digit, and increase/decrease by smallest interval
         switch direction {
-            case .down: return max(decimal - 1, 0)
-            case .up: return decimal + 1
+        case .down: return max(decimal - 1, 0)
+        case .up: return decimal + 1
         }
     }
 }

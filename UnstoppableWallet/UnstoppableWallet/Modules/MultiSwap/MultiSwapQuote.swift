@@ -1,3 +1,4 @@
+import EvmKit
 import Foundation
 import MarketKit
 
@@ -13,16 +14,21 @@ protocol IMultiSwapConfirmationQuote {
     var amountOut: Decimal { get }
     var feeData: FeeData? { get }
     var canSwap: Bool { get }
-    func cautions(feeToken: Token) -> [CautionNew]
-    func priceSectionFields(tokenIn: Token, tokenOut: Token, feeToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField]
-    func otherSections(tokenIn: Token, tokenOut: Token, feeToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]]
+    func cautions(feeToken: Token?) -> [CautionNew]
+    func priceSectionFields(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField]
+    func otherSections(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]]
 }
 
 protocol ISendConfirmationData {
     var feeData: FeeData? { get }
     var canSend: Bool { get }
-    func cautions(feeToken: Token) -> [CautionNew]
-    func sections(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [[SendConfirmField]]
+    func cautions(feeToken: Token?) -> [CautionNew]
+    func sections(feeToken: Token?, currency: Currency, feeTokenRate: Decimal?) -> [[SendConfirmField]]
+}
+
+enum SendDataNew {
+    case evm(blockchainType: BlockchainType, transactionData: TransactionData)
+    case bitcoin(amount: Decimal, recipient: String)
 }
 
 struct MultiSwapTokenAmount {
@@ -95,12 +101,12 @@ struct MultiSwapButtonState {
     let title: String
     let disabled: Bool
     let showProgress: Bool
-    let preSwapStepId: String?
+    let preSwapStep: MultiSwapPreSwapStep?
 
-    init(title: String, disabled: Bool = false, showProgress: Bool = false, preSwapStepId: String? = nil) {
+    init(title: String, disabled: Bool = false, showProgress: Bool = false, preSwapStep: MultiSwapPreSwapStep? = nil) {
         self.title = title
         self.disabled = disabled
         self.showProgress = showProgress
-        self.preSwapStepId = preSwapStepId
+        self.preSwapStep = preSwapStep
     }
 }

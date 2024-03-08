@@ -1,24 +1,28 @@
 import Foundation
+import MarketKit
 import SwiftUI
 
 struct RecipientAndSlippageMultiSwapSettingsView: View {
-    @ObservedObject var viewModel: BaseMultiSwapSettingsViewModel
-    @ObservedObject var addressViewModel: AddressMultiSwapSettingsViewModel
-    @ObservedObject var slippageViewModel: SlippageMultiSwapSettingsViewModel
-    var onChangeSettings: () -> ()
+    @StateObject var viewModel: ViewModel
+    var onChangeSettings: () -> Void
 
     @Environment(\.presentationMode) private var presentationMode
+
+    init(tokenIn: Token, storage: MultiSwapSettingStorage, onChangeSettings: @escaping () -> Void) {
+        _viewModel = .init(wrappedValue: ViewModel(tokenIn: tokenIn, storage: storage))
+        self.onChangeSettings = onChangeSettings
+    }
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
-                MultiSwapAddressView(viewModel: addressViewModel)
-                MultiSwapSlippageView(viewModel: slippageViewModel)
+                MultiSwapAddressView(viewModel: viewModel.addressViewModel)
+                MultiSwapSlippageView(viewModel: viewModel.slippageViewModel)
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .animation(.default, value: addressViewModel.addressCautionState)
-        .animation(.default, value: slippageViewModel.slippageCautionState)
+        .animation(.default, value: viewModel.addressViewModel.addressCautionState)
+        .animation(.default, value: viewModel.slippageViewModel.slippageCautionState)
         .navigationTitle("swap.advanced_settings".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -37,6 +41,20 @@ struct RecipientAndSlippageMultiSwapSettingsView: View {
                 }
                 .disabled(!viewModel.doneEnabled)
             }
+        }
+    }
+}
+
+extension RecipientAndSlippageMultiSwapSettingsView {
+    class ViewModel: BaseMultiSwapSettingsViewModel {
+        let addressViewModel: AddressMultiSwapSettingsViewModel
+        let slippageViewModel: SlippageMultiSwapSettingsViewModel
+
+        init(tokenIn: Token, storage: MultiSwapSettingStorage) {
+            addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
+            slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
+
+            super.init(fields: [addressViewModel, slippageViewModel])
         }
     }
 }

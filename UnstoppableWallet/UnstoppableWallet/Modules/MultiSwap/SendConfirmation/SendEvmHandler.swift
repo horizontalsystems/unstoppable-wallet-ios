@@ -157,25 +157,27 @@ extension SendEvmHandler {
             gasLimit != nil
         }
 
-        func cautions(feeToken _: Token) -> [CautionNew] {
+        func cautions(feeToken _: Token?) -> [CautionNew] {
             []
         }
 
-        func sections(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
+        func sections(feeToken: Token?, currency: Currency, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
             var sections = baseSections
 
-            let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
+            if let feeToken {
+                let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
 
-            sections.append(
-                [
-                    .value(
-                        title: "Network Fee",
-                        description: .init(title: "Network Fee", description: "Network Fee Description"),
-                        coinValue: (feeData?.coinValue).flatMap { ValueFormatter.instance.formatShort(coinValue: $0) },
-                        currencyValue: (feeData?.currencyValue).flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) }
-                    ),
-                ]
-            )
+                sections.append(
+                    [
+                        .value(
+                            title: "Network Fee",
+                            description: .init(title: "Network Fee", description: "Network Fee Description"),
+                            coinValue: (feeData?.coinValue).flatMap { ValueFormatter.instance.formatShort(coinValue: $0) },
+                            currencyValue: (feeData?.currencyValue).flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) }
+                        ),
+                    ]
+                )
+            }
 
             return sections
         }

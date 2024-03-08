@@ -8,6 +8,11 @@ struct SendConfirmationNewView: View {
 
     @State private var feeSettingsPresented = false
 
+    init(sendData: SendDataNew, isParentPresented: Binding<Bool>) {
+        _viewModel = .init(wrappedValue: SendConfirmationNewViewModel(sendData: sendData))
+        _isParentPresented = isParentPresented
+    }
+
     var body: some View {
         ThemeView {
             if viewModel.syncing {
@@ -20,13 +25,15 @@ struct SendConfirmationNewView: View {
             }
         }
         .sheet(isPresented: $feeSettingsPresented) {
-            viewModel.transactionService.settingsView(
-                feeData: Binding<FeeData?>(get: { viewModel.data?.feeData }, set: { _ in }),
-                loading: $viewModel.syncing,
-                feeToken: viewModel.feeToken,
-                currency: viewModel.currency,
-                feeTokenRate: $viewModel.feeTokenRate
-            )
+            if let transactionService = viewModel.transactionService, let feeToken = viewModel.feeToken {
+                transactionService.settingsView(
+                    feeData: Binding<FeeData?>(get: { viewModel.data?.feeData }, set: { _ in }),
+                    loading: $viewModel.syncing,
+                    feeToken: feeToken,
+                    currency: viewModel.currency,
+                    feeTokenRate: $viewModel.feeTokenRate
+                )
+            }
         }
         .navigationTitle("Confirm")
         .navigationBarTitleDisplayMode(.inline)
@@ -65,7 +72,7 @@ struct SendConfirmationNewView: View {
                         }
                     }
 
-                    let cautions = viewModel.transactionService.cautions + data.cautions(feeToken: viewModel.feeToken)
+                    let cautions = (viewModel.transactionService?.cautions ?? []) + data.cautions(feeToken: viewModel.feeToken)
 
                     if !cautions.isEmpty {
                         VStack(spacing: .margin12) {

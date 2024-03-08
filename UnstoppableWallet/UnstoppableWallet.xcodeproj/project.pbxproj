@@ -14,7 +14,6 @@
 		11B35011A84F0CF938353837 /* RestoreSelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AA1093600AF7B08362D /* RestoreSelectService.swift */; };
 		11B350153FC4894DAFCDB06F /* EnabledWallet_v_0_34.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3509AC90AEDF72F5989C6 /* EnabledWallet_v_0_34.swift */; };
 		11B350170A8E4E7E0F71086F /* NftAssetMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358C2B0271F74A958BD90 /* NftAssetMetadata.swift */; };
-		11B35017C071FA16FBC9F525 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355A902DEE8AFAF0A628C /* LazyView.swift */; };
 		11B35019C9DB5A6FDCE6BAE6 /* OneInchMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EF841FD4B3D13058F76 /* OneInchMultiSwapProvider.swift */; };
 		11B3501BA3EA411F93E9C694 /* TransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352C2F20DB6266112BE68 /* TransactionsService.swift */; };
 		11B3501EA3658BFDC67DEB1F /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E7E7A5DBB09A2A5197D /* ThemeView.swift */; };
@@ -1493,7 +1492,6 @@
 		11B35FC6DE83EE46FB361756 /* CexWithdrawModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35507A989EA73EE5E8EA8 /* CexWithdrawModule.swift */; };
 		11B35FD18C255E2C6D75F38A /* RestoreMnemonicHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CB288AF5A54B99A51E4 /* RestoreMnemonicHintView.swift */; };
 		11B35FD593B38EEEE5F18010 /* AppWidgetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E298D53B8A2C2684119 /* AppWidgetConstants.swift */; };
-		11B35FD6A4DA12D8563A6328 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355A902DEE8AFAF0A628C /* LazyView.swift */; };
 		11B35FD73BCF3DD557FD9783 /* RecipientAddressInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DBDADDA8D4F9D88C7AA /* RecipientAddressInputCell.swift */; };
 		11B35FDF03CD52FEC5B1745A /* CoinOverviewViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35363A530051B79BFFFD0 /* CoinOverviewViewModelNew.swift */; };
 		11B35FE0809AC8A716C41427 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35968D12AAAC828AFE955 /* PrimaryButtonStyle.swift */; };
@@ -3450,7 +3448,6 @@
 		11B3558D624AF040E9D102DF /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		11B35592753D3F2A9CCA5809 /* UnlinkWatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlinkWatchViewController.swift; sourceTree = "<group>"; };
 		11B355949F6D268EF1977DC9 /* ManageAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountViewModel.swift; sourceTree = "<group>"; };
-		11B355A902DEE8AFAF0A628C /* LazyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		11B355ABE6F12B78194DDEDD /* WalletSorter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletSorter.swift; sourceTree = "<group>"; };
 		11B355ABE89C2793563829BD /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		11B355B546A9CA0324F2F0AE /* AmountInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountInputView.swift; sourceTree = "<group>"; };
@@ -5375,7 +5372,6 @@
 				ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */,
 				D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */,
 				ABC9A38EBD625694033572A2 /* RightCheckingView.swift */,
-				11B355A902DEE8AFAF0A628C /* LazyView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -10784,7 +10780,6 @@
 				ABC9A8A507E8AF95CB00379A /* MultiSwapApproveViewModel.swift in Sources */,
 				ABC9A2F69C11C20F72C2FF63 /* Binding.swift in Sources */,
 				ABC9AC741B546BC96F2E8F3A /* ErrorViewController.swift in Sources */,
-				11B35017C071FA16FBC9F525 /* LazyView.swift in Sources */,
 				11B35337D37FD03982571DF0 /* ThorChainMultiSwapProvider.swift in Sources */,
 				ABC9AE635D02A4E6DA719787 /* TransactionContactSelectView.swift in Sources */,
 				ABC9AD02AD6340C230AC4F9D /* TransactionContactSelectViewModel.swift in Sources */,
@@ -12254,7 +12249,6 @@
 				ABC9AB3C239A182E9B93AFDA /* MultiSwapApproveViewModel.swift in Sources */,
 				ABC9A62E858360A9964084D2 /* Binding.swift in Sources */,
 				ABC9AAF24F259B71E59C247D /* ErrorViewController.swift in Sources */,
-				11B35FD6A4DA12D8563A6328 /* LazyView.swift in Sources */,
 				11B357696EB7DB1895BF9F23 /* ThorChainMultiSwapProvider.swift in Sources */,
 				ABC9A5B9D81C00155732363C /* TransactionContactSelectView.swift in Sources */,
 				ABC9A6C99739F0AC308F0574 /* TransactionContactSelectViewModel.swift in Sources */,
