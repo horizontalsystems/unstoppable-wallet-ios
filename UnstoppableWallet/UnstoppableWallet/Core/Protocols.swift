@@ -180,10 +180,15 @@ extension IPresentDelegate {
 
 protocol Warning {
     var titledCaution: TitledCaution { get }
+    var caution: CautionNew { get }
 }
 
 extension Warning {
     var titledCaution: TitledCaution { TitledCaution(title: "", text: "", type: .warning) }
+    var caution: CautionNew {
+        let caution = titledCaution
+        return .init(title: caution.title, text: caution.text, type: caution.type)
+    }
 }
 
 protocol IErrorService: AnyObject {

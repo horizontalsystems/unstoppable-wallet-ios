@@ -17,7 +17,7 @@ struct Eip1559FeeSettingsView: View {
             VStack(spacing: .margin24) {
                 let (feeCoinValue, feeCurrencyValue) = FeeSettings.feeAmount(
                     feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate, loading: loading,
-                    gasLimit: feeData?.gasLimit, gasPrice: viewModel.gasPrice
+                    gasLimit: feeData?.gasLimit, gasPrice: viewModel.service.gasPrice
                 )
 
                 ListSection {
@@ -95,9 +95,12 @@ struct Eip1559FeeSettingsView: View {
                     )
                 }
 
-                if let caution = viewModel.cautionState.caution {
-                    VStack(spacing: 32) {
-                        HighlightedTitledTextView(caution: caution)
+                let cautions = viewModel.service.cautions
+                if !cautions.isEmpty {
+                    VStack(spacing: .margin12) {
+                        ForEach(cautions.indices, id: \.self) { index in
+                            HighlightedTextView(caution: cautions[index])
+                        }
                     }
                 }
             }
@@ -143,7 +146,7 @@ struct Eip1559FeeSettingsView: View {
             }
         }
         .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin12, trailing: .margin16))
-        .frame(minHeight: .heightCell56)
+        .frame(height: .heightCell56)
     }
 
     @ViewBuilder private func headerRow(title: String, description: AlertView.InfoDescription) -> some View {

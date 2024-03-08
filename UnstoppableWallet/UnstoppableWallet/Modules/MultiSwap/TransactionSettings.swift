@@ -84,11 +84,15 @@ class EvmTransactionService: ITransactionService {
         var cautions = [CautionNew]()
 
         for warning in warnings {
-            cautions.append(.init(title: warning.titledCaution.title, text: warning.titledCaution.text, type: warning.titledCaution.type))
+            cautions.append(warning.caution)
         }
 
-        for error in errors {
-            cautions.append(.init(text: error.smartDescription, type: .error))
+        if let error = errors.first {
+            if let error = error as? NonceService.NonceError {
+                cautions.append(error.caution)
+            } else {
+                cautions.append(CautionNew(title: "Error", text: "Nonce ERROR", type: .error))
+            }
         }
 
         return cautions

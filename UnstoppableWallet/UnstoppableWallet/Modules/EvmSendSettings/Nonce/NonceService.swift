@@ -102,5 +102,10 @@ extension NonceService {
                 type: .error
             )
         }
+
+        var caution: CautionNew {
+            let caution = titledCaution
+            return .init(title: caution.title, text: caution.text, type: caution.type)
+        }
     }
 }

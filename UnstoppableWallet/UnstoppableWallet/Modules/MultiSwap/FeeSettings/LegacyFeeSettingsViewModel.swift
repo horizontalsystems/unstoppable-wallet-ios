@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 
 class LegacyFeeSettingsViewModel: ObservableObject {
-    private let service: EvmTransactionService
+    let service: EvmTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
     private let decimalParser = AmountDecimalParser()
 
@@ -13,8 +13,6 @@ class LegacyFeeSettingsViewModel: ObservableObject {
 
         sync()
     }
-
-    @Published var cautionState: TitledCautionState = .none
 
     @Published var gasPriceCautionState: FieldCautionState = .none
     @Published var gasPrice: String = ""
@@ -41,23 +39,10 @@ class LegacyFeeSettingsViewModel: ObservableObject {
         } else {
             nonceCautionState = .none
         }
-
-        if let error = service.errors.first {
-            if let error = error as? NonceService.NonceError {
-                cautionState = .caution(error.titledCaution)
-            } else {
-                cautionState = .caution(TitledCaution(title: "Error", text: "Nonce ERROR", type: .error))
-            }
-        } else if let warning = service.warnings.first {
-            cautionState = .caution(warning.titledCaution)
-        } else {
-            cautionState = .none
-        }
     }
 
     private func handleGasPrice() {
         guard let gasPriceDecimal = decimalParser.parseAnyDecimal(from: gasPrice) else {
-            cautionState = .caution(TitledCaution(title: "Can't recognize", text: "", type: .error))
             gasPriceCautionState = .caution(.error)
             return
         }
@@ -68,7 +53,6 @@ class LegacyFeeSettingsViewModel: ObservableObject {
 
     private func handleNonce() {
         guard let intNonce = Int(nonce) else {
-            cautionState = .caution(TitledCaution(title: "Can't recognize", text: "", type: .error))
             nonceCautionState = .caution(.error)
             return
         }
@@ -90,10 +74,6 @@ class LegacyFeeSettingsViewModel: ObservableObject {
 }
 
 extension LegacyFeeSettingsViewModel {
-    var actualGasPrice: GasPrice? {
-        service.gasPrice
-    }
-
     func stepChangeGasPrice(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: gasPrice, direction: direction) {
             gasPrice = newValue.description
