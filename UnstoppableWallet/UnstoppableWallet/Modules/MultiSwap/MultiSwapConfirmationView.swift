@@ -3,10 +3,15 @@ import MarketKit
 import SwiftUI
 
 struct MultiSwapConfirmationView: View {
-    @StateObject var viewModel: MultiSwapConfirmationViewModel
-    @Binding var swapPresentationMode: PresentationMode
+    @StateObject private var viewModel: MultiSwapConfirmationViewModel
+    @Binding private var swapPresentationMode: PresentationMode
 
     @State private var feeSettingsPresented = false
+
+    init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, swapPresentationMode: Binding<PresentationMode>) {
+        _viewModel = .init(wrappedValue: MultiSwapConfirmationViewModel(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider))
+        _swapPresentationMode = swapPresentationMode
+    }
 
     var body: some View {
         ThemeView {
@@ -20,13 +25,15 @@ struct MultiSwapConfirmationView: View {
             }
         }
         .sheet(isPresented: $feeSettingsPresented) {
-            viewModel.transactionService.settingsView(
-                feeData: Binding<FeeData?>(get: { viewModel.quote?.feeData }, set: { _ in }),
-                loading: $viewModel.quoting,
-                feeToken: viewModel.feeToken,
-                currency: viewModel.currency,
-                feeTokenRate: $viewModel.feeTokenRate
-            )
+            if let transactionService = viewModel.transactionService, let feeToken = viewModel.feeToken {
+                transactionService.settingsView(
+                    feeData: Binding<FeeData?>(get: { viewModel.quote?.feeData }, set: { _ in }),
+                    loading: $viewModel.quoting,
+                    feeToken: feeToken,
+                    currency: viewModel.currency,
+                    feeTokenRate: $viewModel.feeTokenRate
+                )
+            }
         }
         .navigationTitle("Confirm")
         .navigationBarTitleDisplayMode(.inline)
@@ -118,7 +125,7 @@ struct MultiSwapConfirmationView: View {
                         }
                     }
 
-                    let cautions = viewModel.transactionService.cautions + quote.cautions(feeToken: viewModel.feeToken)
+                    let cautions = (viewModel.transactionService?.cautions ?? []) + quote.cautions(feeToken: viewModel.feeToken)
 
                     if !cautions.isEmpty {
                         VStack(spacing: .margin12) {

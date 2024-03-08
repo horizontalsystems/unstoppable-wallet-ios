@@ -7,15 +7,16 @@ class SendConfirmationNewViewModel: ObservableObject {
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
     private let transactionServiceFactory = TransactionServiceFactory()
+    private let sendHandlerFactory = SendHandlerFactory()
 
     private var syncTask: AnyTask?
     private var sendTask: AnyTask?
     private var cancellables = Set<AnyCancellable>()
 
-    let handler: ISendHandler
-    let transactionService: ITransactionService
+    let handler: ISendHandler?
+    let transactionService: ITransactionService?
     let currency: Currency
-    let feeToken: Token
+    let feeToken: Token?
 
     @Published var feeTokenRate: Decimal?
 
@@ -25,27 +26,29 @@ class SendConfirmationNewViewModel: ObservableObject {
 
     let finishSubject = PassthroughSubject<Void, Never>()
 
-    init(handler: ISendHandler) {
-        self.handler = handler
-        transactionService = transactionServiceFactory.transactionService(blockchainType: handler.blockchainType)
-
+    init(sendData: SendDataNew) {
+        handler = sendHandlerFactory.handler(sendData: sendData)
         currency = currencyManager.baseCurrency
 
-        guard let feeToken = try? marketKit.token(query: TokenQuery(blockchainType: handler.blockchainType, tokenType: .native)) else {
-            fatalError("No fee token for \(handler.blockchainType.uid)")
+        if let handler {
+            transactionService = transactionServiceFactory.transactionService(blockchainType: handler.blockchainType)
+            feeToken = try? marketKit.token(query: TokenQuery(blockchainType: handler.blockchainType, tokenType: .native))
+        } else {
+            transactionService = nil
+            feeToken = nil
         }
 
-        self.feeToken = feeToken
-
-        transactionService.updatePublisher
+        transactionService?.updatePublisher
             .sink { [weak self] in self?.sync() }
             .store(in: &cancellables)
 
-        feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
-        marketKit.coinPricePublisher(tag: "send", coinUid: feeToken.coin.uid, currencyCode: currency.code)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] price in self?.feeTokenRate = price.value }
-            .store(in: &cancellables)
+        if let feeToken {
+            feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
+            marketKit.coinPricePublisher(tag: "send", coinUid: feeToken.coin.uid, currencyCode: currency.code)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] price in self?.feeTokenRate = price.value }
+                .store(in: &cancellables)
+        }
 
         sync()
     }
@@ -53,6 +56,10 @@ class SendConfirmationNewViewModel: ObservableObject {
 
 extension SendConfirmationNewViewModel {
     func sync() {
+        guard let handler, let transactionService else {
+            return
+        }
+
         syncTask = nil
         data = nil
 
@@ -76,7 +83,7 @@ extension SendConfirmationNewViewModel {
     }
 
     func send() {
-        guard let data else {
+        guard let handler, let data else {
             return
         }
 

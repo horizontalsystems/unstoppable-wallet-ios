@@ -180,9 +180,9 @@ class EvmTransactionService: ITransactionService {
 
     func settingsView(feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) -> AnyView? {
         if chain.isEIP1559Supported {
-            let viewModel = Eip1559FeeSettingsViewModel(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
             let view = Eip1559FeeSettingsView(
-                viewModel: viewModel,
+                service: self,
+                blockchainType: blockchainType,
                 feeData: feeData,
                 loading: loading,
                 feeToken: feeToken,
@@ -191,9 +191,9 @@ class EvmTransactionService: ITransactionService {
             )
             return AnyView(ThemeNavigationView { view })
         } else {
-            let viewModel = LegacyFeeSettingsViewModel(service: self, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale))
             let view = LegacyFeeSettingsView(
-                viewModel: viewModel,
+                service: self,
+                blockchainType: blockchainType,
                 feeData: feeData,
                 loading: loading,
                 feeToken: feeToken,

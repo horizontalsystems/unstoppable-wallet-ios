@@ -42,16 +42,8 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     }
 
     override func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
-        let slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
-        let viewModel = BaseMultiSwapSettingsViewModel(fields: [addressViewModel, slippageViewModel])
         let view = ThemeNavigationView {
-            RecipientAndSlippageMultiSwapSettingsView(
-                viewModel: viewModel,
-                addressViewModel: addressViewModel,
-                slippageViewModel: slippageViewModel,
-                onChangeSettings: onChangeSettings
-            )
+            RecipientAndSlippageMultiSwapSettingsView(tokenIn: tokenIn, storage: storage, onChangeSettings: onChangeSettings)
         }
 
         return AnyView(view)
@@ -295,7 +287,7 @@ extension BaseUniswapMultiSwapProvider {
             super.canSwap && transactionData != nil
         }
 
-        override func cautions(feeToken: MarketKit.Token) -> [CautionNew] {
+        override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
             var cautions = super.cautions(feeToken: feeToken)
 
             if let transactionError {
@@ -306,7 +298,7 @@ extension BaseUniswapMultiSwapProvider {
                     switch reason {
                     case .insufficientBalanceWithFee:
                         title = "fee_settings.errors.insufficient_balance".localized
-                        text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken.coin.code)
+                        text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken?.coin.code ?? "")
                     case let .executionReverted(message):
                         title = "fee_settings.errors.unexpected_error".localized
                         text = message
@@ -339,7 +331,7 @@ extension BaseUniswapMultiSwapProvider {
             return cautions
         }
 
-        override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField] {
+        override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField] {
             var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
 
             if let priceImpact = quote.trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {

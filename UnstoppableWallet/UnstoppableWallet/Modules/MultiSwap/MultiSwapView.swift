@@ -1,3 +1,4 @@
+import Foundation
 import Kingfisher
 import MarketKit
 import SwiftUI
@@ -11,7 +12,7 @@ struct MultiSwapView: View {
     @State private var quotesPresented = false
     @State private var confirmPresented = false
     @State private var settingsPresented = false
-    @State private var preSwapStepId: String?
+    @State private var preSwapStep: MultiSwapPreSwapStep?
     @State private var presentedSettingId: String?
 
     @FocusState var isInputActive: Bool
@@ -37,20 +38,20 @@ struct MultiSwapView: View {
                     .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
                         MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
                     }
-                    .sheet(item: $preSwapStepId, onDismiss: { viewModel.syncQuotes() }) { stepId in
+                    .sheet(item: $preSwapStep, onDismiss: { viewModel.syncQuotes() }) { step in
                         if let currentQuote = viewModel.currentQuote,
                            let tokenIn = viewModel.tokenIn,
                            let tokenOut = viewModel.tokenOut,
                            let amount = viewModel.amountIn
                         {
                             let isPresented = Binding<Bool>(get: {
-                                preSwapStepId == stepId
+                                preSwapStep?.id == step.id
                             }, set: { newValue in
-                                if !newValue { preSwapStepId = nil }
+                                if !newValue { preSwapStep = nil }
                             })
 
                             currentQuote.provider.preSwapView(
-                                stepId: stepId,
+                                step: step,
                                 tokenIn: tokenIn,
                                 tokenOut: tokenOut,
                                 amount: amount,
@@ -63,22 +64,18 @@ struct MultiSwapView: View {
                 NavigationLink(
                     isActive: $confirmPresented,
                     destination: {
-                        LazyView {
-                            if let tokenIn = viewModel.tokenIn,
-                               let tokenOut = viewModel.tokenOut,
-                               let amountIn = viewModel.amountIn,
-                               let currentQuote = viewModel.currentQuote
-                            {
-                                MultiSwapConfirmationView(
-                                    viewModel: MultiSwapConfirmationViewModel(
-                                        tokenIn: tokenIn,
-                                        tokenOut: tokenOut,
-                                        amountIn: amountIn,
-                                        provider: currentQuote.provider
-                                    ),
-                                    swapPresentationMode: presentationMode
-                                )
-                            }
+                        if let tokenIn = viewModel.tokenIn,
+                           let tokenOut = viewModel.tokenOut,
+                           let amountIn = viewModel.amountIn,
+                           let currentQuote = viewModel.currentQuote
+                        {
+                            MultiSwapConfirmationView(
+                                tokenIn: tokenIn,
+                                tokenOut: tokenOut,
+                                amountIn: amountIn,
+                                provider: currentQuote.provider,
+                                swapPresentationMode: presentationMode
+                            )
                         }
                     }
                 ) {
@@ -314,13 +311,13 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func buttonView() -> some View {
-        let (title, disabled, showProgress, preSwapStepId) = buttonState()
+        let (title, disabled, showProgress, preSwapStep) = buttonState()
 
         Button(action: {
             viewModel.stopAutoQuoting()
 
-            if let preSwapStepId {
-                self.preSwapStepId = preSwapStepId
+            if let preSwapStep {
+                self.preSwapStep = preSwapStep
             } else {
                 confirmPresented = true
             }
@@ -505,11 +502,11 @@ struct MultiSwapView: View {
         return ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: tokenIn), value: availableBalance))
     }
 
-    private func buttonState() -> (String, Bool, Bool, String?) {
+    private func buttonState() -> (String, Bool, Bool, MultiSwapPreSwapStep?) {
         let title: String
         var disabled = true
         var showProgress = false
-        var preSwapStepId: String?
+        var preSwapStep: MultiSwapPreSwapStep?
 
         if viewModel.quoting {
             title = "swap.quoting".localized
@@ -537,12 +534,18 @@ struct MultiSwapView: View {
             title = state.title
             disabled = state.disabled
             showProgress = state.showProgress
-            preSwapStepId = state.preSwapStepId
+            preSwapStep = state.preSwapStep
         } else {
             title = "swap.proceed_button".localized
             disabled = false
         }
 
-        return (title, disabled, showProgress, preSwapStepId)
+        return (title, disabled, showProgress, preSwapStep)
+    }
+}
+
+class MultiSwapPreSwapStep: Identifiable {
+    var id: String {
+        fatalError("Must be implemented in subclass")
     }
 }
