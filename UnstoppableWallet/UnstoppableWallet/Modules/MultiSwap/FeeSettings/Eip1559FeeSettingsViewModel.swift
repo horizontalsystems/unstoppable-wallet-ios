@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 
 class Eip1559FeeSettingsViewModel: ObservableObject {
-    private let service: EvmTransactionService
+    let service: EvmTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
     private let decimalParser = AmountDecimalParser()
 
@@ -20,8 +20,6 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
     }
 
     @Published var baseFee: String = ""
-    @Published var cautionState: TitledCautionState = .none
-
     @Published var maxFeeCautionState: FieldCautionState = .none
     @Published var maxFee: String = ""
     @Published var maxTipsCautionState: FieldCautionState = .none
@@ -52,25 +50,12 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
         } else {
             nonceCautionState = .none
         }
-
-        if let error = service.errors.first {
-            if let error = error as? NonceService.NonceError {
-                cautionState = .caution(error.titledCaution)
-            } else {
-                cautionState = .caution(TitledCaution(title: "Error", text: "Nonce ERROR", type: .error))
-            }
-        } else if let warning = service.warnings.first {
-            cautionState = .caution(warning.titledCaution)
-        } else {
-            cautionState = .none
-        }
     }
 
     private func handleGasPrice() {
         guard let maxFeeDecimal = decimalParser.parseAnyDecimal(from: maxFee),
               let maxTipsDecimal = decimalParser.parseAnyDecimal(from: maxTips)
         else {
-            cautionState = .caution(TitledCaution(title: "Can't recognize", text: "", type: .error))
             maxFeeCautionState = .caution(.error)
             maxTipsCautionState = .caution(.error)
             return
@@ -86,7 +71,6 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
 
     private func handleNonce() {
         guard let intNonce = Int(nonce) else {
-            cautionState = .caution(TitledCaution(title: "Can't recognize", text: "", type: .error))
             nonceCautionState = .caution(.error)
             return
         }
@@ -108,10 +92,6 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
 }
 
 extension Eip1559FeeSettingsViewModel {
-    var gasPrice: GasPrice? {
-        service.gasPrice
-    }
-
     func stepChangeMaxFee(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: maxFee, direction: direction) {
             maxFee = newValue.description
