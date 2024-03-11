@@ -444,6 +444,7 @@
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Существует широко признанный стандарт для упорядочивания выходов транзакции, известный как BIP69. В открытых кошельках этот стандарт обеспечивает, чтобы пользователи кошелька не должны были полагаться на то, как разработчики приложения реализуют упорядочивание выходов. Поскольку этот стандарт относительно новый, не многие кошельки его уже реализовали. В результате, на блокчейне в некоторых случаях можно узнать, отправлена ли транзакция из кошелька, который использует этот стандарт или нет.";
 
+"send.confirmation.title" = "Подтвердить";
 "send.confirmation.you_send" = "Вы отправляете";
 "send.confirmation.to" = "Кому";
 "send.confirmation.own" = "Own";
@@ -521,7 +522,6 @@
 "swap.you_pay" = "Вы платите";
 "swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
-"swap.allowance" = "Разрешение";
 "swap.you_get" = "Вы получите";
 "swap.token" = "Выбрать";
 "swap.advanced_settings" = "Настройки обмена";
@@ -543,7 +543,6 @@
 "swap.price" = "Цена";
 "swap.buy_price" = "Цена покупки";
 "swap.sell_price" = "Цена продажи";
-"swap.price_impact" = "Отклонение от рын. цены";
 "swap.maximum_paid" = "Макс. сумма";
 "swap.minimum_got" = "Гарантированная сумма";
 "swap.estimate_short" = "(прим)";
@@ -565,6 +564,22 @@
 
 "swap.quotes.providers" = "Providers";
 "swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "Разрешение";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "Разблокировать";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "Отклонение от рын. цены";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "Получатель";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -597,8 +612,17 @@
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "Подтвердить";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ отключил действие обмена для этой сделки, потому что вы получаете крайне невыгодную цену. Это связано с крайне низкой ликвидностью.Если вы все равно хотите выполнить обмен, используйте вместо этого веб-сайт %@.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
 
