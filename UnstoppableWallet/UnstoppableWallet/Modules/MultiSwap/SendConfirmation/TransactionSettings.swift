@@ -1,7 +1,7 @@
 import EvmKit
 
 enum TransactionSettings {
-    case evm(gasPrice: GasPrice, nonce: Int)
+    case evm(gasPrice: GasPrice, nonce: Int?)
     case bitcoin(satoshiPerByte: Int)
 
     var gasPrice: GasPrice? {

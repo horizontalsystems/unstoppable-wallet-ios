@@ -24,7 +24,7 @@ struct Eip1559FeeSettingsView: View {
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
-                let (feeCoinValue, feeCurrencyValue) = FeeSettings.feeAmount(
+                let (feeCoinValue, feeCurrencyValue, gasLimit) = FeeSettings.feeAmount(
                     feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate, loading: loading,
                     gasLimit: feeData?.gasLimit, gasPrice: viewModel.service.gasPrice
                 )
@@ -41,7 +41,7 @@ struct Eip1559FeeSettingsView: View {
                     row(
                         viewItem: .init(
                             title: "fee_settings.gas_limit".localized,
-                            value: feeData?.gasLimit?.description,
+                            value: gasLimit,
                             subValue: nil
                         ),
                         description: .init(title: "fee_settings.gas_limit".localized, description: "fee_settings.gas_limit.info".localized)

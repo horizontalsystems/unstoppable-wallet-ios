@@ -62,11 +62,11 @@ class EvmTransactionService: ITransactionService {
     }
 
     var transactionSettings: TransactionSettings? {
-        guard let gasPrice, let nonce else {
+        guard let gasPrice else {
             return nil
         }
 
-        return .evm(gasPrice: gasPrice, nonce: nonce)
+        return .evm(gasPrice: gasPrice, nonce: usingRecommendedNonce ? nil : nonce)
     }
 
     init?(blockchainType: BlockchainType, userAddress: EvmKit.Address) {
@@ -173,6 +173,8 @@ class EvmTransactionService: ITransactionService {
     func set(nonce: Int) {
         self.nonce = nonce
         usingRecommendedNonce = (nonce == nextNonce)
+
+        updateSubject.send()
     }
 
     func useRecommended() {
