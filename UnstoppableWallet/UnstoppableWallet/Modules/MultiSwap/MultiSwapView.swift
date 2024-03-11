@@ -301,10 +301,9 @@ struct MultiSwapView: View {
         }
     }
 
-    private func color(valueLevel: MultiSwapValueLevel) -> Color {
+    private func color(valueLevel: ValueLevel) -> Color {
         switch valueLevel {
         case .regular: return .themeLeah
-        case .notAvailable: return .themeGray50
         case .warning: return .themeJacob
         case .error: return .themeLucian
         }
@@ -541,11 +540,5 @@ struct MultiSwapView: View {
         }
 
         return (title, disabled, showProgress, preSwapStep)
-    }
-}
-
-class MultiSwapPreSwapStep: Identifiable {
-    var id: String {
-        fatalError("Must be implemented in subclass")
     }
 }

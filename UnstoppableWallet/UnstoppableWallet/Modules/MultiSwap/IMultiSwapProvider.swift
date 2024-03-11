@@ -14,9 +14,3 @@ protocol IMultiSwapProvider {
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>) -> AnyView
     func swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: IMultiSwapConfirmationQuote) async throws
 }
-
-protocol ISendHandler {
-    var blockchainType: BlockchainType { get }
-    func confirmationData(transactionSettings: TransactionSettings?) async throws -> ISendConfirmationData
-    func send(data: ISendConfirmationData) async throws
-}

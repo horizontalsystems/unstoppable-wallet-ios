@@ -98,7 +98,7 @@ struct MultiSwapConfirmationView: View {
 
                             if !priceSectionFields.isEmpty {
                                 ForEach(priceSectionFields.indices, id: \.self) { index in
-                                    fieldRow(field: priceSectionFields[index])
+                                    priceSectionFields[index].listRow
                                 }
                             }
                         }
@@ -121,7 +121,7 @@ struct MultiSwapConfirmationView: View {
                             if !section.isEmpty {
                                 ListSection {
                                     ForEach(section.indices, id: \.self) { index in
-                                        fieldRow(field: section[index])
+                                        section[index].listRow
                                     }
                                 }
                             }
@@ -225,65 +225,6 @@ struct MultiSwapConfirmationView: View {
         }
     }
 
-    @ViewBuilder private func fieldRow(field: MultiSwapConfirmField) -> some View {
-        switch field {
-        case let .value(title, description, coinValue, currencyValue):
-            ListRow(padding: EdgeInsets(top: .margin12, leading: description == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
-                if let description {
-                    Text(title)
-                        .textSubhead2()
-                        .modifier(Informed(description: description))
-                } else {
-                    Text(title)
-                        .textSubhead2()
-                }
-
-                Spacer()
-
-                VStack(alignment: .trailing, spacing: 1) {
-                    if let coinValue, let formatted = ValueFormatter.instance.formatShort(coinValue: coinValue) {
-                        Text(formatted)
-                            .textSubhead1(color: .themeLeah)
-                            .multilineTextAlignment(.trailing)
-                    } else {
-                        Text("n/a".localized)
-                            .textSubhead1()
-                            .multilineTextAlignment(.trailing)
-                    }
-
-                    if let currencyValue, let formatted = ValueFormatter.instance.formatShort(currencyValue: currencyValue) {
-                        Text(formatted)
-                            .textCaption()
-                            .multilineTextAlignment(.trailing)
-                    }
-                }
-            }
-        case let .levelValue(title, value, level):
-            ListRow {
-                Text(title).textSubhead2()
-                Spacer()
-                Text(value).textSubhead1(color: color(valueLevel: level))
-            }
-        case let .address(title, value):
-            ListRow {
-                Text(title).textSubhead2()
-
-                Spacer()
-
-                Text(value)
-                    .textSubhead1(color: .themeLeah)
-                    .multilineTextAlignment(.trailing)
-
-                Button(action: {
-                    CopyHelper.copyAndNotify(value: value)
-                }) {
-                    Image("copy_20").renderingMode(.template)
-                }
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-            }
-        }
-    }
-
     private func bottomText() -> String {
         if let quote = viewModel.state.quote, !quote.canSwap {
             return "swap.confirmation.invalid_quote".localized
@@ -293,15 +234,6 @@ struct MultiSwapConfirmationView: View {
             return "swap.confirmation.quote_expires_in".localized("\(viewModel.quoteTimeLeft)")
         } else {
             return "swap.confirmation.quote_expired".localized
-        }
-    }
-
-    private func color(valueLevel: MultiSwapValueLevel) -> Color {
-        switch valueLevel {
-        case .regular: return .themeLeah
-        case .notAvailable: return .themeGray50
-        case .warning: return .themeJacob
-        case .error: return .themeLucian
         }
     }
 }

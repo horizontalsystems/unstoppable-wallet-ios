@@ -8,14 +8,11 @@ class SendEvmHandler {
     let coinServiceFactory: EvmCoinServiceFactory
     let transactionData: TransactionData
     let evmKitWrapper: EvmKitWrapper
-    let evmLabelManager = App.shared.evmLabelManager
-    let contactLabelService: ContactLabelService
 
-    init(coinServiceFactory: EvmCoinServiceFactory, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper, contactLabelService: ContactLabelService) {
+    init(coinServiceFactory: EvmCoinServiceFactory, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
         self.coinServiceFactory = coinServiceFactory
         self.transactionData = transactionData
         self.evmKitWrapper = evmKitWrapper
-        self.contactLabelService = contactLabelService
     }
 }
 
@@ -39,30 +36,46 @@ extension SendEvmHandler: ISendHandler {
             }
         }
 
-        let sections = decoration.map { self.sections(decoration: $0, nonce: transactionSettings?.nonce) } ?? []
+        let sections = decoration.map { self.sections(decoration: $0) } ?? []
 
-        return ConfirmationData(baseSections: sections, gasPrice: gasPrice, gasLimit: gasLimit, transactionError: transactionError)
+        return ConfirmationData(baseSections: sections, gasPrice: gasPrice, gasLimit: gasLimit, nonce: transactionSettings?.nonce, transactionError: transactionError)
     }
 
-    func send(data _: ISendConfirmationData) async throws {
-        try await Task.sleep(nanoseconds: 2_000_000_000)
+    func send(data: ISendConfirmationData) async throws {
+        guard let data = data as? ConfirmationData else {
+            throw SendError.invalidData
+        }
+
+        guard let gasPrice = data.gasPrice else {
+            throw SendError.noGasPrice
+        }
+
+        guard let gasLimit = data.gasLimit else {
+            throw SendError.noGasLimit
+        }
+
+        _ = try await evmKitWrapper.send(
+            transactionData: transactionData,
+            gasPrice: gasPrice,
+            gasLimit: gasLimit,
+            nonce: data.nonce
+        )
     }
 
-    private func sections(decoration: TransactionDecoration?, nonce: Int?) -> [[SendConfirmField]] {
+    private func sections(decoration: TransactionDecoration?) -> [[SendConfirmField]] {
         switch decoration {
         case let decoration as ApproveEip20Decoration:
             return eip20ApproveItems(
                 spender: decoration.spender,
                 value: decoration.value,
-                contractAddress: decoration.contractAddress,
-                nonce: nonce
+                contractAddress: decoration.contractAddress
             )
         default:
             return []
         }
     }
 
-    private func eip20ApproveItems(spender: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address, nonce: Int?) -> [[SendConfirmField]] {
+    private func eip20ApproveItems(spender: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address) -> [[SendConfirmField]] {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return []
         }
@@ -77,7 +90,7 @@ extension SendEvmHandler: ISendHandler {
             amountField = .amount(
                 title: "approve.confirmation.you_revoke".localized,
                 token: coinService.token,
-                coinValue: coinService.token.coin.code,
+                coinValueType: .withoutAmount(kind: .token(token: coinService.token)),
                 currencyValue: nil,
                 type: .neutral
             )
@@ -92,34 +105,16 @@ extension SendEvmHandler: ISendHandler {
 
         sections.append([amountField])
 
-        let addressValue = spender.eip55
-        let addressTitle = evmLabelManager.addressLabel(address: addressValue)
-        let contactData = contactLabelService.contactData(for: addressValue)
-
-        var fields: [SendConfirmField] = [
-            .address(
-                title: "approve.confirmation.spender".localized,
-                value: addressValue,
-                valueTitle: addressTitle,
-                contactAddress: contactData.contactAddress
-            ),
-        ]
-
-        if let contactName = contactData.name {
-            fields.append(.levelValue(title: "send.confirmation.contact_name".localized, value: contactName, level: .regular))
-        }
-
-        if let nonce {
-            fields.append(.levelValue(title: "send.confirmation.nonce".localized, value: nonce.description, level: .regular))
-        }
-
-        sections.append(fields)
+        sections.append(
+            [
+                .address(
+                    title: "approve.confirmation.spender".localized,
+                    value: spender.eip55
+                ),
+            ]
+        )
 
         return sections
-
-//        if let section = dAppSection(additionalInfo: additionalInfo) {
-//            sections.append(section)
-//        }
     }
 
     private func amountField(coinService: CoinService, title: String, value: BigUInt, type: SendConfirmField.AmountType) -> SendConfirmField {
@@ -133,19 +128,24 @@ extension SendEvmHandler: ISendHandler {
         return .amount(
             title: title,
             token: token,
-            coinValue: value.isMaxValue ? value.infinity : value.formattedFull ?? "n/a".localized,
-            currencyValue: value.isMaxValue ? nil : amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+            coinValueType: value.isMaxValue ? .infinity(kind: value.kind) : .regular(coinValue: value),
+            currencyValue: value.isMaxValue ? nil : amountData.currencyValue,
             type: type
         )
     }
 }
 
 extension SendEvmHandler {
-    struct ConfirmationData: ISendConfirmationData {
+    class ConfirmationData: BaseSendEvmData, ISendConfirmationData {
         let baseSections: [[SendConfirmField]]
-        let gasPrice: GasPrice?
-        let gasLimit: Int?
         let transactionError: Error?
+
+        init(baseSections: [[SendConfirmField]], gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?, transactionError: Error?) {
+            self.baseSections = baseSections
+            self.transactionError = transactionError
+
+            super.init(gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
+        }
 
         var feeData: FeeData? {
             gasLimit.map {
@@ -157,42 +157,41 @@ extension SendEvmHandler {
             gasLimit != nil
         }
 
-        func cautions(feeToken _: Token?) -> [CautionNew] {
-            []
+        func cautions(feeToken: Token?) -> [CautionNew] {
+            var cautions = [CautionNew]()
+
+            if let transactionError {
+                cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
+            }
+
+            return cautions
         }
 
         func sections(feeToken: Token?, currency: Currency, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
             var sections = baseSections
 
-            if let feeToken {
-                let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
-
+            if let nonce {
                 sections.append(
                     [
-                        .value(
-                            title: "fee_settings.network_fee".localized,
-                            description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
-                            coinValue: (feeData?.coinValue).flatMap { ValueFormatter.instance.formatShort(coinValue: $0) },
-                            currencyValue: (feeData?.currencyValue).flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) }
-                        ),
+                        .levelValue(title: "send.confirmation.nonce".localized, value: String(nonce), level: .regular),
                     ]
                 )
             }
 
-            return sections
-        }
-
-        private func feeData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-            guard let gasPrice, let gasLimit else {
-                return nil
+            if let feeToken {
+                sections.append(feeSection(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate))
             }
 
-            let amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, feeToken.decimals)
-            let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
-            let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
-
-            return AmountData(coinValue: coinValue, currencyValue: currencyValue)
+            return sections
         }
+    }
+}
+
+extension SendEvmHandler {
+    enum SendError: Error {
+        case invalidData
+        case noGasPrice
+        case noGasLimit
     }
 }
 
@@ -211,13 +210,10 @@ extension SendEvmHandler {
             return nil
         }
 
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: blockchainType)
-
         return SendEvmHandler(
             coinServiceFactory: coinServiceFactory,
             transactionData: transactionData,
-            evmKitWrapper: evmKitWrapper,
-            contactLabelService: contactLabelService
+            evmKitWrapper: evmKitWrapper
         )
     }
 }

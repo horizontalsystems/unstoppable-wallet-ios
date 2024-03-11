@@ -184,17 +184,7 @@ extension BaseEvmMultiSwapProvider {
         }
     }
 
-    class ConfirmationQuote: IMultiSwapConfirmationQuote {
-        let gasPrice: GasPrice?
-        let gasLimit: Int?
-        let nonce: Int?
-
-        init(gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?) {
-            self.gasPrice = gasPrice
-            self.gasLimit = gasLimit
-            self.nonce = nonce
-        }
-
+    class ConfirmationQuote: BaseSendEvmData, IMultiSwapConfirmationQuote {
         var amountOut: Decimal {
             fatalError("Must be implemented in subclass")
         }
@@ -211,24 +201,12 @@ extension BaseEvmMultiSwapProvider {
             []
         }
 
-        private func feeData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-            guard let gasPrice, let gasLimit else {
-                return nil
-            }
-
-            let amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, feeToken.decimals)
-            let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
-            let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
-
-            return AmountData(coinValue: coinValue, currencyValue: currencyValue)
-        }
-
-        func priceSectionFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [MultiSwapConfirmField] {
+        func priceSectionFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [SendConfirmField] {
             []
         }
 
-        func otherSections(tokenIn _: Token, tokenOut _: Token, feeToken: Token?, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]] {
-            var sections = [[MultiSwapConfirmField]]()
+        func otherSections(tokenIn _: Token, tokenOut _: Token, feeToken: Token?, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
+            var sections = [[SendConfirmField]]()
 
             if let nonce {
                 sections.append(
@@ -239,18 +217,7 @@ extension BaseEvmMultiSwapProvider {
             }
 
             if let feeToken {
-                let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
-
-                sections.append(
-                    [
-                        .value(
-                            title: "fee_settings.network_fee".localized,
-                            description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
-                            coinValue: feeData?.coinValue,
-                            currencyValue: feeData?.currencyValue
-                        ),
-                    ]
-                )
+                sections.append(feeSection(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate))
             }
 
             return sections
