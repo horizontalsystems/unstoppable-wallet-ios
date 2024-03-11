@@ -442,6 +442,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Determinístico";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
 
+"send.confirmation.title" = "Confirmar";
 "send.confirmation.you_send" = "Enviar";
 "send.confirmation.to" = "Para";
 "send.confirmation.own" = "Own";
@@ -519,7 +520,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.you_pay" = "Você Paga";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
-"swap.allowance" = "Preço";
 "swap.you_get" = "Você recebe";
 "swap.token" = "Selecionar";
 "swap.advanced_settings" = "Configurações de troca";
@@ -541,7 +541,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.price" = "Preço";
 "swap.buy_price" = "Preço de Compra";
 "swap.sell_price" = "Preço de Venda";
-"swap.price_impact" = "Impacto de preço";
 "swap.maximum_paid" = "Quantia Máxima";
 "swap.minimum_got" = "Valor garantido";
 "swap.estimate_short" = "(est)";
@@ -563,6 +562,22 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "swap.quotes.providers" = "Providers";
 "swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "Preço";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "Desbloquear";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "Impacto de preço";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "Destinatário";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -595,8 +610,17 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "Confirmar";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "Deslize para trocar";
 "swap.confirmation.swapping" = "Trocando";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ desativou a ação de troca para essa troca porque você está obtendo um preço extremamente desfavorável. Isso se deve a liquidez extremamente baixa.\nSe você ainda quiser trocar, use o site %@.";
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
 
