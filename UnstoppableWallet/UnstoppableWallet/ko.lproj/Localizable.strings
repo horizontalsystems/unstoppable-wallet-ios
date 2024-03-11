@@ -440,6 +440,7 @@
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "거래 출력을 정렬하는 데에는 일반적으로 합의된 표준이 있습니다(이것은 BIP69로 알려져 있습니다). 오픈 소스 지갑에서는 이 표준이 지갑 사용자가 앱 개발자가 출력 순서를 어떻게 구현하는지 신뢰할 필요가 없도록 보장합니다. 이 표준은 새로운 것이기 때문에 아직 많은 지갑이 이를 구현하지 않았습니다. 그 결과, 블록체인에서 특정 거래가 이 표준을 사용하는 지갑에서 보내졌는지 여부를 어느 정도 파악할 수 있습니다.";
 
+"send.confirmation.title" = "확인";
 "send.confirmation.you_send" = "보냅니다";
 "send.confirmation.to" = "에게";
 "send.confirmation.own" = "Own";
@@ -517,7 +518,6 @@
 "swap.you_pay" = "지불하기";
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
-"swap.allowance" = "허용량";
 "swap.you_get" = "얻기";
 "swap.token" = "선택";
 "swap.advanced_settings" = "스왑 설정";
@@ -539,7 +539,6 @@
 "swap.price" = "금액";
 "swap.buy_price" = "구매 가격";
 "swap.sell_price" = "매도 가격";
-"swap.price_impact" = "가격 영향";
 "swap.maximum_paid" = "최대 지불액";
 "swap.minimum_got" = "최대 지급액";
 "swap.estimate_short" = "(추정)";
@@ -561,6 +560,22 @@
 
 "swap.quotes.providers" = "Providers";
 "swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "허용량";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "잠금 해제";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "가격 영향";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "수령인";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -593,8 +608,17 @@
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "확인";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "밀어서 결제하기";
 "swap.confirmation.swapping" = "스와핑";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
