@@ -442,6 +442,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe un estándar comúnmente acordado para ordenar las salidas de las transacciones (conocido como BIP69). En carteras de código abierto, ese estándar asegura que los usuarios de la cartera no necesiten confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Dado que este estándar es nuevo, todavía no muchos monederos lo han implementado. Como resultado, es algo posible ver en la cadena de bloques si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
 
+"send.confirmation.title" = "Confirmar";
 "send.confirmation.you_send" = "Usted envía";
 "send.confirmation.to" = "Para";
 "send.confirmation.own" = "Own";
@@ -519,7 +520,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.you_pay" = "Usted paga";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
-"swap.allowance" = "Permiso de acceso";
 "swap.you_get" = "Obtienes";
 "swap.token" = "Seleccionar";
 "swap.advanced_settings" = "Ajustes de intercambio";
@@ -541,7 +541,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.price" = "Precio";
 "swap.buy_price" = "Precio de Compra";
 "swap.sell_price" = "Precio de venta";
-"swap.price_impact" = "Impacto en el precio";
 "swap.maximum_paid" = "Máximo Pagado";
 "swap.minimum_got" = "Mínimo Obtenido";
 "swap.estimate_short" = "(est)";
@@ -563,6 +562,22 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "swap.quotes.providers" = "Providers";
 "swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "Permiso de acceso";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "Desbloquear";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "Impacto en el precio";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "Destinatario";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -595,8 +610,17 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "Confirmar";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "Deslizar para intercambiar";
 "swap.confirmation.swapping" = "Intercambio";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
