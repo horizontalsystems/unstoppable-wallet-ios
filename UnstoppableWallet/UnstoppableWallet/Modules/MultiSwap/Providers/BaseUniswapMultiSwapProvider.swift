@@ -70,14 +70,12 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noEvmKitWrapper
         }
 
-        try await Task.sleep(nanoseconds: 2_000_000_000)
-
-//        _ = try await evmKitWrapper.send(
-//            transactionData: transactionData,
-//            gasPrice: gasPrice,
-//            gasLimit: gasLimit,
-//            nonce: quote.nonce
-//        )
+        _ = try await evmKitWrapper.send(
+            transactionData: transactionData,
+            gasPrice: gasPrice,
+            gasLimit: gasLimit,
+            nonce: quote.nonce
+        )
     }
 
     func kitToken(chain _: Chain, token _: MarketKit.Token) throws -> UniswapKit.Token {
@@ -187,7 +185,7 @@ extension BaseUniswapMultiSwapProvider {
 
         override var customButtonState: MultiSwapButtonState? {
             if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) == .forbidden {
-                return .init(title: "High Price Impact", disabled: true)
+                return .init(title: "swap.high_price_impact".localized, disabled: true)
             }
 
             return super.customButtonState
@@ -203,7 +201,7 @@ extension BaseUniswapMultiSwapProvider {
             if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
                 fields.append(
                     MultiSwapMainField(
-                        title: "Price Impact",
+                        title: "swap.price_impact".localized,
                         value: "\(priceImpact.rounded(decimal: 2))%",
                         valueLevel: PriceImpactLevel(priceImpact: priceImpact).valueLevel
                     )
@@ -213,7 +211,7 @@ extension BaseUniswapMultiSwapProvider {
             if let recipient {
                 fields.append(
                     MultiSwapMainField(
-                        title: "Recipient",
+                        title: "swap.recipient".localized,
                         value: recipient.title,
                         valueLevel: .regular
                     )
@@ -225,7 +223,7 @@ extension BaseUniswapMultiSwapProvider {
             if slippage != MultiSwapSlippage.default {
                 fields.append(
                     MultiSwapMainField(
-                        title: "Slippage",
+                        title: "swap.slippage".localized,
                         value: "\(slippage.description)%",
                         valueLevel: MultiSwapSlippage.validate(slippage: slippage).valueLevel
                     )
@@ -337,7 +335,7 @@ extension BaseUniswapMultiSwapProvider {
             if let priceImpact = quote.trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
                 fields.append(
                     .levelValue(
-                        title: "Price Impact",
+                        title: "swap.price_impact".localized,
                         value: "\(priceImpact.rounded(decimal: 2))%",
                         level: PriceImpactLevel(priceImpact: priceImpact).valueLevel
                     )
@@ -347,7 +345,7 @@ extension BaseUniswapMultiSwapProvider {
             if let recipient = quote.recipient {
                 fields.append(
                     .address(
-                        title: "Recipient",
+                        title: "swap.recipient".localized,
                         value: recipient.title
                     )
                 )
@@ -358,7 +356,7 @@ extension BaseUniswapMultiSwapProvider {
             if slippage != MultiSwapSlippage.default {
                 fields.append(
                     .levelValue(
-                        title: "Slippage",
+                        title: "swap.slippage".localized,
                         value: "\(slippage.description)%",
                         level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
                     )
@@ -369,7 +367,7 @@ extension BaseUniswapMultiSwapProvider {
 
             fields.append(
                 .value(
-                    title: "Minimum Received",
+                    title: "swap.confirmation.minimum_received".localized,
                     description: nil,
                     coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
                     currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) }

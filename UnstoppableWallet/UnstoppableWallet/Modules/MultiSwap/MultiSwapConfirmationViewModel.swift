@@ -27,13 +27,13 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     @Published var rateOut: Decimal?
     @Published var feeTokenRate: Decimal?
 
-    @Published var quote: IMultiSwapConfirmationQuote? {
+    @Published var state: State = .quoting {
         didSet {
             syncPrice()
 
             timer?.cancel()
 
-            if let quote, quote.canSwap {
+            if let quote = state.quote, quote.canSwap {
                 quoteTimeLeft = quoteExpirationDuration
 
                 timer = Timer.publish(every: 1, on: .main, in: .common)
@@ -45,7 +45,6 @@ class MultiSwapConfirmationViewModel: ObservableObject {
         }
     }
 
-    @Published var quoting = false
     @Published var quoteTimeLeft: Int = 0
 
     @Published var price: String?
@@ -102,7 +101,8 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     }
 
     private func syncPrice() {
-        if let amountOut = quote?.amountOut {
+        if let quote = state.quote {
+            let amountOut = quote.amountOut
             var showAsIn = amountIn < amountOut
 
             if priceFlipped {
@@ -129,32 +129,32 @@ extension MultiSwapConfirmationViewModel {
         }
 
         quoteTask = nil
-        quote = nil
 
-        if !quoting {
-            quoting = true
+        if !state.isQuoting {
+            state = .quoting
         }
 
         quoteTask = Task { [weak self, tokenIn, tokenOut, amountIn, provider, transactionService] in
-            var quote: IMultiSwapConfirmationQuote?
+            var state: State
 
             do {
                 try await transactionService.sync()
 
-                quote = try await provider.confirmationQuote(
+                let quote = try await provider.confirmationQuote(
                     tokenIn: tokenIn,
                     tokenOut: tokenOut,
                     amountIn: amountIn,
                     transactionSettings: transactionService.transactionSettings
                 )
+
+                state = .success(quote: quote)
             } catch {
-                print(error)
+                state = .failed(error: error)
             }
 
             if !Task.isCancelled {
-                await MainActor.run { [weak self, quote] in
-                    self?.quoting = false
-                    self?.quote = quote
+                await MainActor.run { [weak self, state] in
+                    self?.state = state
                 }
             }
         }
@@ -167,7 +167,7 @@ extension MultiSwapConfirmationViewModel {
     }
 
     func swap() {
-        guard let quote else {
+        guard let quote = state.quote else {
             return
         }
 
@@ -187,5 +187,27 @@ extension MultiSwapConfirmationViewModel {
             }
         }
         .erased()
+    }
+}
+
+extension MultiSwapConfirmationViewModel {
+    enum State {
+        case quoting
+        case success(quote: IMultiSwapConfirmationQuote)
+        case failed(error: Error)
+
+        var quote: IMultiSwapConfirmationQuote? {
+            switch self {
+            case let .success(quote): return quote
+            default: return nil
+            }
+        }
+
+        var isQuoting: Bool {
+            switch self {
+            case .quoting: return true
+            default: return false
+            }
+        }
     }
 }

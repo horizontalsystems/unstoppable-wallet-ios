@@ -170,8 +170,8 @@ extension SendEvmHandler {
                 sections.append(
                     [
                         .value(
-                            title: "Network Fee",
-                            description: .init(title: "Network Fee", description: "Network Fee Description"),
+                            title: "fee_settings.network_fee".localized,
+                            description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
                             coinValue: (feeData?.coinValue).flatMap { ValueFormatter.instance.formatShort(coinValue: $0) },
                             currencyValue: (feeData?.currencyValue).flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) }
                         ),

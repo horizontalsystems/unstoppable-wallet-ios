@@ -138,9 +138,9 @@ extension BaseEvmMultiSwapProvider {
 
         var customButtonState: MultiSwapButtonState? {
             switch allowanceState {
-            case let .notEnough(_, spenderAddress): return .init(title: "Unlock", preSwapStep: UnlockStep(spenderAddress: spenderAddress))
-            case .pending: return .init(title: "Unlocking...", disabled: true, showProgress: true)
-            case .unknown: return .init(title: "Allowance Error", disabled: true)
+            case let .notEnough(_, spenderAddress): return .init(title: "swap.unlock".localized, preSwapStep: UnlockStep(spenderAddress: spenderAddress))
+            case .pending: return .init(title: "swap.unlocking".localized, disabled: true, showProgress: true)
+            case .unknown: return .init(title: "swap.allowance_error".localized, disabled: true)
             default: return nil
             }
         }
@@ -161,7 +161,7 @@ extension BaseEvmMultiSwapProvider {
                 if let formatted = ValueFormatter.instance.formatShort(coinValue: amount) {
                     fields.append(
                         MultiSwapMainField(
-                            title: "Allowance",
+                            title: "swap.allowance".localized,
                             value: "\(formatted)",
                             valueLevel: .error
                         )
@@ -171,7 +171,7 @@ extension BaseEvmMultiSwapProvider {
                 if let formatted = ValueFormatter.instance.formatShort(coinValue: amount) {
                     fields.append(
                         MultiSwapMainField(
-                            title: "Pending Allowance",
+                            title: "swap.pending_allowance".localized,
                             value: "\(formatted)",
                             valueLevel: .warning
                         )
@@ -230,14 +230,22 @@ extension BaseEvmMultiSwapProvider {
         func otherSections(tokenIn _: Token, tokenOut _: Token, feeToken: Token?, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate: Decimal?) -> [[MultiSwapConfirmField]] {
             var sections = [[MultiSwapConfirmField]]()
 
+            if let nonce {
+                sections.append(
+                    [
+                        .levelValue(title: "send.confirmation.nonce".localized, value: String(nonce), level: .regular),
+                    ]
+                )
+            }
+
             if let feeToken {
                 let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
 
                 sections.append(
                     [
                         .value(
-                            title: "Network Fee",
-                            description: .init(title: "Network Fee", description: "Network Fee Description"),
+                            title: "fee_settings.network_fee".localized,
+                            description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
                             coinValue: feeData?.coinValue,
                             currencyValue: feeData?.currencyValue
                         ),

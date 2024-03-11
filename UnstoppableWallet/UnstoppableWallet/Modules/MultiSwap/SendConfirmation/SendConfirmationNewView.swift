@@ -16,10 +16,7 @@ struct SendConfirmationNewView: View {
     var body: some View {
         ThemeView {
             if viewModel.syncing {
-                VStack(spacing: .margin12) {
-                    ProgressView()
-                    Text("Syncing...").textSubhead2()
-                }
+                ProgressView()
             } else if let data = viewModel.data {
                 dataView(data: data)
             }
@@ -35,7 +32,7 @@ struct SendConfirmationNewView: View {
                 )
             }
         }
-        .navigationTitle("Confirm")
+        .navigationTitle("send.confirmation.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -93,7 +90,7 @@ struct SendConfirmationNewView: View {
                         ProgressView()
                     }
 
-                    Text(viewModel.sending ? "Sending" : "Send")
+                    Text(viewModel.sending ? "send.confirmation.sending".localized : "send.confirmation.slide_to_send".localized)
                 }
             }
             .disabled(viewModel.sending)
