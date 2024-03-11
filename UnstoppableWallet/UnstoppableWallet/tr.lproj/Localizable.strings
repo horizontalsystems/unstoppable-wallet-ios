@@ -442,6 +442,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "İşlem çıktılarını sipariş etmek için yaygın olarak kabul edilen bir standart vardır (BIP69 olarak bilinir). Açık kaynaklı (open-source) cüzdanlarda, bu standart, cüzdan kullanıcılarının uygulamanın geliştiricilerinin çıktıların sıralanmasını nasıl uyguladıklarına güvenmelerine gerek kalmamasını sağlar. Bu standart yeni olduğundan, henüz pek çok cüzdan bunu uygulamamıştır. Sonuç olarak, bir işlemin bu standardı kullanan bir cüzdandan gönderilip gönderilmediğini blok zincirinde görmek mümkündür.";
 
+"send.confirmation.title" = "Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
 "send.confirmation.to" = "Alan";
 "send.confirmation.own" = "Own";
@@ -519,7 +520,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.you_pay" = "Ödediğiniz";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
-"swap.allowance" = "Ödenek";
 "swap.you_get" = "Kazandığınız";
 "swap.token" = "Seç";
 "swap.advanced_settings" = "Swap Ayarları";
@@ -541,7 +541,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.price" = "Fiyat";
 "swap.buy_price" = "Alış Fiyatı";
 "swap.sell_price" = "Satış Fiyatı";
-"swap.price_impact" = "Fiyat Etkisi";
 "swap.maximum_paid" = "Maksimum Ödenen";
 "swap.minimum_got" = "Minimum Kazanılan";
 "swap.estimate_short" = "(tah)";
@@ -563,6 +562,22 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "swap.quotes.providers" = "Providers";
 "swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "Ödenek";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "Kilidi Aç";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "Fiyat Etkisi";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "Alıcı";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -595,8 +610,17 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "Onayla";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@, son derece elverişsiz bir fiyat aldığınız için bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
