@@ -442,6 +442,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Déterministe";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Il existe une norme communément acceptée pour l'ordonnancement des sorties de transaction, connue sous le nom de BIP69 (Bitcoin Improvement Proposal 69). Dans les portefeuilles open source, cette norme garantit que les utilisateurs de portefeuille n'ont pas besoin de faire confiance à la manière dont les développeurs de l'application implémentent l'ordonnancement des sorties. Comme cette norme est relativement récente, peu de portefeuilles l'ont encore mise en œuvre. Par conséquent, il est quelque peu possible de déterminer sur la blockchain si une transaction a été envoyée depuis un portefeuille qui utilise cette norme ou non.";
 
+"send.confirmation.title" = "Confirmer";
 "send.confirmation.you_send" = "Vous envoyez";
 "send.confirmation.to" = "À";
 "send.confirmation.own" = "Own";
@@ -519,7 +520,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.you_pay" = "Vous payez";
 "swap.estimated" = "estimé";
 "swap.balance" = "Solde";
-"swap.allowance" = "Allocation";
 "swap.you_get" = "Vous recevez";
 "swap.token" = "Sélectionner";
 "swap.advanced_settings" = "Paramètres de swap";
@@ -541,7 +541,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.price" = "Prix";
 "swap.buy_price" = "Prix d'achat";
 "swap.sell_price" = "Prix de vente";
-"swap.price_impact" = "Impact prix";
 "swap.maximum_paid" = "Montant maximum payé";
 "swap.minimum_got" = "Montant minimum reçu";
 "swap.estimate_short" = "(est)";
@@ -563,6 +562,22 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "swap.quotes.providers" = "Providers";
 "swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "Allocation";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "Déverrouiller";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "Impact prix";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "Destinataire";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -595,8 +610,17 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "Confirmer";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "Glisser pour changer";
 "swap.confirmation.swapping" = "Swapping";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
 
