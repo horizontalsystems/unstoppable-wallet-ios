@@ -502,7 +502,7 @@ extension MultiSwapViewModel {
             }
         }
 
-        var valueLevel: MultiSwapValueLevel {
+        var valueLevel: ValueLevel {
             switch self {
             case .warning: return .warning
             case .forbidden: return .error

@@ -1,48 +1,7 @@
 import Combine
 import EvmKit
-import Foundation
 import MarketKit
 import SwiftUI
-
-enum TransactionSettings {
-    case evm(gasPrice: GasPrice, nonce: Int)
-    case bitcoin(satoshiPerByte: Int)
-
-    var gasPrice: GasPrice? {
-        switch self {
-        case let .evm(gasPrice, _): return gasPrice
-        default: return nil
-        }
-    }
-
-    var nonce: Int? {
-        switch self {
-        case let .evm(_, nonce): return nonce
-        default: return nil
-        }
-    }
-}
-
-enum FeeData {
-    case evm(gasLimit: Int)
-    case bitcoin(bytes: Int)
-
-    var gasLimit: Int? {
-        switch self {
-        case let .evm(gasLimit): return gasLimit
-        default: return nil
-        }
-    }
-}
-
-protocol ITransactionService {
-    var transactionSettings: TransactionSettings? { get }
-    var modified: Bool { get }
-    var cautions: [CautionNew] { get }
-    var updatePublisher: AnyPublisher<Void, Never> { get }
-    func sync() async throws
-    func settingsView(feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) -> AnyView?
-}
 
 class EvmTransactionService: ITransactionService {
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))

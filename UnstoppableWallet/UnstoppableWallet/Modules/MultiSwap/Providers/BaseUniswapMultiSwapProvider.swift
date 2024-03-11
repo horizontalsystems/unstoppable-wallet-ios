@@ -155,7 +155,7 @@ extension BaseUniswapMultiSwapProvider {
             }
         }
 
-        var valueLevel: MultiSwapValueLevel {
+        var valueLevel: ValueLevel {
             switch self {
             case .warning: return .warning
             case .forbidden: return .error
@@ -289,39 +289,7 @@ extension BaseUniswapMultiSwapProvider {
             var cautions = super.cautions(feeToken: feeToken)
 
             if let transactionError {
-                let title: String
-                let text: String
-
-                if case let AppError.ethereum(reason) = transactionError.convertedError {
-                    switch reason {
-                    case .insufficientBalanceWithFee:
-                        title = "fee_settings.errors.insufficient_balance".localized
-                        text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken?.coin.code ?? "")
-                    case let .executionReverted(message):
-                        title = "fee_settings.errors.unexpected_error".localized
-                        text = message
-                    case .lowerThanBaseGasLimit:
-                        title = "fee_settings.errors.low_max_fee".localized
-                        text = "fee_settings.errors.low_max_fee.info".localized
-                    case .nonceAlreadyInBlock:
-                        title = "fee_settings.errors.nonce_already_in_block".localized
-                        text = "ethereum_transaction.error.nonce_already_in_block".localized
-                    case .replacementTransactionUnderpriced:
-                        title = "fee_settings.errors.replacement_transaction_underpriced".localized
-                        text = "ethereum_transaction.error.replacement_transaction_underpriced".localized
-                    case .transactionUnderpriced:
-                        title = "fee_settings.errors.transaction_underpriced".localized
-                        text = "ethereum_transaction.error.transaction_underpriced".localized
-                    case .tipsHigherThanMaxFee:
-                        title = "fee_settings.errors.tips_higher_than_max_fee".localized
-                        text = "ethereum_transaction.error.tips_higher_than_max_fee".localized
-                    }
-                } else {
-                    title = "ethereum_transaction.error.title".localized
-                    text = transactionError.convertedError.smartDescription
-                }
-
-                cautions.append(CautionNew(title: title, text: text, type: .error))
+                cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
             }
 
             cautions.append(contentsOf: quote.cautions())
@@ -329,7 +297,7 @@ extension BaseUniswapMultiSwapProvider {
             return cautions
         }
 
-        override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [MultiSwapConfirmField] {
+        override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [SendConfirmField] {
             var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
 
             if let priceImpact = quote.trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {

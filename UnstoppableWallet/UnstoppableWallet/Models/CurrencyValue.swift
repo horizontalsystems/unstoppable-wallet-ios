@@ -20,4 +20,8 @@ extension CurrencyValue {
     var formattedFull: String? {
         ValueFormatter.instance.formatFull(currencyValue: self)
     }
+
+    var formattedShort: String? {
+        ValueFormatter.instance.formatShort(currencyValue: self)
+    }
 }

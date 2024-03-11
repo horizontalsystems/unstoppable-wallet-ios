@@ -146,7 +146,7 @@ enum MultiSwapSlippage {
 }
 
 extension CautionState {
-    var valueLevel: MultiSwapValueLevel {
+    var valueLevel: ValueLevel {
         switch self {
         case .none: return .regular
         case let .caution(caution):
