@@ -5,30 +5,25 @@ import SwiftUI
 
 struct MultiSwapApproveView: View {
     @StateObject private var viewModel: MultiSwapApproveViewModel
-    private var isPresented: Binding<Bool>
+    @Binding private var isPresented: Bool
 
     @State private var unlockPresented = false
     @Environment(\.dismiss) private var dismiss
 
     init(tokenIn: Token, amount: Decimal, spenderAddress: EvmKit.Address, isPresented: Binding<Bool>) {
         _viewModel = .init(wrappedValue: MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress))
-        self.isPresented = isPresented
+        _isPresented = isPresented
     }
 
     var body: some View {
         ThemeView {
             if let transactionData = viewModel.transactionData {
                 BottomGradientWrapper {
-                    VStack(spacing: .margin32) {
-                        VStack(spacing: .margin24) {
-                            Text("Allow access to the following amount".localized)
-                                .themeHeadline1()
-                                .padding(.horizontal, .margin16)
-
-                            Text("You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.")
-                                .themeSubhead2()
-                                .padding(.horizontal, .margin16)
-                        }
+                    VStack(spacing: .margin12) {
+                        Text("swap.unlock.subtitle".localized)
+                            .themeHeadline1()
+                            .padding(.horizontal, .margin16)
+                            .padding(.bottom, .margin12)
 
                         ListSection {
                             ClickableRow(action: {
@@ -41,9 +36,13 @@ struct MultiSwapApproveView: View {
                             ClickableRow(action: {
                                 viewModel.set(unlimitedAmount: true)
                             }) {
-                                row(text: "Unlimited", selected: viewModel.unlimitedAmount)
+                                row(text: "swap.unlock.unlimited".localized, selected: viewModel.unlimitedAmount)
                             }
                         }
+
+                        Text("swap.unlock.description".localized)
+                            .themeSubhead2()
+                            .padding(.horizontal, .margin16)
 
                         Spacer()
                     }
@@ -62,7 +61,7 @@ struct MultiSwapApproveView: View {
                     destination: {
                         SendConfirmationNewView(
                             sendData: .evm(blockchainType: viewModel.token.blockchainType, transactionData: transactionData),
-                            isParentPresented: isPresented
+                            isParentPresented: $isPresented
                         )
                     }
                 ) {
@@ -70,8 +69,15 @@ struct MultiSwapApproveView: View {
                 }
             }
         }
-        .navigationTitle("Unlock Access")
+        .navigationTitle("swap.unlock.title".localized)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("button.cancel".localized) {
+                    isPresented = false
+                }
+            }
+        }
     }
 
     @ViewBuilder func row(text: String, selected: Bool) -> some View {

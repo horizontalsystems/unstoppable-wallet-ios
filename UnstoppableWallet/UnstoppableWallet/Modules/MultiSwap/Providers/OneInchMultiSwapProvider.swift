@@ -106,14 +106,12 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noEvmKitWrapper
         }
 
-        try await Task.sleep(nanoseconds: 2_000_000_000)
-
-//        _ = try await evmKitWrapper.send(
-//            transactionData: TransactionData(to: swap.transaction.to, value: swap.transaction.value, input: swap.transaction.data),
-//            gasPrice: swap.transaction.gasPrice,
-//            gasLimit: swap.transaction.gasLimit,
-//            nonce: quote.nonce
-//        )
+        _ = try await evmKitWrapper.send(
+            transactionData: TransactionData(to: swap.transaction.to, value: swap.transaction.value, input: swap.transaction.data),
+            gasPrice: swap.transaction.gasPrice,
+            gasLimit: swap.transaction.gasLimit,
+            nonce: quote.nonce
+        )
     }
 
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
@@ -207,7 +205,7 @@ extension OneInchMultiSwapProvider {
             if let recipient {
                 fields.append(
                     MultiSwapMainField(
-                        title: "Recipient",
+                        title: "swap.recipient".localized,
                         value: recipient.title,
                         valueLevel: .regular
                     )
@@ -217,7 +215,7 @@ extension OneInchMultiSwapProvider {
             if slippage != MultiSwapSlippage.default {
                 fields.append(
                     MultiSwapMainField(
-                        title: "Slippage",
+                        title: "swap.slippage".localized,
                         value: "\(slippage.description)%",
                         valueLevel: MultiSwapSlippage.validate(slippage: slippage).valueLevel
                     )
@@ -284,7 +282,7 @@ extension OneInchMultiSwapProvider {
             if let recipient = quote.recipient {
                 fields.append(
                     .address(
-                        title: "Recipient",
+                        title: "swap.recipient".localized,
                         value: recipient.title
                     )
                 )
@@ -295,7 +293,7 @@ extension OneInchMultiSwapProvider {
             if slippage != MultiSwapSlippage.default {
                 fields.append(
                     .levelValue(
-                        title: "Slippage",
+                        title: "swap.slippage".localized,
                         value: "\(slippage.description)%",
                         level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
                     )
@@ -306,7 +304,7 @@ extension OneInchMultiSwapProvider {
 
             fields.append(
                 .value(
-                    title: "Minimum Received",
+                    title: "swap.confirmation.minimum_received".localized,
                     description: nil,
                     coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
                     currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) }

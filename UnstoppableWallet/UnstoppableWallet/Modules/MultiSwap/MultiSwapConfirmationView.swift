@@ -15,27 +15,30 @@ struct MultiSwapConfirmationView: View {
 
     var body: some View {
         ThemeView {
-            if viewModel.quoting {
+            switch viewModel.state {
+            case .quoting:
                 VStack(spacing: .margin12) {
                     ProgressView()
-                    Text("Quoting...").textSubhead2()
+                    Text("swap.confirmation.quoting".localized).textSubhead2()
                 }
-            } else if let quote = viewModel.quote {
+            case let .success(quote):
                 quoteView(quote: quote)
+            case let .failed(error):
+                errorView(error: error)
             }
         }
         .sheet(isPresented: $feeSettingsPresented) {
             if let transactionService = viewModel.transactionService, let feeToken = viewModel.feeToken {
                 transactionService.settingsView(
-                    feeData: Binding<FeeData?>(get: { viewModel.quote?.feeData }, set: { _ in }),
-                    loading: $viewModel.quoting,
+                    feeData: Binding<FeeData?>(get: { viewModel.state.quote?.feeData }, set: { _ in }),
+                    loading: Binding<Bool>(get: { viewModel.state.isQuoting }, set: { _ in }),
                     feeToken: feeToken,
                     currency: viewModel.currency,
                     feeTokenRate: $viewModel.feeTokenRate
                 )
             }
         }
-        .navigationTitle("Confirm")
+        .navigationTitle("swap.confirmation.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -44,7 +47,7 @@ struct MultiSwapConfirmationView: View {
                 }) {
                     Image("manage_2_20").renderingMode(.template)
                 }
-                .disabled(viewModel.quoting)
+                .disabled(viewModel.state.isQuoting)
             }
         }
         .onReceive(viewModel.finishSubject) {
@@ -57,8 +60,8 @@ struct MultiSwapConfirmationView: View {
             ScrollView {
                 VStack(spacing: .margin16) {
                     ListSection {
-                        tokenRow(title: "You Send", token: viewModel.tokenIn, amount: viewModel.amountIn, rate: viewModel.rateIn)
-                        tokenRow(title: "You Get", token: viewModel.tokenOut, amount: quote.amountOut, rate: viewModel.rateOut)
+                        tokenRow(title: "swap.you_pay".localized, token: viewModel.tokenIn, amount: viewModel.amountIn, rate: viewModel.rateIn)
+                        tokenRow(title: "swap.you_get".localized, token: viewModel.tokenOut, amount: quote.amountOut, rate: viewModel.rateOut)
                     }
 
                     let priceSectionFields = quote.priceSectionFields(
@@ -75,7 +78,7 @@ struct MultiSwapConfirmationView: View {
                         ListSection {
                             if let price = viewModel.price {
                                 ListRow {
-                                    Text("Price").textSubhead2()
+                                    Text("swap.price".localized).textSubhead2()
 
                                     Spacer()
 
@@ -150,7 +153,7 @@ struct MultiSwapConfirmationView: View {
                         ProgressView()
                     }
 
-                    Text(viewModel.quoteTimeLeft > 0 ? (viewModel.swapping ? "Swapping" : "Swap") : "Refresh")
+                    Text(viewModel.quoteTimeLeft > 0 ? (viewModel.swapping ? "swap.confirmation.swapping".localized : "swap.confirmation.slide_to_swap".localized) : "swap.confirmation.refresh".localized)
                 }
             }
             .disabled(viewModel.swapping)
@@ -159,6 +162,30 @@ struct MultiSwapConfirmationView: View {
             .padding(.horizontal, .margin16)
 
             Text(bottomText())
+                .textSubhead1()
+                .padding(.bottom, .margin8)
+        }
+    }
+
+    @ViewBuilder private func errorView(error: Error) -> some View {
+        VStack {
+            ScrollView {
+                VStack(spacing: .margin16) {
+                    HighlightedTextView(caution: CautionNew(text: error.smartDescription, type: .error))
+                }
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            }
+
+            Button(action: {
+                viewModel.syncQuote()
+            }) {
+                Text("swap.confirmation.refresh".localized)
+            }
+            .buttonStyle(PrimaryButtonStyle(style: .gray))
+            .padding(.vertical, .margin16)
+            .padding(.horizontal, .margin16)
+
+            Text("swap.confirmation.quote_failed".localized)
                 .textSubhead1()
                 .padding(.bottom, .margin8)
         }
@@ -258,14 +285,14 @@ struct MultiSwapConfirmationView: View {
     }
 
     private func bottomText() -> String {
-        if let quote = viewModel.quote, !quote.canSwap {
-            return "Invalid Quote"
+        if let quote = viewModel.state.quote, !quote.canSwap {
+            return "swap.confirmation.invalid_quote".localized
         } else if viewModel.swapping {
-            return "Please wait"
+            return "swap.confirmation.please_wait".localized
         } else if viewModel.quoteTimeLeft > 0 {
-            return "Quote expires in \(viewModel.quoteTimeLeft)"
+            return "swap.confirmation.quote_expires_in".localized("\(viewModel.quoteTimeLeft)")
         } else {
-            return "Quote expired"
+            return "swap.confirmation.quote_expired".localized
         }
     }
 
