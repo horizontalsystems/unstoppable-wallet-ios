@@ -442,6 +442,7 @@
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "存在一个公认的交易输出排序标准（称为BIP69）。在开源钱包中，该标准确保钱包用户不需要信任应用开发者如何实现输出的排序。由于这个标准是新的，目前还没有多少钱包实施它。因此，在区块链上有可能某种程度上看出交易是否来自使用该标准的钱包。";
 
+"send.confirmation.title" = "确认";
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.to" = "接收人";
 "send.confirmation.own" = "Own";
@@ -519,7 +520,6 @@
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
-"swap.allowance" = "补贴";
 "swap.you_get" = "您获得";
 "swap.token" = "选择";
 "swap.advanced_settings" = "掉期设置";
@@ -541,7 +541,6 @@
 "swap.price" = "价格";
 "swap.buy_price" = "买入价";
 "swap.sell_price" = "卖出价";
-"swap.price_impact" = "价格影响";
 "swap.maximum_paid" = "最大支付金额";
 "swap.minimum_got" = "最小获取金额";
 "swap.estimate_short" = "（美国东部时间）";
@@ -563,6 +562,22 @@
 
 "swap.quotes.providers" = "Providers";
 "swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "补贴";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "解锁​​​​";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "价格影响";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "收款人";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -595,8 +610,17 @@
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "确认";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
