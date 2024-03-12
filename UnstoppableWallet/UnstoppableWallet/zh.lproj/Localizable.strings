@@ -458,9 +458,11 @@
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "滑动发送";
+"send.confirmation.sending" = "发送中";
+"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.approving" = "审批中";
 "send.confirmation.slide_to_resend" = "重新发送";
 "send.confirmation.slide_to_cancel" = "取消交易";
-"send.confirmation.sending" = "发送中";
 "send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.resend" = "重新发送";
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
@@ -564,6 +566,7 @@
 "swap.quotes.best_price" = "Best Price";
 
 "swap.allowance" = "补贴";
+"swap.allowance.description" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
 "swap.pending_allowance" = "Pending Allowance";
 "swap.unlock" = "解锁​​​​";
 "swap.unlocking" = "Unlocking";
@@ -575,6 +578,7 @@
 "swap.unlock.unlimited" = "Unlimited";
 
 "swap.price_impact" = "价格影响";
+"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "High Price Impact";
 "swap.recipient" = "收款人";
 "swap.slippage" = "Slippage";
@@ -621,7 +625,7 @@
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
 "swap.confirmation.refresh" = "Refresh";
-"swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
+"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
 "swap.confirmation.minimum_received" = "收到的最小金额";
