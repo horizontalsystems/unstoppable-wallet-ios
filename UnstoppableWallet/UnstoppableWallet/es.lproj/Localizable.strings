@@ -458,9 +458,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
+"send.confirmation.sending" = "Enviar";
+"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.approving" = "Aprobando";
 "send.confirmation.slide_to_resend" = "Reenviar";
 "send.confirmation.slide_to_cancel" = "Cancelar la transacción";
-"send.confirmation.sending" = "Enviar";
 "send.confirmation.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.resend" = "Reenviar";
 "send.confirmation.cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
@@ -564,6 +566,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.quotes.best_price" = "Best Price";
 
 "swap.allowance" = "Permiso de acceso";
+"swap.allowance.description" = "La cantidad que un intercambio puede gastar en nombre del usuario al ejecutar swaps de token. Se requiere un permiso suficiente para establecer una transacción anterior antes de que pueda tener lugar una transacción de intercambio real.";
 "swap.pending_allowance" = "Pending Allowance";
 "swap.unlock" = "Desbloquear";
 "swap.unlocking" = "Unlocking";
@@ -575,6 +578,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.unlock.unlimited" = "Unlimited";
 
 "swap.price_impact" = "Impacto en el precio";
+"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "High Price Impact";
 "swap.recipient" = "Destinatario";
 "swap.slippage" = "Slippage";
@@ -621,7 +625,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.confirmation.slide_to_swap" = "Deslizar para intercambiar";
 "swap.confirmation.swapping" = "Intercambio";
 "swap.confirmation.refresh" = "Refresh";
-"swap.confirmation.impact_too_high" = "%@ ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
+"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
 "swap.confirmation.minimum_received" = "Mínimo Recibido";
