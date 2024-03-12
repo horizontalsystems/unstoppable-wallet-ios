@@ -21,22 +21,32 @@ enum SendConfirmField {
                     .clipShape(Circle())
                     .frame(width: .iconSize24, height: .iconSize24)
 
-                VStack(spacing: 1) {
-                    HStack(spacing: .margin4) {
+                HStack(spacing: .margin4) {
+                    VStack(alignment: .leading, spacing: 1) {
                         Text(title).textSubhead2(color: .themeLeah)
-                        Spacer()
-                        Text(coinValueType.formatted(full: true) ?? "n/a".localized).textSubhead1(color: .themeLeah)
-                    }
 
-                    HStack(spacing: .margin4) {
                         if let protocolName = token.protocolName {
                             Text(protocolName).textCaption()
                         }
+                    }
 
-                        Spacer()
+                    Spacer()
+
+                    VStack(alignment: .trailing, spacing: 1) {
+                        if let formatted = coinValueType.formatted(full: true) {
+                            Text(formatted)
+                                .textSubhead1(color: .themeLeah)
+                                .multilineTextAlignment(.trailing)
+                        } else {
+                            Text("n/a".localized)
+                                .textSubhead1(color: .themeGray50)
+                                .multilineTextAlignment(.trailing)
+                        }
 
                         if let formatted = currencyValue?.formattedFull {
-                            Text(formatted).textCaption()
+                            Text(formatted)
+                                .textCaption()
+                                .multilineTextAlignment(.trailing)
                         }
                     }
                 }

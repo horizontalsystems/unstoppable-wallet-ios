@@ -498,7 +498,7 @@ struct MultiSwapView: View {
             return nil
         }
 
-        return ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: tokenIn), value: availableBalance))
+        return ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: tokenIn), value: availableBalance))
     }
 
     private func buttonState() -> (String, Bool, Bool, MultiSwapPreSwapStep?) {

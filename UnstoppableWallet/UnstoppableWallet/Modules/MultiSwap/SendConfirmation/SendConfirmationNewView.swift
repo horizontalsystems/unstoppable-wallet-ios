@@ -90,7 +90,7 @@ struct SendConfirmationNewView: View {
                         ProgressView()
                     }
 
-                    Text(viewModel.sending ? "send.confirmation.sending".localized : "send.confirmation.slide_to_send".localized)
+                    Text(viewModel.sending ? (data.customSendingButtonTitle ?? "send.confirmation.sending".localized) : (data.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized))
                 }
             }
             .disabled(viewModel.sending)

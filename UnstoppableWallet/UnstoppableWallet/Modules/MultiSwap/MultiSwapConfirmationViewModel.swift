@@ -23,6 +23,8 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     let currency: Currency
     let feeToken: Token?
 
+    @Published var transactionSettingsModified = false
+
     @Published var rateIn: Decimal?
     @Published var rateOut: Decimal?
     @Published var feeTokenRate: Decimal?
@@ -66,7 +68,10 @@ class MultiSwapConfirmationViewModel: ObservableObject {
         feeToken = try? marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
 
         transactionService?.updatePublisher
-            .sink { [weak self] in self?.syncQuote() }
+            .sink { [weak self] in
+                self?.syncTransactionSettingsModified()
+                self?.syncQuote()
+            }
             .store(in: &cancellables)
 
         if let feeToken {
@@ -119,6 +124,10 @@ class MultiSwapConfirmationViewModel: ObservableObject {
         } else {
             price = nil
         }
+    }
+
+    private func syncTransactionSettingsModified() {
+        transactionSettingsModified = transactionService?.modified ?? false
     }
 }
 

@@ -456,9 +456,11 @@
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.sending" = "Sending";
+"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.approving" = "Approving";
 "send.confirmation.slide_to_resend" = "Resend";
 "send.confirmation.slide_to_cancel" = "Cancel Transaction";
-"send.confirmation.sending" = "Sending";
 "send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.resend" = "Resend";
 "send.confirmation.cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new 0 amount transaction to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
@@ -562,6 +564,7 @@
 "swap.quotes.best_price" = "Best Price";
 
 "swap.allowance" = "Allowance";
+"swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.pending_allowance" = "Pending Allowance";
 "swap.unlock" = "Unlock";
 "swap.unlocking" = "Unlocking";
@@ -573,6 +576,7 @@
 "swap.unlock.unlimited" = "Unlimited";
 
 "swap.price_impact" = "Price Impact";
+"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "High Price Impact";
 "swap.recipient" = "Recipient";
 "swap.slippage" = "Slippage";
@@ -619,7 +623,7 @@
 "swap.confirmation.slide_to_swap" = "Slide to Swap";
 "swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.refresh" = "Refresh";
-"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
 
 "swap.confirmation.minimum_received" = "Minimum Received";

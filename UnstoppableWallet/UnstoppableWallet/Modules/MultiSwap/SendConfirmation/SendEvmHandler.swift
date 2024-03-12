@@ -22,8 +22,6 @@ extension SendEvmHandler: ISendHandler {
     }
 
     func confirmationData(transactionSettings: TransactionSettings?) async throws -> ISendConfirmationData {
-        let decoration = evmKitWrapper.evmKit.decorate(transactionData: transactionData)
-
         let gasPrice = transactionSettings?.gasPrice
         var gasLimit: Int?
         var transactionError: Error?
@@ -36,9 +34,18 @@ extension SendEvmHandler: ISendHandler {
             }
         }
 
-        let sections = decoration.map { self.sections(decoration: $0) } ?? []
+        let decoration = evmKitWrapper.evmKit.decorate(transactionData: transactionData)
+        let (sections, customSendButtonTitle, customSendingButtonTitle) = decoration.map { resolve(decoration: $0) } ?? ([], nil, nil)
 
-        return ConfirmationData(baseSections: sections, gasPrice: gasPrice, gasLimit: gasLimit, nonce: transactionSettings?.nonce, transactionError: transactionError)
+        return ConfirmationData(
+            baseSections: sections,
+            transactionError: transactionError,
+            customSendButtonTitle: customSendButtonTitle,
+            customSendingButtonTitle: customSendingButtonTitle,
+            gasPrice: gasPrice,
+            gasLimit: gasLimit,
+            nonce: transactionSettings?.nonce
+        )
     }
 
     func send(data: ISendConfirmationData) async throws {
@@ -62,20 +69,22 @@ extension SendEvmHandler: ISendHandler {
         )
     }
 
-    private func sections(decoration: TransactionDecoration?) -> [[SendConfirmField]] {
+    private func resolve(decoration: TransactionDecoration?) -> ([[SendConfirmField]], String?, String?) {
         switch decoration {
         case let decoration as ApproveEip20Decoration:
-            return eip20ApproveItems(
+            let sections = eip20ApproveSections(
                 spender: decoration.spender,
                 value: decoration.value,
                 contractAddress: decoration.contractAddress
             )
+
+            return (sections, "send.confirmation.slide_to_approve".localized, "send.confirmation.approving".localized)
         default:
-            return []
+            return ([], nil, nil)
         }
     }
 
-    private func eip20ApproveItems(spender: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address) -> [[SendConfirmField]] {
+    private func eip20ApproveSections(spender: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address) -> [[SendConfirmField]] {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return []
         }
@@ -139,10 +148,14 @@ extension SendEvmHandler {
     class ConfirmationData: BaseSendEvmData, ISendConfirmationData {
         let baseSections: [[SendConfirmField]]
         let transactionError: Error?
+        let customSendButtonTitle: String?
+        let customSendingButtonTitle: String?
 
-        init(baseSections: [[SendConfirmField]], gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?, transactionError: Error?) {
+        init(baseSections: [[SendConfirmField]], transactionError: Error?, customSendButtonTitle: String?, customSendingButtonTitle: String?, gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?) {
             self.baseSections = baseSections
             self.transactionError = transactionError
+            self.customSendButtonTitle = customSendButtonTitle
+            self.customSendingButtonTitle = customSendingButtonTitle
 
             super.init(gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
         }
