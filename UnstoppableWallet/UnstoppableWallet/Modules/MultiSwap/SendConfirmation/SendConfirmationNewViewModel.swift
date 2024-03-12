@@ -10,7 +10,6 @@ class SendConfirmationNewViewModel: ObservableObject {
     private let sendHandlerFactory = SendHandlerFactory()
 
     private var syncTask: AnyTask?
-    private var sendTask: AnyTask?
     private var cancellables = Set<AnyCancellable>()
 
     let handler: ISendHandler?
@@ -24,7 +23,7 @@ class SendConfirmationNewViewModel: ObservableObject {
     @Published var syncing = false
     @Published var sending = false
 
-    let finishSubject = PassthroughSubject<Void, Never>()
+    let errorSubject = PassthroughSubject<String, Never>()
 
     init(sendData: SendDataNew) {
         handler = sendHandlerFactory.handler(sendData: sendData)
@@ -51,6 +50,10 @@ class SendConfirmationNewViewModel: ObservableObject {
         }
 
         sync()
+    }
+
+    @MainActor private func set(sending: Bool) {
+        self.sending = sending
     }
 }
 
@@ -82,26 +85,30 @@ extension SendConfirmationNewViewModel {
         .erased()
     }
 
-    func send() {
-        guard let handler, let data else {
-            return
-        }
-
-        sending = true
-
-        sendTask = Task { [weak self, handler] in
-            do {
-                try await handler.send(data: data)
-
-                await MainActor.run { [weak self] in
-                    self?.finishSubject.send()
-                }
-            } catch {
-                await MainActor.run { [weak self] in
-                    self?.sending = false
-                }
+    func send() async throws {
+        do {
+            guard let handler else {
+                throw SendError.noHandler
             }
+
+            guard let data else {
+                throw SendError.noData
+            }
+
+            await set(sending: true)
+
+            try await handler.send(data: data)
+        } catch {
+            await set(sending: false)
+            errorSubject.send(error.smartDescription)
+            throw error
         }
-        .erased()
+    }
+}
+
+extension SendConfirmationNewViewModel {
+    enum SendError: Error {
+        case noHandler
+        case noData
     }
 }
