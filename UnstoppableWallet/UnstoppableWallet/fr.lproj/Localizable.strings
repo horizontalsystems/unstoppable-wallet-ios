@@ -458,9 +458,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "Glisser pour envoyer";
+"send.confirmation.sending" = "En attente";
+"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.approving" = "En cours d'approbation";
 "send.confirmation.slide_to_resend" = "Réenvoyer";
 "send.confirmation.slide_to_cancel" = "Annuler la transaction";
-"send.confirmation.sending" = "En attente";
 "send.confirmation.resend_description" = "Cette action tentera d'invalider la transaction précédente en la renvoyant avec des frais plus élevés. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
 "send.confirmation.resend" = "Réenvoyer";
 "send.confirmation.cancel_description" = "Cette action tentera d'invalider la transaction précédente en l'envoyant à nouveau comme une nouvelle transaction de valeur 0 à soi-même. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
@@ -564,6 +566,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.quotes.best_price" = "Best Price";
 
 "swap.allowance" = "Allocation";
+"swap.allowance.description" = "Le montant qu\'un échange peut dépenser pour le compte de l\'utilisateur lors de l\'exécution de swaps de jetons. Une provision suffisante est requise avant de pouvoir effectuer une opération d\'échange réelle.";
 "swap.pending_allowance" = "Pending Allowance";
 "swap.unlock" = "Déverrouiller";
 "swap.unlocking" = "Unlocking";
@@ -575,6 +578,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.unlock.unlimited" = "Unlimited";
 
 "swap.price_impact" = "Impact prix";
+"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "High Price Impact";
 "swap.recipient" = "Destinataire";
 "swap.slippage" = "Slippage";
@@ -621,7 +625,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.confirmation.slide_to_swap" = "Glisser pour changer";
 "swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.refresh" = "Refresh";
-"swap.confirmation.impact_too_high" = "%@ a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
+"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
 
 "swap.confirmation.minimum_received" = "Minimum reçu";
