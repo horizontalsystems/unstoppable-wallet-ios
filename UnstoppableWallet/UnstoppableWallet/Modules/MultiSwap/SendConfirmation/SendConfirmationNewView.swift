@@ -1,3 +1,4 @@
+import ComponentKit
 import Kingfisher
 import MarketKit
 import SwiftUI
@@ -44,8 +45,8 @@ struct SendConfirmationNewView: View {
                 .disabled(viewModel.syncing)
             }
         }
-        .onReceive(viewModel.finishSubject) {
-            isParentPresented = false
+        .onReceive(viewModel.errorSubject) { error in
+            HudHelper.instance.showError(subtitle: error)
         }
     }
 
@@ -83,7 +84,14 @@ struct SendConfirmationNewView: View {
             }
 
             Button(action: {
-                viewModel.send()
+                Task {
+                    try await viewModel.send()
+
+                    await MainActor.run {
+                        HudHelper.instance.show(banner: .sent)
+                        isParentPresented = false
+                    }
+                }
             }) {
                 HStack(spacing: .margin8) {
                     if viewModel.sending {

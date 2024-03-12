@@ -11,7 +11,6 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     private let transactionServiceFactory = TransactionServiceFactory()
 
     private var quoteTask: AnyTask?
-    private var swapTask: AnyTask?
     private var timer: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
 
@@ -53,7 +52,8 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     private var priceFlipped = false
 
     @Published var swapping = false
-    let finishSubject = PassthroughSubject<Void, Never>()
+
+    let errorSubject = PassthroughSubject<String, Never>()
 
     init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider) {
         self.tokenIn = tokenIn
@@ -129,6 +129,10 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     private func syncTransactionSettingsModified() {
         transactionSettingsModified = transactionService?.modified ?? false
     }
+
+    @MainActor private func set(swapping: Bool) {
+        self.swapping = swapping
+    }
 }
 
 extension MultiSwapConfirmationViewModel {
@@ -175,27 +179,20 @@ extension MultiSwapConfirmationViewModel {
         syncPrice()
     }
 
-    func swap() {
-        guard let quote = state.quote else {
-            return
-        }
-
-        swapping = true
-
-        swapTask = Task { [weak self, tokenIn, tokenOut, amountIn, provider] in
-            do {
-                try await provider.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote)
-
-                await MainActor.run { [weak self] in
-                    self?.finishSubject.send()
-                }
-            } catch {
-                await MainActor.run { [weak self] in
-                    self?.swapping = false
-                }
+    func swap() async throws {
+        do {
+            guard let quote = state.quote else {
+                throw SwapError.noQuote
             }
+
+            await set(swapping: true)
+
+            try await provider.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote)
+        } catch {
+            await set(swapping: false)
+            errorSubject.send(error.smartDescription)
+            throw error
         }
-        .erased()
     }
 }
 
@@ -218,5 +215,9 @@ extension MultiSwapConfirmationViewModel {
             default: return false
             }
         }
+    }
+
+    enum SwapError: Error {
+        case noQuote
     }
 }

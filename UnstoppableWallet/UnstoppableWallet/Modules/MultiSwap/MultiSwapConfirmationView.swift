@@ -1,3 +1,4 @@
+import ComponentKit
 import Kingfisher
 import MarketKit
 import SwiftUI
@@ -50,8 +51,8 @@ struct MultiSwapConfirmationView: View {
                 .disabled(viewModel.state.isQuoting)
             }
         }
-        .onReceive(viewModel.finishSubject) {
-            swapPresentationMode.dismiss()
+        .onReceive(viewModel.errorSubject) { error in
+            HudHelper.instance.showError(subtitle: error)
         }
     }
 
@@ -143,7 +144,14 @@ struct MultiSwapConfirmationView: View {
 
             Button(action: {
                 if viewModel.quoteTimeLeft > 0 {
-                    viewModel.swap()
+                    Task {
+                        try await viewModel.swap()
+
+                        await MainActor.run {
+                            HudHelper.instance.show(banner: .swapped)
+                            swapPresentationMode.dismiss()
+                        }
+                    }
                 } else {
                     viewModel.syncQuote()
                 }
@@ -153,7 +161,7 @@ struct MultiSwapConfirmationView: View {
                         ProgressView()
                     }
 
-                    Text(viewModel.quoteTimeLeft > 0 ? (viewModel.swapping ? "swap.confirmation.swapping".localized : "swap.confirmation.slide_to_swap".localized) : "swap.confirmation.refresh".localized)
+                    Text(viewModel.swapping ? "swap.confirmation.swapping".localized : (viewModel.quoteTimeLeft > 0 ? "swap.confirmation.slide_to_swap".localized : "swap.confirmation.refresh".localized))
                 }
             }
             .disabled(viewModel.swapping)
