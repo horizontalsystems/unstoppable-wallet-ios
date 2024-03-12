@@ -191,11 +191,11 @@ extension BaseEvmMultiSwapProvider {
         }
 
         var feeData: FeeData? {
-            gasLimit.map { .evm(gasLimit: $0) }
+            evmFeeData.map { .evm(evmFeeData: $0) }
         }
 
         var canSwap: Bool {
-            gasPrice != nil && gasLimit != nil
+            gasPrice != nil && evmFeeData != nil
         }
 
         func cautions(feeToken _: Token?) -> [CautionNew] {

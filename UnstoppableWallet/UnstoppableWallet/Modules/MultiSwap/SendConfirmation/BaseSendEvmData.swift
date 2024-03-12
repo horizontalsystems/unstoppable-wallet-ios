@@ -4,17 +4,17 @@ import MarketKit
 
 class BaseSendEvmData {
     let gasPrice: GasPrice?
-    let gasLimit: Int?
+    let evmFeeData: EvmFeeData?
     let nonce: Int?
 
-    init(gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?) {
+    init(gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
         self.gasPrice = gasPrice
-        self.gasLimit = gasLimit
+        self.evmFeeData = evmFeeData
         self.nonce = nonce
     }
 
     func feeSection(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendConfirmField] {
-        let amountData = feeAmountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
+        let amountData = evmFeeData.flatMap { $0.feeAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) }
 
         return [
             .value(
@@ -60,17 +60,5 @@ class BaseSendEvmData {
         }
 
         return CautionNew(title: title, text: text, type: .error)
-    }
-
-    private func feeAmountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-        guard let gasPrice, let gasLimit else {
-            return nil
-        }
-
-        let amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, feeToken.decimals)
-        let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
-        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
-
-        return AmountData(coinValue: coinValue, currencyValue: currencyValue)
     }
 }

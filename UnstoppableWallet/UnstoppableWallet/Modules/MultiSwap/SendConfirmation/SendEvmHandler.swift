@@ -8,6 +8,7 @@ class SendEvmHandler {
     let coinServiceFactory: EvmCoinServiceFactory
     let transactionData: TransactionData
     let evmKitWrapper: EvmKitWrapper
+    let evmFeeEstimator = EvmFeeEstimator()
 
     init(coinServiceFactory: EvmCoinServiceFactory, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
         self.coinServiceFactory = coinServiceFactory
@@ -23,12 +24,12 @@ extension SendEvmHandler: ISendHandler {
 
     func confirmationData(transactionSettings: TransactionSettings?) async throws -> ISendConfirmationData {
         let gasPrice = transactionSettings?.gasPrice
-        var gasLimit: Int?
+        var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
         if let gasPrice {
             do {
-                gasLimit = try await evmKitWrapper.evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
+                evmFeeData = try await evmFeeEstimator.estimateFee(blockchainType: blockchainType, evmKit: evmKitWrapper.evmKit, transactionData: transactionData, gasPrice: gasPrice)
             } catch {
                 transactionError = error
             }
@@ -43,7 +44,7 @@ extension SendEvmHandler: ISendHandler {
             customSendButtonTitle: customSendButtonTitle,
             customSendingButtonTitle: customSendingButtonTitle,
             gasPrice: gasPrice,
-            gasLimit: gasLimit,
+            evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )
     }
@@ -57,7 +58,7 @@ extension SendEvmHandler: ISendHandler {
             throw SendError.noGasPrice
         }
 
-        guard let gasLimit = data.gasLimit else {
+        guard let gasLimit = data.evmFeeData?.gasLimit else {
             throw SendError.noGasLimit
         }
 
@@ -151,23 +152,21 @@ extension SendEvmHandler {
         let customSendButtonTitle: String?
         let customSendingButtonTitle: String?
 
-        init(baseSections: [[SendConfirmField]], transactionError: Error?, customSendButtonTitle: String?, customSendingButtonTitle: String?, gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?) {
+        init(baseSections: [[SendConfirmField]], transactionError: Error?, customSendButtonTitle: String?, customSendingButtonTitle: String?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
             self.baseSections = baseSections
             self.transactionError = transactionError
             self.customSendButtonTitle = customSendButtonTitle
             self.customSendingButtonTitle = customSendingButtonTitle
 
-            super.init(gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
+            super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
         }
 
         var feeData: FeeData? {
-            gasLimit.map {
-                .evm(gasLimit: $0)
-            }
+            evmFeeData.map { .evm(evmFeeData: $0) }
         }
 
         var canSend: Bool {
-            gasLimit != nil
+            evmFeeData != nil
         }
 
         func cautions(feeToken: Token?) -> [CautionNew] {
