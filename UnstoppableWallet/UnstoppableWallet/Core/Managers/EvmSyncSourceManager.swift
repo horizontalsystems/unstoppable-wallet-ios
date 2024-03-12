@@ -59,13 +59,8 @@ extension EvmSyncSourceManager {
             } else {
                 return [
                     EvmSyncSource(
-                        name: "Infura Websocket",
-                        rpcSource: .ethereumInfuraWebsocket(projectId: AppConfig.infuraCredentials.id, projectSecret: AppConfig.infuraCredentials.secret),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                    ),
-                    EvmSyncSource(
-                        name: "Infura HTTPS",
-                        rpcSource: .ethereumInfuraHttp(projectId: AppConfig.infuraCredentials.id, projectSecret: AppConfig.infuraCredentials.secret),
+                        name: "BlocksDecoded",
+                        rpcSource: .http(urls: [URL(string: "\(AppConfig.marketApiUrl)/v1/infura")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                     EvmSyncSource(
