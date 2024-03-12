@@ -247,7 +247,7 @@ extension OneInchMultiSwapProvider {
             self.swap = swap
             self.insufficientFeeBalance = insufficientFeeBalance
 
-            super.init(gasPrice: swap?.transaction.gasPrice, gasLimit: swap?.transaction.gasLimit, nonce: nonce)
+            super.init(gasPrice: swap?.transaction.gasPrice, evmFeeData: swap.map { EvmFeeData(gasLimit: $0.transaction.gasLimit) }, nonce: nonce)
         }
 
         override var amountOut: Decimal {

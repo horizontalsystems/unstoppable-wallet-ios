@@ -7,6 +7,7 @@ import UniswapKit
 class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     let marketKit = App.shared.marketKit
     let evmSyncSourceManager = App.shared.evmSyncSourceManager
+    let evmFeeEstimator = EvmFeeEstimator()
 
     override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
         try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
@@ -18,14 +19,14 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         let blockchainType = tokenIn.blockchainType
         let gasPrice = transactionSettings?.gasPrice
         var txData: TransactionData?
-        var gasLimit: Int?
+        var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
         if let evmKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit, let gasPrice {
             do {
                 let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, trade: quote.trade, tradeOptions: quote.tradeOptions)
                 txData = transactionData
-                gasLimit = try await evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
+                evmFeeData = try await evmFeeEstimator.estimateFee(blockchainType: blockchainType, evmKit: evmKit, transactionData: transactionData, gasPrice: gasPrice)
             } catch {
                 transactionError = error
             }
@@ -36,7 +37,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             transactionData: txData,
             transactionError: transactionError,
             gasPrice: gasPrice,
-            gasLimit: gasLimit,
+            evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )
     }
@@ -62,7 +63,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noGasPrice
         }
 
-        guard let gasLimit = quote.gasLimit else {
+        guard let gasLimit = quote.evmFeeData?.gasLimit else {
             throw SwapError.noGasLimit
         }
 
@@ -281,12 +282,12 @@ extension BaseUniswapMultiSwapProvider {
         let transactionData: TransactionData?
         let transactionError: Error?
 
-        init(quote: Quote, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, gasLimit: Int?, nonce: Int?) {
+        init(quote: Quote, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
             self.quote = quote
             self.transactionData = transactionData
             self.transactionError = transactionError
 
-            super.init(gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
+            super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
         }
 
         override var amountOut: Decimal {
