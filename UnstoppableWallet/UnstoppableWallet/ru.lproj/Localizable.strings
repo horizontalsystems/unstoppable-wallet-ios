@@ -460,9 +460,11 @@
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
+"send.confirmation.sending" = "Отправка";
+"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.approving" = "Разрешение";
 "send.confirmation.slide_to_resend" = "Отправить повторно";
 "send.confirmation.slide_to_cancel" = "Отменить транзакцию";
-"send.confirmation.sending" = "Отправка";
 "send.confirmation.resend_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее повторно с более высокой комиссией. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее заново как новую транзакцию с нулевой суммой к самому себе. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
@@ -566,6 +568,7 @@
 "swap.quotes.best_price" = "Best Price";
 
 "swap.allowance" = "Разрешение";
+"swap.allowance.description" = "Сумма, которую exchange может потратить от имени пользователя при выполнении обмена токенов. Действующая транзакция, устанавливающая достаточный уровень допустимости, необходима для того, чтобы транзакция обмена была осуществлена.";
 "swap.pending_allowance" = "Pending Allowance";
 "swap.unlock" = "Разблокировать";
 "swap.unlocking" = "Unlocking";
@@ -577,6 +580,7 @@
 "swap.unlock.unlimited" = "Unlimited";
 
 "swap.price_impact" = "Отклонение от рын. цены";
+"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "High Price Impact";
 "swap.recipient" = "Получатель";
 "swap.slippage" = "Slippage";
@@ -623,7 +627,7 @@
 "swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
 "swap.confirmation.refresh" = "Refresh";
-"swap.confirmation.impact_too_high" = "%@ отключил действие обмена для этой сделки, потому что вы получаете крайне невыгодную цену. Это связано с крайне низкой ликвидностью.Если вы все равно хотите выполнить обмен, используйте вместо этого веб-сайт %@.";
+"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
 
 "swap.confirmation.minimum_received" = "Получено минимум";
