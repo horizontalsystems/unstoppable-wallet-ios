@@ -458,9 +458,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
+"send.confirmation.sending" = "Gönderiliyor";
+"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.approving" = "Onaylayan";
 "send.confirmation.slide_to_resend" = "Yeniden Gönder";
 "send.confirmation.slide_to_cancel" = "İşlemi İptal Et";
-"send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.resend_description" = "Bunu yapmak, daha yüksek bir ücretle işlemi yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
 "send.confirmation.resend" = "Yeniden Gönder";
 "send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
@@ -564,6 +566,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.quotes.best_price" = "Best Price";
 
 "swap.allowance" = "Ödenek";
+"swap.allowance.description" = "Bir borsanın, token takaslarını yürütürken kullanıcının adına harcayabileceği ödenek miktarı. Fiili bir takas işleminin gerçekleşmesinde yeterli ödenek gereklidir.";
 "swap.pending_allowance" = "Pending Allowance";
 "swap.unlock" = "Kilidi Aç";
 "swap.unlocking" = "Unlocking";
@@ -575,6 +578,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.unlock.unlimited" = "Unlimited";
 
 "swap.price_impact" = "Fiyat Etkisi";
+"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "High Price Impact";
 "swap.recipient" = "Alıcı";
 "swap.slippage" = "Slippage";
@@ -621,7 +625,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
 "swap.confirmation.refresh" = "Refresh";
-"swap.confirmation.impact_too_high" = "%@, son derece elverişsiz bir fiyat aldığınız için bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
+"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
 "swap.confirmation.minimum_received" = "Minimum Alınan";
