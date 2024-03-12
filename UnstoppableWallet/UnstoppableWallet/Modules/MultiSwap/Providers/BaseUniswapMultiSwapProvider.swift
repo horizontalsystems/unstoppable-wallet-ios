@@ -119,6 +119,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             trade: trade,
             tradeOptions: tradeOptions,
             recipient: recipient,
+            providerName: name,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
         )
     }
@@ -170,11 +171,13 @@ extension BaseUniswapMultiSwapProvider {
         let trade: Trade
         let tradeOptions: TradeOptions
         let recipient: Address?
+        let providerName: String
 
-        init(trade: Trade, tradeOptions: TradeOptions, recipient: Address?, allowanceState: AllowanceState) {
+        init(trade: Trade, tradeOptions: TradeOptions, recipient: Address?, providerName: String, allowanceState: AllowanceState) {
             self.trade = trade
             self.tradeOptions = tradeOptions
             self.recipient = recipient
+            self.providerName = providerName
 
             super.init(allowanceState: allowanceState)
         }
@@ -202,7 +205,8 @@ extension BaseUniswapMultiSwapProvider {
                 fields.append(
                     MultiSwapMainField(
                         title: "swap.price_impact".localized,
-                        value: "\(priceImpact.rounded(decimal: 2))%",
+                        description: .init(title: "swap.price_impact".localized, description: "swap.price_impact.description".localized),
+                        value: "-\(priceImpact.rounded(decimal: 2))%",
                         valueLevel: PriceImpactLevel(priceImpact: priceImpact).valueLevel
                     )
                 )
@@ -236,6 +240,14 @@ extension BaseUniswapMultiSwapProvider {
         override func cautions() -> [CautionNew] {
             var cautions = super.cautions()
 
+            if let priceImpact = trade.priceImpact {
+                switch PriceImpactLevel(priceImpact: priceImpact) {
+                case .warning: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_warning".localized, type: .warning))
+                case .forbidden: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(AppConfig.appName, providerName), type: .error))
+                default: ()
+                }
+            }
+
             switch MultiSwapSlippage.validate(slippage: tradeOptions.allowedSlippage) {
             case .none: ()
             case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
@@ -257,8 +269,8 @@ extension BaseUniswapMultiSwapProvider {
 
             var priceImpact: Decimal? {
                 switch self {
-                case let .v2(tradeData): return tradeData.priceImpact
-                case let .v3(bestTrade): return bestTrade.priceImpact
+                case let .v2(tradeData): return tradeData.priceImpact.map { max(0, $0) }
+                case let .v3(bestTrade): return bestTrade.priceImpact.map { max(0, $0) }
                 }
             }
         }
