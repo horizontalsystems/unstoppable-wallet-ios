@@ -142,32 +142,33 @@ struct MultiSwapConfirmationView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
 
-            Button(action: {
-                if viewModel.quoteTimeLeft > 0 {
-                    Task {
+            if viewModel.quoteTimeLeft > 0 || viewModel.swapping {
+                SlideButton(
+                    styling: .text(
+                        start: "swap.confirmation.slide_to_swap".localized,
+                        end: "swap.confirmation.swapping".localized,
+                        success: "swap.confirmation.swapped".localized
+                    ),
+                    action: {
                         try await viewModel.swap()
-
-                        await MainActor.run {
-                            HudHelper.instance.show(banner: .swapped)
-                            swapPresentationMode.dismiss()
-                        }
+                    }, completion: {
+                        HudHelper.instance.show(banner: .swapped)
+                        swapPresentationMode.dismiss()
                     }
-                } else {
+                )
+                .disabled(viewModel.quoteTimeLeft <= 0)
+                .padding(.vertical, .margin16)
+                .padding(.horizontal, .margin16)
+            } else {
+                Button(action: {
                     viewModel.syncQuote()
+                }) {
+                    Text("swap.confirmation.refresh".localized)
                 }
-            }) {
-                HStack(spacing: .margin8) {
-                    if viewModel.swapping {
-                        ProgressView()
-                    }
-
-                    Text(viewModel.swapping ? "swap.confirmation.swapping".localized : (viewModel.quoteTimeLeft > 0 ? "swap.confirmation.slide_to_swap".localized : "swap.confirmation.refresh".localized))
-                }
+                .buttonStyle(PrimaryButtonStyle(style: .gray))
+                .padding(.vertical, .margin16)
+                .padding(.horizontal, .margin16)
             }
-            .disabled(viewModel.swapping)
-            .buttonStyle(PrimaryButtonStyle(style: viewModel.quoteTimeLeft > 0 ? .yellow : .gray))
-            .padding(.vertical, .margin16)
-            .padding(.horizontal, .margin16)
 
             Text(bottomText())
                 .textSubhead1()
