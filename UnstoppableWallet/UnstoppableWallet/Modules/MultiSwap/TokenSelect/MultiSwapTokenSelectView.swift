@@ -3,10 +3,16 @@ import MarketKit
 import SwiftUI
 
 struct MultiSwapTokenSelectView: View {
-    @Binding var token: Token?
+    @StateObject private var viewModel: MultiSwapTokenSelectViewModel
+
+    @Binding var currentToken: Token?
     @Binding var isPresented: Bool
 
-    @StateObject private var viewModel = MultiSwapTokenSelectViewModel()
+    init(currentToken: Binding<Token?>, otherToken: Token?, isPresented: Binding<Bool>) {
+        _viewModel = .init(wrappedValue: MultiSwapTokenSelectViewModel(token: otherToken))
+        _currentToken = currentToken
+        _isPresented = isPresented
+    }
 
     var body: some View {
         ThemeNavigationView {
@@ -16,7 +22,7 @@ struct MultiSwapTokenSelectView: View {
 
                     ThemeList(items: viewModel.items) { item in
                         ClickableRow(action: {
-                            token = item.token
+                            currentToken = item.token
                             isPresented = false
                         }) {
                             KFImage.url(URL(string: item.token.coin.imageUrl))
@@ -28,7 +34,7 @@ struct MultiSwapTokenSelectView: View {
 
                             VStack(spacing: 1) {
                                 HStack(spacing: .margin8) {
-                                    Text(item.token.coin.code).textBody()
+                                    Text(item.token.coin.code + " (\(item.token.coin.marketCapRank ?? 0))").textBody()
 
                                     if let badge = item.token.badge {
                                         BadgeViewNew(text: badge)

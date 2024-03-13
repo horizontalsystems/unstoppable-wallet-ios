@@ -156,7 +156,6 @@ struct MultiSwapConfirmationView: View {
                         swapPresentationMode.dismiss()
                     }
                 )
-                .disabled(viewModel.quoteTimeLeft <= 0)
                 .padding(.vertical, .margin16)
                 .padding(.horizontal, .margin16)
             } else {
