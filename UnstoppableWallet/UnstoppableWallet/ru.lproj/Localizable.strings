@@ -461,8 +461,10 @@
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
+"send.confirmation.sent" = "Отправлено";
 "send.confirmation.slide_to_approve" = "Slide to Approve";
 "send.confirmation.approving" = "Разрешение";
+"send.confirmation.approved" = "Разрешено";
 "send.confirmation.slide_to_resend" = "Отправить повторно";
 "send.confirmation.slide_to_cancel" = "Отменить транзакцию";
 "send.confirmation.resend_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее повторно с более высокой комиссией. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
