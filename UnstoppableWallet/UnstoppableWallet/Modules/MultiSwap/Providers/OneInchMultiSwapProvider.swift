@@ -9,6 +9,7 @@ import SwiftUI
 class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let kit: OneInchKit.Kit
     private let networkManager = App.shared.networkManager
+    private let evmFeeEstimator = EvmFeeEstimator()
 
     init(kit: OneInchKit.Kit, storage: MultiSwapSettingStorage) {
         self.kit = kit
@@ -48,6 +49,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         let blockchainType = tokenIn.blockchainType
         let gasPrice = transactionSettings?.gasPrice
+        var evmFeeData: EvmFeeData?
         var resolvedSwap: Swap?
         var insufficientFeeBalance = false
 
@@ -75,12 +77,15 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             let totalAmount = txAmount + feeAmount
 
             insufficientFeeBalance = totalAmount > evmBalance
+
+            evmFeeData = try await evmFeeEstimator.oneIncheEstimateFee(blockchainType: blockchainType, evmKit: evmKit, swap: swap, gasPrice: gasPrice)
         }
 
         return ConfirmationQuote(
             quote: quote,
             swap: resolvedSwap,
             insufficientFeeBalance: insufficientFeeBalance,
+            evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )
     }
@@ -242,12 +247,12 @@ extension OneInchMultiSwapProvider {
         let swap: Swap?
         let insufficientFeeBalance: Bool
 
-        init(quote: Quote, swap: Swap?, insufficientFeeBalance: Bool, nonce: Int?) {
+        init(quote: Quote, swap: Swap?, insufficientFeeBalance: Bool, evmFeeData: EvmFeeData?, nonce: Int?) {
             self.quote = quote
             self.swap = swap
             self.insufficientFeeBalance = insufficientFeeBalance
 
-            super.init(gasPrice: swap?.transaction.gasPrice, evmFeeData: swap.map { EvmFeeData(gasLimit: $0.transaction.gasLimit) }, nonce: nonce)
+            super.init(gasPrice: swap?.transaction.gasPrice, evmFeeData: evmFeeData, nonce: nonce)
         }
 
         override var amountOut: Decimal {

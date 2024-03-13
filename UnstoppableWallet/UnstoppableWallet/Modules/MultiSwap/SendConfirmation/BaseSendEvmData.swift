@@ -14,7 +14,7 @@ class BaseSendEvmData {
     }
 
     func feeSection(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendConfirmField] {
-        let amountData = evmFeeData.flatMap { $0.feeAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) }
+        let amountData = evmFeeData.flatMap { $0.totalAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) }
 
         return [
             .value(

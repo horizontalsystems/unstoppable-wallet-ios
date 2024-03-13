@@ -1782,6 +1782,8 @@
 
 "fee_settings.network_fee" = "Network Fee";
 "fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.l1_fee" = "L1 Fee";
+"fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
 
