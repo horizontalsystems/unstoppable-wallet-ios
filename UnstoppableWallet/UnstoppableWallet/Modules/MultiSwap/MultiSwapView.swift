@@ -38,7 +38,7 @@ struct MultiSwapView: View {
                     .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
                         MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
                     }
-                    .sheet(item: $preSwapStep, onDismiss: { viewModel.syncQuotes() }) { step in
+                    .sheet(item: $preSwapStep, onDismiss: { viewModel.autoQuoteIfRequired() }) { step in
                         if let currentQuote = viewModel.currentQuote,
                            let tokenIn = viewModel.tokenIn,
                            let tokenOut = viewModel.tokenOut,
@@ -56,7 +56,9 @@ struct MultiSwapView: View {
                                 tokenOut: tokenOut,
                                 amount: amount,
                                 isPresented: isPresented
-                            )
+                            ) {
+                                viewModel.syncQuotes()
+                            }
                         }
                     }
                 }

@@ -44,10 +44,10 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("settingView(settingId:) has not been implemented")
     }
 
-    func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>) -> AnyView {
+    func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         switch step {
         case let unlockStep as UnlockStep:
-            let view = ThemeNavigationView { MultiSwapApproveView(tokenIn: tokenIn, amount: amount, spenderAddress: unlockStep.spenderAddress, isPresented: isPresented) }
+            let view = ThemeNavigationView { MultiSwapApproveView(tokenIn: tokenIn, amount: amount, spenderAddress: unlockStep.spenderAddress, isPresented: isPresented, onSuccess: onSuccess) }
             return AnyView(view)
         default:
             return AnyView(Text("Invalid Pre Swap Step"))

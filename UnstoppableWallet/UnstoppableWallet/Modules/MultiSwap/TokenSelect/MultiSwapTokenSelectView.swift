@@ -34,7 +34,7 @@ struct MultiSwapTokenSelectView: View {
 
                             VStack(spacing: 1) {
                                 HStack(spacing: .margin8) {
-                                    Text(item.token.coin.code + " (\(item.token.coin.marketCapRank ?? 0))").textBody()
+                                    Text(item.token.coin.code).textBody()
 
                                     if let badge = item.token.badge {
                                         BadgeViewNew(text: badge)

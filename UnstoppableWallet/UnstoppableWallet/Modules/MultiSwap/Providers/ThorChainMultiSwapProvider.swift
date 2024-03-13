@@ -82,8 +82,8 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         fatalError("settingView(settingId:) has not been implemented")
     }
 
-    func preSwapView(step _: MultiSwapPreSwapStep, tokenIn _: Token, tokenOut _: Token, amount _: Decimal, isPresented _: Binding<Bool>) -> AnyView {
-        fatalError("preSwapView(step:tokenIn:tokenOut:amount:isPresented:) has not been implemented")
+    func preSwapView(step _: MultiSwapPreSwapStep, tokenIn _: Token, tokenOut _: Token, amount _: Decimal, isPresented _: Binding<Bool>, onSuccess _: @escaping () -> Void) -> AnyView {
+        fatalError("preSwapView(step:tokenIn:tokenOut:amount:isPresented:onSuccess:) has not been implemented")
     }
 
     func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {

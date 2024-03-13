@@ -6,13 +6,15 @@ import SwiftUI
 struct MultiSwapApproveView: View {
     @StateObject private var viewModel: MultiSwapApproveViewModel
     @Binding private var isPresented: Bool
+    private let onSuccess: () -> Void
 
     @State private var unlockPresented = false
     @Environment(\.dismiss) private var dismiss
 
-    init(tokenIn: Token, amount: Decimal, spenderAddress: EvmKit.Address, isPresented: Binding<Bool>) {
+    init(tokenIn: Token, amount: Decimal, spenderAddress: EvmKit.Address, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) {
         _viewModel = .init(wrappedValue: MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress))
         _isPresented = isPresented
+        self.onSuccess = onSuccess
     }
 
     var body: some View {
@@ -59,10 +61,10 @@ struct MultiSwapApproveView: View {
                 NavigationLink(
                     isActive: $unlockPresented,
                     destination: {
-                        SendConfirmationNewView(
-                            sendData: .evm(blockchainType: viewModel.token.blockchainType, transactionData: transactionData),
-                            isParentPresented: $isPresented
-                        )
+                        SendConfirmationNewView(sendData: .evm(blockchainType: viewModel.token.blockchainType, transactionData: transactionData)) {
+                            onSuccess()
+                            isPresented = false
+                        }
                     }
                 ) {
                     EmptyView()

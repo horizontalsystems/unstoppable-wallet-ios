@@ -36,13 +36,14 @@ extension SendEvmHandler: ISendHandler {
         }
 
         let decoration = evmKitWrapper.evmKit.decorate(transactionData: transactionData)
-        let (sections, customSendButtonTitle, customSendingButtonTitle) = decoration.map { resolve(decoration: $0) } ?? ([], nil, nil)
+        let (sections, customSendButtonTitle, customSendingButtonTitle, customSentButtonTitle) = decoration.map { resolve(decoration: $0) } ?? ([], nil, nil, nil)
 
         return ConfirmationData(
             baseSections: sections,
             transactionError: transactionError,
             customSendButtonTitle: customSendButtonTitle,
             customSendingButtonTitle: customSendingButtonTitle,
+            customSentButtonTitle: customSentButtonTitle,
             gasPrice: gasPrice,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
@@ -70,7 +71,7 @@ extension SendEvmHandler: ISendHandler {
         )
     }
 
-    private func resolve(decoration: TransactionDecoration?) -> ([[SendConfirmField]], String?, String?) {
+    private func resolve(decoration: TransactionDecoration?) -> ([[SendConfirmField]], String?, String?, String?) {
         switch decoration {
         case let decoration as ApproveEip20Decoration:
             let sections = eip20ApproveSections(
@@ -79,9 +80,9 @@ extension SendEvmHandler: ISendHandler {
                 contractAddress: decoration.contractAddress
             )
 
-            return (sections, "send.confirmation.slide_to_approve".localized, "send.confirmation.approving".localized)
+            return (sections, "send.confirmation.slide_to_approve".localized, "send.confirmation.approving".localized, "send.confirmation.approved".localized)
         default:
-            return ([], nil, nil)
+            return ([], nil, nil, nil)
         }
     }
 
@@ -151,12 +152,14 @@ extension SendEvmHandler {
         let transactionError: Error?
         let customSendButtonTitle: String?
         let customSendingButtonTitle: String?
+        let customSentButtonTitle: String?
 
-        init(baseSections: [[SendConfirmField]], transactionError: Error?, customSendButtonTitle: String?, customSendingButtonTitle: String?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
+        init(baseSections: [[SendConfirmField]], transactionError: Error?, customSendButtonTitle: String?, customSendingButtonTitle: String?, customSentButtonTitle: String?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
             self.baseSections = baseSections
             self.transactionError = transactionError
             self.customSendButtonTitle = customSendButtonTitle
             self.customSendingButtonTitle = customSendingButtonTitle
+            self.customSentButtonTitle = customSentButtonTitle
 
             super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
         }

@@ -5,13 +5,13 @@ import SwiftUI
 
 struct SendConfirmationNewView: View {
     @StateObject var viewModel: SendConfirmationNewViewModel
-    @Binding var isParentPresented: Bool
+    private let onSend: () -> Void
 
     @State private var feeSettingsPresented = false
 
-    init(sendData: SendDataNew, isParentPresented: Binding<Bool>) {
+    init(sendData: SendDataNew, onSend: @escaping () -> Void) {
         _viewModel = .init(wrappedValue: SendConfirmationNewViewModel(sendData: sendData))
-        _isParentPresented = isParentPresented
+        self.onSend = onSend
     }
 
     var body: some View {
@@ -83,26 +83,18 @@ struct SendConfirmationNewView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
 
-            Button(action: {
-                Task {
+            SlideButton(
+                styling: .text(
+                    start: data.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized,
+                    end: data.customSendingButtonTitle ?? "send.confirmation.sending".localized,
+                    success: data.customSentButtonTitle ?? "send.confirmation.sent".localized
+                ),
+                action: {
                     try await viewModel.send()
-
-                    await MainActor.run {
-                        HudHelper.instance.show(banner: .sent)
-                        isParentPresented = false
-                    }
+                }, completion: {
+                    onSend()
                 }
-            }) {
-                HStack(spacing: .margin8) {
-                    if viewModel.sending {
-                        ProgressView()
-                    }
-
-                    Text(viewModel.sending ? (data.customSendingButtonTitle ?? "send.confirmation.sending".localized) : (data.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized))
-                }
-            }
-            .disabled(viewModel.sending)
-            .buttonStyle(PrimaryButtonStyle(style: .yellow))
+            )
             .padding(.vertical, .margin16)
             .padding(.horizontal, .margin16)
         }
