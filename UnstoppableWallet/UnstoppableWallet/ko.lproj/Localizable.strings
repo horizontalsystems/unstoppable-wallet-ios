@@ -457,8 +457,10 @@
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
+"send.confirmation.sent" = "전송됨";
 "send.confirmation.slide_to_approve" = "Slide to Approve";
 "send.confirmation.approving" = "승인 중";
+"send.confirmation.approved" = "승인됨";
 "send.confirmation.slide_to_resend" = "재전송";
 "send.confirmation.slide_to_cancel" = "트랜잭션 취소";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
