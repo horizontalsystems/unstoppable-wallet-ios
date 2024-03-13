@@ -622,6 +622,7 @@
 
 "swap.confirmation.slide_to_swap" = "밀어서 결제하기";
 "swap.confirmation.swapping" = "스와핑";
+"swap.confirmation.swapped" = "스왑됨";
 "swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
