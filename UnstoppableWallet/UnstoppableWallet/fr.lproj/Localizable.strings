@@ -624,6 +624,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "swap.confirmation.slide_to_swap" = "Glisser pour changer";
 "swap.confirmation.swapping" = "Swapping";
+"swap.confirmation.swapped" = "Échangé";
 "swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
