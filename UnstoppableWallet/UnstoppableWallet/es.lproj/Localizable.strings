@@ -1785,6 +1785,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "fee_settings.network_fee" = "Cuota de transferencia";
 "fee_settings.network_fee.info" = "El coste estimado del envío de una transacción en la red.";
+"fee_settings.l1_fee" = "L1 Fee";
+"fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La complejidad de la transacción se mide en unidades llamadas \"gas\". El límite de gas es el máximo estimado de gas necesario para ejecutarlo. El gas utilizado será normalmente más bajo.";
 
