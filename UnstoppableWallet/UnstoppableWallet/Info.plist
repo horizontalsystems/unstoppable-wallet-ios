@@ -63,10 +63,6 @@
 	<string>$(hs_provider_api_key)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>InfuraProjectId</key>
-	<string>${infura_project_id}</string>
-	<key>InfuraProjectSecret</key>
-	<string>${infura_project_secret}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tg</string>

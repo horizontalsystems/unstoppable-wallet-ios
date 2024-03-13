@@ -48,8 +48,8 @@ extension EvmSyncSourceManager {
             if testNetManager.testNetEnabled {
                 return [
                     EvmSyncSource(
-                        name: "Infura Sepolia",
-                        rpcSource: .http(urls: [URL(string: "https://sepolia.infura.io/v3/\(AppConfig.infuraCredentials.id)")!], auth: AppConfig.infuraCredentials.secret),
+                        name: "BlocksDecoded Sepolia",
+                        rpcSource: .http(urls: [URL(string: "\(AppConfig.marketApiUrl)/v1/ethereum-rpc/sepolia")!], auth: nil),
                         transactionSource: EvmKit.TransactionSource(
                             name: "sepolia.etherscan.io",
                             type: .etherscan(apiBaseUrl: "https://api-sepolia.etherscan.io", txBaseUrl: "https://sepiloa.etherscan.io", apiKey: AppConfig.etherscanKey)
@@ -60,7 +60,7 @@ extension EvmSyncSourceManager {
                 return [
                     EvmSyncSource(
                         name: "BlocksDecoded",
-                        rpcSource: .http(urls: [URL(string: "\(AppConfig.marketApiUrl)/v1/infura")!], auth: nil),
+                        rpcSource: .http(urls: [URL(string: "\(AppConfig.marketApiUrl)/v1/ethereum-rpc/mainnet")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                     EvmSyncSource(

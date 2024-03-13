@@ -7,8 +7,7 @@ class FeeRateProvider {
 
     init() {
         let providerConfig = FeeProviderConfig(
-            ethEvmUrl: FeeProviderConfig.infuraUrl(projectId: AppConfig.infuraCredentials.id),
-            ethEvmAuth: AppConfig.infuraCredentials.secret,
+            ethEvmUrl: "\(AppConfig.marketApiUrl)/v1/ethereum-rpc/mainnet",
             bscEvmUrl: FeeProviderConfig.defaultBscEvmUrl,
             mempoolSpaceUrl: AppConfig.mempoolSpaceUrl
         )
