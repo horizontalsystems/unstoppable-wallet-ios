@@ -12,7 +12,6 @@ class MarketWatchlistDecorator {
 
         priceChangeType = MarketModule.PriceChangeType.sortingTypes.at(index: service.initialIndex) ?? .day
     }
-
 }
 
 extension MarketWatchlistDecorator: IMarketSingleSortHeaderDecorator {

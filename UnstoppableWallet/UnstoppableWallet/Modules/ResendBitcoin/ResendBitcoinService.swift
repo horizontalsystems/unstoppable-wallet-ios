@@ -23,7 +23,7 @@ class ResendBitcoinService {
     @PostPublished private(set) var state: State = .unsendable(error: nil)
 
     init(transactionRecord: BitcoinTransactionRecord, feeRange: Range<Int>, feeRateProvider: IFeeRateProvider, originalSize: Int, type: ResendTransactionType, adapter: BitcoinBaseAdapter, token: Token, currency: Currency, price: Decimal?, logger: Logger) {
-        self.transactionHash = transactionRecord.transactionHash
+        transactionHash = transactionRecord.transactionHash
         self.type = type
         self.feeRange = feeRange
         self.adapter = adapter
@@ -91,12 +91,12 @@ extension ResendBitcoinService {
         Task { [weak self, transactionHash, adapter, type] in
             do {
                 switch type {
-                    case .speedUp:
-                        let (replacement, record) = try adapter.speedUpTransaction(transactionHash: transactionHash, minFee: minFee)
-                        self?.syncItems(replacement: replacement, transactionRecord: record)
-                    case .cancel:
-                        let (replacement, record) = try adapter.cancelTransaction(transactionHash: transactionHash, minFee: minFee)
-                        self?.syncItems(replacement: replacement, transactionRecord: record)
+                case .speedUp:
+                    let (replacement, record) = try adapter.speedUpTransaction(transactionHash: transactionHash, minFee: minFee)
+                    self?.syncItems(replacement: replacement, transactionRecord: record)
+                case .cancel:
+                    let (replacement, record) = try adapter.cancelTransaction(transactionHash: transactionHash, minFee: minFee)
+                    self?.syncItems(replacement: replacement, transactionRecord: record)
                 }
                 self?.state = .sendable
             } catch {

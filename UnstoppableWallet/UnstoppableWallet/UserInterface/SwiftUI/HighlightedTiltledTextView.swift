@@ -6,9 +6,9 @@ struct HighlightedTitledTextView: View {
     private let cautionType: CautionType
 
     init(caution: TitledCaution) {
-        self.title = caution.title
-        self.text = caution.text
-        self.cautionType = caution.type
+        title = caution.title
+        text = caution.text
+        cautionType = caution.type
     }
 
     var body: some View {

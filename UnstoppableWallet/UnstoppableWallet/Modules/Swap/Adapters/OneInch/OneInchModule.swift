@@ -22,7 +22,6 @@ class OneInchModule {
         let oneInchProvider = OneInchProvider(swapKit: swapKit, evmKit: evmKit, rpcSource: rpcSource)
         print("OneInchProvider router Address: \(oneInchProvider.routerAddress.hex)")
 
-
         tradeService = OneInchTradeService(
             oneInchProvider: oneInchProvider,
             state: dataSourceState,

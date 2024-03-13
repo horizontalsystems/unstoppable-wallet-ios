@@ -63,7 +63,6 @@ class TechnicalIndicatorCell: BaseThemeCell {
         detailsLabel.textColor = .themeLeah
         detailsLabel.numberOfLines = 0
 
-
         wrapperView.addSubview(disclaimerLabel)
         disclaimerLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)

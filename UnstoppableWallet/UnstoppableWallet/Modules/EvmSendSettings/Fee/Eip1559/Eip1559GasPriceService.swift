@@ -97,7 +97,7 @@ class Eip1559GasPriceService {
     }
 
     private func handle(gasPrice: GasPrice) {
-        guard case .eip1559(let maxFeePerGas, let maxPriorityFeePerGas) = gasPrice else {
+        guard case let .eip1559(maxFeePerGas, maxPriorityFeePerGas) = gasPrice else {
             status = .failed(EvmFeeModule.GasDataError.unknownError)
             return
         }

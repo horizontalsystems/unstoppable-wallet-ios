@@ -1,9 +1,9 @@
 import Chart
 import Combine
 import Foundation
+import MarketKit
 import ThemeKit
 import UIKit
-import MarketKit
 
 class CoinIndicatorViewItemFactory {
     static let sectionNames = ["coin_analytics.indicators.summary".localized] + ChartIndicator.Category.allCases.map(\.title)
@@ -183,7 +183,6 @@ extension CoinIndicatorViewItemFactory {
 
         return (["technical_advice.other.title".localized] + advices).joined(separator: "\n\n")
     }
-
 }
 
 extension TechnicalAdvice.Advice {

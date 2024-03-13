@@ -1,6 +1,6 @@
+import SwiftUI
 import ThemeKit
 import UIKit
-import SwiftUI
 
 enum ContactBookContactModule {
     static func viewController(mode: Mode, onUpdateContact: (() -> Void)? = nil) -> UIViewController? {

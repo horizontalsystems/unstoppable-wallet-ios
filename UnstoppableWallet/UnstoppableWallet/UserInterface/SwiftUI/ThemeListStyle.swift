@@ -6,7 +6,6 @@ enum ThemeListStyle {
     case borderedLawrence
     case transparent
     case transparentInline
-
 }
 
 struct ThemeListStyleModifier: ViewModifier {

@@ -56,8 +56,8 @@ struct TransactionContactSelectView: View {
                                 }
                             }
                         }
-                            .themeListStyle(.transparent)
-                            .padding(.bottom, .margin32)
+                        .themeListStyle(.transparent)
+                        .padding(.bottom, .margin32)
                     }
                 } else {
                     PlaceholderViewNew(image: Image("not_found_48"), text: "no suitable contacts".localized)

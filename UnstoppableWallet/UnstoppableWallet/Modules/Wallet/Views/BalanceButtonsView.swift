@@ -129,7 +129,7 @@ class BalanceButtonsView: UIView {
 
     func bind(buttons: [WalletModule.Button: ButtonState], sendAction: (() -> Void)?, withdrawAction: (() -> Void)?, receiveAction: (() -> Void)?, depositAction: (() -> Void)?, swapAction: (() -> Void)?, chartAction: (() -> Void)?) {
         let buttonCount = buttons.filter { _, value in value != .hidden }.count
-        let showIcons = (1...2).contains(buttonCount)
+        let showIcons = (1 ... 2).contains(buttonCount)
 
         sendButton.set(style: .yellow, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_up_right_24")) : .none)
         receiveButton.set(style: .gray, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_down_left_24")) : .none)

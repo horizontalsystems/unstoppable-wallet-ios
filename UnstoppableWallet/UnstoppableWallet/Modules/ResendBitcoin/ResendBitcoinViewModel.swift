@@ -60,83 +60,83 @@ class ResendBitcoinViewModel {
 
         for item in items {
             switch item {
-                case let item as SendConfirmationAmountViewItem:
-                    primaryViewItems.append(
-                        .amount(
-                            iconUrl: service.token.coin.imageUrl,
-                            iconPlaceholderImageName: service.token.placeholderImageName,
-                            coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "n/a".localized,
-                            currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
-                            type: .neutral
-                        )
+            case let item as SendConfirmationAmountViewItem:
+                primaryViewItems.append(
+                    .amount(
+                        iconUrl: service.token.coin.imageUrl,
+                        iconPlaceholderImageName: service.token.placeholderImageName,
+                        coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "n/a".localized,
+                        currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                        type: .neutral
                     )
+                )
 
-                    let contactData = contactLabelService.contactData(for: item.receiver.raw)
+                let contactData = contactLabelService.contactData(for: item.receiver.raw)
 
-                    primaryViewItems.append(
-                        .address(
-                            title: item.sentToSelf ? "send.confirmation.own".localized : "send.confirmation.to".localized,
-                            value: item.receiver.raw,
-                            valueTitle: item.receiver.title,
-                            contactAddress: contactData.contactAddress
-                        )
+                primaryViewItems.append(
+                    .address(
+                        title: item.sentToSelf ? "send.confirmation.own".localized : "send.confirmation.to".localized,
+                        value: item.receiver.raw,
+                        valueTitle: item.receiver.title,
+                        contactAddress: contactData.contactAddress
                     )
-                    if let contactName = contactData.name {
-                        primaryViewItems.append(
-                            .value(
-                                iconName: nil,
-                                title: "send.confirmation.contact_name".localized,
-                                value: contactName,
-                                type: .regular
-                            )
-                        )
-                    }
-                case let item as SendConfirmationMemoViewItem:
+                )
+                if let contactName = contactData.name {
                     primaryViewItems.append(
                         .value(
                             iconName: nil,
-                            title: "send.confirmation.memo".localized,
-                            value: item.memo,
+                            title: "send.confirmation.contact_name".localized,
+                            value: contactName,
                             type: .regular
                         )
                     )
-                case let item as SendConfirmationFeeViewItem:
-                    secondaryViewItems.append(
-                        .fee(
-                            title: "send.confirmation.fee".localized,
-                            coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "",
-                            currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
-                        )
+                }
+            case let item as SendConfirmationMemoViewItem:
+                primaryViewItems.append(
+                    .value(
+                        iconName: nil,
+                        title: "send.confirmation.memo".localized,
+                        value: item.memo,
+                        type: .regular
                     )
-                case let item as SendConfirmationLockUntilViewItem:
-                    primaryViewItems.append(
-                        .value(
-                            iconName: "lock_24",
-                            title: "send.confirmation.time_lock".localized,
-                            value: item.lockValue,
-                            type: .regular
-                        )
+                )
+            case let item as SendConfirmationFeeViewItem:
+                secondaryViewItems.append(
+                    .fee(
+                        title: "send.confirmation.fee".localized,
+                        coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "",
+                        currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
                     )
-                case _ as SendConfirmationDisabledRbfViewItem:
-                    primaryViewItems.append(
-                        .value(
-                            iconName: nil,
-                            title: "send.confirmation.replace_by_fee".localized,
-                            value: "send.confirmation.replace_by_fee.disabled".localized,
-                            type: .regular
-                        )
+                )
+            case let item as SendConfirmationLockUntilViewItem:
+                primaryViewItems.append(
+                    .value(
+                        iconName: "lock_24",
+                        title: "send.confirmation.time_lock".localized,
+                        value: item.lockValue,
+                        type: .regular
                     )
-                case let item as ReplacedTransactionHashViewItem:
-                    primaryViewItems.append(
-                        .value(
-                            iconName: nil,
-                            title: "send.confirmation.replaced_transactions".localized,
-                            value: "\(item.hashes.count)",
-                            type: .regular
-                        )
+                )
+            case _ as SendConfirmationDisabledRbfViewItem:
+                primaryViewItems.append(
+                    .value(
+                        iconName: nil,
+                        title: "send.confirmation.replace_by_fee".localized,
+                        value: "send.confirmation.replace_by_fee.disabled".localized,
+                        type: .regular
                     )
+                )
+            case let item as ReplacedTransactionHashViewItem:
+                primaryViewItems.append(
+                    .value(
+                        iconName: nil,
+                        title: "send.confirmation.replaced_transactions".localized,
+                        value: "\(item.hashes.count)",
+                        type: .regular
+                    )
+                )
 
-                default: ()
+            default: ()
             }
         }
 
@@ -145,22 +145,22 @@ class ResendBitcoinViewModel {
 
     private func sync(state: ResendBitcoinService.State) {
         switch state {
-            case let .unsendable(error):
-                sendEnabledRelay.accept(false)
-                if let error {
-                    sendFailedRelay.accept(error.smartDescription)
-                }
-            case .sendable:
-                sendEnabledRelay.accept(true)
-            case .sending:
-                sendEnabledRelay.accept(false)
-                sendingRelay.accept(())
-            case .sent:
-                sendEnabledRelay.accept(false)
-                sendSuccessRelay.accept(())
-            case let .failed(error):
-                sendEnabledRelay.accept(true)
+        case let .unsendable(error):
+            sendEnabledRelay.accept(false)
+            if let error {
                 sendFailedRelay.accept(error.smartDescription)
+            }
+        case .sendable:
+            sendEnabledRelay.accept(true)
+        case .sending:
+            sendEnabledRelay.accept(false)
+            sendingRelay.accept(())
+        case .sent:
+            sendEnabledRelay.accept(false)
+            sendSuccessRelay.accept(())
+        case let .failed(error):
+            sendEnabledRelay.accept(true)
+            sendFailedRelay.accept(error.smartDescription)
         }
     }
 }

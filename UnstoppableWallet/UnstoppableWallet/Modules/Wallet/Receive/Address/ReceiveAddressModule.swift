@@ -3,7 +3,7 @@ import SwiftUI
 import UIKit
 
 enum ReceiveAddressModule {
-    static func view(wallet: Wallet, onDismiss: (() -> ())? = nil) -> some View {
+    static func view(wallet: Wallet, onDismiss: (() -> Void)? = nil) -> some View {
         let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()
 
@@ -94,7 +94,7 @@ extension ReceiveAddressModule {
             }
         }
 
-        static func <(lhs: AddressType, rhs: AddressType) -> Bool { lhs.rawValue < rhs.rawValue }
+        static func < (lhs: AddressType, rhs: AddressType) -> Bool { lhs.rawValue < rhs.rawValue }
     }
 
     struct ViewItem {

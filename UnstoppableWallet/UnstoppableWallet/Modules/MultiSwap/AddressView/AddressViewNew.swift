@@ -10,7 +10,7 @@ struct AddressViewNew: View {
     @Binding var text: String
     @Binding var result: AddressInput.Result
 
-    init(initial: AddressInput.Initial, text: Binding<String>, result : Binding<AddressInput.Result>) {
+    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>) {
         _viewModel = StateObject(wrappedValue: AddressViewModelNew(initial: initial))
 
         _text = text

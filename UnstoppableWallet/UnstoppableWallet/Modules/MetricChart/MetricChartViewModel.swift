@@ -39,7 +39,7 @@ class MetricChartViewModel {
         sync(state: service.state)
     }
 
-    private func sync(interval: HsPeriodType) {
+    private func sync(interval _: HsPeriodType) {
 //        intervalIndexRelay.accept(service.intervals.firstIndex(of: interval) ?? 0)
         let index = service.intervals.firstIndex(of: service.interval) ?? 0
         needUpdateIntervalsRelay.accept(index)
@@ -74,7 +74,7 @@ class MetricChartViewModel {
 }
 
 extension MetricChartViewModel: IChartViewModel {
-    var showAll: Bool { service.intervals.contains(where: { $0.byStartTime }) }
+    var showAll: Bool { service.intervals.contains(where: \.byStartTime) }
 
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()

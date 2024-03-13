@@ -29,11 +29,11 @@ class MarketOverviewTopPairsViewModel {
     }
 }
 
- extension MarketOverviewTopPairsViewModel {
+extension MarketOverviewTopPairsViewModel {
     func marketPair(uid: String) -> MarketPair? {
         service.marketPairs?.first { $0.uid == uid }
     }
- }
+}
 
 extension MarketOverviewTopPairsViewModel: IBaseMarketOverviewTopListViewModel {
     var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> {

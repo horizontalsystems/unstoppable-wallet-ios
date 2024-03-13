@@ -1,8 +1,8 @@
 import ComponentKit
 import SnapKit
+import SwiftUI
 import ThemeKit
 import UIKit
-import SwiftUI
 
 class ScanQrViewController: ThemeViewController {
     private let scanView: ScanQrView

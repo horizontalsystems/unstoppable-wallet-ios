@@ -462,7 +462,7 @@ extension ContactBookManager {
     }
 }
 
-extension Array where Element == Contact {
+extension [Contact] {
     func by(blockchainUid: String?) -> Self {
         guard let blockchainUid else { return self }
         return filter { $0.address(blockchainUid: blockchainUid) != nil }

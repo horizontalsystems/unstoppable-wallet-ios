@@ -319,7 +319,7 @@ extension BitcoinBaseAdapter {
 
         let info = try abstractKit.sendInfo(for: amount, toAddress: address, memo: memo, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)
         return SendInfo(
-            unspentOutputs: info.unspentOutputs.map { $0.info },
+            unspentOutputs: info.unspentOutputs.map(\.info),
             fee: Decimal(info.fee) / coinRate,
             changeValue: info.changeValue.map { Decimal($0) / coinRate },
             changeAddress: info.changeAddress?.stringValue
@@ -367,7 +367,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         []
     }
 
-    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address _: String?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
             .map { transactions in
                 transactions.compactMap { transaction -> TransactionRecord? in
@@ -383,7 +383,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
             .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address _: String?, limit: Int) -> Single<[TransactionRecord]> {
         let bitcoinFilter: TransactionFilterType?
         switch filter {
         case .all: bitcoinFilter = nil

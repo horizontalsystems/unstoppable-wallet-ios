@@ -184,7 +184,7 @@ extension BinanceAdapter: ITransactionsAdapter {
             : "https://testnet-explorer.binance.org/address/" + address
     }
 
-    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address _: String?) -> Observable<[TransactionRecord]> {
         let binanceChainFilter: TransactionFilterType?
         switch filter {
         case .all: binanceChainFilter = nil
@@ -200,7 +200,7 @@ extension BinanceAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address _: String?, limit: Int) -> Single<[TransactionRecord]> {
         let binanceChainFilter: TransactionFilterType?
 
         switch filter {

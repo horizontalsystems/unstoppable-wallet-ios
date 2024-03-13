@@ -2,7 +2,7 @@ import SwiftUI
 
 struct StepChangeButtonsView<Content: View>: View {
     @ViewBuilder let content: Content
-    let onTap: (StepChangeButtonsViewDirection) -> ()
+    let onTap: (StepChangeButtonsViewDirection) -> Void
 
     var body: some View {
         HStack(spacing: .margin16) {

@@ -18,7 +18,7 @@ struct UsedAddressesView: View {
                     .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
 
                 TabHeaderView(
-                    tabs: usedAddresses.map { key, _ in key }.sorted().map { $0.title },
+                    tabs: usedAddresses.map { key, _ in key }.sorted().map(\.title),
                     currentTabIndex: $currentTabIndex
                 )
 

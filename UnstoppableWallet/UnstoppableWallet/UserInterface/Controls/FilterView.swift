@@ -259,7 +259,7 @@ extension FilterView {
         case all
         case item(title: String)
 
-        public static func ==(lhs: Self, rhs: Self) -> Bool {
+        public static func == (lhs: Self, rhs: Self) -> Bool {
             switch (lhs, rhs) {
             case let (.item(lh), .item(rh)): return lh == rh
             case (.all, .all): return true

@@ -126,7 +126,7 @@ struct ContactBookView: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context _: Context) -> UIViewController {
-        //todo: must provide any VC
+        // TODO: must provide any VC
         ContactBookModule.viewController(mode: mode, presented: presented) ?? UIViewController()
     }
 
