@@ -2860,6 +2860,8 @@
 		D061A5332AA846FA009AAD57 /* SecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */; };
 		D06669022A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
+		D06A171B2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
+		D06A171C2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06B302C2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
 		D06B302D2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
 		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
@@ -4679,6 +4681,7 @@
 		D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTronTokenBlockchainService.swift; sourceTree = "<group>"; };
 		D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsView.swift; sourceTree = "<group>"; };
 		D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronRecipientAddressViewModel.swift; sourceTree = "<group>"; };
+		D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSettingsViewHelper.swift; sourceTree = "<group>"; };
 		D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsViewModel.swift; sourceTree = "<group>"; };
 		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
 		D07157DD2A2DDA09006F141F /* SendTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronService.swift; sourceTree = "<group>"; };
@@ -8890,6 +8893,7 @@
 		D0B462F12B5A470F0027815D /* FeeSettings */ = {
 			isa = PBXGroup;
 			children = (
+				D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */,
 				ABC9ABCA9E26E2B6A5E0D43E /* Eip1559FeeSettingsView.swift */,
 				ABC9A8E02C3486492E3B12F2 /* Eip1559FeeSettingsViewModel.swift */,
 				D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */,
@@ -10741,6 +10745,7 @@
 				ABC9AF231709386971D1A7AA /* WCSignMessageRequestViewModel.swift in Sources */,
 				ABC9A45C4CF0128410051774 /* WCSignMessageRequestModule.swift in Sources */,
 				ABC9A6C1F0B51698A7BC0B2A /* WCSignMessageRequestService.swift in Sources */,
+				D06A171C2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */,
 				ABC9AACB5CF2190A3D7C39AE /* WCSignMessageRequestViewController.swift in Sources */,
 				11B359EEA14A9DBB8B43BFEB /* WCSignEthereumTransactionRequestModule.swift in Sources */,
 				11B357408E3CCC0B93C42F67 /* WCSignEthereumTransactionRequestViewModel.swift in Sources */,
@@ -12228,6 +12233,7 @@
 				ABC9AFFE5C166606FD561A21 /* WCSendEthereumTransactionRequestService.swift in Sources */,
 				ABC9A0F2D481BBE31568347F /* WCSendEthereumTransactionRequestViewModel.swift in Sources */,
 				ABC9A23C433DC06FB7791285 /* WCSignMessageRequestViewModel.swift in Sources */,
+				D06A171B2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */,
 				ABC9A769D84D08514D26FFBC /* WCSignMessageRequestModule.swift in Sources */,
 				ABC9A60B3523F167B23648E1 /* WCSignMessageRequestService.swift in Sources */,
 				ABC9A84D1417A540D100EEB4 /* WCSignMessageRequestViewController.swift in Sources */,

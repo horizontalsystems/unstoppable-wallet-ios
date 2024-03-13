@@ -10,6 +10,7 @@ struct LegacyFeeSettingsView: View {
     private var currency: Currency
     @Binding private var feeTokenRate: Decimal?
 
+    private var helper = FeeSettingsViewHelper()
     @Environment(\.presentationMode) private var presentationMode
 
     init(service: EvmTransactionService, blockchainType: BlockchainType, feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) {
@@ -24,39 +25,40 @@ struct LegacyFeeSettingsView: View {
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
-                let (feeCoinValue, feeCurrencyValue, gasLimit) = FeeSettings.feeAmount(
+                let (l2FeeValue, l1FeeValue, gasLimitValue) = helper.feeAmount(
                     feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate, loading: loading,
-                    gasLimit: feeData?.gasLimit, gasPrice: viewModel.service.gasPrice
+                    feeData: feeData, gasPrice: viewModel.service.gasPrice
                 )
 
                 ListSection {
-                    row(
-                        viewItem: .init(
-                            title: "fee_settings.network_fee".localized,
-                            value: feeCoinValue,
-                            subValue: feeCurrencyValue
-                        ),
+                    helper.row(
+                        title: "fee_settings.network_fee".localized,
+                        feeValue: l2FeeValue,
                         description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
                     )
-                    row(
-                        viewItem: .init(
-                            title: "fee_settings.gas_limit".localized,
-                            value: gasLimit,
-                            subValue: nil
-                        ),
+                    if let l1FeeValue {
+                        helper.row(
+                            title: "fee_settings.l1_fee".localized,
+                            feeValue: l1FeeValue,
+                            description: .init(title: "fee_settings.l1_fee".localized, description: "fee_settings.l1_fee.info".localized)
+                        )
+                    }
+                    helper.row(
+                        title: "fee_settings.gas_limit".localized,
+                        feeValue: gasLimitValue,
                         description: .init(title: "fee_settings.gas_limit".localized, description: "fee_settings.gas_limit.info".localized)
                     )
                 }
 
                 VStack(spacing: 0) {
-                    headerRow(
+                    helper.headerRow(
                         title: "fee_settings.gas_price".localized,
                         description: .init(
                             title: "fee_settings.gas_price".localized,
                             description: "fee_settings.gas_price.info".localized
                         )
                     )
-                    inputNumberWithSteps(
+                    helper.inputNumberWithSteps(
                         placeholder: "",
                         text: $viewModel.gasPrice,
                         cautionState: $viewModel.gasPriceCautionState,
@@ -65,14 +67,14 @@ struct LegacyFeeSettingsView: View {
                 }
 
                 VStack(spacing: 0) {
-                    headerRow(
+                    helper.headerRow(
                         title: "evm_send_settings.nonce".localized,
                         description: .init(
                             title: "evm_send_settings.nonce".localized,
                             description: "evm_send_settings.nonce.info".localized
                         )
                     )
-                    inputNumberWithSteps(
+                    helper.inputNumberWithSteps(
                         placeholder: "",
                         text: $viewModel.nonce,
                         cautionState: $viewModel.nonceCautionState,
@@ -107,51 +109,5 @@ struct LegacyFeeSettingsView: View {
                 }
             }
         }
-    }
-
-    @ViewBuilder private func row(viewItem: FeeSettings.ViewItem, description: AlertView.InfoDescription) -> some View {
-        HStack(spacing: .margin8) {
-            Text(viewItem.title)
-                .textSubhead2()
-                .modifier(Informed(description: description))
-
-            Spacer()
-
-            VStack(alignment: .trailing, spacing: 1) {
-                if let value = viewItem.value {
-                    Text(value).textSubhead1(color: .themeLeah)
-
-                    if let subValue = viewItem.subValue {
-                        Text(subValue).textSubhead2()
-                    }
-                } else {
-                    ProgressView().progressViewStyle(.circular)
-                }
-            }
-        }
-        .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin12, trailing: .margin16))
-        .frame(height: .heightCell56)
-    }
-
-    @ViewBuilder private func headerRow(title: String, description: AlertView.InfoDescription) -> some View {
-        Text(title)
-            .textSubhead1()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .modifier(Informed(description: description))
-    }
-
-    @ViewBuilder private func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {
-        InputTextRow(vertical: .margin8) {
-            StepChangeButtonsView(content: {
-                InputTextView(
-                    placeholder: placeholder,
-                    text: text
-                )
-                .font(.themeBody)
-                .keyboardType(.numberPad)
-                .autocorrectionDisabled()
-            }, onTap: onTap)
-        }
-        .modifier(FieldCautionBorder(cautionState: cautionState))
     }
 }
