@@ -193,7 +193,7 @@ struct MultiSwapView: View {
                 selectTokenInPresented = true
             }
             .sheet(isPresented: $selectTokenInPresented) {
-                MultiSwapTokenSelectView(token: $viewModel.tokenIn, isPresented: $selectTokenInPresented)
+                MultiSwapTokenSelectView(currentToken: $viewModel.tokenIn, otherToken: viewModel.tokenOut, isPresented: $selectTokenInPresented)
             }
         }
     }
@@ -269,7 +269,7 @@ struct MultiSwapView: View {
                 selectTokenOutPresented = true
             }
             .sheet(isPresented: $selectTokenOutPresented) {
-                MultiSwapTokenSelectView(token: $viewModel.tokenOut, isPresented: $selectTokenOutPresented)
+                MultiSwapTokenSelectView(currentToken: $viewModel.tokenOut, otherToken: viewModel.tokenIn, isPresented: $selectTokenOutPresented)
             }
         }
     }
@@ -290,7 +290,7 @@ struct MultiSwapView: View {
                 if let token {
                     VStack(alignment: .leading, spacing: 1) {
                         Text(token.coin.code).textSubhead1(color: .themeLeah)
-                        Text((token.protocolName ?? "coin_platforms.native".localized).uppercased()).textMicro()
+                        Text((token.badge ?? "coin_platforms.native".localized).uppercased()).textMicro()
                     }
                 } else {
                     Text("swap.select".localized).textSubhead1(color: .themeJacob)
