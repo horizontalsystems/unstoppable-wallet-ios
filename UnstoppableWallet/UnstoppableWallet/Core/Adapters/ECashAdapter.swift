@@ -22,30 +22,30 @@ class ECashAdapter: BitcoinBaseAdapter {
             }
 
             eCashKit = try ECashKit.Kit(
-                    seed: seed,
-                    walletId: wallet.account.id,
-                    syncMode: syncMode,
-                    networkType: networkType,
-                    confirmationsThreshold: Self.eCashConfirmationsThreshold,
-                    logger: logger
+                seed: seed,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: Self.eCashConfirmationsThreshold,
+                logger: logger
             )
         case let .hdExtendedKey(key):
             eCashKit = try ECashKit.Kit(
-                    extendedKey: key,
-                    walletId: wallet.account.id,
-                    syncMode: syncMode,
-                    networkType: networkType,
-                    confirmationsThreshold: Self.eCashConfirmationsThreshold,
-                    logger: logger
+                extendedKey: key,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: Self.eCashConfirmationsThreshold,
+                logger: logger
             )
         case let .btcAddress(address, _, _):
             eCashKit = try ECashKit.Kit(
-                    watchAddress: address,
-                    walletId: wallet.account.id,
-                    syncMode: syncMode,
-                    networkType: networkType,
-                    confirmationsThreshold: Self.eCashConfirmationsThreshold,
-                    logger: logger
+                watchAddress: address,
+                walletId: wallet.account.id,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: Self.eCashConfirmationsThreshold,
+                logger: logger
             )
         default:
             throw AdapterError.unsupportedAccount

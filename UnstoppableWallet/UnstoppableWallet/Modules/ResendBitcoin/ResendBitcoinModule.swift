@@ -4,10 +4,10 @@ import UIKit
 enum ResendBitcoinModule {
     private static func replacementInfo(adapter: BitcoinBaseAdapter, transactionHash: String, type: ResendTransactionType) -> (Int, Range<Int>)? {
         switch type {
-            case .speedUp:
-                return adapter.speedUpTransactionInfo(transactionHash: transactionHash)
-            case .cancel:
-                return adapter.cancelTransactionInfo(transactionHash: transactionHash)
+        case .speedUp:
+            return adapter.speedUpTransactionInfo(transactionHash: transactionHash)
+        case .cancel:
+            return adapter.cancelTransactionInfo(transactionHash: transactionHash)
         }
     }
 
@@ -47,7 +47,7 @@ extension ResendBitcoinModule {
         case wrongTransaction
 
         var errorDescription: String? {
-            return "alert.unknown_error".localized
+            "alert.unknown_error".localized
         }
     }
 }
@@ -55,10 +55,10 @@ extension ResendBitcoinModule {
 extension ReplacementTransactionBuildError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-            case .feeTooLow: return "alert.fee_too_low".localized
-            case .rbfNotEnabled: return "alert.rbf_not_Enabled".localized
-            case .invalidTransaction, .noPreviousOutput, .unableToReplace: return "alert.unable_to_replace".localized
-            case .alreadyReplaced: return "alert.already_replaced".localized
+        case .feeTooLow: return "alert.fee_too_low".localized
+        case .rbfNotEnabled: return "alert.rbf_not_Enabled".localized
+        case .invalidTransaction, .noPreviousOutput, .unableToReplace: return "alert.unable_to_replace".localized
+        case .alreadyReplaced: return "alert.already_replaced".localized
         }
     }
 }

@@ -1,9 +1,9 @@
 import BigInt
 import EvmKit
 import HsExtensions
+import MarketKit
 import ThemeKit
 import UIKit
-import MarketKit
 
 enum SwapApproveConfirmationModule {
     static func viewController(sendData: SendEvmData, blockchainType: BlockchainType, revokeAllowance: Bool = false, delegate: ISwapApproveDelegate?) throws -> UIViewController {

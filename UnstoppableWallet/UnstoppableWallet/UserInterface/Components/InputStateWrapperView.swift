@@ -19,7 +19,7 @@ class InputStateWrapperView: UIView, ISizeAwareView {
         addSubview(successImageView)
         successImageView.snp.makeConstraints { maker in
             maker.edges.equalTo(spinner)
-                                  }
+        }
 
         successImageView.image = UIImage(named: "circle_check_20")?.withRenderingMode(.alwaysTemplate)
         successImageView.tintColor = .themeRemus

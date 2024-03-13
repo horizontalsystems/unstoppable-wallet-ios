@@ -3,20 +3,20 @@ import ThemeKit
 
 public struct SlideButtonStyling {
     public init(
-            indicatorSize: CGFloat = .heightButton,
-            indicatorColor: Color = .themeJacob,
-            indicatorBrightness: Double = 0.0,
-            backgroundColor: Color = .themeSteel20,
-            start: String = "",
-            end: String = "",
-            success: String = "",
-            textColor: Color = .themeGray,
-            textFont: Font = .themeHeadline2,
-            indicator: String = "arrow_medium_2_right_24",
-            indicatorSuccess: String = "check_2_24",
-            indicatorDisabled: String = "arrow_medium_2_right_24",
-            textHiddenBehindIndicator: Bool = true,
-            textShimmers: Bool = true
+        indicatorSize: CGFloat = .heightButton,
+        indicatorColor: Color = .themeJacob,
+        indicatorBrightness: Double = 0.0,
+        backgroundColor: Color = .themeSteel20,
+        start: String = "",
+        end: String = "",
+        success: String = "",
+        textColor: Color = .themeGray,
+        textFont: Font = .themeHeadline2,
+        indicator: String = "arrow_medium_2_right_24",
+        indicatorSuccess: String = "check_2_24",
+        indicatorDisabled: String = "arrow_medium_2_right_24",
+        textHiddenBehindIndicator: Bool = true,
+        textShimmers: Bool = true
     ) {
         self.indicatorSize = indicatorSize
         self.indicatorBrightness = indicatorBrightness

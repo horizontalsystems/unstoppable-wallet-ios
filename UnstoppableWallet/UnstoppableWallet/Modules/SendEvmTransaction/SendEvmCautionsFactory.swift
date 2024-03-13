@@ -11,7 +11,7 @@ class SendEvmCautionsFactory {
                             title: "alert.unknown_error".localized,
                             text: "",
                             type: .error
-                        )
+                        ),
                     ]
                 case .insufficientBalance:
                     return [

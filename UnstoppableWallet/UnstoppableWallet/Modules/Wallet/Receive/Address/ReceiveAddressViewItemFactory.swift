@@ -7,8 +7,8 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
         var description: ReceiveAddressModule.HighlightedDescription?
         if item.watchAccount {
             description = .init(
-                    text: "deposit.warning.watch_account".localized,
-                    style: .yellow
+                text: "deposit.warning.watch_account".localized,
+                style: .yellow
             )
         }
 

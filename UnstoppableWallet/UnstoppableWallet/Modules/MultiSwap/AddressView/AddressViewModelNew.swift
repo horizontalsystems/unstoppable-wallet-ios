@@ -84,8 +84,8 @@ class AddressViewModelNew: ObservableObject {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
                 .subscribe(
-                        onSuccess: { [weak self] in self?.sync($0, uri: uri) },
-                        onError: { [weak self] in self?.sync($0, text: text) }
+                    onSuccess: { [weak self] in self?.sync($0, uri: uri) },
+                    onError: { [weak self] in self?.sync($0, text: text) }
                 )
                 .disposed(by: addressParserDisposeBag)
         } catch {

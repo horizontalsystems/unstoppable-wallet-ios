@@ -1,11 +1,11 @@
 import ComponentKit
+import MarketKit
 import RxCocoa
 import RxSwift
 import SnapKit
+import SwiftUI
 import ThemeKit
 import UIKit
-import MarketKit
-import SwiftUI
 
 class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
     private let approveButton = PrimaryButton()
@@ -72,7 +72,7 @@ struct SwapApproveConfirmationView: UIViewControllerRepresentable {
                 blockchainType: blockchainType,
                 delegate: delegate
             )
-            return ThemeNavigationController(rootViewController:viewController)
+            return ThemeNavigationController(rootViewController: viewController)
         } catch {
             return ThemeNavigationController(rootViewController: ErrorViewController(text: error.localizedDescription))
         }

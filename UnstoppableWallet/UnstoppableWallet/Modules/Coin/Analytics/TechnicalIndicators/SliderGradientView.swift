@@ -10,7 +10,7 @@ class TechnicalIndicatorSliderView: UIView {
         .themeRedD,
         UIColor(hex: 0xFF7A00),
         .themeYellowD,
-        .themeGreenD
+        .themeGreenD,
     ]
 
     private let sliderView = UIView()
@@ -42,7 +42,8 @@ class TechnicalIndicatorSliderView: UIView {
         addSubview(gradientView)
         gradientView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
-            maker.height.equalTo(Self.height)}
+            maker.height.equalTo(Self.height)
+        }
 
         gradientView.clipsToBounds = true
         gradientView.cornerRadius = .cornerRadius8
@@ -86,14 +87,14 @@ class TechnicalIndicatorSliderView: UIView {
 class SliderGradientView: UIView {
     static let colors: [UIColor] = [
         .themeRedD.withAlphaComponent(0.2),
-        UIColor(hex: 0xFFd600).withAlphaComponent(0.2),
+        UIColor(hex: 0xFFD600).withAlphaComponent(0.2),
         .themeGreenD.withAlphaComponent(0.2),
     ]
 
-    override func draw(_ rect: CGRect) {
+    override func draw(_: CGRect) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
-        gradientLayer.colors = Self.colors.map(\.self.cgColor)
+        gradientLayer.colors = Self.colors.map(\.cgColor)
         gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
         layer.addSublayer(gradientLayer)

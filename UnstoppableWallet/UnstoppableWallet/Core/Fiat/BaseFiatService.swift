@@ -12,7 +12,7 @@ class BaseFiatService {
     private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
 
-    private var price: Decimal? = nil
+    private var price: Decimal?
 
     private var coinValueKind: CoinValue.Kind?
     var token: Token? { coinValueKind?.token }

@@ -1,5 +1,5 @@
-import SwiftUI
 import MarketKit
+import SwiftUI
 
 struct MultiSwapAddressView: View {
     @ObservedObject var viewModel: AddressMultiSwapSettingsViewModel
@@ -15,19 +15,19 @@ struct MultiSwapAddressView: View {
             .padding(EdgeInsets(top: .margin6, leading: .margin16, bottom: .margin6, trailing: .margin16))
 
             AddressViewNew(
-                    initial: .init(
-                            blockchainType: viewModel.blockchainType,
-                            showContacts: true
-                    ),
-                    text: $viewModel.address,
-                    result: $viewModel.addressResult
+                initial: .init(
+                    blockchainType: viewModel.blockchainType,
+                    showContacts: true
+                ),
+                text: $viewModel.address,
+                result: $viewModel.addressResult
             )
-                .focused($isAddressFocused)
-                .onChange(of: isAddressFocused) { active in
-                    viewModel.changeAddressFocus(active: active)
-                }
-                .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
-                .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
+            .focused($isAddressFocused)
+            .onChange(of: isAddressFocused) { active in
+                viewModel.changeAddressFocus(active: active)
+            }
+            .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
+            .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
 
             Text("swap.advanced_settings.recipient.footer".localized)
                 .themeSubhead2()

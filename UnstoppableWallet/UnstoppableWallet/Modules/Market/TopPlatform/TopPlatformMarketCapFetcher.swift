@@ -51,9 +51,9 @@ extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
         try await fetchStartTimeInterval()
 
         let points = try await marketKit.topPlatformMarketCapChart(
-                platform: topPlatform.blockchain.uid,
-                currencyCode: currencyManager.baseCurrency.code,
-                periodType: interval
+            platform: topPlatform.blockchain.uid,
+            currencyCode: currencyManager.baseCurrency.code,
+            periodType: interval
         )
 
         let items = points.map { point -> MetricChartModule.Item in

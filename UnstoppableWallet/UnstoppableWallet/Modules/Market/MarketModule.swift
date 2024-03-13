@@ -245,7 +245,6 @@ extension MarketModule {
             case .month: return "market.advanced_search.month.short".localized
             default: return "market.advanced_search.day.short".localized
             }
-
         }
     }
 

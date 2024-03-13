@@ -79,9 +79,9 @@ extension RbfDataSource: ISendSettingsDataSource {
                         font: .subhead2,
                         textColor: .themeGray,
                         ignoreBottomMargin: true
-                    )
+                    ),
                 ]
-            )
+            ),
         ]
     }
 

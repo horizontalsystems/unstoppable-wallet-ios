@@ -1,5 +1,5 @@
-import RxSwift
 import Combine
+import RxSwift
 
 class UnspentOutputsViewModel {
     private let sendInfoService: ISendInfoValueService

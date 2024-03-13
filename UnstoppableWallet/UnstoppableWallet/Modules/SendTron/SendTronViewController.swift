@@ -150,19 +150,18 @@ class SendTronViewController: ThemeViewController {
 }
 
 extension SendTronViewController: SectionsDataSource {
-
     var memoSection: SectionProtocol {
         Section(
-                id: "memo",
-                rows: [
-                    StaticRow(
-                            cell: memoCell,
-                            id: "memo-input",
-                            dynamicHeight: { [weak self] width in
-                                self?.memoCell.height(containerWidth: width) ?? 0
-                            }
-                    ),
-                ]
+            id: "memo",
+            rows: [
+                StaticRow(
+                    cell: memoCell,
+                    id: "memo-input",
+                    dynamicHeight: { [weak self] width in
+                        self?.memoCell.height(containerWidth: width) ?? 0
+                    }
+                ),
+            ]
         )
     }
 

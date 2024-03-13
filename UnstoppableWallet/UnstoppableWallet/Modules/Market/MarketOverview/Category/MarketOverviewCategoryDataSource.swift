@@ -36,9 +36,9 @@ class MarketOverviewCategoryDataSource {
 
     func didTapSeeAll() {
         let module = MarketTopModule.viewController(
-                marketTop: viewModel.marketTop,
-                sortingField: viewModel.listType.sortingField,
-                marketField: viewModel.listType.marketField
+            marketTop: viewModel.marketTop,
+            sortingField: viewModel.listType.sortingField,
+            marketField: viewModel.listType.marketField
         )
         presentDelegate?.present(viewController: module)
     }

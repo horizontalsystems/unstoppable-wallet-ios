@@ -12,7 +12,6 @@ class MarketGlobalFetcher {
         self.currencyManager = currencyManager
         self.metricsType = metricsType
     }
-
 }
 
 extension MarketGlobalFetcher: IMetricChartFetcher {

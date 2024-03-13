@@ -91,22 +91,22 @@ class ResendBitcoinViewController: KeyboardAwareViewController, SectionsDataSour
 
     private func row(viewItem: ResendBitcoinViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
-            case let .subhead(iconName, title, value):
-                return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)
-            case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
-                return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
-            case let .address(title, value, valueTitle, contactAddress):
-                var onAddToContact: (() -> Void)? = nil
-                if let contactAddress {
-                    onAddToContact = { [weak self] in
-                        ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
-                    }
+        case let .subhead(iconName, title, value):
+            return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)
+        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .address(title, value, valueTitle, contactAddress):
+            var onAddToContact: (() -> Void)? = nil
+            if let contactAddress {
+                onAddToContact = { [weak self] in
+                    ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
                 }
-                return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
-            case let .value(iconName, title, value, type):
-                return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, title: title, value: value, type: type)
-            case let .fee(title, coinValue, currencyValue):
-                return CellComponent.doubleAmountRow(tableView: tableView, rowInfo: rowInfo, title: title, coinValue: coinValue, currencyValue: currencyValue)
+            }
+            return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
+        case let .value(iconName, title, value, type):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, title: title, value: value, type: type)
+        case let .fee(title, coinValue, currencyValue):
+            return CellComponent.doubleAmountRow(tableView: tableView, rowInfo: rowInfo, title: title, coinValue: coinValue, currencyValue: currencyValue)
         }
     }
 }

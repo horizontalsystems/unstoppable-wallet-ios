@@ -39,8 +39,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
-         memoViewModel: SendMemoInputViewModel
-    )
+         memoViewModel: SendMemoInputViewModel)
     {
         self.confirmationFactory = confirmationFactory
         self.feeSettingsFactory = feeSettingsFactory
@@ -260,16 +259,16 @@ extension BaseSendViewController {
 
     var memoSection: SectionProtocol {
         Section(
-                id: "memo",
-                rows: [
-                    StaticRow(
-                            cell: memoCell,
-                            id: "memo-input",
-                            dynamicHeight: { [weak self] width in
-                                self?.memoCell.height(containerWidth: width) ?? 0
-                            }
-                    ),
-                ]
+            id: "memo",
+            rows: [
+                StaticRow(
+                    cell: memoCell,
+                    id: "memo-input",
+                    dynamicHeight: { [weak self] width in
+                        self?.memoCell.height(containerWidth: width) ?? 0
+                    }
+                ),
+            ]
         )
     }
 

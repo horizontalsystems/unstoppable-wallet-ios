@@ -628,23 +628,23 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
     private func technicalAdviceSection(viewItem: CoinAnalyticsViewModel.TechnicalAdviceViewItem) -> SectionProtocol {
         let row = Row<TechnicalIndicatorCell>(
-                id: "technical-indicator",
-                dynamicHeight: { width in
-                    TechnicalIndicatorCell.height(width: width, viewItem: viewItem)
-                },
-                bind: { [weak self] cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    cell.bind(viewItem: viewItem)
+            id: "technical-indicator",
+            dynamicHeight: { width in
+                TechnicalIndicatorCell.height(width: width, viewItem: viewItem)
+            },
+            bind: { [weak self] cell, _ in
+                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                cell.bind(viewItem: viewItem)
 
-                    cell.onTapDetails = { self?.onTapDetails() }
-                    cell.onTapInfo = { self?.onTapTechnicalIndicatorInfo() }
-                }
+                cell.onTapDetails = { self?.onTapDetails() }
+                cell.onTapInfo = { self?.onTapTechnicalIndicatorInfo() }
+            }
         )
 
         return Section(
-                id: "technical-indicator",
-                headerState: .margin(height: .margin12),
-                rows: [row]
+            id: "technical-indicator",
+            headerState: .margin(height: .margin12),
+            rows: [row]
         )
     }
 

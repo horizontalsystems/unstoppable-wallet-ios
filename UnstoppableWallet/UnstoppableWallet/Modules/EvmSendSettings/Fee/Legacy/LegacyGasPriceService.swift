@@ -62,13 +62,13 @@ class LegacyGasPriceService {
     }
 
     private func handleRecommendedGasPrice(gasPrice: GasPrice, initialGasPrice: Int?) {
-        guard case .legacy(let gasPrice) = gasPrice else {
+        guard case let .legacy(gasPrice) = gasPrice else {
             status = .failed(EvmFeeModule.GasDataError.unknownError)
             return
         }
 
         recommendedGasPrice = gasPrice
-        if let minRecommendedGasPrice = minRecommendedGasPrice {
+        if let minRecommendedGasPrice {
             recommendedGasPrice = max(gasPrice, minRecommendedGasPrice)
         }
         legacyGasPrice = initialGasPrice ?? gasPrice

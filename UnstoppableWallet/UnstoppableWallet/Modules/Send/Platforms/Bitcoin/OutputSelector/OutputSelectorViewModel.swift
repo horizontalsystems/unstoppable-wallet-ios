@@ -98,9 +98,7 @@ extension OutputSelectorViewModel {
         resetEnabled = true
     }
 
-    func onTapDone() {
-
-    }
+    func onTapDone() {}
 
     func reset() {
         adapterService.customOutputs = nil

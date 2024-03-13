@@ -136,7 +136,7 @@ extension FeeCell {
             }
         }
 
-        static func ==(lhs: Value, rhs: Value) -> Bool {
+        static func == (lhs: Value, rhs: Value) -> Bool {
             switch (lhs, rhs) {
             case let (.disabled(lhs), .disabled(rhs)): return lhs == rhs
             case let (.error(lhs), .error(rhs)): return lhs == rhs
