@@ -169,8 +169,10 @@ struct MultiSwapConfirmationView: View {
                 .padding(.horizontal, .margin16)
             }
 
-            Text(bottomText())
-                .textSubhead1()
+            let (bottomText, bottomTextColor) = bottomText()
+
+            Text(bottomText)
+                .textSubhead1(color: bottomTextColor)
                 .padding(.bottom, .margin8)
         }
     }
@@ -233,15 +235,15 @@ struct MultiSwapConfirmationView: View {
         }
     }
 
-    private func bottomText() -> String {
+    private func bottomText() -> (String, Color) {
         if let quote = viewModel.state.quote, !quote.canSwap {
-            return "swap.confirmation.invalid_quote".localized
+            return ("swap.confirmation.invalid_quote".localized, .themeGray)
         } else if viewModel.swapping {
-            return "swap.confirmation.please_wait".localized
+            return ("swap.confirmation.please_wait".localized, .themeGray)
         } else if viewModel.quoteTimeLeft > 0 {
-            return "swap.confirmation.quote_expires_in".localized("\(viewModel.quoteTimeLeft)")
+            return ("swap.confirmation.quote_expires_in".localized("\(viewModel.quoteTimeLeft)"), .themeJacob)
         } else {
-            return "swap.confirmation.quote_expired".localized
+            return ("swap.confirmation.quote_expired".localized, .themeGray)
         }
     }
 }
