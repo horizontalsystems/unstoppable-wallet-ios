@@ -455,12 +455,19 @@
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
+
 "send.confirmation.slide_to_send" = "Slide to Send";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.sent" = "Sent";
+
 "send.confirmation.slide_to_approve" = "Slide to Approve";
 "send.confirmation.approving" = "Approving";
 "send.confirmation.approved" = "Approved";
+
+"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.revoking" = "Revoking";
+"send.confirmation.revoked" = "Revoked";
+
 "send.confirmation.slide_to_resend" = "Resend";
 "send.confirmation.slide_to_cancel" = "Cancel Transaction";
 "send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
@@ -531,7 +538,6 @@
 "swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
 "swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Approving...";
-"swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
 "swap.revoking_button" = "Revoking...";
 "swap.not_available_button" = "Balance n/a";
 "swap.trade_error.not_found" = "Can't swap these tokens";
@@ -571,6 +577,9 @@
 "swap.unlock" = "Unlock";
 "swap.unlocking" = "Unlocking";
 "swap.allowance_error" = "Allowance Error";
+"swap.revoke" = "Revoke";
+"swap.revoking" = "Revoking";
+"swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
 
 "swap.unlock.title" = "Unlock Access";
 "swap.unlock.subtitle" = "Allow access to the following amount";

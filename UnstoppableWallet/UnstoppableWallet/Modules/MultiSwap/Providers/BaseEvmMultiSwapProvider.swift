@@ -47,8 +47,13 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         switch step {
         case let unlockStep as UnlockStep:
-            let view = ThemeNavigationView { MultiSwapApproveView(tokenIn: tokenIn, amount: amount, spenderAddress: unlockStep.spenderAddress, isPresented: isPresented, onSuccess: onSuccess) }
-            return AnyView(view)
+            if unlockStep.isRevoke {
+                let view = MultiSwapRevokeView(tokenIn: tokenIn, spenderAddress: unlockStep.spenderAddress, isPresented: isPresented, onSuccess: onSuccess)
+                return AnyView(ThemeNavigationView { view })
+            } else {
+                let view = MultiSwapApproveView(tokenIn: tokenIn, amount: amount, spenderAddress: unlockStep.spenderAddress, isPresented: isPresented, onSuccess: onSuccess)
+                return AnyView(ThemeNavigationView { view })
+            }
         default:
             return AnyView(Text("Invalid Pre Swap Step"))
         }
@@ -76,7 +81,11 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
             let spenderAddress = try spenderAddress(chain: chain)
 
             if let pendingAllowance = pendingAllowance(pendingTransactions: adapter.pendingTransactions, spenderAddress: spenderAddress) {
-                return .pending(amount: CoinValue(kind: .token(token: token), value: pendingAllowance))
+                if pendingAllowance == 0 {
+                    return .pendingRevoke
+                } else {
+                    return .pendingAllowance(amount: CoinValue(kind: .token(token: token), value: pendingAllowance))
+                }
             }
 
             let allowance = try await adapter.allowance(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
@@ -84,7 +93,11 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
             if amount <= allowance {
                 return .allowed
             } else {
-                return .notEnough(amount: CoinValue(kind: .token(token: token), value: allowance), spenderAddress: spenderAddress)
+                return .notEnough(
+                    amount: CoinValue(kind: .token(token: token), value: allowance),
+                    spenderAddress: spenderAddress,
+                    revokeRequired: allowance > 0 && mustBeRevoked(token: token)
+                )
             }
         } catch {
             return .unknown
@@ -100,22 +113,35 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
 
         return nil
     }
+
+    private func mustBeRevoked(token: Token) -> Bool {
+        let addressesForRevoke = ["0xdac17f958d2ee523a2206206994597c13d831ec7"]
+
+        if case .ethereum = token.blockchainType, case let .eip20(address) = token.type, addressesForRevoke.contains(address.lowercased()) {
+            return true
+        }
+
+        return false
+    }
 }
 
 extension BaseEvmMultiSwapProvider {
     enum AllowanceState {
         case notRequired
-        case pending(amount: CoinValue)
-        case notEnough(amount: CoinValue, spenderAddress: EvmKit.Address)
+        case pendingAllowance(amount: CoinValue)
+        case pendingRevoke
+        case notEnough(amount: CoinValue, spenderAddress: EvmKit.Address, revokeRequired: Bool)
         case allowed
         case unknown
     }
 
     class UnlockStep: MultiSwapPreSwapStep {
         let spenderAddress: EvmKit.Address
+        let isRevoke: Bool
 
-        init(spenderAddress: EvmKit.Address) {
+        init(spenderAddress: EvmKit.Address, isRevoke: Bool) {
             self.spenderAddress = spenderAddress
+            self.isRevoke = isRevoke
         }
 
         override var id: String {
@@ -138,8 +164,9 @@ extension BaseEvmMultiSwapProvider {
 
         var customButtonState: MultiSwapButtonState? {
             switch allowanceState {
-            case let .notEnough(_, spenderAddress): return .init(title: "swap.unlock".localized, preSwapStep: UnlockStep(spenderAddress: spenderAddress))
-            case .pending: return .init(title: "swap.unlocking".localized, disabled: true, showProgress: true)
+            case let .notEnough(_, spenderAddress, revokeRequired): return .init(title: revokeRequired ? "swap.revoke".localized : "swap.unlock".localized, preSwapStep: UnlockStep(spenderAddress: spenderAddress, isRevoke: revokeRequired))
+            case .pendingAllowance: return .init(title: "swap.unlocking".localized, disabled: true, showProgress: true)
+            case .pendingRevoke: return .init(title: "swap.revoking".localized, disabled: true, showProgress: true)
             case .unknown: return .init(title: "swap.allowance_error".localized, disabled: true)
             default: return nil
             }
@@ -150,14 +177,24 @@ extension BaseEvmMultiSwapProvider {
         }
 
         func cautions() -> [CautionNew] {
-            []
+            var cautions = [CautionNew]()
+
+            switch allowanceState {
+            case let .notEnough(amount, _, revokeRequired):
+                if revokeRequired {
+                    cautions.append(.init(text: "swap.revoke_warning".localized(ValueFormatter.instance.formatShort(coinValue: amount) ?? ""), type: .warning))
+                }
+            default: ()
+            }
+
+            return cautions
         }
 
         func fields(tokenIn _: Token, tokenOut _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?) -> [MultiSwapMainField] {
             var fields = [MultiSwapMainField]()
 
             switch allowanceState {
-            case let .notEnough(amount, _):
+            case let .notEnough(amount, _, _):
                 if let formatted = ValueFormatter.instance.formatShort(coinValue: amount) {
                     fields.append(
                         MultiSwapMainField(
@@ -168,7 +205,7 @@ extension BaseEvmMultiSwapProvider {
                         )
                     )
                 }
-            case let .pending(amount):
+            case let .pendingAllowance(amount):
                 if let formatted = ValueFormatter.instance.formatShort(coinValue: amount) {
                     fields.append(
                         MultiSwapMainField(
