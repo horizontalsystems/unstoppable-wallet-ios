@@ -80,7 +80,14 @@ extension SendEvmHandler: ISendHandler {
                 contractAddress: decoration.contractAddress
             )
 
-            return (sections, "send.confirmation.slide_to_approve".localized, "send.confirmation.approving".localized, "send.confirmation.approved".localized)
+            let isRevoke = decoration.value == 0
+
+            return (
+                sections,
+                isRevoke ? "send.confirmation.slide_to_revoke".localized : "send.confirmation.slide_to_approve".localized,
+                isRevoke ? "send.confirmation.revoking".localized : "send.confirmation.approving".localized,
+                isRevoke ? "send.confirmation.revoked".localized : "send.confirmation.approved".localized
+            )
         default:
             return ([], nil, nil, nil)
         }

@@ -61,8 +61,8 @@ struct MultiSwapConfirmationView: View {
             ScrollView {
                 VStack(spacing: .margin16) {
                     ListSection {
-                        tokenRow(title: "swap.you_pay".localized, token: viewModel.tokenIn, amount: viewModel.amountIn, rate: viewModel.rateIn)
-                        tokenRow(title: "swap.you_get".localized, token: viewModel.tokenOut, amount: quote.amountOut, rate: viewModel.rateOut)
+                        tokenRow(title: "swap.you_pay".localized, token: viewModel.tokenIn, amount: viewModel.amountIn, rate: viewModel.rateIn, type: .neutral)
+                        tokenRow(title: "swap.you_get".localized, token: viewModel.tokenOut, amount: quote.amountOut, rate: viewModel.rateOut, type: .incoming)
                     }
 
                     let priceSectionFields = quote.priceSectionFields(
@@ -201,38 +201,16 @@ struct MultiSwapConfirmationView: View {
         }
     }
 
-    @ViewBuilder private func tokenRow(title: String, token: Token, amount: Decimal, rate: Decimal?) -> some View {
-        ListRow {
-            KFImage.url(URL(string: token.coin.imageUrl))
-                .resizable()
-                .placeholder {
-                    Circle().fill(Color.themeSteel20)
-                }
-                .clipShape(Circle())
-                .frame(width: .iconSize24, height: .iconSize24)
+    @ViewBuilder private func tokenRow(title: String, token: Token, amount: Decimal, rate: Decimal?, type: SendConfirmField.AmountType) -> some View {
+        let field = SendConfirmField.amount(
+            title: title,
+            token: token,
+            coinValueType: .regular(coinValue: CoinValue(kind: .token(token: token), value: amount)),
+            currencyValue: rate.map { CurrencyValue(currency: viewModel.currency, value: amount * $0) },
+            type: type
+        )
 
-            VStack(spacing: 1) {
-                HStack(spacing: .margin4) {
-                    Text(title).textSubhead2(color: .themeLeah)
-
-                    Spacer()
-
-                    if let formatted = ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: token), value: amount)) {
-                        Text(formatted).textSubhead1(color: .themeLeah)
-                    }
-                }
-
-                HStack(spacing: .margin4) {
-                    Text((token.protocolName ?? "coin_platforms.native".localized).uppercased()).textCaption()
-
-                    Spacer()
-
-                    if let rate, let formatted = ValueFormatter.instance.formatFull(currency: viewModel.currency, value: amount * rate) {
-                        Text(formatted).textCaption()
-                    }
-                }
-            }
-        }
+        field.listRow
     }
 
     private func bottomText() -> (String, Color) {

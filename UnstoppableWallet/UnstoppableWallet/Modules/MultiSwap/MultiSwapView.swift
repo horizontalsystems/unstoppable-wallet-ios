@@ -312,7 +312,7 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func buttonView() -> some View {
-        let (title, disabled, showProgress, preSwapStep) = buttonState()
+        let (title, style, disabled, showProgress, preSwapStep) = buttonState()
 
         Button(action: {
             viewModel.stopAutoQuoting()
@@ -332,7 +332,7 @@ struct MultiSwapView: View {
             }
         }
         .disabled(disabled)
-        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+        .buttonStyle(PrimaryButtonStyle(style: style))
     }
 
     @ViewBuilder private func availableBalanceView(value: String) -> some View {
@@ -503,8 +503,9 @@ struct MultiSwapView: View {
         return ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: tokenIn), value: availableBalance))
     }
 
-    private func buttonState() -> (String, Bool, Bool, MultiSwapPreSwapStep?) {
+    private func buttonState() -> (String, PrimaryButtonStyle.Style, Bool, Bool, MultiSwapPreSwapStep?) {
         let title: String
+        var style: PrimaryButtonStyle.Style = .yellow
         var disabled = true
         var showProgress = false
         var preSwapStep: MultiSwapPreSwapStep?
@@ -533,6 +534,7 @@ struct MultiSwapView: View {
             title = "swap.insufficient_balance".localized
         } else if let currentQuote = viewModel.currentQuote, let state = currentQuote.quote.customButtonState {
             title = state.title
+            style = state.style
             disabled = state.disabled
             showProgress = state.showProgress
             preSwapStep = state.preSwapStep
@@ -541,6 +543,6 @@ struct MultiSwapView: View {
             disabled = false
         }
 
-        return (title, disabled, showProgress, preSwapStep)
+        return (title, style, disabled, showProgress, preSwapStep)
     }
 }

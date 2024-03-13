@@ -5,7 +5,7 @@ import SwiftUI
 
 enum SendConfirmField {
     case amount(title: String, token: Token, coinValueType: CoinValueType, currencyValue: CurrencyValue?, type: AmountType)
-    case value(title: String, description: AlertView.InfoDescription?, coinValue: CoinValue?, currencyValue: CurrencyValue?)
+    case value(title: String, description: AlertView.InfoDescription?, coinValue: CoinValue?, currencyValue: CurrencyValue?, formatFull: Bool)
     case levelValue(title: String, value: String, level: ValueLevel)
     case address(title: String, value: String)
 
@@ -19,15 +19,12 @@ enum SendConfirmField {
                         Circle().fill(Color.themeSteel20)
                     }
                     .clipShape(Circle())
-                    .frame(width: .iconSize24, height: .iconSize24)
+                    .frame(width: .iconSize32, height: .iconSize32)
 
                 HStack(spacing: .margin4) {
                     VStack(alignment: .leading, spacing: 1) {
                         Text(title).textSubhead2(color: .themeLeah)
-
-                        if let protocolName = token.protocolName {
-                            Text(protocolName).textCaption()
-                        }
+                        Text((token.badge ?? "coin_platforms.native".localized).uppercased()).textCaption()
                     }
 
                     Spacer()
@@ -35,7 +32,7 @@ enum SendConfirmField {
                     VStack(alignment: .trailing, spacing: 1) {
                         if let formatted = coinValueType.formatted(full: true) {
                             Text(formatted)
-                                .textSubhead1(color: .themeLeah)
+                                .textSubhead1(color: type.color)
                                 .multilineTextAlignment(.trailing)
                         } else {
                             Text("n/a".localized)
@@ -51,7 +48,7 @@ enum SendConfirmField {
                     }
                 }
             }
-        case let .value(title, description, coinValue, currencyValue):
+        case let .value(title, description, coinValue, currencyValue, formatFull):
             ListRow(padding: EdgeInsets(top: .margin12, leading: description == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
                 if let description {
                     Text(title)
@@ -65,7 +62,7 @@ enum SendConfirmField {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 1) {
-                    if let formatted = coinValue?.formattedShort {
+                    if let formatted = (formatFull ? coinValue?.formattedFull : coinValue?.formattedShort) {
                         Text(formatted)
                             .textSubhead1(color: .themeLeah)
                             .multilineTextAlignment(.trailing)
@@ -75,7 +72,7 @@ enum SendConfirmField {
                             .multilineTextAlignment(.trailing)
                     }
 
-                    if let formatted = currencyValue?.formattedShort {
+                    if let formatted = (formatFull ? currencyValue?.formattedFull : currencyValue?.formattedShort) {
                         Text(formatted)
                             .textCaption()
                             .multilineTextAlignment(.trailing)
@@ -139,6 +136,14 @@ enum SendConfirmField {
             switch self {
             case .incoming, .neutral: return .plus
             case .outgoing: return .minus
+            }
+        }
+
+        var color: Color {
+            switch self {
+            case .incoming: return .themeRemus
+            case .outgoing: return .themeLucian
+            case .neutral: return .themeLeah
             }
         }
     }
