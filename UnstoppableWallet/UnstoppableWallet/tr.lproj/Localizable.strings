@@ -624,6 +624,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
+"swap.confirmation.swapped" = "Takas Edildi";
 "swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
