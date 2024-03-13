@@ -9330,6 +9330,7 @@
 				D3E323C62AE7B8E400F73914 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				6B55E3392AF26D6400616B60 /* XCRemoteSwiftPackageReference "Starscream" */,
 				D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler.Swift" */,
+				6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -9651,7 +9652,6 @@
 				11B3563BF84B730CB695FAB4 /* FaqViewModel.swift in Sources */,
 				D05E96A12A2627C8002CCD71 /* TronExternalContractCallTransactionRecord.swift in Sources */,
 				11B35F27274120E53E2C1ADE /* Faq.swift in Sources */,
-				6BAAF34C2B9B245C00EFE5B2,
 				D008CA63267C8DFD00001E0A /* SwapTransactionRecord.swift in Sources */,
 				11B35B077A52041C9939C6E8 /* FaqCell.swift in Sources */,
 				11B35BF0FDB441A29B9467AF /* CoinSelectService.swift in Sources */,
@@ -9904,7 +9904,6 @@
 				58AAAA19D6C7812306A164EA /* SwapCoinCardCell.swift in Sources */,
 				58AAAF222E553D8DCD123AB2 /* SwapAllowanceService.swift in Sources */,
 				58AAADE506ABABF4F25F98E1 /* SwapPendingAllowanceService.swift in Sources */,
-				6BAAF34A2B9B245C00EFE5B2,
 				D023D2722A25CF61004F65B0 /* TronAdapter.swift in Sources */,
 				58AAAA7B0493F3790D49AA14 /* SwapAllowanceViewModel.swift in Sources */,
 				58AAA188EBE3E1CC463D8D9F /* SwapAllowanceCell.swift in Sources */,
@@ -10366,7 +10365,6 @@
 				2FA5D50BFA714AAF76AC536B /* Eip1559GasPriceService.swift in Sources */,
 				11B35963D09A27ACE74B3A52 /* PublicKeysModule.swift in Sources */,
 				11B35B1F63DBDEEF57043C97 /* PublicKeysService.swift in Sources */,
-				6BAAF3482B9B245C00EFE5B2,
 				11B3536008462BFF8CA245BE /* PublicKeysViewModel.swift in Sources */,
 				11B3509603841DEF2FC02F24 /* PublicKeysViewController.swift in Sources */,
 				11B358AE1CCD292DF2D2AC42 /* PrivateKeysViewModel.swift in Sources */,
@@ -13162,6 +13160,14 @@
 			requirement = {
 				kind = exactVersion;
 				version = 2.0.5;
+			};
+		};
+		6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tristanhimmelman/ObjectMapper/";
+			requirement = {
+				kind = exactVersion;
+				version = 4.2.0;
 			};
 		};
 		D023D2612A249E59004F65B0 /* XCRemoteSwiftPackageReference "TronKit.Swift" */ = {
