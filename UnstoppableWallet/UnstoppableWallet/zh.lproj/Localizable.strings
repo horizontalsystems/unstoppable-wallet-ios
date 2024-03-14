@@ -457,12 +457,19 @@
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
+
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.sent" = "已发送";
+
 "send.confirmation.slide_to_approve" = "Slide to Approve";
 "send.confirmation.approving" = "审批中";
 "send.confirmation.approved" = "批准";
+
+"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.revoking" = "正在取消";
+"send.confirmation.revoked" = "已注销";
+
 "send.confirmation.slide_to_resend" = "重新发送";
 "send.confirmation.slide_to_cancel" = "取消交易";
 "send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
@@ -533,7 +540,6 @@
 "swap.approve.amount_error.already_approved" = "您已经有了此金额的限额";
 "swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "审批中...";
-"swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 "swap.revoking_button" = "正在取消...";
 "swap.not_available_button" = "余额 N/A";
 "swap.trade_error.not_found" = "无法交换代币";
@@ -573,6 +579,9 @@
 "swap.unlock" = "解锁​​​​";
 "swap.unlocking" = "Unlocking";
 "swap.allowance_error" = "Allowance Error";
+"swap.revoke" = "撤回";
+"swap.revoking" = "正在取消";
+"swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 
 "swap.unlock.title" = "Unlock Access";
 "swap.unlock.subtitle" = "Allow access to the following amount";
