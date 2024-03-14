@@ -457,12 +457,19 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
+
 "send.confirmation.slide_to_send" = "Glisser pour envoyer";
 "send.confirmation.sending" = "En attente";
 "send.confirmation.sent" = "Envoyée";
+
 "send.confirmation.slide_to_approve" = "Slide to Approve";
 "send.confirmation.approving" = "En cours d'approbation";
 "send.confirmation.approved" = "Approuvé";
+
+"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.revoking" = "Révocation en cours";
+"send.confirmation.revoked" = "Révoqué";
+
 "send.confirmation.slide_to_resend" = "Réenvoyer";
 "send.confirmation.slide_to_cancel" = "Annuler la transaction";
 "send.confirmation.resend_description" = "Cette action tentera d'invalider la transaction précédente en la renvoyant avec des frais plus élevés. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
@@ -533,7 +540,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.approve.amount_error.already_approved" = "Vous avez déjà une provision pour ce montant";
 "swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "En cours d'approbation...";
-"swap.revoke_warning" = "Vous pouvez échanger %@, ou vous devez révoquer et approuver le nouveau montant";
 "swap.revoking_button" = "Révocation en cours...";
 "swap.not_available_button" = "Solde N/A";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
@@ -573,6 +579,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.unlock" = "Déverrouiller";
 "swap.unlocking" = "Unlocking";
 "swap.allowance_error" = "Allowance Error";
+"swap.revoke" = "Révoquer";
+"swap.revoking" = "Révocation en cours";
+"swap.revoke_warning" = "Vous pouvez échanger %@, ou vous devez révoquer et approuver le nouveau montant";
 
 "swap.unlock.title" = "Unlock Access";
 "swap.unlock.subtitle" = "Allow access to the following amount";
