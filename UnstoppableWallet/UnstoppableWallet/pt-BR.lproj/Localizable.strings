@@ -457,12 +457,19 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
+
 "send.confirmation.slide_to_send" = "Deslize para enviar";
 "send.confirmation.sending" = "Enviando";
 "send.confirmation.sent" = "Enviado";
+
 "send.confirmation.slide_to_approve" = "Slide to Approve";
 "send.confirmation.approving" = "Aprovando";
 "send.confirmation.approved" = "Aprovado";
+
+"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.revoking" = "Revogando";
+"send.confirmation.revoked" = "Revogado";
+
 "send.confirmation.slide_to_resend" = "Enviar novamente";
 "send.confirmation.slide_to_cancel" = "Cancelar transação";
 "send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
@@ -533,7 +540,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.approve.amount_error.already_approved" = "Você já tem uma permissão para este valor";
 "swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Aprovando...";
-"swap.revoke_warning" = "Você pode trocar %@, ou você precisa revogar e aprovar o novo valor";
 "swap.revoking_button" = "Revogando...";
 "swap.not_available_button" = "Saldo N/A";
 "swap.trade_error.not_found" = "Não é possível trocar esses tokens";
@@ -573,6 +579,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.unlock" = "Desbloquear";
 "swap.unlocking" = "Unlocking";
 "swap.allowance_error" = "Allowance Error";
+"swap.revoke" = "Revogar";
+"swap.revoking" = "Revogando";
+"swap.revoke_warning" = "Você pode trocar %@, ou você precisa revogar e aprovar o novo valor";
 
 "swap.unlock.title" = "Unlock Access";
 "swap.unlock.subtitle" = "Allow access to the following amount";
