@@ -455,12 +455,19 @@
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
+
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.sent" = "전송됨";
+
 "send.confirmation.slide_to_approve" = "Slide to Approve";
 "send.confirmation.approving" = "승인 중";
 "send.confirmation.approved" = "승인됨";
+
+"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.revoking" = "철회";
+"send.confirmation.revoked" = "철회됨";
+
 "send.confirmation.slide_to_resend" = "재전송";
 "send.confirmation.slide_to_cancel" = "트랜잭션 취소";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
@@ -531,7 +538,6 @@
 "swap.approve.amount_error.already_approved" = "귀하는 이미 이 금액에 대한 허용량을 가지고 있습니다.";
 "swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "승인 중...";
-"swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
 "swap.revoking_button" = "철회...";
 "swap.not_available_button" = "균형 N/A";
 "swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
@@ -571,6 +577,9 @@
 "swap.unlock" = "잠금 해제";
 "swap.unlocking" = "Unlocking";
 "swap.allowance_error" = "Allowance Error";
+"swap.revoke" = "취소";
+"swap.revoking" = "철회";
+"swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
 
 "swap.unlock.title" = "Unlock Access";
 "swap.unlock.subtitle" = "Allow access to the following amount";
