@@ -16,7 +16,7 @@ protocol IMarketListViewModel {
 
 class MarketListViewController: ThemeViewController {
     private let listViewModel: IMarketListViewModel
-    private let apiTag: String
+    private let statPage: StatPage
     private let disposeBag = DisposeBag()
 
     let tableView = SectionsTableView(style: .plain)
@@ -32,9 +32,9 @@ class MarketListViewController: ThemeViewController {
     var refreshEnabled: Bool { true }
     func topSections(loaded _: Bool) -> [SectionProtocol] { [] }
 
-    init(listViewModel: IMarketListViewModel, apiTag: String) {
+    init(listViewModel: IMarketListViewModel, statPage: StatPage) {
         self.listViewModel = listViewModel
-        self.apiTag = apiTag
+        self.statPage = statPage
 
         super.init()
 
@@ -146,12 +146,13 @@ class MarketListViewController: ThemeViewController {
     }
 
     func onSelect(viewItem: MarketModule.ListViewItem) {
-        guard let uid = viewItem.uid, let module = CoinPageModule.viewController(coinUid: uid, apiTag: apiTag) else {
+        guard let coinUid = viewItem.uid, let module = CoinPageModule.viewController(coinUid: coinUid) else {
             HudHelper.instance.show(banner: .attention(string: "market.project_has_no_coin".localized))
             return
         }
 
         viewController?.present(module, animated: true)
+        stat(page: statPage, event: .coinOpen, params: [.coinUid: coinUid])
     }
 
     private func rowActions(index: Int) -> [RowAction] {

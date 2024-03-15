@@ -15,24 +15,23 @@ extension WidgetCoinAppShowModule: IEventHandler {
             throw EventHandler.HandleError.noSuitableHandler
         }
 
-        var uid: String?
+        var coinUid: String?
         switch event {
         case let event as String:
-            uid = event
+            coinUid = event
         case let event as DeepLinkManager.DeepLink:
-            if case let .coin(coinUid) = event {
-                uid = coinUid
+            if case let .coin(_coinUid) = event {
+                coinUid = _coinUid
             }
         default: ()
         }
 
-        guard let uid,
-              let viewController = CoinPageModule.viewController(coinUid: uid, apiTag: "widget")
-        else {
+        guard let coinUid, let viewController = CoinPageModule.viewController(coinUid: coinUid) else {
             throw EventHandler.HandleError.noSuitableHandler
         }
 
         parentViewController?.visibleController.present(viewController, animated: true)
+        stat(page: .widget, event: .coinOpen, params: [.coinUid: coinUid])
     }
 }
 

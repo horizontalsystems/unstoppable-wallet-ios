@@ -9,18 +9,16 @@ class CoinAnalyticsService {
     private let marketKit: MarketKit.Kit
     private let currencyManager: CurrencyManager
     private let subscriptionManager: SubscriptionManager
-    private let apiTag: String
     private var tasks = Set<AnyTask>()
     private var cancellables = Set<AnyCancellable>()
 
     @PostPublished private(set) var state: State = .loading
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, subscriptionManager: SubscriptionManager, apiTag: String) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, subscriptionManager: SubscriptionManager) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyManager = currencyManager
         self.subscriptionManager = subscriptionManager
-        self.apiTag = apiTag
 
         subscriptionManager.$isAuthenticated
             .sink { [weak self] isAuthenticated in
@@ -32,9 +30,9 @@ class CoinAnalyticsService {
     }
 
     private func loadPreview() {
-        Task { [weak self, marketKit, fullCoin, apiTag] in
+        Task { [weak self, marketKit, fullCoin] in
             do {
-                let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid, apiTag: apiTag)
+                let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid, apiTag: "")
                 self?.state = .preview(analyticsPreview: analyticsPreview)
             } catch {
                 self?.state = .failed(error)
@@ -78,10 +76,10 @@ extension CoinAnalyticsService {
         state = .loading
 
         if subscriptionManager.isAuthenticated {
-            Task { [weak self, subscriptionManager, marketKit, fullCoin, currency, apiTag] in
+            Task { [weak self, subscriptionManager, marketKit, fullCoin, currency] in
                 try await subscriptionManager.fetch(
                     request: {
-                        try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code, apiTag: apiTag)
+                        try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code, apiTag: "")
                     },
                     onSuccess: { [weak self] analytics in
                         self?.state = .success(analytics: analytics)

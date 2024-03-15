@@ -120,8 +120,11 @@ extension CoinRankViewController: SectionsDataSource {
                 cell.set(backgroundStyle: .transparent, isLast: isLast)
             },
             action: { [weak self] in
-                if let viewController = CoinPageModule.viewController(coinUid: viewItem.uid, apiTag: "coin_rank") {
+                let coinUid = viewItem.uid
+
+                if let viewController = CoinPageModule.viewController(coinUid: coinUid) {
                     self?.present(viewController, animated: true)
+                    stat(page: .coinRank, event: .coinOpen, params: [.coinUid: coinUid])
                 }
             }
         )

@@ -13,7 +13,7 @@ class MarketAdvancedSearchResultViewController: MarketListViewController {
     init(listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
 
-        super.init(listViewModel: listViewModel, apiTag: "market_advanced_search_results")
+        super.init(listViewModel: listViewModel, statPage: .advancedSearchResults)
 
         multiSortHeaderView.viewController = self
     }

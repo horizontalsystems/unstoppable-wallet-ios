@@ -13,7 +13,7 @@ class MarketTopViewController: MarketListViewController {
     init(listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel, hasLeftSelector: true)
 
-        super.init(listViewModel: listViewModel, apiTag: "market_top")
+        super.init(listViewModel: listViewModel, statPage: .topCoins)
 
         multiSortHeaderView.viewController = self
     }

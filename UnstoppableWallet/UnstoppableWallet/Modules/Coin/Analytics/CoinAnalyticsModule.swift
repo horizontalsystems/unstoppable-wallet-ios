@@ -4,17 +4,16 @@ import ThemeKit
 import UIKit
 
 enum CoinAnalyticsModule {
-    static func view(fullCoin: FullCoin, apiTag: String) -> some View {
-        CoinAnalyticsView(fullCoin: fullCoin, apiTag: apiTag)
+    static func view(fullCoin: FullCoin) -> some View {
+        CoinAnalyticsView(fullCoin: fullCoin)
     }
 
-    static func viewController(fullCoin: FullCoin, apiTag: String) -> CoinAnalyticsViewController {
+    static func viewController(fullCoin: FullCoin) -> CoinAnalyticsViewController {
         let service = CoinAnalyticsService(
             fullCoin: fullCoin,
             marketKit: App.shared.marketKit,
             currencyManager: App.shared.currencyManager,
-            subscriptionManager: App.shared.subscriptionManager,
-            apiTag: apiTag
+            subscriptionManager: App.shared.subscriptionManager
         )
         let technicalIndicatorService = TechnicalIndicatorService(
             coinUid: fullCoin.coin.uid,
@@ -62,10 +61,9 @@ struct CoinAnalyticsView: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
 
     let fullCoin: FullCoin
-    let apiTag: String
 
     func makeUIViewController(context _: Context) -> UIViewController {
-        CoinAnalyticsModule.viewController(fullCoin: fullCoin, apiTag: apiTag)
+        CoinAnalyticsModule.viewController(fullCoin: fullCoin)
     }
 
     func updateUIViewController(_: UIViewController, context _: Context) {}

@@ -34,7 +34,7 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
             height: chartCell.cellHeight
         )
 
-        super.init(listViewModel: listViewModel, apiTag: "market_global_tvl_metrics")
+        super.init(listViewModel: listViewModel, statPage: .globalMetricsTvlInDefi)
 
         sortHeaderView.viewController = self
     }

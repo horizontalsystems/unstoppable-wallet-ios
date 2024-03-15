@@ -176,15 +176,18 @@ class MarketViewController: ThemeSearchViewController {
 
 extension MarketViewController: SectionsDataSource {
     private func onSelect(fullCoin: FullCoin) {
-        guard let module = CoinPageModule.viewController(coinUid: fullCoin.coin.uid, apiTag: "market_discovery") else {
+        let coinUid = fullCoin.coin.uid
+
+        guard let module = CoinPageModule.viewController(coinUid: coinUid) else {
             return
         }
 
         DispatchQueue.global().async { [weak self] in
-            self?.viewModel.handleOpen(coinUid: fullCoin.coin.uid)
+            self?.viewModel.handleOpen(coinUid: coinUid)
         }
 
         present(module, animated: true)
+        stat(page: .marketSearch, event: .coinOpen, params: [.coinUid: coinUid])
     }
 
     private func rowActions(coinUid: String) -> [RowAction] {

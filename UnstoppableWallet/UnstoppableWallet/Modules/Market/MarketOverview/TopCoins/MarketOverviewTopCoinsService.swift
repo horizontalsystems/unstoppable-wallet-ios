@@ -93,5 +93,12 @@ extension MarketOverviewTopCoinsService {
             case .topGainers, .topLosers: return .price
             }
         }
+
+        var statSection: StatSection {
+            switch self {
+            case .topGainers: return .topGainers
+            case .topLosers: return .topLosers
+            }
+        }
     }
 }

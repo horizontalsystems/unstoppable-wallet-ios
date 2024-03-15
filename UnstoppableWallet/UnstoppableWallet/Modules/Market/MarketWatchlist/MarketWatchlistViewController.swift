@@ -19,7 +19,7 @@ class MarketWatchlistViewController: MarketListViewController {
         self.viewModel = viewModel
         singleSortHeaderView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
 
-        super.init(listViewModel: listViewModel, apiTag: "market_watchlist")
+        super.init(listViewModel: listViewModel, statPage: .watchlist)
     }
 
     @available(*, unavailable)
