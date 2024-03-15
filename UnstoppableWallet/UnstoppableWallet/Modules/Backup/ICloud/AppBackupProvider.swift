@@ -90,7 +90,6 @@ class AppBackupProvider {
         SettingsBackup(
             evmSyncSources: evmSyncSources,
             btcModes: btcBlockchainManager.backup,
-            lockTimeEnabled: localStorage.lockTimeEnabled,
             remoteContactsSync: localStorage.remoteContactsSync,
             swapProviders: swapProviders,
             chartIndicators: chartRepository.backup,

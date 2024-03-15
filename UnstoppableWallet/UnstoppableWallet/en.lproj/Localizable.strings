@@ -1169,7 +1169,6 @@
 "settings.blockchain_settings" = "Blockchain Settings";
 "settings.backup_manager" = "Backup Manager";
 "settings.security" = "Security";
-"settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Personal Support";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
@@ -1211,18 +1210,6 @@
 "settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
 "settings.personal_support.requested.open_telegram" = "Open Telegram";
 "settings.personal_support.requested.new_request" = "New Request";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
-"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the %@ wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the %@ wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
 
 // Settings -> Terms
 

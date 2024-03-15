@@ -305,23 +305,6 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private var experimentalRows: [RowProtocol] {
-        [
-            tableView.universalRow48(
-                id: "experimental-features",
-                image: .local(UIImage(named: "flask_24")),
-                title: .body("settings.experimental_features".localized),
-                accessoryType: .disclosure,
-                isFirst: true,
-                isLast: true,
-                action: { [weak self] in
-                    let viewController = ExperimentalFeaturesView().toViewController(title: "settings.experimental_features.title".localized)
-                    self?.navigationController?.pushViewController(viewController, animated: true)
-                }
-            ),
-        ]
-    }
-
     private var knowledgeRows: [RowProtocol] {
         [
             tableView.universalRow48(
@@ -482,7 +465,6 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
-            Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "feedback", headerState: .margin(height: .margin32), rows: feedbackRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
