@@ -1171,7 +1171,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.blockchain_settings" = "Blockchain Einstellungen";
 "settings.backup_manager" = "Backup-Manager";
 "settings.security" = "Sicherheit";
-"settings.experimental_features" = "Experimentell";
 "settings.personal_support" = "Persönlicher Support";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
@@ -1213,18 +1212,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.personal_support.requested.description" = "Sie haben bereits einen privaten Chat angefordert, finden Sie ihn auf Telegram";
 "settings.personal_support.requested.open_telegram" = "Telegram öffnen";
 "settings.personal_support.requested.new_request" = "Neue Zahlungsaufforderung";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "Experimentell";
-"settings.experimental_features.description" = "Die unten aufgeführten Funktionen sind experimentell und sollten mit Vorsicht eingesetzt werden. Wir haben sie zwar ausführlich mit unserem eigenen Kryptoguthaben getestet, aber wir können noch nicht garantieren, dass sie in allen denkbaren Fällen funktionieren.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Aktivieren";
-"settings.bitcoin_hodling.description" = "Dadurch können Sie Bitcoins senden, die bis zu einem bestimmten Datum nicht ausgegeben werden können. \n\nDer Empfänger solcher Transaktionen sollte die %@ Wallet-App Version 0 verwenden. 0 oder neuer, mit dem BIP44 Adressformat für Bitcoin. \n\nNur die %@ Brieftasche kann solche Transaktionen im Bitcoin-Netzwerk korrekt identifizieren sowie den Empfänger in die Lage zu versetzen, diese Bitcoins nach Ablauf der Sperrfrist auszugeben. \n\nWenn Sie ein HODLer sind Sie können diese Funktion nutzen, um sich selbst zu erzwingen, Ihre Bitcoins zu hodlen, indem Sie solche Transaktionen an sich senden.";
 
 // Settings -> Terms
 
