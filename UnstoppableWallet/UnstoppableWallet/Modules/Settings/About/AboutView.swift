@@ -86,20 +86,6 @@ struct AboutView: View {
                         }
 
                         ClickableRow(action: {
-                            let account = AppConfig.appTwitterAccount
-
-                            if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
-                                UIApplication.shared.open(appUrl)
-                            } else {
-                                linkUrl = URL(string: "https://twitter.com/\(account)")
-                            }
-                        }) {
-                            Image("twitter_24").themeIcon()
-                            Text("Twitter").themeBody()
-                            Image.disclosureIcon
-                        }
-
-                        ClickableRow(action: {
                             linkUrl = URL(string: AppConfig.appWebPageLink)
                         }) {
                             Image("globe_24").themeIcon()
