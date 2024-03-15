@@ -1171,7 +1171,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.blockchain_settings" = "Blockchain Ayarları";
 "settings.backup_manager" = "Yedekleme yöneticisi";
 "settings.security" = "Güvenlik";
-"settings.experimental_features" = "Deneysel";
 "settings.personal_support" = "Kişisel Destek
 
 
@@ -1217,18 +1216,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.personal_support.requested.description" = "Zaten özel bir sohbet talep ettiniz, bunu Telegram'da bulun";
 "settings.personal_support.requested.open_telegram" = "Abrir Telegram";
 "settings.personal_support.requested.new_request" = "Yeni istek";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "Deneysel";
-"settings.experimental_features.description" = "Aşağıdaki özellikler deneyseldir ve dikkatli kullanılmalıdır. Bu özellikleri kendi kripto fonlarımızı kullanarak baştan sona test etmemize rağmen, olası tüm durumlarda beklendiği gibi çalışmalarını garanti edemeyiz.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Aktiveet";
-"settings.bitcoin_hodling.description" = "Belirtilen tarihe kadar harcanmamış Bitcoin'leri göndermenize olanak verir.\n\nBu tür bir işlemin alıcısı %@ cüzdan kullanmalıdır.\n\nSadece %@ cüzdan, Bitcoin ağındaki bu tür işlemleri doğru bir şekilde tanımlayabilir ve kilitleme süresi dolduktan sonra da alıcının bu Bitcoin'leri harcamasını sağlayabilir.\n\nEğer bir HODLer iseniz, kendinize böyle bir işlem göndererek, bu özelliği Bitcoin'lerinizi zarar etmeden uzun süre elinizde tutmaya zorlamak için kullanabilirsiniz.\n\nDeneysel bir özellik olduğundan, işlem başına maksimum tutar 0.5 BTC ile sınırlandırılmıştır.";
 
 // Settings -> Terms
 
