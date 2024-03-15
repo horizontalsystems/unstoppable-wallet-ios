@@ -1173,7 +1173,6 @@
 "settings.blockchain_settings" = "Настройки блокчейна";
 "settings.backup_manager" = "Резерв. копирования";
 "settings.security" = "Безопасность";
-"settings.experimental_features" = "Экспериментальные функции";
 "settings.personal_support" = "Персональная поддержка";
 "settings.base_currency" = "Базовая валюта";
 "settings.language" = "Язык";
@@ -1215,18 +1214,6 @@
 "settings.personal_support.requested.description" = "Вы уже запросили приватный чат, найдите его в Telegram";
 "settings.personal_support.requested.open_telegram" = "Открыть Telegram";
 "settings.personal_support.requested.new_request" = "Новый запрос";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "Экспериментальные функции";
-"settings.experimental_features.description" = "Функции ниже являются экспериментальными. Несмотря на то, что мы детально их протестировали, используя наши собственные криптосредства, мы не можем гарантировать, что они всегда будут работать так, как предусмотрено.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Активировать";
-"settings.bitcoin_hodling.description" = "Позволяет отправлять биткойны, которые могут быть потрачены только после указанной даты.\n\nПолучатель такой транзакции должен использовать версию 0.10 приложения %@ Wallet или же более новую версию с форматом адреса BIP44 для Bitcoin.\n\nТолько кошелек %@ может правильно распознать и обработать такие транзакции в сети Bitcoin, и позволить получателю тратить эти биткойны по истечении периода блокировки.\n\nЕсли вы HODLer (долгосрочный инвестор), то вы можете использовать эту функцию для удержания своих биткойнов, отправив их себе. \n\nТак как это экспериментальная функция, максимальная сумма транзакции ограничена 0,5 BTC.";
 
 // Settings -> Terms
 
