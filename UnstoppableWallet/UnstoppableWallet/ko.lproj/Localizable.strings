@@ -1170,7 +1170,6 @@
 "settings.blockchain_settings" = "블록 체인 설정";
 "settings.backup_manager" = "백업 관리자";
 "settings.security" = "보안 센터";
-"settings.experimental_features" = "실험";
 "settings.personal_support" = "개인 지원";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
@@ -1212,18 +1211,6 @@
 "settings.personal_support.requested.description" = "이미 비공개 채팅을 요청하셨습니다. Telegram에서 찾아보세요.";
 "settings.personal_support.requested.open_telegram" = "오픈 텔레그램";
 "settings.personal_support.requested.new_request" = "요청";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "실험";
-"settings.experimental_features.description" = "아래 기능은 실험용이므로 주의해서 사용해 주세요. 자체 암호화된 자금을 사용하여 이러한 기능을 철저히 실험하였지만 가능한 모든 경우에 예상대로 작독한다고 보장 드릴 수는 없습니다.";
-"settings.experimental_features.bitcoin_hodling" = "시간 자물쇠";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "시간 자물쇠";
-"settings.bitcoin_hodling.lock_time" = "활성화";
-"settings.bitcoin_hodling.description" = "이 기능을 사용하면 지정된 날짜까지 사용할 수 없는 비트코인을 보낼 수 있습니다. \n\n이러한 거래의 수신자는 비트코인을 위한 BIP44 주소 형식과 %@ 지갑 앱 버전 0.10 이상을 사용해야 합니다. \n\n%@ 지갑만이 비트코인 네트워크에서 이러한 거래를 올바르게 식별하고 잠금 기간이 종료된 후 해당 비트코인을 사용할 수 있도록 할 수 있습니다. \n\nHODLer이라면 이 기능을 사용하여 자신에게 이러한 거래를 보내어 비트코인을 보유할 수 있습니다.";
 
 // Settings -> Terms
 
