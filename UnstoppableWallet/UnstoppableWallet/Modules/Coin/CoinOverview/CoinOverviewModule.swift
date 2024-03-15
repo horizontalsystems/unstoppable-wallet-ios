@@ -3,7 +3,7 @@ import MarketKit
 import SwiftUI
 
 enum CoinOverviewModule {
-    static func view(coinUid: String, apiTag: String) -> some View {
+    static func view(coinUid: String) -> some View {
         let repository = ChartIndicatorsRepository(
             localStorage: App.shared.localStorage,
             subscriptionManager: App.shared.subscriptionManager
@@ -24,8 +24,7 @@ enum CoinOverviewModule {
             currencyManager: App.shared.currencyManager,
             languageManager: LanguageManager.shared,
             accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            apiTag: apiTag
+            walletManager: App.shared.walletManager
         )
 
         return CoinOverviewView(
@@ -36,15 +35,14 @@ enum CoinOverviewModule {
         )
     }
 
-    static func viewController(coinUid: String, apiTag: String) -> CoinOverviewViewController {
+    static func viewController(coinUid: String) -> CoinOverviewViewController {
         let service = CoinOverviewService(
             coinUid: coinUid,
             marketKit: App.shared.marketKit,
             currencyManager: App.shared.currencyManager,
             languageManager: LanguageManager.shared,
             accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            apiTag: apiTag
+            walletManager: App.shared.walletManager
         )
 
         let repository = ChartIndicatorsRepository(

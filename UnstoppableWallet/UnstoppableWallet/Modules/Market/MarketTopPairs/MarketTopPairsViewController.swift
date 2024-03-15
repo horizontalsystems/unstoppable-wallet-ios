@@ -12,7 +12,7 @@ class MarketTopPairsViewController: MarketListViewController {
     init(viewModel: MarketTopPairsViewModel, listViewModel: IMarketListViewModel) {
         self.viewModel = viewModel
 
-        super.init(listViewModel: listViewModel, apiTag: "")
+        super.init(listViewModel: listViewModel, statPage: .topMarketPairs)
     }
 
     @available(*, unavailable)

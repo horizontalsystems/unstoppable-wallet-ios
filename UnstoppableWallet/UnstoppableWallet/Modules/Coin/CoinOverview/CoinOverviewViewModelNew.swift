@@ -12,21 +12,19 @@ class CoinOverviewViewModelNew: ObservableObject {
     private let languageManager: LanguageManager
     private let accountManager: AccountManager
     private let walletManager: WalletManager
-    private let apiTag: String
     private let viewItemFactory = CoinOverviewViewItemFactory()
 
     let currency: Currency
 
     @Published private(set) var state: DataStatus<Item> = .loading
 
-    init(coinUid: String, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager, apiTag: String) {
+    init(coinUid: String, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager) {
         self.coinUid = coinUid
         self.marketKit = marketKit
         self.currencyManager = currencyManager
         self.languageManager = languageManager
         self.accountManager = accountManager
         self.walletManager = walletManager
-        self.apiTag = apiTag
 
         currency = currencyManager.baseCurrency
     }
@@ -119,13 +117,13 @@ extension CoinOverviewViewModelNew {
 
         state = .loading
 
-        Task { [weak self, marketKit, coinUid, currencyManager, languageManager, apiTag] in
+        Task { [weak self, marketKit, coinUid, currencyManager, languageManager] in
             do {
                 let info = try await marketKit.marketInfoOverview(
                     coinUid: coinUid,
                     currencyCode: currencyManager.baseCurrency.code,
                     languageCode: languageManager.currentLanguage,
-                    apiTag: apiTag
+                    apiTag: ""
                 )
                 self?.handleSuccess(info: info)
             } catch {

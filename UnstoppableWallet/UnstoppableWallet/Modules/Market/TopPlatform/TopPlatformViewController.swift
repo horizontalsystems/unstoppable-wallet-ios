@@ -27,7 +27,7 @@ class TopPlatformViewController: MarketListViewController {
             height: chartCell.cellHeight
         )
 
-        super.init(listViewModel: listViewModel, apiTag: "market_top_platform")
+        super.init(listViewModel: listViewModel, statPage: .topPlatform)
 
         multiSortHeaderView.viewController = self
     }

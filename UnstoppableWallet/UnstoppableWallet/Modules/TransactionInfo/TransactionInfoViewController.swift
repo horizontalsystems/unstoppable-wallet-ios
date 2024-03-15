@@ -92,11 +92,12 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func openCoin(coinUid: String) {
-        guard let module = CoinPageModule.viewController(coinUid: coinUid, apiTag: "transaction_info") else {
+        guard let module = CoinPageModule.viewController(coinUid: coinUid) else {
             return
         }
 
         present(module, animated: true)
+        stat(page: .transactionInfo, event: .coinOpen, params: [.coinUid: coinUid])
     }
 
     private func openNftAsset(providerCollectionUid: String, nftUid: NftUid) {

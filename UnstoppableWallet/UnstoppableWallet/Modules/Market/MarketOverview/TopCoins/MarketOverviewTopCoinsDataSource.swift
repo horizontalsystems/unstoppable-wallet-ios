@@ -37,8 +37,9 @@ class MarketOverviewTopCoinsDataSource: BaseMarketOverviewTopListDataSource {
     }
 
     override func onSelect(listViewItem: MarketModule.ListViewItem) {
-        if let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid, apiTag: "market_overview_top_coins") {
+        if let coinUid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: coinUid) {
             presentDelegate?.present(viewController: module)
+            stat(page: .marketOverview, section: viewModel.listType.statSection, event: .coinOpen, params: [.coinUid: coinUid])
         }
     }
 }

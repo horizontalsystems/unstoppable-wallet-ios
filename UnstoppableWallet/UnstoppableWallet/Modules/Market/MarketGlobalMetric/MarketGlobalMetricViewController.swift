@@ -38,7 +38,16 @@ class MarketGlobalMetricViewController: MarketListViewController {
             height: chartCell.cellHeight
         )
 
-        super.init(listViewModel: listViewModel, apiTag: "market_global_metrics_\(metricsType)")
+        let statPage: StatPage
+
+        switch metricsType {
+        case .totalMarketCap: statPage = .globalMetricsMarketCap
+        case .volume24h: statPage = .globalMetricsVolume
+        case .defiCap: statPage = .globalMetricsDefiCap
+        case .tvlInDefi: statPage = .globalMetricsTvlInDefi
+        }
+
+        super.init(listViewModel: listViewModel, statPage: statPage)
     }
 
     @available(*, unavailable)
