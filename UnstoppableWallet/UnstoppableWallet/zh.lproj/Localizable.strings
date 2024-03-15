@@ -1171,7 +1171,6 @@
 "settings.blockchain_settings" = "区块链设置";
 "settings.backup_manager" = "备份管理器";
 "settings.security" = "安全中心";
-"settings.experimental_features" = "实验性功能";
 "settings.personal_support" = "个人支持";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
@@ -1213,18 +1212,6 @@
 "settings.personal_support.requested.description" = "您已经请求了一个私聊，在Telegram 上找到它";
 "settings.personal_support.requested.open_telegram" = "打开 Telegram";
 "settings.personal_support.requested.new_request" = "新建请求";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "实验性功能";
-"settings.experimental_features.description" = "以下功能为实验性，应谨慎使用。虽然我们已使用自己的加密货币资金对这些功能进行了彻底测试，但是我们不保证它们在所有情况下都能如常工作。";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "激活";
-"settings.bitcoin_hodling.description" = "这使您能够发送比特币，直到指定日期才能使用。 \n\n这种交易的接收者应该使用 %@ 钱包应用程序版本 0。 0或更新，比特币的BIP44地址格式。 \n\n只有 %@ 钱包能够在比特币网络上正确识别此类交易。 并且允许接收者在锁定期满后使用这些比特币。 \n\n如果您是一个HODLER, 您可以使用此功能来通过向您自己发送这种交易来强制自己套装比特币。";
 
 // Settings -> Terms
 
