@@ -72,14 +72,8 @@ enum SendModule {
         let rbfService = RbfService(blockchainType: adapter.blockchainType, blockchainManager: App.shared.btcBlockchainManager)
 
         // TimeLock
-        var timeLockService: TimeLockService?
-        var timeLockErrorService: SendTimeLockErrorService?
-
-        if App.shared.localStorage.lockTimeEnabled, adapter.blockchainType == .bitcoin {
-            let timeLockServiceInstance = TimeLockService()
-            timeLockService = timeLockServiceInstance
-            timeLockErrorService = SendTimeLockErrorService(timeLockService: timeLockServiceInstance, addressService: addressService, adapter: adapter)
-        }
+        let timeLockService = TimeLockService()
+        let timeLockErrorService = SendTimeLockErrorService(timeLockService: timeLockService, addressService: addressService, adapter: adapter)
 
         let bitcoinAdapterService = SendBitcoinAdapterService(
             feeRateService: feeRateService,

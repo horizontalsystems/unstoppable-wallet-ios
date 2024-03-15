@@ -6,7 +6,6 @@ struct SettingsBackup: Codable {
     var evmSyncSources: EvmSyncSourceManager.SyncSourceBackup
     let btcModes: [BtcBlockchainManager.BtcRestoreModeBackup]
 
-    let lockTimeEnabled: Bool
     let remoteContactsSync: Bool?
     let swapProviders: [DefaultProvider]
     let chartIndicators: ChartIndicatorsRepository.BackupIndicators
@@ -25,7 +24,6 @@ struct SettingsBackup: Codable {
     enum CodingKeys: String, CodingKey {
         case evmSyncSources = "evm_sync_sources"
         case btcModes = "btc_modes"
-        case lockTimeEnabled = "lock_time"
         case remoteContactsSync = "contacts_sync"
         case swapProviders = "swap_providers"
         case chartIndicators = "indicators"

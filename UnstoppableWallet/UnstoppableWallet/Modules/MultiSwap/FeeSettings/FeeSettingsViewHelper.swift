@@ -42,14 +42,14 @@ class FeeSettingsViewHelper {
 
             VStack(alignment: .trailing, spacing: 1) {
                 switch feeValue {
-                    case .spinner: ProgressView().progressViewStyle(.circular)
-                    case .none: Text("n/a".localized).textSubhead1(color: .themeLeah)
-                    case let .value(primary, secondary):
-                        Text(primary).textSubhead1(color: .themeLeah)
+                case .spinner: ProgressView().progressViewStyle(.circular)
+                case .none: Text("n/a".localized).textSubhead1(color: .themeLeah)
+                case let .value(primary, secondary):
+                    Text(primary).textSubhead1(color: .themeLeah)
 
-                        if let secondary {
-                            Text(secondary).textSubhead2()
-                        }
+                    if let secondary {
+                        Text(secondary).textSubhead2()
+                    }
                 }
             }
         }
