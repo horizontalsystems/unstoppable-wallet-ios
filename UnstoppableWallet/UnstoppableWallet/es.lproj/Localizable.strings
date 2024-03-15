@@ -1171,7 +1171,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.blockchain_settings" = "Configuración de Blockchain";
 "settings.backup_manager" = "Gestor de copias de seguridad";
 "settings.security" = "Seguridad";
-"settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Soporte personal";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
@@ -1214,18 +1213,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.personal_support.requested.description" = "Ya has solicitado un chat privado, encuentra en Telegram";
 "settings.personal_support.requested.open_telegram" = "Abrir Telegram";
 "settings.personal_support.requested.new_request" = "Nueva requisición";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
-"settings.experimental_features.bitcoin_hodling" = "Timelock";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "Timelock";
-"settings.bitcoin_hodling.lock_time" = "Activar";
-"settings.bitcoin_hodling.description" = "Esto te permite enviar bitcoins que no se pueden gastar hasta una fecha específica. \n\nEl receptor de dichas transacciones debe usar la aplicación de cartera %@ en la versión 0.10 o más reciente, con el formato de dirección BIP44 para Bitcoin. \n\nSolo la cartera %@ puede identificar correctamente dichas transacciones en la red de Bitcoin, así como permitir que el receptor gaste esos bitcoins después de que expire el período de bloqueo. \n\nSi eres un HODLer, puedes usar esta función para obligarte a ti mismo a mantener tus bitcoins enviando dichas transacciones a ti mismo.";
 
 // Settings -> Terms
 
