@@ -1171,7 +1171,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.blockchain_settings" = "Configurações da Blockchain";
 "settings.backup_manager" = "Gerenciador de Backup";
 "settings.security" = "Segurança";
-"settings.experimental_features" = "Experimental";
 "settings.personal_support" = "Suporte Pessoal";
 "settings.base_currency" = "Moeda base";
 "settings.language" = "Idioma";
@@ -1213,18 +1212,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.personal_support.requested.description" = "Você já pediu um chat privado, encontre-o no Telegram";
 "settings.personal_support.requested.open_telegram" = "Abrir Telegram";
 "settings.personal_support.requested.new_request" = "Nova solicitação";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "Os recursos abaixo são experimentais e devem ser usados com cautela. Enquanto nós testamos minuciosamente esses recursos usando nossos próprios fundos cripto, nós não podemos garantir que eles funcionarão como esperado em todos os casos possíveis.";
-"settings.experimental_features.bitcoin_hodling" = "TravaTempo";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "TravaTempo";
-"settings.bitcoin_hodling.lock_time" = "Ativar";
-"settings.bitcoin_hodling.description" = "Isso permite que você envie Bitcoins que não podem ser gastos até uma data especificada. \n\nO destinatário de tais transações deve usar o aplicativo de carteira %@ versão 0.10 ou mais recente, com o formato de endereço BIP44 para Bitcoin. \n\nSomente a carteira %@ pode identificar corretamente tais transações na rede Bitcoin, bem como permitir que o receptor gaste esses Bitcoins após o período de bloqueio expirar. \n\nSe você é um HOLDER, você pode usar este recurso para se forçar a manter seus Bitcoins enviando tais transações para si mesmo. \n\nSendo um recurso experimental, o valor máximo por transação é limitado a 0,5 BTC.";
 
 // Settings -> Terms
 
