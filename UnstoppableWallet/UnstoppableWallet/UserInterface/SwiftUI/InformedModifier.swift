@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct Informed: ViewModifier {
-    let description: AlertView.InfoDescription
+    let description: ActionSheetView.InfoDescription
     @State private var descriptionPresented: Bool = false
 
     func body(content: Content) -> some View {
@@ -15,7 +15,7 @@ struct Informed: ViewModifier {
             .padding(EdgeInsets(top: 5.5, leading: .margin16, bottom: 5.5, trailing: .margin16))
         })
         .bottomSheet(isPresented: $descriptionPresented) {
-            AlertView(
+            ActionSheetView(
                 image: .info,
                 title: description.title,
                 items: [

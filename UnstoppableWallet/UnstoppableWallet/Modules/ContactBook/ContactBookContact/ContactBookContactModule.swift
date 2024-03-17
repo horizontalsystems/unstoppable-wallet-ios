@@ -43,3 +43,16 @@ extension ContactBookContactModule {
         case add(ContactAddress)
     }
 }
+
+struct ContactBookContactView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let mode: ContactBookContactModule.Mode
+    let onUpdateContact: (() -> Void)?
+
+    func makeUIViewController(context: Context) -> UIViewControllerType {
+        ContactBookContactModule.viewController(mode: mode, onUpdateContact: onUpdateContact) ?? UIViewController()
+    }
+
+    func updateUIViewController(_: UIViewControllerType, context _: Context) {}
+}

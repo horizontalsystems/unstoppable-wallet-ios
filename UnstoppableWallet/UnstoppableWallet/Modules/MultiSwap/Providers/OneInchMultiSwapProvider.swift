@@ -288,7 +288,8 @@ extension OneInchMultiSwapProvider {
                 fields.append(
                     .address(
                         title: "swap.recipient".localized,
-                        value: recipient.title
+                        value: recipient.title,
+                        blockchainType: tokenOut.blockchainType
                     )
                 )
             }

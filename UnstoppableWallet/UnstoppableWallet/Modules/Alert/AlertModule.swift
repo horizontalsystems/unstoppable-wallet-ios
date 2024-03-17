@@ -17,10 +17,19 @@ struct AlertViewItem {
     let selected: Bool
     let disabled: Bool
 
-    init(text: String, description: String? = nil, selected: Bool, disabled: Bool = false) {
+    init(text: String, description: String? = nil, selected: Bool = false, disabled: Bool = false) {
         self.text = text
         self.description = description
         self.selected = selected
         self.disabled = disabled
+    }
+}
+
+extension AlertViewItem: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(text)
+        hasher.combine(description)
+        hasher.combine(selected)
+        hasher.combine(disabled)
     }
 }
