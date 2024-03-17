@@ -467,4 +467,9 @@ extension [Contact] {
         guard let blockchainUid else { return self }
         return filter { $0.address(blockchainUid: blockchainUid) != nil }
     }
+
+    func by(address: String, blockchainUid: String) -> Self.Element? {
+        filter { $0.address(blockchainUid: blockchainUid)?.address.lowercased() == address.lowercased() }
+            .first
+    }
 }

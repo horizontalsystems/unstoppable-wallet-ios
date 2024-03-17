@@ -5,9 +5,9 @@ import SwiftUI
 
 enum SendConfirmField {
     case amount(title: String, token: Token, coinValueType: CoinValueType, currencyValue: CurrencyValue?, type: AmountType)
-    case value(title: String, description: AlertView.InfoDescription?, coinValue: CoinValue?, currencyValue: CurrencyValue?, formatFull: Bool)
+    case value(title: String, description: ActionSheetView.InfoDescription?, coinValue: CoinValue?, currencyValue: CurrencyValue?, formatFull: Bool)
     case levelValue(title: String, value: String, level: ValueLevel)
-    case address(title: String, value: String)
+    case address(title: String, value: String, blockchainType: BlockchainType)
 
     @ViewBuilder var listRow: some View {
         switch self {
@@ -85,23 +85,8 @@ enum SendConfirmField {
                 Spacer()
                 Text(value).textSubhead1(color: color(valueLevel: level))
             }
-        case let .address(title, value):
-            ListRow {
-                Text(title).textSubhead2()
-
-                Spacer()
-
-                Text(value)
-                    .textSubhead1(color: .themeLeah)
-                    .multilineTextAlignment(.trailing)
-
-                Button(action: {
-                    CopyHelper.copyAndNotify(value: value)
-                }) {
-                    Image("copy_20").renderingMode(.template)
-                }
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-            }
+        case let .address(title, value, blockchainType):
+            RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
         }
     }
 

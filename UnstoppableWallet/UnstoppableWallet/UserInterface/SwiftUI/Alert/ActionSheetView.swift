@@ -1,7 +1,7 @@
 import Kingfisher
 import SwiftUI
 
-struct AlertView: View {
+struct ActionSheetView: View {
     private let image: BottomSheetTitleView.Image?
     private let title: String
     private let subtitle: String?
@@ -153,7 +153,7 @@ extension BottomSheetTitleView.Image {
     }
 }
 
-extension AlertView {
+extension ActionSheetView {
     struct InfoDescription: Identifiable {
         let title: String
         let description: String

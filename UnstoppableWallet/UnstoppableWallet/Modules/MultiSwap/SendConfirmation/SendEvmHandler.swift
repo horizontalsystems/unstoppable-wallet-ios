@@ -127,7 +127,8 @@ extension SendEvmHandler: ISendHandler {
             [
                 .address(
                     title: "approve.confirmation.spender".localized,
-                    value: spender.eip55
+                    value: spender.eip55,
+                    blockchainType: coinService.token.blockchainType
                 ),
             ]
         )

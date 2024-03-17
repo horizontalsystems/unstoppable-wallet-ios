@@ -32,7 +32,7 @@ class FeeSettingsViewHelper {
         return (l2Value, l1Value, .value(primary: evmFeeData.gasLimit.description, secondary: nil))
     }
 
-    @ViewBuilder func row(title: String, feeValue: FeeSettings.FeeValue, description: AlertView.InfoDescription) -> some View {
+    @ViewBuilder func row(title: String, feeValue: FeeSettings.FeeValue, description: ActionSheetView.InfoDescription) -> some View {
         HStack(spacing: .margin8) {
             Text(title)
                 .textSubhead2()
@@ -57,7 +57,7 @@ class FeeSettingsViewHelper {
         .frame(height: .heightCell56)
     }
 
-    @ViewBuilder func headerRow(title: String, description: AlertView.InfoDescription) -> some View {
+    @ViewBuilder func headerRow(title: String, description: ActionSheetView.InfoDescription) -> some View {
         Text(title)
             .textSubhead1()
             .frame(maxWidth: .infinity, alignment: .leading)
