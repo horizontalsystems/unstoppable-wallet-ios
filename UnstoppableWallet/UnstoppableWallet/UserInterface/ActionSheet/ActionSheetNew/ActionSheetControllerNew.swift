@@ -195,7 +195,7 @@ extension ActionSheetControllerNew {
     }
 }
 
-extension ActionSheetControllerNew: ActionSheetView {
+extension ActionSheetControllerNew: IActionSheetView {
     public func contentWillDismissed() {
         dismissing = true
     }

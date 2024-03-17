@@ -89,7 +89,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         })
         .alertButtonTint(color: .themeJacob)
         .bottomSheet(item: $warningAlertPopup) { popup in
-            AlertView(
+            ActionSheetView(
                 image: .warning,
                 title: popup.title,
                 items: [
@@ -215,7 +215,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 .textSubhead2()
                 .modifier(
                     Informed(description:
-                        AlertView.InfoDescription(
+                        ActionSheetView.InfoDescription(
                             title: "deposit.not_active.title".localized,
                             description: "deposit.not_active.tron_description".localized
                         )
@@ -231,7 +231,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 .textSubhead2()
                 .modifier(
                     Informed(description:
-                        AlertView.InfoDescription(
+                        ActionSheetView.InfoDescription(
                             title: "cex_deposit.memo_warning.title".localized,
                             description: "cex_deposit.memo_warning.description".localized
                         )
