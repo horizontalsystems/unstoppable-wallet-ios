@@ -28,6 +28,7 @@
 "button.more" = "Показать больше";
 "button.i_understand" = "Я понимаю";
 "button.learn_more" = "Подробнее";
+"button.unlock" = "Unlock";
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
@@ -69,6 +70,11 @@
 "alert.revoking" = "Отмена";
 "alert.revoked" = "Отменен";
 "alert.cant_recognize" = "Не удалось распознать";
+
+"alert.fee_too_low" = "Fee Too Low";
+"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.unable_to_replace" = "Unable to replace";
+"alert.already_replaced" = "Already replaced";
 
 "no_results_found" = "Ничего не найдено";
 "action.loading" = "загрузка...";
@@ -374,14 +380,22 @@
 "deposit.set_amount" = "Установить сумму";
 "deposit.enter_amount" = "Ввести сумму";
 "deposit.not_active" = "Не активен";
+"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "Неактивный адрес";
 "deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
+
+"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+
+"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
 "deposit.zcash.restore.dont_have" = "Нет, у меня нет";
 
 "deposit.warning" = "Только совместимые с сетью токены. Другие будут потеряны.";
+"deposit.warning.watch_account" = "This address is the address of the watched account";
 
 "receive_network_select.title" = "Сеть";
 "receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
@@ -430,8 +444,10 @@
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Существует широко признанный стандарт для упорядочивания выходов транзакции, известный как BIP69. В открытых кошельках этот стандарт обеспечивает, чтобы пользователи кошелька не должны были полагаться на то, как разработчики приложения реализуют упорядочивание выходов. Поскольку этот стандарт относительно новый, не многие кошельки его уже реализовали. В результате, на блокчейне в некоторых случаях можно узнать, отправлена ли транзакция из кошелька, который использует этот стандарт или нет.";
 
+"send.confirmation.title" = "Подтвердить";
 "send.confirmation.you_send" = "Вы отправляете";
 "send.confirmation.to" = "Кому";
+"send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
@@ -441,14 +457,32 @@
 "send.confirmation.total" = "Итого";
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
+"send.confirmation.replace_by_fee" = "Replace by Fee";
+"send.confirmation.replaced_transactions" = "Replaced Transactions";
+
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
+"send.confirmation.sent" = "Отправлено";
+
+"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.approving" = "Разрешение";
+"send.confirmation.approved" = "Разрешено";
+
+"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.revoking" = "Отмена";
+"send.confirmation.revoked" = "Отменен";
+
+"send.confirmation.slide_to_resend" = "Отправить повторно";
+"send.confirmation.slide_to_cancel" = "Cancel Transaction";
 "send.confirmation.resend_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее повторно с более высокой комиссией. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее заново как новую транзакцию с нулевой суммой к самому себе. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
-"send.confirmation.cancel" = "Отменить транзакцию";
+"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.speed_up" = "Speed Up";
+"send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Memo";
 "send.confirmation.method" = "Метод";
+"send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "Недостаточно средств";
 "send.address_error.own_address" = "Невозможно отправить TRX самому себе";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
@@ -469,6 +503,10 @@
 "send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
 "send.lock_time" = "TimeLock";
+
+"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.change" = "Change";
 
 "approve.confirmation.you_approve" = "Вы разрешаете";
 "approve.confirmation.you_revoke" = "Вы отменяете";
@@ -495,7 +533,6 @@
 "swap.you_pay" = "Вы платите";
 "swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
-"swap.allowance" = "Разрешение";
 "swap.you_get" = "Вы получите";
 "swap.token" = "Выбрать";
 "swap.advanced_settings" = "Настройки обмена";
@@ -503,8 +540,8 @@
 "swap.approve.title" = "Разрешение обмена";
 "swap.approve.description" = "Вы должны предоставить разрешение смарт-контракту для обмена заданным токеном от вашего имени. Это разрешение устанавливает сумму, которую может использовать смарт-контракт. Это не влияет на ваш баланс, но требует небольшой комиссии для выполнения транзакции на подтверждение.\n\nХотя это можно сделать по мере необходимости перед каждой сделкой, более дешево предварительно разрешить большую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
+"swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Разрешение...";
-"swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и разрешить новую сумму";
 "swap.revoking_button" = "Отмена...";
 "swap.not_available_button" = "Баланс N/А";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
@@ -516,12 +553,48 @@
 "swap.price" = "Цена";
 "swap.buy_price" = "Цена покупки";
 "swap.sell_price" = "Цена продажи";
-"swap.price_impact" = "Отклонение от рын. цены";
 "swap.maximum_paid" = "Макс. сумма";
 "swap.minimum_got" = "Гарантированная сумма";
 "swap.estimate_short" = "(прим)";
 "swap.minimum_short" = "(мин)";
 "swap.maximum_short" = "(макс)";
+
+"swap.rate_not_available" = "Rate not available";
+"swap.select" = "Выбрать";
+"swap.quoting" = "Quoting";
+"swap.select_token_in" = "Select Token In";
+"swap.select_token_out" = "Select Token Out";
+"swap.no_providers" = "No Providers";
+"swap.enter_amount" = "Ввести сумму";
+"swap.no_quotes" = "No Quotes";
+"swap.token_not_enabled" = "Token Not Enabled";
+"swap.token_syncing" = "Token Syncing";
+"swap.token_not_synced" = "Token Not Synced";
+"swap.insufficient_balance" = "Недостаточный баланс";
+
+"swap.quotes.providers" = "Providers";
+"swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "Разрешение";
+"swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "Unlock";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+"swap.revoke" = "Отменить";
+"swap.revoking" = "Отмена";
+"swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и разрешить новую сумму";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "Отклонение от рын. цены";
+"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "Recipient";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -554,8 +627,18 @@
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "Подтвердить";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
+"swap.confirmation.swapped" = "Обмен выполнен";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ отключил действие обмена для этой сделки, потому что вы получаете крайне невыгодную цену. Это связано с крайне низкой ликвидностью.Если вы все равно хотите выполнить обмен, используйте вместо этого веб-сайт %@.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
 
@@ -565,7 +648,7 @@
 "swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 "swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Разрешение";
-"swap.dex_info.content_allowance" = "Сумма, которую exchange может потратить от имени пользователя при выполнении обмена токенов. Действующая транзакция, устанавливающая достаточный уровень допустимости, необходима для того, чтобы транзакция обмена была осуществлена.";
+"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
 "swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.dex_info.header_swap_fee" = "Комиссия за обмен";
@@ -582,6 +665,8 @@
 "swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также верно и обратное.";
 
 "swap.dex_info.link_button" = "%@ Сайт";
+
+
 
 // Market
 
@@ -623,12 +708,16 @@
 "market.top.lowest_cap" = "Наименьшая кап.";
 "market.top.highest_volume" = "Наивысший объем";
 "market.top.lowest_volume" = "Наименьший объем";
-"market.top.top_gainers" = "Взлеты";
-"market.top.top_losers" = "Падения";
+"market.top.top_gainers" = "Показывают рост";
+"market.top.top_losers" = "Теряют в цене";
 "market.top.top_collections" = "Топ NFT коллекции";
 "market.top.floor_price" = "Цена";
+"market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "Топ платформы";
 "market.top.protocols" = "Протоколы";
+
+"top_pairs.title" = "Top Market Pairs";
+"top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "Рейтинг платформ";
 "top_platforms.description" = "Лучшие ведущие блокчейн-платформы кумулятивного рынка проектов";
@@ -659,6 +748,13 @@
 "market.advanced_search.choose_set" = "Выбор набора";
 "market.advanced_search.market_cap" = "Рын. капитализация";
 "market.advanced_search.volume" = "Объем торговли";
+
+"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
+"market.advanced_search.good_cex_volume" = "Good CEX Volume";
+"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+
 "market.advanced_search.liquidity" = "Ликвидность DEX";
 "market.advanced_search.blockchains" = "Блокчейны";
 "market.advanced_search.price_period" = "Ценовой период";
@@ -703,6 +799,10 @@
 "market.advanced_search.month" = "1 месяц";
 "market.advanced_search.month6" = "6 месяцев";
 "market.advanced_search.year" = "1 год";
+
+"market.advanced_search.day.short" = "24H";
+"market.advanced_search.week.short" = "7D";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Результаты";
 
@@ -760,6 +860,11 @@
 "coin_overview.whitepaper" = "Тех. описание (whitepaper)";
 
 // Coin Page -> Analytics
+"technical_advice.over.bought" = "overbought";
+"technical_advice.over.sold" = "oversold";
+"technical_advice.down" = "down";
+"technical_advice.up" = "up";
+
 "technical_advice.over.main" = "Действия с активом опасны.";
 "technical_advice.over.indicators.signal_date" = "C %@";
 "technical_advice.over.indicators" = "Актив находится за границей канала Bollinger Band и %@.";
@@ -777,26 +882,46 @@
 "technical_advice.neutral.indicators" = "Актив находился в зоне перекупленности/перепроданности, однако в текущий момент цена вернулась в канал Bollinger Band в нейтральную зону. (RSI)? RSI = $@ также подверждает отсутствие сильного тренда, поэтому в целом цена актива стремится к усреднению и дальнейшее движение возможно в любую сторону.";
 "technical_advice.neutral.advice" = " В целом цена актива стремится к усреднению и дальнейшее движение возможно в любую сторону.";
 
-"coin_analytics.indicators.summary" = "Общая оценка";
+"technical_advice.other.title" = "Please note:";
+
+"technical_advice.ema.above" = "above";
+"technical_advice.ema.below" = "below";
+"technical_advice.ema.growth" = "growth";
+"technical_advice.ema.decrease" = "decrease";
+"technical_advice.ema.advice" = "EMA 200. Determines the overall sentiment and trend. The daily price of the asset is located %@ the EMA (%@). This means that globally the asset is set for %@.";
+
+"technical_advice.macd.positive" = "above";
+"technical_advice.macd.negative" = "below";
+"technical_advice.macd.advice" = "MACD. Assesses the strength of the trend considering the average price change. The daily value of the histogram is %@ (%@). The price of the asset globally may move %@.";
+
 "coin_analytics.indicators.title" = "Технические индикаторы";
+"coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
+"coin_analytics.indicators.info.title" = "Technical Indicators";
+"coin_analytics.indicators.info.description" = "We use the Bollinger Bands + RSI strategy to determine trading signals. All calculations are based on daily candlesticks and provide advice for a moderately long term. The essence of the strategy is that the asset price should reach an extreme, breaking out of the Bollinger Bands channel, and the RSI should be in the overbought/oversold zone. After the price returns to the channel, there is a high probability of the price returning to the mean values or attempting to break the channel from the other side. Note that the strategy may give several false signals during strong market movements before a correct signal appears.\n\nPlease remember that it is very important to apply risk management to trading and remember to cut losses if the market situation changes! ";
+"coin_analytics.indicators.hide_details" = "Hide Details";
+"coin_analytics.indicators.show_details" = "Show Details";
+"coin_analytics.indicators.summary" = "Общая оценка";
 "coin_analytics.indicators.no_data" = "Нет данных";
+"coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "Активно покупать";
 "coin_analytics.indicators.buy" = "Покупать";
 "coin_analytics.indicators.neutral" = "Нейтральный";
 "coin_analytics.indicators.sell" = "Продавать";
 "coin_analytics.indicators.strong_sell" = "Активно продавать";
+"coin_analytics.indicators.overbought" = "Very Risky to Trade";
 "coin_analytics.period" = "Период";
 "coin_analytics.period.select_title" = "Выберите период";
 "coin_analytics.period.1h" = "1 час";
 "coin_analytics.period.4h" = "4 часа";
 "coin_analytics.period.1d" = "1 день";
 "coin_analytics.period.1w" = "1 неделя";
+"coin_analytics.period.1m" = "1 месяц";
 
 "coin_analytics.details" = "Подробности";
 
 "coin_analytics.not_available" = "В этом проекте нет аналитических данных";
 
-"coin_analytics.technical_indicators" = "Технические индикаторы";
+"coin_analytics.technical_indicators" = "Technical Indicators";
 "coin_analytics.technical_indicators.info1" = "Сводка: Это общий обзор технических характеристик актива, учитывающий различные технические индикаторы и временные рамки. Она предоставляет консенсусное мнение (Покупать, Продавать или Нейтрально) на основе этих индикаторов.";
 "coin_analytics.technical_indicators.info2" = "Скользящие средние (MA): Это обычно используемые технические индикаторы, позволяющие сгладить данные о ценах для создания индикатора следующего тренда. Они показывают среднюю цену за определенный период времени. Существует несколько типов MAs:\n\nSimple Moving среднее значение (SMA): Это вычисляет среднее значение выбранного диапазона цен, обычно закрывают цены, по количеству периодов в этом диапазоне.\n\nЭкспоненциальное скользящее среднее (EMA): Это даёт больше веса для последних цен, тем самым реагируя быстрее на последние изменения цен.";
 "coin_analytics.technical_indicators.info3" = "Осцилляторы: Это технические индикаторы, которые колеблются со временем в диапазоне (выше и ниже центральной линии или между заданными уровнями). Они предназначены для идентификации перекупленных и перепродаваемых условий на рынке. Вот несколько распространенных осцилляторов:\n\nИндекс относительной силы (RSI): Это измеряет скорость и изменение движений цен. Обычно он используется для идентификации перекупленных или перепроданных условий.\n\nДвижение среднего сближения (MACD): Используется для выявления потенциальных сигналов на покупку и продажу. Она запускает технические сигналы, когда она пересекает линии сигнала выше (покупать) или ниже (продавать).";
@@ -914,12 +1039,21 @@
 "coin_analytics.30_day_rank" = "Рейтинг на 30д";
 "coin_analytics.30_day_volume" = "Объем за 30д";
 
+"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
+"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
+"coin_analytics.analysis.attention_required" = "Attention Required";
+"coin_analytics.analysis.token_detectors" = "Token Detectors";
+"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.issues" = "Issues: %@";
+
 // Coin Page -> Markets
 
 "coin_markets.empty" = "Нет доступных данных";
 "coin_markets.filter.all" = "Все";
-"coin_markets.filter.verified" = "Проверено";
-"coin_markets.verified" = "Проверено";
+"coin_markets.filter.verified" = "Подтверждено";
+"coin_markets.verified" = "Подтверждено";
 
 // Coin Page -> Tweets
 
@@ -967,11 +1101,11 @@
 "transactions.failed" = "Не удалось";
 
 "transactions.receive" = "Получить";
-"transactions.send" = "Отправить";
+"transactions.send" = "Отправлено";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
-"transactions.approve" = "Разрешить";
-"transactions.swap" = "Обмен";
+"transactions.approve" = "Разрешено";
+"transactions.swap" = "Обмен выполнен";
 "transactions.contract_call" = "Вызов контракта";
 "transactions.contract_creation" = "Создание контракта";
 "transactions.external_call" = "Внешний вызов";
@@ -987,7 +1121,7 @@
 "transactions.yesterday" = "Вчера";
 
 "transactions.types.all" = "Все";
-"transactions.types.incoming" = "Получено";
+"transactions.types.incoming" = "Получить";
 "transactions.types.outgoing" = "Отправлено";
 "transactions.types.swap" = "Обмены";
 "transactions.types.approve" = "Разрешения";
@@ -1010,8 +1144,8 @@
 "tx_info.contact_name" = "Имя контакта";
 "tx_info.button_explorer" = "Просмотреть на %@";
 "tx_info.rate" = "Исторический курс";
-"tx_info.options.speed_up" = "Ускорить";
-"tx_info.options.cancel" = "Отменить транзакцию";
+"tx_info.options.speed_up" = "Speed Up";
+"tx_info.options.cancel" = "Cancel Transaction";
 "tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
 "tx_info.fee" = "Комиссия";
 "tx_info.fee.estimated" = "Комиссия (прим.)";
@@ -1019,7 +1153,7 @@
 "tx_info.double_spent_note" = "Риск двойной траты!";
 "tx_info.locked_until" = "Заблокировано до %@";
 "tx_info.unlocked_at" = "Разблокировано %@";
-"tx_info.recipient_hash" = "Получатель";
+"tx_info.recipient_hash" = "Recipient";
 "tx_info.raw_transaction" = "Неподтвержденная транзакция";
 "tx_info.memo" = "Memo";
 "tx_info.service" = "Сервис";
@@ -1039,7 +1173,6 @@
 "settings.blockchain_settings" = "Настройки блокчейна";
 "settings.backup_manager" = "Резерв. копирования";
 "settings.security" = "Безопасность";
-"settings.experimental_features" = "Экспериментальные функции";
 "settings.personal_support" = "Персональная поддержка";
 "settings.base_currency" = "Базовая валюта";
 "settings.language" = "Язык";
@@ -1081,18 +1214,6 @@
 "settings.personal_support.requested.description" = "Вы уже запросили приватный чат, найдите его в Telegram";
 "settings.personal_support.requested.open_telegram" = "Открыть Telegram";
 "settings.personal_support.requested.new_request" = "Новый запрос";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "Экспериментальные функции";
-"settings.experimental_features.description" = "Функции ниже являются экспериментальными. Несмотря на то, что мы детально их протестировали, используя наши собственные криптосредства, мы не можем гарантировать, что они всегда будут работать так, как предусмотрено.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Активировать";
-"settings.bitcoin_hodling.description" = "Позволяет отправлять биткойны, которые могут быть потрачены только после указанной даты.\n\nПолучатель такой транзакции должен использовать версию 0.10 приложения %@ Wallet или же более новую версию с форматом адреса BIP44 для Bitcoin.\n\nТолько кошелек %@ может правильно распознать и обработать такие транзакции в сети Bitcoin, и позволить получателю тратить эти биткойны по истечении периода блокировки.\n\nЕсли вы HODLer (долгосрочный инвестор), то вы можете использовать эту функцию для удержания своих биткойнов, отправив их себе. \n\nТак как это экспериментальная функция, максимальная сумма транзакции ограничена 0,5 BTC.";
 
 // Settings -> Terms
 
@@ -1226,7 +1347,7 @@
 
 // Unlock
 
-"unlock.title" = "Разблокировать";
+"unlock.title" = "Unlock";
 "unlock.passcode" = "Введите код доступа";
 "unlock.biometry_reason" = "Разблокировать кошелек";
 "unlock.attempts_left" = "Осталось попыток: %@";
@@ -1379,14 +1500,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24ч";
-"chart.time_duration.week" = "7Д";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2Н";
-"chart.time_duration.month" = "1М";
+"chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halfyear" = "6М";
 "chart.time_duration.year" = "1Г";
 "chart.time_duration.year2" = "2Г";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "ВСЕ";
 
 "chart.market_cap" = "Рын. капитализация";
@@ -1645,6 +1767,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
 "fee_settings" = "Доп. настройки";
+"fee_settings.title" = "Fee Settings";
 "fee_settings.fee" = "Комиссия";
 "fee_settings.fee.info" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Эти сборы выше, когда в сети происходит много транзакций.";
 "fee_settings.fee_rate" = "Комиссия";
@@ -1652,12 +1775,16 @@
 "fee_settings.inputs_outputs" = "Вводы/Выводы";
 "fee_settings.transaction_settings" = "Настройки транзакций";
 "fee_settings.transaction_settings.description" = "Затрудните отслеживание Биткойн-транзакций, изменив их структурирование.";
+"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
 ";
 
 "fee_settings.network_fee" = "Комиссия сети";
 "fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
+"fee_settings.l1_fee" = "L1 Fee";
+"fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "Единица сложности транзакций - газ, она варьирует в зависимости от выполняемого смарт-контракта. Лимит газа - это предполагаемый максимальный размер газа, необходимый для выполнения смарт-контракта. Обычно используется меньшее количество газа.";
 
@@ -1871,10 +1998,14 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "Фильтр";
+"transaction_filter.title" = "Контакты";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Все блокчейны";
 "transaction_filter.coin" = "Монета";
 "transaction_filter.all_coins" = "Все токены";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Скрыть подозрительные транзакции";
 "transaction_filter.hide_suspicious_txs.description" = "Скрытие входящих транзакций с незначительной суммой в стабильных монетах частично решает проблемы атаки на загрязнение адреса.";
