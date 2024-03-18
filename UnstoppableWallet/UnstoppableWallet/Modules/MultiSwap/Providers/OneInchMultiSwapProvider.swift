@@ -53,10 +53,11 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         var resolvedSwap: Swap?
         var insufficientFeeBalance = false
 
-        if let evmKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit,
+        if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper,
            let gasPrice,
            let amount = rawAmount(amount: amountIn, token: tokenIn)
         {
+            let evmKit = evmKitWrapper.evmKit
             let swap = try await kit.swap(
                 networkManager: networkManager,
                 chain: evmKit.chain,
@@ -72,13 +73,18 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             resolvedSwap = swap
 
             let evmBalance = evmKit.accountState?.balance ?? 0
-            let txAmount = tokenIn.type.isNative ? amount : 0
+            let txAmount = swap.transaction.value
             let feeAmount = BigUInt(swap.transaction.gasLimit * gasPrice.max)
             let totalAmount = txAmount + feeAmount
 
             insufficientFeeBalance = totalAmount > evmBalance
 
-            evmFeeData = try await evmFeeEstimator.oneIncheEstimateFee(blockchainType: blockchainType, evmKit: evmKit, swap: swap, gasPrice: gasPrice)
+            evmFeeData = try await evmFeeEstimator.estimateFee(
+                evmKitWrapper: evmKitWrapper,
+                transactionData: swap.transactionData,
+                gasPrice: gasPrice,
+                predefinedGasLimit: swap.transaction.gasLimit
+            )
         }
 
         return ConfirmationQuote(
@@ -107,14 +113,18 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.invalidSwap
         }
 
+        guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
+            throw SwapError.noGasLimit
+        }
+
         guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
             throw SwapError.noEvmKitWrapper
         }
 
         _ = try await evmKitWrapper.send(
-            transactionData: TransactionData(to: swap.transaction.to, value: swap.transaction.value, input: swap.transaction.data),
+            transactionData: swap.transactionData,
             gasPrice: swap.transaction.gasPrice,
-            gasLimit: swap.transaction.gasLimit,
+            gasLimit: gasLimit,
             nonce: quote.nonce
         )
     }
@@ -179,6 +189,7 @@ extension OneInchMultiSwapProvider {
         case invalidQuote
         case invalidSwap
         case noEvmKitWrapper
+        case noGasLimit
     }
 }
 
@@ -319,5 +330,11 @@ extension OneInchMultiSwapProvider {
 
             return fields
         }
+    }
+}
+
+extension Swap {
+    var transactionData: TransactionData {
+        TransactionData(to: transaction.to, value: transaction.value, input: transaction.data)
     }
 }

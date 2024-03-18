@@ -22,11 +22,12 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        if let evmKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit, let gasPrice {
+        if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPrice {
             do {
+                let evmKit = evmKitWrapper.evmKit
                 let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, trade: quote.trade, tradeOptions: quote.tradeOptions)
                 txData = transactionData
-                evmFeeData = try await evmFeeEstimator.estimateFee(blockchainType: blockchainType, evmKit: evmKit, transactionData: transactionData, gasPrice: gasPrice)
+                evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPrice)
             } catch {
                 transactionError = error
             }
@@ -63,7 +64,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noGasPrice
         }
 
-        guard let gasLimit = quote.evmFeeData?.gasLimit else {
+        guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
             throw SwapError.noGasLimit
         }
 

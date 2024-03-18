@@ -29,7 +29,7 @@ extension SendEvmHandler: ISendHandler {
 
         if let gasPrice {
             do {
-                evmFeeData = try await evmFeeEstimator.estimateFee(blockchainType: blockchainType, evmKit: evmKitWrapper.evmKit, transactionData: transactionData, gasPrice: gasPrice)
+                evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPrice)
             } catch {
                 transactionError = error
             }
@@ -59,7 +59,7 @@ extension SendEvmHandler: ISendHandler {
             throw SendError.noGasPrice
         }
 
-        guard let gasLimit = data.evmFeeData?.gasLimit else {
+        guard let gasLimit = data.evmFeeData?.surchargedGasLimit else {
             throw SendError.noGasLimit
         }
 
