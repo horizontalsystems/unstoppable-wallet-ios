@@ -5,26 +5,13 @@ import MarketKit
 
 struct EvmFeeData {
     let gasLimit: Int
+    let surchargedGasLimit: Int
     let l1Fee: BigUInt?
 
-    init(gasLimit: Int, l1Fee: BigUInt? = nil) {
+    init(gasLimit: Int, surchargedGasLimit: Int, l1Fee: BigUInt? = nil) {
         self.gasLimit = gasLimit
+        self.surchargedGasLimit = surchargedGasLimit
         self.l1Fee = l1Fee
-    }
-
-    private func amountData(amount: Decimal, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-        let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
-        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
-
-        return AmountData(coinValue: coinValue, currencyValue: currencyValue)
-    }
-
-    private func l1FeeValue(feeToken: Token) -> Decimal? {
-        guard let l1Fee else {
-            return nil
-        }
-
-        return Decimal(bigUInt: l1Fee, decimals: feeToken.decimals)
     }
 
     func totalAmountData(gasPrice: GasPrice?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
@@ -54,5 +41,20 @@ struct EvmFeeData {
                 feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate
             )
         }
+    }
+
+    private func amountData(amount: Decimal, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
+        let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
+        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
+
+        return AmountData(coinValue: coinValue, currencyValue: currencyValue)
+    }
+
+    private func l1FeeValue(feeToken: Token) -> Decimal? {
+        guard let l1Fee else {
+            return nil
+        }
+
+        return Decimal(bigUInt: l1Fee, decimals: feeToken.decimals)
     }
 }
