@@ -28,6 +28,7 @@
 "button.more" = "더 보기";
 "button.i_understand" = "이해합니다";
 "button.learn_more" = "자세히 보기";
+"button.unlock" = "Unlock";
 
 "alert" = "알림";
 "alert.copied" = "복사됨";
@@ -69,6 +70,11 @@
 "alert.revoking" = "철회";
 "alert.revoked" = "철회됨";
 "alert.cant_recognize" = "인식할 수 없음";
+
+"alert.fee_too_low" = "Fee Too Low";
+"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.unable_to_replace" = "Unable to replace";
+"alert.already_replaced" = "Already replaced";
 
 "no_results_found" = "검색 결과가 없습니다";
 "action.loading" = "로딩중";
@@ -370,14 +376,22 @@
 "deposit.set_amount" = "금액 설정";
 "deposit.enter_amount" = "금액 입력";
 "deposit.not_active" = "비활성화됨";
+"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
+
+"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+
+"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
 "deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
 "deposit.zcash.restore.dont_have" = "아니요, 없어요";
 
 "deposit.warning" = "네트워크 호환 토큰만 허용됩니다. 그 외에는 소멸됩니다.";
+"deposit.warning.watch_account" = "This address is the address of the watched account";
 
 "receive_network_select.title" = "회로망";
 "receive_network_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
@@ -426,8 +440,10 @@
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "거래 출력을 정렬하는 데에는 일반적으로 합의된 표준이 있습니다(이것은 BIP69로 알려져 있습니다). 오픈 소스 지갑에서는 이 표준이 지갑 사용자가 앱 개발자가 출력 순서를 어떻게 구현하는지 신뢰할 필요가 없도록 보장합니다. 이 표준은 새로운 것이기 때문에 아직 많은 지갑이 이를 구현하지 않았습니다. 그 결과, 블록체인에서 특정 거래가 이 표준을 사용하는 지갑에서 보내졌는지 여부를 어느 정도 파악할 수 있습니다.";
 
+"send.confirmation.title" = "확인";
 "send.confirmation.you_send" = "보냅니다";
 "send.confirmation.to" = "에게";
+"send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "담당자 이름";
 "send.confirmation.domain" = "도메인";
 "send.confirmation.address" = "주소";
@@ -437,14 +453,32 @@
 "send.confirmation.total" = "합계";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.time_lock" = "TimeLock";
+"send.confirmation.replace_by_fee" = "Replace by Fee";
+"send.confirmation.replaced_transactions" = "Replaced Transactions";
+
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
+"send.confirmation.sent" = "전송됨";
+
+"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.approving" = "승인 중";
+"send.confirmation.approved" = "승인됨";
+
+"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.revoking" = "철회";
+"send.confirmation.revoked" = "철회됨";
+
+"send.confirmation.slide_to_resend" = "재전송";
+"send.confirmation.slide_to_cancel" = "Cancel Transaction";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.resend" = "재전송";
 "send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
-"send.confirmation.cancel" = "트랜잭션 취소";
+"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.speed_up" = "Speed Up";
+"send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "메소드";
+"send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "잔고 부족";
 "send.address_error.own_address" = "TRX를 자신에게 전송할 수 없습니다";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
@@ -465,6 +499,10 @@
 "send.stuck_warning" = "경고! 갇힐 위험";
 
 "send.lock_time" = "시간 자물쇠";
+
+"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.change" = "Change";
 
 "approve.confirmation.you_approve" = "승인합니다";
 "approve.confirmation.you_revoke" = "당신은 취소";
@@ -491,7 +529,6 @@
 "swap.you_pay" = "지불하기";
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
-"swap.allowance" = "허용량";
 "swap.you_get" = "얻기";
 "swap.token" = "선택";
 "swap.advanced_settings" = "스왑 설정";
@@ -499,8 +536,8 @@
 "swap.approve.title" = "스왑 승인";
 "swap.approve.description" = "스마트 계약에 사용자 대신 지정된 토큰을 교환할 수 있는 권한을 부여해야 합니다. 이 권한은 스마트 계약에서 사용할 수 있는 금액을 설정합니다. 잔액에는 영향을 미치지 않지만 승인 거래를 실행하려면 소액의 수수료가 필요합니다.\n\n매 거래 전에 요청 시 이루어질 수 있지만, 향후 거래를 위해 사전에 더 많은 금액을 승인하는 것이 더 저렴합니다.";
 "swap.approve.amount_error.already_approved" = "귀하는 이미 이 금액에 대한 허용량을 가지고 있습니다.";
+"swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "승인 중...";
-"swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
 "swap.revoking_button" = "철회...";
 "swap.not_available_button" = "균형 N/A";
 "swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
@@ -512,12 +549,48 @@
 "swap.price" = "금액";
 "swap.buy_price" = "구매 가격";
 "swap.sell_price" = "매도 가격";
-"swap.price_impact" = "가격 영향";
 "swap.maximum_paid" = "최대 지불액";
 "swap.minimum_got" = "최대 지급액";
 "swap.estimate_short" = "(추정)";
 "swap.minimum_short" = "(분)";
 "swap.maximum_short" = "(최대)";
+
+"swap.rate_not_available" = "Rate not available";
+"swap.select" = "선택";
+"swap.quoting" = "Quoting";
+"swap.select_token_in" = "Select Token In";
+"swap.select_token_out" = "Select Token Out";
+"swap.no_providers" = "No Providers";
+"swap.enter_amount" = "금액 입력";
+"swap.no_quotes" = "No Quotes";
+"swap.token_not_enabled" = "Token Not Enabled";
+"swap.token_syncing" = "Token Syncing";
+"swap.token_not_synced" = "Token Not Synced";
+"swap.insufficient_balance" = "잔액 부족";
+
+"swap.quotes.providers" = "Providers";
+"swap.quotes.best_price" = "Best Price";
+
+"swap.allowance" = "허용량";
+"swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.pending_allowance" = "Pending Allowance";
+"swap.unlock" = "Unlock";
+"swap.unlocking" = "Unlocking";
+"swap.allowance_error" = "Allowance Error";
+"swap.revoke" = "취소";
+"swap.revoking" = "철회";
+"swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
+
+"swap.unlock.title" = "Unlock Access";
+"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.unlimited" = "Unlimited";
+
+"swap.price_impact" = "가격 영향";
+"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.high_price_impact" = "High Price Impact";
+"swap.recipient" = "Recipient";
+"swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
 
@@ -550,8 +623,18 @@
 
 // Swap Confirmation
 
+"swap.confirmation.title" = "확인";
+"swap.confirmation.quoting" = "Quoting...";
+"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.quote_expires_in" = "Quote expires in %@";
+"swap.confirmation.quote_expired" = "Quote expired";
+"swap.confirmation.quote_failed" = "Failed to quote";
+
 "swap.confirmation.slide_to_swap" = "밀어서 결제하기";
 "swap.confirmation.swapping" = "스와핑";
+"swap.confirmation.swapped" = "스왑됨";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
@@ -561,7 +644,7 @@
 "swap.dex_info.description" = "이 거래소 서비스는 %@ 블록체인에 구축된 분산형 토큰 교환 프로토콜인 %@에 의해 구동됩니다.\n\n%@는 스마트 계약에 의해 완전 자동화되고 관리되므로 부정 행위 없이 토큰 교환을 안정적으로 수행할 수 있습니다.";
 "swap.dex_info.header_dex_related" = "%@ 관련됨";
 "swap.dex_info.header_allowance" = "허용량";
-"swap.dex_info.content_allowance" = "토큰 스왑을 실행할 때 거래소가 사용자를 대신하여 지출할 수 있는 금액. 실제 스왑 거래가 발생하기 전에 선행 거래 설정 충분한 여유가 필요합니다.";
+"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "가격 영향";
 "swap.dex_info.content_price_impact" = "표시된 가격과의 예상 가격 편차는 일반적으로 스왑 금액에 따라 증가합니다.";
 "swap.dex_info.header_swap_fee" = "스왑 비용";
@@ -578,6 +661,8 @@
 "swap.dex_info.content_transaction_speed" = "거래 수수료가 높은 거래는 처리 속도가 빨라집니다. 반대로도 그렇습니다.";
 
 "swap.dex_info.link_button" = "%@ 사이트";
+
+
 
 // Market
 
@@ -623,8 +708,12 @@
 "market.top.top_losers" = "최고 하락자";
 "market.top.top_collections" = "주요 NFT 컬렉션";
 "market.top.floor_price" = "바닥:";
+"market.top.top_market_pairs" = "Top Market Pairs";
 "market.top.top_platforms" = "주요 플랫폼";
 "market.top.protocols" = "프로토콜";
+
+"top_pairs.title" = "Top Market Pairs";
+"top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "플랫폼 순위";
 "top_platforms.description" = "상위에 구축된 프로젝트들의 누적 시장을 기준으로 한 선도적인 블록체인 플랫폼.";
@@ -655,6 +744,13 @@
 "market.advanced_search.choose_set" = "설정 선택";
 "market.advanced_search.market_cap" = "총 시가 총액";
 "market.advanced_search.volume" = "거래량";
+
+"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
+"market.advanced_search.good_cex_volume" = "Good CEX Volume";
+"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+
 "market.advanced_search.liquidity" = "DEX 유동성";
 "market.advanced_search.blockchains" = "블록체인";
 "market.advanced_search.price_period" = "가격 기간";
@@ -699,6 +795,10 @@
 "market.advanced_search.month" = "1 개월";
 "market.advanced_search.month6" = "6 개월";
 "market.advanced_search.year" = "일년";
+
+"market.advanced_search.day.short" = "24H";
+"market.advanced_search.week.short" = "7D";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "결과";
 
@@ -757,27 +857,68 @@
 "coin_overview.whitepaper" = "백서";
 
 // Coin Page -> Analytics
+"technical_advice.over.bought" = "overbought";
+"technical_advice.over.sold" = "oversold";
+"technical_advice.down" = "down";
+"technical_advice.up" = "up";
 
-"coin_analytics.indicators.summary" = "요약";
+"technical_advice.over.main" = "The actions with the asset are risky.";
+"technical_advice.over.indicators.signal_date" = "Starting from the %@";
+"technical_advice.over.indicators" = "The asset is outside the Bollinger Band channel and %@.";
+"technical_advice.over.rsi" = " RSI = %@, This also indicates that the asset is %@.";
+"technical_advice.over.advice" = " There might be a strong %@ward movement, so it's better to wait for the asset price to return to the channel.";
+
+"technical_advice.strong.indicators" = "The asset was %@, but now it has returned to the Bollinger Band channel. This indicates a possible trend reversal.";
+"technical_advice.strong.rsi" = " Meanwhile, the RSI is %@, which still indicates that it is %@.";
+"technical_advice.strong.advice" = " This could be a very strong signal to enter the market. Keep in mind that there may be several attempts of %@ward movement after returning to the channel, so do not forget about risk management.";
+
+"technical_advice.stable.rsi" = " Meanwhile, the RSI is %@, which also indicates a trend reversal (RSI crossed the boundary at 70%).";
+"technical_advice.stable.advice" = "The price is returning to neutral levels, however, there is still potential for upward movement. Keep in mind that RSI = 50 and the middle of the Bollinger Bands are strong resistances and possible trend reversal points. Do not forget about risk management.";
+
+"technical_advice.neutral.rsi" = "RSI = %@ also confirms the absence of a strong trend.";
+"technical_advice.neutral.indicators" = "The asset was in the overbought/oversold zone, but at the moment the price has returned to the Bollinger Band channel in the neutral zone. The RSI is %@ also confirms the absence of a strong trend, so overall the asset price is moving towards averaging and further movement is possible in any direction.";
+"technical_advice.neutral.advice" = " In general, the asset price is moving towards averaging and further movement is possible in any direction.";
+
+"technical_advice.other.title" = "Please note:";
+
+"technical_advice.ema.above" = "above";
+"technical_advice.ema.below" = "below";
+"technical_advice.ema.growth" = "growth";
+"technical_advice.ema.decrease" = "decrease";
+"technical_advice.ema.advice" = "EMA 200. Determines the overall sentiment and trend. The daily price of the asset is located %@ the EMA (%@). This means that globally the asset is set for %@.";
+
+"technical_advice.macd.positive" = "above";
+"technical_advice.macd.negative" = "below";
+"technical_advice.macd.advice" = "MACD. Assesses the strength of the trend considering the average price change. The daily value of the histogram is %@ (%@). The price of the asset globally may move %@.";
+
 "coin_analytics.indicators.title" = "기술적 지표";
+"coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
+"coin_analytics.indicators.info.title" = "Technical Indicators";
+"coin_analytics.indicators.info.description" = "We use the Bollinger Bands + RSI strategy to determine trading signals. All calculations are based on daily candlesticks and provide advice for a moderately long term. The essence of the strategy is that the asset price should reach an extreme, breaking out of the Bollinger Bands channel, and the RSI should be in the overbought/oversold zone. After the price returns to the channel, there is a high probability of the price returning to the mean values or attempting to break the channel from the other side. Note that the strategy may give several false signals during strong market movements before a correct signal appears.\n\nPlease remember that it is very important to apply risk management to trading and remember to cut losses if the market situation changes! ";
+"coin_analytics.indicators.hide_details" = "Hide Details";
+"coin_analytics.indicators.show_details" = "Show Details";
+"coin_analytics.indicators.summary" = "요약";
 "coin_analytics.indicators.no_data" = "데이터 없음";
+"coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "강한 매수";
 "coin_analytics.indicators.buy" = "매수";
 "coin_analytics.indicators.neutral" = "중립";
 "coin_analytics.indicators.sell" = "매도";
 "coin_analytics.indicators.strong_sell" = "강한 매도";
+"coin_analytics.indicators.overbought" = "Very Risky to Trade";
 "coin_analytics.period" = "기간";
 "coin_analytics.period.select_title" = "기간 선택";
 "coin_analytics.period.1h" = "1시간";
 "coin_analytics.period.4h" = "4 시간";
 "coin_analytics.period.1d" = "1 일";
 "coin_analytics.period.1w" = "1주일";
+"coin_analytics.period.1m" = "1 개월";
 
 "coin_analytics.details" = "상세 정보";
 
 "coin_analytics.not_available" = "이 프로젝트에는 분석 데이터가 없습니다.";
 
-"coin_analytics.technical_indicators" = "기술적 지표";
+"coin_analytics.technical_indicators" = "Technical Indicators";
 "coin_analytics.technical_indicators.info1" = "요약: 이것은 다양한 기술적 지표와 시간대를 고려하여 자산의 기술적 특성을 일반적으로 개요합니다. 이러한 지표를 기반으로 한 공통된 견해 (매수, 매도 또는 중립)를 제공합니다.";
 "coin_analytics.technical_indicators.info2" = "이동평균 (MA): 이것들은 추세를 따르는 지표를 만들기 위해 가격 데이터를 평활하게 하는 데 사용되는 일반적인 기술 지표입니다. 이것들은 특정 시간 기간 동안의 평균 가격을 보여줍니다. 다양한 종류의 이동평균이 있습니다:\n\n단순 이동평균 (SMA): 이것은 선택한 가격 범위, 보통 종가, 내의 기간 수로 평균을 계산합니다.\n\n지수 이동평균 (EMA): 이것은 최근 가격에 더 많은 가중치를 부여하여 최근 가격 변동에 더 빨리 반응합니다.";
 "coin_analytics.technical_indicators.info3" = "오실레이터(Oscillators): 이것들은 일정한 범위 내에서 시간에 따라 변동하는 기술 지표로 (중심선 위 및 아래 또는 설정된 수준 사이에서), 시장에서 과매수 및 과매도 상태를 식별하는 데 도움을 주도록 설계되었습니다. 여기 일반적인 오실레이터 중 일부가 있습니다:\n\n상대강도지수 (RSI): 이것은 가격 움직임의 속도와 변화를 측정합니다. 주로 과매수 또는 과매도 상태를 식별하는 데 사용됩니다.\n\n이동평균수렴확산 (MACD): 이것은 잠재적인 매수 및 매도 신호를 식별하는 데 사용됩니다. MACD는 신호선을 크로스할 때 (매수) 또는 (매도) 아래로 크로스할 때 기술적 신호를 생성합니다.";
@@ -895,6 +1036,15 @@
 "coin_analytics.30_day_rank" = "30일 순위";
 "coin_analytics.30_day_volume" = "30일 거래량";
 
+"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
+"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
+"coin_analytics.analysis.attention_required" = "Attention Required";
+"coin_analytics.analysis.token_detectors" = "Token Detectors";
+"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.issues" = "Issues: %@";
+
 // Coin Page -> Markets
 
 "coin_markets.empty" = "데이터 없음";
@@ -948,11 +1098,11 @@
 "transactions.failed" = "실패";
 
 "transactions.receive" = "수령";
-"transactions.send" = "전송";
+"transactions.send" = "전송됨";
 "transactions.burn" = "번";
 "transactions.mint" = "민트";
-"transactions.approve" = "승인";
-"transactions.swap" = "스왑";
+"transactions.approve" = "승인됨";
+"transactions.swap" = "스왑됨";
 "transactions.contract_call" = "계약 콜";
 "transactions.contract_creation" = "계약 생성";
 "transactions.external_call" = "외부 콜";
@@ -968,7 +1118,7 @@
 "transactions.yesterday" = "어제";
 
 "transactions.types.all" = "전체";
-"transactions.types.incoming" = "수령됨";
+"transactions.types.incoming" = "수령";
 "transactions.types.outgoing" = "전송됨";
 "transactions.types.swap" = "스왑";
 "transactions.types.approve" = "승인";
@@ -991,8 +1141,8 @@
 "tx_info.contact_name" = "담당자 이름";
 "tx_info.button_explorer" = "%@에서 보기";
 "tx_info.rate" = "과거 환율";
-"tx_info.options.speed_up" = "가속";
-"tx_info.options.cancel" = "트랜잭션 취소";
+"tx_info.options.speed_up" = "Speed Up";
+"tx_info.options.cancel" = "Cancel Transaction";
 "tx_info.transaction.already_in_block" = "이미 차단된 거래";
 "tx_info.fee" = "수수료";
 "tx_info.fee.estimated" = "수수료 (추정)";
@@ -1000,7 +1150,7 @@
 "tx_info.double_spent_note" = "이중 지출 위험!";
 "tx_info.locked_until" = "까지 잠그기 %@";
 "tx_info.unlocked_at" = "%@에서 잠금 해제됨";
-"tx_info.recipient_hash" = "수령인";
+"tx_info.recipient_hash" = "Recipient";
 "tx_info.raw_transaction" = "로우 트랜잭션";
 "tx_info.memo" = "Memo";
 "tx_info.service" = "서비스";
@@ -1020,7 +1170,6 @@
 "settings.blockchain_settings" = "블록 체인 설정";
 "settings.backup_manager" = "백업 관리자";
 "settings.security" = "보안 센터";
-"settings.experimental_features" = "실험";
 "settings.personal_support" = "개인 지원";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
@@ -1062,18 +1211,6 @@
 "settings.personal_support.requested.description" = "이미 비공개 채팅을 요청하셨습니다. Telegram에서 찾아보세요.";
 "settings.personal_support.requested.open_telegram" = "오픈 텔레그램";
 "settings.personal_support.requested.new_request" = "요청";
-
-// Settings -> Experimental Features
-
-"settings.experimental_features.title" = "실험";
-"settings.experimental_features.description" = "아래 기능은 실험용이므로 주의해서 사용해 주세요. 자체 암호화된 자금을 사용하여 이러한 기능을 철저히 실험하였지만 가능한 모든 경우에 예상대로 작독한다고 보장 드릴 수는 없습니다.";
-"settings.experimental_features.bitcoin_hodling" = "시간 자물쇠";
-
-// Settings -> Experimental Features -> Bitcoin HODLing
-
-"settings.bitcoin_hodling.title" = "시간 자물쇠";
-"settings.bitcoin_hodling.lock_time" = "활성화";
-"settings.bitcoin_hodling.description" = "이 기능을 사용하면 지정된 날짜까지 사용할 수 없는 비트코인을 보낼 수 있습니다. \n\n이러한 거래의 수신자는 비트코인을 위한 BIP44 주소 형식과 %@ 지갑 앱 버전 0.10 이상을 사용해야 합니다. \n\n%@ 지갑만이 비트코인 네트워크에서 이러한 거래를 올바르게 식별하고 잠금 기간이 종료된 후 해당 비트코인을 사용할 수 있도록 할 수 있습니다. \n\nHODLer이라면 이 기능을 사용하여 자신에게 이러한 거래를 보내어 비트코인을 보유할 수 있습니다.";
 
 // Settings -> Terms
 
@@ -1207,7 +1344,7 @@
 
 // Unlock
 
-"unlock.title" = "잠금 해제";
+"unlock.title" = "Unlock";
 "unlock.passcode" = "비밀번호 입력";
 "unlock.biometry_reason" = "지갑 잠금 해제";
 "unlock.attempts_left" = "남은 시도 횟수: %@";
@@ -1360,14 +1497,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24시";
-"chart.time_duration.week" = "7일";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2주";
-"chart.time_duration.month" = "1개월";
+"chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3개월";
 "chart.time_duration.halfyear" = "6개월";
 "chart.time_duration.year" = "1년";
 "chart.time_duration.year2" = "2년";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "모든";
 
 "chart.market_cap" = "총 시가 총액";
@@ -1628,6 +1766,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "이 nonce를 사용하여 실행된 트랜잭션이 이미 존재합니다.";
 
 "fee_settings" = "고급의";
+"fee_settings.title" = "Fee Settings";
 "fee_settings.fee" = "수수료";
 "fee_settings.fee.info" = "블록체인은 거래를 보낼 때 사용자로부터 네트워크 수수료를 지불하도록 요구합니다. 이 수수료는 네트워크에서 많은 거래가 이루어질 때 더 높아집니다.";
 "fee_settings.fee_rate" = "수수료율";
@@ -1635,11 +1774,15 @@
 "fee_settings.inputs_outputs" = "입력/출력";
 "fee_settings.transaction_settings" = "거래 설정";
 "fee_settings.transaction_settings.description" = "트랜잭션이 구조화되는 방식을 변경하여 Bitcoin 트랜잭션을 추적하기 어렵게 만드십시오.";
+"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
 
 "fee_settings.network_fee" = "네트워크 수수료";
 "fee_settings.network_fee.info" = "네트워크에서 주어진 거래를 보내는 데 예상되는 비용.";
+"fee_settings.l1_fee" = "L1 Fee";
+"fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "거래 복잡성은 '가스'라고 불리는 단위로 측정됩니다. 이는 실행되는 스마트 계약에 따라 다릅니다. 가스 한도는 해당 거래를 실행하는 데 필요한 최대 가스를 예상한 값입니다. 실제로 사용된 가스는 일반적으로 더 낮을 것입니다.";
 
@@ -1853,10 +1996,14 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "필터";
+"transaction_filter.title" = "연락처";
+"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "모든 블록체인";
 "transaction_filter.coin" = "코인";
 "transaction_filter.all_coins" = "모든코인";
+"transaction_filter.contact" = "Contact";
+"transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "의심스러운 거래 숨기기";
 "transaction_filter.hide_suspicious_txs.description" = "Dust 양의 안정화된 암호화폐를 사용하여 수신 거래를 숨기면 주소 독성 공격 문제의 일부를 해결할 수 있습니다.";
