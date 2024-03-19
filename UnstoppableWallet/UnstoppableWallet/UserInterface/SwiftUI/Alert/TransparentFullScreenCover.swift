@@ -10,23 +10,23 @@ private struct TransparentFullScreenModifier<FullScreenContent: View>: ViewModif
                 UIView.setAnimationsEnabled(false)
             }
             .fullScreenCover(
-                    isPresented: $isPresented,
-                    content: {
-                        ZStack {
-                            fullScreenContent()
-                        }
-                            .background(FullScreenCoverBackgroundRemovalView())
-                            .onAppear {
-                                if !UIView.areAnimationsEnabled {
-                                    UIView.setAnimationsEnabled(true)
-                                }
-                            }
-                            .onDisappear {
-                                if !UIView.areAnimationsEnabled {
-                                    UIView.setAnimationsEnabled(true)
-                                }
-                            }
+                isPresented: $isPresented,
+                content: {
+                    ZStack {
+                        fullScreenContent()
                     }
+                    .background(FullScreenCoverBackgroundRemovalView())
+                    .onAppear {
+                        if !UIView.areAnimationsEnabled {
+                            UIView.setAnimationsEnabled(true)
+                        }
+                    }
+                    .onDisappear {
+                        if !UIView.areAnimationsEnabled {
+                            UIView.setAnimationsEnabled(true)
+                        }
+                    }
+                }
             )
     }
 }

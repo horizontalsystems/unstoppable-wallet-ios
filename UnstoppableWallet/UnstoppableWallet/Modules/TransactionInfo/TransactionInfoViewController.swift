@@ -469,7 +469,7 @@ class TransactionInfoViewController: ThemeViewController {
         switch viewItem {
         case let .actionTitle(iconName, iconDimmed, title, subTitle):
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
-        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type, coinUid):
+        case let .amount(title, subtitle, iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type, coinUid):
             var action: (() -> Void)?
 
             if let coinUid {
@@ -478,7 +478,7 @@ class TransactionInfoViewController: ThemeViewController {
                 }
             }
 
-            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type, action: action)
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, title: title, subtitle: subtitle, imageUrl: iconUrl, placeholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type, action: action)
         case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type, providerCollectionUid, nftUid):
             var onTapOpenNft: (() -> Void)?
 

@@ -193,34 +193,33 @@ class SendTronConfirmationViewModel {
         ]
     }
 
-    private func amountViewItem(coinService: CoinService, value: BigUInt, type: AmountType) -> ViewItem {
-        amountViewItem(coinService: coinService, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
+    private func amountViewItem(title: String, coinService: CoinService, value: BigUInt, type: AmountType) -> ViewItem {
+        amountViewItem(title: title, coinService: coinService, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
     }
 
-    private func amountViewItem(coinService: CoinService, value: Decimal, type: AmountType) -> ViewItem {
-        amountViewItem(coinService: coinService, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
+    private func amountViewItem(title: String, coinService: CoinService, value: Decimal, type: AmountType) -> ViewItem {
+        amountViewItem(title: title, coinService: coinService, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
     }
 
-    private func amountViewItem(coinService: CoinService, amountData: AmountData, type: AmountType) -> ViewItem {
-        let token = coinService.token
-
-        return .amount(
-            iconUrl: token.coin.imageUrl,
-            iconPlaceholderImageName: token.placeholderImageName,
+    private func amountViewItem(title: String, coinService: CoinService, amountData: AmountData, type: AmountType) -> ViewItem {
+        .amount(
+            title: title,
+            token: coinService.token,
             coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
-            currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+            currencyAmount: amountData.currencyValue.flatMap {
+                ValueFormatter.instance.formatFull(currencyValue: $0)
+            },
             type: type
         )
     }
 
-    private func estimatedAmountViewItem(coinService: CoinService, value: Decimal, type: AmountType) -> ViewItem {
-        let token = coinService.token
+    private func estimatedAmountViewItem(title: String, coinService: CoinService, value: Decimal, type: AmountType) -> ViewItem {
         let amountData = coinService.amountData(value: value, sign: type.sign)
         let coinAmount = ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized
 
         return .amount(
-            iconUrl: token.coin.imageUrl,
-            iconPlaceholderImageName: token.placeholderImageName,
+            title: title,
+            token: coinService.token,
             coinAmount: "\(coinAmount) \("swap.estimate_short".localized)",
             currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
             type: type
@@ -232,12 +231,8 @@ class SendTronConfirmationViewModel {
         let contactData = contactLabelService.contactData(for: toValue)
 
         var viewItems: [ViewItem] = [
-            .subhead(
-                iconName: "arrow_medium_2_up_right_24",
-                title: "send.confirmation.you_send".localized,
-                value: coinServiceFactory.baseCoinService.token.coin.name
-            ),
             amountViewItem(
+                title: "send.confirmation.you_send".localized,
                 coinService: coinServiceFactory.baseCoinService,
                 value: value,
                 type: .neutral
@@ -263,12 +258,8 @@ class SendTronConfirmationViewModel {
         }
 
         var viewItems: [ViewItem] = [
-            .subhead(
-                iconName: "arrow_medium_2_up_right_24",
-                title: "send.confirmation.you_send".localized,
-                value: coinService.token.coin.name
-            ),
             amountViewItem(
+                title: "send.confirmation.you_send".localized,
                 coinService: coinService,
                 value: value,
                 type: .neutral
@@ -339,8 +330,7 @@ extension SendTronConfirmationViewModel {
     }
 
     enum ViewItem {
-        case subhead(iconName: String, title: String, value: String)
-        case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
+        case amount(title: String, token: MarketKit.Token, coinAmount: String, currencyAmount: String?, type: AmountType)
         case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?)
         case value(title: String, value: String, type: ValueType)
         case warning(text: String, title: String, info: String)

@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MarketKit
 import RxCocoa
 import RxSwift
 
@@ -50,21 +51,13 @@ class ResendBitcoinViewModel {
         var primaryViewItems = [ViewItem]()
         var secondaryViewItems = [ViewItem]()
 
-        primaryViewItems.append(
-            .subhead(
-                iconName: "arrow_medium_2_up_right_24",
-                title: "send.confirmation.you_send".localized,
-                value: service.token.coin.name
-            )
-        )
-
         for item in items {
             switch item {
             case let item as SendConfirmationAmountViewItem:
                 primaryViewItems.append(
                     .amount(
-                        iconUrl: service.token.coin.imageUrl,
-                        iconPlaceholderImageName: service.token.placeholderImageName,
+                        title: "send.confirmation.you_send".localized,
+                        token: service.token,
                         coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "n/a".localized,
                         currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                         type: .neutral
@@ -205,8 +198,7 @@ extension ResendBitcoinViewModel {
 
 extension ResendBitcoinViewModel {
     enum ViewItem {
-        case subhead(iconName: String, title: String, value: String)
-        case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
+        case amount(title: String, token: Token, coinAmount: String, currencyAmount: String?, type: AmountType)
         case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?)
         case value(iconName: String?, title: String, value: String, type: ValueType)
         case fee(title: String, coinAmount: String, currencyAmount: String?)

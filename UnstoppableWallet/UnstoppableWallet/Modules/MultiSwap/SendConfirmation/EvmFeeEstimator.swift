@@ -46,9 +46,6 @@ struct EvmFeeEstimator {
             surchargedGasLimit = gasLimit
         }
 
-        print("GAS LIMIT: \(gasLimit)")
-        print("SURCHARGED: \(surchargedGasLimit)")
-
         return .init(gasLimit: gasLimit, surchargedGasLimit: surchargedGasLimit, l1Fee: l1Fee)
     }
 }

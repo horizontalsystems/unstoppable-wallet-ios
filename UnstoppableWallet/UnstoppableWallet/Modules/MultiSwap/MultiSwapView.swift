@@ -292,7 +292,7 @@ struct MultiSwapView: View {
                 if let token {
                     VStack(alignment: .leading, spacing: 1) {
                         Text(token.coin.code).textSubhead1(color: .themeLeah)
-                        Text((token.badge ?? "coin_platforms.native".localized).uppercased()).textMicro()
+                        Text(token.fullBadge).textMicro()
                     }
                 } else {
                     Text("swap.select".localized).textSubhead1(color: .themeJacob)

@@ -16,12 +16,14 @@ class TransactionInfoViewItemFactory {
         self.contactLabelService = contactLabelService
     }
 
-    private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
+    private func amount(source: TransactionSource, title: String, subtitle: String?, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         let iconUrl = transactionValue.coin?.imageUrl
         let iconPlaceholderImageName = source.blockchainType.placeholderImageName(tokenProtocol: transactionValue.tokenProtocol)
 
         if transactionValue.isMaxValue {
             return .amount(
+                title: title,
+                subtitle: subtitle,
                 iconUrl: iconUrl,
                 iconPlaceholderImageName: iconPlaceholderImageName,
                 coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : "∞ \(transactionValue.coinCode)",
@@ -37,6 +39,8 @@ class TransactionInfoViewItemFactory {
             }
 
             return .amount(
+                title: title,
+                subtitle: subtitle,
                 iconUrl: iconUrl,
                 iconPlaceholderImageName: iconPlaceholderImageName,
                 coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
@@ -115,49 +119,56 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func fullName(transactionValue: TransactionValue, nftMetadata: NftAssetBriefMetadata? = nil) -> String {
+    private func fullBadge(transactionValue: TransactionValue) -> String? {
         switch transactionValue {
         case let .coinValue(token, _):
-            return token.coin.name
+            return token.fullBadge
         case let .tokenValue(tokenName, _, _, _):
             return tokenName
-        case let .nftValue(nftUid, _, tokenName, _):
-            return nftMetadata?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
-        case .rawValue:
-            return ""
+        default:
+            return nil
         }
     }
 
     private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
+        var viewItems = [TransactionInfoModule.ViewItem]()
+
         let burn = to == zeroAddress
-        let subTitle: String
-        let amountViewItem: TransactionInfoModule.ViewItem
-        var toViewItem: TransactionInfoModule.ViewItem?
-        var contactNameViewItem: TransactionInfoModule.ViewItem?
         var rateViewItem: TransactionInfoModule.ViewItem?
 
         switch transactionValue {
-        case let .nftValue(nftUid, _, _, _):
-            subTitle = fullName(transactionValue: transactionValue, nftMetadata: nftMetadata[nftUid])
+        case let .nftValue(nftUid, _, tokenName, _):
+            viewItems.append(
+                .actionTitle(
+                    iconName: burn ? "flame_24" : "arrow_medium_2_up_right_24",
+                    iconDimmed: true,
+                    title: burn ? "transactions.burn".localized : "transactions.send".localized,
+                    subTitle: nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+                )
+            )
 
-            amountViewItem = nftAmount(
-                source: source,
-                transactionValue: transactionValue,
-                type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing),
-                metadata: nftMetadata[nftUid],
-                balanceHidden: balanceHidden
+            viewItems.append(
+                nftAmount(
+                    source: source,
+                    transactionValue: transactionValue,
+                    type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing),
+                    metadata: nftMetadata[nftUid],
+                    balanceHidden: balanceHidden
+                )
             )
         default:
-            subTitle = fullName(transactionValue: transactionValue)
-
             let rate = transactionValue.coin.flatMap { rates[$0] }
 
-            amountViewItem = amount(
-                source: source,
-                transactionValue: transactionValue,
-                rate: rate,
-                type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing),
-                balanceHidden: balanceHidden
+            viewItems.append(
+                amount(
+                    source: source,
+                    title: burn ? "transactions.burn".localized : "transactions.send".localized,
+                    subtitle: fullBadge(transactionValue: transactionValue),
+                    transactionValue: transactionValue,
+                    rate: rate,
+                    type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing),
+                    balanceHidden: balanceHidden
+                )
             )
 
             rateViewItem = .rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code))
@@ -166,24 +177,19 @@ class TransactionInfoViewItemFactory {
         if !burn, let to {
             let contactData = contactLabelService.contactData(for: to)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: to) : nil
-            toViewItem = .to(value: to, valueTitle: valueTitle, contactAddress: contactData.contactAddress)
-            contactNameViewItem = contactData.name.flatMap { .contactName(name: $0) }
+
+            viewItems.append(.to(value: to, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
+
+            if let name = contactData.name {
+                viewItems.append(.contactName(name: name))
+            }
         }
 
-        let viewItems: [TransactionInfoModule.ViewItem?] = [
-            .actionTitle(
-                iconName: burn ? "flame_24" : "arrow_medium_2_up_right_24",
-                iconDimmed: true,
-                title: burn ? "transactions.burn".localized : "transactions.send".localized,
-                subTitle: subTitle
-            ),
-            amountViewItem,
-            toViewItem,
-            contactNameViewItem,
-            rateViewItem,
-        ]
+        if let rateViewItem {
+            viewItems.append(rateViewItem)
+        }
 
-        return viewItems.compactMap { $0 }
+        return viewItems
     }
 
     private func type(value: TransactionValue, condition: Bool = true, _ trueType: AmountType, _ falseType: AmountType? = nil) -> AmountType {
@@ -195,36 +201,43 @@ class TransactionInfoViewItemFactory {
     }
 
     private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
+        var viewItems = [TransactionInfoModule.ViewItem]()
+
         let mint = from == zeroAddress
-        let subTitle: String
-        let amountViewItem: TransactionInfoModule.ViewItem
-        var fromViewItem: TransactionInfoModule.ViewItem?
-        var contactNameViewItem: TransactionInfoModule.ViewItem?
         var rateViewItem: TransactionInfoModule.ViewItem?
 
         switch transactionValue {
-        case let .nftValue(nftUid, _, _, _):
-            subTitle = fullName(transactionValue: transactionValue, nftMetadata: nftMetadata[nftUid])
-
-            amountViewItem = nftAmount(
-                source: source,
-                transactionValue: transactionValue,
-                type: type(value: transactionValue, .incoming),
-                metadata: nftMetadata[nftUid],
-                balanceHidden: balanceHidden
+        case let .nftValue(nftUid, _, tokenName, _):
+            viewItems.append(
+                .actionTitle(
+                    iconName: "arrow_medium_2_down_left_24",
+                    iconDimmed: true,
+                    title: mint ? "transactions.mint".localized : "transactions.receive".localized,
+                    subTitle: nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+                )
             )
-
+            viewItems.append(
+                nftAmount(
+                    source: source,
+                    transactionValue: transactionValue,
+                    type: type(value: transactionValue, .incoming),
+                    metadata: nftMetadata[nftUid],
+                    balanceHidden: balanceHidden
+                )
+            )
         default:
-            subTitle = fullName(transactionValue: transactionValue)
-
             let rate = transactionValue.coin.flatMap { rates[$0] }
 
-            amountViewItem = amount(
-                source: source,
-                transactionValue: transactionValue,
-                rate: rate,
-                type: type(value: transactionValue, .incoming),
-                balanceHidden: balanceHidden
+            viewItems.append(
+                amount(
+                    source: source,
+                    title: mint ? "transactions.mint".localized : "transactions.receive".localized,
+                    subtitle: fullBadge(transactionValue: transactionValue),
+                    transactionValue: transactionValue,
+                    rate: rate,
+                    type: type(value: transactionValue, .incoming),
+                    balanceHidden: balanceHidden
+                )
             )
 
             rateViewItem = .rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code))
@@ -233,24 +246,19 @@ class TransactionInfoViewItemFactory {
         if !mint, let from {
             let contactData = contactLabelService.contactData(for: from)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: from) : nil
-            fromViewItem = .from(value: from, valueTitle: valueTitle, contactAddress: contactData.contactAddress)
-            contactNameViewItem = contactData.name.flatMap { .contactName(name: $0) }
+
+            viewItems.append(.from(value: from, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
+
+            if let name = contactData.name {
+                viewItems.append(.contactName(name: name))
+            }
         }
 
-        let viewItems: [TransactionInfoModule.ViewItem?] = [
-            .actionTitle(
-                iconName: "arrow_medium_2_down_left_24",
-                iconDimmed: true,
-                title: mint ? "transactions.mint".localized : "transactions.receive".localized,
-                subTitle: subTitle
-            ),
-            amountViewItem,
-            fromViewItem,
-            contactNameViewItem,
-            rateViewItem,
-        ]
+        if let rateViewItem {
+            viewItems.append(rateViewItem)
+        }
 
-        return viewItems.compactMap { $0 }
+        return viewItems
     }
 
     private func bitcoinViewItems(record: BitcoinTransactionRecord, lastBlockInfo: LastBlockInfo?) -> [TransactionInfoModule.ViewItem] {
@@ -308,14 +316,14 @@ class TransactionInfoViewItemFactory {
         case let record as ApproveTransactionRecord:
             let transactionValue = record.value
             let rate = _rate(transactionValue)
-
-            var viewItems: [TransactionInfoModule.ViewItem] = [
-                .actionTitle(iconName: "check_2_24", iconDimmed: true, title: "transactions.approve".localized, subTitle: transactionValue.fullName),
-                amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
-            ]
             let contactData = contactLabelService.contactData(for: record.spender)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
-            viewItems.append(.spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
+
+            var viewItems: [TransactionInfoModule.ViewItem] = [
+                amount(source: record.source, title: "transactions.approve".localized, subtitle: fullBadge(transactionValue: transactionValue), transactionValue: transactionValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
+                .spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress),
+            ]
+
             if let name = contactData.name {
                 viewItems.append(.contactName(name: name))
             }
@@ -325,28 +333,17 @@ class TransactionInfoViewItemFactory {
             sections.append(viewItems)
 
         case let record as SwapTransactionRecord:
-            sections.append([
-                .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: record.valueIn.fullName),
-                amount(source: record.source, transactionValue: record.valueIn, rate: _rate(record.valueIn), type: type(value: record.valueIn, .outgoing), balanceHidden: balanceHidden),
-            ])
+            var amountViewItems: [TransactionInfoModule.ViewItem] = [
+                amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(transactionValue: record.valueIn), transactionValue: record.valueIn, rate: _rate(record.valueIn), type: type(value: record.valueIn, .outgoing), balanceHidden: balanceHidden),
+            ]
 
             if let valueOut = record.valueOut {
-                var viewItems: [TransactionInfoModule.ViewItem] = [
-                    .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.fullName),
-                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, condition: record.recipient == nil, .incoming, .outgoing), balanceHidden: balanceHidden),
-                ]
+                amountViewItems.append(amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(transactionValue: valueOut), transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, condition: record.recipient == nil, .incoming, .outgoing), balanceHidden: balanceHidden))
+            }
 
-                if let recipient = record.recipient {
-                    let contactData = contactLabelService.contactData(for: recipient)
-                    let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: recipient) : nil
-                    viewItems.append(.recipient(value: recipient, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
-                    if let name = contactData.name {
-                        viewItems.append(.contactName(name: name))
-                    }
-                }
+            sections.append(amountViewItems)
 
-                sections.append(viewItems)
-            } else if let recipient = record.recipient {
+            if let recipient = record.recipient {
                 let contactData = contactLabelService.contactData(for: recipient)
                 let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: recipient) : nil
                 var viewItems: [TransactionInfoModule.ViewItem] = [
@@ -377,18 +374,22 @@ class TransactionInfoViewItemFactory {
             sections.append(viewItems)
 
         case let record as UnknownSwapTransactionRecord:
+            var amountViewItems = [TransactionInfoModule.ViewItem]()
+
             if let valueIn = record.valueIn {
-                sections.append([
-                    .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: valueIn.fullName),
-                    amount(source: record.source, transactionValue: valueIn, rate: _rate(valueIn), type: type(value: valueIn, .outgoing), balanceHidden: balanceHidden),
-                ])
+                amountViewItems.append(
+                    amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(transactionValue: valueIn), transactionValue: valueIn, rate: _rate(valueIn), type: type(value: valueIn, .outgoing), balanceHidden: balanceHidden)
+                )
             }
 
             if let valueOut = record.valueOut {
-                sections.append([
-                    .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.fullName),
-                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, .incoming), balanceHidden: balanceHidden),
-                ])
+                amountViewItems.append(
+                    amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(transactionValue: valueOut), transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, .incoming), balanceHidden: balanceHidden)
+                )
+            }
+
+            if !amountViewItems.isEmpty {
+                sections.append(amountViewItems)
             }
 
             var viewItems: [TransactionInfoModule.ViewItem] = [
@@ -442,14 +443,14 @@ class TransactionInfoViewItemFactory {
         case let record as TronApproveTransactionRecord:
             let transactionValue = record.value
             let rate = _rate(transactionValue)
-
-            var viewItems: [TransactionInfoModule.ViewItem] = [
-                .actionTitle(iconName: "check_2_24", iconDimmed: true, title: "transactions.approve".localized, subTitle: transactionValue.fullName),
-                amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
-            ]
             let contactData = contactLabelService.contactData(for: record.spender)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
-            viewItems.append(.spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
+
+            var viewItems: [TransactionInfoModule.ViewItem] = [
+                amount(source: record.source, title: "transactions.approve".localized, subtitle: fullBadge(transactionValue: transactionValue), transactionValue: transactionValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
+                .spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress),
+            ]
+
             if let name = contactData.name {
                 viewItems.append(.contactName(name: name))
             }

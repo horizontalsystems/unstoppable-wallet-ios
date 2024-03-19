@@ -50,7 +50,7 @@ struct ContactBookContactView: UIViewControllerRepresentable {
     let mode: ContactBookContactModule.Mode
     let onUpdateContact: (() -> Void)?
 
-    func makeUIViewController(context: Context) -> UIViewControllerType {
+    func makeUIViewController(context _: Context) -> UIViewControllerType {
         ContactBookContactModule.viewController(mode: mode, onUpdateContact: onUpdateContact) ?? UIViewController()
     }
 

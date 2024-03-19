@@ -154,8 +154,8 @@ class SendEvmTransactionViewController: ThemeViewController {
         switch viewItem {
         case let .subhead(iconName, title, value):
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)
-        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
-            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .amount(title, token, coinAmount, currencyAmount, type):
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, title: title, subtitle: token.fullBadge, imageUrl: token.coin.imageUrl, placeholderImageName: token.placeholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type):
             return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type, onTapOpenNft: nil)
         case let .doubleAmount(title, coinValue, currencyValue):
@@ -184,7 +184,7 @@ class SendEvmTransactionViewController: ThemeViewController {
 
         return Section(
             id: "section_\(index)",
-            headerState: headerText.map { tableView.sectionFooter(text: $0) } ?? .margin(height: .margin12),
+            headerState: headerText.map { tableView.sectionFooter(text: $0) } ?? .margin(height: index == 0 ? .margin12 : .margin16),
             rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                 row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
             }
