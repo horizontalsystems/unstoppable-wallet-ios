@@ -3,12 +3,15 @@ import MarketKit
 import SwiftUI
 
 struct MultiSwapTokenSelectView: View {
+    private let title: String
+
     @StateObject private var viewModel: MultiSwapTokenSelectViewModel
 
     @Binding var currentToken: Token?
     @Binding var isPresented: Bool
 
-    init(currentToken: Binding<Token?>, otherToken: Token?, isPresented: Binding<Bool>) {
+    init(title: String, currentToken: Binding<Token?>, otherToken: Token?, isPresented: Binding<Bool>) {
+        self.title = title
         _viewModel = .init(wrappedValue: MultiSwapTokenSelectViewModel(token: otherToken))
         _currentToken = currentToken
         _isPresented = isPresented
@@ -66,7 +69,7 @@ struct MultiSwapTokenSelectView: View {
                     }
                     .themeListStyle(.transparent)
                 }
-                .navigationTitle("transaction_filter.coin".localized)
+                .navigationTitle(title)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     Button("button.cancel".localized) {
