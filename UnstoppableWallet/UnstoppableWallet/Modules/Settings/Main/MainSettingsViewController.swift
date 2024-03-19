@@ -507,17 +507,6 @@ extension MainSettingsViewController: SectionsDataSource {
                     footerState: .margin(height: .margin32),
                     rows: [
                         tableView.universalRow48(
-                            id: "multi-swap-switcher",
-                            title: .body("Multi Swap Enabled"),
-                            accessoryType: .switch(
-                                isOn: App.shared.localStorage.multiSwapEnabled,
-                                onSwitch: { enabled in
-                                    App.shared.localStorage.multiSwapEnabled = enabled
-                                }
-                            ),
-                            isFirst: true
-                        ),
-                        tableView.universalRow48(
                             id: "test-net-switcher",
                             title: .body("TestNet Enabled"),
                             accessoryType: .switch(
@@ -526,6 +515,7 @@ extension MainSettingsViewController: SectionsDataSource {
                                     App.shared.testNetManager.set(testNetEnabled: enabled)
                                 }
                             ),
+                            isFirst: true,
                             isLast: true
                         ),
                     ]

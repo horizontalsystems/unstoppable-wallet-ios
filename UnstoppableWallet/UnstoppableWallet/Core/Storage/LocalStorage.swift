@@ -17,7 +17,6 @@ class LocalStorage {
     private let keyUserChartIndicatorsSync = "user-chart-indicators"
     private let keyIndicatorsShown = "indicators-shown"
     private let keyTelegramSupportRequested = "telegram-support-requested"
-    private let keyMultiSwapEnabled = "multi-swap-enabled"
 
     private let userDefaultsStorage: UserDefaultsStorage
 
@@ -91,11 +90,6 @@ extension LocalStorage {
     var telegramSupportRequested: Bool {
         get { userDefaultsStorage.value(for: keyTelegramSupportRequested) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyTelegramSupportRequested) }
-    }
-
-    var multiSwapEnabled: Bool {
-        get { userDefaultsStorage.value(for: keyMultiSwapEnabled) ?? false }
-        set { userDefaultsStorage.set(value: newValue, for: keyMultiSwapEnabled) }
     }
 }
 
