@@ -7,7 +7,7 @@ struct MultiSwapView: View {
     @ObservedObject var viewModel: MultiSwapViewModel
 
     @Environment(\.presentationMode) private var presentationMode
-    @State private var selectTokenInPresented = false
+    @State private var selectTokenInPresented = true
     @State private var selectTokenOutPresented = false
     @State private var quotesPresented = false
     @State private var confirmPresented = false
@@ -195,7 +195,7 @@ struct MultiSwapView: View {
                 selectTokenInPresented = true
             }
             .sheet(isPresented: $selectTokenInPresented) {
-                MultiSwapTokenSelectView(currentToken: $viewModel.tokenIn, otherToken: viewModel.tokenOut, isPresented: $selectTokenInPresented)
+                MultiSwapTokenSelectView(title: "swap.you_pay".localized, currentToken: $viewModel.tokenIn, otherToken: viewModel.tokenOut, isPresented: $selectTokenInPresented)
             }
         }
     }
@@ -271,7 +271,7 @@ struct MultiSwapView: View {
                 selectTokenOutPresented = true
             }
             .sheet(isPresented: $selectTokenOutPresented) {
-                MultiSwapTokenSelectView(currentToken: $viewModel.tokenOut, otherToken: viewModel.tokenIn, isPresented: $selectTokenOutPresented)
+                MultiSwapTokenSelectView(title: "swap.you_get".localized, currentToken: $viewModel.tokenOut, otherToken: viewModel.tokenIn, isPresented: $selectTokenOutPresented)
             }
         }
     }
