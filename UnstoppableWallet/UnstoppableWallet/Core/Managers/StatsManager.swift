@@ -4,10 +4,11 @@ import HsToolKit
 
 func stat(page: StatPage, section: StatSection? = nil, event: StatEvent, params: [StatParam: Any]? = nil) {
     StatsManager.instance.sendStat(page: page, section: section, event: event, params: params)
+//    print("PAGE: \(page)\(section.map { ", SECTION: \($0)" } ?? ""), event: \(event.raw)\(params.map { ", PARAMS: \($0)" } ?? "")")
 }
 
 class StatsManager {
-    static let instance = StatsManager(networkManager: NetworkManager(logger: Logger(minLogLevel: .debug)))
+    static let instance = StatsManager(networkManager: App.shared.networkManager)
 
     private let networkManager: NetworkManager
 
@@ -19,7 +20,7 @@ class StatsManager {
         Task {
             var parameters: Parameters = [
                 "page": page.rawValue,
-                "event": event.rawValue,
+                "event": event.raw,
             ]
 
             if let section {

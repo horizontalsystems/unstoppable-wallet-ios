@@ -18,6 +18,8 @@ class MarketOverviewTopPlatformsDataSource: BaseMarketOverviewTopListDataSource 
     override func didTapSeeAll() {
         let module = MarketTopPlatformsModule.viewController(timePeriod: viewModel.timePeriod)
         presentDelegate?.present(viewController: module)
+
+        stat(page: .marketOverview, event: .open(page: .topPlatforms))
     }
 
     override func onSelect(listViewItem: MarketModule.ListViewItem) {
@@ -26,5 +28,7 @@ class MarketOverviewTopPlatformsDataSource: BaseMarketOverviewTopListDataSource 
         }
 
         presentDelegate?.present(viewController: TopPlatformModule.viewController(topPlatform: topPlatform, apiTag: "market_overview"))
+
+        stat(page: .marketOverview, event: .open(page: .topPlatform), params: [.chainUid: uid])
     }
 }

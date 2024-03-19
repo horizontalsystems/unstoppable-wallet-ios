@@ -31,7 +31,7 @@ extension WidgetCoinAppShowModule: IEventHandler {
         }
 
         parentViewController?.visibleController.present(viewController, animated: true)
-        stat(page: .widget, event: .coinOpen, params: [.coinUid: coinUid])
+        stat(page: .widget, event: .open(page: .coinPage), params: [.coinUid: coinUid])
     }
 }
 

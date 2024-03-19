@@ -99,6 +99,8 @@ class MarketOverviewMetricsCell: UITableViewCell {
     private func onTap(metricType: MarketGlobalModule.MetricsType) {
         let viewController = MarketGlobalMetricModule.viewController(type: metricType)
         presentDelegate?.present(viewController: viewController)
+
+        stat(page: .marketOverview, event: .open(page: metricType.statPage))
     }
 }
 
