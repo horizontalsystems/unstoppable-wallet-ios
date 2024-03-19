@@ -61,7 +61,7 @@ extension MarketOverviewTopCoinsService {
 }
 
 extension MarketOverviewTopCoinsService: IMarketListDecoratorService {
-    var initialMarketFieldIndex: Int {
+    var initialIndex: Int {
         0
     }
 
@@ -73,7 +73,7 @@ extension MarketOverviewTopCoinsService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketFieldIndex _: Int) {}
+    func onUpdate(index _: Int) {}
 }
 
 extension MarketOverviewTopCoinsService {
@@ -91,6 +91,13 @@ extension MarketOverviewTopCoinsService {
         var marketField: MarketModule.MarketField {
             switch self {
             case .topGainers, .topLosers: return .price
+            }
+        }
+
+        var statSection: StatSection {
+            switch self {
+            case .topGainers: return .topGainers
+            case .topLosers: return .topLosers
             }
         }
     }

@@ -1,6 +1,5 @@
 import ComponentKit
 import MessageUI
-import ModuleKit
 import RxCocoa
 import RxSwift
 import SafariServices
@@ -84,7 +83,7 @@ class MainSettingsViewController: ThemeViewController {
         languageCell.set(backgroundStyle: .lawrence, isLast: true)
         buildTitleValue(cell: languageCell, image: UIImage(named: "globe_24"), title: "settings.language".localized, value: viewModel.currentLanguage)
 
-        aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        aboutCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncAboutCell()
 
         footerCell.set(appVersion: viewModel.appVersion)
@@ -306,23 +305,6 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private var experimentalRows: [RowProtocol] {
-        [
-            tableView.universalRow48(
-                id: "experimental-features",
-                image: .local(UIImage(named: "flask_24")),
-                title: .body("settings.experimental_features".localized),
-                accessoryType: .disclosure,
-                isFirst: true,
-                isLast: true,
-                action: { [weak self] in
-                    let viewController = ExperimentalFeaturesView().toViewController(title: "settings.experimental_features.title".localized)
-                    self?.navigationController?.pushViewController(viewController, animated: true)
-                }
-            ),
-        ]
-    }
-
     private var knowledgeRows: [RowProtocol] {
         [
             tableView.universalRow48(
@@ -348,6 +330,39 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
+    private var socialRows: [RowProtocol] {
+        [
+            tableView.universalRow48(
+                id: "telegram",
+                image: .local(UIImage(named: "telegram_24")),
+                title: .body("Telegram"),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isFirst: true,
+                action: {
+                    UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
+                }
+            ),
+            tableView.universalRow48(
+                id: "twitter",
+                image: .local(UIImage(named: "twitter_24")),
+                title: .body("Twitter"),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isLast: true,
+                action: {
+                    let account = AppConfig.appTwitterAccount
+
+                    if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
+                        UIApplication.shared.open(appUrl)
+                    } else {
+                        UrlManager.open(url: "https://twitter.com/\(account)")
+                    }
+                }
+            ),
+        ]
+    }
+
     private var aboutRows: [RowProtocol] {
         [
             StaticRow(
@@ -358,18 +373,12 @@ class MainSettingsViewController: ThemeViewController {
                     self?.navigationController?.pushViewController(AboutModule.view().toViewController(title: "settings.about_app.title".localized), animated: true)
                 }
             ),
-        ]
-    }
-
-    private var feedbackRows: [RowProtocol] {
-        [
             tableView.universalRow48(
                 id: "rate-us",
                 image: .local(UIImage(named: "rate_24")),
                 title: .body("settings.rate_us".localized),
                 accessoryType: .disclosure,
                 autoDeselect: true,
-                isFirst: true,
                 action: { [weak self] in
                     self?.viewModel.onTapRateApp()
                 }
@@ -482,9 +491,8 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
+            Section(id: "social", headerState: .margin(height: .margin32), rows: socialRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
-            Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
-            Section(id: "feedback", headerState: .margin(height: .margin32), rows: feedbackRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
 
@@ -499,6 +507,17 @@ extension MainSettingsViewController: SectionsDataSource {
                     footerState: .margin(height: .margin32),
                     rows: [
                         tableView.universalRow48(
+                            id: "multi-swap-switcher",
+                            title: .body("Multi Swap Enabled"),
+                            accessoryType: .switch(
+                                isOn: App.shared.localStorage.multiSwapEnabled,
+                                onSwitch: { enabled in
+                                    App.shared.localStorage.multiSwapEnabled = enabled
+                                }
+                            ),
+                            isFirst: true
+                        ),
+                        tableView.universalRow48(
                             id: "test-net-switcher",
                             title: .body("TestNet Enabled"),
                             accessoryType: .switch(
@@ -507,7 +526,6 @@ extension MainSettingsViewController: SectionsDataSource {
                                     App.shared.testNetManager.set(testNetEnabled: enabled)
                                 }
                             ),
-                            isFirst: true,
                             isLast: true
                         ),
                     ]

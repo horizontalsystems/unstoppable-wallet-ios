@@ -13,11 +13,13 @@ class UniswapV3Module {
             return nil
         }
 
-        guard let swapKit = try? UniswapKit.KitV3.instance(evmKit: evmKit, dexType: dex.provider.dexType) else {
+        guard let swapKit = try? UniswapKit.KitV3.instance(dexType: dex.provider.dexType),
+              let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: dex.blockchainType)?.rpcSource
+        else {
             return nil
         }
 
-        let uniswapRepository = UniswapV3Provider(swapKit: swapKit)
+        let uniswapRepository = UniswapV3Provider(swapKit: swapKit, evmKit: evmKit, rpcSource: rpcSource)
 
         tradeService = UniswapV3TradeService(
             uniswapProvider: uniswapRepository,

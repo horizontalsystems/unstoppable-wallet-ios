@@ -4,6 +4,7 @@ import Foundation
 protocol IReceiveAddressService {
     associatedtype ServiceItem
     var title: String { get }
+    var coinName: String { get }
     var state: DataStatus<ServiceItem> { get }
     var statusUpdatedPublisher: AnyPublisher<DataStatus<ServiceItem>, Never> { get }
 }
@@ -62,6 +63,10 @@ class ReceiveAddressViewModel<Service: IReceiveAddressService, Factory: IReceive
 extension ReceiveAddressViewModel {
     var title: String {
         service.title
+    }
+
+    var coinName: String {
+        service.coinName
     }
 
     func set(amount: String) {

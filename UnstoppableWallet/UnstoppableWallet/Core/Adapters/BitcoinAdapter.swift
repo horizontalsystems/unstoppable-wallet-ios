@@ -45,7 +45,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
                 logger: logger
             )
         case let .btcAddress(address, _, tokenType):
-            guard let purpose =  tokenType.derivation?.purpose else {
+            guard let purpose = tokenType.derivation?.purpose else {
                 throw AdapterError.wrongParameters
             }
 
@@ -73,6 +73,10 @@ class BitcoinAdapter: BitcoinBaseAdapter {
 
     override func explorerUrl(transactionHash: String) -> String? {
         "https://blockchair.com/bitcoin/transaction/" + transactionHash
+    }
+
+    override func explorerUrl(address: String) -> String? {
+        "https://blockchair.com/bitcoin/address/" + address
     }
 }
 

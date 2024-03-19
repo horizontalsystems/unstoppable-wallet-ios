@@ -531,10 +531,15 @@ class WalletViewController: ThemeViewController {
         }
 
         cell.actions[.swap] = { [weak self] in
-            guard let viewController = WalletModule.swapTokenListViewController() else {
-                return
+            if App.shared.localStorage.multiSwapEnabled {
+                let viewController = MultiSwapModule.view().toViewController()
+                self?.present(viewController, animated: true)
+            } else {
+                guard let viewController = WalletModule.swapTokenListViewController() else {
+                    return
+                }
+                self?.present(viewController, animated: true)
             }
-            self?.present(viewController, animated: true)
         }
 
         cell.actions[.receive] = { [weak self] in

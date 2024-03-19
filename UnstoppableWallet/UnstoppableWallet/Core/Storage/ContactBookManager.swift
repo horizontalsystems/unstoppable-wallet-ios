@@ -342,12 +342,8 @@ extension ContactBookManager {
         state.data?.contacts
     }
 
-    func contacts(blockchainUid: String) -> [Contact] {
-        guard let all else {
-            return []
-        }
-
-        return all.filter { $0.address(blockchainUid: blockchainUid) != nil }
+    func contacts(blockchainUid: String?) -> [Contact] {
+        all?.by(blockchainUid: blockchainUid) ?? []
     }
 
     func name(blockchainType: BlockchainType, address: String) -> String? {
@@ -463,5 +459,17 @@ extension ContactBookManager {
         case localUrlNotAvailable
         case notReady
         case cantParseData
+    }
+}
+
+extension [Contact] {
+    func by(blockchainUid: String?) -> Self {
+        guard let blockchainUid else { return self }
+        return filter { $0.address(blockchainUid: blockchainUid) != nil }
+    }
+
+    func by(address: String, blockchainUid: String) -> Self.Element? {
+        filter { $0.address(blockchainUid: blockchainUid)?.address.lowercased() == address.lowercased() }
+            .first
     }
 }

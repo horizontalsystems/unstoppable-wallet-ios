@@ -13,11 +13,14 @@ class UniswapModule {
             return nil
         }
 
-        guard let swapKit = try? UniswapKit.Kit.instance(evmKit: evmKit) else {
+        guard let swapKit = try? UniswapKit.Kit.instance(),
+              let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: dex.blockchainType)?.rpcSource
+        else {
             return nil
         }
 
-        let uniswapRepository = UniswapProvider(swapKit: swapKit)
+        let uniswapRepository = UniswapProvider(swapKit: swapKit, evmKit: evmKit, rpcSource: rpcSource)
+        print("OneInchProvider router Address: \(uniswapRepository.routerAddress.hex)")
 
         tradeService = UniswapTradeService(
             uniswapProvider: uniswapRepository,

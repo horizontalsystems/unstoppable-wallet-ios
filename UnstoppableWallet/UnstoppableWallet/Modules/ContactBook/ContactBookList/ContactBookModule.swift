@@ -1,6 +1,7 @@
 import ComponentKit
 import MarketKit
 import MobileCoreServices
+import SwiftUI
 import ThemeKit
 import UIKit
 
@@ -9,20 +10,20 @@ protocol ContactBookSelectorDelegate: AnyObject {
 }
 
 enum ContactBookModule {
-    private static func showAddContact(mode: ContactBookModule.AddContactMode, contactAddress: ContactAddress, parentViewController: UIViewController?) {
+    private static func showAddContact(mode: ContactBookModule.AddContactMode, contactAddress: ContactAddress) -> UIViewController? {
         switch mode {
         case .new:
             guard let module = ContactBookContactModule.viewController(mode: .add(contactAddress)) else {
-                return
+                return nil
             }
 
-            parentViewController?.present(module, animated: true)
+            return module
         case .exist:
             guard let module = ContactBookModule.viewController(mode: .addToContact(contactAddress), presented: true) else {
-                return
+                return nil
             }
 
-            parentViewController?.present(module, animated: true)
+            return module
         }
     }
 
@@ -60,14 +61,17 @@ extension ContactBookModule {
 
     static func showAddition(contactAddress: ContactAddress, parentViewController: UIViewController?) {
         // if all contacts has address for blockchain just show add-new controller
-        if App.shared.contactManager.all?.isEmpty ?? true {
-            showAddContact(mode: .new, contactAddress: contactAddress, parentViewController: parentViewController)
+        if App.shared.contactManager.all?.isEmpty ?? true, let controller = showAddContact(mode: .new, contactAddress: contactAddress) {
+            parentViewController?.present(controller, animated: true)
             return
         }
 
         // show alert and choose make new contact or add to existed
         let alertController = ContactBookModule.chooseAddContactMode(resultAfterClose: true) { [weak parentViewController] mode in
-            showAddContact(mode: mode, contactAddress: contactAddress, parentViewController: parentViewController)
+            guard let controller = showAddContact(mode: mode, contactAddress: contactAddress) else {
+                return
+            }
+            parentViewController?.present(controller, animated: true)
         }
 
         parentViewController?.present(alertController, animated: true)
@@ -111,4 +115,23 @@ extension ContactBookModule {
         case restore
         case backup
     }
+}
+
+struct ContactBookView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let mode: ContactBookModule.Mode
+    let presented: Bool
+
+    init(mode: ContactBookModule.Mode, presented: Bool) {
+        self.mode = mode
+        self.presented = presented
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        // TODO: must provide any VC
+        ContactBookModule.viewController(mode: mode, presented: presented) ?? UIViewController()
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

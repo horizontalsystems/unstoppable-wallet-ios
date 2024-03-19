@@ -18,10 +18,10 @@ protocol IMarketListCoinUidService {
 }
 
 protocol IMarketListDecoratorService {
-    var initialMarketFieldIndex: Int { get }
+    var initialIndex: Int { get }
     var currency: Currency { get }
     var priceChangeType: MarketModule.PriceChangeType { get }
-    func onUpdate(marketFieldIndex: Int)
+    func onUpdate(index: Int)
 }
 
 protocol IMarketListDecorator {

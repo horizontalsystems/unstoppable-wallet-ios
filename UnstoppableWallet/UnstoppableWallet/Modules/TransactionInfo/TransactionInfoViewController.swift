@@ -77,21 +77,27 @@ class TransactionInfoViewController: ThemeViewController {
         present(InfoModule.transactionStatusInfo, animated: true)
     }
 
-    private func openResend(type: ResendEvmTransactionType) {
+    private func openResend(type: ResendTransactionType) {
         do {
-            let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, type: type, transactionHash: viewModel.transactionHash)
-            present(ThemeNavigationController(rootViewController: viewController), animated: true)
+            if adapter is BaseEvmAdapter {
+                let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, type: type, transactionHash: viewModel.transactionHash)
+                present(ThemeNavigationController(rootViewController: viewController), animated: true)
+            } else if adapter is BitcoinBaseAdapter, let transactionRecord = viewModel.transactionRecord as? BitcoinTransactionRecord {
+                let viewController = try ResendBitcoinModule.resendViewController(adapter: adapter, type: type, transactionRecord: transactionRecord)
+                present(ThemeNavigationController(rootViewController: viewController), animated: true)
+            }
         } catch {
             HudHelper.instance.show(banner: .error(string: error.localizedDescription))
         }
     }
 
     private func openCoin(coinUid: String) {
-        guard let module = CoinPageModule.viewController(coinUid: coinUid, apiTag: "transaction_info") else {
+        guard let module = CoinPageModule.viewController(coinUid: coinUid) else {
             return
         }
 
         present(module, animated: true)
+        stat(page: .transactionInfo, event: .coinOpen, params: [.coinUid: coinUid])
     }
 
     private func openNftAsset(providerCollectionUid: String, nftUid: NftUid) {

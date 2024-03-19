@@ -8,24 +8,32 @@ import UIKit
 class SendBitcoinViewController: BaseSendViewController {
     private let disposeBag = DisposeBag()
 
+    private let outputSelectorFactory: ISendOutputSelectorFactory
     private let feeCautionViewModel: ITitledCautionViewModel
+    private let unspentOutputsViewModel: UnspentOutputsViewModel
 
+    private let unspentOutputsCell: UnspentOutputsCell
     private let feeCell: FeeCell
     private let feeCautionCell = TitledHighlightedDescriptionCell()
 
     init(confirmationFactory: ISendConfirmationFactory,
          feeSettingsFactory: ISendFeeSettingsFactory,
+         outputSelectorFactory: ISendOutputSelectorFactory,
          viewModel: SendViewModel,
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
+         memoViewModel: SendMemoInputViewModel,
+         unspentOutputsViewModel: UnspentOutputsViewModel,
          feeViewModel: SendFeeViewModel,
          feeCautionViewModel: ITitledCautionViewModel)
     {
+        self.outputSelectorFactory = outputSelectorFactory
         self.feeCautionViewModel = feeCautionViewModel
-
-        feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
+        feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized, isFirst: false)
+        self.unspentOutputsViewModel = unspentOutputsViewModel
+        unspentOutputsCell = UnspentOutputsCell(viewModel: unspentOutputsViewModel, isFirst: true, isLast: false)
 
         super.init(
             confirmationFactory: confirmationFactory,
@@ -34,7 +42,8 @@ class SendBitcoinViewController: BaseSendViewController {
             availableBalanceViewModel: availableBalanceViewModel,
             amountInputViewModel: amountInputViewModel,
             amountCautionViewModel: amountCautionViewModel,
-            recipientViewModel: recipientViewModel
+            recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel
         )
     }
 
@@ -78,6 +87,19 @@ class SendBitcoinViewController: BaseSendViewController {
             headerState: .margin(height: .margin12),
             rows: [
                 StaticRow(
+                    cell: unspentOutputsCell,
+                    id: "unspent_outputs",
+                    height: .heightCell48,
+                    autoDeselect: true,
+                    action: { [weak self] in
+                        guard let view = try? self?.outputSelectorFactory.outputSelectorView() else {
+                            return
+                        }
+
+                        self?.present(view.toNavigationViewController(), animated: true)
+                    }
+                ),
+                StaticRow(
                     cell: feeCell,
                     id: "fee",
                     height: .heightDoubleLineCell
@@ -105,6 +127,7 @@ class SendBitcoinViewController: BaseSendViewController {
     override func buildSections() -> [SectionProtocol] {
         var sections = super.buildSections()
         sections.append(contentsOf: [
+            memoSection,
             feeSection,
             feeCautionSection,
             buttonSection,

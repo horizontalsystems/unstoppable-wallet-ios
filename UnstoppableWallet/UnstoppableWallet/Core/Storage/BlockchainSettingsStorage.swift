@@ -5,6 +5,7 @@ class BlockchainSettingsStorage {
 
     private let keyBtcRestore = "btc-restore"
     private let keyBtcTransactionSort = "btc-transaction-sort"
+    private let keyBtcTransactionRbf = "btc-transaction-rbf"
     private let keyEvmSyncSource = "evm-sync-source"
 
     init(storage: BlockchainSettingRecordStorage) {
@@ -34,6 +35,18 @@ extension BlockchainSettingsStorage {
 
     func save(btcTransactionSortMode: TransactionDataSortMode, blockchainType: BlockchainType) {
         let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyBtcTransactionSort, value: btcTransactionSortMode.rawValue)
+        try? storage.save(record: record)
+    }
+
+    func btcTransactionRbfEnabled(blockchainType: BlockchainType) -> Bool? {
+        try? storage.record(blockchainUid: blockchainType.uid, key: keyBtcTransactionRbf)
+            .flatMap { record in
+                Bool(record.value)
+            }
+    }
+
+    func save(btcRbfEnabled: Bool, blockchainType: BlockchainType) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyBtcTransactionRbf, value: String(btcRbfEnabled))
         try? storage.save(record: record)
     }
 

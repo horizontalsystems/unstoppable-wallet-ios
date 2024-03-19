@@ -3,6 +3,7 @@ import ThemeKit
 
 struct InputTextView: View {
     var placeholder: String = ""
+    var multiline: Bool
 
     var text: Binding<String>
 
@@ -11,17 +12,14 @@ struct InputTextView: View {
     @State var shake = false
     var shakeOnInvalid = true
 
-    var onEditingChanged: ((Bool) -> Void)?
-    var onCommit: (() -> Void)?
     var isValidText: ((String) -> Bool)?
 
-    init(placeholder: String = "", text: Binding<String>, secured: Binding<Bool> = .constant(false), onEditingChanged: ((Bool) -> Void)? = nil, onCommit: (() -> Void)? = nil, isValidText: ((String) -> Bool)? = nil) {
+    init(placeholder: String = "", multiline: Bool = false, text: Binding<String>, secured: Binding<Bool> = .constant(false), isValidText: ((String) -> Bool)? = nil) {
         self.placeholder = placeholder
+        self.multiline = multiline
         self.text = text
         _secured = secured
 
-        self.onEditingChanged = onEditingChanged
-        self.onCommit = onCommit
         self.isValidText = isValidText
     }
 
@@ -29,7 +27,6 @@ struct InputTextView: View {
         editView()
             .font(.themeBody)
             .accentColor(.themeLeah)
-            .frame(height: 20) // TODO: How to remove this?
             .modifier(Validated(text: text, isValidText: isValidText))
     }
 
@@ -38,27 +35,27 @@ struct InputTextView: View {
         if secured {
             SecureField(
                 placeholder,
-                text: text,
-                onCommit: { commit() }
+                text: text
             )
             .accentColor(.themeYellow)
+            .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
         } else {
-            TextField(
-                placeholder,
-                text: text,
-                onEditingChanged: { editingChanged($0) },
-                onCommit: { commit() }
-            )
-            .accentColor(.themeYellow)
+            if #available(iOS 16.0, *), multiline {
+                TextField(
+                    placeholder,
+                    text: text,
+                    axis: .vertical
+                )
+                .accentColor(.themeYellow)
+            } else {
+                TextField(
+                    placeholder,
+                    text: text
+                )
+                .accentColor(.themeYellow)
+                .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
+            }
         }
-    }
-
-    private func editingChanged(_ bool: Bool) {
-        onEditingChanged?(bool)
-    }
-
-    private func commit() {
-        onCommit?()
     }
 }
 
@@ -84,6 +81,24 @@ struct CautionBorder: ViewModifier {
     @Binding var cautionState: CautionState
 
     init(cornerRadius: CGFloat = .cornerRadius8, cautionState: Binding<CautionState>) {
+        self.cornerRadius = cornerRadius
+        _cautionState = cautionState
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(cautionState.color, lineWidth: .heightOneDp)
+            )
+    }
+}
+
+struct FieldCautionBorder: ViewModifier {
+    let cornerRadius: CGFloat
+    @Binding var cautionState: FieldCautionState
+
+    init(cornerRadius: CGFloat = .cornerRadius8, cautionState: Binding<FieldCautionState>) {
         self.cornerRadius = cornerRadius
         _cautionState = cautionState
     }

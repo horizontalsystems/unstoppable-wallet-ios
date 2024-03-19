@@ -8,7 +8,7 @@ extension String {
     }
 
     var shortened: String {
-        let excludedPrefixes = ["0x", "bc", "bnb", "ltc", "bitcoincash:"]
+        let excludedPrefixes = ["0x", "bc", "bnb", "ltc", "bitcoincash:", "ecash:"]
 
         var extraPrefix = 0
 

@@ -1,5 +1,6 @@
 import Alamofire
 import BigInt
+import BitcoinCore
 import Combine
 import EvmKit
 import GRDB
@@ -12,7 +13,7 @@ import UIKit
 import UniswapKit
 import ZcashLightClientKit
 
-protocol IBaseAdapter {
+protocol IBaseAdapter: AnyObject {
     var isMainNet: Bool { get }
 }
 
@@ -36,6 +37,7 @@ protocol IDepositAdapter: IBaseAdapter {
     var receiveAddress: DepositAddress { get }
     var receiveAddressStatus: DataStatus<DepositAddress> { get }
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> { get }
+    func usedAddresses(change: Bool) -> [UsedAddress]
 }
 
 extension IDepositAdapter {
@@ -46,6 +48,8 @@ extension IDepositAdapter {
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
         Just(receiveAddressStatus).eraseToAnyPublisher()
     }
+
+    func usedAddresses(change _: Bool) -> [UsedAddress] { [] }
 }
 
 protocol ITransactionsAdapter {
@@ -54,21 +58,23 @@ protocol ITransactionsAdapter {
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var explorerTitle: String { get }
+    var additionalTokenQueries: [TokenQuery] { get }
     func explorerUrl(transactionHash: String) -> String?
-    func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]>
-    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]>
+    func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]>
+    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]>
     func rawTransaction(hash: String) -> String?
 }
 
 protocol ISendBitcoinAdapter {
     var blockchainType: BlockchainType { get }
     var balanceData: BalanceData { get }
-    func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
+    func availableBalance(feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
-    func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
+    var unspentOutputs: [UnspentOutputInfo] { get }
+    func sendInfo(amount: Decimal, feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) throws -> SendInfo
+    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, rbfEnabled: Bool, logger: HsToolKit.Logger) -> Single<Void>
 }
 
 protocol ISendDashAdapter {
@@ -88,7 +94,7 @@ protocol ISendEthereumAdapter {
 protocol ISendTronAdapter {
     var tronKitWrapper: TronKitWrapper { get }
     var balanceData: BalanceData { get }
-    func contract(amount: BigUInt, address: TronKit.Address) -> TronKit.Contract
+    func contract(amount: BigUInt, address: TronKit.Address, memo: String?) -> TronKit.Contract
     func accountActive(address: TronKit.Address) async -> Bool
 }
 
@@ -96,12 +102,17 @@ protocol ISendTonAdapter {
     var availableBalance: Decimal { get }
     func validate(address: String) throws
     func estimateFee() async throws -> Decimal
-    func send(recipient: String, amount: Decimal) async throws
+    func send(recipient: String, amount: Decimal, memo: String?) async throws
 }
 
 protocol IErc20Adapter {
     var pendingTransactions: [TransactionRecord] { get }
     func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
+    func allowance(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) async throws -> Decimal
+}
+
+protocol IApproveDataProvider {
+    func approveTransactionData(spenderAddress: EvmKit.Address, amount: BigUInt) -> TransactionData
 }
 
 protocol ISendBinanceAdapter {
@@ -167,7 +178,18 @@ extension IPresentDelegate {
     }
 }
 
-protocol Warning {}
+protocol Warning {
+    var titledCaution: TitledCaution { get }
+    var caution: CautionNew { get }
+}
+
+extension Warning {
+    var titledCaution: TitledCaution { TitledCaution(title: "", text: "", type: .warning) }
+    var caution: CautionNew {
+        let caution = titledCaution
+        return .init(title: caution.title, text: caution.text, type: caution.type)
+    }
+}
 
 protocol IErrorService: AnyObject {
     var error: Error? { get }

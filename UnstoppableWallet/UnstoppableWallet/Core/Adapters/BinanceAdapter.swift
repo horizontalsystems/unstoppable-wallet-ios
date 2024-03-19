@@ -168,13 +168,23 @@ extension BinanceAdapter: ITransactionsAdapter {
         "binance.org"
     }
 
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
+
     func explorerUrl(transactionHash: String) -> String? {
         binanceKit.networkType == .mainNet
             ? "https://explorer.binance.org/tx/" + transactionHash
             : "https://testnet-explorer.binance.org/tx/" + transactionHash
     }
 
-    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func explorerUrl(address: String) -> String? {
+        binanceKit.networkType == .mainNet
+            ? "https://explorer.binance.org/address/" + address
+            : "https://testnet-explorer.binance.org/address/" + address
+    }
+
+    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address _: String?) -> Observable<[TransactionRecord]> {
         let binanceChainFilter: TransactionFilterType?
         switch filter {
         case .all: binanceChainFilter = nil
@@ -190,7 +200,7 @@ extension BinanceAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address _: String?, limit: Int) -> Single<[TransactionRecord]> {
         let binanceChainFilter: TransactionFilterType?
 
         switch filter {

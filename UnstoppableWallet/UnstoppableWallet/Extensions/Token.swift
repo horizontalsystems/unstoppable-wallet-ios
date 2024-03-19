@@ -1,3 +1,5 @@
+import BigInt
+import Foundation
 import MarketKit
 
 extension Token {
@@ -64,5 +66,11 @@ extension Token: Comparable {
         }
 
         return lhs.blockchainType.order < rhs.blockchainType.order
+    }
+}
+
+extension Token {
+    func fractionalMonetaryValue(value: Decimal) -> BigUInt {
+        BigUInt(value.hs.roundedString(decimal: decimals)) ?? 0
     }
 }

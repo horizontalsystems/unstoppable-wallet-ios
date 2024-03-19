@@ -5,6 +5,7 @@ struct PoolSource {
     let token: Token?
     let blockchainType: BlockchainType
     let filter: TransactionTypeFilter
+    let address: String?
 
     var transactionSource: TransactionSource {
         TransactionSource(
@@ -19,9 +20,10 @@ extension PoolSource: Hashable {
         hasher.combine(token)
         hasher.combine(blockchainType)
         hasher.combine(filter)
+        hasher.combine(address)
     }
 
     public static func == (lhs: PoolSource, rhs: PoolSource) -> Bool {
-        lhs.token == rhs.token && lhs.blockchainType == rhs.blockchainType && lhs.filter == rhs.filter
+        lhs.token == rhs.token && lhs.blockchainType == rhs.blockchainType && lhs.filter == rhs.filter && lhs.address == rhs.address
     }
 }

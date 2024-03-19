@@ -1,26 +1,21 @@
 import SwiftUI
 
 struct Informed: ViewModifier {
-    private let description: AlertView.InfoDescription
+    let description: ActionSheetView.InfoDescription
     @State private var descriptionPresented: Bool = false
 
-    init(description: AlertView.InfoDescription) {
-        self.description = description
-    }
-
     func body(content: Content) -> some View {
-        HStack(spacing: .margin8) {
-            content
-
-            Button(action: {
-                descriptionPresented = true
-            }, label: {
-                Image("circle_information_20").renderingMode(.template)
-            })
-            .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
-        }
+        Button(action: {
+            descriptionPresented = true
+        }, label: {
+            HStack(spacing: .margin8) {
+                content
+                Image("circle_information_20").themeIcon()
+            }
+            .padding(EdgeInsets(top: 5.5, leading: .margin16, bottom: 5.5, trailing: .margin16))
+        })
         .bottomSheet(isPresented: $descriptionPresented) {
-            AlertView(
+            ActionSheetView(
                 image: .info,
                 title: description.title,
                 items: [

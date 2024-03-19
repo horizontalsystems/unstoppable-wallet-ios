@@ -71,12 +71,16 @@ class BaseTransactionsService {
         fatalError("Should be overridden in child service")
     }
 
+    var contact: Contact? {
+        nil
+    }
+
     var scamFilterEnabled: Bool {
         true
     }
 
     func _syncPoolGroup() {
-        poolGroup = poolGroupFactory.poolGroup(type: _poolGroupType, filter: typeFilter, scamFilterEnabled: scamFilterEnabled)
+        poolGroup = poolGroupFactory.poolGroup(type: _poolGroupType, filter: typeFilter, contact: contact, scamFilterEnabled: scamFilterEnabled)
         _initPoolGroup()
     }
 

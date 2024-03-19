@@ -123,7 +123,7 @@ class FeeCell: BaseThemeCell {
 }
 
 extension FeeCell {
-    enum Value {
+    enum Value: Equatable {
         case disabled(text: String)
         case regular(text: String, secondaryText: String?)
         case error(text: String)
@@ -133,6 +133,15 @@ extension FeeCell {
             case .disabled: return .themeGray
             case .regular: return .themeLeah
             case .error: return .themeLucian
+            }
+        }
+
+        static func == (lhs: Value, rhs: Value) -> Bool {
+            switch (lhs, rhs) {
+            case let (.disabled(lhs), .disabled(rhs)): return lhs == rhs
+            case let (.error(lhs), .error(rhs)): return lhs == rhs
+            case let (.regular(lhs1, lhs2), .regular(rhs1, rhs2)): return lhs1 == rhs1 && lhs2 == rhs2
+            default: return false
             }
         }
     }

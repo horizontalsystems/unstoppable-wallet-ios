@@ -121,7 +121,8 @@ class CoinChartService {
             rateDiff24h: coinPrice.diff,
             timestamp: coinPrice.timestamp,
             chartPointsItem: chartPointsItem,
-            indicators: indicatorRepository.indicators
+            indicators: indicatorRepository.indicators,
+            showIndicators: indicatorsShown
         )
 
         state = .completed(item)
@@ -221,6 +222,7 @@ extension CoinChartService {
         let timestamp: TimeInterval
         let chartPointsItem: ChartPointsItem
         let indicators: [ChartIndicator]
+        let showIndicators: Bool
     }
 
     struct ChartPointsItem {

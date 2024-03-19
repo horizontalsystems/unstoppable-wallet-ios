@@ -15,6 +15,12 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let coinListCell = BaseSelectableThemeCell()
     private let marketCapCell = BaseSelectableThemeCell()
     private let volumeCell = BaseSelectableThemeCell()
+
+    private let listedOnTopExchangesCell = BaseThemeCell()
+    private let goodCexVolumeCell = BaseThemeCell()
+    private let goodDexVolumeCell = BaseThemeCell()
+    private let goodDistributionCell = BaseThemeCell()
+
     private let blockchainsCell = BaseSelectableThemeCell()
     private let periodCell = BaseSelectableThemeCell()
     private let priceChangeCell = BaseSelectableThemeCell()
@@ -63,7 +69,13 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
         coinListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         marketCapCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        volumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        volumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+
+        listedOnTopExchangesCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+        goodCexVolumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+        goodDexVolumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+        goodDistributionCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+
         blockchainsCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         priceChangeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
@@ -95,6 +107,18 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         }
         subscribe(disposeBag, viewModel.volumeViewItemDriver) { [weak self] in
             self?.syncVolume(viewItem: $0)
+        }
+        subscribe(disposeBag, viewModel.listedOnTopExchangesDriver) { [weak self] in
+            self?.syncListedOnTopExchanges(isOn: $0)
+        }
+        subscribe(disposeBag, viewModel.goodCexVolumeDriver) { [weak self] in
+            self?.syncGoodCexVolume(isOn: $0)
+        }
+        subscribe(disposeBag, viewModel.goodDexVolumeDriver) { [weak self] in
+            self?.syncGoodDexVolume(isOn: $0)
+        }
+        subscribe(disposeBag, viewModel.goodDistributionDriver) { [weak self] in
+            self?.syncGoodDistribution(isOn: $0)
         }
         subscribe(disposeBag, viewModel.blockchainsViewItemDriver) { [weak self] in
             self?.syncBlockchains(viewItem: $0)
@@ -138,9 +162,18 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
     }
 
-    private func buildToggle(cell: BaseThemeCell, title: String? = nil, isOn: Bool, onToggle: @escaping (Bool) -> Void) {
+    private func buildToggle(cell: BaseThemeCell, title: String, isOn: Bool, onToggle: @escaping (Bool) -> Void) {
         let elements = tableView.universalImage24Elements(
             title: .body(title),
+            accessoryType: .switch(isOn: isOn, onSwitch: onToggle)
+        )
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
+    }
+
+    private func buildToggleWithDescription(cell: BaseThemeCell, title: String, description: String, isOn: Bool, onToggle: @escaping (Bool) -> Void) {
+        let elements = tableView.universalImage32Elements(
+            title: .body(title),
+            description: .subhead2(description),
             accessoryType: .switch(isOn: isOn, onSwitch: onToggle)
         )
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
@@ -282,6 +315,45 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         buildSelector(cell: volumeCell, title: "market.advanced_search.volume".localized, viewItem: viewItem)
     }
 
+    private func syncListedOnTopExchanges(isOn: Bool) {
+        buildToggle(cell: listedOnTopExchangesCell, title: "market.advanced_search.listed_on_top_exchanges".localized, isOn: isOn) { [weak self] in
+            self?.viewModel.setListedOnTopExchanges(isOn: $0)
+        }
+    }
+
+    private func syncGoodCexVolume(isOn: Bool) {
+        buildToggleWithDescription(
+            cell: goodCexVolumeCell,
+            title: "market.advanced_search.good_cex_volume".localized,
+            description: "market.advanced_search.overall_score_is_good_or_excellent".localized,
+            isOn: isOn
+        ) { [weak self] in
+            self?.viewModel.setGoodCexVolume(isOn: $0)
+        }
+    }
+
+    private func syncGoodDexVolume(isOn: Bool) {
+        buildToggleWithDescription(
+            cell: goodDexVolumeCell,
+            title: "market.advanced_search.good_dex_volume".localized,
+            description: "market.advanced_search.overall_score_is_good_or_excellent".localized,
+            isOn: isOn
+        ) { [weak self] in
+            self?.viewModel.setGoodDexVolume(isOn: $0)
+        }
+    }
+
+    private func syncGoodDistribution(isOn: Bool) {
+        buildToggleWithDescription(
+            cell: goodDistributionCell,
+            title: "market.advanced_search.good_distribution".localized,
+            description: "market.advanced_search.overall_score_is_good_or_excellent".localized,
+            isOn: isOn
+        ) { [weak self] in
+            self?.viewModel.setGoodDistribution(isOn: $0)
+        }
+    }
+
     private func syncBlockchains(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
         buildSelector(cell: blockchainsCell, title: "market.advanced_search.blockchains".localized, viewItem: viewItem)
     }
@@ -384,6 +456,10 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 row(cell: volumeCell, id: "volume") { [weak self] in
                     self?.onTapVolumeCell()
                 },
+                row(cell: listedOnTopExchangesCell, id: "listed_on_top_exchanges", height: .heightCell56),
+                row(cell: goodCexVolumeCell, id: "good_cex_volume", height: .heightDoubleLineCell),
+                row(cell: goodDexVolumeCell, id: "good_dex_volume", height: .heightDoubleLineCell),
+                row(cell: goodDistributionCell, id: "good_distribution", height: .heightDoubleLineCell),
             ]
         )
         )

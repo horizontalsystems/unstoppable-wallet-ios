@@ -8,7 +8,7 @@ struct ThemeList<Content: View, Item: Hashable>: View {
 
     var body: some View {
         switch themeListStyle {
-        case .lawrence, .bordered, .transparentInline:
+        case .lawrence, .bordered, .transparentInline, .borderedLawrence:
             Text("todo")
         case .transparent:
             List {

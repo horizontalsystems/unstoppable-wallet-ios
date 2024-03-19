@@ -51,11 +51,11 @@ extension PoolProvider: IPoolProvider {
     }
 
     func recordsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        adapter.transactionsSingle(from: from, token: source.token, filter: source.filter, limit: limit)
+        adapter.transactionsSingle(from: from, token: source.token, filter: source.filter, address: source.address, limit: limit)
     }
 
     func recordsObservable() -> Observable<[TransactionRecord]> {
-        adapter.transactionsObservable(token: source.token, filter: source.filter)
+        adapter.transactionsObservable(token: source.token, filter: source.filter, address: source.address)
     }
 
     func lastBlockUpdatedObservable() -> Observable<Void> {

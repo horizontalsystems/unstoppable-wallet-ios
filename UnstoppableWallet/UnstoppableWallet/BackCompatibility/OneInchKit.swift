@@ -9,7 +9,9 @@ import RxSwift
 public extension OneInchKit.Kit {
     internal struct DisposedError: Error {}
 
-    func quoteSingle(fromToken: EvmKit.Address,
+    func quoteSingle(networkManager: NetworkManager,
+                     chain: Chain,
+                     fromToken: EvmKit.Address,
                      toToken: EvmKit.Address,
                      amount: BigUInt,
                      protocols: String? = nil,
@@ -29,6 +31,8 @@ public extension OneInchKit.Kit {
             let task = Task {
                 do {
                     let result = try await strongSelf.quote(
+                        networkManager: networkManager,
+                        chain: chain,
                         fromToken: fromToken,
                         toToken: toToken,
                         amount: amount,
@@ -52,7 +56,10 @@ public extension OneInchKit.Kit {
         }
     }
 
-    func swapSingle(fromToken: EvmKit.Address,
+    func swapSingle(networkManager: NetworkManager,
+                    chain: Chain,
+                    receiveAddress: EvmKit.Address,
+                    fromToken: EvmKit.Address,
                     toToken: EvmKit.Address,
                     amount: BigUInt,
                     slippage: Decimal,
@@ -76,6 +83,9 @@ public extension OneInchKit.Kit {
             let task = Task {
                 do {
                     let result = try await strongSelf.swap(
+                        networkManager: networkManager,
+                        chain: chain,
+                        receiveAddress: receiveAddress,
                         fromToken: fromToken,
                         toToken: toToken,
                         amount: amount,

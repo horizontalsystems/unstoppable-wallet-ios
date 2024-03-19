@@ -21,7 +21,7 @@ enum TransactionInfoModule {
 
 extension TransactionInfoModule {
     enum Option {
-        case resend(type: ResendEvmTransactionType)
+        case resend(type: ResendTransactionType)
     }
 
     enum ViewItem {

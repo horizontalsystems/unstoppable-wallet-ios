@@ -39,7 +39,7 @@ enum MarketModule {
                     component.imageView.cornerRadius = listViewItem.iconShape.radius
                     component.imageView.layer.cornerCurve = .continuous
                     component.imageView.kf.setImage(
-                        with: URL(string: listViewItem.iconUrl),
+                        with: listViewItem.iconUrl.flatMap { URL(string: $0) },
                         placeholder: UIImage(named: listViewItem.iconPlaceholderName),
                         options: [.onlyLoadFirstFrame]
                     )
@@ -218,7 +218,9 @@ extension MarketModule {
         }
     }
 
-    enum PriceChangeType: CaseIterable {
+    enum PriceChangeType: Int, CaseIterable {
+        static let sortingTypes: [Self] = [.day, .week, .month]
+
         case day
         case week
         case week2
@@ -234,6 +236,14 @@ extension MarketModule {
             case .month: return "market.advanced_search.month".localized
             case .month6: return "market.advanced_search.month6".localized
             case .year: return "market.advanced_search.year".localized
+            }
+        }
+
+        var shortTitle: String {
+            switch self {
+            case .week: return "market.advanced_search.week.short".localized
+            case .month: return "market.advanced_search.month.short".localized
+            default: return "market.advanced_search.day.short".localized
             }
         }
     }
@@ -329,7 +339,7 @@ extension MarketModule { // ViewModel Items
 
     struct ListViewItem {
         let uid: String?
-        let iconUrl: String
+        let iconUrl: String?
         let iconShape: IconShape
         let iconPlaceholderName: String
         let leftPrimaryValue: String

@@ -155,6 +155,9 @@ class FilterView: UIView {
     }
 
     func reload(filters: [ViewItem]) {
+        guard filters != self.filters else {
+            return
+        }
         self.filters = filters
         needCalculateItemWidths = true
         collectionView.reloadData()
@@ -252,9 +255,17 @@ extension FilterView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
 }
 
 extension FilterView {
-    enum ViewItem {
+    enum ViewItem: Equatable {
         case all
         case item(title: String)
+
+        public static func == (lhs: Self, rhs: Self) -> Bool {
+            switch (lhs, rhs) {
+            case let (.item(lh), .item(rh)): return lh == rh
+            case (.all, .all): return true
+            default: return false
+            }
+        }
     }
 
     private class IndexedWidth {

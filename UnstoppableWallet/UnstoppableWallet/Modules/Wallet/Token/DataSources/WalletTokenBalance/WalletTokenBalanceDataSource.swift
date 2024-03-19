@@ -59,7 +59,7 @@ class WalletTokenBalanceDataSource: NSObject {
         viewModel.openCoinPagePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.openCoinPage(coin: $0)
+                self?.openCoinPage(coinUid: $0.uid)
             }
             .store(in: &cancellables)
 
@@ -177,9 +177,14 @@ class WalletTokenBalanceDataSource: NSObject {
                 }
             }
             cell.actions[.swap] = { [weak self] in
-                if let viewController = SwapModule.viewController(tokenFrom: wallet.token) {
-                    let navigationController = ThemeNavigationController(rootViewController: viewController)
-                    self?.parentViewController?.present(navigationController, animated: true)
+                if App.shared.localStorage.multiSwapEnabled {
+                    let viewController = MultiSwapModule.view(token: wallet.token).toViewController()
+                    self?.parentViewController?.present(viewController, animated: true)
+                } else {
+                    if let viewController = SwapModule.viewController(tokenFrom: wallet.token) {
+                        let navigationController = ThemeNavigationController(rootViewController: viewController)
+                        self?.parentViewController?.present(navigationController, animated: true)
+                    }
                 }
             }
             cell.actions[.receive] = { [weak self] in
@@ -205,9 +210,10 @@ class WalletTokenBalanceDataSource: NSObject {
         parentViewController?.present(view.toNavigationViewController(), animated: true)
     }
 
-    private func openCoinPage(coin: Coin) {
-        if let viewController = CoinPageModule.viewController(coinUid: coin.uid, apiTag: "wallet_token_balance") {
+    private func openCoinPage(coinUid: String) {
+        if let viewController = CoinPageModule.viewController(coinUid: coinUid) {
             parentViewController?.present(viewController, animated: true)
+            stat(page: .tokenPage, event: .coinOpen, params: [.coinUid: coinUid])
         }
     }
 

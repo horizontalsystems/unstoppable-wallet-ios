@@ -57,18 +57,27 @@ class ReceiveAddressService {
 
         let isMainNet = adapter.isMainNet
         adapter.receiveAddressPublisher
-            .sink { [weak self] status in
-                self?.updateStatus(status: status, isMainNet: isMainNet)
+            .sink { [weak self, weak adapter] status in
+                var usedAddresses = [ReceiveAddressModule.AddressType: [UsedAddress]]()
+                usedAddresses[.external] = adapter?.usedAddresses(change: false) ?? []
+                usedAddresses[.change] = adapter?.usedAddresses(change: true) ?? []
+
+                self?.updateStatus(status: status, usedAddresses: usedAddresses, isMainNet: isMainNet)
             }
             .store(in: &cancellables)
 
-        updateStatus(status: adapter.receiveAddressStatus, isMainNet: isMainNet)
+        var usedAddresses = [ReceiveAddressModule.AddressType: [UsedAddress]]()
+        usedAddresses[.external] = adapter.usedAddresses(change: false)
+        usedAddresses[.change] = adapter.usedAddresses(change: true)
+
+        updateStatus(status: adapter.receiveAddressStatus, usedAddresses: usedAddresses, isMainNet: isMainNet)
     }
 
-    private func updateStatus(status: DataStatus<DepositAddress>, isMainNet: Bool) {
+    private func updateStatus(status: DataStatus<DepositAddress>, usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?, isMainNet: Bool) {
         state = status.map { address in
             Item(
                 address: address,
+                usedAddresses: usedAddresses,
                 token: wallet.token,
                 isMainNet: isMainNet,
                 watchAccount: wallet.account.watchAccount,
@@ -84,6 +93,10 @@ extension ReceiveAddressService: IReceiveAddressService {
         "deposit.receive_coin".localized(wallet.coin.code)
     }
 
+    var coinName: String {
+        wallet.coin.name
+    }
+
     var statusUpdatedPublisher: AnyPublisher<DataStatus<ServiceItem>, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
@@ -92,6 +105,7 @@ extension ReceiveAddressService: IReceiveAddressService {
 extension ReceiveAddressService {
     struct Item {
         let address: DepositAddress
+        let usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?
         let token: Token
         let isMainNet: Bool
         let watchAccount: Bool

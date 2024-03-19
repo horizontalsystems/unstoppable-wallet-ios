@@ -60,6 +60,20 @@ class LegacyGasPriceService {
             errors: [], warnings: warnings
         ))
     }
+
+    private func handleRecommendedGasPrice(gasPrice: GasPrice, initialGasPrice: Int?) {
+        guard case let .legacy(gasPrice) = gasPrice else {
+            status = .failed(EvmFeeModule.GasDataError.unknownError)
+            return
+        }
+
+        recommendedGasPrice = gasPrice
+        if let minRecommendedGasPrice {
+            recommendedGasPrice = max(gasPrice, minRecommendedGasPrice)
+        }
+        legacyGasPrice = initialGasPrice ?? gasPrice
+        usingRecommended = true
+    }
 }
 
 extension LegacyGasPriceService: IGasPriceService {
@@ -86,12 +100,7 @@ extension LegacyGasPriceService {
         gasPriceProvider.gasPriceSingle()
             .subscribe(
                 onSuccess: { [weak self] gasPrice in
-                    self?.recommendedGasPrice = gasPrice
-                    if let minRecommendedGasPrice = self?.minRecommendedGasPrice {
-                        self?.recommendedGasPrice = max(gasPrice, minRecommendedGasPrice)
-                    }
-                    self?.legacyGasPrice = initialGasPrice ?? gasPrice
-                    self?.usingRecommended = true
+                    self?.handleRecommendedGasPrice(gasPrice: gasPrice, initialGasPrice: initialGasPrice)
                 },
                 onError: { [weak self] error in
                     self?.status = .failed(error)

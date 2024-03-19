@@ -30,6 +30,7 @@ struct ThemeNavigationView<Content: View>: View {
         NavigationView {
             content
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(.themeJacob)
     }
 }

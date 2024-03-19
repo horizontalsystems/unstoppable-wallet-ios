@@ -92,6 +92,10 @@ class LitecoinAdapter: BitcoinBaseAdapter {
     override func explorerUrl(transactionHash: String) -> String? {
         "https://blockchair.com/litecoin/transaction/" + transactionHash
     }
+
+    override func explorerUrl(address: String) -> String? {
+        "https://blockchair.com/litecoin/address/" + address
+    }
 }
 
 extension LitecoinAdapter: ISendBitcoinAdapter {

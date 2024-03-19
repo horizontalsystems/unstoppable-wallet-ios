@@ -265,11 +265,15 @@ extension TonAdapter: ITransactionsAdapter {
         "tonscan.org"
     }
 
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
+
     func explorerUrl(transactionHash: String) -> String? {
         "https://tonscan.org/tx/\(transactionHash)"
     }
 
-    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address _: String?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject
             .map { transactionRecords in
                 transactionRecords.compactMap { transaction -> TransactionRecord? in
@@ -284,7 +288,7 @@ extension TonAdapter: ITransactionsAdapter {
             .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address _: String?, limit: Int) -> Single<[TransactionRecord]> {
         switch filter {
         case .all: return transactionsSingle(from: from, type: nil, limit: limit)
         case .incoming: return transactionsSingle(from: from, type: TransactionType.incoming, limit: limit)
@@ -312,8 +316,8 @@ extension TonAdapter: ISendTonAdapter {
         return Self.amount(kitAmount: kitAmount)
     }
 
-    func send(recipient: String, amount: Decimal) async throws {
+    func send(recipient: String, amount: Decimal, memo: String?) async throws {
         let rawAmount = amount * Self.coinRate
-        try await tonKit.send(recipient: recipient, amount: rawAmount.description)
+        try await tonKit.send(recipient: recipient, amount: rawAmount.description, memo: memo)
     }
 }

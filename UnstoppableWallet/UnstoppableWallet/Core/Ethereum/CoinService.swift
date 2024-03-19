@@ -50,7 +50,7 @@ extension CoinService: ICoinService {
 
     // Example: Cent, Satoshi, GWei, etc
     func fractionalMonetaryValue(value: Decimal) -> BigUInt {
-        BigUInt(value.hs.roundedString(decimal: token.decimals)) ?? 0
+        token.fractionalMonetaryValue(value: value)
     }
 
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {

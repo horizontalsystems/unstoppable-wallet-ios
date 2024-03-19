@@ -197,7 +197,7 @@ class ChartUiView: UIView {
         }
 
         timePeriodView.backgroundColor = .clear
-        timePeriodView.reload(filters: viewModel.intervals.map { .item(title: $0) })
+        updateIntervals()
 
         addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
@@ -228,6 +228,14 @@ class ChartUiView: UIView {
             + configuration.mainHeight
             + (configuration.showIndicatorArea ? configuration.indicatorHeight : 0)
             + .margin8 + .heightCell48 + .margin8
+    }
+
+    private func updateIntervals() {
+        var viewItems: [FilterView.ViewItem] = viewModel.intervals.map { .item(title: $0) }
+        if viewModel.showAll {
+            viewItems.append(.item(title: "chart.time_duration.all".localized))
+        }
+        timePeriodView.reload(filters: viewItems)
     }
 
     private func syncChart(viewItem: ChartModule.ViewItem?) {
@@ -281,8 +289,7 @@ class ChartUiView: UIView {
             if !chartView.isPressed {
                 chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
             }
-            chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, showIndicators: showIndicators, animated: true)
-            chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
+            chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, showIndicators: showIndicators, limitFormatter: viewItem.limitFormatter, animated: true)
         } else {
             currentValueWrapper.isHidden = true
             chartView.isHidden = true
@@ -365,7 +372,7 @@ class ChartUiView: UIView {
     }
 
     private func syncIntervals(typeIndex: Int) {
-        timePeriodView.reload(filters: viewModel.intervals.map { .item(title: $0) })
+        updateIntervals()
         syncChart(typeIndex: typeIndex)
     }
 
@@ -392,7 +399,6 @@ class ChartUiView: UIView {
 extension ChartUiView {
     func onLoad() {
         subscribe(disposeBag, viewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
-        subscribe(disposeBag, viewModel.intervalIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
         subscribe(disposeBag, viewModel.intervalsUpdatedWithCurrentIndexDriver) { [weak self] in self?.syncIntervals(typeIndex: $0) }
 
         subscribe(disposeBag, viewModel.indicatorsShownDriver) { [weak self] in self?.syncChart(showIndicators: $0) }

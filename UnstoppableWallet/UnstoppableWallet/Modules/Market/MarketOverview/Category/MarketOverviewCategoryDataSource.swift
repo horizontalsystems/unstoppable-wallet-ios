@@ -33,6 +33,26 @@ class MarketOverviewCategoryDataSource {
             self?.presentDelegate?.present(viewController: viewController)
         }
     }
+
+    func didTapSeeAll() {
+        let module = MarketTopModule.viewController(
+            marketTop: viewModel.marketTop,
+            sortingField: viewModel.listType.sortingField,
+            marketField: viewModel.listType.marketField
+        )
+        presentDelegate?.present(viewController: module)
+    }
+
+    private func bind(cell: MarketOverviewHeaderCell) {
+        cell.set(backgroundStyle: .transparent)
+        cell.buttonMode = .none
+        cell.titleImage = UIImage(named: "categories_20")
+        cell.title = "market.top.section.header.sectors".localized
+
+        cell.onTapTitle = { [weak self] in
+            self?.didTapSeeAll()
+        }
+    }
 }
 
 extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
@@ -52,11 +72,8 @@ extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
                     Row<MarketOverviewHeaderCell>(
                         id: "categories_header_cell",
                         height: .heightCell48,
-                        bind: { cell, _ in
-                            cell.set(backgroundStyle: .transparent)
-                            cell.buttonMode = .none
-                            cell.titleImage = UIImage(named: "categories_20")
-                            cell.title = "market.top.section.header.sectors".localized
+                        bind: { [weak self] cell, _ in
+                            self?.bind(cell: cell)
                         }
                     ),
                 ]

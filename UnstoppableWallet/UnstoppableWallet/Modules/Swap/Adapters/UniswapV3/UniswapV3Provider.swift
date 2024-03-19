@@ -5,14 +5,18 @@ import UniswapKit
 
 class UniswapV3Provider {
     private let swapKit: UniswapKit.KitV3
+    private let evmKit: EvmKit.Kit
+    private let rpcSource: RpcSource
 
-    init(swapKit: UniswapKit.KitV3) {
+    init(swapKit: UniswapKit.KitV3, evmKit: EvmKit.Kit, rpcSource: RpcSource) {
         self.swapKit = swapKit
+        self.evmKit = evmKit
+        self.rpcSource = rpcSource
     }
 
     private func uniswapToken(token: MarketKit.Token) throws -> UniswapKit.Token {
         switch token.type {
-        case .native: return swapKit.etherToken
+        case .native: return try swapKit.etherToken(chain: evmKit.chain)
         case let .eip20(address): return try swapKit.token(contractAddress: EvmKit.Address(hex: address), decimals: token.decimals)
         default: throw TokenError.unsupportedToken
         }
@@ -21,11 +25,11 @@ class UniswapV3Provider {
 
 extension UniswapV3Provider {
     var routerAddress: EvmKit.Address {
-        swapKit.routerAddress
+        swapKit.routerAddress(chain: evmKit.chain)
     }
 
     var wethAddress: EvmKit.Address {
-        swapKit.etherToken.address
+        try! swapKit.etherToken(chain: evmKit.chain).address
     }
 
     func bestTrade(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amount: Decimal, tradeType: TradeType, tradeOptions: TradeOptions) async throws -> TradeDataV3 {
@@ -34,14 +38,14 @@ extension UniswapV3Provider {
 
         switch tradeType {
         case .exactIn:
-            return try await swapKit.bestTradeExactIn(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut, amountIn: amount, options: tradeOptions)
+            return try await swapKit.bestTradeExactIn(rpcSource: rpcSource, chain: evmKit.chain, tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut, amountIn: amount, options: tradeOptions)
         case .exactOut:
-            return try await swapKit.bestTradeExactOut(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut, amountOut: amount, options: tradeOptions)
+            return try await swapKit.bestTradeExactOut(rpcSource: rpcSource, chain: evmKit.chain, tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut, amountOut: amount, options: tradeOptions)
         }
     }
 
     func transactionData(tradeData: TradeDataV3, tradeOptions: TradeOptions) throws -> TransactionData {
-        try swapKit.transactionData(bestTrade: tradeData, tradeOptions: tradeOptions)
+        try swapKit.transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, bestTrade: tradeData, tradeOptions: tradeOptions)
     }
 }
 

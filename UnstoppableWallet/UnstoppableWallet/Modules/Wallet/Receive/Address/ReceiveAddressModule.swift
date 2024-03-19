@@ -3,7 +3,7 @@ import SwiftUI
 import UIKit
 
 enum ReceiveAddressModule {
-    static func view(wallet: Wallet, onDismiss: (() -> ())? = nil) -> some View {
+    static func view(wallet: Wallet, onDismiss: (() -> Void)? = nil) -> some View {
         let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()
 
@@ -78,43 +78,32 @@ extension ReceiveAddressModule {
         }
     }
 
-    enum Item: Identifiable, Hashable {
-        case qrItem(QrItem)
-        case amount(value: String)
-        case status(value: String)
-        case memo(value: String)
-        case highlightedDescription(text: String, style: HighlightedDescriptionBaseView.Style = .yellow)
-
-        public var id: String {
-            switch self {
-            case let .qrItem(item): return "\(item.address)_\(item.networkName ?? "NA")"
-            case let .amount(value): return value
-            case let .status(value): return value
-            case let .memo(value): return value
-            case let .highlightedDescription(text, _): return text
-            }
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
-
-        static func == (lhs: Item, rhs: Item) -> Bool {
-            lhs.id == rhs.id
-        }
-    }
-
     struct HighlightedDescription {
         let text: String
         let style: HighlightedDescriptionBaseView.Style
     }
 
+    enum AddressType: Int, Comparable {
+        case external
+        case change
+
+        var title: String {
+            switch self {
+            case .external: return "receive_used_addresses.external".localized
+            case .change: return "receive_used_addresses.change".localized
+            }
+        }
+
+        static func < (lhs: AddressType, rhs: AddressType) -> Bool { lhs.rawValue < rhs.rawValue }
+    }
+
     struct ViewItem {
         let copyValue: String
-        let highlightedDescription: HighlightedDescription
+        let highlightedDescription: HighlightedDescription?
         let qrItem: QrItem
         let amount: String?
         let active: Bool
         let memo: String?
+        let usedAddresses: [AddressType: [UsedAddress]]?
     }
 }

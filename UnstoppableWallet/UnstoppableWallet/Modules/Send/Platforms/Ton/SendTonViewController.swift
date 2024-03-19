@@ -4,7 +4,6 @@ import ThemeKit
 import UIKit
 
 class SendTonViewController: BaseSendViewController {
-    private let memoCell: SendMemoInputCell
     private let feeCell: FeeCell
 
     init(confirmationFactory: ISendConfirmationFactory,
@@ -16,7 +15,6 @@ class SendTonViewController: BaseSendViewController {
          memoViewModel: SendMemoInputViewModel,
          feeViewModel: SendFeeViewModel)
     {
-        memoCell = SendMemoInputCell(viewModel: memoViewModel, topInset: .margin12)
         feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         super.init(
@@ -25,7 +23,8 @@ class SendTonViewController: BaseSendViewController {
             availableBalanceViewModel: availableBalanceViewModel,
             amountInputViewModel: amountInputViewModel,
             amountCautionViewModel: amountCautionViewModel,
-            recipientViewModel: recipientViewModel
+            recipientViewModel: recipientViewModel,
+            memoViewModel: memoViewModel
         )
     }
 
@@ -41,31 +40,12 @@ class SendTonViewController: BaseSendViewController {
             self?.openInfo(title: "fee_settings.fee".localized, description: "fee_settings.fee.info".localized)
         }
 
-        memoCell.onChangeHeight = { [weak self] in
-            self?.reloadTable()
-        }
-
         didLoad()
     }
 
     private func openInfo(title: String, description: String) {
         let viewController = BottomSheetModule.description(title: title, text: description)
         present(viewController, animated: true)
-    }
-
-    var memoSection: SectionProtocol {
-        Section(
-            id: "memo",
-            rows: [
-                StaticRow(
-                    cell: memoCell,
-                    id: "memo-input",
-                    dynamicHeight: { [weak self] width in
-                        self?.memoCell.height(containerWidth: width) ?? 0
-                    }
-                ),
-            ]
-        )
     }
 
     var feeSection: SectionProtocol {

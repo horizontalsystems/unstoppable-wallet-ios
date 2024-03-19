@@ -24,9 +24,41 @@ enum CautionState: Equatable {
     }
 }
 
+enum TitledCautionState: Equatable {
+    case none
+    case caution(TitledCaution)
+
+    var caution: TitledCaution? {
+        switch self {
+        case let .caution(caution): return caution
+        default: return nil
+        }
+    }
+}
+
+enum FieldCautionState: Equatable {
+    case none
+    case caution(CautionType)
+
+    var color: Color {
+        switch self {
+        case .none: return Color.clear
+        case let .caution(type):
+            switch type {
+            case .warning: return .themeJacob
+            case .error: return .themeLucian
+            }
+        }
+    }
+}
+
 struct Caution: Equatable {
     let text: String
     let type: CautionType
+
+    func cautionNew(title: String? = nil) -> CautionNew {
+        .init(title: title, text: text, type: type)
+    }
 }
 
 enum CautionType: Equatable {
@@ -42,8 +74,8 @@ enum CautionType: Equatable {
 
     var borderColor: UIColor {
         switch self {
-        case .error: return .themeRed50
-        case .warning: return .themeYellow50
+        case .error: return .themeLucian
+        case .warning: return .themeYellowD
         }
     }
 
@@ -80,5 +112,17 @@ class CancellableTitledCaution: TitledCaution {
         self.cancellable = cancellable
 
         super.init(title: title, text: text, type: type)
+    }
+}
+
+struct CautionNew: Equatable {
+    let title: String?
+    let text: String
+    let type: CautionType
+
+    init(title: String? = nil, text: String, type: CautionType) {
+        self.title = title
+        self.text = text
+        self.type = type
     }
 }

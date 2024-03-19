@@ -22,6 +22,12 @@ class CoinAnalyticsViewModel {
     private let indicatorViewItemsSubject = CurrentValueSubject<IndicatorViewItem, Never>(.empty)
     private let subscriptionInfoSubject = PassthroughSubject<Void, Never>()
 
+    private var detailsShowed: Bool = false {
+        didSet {
+            sync()
+        }
+    }
+
     private let ratioFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -163,6 +169,19 @@ class CoinAnalyticsViewModel {
         )
     }
 
+    private func viewItem(technicalAdvice: TechnicalAdvice?) -> TechnicalAdviceViewItem? {
+        guard let technicalAdvice, let advice = technicalAdvice.advice else {
+            return nil
+        }
+
+        return TechnicalAdviceViewItem(
+            title: advice.title,
+            sliderIndex: advice.sliderIndex,
+            details: coinIndicatorViewItemFactory.advice(technicalAdvice: technicalAdvice),
+            detailsShowed: detailsShowed
+        )
+    }
+
     private func rankCardViewItem(points: [ChartPoint]?, value: Decimal?, postfix: ChartPreviewValuePostfix, rank: Int?, rating: String?) -> RankCardViewItem? {
         guard let points, let chartViewItem = chartViewItem(points: points, value: value, postfix: postfix) else {
             return nil
@@ -270,6 +289,35 @@ class CoinAnalyticsViewModel {
         )
     }
 
+    private func issueBlockchainViewItems(issueBlockchains: [Analytics.IssueBlockchain]) -> [IssueBlockchainViewItem]? {
+        let blockchains = service.blockchains(uids: issueBlockchains.map(\.blockchain))
+
+        let viewItems: [IssueBlockchainViewItem] = issueBlockchains.compactMap { issueBlockchain in
+            guard let blockchain = blockchains.first(where: { $0.uid == issueBlockchain.blockchain }) else {
+                return nil
+            }
+
+            return IssueBlockchainViewItem(
+                blockchain: blockchain,
+                allItems: issueBlockchain.issues.map { issue in
+                    IssueViewItem(
+                        title: issue.title ?? issue.description ?? "",
+                        description: issue.title != nil ? issue.description : nil,
+                        level: .init(impact: issue.issues?.first?.impact),
+                        type: issue.issue,
+                        issues: issue.issues.map { $0.compactMap(\.description) } ?? []
+                    )
+                }.sorted { $0.level.rawValue < $1.level.rawValue }
+            )
+        }
+
+        guard !viewItems.isEmpty else {
+            return nil
+        }
+
+        return viewItems.sorted { $0.blockchain.type.order < $1.blockchain.type.order }
+    }
+
     private func viewItem(analytics: Analytics) -> ViewItem {
         ViewItem(
             cexVolume: rankCardViewItem(
@@ -335,7 +383,9 @@ class CoinAnalyticsViewModel {
                 .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
                 .map { .regular(value: $0) },
             auditAddresses: service.auditAddresses
-                .map { .regular(value: $0) }
+                .map { .regular(value: $0) },
+            issueBlockchains: analytics.issueBlockchains.flatMap { issueBlockchainViewItems(issueBlockchains: $0) },
+            technicalAdvice: viewItem(technicalAdvice: analytics.technicalAdvice)
         )
     }
 
@@ -355,7 +405,9 @@ class CoinAnalyticsViewModel {
             reports: data.reports ? .preview : nil,
             investors: data.fundsInvested ? .preview : nil,
             treasuries: data.treasuries ? .preview : nil,
-            auditAddresses: service.auditAddresses != nil ? .preview : nil
+            auditAddresses: service.auditAddresses != nil ? .preview : nil,
+            issueBlockchains: nil,
+            technicalAdvice: nil
         )
     }
 }
@@ -423,6 +475,10 @@ extension CoinAnalyticsViewModel {
     func onTapRetry() {
         service.sync()
     }
+
+    func onTapDetails() {
+        detailsShowed.toggle()
+    }
 }
 
 extension CoinAnalyticsViewModel {
@@ -442,9 +498,11 @@ extension CoinAnalyticsViewModel {
         let investors: Previewable<String>?
         let treasuries: Previewable<String>?
         let auditAddresses: Previewable<[String]>?
+        let issueBlockchains: [IssueBlockchainViewItem]?
+        let technicalAdvice: TechnicalAdviceViewItem?
 
         var isEmpty: Bool {
-            let items: [Any?] = [cexVolume, dexVolume, dexLiquidity, activeAddresses, transactionCount, holders, tvl, revenue, reports, investors, treasuries]
+            let items: [Any?] = [cexVolume, dexVolume, dexLiquidity, activeAddresses, transactionCount, holders, tvl, revenue, reports, investors, treasuries, technicalAdvice]
             return items.compactMap { $0 }.isEmpty
         }
     }
@@ -462,6 +520,13 @@ extension CoinAnalyticsViewModel {
         let value: String
         let chartData: ChartData
         let chartTrend: MovementTrend
+    }
+
+    struct TechnicalAdviceViewItem {
+        let title: String
+        let sliderIndex: Int
+        let details: String
+        let detailsShowed: Bool
     }
 
     struct RankCardViewItem {
@@ -495,6 +560,57 @@ extension CoinAnalyticsViewModel {
         let name: String
         let value: String?
         let percent: Decimal
+    }
+
+    struct IssueBlockchainViewItem {
+        let blockchain: Blockchain
+        let allItems: [IssueViewItem]
+
+        var highRiskCount: Int {
+            allItems.filter { $0.level == .highRisk }.count
+        }
+
+        var mediumRiskCount: Int {
+            allItems.filter { $0.level == .mediumRisk }.count
+        }
+
+        var lowRiskCount: Int {
+            allItems.filter { $0.level == .attentionRequired || $0.level == .informational }.count
+        }
+
+        var coreItems: [IssueViewItem] {
+            allItems.filter { $0.type == "core" }
+        }
+
+        var generalItems: [IssueViewItem] {
+            allItems.filter { $0.type == "general" }
+        }
+    }
+
+    struct IssueViewItem {
+        let title: String
+        let description: String?
+        let level: Level
+        let type: String?
+        let issues: [String]
+
+        enum Level: Int {
+            case highRisk
+            case mediumRisk
+            case attentionRequired
+            case informational
+            case regular
+
+            init(impact: String?) {
+                switch impact {
+                case "Critical", "High": self = .highRisk
+                case "Medium": self = .mediumRisk
+                case "Low": self = .attentionRequired
+                case "Informational": self = .informational
+                default: self = .regular
+                }
+            }
+        }
     }
 
     struct TvlViewItem {
@@ -551,6 +667,7 @@ extension HsPointTimePeriod {
         case .hour4: return "coin_analytics.period.4h".localized
         case .day1: return "coin_analytics.period.1d".localized
         case .week1: return "coin_analytics.period.1w".localized
+        case .month1: return "coin_analytics.period.1m".localized
         }
     }
 }

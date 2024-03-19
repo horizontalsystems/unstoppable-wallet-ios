@@ -64,12 +64,6 @@ enum AppConfig {
         Bundle.main.object(forInfoDictionaryKey: "OfficeMode") as? String == "true"
     }
 
-    static var infuraCredentials: (id: String, secret: String?) {
-        let id = (Bundle.main.object(forInfoDictionaryKey: "InfuraProjectId") as? String) ?? ""
-        let secret = Bundle.main.object(forInfoDictionaryKey: "InfuraProjectSecret") as? String
-        return (id: id, secret: secret)
-    }
-
     static var etherscanKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
     }
@@ -160,9 +154,5 @@ enum AppConfig {
 
     static var donateEnabled: Bool {
         Bundle.main.object(forInfoDictionaryKey: "DonateEnabled") as? String == "true"
-    }
-
-    static var blockchairApiKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "BlockchairApiKey") as? String) ?? ""
     }
 }

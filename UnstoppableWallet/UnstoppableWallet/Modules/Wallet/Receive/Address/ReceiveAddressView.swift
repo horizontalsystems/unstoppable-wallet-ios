@@ -5,7 +5,7 @@ private let appIconSize: CGFloat = 47
 
 struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddressViewItemFactory>: View where Service.ServiceItem == Factory.Item {
     @ObservedObject var viewModel: ReceiveAddressViewModel<Service, Factory>
-    var onDismiss: (() -> ())?
+    var onDismiss: (() -> Void)?
 
     @State private var hasAppeared = false
     @State private var warningAlertPopup: ReceiveAddressModule.PopupWarningItem?
@@ -24,7 +24,9 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 ProgressView()
             case let .completed(viewItem):
                 VStack(spacing: .margin12) {
-                    HighlightedTextView(text: viewItem.highlightedDescription.text, style: viewItem.highlightedDescription.style)
+                    if let description = viewItem.highlightedDescription {
+                        HighlightedTextView(text: description.text, style: description.style)
+                    }
 
                     ListSection {
                         qrView(item: viewItem.qrItem)
@@ -36,6 +38,19 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                         }
                         if let memo = viewItem.memo {
                             view(memo: memo)
+                        }
+
+                        if let usedAddresses = viewItem.usedAddresses, !usedAddresses.isEmpty {
+                            NavigationRow(destination: {
+                                UsedAddressesView(
+                                    coinName: viewModel.coinName,
+                                    usedAddresses: usedAddresses,
+                                    onDismiss: onDismiss ?? { presentationMode.wrappedValue.dismiss() }
+                                )
+                            }) {
+                                Text("deposit.used_addresses".localized).themeSubhead2()
+                                Image.disclosureIcon
+                            }
                         }
                     }
                 }
@@ -74,7 +89,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         })
         .alertButtonTint(color: .themeJacob)
         .bottomSheet(item: $warningAlertPopup) { popup in
-            AlertView(
+            ActionSheetView(
                 image: .warning,
                 title: popup.title,
                 items: [
@@ -96,7 +111,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.cancel".localized) {
+                Button("button.done".localized) {
                     if let onDismiss {
                         onDismiss()
                     } else {
@@ -200,7 +215,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 .textSubhead2()
                 .modifier(
                     Informed(description:
-                        AlertView.InfoDescription(
+                        ActionSheetView.InfoDescription(
                             title: "deposit.not_active.title".localized,
                             description: "deposit.not_active.tron_description".localized
                         )
@@ -216,7 +231,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
                 .textSubhead2()
                 .modifier(
                     Informed(description:
-                        AlertView.InfoDescription(
+                        ActionSheetView.InfoDescription(
                             title: "cex_deposit.memo_warning.title".localized,
                             description: "cex_deposit.memo_warning.description".localized
                         )

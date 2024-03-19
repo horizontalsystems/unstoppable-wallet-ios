@@ -15,7 +15,7 @@ class MarketNftTopCollectionsViewController: MarketListViewController {
         self.viewModel = viewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
 
-        super.init(listViewModel: listViewModel, apiTag: "")
+        super.init(listViewModel: listViewModel, statPage: .topNftCollections)
 
         multiSortHeaderView.viewController = self
     }

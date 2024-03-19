@@ -63,6 +63,10 @@ class ECashAdapter: BitcoinBaseAdapter {
     override func explorerUrl(transactionHash: String) -> String? {
         "https://blockchair.com/ecash/transaction/" + transactionHash
     }
+
+    override func explorerUrl(address: String) -> String? {
+        "https://blockchair.com/ecash/address/" + address
+    }
 }
 
 extension ECashAdapter: ISendBitcoinAdapter {

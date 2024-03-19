@@ -267,8 +267,8 @@ extension L1FeeProvider {
 extension LegacyGasPriceProvider {
     struct DisposedError: Error {}
 
-    public func gasPriceSingle() -> Single<Int> {
-        Single<Int>.create { [weak self] observer in
+    public func gasPriceSingle() -> Single<GasPrice> {
+        Single<GasPrice>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
                 return Disposables.create()
@@ -319,12 +319,8 @@ extension Eip1155Provider {
 public extension EIP1559GasPriceProvider {
     internal struct DisposedError: Error {}
 
-    func feeHistoryObservable(blocksCount: Int, defaultBlockParameter: DefaultBlockParameter = .latest, rewardPercentile: [Int]) -> Observable<FeeHistory> {
-        feeHistoryPublisher(blocksCount: blocksCount, defaultBlockParameter: defaultBlockParameter, rewardPercentile: rewardPercentile).asObservable()
-    }
-
-    func feeHistorySingle(blocksCount: Int, defaultBlockParameter: DefaultBlockParameter = .latest, rewardPercentile: [Int]) -> Single<FeeHistory> {
-        Single<FeeHistory>.create { [weak self] observer in
+    func gasPriceSingle(defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<GasPrice> {
+        Single<GasPrice>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
                 return Disposables.create()
@@ -332,7 +328,7 @@ public extension EIP1559GasPriceProvider {
 
             let task = Task {
                 do {
-                    let result = try await strongSelf.feeHistory(blocksCount: blocksCount, defaultBlockParameter: defaultBlockParameter, rewardPercentile: rewardPercentile)
+                    let result = try await strongSelf.gasPrice(defaultBlockParameter: defaultBlockParameter)
                     observer(.success(result))
                 } catch {
                     observer(.error(error))

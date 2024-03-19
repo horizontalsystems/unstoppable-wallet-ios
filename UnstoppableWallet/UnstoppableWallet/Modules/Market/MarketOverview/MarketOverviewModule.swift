@@ -16,12 +16,17 @@ enum MarketOverviewModule {
         let topLosersViewModel = MarketOverviewTopCoinsViewModel(service: topLosersService, decorator: topLosersDecorator)
         let topLosersDataSource = MarketOverviewTopCoinsDataSource(viewModel: topLosersViewModel, presentDelegate: presentDelegate)
 
+        let topPairsService = MarketOverviewTopPairsService(baseService: service)
+        let topPairsDecorator = MarketListMarketPairDecorator(service: topPairsService)
+        let topPairsViewModel = MarketOverviewTopPairsViewModel(service: topPairsService, decorator: topPairsDecorator)
+        let topPairsDataSource = MarketOverviewTopPairsDataSource(viewModel: topPairsViewModel, presentDelegate: presentDelegate)
+
         let topPlatformsService = MarketOverviewTopPlatformsService(baseService: service)
         let topPlatformsDecorator = MarketListTopPlatformDecorator(service: topPlatformsService)
         let topPlatformsViewModel = MarketOverviewTopPlatformsViewModel(service: topPlatformsService, decorator: topPlatformsDecorator)
         let topPlatformsDataSource = MarketOverviewTopPlatformsDataSource(viewModel: topPlatformsViewModel, presentDelegate: presentDelegate)
 
-        let categoryService = MarketOverviewCategoryService(baseService: service)
+        let categoryService = MarketOverviewCategoryService(listType: .topGainers, baseService: service)
         let categoryViewModel = MarketOverviewCategoryViewModel(service: categoryService)
         let categoryDataSource = MarketOverviewCategoryDataSource(viewModel: categoryViewModel, presentDelegate: presentDelegate)
 
@@ -31,6 +36,7 @@ enum MarketOverviewModule {
             marketOverviewDataSource,
             topGainersDataSource,
             topLosersDataSource,
+            topPairsDataSource,
             topPlatformsDataSource,
             categoryDataSource,
         ])

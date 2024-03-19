@@ -2,15 +2,21 @@ import BigInt
 import EvmKit
 import Foundation
 import HsExtensions
+import HsToolKit
 import MarketKit
 import OneInchKit
 import RxSwift
 
 class OneInchProvider {
     private let swapKit: OneInchKit.Kit
+    private let evmKit: EvmKit.Kit
+    private let rpcSource: RpcSource
+    private let networkManager = NetworkManager()
 
-    init(swapKit: OneInchKit.Kit) {
+    init(swapKit: OneInchKit.Kit, evmKit: EvmKit.Kit, rpcSource: RpcSource) {
         self.swapKit = swapKit
+        self.evmKit = evmKit
+        self.rpcSource = rpcSource
     }
 
     private func units(amount: Decimal, token: MarketKit.Token) -> BigUInt? {
@@ -29,7 +35,7 @@ class OneInchProvider {
 
 extension OneInchProvider {
     var routerAddress: EvmKit.Address {
-        swapKit.routerAddress
+        try! OneInchKit.Kit.routerAddress(chain: evmKit.chain)
     }
 
     func quoteSingle(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amount: Decimal) -> Single<OneInchKit.Quote> {
@@ -42,6 +48,8 @@ extension OneInchProvider {
             let addressTo = try address(token: tokenOut)
 
             return swapKit.quoteSingle(
+                networkManager: networkManager,
+                chain: evmKit.chain,
                 fromToken: addressFrom,
                 toToken: addressTo,
                 amount: amountUnits,
@@ -68,6 +76,9 @@ extension OneInchProvider {
             let addressTo = try address(token: tokenTo)
 
             return swapKit.swapSingle(
+                networkManager: networkManager,
+                chain: evmKit.chain,
+                receiveAddress: evmKit.receiveAddress,
                 fromToken: addressFrom,
                 toToken: addressTo,
                 amount: amountUnits,

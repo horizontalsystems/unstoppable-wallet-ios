@@ -82,4 +82,20 @@ extension Eip20Adapter: IErc20Adapter {
                 return 0
             }
     }
+
+    func allowance(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) async throws -> Decimal {
+        let allowanceString = try await eip20Kit.allowance(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
+
+        guard let significand = Decimal(string: allowanceString) else {
+            return 0
+        }
+
+        return Decimal(sign: .plus, exponent: -decimals, significand: significand)
+    }
+}
+
+extension Eip20Adapter: IApproveDataProvider {
+    func approveTransactionData(spenderAddress: EvmKit.Address, amount: BigUInt) -> TransactionData {
+        eip20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
+    }
 }

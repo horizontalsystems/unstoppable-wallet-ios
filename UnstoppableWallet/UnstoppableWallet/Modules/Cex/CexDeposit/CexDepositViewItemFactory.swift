@@ -24,7 +24,8 @@ class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
             qrItem: qrItem,
             amount: nil,
             active: true,
-            memo: item.memo
+            memo: item.memo,
+            usedAddresses: nil
         )
     }
 

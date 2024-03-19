@@ -1,7 +1,7 @@
 import UIKit
 
 class ThemeActionSheetController: UIViewController {
-    public weak var actionSheetView: ActionSheetView?
+    public weak var actionSheetView: IActionSheetView?
     public var onInteractiveDismiss: (() -> Void)?
 
     init() {

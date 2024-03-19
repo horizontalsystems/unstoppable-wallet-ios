@@ -53,7 +53,7 @@ extension Trc20Adapter: IBalanceAdapter {
 }
 
 extension Trc20Adapter: ISendTronAdapter {
-    func contract(amount: BigUInt, address: TronKit.Address) -> Contract {
+    func contract(amount: BigUInt, address: TronKit.Address, memo _: String?) -> Contract {
         tronKit.transferTrc20TriggerSmartContract(contractAddress: contractAddress, toAddress: address, amount: amount)
     }
 }

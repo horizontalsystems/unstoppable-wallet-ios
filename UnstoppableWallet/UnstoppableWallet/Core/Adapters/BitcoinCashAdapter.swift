@@ -70,6 +70,10 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
     override func explorerUrl(transactionHash: String) -> String? {
         "https://bch.btc.com/" + transactionHash
     }
+
+    override func explorerUrl(address: String) -> String? {
+        "https://bch.btc.com/bch/address/" + address
+    }
 }
 
 extension BitcoinCashAdapter: ISendBitcoinAdapter {

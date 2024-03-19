@@ -9,7 +9,6 @@ class LocalStorage {
     private let mainShownOnceKey = "main_shown_once_key"
     private let jailbreakShownOnceKey = "jailbreak_shown_once_key"
     private let debugLogKey = "debug_log_key"
-    private let keyLockTimeEnabled = "lock_time_enabled"
     private let keyAppLaunchCount = "app_launch_count"
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
     private let keyZCashRewind = "z_cash_always_pending_rewind"
@@ -18,6 +17,7 @@ class LocalStorage {
     private let keyUserChartIndicatorsSync = "user-chart-indicators"
     private let keyIndicatorsShown = "indicators-shown"
     private let keyTelegramSupportRequested = "telegram-support-requested"
+    private let keyMultiSwapEnabled = "multi-swap-enabled"
 
     private let userDefaultsStorage: UserDefaultsStorage
 
@@ -45,11 +45,6 @@ extension LocalStorage {
     var jailbreakShownOnce: Bool {
         get { userDefaultsStorage.value(for: jailbreakShownOnceKey) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: jailbreakShownOnceKey) }
-    }
-
-    var lockTimeEnabled: Bool {
-        get { userDefaultsStorage.value(for: keyLockTimeEnabled) ?? false }
-        set { userDefaultsStorage.set(value: newValue, for: keyLockTimeEnabled) }
     }
 
     var remoteContactsSync: Bool {
@@ -97,11 +92,15 @@ extension LocalStorage {
         get { userDefaultsStorage.value(for: keyTelegramSupportRequested) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyTelegramSupportRequested) }
     }
+
+    var multiSwapEnabled: Bool {
+        get { userDefaultsStorage.value(for: keyMultiSwapEnabled) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyMultiSwapEnabled) }
+    }
 }
 
 extension LocalStorage {
     func restore(backup: SettingsBackup) {
-        lockTimeEnabled = backup.lockTimeEnabled
         remoteContactsSync = backup.remoteContactsSync ?? false
         indicatorsShown = backup.indicatorsShown
         backup.swapProviders.forEach { provider in

@@ -1,11 +1,15 @@
 import SwiftUI
 
 struct ListRow<Content: View>: View {
+    private let padding: EdgeInsets
     private let spacing: CGFloat
+    private let minHeight: CGFloat
     @ViewBuilder private let content: Content
 
-    init(spacing: CGFloat = .margin16, @ViewBuilder content: () -> Content) {
+    init(padding: EdgeInsets = EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16), spacing: CGFloat = .margin16, minHeight: CGFloat = .heightCell48, @ViewBuilder content: () -> Content) {
+        self.padding = padding
         self.spacing = spacing
+        self.minHeight = minHeight
         self.content = content()
     }
 
@@ -13,7 +17,7 @@ struct ListRow<Content: View>: View {
         HStack(spacing: spacing) {
             content
         }
-        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-        .frame(minHeight: .heightCell48)
+        .padding(padding)
+        .frame(minHeight: minHeight)
     }
 }

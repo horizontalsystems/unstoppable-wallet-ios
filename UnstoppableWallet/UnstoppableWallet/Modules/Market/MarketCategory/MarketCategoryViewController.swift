@@ -29,7 +29,7 @@ class MarketCategoryViewController: MarketListViewController {
             height: chartCell.cellHeight
         )
 
-        super.init(listViewModel: listViewModel, apiTag: "market_category")
+        super.init(listViewModel: listViewModel, statPage: .coinCategory)
 
         multiSortHeaderView.viewController = self
     }

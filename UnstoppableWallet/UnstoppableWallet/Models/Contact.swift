@@ -80,6 +80,14 @@ class Contact: Codable, ImmutableMappable, Hashable, Equatable {
     func address(blockchainUid: String) -> ContactAddress? {
         addresses.first { $0.blockchainUid == blockchainUid }
     }
+
+    func has(blockchainUId: String) -> Bool {
+        addresses.contains(where: { $0.blockchainUid == blockchainUId })
+    }
+
+    func hasOne(of blockchainUids: [String]) -> Bool {
+        !Set(addresses.map(\.blockchainUid)).intersection(Set(blockchainUids)).isEmpty
+    }
 }
 
 class DeletedContact: Codable, ImmutableMappable, Hashable, Equatable {

@@ -43,7 +43,7 @@ class SendConfirmationViewModel {
             )
         )
 
-        service.items.forEach { item in
+        for item in service.items {
             switch item {
             case let item as SendConfirmationAmountViewItem:
                 primaryViewItems.append(
@@ -104,6 +104,15 @@ class SendConfirmationViewModel {
                         iconName: "lock_24",
                         title: "send.confirmation.time_lock".localized,
                         value: item.lockValue,
+                        type: .regular
+                    )
+                )
+            case _ as SendConfirmationDisabledRbfViewItem:
+                primaryViewItems.append(
+                    .value(
+                        iconName: nil,
+                        title: "send.confirmation.replace_by_fee".localized,
+                        value: "send.confirmation.replace_by_fee.disabled".localized,
                         type: .regular
                     )
                 )

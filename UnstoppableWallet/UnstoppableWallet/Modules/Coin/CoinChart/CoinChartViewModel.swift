@@ -17,7 +17,6 @@ class CoinChartViewModel: ObservableObject {
     private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
 
     private let intervalsUpdatedWithCurrentIndex = BehaviorRelay<Int>(value: 0)
-    private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<Bool>(value: false)
@@ -27,7 +26,7 @@ class CoinChartViewModel: ObservableObject {
     @Published private(set) var indicatorsShown: Bool
 
     var intervals: [String] {
-        service.validIntervals.map(\.title) + ["chart.time_duration.all".localized]
+        service.validIntervals.map(\.title)
     }
 
     init(service: CoinChartService, factory: CoinChartFactory) {
@@ -63,7 +62,7 @@ class CoinChartViewModel: ObservableObject {
     }
 
     private func sync(periodType: HsPeriodType) {
-        intervalIndexRelay.accept(index(periodType: periodType))
+        intervalsUpdatedWithCurrentIndex.accept(index(periodType: periodType))
     }
 
     private func sync(state: DataStatus<CoinChartService.Item>) {
@@ -85,16 +84,14 @@ class CoinChartViewModel: ObservableObject {
 }
 
 extension CoinChartViewModel: IChartViewModel {
+    var showAll: Bool { true }
+
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
     }
 
     var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> {
         intervalsUpdatedWithCurrentIndex.asDriver()
-    }
-
-    var intervalIndexDriver: Driver<Int> {
-        intervalIndexRelay.asDriver()
     }
 
     var loadingDriver: Driver<Bool> {
@@ -182,6 +179,22 @@ extension HsTimePeriod {
         case .month6: return "chart.time_duration.halfyear".localized
         case .year1: return "chart.time_duration.year".localized
         case .year2: return "chart.time_duration.year2".localized
+        case .year5: return "chart.time_duration.year5".localized
+        }
+    }
+}
+
+extension [HsTimePeriod] {
+    var periodTypes: [HsPeriodType] {
+        map { .byPeriod($0) }
+    }
+}
+
+extension [HsPeriodType] {
+    var timePeriods: [HsTimePeriod] {
+        compactMap {
+            if case let .byPeriod(interval) = $0 { return interval }
+            return nil
         }
     }
 }
