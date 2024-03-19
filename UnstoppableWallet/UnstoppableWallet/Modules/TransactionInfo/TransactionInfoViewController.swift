@@ -97,7 +97,7 @@ class TransactionInfoViewController: ThemeViewController {
         }
 
         present(module, animated: true)
-        stat(page: .transactionInfo, event: .coinOpen, params: [.coinUid: coinUid])
+        stat(page: .transactionInfo, event: .open(page: .coinPage), params: [.coinUid: coinUid])
     }
 
     private func openNftAsset(providerCollectionUid: String, nftUid: NftUid) {

@@ -118,6 +118,7 @@ extension AddTokenViewModel {
 
     func onTapButton() {
         service.save()
+        stat(page: .addToken, event: .add(entity: .token))
         finishRelay.accept(())
     }
 }

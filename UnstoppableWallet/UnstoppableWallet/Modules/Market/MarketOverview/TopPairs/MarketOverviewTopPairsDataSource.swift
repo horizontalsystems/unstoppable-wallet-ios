@@ -18,6 +18,8 @@ class MarketOverviewTopPairsDataSource: BaseMarketOverviewTopListDataSource {
     override func didTapSeeAll() {
         let module = MarketTopPairsModule.viewController()
         presentDelegate?.present(viewController: module)
+
+        stat(page: .marketOverview, event: .open(page: .topMarketPairs))
     }
 
     override func onSelect(listViewItem: MarketModule.ListViewItem) {
@@ -26,5 +28,7 @@ class MarketOverviewTopPairsDataSource: BaseMarketOverviewTopListDataSource {
         }
 
         UrlManager.open(url: tradeUrl)
+
+        stat(page: .marketOverview, event: .open(page: .externalMarketPair))
     }
 }

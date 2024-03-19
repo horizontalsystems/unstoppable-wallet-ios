@@ -27,7 +27,7 @@ enum MultiSwapModule {
             providers.append(OneInchMultiSwapProvider(kit: OneInchKit.Kit.instance(apiKey: apiKey), storage: storage))
         }
 
-        providers.append(ThorChainMultiSwapProvider(storage: storage))
+//        providers.append(ThorChainMultiSwapProvider(storage: storage))
 
         let viewModel = MultiSwapViewModel(providers: providers, token: token)
         return MultiSwapView(viewModel: viewModel)

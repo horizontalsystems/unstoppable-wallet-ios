@@ -117,6 +117,12 @@ class MarketViewController: ThemeSearchViewController {
         sync(state: viewModel.state)
     }
 
+    override func didPresentSearch() {
+        super.didPresentSearch()
+
+        stat(page: .markets, event: .open(page: .marketSearch))
+    }
+
     private func sync(state: MarketViewModel.State) {
         self.state = state
 
@@ -146,6 +152,14 @@ class MarketViewController: ThemeSearchViewController {
         }
 
         viewModel.currentTab = tab
+
+        let event: StatEvent
+        switch tab {
+        case .overview: event = .selectTab(page: .marketOverview)
+        case .posts: event = .selectTab(page: .news)
+        case .watchlist: event = .selectTab(page: .watchlist)
+        }
+        stat(page: .markets, event: event)
     }
 
     private func setViewPager(tab: MarketModule.Tab) {
@@ -163,6 +177,8 @@ class MarketViewController: ThemeSearchViewController {
     @objc private func onTapFilter() {
         let viewController = MarketAdvancedSearchModule.viewController()
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
+
+        stat(page: .markets, event: .open(page: .advancedSearch))
     }
 
     func willPresentSearchController(_: UISearchController) {
@@ -187,7 +203,7 @@ extension MarketViewController: SectionsDataSource {
         }
 
         present(module, animated: true)
-        stat(page: .marketSearch, event: .coinOpen, params: [.coinUid: coinUid])
+        stat(page: .marketSearch, event: .open(page: .coinPage), params: [.coinUid: coinUid])
     }
 
     private func rowActions(coinUid: String) -> [RowAction] {

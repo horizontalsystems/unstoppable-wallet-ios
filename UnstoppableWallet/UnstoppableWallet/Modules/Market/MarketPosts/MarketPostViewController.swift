@@ -110,6 +110,8 @@ class MarketPostViewController: ThemeViewController {
 
     private func open(url: String) {
         urlManager.open(url: url, from: parentNavigationController)
+
+        stat(page: .news, event: .open(page: .externalNews))
     }
 }
 

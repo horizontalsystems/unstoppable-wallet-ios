@@ -50,5 +50,7 @@ extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
     func onSelect(selectorIndex: Int) {
         let marketTop = MarketModule.MarketTop.allCases[selectorIndex]
         service.set(marketTop: marketTop)
+
+        stat(page: .marketOverview, section: listType.statSection, event: .switchCount)
     }
 }

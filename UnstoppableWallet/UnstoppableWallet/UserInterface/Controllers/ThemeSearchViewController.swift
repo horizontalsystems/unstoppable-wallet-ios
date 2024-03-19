@@ -54,6 +54,8 @@ class ThemeSearchViewController: KeyboardAwareViewController {
             }
         }
     }
+
+    func didPresentSearch() {}
 }
 
 extension ThemeSearchViewController: UISearchControllerDelegate {
@@ -61,6 +63,8 @@ extension ThemeSearchViewController: UISearchControllerDelegate {
         DispatchQueue.main.async {
             self.searchController.searchBar.becomeFirstResponder()
         }
+
+        didPresentSearch()
     }
 }
 
