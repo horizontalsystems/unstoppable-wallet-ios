@@ -67,12 +67,8 @@ class CexWithdrawConfirmViewModel {
         let amountData = coinService.amountData(value: service.amount, sign: .plus)
 
         var viewItems: [ViewItem] = [
-            .subhead(
-                iconName: "arrow_medium_2_up_right_24",
-                title: "cex_withdraw_confirm.you_withdraw".localized,
-                value: service.cexAsset.coinName
-            ),
             .amount(
+                title: "cex_withdraw_confirm.you_withdraw".localized,
                 iconUrl: service.cexAsset.coin?.imageUrl,
                 iconPlaceholderImageName: "placeholder_circle_32",
                 coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
@@ -114,8 +110,7 @@ extension CexWithdrawConfirmViewModel {
     }
 
     enum ViewItem {
-        case subhead(iconName: String, title: String, value: String)
-        case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
+        case amount(title: String, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
         case address(title: String, value: String, contactAddress: ContactAddress?)
         case value(title: String, value: String, type: ValueType)
         case feeValue(title: String, coinAmount: String, currencyAmount: String?)

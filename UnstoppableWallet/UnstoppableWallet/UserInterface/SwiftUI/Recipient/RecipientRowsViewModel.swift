@@ -42,5 +42,5 @@ extension RecipientRowsViewModel {
 }
 
 extension RecipientRowsViewModel: ContactBookSelectorDelegate {
-    func onFetch(address: String) {}
+    func onFetch(address _: String) {}
 }

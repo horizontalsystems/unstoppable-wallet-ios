@@ -39,25 +39,44 @@ enum CellComponent {
         )
     }
 
-    static func amountRow(tableView: SectionsTableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, action: (() -> Void)? = nil) -> RowProtocol {
+    static func amountRow(tableView: SectionsTableView, rowInfo: RowInfo, title: String, subtitle: String? = nil, imageUrl: String?, placeholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, action: (() -> Void)? = nil) -> RowProtocol {
         CellBuilderNew.row(
             rootElement: .hStack([
                 .image32 { (component: ImageComponent) in
-                    component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
+                    component.setImage(urlString: imageUrl, placeholder: UIImage(named: placeholderImageName))
                 },
-                .text { (component: TextComponent) in
-                    component.font = type.textFont
-                    component.textColor = type.textColor
-                    component.lineBreakMode = .byTruncatingMiddle
-                    component.text = coinAmount
-                },
-                .text { (component: TextComponent) in
-                    component.isHidden = currencyAmount == nil
-                    component.font = .subhead2
-                    component.textColor = .themeGray
-                    component.lineBreakMode = .byTruncatingMiddle
-                    component.text = currencyAmount
-                },
+                .vStackCentered([
+                    .text { (component: TextComponent) in
+                        component.font = .subhead2
+                        component.textColor = .themeLeah
+                        component.text = title
+                    },
+                    .margin(1),
+                    .text { (component: TextComponent) in
+                        component.isHidden = subtitle == nil
+                        component.font = .caption
+                        component.textColor = .themeGray
+                        component.text = subtitle
+                    },
+                ]),
+                .vStackCentered([
+                    .text { (component: TextComponent) in
+                        component.font = type.textFont
+                        component.textColor = type.textColor
+                        component.textAlignment = .right
+                        component.lineBreakMode = .byTruncatingMiddle
+                        component.text = coinAmount
+                    },
+                    .margin(1),
+                    .text { (component: TextComponent) in
+                        component.isHidden = currencyAmount == nil
+                        component.font = .caption
+                        component.textColor = .themeGray
+                        component.textAlignment = .right
+                        component.lineBreakMode = .byTruncatingMiddle
+                        component.text = currencyAmount
+                    },
+                ]),
             ]),
             tableView: tableView,
             id: "amount-\(rowInfo.index)",

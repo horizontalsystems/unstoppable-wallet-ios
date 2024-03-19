@@ -136,10 +136,8 @@ class SendTronConfirmationViewController: ThemeViewController {
 
     private func row(viewItem: SendTronConfirmationViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
-        case let .subhead(iconName, title, value):
-            return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)
-        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
-            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .amount(title, token, coinAmount, currencyAmount, type):
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, title: title, subtitle: token.fullBadge, imageUrl: token.coin.imageUrl, placeholderImageName: token.placeholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .address(title, value, valueTitle, contactAddress):
             var onAddToContact: (() -> Void)? = nil
             if let contactAddress {

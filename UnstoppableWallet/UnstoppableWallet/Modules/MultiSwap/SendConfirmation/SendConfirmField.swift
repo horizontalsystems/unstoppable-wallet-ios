@@ -24,7 +24,7 @@ enum SendConfirmField {
                 HStack(spacing: .margin4) {
                     VStack(alignment: .leading, spacing: 1) {
                         Text(title).textSubhead2(color: .themeLeah)
-                        Text((token.badge ?? "coin_platforms.native".localized).uppercased()).textCaption()
+                        Text(token.fullBadge).textCaption()
                     }
 
                     Spacer()

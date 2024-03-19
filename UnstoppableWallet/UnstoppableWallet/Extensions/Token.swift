@@ -54,6 +54,10 @@ extension Token {
         default: return protocolName?.uppercased()
         }
     }
+
+    var fullBadge: String {
+        (badge ?? "coin_platforms.native".localized).uppercased()
+    }
 }
 
 extension Token: Comparable {
