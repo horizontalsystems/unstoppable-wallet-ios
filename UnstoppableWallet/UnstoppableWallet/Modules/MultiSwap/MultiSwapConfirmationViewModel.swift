@@ -8,6 +8,8 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
+    private let accountManager = App.shared.accountManager
+    private let walletManager = App.shared.walletManager
     private let transactionServiceFactory = TransactionServiceFactory()
 
     private var quoteTask: AnyTask?
@@ -188,6 +190,11 @@ extension MultiSwapConfirmationViewModel {
             await set(swapping: true)
 
             try await provider.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote)
+
+            if !walletManager.activeWallets.contains(where: { $0.token == tokenOut }), let activeAccount = accountManager.activeAccount {
+                let wallet = Wallet(token: tokenOut, account: activeAccount)
+                walletManager.save(wallets: [wallet])
+            }
         } catch {
             await set(swapping: false)
             errorSubject.send(error.smartDescription)
