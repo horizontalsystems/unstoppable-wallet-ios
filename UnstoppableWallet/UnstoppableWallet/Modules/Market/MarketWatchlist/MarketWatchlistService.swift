@@ -27,6 +27,8 @@ class MarketWatchlistService: IMarketSingleSortHeaderService {
         didSet {
             userDefaultsStorage.set(value: sortDirectionAscending, for: keySortDirectionField)
             syncIfPossible()
+
+            stat(page: .watchlist, event: .toggleSortDirection)
         }
     }
 

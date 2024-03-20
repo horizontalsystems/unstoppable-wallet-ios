@@ -26,6 +26,8 @@ extension MarketWatchlistDecorator: IMarketSingleSortHeaderDecorator {
     func setCurrentField(index: Int) {
         priceChangeType = MarketModule.PriceChangeType.sortingTypes.at(index: index) ?? .day
         service.onUpdate(index: index)
+
+        stat(page: .watchlist, event: .switchPeriod)
     }
 }
 

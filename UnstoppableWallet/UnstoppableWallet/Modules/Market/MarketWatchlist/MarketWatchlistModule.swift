@@ -11,7 +11,8 @@ enum MarketWatchlistModule {
         )
         let watchlistToggleService = MarketWatchlistToggleService(
             coinUidService: service,
-            favoritesManager: App.shared.favoritesManager
+            favoritesManager: App.shared.favoritesManager,
+            statPage: .watchlist
         )
 
         let decorator = MarketWatchlistDecorator(service: service)

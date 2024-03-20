@@ -38,6 +38,9 @@ enum StatEvent {
     case selectTab(page: StatPage)
     case switchCount
     case switchPeriod
+    case toggleSortDirection
+    case addToWatchlist
+    case removeFromWatchlist
 
     var raw: String {
         switch self {
@@ -46,6 +49,9 @@ enum StatEvent {
         case let .selectTab(page): return "\(page.rawValue)_select_tab"
         case .switchCount: return "switch_count"
         case .switchPeriod: return "switch_period"
+        case .toggleSortDirection: return "toggle_sort_direction"
+        case .addToWatchlist: return "add_to_watchlist"
+        case .removeFromWatchlist: return "remove_from_watchlist"
         }
     }
 }
