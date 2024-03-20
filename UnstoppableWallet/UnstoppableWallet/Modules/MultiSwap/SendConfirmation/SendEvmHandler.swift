@@ -98,8 +98,6 @@ extension SendEvmHandler: ISendHandler {
             return []
         }
 
-        var sections = [[SendConfirmField]]()
-
         let isRevokeAllowance = value == 0 // Check approved new value or revoked last allowance
 
         let amountField: SendConfirmField
@@ -121,19 +119,16 @@ extension SendEvmHandler: ISendHandler {
             )
         }
 
-        sections.append([amountField])
-
-        sections.append(
+        return [
             [
+                amountField,
                 .address(
                     title: "approve.confirmation.spender".localized,
                     value: spender.eip55,
                     blockchainType: coinService.token.blockchainType
                 ),
-            ]
-        )
-
-        return sections
+            ],
+        ]
     }
 
     private func amountField(coinService: CoinService, title: String, value: BigUInt, type: SendConfirmField.AmountType) -> SendConfirmField {
