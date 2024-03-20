@@ -7,7 +7,7 @@ struct MultiSwapView: View {
     @ObservedObject var viewModel: MultiSwapViewModel
 
     @Environment(\.presentationMode) private var presentationMode
-    @State private var selectTokenInPresented = true
+    @State private var selectTokenInPresented: Bool
     @State private var selectTokenOutPresented = false
     @State private var quotesPresented = false
     @State private var confirmPresented = false
@@ -16,6 +16,11 @@ struct MultiSwapView: View {
     @State private var presentedSettingId: String?
 
     @FocusState var isInputActive: Bool
+
+    init(viewModel: MultiSwapViewModel) {
+        self.viewModel = viewModel
+        _selectTokenInPresented = State(initialValue: viewModel.tokenIn == nil)
+    }
 
     var body: some View {
         ThemeNavigationView {

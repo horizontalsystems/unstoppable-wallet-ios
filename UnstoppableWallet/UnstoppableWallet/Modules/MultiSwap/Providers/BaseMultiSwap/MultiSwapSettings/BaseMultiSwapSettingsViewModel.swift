@@ -28,6 +28,7 @@ class BaseMultiSwapSettingsViewModel: ObservableObject {
                 .sink(receiveValue: { [weak self] in self?.syncButtons() })
                 .store(in: &cancellables)
         }
+        syncButtons()
     }
 
     func syncButtons() {
