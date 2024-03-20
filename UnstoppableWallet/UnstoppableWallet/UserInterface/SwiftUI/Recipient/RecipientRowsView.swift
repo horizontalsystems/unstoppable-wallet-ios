@@ -36,7 +36,7 @@ struct RecipientRowsView: View {
                 .textSubhead1(color: .themeLeah)
                 .multilineTextAlignment(.trailing)
 
-            if viewModel.name == nil && viewModel.label == nil {
+            if viewModel.name == nil, viewModel.label == nil {
                 Button(action: {
                     if viewModel.emptyContacts {
                         addAddressType = .create

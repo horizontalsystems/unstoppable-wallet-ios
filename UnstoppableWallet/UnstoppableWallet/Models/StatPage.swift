@@ -3,6 +3,7 @@ enum StatPage: String {
     case addToken = "add_token"
     case advancedSearch = "advanced_search"
     case advancedSearchResults = "advanced_search_results"
+    case balance
     case coinPage = "coin_page"
     case coinCategory = "coin_category"
     case coinRank = "coin_rank"
@@ -12,16 +13,20 @@ enum StatPage: String {
     case globalMetricsVolume = "global_metrics_volume"
     case globalMetricsDefiCap = "global_metrics_defi_cap"
     case globalMetricsTvlInDefi = "global_metrics_tvl_in_defi"
+    case main
     case markets
     case marketOverview = "market_overview"
     case marketSearch = "market_search"
     case news
+    case settings
+    case switchWallet = "switch_wallet"
     case topCoins = "top_coins"
     case topMarketPairs = "top_market_pairs"
     case topNftCollections = "top_nft_collections"
     case topPlatform = "top_platform"
     case topPlatforms = "top_platforms"
     case tokenPage = "token_page"
+    case transactions
     case transactionInfo = "transaction_info"
     case watchlist
     case widget
