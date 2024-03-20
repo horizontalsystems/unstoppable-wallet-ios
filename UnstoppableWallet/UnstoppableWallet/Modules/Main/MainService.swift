@@ -3,7 +3,7 @@ import RxRelay
 import RxSwift
 
 class MainService {
-    private let keyTabIndex = "main-tab-index"
+    private let keyTab = "main-tab"
 
     private let localStorage: LocalStorage
     private let userDefaultsStorage: UserDefaultsStorage
@@ -107,7 +107,7 @@ extension MainService {
 
         switch launchScreenManager.launchScreen {
         case .auto:
-            if let storedIndex: Int = userDefaultsStorage.value(for: keyTabIndex), let storedTab = MainModule.Tab(rawValue: storedIndex) {
+            if let storedValue: String = userDefaultsStorage.value(for: keyTab), let storedTab = MainModule.Tab(rawValue: storedValue) {
                 switch storedTab {
                 case .settings: return .balance
                 default: return storedTab
@@ -118,7 +118,7 @@ extension MainService {
         case .balance:
             return .balance
         case .marketOverview, .watchlist:
-            return .market
+            return .markets
         }
     }
 
@@ -129,7 +129,7 @@ extension MainService {
     }
 
     func set(tab: MainModule.Tab) {
-        userDefaultsStorage.set(value: tab.rawValue, for: keyTabIndex)
+        userDefaultsStorage.set(value: tab.rawValue, for: keyTab)
     }
 
     var activeAccount: Account? {

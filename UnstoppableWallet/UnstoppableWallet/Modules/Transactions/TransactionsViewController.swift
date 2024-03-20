@@ -108,6 +108,8 @@ class TransactionsViewController: ThemeViewController {
     @objc private func onTapFilter() {
         let viewController = TransactionFilterModule.view(transactionsService: viewModel.service).toNavigationViewController()
         present(viewController, animated: true)
+
+        stat(page: .transactions, event: .open(page: .transactionFilter))
     }
 
     private func sync(syncing: Bool) {

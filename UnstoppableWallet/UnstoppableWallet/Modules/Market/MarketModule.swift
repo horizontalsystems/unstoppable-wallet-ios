@@ -141,7 +141,7 @@ enum MarketModule {
 }
 
 extension MarketModule {
-    enum Tab: Int, CaseIterable {
+    enum Tab: String, CaseIterable {
         case overview
         case posts
         case watchlist

@@ -24,7 +24,7 @@ class MainViewController: ThemeTabBarController {
 
         super.init()
 
-        selectedIndex = viewModel.initialTab.rawValue
+        selectedIndex = MainModule.Tab.allCases.firstIndex(of: viewModel.initialTab) ?? 0
     }
 
     @available(*, unavailable)
@@ -54,10 +54,12 @@ class MainViewController: ThemeTabBarController {
     }
 
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if let items = tabBar.items, let index = items.firstIndex(of: item), index != selectedIndex, let tab = MainModule.Tab(rawValue: index) {
+        if let items = tabBar.items, let index = items.firstIndex(of: item), index != selectedIndex, index < MainModule.Tab.allCases.count {
+            let tab = MainModule.Tab.allCases[index]
+
             viewModel.onSwitch(tab: tab)
 
-            stat(page: .main, event: .selectTab(page: tab.statPage))
+            stat(page: .main, event: .switchTab, params: [.tab: tab.rawValue])
         }
 
         if let items = tabBar.items, items.count > selectedIndex, item == items[selectedIndex] {

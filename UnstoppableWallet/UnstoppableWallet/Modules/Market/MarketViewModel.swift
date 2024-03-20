@@ -2,7 +2,7 @@ import Combine
 import MarketKit
 
 class MarketViewModel {
-    private let keyTabIndex = "market-tab-index"
+    private let keyTab = "market-tab"
     private let keyRecentCoinUids = "market-recent-coin-uids"
 
     private let userDefaultsStorage = App.shared.userDefaultsStorage
@@ -12,7 +12,7 @@ class MarketViewModel {
 
     @Published var currentTab: MarketModule.Tab {
         didSet {
-            userDefaultsStorage.set(value: currentTab.rawValue, for: keyTabIndex)
+            userDefaultsStorage.set(value: currentTab.rawValue, for: keyTab)
         }
     }
 
@@ -32,7 +32,7 @@ class MarketViewModel {
 
         switch launchScreenManager.launchScreen {
         case .auto:
-            if let storedIndex: Int = userDefaultsStorage.value(for: keyTabIndex), let storedTab = MarketModule.Tab(rawValue: storedIndex) {
+            if let storedValue: String = userDefaultsStorage.value(for: keyTab), let storedTab = MarketModule.Tab(rawValue: storedValue) {
                 currentTab = storedTab
             } else {
                 currentTab = .overview
