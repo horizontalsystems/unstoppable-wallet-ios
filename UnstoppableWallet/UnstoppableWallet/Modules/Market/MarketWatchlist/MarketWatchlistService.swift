@@ -115,6 +115,7 @@ extension MarketWatchlistService: IMarketListService {
 
     func refresh() {
         syncMarketInfos()
+        stat(page: .watchlist, event: .refresh)
     }
 }
 

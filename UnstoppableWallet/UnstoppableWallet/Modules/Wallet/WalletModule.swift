@@ -343,7 +343,7 @@ extension WalletModule {
     enum SortType: String, CaseIterable {
         case balance
         case name
-        case percentGrowth
+        case percentGrowth = "percent_growth"
 
         var title: String {
             switch self {

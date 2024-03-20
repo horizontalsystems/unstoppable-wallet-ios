@@ -222,11 +222,15 @@ class WalletViewController: ThemeViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
+
+        stat(page: .balance, event: .refresh)
     }
 
     @objc private func onTapSwitchWallet() {
         let viewController = ManageAccountsModule.viewController(mode: .switcher, createAccountListener: self)
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
+
+        stat(page: .balance, event: .open(page: .manageWallets))
     }
 
     @objc private func onTapNft() {
@@ -240,8 +244,9 @@ class WalletViewController: ThemeViewController {
     @objc private func onTapQrScan() {
         let viewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
         viewController.didFetch = { [weak self] in self?.viewModel.process(scanned: $0) }
-
         present(viewController, animated: true)
+
+        stat(page: .balance, event: .open(page: .scanQrCode))
     }
 
     @objc private func onTapRetry() {
@@ -431,12 +436,15 @@ class WalletViewController: ThemeViewController {
     private func openReceive() {
         if let viewController = ReceiveModule.viewController() {
             present(viewController, animated: true)
+            stat(page: .balance, event: .open(page: .receiveTokenList))
         }
     }
 
     private func open(element: WalletModule.Element) {
         if let viewController = WalletTokenModule.viewController(element: element) {
             navigationController?.pushViewController(viewController, animated: true)
+
+            stat(page: .balance, event: .open(page: .tokenBalance))
         }
     }
 
@@ -455,6 +463,8 @@ class WalletViewController: ThemeViewController {
         )
 
         present(viewController, animated: true)
+
+        stat(page: .balance, event: .open(page: .backupRequired))
     }
 
     private func openSyncError(wallet: Wallet, error: Error) {
@@ -465,6 +475,8 @@ class WalletViewController: ThemeViewController {
     private func openManageWallets() {
         if let module = ManageWalletsModule.viewController() {
             present(module, animated: true)
+
+            stat(page: .balance, event: .open(page: .coinManager))
         }
     }
 
@@ -506,6 +518,8 @@ class WalletViewController: ThemeViewController {
         tableView.endUpdates()
 
         viewModel.onDisable(element: element)
+
+        stat(page: .balance, event: .disableToken)
     }
 
     private func bindHeaderActions(cell: WalletHeaderCell) {
@@ -528,11 +542,15 @@ class WalletViewController: ThemeViewController {
                 return
             }
             self?.present(viewController, animated: true)
+
+            stat(page: .balance, event: .open(page: .sendTokenList))
         }
 
         cell.actions[.swap] = { [weak self] in
             let viewController = MultiSwapModule.view().toViewController()
             self?.present(viewController, animated: true)
+
+            stat(page: .balance, event: .open(page: .swap))
         }
 
         cell.actions[.receive] = { [weak self] in

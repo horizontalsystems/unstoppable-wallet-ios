@@ -90,6 +90,8 @@ class MarketPostViewController: ThemeViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
+
+        stat(page: .news, event: .refresh)
     }
 
     private func refresh() {
