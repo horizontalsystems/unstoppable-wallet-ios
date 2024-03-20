@@ -4,7 +4,7 @@ import MarketKit
 import SwiftUI
 
 struct MultiSwapView: View {
-    @ObservedObject var viewModel: MultiSwapViewModel
+    @StateObject var viewModel: MultiSwapViewModel
 
     @Environment(\.presentationMode) private var presentationMode
     @State private var selectTokenInPresented: Bool
@@ -17,9 +17,9 @@ struct MultiSwapView: View {
 
     @FocusState var isInputActive: Bool
 
-    init(viewModel: MultiSwapViewModel) {
-        self.viewModel = viewModel
-        _selectTokenInPresented = State(initialValue: viewModel.tokenIn == nil)
+    init(token: Token? = nil) {
+        _viewModel = StateObject(wrappedValue: MultiSwapViewModel.instance(token: token))
+        _selectTokenInPresented = State(initialValue: token == nil)
     }
 
     var body: some View {

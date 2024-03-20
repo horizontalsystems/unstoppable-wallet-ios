@@ -547,7 +547,7 @@ class WalletViewController: ThemeViewController {
         }
 
         cell.actions[.swap] = { [weak self] in
-            let viewController = MultiSwapModule.view().toViewController()
+            let viewController = MultiSwapView().toViewController()
             self?.present(viewController, animated: true)
 
             stat(page: .balance, event: .open(page: .swap))

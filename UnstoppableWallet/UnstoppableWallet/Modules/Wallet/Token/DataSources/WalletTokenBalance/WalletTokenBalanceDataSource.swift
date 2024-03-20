@@ -177,7 +177,7 @@ class WalletTokenBalanceDataSource: NSObject {
                 }
             }
             cell.actions[.swap] = { [weak self] in
-                let viewController = MultiSwapModule.view(token: wallet.token).toViewController()
+                let viewController = MultiSwapView(token: wallet.token).toViewController()
                 self?.parentViewController?.present(viewController, animated: true)
             }
             cell.actions[.receive] = { [weak self] in
