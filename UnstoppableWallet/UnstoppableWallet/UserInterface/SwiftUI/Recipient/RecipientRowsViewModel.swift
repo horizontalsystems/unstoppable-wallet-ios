@@ -8,6 +8,7 @@ class RecipientRowsViewModel: ObservableObject {
     let manager = App.shared.contactManager
 
     let address: String
+    let label: String?
     let blockchainType: BlockchainType
 
     @Published var name: String?
@@ -15,16 +16,13 @@ class RecipientRowsViewModel: ObservableObject {
     init(address: String, blockchainType: BlockchainType) {
         self.address = address
         self.blockchainType = blockchainType
+        label = evmLabelManager.addressLabel(address: address)
 
         subscribe(disposeBag, App.shared.contactManager.stateObservable) { [weak self] _ in self?.sync() }
         sync()
     }
 
     private func sync() {
-        if let evmLabel = evmLabelManager.addressLabel(address: address) {
-            name = evmLabel
-            return
-        }
         name = manager.all?.by(address: address, blockchainUid: blockchainType.uid)?.name
     }
 

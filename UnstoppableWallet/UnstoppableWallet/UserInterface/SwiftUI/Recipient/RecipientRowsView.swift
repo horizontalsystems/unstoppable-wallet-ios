@@ -32,11 +32,11 @@ struct RecipientRowsView: View {
 
             Spacer()
 
-            Text(viewModel.address)
+            Text(viewModel.label ?? viewModel.address)
                 .textSubhead1(color: .themeLeah)
                 .multilineTextAlignment(.trailing)
 
-            if viewModel.name == nil {
+            if viewModel.name == nil && viewModel.label == nil {
                 Button(action: {
                     if viewModel.emptyContacts {
                         addAddressType = .create
