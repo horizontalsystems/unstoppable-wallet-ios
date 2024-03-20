@@ -33,6 +33,7 @@ class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFi
         self.storage = storage
 
         slippage = initialSlippage
+        slippageString = slippage?.description ?? ""
     }
 
     private func validateSlippage() {
@@ -45,7 +46,7 @@ class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFi
     }
 
     var state: BaseMultiSwapSettingsViewModel.FieldState {
-        MultiSwapSlippage.state(initial: initialSlippage, value: slippage?.description ?? "")
+        MultiSwapSlippage.state(initial: initialSlippage, value: slippage)
     }
 
     func onReset() {
@@ -72,8 +73,8 @@ extension SlippageMultiSwapSettingsViewModel {
 
     func stepSlippage(direction: StepChangeButtonsViewDirection) {
         switch direction {
-        case .down: slippage = max((slippage ?? 0) - 0.5, 0)
-        case .up: slippage = (slippage ?? 0) + 0.5
+        case .down: slippage = max((slippage ?? MultiSwapSlippage.default) - 0.5, 0)
+        case .up: slippage = (slippage ?? MultiSwapSlippage.default) + 0.5
         }
     }
 }
@@ -132,19 +133,13 @@ enum MultiSwapSlippage {
         return .none
     }
 
-    static func state(initial: Decimal?, value: String) -> BaseMultiSwapSettingsViewModel.FieldState {
-        let initial = initial ?? `default`
+    static func state(initial: Decimal?, value: Decimal?) -> BaseMultiSwapSettingsViewModel.FieldState {
+        let changed = value != initial
+        let slippage = value ?? `default`
+        let valid = slippage < Self.limitBounds.upperBound
+        let resetEnabled = slippage != `default`
 
-        if value.isEmpty {
-            return .init(valid: true, changed: initial != MultiSwapSlippage.default, resetEnabled: false)
-        }
-
-        if let slippage = AmountDecimalParser().parseAnyDecimal(from: value) {
-            let valid = slippage < Self.limitBounds.upperBound
-            return .init(valid: valid, changed: slippage != initial, resetEnabled: true)
-        } else {
-            return .init(valid: false, changed: false, resetEnabled: true)
-        }
+        return .init(valid: valid, changed: changed, resetEnabled: resetEnabled)
     }
 }
 
