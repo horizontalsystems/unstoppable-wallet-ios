@@ -214,17 +214,24 @@ extension WalletViewModel {
     }
 
     func onSelectSortType(index: Int) {
-        service.sortType = WalletModule.SortType.allCases[index]
+        let sortType = WalletModule.SortType.allCases[index]
+        service.sortType = sortType
+
+        stat(page: .balance, event: .switchSortType, params: [.sortType: sortType.rawValue])
     }
 
     func onTapTotalAmount() {
         service.toggleBalanceHidden()
         playHapticRelay.accept(())
+
+        stat(page: .balance, event: .toggleBalanceHidden)
     }
 
     func onTapConvertedTotalAmount() {
         service.toggleConversionCoin()
         playHapticRelay.accept(())
+
+        stat(page: .balance, event: .toggleConversionCoin)
     }
 
     func onTap(element: WalletModule.Element) {
