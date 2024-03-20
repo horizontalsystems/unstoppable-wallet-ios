@@ -141,6 +141,18 @@ class MarketAdvancedSearchService {
         }
     }
 
+    private let technicalAdviceRelay = PublishRelay<TechnicalAdvice.Advice?>()
+    var technicalAdvice: TechnicalAdvice.Advice? {
+        didSet {
+            guard technicalAdvice != oldValue else {
+                return
+            }
+
+            technicalAdviceRelay.accept(technicalAdvice)
+            syncState()
+        }
+    }
+
     private let priceChangeRelay = PublishRelay<PriceChangeFilter>()
     var priceChange: PriceChangeFilter = .none {
         didSet {
@@ -287,6 +299,7 @@ class MarketAdvancedSearchService {
             || goodDexVolume != false
             || goodDistribution != false
             || blockchains != []
+            || technicalAdvice != nil
             || priceChangeType != .day
             || priceChange != .none
             || outperformedBtc != false
@@ -349,6 +362,15 @@ class MarketAdvancedSearchService {
         return false
     }
 
+    private func filteredByAdvice(marketInfo _: MarketInfo) -> Bool {
+        guard let technicalAdvice else {
+            return true
+        }
+
+        // TODO: Add advice to MarketInfo
+        return false
+    }
+
     private func filtered(marketInfos: [MarketInfo]) -> [MarketInfo] {
         marketInfos.filter { marketInfo in
             let priceChangeValue = marketInfo.priceChangeValue(type: priceChangeType)
@@ -360,6 +382,7 @@ class MarketAdvancedSearchService {
                 (!goodDexVolume || marketInfo.solidDex == true) &&
                 (!goodDistribution || marketInfo.goodDistribution == true) &&
                 inBlockchain(tokens: marketInfo.fullCoin.tokens) &&
+                filteredByAdvice(marketInfo: marketInfo) &&
                 inBounds(value: priceChangeValue, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
                 (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
                 (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
@@ -407,6 +430,10 @@ extension MarketAdvancedSearchService {
         blockchainsRelay.asObservable()
     }
 
+    var technicalAdviceObservable: Observable<TechnicalAdvice.Advice?> {
+        technicalAdviceRelay.asObservable()
+    }
+
     var priceChangeObservable: Observable<PriceChangeFilter> {
         priceChangeRelay.asObservable()
     }
@@ -450,6 +477,7 @@ extension MarketAdvancedSearchService {
         goodDistribution = false
 
         blockchains = []
+        technicalAdvice = nil
         priceChangeType = .day
         priceChange = .none
 

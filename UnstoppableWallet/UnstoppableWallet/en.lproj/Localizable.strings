@@ -741,6 +741,7 @@
 
 "market.advanced_search.market_parameters" = "Market Parameters";
 "market.advanced_search.network_parameters" = "Network Parameters";
+"market.advanced_search.indicators" = "Indicators";
 "market.advanced_search.price_parameters" = "Price Parameters";
 "market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
@@ -754,8 +755,16 @@
 
 "market.advanced_search.liquidity" = "DEX Liquidity";
 "market.advanced_search.blockchains" = "Blockchains";
+"market.advanced_search.technical_advice" = "Trading Signals";
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.technical_advice.risk_trade" = "Risk To Trade";
+"market.advanced_search.technical_advice.strong_buy" = "Strong Buy";
+"market.advanced_search.technical_advice.buy" = "Buy";
+"market.advanced_search.technical_advice.neutral" = "Neutral";
+"market.advanced_search.technical_advice.sell" = "Sell";
+"market.advanced_search.technical_advice.strong_sell" = "Strong Sell";
 
 "market.advanced_search.outperformed_btc" = "Outperformed BTC";
 "market.advanced_search.outperformed_eth" = "Outperformed ETH";

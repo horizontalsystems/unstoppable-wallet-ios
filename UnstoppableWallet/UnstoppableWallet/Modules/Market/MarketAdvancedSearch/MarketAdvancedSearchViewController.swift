@@ -22,6 +22,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let goodDistributionCell = BaseThemeCell()
 
     private let blockchainsCell = BaseSelectableThemeCell()
+    private let technicalAdviceCell = BaseSelectableThemeCell()
     private let periodCell = BaseSelectableThemeCell()
     private let priceChangeCell = BaseSelectableThemeCell()
 
@@ -77,6 +78,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         goodDistributionCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
         blockchainsCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        technicalAdviceCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         priceChangeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
 
@@ -122,6 +124,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         }
         subscribe(disposeBag, viewModel.blockchainsViewItemDriver) { [weak self] in
             self?.syncBlockchains(viewItem: $0)
+        }
+        subscribe(disposeBag, viewModel.technicalAdviceViewItemDriver) { [weak self] in
+            self?.syncTechnicalAdvice(viewItem: $0)
         }
         subscribe(disposeBag, viewModel.priceChangeTypeViewItemDriver) { [weak self] in
             self?.syncPeriod(viewItem: $0)
@@ -244,6 +249,16 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         present(viewController, animated: true)
     }
 
+    private func onTapTechnicalIndicatorCell() {
+        showSelector(
+            image: .local(name: "bell_ring_24", tint: .warning),
+            title: "market.advanced_search.technical_advice".localized,
+            viewItems: selectorItems(viewItems: viewModel.technicalIndicatorViewItems)
+        ) { [weak self] index in
+            self?.viewModel.setTechnicalAdvice(index: index)
+        }
+    }
+
     private func onTapPeriodCell() {
         showSelector(
             image: .local(name: "circle_clock_24", tint: .warning),
@@ -356,6 +371,10 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func syncBlockchains(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
         buildSelector(cell: blockchainsCell, title: "market.advanced_search.blockchains".localized, viewItem: viewItem)
+    }
+
+    private func syncTechnicalAdvice(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
+        buildSelector(cell: technicalAdviceCell, title: "market.advanced_search.technical_advice".localized, viewItem: viewItem)
     }
 
     private func syncPeriod(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
@@ -471,6 +490,18 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
             rows: [
                 row(cell: blockchainsCell, id: "blockchains") { [weak self] in
                     self?.onTapBlockchainsCell()
+                },
+            ]
+        )
+        )
+
+        sections.append(Section(
+            id: "indicators",
+            headerState: tableView.sectionHeader(text: "market.advanced_search.indicators".localized.uppercased()),
+            footerState: .margin(height: .margin24),
+            rows: [
+                row(cell: technicalAdviceCell, id: "indicators") { [weak self] in
+                    self?.onTapTechnicalIndicatorCell()
                 },
             ]
         )

@@ -82,8 +82,8 @@ extension CoinIndicatorViewItemFactory {
             direction = "technical_advice.down".localized
             rsiLine = "30%"
         case .overbought, .strongSell, .sell, .neutral:
-            overtype = "technical_advice.over.sold".localized
-            direction = "technical_advice.down".localized
+            overtype = "technical_advice.over.bought".localized
+            direction = "technical_advice.up".localized
             rsiLine = "70%"
         }
 
@@ -189,11 +189,11 @@ extension TechnicalAdvice.Advice {
     var title: String {
         switch self {
         case .oversold: return "coin_analytics.indicators.oversold".localized
-        case .strongBuy: return "coin_analytics.indicators.strong_buy".localized
-        case .buy: return "coin_analytics.indicators.buy".localized
-        case .neutral: return "coin_analytics.indicators.neutral".localized
-        case .sell: return "coin_analytics.indicators.sell".localized
         case .strongSell: return "coin_analytics.indicators.strong_sell".localized
+        case .sell: return "coin_analytics.indicators.sell".localized
+        case .neutral: return "coin_analytics.indicators.neutral".localized
+        case .buy: return "coin_analytics.indicators.buy".localized
+        case .strongBuy: return "coin_analytics.indicators.strong_buy".localized
         case .overbought: return "coin_analytics.indicators.overbought".localized
         }
     }
@@ -201,11 +201,11 @@ extension TechnicalAdvice.Advice {
     var sliderIndex: Int {
         switch self {
         case .oversold: return 0
-        case .strongBuy: return 3
-        case .buy: return 2
-        case .neutral: return 1
-        case .sell: return 2
         case .strongSell: return 3
+        case .sell: return 2
+        case .neutral: return 1
+        case .buy: return 2
+        case .strongBuy: return 3
         case .overbought: return 0
         }
     }
