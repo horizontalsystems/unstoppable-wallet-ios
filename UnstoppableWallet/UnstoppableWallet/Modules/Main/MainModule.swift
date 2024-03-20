@@ -4,6 +4,15 @@ import UIKit
 enum MainModule {
     enum Tab: Int {
         case market, balance, transactions, settings
+
+        var statPage: StatPage {
+            switch self {
+            case .market: return .markets
+            case .balance: return .balance
+            case .transactions: return .transactions
+            case .settings: return .settings
+            }
+        }
     }
 
     static func instance(presetTab: Tab? = nil) -> UIViewController {

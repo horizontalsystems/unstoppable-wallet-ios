@@ -56,6 +56,8 @@ class MainViewController: ThemeTabBarController {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if let items = tabBar.items, let index = items.firstIndex(of: item), index != selectedIndex, let tab = MainModule.Tab(rawValue: index) {
             viewModel.onSwitch(tab: tab)
+
+            stat(page: .main, event: .selectTab(page: tab.statPage))
         }
 
         if let items = tabBar.items, items.count > selectedIndex, item == items[selectedIndex] {
@@ -72,6 +74,8 @@ class MainViewController: ThemeTabBarController {
     private func handleDoubleClick(index: Int) {
         if let viewControllers, viewControllers.count > index, let navigationController = viewControllers[index] as? UINavigationController, navigationController.topViewController is WalletViewController {
             present(SwitchAccountModule.viewController(), animated: true)
+
+            stat(page: .main, event: .open(page: .switchWallet))
         }
     }
 
