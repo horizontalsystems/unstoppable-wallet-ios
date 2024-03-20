@@ -32,7 +32,7 @@ class MarketOverviewCategoryDataSource {
             let viewController = MarketCategoryModule.viewController(category: category, apiTag: "market_overview")
             self?.presentDelegate?.present(viewController: viewController)
 
-            stat(page: .marketOverview, event: .open(page: .coinCategory), params: [.categoryUid: uid])
+            stat(page: .marketOverview, event: .openCategory(categoryUid: uid))
         }
     }
 

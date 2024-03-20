@@ -206,7 +206,7 @@ class WalletTokenBalanceDataSource: NSObject {
     private func openCoinPage(coinUid: String) {
         if let viewController = CoinPageModule.viewController(coinUid: coinUid) {
             parentViewController?.present(viewController, animated: true)
-            stat(page: .tokenPage, event: .open(page: .coinPage), params: [.coinUid: coinUid])
+            stat(page: .tokenPage, event: .openCoin(coinUid: coinUid))
         }
     }
 

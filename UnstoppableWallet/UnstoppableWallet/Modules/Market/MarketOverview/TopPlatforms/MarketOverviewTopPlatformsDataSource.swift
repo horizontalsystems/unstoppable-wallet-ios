@@ -29,6 +29,6 @@ class MarketOverviewTopPlatformsDataSource: BaseMarketOverviewTopListDataSource 
 
         presentDelegate?.present(viewController: TopPlatformModule.viewController(topPlatform: topPlatform, apiTag: "market_overview"))
 
-        stat(page: .marketOverview, event: .open(page: .topPlatform), params: [.chainUid: uid])
+        stat(page: .marketOverview, event: .openPlatform(chainUid: uid))
     }
 }

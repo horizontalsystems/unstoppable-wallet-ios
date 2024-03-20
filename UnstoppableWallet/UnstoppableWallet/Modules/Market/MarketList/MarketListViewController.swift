@@ -152,7 +152,7 @@ class MarketListViewController: ThemeViewController {
         }
 
         viewController?.present(module, animated: true)
-        stat(page: statPage, event: .open(page: .coinPage), params: [.coinUid: coinUid])
+        stat(page: statPage, event: .openCoin(coinUid: coinUid))
     }
 
     private func rowActions(index: Int) -> [RowAction] {

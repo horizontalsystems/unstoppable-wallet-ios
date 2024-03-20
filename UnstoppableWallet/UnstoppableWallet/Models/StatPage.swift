@@ -41,41 +41,65 @@ enum StatPage: String {
     case widget
 }
 
-enum StatEntity: String {
-    case evmSyncSource = "evm_sync_source"
-    case token
+enum StatSection: String {
+    case topGainers = "top_gainers"
+    case topLosers = "top_losers"
+    case topPlatforms = "top_platforms"
 }
 
 enum StatEvent {
-    case add(entity: StatEntity)
+    case openCategory(categoryUid: String)
+    case openCoin(coinUid: String)
+    case openPlatform(chainUid: String)
     case open(page: StatPage)
-    case switchTab
-    case refresh
+
+    case switchTab(tab: StatTab)
     case switchCount
     case switchPeriod
-    case switchSortType
+    case switchSortType(sortType: StatSortType)
+    case toggleSortDirection
+
+    case refresh
+
     case toggleBalanceHidden
     case toggleConversionCoin
-    case toggleSortDirection
-    case addToWatchlist
-    case removeFromWatchlist
     case disableToken
 
-    var raw: String {
+    case addToWatchlist(coinUid: String)
+    case removeFromWatchlist(coinUid: String)
+
+    case add(entity: StatEntity)
+
+    var name: String {
         switch self {
-        case let .add(entity): return "\(entity.rawValue)_add"
-        case let .open(page): return "\(page.rawValue)_open"
+        case .openCategory, .openCoin, .openPlatform, .open: return "open_page"
         case .switchTab: return "switch_tab"
-        case .refresh: return "refresh"
         case .switchCount: return "switch_count"
         case .switchPeriod: return "switch_period"
         case .switchSortType: return "switch_sort_type"
+        case .toggleSortDirection: return "toggle_sort_direction"
+        case .refresh: return "refresh"
         case .toggleBalanceHidden: return "toggle_balance_hidden"
         case .toggleConversionCoin: return "toggle_conversion_coin"
-        case .toggleSortDirection: return "toggle_sort_direction"
+        case .disableToken: return "disable_token"
         case .addToWatchlist: return "add_to_watchlist"
         case .removeFromWatchlist: return "remove_from_watchlist"
-        case .disableToken: return "disable_token"
+        case .add: return "add"
+        }
+    }
+
+    var params: [StatParam: Any]? {
+        switch self {
+        case let .openCategory(categoryUid): return [.page: StatPage.coinCategory, .categoryUid: categoryUid]
+        case let .openCoin(coinUid): return [.page: StatPage.coinPage, .coinUid: coinUid]
+        case let .openPlatform(chainUid): return [.page: StatPage.topPlatform, .chainUid: chainUid]
+        case let .open(page): return [.page: page.rawValue]
+        case let .switchTab(tab): return [.tab: tab.rawValue]
+        case let .switchSortType(sortType): return [.sortType: sortType.rawValue]
+        case let .addToWatchlist(coinUid): return [.coinUid: coinUid]
+        case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
+        case let .add(entity): return [.entity: entity.rawValue]
+        default: return nil
         }
     }
 }
@@ -84,12 +108,25 @@ enum StatParam: String {
     case categoryUid = "category_uid"
     case chainUid = "chain_uid"
     case coinUid = "coin_uid"
+    case entity
+    case page
     case sortType = "sort_type"
     case tab
 }
 
-enum StatSection: String {
-    case topGainers = "top_gainers"
-    case topLosers = "top_losers"
-    case topPlatforms = "top_platforms"
+enum StatTab: String {
+    case markets, balance, transactions, settings
+    case overview, news, watchlist
+    case all, incoming, outgoing, swap, approve
+}
+
+enum StatSortType: String {
+    case balance
+    case name
+    case priceChange = "price_change"
+}
+
+enum StatEntity: String {
+    case evmSyncSource = "evm_sync_source"
+    case token
 }
