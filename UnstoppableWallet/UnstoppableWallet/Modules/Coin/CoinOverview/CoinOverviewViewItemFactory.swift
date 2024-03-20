@@ -42,11 +42,11 @@ class CoinOverviewViewItemFactory {
 
         viewItems.append(titleRow)
 
-        info.performance.forEach { performanceRow in
+        for performanceRow in info.performance {
             var row = [CoinOverviewViewModel.PerformanceViewItem]()
             row.append(.content("vs \(performanceRow.base.rawValue.uppercased())"))
 
-            intervals.forEach { timePeriod in
+            for timePeriod in intervals {
                 row.append(.value(performanceRow.changes[timePeriod]))
             }
             viewItems.append(row)

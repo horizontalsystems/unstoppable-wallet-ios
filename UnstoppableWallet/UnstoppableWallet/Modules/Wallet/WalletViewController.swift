@@ -395,9 +395,9 @@ class WalletViewController: ThemeViewController {
             self.tableView.endUpdates()
         }
 
-        updateIndexes.forEach {
-            if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 1)) as? BalanceCell {
-                bind(cell: cell, viewItem: viewItems[$0])
+        for updateIndex in updateIndexes {
+            if let cell = tableView.cellForRow(at: IndexPath(row: updateIndex, section: 1)) as? BalanceCell {
+                bind(cell: cell, viewItem: viewItems[updateIndex])
             }
         }
     }

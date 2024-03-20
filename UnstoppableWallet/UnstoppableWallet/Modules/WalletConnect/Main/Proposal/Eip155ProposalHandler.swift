@@ -47,15 +47,15 @@ class Eip155ProposalHandler {
             )
         }
 
-        namespace.methods.forEach {
-            if supportedMethods.contains($0) {
-                set.methods.insert($0)
+        for method in namespace.methods {
+            if supportedMethods.contains(method) {
+                set.methods.insert(method)
             }
         }
 
-        namespace.events.forEach {
-            if Self.supportedEvents.contains($0) {
-                set.events.insert($0)
+        for event in namespace.events {
+            if Self.supportedEvents.contains(event) {
+                set.events.insert(event)
             }
         }
 
@@ -67,7 +67,7 @@ extension Eip155ProposalHandler: IProposalHandler {
     func handle(provider: INamespaceProvider) -> WalletConnectMainModule.BlockchainSet {
         var set = WalletConnectMainModule.BlockchainSet.empty
 
-        provider.get(namespace: Self.namespace).forEach { namespace in
+        for namespace in provider.get(namespace: Self.namespace) {
             set.formUnion(blockchainSet(namespace: namespace))
         }
 

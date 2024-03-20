@@ -59,7 +59,7 @@ class MultiTextMetricsView: UIView {
 
     private func fillStackView() {
         guard metricViews.count != metricsViewItems.count else {
-            metricViews.enumerated().forEach { index, view in
+            for (index, view) in metricViews.enumerated() {
                 bind(view: view, viewItem: metricsViewItems[index])
             }
 
@@ -69,7 +69,7 @@ class MultiTextMetricsView: UIView {
         metricViews.forEach { view in metricsStackView.removeArrangedSubview(view) }
         metricViews = []
 
-        metricsViewItems.enumerated().forEach { _, item in
+        for (_, item) in metricsViewItems.enumerated() {
             let view = MetricsView()
             bind(view: view, viewItem: item)
             metricsStackView.addArrangedSubview(view)

@@ -102,7 +102,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 extension SendConfirmationViewController {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
-        viewItems.enumerated().forEach { index, viewItems in
+        for (index, viewItems) in viewItems.enumerated() {
             sections.append(
                 Section(
                     id: "section-\(index)",

@@ -472,7 +472,7 @@ enum StorageMigrator {
                 return
             }
 
-            try oldVersions.forEach { oldVersion in
+            for oldVersion in oldVersions {
                 let regex = try! NSRegularExpression(pattern: "\\(.*\\)")
                 let matches = regex.matches(in: oldVersion.version, range: NSRange(location: 0, length: oldVersion.version.count))
 

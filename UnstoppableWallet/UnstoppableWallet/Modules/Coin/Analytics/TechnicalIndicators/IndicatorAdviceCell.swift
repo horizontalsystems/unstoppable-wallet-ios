@@ -93,9 +93,9 @@ extension IndicatorAdviceCell {
     }
 
     func setEmpty(value: String) {
-        CoinIndicatorViewItemFactory.sectionNames.enumerated().forEach { index, element in
+        for (index, element) in CoinIndicatorViewItemFactory.sectionNames.enumerated() {
             guard let view = adviceViews.at(index: index) else {
-                return
+                continue
             }
 
             view.title = element
@@ -104,9 +104,9 @@ extension IndicatorAdviceCell {
     }
 
     func set(viewItems: [CoinIndicatorViewItemFactory.ViewItem]) {
-        viewItems.enumerated().forEach { index, element in
+        for (index, element) in viewItems.enumerated() {
             guard let view = adviceViews.at(index: index) else {
-                return
+                continue
             }
 
             view.title = element.name

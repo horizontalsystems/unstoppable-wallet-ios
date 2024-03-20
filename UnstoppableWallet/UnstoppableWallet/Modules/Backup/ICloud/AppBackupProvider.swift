@@ -148,7 +148,7 @@ extension AppBackupProvider {
 
         accountManager.save(accounts: updated.map(\.account))
 
-        updated.forEach { (raw: RawWalletBackup) in
+        for raw in updated {
             switch raw.account.type {
             case .cex: ()
             default:
@@ -161,7 +161,7 @@ extension AppBackupProvider {
 
                     if !wallet.settings.isEmpty {
                         var restoreSettings = [RestoreSettingType: String]()
-                        wallet.settings.forEach { key, value in
+                        for (key, value) in wallet.settings {
                             if let key = RestoreSettingType(rawValue: key) {
                                 restoreSettings[key] = value
                             }
@@ -183,7 +183,7 @@ extension AppBackupProvider {
     }
 
     func restore(raw: RawFullBackup) {
-        raw.accounts.forEach { wallet in
+        for wallet in raw.accounts {
             restore(raws: [wallet])
         }
         favoritesManager.add(coinUids: raw.watchlistIds)

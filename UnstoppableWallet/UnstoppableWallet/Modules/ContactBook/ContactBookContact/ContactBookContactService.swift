@@ -42,7 +42,7 @@ class ContactBookContactService {
         oldContact = contact
         restoreContainer()
 
-        newAddresses.forEach { address in
+        for address in newAddresses {
             updateContact(address: address)
         }
 

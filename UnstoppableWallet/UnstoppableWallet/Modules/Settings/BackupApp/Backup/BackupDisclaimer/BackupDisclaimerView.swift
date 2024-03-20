@@ -41,7 +41,6 @@ struct BackupDisclaimerView: View {
             }
         }
         .navigationBarTitle(backupDisclaimer.title)
-
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.cancel".localized) {

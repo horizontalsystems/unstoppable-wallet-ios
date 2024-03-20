@@ -296,7 +296,7 @@ class ZcashAdapter {
         switch event {
         case let .foundTransactions(transactions, inRange):
             logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(inRange)")
-            transactions.forEach { overview in
+            for overview in transactions {
                 logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
             }
             let lastBlockHeight = max(inRange.upperBound, lastBlockHeight)
@@ -322,7 +322,7 @@ class ZcashAdapter {
         Task {
             let pending = await synchronizer.transactions.filter { overview in overview.minedHeight == nil }
             logger?.log(level: .debug, message: "Resync pending txs: \(pending.count)")
-            pending.forEach { entity in
+            for entity in pending {
                 logger?.log(level: .debug, message: "TX : \(entity.value.decimalValue.description)")
             }
             if !pending.isEmpty {

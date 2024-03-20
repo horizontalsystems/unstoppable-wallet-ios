@@ -138,7 +138,7 @@ class AppStatusViewModel {
     private func build(logs: [(String, Any)], level: Int = 0, showBullet: Bool = false) -> String {
         var result = ""
 
-        logs.forEach { key, value in
+        for (key, value) in logs {
             let indentation = String(repeating: "    ", count: level)
             let bullet = showBullet ? "- " : ""
             let key = (indentation + bullet + key + ": ").capitalized
@@ -153,7 +153,7 @@ class AppStatusViewModel {
                 result += key + "\(int)" + "\n"
             } else if let deep = value as? [String] {
                 result += key + "\n"
-                deep.forEach { str in
+                for str in deep {
                     result += indentation + "    " + bullet + str + "\n"
                 }
             } else if let deep = value as? [(String, Any)] {

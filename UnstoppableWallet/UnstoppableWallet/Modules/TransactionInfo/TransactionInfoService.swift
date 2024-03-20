@@ -100,7 +100,7 @@ class TransactionInfoService {
     }
 
     private func fetchRates() {
-        tokenForRates.forEach { token in
+        for token in tokenForRates {
             let rateKey = RateKey(token: token, date: transactionRecord.date)
             if let currencyValue = rateService.rate(key: rateKey) {
                 rates[rateKey] = currencyValue

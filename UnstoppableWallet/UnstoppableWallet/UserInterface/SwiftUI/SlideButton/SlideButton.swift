@@ -1,4 +1,5 @@
 import SwiftUI
+
 // https://github.com/no-comment/SlideButton
 
 public struct SlideButton: View {
