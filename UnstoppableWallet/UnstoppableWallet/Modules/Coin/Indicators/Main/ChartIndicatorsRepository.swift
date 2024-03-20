@@ -81,7 +81,7 @@ extension ChartIndicatorsRepository {
         var rsi = [BackupRsiIndicator]()
         var macd = [BackupMacdIndicator]()
 
-        userIndicators.forEach { indicator in
+        for indicator in userIndicators {
             switch indicator {
             case let indicator as MaIndicator:
                 ma.append(BackupMaIndicator(
@@ -113,7 +113,7 @@ extension ChartIndicatorsRepository {
 
     func restore(backup: BackupIndicators) {
         var indicators = [ChartIndicator]()
-        backup.ma.enumerated().forEach { index, element in
+        for (index, element) in backup.ma.enumerated() {
             indicators.append(
                 MaIndicator(
                     id: "MA",
@@ -127,7 +127,7 @@ extension ChartIndicatorsRepository {
                 )
             )
         }
-        backup.rsi.enumerated().forEach { index, element in
+        for (index, element) in backup.rsi.enumerated() {
             indicators.append(
                 RsiIndicator(
                     id: "RSI",
@@ -140,7 +140,7 @@ extension ChartIndicatorsRepository {
                 )
             )
         }
-        backup.macd.enumerated().forEach { index, element in
+        for (index, element) in backup.macd.enumerated() {
             indicators.append(
                 MacdIndicator(
                     id: "MACD",

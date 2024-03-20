@@ -151,7 +151,7 @@ extension RestoreMnemonicViewModel: IRestoreSubViewModel {
         do {
             return try service.accountType(words: service.items.map(\.word))
         } catch let RestoreMnemonicService.ErrorList.errors(errors) {
-            errors.forEach { error in
+            for error in errors {
                 if case RestoreMnemonicService.RestoreError.emptyPassphrase = error {
                     passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
                 } else {

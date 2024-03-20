@@ -50,7 +50,7 @@ class ReceiveAddressService {
     }
 
     private func prepare(adapter: IDepositAdapter) {
-        cancellables.forEach { cancellable in
+        for cancellable in cancellables {
             cancellable.cancel()
         }
         cancellables.removeAll()

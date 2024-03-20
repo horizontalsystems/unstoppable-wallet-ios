@@ -331,12 +331,12 @@ extension EvmSyncSourceManager {
 extension EvmSyncSourceManager {
     func restore(selected: [SelectedSource], custom: [EvmSyncSourceRecord]) {
         var blockchainTypes = Set<BlockchainType>()
-        custom.forEach { source in
+        for source in custom {
             blockchainTypes.insert(BlockchainType(uid: source.blockchainTypeUid))
             try? evmSyncSourceStorage.save(record: source)
         }
 
-        selected.forEach { source in
+        for source in selected {
             let blockchainType = BlockchainType(uid: source.blockchainTypeUid)
             if let syncSource = allSyncSources(blockchainType: blockchainType)
                 .first(where: { $0.rpcSource.url.absoluteString == source.url })
@@ -345,7 +345,7 @@ extension EvmSyncSourceManager {
             }
         }
 
-        blockchainTypes.forEach { blockchainType in
+        for blockchainType in blockchainTypes {
             syncSourcesUpdatedRelay.accept(blockchainType)
         }
     }

@@ -95,7 +95,7 @@ class CloudBackupManager {
         // ignore any errors
         do {
             let files = try fileStorage.fileList(url: url)
-            files.forEach { file in
+            for file in files {
                 do {
                     try fileStorage.prepareUbiquitousItem(url: url, filename: file)
                 } catch {

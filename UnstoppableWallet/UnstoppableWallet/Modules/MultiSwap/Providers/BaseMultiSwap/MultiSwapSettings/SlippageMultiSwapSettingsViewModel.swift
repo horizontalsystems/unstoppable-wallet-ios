@@ -72,8 +72,8 @@ extension SlippageMultiSwapSettingsViewModel {
 
     func stepSlippage(direction: StepChangeButtonsViewDirection) {
         switch direction {
-            case .down: slippage = max((slippage ?? 0) - 0.5, 0)
-            case .up: slippage = (slippage ?? 0) + 0.5
+        case .down: slippage = max((slippage ?? 0) - 0.5, 0)
+        case .up: slippage = (slippage ?? 0) + 0.5
         }
     }
 }

@@ -13,7 +13,7 @@ class DonateAddressViewModel {
         }
 
         var viewItems = [ViewItem]()
-        AppConfig.donationAddresses.forEach { type, address in
+        for (type, address) in AppConfig.donationAddresses {
             if let blockchain = blockchains.first(where: { $0.type == type }) {
                 viewItems.append((blockchain.name, type, address))
             }

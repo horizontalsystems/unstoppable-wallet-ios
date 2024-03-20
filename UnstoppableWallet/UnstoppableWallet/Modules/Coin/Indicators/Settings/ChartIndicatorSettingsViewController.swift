@@ -144,7 +144,7 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
     }
 
     private func sync(cautions: [IndicatorDataSource.Caution]) {
-        inputSections.forEach { section in
+        for section in inputSections {
             if let caution = cautions.first(where: { $0.id == section.id }) {
                 section.set(caution: Caution(text: caution.error, type: .error))
             } else {
@@ -154,7 +154,7 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
     }
 
     private func resetToInitial(items: [ChartIndicatorSettingsModule.ValueItem]) {
-        inputSections.forEach { section in
+        for section in inputSections {
             if let item = items.first(where: { $0.id == section.id }) {
                 section.text = (item.value as? CustomStringConvertible)?.description
                 section.set(caution: nil)
@@ -231,7 +231,7 @@ extension ChartIndicatorSettingsViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        viewModel.fields.enumerated().forEach { index, field in
+        for (index, field) in viewModel.fields.enumerated() {
             let rowInfo = RowInfo(index: index, count: viewModel.fields.count)
             switch field {
             case let field as ChartIndicatorSettingsModule.TextField:

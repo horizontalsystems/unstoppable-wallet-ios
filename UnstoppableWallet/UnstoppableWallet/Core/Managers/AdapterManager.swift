@@ -73,7 +73,7 @@ class AdapterManager {
             self.adapterDataReadyRelay.accept(newAdapterData)
         }
 
-        removedAdapters.forEach { adapter in
+        for adapter in removedAdapters {
             adapter.stop()
         }
     }
@@ -99,9 +99,9 @@ class AdapterManager {
         }
 
         queue.sync {
-            wallets.forEach {
-                _adapterData.adapterMap[$0]?.stop()
-                _adapterData.adapterMap[$0] = nil
+            for wallet in wallets {
+                _adapterData.adapterMap[wallet]?.stop()
+                _adapterData.adapterMap[wallet] = nil
             }
         }
 

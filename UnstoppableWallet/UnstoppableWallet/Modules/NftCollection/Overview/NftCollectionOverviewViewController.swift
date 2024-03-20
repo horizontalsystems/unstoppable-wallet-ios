@@ -176,7 +176,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
         }
 
         let chunks = marketCards.chunks(2)
-        chunks.enumerated().forEach { index, marketCards in
+        for (index, marketCards) in chunks.enumerated() {
             let isLast = index == chunks.count - 1
             sections.append(
                 Section(
@@ -188,8 +188,8 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                             height: MarketCardView.height,
                             bind: { cell, _ in
                                 cell.clear()
-                                marketCards.forEach {
-                                    cell.append(viewItem: $0)
+                                for marketCard in marketCards {
+                                    cell.append(viewItem: marketCard)
                                 }
                             }
                         ),

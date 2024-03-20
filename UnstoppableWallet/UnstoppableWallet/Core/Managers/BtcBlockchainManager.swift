@@ -100,17 +100,16 @@ extension BtcBlockchainManager {
     }
 
     func restore(backup: [BtcRestoreModeBackup]) {
-        backup
-            .forEach { backup in
-                let type = BlockchainType(uid: backup.blockchainTypeUid)
+        for backup in backup {
+            let type = BlockchainType(uid: backup.blockchainTypeUid)
 
-                if let mode = BtcRestoreMode(rawValue: backup.restoreMode) {
-                    save(restoreMode: mode, blockchainType: type)
-                }
-                if let mode = TransactionDataSortMode(rawValue: backup.sortMode) {
-                    save(transactionSortMode: mode, blockchainType: type)
-                }
+            if let mode = BtcRestoreMode(rawValue: backup.restoreMode) {
+                save(restoreMode: mode, blockchainType: type)
             }
+            if let mode = TransactionDataSortMode(rawValue: backup.sortMode) {
+                save(transactionSortMode: mode, blockchainType: type)
+            }
+        }
     }
 }
 

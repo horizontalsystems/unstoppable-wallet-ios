@@ -139,8 +139,8 @@ class NftAssetOverviewService {
         _fill(priceItem: item.average30d, map: map)
         _fill(priceItem: item.collectionFloor, map: map)
 
-        item.offers.forEach {
-            _fill(priceItem: $0, map: map)
+        for offer in item.offers {
+            _fill(priceItem: offer, map: map)
         }
 
         if let saleItem = item.sale {

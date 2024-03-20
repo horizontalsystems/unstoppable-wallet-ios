@@ -237,7 +237,7 @@ class WalletService {
         var total: Decimal = 0
         var expired = false
 
-        items.forEach { item in
+        for item in items {
             if let rateItem = item.priceItem {
                 total += item.balanceData.balanceTotal * rateItem.price.value
 

@@ -56,8 +56,8 @@ class AccountManager {
     }
 
     private func clearAccounts(ids: [String]) {
-        ids.forEach {
-            storage.delete(accountId: $0)
+        for id in ids {
+            storage.delete(accountId: id)
         }
 
         if storage.allAccounts.isEmpty {
@@ -128,7 +128,7 @@ extension AccountManager {
     }
 
     func save(accounts: [Account]) {
-        accounts.forEach { account in
+        for account in accounts {
             storage.save(account: account)
         }
 
@@ -180,7 +180,7 @@ extension AccountManager {
             lostAccountIds.contains(account.id)
         }
 
-        lostAccounts.forEach { account in
+        for account in lostAccounts {
             accountDeletedRelay.accept(account)
         }
 

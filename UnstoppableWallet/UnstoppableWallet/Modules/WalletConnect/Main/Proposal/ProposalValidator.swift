@@ -5,7 +5,7 @@ class ProposalValidator {
     func validate(namespaces: [String: ProposalNamespace], set: WalletConnectMainModule.BlockchainSet) throws {
         for (_, namespace) in namespaces {
             if let chains = namespace.chains {
-                try chains.forEach { blockchain in
+                for blockchain in chains {
                     if !set.items.contains(where: { $0.equal(blockchain: blockchain) }) {
                         throw ValidateError.unsupportedReference(
                             namespace: blockchain.namespace,
@@ -15,13 +15,13 @@ class ProposalValidator {
                 }
             }
 
-            try namespace.methods.forEach { method in
+            for method in namespace.methods {
                 if !set.methods.contains(method) {
                     throw ValidateError.unsupportedMethod(method)
                 }
             }
 
-            try namespace.events.forEach { event in
+            for event in namespace.events {
                 if !set.events.contains(event) {
                     throw ValidateError.unsupportedEvent(event)
                 }

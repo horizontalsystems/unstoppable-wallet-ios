@@ -20,7 +20,6 @@ struct WatchlistWidget: Widget {
         .contentMarginsDisabled()
         .configurationDisplayName("watchlist.title")
         .description("watchlist.description")
-
         .supportedFamilies([
             .systemSmall,
             .systemMedium,

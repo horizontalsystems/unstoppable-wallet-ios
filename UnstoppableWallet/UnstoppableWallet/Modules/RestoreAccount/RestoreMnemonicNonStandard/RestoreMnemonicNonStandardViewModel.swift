@@ -149,7 +149,7 @@ extension RestoreMnemonicNonStandardViewModel {
         do {
             return try service.accountType(words: service.items.map(\.word))
         } catch let RestoreMnemonicNonStandardService.ErrorList.errors(errors) {
-            errors.forEach { error in
+            for error in errors {
                 if case RestoreMnemonicNonStandardService.RestoreError.emptyPassphrase = error {
                     passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
                 } else {
