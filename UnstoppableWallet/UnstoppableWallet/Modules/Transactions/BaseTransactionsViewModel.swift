@@ -159,7 +159,7 @@ extension BaseTransactionsViewModel {
         let typeFilter = typeFilters[index]
         service.set(typeFilter: typeFilter)
 
-        stat(page: .transactions, event: .switchTab, params: [.tab: typeFilter.rawValue])
+        stat(page: .transactions, event: .switchTab(tab: typeFilter.statTab))
     }
 
     func record(uid: String) -> TransactionRecord? {

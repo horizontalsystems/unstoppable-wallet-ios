@@ -155,7 +155,7 @@ class MarketViewController: ThemeSearchViewController {
 
         viewModel.currentTab = tab
 
-        stat(page: .markets, event: .switchTab, params: [.tab: tab.rawValue])
+        stat(page: .markets, event: .switchTab(tab: tab.statTab))
     }
 
     private func setViewPager(tab: MarketModule.Tab) {
@@ -199,7 +199,7 @@ extension MarketViewController: SectionsDataSource {
         }
 
         present(module, animated: true)
-        stat(page: .marketSearch, event: .open(page: .coinPage), params: [.coinUid: coinUid])
+        stat(page: .marketSearch, event: .openCoin(coinUid: coinUid))
     }
 
     private func rowActions(coinUid: String) -> [RowAction] {

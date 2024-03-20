@@ -37,7 +37,7 @@ extension MarketWatchlistToggleService {
 
         statusSubject.onNext(.favorite)
 
-        stat(page: statPage, event: .addToWatchlist, params: [.coinUid: coinUid])
+        stat(page: statPage, event: .addToWatchlist(coinUid: coinUid))
     }
 
     func unfavorite(index: Int) {
@@ -50,7 +50,7 @@ extension MarketWatchlistToggleService {
 
         statusSubject.onNext(.unfavorite)
 
-        stat(page: statPage, event: .removeFromWatchlist, params: [.coinUid: coinUid])
+        stat(page: statPage, event: .removeFromWatchlist(coinUid: coinUid))
     }
 }
 

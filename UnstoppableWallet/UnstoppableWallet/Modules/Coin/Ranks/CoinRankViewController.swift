@@ -124,7 +124,7 @@ extension CoinRankViewController: SectionsDataSource {
 
                 if let viewController = CoinPageModule.viewController(coinUid: coinUid) {
                     self?.present(viewController, animated: true)
-                    stat(page: .coinRank, event: .open(page: .coinPage), params: [.coinUid: coinUid])
+                    stat(page: .coinRank, event: .openCoin(coinUid: coinUid))
                 }
             }
         )

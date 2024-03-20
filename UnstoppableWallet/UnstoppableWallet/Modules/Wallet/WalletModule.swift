@@ -343,13 +343,21 @@ extension WalletModule {
     enum SortType: String, CaseIterable {
         case balance
         case name
-        case percentGrowth = "percent_growth"
+        case percentGrowth
 
         var title: String {
             switch self {
             case .balance: return "balance.sort.valueHighToLow".localized
             case .name: return "balance.sort.az".localized
             case .percentGrowth: return "balance.sort.price_change".localized
+            }
+        }
+
+        var statSortType: StatSortType {
+            switch self {
+            case .balance: return .balance
+            case .name: return .name
+            case .percentGrowth: return .priceChange
             }
         }
     }

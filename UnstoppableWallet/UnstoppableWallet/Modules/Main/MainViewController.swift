@@ -59,7 +59,7 @@ class MainViewController: ThemeTabBarController {
 
             viewModel.onSwitch(tab: tab)
 
-            stat(page: .main, event: .switchTab, params: [.tab: tab.rawValue])
+            stat(page: .main, event: .switchTab(tab: tab.statTab))
         }
 
         if let items = tabBar.items, items.count > selectedIndex, item == items[selectedIndex] {

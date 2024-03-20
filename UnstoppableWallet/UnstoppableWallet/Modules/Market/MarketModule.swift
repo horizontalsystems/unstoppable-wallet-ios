@@ -153,6 +153,14 @@ extension MarketModule {
             case .watchlist: return "market.category.watchlist".localized
             }
         }
+
+        var statTab: StatTab {
+            switch self {
+            case .overview: return .overview
+            case .posts: return .news
+            case .watchlist: return .watchlist
+            }
+        }
     }
 
     enum SortingField: Int, CaseIterable {

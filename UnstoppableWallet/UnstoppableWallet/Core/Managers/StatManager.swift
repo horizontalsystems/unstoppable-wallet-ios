@@ -2,9 +2,9 @@ import Alamofire
 import Foundation
 import HsToolKit
 
-func stat(page: StatPage, section: StatSection? = nil, event: StatEvent, params: [StatParam: Any]? = nil) {
-    StatManager.instance.sendStat(page: page, section: section, event: event, params: params)
-//    print("PAGE: \(page)\(section.map { ", SECTION: \($0)" } ?? ""), event: \(event.raw)\(params.map { ", PARAMS: \($0)" } ?? "")")
+func stat(page: StatPage, section: StatSection? = nil, event: StatEvent) {
+    StatManager.instance.sendStat(eventPage: page, eventSection: section, event: event)
+//    print("PAGE: \(page)\(section.map { ", SECTION: \($0)" } ?? ""), event: \(event.name)\(event.params.map { ", PARAMS: \($0)" } ?? "")")
 }
 
 class StatManager {
@@ -16,18 +16,18 @@ class StatManager {
         self.networkManager = networkManager
     }
 
-    func sendStat(page: StatPage, section: StatSection? = nil, event: StatEvent, params: [StatParam: Any]? = nil) {
+    func sendStat(eventPage: StatPage, eventSection: StatSection? = nil, event: StatEvent) {
         Task {
             var parameters: Parameters = [
-                "page": page.rawValue,
-                "event": event.raw,
+                "event_page": eventPage.rawValue,
+                "event": event.name,
             ]
 
-            if let section {
-                parameters["section"] = section.rawValue
+            if let eventSection {
+                parameters["event_section"] = eventSection.rawValue
             }
 
-            if let params {
+            if let params = event.params {
                 for (key, value) in params {
                     parameters[key.rawValue] = value
                 }

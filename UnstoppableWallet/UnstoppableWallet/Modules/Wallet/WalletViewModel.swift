@@ -217,7 +217,7 @@ extension WalletViewModel {
         let sortType = WalletModule.SortType.allCases[index]
         service.sortType = sortType
 
-        stat(page: .balance, event: .switchSortType, params: [.sortType: sortType.rawValue])
+        stat(page: .balance, event: .switchSortType(sortType: sortType.statSortType))
     }
 
     func onTapTotalAmount() {
