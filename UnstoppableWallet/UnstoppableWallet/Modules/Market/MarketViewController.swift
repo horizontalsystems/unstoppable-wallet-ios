@@ -92,7 +92,7 @@ class MarketViewController: ThemeSearchViewController {
 
         viewModel.$currentTab
             .sink { [weak self] currentTab in
-                self?.tabsView.select(index: currentTab.rawValue)
+                self?.tabsView.select(index: MarketModule.Tab.allCases.firstIndex(of: currentTab) ?? 0)
                 self?.setViewPager(tab: currentTab)
             }
             .store(in: &cancellables)
@@ -147,19 +147,15 @@ class MarketViewController: ThemeSearchViewController {
     }
 
     private func onSelectTab(index: Int) {
-        guard let tab = MarketModule.Tab(rawValue: index) else {
+        guard index < MarketModule.Tab.allCases.count else {
             return
         }
 
+        let tab = MarketModule.Tab.allCases[index]
+
         viewModel.currentTab = tab
 
-        let event: StatEvent
-        switch tab {
-        case .overview: event = .selectTab(page: .marketOverview)
-        case .posts: event = .selectTab(page: .news)
-        case .watchlist: event = .selectTab(page: .watchlist)
-        }
-        stat(page: .markets, event: event)
+        stat(page: .markets, event: .switchTab, params: [.tab: tab.rawValue])
     }
 
     private func setViewPager(tab: MarketModule.Tab) {

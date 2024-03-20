@@ -35,6 +35,7 @@ enum StatPage: String {
     case topPlatforms = "top_platforms"
     case tokenPage = "token_page"
     case transactions
+    case transactionFilter = "transaction_filter"
     case transactionInfo = "transaction_info"
     case watchlist
     case widget
@@ -48,7 +49,7 @@ enum StatEntity: String {
 enum StatEvent {
     case add(entity: StatEntity)
     case open(page: StatPage)
-    case selectTab(page: StatPage)
+    case switchTab
     case refresh
     case switchCount
     case switchPeriod
@@ -64,7 +65,7 @@ enum StatEvent {
         switch self {
         case let .add(entity): return "\(entity.rawValue)_add"
         case let .open(page): return "\(page.rawValue)_open"
-        case let .selectTab(page): return "\(page.rawValue)_select_tab"
+        case .switchTab: return "switch_tab"
         case .refresh: return "refresh"
         case .switchCount: return "switch_count"
         case .switchPeriod: return "switch_period"
@@ -84,6 +85,7 @@ enum StatParam: String {
     case chainUid = "chain_uid"
     case coinUid = "coin_uid"
     case sortType = "sort_type"
+    case tab
 }
 
 enum StatSection: String {

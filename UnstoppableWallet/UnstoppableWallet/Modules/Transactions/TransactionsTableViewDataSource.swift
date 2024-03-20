@@ -28,6 +28,8 @@ class TransactionsTableViewDataSource: NSObject {
             }
 
             viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
+
+            stat(page: .transactions, event: .open(page: .transactionInfo))
         }
     }
 
