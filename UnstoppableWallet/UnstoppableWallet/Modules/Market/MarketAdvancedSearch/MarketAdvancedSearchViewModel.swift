@@ -18,6 +18,7 @@ class MarketAdvancedSearchViewModel {
     private let goodDexVolumeRelay = BehaviorRelay<Bool>(value: false)
     private let goodDistributionRelay = BehaviorRelay<Bool>(value: false)
     private let blockchainsViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
+    private let technicalAdviceViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let priceChangeTypeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let priceChangeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let outperformedBtcRelay = BehaviorRelay<Bool>(value: false)
@@ -44,6 +45,7 @@ class MarketAdvancedSearchViewModel {
         subscribe(disposeBag, service.goodDexVolumeObservable) { [weak self] in self?.goodDexVolumeRelay.accept($0) }
         subscribe(disposeBag, service.goodDistributionObservable) { [weak self] in self?.goodDistributionRelay.accept($0) }
         subscribe(disposeBag, service.blockchainsObservable) { [weak self] in self?.sync(blockchains: $0) }
+        subscribe(disposeBag, service.technicalAdviceObservable) { [weak self] in self?.sync(technicalAdvice: $0) }
         subscribe(disposeBag, service.priceChangeTypeObservable) { [weak self] in self?.sync(priceChangeType: $0) }
         subscribe(disposeBag, service.priceChangeObservable) { [weak self] in self?.sync(priceChange: $0) }
         subscribe(disposeBag, service.outperformedBtcObservable) { [weak self] in self?.sync(outperformedBtc: $0) }
@@ -57,6 +59,7 @@ class MarketAdvancedSearchViewModel {
         sync(marketCap: service.marketCap)
         sync(volume: service.volume)
         sync(blockchains: service.blockchains)
+        sync(technicalAdvice: service.technicalAdvice)
         sync(priceChangeType: service.priceChangeType)
         sync(priceChange: service.priceChange)
         sync(canReset: service.canReset)
@@ -107,6 +110,15 @@ class MarketAdvancedSearchViewModel {
         }
 
         blockchainsViewItemRelay.accept(ViewItem(value: value, valueStyle: valueStyle))
+    }
+
+    private func sync(technicalAdvice: TechnicalAdvice.Advice?) {
+        guard let technicalAdvice else {
+            technicalAdviceViewItemRelay.accept(ViewItem(value: "selector.any".localized, valueStyle: .none))
+            return
+        }
+
+        technicalAdviceViewItemRelay.accept(ViewItem(value: technicalAdvice.title.localized, valueStyle: .normal))
     }
 
     private func sync(priceChangeType _: MarketModule.PriceChangeType) {
@@ -179,6 +191,10 @@ extension MarketAdvancedSearchViewModel {
         blockchainsViewItemRelay.asDriver()
     }
 
+    var technicalAdviceViewItemDriver: Driver<ViewItem> {
+        technicalAdviceViewItemRelay.asDriver()
+    }
+
     var priceChangeTypeViewItemDriver: Driver<ViewItem> {
         priceChangeTypeViewItemRelay.asDriver()
     }
@@ -239,6 +255,24 @@ extension MarketAdvancedSearchViewModel {
         }
     }
 
+    var technicalIndicatorViewItems: [FilterViewItem] {
+        var cases = [FilterViewItem(
+            title: "selector.any".localized,
+            style: .normal,
+            selected: service.technicalAdvice == nil
+        )]
+
+        cases.append(contentsOf: TechnicalAdvice.Advice.searchCases.map { advice in
+            FilterViewItem(
+                title: advice.searchTitle,
+                style: .normal,
+                selected: service.technicalAdvice == advice
+            )
+        })
+
+        return cases
+    }
+
     var priceChangeTypeViewItems: [FilterViewItem] {
         MarketModule.PriceChangeType.allCases.map {
             FilterViewItem(title: $0.title, style: .normal, selected: service.priceChangeType == $0)
@@ -293,6 +327,10 @@ extension MarketAdvancedSearchViewModel {
 
     func setBlockchains(indexes: [Int]) {
         service.blockchains = indexes.map { service.allBlockchains[$0] }
+    }
+
+    func setTechnicalAdvice(index: Int) {
+        service.technicalAdvice = TechnicalAdvice.Advice.by(index: index)
     }
 
     func setPriceChangeType(at index: Int) {
@@ -432,6 +470,47 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
         case .none: return .none
         case .plus10, .plus25, .plus50, .plus100: return .positive
         case .minus10, .minus25, .minus50, .minus75: return .negative
+        }
+    }
+}
+
+extension TechnicalAdvice.Advice {
+    static func by(index: Int) -> TechnicalAdvice.Advice {
+        switch index {
+        case 0: return .oversold
+        case 1: return .strongSell
+        case 2: return .sell
+        case 4: return .buy
+        case 5: return .strongBuy
+        case 6: return .overbought
+        default: return .neutral
+        }
+    }
+
+    var index: Int {
+        switch self {
+        case .oversold: return 0
+        case .strongSell: return 1
+        case .sell: return 2
+        case .neutral: return 3
+        case .buy: return 4
+        case .strongBuy: return 5
+        case .overbought: return 6
+        }
+    }
+
+    static var searchCases: [Self] {
+        [.oversold, .strongSell, .sell, .neutral, .buy, .strongBuy]
+    }
+
+    var searchTitle: String {
+        switch self {
+        case .oversold, .overbought: return "market.advanced_search.technical_advice.risk_trade".localized
+        case .strongSell: return "market.advanced_search.technical_advice.strong_sell".localized
+        case .sell: return "market.advanced_search.technical_advice.sell".localized
+        case .neutral: return "market.advanced_search.technical_advice.neutral".localized
+        case .buy: return "market.advanced_search.technical_advice.buy".localized
+        case .strongBuy: return "market.advanced_search.technical_advice.strong_buy".localized
         }
     }
 }
