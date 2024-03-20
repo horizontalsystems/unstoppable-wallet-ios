@@ -5,14 +5,25 @@ import UIKit
 
 class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsField {
     private let decimalParser = AmountDecimalParser()
-
     var storage: MultiSwapSettingStorage
     var syncSubject = PassthroughSubject<Void, Never>()
 
     @Published var slippageCautionState: CautionState = .none
-    @Published var slippage: String = "" {
+    @Published var slippageString: String = "" {
+        didSet {
+            if slippageString == oldValue { return }
+            guard let decimal = decimalParser.parseAnyDecimal(from: slippageString) else {
+                slippage = nil
+                return
+            }
+            slippage = decimal
+        }
+    }
+
+    var slippage: Decimal? = nil {
         didSet {
             if slippage == oldValue { return }
+            slippageString = slippage?.description ?? ""
             syncSubject.send()
             validateSlippage()
         }
@@ -21,35 +32,30 @@ class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFi
     init(storage: MultiSwapSettingStorage) {
         self.storage = storage
 
-        slippage = initialSlippage?.description ?? ""
+        slippage = initialSlippage
     }
 
     private func validateSlippage() {
-        guard !slippage.isEmpty else {
+        guard let slippage else {
             slippageCautionState = .none
             return
         }
 
-        guard let decimal = decimalParser.parseAnyDecimal(from: slippage) else {
-            slippageCautionState = .caution(.init(text: MultiSwapSlippage.SlippageError.invalid.localizedDescription, type: .error))
-            return
-        }
-
-        slippageCautionState = MultiSwapSlippage.validate(slippage: decimal)
+        slippageCautionState = MultiSwapSlippage.validate(slippage: slippage)
     }
 
     var state: BaseMultiSwapSettingsViewModel.FieldState {
-        MultiSwapSlippage.state(initial: initialSlippage, value: slippage)
+        MultiSwapSlippage.state(initial: initialSlippage, value: slippage?.description ?? "")
     }
 
     func onReset() {
-        slippage = ""
+        slippage = nil
     }
 
     func onDone() {
-        if slippage.isEmpty {
+        if slippage == nil {
             storage.set(value: nil, for: MultiSwapSettingStorage.LegacySetting.slippage)
-        } else if let slippage = decimalParser.parseAnyDecimal(from: slippage), slippage != initialSlippage {
+        } else if let slippage, slippage != initialSlippage {
             storage.set(value: slippage, for: MultiSwapSettingStorage.LegacySetting.slippage)
         }
     }
@@ -64,19 +70,16 @@ extension SlippageMultiSwapSettingsViewModel {
         storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage)
     }
 
-    var slippageShortCuts: [ShortCutButtonType] {
-        MultiSwapSlippage.recommended.map { $0.description + "%" }.map { .text($0) }
-    }
-
-    func slippage(at index: Int) -> Decimal {
-        MultiSwapSlippage.recommended.at(index: index) ??
-            MultiSwapSlippage.recommended[0]
+    func stepSlippage(direction: StepChangeButtonsViewDirection) {
+        switch direction {
+            case .down: slippage = max((slippage ?? 0) - 0.5, 0)
+            case .up: slippage = (slippage ?? 0) + 0.5
+        }
     }
 }
 
 enum MultiSwapSlippage {
     static let `default`: Decimal = 1
-    static let recommended: [Decimal] = [0.1, 3]
     static var limitBounds: ClosedRange<Decimal> { 0.01 ... 50 }
     static let usualHighest: Decimal = 5
 
