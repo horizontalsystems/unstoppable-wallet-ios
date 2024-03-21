@@ -83,11 +83,15 @@ extension MarketViewModel {
     func favorite(coinUid: String) {
         favoritesManager.add(coinUid: coinUid)
         favoritedSubject.send()
+
+        stat(page: .marketSearch, event: .addToWatchlist(coinUid: coinUid))
     }
 
     func unfavorite(coinUid: String) {
         favoritesManager.remove(coinUid: coinUid)
         unfavoritedSubject.send()
+
+        stat(page: .marketSearch, event: .removeFromWatchlist(coinUid: coinUid))
     }
 
     func handleOpen(coinUid: String) {

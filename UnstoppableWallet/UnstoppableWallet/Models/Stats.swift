@@ -11,6 +11,7 @@ enum StatPage: String {
     case balance
     case baseCurrency = "base_currency"
     case blockchainSettings = "blockchain_settings"
+    case coinAnalytics = "coin_analytics"
     case coinAnalyticsCexVolume = "coin_analytics_cex_volume"
     case coinAnalyticsDexVolume = "coin_analytics_dex_volume"
     case coinAnalyticsDexLiquidity = "coin_analytics_dex_liquidity"
@@ -18,15 +19,22 @@ enum StatPage: String {
     case coinAnalyticsTxCount = "coin_analytics_tx_count"
     case coinAnalyticsTvl = "coin_analytics_tvl"
     case coinManager = "coin_manager"
+    case coinMarkets = "coin_markets"
+    case coinOverview = "coin_overview"
     case coinPage = "coin_page"
     case coinCategory = "coin_category"
     case coinRank = "coin_rank"
     case contacts
     case contactUs = "contact_us"
     case donate
+    case externalBlockExplorer = "external_block_explorer"
+    case externalCoinWebsite = "external_coin_website"
+    case externalCoinWhitePaper = "external_coin_white_paper"
     case externalCompanyWebsite = "external_company_website"
+    case externalGithub = "external_github"
     case externalMarketPair = "external_market_pair"
     case externalNews = "external_news"
+    case externalReddit = "external_reddit"
     case externalTelegram = "external_telegram"
     case externalTwitter = "external_twitter"
     case faq
@@ -34,7 +42,9 @@ enum StatPage: String {
     case globalMetricsVolume = "global_metrics_volume"
     case globalMetricsDefiCap = "global_metrics_defi_cap"
     case globalMetricsTvlInDefi = "global_metrics_tvl_in_defi"
+    case guide
     case importWallet = "import_wallet"
+    case indicators
     case language
     case main
     case manageWallets = "manage_wallets"
@@ -103,6 +113,12 @@ enum StatEvent {
     case addToWatchlist(coinUid: String)
     case removeFromWatchlist(coinUid: String)
 
+    case toggleIndicators(shown: Bool)
+    case addToWallet
+    case removeFromWallet
+
+    case copy(entity: StatEntity)
+
     case add(entity: StatEntity)
 
     var name: String {
@@ -123,6 +139,10 @@ enum StatEvent {
         case .disableToken: return "disable_token"
         case .addToWatchlist: return "add_to_watchlist"
         case .removeFromWatchlist: return "remove_from_watchlist"
+        case .toggleIndicators: return "toggle_indicators"
+        case .addToWallet: return "add_to_wallet"
+        case .removeFromWallet: return "remove_from_wallet"
+        case .copy: return "copy"
         case .add: return "add"
         }
     }
@@ -142,6 +162,8 @@ enum StatEvent {
         case let .switchTvlChain(chain): return [.tvlChain: chain]
         case let .addToWatchlist(coinUid): return [.coinUid: coinUid]
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
+        case let .toggleIndicators(shown): return [.shown: shown]
+        case let .copy(entity): return [.entity: entity.rawValue]
         case let .add(entity): return [.entity: entity.rawValue]
         default: return nil
         }
@@ -157,6 +179,7 @@ enum StatParam: String {
     case marketTop = "market_top"
     case page
     case period
+    case shown
     case sortType = "sort_type"
     case tab
     case tvlChain = "tvl_chain"
@@ -165,6 +188,7 @@ enum StatParam: String {
 enum StatTab: String {
     case markets, balance, transactions, settings
     case overview, news, watchlist
+    case analytics
     case all, incoming, outgoing, swap, approve
 }
 
@@ -207,6 +231,7 @@ enum StatMarketTop: String {
 }
 
 enum StatEntity: String {
+    case contractAddress = "contract_address"
     case evmSyncSource = "evm_sync_source"
     case token
 }

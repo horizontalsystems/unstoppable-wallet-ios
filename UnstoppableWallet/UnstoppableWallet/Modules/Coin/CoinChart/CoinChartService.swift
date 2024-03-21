@@ -29,6 +29,8 @@ class CoinChartService {
         set {
             localStorage.indicatorsShown = newValue
             indicatorsShownUpdatedRelay.accept(())
+
+            stat(page: .coinOverview, event: .toggleIndicators(shown: indicatorsShown))
         }
     }
 
@@ -38,6 +40,8 @@ class CoinChartService {
             if periodType != oldValue {
                 periodTypeRelay.accept(periodType)
                 fetch()
+
+                stat(page: .coinOverview, event: .switchChartPeriod(period: periodType.statPeriod))
             }
         }
     }

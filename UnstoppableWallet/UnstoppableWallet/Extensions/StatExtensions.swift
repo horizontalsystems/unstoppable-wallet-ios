@@ -47,6 +47,16 @@ extension MarketModule.Tab {
     }
 }
 
+extension CoinPageModule.Tab {
+    var statTab: StatTab {
+        switch self {
+        case .overview: return .overview
+        case .analytics: return .analytics
+        case .markets: return .markets
+        }
+    }
+}
+
 extension TransactionTypeFilter {
     var statTab: StatTab {
         switch self {
@@ -155,6 +165,20 @@ extension MarketTopPlatformsModule.SortType {
         case .lowestCap: return .lowestCap
         case .topGainers: return .topGainers
         case .topLosers: return .topLosers
+        }
+    }
+}
+
+extension LinkType {
+    var statPage: StatPage {
+        switch self {
+        case .guide: return .guide
+        case .website: return .externalCoinWebsite
+        case .whitepaper: return .externalCoinWhitePaper
+        case .twitter: return .externalTwitter
+        case .telegram: return .externalTelegram
+        case .reddit: return .externalReddit
+        case .github: return .externalGithub
         }
     }
 }

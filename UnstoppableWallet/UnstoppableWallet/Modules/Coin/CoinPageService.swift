@@ -37,10 +37,14 @@ extension CoinPageService {
     }
 
     func toggleFavorite() {
+        let coinUid = fullCoin.coin.uid
+
         if favorite {
-            favoritesManager.remove(coinUid: fullCoin.coin.uid)
+            favoritesManager.remove(coinUid: coinUid)
+            stat(page: .coinPage, event: .addToWatchlist(coinUid: coinUid))
         } else {
-            favoritesManager.add(coinUid: fullCoin.coin.uid)
+            favoritesManager.add(coinUid: coinUid)
+            stat(page: .coinPage, event: .removeFromWatchlist(coinUid: coinUid))
         }
     }
 }

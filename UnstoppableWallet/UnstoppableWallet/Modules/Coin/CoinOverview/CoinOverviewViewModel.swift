@@ -73,6 +73,8 @@ extension CoinOverviewViewModel {
         do {
             try service.editWallet(index: index, add: true)
             hudRelay.accept(.addedToWallet)
+
+            stat(page: .coinOverview, event: .addToWallet)
         } catch {}
     }
 
@@ -80,6 +82,8 @@ extension CoinOverviewViewModel {
         do {
             try service.editWallet(index: index, add: false)
             hudRelay.accept(.removedFromWallet)
+
+            stat(page: .coinOverview, event: .removeFromWallet)
         } catch {}
     }
 
@@ -159,6 +163,7 @@ extension CoinOverviewViewModel {
     }
 
     struct LinkViewItem {
+        let type: LinkType
         let title: String
         let iconName: String
         let url: String
