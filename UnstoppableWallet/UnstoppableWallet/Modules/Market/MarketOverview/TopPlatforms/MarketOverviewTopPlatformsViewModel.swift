@@ -48,8 +48,9 @@ extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewMod
     }
 
     func onSelect(selectorIndex: Int) {
-        service.timePeriod = MarketTopPlatformsModule.selectorValues[selectorIndex]
+        let timePeriod = MarketTopPlatformsModule.selectorValues[selectorIndex]
+        service.timePeriod = timePeriod
 
-        stat(page: .marketOverview, section: .topPlatforms, event: .switchPeriod)
+        stat(page: .marketOverview, section: .topPlatforms, event: .switchPeriod(period: timePeriod.statPeriod))
     }
 }

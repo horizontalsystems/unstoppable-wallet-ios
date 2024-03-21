@@ -4,15 +4,20 @@ class MarketListMarketFieldDecorator {
     typealias Item = MarketInfo
 
     private let service: IMarketListDecoratorService
+    private let statPage: StatPage
 
     var marketField: MarketModule.MarketField {
         didSet {
             service.onUpdate(index: marketField.rawValue)
+
+            stat(page: statPage, event: .switchField(field: marketField.statField))
         }
     }
 
-    init(service: IMarketListDecoratorService) {
+    init(service: IMarketListDecoratorService, statPage: StatPage) {
         self.service = service
+        self.statPage = statPage
+
         marketField = MarketModule.MarketField.allCases[service.initialIndex]
     }
 }

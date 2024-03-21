@@ -16,7 +16,7 @@ enum MarketTopModule {
             statPage: .topCoins
         )
 
-        let decorator = MarketListMarketFieldDecorator(service: service)
+        let decorator = MarketListMarketFieldDecorator(service: service, statPage: .topCoins)
         let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
 

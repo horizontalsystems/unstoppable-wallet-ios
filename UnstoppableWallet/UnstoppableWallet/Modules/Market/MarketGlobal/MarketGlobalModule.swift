@@ -43,14 +43,5 @@ enum MarketGlobalModule {
             case .tvlInDefi: return .price
             }
         }
-
-        var statPage: StatPage {
-            switch self {
-            case .totalMarketCap: return .globalMetricsMarketCap
-            case .volume24h: return .globalMetricsVolume
-            case .defiCap: return .globalMetricsDefiCap
-            case .tvlInDefi: return .globalMetricsTvlInDefi
-            }
-        }
     }
 }

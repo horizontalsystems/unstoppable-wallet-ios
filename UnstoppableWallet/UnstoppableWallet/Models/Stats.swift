@@ -11,6 +11,12 @@ enum StatPage: String {
     case balance
     case baseCurrency = "base_currency"
     case blockchainSettings = "blockchain_settings"
+    case coinAnalyticsCexVolume = "coin_analytics_cex_volume"
+    case coinAnalyticsDexVolume = "coin_analytics_dex_volume"
+    case coinAnalyticsDexLiquidity = "coin_analytics_dex_liquidity"
+    case coinAnalyticsActiveAddresses = "coin_analytics_active_addresses"
+    case coinAnalyticsTxCount = "coin_analytics_tx_count"
+    case coinAnalyticsTvl = "coin_analytics_tvl"
     case coinManager = "coin_manager"
     case coinPage = "coin_page"
     case coinCategory = "coin_category"
@@ -63,6 +69,10 @@ enum StatPage: String {
 }
 
 enum StatSection: String {
+    case popular
+    case recent
+    case searchResults = "search_results"
+
     case topGainers = "top_gainers"
     case topLosers = "top_losers"
     case topPlatforms = "top_platforms"
@@ -75,10 +85,14 @@ enum StatEvent {
     case open(page: StatPage)
 
     case switchTab(tab: StatTab)
-    case switchCount
-    case switchPeriod
+    case switchMarketTop(marketTop: StatMarketTop)
+    case switchPeriod(period: StatPeriod)
+    case switchField(field: StatField)
     case switchSortType(sortType: StatSortType)
+    case switchChartPeriod(period: StatPeriod)
+    case switchTvlChain(chain: String)
     case toggleSortDirection
+    case toggleTvlField
 
     case refresh
 
@@ -95,10 +109,14 @@ enum StatEvent {
         switch self {
         case .openCategory, .openCoin, .openPlatform, .open: return "open_page"
         case .switchTab: return "switch_tab"
-        case .switchCount: return "switch_count"
+        case .switchMarketTop: return "switch_market_top"
         case .switchPeriod: return "switch_period"
+        case .switchField: return "switch_field"
         case .switchSortType: return "switch_sort_type"
+        case .switchChartPeriod: return "switch_chart_period"
+        case .switchTvlChain: return "switch_tvl_platform"
         case .toggleSortDirection: return "toggle_sort_direction"
+        case .toggleTvlField: return "toggle_tvl_field"
         case .refresh: return "refresh"
         case .toggleBalanceHidden: return "toggle_balance_hidden"
         case .toggleConversionCoin: return "toggle_conversion_coin"
@@ -116,7 +134,12 @@ enum StatEvent {
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform, .chainUid: chainUid]
         case let .open(page): return [.page: page.rawValue]
         case let .switchTab(tab): return [.tab: tab.rawValue]
+        case let .switchMarketTop(marketTop): return [.marketTop: marketTop.rawValue]
+        case let .switchPeriod(period): return [.period: period.rawValue]
+        case let .switchField(field): return [.field: field.rawValue]
         case let .switchSortType(sortType): return [.sortType: sortType.rawValue]
+        case let .switchChartPeriod(period): return [.period: period.rawValue]
+        case let .switchTvlChain(chain): return [.tvlChain: chain]
         case let .addToWatchlist(coinUid): return [.coinUid: coinUid]
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
         case let .add(entity): return [.entity: entity.rawValue]
@@ -130,9 +153,13 @@ enum StatParam: String {
     case chainUid = "chain_uid"
     case coinUid = "coin_uid"
     case entity
+    case field
+    case marketTop = "market_top"
     case page
+    case period
     case sortType = "sort_type"
     case tab
+    case tvlChain = "tvl_chain"
 }
 
 enum StatTab: String {
@@ -145,6 +172,31 @@ enum StatSortType: String {
     case balance
     case name
     case priceChange = "price_change"
+}
+
+enum StatPeriod: String {
+    case day1 = "1d"
+    case week1 = "1w"
+    case week2 = "2w"
+    case month1 = "1m"
+    case month3 = "3m"
+    case month6 = "6m"
+    case year1 = "1y"
+    case year2 = "2y"
+    case year5 = "5y"
+    case all
+}
+
+enum StatField: String {
+    case marketCap = "market_cap"
+    case volume
+    case price
+}
+
+enum StatMarketTop: String {
+    case top100
+    case top200
+    case top300
 }
 
 enum StatEntity: String {

@@ -30,18 +30,24 @@ class MarketGlobalTvlMetricService {
     var sortDirectionAscending: Bool = false {
         didSet {
             syncIfPossible(reorder: true)
+
+            stat(page: .globalMetricsTvlInDefi, event: .toggleSortDirection)
         }
     }
 
     @PostPublished var marketPlatformField: MarketModule.MarketPlatformField = .all {
         didSet {
             syncIfPossible(reorder: true)
+
+            stat(page: .globalMetricsTvlInDefi, event: .switchTvlChain(chain: marketPlatformField.statTvlChain))
         }
     }
 
     var marketTvlField: MarketModule.MarketTvlField = .diff {
         didSet {
             syncIfPossible()
+
+            stat(page: .globalMetricsTvlInDefi, event: .toggleTvlField)
         }
     }
 
