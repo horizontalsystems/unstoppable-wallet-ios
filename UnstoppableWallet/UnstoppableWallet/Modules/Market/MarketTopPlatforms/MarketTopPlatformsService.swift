@@ -14,8 +14,21 @@ class MarketTopPlatformsService {
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
-    var sortType: MarketTopPlatformsModule.SortType = .highestCap { didSet { syncIfPossible() } }
-    var timePeriod: MarketKit.HsTimePeriod { didSet { syncIfPossible() } }
+    var sortType: MarketTopPlatformsModule.SortType = .highestCap {
+        didSet {
+            syncIfPossible()
+
+            stat(page: .topPlatforms, event: .switchSortType(sortType: sortType.statSortType))
+        }
+    }
+
+    var timePeriod: MarketKit.HsTimePeriod {
+        didSet {
+            syncIfPossible()
+
+            stat(page: .topPlatforms, event: .switchPeriod(period: timePeriod.statPeriod))
+        }
+    }
 
     private var internalState: MarketListServiceState<TopPlatform> = .loading
 

@@ -23,12 +23,16 @@ class MarketTopService: IMarketMultiSortHeaderService {
     var marketTop: MarketModule.MarketTop {
         didSet {
             syncIfPossible()
+
+            stat(page: .topCoins, event: .switchMarketTop(marketTop: marketTop.statMarketTop))
         }
     }
 
     var sortingField: MarketModule.SortingField {
         didSet {
             syncIfPossible()
+
+            stat(page: .topCoins, event: .switchSortType(sortType: sortingField.statSortType))
         }
     }
 

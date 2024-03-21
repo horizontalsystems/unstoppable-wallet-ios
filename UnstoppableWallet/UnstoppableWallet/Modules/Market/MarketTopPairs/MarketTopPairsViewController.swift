@@ -60,5 +60,7 @@ class MarketTopPairsViewController: MarketListViewController {
         }
 
         UrlManager.open(url: tradeUrl)
+
+        stat(page: .topMarketPairs, event: .open(page: .externalMarketPair))
     }
 }
