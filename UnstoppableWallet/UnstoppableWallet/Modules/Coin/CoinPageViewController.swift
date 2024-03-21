@@ -79,7 +79,8 @@ class CoinPageViewController: ThemeViewController {
             HudHelper.instance.show(banner: $0)
         }
 
-        onSelectTab(index: 0)
+        tabsView.select(index: 0)
+        setViewPager(tab: .overview)
     }
 
     @objc private func onTapCloseButton() {
@@ -97,6 +98,8 @@ class CoinPageViewController: ThemeViewController {
 
         tabsView.select(index: tab.rawValue)
         setViewPager(tab: tab)
+
+        stat(page: .coinPage, event: .switchTab(tab: tab.statTab))
     }
 
     private func setViewPager(tab: CoinPageModule.Tab) {

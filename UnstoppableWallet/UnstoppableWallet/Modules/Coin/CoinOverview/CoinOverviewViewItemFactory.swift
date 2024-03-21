@@ -183,6 +183,7 @@ class CoinOverviewViewItemFactory {
             }
 
             return CoinOverviewViewModel.LinkViewItem(
+                type: linkType,
                 title: linkTitle(type: linkType, url: url),
                 iconName: linkIconName(type: linkType),
                 url: linkUrl(type: linkType, url: url)

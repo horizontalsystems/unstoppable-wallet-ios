@@ -200,6 +200,8 @@ class CoinOverviewViewController: ThemeViewController {
 
     private func openChartSettings() {
         parentNavigationController?.present(chartRouter.viewController(), animated: true)
+
+        stat(page: .coinOverview, event: .open(page: .indicators))
     }
 }
 
@@ -305,6 +307,8 @@ extension CoinOverviewViewController {
                 action: { [weak self] in
                     let module = MarkdownModule.viewController(url: guideUrl)
                     self?.parentNavigationController?.pushViewController(module, animated: true)
+
+                    stat(page: .coinOverview, event: .open(page: .guide))
                 }
             )
 
@@ -323,6 +327,7 @@ extension CoinOverviewViewController {
                     isLast: index == links.count - 1,
                     action: { [weak self] in
                         self?.openLink(url: link.url)
+                        stat(page: .coinOverview, event: .open(page: link.type.statPage))
                     }
                 )
             }
@@ -384,6 +389,7 @@ extension CoinOverviewViewController {
         if let reference = viewItem.reference {
             action = {
                 CopyHelper.copyAndNotify(value: reference)
+                stat(page: .coinOverview, event: .copy(entity: .contractAddress))
             }
         }
 
@@ -416,6 +422,7 @@ extension CoinOverviewViewController {
                         component.button.set(image: UIImage(named: "globe_20"))
                         component.onTap = {
                             self?.urlManager.open(url: explorerUrl, from: self?.parentNavigationController)
+                            stat(page: .coinOverview, event: .open(page: .externalBlockExplorer))
                         }
                     } else {
                         component.isHidden = true
