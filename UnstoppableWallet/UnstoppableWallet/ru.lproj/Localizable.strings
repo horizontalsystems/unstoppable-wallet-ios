@@ -563,11 +563,11 @@
 "swap.rate_not_available" = "Rate not available";
 "swap.select" = "Выбрать";
 "swap.quoting" = "Котировка";
-"swap.select_token_in" = "Select Token In";
+"swap.select_token_in" = "Выбрать токен";
 "swap.select_token_out" = "Select Token Out";
-"swap.no_providers" = "No Providers";
+"swap.no_providers" = "Нет провайдеров";
 "swap.enter_amount" = "Ввести сумму";
-"swap.no_quotes" = "No Quotes";
+"swap.no_quotes" = "Нет предложений";
 "swap.token_not_enabled" = "Токен не включен";
 "swap.token_syncing" = "Синхронизация токенов";
 "swap.token_not_synced" = "Токен не синхронизирован";
