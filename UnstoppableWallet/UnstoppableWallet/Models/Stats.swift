@@ -172,6 +172,13 @@ enum StatSortType: String {
     case balance
     case name
     case priceChange = "price_change"
+
+    case highestCap = "highest_cap"
+    case lowestCap = "lowest_cap"
+    case highestVolume = "highest_volume"
+    case lowestVolume = "lowest_volume"
+    case topGainers = "top_gainers"
+    case topLosers = "top_losers"
 }
 
 enum StatPeriod: String {

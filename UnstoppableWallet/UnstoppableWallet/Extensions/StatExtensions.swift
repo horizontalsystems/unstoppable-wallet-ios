@@ -134,3 +134,27 @@ extension MarketModule.MarketPlatformField {
         }
     }
 }
+
+extension MarketModule.SortingField {
+    var statSortType: StatSortType {
+        switch self {
+        case .highestCap: return .highestCap
+        case .lowestCap: return .lowestCap
+        case .highestVolume: return .highestVolume
+        case .lowestVolume: return .lowestVolume
+        case .topGainers: return .topGainers
+        case .topLosers: return .topLosers
+        }
+    }
+}
+
+extension MarketTopPlatformsModule.SortType {
+    var statSortType: StatSortType {
+        switch self {
+        case .highestCap: return .highestCap
+        case .lowestCap: return .lowestCap
+        case .topGainers: return .topGainers
+        case .topLosers: return .topLosers
+        }
+    }
+}

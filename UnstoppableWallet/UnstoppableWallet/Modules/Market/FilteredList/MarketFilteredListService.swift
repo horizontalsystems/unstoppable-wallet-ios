@@ -11,6 +11,7 @@ protocol IMarketFilteredListProvider {
 class MarketFilteredListService: IMarketMultiSortHeaderService {
     private let currencyManager: CurrencyManager
     private let provider: IMarketFilteredListProvider
+    private let statPage: StatPage
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: MarketListServiceState<MarketInfo> = .loading
@@ -18,12 +19,15 @@ class MarketFilteredListService: IMarketMultiSortHeaderService {
     var sortingField: MarketModule.SortingField = .highestCap {
         didSet {
             syncIfPossible()
+
+            stat(page: statPage, event: .switchSortType(sortType: sortingField.statSortType))
         }
     }
 
-    init(currencyManager: CurrencyManager, provider: IMarketFilteredListProvider) {
+    init(currencyManager: CurrencyManager, provider: IMarketFilteredListProvider, statPage: StatPage) {
         self.currencyManager = currencyManager
         self.provider = provider
+        self.statPage = statPage
 
         syncMarketInfos()
     }

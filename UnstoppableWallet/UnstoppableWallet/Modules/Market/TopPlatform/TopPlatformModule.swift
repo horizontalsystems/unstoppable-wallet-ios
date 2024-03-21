@@ -6,7 +6,7 @@ import UIKit
 enum TopPlatformModule {
     static func viewController(topPlatform: TopPlatform, apiTag: String) -> UIViewController {
         let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit, apiTag: apiTag)
-        let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service)
+        let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service, statPage: .topPlatform)
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, favoritesManager: App.shared.favoritesManager, statPage: .topPlatform)
 
         let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, topPlatform: topPlatform)
