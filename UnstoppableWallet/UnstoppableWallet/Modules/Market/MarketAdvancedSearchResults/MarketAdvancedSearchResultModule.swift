@@ -6,7 +6,7 @@ enum MarketAdvancedSearchResultModule {
         let service = MarketAdvancedSearchResultService(marketInfos: marketInfos, currencyManager: App.shared.currencyManager, priceChangeType: priceChangeType)
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: service, favoritesManager: App.shared.favoritesManager, statPage: .advancedSearchResults)
 
-        let decorator = MarketListMarketFieldDecorator(service: service)
+        let decorator = MarketListMarketFieldDecorator(service: service, statPage: .advancedSearchResults)
         let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
 

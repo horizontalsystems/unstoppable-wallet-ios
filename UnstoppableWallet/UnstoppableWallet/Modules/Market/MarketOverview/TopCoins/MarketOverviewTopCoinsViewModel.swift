@@ -51,6 +51,6 @@ extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
         let marketTop = MarketModule.MarketTop.allCases[selectorIndex]
         service.set(marketTop: marketTop)
 
-        stat(page: .marketOverview, section: listType.statSection, event: .switchCount)
+        stat(page: .marketOverview, section: listType.statSection, event: .switchMarketTop(marketTop: marketTop.statMarketTop))
     }
 }

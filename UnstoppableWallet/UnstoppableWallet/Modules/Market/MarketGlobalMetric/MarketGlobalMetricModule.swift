@@ -28,14 +28,15 @@ enum MarketGlobalMetricModule {
             statPage: type.statPage
         )
 
-        let decorator = MarketListMarketFieldDecorator(service: service)
+        let decorator = MarketListMarketFieldDecorator(service: service, statPage: type.statPage)
         let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: decorator)
 
         let chartFetcher = MarketGlobalFetcher(currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, metricsType: type)
         let chartService = MetricChartService(
             chartFetcher: chartFetcher,
-            interval: .byPeriod(.day1)
+            interval: .byPeriod(.day1),
+            statPage: type.statPage
         )
 
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
@@ -63,7 +64,8 @@ enum MarketGlobalMetricModule {
         let chartFetcher = MarketGlobalFetcher(currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, metricsType: .defiCap)
         let chartService = MetricChartService(
             chartFetcher: chartFetcher,
-            interval: .byPeriod(.day1)
+            interval: .byPeriod(.day1),
+            statPage: .globalMetricsDefiCap
         )
 
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
@@ -92,7 +94,8 @@ enum MarketGlobalMetricModule {
         let chartFetcher = MarketGlobalTvlFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, marketGlobalTvlPlatformService: service)
         let chartService = MetricChartService(
             chartFetcher: chartFetcher,
-            interval: .byPeriod(.day1)
+            interval: .byPeriod(.day1),
+            statPage: .globalMetricsTvlInDefi
         )
         service.chartService = chartService
 

@@ -4,15 +4,6 @@ import UIKit
 enum MainModule {
     enum Tab: String, CaseIterable {
         case markets, balance, transactions, settings
-
-        var statTab: StatTab {
-            switch self {
-            case .markets: return .markets
-            case .balance: return .balance
-            case .transactions: return .transactions
-            case .settings: return .settings
-            }
-        }
     }
 
     static func instance(presetTab: Tab? = nil) -> UIViewController {

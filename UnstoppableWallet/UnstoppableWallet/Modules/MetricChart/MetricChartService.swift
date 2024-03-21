@@ -8,11 +8,14 @@ class MetricChartService {
     private var cancellables = Set<AnyCancellable>()
 
     private var chartFetcher: IMetricChartFetcher
+    private var statPage: StatPage
 
     @DistinctPublished var interval: HsPeriodType {
         didSet {
             if interval != oldValue {
                 fetchChartData()
+
+                stat(page: statPage, event: .switchChartPeriod(period: interval.statPeriod))
             }
         }
     }
@@ -23,9 +26,10 @@ class MetricChartService {
 
     private var itemDataMap = [HsPeriodType: MetricChartModule.ItemData]()
 
-    init(chartFetcher: IMetricChartFetcher, interval: HsPeriodType) {
+    init(chartFetcher: IMetricChartFetcher, interval: HsPeriodType, statPage: StatPage) {
         self.chartFetcher = chartFetcher
         self.interval = interval
+        self.statPage = statPage
 
         intervals = chartFetcher.intervals
 

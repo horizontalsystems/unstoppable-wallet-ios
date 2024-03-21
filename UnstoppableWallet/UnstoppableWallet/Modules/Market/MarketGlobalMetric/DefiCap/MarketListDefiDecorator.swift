@@ -8,6 +8,8 @@ class MarketListDefiDecorator {
     var marketField: MarketModule.MarketField {
         didSet {
             service.onUpdate(index: marketField.rawValue)
+
+            stat(page: .globalMetricsDefiCap, event: .switchField(field: marketField.statField))
         }
     }
 

@@ -187,7 +187,7 @@ class MarketViewController: ThemeSearchViewController {
 }
 
 extension MarketViewController: SectionsDataSource {
-    private func onSelect(fullCoin: FullCoin) {
+    private func onSelect(fullCoin: FullCoin, statSection: StatSection) {
         let coinUid = fullCoin.coin.uid
 
         guard let module = CoinPageModule.viewController(coinUid: coinUid) else {
@@ -199,7 +199,8 @@ extension MarketViewController: SectionsDataSource {
         }
 
         present(module, animated: true)
-        stat(page: .marketSearch, event: .openCoin(coinUid: coinUid))
+
+        stat(page: .marketSearch, section: statSection, event: .openCoin(coinUid: coinUid))
     }
 
     private func rowActions(coinUid: String) -> [RowAction] {
@@ -229,7 +230,7 @@ extension MarketViewController: SectionsDataSource {
         ]
     }
 
-    private func rows(fullCoins: [FullCoin]) -> [RowProtocol] {
+    private func rows(fullCoins: [FullCoin], statSection: StatSection) -> [RowProtocol] {
         fullCoins.enumerated().map { index, fullCoin in
             let coin = fullCoin.coin
             let isLast = index == fullCoins.count - 1
@@ -262,7 +263,7 @@ extension MarketViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                 },
                 action: { [weak self] in
-                    self?.onSelect(fullCoin: fullCoin)
+                    self?.onSelect(fullCoin: fullCoin, statSection: statSection)
                 }
             )
         }
@@ -286,7 +287,7 @@ extension MarketViewController: SectionsDataSource {
                             },
                             dynamicHeight: { _ in .heightSingleLineCell }
                         ),
-                        rows: rows(fullCoins: recentFullCoins)
+                        rows: rows(fullCoins: recentFullCoins, statSection: .recent)
                     )
                 )
             }
@@ -302,7 +303,7 @@ extension MarketViewController: SectionsDataSource {
                             },
                             dynamicHeight: { _ in .heightSingleLineCell }
                         ),
-                        rows: rows(fullCoins: popularFullCoins)
+                        rows: rows(fullCoins: popularFullCoins, statSection: .popular)
                     )
                 )
             }
@@ -312,7 +313,7 @@ extension MarketViewController: SectionsDataSource {
             return [
                 Section(
                     id: "coins",
-                    rows: rows(fullCoins: fullCoins)
+                    rows: rows(fullCoins: fullCoins, statSection: .searchResults)
                 ),
             ]
         }

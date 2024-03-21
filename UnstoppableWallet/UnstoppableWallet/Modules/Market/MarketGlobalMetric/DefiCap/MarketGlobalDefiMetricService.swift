@@ -17,6 +17,8 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
     var sortDirectionAscending: Bool = false {
         didSet {
             syncIfPossible()
+
+            stat(page: .globalMetricsDefiCap, event: .toggleSortDirection)
         }
     }
 

@@ -352,14 +352,6 @@ extension WalletModule {
             case .percentGrowth: return "balance.sort.price_change".localized
             }
         }
-
-        var statSortType: StatSortType {
-            switch self {
-            case .balance: return .balance
-            case .name: return .name
-            case .percentGrowth: return .priceChange
-            }
-        }
     }
 
     class HeaderViewItem {

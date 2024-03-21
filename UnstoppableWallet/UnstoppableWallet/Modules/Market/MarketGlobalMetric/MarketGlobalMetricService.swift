@@ -17,6 +17,8 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
     var sortDirectionAscending: Bool = false {
         didSet {
             syncIfPossible()
+
+            stat(page: metricsType.statPage, event: .toggleSortDirection)
         }
     }
 
