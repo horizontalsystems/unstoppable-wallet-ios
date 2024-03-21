@@ -204,16 +204,22 @@ class WalletViewController: ThemeViewController {
     @objc func onTapCreate() {
         let viewController = CreateAccountModule.viewController(sourceViewController: self, listener: self)
         present(viewController, animated: true)
+
+        stat(page: .balance, event: .open(page: .newWallet))
     }
 
     @objc func onTapRestore() {
         let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self)
         present(viewController, animated: true)
+
+        stat(page: .balance, event: .open(page: .importWallet))
     }
 
     @objc func onTapWatch() {
         let viewController = WatchModule.viewController()
         present(viewController, animated: true)
+
+        stat(page: .balance, event: .open(page: .watchWallet))
     }
 
     @objc func onRefresh() {

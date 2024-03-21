@@ -1,32 +1,51 @@
 enum StatPage: String {
+    case aboutApp = "about_app"
+    case academy
     case addEvmSyncSource = "add_evm_sync_source"
     case addToken = "add_token"
     case advancedSearch = "advanced_search"
     case advancedSearchResults = "advanced_search_results"
+    case appearance
     case backupRequired = "backup_required"
+    case backupManager = "backup_manager"
     case balance
+    case baseCurrency = "base_currency"
+    case blockchainSettings = "blockchain_settings"
     case coinManager = "coin_manager"
     case coinPage = "coin_page"
     case coinCategory = "coin_category"
     case coinRank = "coin_rank"
+    case contacts
+    case contactUs = "contact_us"
+    case donate
+    case externalCompanyWebsite = "external_company_website"
     case externalMarketPair = "external_market_pair"
     case externalNews = "external_news"
+    case externalTelegram = "external_telegram"
+    case externalTwitter = "external_twitter"
+    case faq
     case globalMetricsMarketCap = "global_metrics_market_cap"
     case globalMetricsVolume = "global_metrics_volume"
     case globalMetricsDefiCap = "global_metrics_defi_cap"
     case globalMetricsTvlInDefi = "global_metrics_tvl_in_defi"
+    case importWallet = "import_wallet"
+    case language
     case main
     case manageWallets = "manage_wallets"
     case markets
     case marketOverview = "market_overview"
     case marketSearch = "market_search"
     case news
+    case newWallet = "new_wallet"
+    case rateUs = "rate_us"
     case receiveTokenList = "receive_token_list"
     case scanQrCode = "scan_qr_code"
+    case security
     case sendTokenList = "send_token_list"
     case settings
     case swap
     case switchWallet = "switch_wallet"
+    case tellFriends = "tell_friends"
     case tokenBalance = "token_balance"
     case topCoins = "top_coins"
     case topMarketPairs = "top_market_pairs"
@@ -37,7 +56,9 @@ enum StatPage: String {
     case transactions
     case transactionFilter = "transaction_filter"
     case transactionInfo = "transaction_info"
+    case walletConnect = "wallet_connect"
     case watchlist
+    case watchWallet = "watch_wallet"
     case widget
 }
 

@@ -89,6 +89,8 @@ class MainSettingsViewController: ThemeViewController {
         footerCell.set(appVersion: viewModel.appVersion)
         footerCell.onTapLogo = { [weak self] in
             self?.viewModel.onTapCompanyLink()
+
+            stat(page: .settings, event: .open(page: .externalCompanyWebsite))
         }
 
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] in self?.syncManageAccountCell(alert: $0) }
@@ -203,6 +205,8 @@ class MainSettingsViewController: ThemeViewController {
             return
         }
         present(viewController, animated: true)
+
+        stat(page: .settings, event: .open(page: .donate))
     }
 
     private var accountRows: [RowProtocol] {
@@ -213,6 +217,8 @@ class MainSettingsViewController: ThemeViewController {
                 height: .heightCell48,
                 action: { [weak self] in
                     self?.navigationController?.pushViewController(ManageAccountsModule.viewController(mode: .manage), animated: true)
+
+                    stat(page: .settings, event: .open(page: .manageWallets))
                 }
             ),
             tableView.universalRow48(
@@ -224,6 +230,8 @@ class MainSettingsViewController: ThemeViewController {
                 action: { [weak self] in
                     let viewController = BlockchainSettingsModule.view().toViewController(title: "blockchain_settings.title".localized)
                     self?.navigationController?.pushViewController(viewController, animated: true)
+
+                    stat(page: .settings, event: .open(page: .blockchainSettings))
                 }
             ),
             tableView.universalRow48(
@@ -235,6 +243,8 @@ class MainSettingsViewController: ThemeViewController {
                 action: { [weak self] in
                     let viewController = BackupManagerModule.viewController()
                     self?.navigationController?.pushViewController(viewController, animated: true)
+
+                    stat(page: .settings, event: .open(page: .backupManager))
                 }
             ),
         ]
@@ -263,6 +273,8 @@ class MainSettingsViewController: ThemeViewController {
                 action: { [weak self] in
                     let viewController = SecuritySettingsModule.view().toViewController(title: "settings_security.title".localized)
                     self?.navigationController?.pushViewController(viewController, animated: true)
+
+                    stat(page: .settings, event: .open(page: .security))
                 }
             ),
             StaticRow(
@@ -274,6 +286,8 @@ class MainSettingsViewController: ThemeViewController {
                         return
                     }
                     self?.navigationController?.pushViewController(viewController, animated: true)
+
+                    stat(page: .settings, event: .open(page: .contacts))
                 }
             ),
             StaticRow(
@@ -283,6 +297,8 @@ class MainSettingsViewController: ThemeViewController {
                 action: { [weak self] in
                     let viewController = AppearanceView().toViewController(title: "appearance.title".localized)
                     self?.navigationController?.pushViewController(viewController, animated: true)
+
+                    stat(page: .settings, event: .open(page: .appearance))
                 }
             ),
             StaticRow(
@@ -291,6 +307,8 @@ class MainSettingsViewController: ThemeViewController {
                 height: .heightCell48,
                 action: { [weak self] in
                     self?.navigationController?.pushViewController(BaseCurrencySettingsModule.view().toViewController(title: "settings.base_currency.title".localized), animated: true)
+
+                    stat(page: .settings, event: .open(page: .baseCurrency))
                 }
             ),
             StaticRow(
@@ -300,6 +318,8 @@ class MainSettingsViewController: ThemeViewController {
                 action: { [weak self] in
                     let module = LanguageSettingsModule.view().toViewController(title: "settings.language".localized)
                     self?.navigationController?.pushViewController(module, animated: true)
+
+                    stat(page: .settings, event: .open(page: .language))
                 }
             ),
         ]
@@ -315,6 +335,8 @@ class MainSettingsViewController: ThemeViewController {
                 isFirst: true,
                 action: { [weak self] in
                     self?.navigationController?.pushViewController(FaqModule.viewController(), animated: true)
+
+                    stat(page: .settings, event: .open(page: .faq))
                 }
             ),
             tableView.universalRow48(
@@ -325,6 +347,8 @@ class MainSettingsViewController: ThemeViewController {
                 isLast: true,
                 action: { [weak self] in
                     self?.navigationController?.pushViewController(GuidesModule.instance(), animated: true)
+
+                    stat(page: .settings, event: .open(page: .academy))
                 }
             ),
         ]
@@ -341,6 +365,8 @@ class MainSettingsViewController: ThemeViewController {
                 isFirst: true,
                 action: {
                     UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
+
+                    stat(page: .settings, event: .open(page: .externalTelegram))
                 }
             ),
             tableView.universalRow48(
@@ -358,6 +384,8 @@ class MainSettingsViewController: ThemeViewController {
                     } else {
                         UrlManager.open(url: "https://twitter.com/\(account)")
                     }
+
+                    stat(page: .settings, event: .open(page: .externalTwitter))
                 }
             ),
         ]
@@ -371,6 +399,8 @@ class MainSettingsViewController: ThemeViewController {
                 height: .heightCell48,
                 action: { [weak self] in
                     self?.navigationController?.pushViewController(AboutModule.view().toViewController(title: "settings.about_app.title".localized), animated: true)
+
+                    stat(page: .settings, event: .open(page: .aboutApp))
                 }
             ),
             tableView.universalRow48(
@@ -381,6 +411,8 @@ class MainSettingsViewController: ThemeViewController {
                 autoDeselect: true,
                 action: { [weak self] in
                     self?.viewModel.onTapRateApp()
+
+                    stat(page: .settings, event: .open(page: .rateUs))
                 }
             ),
             tableView.universalRow48(
@@ -417,7 +449,9 @@ class MainSettingsViewController: ThemeViewController {
                 autoDeselect: true,
                 isFirst: true,
                 isLast: true,
-                action: { [weak self] in self?.onDonateTapped() }
+                action: { [weak self] in
+                    self?.onDonateTapped()
+                }
             ),
         ]
     }
@@ -445,6 +479,8 @@ class MainSettingsViewController: ThemeViewController {
         let text = "settings_tell_friends.text".localized + "\n" + AppConfig.appWebPageLink
         let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: [])
         present(activityViewController, animated: true, completion: nil)
+
+        stat(page: .settings, event: .open(page: .tellFriends))
     }
 
     private func handleEmailContact() {
@@ -481,6 +517,8 @@ class MainSettingsViewController: ThemeViewController {
         )
 
         present(viewController, animated: true)
+
+        stat(page: .settings, event: .open(page: .contactUs))
     }
 }
 
