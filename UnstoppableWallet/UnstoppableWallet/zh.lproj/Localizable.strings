@@ -451,8 +451,8 @@
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "账户";
-"send.confirmation.memo" = "Memo";
-"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.memo" = "备忘录";
+"send.confirmation.memo_placeholder" = "备忘录";
 "send.confirmation.total" = "总额";
 "send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "TimeLock";
@@ -808,9 +808,9 @@
 "market.advanced_search.month6" = "6 个月";
 "market.advanced_search.year" = "1 年";
 
-"market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
-"market.advanced_search.month.short" = "1M";
+"market.advanced_search.day.short" = "24时";
+"market.advanced_search.week.short" = "7天";
+"market.advanced_search.month.short" = "1月";
 
 "market.advanced_search_results.title" = "搜索结果";
 
@@ -1163,7 +1163,7 @@
 "tx_info.unlocked_at" = "在 %@ 解锁了";
 "tx_info.recipient_hash" = "Recipient";
 "tx_info.raw_transaction" = "原始交易";
-"tx_info.memo" = "Memo";
+"tx_info.memo" = "备忘录";
 "tx_info.service" = "服务";
 "tx_info.view_on" = "查看于%@";
 "tx_info.you_pay" = "您支付";
@@ -1508,15 +1508,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.day" = "24时";
+"chart.time_duration.week" = "7天";
 "chart.time_duration.week2" = "2星期";
-"chart.time_duration.month" = "1M";
+"chart.time_duration.month" = "1月";
 "chart.time_duration.month3" = "3个月";
 "chart.time_duration.halfyear" = "6个月";
 "chart.time_duration.year" = "1年";
 "chart.time_duration.year2" = "2年";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year5" = "5年";
 "chart.time_duration.all" = "所有";
 
 "chart.market_cap" = "市场价值";
@@ -1775,7 +1775,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "使用此nonce执行的交易已存在。";
 
 "fee_settings" = "高级";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "费用设置";
 "fee_settings.fee" = "费用";
 "fee_settings.fee.info" = "区块链要求用户在发送交易时支付网络费用。当大量交易在网络上进行时，这笔费用将更高。";
 "fee_settings.fee_rate" = "费率";
@@ -2012,7 +2012,7 @@
 "transaction_filter.all_blockchains" = "所有区块链";
 "transaction_filter.coin" = "硬币";
 "transaction_filter.all_coins" = "所有硬币";
-"transaction_filter.contact" = "Contact";
+"transaction_filter.contact" = "联系";
 "transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
 "transaction_filter.hide_suspicious_txs.description" = "隐藏到达的沙尘群交易，这部分解决了地址中毒攻击问题。";
