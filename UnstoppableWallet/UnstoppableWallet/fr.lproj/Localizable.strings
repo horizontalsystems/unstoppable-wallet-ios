@@ -809,7 +809,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market.advanced_search.year" = "1 An";
 
 "market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
+"market.advanced_search.week.short" = "7J";
 "market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Résultat";
@@ -1509,14 +1509,14 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Key Types
 
 "chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.week" = "7J";
 "chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3 M";
 "chart.time_duration.halfyear" = "6 m.";
 "chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2A";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year5" = "5A";
 "chart.time_duration.all" = "TOUS";
 
 "chart.market_cap" = "Cap. marché";
@@ -1790,7 +1790,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "fee_settings.network_fee" = "Frais de réseau";
 "fee_settings.network_fee.info" = "Le coût estimé de l'envoi d'une transaction donnée sur le réseau.";
-"fee_settings.l1_fee" = "L1 Fee";
+"fee_settings.l1_fee" = "Frais L1";
 "fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La complexité des transactions est mesurée en unités appelées \"gas\". Elles varient en fonction du contrat intelligent en cours d'exécution. La limite de gas est le volume maximum estimé de gas nécessaire pour son exécution. Le volume de gaz réellement utilisé est généralement inférieur.";
@@ -2012,7 +2012,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "transaction_filter.all_blockchains" = "Toutes les blockchains";
 "transaction_filter.coin" = "Coin";
 "transaction_filter.all_coins" = "Toutes les pièces";
-"transaction_filter.contact" = "Contact";
+"transaction_filter.contact" = "Contacter";
 "transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Masquer les transactions suspectes";
 "transaction_filter.hide_suspicious_txs.description" = "Masquer les transactions entrantes avec des montants infimes en stablecoins, cela résout partiellement les problèmes d'attaques de poisoning d'adresse.";
