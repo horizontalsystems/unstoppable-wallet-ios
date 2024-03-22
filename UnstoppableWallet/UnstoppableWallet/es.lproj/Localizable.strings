@@ -503,7 +503,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "send.lock_time" = "Timelock";
 
-"send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs" = "UTXOs";
 "send.unspent_outputs.send_to" = "Send To";
 "send.unspent_outputs.change" = "Change";
 
@@ -592,7 +592,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.price_impact" = "Impacto en el precio";
 "swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "High Price Impact";
-"swap.recipient" = "Recipient";
+"swap.recipient" = "Destinatario";
 "swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
@@ -743,7 +743,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "market.advanced_search.market_parameters" = "Parámetros de Mercado";
 "market.advanced_search.network_parameters" = "Parámetros de red";
-"market.advanced_search.indicators" = "Indicators";
+"market.advanced_search.indicators" = "Indicadores";
 "market.advanced_search.price_parameters" = "Parámetros de Precio";
 "market.advanced_search.choose_set" = "Elegir Conjunto";
 "market.advanced_search.market_cap" = "Capitalización del Mercado";
@@ -837,7 +837,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators" = "Indicadores";
 "coin_overview.indicators.show" = "Mostrar";
 "coin_overview.indicators.hide" = "Ocultar";
 "coin_overview.market_cap" = "Capitalización del Mercado";
@@ -1074,7 +1074,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "Indicadores";
 "chart_indicators.moving_averages" = "Medias móviles";
 "chart_indicators.oscillators" = "Osciladores";
 
@@ -1161,7 +1161,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.double_spent_note" = "¡Riesgo de doble gasto!";
 "tx_info.locked_until" = "Bloqueado hasta %@";
 "tx_info.unlocked_at" = "Desbloqueado en %@";
-"tx_info.recipient_hash" = "Recipient";
+"tx_info.recipient_hash" = "Destinatario";
 "tx_info.raw_transaction" = "Transacción sin procesar";
 "tx_info.memo" = "Memo";
 "tx_info.service" = "Servicio";
@@ -1517,7 +1517,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1 Año";
 "chart.time_duration.year2" = "2 Años";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year5" = "5A";
 "chart.time_duration.all" = "TODO";
 
 "chart.market_cap" = "Capitalización del Mercado";
@@ -1776,7 +1776,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "evm_send_settings.nonce.errors.already_in_use.info" = "Una transacción ejecutada con este nonce ya existe.";
 
 "fee_settings" = "Avanzado";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "Configuración de tarifas";
 "fee_settings.fee" = "Comisión";
 "fee_settings.fee.info" = "Blockchains requiere que los usuarios paguen comisiones de red al enviar transacciones. Las comisiones son más altas cuando muchas transacciones tienen lugar en la red.";
 "fee_settings.fee_rate" = "Tasa de comisión";
