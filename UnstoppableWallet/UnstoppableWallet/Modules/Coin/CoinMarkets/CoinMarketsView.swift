@@ -63,6 +63,7 @@ struct CoinMarketsView: View {
                     if let tradeUrl = viewItem.tradeUrl {
                         ClickableRow(action: {
                             UrlManager.open(url: tradeUrl)
+                            stat(page: .coinMarkets, event: .open(page: .externalMarketPair))
                         }) {
                             listItemContent(viewItem: viewItem)
                         }

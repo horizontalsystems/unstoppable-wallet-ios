@@ -20,6 +20,8 @@ class CoinMarketsViewModel: ObservableObject {
             DispatchQueue.global().async { [weak self] in
                 self?.syncState()
             }
+
+            stat(page: .coinMarkets, event: .switchFilterType(type: filterType.rawValue))
         }
     }
 
@@ -30,6 +32,8 @@ class CoinMarketsViewModel: ObservableObject {
             DispatchQueue.global().async { [weak self] in
                 self?.syncState()
             }
+
+            stat(page: .coinMarkets, event: .switchVolumeType(type: volumeType.rawValue))
         }
     }
 
@@ -164,12 +168,12 @@ extension CoinMarketsViewModel {
         case failed(error: String)
     }
 
-    private enum FilterType: CaseIterable {
+    private enum FilterType: String, CaseIterable {
         case all
         case verified
     }
 
-    private enum VolumeType: CaseIterable {
+    private enum VolumeType: String, CaseIterable {
         case coin
         case currency
     }
