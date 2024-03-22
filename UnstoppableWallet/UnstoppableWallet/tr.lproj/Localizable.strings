@@ -808,9 +808,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.month6" = "6 Ay";
 "market.advanced_search.year" = "1 Yıl";
 
-"market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
-"market.advanced_search.month.short" = "1M";
+"market.advanced_search.day.short" = "24S";
+"market.advanced_search.week.short" = "7G";
+"market.advanced_search.month.short" = "1A";
 
 "market.advanced_search_results.title" = "Sonuçlar";
 
@@ -1512,10 +1512,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.day" = "24S";
+"chart.time_duration.week" = "7G";
 "chart.time_duration.week2" = "2H";
-"chart.time_duration.month" = "1M";
+"chart.time_duration.month" = "1A";
 "chart.time_duration.month3" = "3A";
 "chart.time_duration.halfyear" = "6A";
 "chart.time_duration.year" = "1Y";
