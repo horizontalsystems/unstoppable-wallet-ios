@@ -21,7 +21,7 @@ enum WalletTokenModule {
         dataSourceChain.append(source: tokenBalanceDataSource)
 
         if let wallet = element.wallet {
-            let transactionsDataSource = TransactionsModule.dataSource(token: wallet.token)
+            let transactionsDataSource = TransactionsModule.dataSource(token: wallet.token, statPage: .tokenPage)
             transactionsDataSource.viewController = viewController
             dataSourceChain.append(source: transactionsDataSource)
         }

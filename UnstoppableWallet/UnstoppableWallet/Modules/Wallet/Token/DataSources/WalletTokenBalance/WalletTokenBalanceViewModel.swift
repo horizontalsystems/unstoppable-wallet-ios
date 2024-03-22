@@ -81,6 +81,8 @@ extension WalletTokenBalanceViewModel {
     func onTapAmount() {
         service.toggleBalanceHidden()
         playHapticSubject.send()
+
+        stat(page: .tokenPage, event: .toggleBalanceHidden)
     }
 
     func onTapReceive() {

@@ -450,7 +450,7 @@ class WalletViewController: ThemeViewController {
         if let viewController = WalletTokenModule.viewController(element: element) {
             navigationController?.pushViewController(viewController, animated: true)
 
-            stat(page: .balance, event: .open(page: .tokenBalance))
+            stat(page: .balance, event: .open(page: .tokenPage))
         }
     }
 
