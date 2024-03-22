@@ -56,7 +56,7 @@ struct UsedAddressesView: View {
         .navigationTitle("deposit.used_addresses.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .confirmationAction) {
                 Button("button.done".localized) {
                     if let onDismiss {
                         onDismiss()

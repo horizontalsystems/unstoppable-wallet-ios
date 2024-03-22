@@ -110,7 +110,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .confirmationAction) {
                 Button("button.done".localized) {
                     if let onDismiss {
                         onDismiss()
