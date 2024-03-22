@@ -335,7 +335,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "lost_accounts.warning_message" = "Die verschlüsselten Daten Ihres Wallets wurden kürzlich ungültig, weil Ihr iOS-Sperrbildschirm geändert wurde";
 
 // Token Balance Page
-"balance.token.locked" = "Locked";
+"balance.token.locked" = "Gesperrt";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
 "balance.token.processing" = "Verarbeite";
@@ -378,14 +378,14 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.set_amount" = "Setze Betrag";
 "deposit.enter_amount" = "Betrag eingeben";
 "deposit.not_active" = "nicht aktiv";
-"deposit.used_addresses" = "Used Addresses";
+"deposit.used_addresses" = "Verwendete Adressen";
 "deposit.not_active.title" = "Keine aktive Adresse";
 "deposit.not_active.tron_description" = "Neu erstellte Konten in der TRON-Blockchain sind inaktiv und können nicht abgefragt oder untersucht werden. Sie müssen aktiviert werden.\n\nDie Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren. Zur Aktivierung eines neuen Kontos auf der Tron-Kette ist eine Gebühr von 1 TRX erforderlich";
 
-"deposit.used_addresses.title" = "Used Addresses";
-"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+"deposit.used_addresses.title" = "Verwendete Adressen";
+"deposit.used_addresses.description" = "%@ Adressen werden aus Datenschutz- und Sicherheitsgründen geändert. Unten finden Sie eine Liste der verwendeten Adressen in diesem Wallet.";
 
-"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.external" = "Empfängeraddressen";
 "receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "Hast du schon einmal im Besitz von ZEC-Münzen?";
@@ -393,7 +393,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.zcash.restore.dont_have" = "Nein, ich habe nicht";
 
 "deposit.warning" = "Nur Netzwerk-kompatible Tokens. Andere gehen verloren.";
-"deposit.warning.watch_account" = "This address is the address of the watched account";
+"deposit.warning.watch_account" = "Diese Adresse ist die Adresse des überwachten Kontos";
 
 "receive_network_select.title" = "Netzwerk";
 "receive_network_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse.";
@@ -435,7 +435,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
 "send.fee_info.title" = "Gebührenrate";
 "send.fee_info.description" = "Blockchains verlangen, dass Nutzer Netzwerkgebühren beim Versenden von Transaktionen bezahlen. Die Gebühren sind höher, wenn viele Transaktionen im Netzwerk stattfinden.\n\nDie %@ Brieftasche schätzt die Gebühr basierend auf der aktuellen Blockchain Aktivität und empfiehlt den optimalen Wert, damit die Transaktion innerhalb einer angemessenen Zeit bearbeitet werden kann.\n\nDie empfohlene Gebührenrate, die als Betrag des satoshi Benutzers angezeigt wird, um für ein einziges Byte der Transaktion zu bezahlen. Daher hängt die Gesamtgebühr von der Gesamtgröße der Transaktion ab, die in Bytes gemessen wird.\n\nBenutzer können die zur Verfügung gestellten Steuerelemente verwenden, um den Gebührenwert zu erhöhen oder zu senken. Die Änderung des Gebührensatzes ändert die Gesamtgebühr für die Transaktion, die der Nutzer zu zahlen hat.\n\nSetzen der Gebühr unter dem empfohlenen Wert kann dazu führen, dass eine Transaktion stundenlang als ausstehend gehalten oder abgelehnt wird. Je niedriger der Wert, desto länger dauert die Bestätigung der Transaktion. Für Transaktionen, bei denen Priorität wichtig ist, empfehlen wir, höhere Gebührensätze festzulegen.";
-"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
+"send.transaction_inputs_outputs_info.title" = "Transaktionseingänge / -ausgänge";
 "send.transaction_inputs_outputs_info.description" = "Die meisten Bitcoin-Transaktionen sowie Transaktionen in Kryptowährungen wie Bitcoin-Cash, Dash, und Litecoin erzeugen zwei Ausgänge. Die eine Ausgabe ist der Betrag, der an den Empfänger geht, die andere ist die Umstellausgabe, die an den Absender zurückgegeben wird. Die Art und Weise, wie die meisten Brieftaschen Transaktionen erstellen, macht es für einen Dritten leicht zu verstehen, welche der Ausgaben an den Empfänger gingen und welcher der Änderungsbetrag an den Absender zurückgegeben wurde. Da die an den Absender zurückgegebene Ausgabe später bei zukünftigen Transaktionen verwendet wird, zeigt sich eine Verbindung zwischen diesen beiden Transaktionen.\n\nDie Brieftasche %@ implementiert Maßnahmen, um es jemandem zu erschweren, herauszufinden, welche Ausgabe wohin geht.\n\nEs gibt zwei Optionen für %@ Benutzer:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "Die Reihenfolge der Transaktionsausgänge wird bei jeder Transaktion zufällig. Manchmal können Änderungen die erste Ausgabe sein, manchmal kann es die zweite sein. Wenn ein Benutzer dem Entwickler der App vertraut, dann erwäge dies eine empfohlene Option.";
@@ -444,7 +444,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "send.confirmation.title" = "Bestätigen";
 "send.confirmation.you_send" = "Sie Senden";
-"send.confirmation.transfer" = "Transfer";
+"send.confirmation.transfer" = "Überweisung";
 "send.confirmation.to" = "An";
 "send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "Kontaktname";
@@ -463,22 +463,22 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.sending" = "Wird gesendet";
 "send.confirmation.sent" = "Gesendet";
 
-"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.slide_to_approve" = "Zum Genehmigen wischen";
 "send.confirmation.approving" = "Wird bestätigt";
 "send.confirmation.approved" = "Bestätigt";
 
-"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.slide_to_revoke" = "Zum Widerrufen wischen";
 "send.confirmation.revoking" = "Widerrufen";
 "send.confirmation.revoked" = "Widerrufen";
 
 "send.confirmation.slide_to_resend" = "Nochmal senden";
-"send.confirmation.slide_to_cancel" = "Cancel Transaction";
+"send.confirmation.slide_to_cancel" = "Transaktion abbrechen";
 "send.confirmation.resend_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch erneutes Senden mit einer höheren Gebühr ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.resend" = "Nochmal senden";
 "send.confirmation.cancel_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch eine neue Transaktion mit einem Betrag von 0 an sich selbst ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue Transaktion gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.speed_up" = "Speed Up";
-"send.confirmation.cancel" = "Cancel Transaction";
+"send.confirmation.cancel" = "Transaktion abbrechen";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Methode";
 "send.confirmation.replace_by_fee.disabled" = "Disabled";
@@ -674,8 +674,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.category.overview" = "Übersicht";
 "market.category.posts" = "Nachrichten";
 "market.category.watchlist" = "Merkliste";
-"market.total_market_cap" = "Total M.Cap";
-"market.24h_volume" = "24h Volume";
+"market.total_market_cap" = "Gesamt-MK";
+"market.24h_volume" = "24h-Volumen";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
@@ -817,7 +817,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.global.total_market_cap.title" = "Gesamtmarktzahl";
 "market.global.total_market_cap.description" = "Gesamtmarktwert aller Kryptowährungen";
 
-"market.global.volume_24h.title" = "24h Volume";
+"market.global.volume_24h.title" = "24h-Volumen";
 "market.global.volume_24h.description" = "Das 24h Handelsvolumen des Krypto-Marktes";
 
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -1153,7 +1153,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tx_info.button_explorer" = "Auf %@ ansehen";
 "tx_info.rate" = "Historischer Rate";
 "tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel Transaction";
+"tx_info.options.cancel" = "Transaktion abbrechen";
 "tx_info.transaction.already_in_block" = "Transaktion bereits im Block";
 "tx_info.fee" = "Gebühr";
 "tx_info.fee.estimated" = "Gebühr (est.)";
@@ -1887,7 +1887,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "nft_collection.overview.owners" = "Besitzer";
 "nft_collection.overview.items" = "Artikel";
-"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.24h_volume" = "24h-Volumen";
 "nft_collection.overview.today_sellers" = "Heutige Verkäufer";
 "nft_collection.overview.floor_price" = "Mindestpreis";
 "nft_collection.overview.all_time_average" = "Ganzzeitiger Durchschnitt";
@@ -1899,7 +1899,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "nft.activity.event_types" = "Ereignistypen";
 "nft.activity.event_type.all" = "Alle Ereignisse";
 "nft.activity.event_type.sale" = "Sale";
-"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.transfer" = "Überweisung";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Liste";
 "nft.activity.event_type.listCancel" = "Liste abbrechen";
