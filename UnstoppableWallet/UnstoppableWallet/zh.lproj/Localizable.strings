@@ -587,12 +587,12 @@
 "swap.unlock.title" = "Unlock Access";
 "swap.unlock.subtitle" = "Allow access to the following amount";
 "swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
-"swap.unlock.unlimited" = "Unlimited";
+"swap.unlock.unlimited" = "无限";
 
 "swap.price_impact" = "价格影响";
 "swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "High Price Impact";
-"swap.recipient" = "Recipient";
+"swap.recipient" = "收款人";
 "swap.slippage" = "Slippage";
 
 // Swap Advanced Settings
@@ -1161,7 +1161,7 @@
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
 "tx_info.unlocked_at" = "在 %@ 解锁了";
-"tx_info.recipient_hash" = "Recipient";
+"tx_info.recipient_hash" = "收款人";
 "tx_info.raw_transaction" = "原始交易";
 "tx_info.memo" = "备忘录";
 "tx_info.service" = "服务";
