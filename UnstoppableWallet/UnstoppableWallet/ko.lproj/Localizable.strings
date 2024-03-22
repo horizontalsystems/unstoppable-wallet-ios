@@ -1776,7 +1776,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "이 nonce를 사용하여 실행된 트랜잭션이 이미 존재합니다.";
 
 "fee_settings" = "고급의";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "수수료 설정";
 "fee_settings.fee" = "수수료";
 "fee_settings.fee.info" = "블록체인은 거래를 보낼 때 사용자로부터 네트워크 수수료를 지불하도록 요구합니다. 이 수수료는 네트워크에서 많은 거래가 이루어질 때 더 높아집니다.";
 "fee_settings.fee_rate" = "수수료율";
