@@ -457,7 +457,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.fee" = "Gebühr";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replaced_transactions" = "Ersetzte Transaktionen";
 
 "send.confirmation.slide_to_send" = "Zum Senden wischen";
 "send.confirmation.sending" = "Wird gesendet";
@@ -476,12 +476,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.resend_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch erneutes Senden mit einer höheren Gebühr ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.resend" = "Nochmal senden";
 "send.confirmation.cancel_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch eine neue Transaktion mit einem Betrag von 0 an sich selbst ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue Transaktion gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
-"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.btc_cancel_description" = "Diese Aktion wird versuchen, die vorherige Transaktion zu ungültig zu machen, indem sie sie als neue Transaktion neu sendet und dabei einen Betrag an sich selbst sendet. Wenn die Originaltransaktion ausstehend bleibt, wenn eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie ungültig gemacht und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "Transaktion abbrechen";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Methode";
-"send.confirmation.replace_by_fee.disabled" = "Disabled";
+"send.confirmation.replace_by_fee.disabled" = "Deaktiviert";
 "send.amount_error.balance" = "Nicht genügend Guthaben";
 "send.address_error.own_address" = "TRX kann nicht auf sich selbst übertragen werden";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
@@ -539,7 +539,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.approve.title" = "Genehmigen tauschen";
 "swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, in Ihrem Namen gegebene Token einzutauschen. Diese Erlaubnis legt einen Betrag fest, der von einem intelligenten Vertrag verwendet werden kann. Sie wirkt sich nicht auf Ihr Guthaben aus, erfordert jedoch eine geringe Gebühr für die Ausführung der Genehmigungstransaktion.\n\nEs kann zwar vor jedem Handel auf Anfrage erfolgen, es ist jedoch günstiger, bei zukünftigen Handelsgeschäften einen höheren Betrag im Voraus für uns zu genehmigen.";
 "swap.approve.amount_error.already_approved" = "Sie haben bereits eine Vergütung für diesen Betrag";
-"swap.approve.not_found" = "Can't approve these tokens";
+"swap.approve.not_found" = "Kann diese Token nicht genehmigen";
 "swap.approving_button" = "Wird bestätigt...";
 "swap.revoking_button" = "Widerrufen...";
 "swap.not_available_button" = "Saldo N/A";
@@ -561,39 +561,39 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.rate_not_available" = "Rate nicht verfügbar";
 "swap.select" = "Auswählen";
 "swap.quoting" = "Quoting";
-"swap.select_token_in" = "Select Token In";
-"swap.select_token_out" = "Select Token Out";
-"swap.no_providers" = "No Providers";
+"swap.select_token_in" = "Token auswählen";
+"swap.select_token_out" = "Token auswählen";
+"swap.no_providers" = "Keine Anbieter";
 "swap.enter_amount" = "Betrag eingeben";
-"swap.no_quotes" = "No Quotes";
-"swap.token_not_enabled" = "Token Not Enabled";
-"swap.token_syncing" = "Token Syncing";
-"swap.token_not_synced" = "Token Not Synced";
+"swap.no_quotes" = "Keine Angebote";
+"swap.token_not_enabled" = "Token nicht aktiviert";
+"swap.token_syncing" = "Token-Synchronisation";
+"swap.token_not_synced" = "Token nicht synchronisiert";
 "swap.insufficient_balance" = "Unzureichendes Guthaben";
 
-"swap.quotes.providers" = "Providers";
-"swap.quotes.best_price" = "Best Price";
+"swap.quotes.providers" = "Anbieter";
+"swap.quotes.best_price" = "Bester Preis";
 
 "swap.allowance" = "Vergütung";
-"swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
-"swap.pending_allowance" = "Pending Allowance";
+"swap.allowance.description" = "Die Menge, die eine Börse im Namen eines Benutzers für Token-Austausche ausgeben kann. Eine vorhergehende Transaktion, die eine ausreichende Zulage festlegt, ist erforderlich, bevor eine tatsächliche Austauschtransaktion stattfinden kann.";
+"swap.pending_allowance" = "Ausstehendes Guthaben";
 "swap.unlock" = "Entsperren";
-"swap.unlocking" = "Unlocking";
-"swap.allowance_error" = "Allowance Error";
+"swap.unlocking" = "Entsperrung";
+"swap.allowance_error" = "Zulagenfehler";
 "swap.revoke" = "Widerrufen";
 "swap.revoking" = "Widerrufen";
 "swap.revoke_warning" = "Sie können %@tauschen, oder Sie müssen den neuen Betrag widerrufen und genehmigen";
 
-"swap.unlock.title" = "Unlock Access";
-"swap.unlock.subtitle" = "Allow access to the following amount";
-"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
-"swap.unlock.unlimited" = "Unlimited";
+"swap.unlock.title" = "Zugriff entsperren";
+"swap.unlock.subtitle" = "Zugriff auf den folgenden Betrag gewähren";
+"swap.unlock.description" = "Einer Smart Contract die Berechtigung zum Token-Handel in Ihrem Namen erteilen, wobei der erlaubte Betrag angegeben wird. Es hat keine Auswirkungen auf Ihr Guthaben, verursacht jedoch eine geringe Gebühr für die Genehmigung.\n\nDas Vorabgenehmigen eines höheren Betrags für zukünftige Trades ist kosteneffizienter im Vergleich zu Genehmigungen auf Abruf.";
+"swap.unlock.unlimited" = "Unbegrenzt";
 
 "swap.price_impact" = "Preisauswirkungen";
-"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
-"swap.high_price_impact" = "High Price Impact";
-"swap.recipient" = "Recipient";
-"swap.slippage" = "Slippage";
+"swap.price_impact.description" = "Die erwartete Preisabweichung von einem angezeigten Preis nimmt typischerweise mit dem Tauschbetrag zu.";
+"swap.high_price_impact" = "Hohe Preisbeeinflussung";
+"swap.recipient" = "Empfänger";
+"swap.slippage" = "Preisabweichung";
 
 // Swap Advanced Settings
 
@@ -627,12 +627,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Swap Confirmation
 
 "swap.confirmation.title" = "Bestätigen";
-"swap.confirmation.quoting" = "Quoting...";
-"swap.confirmation.invalid_quote" = "Invalid Quote";
-"swap.confirmation.please_wait" = "Please Wait";
-"swap.confirmation.quote_expires_in" = "Quote expires in %@";
-"swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
+"swap.confirmation.quoting" = "Preisangeboten...";
+"swap.confirmation.invalid_quote" = "Ungültiges Angebot";
+"swap.confirmation.please_wait" = "Bitte warten";
+"swap.confirmation.quote_expires_in" = "Angebot läuft in %@ ab";
+"swap.confirmation.quote_expired" = "Angebot abgelaufen";
+"swap.confirmation.quote_failed" = "Angebot fehlgeschlagen";
 
 "swap.confirmation.slide_to_swap" = "Wischen zum Tauschen";
 "swap.confirmation.swapping" = "Swapping";
@@ -647,7 +647,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.dex_info.description" = "Dieser Tauschdienst wird von %@ betrieben, einem dezentralen Token-Tauschprotokoll, das auf der %@ Blockchain basiert.\n\n%@ ist vollständig automatisiert und wird von intelligenten Verträgen verwaltet, die den Token-Tausch in einer zuverlässigen Art und Weise ermöglichen, ohne dass Betrug betrieben werden kann.";
 "swap.dex_info.header_dex_related" = "%@ zugehörige";
 "swap.dex_info.header_allowance" = "Vergütung";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "Die Menge, die eine Börse im Namen eines Benutzers für Token-Austausche ausgeben kann. Eine vorhergehende Transaktion, die eine ausreichende Zulage festlegt, ist erforderlich, bevor eine tatsächliche Austauschtransaktion stattfinden kann.";
 "swap.dex_info.header_price_impact" = "Preisauswirkungen";
 "swap.dex_info.content_price_impact" = "Erwartete Preisabweichung von einem angezeigten Preis, steigt normalerweise mit dem Tauschbetrag.";
 "swap.dex_info.header_swap_fee" = "Swap-Gebühr";
@@ -676,10 +676,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.category.watchlist" = "Merkliste";
 "market.total_market_cap" = "Gesamt-MK";
 "market.24h_volume" = "24h-Volumen";
-"market.defi_cap" = "DeFi Cap";
+"market.defi_cap" = "DeFi MK";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.project_has_no_coin" = "This project doesn’t have a coin";
+"market.project_has_no_coin" = "Dieses Projekt hat keine eigene Kryptowährung";
 
 "market.top.section.header.see_all" = "Alle anzeigen";
 "market.top.section.header.top_gainers" = "Top- Gewinner";
@@ -687,10 +687,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.top.section.header.sectors" = "Sektoren";
 "market.top.section.header.news" = "Nachrichten";
 "market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted MCap";
+"market.top.market_cap.title" = "MKap";
+"market.top.diluted_market_cap.title" = "Diluted MKap";
 
-"market.market_field.mcap" = "MCap";
+"market.market_field.mcap" = "MKap";
 "market.market_field.vol" = "Vol";
 
 "market.tvl.market_field.value" = "USD";
@@ -700,8 +700,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "market.sort_by" = "Sortieren nach";
 
-"market.top.title" = "Top Coins";
-"market.top.description" = "Top Coins by market cap rank";
+"market.top.title" = "Top Münzen";
+"market.top.description" = "Top-Münzen nach Marktkapitalisierungsrang";
 
 "market.top.highest_cap" = "Höchste Obergrenze";
 "market.top.lowest_cap" = "Niedrigste Obergrenze";
@@ -709,33 +709,33 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.top.lowest_volume" = "Geringste Lautstärke";
 "market.top.top_gainers" = "Top- Gewinner";
 "market.top.top_losers" = "Top Verlierer";
-"market.top.top_collections" = "Top NFT Collections";
+"market.top.top_collections" = "Top NFT-Sammlungen";
 "market.top.floor_price" = "Stockwerk:";
-"market.top.top_market_pairs" = "Top Market Pairs";
-"market.top.top_platforms" = "Top Platforms";
+"market.top.top_market_pairs" = "Top Marktpaare";
+"market.top.top_platforms" = "Top Plattformen";
 "market.top.protocols" = "Protocols";
 
-"top_pairs.title" = "Top Market Pairs";
-"top_pairs.description" = "Top trading pairs by volume in every exchanges";
+"top_pairs.title" = "Top Marktpaare";
+"top_pairs.description" = "Top-Handelspaare nach Volumen in jedem Exchange";
 
 "top_platforms.title" = "Plattform-Rang";
 "top_platforms.description" = "Leading blockchain platforms by the cumulative market of projects built on top.";
 
-"top_platform.title" = "%@ Ecosystem";
+"top_platform.title" = "%@ Ökosystem";
 "top_platform.description" = "Marktkapitalisierung aller Protokolle auf der %@ Kette";
 
 "market.search.recent" = "Neueste";
 "market.search.popular" = "Beliebt";
 
 "market_discovery.title" = "Discovey";
-"market_discovery.filters" = "Filters";
+"market_discovery.filters" = "Filter";
 "market_discovery.browse_categories" = "Kategorien durchsuchen";
-"market_discovery.top_coins" = "TOP Coins";
+"market_discovery.top_coins" = "TOP Münzen";
 "market_discovery.not_found" = "Keine Ergebnisse gefunden";
 
 "market_watchlist.empty.caption" = "Ihre Beobachtungsliste ist leer.";
 
-"market.advanced_search.title" = "Filters";
+"market.advanced_search.title" = "Filter";
 "market.advanced_search.show_results" = "Ergebnisse anzeigen";
 "market.advanced_search.empty_results" = "Leere Ergebnisse";
 "market.advanced_search.dex_description" = "Diese Einstellung gilt für Token, die auf Ethereum (Uniswap DEX) und Binance Smart Chain (Pancake DEX) gehandelt werden.";
@@ -743,7 +743,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "market.advanced_search.market_parameters" = "Marktparameter";
 "market.advanced_search.network_parameters" = "Netzwerkparameter";
-"market.advanced_search.indicators" = "Indicators";
+"market.advanced_search.indicators" = "Indikatoren";
 "market.advanced_search.price_parameters" = "Preisparameter";
 "market.advanced_search.choose_set" = "Satz auswählen";
 "market.advanced_search.market_cap" = "Marktkappe";
@@ -753,20 +753,20 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.good_cex_volume" = "Good CEX Volume";
 "market.advanced_search.good_dex_volume" = "Good DEX Volume";
 "market.advanced_search.good_distribution" = "Good Distribution";
-"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+"market.advanced_search.overall_score_is_good_or_excellent" = "Gesamtbewertung ist Gut oder Ausgezeichnet";
 
 "market.advanced_search.liquidity" = "DEX-Liquidität";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.technical_advice" = "Trading Signals";
+"market.advanced_search.technical_advice" = "Handelssignale";
 "market.advanced_search.price_period" = "Preiszeitraum";
 "market.advanced_search.price_change" = "Preisänderung";
 
-"market.advanced_search.technical_advice.risk_trade" = "Risk To Trade";
-"market.advanced_search.technical_advice.strong_buy" = "Strong Buy";
-"market.advanced_search.technical_advice.buy" = "Buy";
+"market.advanced_search.technical_advice.risk_trade" = "Handelsrisiko";
+"market.advanced_search.technical_advice.strong_buy" = "Starker Kauf";
+"market.advanced_search.technical_advice.buy" = "Kaufen";
 "market.advanced_search.technical_advice.neutral" = "Neutral";
-"market.advanced_search.technical_advice.sell" = "Sell";
-"market.advanced_search.technical_advice.strong_sell" = "Strong Sell";
+"market.advanced_search.technical_advice.sell" = "Verkaufen";
+"market.advanced_search.technical_advice.strong_sell" = "Starker Verkauf";
 
 "market.advanced_search.outperformed_btc" = "Übertraf BTC";
 "market.advanced_search.outperformed_eth" = "Übertraf ETH";
@@ -820,7 +820,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.global.volume_24h.title" = "24h-Volumen";
 "market.global.volume_24h.description" = "Das 24h Handelsvolumen des Krypto-Marktes";
 
-"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.defi_cap.title" = "DeFi MK";
 "market.global.defi_cap.description" = "Gesamter Marktwert von DeFi-Projekten";
 
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
@@ -837,13 +837,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators" = "Indikatoren";
 "coin_overview.indicators.show" = "Anzeigen";
 "coin_overview.indicators.hide" = "Verstecken";
 "coin_overview.market_cap" = "Marktkappe";
 "coin_overview.circulating_supply" = "Im Kreis";
 "coin_overview.total_supply" = "Gesamtmenge";
-"coin_overview.diluted_market_cap" = "Diluted MCap";
+"coin_overview.diluted_market_cap" = "Diluted MKap";
 "coin_overview.genesis_date" = "Startdatum";
 "coin_overview.trading_volume" = "Handelsvolumen";
 
@@ -876,18 +876,18 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "technical_advice.over.main" = "Die Handlungen mit dem Vermögenswert sind riskant.";
 "technical_advice.over.indicators.signal_date" = "Beginnt von %@";
 "technical_advice.over.indicators" = "Das Asset befindet sich außerhalb des Bollinger Bandkanals und %@.";
-"technical_advice.over.rsi" = " RSI = %@, This also indicates that the asset is %@.";
-"technical_advice.over.advice" = " There might be a strong %@ward movement, so it's better to wait for the asset price to return to the channel.";
+"technical_advice.over.rsi" = " RSI = %@, dies deutet auch darauf hin, dass das Asset %@ ist.";
+"technical_advice.over.advice" = " Es könnte eine starke %@wärtsbewegung geben, daher ist es besser, auf eine Rückkehr des Assetpreises in den Kanal zu warten.";
 
-"technical_advice.strong.indicators" = "The asset was %@, but now it has returned to the Bollinger Band channel. This indicates a possible trend reversal.";
-"technical_advice.strong.rsi" = " Meanwhile, the RSI is %@, which still indicates that it is %@.";
-"technical_advice.strong.advice" = " This could be a very strong signal to enter the market. Keep in mind that there may be several attempts of %@ward movement after returning to the channel, so do not forget about risk management.";
+"technical_advice.strong.indicators" = "Das Asset war %@, aber jetzt ist es wieder in den Bollinger-Bänder-Kanal zurückgekehrt. Dies deutet auf eine mögliche Trendumkehr hin.";
+"technical_advice.strong.rsi" = " In der Zwischenzeit beträgt der RSI %@, was immer noch darauf hindeutet, dass es %@ ist.";
+"technical_advice.strong.advice" = " Dies könnte ein sehr starkes Signal sein, um in den Markt einzusteigen. Bedenken Sie jedoch, dass es nach der Rückkehr in den Kanal mehrere Versuche einer %@wärtsbewegung geben kann, daher vergessen Sie nicht das Risikomanagement.";
 
-"technical_advice.stable.rsi" = " Meanwhile, the RSI is %@, which also indicates a trend reversal (RSI crossed the boundary at 70%).";
-"technical_advice.stable.advice" = "The price is returning to neutral levels, however, there is still potential for upward movement. Keep in mind that RSI = 50 and the middle of the Bollinger Bands are strong resistances and possible trend reversal points. Do not forget about risk management.";
+"technical_advice.stable.rsi" = " Inzwischen beträgt der RSI %@, was ebenfalls auf eine Trendumkehr hinweist (der RSI hat die Grenze von 70% überschritten).";
+"technical_advice.stable.advice" = "Der Preis kehrt auf neutrale Niveaus zurück, jedoch besteht immer noch Potenzial für Aufwärtsbewegungen. Beachten Sie jedoch, dass RSI = 50 und die Mitte der Bollinger-Bänder starke Widerstände und mögliche Trendumkehrpunkte sind. Vergessen Sie nicht das Risikomanagement.";
 
-"technical_advice.neutral.rsi" = "RSI = %@ also confirms the absence of a strong trend.";
-"technical_advice.neutral.indicators" = "The asset was in the overbought/oversold zone, but at the moment the price has returned to the Bollinger Band channel in the neutral zone. The RSI is %@ also confirms the absence of a strong trend, so overall the asset price is moving towards averaging and further movement is possible in any direction.";
+"technical_advice.neutral.rsi" = "RSI = %@ bestätigt ebenfalls das Fehlen eines starken Trends.";
+"technical_advice.neutral.indicators" = "Das Asset befand sich in der überkauften/überverkauften Zone, aber momentan hat der Preis wieder den Bollinger-Band-Kanal in der neutralen Zone erreicht. Der RSI beträgt %@, was auch das Fehlen eines starken Trends bestätigt. Insgesamt bewegt sich der Assetpreis also in Richtung Durchschnittsbildung und weitere Bewegungen sind in jede Richtung möglich.";
 "technical_advice.neutral.advice" = " In general, the asset price is moving towards averaging and further movement is possible in any direction.";
 
 "technical_advice.other.title" = "Please note:";
@@ -910,13 +910,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.indicators.show_details" = "Details anzeigen";
 "coin_analytics.indicators.summary" = "Zusammenfassung";
 "coin_analytics.indicators.no_data" = "Keine Daten";
-"coin_analytics.indicators.oversold" = "Very Risky to Trade";
+"coin_analytics.indicators.oversold" = "Sehr risikoreich zu handeln";
 "coin_analytics.indicators.strong_buy" = "Stark Kaufen";
 "coin_analytics.indicators.buy" = "Kaufen";
 "coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "Verkaufen";
 "coin_analytics.indicators.strong_sell" = "Stark Verkaufen";
-"coin_analytics.indicators.overbought" = "Very Risky to Trade";
+"coin_analytics.indicators.overbought" = "Sehr risikoreich zu handeln";
 "coin_analytics.period" = "Zeitraum";
 "coin_analytics.period.select_title" = "Zeitraum auswählen";
 "coin_analytics.period.1h" = "1 Stunde";
@@ -993,7 +993,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.holders.see_all" = "Alle anzeigen";
 
 "coin_analytics.project_tvl" = "Projekt TVL";
-"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
+"coin_analytics.tvl_ratio" = "M.Kap / TVL-Verhältnis";
 "coin_analytics.project_tvl.info_title" = "Projekt TVL (Gesamtwert gesperrt)";
 "coin_analytics.project_tvl.info1" = "Überwachte Blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon.";
 "coin_analytics.project_tvl.info2" = "Diagramm mit Variation Total-Value-gesperrt in intelligenten Verträgen über 1 Jahr.";
@@ -1014,10 +1014,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.reports" = "Berichte";
 
 "coin_analytics.funding" = "Finanzierung";
-"coin_analytics.funding.lead" = "Lead";
+"coin_analytics.funding.lead" = "Blei";
 
 "coin_analytics.treasuries" = "Treasuries";
-"coin_analytics.treasuries.filters" = "Filters";
+"coin_analytics.treasuries.filters" = "Filter";
 "coin_analytics.treasuries.filter.all" = "Alle";
 "coin_analytics.treasuries.filter.public" = "Öffentlich";
 "coin_analytics.treasuries.filter.private" = "Privat";
@@ -1052,8 +1052,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.analysis.high_risk_items" = "Hochrisiko-Positionen";
 "coin_analytics.analysis.medium_risk_items" = "Mittlere Risiko-Positionen";
 "coin_analytics.analysis.attention_required" = "Aufmerksamkeit erforderlich";
-"coin_analytics.analysis.token_detectors" = "Token Detectors";
-"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.token_detectors" = "Token-Detektoren";
+"coin_analytics.analysis.general_detectors" = "Allgemeine Detektoren";
 "coin_analytics.analysis.issues" = "Issues: %@";
 
 // Coin Page -> Markets
@@ -1074,7 +1074,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "Indikatoren";
 "chart_indicators.moving_averages" = "Gleitende Durchschnitte";
 "chart_indicators.oscillators" = "Oszillatoren";
 
@@ -1087,7 +1087,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "chart_indicators.settings.rsi.title" = "RSI";
 "chart_indicators.settings.rsi.description" = "Der Relative Strength Index (RSI) ist ein Momentum-Oszillator, der die Geschwindigkeit und Veränderung des Preises misst und überkaufte (über 70) oder überverkaufte (unter 30) Marktbedingungen identifiziert. Er kann auch Preisumkehrungen durch Divergenzen erkennen.";
-"chart_indicators.settings.rsi.period_title" = "RSI Length";
+"chart_indicators.settings.rsi.period_title" = "RSI-Länge";
 
 "chart_indicators.settings.macd.title" = "MACD";
 "chart_indicators.settings.macd.description" = "Der Moving Average Convergence Divergence (MACD) ist ein Momentum-Indikator, der das Verhältnis zwischen zwei EMAs (Exponentiell Gleitenden Durchschnitten) des Preises eines Wertpapiers verfolgt. Er signalisiert Kauf- oder Verkaufsmöglichkeiten, wenn die MACD-Linie (12-Perioden-EMA minus 26-Perioden-EMA) den 9-Perioden-EMA, bekannt als Signal-Linie, kreuzt.";
@@ -1161,7 +1161,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tx_info.double_spent_note" = "Double-Spend-Risiko!";
 "tx_info.locked_until" = "Gesperrt bis %@";
 "tx_info.unlocked_at" = "Freigegeben am %@";
-"tx_info.recipient_hash" = "Recipient";
+"tx_info.recipient_hash" = "Empfänger";
 "tx_info.raw_transaction" = "Rohdaten der Transaktion";
 "tx_info.memo" = "Memo";
 "tx_info.service" = "Dienst";
@@ -1261,7 +1261,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
 "backup_app.backup_list.other.watchlist.title" = "Merkliste";
 "backup_app.backup_list.other.contacts.title" = "Kontakte";
-"backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
+"backup_app.backup_list.other.blockchain_settings.title" = "Eigener RPC";
 "backup_app.backup_list.other.app_settings.title" = "App-Einstellungen";
 "backup_app.backup_list.other.app_settings.description" = "Sprache, Währung, Erscheinung ...";
 
@@ -1598,7 +1598,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "add_token.blockchain" = "Blockchain";
 "add_token.already_added" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste";
 "add_token.invalid_contract_address" = "Ungültige Vertragsadresse";
-"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.invalid_bep2_symbol" = "Ungültiges BEP2-Symbol";
 "add_token.contract_address_not_found" = "Vertragsadresse in %@ Blockchain nicht gefunden";
 "add_token.bep2_symbol_not_found" = "BEP2-Symbol nicht gefunden";
 "add_token.input_placeholder.contract_address" = "Vertragsadresse";
@@ -1775,7 +1775,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "evm_send_settings.nonce.errors.already_in_use.info" = "Eine ausgeführte Transaktion mit diesem nonce existiert bereits.";
 
 "fee_settings" = "Erweitert";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "Gebühreneinstellungen";
 "fee_settings.fee" = "Gebühr";
 "fee_settings.fee.info" = "Blockchains verlangen, dass Nutzer Netzwerkgebühren beim Versenden von Transaktionen bezahlen. Die Gebühren sind höher, wenn viele Transaktionen im Netzwerk stattfinden.";
 "fee_settings.fee_rate" = "Gebührenrate";
@@ -1784,14 +1784,14 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "fee_settings.transaction_settings" = "Transaktionseinstellungen";
 "fee_settings.transaction_settings.description" = "Machen Sie Ihre Bitcoin-Transaktionen schwieriger nachvollziehbar, indem Sie die Transaktionsstruktur verändern.";
 "fee_settings.replace_by_fee" = "Replace by Fee";
-"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
+"fee_settings.replace_by_fee.description" = "Diese Option ermöglicht es Ihnen, eine festsitzende Transaktion erneut zu senden, indem Sie die Höhe der Gebühr erhöhen.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funktioniert nur beim Senden an BIP44 Adressen (ab 1)";
 
 "fee_settings.network_fee" = "Netzwerkgebühr";
 "fee_settings.network_fee.info" = "Die geschätzten Kosten für den Versand der Transaktion im Netzwerk.";
-"fee_settings.l1_fee" = "L1 Fee";
-"fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";
+"fee_settings.l1_fee" = "L1 Gebühr";
+"fee_settings.l1_fee.info" = "Die geschätzten Kosten für das Senden einer bestimmten Transaktion im Layer-1-Netzwerk.";
 "fee_settings.gas_limit" = "Gaslimit";
 "fee_settings.gas_limit.info" = "Die Transaktionskomplexität wird in Einheiten mit dem Namen \"Gas\" gemessen, die je nach ausgeführten intelligenten Verträgen variieren. Das Gaslimit ist das geschätzte Höchstgas, das benötigt wird, um es auszuführen. Das tatsächliche Gas wird normalerweise niedriger sein.";
 
@@ -1842,7 +1842,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "nft_collections.on_sale" = "Im Verkauf";
 "nft_collections.empty" = "Sie haben keinen NFT in Ihrer Brieftasche";
 
-"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.title" = "Top NFT-Sammlungen";
 "top_nft_collections.description" = "Führen von NFT-Sammlungen durch Handelsvolumen.";
 
 // Nft Asset
@@ -2006,13 +2006,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Transaction Filter
 
 "transaction_filter.title" = "Kontakte";
-"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+"transaction_filter.description" = "Die Filterung nach Kontakten funktioniert auf %@ Blockchains. Im Folgenden sind geeignete Kontakte aufgeführt";
 
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Alle Blockchains";
 "transaction_filter.coin" = "Coin";
 "transaction_filter.all_coins" = "Alle Coins";
-"transaction_filter.contact" = "Contact";
+"transaction_filter.contact" = "Kontakt";
 "transaction_filter.all_contacts" = "Alle Kontakte";
 "transaction_filter.hide_suspicious_txs" = "Verdächtige Txs ausblenden";
 "transaction_filter.hide_suspicious_txs.description" = "Das Verstecken eingehender Transaktionen mit dem Staub in Stablecoins löst teilweise die Adressenvergiftungsprobleme.";
