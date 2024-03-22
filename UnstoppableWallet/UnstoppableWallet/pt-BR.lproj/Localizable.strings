@@ -96,11 +96,11 @@
 
 "sync_error" = "Erro de sincronização. Tente novamente.";
 
-"number.thousand" = "%@K";
-"number.million" = "%@M";
-"number.billion" = "%@B";
-"number.trillion" = "%@T";
-"number.quadrillion" = "%@Q";
+"number.thousand" = "%@M";
+"number.million" = "%@mi";
+"number.billion" = "%@bi";
+"number.trillion" = "%@tri";
+"number.quadrillion" = "%@quad";
 
 "selector.any" = "Qualquer";
 
@@ -808,7 +808,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.month6" = "6 Meses";
 "market.advanced_search.year" = "1 Ano";
 
-"market.advanced_search.day.short" = "24H";
+"market.advanced_search.day.short" = "24h";
 "market.advanced_search.week.short" = "7D";
 "market.advanced_search.month.short" = "1M";
 
@@ -1508,7 +1508,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
+"chart.time_duration.day" = "24h";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1M";
