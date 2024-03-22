@@ -103,7 +103,7 @@ struct LegacyFeeSettingsView: View {
                     viewModel.onReset()
                 }.disabled(!viewModel.resetEnabled)
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .confirmationAction) {
                 Button("button.done".localized) {
                     presentationMode.wrappedValue.dismiss()
                 }

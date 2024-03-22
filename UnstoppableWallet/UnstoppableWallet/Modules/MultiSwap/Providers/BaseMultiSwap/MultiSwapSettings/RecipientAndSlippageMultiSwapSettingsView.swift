@@ -33,7 +33,7 @@ struct RecipientAndSlippageMultiSwapSettingsView: View {
                 .disabled(!viewModel.resetEnabled)
             }
 
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .confirmationAction) {
                 Button("button.done".localized) {
                     viewModel.onDone()
                     onChangeSettings()

@@ -39,6 +39,7 @@ class TransactionInfoViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = pageTitle
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
