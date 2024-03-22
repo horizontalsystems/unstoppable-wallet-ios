@@ -54,15 +54,16 @@ enum StatPage: String {
     case news
     case newWallet = "new_wallet"
     case rateUs = "rate_us"
+    case receive
     case receiveTokenList = "receive_token_list"
     case scanQrCode = "scan_qr_code"
     case security
+    case send
     case sendTokenList = "send_token_list"
     case settings
     case swap
     case switchWallet = "switch_wallet"
     case tellFriends = "tell_friends"
-    case tokenBalance = "token_balance"
     case topCoins = "top_coins"
     case topMarketPairs = "top_market_pairs"
     case topNftCollections = "top_nft_collections"

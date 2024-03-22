@@ -7,6 +7,7 @@ import UIKit
 
 class TransactionsTableViewDataSource: NSObject {
     private let viewModel: BaseTransactionsViewModel
+    private let statPage: StatPage
     private let disposeBag = DisposeBag()
 
     private var sectionViewItems = [BaseTransactionsViewModel.SectionViewItem]()
@@ -17,8 +18,9 @@ class TransactionsTableViewDataSource: NSObject {
     private weak var tableView: UITableView?
     weak var delegate: ISectionDataSourceDelegate?
 
-    init(viewModel: BaseTransactionsViewModel) {
+    init(viewModel: BaseTransactionsViewModel, statPage: StatPage) {
         self.viewModel = viewModel
+        self.statPage = statPage
     }
 
     private func itemClicked(item: BaseTransactionsViewModel.ViewItem) {
@@ -29,7 +31,7 @@ class TransactionsTableViewDataSource: NSObject {
 
             viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
 
-            stat(page: .transactions, event: .open(page: .transactionInfo))
+            stat(page: statPage, event: .open(page: .transactionInfo))
         }
     }
 
