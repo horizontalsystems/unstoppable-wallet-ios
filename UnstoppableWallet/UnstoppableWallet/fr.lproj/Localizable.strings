@@ -393,7 +393,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.zcash.restore.dont_have" = "Non, je n'ai pas";
 
 "deposit.warning" = "Seuls les jetons compatibles avec le réseau seront conservés. Les autres seront perdus.";
-"deposit.warning.watch_account" = "This address is the address of the watched account";
+"deposit.warning.watch_account" = "Cette adresse est l'adresse du compte surveillé";
 
 "receive_network_select.title" = "Réseau";
 "receive_network_select.description" = "Choisissez un réseau et obtenez une adresse à recevoir.";
@@ -476,7 +476,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.resend_description" = "Cette action tentera d'invalider la transaction précédente en la renvoyant avec des frais plus élevés. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
 "send.confirmation.resend" = "Réenvoyer";
 "send.confirmation.cancel_description" = "Cette action tentera d'invalider la transaction précédente en l'envoyant à nouveau comme une nouvelle transaction de valeur 0 à soi-même. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
-"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.btc_cancel_description" = "Cette action tentera d'invaliditer la transaction précédente en la renvoyant sous forme de nouvelle transaction en envoyant une certaine somme à soi-même. Si la transaction originale reste en attente lorsqu'une nouvelle est envoyée, il y a une forte chance (mais pas garantie) qu'elle soit invalidée et remplacée. Seule l'une de ces deux transactions sera incluse dans la blockchain.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
@@ -558,9 +558,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.minimum_short" = "(min)";
 "swap.maximum_short" = "(max)";
 
-"swap.rate_not_available" = "Rate not available";
+"swap.rate_not_available" = "Taux non disponible";
 "swap.select" = "Sélectionner";
-"swap.quoting" = "Quoting";
+"swap.quoting" = "Quotation";
 "swap.select_token_in" = "Select Token In";
 "swap.select_token_out" = "Select Token Out";
 "swap.no_providers" = "No Providers";
