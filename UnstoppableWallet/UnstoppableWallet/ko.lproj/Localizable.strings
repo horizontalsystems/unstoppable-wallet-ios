@@ -442,7 +442,7 @@
 
 "send.confirmation.title" = "확인";
 "send.confirmation.you_send" = "보냅니다";
-"send.confirmation.transfer" = "Transfer";
+"send.confirmation.transfer" = "전송";
 "send.confirmation.to" = "에게";
 "send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "담당자 이름";
@@ -806,9 +806,9 @@
 "market.advanced_search.month6" = "6 개월";
 "market.advanced_search.year" = "일년";
 
-"market.advanced_search.day.short" = "24H";
-"market.advanced_search.week.short" = "7D";
-"market.advanced_search.month.short" = "1M";
+"market.advanced_search.day.short" = "24시";
+"market.advanced_search.week.short" = "7일";
+"market.advanced_search.month.short" = "1개월";
 
 "market.advanced_search_results.title" = "결과";
 
@@ -1507,10 +1507,10 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.day" = "24시";
+"chart.time_duration.week" = "7일";
 "chart.time_duration.week2" = "2주";
-"chart.time_duration.month" = "1M";
+"chart.time_duration.month" = "1개월";
 "chart.time_duration.month3" = "3개월";
 "chart.time_duration.halfyear" = "6개월";
 "chart.time_duration.year" = "1년";
@@ -1776,7 +1776,7 @@
 "evm_send_settings.nonce.errors.already_in_use.info" = "이 nonce를 사용하여 실행된 트랜잭션이 이미 존재합니다.";
 
 "fee_settings" = "고급의";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "수수료 설정";
 "fee_settings.fee" = "수수료";
 "fee_settings.fee.info" = "블록체인은 거래를 보낼 때 사용자로부터 네트워크 수수료를 지불하도록 요구합니다. 이 수수료는 네트워크에서 많은 거래가 이루어질 때 더 높아집니다.";
 "fee_settings.fee_rate" = "수수료율";
@@ -1900,7 +1900,7 @@
 "nft.activity.event_types" = "이벤트 유형";
 "nft.activity.event_type.all" = "모든 이벤트";
 "nft.activity.event_type.sale" = "판매";
-"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.transfer" = "전송";
 "nft.activity.event_type.mint" = "민트";
 "nft.activity.event_type.list" = "목록";
 "nft.activity.event_type.listCancel" = "목록 취소";
@@ -2013,7 +2013,7 @@
 "transaction_filter.all_blockchains" = "모든 블록체인";
 "transaction_filter.coin" = "코인";
 "transaction_filter.all_coins" = "모든코인";
-"transaction_filter.contact" = "Contact";
+"transaction_filter.contact" = "연락처";
 "transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "의심스러운 거래 숨기기";
 "transaction_filter.hide_suspicious_txs.description" = "Dust 양의 안정화된 암호화폐를 사용하여 수신 거래를 숨기면 주소 독성 공격 문제의 일부를 해결할 수 있습니다.";

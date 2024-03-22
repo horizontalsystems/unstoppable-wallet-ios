@@ -1410,8 +1410,8 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> About App -> Contact
 
 "settings.contact.title" = "Fale Conosco";
-"settings.contact.via_email" = "via E-mail";
-"settings.contact.via_telegram" = "via Telegram";
+"settings.contact.via_email" = "por e-mail";
+"settings.contact.via_telegram" = "por Telegram";
 
 // Settings -> Privacy
 
@@ -1516,7 +1516,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1A";
 "chart.time_duration.year2" = "2A";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year5" = "5A";
 "chart.time_duration.all" = "TODOS";
 
 "chart.market_cap" = "Capitalização de Mercado";
@@ -1775,7 +1775,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "evm_send_settings.nonce.errors.already_in_use.info" = "Já existe uma transação executada agora.";
 
 "fee_settings" = "Avançado";
-"fee_settings.title" = "Fee Settings";
+"fee_settings.title" = "Configurações de taxa";
 "fee_settings.fee" = "Taxa";
 "fee_settings.fee.info" = "Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são mais altas quando muitas transações estão ocorrendo na rede.";
 "fee_settings.fee_rate" = "Taxa de tarifa";
