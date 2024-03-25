@@ -629,7 +629,7 @@
 "swap.confirmation.title" = "确认";
 "swap.confirmation.quoting" = "Quoting...";
 "swap.confirmation.invalid_quote" = "Invalid Quote";
-"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.please_wait" = "请稍候";
 "swap.confirmation.quote_expires_in" = "Quote expires in %@";
 "swap.confirmation.quote_expired" = "Quote expired";
 "swap.confirmation.quote_failed" = "Failed to quote";
@@ -716,7 +716,7 @@
 "market.top.protocols" = "协议";
 
 "top_pairs.title" = "热门市场交易对";
-"top_pairs.description" = "Top trading pairs by volume in every exchanges";
+"top_pairs.description" = "每个交易所的交易量最高的交易对";
 
 "top_platforms.title" = "平台排名";
 "top_platforms.description" = "通过建立在顶部的项目的累积市场来领导区块链平台。";
@@ -743,15 +743,15 @@
 
 "market.advanced_search.market_parameters" = "市场参数";
 "market.advanced_search.network_parameters" = "网络参数";
-"market.advanced_search.indicators" = "Indicators";
+"market.advanced_search.indicators" = "指示器";
 "market.advanced_search.price_parameters" = "价格参数";
 "market.advanced_search.choose_set" = "可选集合";
 "market.advanced_search.market_cap" = "市场价值";
 "market.advanced_search.volume" = "成交量";
 
-"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
-"market.advanced_search.good_cex_volume" = "Good CEX Volume";
-"market.advanced_search.good_dex_volume" = "Good DEX Volume";
+"market.advanced_search.listed_on_top_exchanges" = "列在顶级交易所上";
+"market.advanced_search.good_cex_volume" = "良好的中心化交易所（CEX）交易量";
+"market.advanced_search.good_dex_volume" = "良好的去中心化交易所（DEX）交易量";
 "market.advanced_search.good_distribution" = "Good Distribution";
 "market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
 
@@ -837,7 +837,7 @@
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators" = "指示器";
 "coin_overview.indicators.show" = "查看";
 "coin_overview.indicators.hide" = "隐藏";
 "coin_overview.market_cap" = "市场价值";
@@ -1074,7 +1074,7 @@
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "指示器";
 "chart_indicators.moving_averages" = "移动平均线";
 "chart_indicators.oscillators" = "震荡指标";
 
@@ -2006,13 +2006,13 @@
 // Transaction Filter
 
 "transaction_filter.title" = "联系人";
-"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+"transaction_filter.description" = "在 %@ 区块链上，通过联系人进行筛选是有效的。下面显示了适用的联系人。";
 
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "所有区块链";
 "transaction_filter.coin" = "硬币";
 "transaction_filter.all_coins" = "所有硬币";
 "transaction_filter.contact" = "联系";
-"transaction_filter.all_contacts" = "All Contacts";
+"transaction_filter.all_contacts" = "所有联系人";
 "transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
 "transaction_filter.hide_suspicious_txs.description" = "隐藏到达的沙尘群交易，这部分解决了地址中毒攻击问题。";
