@@ -749,10 +749,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.market_cap" = "Marktkappe";
 "market.advanced_search.volume" = "Handelsvolumen";
 
-"market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
-"market.advanced_search.good_cex_volume" = "Good CEX Volume";
-"market.advanced_search.good_dex_volume" = "Good DEX Volume";
-"market.advanced_search.good_distribution" = "Good Distribution";
+"market.advanced_search.listed_on_top_exchanges" = "Listé sur les principales bourses";
+"market.advanced_search.good_cex_volume" = "Bon volume CEX";
+"market.advanced_search.good_dex_volume" = "Bon volume DEX";
+"market.advanced_search.good_distribution" = "Bonne distribution";
 "market.advanced_search.overall_score_is_good_or_excellent" = "Gesamtbewertung ist Gut oder Ausgezeichnet";
 
 "market.advanced_search.liquidity" = "DEX-Liquidität";

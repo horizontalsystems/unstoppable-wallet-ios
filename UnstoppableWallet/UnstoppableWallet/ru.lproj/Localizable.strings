@@ -1110,7 +1110,7 @@
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Получить";
+"transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
@@ -1131,7 +1131,7 @@
 "transactions.yesterday" = "Вчера";
 
 "transactions.types.all" = "Все";
-"transactions.types.incoming" = "Получить";
+"transactions.types.incoming" = "Получено";
 "transactions.types.outgoing" = "Отправлено";
 "transactions.types.swap" = "Обмены";
 "transactions.types.approve" = "Разрешения";
