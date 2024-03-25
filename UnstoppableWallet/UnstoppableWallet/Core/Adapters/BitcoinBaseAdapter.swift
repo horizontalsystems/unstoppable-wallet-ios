@@ -116,7 +116,7 @@ class BitcoinBaseAdapter {
                 to: anyNotMineToAddress,
                 sentToSelf: false,
                 memo: memo,
-                replaceable: transaction.rbfEnabled && transaction.blockHeight == nil && transaction.conflictingHash == nil
+                replaceable: transaction.replaceable
             )
         case .sentToSelf:
             return BitcoinOutgoingTransactionRecord(
@@ -137,7 +137,7 @@ class BitcoinBaseAdapter {
                 to: transaction.outputs.first(where: { !$0.changeOutput })?.address ?? transaction.outputs.first?.address,
                 sentToSelf: true,
                 memo: memo,
-                replaceable: transaction.rbfEnabled && transaction.blockHeight == nil && transaction.conflictingHash == nil
+                replaceable: transaction.replaceable
             )
         }
     }

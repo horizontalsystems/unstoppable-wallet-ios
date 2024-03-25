@@ -171,6 +171,7 @@ class TransactionsViewItemFactory {
         let subTitle: String
         var primaryValue: BaseTransactionsViewModel.Value?
         var secondaryValue: BaseTransactionsViewModel.Value?
+        var doubleSpend = false
         var sentToSelf = false
         var locked: Bool?
 
@@ -279,6 +280,7 @@ class TransactionsViewItemFactory {
                 secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
+            doubleSpend = record.conflictingHash != nil
             if let lockState = item.transactionItem.lockState {
                 locked = lockState.locked
             }
@@ -294,6 +296,7 @@ class TransactionsViewItemFactory {
                 secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
+            doubleSpend = record.conflictingHash != nil
             sentToSelf = record.sentToSelf
             if let lockState = item.transactionItem.lockState {
                 locked = lockState.locked
@@ -473,6 +476,7 @@ class TransactionsViewItemFactory {
             subTitle: subTitle,
             primaryValue: primaryValue,
             secondaryValue: secondaryValue,
+            doubleSpend: doubleSpend,
             sentToSelf: sentToSelf,
             locked: locked,
             spam: item.record.spam

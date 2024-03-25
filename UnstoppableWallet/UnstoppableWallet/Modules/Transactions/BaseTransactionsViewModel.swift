@@ -205,6 +205,7 @@ extension BaseTransactionsViewModel {
         let subTitle: String
         let primaryValue: Value?
         let secondaryValue: Value?
+        let doubleSpend: Bool
         let sentToSelf: Bool
         let locked: Bool?
         let spam: Bool
