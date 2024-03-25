@@ -28,7 +28,7 @@
 "button.more" = "Mostrar más";
 "button.i_understand" = "Entiendo";
 "button.learn_more" = "Aprender más";
-"button.unlock" = "Unlock";
+"button.unlock" = "Desbloquear";
 
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
@@ -71,10 +71,10 @@
 "alert.revoked" = "Revocada";
 "alert.cant_recognize" = "No se puede reconocer";
 
-"alert.fee_too_low" = "Fee Too Low";
+"alert.fee_too_low" = "Tarifa Demasiado Baja";
 "alert.rbf_not_Enabled" = "RBF not enabled";
-"alert.unable_to_replace" = "Unable to replace";
-"alert.already_replaced" = "Already replaced";
+"alert.unable_to_replace" = "No se puede reemplazar";
+"alert.already_replaced" = "Ya reemplazado";
 
 "no_results_found" = "No se han encontrado resultados";
 "action.loading" = "cargando...";
@@ -444,7 +444,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "send.confirmation.title" = "Confirmar";
 "send.confirmation.you_send" = "Usted envía";
-"send.confirmation.transfer" = "Transfer";
+"send.confirmation.transfer" = "Transferencia";
 "send.confirmation.to" = "Para";
 "send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "Nombre de contacto";
@@ -505,7 +505,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "send.unspent_outputs" = "UTXOs";
 "send.unspent_outputs.send_to" = "Send To";
-"send.unspent_outputs.change" = "Change";
+"send.unspent_outputs.change" = "Cambio";
 
 "approve.confirmation.you_approve" = "Apruebas";
 "approve.confirmation.you_revoke" = "Revocas";
@@ -539,7 +539,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.approve.title" = "Aprobación de Swap";
 "swap.approve.description" = "Para intercambiar un token dado en tu nombre debes conceder permiso a un contrato inteligente. Este permiso establece la cantidad que puede ser utilizada por un contrato inteligente. Esto no afecta su saldo, requiere una pequeña comisión para ejecutar la transacción de aprobación.\n\nSi bien se puede hacer bajo demanda antes de cada operación, para nosotros es más barato aprobar una cantidad más alta por adelantado en operaciones futuras.";
 "swap.approve.amount_error.already_approved" = "Usted ya tiene una concesión para esta cantidad";
-"swap.approve.not_found" = "Can't approve these tokens";
+"swap.approve.not_found" = "No se pueden aprobar estos tokens";
 "swap.approving_button" = "Aprobando...";
 "swap.revoking_button" = "Revocando...";
 "swap.not_available_button" = "Saldo N/A";
@@ -558,11 +558,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.minimum_short" = "(min)";
 "swap.maximum_short" = "(máx)";
 
-"swap.rate_not_available" = "Rate not available";
+"swap.rate_not_available" = "Tasa no disponible";
 "swap.select" = "Seleccionar";
 "swap.quoting" = "Quoting";
-"swap.select_token_in" = "Select Token In";
-"swap.select_token_out" = "Select Token Out";
+"swap.select_token_in" = "Seleccionar Token de Entrada";
+"swap.select_token_out" = "Seleccionar Token de Salida";
 "swap.no_providers" = "No hay proveedores";
 "swap.enter_amount" = "Introducir cantidad";
 "swap.no_quotes" = "No Quotes";
@@ -577,14 +577,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.allowance" = "Permiso de acceso";
 "swap.allowance.description" = "La cantidad que un intercambio puede gastar en nombre de un usuario al ejecutar intercambios de tokens. Se requiere una transacción previa que establezca una autorización suficiente antes de que pueda tener lugar una transacción de intercambio real.";
 "swap.pending_allowance" = "Pending Allowance";
-"swap.unlock" = "Unlock";
+"swap.unlock" = "Desbloquear";
 "swap.unlocking" = "Desbloqueando";
 "swap.allowance_error" = "Allowance Error";
 "swap.revoke" = "Revocar";
 "swap.revoking" = "Revocando";
 "swap.revoke_warning" = "Puedes cambiar %@o necesitas revocar y aprobar la nueva cantidad";
 
-"swap.unlock.title" = "Unlock Access";
+"swap.unlock.title" = "Desbloquear Acceso";
 "swap.unlock.subtitle" = "Permitir el acceso al siguiente monto";
 "swap.unlock.description" = "Conceder permiso a un contrato inteligente para el comercio de tokens en su nombre, especificando el monto permitido. No impacta en su saldo, pero incurre en una pequeña tarifa por la aprobación.\n\nLa preaprobación de un monto mayor para futuros intercambios es más rentable en comparación con las aprobaciones bajo demanda.";
 "swap.unlock.unlimited" = "Ilimitado";
@@ -810,7 +810,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "market.advanced_search.day.short" = "24H";
 "market.advanced_search.week.short" = "7D";
-"market.advanced_search.month.short" = "1M";
+"market.advanced_search.month.short" = "1 M";
 
 "market.advanced_search_results.title" = "Resultados";
 
@@ -1047,13 +1047,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.30_day_rank" = "Rango de 30 días";
 "coin_analytics.30_day_volume" = "Volumen de 30 días";
 
-"coin_analytics.analysis.title" = "Smart Contract Analysis";
-"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
-"coin_analytics.analysis.high_risk_items" = "High Risk Items";
+"coin_analytics.analysis.title" = "Análisis de contratos inteligente";
+"coin_analytics.analysis.footer" = "Desarrollado por Escáner De.Fi";
+"coin_analytics.analysis.high_risk_items" = "Elementos de Alto Riesgo";
 "coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
 "coin_analytics.analysis.attention_required" = "Attention Required";
-"coin_analytics.analysis.token_detectors" = "Token Detectors";
-"coin_analytics.analysis.general_detectors" = "General Detectors";
+"coin_analytics.analysis.token_detectors" = "Detectores de Tokens";
+"coin_analytics.analysis.general_detectors" = "Detectores Generales";
 "coin_analytics.analysis.issues" = "Issues: %@";
 
 // Coin Page -> Markets
@@ -1356,7 +1356,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Unlock
 
-"unlock.title" = "Unlock";
+"unlock.title" = "Desbloquear";
 "unlock.passcode" = "Introducir código";
 "unlock.biometry_reason" = "Desbloquear Cartera";
 "unlock.attempts_left" = "Intentos restantes: %@";
@@ -1512,7 +1512,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2 S";
-"chart.time_duration.month" = "1M";
+"chart.time_duration.month" = "1 M";
 "chart.time_duration.month3" = "3 M";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1 Año";
@@ -1785,7 +1785,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.transaction_settings" = "Ajustes de la transacción";
 "fee_settings.transaction_settings.description" = "Haga que sus transacciones Bitcoin sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
 "fee_settings.replace_by_fee" = "Replace by Fee";
-"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
+"fee_settings.replace_by_fee.description" = "Esta opción le permite volver a enviar una transacción bloqueada aumentando la cantidad de la tarifa.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock sólo funciona para enviar a direcciones BIP44 (comenzando con 1)";
 
@@ -1900,7 +1900,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "nft.activity.event_types" = "Tipos de Evento";
 "nft.activity.event_type.all" = "Todos los eventos";
 "nft.activity.event_type.sale" = "Venta";
-"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.transfer" = "Transferencia";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Lista";
 "nft.activity.event_type.listCancel" = "Lista Cancelar";
@@ -2013,7 +2013,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transaction_filter.all_blockchains" = "Todos los bloqueos";
 "transaction_filter.coin" = "Moneda";
 "transaction_filter.all_coins" = "Todas";
-"transaction_filter.contact" = "Contact";
+"transaction_filter.contact" = "Contacto";
 "transaction_filter.all_contacts" = "Todos los contactos";
 "transaction_filter.hide_suspicious_txs" = "Ocultar Transacciones Sospechosas";
 "transaction_filter.hide_suspicious_txs.description" = "Ocultando transacciones entrantes con montos mínimos en stablecoins, esto resuelve parcialmente los problemas de ataques de envenenamiento de direcciones.";
