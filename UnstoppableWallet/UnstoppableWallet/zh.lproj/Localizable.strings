@@ -28,7 +28,7 @@
 "button.more" = "显示更多";
 "button.i_understand" = "我理解";
 "button.learn_more" = "了解更多";
-"button.unlock" = "Unlock";
+"button.unlock" = "解锁​​​​";
 
 "alert" = "警报";
 "alert.copied" = "已复制";
@@ -71,10 +71,10 @@
 "alert.revoked" = "已注销";
 "alert.cant_recognize" = "无法识别";
 
-"alert.fee_too_low" = "Fee Too Low";
+"alert.fee_too_low" = "费用过低";
 "alert.rbf_not_Enabled" = "RBF not enabled";
 "alert.unable_to_replace" = "Unable to replace";
-"alert.already_replaced" = "Already replaced";
+"alert.already_replaced" = "已经替换";
 
 "no_results_found" = "未发现结果";
 "action.loading" = "正在加载...";
@@ -378,22 +378,22 @@
 "deposit.set_amount" = "设定金额";
 "deposit.enter_amount" = "输入金额";
 "deposit.not_active" = "不活动";
-"deposit.used_addresses" = "Used Addresses";
+"deposit.used_addresses" = "已使用地址";
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
 
-"deposit.used_addresses.title" = "Used Addresses";
-"deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
+"deposit.used_addresses.title" = "已使用地址";
+"deposit.used_addresses.description" = "%@ 地址用于隐私和安全。以下是此钱包中已使用的地址列表。";
 
-"receive_used_addresses.external" = "Receive Addresses";
-"receive_used_addresses.change" = "Change Addresses";
+"receive_used_addresses.external" = "接收地址";
+"receive_used_addresses.change" = "找零地址";
 
 "deposit.zcash.restore.description" = "您以前是否拥有过任何ZEC硬币？";
 "deposit.zcash.restore.already_own" = "是的，我已经拥有了";
 "deposit.zcash.restore.dont_have" = "不，我没有";
 
 "deposit.warning" = "仅支持与网络兼容的代币，其他将会丧失。";
-"deposit.warning.watch_account" = "This address is the address of the watched account";
+"deposit.warning.watch_account" = "该地址是被监视账户的地址";
 
 "receive_network_select.title" = "網絡";
 "receive_network_select.description" = "选择一个网络并获取要接收的地址。";
@@ -444,9 +444,9 @@
 
 "send.confirmation.title" = "确认";
 "send.confirmation.you_send" = "您发送";
-"send.confirmation.transfer" = "Transfer";
+"send.confirmation.transfer" = "转帐";
 "send.confirmation.to" = "接收人";
-"send.confirmation.own" = "Own";
+"send.confirmation.own" = "自有";
 "send.confirmation.contact_name" = "联系人姓名";
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
@@ -481,7 +481,7 @@
 "send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
-"send.confirmation.replace_by_fee.disabled" = "Disabled";
+"send.confirmation.replace_by_fee.disabled" = "已禁用";
 "send.amount_error.balance" = "余额不足";
 "send.address_error.own_address" = "无法将 TRX 转移给自己";
 "send.amount_error.maximum_amount" = "最大金额 %@";
@@ -566,18 +566,18 @@
 "swap.no_providers" = "No Providers";
 "swap.enter_amount" = "输入金额";
 "swap.no_quotes" = "No Quotes";
-"swap.token_not_enabled" = "Token Not Enabled";
-"swap.token_syncing" = "Token Syncing";
-"swap.token_not_synced" = "Token Not Synced";
+"swap.token_not_enabled" = "代币未启用";
+"swap.token_syncing" = "代币同步";
+"swap.token_not_synced" = "代币未同步";
 "swap.insufficient_balance" = "可用额度不足";
 
-"swap.quotes.providers" = "Providers";
-"swap.quotes.best_price" = "Best Price";
+"swap.quotes.providers" = "服务提供商";
+"swap.quotes.best_price" = "最优价格";
 
 "swap.allowance" = "补贴";
-"swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.allowance.description" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
 "swap.pending_allowance" = "Pending Allowance";
-"swap.unlock" = "Unlock";
+"swap.unlock" = "解锁​​​​";
 "swap.unlocking" = "Unlocking";
 "swap.allowance_error" = "Allowance Error";
 "swap.revoke" = "撤回";
@@ -585,12 +585,12 @@
 "swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 
 "swap.unlock.title" = "Unlock Access";
-"swap.unlock.subtitle" = "Allow access to the following amount";
-"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.subtitle" = "允许访问以下金额";
+"swap.unlock.description" = "授权智能合约代表您进行代币交易，并指定允许的金额。这不会影响您的余额，但需要支付少量费用以进行批准。\n\n预先批准较高金额用于未来交易比按需批准更具成本效益。";
 "swap.unlock.unlimited" = "无限";
 
 "swap.price_impact" = "价格影响";
-"swap.price_impact.description" = "The expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.price_impact.description" = "从显示的价格预期的价格偏差通常随着交换金额的增加而增加。";
 "swap.high_price_impact" = "High Price Impact";
 "swap.recipient" = "收款人";
 "swap.slippage" = "Slippage";
@@ -637,7 +637,7 @@
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
 "swap.confirmation.swapped" = "已交换";
-"swap.confirmation.refresh" = "Refresh";
+"swap.confirmation.refresh" = "刷新";
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
@@ -647,7 +647,7 @@
 "swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
 "swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
@@ -711,11 +711,11 @@
 "market.top.top_losers" = "跌幅榜";
 "market.top.top_collections" = "前列 NFT 收藏";
 "market.top.floor_price" = "底部：";
-"market.top.top_market_pairs" = "Top Market Pairs";
+"market.top.top_market_pairs" = "热门市场交易对";
 "market.top.top_platforms" = "前列平台";
 "market.top.protocols" = "协议";
 
-"top_pairs.title" = "Top Market Pairs";
+"top_pairs.title" = "热门市场交易对";
 "top_pairs.description" = "Top trading pairs by volume in every exchanges";
 
 "top_platforms.title" = "平台排名";
@@ -1355,7 +1355,7 @@
 
 // Unlock
 
-"unlock.title" = "Unlock";
+"unlock.title" = "解锁​​​​";
 "unlock.passcode" = "输入密码";
 "unlock.biometry_reason" = "解锁钱包";
 "unlock.attempts_left" = "剩余尝试次数: %@";
@@ -1899,7 +1899,7 @@
 "nft.activity.event_types" = "事件类型";
 "nft.activity.event_type.all" = "全部事件";
 "nft.activity.event_type.sale" = "出售";
-"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.transfer" = "转帐";
 "nft.activity.event_type.mint" = "薄荷绿";
 "nft.activity.event_type.list" = "列表";
 "nft.activity.event_type.listCancel" = "取消列表";
