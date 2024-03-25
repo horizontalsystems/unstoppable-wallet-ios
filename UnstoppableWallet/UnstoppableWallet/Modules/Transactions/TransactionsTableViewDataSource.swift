@@ -121,6 +121,11 @@ class TransactionsTableViewDataSource: NSObject {
                     },
                     .margin8,
                     .image20 { component in
+                        component.isHidden = !viewItem.doubleSpend
+                        component.imageView.image = UIImage(named: "double_send_20")?.withTintColor(.themeGray)
+                    },
+                    .margin(6),
+                    .image20 { component in
                         component.isHidden = !viewItem.sentToSelf
                         component.imageView.image = UIImage(named: "arrow_return_20")?.withTintColor(.themeGray)
                     },
