@@ -362,13 +362,20 @@ class MarketAdvancedSearchService {
         return false
     }
 
-    private func filteredByAdvice(marketInfo _: MarketInfo) -> Bool {
+    private func filteredByAdvice(marketInfo: MarketInfo) -> Bool {
         guard let technicalAdvice else {
             return true
         }
 
-        // TODO: Add advice to MarketInfo
-        return false
+        guard let infoAdvice = marketInfo.indicatorsResult else {
+            return false
+        }
+
+        if technicalAdvice.isRisky, infoAdvice.isRisky {
+            return true
+        }
+
+        return technicalAdvice == infoAdvice
     }
 
     private func filtered(marketInfos: [MarketInfo]) -> [MarketInfo] {
