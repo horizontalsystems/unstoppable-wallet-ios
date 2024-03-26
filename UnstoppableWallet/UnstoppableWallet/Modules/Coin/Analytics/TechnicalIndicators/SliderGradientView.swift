@@ -8,8 +8,8 @@ class TechnicalIndicatorSliderView: UIView {
 
     static let sliderColor: [UIColor] = [
         .themeRedD,
-        UIColor(hex: 0xFF7A00),
-        .themeYellowD,
+        .themeYellowL,
+        UIColor(hex: 0xA8D026),
         .themeGreenD,
     ]
 

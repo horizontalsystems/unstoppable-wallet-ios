@@ -118,7 +118,7 @@ class MarketAdvancedSearchViewModel {
             return
         }
 
-        technicalAdviceViewItemRelay.accept(ViewItem(value: technicalAdvice.title.localized, valueStyle: .normal))
+        technicalAdviceViewItemRelay.accept(ViewItem(value: technicalAdvice.searchTitle.localized, valueStyle: .normal))
     }
 
     private func sync(priceChangeType _: MarketModule.PriceChangeType) {
@@ -330,7 +330,11 @@ extension MarketAdvancedSearchViewModel {
     }
 
     func setTechnicalAdvice(index: Int) {
-        service.technicalAdvice = TechnicalAdvice.Advice.by(index: index)
+        if index == 0 {
+            service.technicalAdvice = nil
+        }
+
+        service.technicalAdvice = TechnicalAdvice.Advice.searchCases.at(index: index - 1)
     }
 
     func setPriceChangeType(at index: Int) {
@@ -475,42 +479,18 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
 }
 
 extension TechnicalAdvice.Advice {
-    static func by(index: Int) -> TechnicalAdvice.Advice {
-        switch index {
-        case 0: return .oversold
-        case 1: return .strongSell
-        case 2: return .sell
-        case 4: return .buy
-        case 5: return .strongBuy
-        case 6: return .overbought
-        default: return .neutral
-        }
-    }
-
-    var index: Int {
-        switch self {
-        case .oversold: return 0
-        case .strongSell: return 1
-        case .sell: return 2
-        case .neutral: return 3
-        case .buy: return 4
-        case .strongBuy: return 5
-        case .overbought: return 6
-        }
-    }
-
     static var searchCases: [Self] {
-        [.oversold, .strongSell, .sell, .neutral, .buy, .strongBuy]
+        [.strongBuy, .buy, .neutral, .sell, .strongSell, .overbought]
     }
 
     var searchTitle: String {
         switch self {
         case .oversold, .overbought: return "market.advanced_search.technical_advice.risk_trade".localized
-        case .strongSell: return "market.advanced_search.technical_advice.strong_sell".localized
-        case .sell: return "market.advanced_search.technical_advice.sell".localized
-        case .neutral: return "market.advanced_search.technical_advice.neutral".localized
-        case .buy: return "market.advanced_search.technical_advice.buy".localized
         case .strongBuy: return "market.advanced_search.technical_advice.strong_buy".localized
+        case .buy: return "market.advanced_search.technical_advice.buy".localized
+        case .neutral: return "market.advanced_search.technical_advice.neutral".localized
+        case .sell: return "market.advanced_search.technical_advice.sell".localized
+        case .strongSell: return "market.advanced_search.technical_advice.strong_sell".localized
         }
     }
 }
