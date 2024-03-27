@@ -340,6 +340,9 @@
 "balance.token.locked" = "Заблокировано";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
+"balance.token.not_relayed" = "Broadcasting";
+"balance.token.not_relayed.info.title" = "Broadcast";
+"balance.token.not_relayed.info.description" = "The transaction holding this amount is broadcasted but not yet accepted by the network";
 "balance.token.processing" = "В процессе";
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
@@ -751,7 +754,7 @@
 "market.advanced_search.market_cap" = "Рын. капитализация";
 "market.advanced_search.volume" = "Объем торговли";
 
-"market.advanced_search.listed_on_top_exchanges" = "Размещенные на ведущих биржах";
+"market.advanced_search.listed_on_top_exchanges" = "Размещены на ведущих биржах";
 "market.advanced_search.good_cex_volume" = "Хороший объем CEX";
 "market.advanced_search.good_dex_volume" = "Хороший объем DEX";
 "market.advanced_search.good_distribution" = "Хорошее распределение";
