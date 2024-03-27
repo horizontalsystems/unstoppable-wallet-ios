@@ -12,10 +12,12 @@ class ResendBitcoinViewController: KeyboardAwareViewController, SectionsDataSour
     private let tableView = SectionsTableView(style: .grouped)
     private let bottomWrapper = BottomGradientHolder()
     private let minFeeCell: StepperAmountInputCell
+    private let cautionCell = TitledHighlightedDescriptionCell()
     private let sendButton = SliderButton()
 
     private var topDescription: String = ""
     private var viewItems = [[ResendBitcoinViewModel.ViewItem]]()
+    private var loaded = false
 
     init(viewModel: ResendBitcoinViewModel) {
         self.viewModel = viewModel
@@ -65,8 +67,12 @@ class ResendBitcoinViewController: KeyboardAwareViewController, SectionsDataSour
         subscribe(disposeBag, viewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess() }
         subscribe(disposeBag, viewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
         subscribe(disposeBag, viewModel.minFeeDriver) { [weak self] in self?.minFeeCell.value = $0 }
+        subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in self?.handle(caution: $0) }
 
         minFeeCell.onChangeValue = { [weak self] value in self?.viewModel.set(minFee: value) }
+
+        handle(caution: nil)
+        loaded = true
     }
 
     private func sync(viewItems: [[ResendBitcoinViewModel.ViewItem]]) {
@@ -87,6 +93,21 @@ class ResendBitcoinViewController: KeyboardAwareViewController, SectionsDataSour
     private func handleSendFailed(error: String) {
         HudHelper.instance.show(banner: .error(string: error))
         sendButton.reset()
+    }
+
+    private func handle(caution: TitledCaution?) {
+        cautionCell.isVisible = caution != nil
+
+        if let caution {
+            cautionCell.bind(caution: caution)
+        }
+
+        if loaded {
+            UIView.animate(withDuration: 0.15) {
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+            }
+        }
     }
 
     private func row(viewItem: ResendBitcoinViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
@@ -156,6 +177,21 @@ extension ResendBitcoinViewController {
             )
         )
 
-        return sections
+        let cautionsSections: [SectionProtocol] = [
+            Section(
+                id: "caution",
+                rows: [
+                    StaticRow(
+                        cell: cautionCell,
+                        id: "caution",
+                        dynamicHeight: { [weak self] containerWidth in
+                            self?.cautionCell.cellHeight(containerWidth: containerWidth) ?? 0
+                        }
+                    ),
+                ]
+            ),
+        ]
+
+        return sections + cautionsSections
     }
 }

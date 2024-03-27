@@ -22,6 +22,7 @@ class ResendBitcoinViewModel {
     private let sendSuccessRelay = PublishRelay<Void>()
     private let sendFailedRelay = PublishRelay<String>()
     private let minFeeRelay = BehaviorRelay<Decimal?>(value: nil)
+    private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
     init(service: ResendBitcoinService, contactLabelService: ContactLabelService) {
         self.service = service
@@ -37,6 +38,11 @@ class ResendBitcoinViewModel {
             .sink { [weak self] in self?.syncViewItems(items: $0) }
             .store(in: &cancellables)
 
+        service.$caution
+            .receive(on: queue)
+            .sink { [weak self] in self?.cautionRelay.accept($0) }
+            .store(in: &cancellables)
+
         service.$minFee
             .receive(on: queue)
             .sink { [weak self] in self?.minFeeRelay.accept(Decimal($0)) }
@@ -44,6 +50,7 @@ class ResendBitcoinViewModel {
 
         sync(state: service.state)
         syncViewItems(items: service.items)
+        cautionRelay.accept(service.caution)
         minFeeRelay.accept(Decimal(service.minFee))
     }
 
@@ -181,6 +188,10 @@ extension ResendBitcoinViewModel {
 
     var minFeeDriver: Driver<Decimal?> {
         minFeeRelay.asDriver()
+    }
+
+    var cautionDriver: Driver<TitledCaution?> {
+        cautionRelay.asDriver()
     }
 
     var replaceType: ResendTransactionType {

@@ -158,7 +158,8 @@ class BitcoinBaseAdapter {
     private func balanceData(balanceInfo: BalanceInfo) -> BalanceData {
         LockedBalanceData(
             available: Decimal(balanceInfo.spendable) / coinRate,
-            locked: Decimal(balanceInfo.unspendable) / coinRate
+            locked: Decimal(balanceInfo.unspendableTimeLocked) / coinRate,
+            notRelayed: Decimal(balanceInfo.unspendableNotRelayed) / coinRate
         )
     }
 
