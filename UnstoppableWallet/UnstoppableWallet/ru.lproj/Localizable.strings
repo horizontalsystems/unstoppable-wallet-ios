@@ -875,7 +875,7 @@
 "technical_advice.down" = "вниз";
 "technical_advice.up" = "вверх";
 
-"technical_advice.over.main" = "Действия с активом опасны.";
+"technical_advice.over.main" = "The actions with the asset are risky.";
 "technical_advice.over.indicators.signal_date" = "C %@";
 "technical_advice.over.indicators" = "Актив находится за границей канала Bollinger Band и %@.";
 "technical_advice.over.rsi" = " RSI = %@, что также говорит о том, что актив %@.";
