@@ -544,7 +544,7 @@
 "swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Разрешение...";
 "swap.revoking_button" = "Отмена...";
-"swap.not_available_button" = "Баланс N/А";
+"swap.not_available_button" = "Баланс n/a";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Эта служба не позволяет wrapping/unwrapping. Пожалуйста, попробуйте другой сервис обмена. Рекомендуется 1inch";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
