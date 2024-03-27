@@ -338,6 +338,9 @@
 "balance.token.locked" = "锁住";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
+"balance.token.not_relayed" = "Broadcasting";
+"balance.token.not_relayed.info.title" = "Broadcast";
+"balance.token.not_relayed.info.description" = "The transaction holding this amount is broadcasted but not yet accepted by the network";
 "balance.token.processing" = "正在处理";
 "balance.token.processing.info.title" = "处理金额";
 "balance.token.processing.info.description" = "此金额的交易仍然在同步。当它们被确认时，这些代币将用于支出";
