@@ -16,7 +16,7 @@ enum ResendBitcoinModule {
               let (originalSize, feeRange) = replacementInfo(adapter: adapter, transactionHash: transactionRecord.transactionHash, type: type),
               let feeRateProvider = App.shared.feeRateProviderFactory.provider(blockchainType: adapter.token.blockchainType)
         else {
-            throw CreateModuleError.wrongTransaction
+            throw CreateModuleError.unableToReplace
         }
 
         let token = adapter.token
@@ -44,10 +44,10 @@ enum ResendBitcoinModule {
 
 extension ResendBitcoinModule {
     enum CreateModuleError: LocalizedError {
-        case wrongTransaction
+        case unableToReplace
 
         var errorDescription: String? {
-            "alert.unknown_error".localized
+            "alert.unable_to_replace".localized
         }
     }
 }

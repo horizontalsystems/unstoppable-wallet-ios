@@ -58,19 +58,22 @@ extension BalanceData {
 
 class LockedBalanceData: BalanceData {
     let locked: Decimal
+    let notRelayed: Decimal
 
-    init(available: Decimal, locked: Decimal = 0) {
+    init(available: Decimal, locked: Decimal = 0, notRelayed: Decimal = 0) {
         self.locked = locked
+        self.notRelayed = notRelayed
         super.init(available: available)
     }
 
     enum CodingKeys: String, CodingKey {
-        case locked
+        case locked, notRelayed
     }
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         locked = try container.decode(Decimal.self, forKey: .locked)
+        notRelayed = try container.decode(Decimal.self, forKey: .notRelayed)
 
         try super.init(from: decoder)
     }
@@ -80,10 +83,11 @@ class LockedBalanceData: BalanceData {
 
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(locked, forKey: .locked)
+        try container.encode(notRelayed, forKey: .notRelayed)
     }
 
     override var balanceTotal: Decimal {
-        super.balanceTotal + locked
+        super.balanceTotal + locked + notRelayed
     }
 
     override var customStates: [CustomState] {
@@ -98,12 +102,21 @@ class LockedBalanceData: BalanceData {
                 )
             )
         }
+        if !notRelayed.isZero {
+            states.append(
+                CustomState(
+                    title: "balance.token.not_relayed".localized,
+                    value: notRelayed,
+                    infoTitle: "balance.token.not_relayed.info.title".localized,
+                    infoDescription: "balance.token.not_relayed.info.description".localized
+                )
+            )
+        }
         return states
     }
 
     static func == (lhs: LockedBalanceData, rhs: LockedBalanceData) -> Bool {
-        lhs.available == rhs.available &&
-            lhs.locked == rhs.locked
+        lhs.available == rhs.available && lhs.locked == rhs.locked && lhs.notRelayed == rhs.notRelayed
     }
 }
 
