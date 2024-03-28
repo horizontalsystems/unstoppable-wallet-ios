@@ -340,6 +340,9 @@
 "balance.token.locked" = "Заблокировано";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
+"balance.token.not_relayed" = "Broadcasting";
+"balance.token.not_relayed.info.title" = "Broadcast";
+"balance.token.not_relayed.info.description" = "The transaction holding this amount is broadcasted but not yet accepted by the network";
 "balance.token.processing" = "В процессе";
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
@@ -544,7 +547,7 @@
 "swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Разрешение...";
 "swap.revoking_button" = "Отмена...";
-"swap.not_available_button" = "Баланс N/А";
+"swap.not_available_button" = "Баланс n/a";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Эта служба не позволяет wrapping/unwrapping. Пожалуйста, попробуйте другой сервис обмена. Рекомендуется 1inch";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
@@ -751,7 +754,7 @@
 "market.advanced_search.market_cap" = "Рын. капитализация";
 "market.advanced_search.volume" = "Объем торговли";
 
-"market.advanced_search.listed_on_top_exchanges" = "Размещенные на ведущих биржах";
+"market.advanced_search.listed_on_top_exchanges" = "Размещены на ведущих биржах";
 "market.advanced_search.good_cex_volume" = "Хороший объем CEX";
 "market.advanced_search.good_dex_volume" = "Хороший объем DEX";
 "market.advanced_search.good_distribution" = "Хорошее распределение";
@@ -875,7 +878,7 @@
 "technical_advice.down" = "вниз";
 "technical_advice.up" = "вверх";
 
-"technical_advice.over.main" = "Действия с активом опасны.";
+"technical_advice.over.main" = "The actions with the asset are risky.";
 "technical_advice.over.indicators.signal_date" = "C %@";
 "technical_advice.over.indicators" = "Актив находится за границей канала Bollinger Band и %@.";
 "technical_advice.over.rsi" = " RSI = %@, что также говорит о том, что актив %@.";
@@ -2008,7 +2011,7 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "Контакты";
+"transaction_filter.title" = "Filter";
 "transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
 
 "transaction_filter.blockchain" = "Blockchain";
