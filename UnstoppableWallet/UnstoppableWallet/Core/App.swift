@@ -95,6 +95,8 @@ class App {
     let appBackupProvider: AppBackupProvider
     let cloudBackupManager: CloudBackupManager
 
+    let statManager: StatManager
+
     let kitCleaner: KitCleaner
     let appManager: AppManager
 
@@ -303,6 +305,9 @@ class App {
             logger: logger
         )
 
+        let statStorage = StatStorage(dbPool: dbPool)
+        statManager = StatManager(networkManager: networkManager, storage: statStorage, userDefaultsStorage: userDefaultsStorage)
+
         kitCleaner = KitCleaner(accountManager: accountManager)
 
         appManager = AppManager(
@@ -321,6 +326,7 @@ class App {
             deepLinkManager: deepLinkManager,
             evmLabelManager: evmLabelManager,
             balanceHiddenManager: balanceHiddenManager,
+            statManager: statManager,
             walletConnectSocketConnectionService: walletConnectSocketConnectionService,
             nftMetadataSyncer: nftMetadataSyncer
         )

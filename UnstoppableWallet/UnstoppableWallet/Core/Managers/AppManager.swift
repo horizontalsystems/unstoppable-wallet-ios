@@ -19,6 +19,7 @@ class AppManager {
     private let deepLinkManager: DeepLinkManager
     private let evmLabelManager: EvmLabelManager
     private let balanceHiddenManager: BalanceHiddenManager
+    private let statManager: StatManager
     private let walletConnectSocketConnectionService: WalletConnectSocketConnectionService
     private let nftMetadataSyncer: NftMetadataSyncer
 
@@ -30,7 +31,7 @@ class AppManager {
          kitCleaner: KitCleaner, debugLogger: DebugLogger?,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
-         deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager,
+         deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer)
     {
         self.accountManager = accountManager
@@ -48,6 +49,7 @@ class AppManager {
         self.deepLinkManager = deepLinkManager
         self.evmLabelManager = evmLabelManager
         self.balanceHiddenManager = balanceHiddenManager
+        self.statManager = statManager
         self.walletConnectSocketConnectionService = walletConnectSocketConnectionService
         self.nftMetadataSyncer = nftMetadataSyncer
     }
@@ -107,6 +109,8 @@ extension AppManager {
         lockManager.willEnterForeground()
         adapterManager.refresh()
         walletConnectSocketConnectionService.willEnterForeground()
+
+        statManager.sendStats()
 
         nftMetadataSyncer.sync()
 

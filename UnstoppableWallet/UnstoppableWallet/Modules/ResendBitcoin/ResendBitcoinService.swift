@@ -13,7 +13,7 @@ class ResendBitcoinService {
     private let price: Decimal?
     private let logger: Logger
 
-    private var recommendedFee: Decimal? = nil
+    private var recommendedFee: Decimal?
     private(set) var replacementTransaction: ReplacementTransaction?
     private(set) var feeRange: Range<Int>
     let type: ResendTransactionType
