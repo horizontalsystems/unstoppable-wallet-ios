@@ -2008,7 +2008,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Contatos";
+"transaction_filter.title" = "Filter";
 "transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
 
 "transaction_filter.blockchain" = "Blockchain";
