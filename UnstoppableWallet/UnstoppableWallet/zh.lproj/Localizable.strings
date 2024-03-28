@@ -2008,7 +2008,7 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "联系人";
+"transaction_filter.title" = "Filter";
 "transaction_filter.description" = "在 %@ 区块链上，通过联系人进行筛选是有效的。下面显示了适用的联系人。";
 
 "transaction_filter.blockchain" = "Blockchain";
