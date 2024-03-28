@@ -63,7 +63,7 @@ struct TransactionContactSelectView: View {
                     PlaceholderViewNew(image: Image("not_found_48"), text: "no suitable contacts".localized)
                 }
             }
-            .navigationTitle("transaction_filter.title".localized)
+            .navigationTitle("contacts.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
