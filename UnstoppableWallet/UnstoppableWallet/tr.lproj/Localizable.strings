@@ -2016,7 +2016,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Kişiler";
+"transaction_filter.title" = "Filter";
 "transaction_filter.description" = "Kişi listesine göre filtreleme %@ blok zinciri üzerinde çalışır. Uygun kişiler aşağıda gösterilmiştir";
 
 "transaction_filter.blockchain" = "Blockchain";
