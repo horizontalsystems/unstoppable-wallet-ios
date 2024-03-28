@@ -2009,7 +2009,7 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "연락처";
+"transaction_filter.title" = "Filter";
 "transaction_filter.description" = "연락처로 필터링이 %@개의 블록체인에서 작동합니다. 아래에 적합한 연락처가 표시됩니다.";
 
 "transaction_filter.blockchain" = "Blockchain";
