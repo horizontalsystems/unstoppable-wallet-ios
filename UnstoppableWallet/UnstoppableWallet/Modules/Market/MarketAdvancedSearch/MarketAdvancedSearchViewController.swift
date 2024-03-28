@@ -465,6 +465,18 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         )
 
         sections.append(Section(
+                id: "indicators",
+                headerState: tableView.sectionHeader(text: "market.advanced_search.indicators".localized.uppercased()),
+                footerState: .margin(height: .margin24),
+                rows: [
+                    row(cell: technicalAdviceCell, id: "indicators") { [weak self] in
+                        self?.onTapTechnicalIndicatorCell()
+                    },
+                ]
+        )
+        )
+
+        sections.append(Section(
             id: "market_filters",
             headerState: tableView.sectionHeader(text: "market.advanced_search.market_parameters".localized.uppercased()),
             footerState: .margin(height: .margin24),
@@ -490,18 +502,6 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
             rows: [
                 row(cell: blockchainsCell, id: "blockchains") { [weak self] in
                     self?.onTapBlockchainsCell()
-                },
-            ]
-        )
-        )
-
-        sections.append(Section(
-            id: "indicators",
-            headerState: tableView.sectionHeader(text: "market.advanced_search.indicators".localized.uppercased()),
-            footerState: .margin(height: .margin24),
-            rows: [
-                row(cell: technicalAdviceCell, id: "indicators") { [weak self] in
-                    self?.onTapTechnicalIndicatorCell()
                 },
             ]
         )
