@@ -1,5 +1,6 @@
 import Combine
 import EvmKit
+import Foundation
 import HsExtensions
 import MarketKit
 
@@ -42,6 +43,21 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
             let wallets = walletManager.activeWallets
             var resultTokens = [Token]()
 
+            let currency = currencyManager.baseCurrency
+            let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
+
+            var balances = [Token: Decimal]()
+            var fiatBalances = [Token: Decimal]()
+
+            for wallet in wallets {
+                let balance = adapterManager.balanceAdapter(for: wallet)?.balanceData.available ?? 0
+                balances[wallet.token] = balance
+
+                if let coinPrice = coinPriceMap[wallet.coin.uid] {
+                    fiatBalances[wallet.token] = balance * coinPrice.value
+                }
+            }
+
             do {
                 if filter.isEmpty {
                     let enabledTokens = wallets
@@ -54,6 +70,13 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                                 if lhsSameBlockchain != rhsSameBlockchain {
                                     return lhsSameBlockchain
                                 }
+                            }
+
+                            let lhsFiatBalance = fiatBalances[lhsToken] ?? 0
+                            let rhsFiatBalance = fiatBalances[rhsToken] ?? 0
+
+                            if lhsFiatBalance != rhsFiatBalance {
+                                return lhsFiatBalance > rhsFiatBalance
                             }
 
                             if lhsToken.coin.code != rhsToken.coin.code {
@@ -123,8 +146,8 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     resultTokens = tokens
                         .filter { account.type.supports(token: $0) }
                         .sorted { lhsToken, rhsToken in
-                            let lhsEnabled = wallets.contains { $0.token == lhsToken }
-                            let rhsEnabled = wallets.contains { $0.token == rhsToken }
+                            let lhsEnabled = balances[lhsToken] != nil
+                            let rhsEnabled = balances[rhsToken] != nil
 
                             if lhsEnabled != rhsEnabled {
                                 return lhsEnabled
@@ -143,8 +166,8 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     resultTokens = tokens
                         .filter { account.type.supports(token: $0) }
                         .sorted { lhsToken, rhsToken in
-                            let lhsEnabled = wallets.contains { $0.token == lhsToken }
-                            let rhsEnabled = wallets.contains { $0.token == rhsToken }
+                            let lhsEnabled = balances[lhsToken] != nil
+                            let rhsEnabled = balances[rhsToken] != nil
 
                             if lhsEnabled != rhsEnabled {
                                 return lhsEnabled
@@ -182,27 +205,22 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 }
             } catch {}
 
-            let currency = currencyManager.baseCurrency
-            let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
-
             let items = resultTokens.map { token in
-                var balance: String?
-                var fiatBalance: String?
+                var balanceString: String?
+                var fiatBalanceString: String?
 
-                if let wallet = wallets.first(where: { $0.token == token }),
-                   let availableBalance = adapterManager.balanceAdapter(for: wallet)?.balanceData.available
-                {
-                    balance = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: token), value: availableBalance))
+                if let balance = balances[token] {
+                    balanceString = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: token), value: balance))
 
-                    if let coinPrice = coinPriceMap[token.coin.uid] {
-                        fiatBalance = ValueFormatter.instance.formatShort(currency: currency, value: availableBalance * coinPrice.value)
+                    if let fiatBalance = fiatBalances[token] {
+                        fiatBalanceString = ValueFormatter.instance.formatShort(currency: currency, value: fiatBalance)
                     }
                 }
 
                 return Item(
                     token: token,
-                    balance: balance,
-                    fiatBalance: fiatBalance
+                    balance: balanceString,
+                    fiatBalance: fiatBalanceString
                 )
             }
 
