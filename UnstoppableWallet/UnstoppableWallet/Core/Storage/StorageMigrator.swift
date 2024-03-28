@@ -808,6 +808,15 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create StatRecord") { db in
+            try db.create(table: StatRecord.databaseTableName) { t in
+                t.column(StatRecord.Columns.eventPage.name, .text).notNull()
+                t.column(StatRecord.Columns.eventSection.name, .text)
+                t.column(StatRecord.Columns.event.name, .text).notNull()
+                t.column(StatRecord.Columns.params.name, .blob)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

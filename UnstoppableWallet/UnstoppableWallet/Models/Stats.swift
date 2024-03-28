@@ -154,9 +154,9 @@ enum StatEvent {
 
     var params: [StatParam: Any]? {
         switch self {
-        case let .openCategory(categoryUid): return [.page: StatPage.coinCategory, .categoryUid: categoryUid]
-        case let .openCoin(coinUid): return [.page: StatPage.coinPage, .coinUid: coinUid]
-        case let .openPlatform(chainUid): return [.page: StatPage.topPlatform, .chainUid: chainUid]
+        case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
+        case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
+        case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
         case let .open(page): return [.page: page.rawValue]
         case let .switchTab(tab): return [.tab: tab.rawValue]
         case let .switchMarketTop(marketTop): return [.marketTop: marketTop.rawValue]
