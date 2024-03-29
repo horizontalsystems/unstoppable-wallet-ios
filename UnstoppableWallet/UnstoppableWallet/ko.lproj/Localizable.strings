@@ -134,6 +134,7 @@
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
+"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
 "restore.passphrase_description" = "이 암호는 지갑의 백업 파일을 암호화하는 데 사용됩니다. 이 암호는 Apple iCloud 암호와는 관련이 없습니다. 만약 분실하거나 잊어버린 경우, 복구하거나 재설정할 수 없습니다.";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "restore.non_standard_import" = "비표준 복원";
@@ -474,9 +475,7 @@
 
 "send.confirmation.slide_to_resend" = "재전송";
 "send.confirmation.slide_to_cancel" = "거래 취소";
-"send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.resend" = "재전송";
-"send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.btc_cancel_description" = "이 작업은 이전 거래를 무효화하려고 하며, 새로운 거래로 다시 보내면서 일부 금액을 자신에게 전송합니다. 원래 거래가 새 거래를 보낼 때까지 대기 중인 경우 (보장되지는 않음) 무효화되고 대체될 가능성이 높습니다. 두 거래 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "거래 취소";
@@ -1174,6 +1173,7 @@
 "tx_info.you_got" = "받았던 금액";
 "tx_info.price" = "금액";
 "tx_info.scam_warning" = "이 거래는 의심스럽고 사기일 수 있습니다. 이 거래에서 주소를 복사하지 마십시오.";
+"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
 
 // Settings
 
