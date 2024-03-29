@@ -136,6 +136,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore.checksum_error" = "Suma de verificación inválida";
 "restore.passphrase" = "Frase de contraseña";
 "restore.input.passphrase" = "Frase de contraseña";
+"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
 "restore.passphrase_description" = "Esta contraseña se utiliza para encriptar el archivo de respaldo de tu cartera. No está relacionada con tu contraseña de Apple iCloud. No se puede recuperar ni restablecer si se pierde o se olvida.";
 "restore.error.empty_passphrase" = "La frase no puede estar vacía";
 "restore.non_standard_import" = "Restauración no estándar";
@@ -476,9 +477,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "send.confirmation.slide_to_resend" = "Reenviar";
 "send.confirmation.slide_to_cancel" = "Cancel Transaction";
-"send.confirmation.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.resend" = "Reenviar";
-"send.confirmation.cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.btc_cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola como una nueva transacción, enviando una cierta cantidad a sí misma. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que se invalide y se reemplace. Solo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "Cancel Transaction";
@@ -1175,6 +1174,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
 "tx_info.scam_warning" = "Esta transacción es sospechosa y podría ser una estafa. Por favor, no copies ninguna dirección de esta transacción.";
+"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
 
 // Settings
 
