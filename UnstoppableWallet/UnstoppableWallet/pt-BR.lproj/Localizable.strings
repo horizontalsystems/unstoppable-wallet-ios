@@ -136,6 +136,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.checksum_error" = "Soma de Verificação Inválida";
 "restore.passphrase" = "Senha";
 "restore.input.passphrase" = "Senha";
+"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
 "restore.passphrase_description" = "Listen up, folks. This password right here, it's for your wallet's backup file, not your fancy Apple iCloud password, okay? And here's the deal, you forget this one, there's no recovery, no reset. It's like a key to Fort Knox, so guard it like gold!";
 "restore.error.empty_passphrase" = "Folks, we can't have an empty passphrase here, okay?";
 "restore.non_standard_import" = "Restauração Não-Padrão";
@@ -476,9 +477,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "send.confirmation.slide_to_resend" = "Enviar novamente";
 "send.confirmation.slide_to_cancel" = "Cancel Transaction";
-"send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
 "send.confirmation.resend" = "Enviar novamente";
-"send.confirmation.cancel_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
 "send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "Cancel Transaction";
@@ -1175,6 +1174,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "tx_info.you_got" = "Você Tem";
 "tx_info.price" = "Preço";
 "tx_info.scam_warning" = "Esta transação é suspeita e pode ser um golpe. Por favor, não copie nenhum endereço desta transação.";
+"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
 
 // Settings
 
