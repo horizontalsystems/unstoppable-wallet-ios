@@ -136,6 +136,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 "restore.passphrase" = "Parola";
 "restore.input.passphrase" = "Parola";
+"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
 "restore.passphrase_description" = "Bu şifre, cüzdanınızın yedek dosyasını şifrelemek için kullanılır. Apple iCloud parolanızla ilgili değil. Kaybolur veya unutulursa kurtarılamaz veya sıfırlanamaz.";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 "restore.non_standard_import" = "Standart Olmayan Yükleme";
@@ -476,9 +477,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "send.confirmation.slide_to_resend" = "Yeniden Gönder";
 "send.confirmation.slide_to_cancel" = "İşlemi İptal Et";
-"send.confirmation.resend_description" = "Bunu yapmak, daha yüksek bir ücretle işlemi yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
 "send.confirmation.resend" = "Yeniden Gönder";
-"send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
 "send.confirmation.btc_cancel_description" = "Bu işlem, önceki işlemi geçersiz kılmak için onu yeni bir işlem olarak kendine bir miktar göndererek yeniden göndermeyi deneyecektir. Yeni bir işlem gönderildiğinde önceki işlem hala beklemekteyse, bu işlemin geçersiz kılınacağı ve yerine geçeceği yüksek bir olasılık vardır (garanti edilmez). Bu iki işlemden sadece biri blok zincirine dahil edilecektir.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "İşlemi İptal Et";
@@ -1175,6 +1174,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.you_got" = "Aldığınız Tutar";
 "tx_info.price" = "Fiyat";
 "tx_info.scam_warning" = "Bu işlem şüpheli ve dolandırıcılık olabilir. Lütfen bu işlemden herhangi bir adres kopyalamayın.";
+"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
 
 // Settings
 
