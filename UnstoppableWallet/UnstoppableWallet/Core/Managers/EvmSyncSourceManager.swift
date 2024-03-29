@@ -174,6 +174,11 @@ extension EvmSyncSourceManager {
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
+                    name: "Fantom Chain (Mirror)",
+                    rpcSource: .http(urls: [URL(string: "https://rpcapi.fantom.network/")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
                     name: "Ankr",
                     rpcSource: .http(urls: [URL(string: "https://rpc.ankr.com/fantom")!], auth: nil),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
