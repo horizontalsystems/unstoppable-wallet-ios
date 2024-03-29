@@ -136,6 +136,7 @@
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
+"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
 "restore.passphrase_description" = "此密码用于加密您的钱包备份文件。与您的 Apple iCloud 密码无关。如果丢失或遗忘，将无法恢复或重置。";
 "restore.error.empty_passphrase" = "密码不能为空白";
 "restore.non_standard_import" = "非标准还原";
@@ -476,9 +477,7 @@
 
 "send.confirmation.slide_to_resend" = "重新发送";
 "send.confirmation.slide_to_cancel" = "Cancel Transaction";
-"send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.resend" = "重新发送";
-"send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "Cancel Transaction";
@@ -1175,6 +1174,7 @@
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
 "tx_info.scam_warning" = "这笔交易存在可疑，可能是诈骗。请不要从这笔交易中复制任何地址。";
+"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
 
 // Settings
 
