@@ -136,6 +136,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "restore.checksum_error" = "Ungültige Prüfsumme";
 "restore.passphrase" = "Passwort";
 "restore.input.passphrase" = "Passwort";
+"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
 "restore.passphrase_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Wallet zu verschlüsseln. Es hat nichts mit Ihrem Apple iCloud-Passwort zu tun. Wenn Sie es vergessen oder verlieren, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
@@ -476,9 +477,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "send.confirmation.slide_to_resend" = "Nochmal senden";
 "send.confirmation.slide_to_cancel" = "Transaktion abbrechen";
-"send.confirmation.resend_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch erneutes Senden mit einer höheren Gebühr ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.resend" = "Nochmal senden";
-"send.confirmation.cancel_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch eine neue Transaktion mit einem Betrag von 0 an sich selbst ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue Transaktion gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.btc_cancel_description" = "Diese Aktion wird versuchen, die vorherige Transaktion zu ungültig zu machen, indem sie sie als neue Transaktion neu sendet und dabei einen Betrag an sich selbst sendet. Wenn die Originaltransaktion ausstehend bleibt, wenn eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie ungültig gemacht und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "Transaktion abbrechen";
@@ -1175,6 +1174,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tx_info.you_got" = "Du bekommst";
 "tx_info.price" = "Preis";
 "tx_info.scam_warning" = "Diese Transaktion ist verdächtig und könnte ein Betrug sein. Bitte kopieren Sie keine Adressen aus dieser Transaktion.";
+"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
 
 // Settings
 
