@@ -174,8 +174,8 @@ class ZcashAdapter {
                     self?.transactionSubject.onNext(wrapped)
                 }
 
-                let shielded = await (try? synchronizer.getShieldedBalance(accountIndex: 0).decimalValue.decimalValue) ?? 0
-                let shieldedVerified = await (try? synchronizer.getShieldedVerifiedBalance(accountIndex: 0).decimalValue.decimalValue) ?? 0
+                let shielded = await (try? synchronizer.getAccountBalance(accountIndex: 0)?.saplingBalance.total().decimalValue.decimalValue) ?? 0
+                let shieldedVerified = await (try? synchronizer.getAccountBalance(accountIndex: 0)?.saplingBalance.spendableValue.decimalValue.decimalValue) ?? 0
                 self?.balanceSubject.onNext(
                     VerifiedBalanceData(
                         fullBalance: shielded,
@@ -476,8 +476,8 @@ class ZcashAdapter {
         }
 
         return VerifiedBalanceData(
-            fullBalance: synchronizerState.shieldedBalance.total.decimalValue.decimalValue,
-            available: synchronizerState.shieldedBalance.verified.decimalValue.decimalValue
+            fullBalance: synchronizerState.accountBalance?.saplingBalance.total().decimalValue.decimalValue ?? 0,
+            available: synchronizerState.accountBalance?.saplingBalance.spendableValue.decimalValue.decimalValue ?? 0
         )
     }
 
@@ -622,12 +622,10 @@ extension ZcashAdapter: IAdapter {
 
         if let status = synchronizerState {
             balanceState = """
-            shielded balance
-              total:  \(balanceData.balanceTotal.description)
-            verified:  \(balanceData.available)
-            transparent balance
-                 total: \(String(describing: status.transparentBalance.total))
-              verified: \(String(describing: status.transparentBalance.verified))
+            shielded balance (BalanceData)
+                total:  \(balanceData.balanceTotal.description)
+                verified:  \(balanceData.available)
+            unshielded balance: \(String(describing: status.accountBalance?.unshielded ?? Zatoshi(0)))
             """
         }
         return """
