@@ -112,7 +112,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         passphraseCell.onChangeText = { [weak self] in self?.mnemonicViewModel.onChange(passphrase: $0 ?? "") }
 
         passphraseCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-        passphraseDescriptionCell.descriptionText = "restore.passphrase_description".localized
+        passphraseDescriptionCell.descriptionText = "restore.wallet.passphrase_description".localized
 
         view.addSubview(hintView)
         hintView.snp.makeConstraints { maker in

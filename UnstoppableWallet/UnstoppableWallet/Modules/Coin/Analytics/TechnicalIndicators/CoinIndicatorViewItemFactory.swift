@@ -67,8 +67,8 @@ extension CoinIndicatorViewItemFactory {
         return main
     }
 
-    private func capitalizedFirst(_ string: String) -> String {
-        string.prefix(1).uppercased() + string.dropFirst()
+    private func lowercasedFirst(_ string: String) -> String {
+        string.prefix(1).lowercased() + string.dropFirst()
     }
 
     private func mainAdvice(_ technicalAdvice: TechnicalAdvice) -> String {
@@ -105,7 +105,7 @@ extension CoinIndicatorViewItemFactory {
             indicators += rsi
 
             if let time = signalTimeString {
-                indicators = [time, capitalizedFirst(indicators)].joined(separator: " ")
+                indicators = [time, lowercasedFirst(indicators)].joined(separator: " ")
             }
 
             let resultAdvice = "technical_advice.over.advice".localized(direction)
@@ -118,7 +118,7 @@ extension CoinIndicatorViewItemFactory {
 
             var indicators = "technical_advice.strong.indicators".localized(overtype)
             if let time = signalTimeString {
-                indicators = [time, capitalizedFirst(indicators)].joined(separator: " ")
+                indicators = [time, lowercasedFirst(indicators)].joined(separator: " ")
             }
 
             indicators += rsi
@@ -132,7 +132,7 @@ extension CoinIndicatorViewItemFactory {
 
             var indicators = "technical_advice.strong.indicators".localized(overtype)
             if let time = signalTimeString {
-                indicators = [time, capitalizedFirst(indicators)].joined(separator: " ")
+                indicators = [time, lowercasedFirst(indicators)].joined(separator: " ")
             }
 
             indicators += rsi
@@ -147,7 +147,7 @@ extension CoinIndicatorViewItemFactory {
             var indicators = "technical_advice.neutral.indicators".localized(overtype)
             indicators += rsi
             if let time = signalTimeString {
-                indicators = [time, capitalizedFirst(indicators)].joined(separator: " ")
+                indicators = [time, lowercasedFirst(indicators)].joined(separator: " ")
             }
 
             let resultAdvice = "technical_advice.neutral.advice".localized

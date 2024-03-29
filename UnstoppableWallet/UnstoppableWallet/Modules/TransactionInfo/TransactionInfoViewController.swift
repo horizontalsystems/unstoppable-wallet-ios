@@ -13,7 +13,7 @@ class TransactionInfoViewController: ThemeViewController {
     private var urlManager: UrlManager
     private let adapter: ITransactionsAdapter
 
-    private var viewItems = [[TransactionInfoModule.ViewItem]]()
+    private var viewItems = [TransactionInfoModule.SectionViewItem]()
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -536,13 +536,20 @@ class TransactionInfoViewController: ThemeViewController {
 
 extension TransactionInfoViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
-        viewItems.enumerated().map { (index: Int, sectionViewItems: [TransactionInfoModule.ViewItem]) -> SectionProtocol in
-            Section(
+        viewItems.enumerated().map { (index: Int, sectionViewItem: TransactionInfoModule.SectionViewItem) -> SectionProtocol in
+            let footerState: ViewState<BottomDescriptionHeaderFooterView>
+            if let footer = sectionViewItem.footer {
+                footerState = tableView.sectionFooter(text: footer, bottomMargin: .margin16)
+            } else {
+                footerState = .margin(height: index == viewItems.count - 1 ? .margin32 : 0)
+            }
+
+            return Section(
                 id: "section_\(index)",
                 headerState: .margin(height: .margin12),
-                footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
-                rows: sectionViewItems.enumerated().map { index, viewItem in
-                    row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItems.count - 1))
+                footerState: footerState,
+                rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
                 }
             )
         }
