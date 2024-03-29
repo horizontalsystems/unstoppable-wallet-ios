@@ -465,14 +465,14 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         )
 
         sections.append(Section(
-                id: "indicators",
-                headerState: tableView.sectionHeader(text: "market.advanced_search.indicators".localized.uppercased()),
-                footerState: .margin(height: .margin24),
-                rows: [
-                    row(cell: technicalAdviceCell, id: "indicators") { [weak self] in
-                        self?.onTapTechnicalIndicatorCell()
-                    },
-                ]
+            id: "indicators",
+            headerState: tableView.sectionHeader(text: "market.advanced_search.indicators".localized.uppercased()),
+            footerState: .margin(height: .margin24),
+            rows: [
+                row(cell: technicalAdviceCell, id: "indicators") { [weak self] in
+                    self?.onTapTechnicalIndicatorCell()
+                },
+            ]
         )
         )
 

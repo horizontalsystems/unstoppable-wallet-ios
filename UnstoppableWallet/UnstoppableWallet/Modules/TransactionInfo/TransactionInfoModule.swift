@@ -49,4 +49,14 @@ extension TransactionInfoModule {
         case explorer(title: String, url: String?)
         case warning(text: String)
     }
+
+    struct SectionViewItem {
+        let viewItems: [ViewItem]
+        let footer: String?
+
+        init(_ viewItems: [ViewItem], footer: String? = nil) {
+            self.viewItems = viewItems
+            self.footer = footer
+        }
+    }
 }

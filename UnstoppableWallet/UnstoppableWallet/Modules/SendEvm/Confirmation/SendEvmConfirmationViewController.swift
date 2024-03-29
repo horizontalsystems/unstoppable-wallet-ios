@@ -40,7 +40,6 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
             }
         case .resend:
             title = "tx_info.options.speed_up".localized
-            topDescription = "send.confirmation.resend_description".localized
 
             bottomWrapper.addSubview(sendButton)
 
@@ -49,7 +48,6 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
             sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
         case .cancel:
             title = "tx_info.options.cancel".localized
-            topDescription = "send.confirmation.cancel_description".localized
 
             bottomWrapper.addSubview(sendButton)
 

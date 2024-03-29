@@ -15,7 +15,6 @@ class ResendBitcoinViewController: KeyboardAwareViewController, SectionsDataSour
     private let cautionCell = TitledHighlightedDescriptionCell()
     private let sendButton = SliderButton()
 
-    private var topDescription: String = ""
     private var viewItems = [[ResendBitcoinViewModel.ViewItem]]()
     private var loaded = false
 
@@ -49,8 +48,6 @@ class ResendBitcoinViewController: KeyboardAwareViewController, SectionsDataSour
 
         bottomWrapper.add(to: self)
         bottomWrapper.addSubview(sendButton)
-
-        topDescription = viewModel.replaceType == .speedUp ? "send.confirmation.resend_description".localized : "send.confirmation.btc_cancel_description".localized
 
         sendButton.title = viewModel.replaceType == .speedUp ? "send.confirmation.slide_to_resend".localized : "send.confirmation.slide_to_cancel".localized
         sendButton.finalTitle = "send.confirmation.sending".localized
@@ -137,7 +134,7 @@ extension ResendBitcoinViewController {
             sections.append(
                 Section(
                     id: "section-\(index)",
-                    headerState: index == 0 ? tableView.sectionFooter(text: topDescription) : .margin(height: .margin16),
+                    headerState: .margin(height: index == 0 ? .margin12 : .margin16),
                     rows: viewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == viewItems.count - 1))
                     }

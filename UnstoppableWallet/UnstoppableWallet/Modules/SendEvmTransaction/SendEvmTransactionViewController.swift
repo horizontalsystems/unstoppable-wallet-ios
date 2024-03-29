@@ -25,8 +25,6 @@ class SendEvmTransactionViewController: ThemeViewController {
     private let caution2Cell = TitledHighlightedDescriptionCell()
     private var isLoaded = false
 
-    var topDescription: String?
-
     init(transactionViewModel: SendEvmTransactionViewModel, settingsViewModel: EvmSendSettingsViewModel) {
         self.transactionViewModel = transactionViewModel
         self.settingsViewModel = settingsViewModel
@@ -176,15 +174,9 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     private func section(sectionViewItem: SendEvmTransactionViewModel.SectionViewItem, index: Int) -> SectionProtocol {
-        var headerText: String?
-
-        if index == 0, let topDescription {
-            headerText = topDescription
-        }
-
-        return Section(
+        Section(
             id: "section_\(index)",
-            headerState: headerText.map { tableView.sectionFooter(text: $0) } ?? .margin(height: index == 0 ? .margin12 : .margin16),
+            headerState: .margin(height: index == 0 ? .margin12 : .margin16),
             rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                 row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
             }
