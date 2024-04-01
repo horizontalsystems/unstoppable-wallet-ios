@@ -595,6 +595,11 @@
 "swap.recipient" = "Recipient";
 "swap.slippage" = "Slippage";
 
+"swap.affiliate_fee" = "Affiliate Fee";
+"swap.liquidity_fee" = "Liquidity Fee";
+"swap.outbound_fee" = "Outbound Fee";
+"swap.total_fee" = "Total Fee";
+
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "토큰 범위 설정";
