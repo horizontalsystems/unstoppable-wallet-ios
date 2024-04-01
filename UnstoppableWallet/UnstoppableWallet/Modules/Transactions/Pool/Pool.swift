@@ -41,6 +41,7 @@ class Pool {
 
             var updatesOnly = true
             var updatedItems = [TransactionItem]()
+            let lastBlockInfo = self.provider.lastBlockInfo
 
             for record in records {
                 guard let index = self.items.firstIndex(where: { $0.record == record }) else {
@@ -49,6 +50,13 @@ class Pool {
                 }
 
                 self.items[index].record = record
+                if self.items[index].status.isPendingOrProcessing {
+                    let newStatus = record.status(lastBlockHeight: lastBlockInfo?.height)
+                    if self.items[index].status != newStatus {
+                        self.items[index].status = newStatus
+                    }
+                }
+
                 updatedItems.append(self.items[index])
             }
 
