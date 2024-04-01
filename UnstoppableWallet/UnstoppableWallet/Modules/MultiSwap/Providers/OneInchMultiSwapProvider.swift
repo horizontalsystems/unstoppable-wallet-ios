@@ -199,7 +199,7 @@ extension OneInchMultiSwapProvider {
         let recipient: Address?
         let slippage: Decimal
 
-        init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, allowanceState: AllowanceState) {
+        init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
             self.quote = quote
             self.recipient = recipient
             self.slippage = slippage

@@ -397,6 +397,7 @@
 		11B3540CF7A5AA26C196D796 /* CreateAccountSimpleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351628BA5984C6EBB412E /* CreateAccountSimpleViewController.swift */; };
 		11B3540F182F3EDE74245EC7 /* MainSettingsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BD9A836C953CCF8D077 /* MainSettingsFooterCell.swift */; };
 		11B35411C817EDE73D4E6242 /* CoinPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BFAAAE3B1357B5CE944 /* CoinPageService.swift */; };
+		11B3541A1D615503ECD614D8 /* MultiSwapAllowanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35914D68AEC1242C482FA /* MultiSwapAllowanceHelper.swift */; };
 		11B3541A3A7BDE85240F71A0 /* SendConfirmationNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B91B5EAF2E193FDC04E /* SendConfirmationNewView.swift */; };
 		11B3541BC8A0EF1066EBA464 /* NonSpamPoolProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FE5BB60FB12BB24F3E /* NonSpamPoolProvider.swift */; };
 		11B3541D3F7AFB8C651BEE2B /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353B4C04282FDBB1B6563 /* Guide.swift */; };
@@ -798,6 +799,7 @@
 		11B3586F6BFCA16BDFD5921D /* DuressModeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A81FB3D4C06BBFEE7E7 /* DuressModeModule.swift */; };
 		11B35871BA700133050E9241 /* CexWithdrawViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B2465CB748311AF03D5 /* CexWithdrawViewModel.swift */; };
 		11B3587280273E0804CA84F2 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35743A66A4653A3C2FDBF /* Stats.swift */; };
+		11B358772C8F79E83FDE3729 /* MultiSwapAllowanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35914D68AEC1242C482FA /* MultiSwapAllowanceHelper.swift */; };
 		11B358781EBEFCE7CED000F0 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A6BEF8299304625D6D0 /* SearchBar.swift */; };
 		11B3587D9E89A97F63CD0C5A /* EditPasscodeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3529CF33E51DA1C872106 /* EditPasscodeModule.swift */; };
 		11B3587EF674C1E8EEE61DE7 /* MarkdownBlockQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3552D3F84BA594EFE964C /* MarkdownBlockQuoteCell.swift */; };
@@ -3670,6 +3672,7 @@
 		11B3590ACA8DFA4196E8EC33 /* CreatePasscodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePasscodeViewModel.swift; sourceTree = "<group>"; };
 		11B3590EB4E34B278277E8E4 /* CexCoinService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CexCoinService.swift; sourceTree = "<group>"; };
 		11B35912C37850929316F49C /* UniswapV3MultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapV3MultiSwapProvider.swift; sourceTree = "<group>"; };
+		11B35914D68AEC1242C482FA /* MultiSwapAllowanceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSwapAllowanceHelper.swift; sourceTree = "<group>"; };
 		11B359198B26152903D5CA14 /* CexAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CexAccount.swift; sourceTree = "<group>"; };
 		11B3591AD106DAC0D18FEDD7 /* BalanceViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceViewItem.swift; sourceTree = "<group>"; };
 		11B35920D0AD623C5E4A4460 /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -6075,6 +6078,7 @@
 				ABC9A2F6BA4469E528E98387 /* BaseMultiSwap */,
 				11B35EF841FD4B3D13058F76 /* OneInchMultiSwapProvider.swift */,
 				11B35B323F0836767BA0565F /* ThorChainMultiSwapProvider.swift */,
+				11B35914D68AEC1242C482FA /* MultiSwapAllowanceHelper.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -10933,6 +10937,7 @@
 				11B3568ED01B671E6C914EA5 /* StatExtensions.swift in Sources */,
 				11B352EC3DD266F5835E8537 /* StatStorage.swift in Sources */,
 				11B35DAA8E2BADCF4FC2AA7F /* StatRecord.swift in Sources */,
+				11B3541A1D615503ECD614D8 /* MultiSwapAllowanceHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12428,6 +12433,7 @@
 				11B359B8A2F9D6DDA45E0931 /* StatExtensions.swift in Sources */,
 				11B3501D2E8C6FB3B3B767FC /* StatStorage.swift in Sources */,
 				11B35B40461A5D9841EEE4EF /* StatRecord.swift in Sources */,
+				11B358772C8F79E83FDE3729 /* MultiSwapAllowanceHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

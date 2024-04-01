@@ -197,7 +197,7 @@ extension SendEvmHandler {
             }
 
             if let feeToken {
-                sections.append(feeSection(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate))
+                sections.append(feeFields(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate))
             }
 
             return sections

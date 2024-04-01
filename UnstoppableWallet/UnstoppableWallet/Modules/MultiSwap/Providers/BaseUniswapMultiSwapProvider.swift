@@ -175,7 +175,7 @@ extension BaseUniswapMultiSwapProvider {
         let recipient: Address?
         let providerName: String
 
-        init(trade: Trade, tradeOptions: TradeOptions, recipient: Address?, providerName: String, allowanceState: AllowanceState) {
+        init(trade: Trade, tradeOptions: TradeOptions, recipient: Address?, providerName: String, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
             self.trade = trade
             self.tradeOptions = tradeOptions
             self.recipient = recipient
