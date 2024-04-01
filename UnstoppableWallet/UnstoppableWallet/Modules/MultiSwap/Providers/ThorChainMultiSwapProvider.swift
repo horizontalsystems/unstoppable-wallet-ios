@@ -1,5 +1,8 @@
 import Alamofire
+import BigInt
+import EvmKit
 import Foundation
+import HsToolKit
 import MarketKit
 import ObjectMapper
 import SwiftUI
@@ -7,9 +10,13 @@ import SwiftUI
 class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private let baseUrl = "https://thornode.ninerealms.com"
 
-    private let networkManager = App.shared.networkManager
+//    private let networkManager = App.shared.networkManager
+    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let marketKit = App.shared.marketKit
+    private let evmBlockchainManager = App.shared.evmBlockchainManager
     private let storage: MultiSwapSettingStorage
+    private let allowanceHelper = MultiSwapAllowanceHelper()
+    private let evmFeeEstimator = EvmFeeEstimator()
 
     var assets = [Asset]()
 
@@ -37,6 +44,104 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
+        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+
+        switch tokenIn.blockchainType {
+        case .avalanche, .binanceSmartChain, .ethereum:
+            guard let router = swapQuote.router else {
+                throw SwapError.noRouterAddress
+            }
+
+            let spenderAddress = try EvmKit.Address(hex: router)
+
+            return await EvmQuote(
+                swapQuote: swapQuote,
+                allowanceState: allowanceHelper.allowanceState(spenderAddress: spenderAddress, token: tokenIn, amount: amountIn)
+            )
+        default:
+            throw SwapError.unsupportedTokenIn
+        }
+    }
+
+    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+
+        switch tokenIn.blockchainType {
+        case .avalanche, .binanceSmartChain, .ethereum:
+            guard let router = swapQuote.router else {
+                throw SwapError.noRouterAddress
+            }
+
+            let transactionData: TransactionData
+
+            switch tokenIn.type {
+            case .native:
+                transactionData = try TransactionData(
+                    to: EvmKit.Address(hex: swapQuote.inboundAddress),
+                    value: tokenIn.fractionalMonetaryValue(value: amountIn),
+                    input: Data(swapQuote.memo.utf8) // TODO: CHECK THIS POINT
+                )
+            case let .eip20(address):
+                let method = try DepositWithExpiryMethod(
+                    inboundAddress: EvmKit.Address(hex: swapQuote.inboundAddress),
+                    asset: EvmKit.Address(hex: address),
+                    amount: tokenIn.fractionalMonetaryValue(value: amountIn),
+                    memo: swapQuote.memo,
+                    expiry: BigUInt(UInt64(Date().timeIntervalSince1970) + 1 * 60 * 60) // TODO: CHECK THIS POINT
+                )
+
+                transactionData = try TransactionData(
+                    to: EvmKit.Address(hex: router),
+                    value: 0,
+                    input: method.encodedABI()
+                )
+            default:
+                throw SwapError.invalidTokenInType
+            }
+
+            let blockchainType = tokenIn.blockchainType
+            let gasPrice = transactionSettings?.gasPrice
+            var evmFeeData: EvmFeeData?
+            var transactionError: Error?
+
+            if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPrice {
+                do {
+                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPrice)
+                } catch {
+                    transactionError = error
+                }
+            }
+
+            return EvmConfirmationQuote(
+                swapQuote: swapQuote,
+                transactionData: transactionData,
+                transactionError: transactionError,
+                gasPrice: gasPrice,
+                evmFeeData: evmFeeData,
+                nonce: transactionSettings?.nonce
+            )
+        default:
+            throw SwapError.unsupportedTokenIn
+        }
+    }
+
+    func settingsView(tokenIn _: Token, tokenOut _: Token, onChangeSettings _: @escaping () -> Void) -> AnyView {
+        fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
+    }
+
+    func settingView(settingId _: String) -> AnyView {
+        fatalError("settingView(settingId:) has not been implemented")
+    }
+
+    func preSwapView(step _: MultiSwapPreSwapStep, tokenIn _: Token, tokenOut _: Token, amount _: Decimal, isPresented _: Binding<Bool>, onSuccess _: @escaping () -> Void) -> AnyView {
+        fatalError("preSwapView(step:tokenIn:tokenOut:amount:isPresented:onSuccess:) has not been implemented")
+    }
+
+    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {
+        try await Task.sleep(nanoseconds: 2_000_000_000) // todo
+    }
+
+    private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> SwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -65,29 +170,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
             "destination": destination,
         ]
 
-        let swapQuote: SwapQuote = try await networkManager.fetch(url: "\(baseUrl)/thorchain/quote/swap", parameters: parameters)
-
-        return Quote(swapQuote: swapQuote)
-    }
-
-    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
-        fatalError("confirmationQuote(quote:tokenIn:tokenOut:amountIn:transactionSettings:) has not been implemented")
-    }
-
-    func settingsView(tokenIn _: Token, tokenOut _: Token, onChangeSettings _: @escaping () -> Void) -> AnyView {
-        fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
-    }
-
-    func settingView(settingId _: String) -> AnyView {
-        fatalError("settingView(settingId:) has not been implemented")
-    }
-
-    func preSwapView(step _: MultiSwapPreSwapStep, tokenIn _: Token, tokenOut _: Token, amount _: Decimal, isPresented _: Binding<Bool>, onSuccess _: @escaping () -> Void) -> AnyView {
-        fatalError("preSwapView(step:tokenIn:tokenOut:amount:isPresented:onSuccess:) has not been implemented")
-    }
-
-    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {
-        try await Task.sleep(nanoseconds: 2_000_000_000) // todo
+        return try await networkManager.fetch(url: "\(baseUrl)/thorchain/quote/swap", parameters: parameters)
     }
 
     private func syncPools() {
@@ -100,7 +183,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private func sync(pools: [Pool]) {
         assets = []
 
-        let availablePools = pools.filter { $0.status == "Available" }
+        let availablePools = pools.filter { $0.status.caseInsensitiveCompare("available") == .orderedSame }
 
         for pool in availablePools {
             let components = pool.asset.components(separatedBy: ".")
@@ -186,45 +269,170 @@ extension ThorChainMultiSwapProvider {
     }
 
     struct SwapQuote: ImmutableMappable {
+        let inboundAddress: String
         let expectedAmountOut: Decimal
+        let memo: String
+        let router: String?
+
+        let affiliateFee: Decimal
+        let outboundFee: Decimal
+        let liquidityFee: Decimal
 
         init(map: Map) throws {
-            expectedAmountOut = try map.value("expected_amount_out", using: Transform.stringToDecimalTransform)
+            inboundAddress = try map.value("inbound_address")
+            expectedAmountOut = try map.value("expected_amount_out", using: Transform.stringToDecimalTransform) / pow(10, 8)
+            memo = try map.value("memo")
+            router = try? map.value("router")
+
+            affiliateFee = try map.value("fees.affiliate", using: Transform.stringToDecimalTransform) / pow(10, 8)
+            outboundFee = try map.value("fees.outbound", using: Transform.stringToDecimalTransform) / pow(10, 8)
+            liquidityFee = try map.value("fees.liquidity", using: Transform.stringToDecimalTransform) / pow(10, 8)
         }
     }
 
     enum SwapError: Error {
         case unsupportedTokenIn
         case unsupportedTokenOut
+        case noRouterAddress
+        case invalidTokenInType
     }
 }
 
 extension ThorChainMultiSwapProvider {
-    class Quote: IMultiSwapQuote {
-        private let swapQuote: SwapQuote
+    class EvmQuote: BaseEvmMultiSwapProvider.Quote {
+        let swapQuote: SwapQuote
 
-        init(swapQuote: SwapQuote) {
+        init(swapQuote: SwapQuote, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
             self.swapQuote = swapQuote
+
+            super.init(allowanceState: allowanceState)
         }
 
-        var amountOut: Decimal {
-            swapQuote.expectedAmountOut / pow(10, 8)
+        override var amountOut: Decimal {
+            swapQuote.expectedAmountOut
+        }
+    }
+
+    class EvmConfirmationQuote: BaseEvmMultiSwapProvider.ConfirmationQuote {
+        let swapQuote: SwapQuote
+        let transactionData: TransactionData
+        let transactionError: Error?
+
+        init(swapQuote: SwapQuote, transactionData: TransactionData, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
+            self.swapQuote = swapQuote
+            self.transactionData = transactionData
+            self.transactionError = transactionError
+
+            super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
         }
 
-        var customButtonState: MultiSwapButtonState? {
-            nil
+        override var amountOut: Decimal {
+            swapQuote.expectedAmountOut
         }
 
-        var settingsModified: Bool {
-            false
+        override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
+            var cautions = super.cautions(feeToken: feeToken)
+
+            if let transactionError {
+                cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
+            }
+
+            return cautions
         }
 
-        func fields(tokenIn _: Token, tokenOut _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?) -> [MultiSwapMainField] {
-            []
+        override func otherSections(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
+            var sections = super.otherSections(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+
+            if let feeToken, let tokenOutRate, let evmFeeData,
+               let evmFeeAmountData = evmFeeData.totalAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate),
+               let evmFeeCurrencyValue = evmFeeAmountData.currencyValue
+            {
+                let totalFee = evmFeeCurrencyValue.value + (swapQuote.affiliateFee + swapQuote.liquidityFee + swapQuote.outboundFee) * tokenOutRate
+                let currencyValue = CurrencyValue(currency: currency, value: totalFee)
+
+                if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
+                    sections.append(
+                        [
+                            .levelValue(
+                                title: "swap.total_fee".localized,
+                                value: formatted,
+                                level: .regular
+                            ),
+                        ]
+                    )
+                }
+            }
+
+            return sections
         }
 
-        func cautions() -> [CautionNew] {
-            []
+        override func additionalFeeFields(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [SendConfirmField] {
+            var fields = super.additionalFeeFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+
+            if swapQuote.affiliateFee > 0 {
+                fields.append(
+                    .value(
+                        title: "swap.affiliate_fee".localized,
+                        description: nil,
+                        coinValue: CoinValue(kind: .token(token: tokenOut), value: swapQuote.affiliateFee),
+                        currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.affiliateFee * $0) },
+                        formatFull: true
+                    )
+                )
+            }
+
+            if swapQuote.liquidityFee > 0 {
+                fields.append(
+                    .value(
+                        title: "swap.liquidity_fee".localized,
+                        description: nil,
+                        coinValue: CoinValue(kind: .token(token: tokenOut), value: swapQuote.liquidityFee),
+                        currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.liquidityFee * $0) },
+                        formatFull: true
+                    )
+                )
+            }
+
+            if swapQuote.outboundFee > 0 {
+                fields.append(
+                    .value(
+                        title: "swap.outbound_fee".localized,
+                        description: nil,
+                        coinValue: CoinValue(kind: .token(token: tokenOut), value: swapQuote.outboundFee),
+                        currencyValue: tokenOutRate.map {
+                            CurrencyValue(currency: currency, value: swapQuote.outboundFee * $0)
+                        },
+                        formatFull: true
+                    )
+                )
+            }
+
+            return fields
         }
+    }
+}
+
+extension ThorChainMultiSwapProvider {
+    class DepositWithExpiryMethod: ContractMethod {
+        static let methodSignature = "depositWithExpiry(address,address,uint,string,uint)"
+
+        let inboundAddress: EvmKit.Address
+        let asset: EvmKit.Address
+        let amount: BigUInt
+        let memo: String
+        let expiry: BigUInt
+
+        init(inboundAddress: EvmKit.Address, asset: EvmKit.Address, amount: BigUInt, memo: String, expiry: BigUInt) {
+            self.inboundAddress = inboundAddress
+            self.asset = asset
+            self.amount = amount
+            self.memo = memo
+            self.expiry = expiry
+
+            super.init()
+        }
+
+        override var methodSignature: String { Self.methodSignature }
+        override var arguments: [Any] { [inboundAddress, asset, amount, memo, expiry] }
     }
 }
