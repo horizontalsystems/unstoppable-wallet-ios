@@ -382,8 +382,24 @@ class MultiSwapViewModel: ObservableObject {
                 for provider in validProviders {
                     group.addTask {
                         do {
-                            let quote = try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn)
-                            return Quote(provider: provider, quote: quote)
+                            let quoteTask = Task {
+                                try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn)
+                            }
+
+                            let timeoutTask = Task {
+                                try await Task.sleep(nanoseconds: 5_000_000_000)
+                                quoteTask.cancel()
+                            }
+
+                            return try await withTaskCancellationHandler {
+                                let quote = try await quoteTask.value
+                                timeoutTask.cancel()
+
+                                return Quote(provider: provider, quote: quote)
+                            } onCancel: {
+                                quoteTask.cancel()
+                                timeoutTask.cancel()
+                            }
                         } catch {
 //                            print("QUOTE ERROR: \(provider.id): \(error)")
                             return nil

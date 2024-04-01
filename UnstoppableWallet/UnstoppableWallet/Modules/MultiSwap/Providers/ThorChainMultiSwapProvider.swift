@@ -10,8 +10,8 @@ import SwiftUI
 class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private let baseUrl = "https://thornode.ninerealms.com"
 
-//    private let networkManager = App.shared.networkManager
-    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+    private let networkManager = App.shared.networkManager
+//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let marketKit = App.shared.marketKit
     private let evmBlockchainManager = App.shared.evmBlockchainManager
     private let storage: MultiSwapSettingStorage
@@ -133,8 +133,8 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         fatalError("settingView(settingId:) has not been implemented")
     }
 
-    func preSwapView(step _: MultiSwapPreSwapStep, tokenIn _: Token, tokenOut _: Token, amount _: Decimal, isPresented _: Binding<Bool>, onSuccess _: @escaping () -> Void) -> AnyView {
-        fatalError("preSwapView(step:tokenIn:tokenOut:amount:isPresented:onSuccess:) has not been implemented")
+    func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
+        allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
 
     func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {
@@ -414,7 +414,7 @@ extension ThorChainMultiSwapProvider {
 
 extension ThorChainMultiSwapProvider {
     class DepositWithExpiryMethod: ContractMethod {
-        static let methodSignature = "depositWithExpiry(address,address,uint,string,uint)"
+        static let methodSignature = "depositWithExpiry(address,address,uint256,string,uint256)"
 
         let inboundAddress: EvmKit.Address
         let asset: EvmKit.Address
