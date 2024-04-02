@@ -46,7 +46,9 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
 
-        switch tokenIn.blockchainType {
+        let blockchainType = tokenIn.blockchainType
+
+        switch blockchainType {
         case .avalanche, .binanceSmartChain, .ethereum:
             guard let router = swapQuote.router else {
                 throw SwapError.noRouterAddress
@@ -56,6 +58,8 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
 
             return await EvmQuote(
                 swapQuote: swapQuote,
+                recipient: storage.recipient(blockchainType: blockchainType),
+                slippage: slippage,
                 allowanceState: allowanceHelper.allowanceState(spenderAddress: spenderAddress, token: tokenIn, amount: amountIn)
             )
         default:
@@ -114,6 +118,8 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
 
             return EvmConfirmationQuote(
                 swapQuote: swapQuote,
+                recipient: storage.recipient(blockchainType: blockchainType),
+                slippage: slippage,
                 transactionData: transactionData,
                 transactionError: transactionError,
                 gasPrice: gasPrice,
@@ -254,6 +260,10 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         default: return nil
         }
     }
+
+    private var slippage: Decimal {
+        storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
+    }
 }
 
 extension ThorChainMultiSwapProvider {
@@ -305,9 +315,13 @@ extension ThorChainMultiSwapProvider {
 extension ThorChainMultiSwapProvider {
     class EvmQuote: BaseEvmMultiSwapProvider.Quote {
         let swapQuote: SwapQuote
+        let recipient: Address?
+        let slippage: Decimal
 
-        init(swapQuote: SwapQuote, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
+        init(swapQuote: SwapQuote, recipient: Address?, slippage: Decimal, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
             self.swapQuote = swapQuote
+            self.recipient = recipient
+            self.slippage = slippage
 
             super.init(allowanceState: allowanceState)
         }
@@ -315,15 +329,60 @@ extension ThorChainMultiSwapProvider {
         override var amountOut: Decimal {
             swapQuote.expectedAmountOut
         }
+
+        override var settingsModified: Bool {
+            super.settingsModified || recipient != nil || slippage != MultiSwapSlippage.default
+        }
+
+        override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
+            var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate)
+
+            if let recipient {
+                fields.append(
+                    MultiSwapMainField(
+                        title: "swap.recipient".localized,
+                        value: recipient.title,
+                        valueLevel: .regular
+                    )
+                )
+            }
+
+            if slippage != MultiSwapSlippage.default {
+                fields.append(
+                    MultiSwapMainField(
+                        title: "swap.slippage".localized,
+                        value: "\(slippage.description)%",
+                        valueLevel: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+                    )
+                )
+            }
+
+            return fields
+        }
+
+        override func cautions() -> [CautionNew] {
+            var cautions = super.cautions()
+
+            switch MultiSwapSlippage.validate(slippage: slippage) {
+            case .none: ()
+            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+            }
+
+            return cautions
+        }
     }
 
     class EvmConfirmationQuote: BaseEvmMultiSwapProvider.ConfirmationQuote {
         let swapQuote: SwapQuote
+        let recipient: Address?
+        let slippage: Decimal
         let transactionData: TransactionData
         let transactionError: Error?
 
-        init(swapQuote: SwapQuote, transactionData: TransactionData, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
+        init(swapQuote: SwapQuote, recipient: Address?, slippage: Decimal, transactionData: TransactionData, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
             self.swapQuote = swapQuote
+            self.recipient = recipient
+            self.slippage = slippage
             self.transactionData = transactionData
             self.transactionError = transactionError
 
@@ -341,7 +400,50 @@ extension ThorChainMultiSwapProvider {
                 cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
             }
 
+            switch MultiSwapSlippage.validate(slippage: slippage) {
+            case .none: ()
+            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+            }
+
             return cautions
+        }
+
+        override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [SendConfirmField] {
+            var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+
+            if let recipient {
+                fields.append(
+                    .address(
+                        title: "swap.recipient".localized,
+                        value: recipient.title,
+                        blockchainType: tokenOut.blockchainType
+                    )
+                )
+            }
+
+            if slippage != MultiSwapSlippage.default {
+                fields.append(
+                    .levelValue(
+                        title: "swap.slippage".localized,
+                        value: "\(slippage.description)%",
+                        level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+                    )
+                )
+            }
+
+//            let minAmountOut = amountOut * (1 - slippage / 100)
+//
+//            fields.append(
+//                .value(
+//                    title: "swap.confirmation.minimum_received".localized,
+//                    description: nil,
+//                    coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
+//                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
+//                    formatFull: true
+//                )
+//            )
+
+            return fields
         }
 
         override func otherSections(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
