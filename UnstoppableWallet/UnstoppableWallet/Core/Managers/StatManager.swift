@@ -62,6 +62,10 @@ class StatManager {
         Task { [storage] in
             let records = try storage.all()
 
+            guard !records.isEmpty else {
+                return
+            }
+
             let jsonObject = records.map { record in
                 var object: [String: Any] = [
                     "event_page": record.eventPage,
@@ -81,14 +85,36 @@ class StatManager {
                 return object
             }
 
+//            let data = try JSONSerialization.data(withJSONObject: jsonObject)
+//            let string = String(data: data, encoding: .utf8)
+//            print(string ?? "N/A")
+
+            _ = try await networkManager.fetchJson(url: "\(AppConfig.marketApiUrl)/v1/stats", method: .post, encoding: HttpBodyEncoding(jsonObject: jsonObject))
+            try storage.clear()
+        }
+    }
+}
+
+extension StatManager {
+    private struct HttpBodyEncoding: ParameterEncoding {
+        private let jsonObject: Any
+
+        init(jsonObject: Any) {
+            self.jsonObject = jsonObject
+        }
+
+        func encode(_ urlRequest: URLRequestConvertible, with _: Parameters?) throws -> URLRequest {
+            var urlRequest = try urlRequest.asURLRequest()
+
             let data = try JSONSerialization.data(withJSONObject: jsonObject)
 
-            let string = String(data: data, encoding: .utf8)
-            print(string ?? "N/A")
+            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
+                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            }
 
-            // send to backend
+            urlRequest.httpBody = data
 
-            try storage.clear()
+            return urlRequest
         }
     }
 }

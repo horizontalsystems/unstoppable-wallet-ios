@@ -75,6 +75,8 @@ extension AppManager {
         rateAppManager.onLaunch()
 
         evmLabelManager.sync()
+
+        statManager.sendStats()
     }
 
     func willResignActive() {
