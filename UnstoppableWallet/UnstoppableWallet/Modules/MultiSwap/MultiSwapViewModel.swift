@@ -486,6 +486,7 @@ extension MultiSwapViewModel {
         if now > nextQuoteTime {
             syncQuotes()
         } else {
+            timer?.invalidate()
             timer = Timer.scheduledTimer(withTimeInterval: nextQuoteTime - now, repeats: false) { [weak self] _ in
                 self?.syncQuotes()
             }
