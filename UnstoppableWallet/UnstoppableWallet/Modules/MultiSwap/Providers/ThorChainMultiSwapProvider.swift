@@ -125,8 +125,12 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func settingsView(tokenIn _: Token, tokenOut _: Token, onChangeSettings _: @escaping () -> Void) -> AnyView {
-        fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
+    func settingsView(tokenIn: Token, tokenOut _: Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+        let view = ThemeNavigationView {
+            RecipientAndSlippageMultiSwapSettingsView(tokenIn: tokenIn, storage: storage, onChangeSettings: onChangeSettings)
+        }
+
+        return AnyView(view)
     }
 
     func settingView(settingId _: String) -> AnyView {

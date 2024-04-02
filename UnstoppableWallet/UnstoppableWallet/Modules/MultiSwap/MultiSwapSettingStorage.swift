@@ -1,4 +1,5 @@
 import Foundation
+import MarketKit
 
 class MultiSwapSettingStorage {
     private var modifiedSettings = [String: Any]()
@@ -15,12 +16,25 @@ class MultiSwapSettingStorage {
         }
     }
 
-    var isModified: Bool { !modifiedSettings.isEmpty }
+    func recipient(blockchainType: BlockchainType) -> Address? {
+        value(for: "recipient-\(recipientUid(blockchainType: blockchainType))")
+    }
+
+    func set(recipient: Address?, blockchainType: BlockchainType) {
+        set(value: recipient, for: "recipient-\(recipientUid(blockchainType: blockchainType))")
+    }
+
+    private func recipientUid(blockchainType: BlockchainType) -> String {
+        if EvmBlockchainManager.blockchainTypes.contains(blockchainType) {
+            return "evm"
+        }
+
+        return blockchainType.uid
+    }
 }
 
 extension MultiSwapSettingStorage {
     enum LegacySetting {
-        static let address = "recipient"
         static let slippage = "slippage"
     }
 }

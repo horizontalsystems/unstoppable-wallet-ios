@@ -65,7 +65,7 @@ class AddressMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFie
         default: address = nil
         }
 
-        storage.set(value: address, for: MultiSwapSettingStorage.LegacySetting.address)
+        storage.set(recipient: address, blockchainType: blockchainType)
     }
 
     func changeAddressFocus(active: Bool) {
@@ -79,7 +79,7 @@ extension AddressMultiSwapSettingsViewModel {
     }
 
     var initialAddress: Address? {
-        if let address: Address = storage.value(for: MultiSwapSettingStorage.LegacySetting.address) {
+        if let address = storage.recipient(blockchainType: blockchainType) {
             return address
         }
         return nil
