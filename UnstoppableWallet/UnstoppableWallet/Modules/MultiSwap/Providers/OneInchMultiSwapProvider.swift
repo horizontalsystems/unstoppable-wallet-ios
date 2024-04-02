@@ -66,7 +66,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
                 toToken: address(token: tokenOut),
                 amount: amount,
                 slippage: slippage,
-                recipient: recipient.flatMap { try? EvmKit.Address(hex: $0.raw) },
+                recipient: storage.recipient(blockchainType: blockchainType).flatMap { try? EvmKit.Address(hex: $0.raw) },
                 gasPrice: gasPrice
             )
 
@@ -154,7 +154,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         return await Quote(
             quote: quote,
-            recipient: recipient,
+            recipient: storage.recipient(blockchainType: blockchainType),
             slippage: slippage,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
         )
@@ -171,10 +171,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private func rawAmount(amount: Decimal, token: MarketKit.Token) -> BigUInt? {
         let rawAmountString = (amount * pow(10, token.decimals)).hs.roundedString(decimal: 0)
         return BigUInt(rawAmountString)
-    }
-
-    private var recipient: Address? {
-        storage.value(for: MultiSwapSettingStorage.LegacySetting.address)
     }
 
     private var slippage: Decimal {

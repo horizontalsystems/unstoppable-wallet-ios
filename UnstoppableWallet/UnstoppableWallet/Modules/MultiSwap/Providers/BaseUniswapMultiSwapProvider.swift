@@ -103,7 +103,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noHttpRpcSource
         }
 
-        let recipient: Address? = storage.value(for: MultiSwapSettingStorage.LegacySetting.address)
+        let recipient = storage.recipient(blockchainType: blockchainType)
         let slippage: Decimal = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
 
         let kitRecipient = try recipient.map { try EvmKit.Address(hex: $0.raw) }
