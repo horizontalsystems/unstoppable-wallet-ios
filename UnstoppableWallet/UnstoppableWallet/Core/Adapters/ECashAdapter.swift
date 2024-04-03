@@ -6,13 +6,13 @@ import MarketKit
 import RxSwift
 
 class ECashAdapter: BitcoinBaseAdapter {
+    private static let networkType: ECashKit.Kit.NetworkType = .mainNet
     private static let eCashConfirmationsThreshold = 1
     override var coinRate: Decimal { 100 } // pow(10,2)
 
     private let eCashKit: ECashKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
-        let networkType: ECashKit.Kit.NetworkType = .mainNet
         let logger = App.shared.logger.scoped(with: "ECashKit")
 
         switch wallet.account.type {
@@ -25,7 +25,7 @@ class ECashAdapter: BitcoinBaseAdapter {
                 seed: seed,
                 walletId: wallet.account.id,
                 syncMode: syncMode,
-                networkType: networkType,
+                networkType: Self.networkType,
                 confirmationsThreshold: Self.eCashConfirmationsThreshold,
                 logger: logger
             )
@@ -34,7 +34,7 @@ class ECashAdapter: BitcoinBaseAdapter {
                 extendedKey: key,
                 walletId: wallet.account.id,
                 syncMode: syncMode,
-                networkType: networkType,
+                networkType: Self.networkType,
                 confirmationsThreshold: Self.eCashConfirmationsThreshold,
                 logger: logger
             )
@@ -43,7 +43,7 @@ class ECashAdapter: BitcoinBaseAdapter {
                 watchAddress: address,
                 walletId: wallet.account.id,
                 syncMode: syncMode,
-                networkType: networkType,
+                networkType: Self.networkType,
                 confirmationsThreshold: Self.eCashConfirmationsThreshold,
                 logger: logger
             )
@@ -78,5 +78,32 @@ extension ECashAdapter: ISendBitcoinAdapter {
 extension ECashAdapter {
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.clear(exceptFor: excludedWalletIds)
+    }
+    
+    static func firstAddress(accountType: AccountType) throws -> String {
+        switch accountType {
+        case .mnemonic:
+            guard let seed = accountType.mnemonicSeed else {
+                throw AdapterError.unsupportedAccount
+            }
+            
+            let address = try ECashKit.Kit.firstAddress(
+                seed: seed,
+                networkType: networkType
+            )
+            
+            return address.stringValue
+        case let .hdExtendedKey(key):
+            let address = try ECashKit.Kit.firstAddress(
+                extendedKey: key,
+                networkType: networkType
+            )
+            
+            return address.stringValue
+        case let .btcAddress(address, _, _):
+            return address
+        default:
+            throw AdapterError.unsupportedAccount
+        }
     }
 }
