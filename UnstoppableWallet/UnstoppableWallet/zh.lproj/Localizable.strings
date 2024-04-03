@@ -72,8 +72,8 @@
 "alert.cant_recognize" = "无法识别";
 
 "alert.fee_too_low" = "费用过低";
-"alert.rbf_not_Enabled" = "RBF not enabled";
-"alert.unable_to_replace" = "Unable to replace";
+"alert.rbf_not_Enabled" = "RBF(替换交易) 未启用";
+"alert.unable_to_replace" = "无法替换";
 "alert.already_replaced" = "已经替换";
 
 "no_results_found" = "未发现结果";
@@ -136,7 +136,7 @@
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
-"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
+"restore.wallet.passphrase_description" = "请输入您在创建恢复短语时使用的密码。使用新密码恢复现有钱包将生成全新的钱包。";
 "restore.passphrase_description" = "此密码用于加密您的钱包备份文件。与您的 Apple iCloud 密码无关。如果丢失或遗忘，将无法恢复或重置。";
 "restore.error.empty_passphrase" = "密码不能为空白";
 "restore.non_standard_import" = "非标准还原";
@@ -339,9 +339,9 @@
 "balance.token.locked" = "锁住";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
-"balance.token.not_relayed" = "Broadcasting";
-"balance.token.not_relayed.info.title" = "Broadcast";
-"balance.token.not_relayed.info.description" = "The transaction holding this amount is broadcasted but not yet accepted by the network";
+"balance.token.not_relayed" = "广播";
+"balance.token.not_relayed.info.title" = "广播";
+"balance.token.not_relayed.info.description" = "此金额的交易已广播，但尚未被网络接受。";
 "balance.token.processing" = "正在处理";
 "balance.token.processing.info.title" = "处理金额";
 "balance.token.processing.info.description" = "此金额的交易仍然在同步。当它们被确认时，这些代币将用于支出";
@@ -460,27 +460,27 @@
 "send.confirmation.total" = "总额";
 "send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replace_by_fee" = "替换交易";
+"send.confirmation.replaced_transactions" = "已替换的交易";
 
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.sent" = "已发送";
 
-"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.slide_to_approve" = "滑动以批准";
 "send.confirmation.approving" = "审批中";
 "send.confirmation.approved" = "批准";
 
-"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.slide_to_revoke" = "滑动以撤销";
 "send.confirmation.revoking" = "正在取消";
 "send.confirmation.revoked" = "已注销";
 
 "send.confirmation.slide_to_resend" = "重新发送";
-"send.confirmation.slide_to_cancel" = "Cancel Transaction";
+"send.confirmation.slide_to_cancel" = "取消交易";
 "send.confirmation.resend" = "重新发送";
-"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.speed_up" = "Speed Up";
-"send.confirmation.cancel" = "Cancel Transaction";
+"send.confirmation.btc_cancel_description" = "此操作将尝试通过将其作为新交易重新发送并将一些金额发送到自身来使原始交易无效。如果原始交易在发送新交易时仍然挂起，有很高的几率（但不保证）它将被作废并替换。只有这两个交易中的一个将被包含在区块链中。";
+"send.confirmation.speed_up" = "加速";
+"send.confirmation.cancel" = "取消交易";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
 "send.confirmation.replace_by_fee.disabled" = "已禁用";
@@ -506,8 +506,8 @@
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.send_to" = "Send To";
-"send.unspent_outputs.change" = "Change";
+"send.unspent_outputs.send_to" = "发送至";
+"send.unspent_outputs.change" = "更改";
 
 "approve.confirmation.you_approve" = "您批准";
 "approve.confirmation.you_revoke" = "您已取消";
@@ -541,7 +541,7 @@
 "swap.approve.title" = "互兑批准";
 "swap.approve.description" = "您应为智能合约授予权限，以代表您互兑给定的代币。此权限设定了智能合约可以使用的金额。它不会影响您的余额，但需要小额费用以执行批准交易。\n\n虽然这可以在每一次交易之前按需完成，但是预先对将来的交易批准较大的金额将使成本更低。";
 "swap.approve.amount_error.already_approved" = "您已经有了此金额的限额";
-"swap.approve.not_found" = "Can't approve these tokens";
+"swap.approve.not_found" = "无法批准这些代币";
 "swap.approving_button" = "审批中...";
 "swap.revoking_button" = "正在取消...";
 "swap.not_available_button" = "余额 N/A";
@@ -560,14 +560,14 @@
 "swap.minimum_short" = "(分钟)";
 "swap.maximum_short" = "(最大金额)";
 
-"swap.rate_not_available" = "Rate not available";
+"swap.rate_not_available" = "汇率不可用";
 "swap.select" = "选择";
-"swap.quoting" = "Quoting";
-"swap.select_token_in" = "Select Token In";
-"swap.select_token_out" = "Select Token Out";
-"swap.no_providers" = "No Providers";
+"swap.quoting" = "引述";
+"swap.select_token_in" = "选择代币输入";
+"swap.select_token_out" = "选择代币输出";
+"swap.no_providers" = "没有提供者";
 "swap.enter_amount" = "输入金额";
-"swap.no_quotes" = "No Quotes";
+"swap.no_quotes" = "没有报价";
 "swap.token_not_enabled" = "代币未启用";
 "swap.token_syncing" = "代币同步";
 "swap.token_not_synced" = "代币未同步";
@@ -578,29 +578,29 @@
 
 "swap.allowance" = "补贴";
 "swap.allowance.description" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
-"swap.pending_allowance" = "Pending Allowance";
+"swap.pending_allowance" = "待批准的额度";
 "swap.unlock" = "解锁​​​​";
-"swap.unlocking" = "Unlocking";
-"swap.allowance_error" = "Allowance Error";
+"swap.unlocking" = "解锁";
+"swap.allowance_error" = "授权错误";
 "swap.revoke" = "撤回";
 "swap.revoking" = "正在取消";
 "swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 
-"swap.unlock.title" = "Unlock Access";
+"swap.unlock.title" = "解锁访问";
 "swap.unlock.subtitle" = "允许访问以下金额";
 "swap.unlock.description" = "授权智能合约代表您进行代币交易，并指定允许的金额。这不会影响您的余额，但需要支付少量费用以进行批准。\n\n预先批准较高金额用于未来交易比按需批准更具成本效益。";
 "swap.unlock.unlimited" = "无限";
 
 "swap.price_impact" = "价格影响";
 "swap.price_impact.description" = "从显示的价格预期的价格偏差通常随着交换金额的增加而增加。";
-"swap.high_price_impact" = "High Price Impact";
+"swap.high_price_impact" = "高价格影响";
 "swap.recipient" = "收款人";
-"swap.slippage" = "Slippage";
+"swap.slippage" = "滑点";
 
-"swap.affiliate_fee" = "Affiliate Fee";
-"swap.liquidity_fee" = "Liquidity Fee";
-"swap.outbound_fee" = "Outbound Fee";
-"swap.total_fee" = "Total Fee";
+"swap.affiliate_fee" = "联盟费";
+"swap.liquidity_fee" = "流动性费用";
+"swap.outbound_fee" = "出站费";
+"swap.total_fee" = "总费用";
 
 // Swap Advanced Settings
 
@@ -634,12 +634,12 @@
 // Swap Confirmation
 
 "swap.confirmation.title" = "确认";
-"swap.confirmation.quoting" = "Quoting...";
-"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.quoting" = "引述...";
+"swap.confirmation.invalid_quote" = "无效的报价";
 "swap.confirmation.please_wait" = "请稍候";
-"swap.confirmation.quote_expires_in" = "Quote expires in %@";
-"swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
+"swap.confirmation.quote_expires_in" = "报价在 %@ 后失效";
+"swap.confirmation.quote_expired" = "报价已过期";
+"swap.confirmation.quote_failed" = "无法提供报价";
 
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
@@ -759,21 +759,21 @@
 "market.advanced_search.listed_on_top_exchanges" = "列在顶级交易所上";
 "market.advanced_search.good_cex_volume" = "良好的中心化交易所（CEX）交易量";
 "market.advanced_search.good_dex_volume" = "良好的去中心化交易所（DEX）交易量";
-"market.advanced_search.good_distribution" = "Good Distribution";
-"market.advanced_search.overall_score_is_good_or_excellent" = "Overall Score is Good or Excellent";
+"market.advanced_search.good_distribution" = "良好的分布";
+"market.advanced_search.overall_score_is_good_or_excellent" = "总体得分是良好或优秀";
 
 "market.advanced_search.liquidity" = "DEX流动性";
 "market.advanced_search.blockchains" = "区块链";
-"market.advanced_search.technical_advice" = "Trading Signals";
+"market.advanced_search.technical_advice" = "交易信号";
 "market.advanced_search.price_period" = "价格区间";
 "market.advanced_search.price_change" = "价格变动";
 
-"market.advanced_search.technical_advice.risk_trade" = "Risk To Trade";
-"market.advanced_search.technical_advice.strong_buy" = "Strong Buy";
-"market.advanced_search.technical_advice.buy" = "Buy";
-"market.advanced_search.technical_advice.neutral" = "Neutral";
-"market.advanced_search.technical_advice.sell" = "Sell";
-"market.advanced_search.technical_advice.strong_sell" = "Strong Sell";
+"market.advanced_search.technical_advice.risk_trade" = "交易风险";
+"market.advanced_search.technical_advice.strong_buy" = "强烈建议买入";
+"market.advanced_search.technical_advice.buy" = "购买";
+"market.advanced_search.technical_advice.neutral" = "中性";
+"market.advanced_search.technical_advice.sell" = "出售";
+"market.advanced_search.technical_advice.strong_sell" = "强烈建议卖出";
 
 "market.advanced_search.outperformed_btc" = "跑赢BTC";
 "market.advanced_search.outperformed_eth" = "跑赢ETH";
@@ -920,7 +920,7 @@
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "强烈建议买入";
 "coin_analytics.indicators.buy" = "购买";
-"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.neutral" = "中性";
 "coin_analytics.indicators.sell" = "出售";
 "coin_analytics.indicators.strong_sell" = "强烈建议卖出";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1054,14 +1054,14 @@
 "coin_analytics.30_day_rank" = "30天排名";
 "coin_analytics.30_day_volume" = "30天交易量";
 
-"coin_analytics.analysis.title" = "Smart Contract Analysis";
-"coin_analytics.analysis.footer" = "Powered by De.Fi Scanner";
-"coin_analytics.analysis.high_risk_items" = "High Risk Items";
-"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
-"coin_analytics.analysis.attention_required" = "Attention Required";
-"coin_analytics.analysis.token_detectors" = "Token Detectors";
-"coin_analytics.analysis.general_detectors" = "General Detectors";
-"coin_analytics.analysis.issues" = "Issues: %@";
+"coin_analytics.analysis.title" = "智能合约分析";
+"coin_analytics.analysis.footer" = "由 De.Fi Scanner 提供支持";
+"coin_analytics.analysis.high_risk_items" = "高风险项目";
+"coin_analytics.analysis.medium_risk_items" = "中等风险项目";
+"coin_analytics.analysis.attention_required" = "需要注意";
+"coin_analytics.analysis.token_detectors" = "代币检测器";
+"coin_analytics.analysis.general_detectors" = "通用检测器";
+"coin_analytics.analysis.issues" = "发布: %@";
 
 // Coin Page -> Markets
 
@@ -1159,8 +1159,8 @@
 "tx_info.contact_name" = "联系人姓名";
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
-"tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel Transaction";
+"tx_info.options.speed_up" = "加速";
+"tx_info.options.cancel" = "取消交易";
 "tx_info.transaction.already_in_block" = "交易已在区块中";
 "tx_info.fee" = "费用";
 "tx_info.fee.estimated" = "费用（预估）";
@@ -1179,7 +1179,7 @@
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
 "tx_info.scam_warning" = "这笔交易存在可疑，可能是诈骗。请不要从这笔交易中复制任何地址。";
-"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
+"tx_info.resend_description" = "此操作将尝试通过以更高的费用重新发送原始交易来使其失效。";
 
 // Settings
 
@@ -1791,15 +1791,15 @@
 "fee_settings.inputs_outputs" = "输入/输出";
 "fee_settings.transaction_settings" = "交易设置";
 "fee_settings.transaction_settings.description" = "通过更改建构交易的方式使您的比特币交易更难被追踪。";
-"fee_settings.replace_by_fee" = "Replace by Fee";
-"fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
+"fee_settings.replace_by_fee" = "替换交易";
+"fee_settings.replace_by_fee.description" = "此选项允许您通过增加手续费金额来重新发送卡住的交易。";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "时间锁（TimeLock）只适用于发送到BIP44地址（从1开始）";
 
 "fee_settings.network_fee" = "网络费";
 "fee_settings.network_fee.info" = "在网络上发送给定交易的估计费用。";
-"fee_settings.l1_fee" = "L1 Fee";
-"fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";
+"fee_settings.l1_fee" = "L1费用";
+"fee_settings.l1_fee.info" = "给定交易在第1层网络上发送的预估成本。";
 "fee_settings.gas_limit" = "燃料限制";
 "fee_settings.gas_limit.info" = "交易复杂度以被称为“gas”（燃料）的单位度量。它将根据被执行的智能合同而变化。Gas Limit（燃料限制）是执行它所需要的估计最大燃料。使用的实际燃料通常会较低。";
 
@@ -2013,7 +2013,7 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "筛选器";
 "transaction_filter.description" = "在 %@ 区块链上，通过联系人进行筛选是有效的。下面显示了适用的联系人。";
 
 "transaction_filter.blockchain" = "Blockchain";
