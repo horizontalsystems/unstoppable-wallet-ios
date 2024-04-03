@@ -228,7 +228,7 @@ extension BinanceAdapter: IDepositAdapter {
 }
 
 extension BinanceAdapter {
-    static func firstAddress(accountType: AccountType) throws -> String {
+    static func address(accountType: AccountType) throws -> String {
         guard let seed = accountType.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
