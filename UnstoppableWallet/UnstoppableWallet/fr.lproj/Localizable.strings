@@ -1061,7 +1061,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.analysis.attention_required" = "Attention Requise";
 "coin_analytics.analysis.token_detectors" = "Détection de token";
 "coin_analytics.analysis.general_detectors" = "Détection générale";
-"coin_analytics.analysis.issues" = "Issues: %@";
+"coin_analytics.analysis.issues" = "Problèmes : %@";
 
 // Coin Page -> Markets
 
