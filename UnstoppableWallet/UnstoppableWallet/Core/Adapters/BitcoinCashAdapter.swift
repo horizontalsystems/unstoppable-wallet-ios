@@ -27,7 +27,6 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
             guard let seed = wallet.account.type.mnemonicSeed else {
                 throw AdapterError.unsupportedAccount
             }
-
             bitcoinCashKit = try BitcoinCashKit.Kit(
                 seed: seed,
                 walletId: wallet.account.id,
@@ -85,5 +84,45 @@ extension BitcoinCashAdapter: ISendBitcoinAdapter {
 extension BitcoinCashAdapter {
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.clear(exceptFor: excludedWalletIds)
+    }
+    
+    static func firstAddress(accountType: AccountType, tokenType: TokenType) throws -> String {
+        guard let bitcoinCashCoinType = tokenType.bitcoinCashCoinType else {
+            throw AdapterError.wrongParameters
+        }
+
+        let kitCoinType: BitcoinCashKit.CoinType
+
+        switch bitcoinCashCoinType {
+        case .type0: kitCoinType = .type0
+        case .type145: kitCoinType = .type145
+        }
+
+        let networkType: BitcoinCashKit.Kit.NetworkType = .mainNet(coinType: kitCoinType)
+
+        switch accountType {
+        case .mnemonic:
+            guard let seed = accountType.mnemonicSeed else {
+                throw AdapterError.unsupportedAccount
+            }
+
+            let address = try BitcoinCashKit.Kit.firstAddress(
+                seed: seed,
+                networkType: networkType
+            )
+
+            return address.stringValue
+        case let .hdExtendedKey(key):
+            let address = try BitcoinCashKit.Kit.firstAddress(
+                extendedKey: key,
+                networkType: networkType
+            )
+
+            return address.stringValue
+        case let .btcAddress(address, _, _):
+            return address
+        default:
+            throw AdapterError.unsupportedAccount
+        }
     }
 }

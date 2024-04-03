@@ -13205,7 +13205,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ECashKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.1;
+				version = 2.2.2;
 			};
 		};
 		6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */ = {
@@ -13317,7 +13317,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCashKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.1;
+				version = 2.2.2;
 			};
 		};
 		D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit" */ = {
@@ -13325,7 +13325,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/LitecoinKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.3.2;
+				version = 2.3.3;
 			};
 		};
 		D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit" */ = {
@@ -13365,7 +13365,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/DashKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.4;
+				version = 2.2.5;
 			};
 		};
 		D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */ = {
