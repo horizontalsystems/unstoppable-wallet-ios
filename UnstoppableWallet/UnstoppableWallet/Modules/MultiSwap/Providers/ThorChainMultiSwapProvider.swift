@@ -14,6 +14,8 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
 //    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let marketKit = App.shared.marketKit
     private let evmBlockchainManager = App.shared.evmBlockchainManager
+    private let accountManager = App.shared.accountManager
+    private let adapterManager = App.shared.adapterManager
     private let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
@@ -161,26 +163,54 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         }
 
         let amount = (amountIn * pow(10, 8)).rounded(decimal: 0)
-
-        let destination: String
-
-        switch tokenOut.blockchainType {
-        case .avalanche, .binanceSmartChain, .ethereum: destination = "0xee50089786222df93f40899c0ee3d6a49e533266"
-        case .bitcoinCash: destination = "qzawwkk57yuctdypj4azj5h9umtq4sy7xuev9fjs4d"
-        case .bitcoin: destination = "bc1qhtn444838xzmfqv40g549e0x6c9vp83h65q3vy"
-        case .litecoin: destination = "ltc1qhtn444838xzmfqv40g549e0x6c9vp83h7g6455"
-        case .binanceChain: destination = "bnb1htn444838xzmfqv40g549e0x6c9vp83hw2pkf8"
-        default: destination = ""
-        }
+        let destination = try resolveDestination(token: tokenOut)
 
         let parameters: Parameters = [
             "from_asset": assetIn.id,
             "to_asset": assetOut.id,
             "amount": amount.description,
             "destination": destination,
+//            "tolerance_bps": slippage * 100
         ]
 
         return try await networkManager.fetch(url: "\(baseUrl)/thorchain/quote/swap", parameters: parameters)
+    }
+
+    private func resolveDestination(token: Token) throws -> String {
+        let blockchainType = token.blockchainType
+
+        if let recipient = storage.recipient(blockchainType: blockchainType) {
+            return recipient.raw
+        }
+
+        if let depositAdapter = adapterManager.adapter(for: token) as? IDepositAdapter {
+            return depositAdapter.receiveAddress.address
+        }
+
+        guard let account = accountManager.activeAccount else {
+            throw SwapError.noActiveAccount
+        }
+
+        switch blockchainType {
+        case .avalanche, .binanceSmartChain, .ethereum:
+            let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
+
+            guard let address = account.type.evmAddress(chain: chain) else {
+                throw SwapError.noDestinationAddress
+            }
+
+            return address.eip55
+        case .bitcoin:
+            return try BitcoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
+        case .bitcoinCash:
+            return try BitcoinCashAdapter.firstAddress(accountType: account.type, tokenType: token.type)
+        case .litecoin:
+            return try LitecoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
+        case .binanceChain:
+            return try BinanceAdapter.address(accountType: account.type)
+        default:
+            throw SwapError.noDestinationAddress
+        }
     }
 
     private func syncPools() {
@@ -309,6 +339,8 @@ extension ThorChainMultiSwapProvider {
         case unsupportedTokenOut
         case noRouterAddress
         case invalidTokenInType
+        case noActiveAccount
+        case noDestinationAddress
     }
 }
 
