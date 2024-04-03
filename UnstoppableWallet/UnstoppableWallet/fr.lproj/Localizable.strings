@@ -637,9 +637,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.confirmation.quoting" = "Quotation...";
 "swap.confirmation.invalid_quote" = "Quote invalide";
 "swap.confirmation.please_wait" = "Veuillez patienter";
-"swap.confirmation.quote_expires_in" = "Quote expires in %@";
-"swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
+"swap.confirmation.quote_expires_in" = "La citation expire dans %@";
+"swap.confirmation.quote_expired" = "La citation a expiré";
+"swap.confirmation.quote_failed" = "Échec du devis";
 
 "swap.confirmation.slide_to_swap" = "Glisser pour changer";
 "swap.confirmation.swapping" = "Swapping";
@@ -1179,7 +1179,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "tx_info.you_got" = "Vous avez reçu";
 "tx_info.price" = "Prix";
 "tx_info.scam_warning" = "Cette transaction est suspecte et peut être une arnaque. Veuillez ne copier aucune adresse de cette transaction.";
-"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
+"tx_info.resend_description" = "Cette action tentera d'annuler la transaction précédente en la renvoyant avec des frais plus élevés.";
 
 // Settings
 
@@ -2013,7 +2013,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "Filtre";
 "transaction_filter.description" = "Le filtrage par contacts fonctionne sur %@ blockchains. Ci-dessous sont affichés les contacts appropriés";
 
 "transaction_filter.blockchain" = "Blockchain";
