@@ -226,3 +226,13 @@ extension BinanceAdapter: IDepositAdapter {
         DepositAddress(binanceKit.account)
     }
 }
+
+extension BinanceAdapter {
+    static func firstAddress(accountType: AccountType) throws -> String {
+        guard let seed = accountType.mnemonicSeed else {
+            throw AdapterError.unsupportedAccount
+        }
+
+        return try BinanceChainKit.firstAddress(seed: seed, networkType: .mainNet)
+    }
+}

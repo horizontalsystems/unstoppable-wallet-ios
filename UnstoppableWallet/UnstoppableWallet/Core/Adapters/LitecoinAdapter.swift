@@ -6,10 +6,10 @@ import MarketKit
 import RxSwift
 
 class LitecoinAdapter: BitcoinBaseAdapter {
+    private static let networkType: LitecoinKit.Kit.NetworkType = .mainNet
     private let litecoinKit: LitecoinKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
-        let networkType: LitecoinKit.Kit.NetworkType = .mainNet
         let logger = App.shared.logger.scoped(with: "LitecoinKit")
 
         let hasher: (Data) -> Data = { data in
@@ -42,7 +42,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 hasher: hasher,
-                networkType: networkType,
+                networkType: Self.networkType,
                 confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
                 logger: logger
             )
@@ -57,7 +57,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 hasher: hasher,
-                networkType: networkType,
+                networkType: Self.networkType,
                 confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
                 logger: logger
             )
@@ -72,7 +72,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 hasher: hasher,
-                networkType: networkType,
+                networkType: Self.networkType,
                 confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
                 logger: logger
             )
@@ -107,5 +107,42 @@ extension LitecoinAdapter: ISendBitcoinAdapter {
 extension LitecoinAdapter {
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.clear(exceptFor: excludedWalletIds)
+    }
+    
+    static func firstAddress(accountType: AccountType, tokenType: TokenType) throws -> String {
+        switch accountType {
+        case .mnemonic:
+            guard let seed = accountType.mnemonicSeed else {
+                throw AdapterError.unsupportedAccount
+            }
+
+            guard let derivation = tokenType.derivation else {
+                throw AdapterError.wrongParameters
+            }
+
+            let address = try LitecoinKit.Kit.firstAddress(
+                seed: seed,
+                purpose: derivation.purpose,
+                networkType: Self.networkType
+            )
+
+            return address.stringValue
+        case let .hdExtendedKey(key):
+            guard let derivation = tokenType.derivation else {
+                throw AdapterError.wrongParameters
+            }
+
+            let address = try LitecoinKit.Kit.firstAddress(
+                extendedKey: key,
+                purpose: derivation.purpose,
+                networkType: networkType
+            )
+
+            return address.stringValue
+        case let .btcAddress(address, _, _):
+            return address
+        default:
+            throw AdapterError.unsupportedAccount
+        }
     }
 }
