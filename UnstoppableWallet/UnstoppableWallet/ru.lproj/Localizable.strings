@@ -136,7 +136,7 @@
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая фраза";
 "restore.input.passphrase" = "Кодовая фраза";
-"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
+"restore.wallet.passphrase_description" = "Введите кодовую фразу, которую вы использовали при создании этой фразы восстановления. Импорт существующего кошелька с новой кодой фразой создаст совершенно новый кошелек.";
 "restore.passphrase_description" = "Этот пароль используется для шифрования файлов резервной копии вашего кошелька. Он не связан с вашим паролем Apple iCloud. Если вы потеряете или забудете этот пароль, его нельзя будет восстановить или сбросить.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "restore.non_standard_import" = "Нестандартный импорт";
@@ -462,18 +462,18 @@
 "send.confirmation.total" = "Итого";
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replace_by_fee" = "Изменить комиссию";
+"send.confirmation.replaced_transactions" = "Замененные транзакции";
 
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.sent" = "Отправлено";
 
-"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.slide_to_approve" = "Проведите для разрешения";
 "send.confirmation.approving" = "Разрешение";
 "send.confirmation.approved" = "Разрешено";
 
-"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.slide_to_revoke" = "Проведите чтобы отозвать";
 "send.confirmation.revoking" = "Отмена";
 "send.confirmation.revoked" = "Отменен";
 
@@ -580,9 +580,9 @@
 
 "swap.allowance" = "Разрешение";
 "swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
-"swap.pending_allowance" = "Pending Allowance";
+"swap.pending_allowance" = "Ожидающие разрешения";
 "swap.unlock" = "Разблокировать";
-"swap.unlocking" = "Unlocking";
+"swap.unlocking" = "Разблокировка";
 "swap.allowance_error" = "Allowance Error";
 "swap.revoke" = "Отменить";
 "swap.revoking" = "Отмена";
@@ -599,10 +599,10 @@
 "swap.recipient" = "Получатель";
 "swap.slippage" = "Отклонение от курса";
 
-"swap.affiliate_fee" = "Affiliate Fee";
-"swap.liquidity_fee" = "Liquidity Fee";
-"swap.outbound_fee" = "Outbound Fee";
-"swap.total_fee" = "Total Fee";
+"swap.affiliate_fee" = "Партнерская плата";
+"swap.liquidity_fee" = "Плата за ликвидность";
+"swap.outbound_fee" = "Исходящая комиссия";
+"swap.total_fee" = "Итоговая комиссия";
 
 // Swap Advanced Settings
 
@@ -882,7 +882,7 @@
 "technical_advice.down" = "вниз";
 "technical_advice.up" = "вверх";
 
-"technical_advice.over.main" = "The actions with the asset are risky.";
+"technical_advice.over.main" = "Действия с активом опасны.";
 "technical_advice.over.indicators.signal_date" = "C %@";
 "technical_advice.over.indicators" = "Актив находится за границей канала Bollinger Band и %@.";
 "technical_advice.over.rsi" = " RSI = %@, что также говорит о том, что актив %@.";
@@ -1181,7 +1181,7 @@
 "tx_info.you_got" = "Вы получили";
 "tx_info.price" = "Цена";
 "tx_info.scam_warning" = "Эта транзакция подозрительна и может быть мошенничеством. Пожалуйста, не копируйте никакие адреса из этой транзакции.";
-"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
+"tx_info.resend_description" = "Это действие попытается аннулировать предыдущую транзакцию, переотправив ее с более высокой комиссией.";
 
 // Settings
 
@@ -1793,7 +1793,7 @@
 "fee_settings.inputs_outputs" = "Вводы/Выводы";
 "fee_settings.transaction_settings" = "Настройки транзакций";
 "fee_settings.transaction_settings.description" = "Затрудните отслеживание Биткойн-транзакций, изменив их структурирование.";
-"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee" = "Изменить комиссию";
 "fee_settings.replace_by_fee.description" = "Эта опция позволяет повторно отправить застрявшую транзакцию, увеличивая сумму комиссии.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
@@ -2016,8 +2016,8 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
-"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+"transaction_filter.title" = "Фильтр";
+"transaction_filter.description" = "Фильтрация по контактам работает на %@ блокчейнах. Ниже показаны подходящие контакты";
 
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Все блокчейны";
