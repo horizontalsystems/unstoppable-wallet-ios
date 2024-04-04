@@ -72,7 +72,7 @@
 "alert.cant_recognize" = "Не удалось распознать";
 
 "alert.fee_too_low" = "Комиссия слишком низкая";
-"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.rbf_not_Enabled" = "RBF (Replace-By-Fee) не активирован";
 "alert.unable_to_replace" = "Не удается заменить";
 "alert.already_replaced" = "Уже заменены";
 
@@ -136,6 +136,7 @@
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая фраза";
 "restore.input.passphrase" = "Кодовая фраза";
+"restore.wallet.passphrase_description" = "Введите кодовую фразу, которую вы использовали при создании этой фразы восстановления. Импорт существующего кошелька с новой кодой фразой создаст совершенно новый кошелек.";
 "restore.passphrase_description" = "Этот пароль используется для шифрования файлов резервной копии вашего кошелька. Он не связан с вашим паролем Apple iCloud. Если вы потеряете или забудете этот пароль, его нельзя будет восстановить или сбросить.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "restore.non_standard_import" = "Нестандартный импорт";
@@ -340,6 +341,9 @@
 "balance.token.locked" = "Заблокировано";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
+"balance.token.not_relayed" = "Трансляция";
+"balance.token.not_relayed.info.title" = "Передача";
+"balance.token.not_relayed.info.description" = "Транзакция, содержащая эту сумму, транслирована, но еще не принята сетью";
 "balance.token.processing" = "В процессе";
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
@@ -388,7 +392,7 @@
 "deposit.used_addresses.description" = "%@ адресов изменены для повышения конфиденциальности и безопасности. Ниже приведен список использованных адресов в этом кошельке.";
 
 "receive_used_addresses.external" = "Адреса для получения";
-"receive_used_addresses.change" = "Change Addresses";
+"receive_used_addresses.change" = "Адрес-сдача";
 
 "deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
@@ -448,7 +452,7 @@
 "send.confirmation.you_send" = "Вы отправляете";
 "send.confirmation.transfer" = "Перевод";
 "send.confirmation.to" = "Кому";
-"send.confirmation.own" = "Own";
+"send.confirmation.own" = "Свой";
 "send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
@@ -458,26 +462,24 @@
 "send.confirmation.total" = "Итого";
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replace_by_fee" = "Изменить комиссию";
+"send.confirmation.replaced_transactions" = "Замененные транзакции";
 
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.sent" = "Отправлено";
 
-"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.slide_to_approve" = "Проведите для разрешения";
 "send.confirmation.approving" = "Разрешение";
 "send.confirmation.approved" = "Разрешено";
 
-"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.slide_to_revoke" = "Проведите чтобы отозвать";
 "send.confirmation.revoking" = "Отмена";
 "send.confirmation.revoked" = "Отменен";
 
 "send.confirmation.slide_to_resend" = "Отправить повторно";
 "send.confirmation.slide_to_cancel" = "Отменить транзакцию";
-"send.confirmation.resend_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее повторно с более высокой комиссией. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.resend" = "Отправить повторно";
-"send.confirmation.cancel_description" = "Это действие попытается аннулировать предыдущую транзакцию, отправив ее заново как новую транзакцию с нулевой суммой к самому себе. Если исходная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантия), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.btc_cancel_description" = "Это действие попытается аннулировать предыдущую транзакцию, повторно отправив ее как новую транзакцию, отправляя определенную сумму самому себе. Если оригинальная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантировано), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.speed_up" = "Ускорить";
 "send.confirmation.cancel" = "Отменить транзакцию";
@@ -541,10 +543,10 @@
 "swap.approve.title" = "Разрешение обмена";
 "swap.approve.description" = "Вы должны предоставить разрешение смарт-контракту для обмена заданным токеном от вашего имени. Это разрешение устанавливает сумму, которую может использовать смарт-контракт. Это не влияет на ваш баланс, но требует небольшой комиссии для выполнения транзакции на подтверждение.\n\nХотя это можно сделать по мере необходимости перед каждой сделкой, более дешево предварительно разрешить большую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
-"swap.approve.not_found" = "Can't approve these tokens";
+"swap.approve.not_found" = "Не удается разрешить эти токены";
 "swap.approving_button" = "Разрешение...";
 "swap.revoking_button" = "Отмена...";
-"swap.not_available_button" = "Баланс N/А";
+"swap.not_available_button" = "Баланс n/a";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Эта служба не позволяет wrapping/unwrapping. Пожалуйста, попробуйте другой сервис обмена. Рекомендуется 1inch";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
@@ -560,11 +562,11 @@
 "swap.minimum_short" = "(мин)";
 "swap.maximum_short" = "(макс)";
 
-"swap.rate_not_available" = "Rate not available";
+"swap.rate_not_available" = "Цена недоступна";
 "swap.select" = "Выбрать";
 "swap.quoting" = "Котировка";
-"swap.select_token_in" = "Выбрать токен";
-"swap.select_token_out" = "Select Token Out";
+"swap.select_token_in" = "Выберите токен для обмена";
+"swap.select_token_out" = "Выберите токен для получения";
 "swap.no_providers" = "Нет провайдеров";
 "swap.enter_amount" = "Ввести сумму";
 "swap.no_quotes" = "Нет предложений";
@@ -577,18 +579,18 @@
 "swap.quotes.best_price" = "Лучшая цена";
 
 "swap.allowance" = "Разрешение";
-"swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
-"swap.pending_allowance" = "Pending Allowance";
+"swap.allowance.description" = "Сумма, которую биржа может потратить от имени пользователя при выполнении обмена токенов. Для осуществления фактической операции обмена необходимо предварительно установить достаточное разрешение для последующей транзакции.";
+"swap.pending_allowance" = "Ожидающие разрешения";
 "swap.unlock" = "Разблокировать";
-"swap.unlocking" = "Unlocking";
-"swap.allowance_error" = "Allowance Error";
+"swap.unlocking" = "Разблокировка";
+"swap.allowance_error" = "Ошибка разрешения";
 "swap.revoke" = "Отменить";
 "swap.revoking" = "Отмена";
 "swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и разрешить новую сумму";
 
-"swap.unlock.title" = "Unlock Access";
-"swap.unlock.subtitle" = "Allow access to the following amount";
-"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.title" = "Открыть доступ";
+"swap.unlock.subtitle" = "Разрешить доступ к следующей сумме";
+"swap.unlock.description" = "Предоставьте разрешение смарт-контракту на торговлю токенами от вашего имени, указав разрешенную сумму. Это не влияет на ваш баланс, но влечет за собой небольшую комиссию за разрешение.\n\nПредварительное разрешение более высокой суммы для будущих сделок экономически выгоднее по сравнению с разрешением по запросу.";
 "swap.unlock.unlimited" = "Безлимит";
 
 "swap.price_impact" = "Отклонение от рын. цены";
@@ -596,6 +598,11 @@
 "swap.high_price_impact" = "Высокое отклонение цены";
 "swap.recipient" = "Получатель";
 "swap.slippage" = "Отклонение от курса";
+
+"swap.affiliate_fee" = "Партнерская плата";
+"swap.liquidity_fee" = "Плата за ликвидность";
+"swap.outbound_fee" = "Исходящая комиссия";
+"swap.total_fee" = "Итоговая комиссия";
 
 // Swap Advanced Settings
 
@@ -649,7 +656,7 @@
 "swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 "swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Разрешение";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "Сумма, которую биржа может потратить от имени пользователя при выполнении обмена токенов. Для осуществления фактической операции обмена необходимо предварительно установить достаточное разрешение для последующей транзакции.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
 "swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.dex_info.header_swap_fee" = "Комиссия за обмен";
@@ -751,7 +758,7 @@
 "market.advanced_search.market_cap" = "Рын. капитализация";
 "market.advanced_search.volume" = "Объем торговли";
 
-"market.advanced_search.listed_on_top_exchanges" = "Размещенные на ведущих биржах";
+"market.advanced_search.listed_on_top_exchanges" = "Размещены на ведущих биржах";
 "market.advanced_search.good_cex_volume" = "Хороший объем CEX";
 "market.advanced_search.good_dex_volume" = "Хороший объем DEX";
 "market.advanced_search.good_distribution" = "Хорошее распределение";
@@ -1095,7 +1102,7 @@
 "chart_indicators.settings.macd.description" = "Дивергенция Moving Average Convergence (MACD) — индикатор динамики, который отслеживает отношения между двумя ЭРА ценой безопасности. Это сигнализирует о возможности покупки или продажи, когда линия MACD (12-ти периодная EMA минус 26-ти периодов EMA) пересекает девять периодов EMA, известную как сигнальная линия.";
 "chart_indicators.settings.macd.fast_period_title" = "Fast Length";
 "chart_indicators.settings.macd.slow_period_title" = "Slow Length";
-"chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
+"chart_indicators.settings.macd.signal_period_title" = "Сглаживание сигнала";
 
 "chart_indicators.settings.macd.slow_fast.error" = "Fast Length должна быть меньше Slow Length";
 
@@ -1174,6 +1181,7 @@
 "tx_info.you_got" = "Вы получили";
 "tx_info.price" = "Цена";
 "tx_info.scam_warning" = "Эта транзакция подозрительна и может быть мошенничеством. Пожалуйста, не копируйте никакие адреса из этой транзакции.";
+"tx_info.resend_description" = "Это действие попытается аннулировать предыдущую транзакцию, переотправив ее с более высокой комиссией.";
 
 // Settings
 
@@ -1785,7 +1793,7 @@
 "fee_settings.inputs_outputs" = "Вводы/Выводы";
 "fee_settings.transaction_settings" = "Настройки транзакций";
 "fee_settings.transaction_settings.description" = "Затрудните отслеживание Биткойн-транзакций, изменив их структурирование.";
-"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee" = "Изменить комиссию";
 "fee_settings.replace_by_fee.description" = "Эта опция позволяет повторно отправить застрявшую транзакцию, увеличивая сумму комиссии.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
@@ -2008,8 +2016,8 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "Контакты";
-"transaction_filter.description" = "Filtering by contacts works on %@ blockchains. Below shown suitable contacts";
+"transaction_filter.title" = "Фильтр";
+"transaction_filter.description" = "Фильтрация по контактам работает на %@ блокчейнах. Ниже показаны подходящие контакты";
 
 "transaction_filter.blockchain" = "Blockchain";
 "transaction_filter.all_blockchains" = "Все блокчейны";

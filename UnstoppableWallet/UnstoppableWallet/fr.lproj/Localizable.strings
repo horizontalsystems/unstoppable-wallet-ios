@@ -72,7 +72,7 @@
 "alert.cant_recognize" = "Impossible de reconnaître";
 
 "alert.fee_too_low" = "Frais trop bas";
-"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.rbf_not_Enabled" = "RBF(Remplacer par frais) non activé";
 "alert.unable_to_replace" = "Impossible de remplacer";
 "alert.already_replaced" = "Déjà remplacé";
 
@@ -136,6 +136,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
+"restore.wallet.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique.";
 "restore.passphrase_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Il n'est pas lié à votre mot de passe Apple iCloud, et il ne peut pas être récupéré ou réinitialisé en cas de perte ou d'oubli.";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
 "restore.non_standard_import" = "Restauration non-standard";
@@ -338,6 +339,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.locked" = "Verrouillé";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "L'expéditeur a envoyé ces fonds avec un délai prédéfini qui se terminera à la date indiquée.\n\nPas de soucis, les Bitcoins reçues sont déjà à vous mais vous devez attendre l'expiration de la période de verrouillage pour les dépenser sur le réseau Bitcoin.";
+"balance.token.not_relayed" = "Diffusion";
+"balance.token.not_relayed.info.title" = "Diffuser";
+"balance.token.not_relayed.info.description" = "La transaction contenant ce montant a été diffusée mais n'a pas encore été acceptée par le réseau";
 "balance.token.processing" = "Traitement en cours";
 "balance.token.processing.info.title" = "Montant en cours de traitement";
 "balance.token.processing.info.description" = "Les transactions avec ce montant sont toujours en cours de synchronisation. Une fois qu'elles seront confirmées, ces jetons seront disponibles pour être dépensés";
@@ -386,7 +390,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.used_addresses.description" = "%@ adresses changent pour des raisons de confidentialité et de sécurité. Ci-dessous, une liste des adresses utilisées dans ce portefeuille.";
 
 "receive_used_addresses.external" = "Adresses de réception";
-"receive_used_addresses.change" = "Change Addresses";
+"receive_used_addresses.change" = "Adresses de changement";
 
 "deposit.zcash.restore.description" = "Avez-vous déjà possédé des pièces de monnaie ZEC?";
 "deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
@@ -446,7 +450,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.you_send" = "Vous envoyez";
 "send.confirmation.transfer" = "Transfert";
 "send.confirmation.to" = "À";
-"send.confirmation.own" = "Own";
+"send.confirmation.own" = "Propriétaire";
 "send.confirmation.contact_name" = "Nom du contact";
 "send.confirmation.domain" = "Domaine";
 "send.confirmation.address" = "Adresses";
@@ -456,8 +460,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.total" = "Total";
 "send.confirmation.fee" = "Frais";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replace_by_fee" = "Remplacer par frais";
+"send.confirmation.replaced_transactions" = "Transactions remplacées";
 
 "send.confirmation.slide_to_send" = "Glisser pour envoyer";
 "send.confirmation.sending" = "En attente";
@@ -473,11 +477,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "send.confirmation.slide_to_resend" = "Réenvoyer";
 "send.confirmation.slide_to_cancel" = "Annuler la transaction";
-"send.confirmation.resend_description" = "Cette action tentera d'invalider la transaction précédente en la renvoyant avec des frais plus élevés. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
 "send.confirmation.resend" = "Réenvoyer";
-"send.confirmation.cancel_description" = "Cette action tentera d'invalider la transaction précédente en l'envoyant à nouveau comme une nouvelle transaction de valeur 0 à soi-même. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
 "send.confirmation.btc_cancel_description" = "Cette action tentera d'invaliditer la transaction précédente en la renvoyant sous forme de nouvelle transaction en envoyant une certaine somme à soi-même. Si la transaction originale reste en attente lorsqu'une nouvelle est envoyée, il y a une forte chance (mais pas garantie) qu'elle soit invalidée et remplacée. Seule l'une de ces deux transactions sera incluse dans la blockchain.";
-"send.confirmation.speed_up" = "Speed Up";
+"send.confirmation.speed_up" = "Accélérer";
 "send.confirmation.cancel" = "Annuler la transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Méthode";
@@ -595,6 +597,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.recipient" = "Destinataire";
 "swap.slippage" = "Glissement";
 
+"swap.affiliate_fee" = "Frais d'affiliation";
+"swap.liquidity_fee" = "Frais de liquidité";
+"swap.outbound_fee" = "Frais sortants";
+"swap.total_fee" = "Frais totaux";
+
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Effet de glissement";
@@ -628,11 +635,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "swap.confirmation.title" = "Confirmer";
 "swap.confirmation.quoting" = "Quotation...";
-"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.invalid_quote" = "Quote invalide";
 "swap.confirmation.please_wait" = "Veuillez patienter";
-"swap.confirmation.quote_expires_in" = "Quote expires in %@";
-"swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
+"swap.confirmation.quote_expires_in" = "La citation expire dans %@";
+"swap.confirmation.quote_expired" = "La citation a expiré";
+"swap.confirmation.quote_failed" = "Échec du devis";
 
 "swap.confirmation.slide_to_swap" = "Glisser pour changer";
 "swap.confirmation.swapping" = "Swapping";
@@ -1054,7 +1061,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.analysis.attention_required" = "Attention Requise";
 "coin_analytics.analysis.token_detectors" = "Détection de token";
 "coin_analytics.analysis.general_detectors" = "Détection générale";
-"coin_analytics.analysis.issues" = "Issues: %@";
+"coin_analytics.analysis.issues" = "Problèmes : %@";
 
 // Coin Page -> Markets
 
@@ -1152,7 +1159,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "tx_info.contact_name" = "Nom du contact";
 "tx_info.button_explorer" = "Afficher sur %@";
 "tx_info.rate" = "Taux historique";
-"tx_info.options.speed_up" = "Speed Up";
+"tx_info.options.speed_up" = "Accélérer";
 "tx_info.options.cancel" = "Annuler la transaction";
 "tx_info.transaction.already_in_block" = "Transaction déjà dans le block";
 "tx_info.fee" = "Frais";
@@ -1172,6 +1179,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "tx_info.you_got" = "Vous avez reçu";
 "tx_info.price" = "Prix";
 "tx_info.scam_warning" = "Cette transaction est suspecte et peut être une arnaque. Veuillez ne copier aucune adresse de cette transaction.";
+"tx_info.resend_description" = "Cette action tentera d'annuler la transaction précédente en la renvoyant avec des frais plus élevés.";
 
 // Settings
 
@@ -1783,7 +1791,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "fee_settings.inputs_outputs" = "Entrées/Sorties";
 "fee_settings.transaction_settings" = "Paramètres de transaction";
 "fee_settings.transaction_settings.description" = "Rendez vos Bitcoin transactions plus difficiles à suivre en modifiant la façon dont les transactions sont structurées.";
-"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee" = "Remplacer par frais";
 "fee_settings.replace_by_fee.description" = "Ce choix vous permet de renvoyer une transaction bloquée en augmentant le montant des frais.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "Le TimeLock ne fonctionne que pour les envois vers les adresses du BIP44 (commençant par 1)";
@@ -2005,7 +2013,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Contacts";
+"transaction_filter.title" = "Filtre";
 "transaction_filter.description" = "Le filtrage par contacts fonctionne sur %@ blockchains. Ci-dessous sont affichés les contacts appropriés";
 
 "transaction_filter.blockchain" = "Blockchain";

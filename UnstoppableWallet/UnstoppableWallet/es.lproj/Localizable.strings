@@ -72,7 +72,7 @@
 "alert.cant_recognize" = "No se puede reconocer";
 
 "alert.fee_too_low" = "Tarifa Demasiado Baja";
-"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.rbf_not_Enabled" = "RBF (Reemplazar por tarifa) no habilitado";
 "alert.unable_to_replace" = "No se puede reemplazar";
 "alert.already_replaced" = "Ya reemplazado";
 
@@ -136,6 +136,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore.checksum_error" = "Suma de verificación inválida";
 "restore.passphrase" = "Frase de contraseña";
 "restore.input.passphrase" = "Frase de contraseña";
+"restore.wallet.passphrase_description" = "Introduce la contraseña que utilizaste al crear esta frase de recuperación. Restaurar una billetera existente con una nueva contraseña generará una billetera completamente nueva.";
 "restore.passphrase_description" = "Esta contraseña se utiliza para encriptar el archivo de respaldo de tu cartera. No está relacionada con tu contraseña de Apple iCloud. No se puede recuperar ni restablecer si se pierde o se olvida.";
 "restore.error.empty_passphrase" = "La frase no puede estar vacía";
 "restore.non_standard_import" = "Restauración no estándar";
@@ -338,6 +339,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.locked" = "Bloqueado";
 "balance.token.locked.info.title" = "Timelock";
 "balance.token.locked.info.description" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
+"balance.token.not_relayed" = "Transmisión";
+"balance.token.not_relayed.info.title" = "Transmitir";
+"balance.token.not_relayed.info.description" = "La transacción que contiene esta cantidad ha sido transmitida pero aún no ha sido aceptada por la red";
 "balance.token.processing" = "Procesando";
 "balance.token.processing.info.title" = "Detenido";
 "balance.token.processing.info.description" = "Transacciones con esta cantidad todavía sincronizadas. Y cuando se confirmen, estos tokens estarán disponibles para gastos";
@@ -385,7 +389,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.used_addresses.title" = "Direcciones Utilizadas";
 "deposit.used_addresses.description" = "%@ direcciones cambian por privacidad y seguridad. A continuación, una lista de las direcciones utilizadas en esta billetera.";
 
-"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.external" = "Direcciones para recibir";
 "receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "¿Ya has poseído alguna moneda ZEC?";
@@ -456,29 +460,27 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.total" = "Összesen";
 "send.confirmation.fee" = "Comisión";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
+"send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
 
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
 "send.confirmation.sending" = "Enviar";
 "send.confirmation.sent" = "Enviado";
 
-"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.slide_to_approve" = "Deslizar para aprobar";
 "send.confirmation.approving" = "Aprobando";
 "send.confirmation.approved" = "Aprobar";
 
-"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.slide_to_revoke" = "Deslizar para revocar";
 "send.confirmation.revoking" = "Revocando";
 "send.confirmation.revoked" = "Revocada";
 
 "send.confirmation.slide_to_resend" = "Reenviar";
-"send.confirmation.slide_to_cancel" = "Cancel Transaction";
-"send.confirmation.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
+"send.confirmation.slide_to_cancel" = "Cancelar transacción";
 "send.confirmation.resend" = "Reenviar";
-"send.confirmation.cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.btc_cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola como una nueva transacción, enviando una cierta cantidad a sí misma. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que se invalide y se reemplace. Solo una de estas dos transacciones se incluirá en la cadena de bloques.";
-"send.confirmation.speed_up" = "Speed Up";
-"send.confirmation.cancel" = "Cancel Transaction";
+"send.confirmation.speed_up" = "Acelerar";
+"send.confirmation.cancel" = "Cancelar transacción";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Método";
 "send.confirmation.replace_by_fee.disabled" = "Desabilitado";
@@ -504,7 +506,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.lock_time" = "Timelock";
 
 "send.unspent_outputs" = "UTXOs";
-"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.send_to" = "Enviar a";
 "send.unspent_outputs.change" = "Cambio";
 
 "approve.confirmation.you_approve" = "Apruebas";
@@ -576,10 +578,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "swap.allowance" = "Permiso de acceso";
 "swap.allowance.description" = "La cantidad que un intercambio puede gastar en nombre de un usuario al ejecutar intercambios de tokens. Se requiere una transacción previa que establezca una autorización suficiente antes de que pueda tener lugar una transacción de intercambio real.";
-"swap.pending_allowance" = "Pending Allowance";
+"swap.pending_allowance" = "Asignación pendiente";
 "swap.unlock" = "Desbloquear";
 "swap.unlocking" = "Desbloqueando";
-"swap.allowance_error" = "Allowance Error";
+"swap.allowance_error" = "Error de asignación";
 "swap.revoke" = "Revocar";
 "swap.revoking" = "Revocando";
 "swap.revoke_warning" = "Puedes cambiar %@o necesitas revocar y aprobar la nueva cantidad";
@@ -591,9 +593,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "swap.price_impact" = "Impacto en el precio";
 "swap.price_impact.description" = "La desviación esperada del precio mostrado, típicamente aumenta con la cantidad de intercambio.";
-"swap.high_price_impact" = "High Price Impact";
+"swap.high_price_impact" = "Alto impacto en el precio";
 "swap.recipient" = "Destinatario";
-"swap.slippage" = "Slippage";
+"swap.slippage" = "Deslizamiento";
+
+"swap.affiliate_fee" = "Tarifa de afiliado";
+"swap.liquidity_fee" = "Tarifa de liquidez";
+"swap.outbound_fee" = "Tarifa de salida";
+"swap.total_fee" = "Tarifa Total";
 
 // Swap Advanced Settings
 
@@ -762,11 +769,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.advanced_search.price_change" = "Cambio de Precio";
 
 "market.advanced_search.technical_advice.risk_trade" = "Riesgo para el Comercio";
-"market.advanced_search.technical_advice.strong_buy" = "Strong Buy";
-"market.advanced_search.technical_advice.buy" = "Buy";
+"market.advanced_search.technical_advice.strong_buy" = "Compra Fuerte";
+"market.advanced_search.technical_advice.buy" = "Comprar";
 "market.advanced_search.technical_advice.neutral" = "Neutral";
-"market.advanced_search.technical_advice.sell" = "Sell";
-"market.advanced_search.technical_advice.strong_sell" = "Strong Sell";
+"market.advanced_search.technical_advice.sell" = "Vender";
+"market.advanced_search.technical_advice.strong_sell" = "Vender fuerte";
 
 "market.advanced_search.outperformed_btc" = "BTC superado";
 "market.advanced_search.outperformed_eth" = "ETH superado";
@@ -1152,8 +1159,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.contact_name" = "Nombre de contacto";
 "tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
-"tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel Transaction";
+"tx_info.options.speed_up" = "Acelerar";
+"tx_info.options.cancel" = "Cancelar transacción";
 "tx_info.transaction.already_in_block" = "La transacción ya está en bloque";
 "tx_info.fee" = "Comisión";
 "tx_info.fee.estimated" = "Tarifa (est.)";
@@ -1172,6 +1179,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
 "tx_info.scam_warning" = "Esta transacción es sospechosa y podría ser una estafa. Por favor, no copies ninguna dirección de esta transacción.";
+"tx_info.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta.";
 
 // Settings
 
@@ -1784,7 +1792,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.inputs_outputs" = "Entradas/Salidas";
 "fee_settings.transaction_settings" = "Ajustes de la transacción";
 "fee_settings.transaction_settings.description" = "Haga que sus transacciones Bitcoin sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
-"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee" = "Reemplazar por tarifa";
 "fee_settings.replace_by_fee.description" = "Esta opción le permite volver a enviar una transacción bloqueada aumentando la cantidad de la tarifa.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock sólo funciona para enviar a direcciones BIP44 (comenzando con 1)";
@@ -2006,7 +2014,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Contactos";
+"transaction_filter.title" = "Filtro";
 "transaction_filter.description" = "El filtrado por contactos funciona en %@ blockchains. A continuación se muestran los contactos adecuados";
 
 "transaction_filter.blockchain" = "Blockchain";
