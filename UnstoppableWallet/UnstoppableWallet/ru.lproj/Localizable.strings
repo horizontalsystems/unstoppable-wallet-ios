@@ -72,7 +72,7 @@
 "alert.cant_recognize" = "Не удалось распознать";
 
 "alert.fee_too_low" = "Комиссия слишком низкая";
-"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.rbf_not_Enabled" = "RBF (Replace-By-Fee) не активирован";
 "alert.unable_to_replace" = "Не удается заменить";
 "alert.already_replaced" = "Уже заменены";
 
@@ -341,9 +341,9 @@
 "balance.token.locked" = "Заблокировано";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
-"balance.token.not_relayed" = "Broadcasting";
-"balance.token.not_relayed.info.title" = "Broadcast";
-"balance.token.not_relayed.info.description" = "The transaction holding this amount is broadcasted but not yet accepted by the network";
+"balance.token.not_relayed" = "Трансляция";
+"balance.token.not_relayed.info.title" = "Передача";
+"balance.token.not_relayed.info.description" = "Транзакция, содержащая эту сумму, транслирована, но еще не принята сетью";
 "balance.token.processing" = "В процессе";
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
@@ -392,7 +392,7 @@
 "deposit.used_addresses.description" = "%@ адресов изменены для повышения конфиденциальности и безопасности. Ниже приведен список использованных адресов в этом кошельке.";
 
 "receive_used_addresses.external" = "Адреса для получения";
-"receive_used_addresses.change" = "Change Addresses";
+"receive_used_addresses.change" = "Адрес-сдача";
 
 "deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
@@ -452,7 +452,7 @@
 "send.confirmation.you_send" = "Вы отправляете";
 "send.confirmation.transfer" = "Перевод";
 "send.confirmation.to" = "Кому";
-"send.confirmation.own" = "Own";
+"send.confirmation.own" = "Свой";
 "send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
@@ -543,7 +543,7 @@
 "swap.approve.title" = "Разрешение обмена";
 "swap.approve.description" = "Вы должны предоставить разрешение смарт-контракту для обмена заданным токеном от вашего имени. Это разрешение устанавливает сумму, которую может использовать смарт-контракт. Это не влияет на ваш баланс, но требует небольшой комиссии для выполнения транзакции на подтверждение.\n\nХотя это можно сделать по мере необходимости перед каждой сделкой, более дешево предварительно разрешить большую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
-"swap.approve.not_found" = "Can't approve these tokens";
+"swap.approve.not_found" = "Не удается разрешить эти токены";
 "swap.approving_button" = "Разрешение...";
 "swap.revoking_button" = "Отмена...";
 "swap.not_available_button" = "Баланс n/a";
@@ -562,11 +562,11 @@
 "swap.minimum_short" = "(мин)";
 "swap.maximum_short" = "(макс)";
 
-"swap.rate_not_available" = "Rate not available";
+"swap.rate_not_available" = "Цена недоступна";
 "swap.select" = "Выбрать";
 "swap.quoting" = "Котировка";
-"swap.select_token_in" = "Выбрать токен";
-"swap.select_token_out" = "Select Token Out";
+"swap.select_token_in" = "Выберите токен для обмена";
+"swap.select_token_out" = "Выберите токен для получения";
 "swap.no_providers" = "Нет провайдеров";
 "swap.enter_amount" = "Ввести сумму";
 "swap.no_quotes" = "Нет предложений";
@@ -579,18 +579,18 @@
 "swap.quotes.best_price" = "Лучшая цена";
 
 "swap.allowance" = "Разрешение";
-"swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.allowance.description" = "Сумма, которую биржа может потратить от имени пользователя при выполнении обмена токенов. Для осуществления фактической операции обмена необходимо предварительно установить достаточное разрешение для последующей транзакции.";
 "swap.pending_allowance" = "Ожидающие разрешения";
 "swap.unlock" = "Разблокировать";
 "swap.unlocking" = "Разблокировка";
-"swap.allowance_error" = "Allowance Error";
+"swap.allowance_error" = "Ошибка разрешения";
 "swap.revoke" = "Отменить";
 "swap.revoking" = "Отмена";
 "swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и разрешить новую сумму";
 
-"swap.unlock.title" = "Unlock Access";
-"swap.unlock.subtitle" = "Allow access to the following amount";
-"swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
+"swap.unlock.title" = "Открыть доступ";
+"swap.unlock.subtitle" = "Разрешить доступ к следующей сумме";
+"swap.unlock.description" = "Предоставьте разрешение смарт-контракту на торговлю токенами от вашего имени, указав разрешенную сумму. Это не влияет на ваш баланс, но влечет за собой небольшую комиссию за разрешение.\n\nПредварительное разрешение более высокой суммы для будущих сделок экономически выгоднее по сравнению с разрешением по запросу.";
 "swap.unlock.unlimited" = "Безлимит";
 
 "swap.price_impact" = "Отклонение от рын. цены";
@@ -656,7 +656,7 @@
 "swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 "swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Разрешение";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "Сумма, которую биржа может потратить от имени пользователя при выполнении обмена токенов. Для осуществления фактической операции обмена необходимо предварительно установить достаточное разрешение для последующей транзакции.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
 "swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.dex_info.header_swap_fee" = "Комиссия за обмен";
@@ -1102,7 +1102,7 @@
 "chart_indicators.settings.macd.description" = "Дивергенция Moving Average Convergence (MACD) — индикатор динамики, который отслеживает отношения между двумя ЭРА ценой безопасности. Это сигнализирует о возможности покупки или продажи, когда линия MACD (12-ти периодная EMA минус 26-ти периодов EMA) пересекает девять периодов EMA, известную как сигнальная линия.";
 "chart_indicators.settings.macd.fast_period_title" = "Fast Length";
 "chart_indicators.settings.macd.slow_period_title" = "Slow Length";
-"chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
+"chart_indicators.settings.macd.signal_period_title" = "Сглаживание сигнала";
 
 "chart_indicators.settings.macd.slow_fast.error" = "Fast Length должна быть меньше Slow Length";
 
