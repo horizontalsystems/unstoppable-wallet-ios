@@ -36,7 +36,9 @@ class BaseTransactionsViewModel {
     }
 
     private func reSyncViewItems() {
-        _sync(itemData: service.itemData)
+        queue.async {
+            self._sync(itemData: self.service.itemData)
+        }
     }
 
     private func sync(typeFilter: TransactionTypeFilter) {
@@ -102,7 +104,7 @@ class BaseTransactionsViewModel {
             if daysAgo != lastDaysAgo {
                 sectionViewItems.append(SectionViewItem(title: dateHeaderTitle(daysAgo: daysAgo), viewItems: [viewItem]))
             } else {
-                sectionViewItems[sectionViewItems.count - 1].viewItems.append(viewItem)
+                sectionViewItems.last?.viewItems.append(viewItem)
             }
 
             lastDaysAgo = daysAgo

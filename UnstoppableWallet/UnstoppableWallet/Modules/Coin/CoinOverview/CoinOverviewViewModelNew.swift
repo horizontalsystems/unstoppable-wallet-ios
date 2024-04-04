@@ -122,8 +122,7 @@ extension CoinOverviewViewModelNew {
                 let info = try await marketKit.marketInfoOverview(
                     coinUid: coinUid,
                     currencyCode: currencyManager.baseCurrency.code,
-                    languageCode: languageManager.currentLanguage,
-                    apiTag: ""
+                    languageCode: languageManager.currentLanguage
                 )
                 self?.handleSuccess(info: info)
             } catch {

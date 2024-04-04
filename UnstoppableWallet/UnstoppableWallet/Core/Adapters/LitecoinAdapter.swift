@@ -108,7 +108,7 @@ extension LitecoinAdapter {
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.clear(exceptFor: excludedWalletIds)
     }
-    
+
     static func firstAddress(accountType: AccountType, tokenType: TokenType) throws -> String {
         switch accountType {
         case .mnemonic:

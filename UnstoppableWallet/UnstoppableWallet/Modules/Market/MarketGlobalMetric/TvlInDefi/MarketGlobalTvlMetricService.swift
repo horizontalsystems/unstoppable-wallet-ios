@@ -8,7 +8,6 @@ class MarketGlobalTvlMetricService {
 
     private let marketKit: MarketKit.Kit
     private let currencyManager: CurrencyManager
-    private let apiTag: String
 
     private var tasks = Set<AnyTask>()
     private var cancellables = Set<AnyCancellable>()
@@ -57,10 +56,9 @@ class MarketGlobalTvlMetricService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, apiTag: String) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
         self.marketKit = marketKit
         self.currencyManager = currencyManager
-        self.apiTag = apiTag
 
         syncDefiCoins()
     }
@@ -72,9 +70,9 @@ class MarketGlobalTvlMetricService {
             internalState = .loading
         }
 
-        Task { [weak self, marketKit, currency, apiTag] in
+        Task { [weak self, marketKit, currency] in
             do {
-                let defiCoins = try await marketKit.defiCoins(currencyCode: currency.code, apiTag: apiTag)
+                let defiCoins = try await marketKit.defiCoins(currencyCode: currency.code)
                 self?.internalState = .loaded(defiCoins: defiCoins)
             } catch {
                 self?.internalState = .failed(error: error)

@@ -73,7 +73,7 @@ class MarketWatchlistService: IMarketSingleSortHeaderService {
 
         Task { [weak self, marketKit, coinUids, currency] in
             do {
-                let marketInfos = try await marketKit.marketInfos(coinUids: coinUids, currencyCode: currency.code, apiTag: "watchlist")
+                let marketInfos = try await marketKit.marketInfos(coinUids: coinUids, currencyCode: currency.code)
                 self?.sync(marketInfos: marketInfos)
             } catch {
                 self?.state = .failed(error: error)

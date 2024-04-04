@@ -1,6 +1,7 @@
 import Alamofire
 import Foundation
 import HsToolKit
+import MarketKit
 
 func stat(page: StatPage, section: StatSection? = nil, event: StatEvent) {
 //    print("PAGE: \(page)\(section.map { ", SECTION: \($0)" } ?? ""), event: \(event.name)\(event.params.map { ", PARAMS: \($0)" } ?? "")")
@@ -11,20 +12,19 @@ class StatManager {
     private static let keyLastSent = "stat_last_sent"
     private static let sendThreshold: TimeInterval = 1 * 60 * 60 // 1 hour
 
-    private let networkManager: NetworkManager
+    private let marketKit: MarketKit.Kit
     private let storage: StatStorage
     private let userDefaultsStorage: UserDefaultsStorage
+    private let appVersion: String
+    private let appId: String?
 
-    init(networkManager: NetworkManager, storage: StatStorage, userDefaultsStorage: UserDefaultsStorage) {
-        self.networkManager = networkManager
+    init(marketKit: MarketKit.Kit, storage: StatStorage, userDefaultsStorage: UserDefaultsStorage) {
+        self.marketKit = marketKit
         self.storage = storage
         self.userDefaultsStorage = userDefaultsStorage
 
-        let lastSent: Double? = userDefaultsStorage.value(for: Self.keyLastSent)
-
-        if lastSent == nil {
-            userDefaultsStorage.set(value: Date().timeIntervalSince1970, for: Self.keyLastSent)
-        }
+        appVersion = AppConfig.appVersion
+        appId = AppConfig.appId
     }
 
     func logStat(eventPage: StatPage, eventSection: StatSection? = nil, event: StatEvent) {
@@ -55,7 +55,7 @@ class StatManager {
     func sendStats() {
         let lastSent: Double? = userDefaultsStorage.value(for: Self.keyLastSent)
 
-        guard let lastSent, Date().timeIntervalSince1970 - lastSent > Self.sendThreshold else {
+        if let lastSent, Date().timeIntervalSince1970 - lastSent < Self.sendThreshold {
             return
         }
 
@@ -66,7 +66,7 @@ class StatManager {
                 return
             }
 
-            let jsonObject = records.map { record in
+            let stats = records.map { record in
                 var object: [String: Any] = [
                     "event_page": record.eventPage,
                     "event": record.event,
@@ -85,36 +85,14 @@ class StatManager {
                 return object
             }
 
-//            let data = try JSONSerialization.data(withJSONObject: jsonObject)
+//            let data = try JSONSerialization.data(withJSONObject: stats)
 //            let string = String(data: data, encoding: .utf8)
 //            print(string ?? "N/A")
 
-            _ = try await networkManager.fetchJson(url: "\(AppConfig.marketApiUrl)/v1/stats", method: .post, encoding: HttpBodyEncoding(jsonObject: jsonObject))
+            try await marketKit.send(stats: stats, appVersion: appVersion, appId: appId)
+
+            userDefaultsStorage.set(value: Date().timeIntervalSince1970, for: Self.keyLastSent)
             try storage.clear()
-        }
-    }
-}
-
-extension StatManager {
-    private struct HttpBodyEncoding: ParameterEncoding {
-        private let jsonObject: Any
-
-        init(jsonObject: Any) {
-            self.jsonObject = jsonObject
-        }
-
-        func encode(_ urlRequest: URLRequestConvertible, with _: Parameters?) throws -> URLRequest {
-            var urlRequest = try urlRequest.asURLRequest()
-
-            let data = try JSONSerialization.data(withJSONObject: jsonObject)
-
-            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            }
-
-            urlRequest.httpBody = data
-
-            return urlRequest
         }
     }
 }

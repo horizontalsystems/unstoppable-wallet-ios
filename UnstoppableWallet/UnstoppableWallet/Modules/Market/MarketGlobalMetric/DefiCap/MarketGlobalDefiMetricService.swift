@@ -40,7 +40,7 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
 
         Task { [weak self, marketKit, currency] in
             do {
-                let marketInfos = try await marketKit.marketInfos(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code, defi: true, apiTag: "global_metrics_defi_cap")
+                let marketInfos = try await marketKit.marketInfos(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code, defi: true)
 
                 let rankedItems = marketInfos.enumerated().map { index, info in
                     Item(marketInfo: info, tvlRank: index + 1)

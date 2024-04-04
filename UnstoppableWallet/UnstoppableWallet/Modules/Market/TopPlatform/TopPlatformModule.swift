@@ -4,8 +4,8 @@ import ThemeKit
 import UIKit
 
 enum TopPlatformModule {
-    static func viewController(topPlatform: TopPlatform, apiTag: String) -> UIViewController {
-        let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit, apiTag: apiTag)
+    static func viewController(topPlatform: TopPlatform) -> UIViewController {
+        let service = TopPlatformService(topPlatform: topPlatform, marketKit: App.shared.marketKit)
         let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service, statPage: .topPlatform)
         let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, favoritesManager: App.shared.favoritesManager, statPage: .topPlatform)
 

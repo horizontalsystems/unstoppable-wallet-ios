@@ -73,7 +73,7 @@ class ResendBitcoinService {
             items.append(SendConfirmationLockUntilViewItem(lockValue: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: lockInfo.lockTimeInterval)))
         }
 
-        if case let .coinValue(coin, feeValue) = record.fee {
+        if case let .coinValue(_, feeValue) = record.fee {
             items.append(
                 SendConfirmationFeeViewItem(coinValue: .init(kind: .token(token: token), value: feeValue), currencyValue: currencyValue(coinAmount: feeValue))
             )

@@ -123,8 +123,7 @@ extension CoinOverviewService {
                 let info = try await marketKit.marketInfoOverview(
                     coinUid: coinUid,
                     currencyCode: currencyManager.baseCurrency.code,
-                    languageCode: languageManager.currentLanguage,
-                    apiTag: ""
+                    languageCode: languageManager.currentLanguage
                 )
                 self?.sync(info: info)
             } catch {
