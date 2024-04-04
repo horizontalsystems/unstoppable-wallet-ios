@@ -8,12 +8,12 @@
 "x1kK4T" = "跌幅榜";
 
 "2puq80" = "数字货币价格列表";
-"Iodq3O-C1LmDj" = "Just to confirm, you wanted ‘Lowest Volume’?";
-"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Top Gainers’?";
-"Iodq3O-qHGyuo" = "Just to confirm, you wanted ‘Highest Cap’?";
-"Iodq3O-t6AKQ5" = "Just to confirm, you wanted ‘Highest Volume’?";
-"Iodq3O-tVjZ7W" = "Just to confirm, you wanted ‘Lowest Cap’?";
-"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Top Losers’?";
+"Iodq3O-C1LmDj" = "只是确认一下，你想要'最低交易量'对吗？";
+"Iodq3O-Rl3a0T" = "只是确认一下，您想要‘涨幅最大’对吗？";
+"Iodq3O-qHGyuo" = "只是确认一下，您想要‘最高市值’对吗？";
+"Iodq3O-t6AKQ5" = "只是确认一下，您想要‘最高交易量’对吗？";
+"Iodq3O-tVjZ7W" = "只是确认一下，您想要‘最低市值’对吗？";
+"Iodq3O-x1kK4T" = "只是确认一下，您想要‘最大跌幅’对吗？";
 "OkcYOj" = "View coin price for selected coin";
 "VXTxGF" = "Widget Coin";
 "ZBHf6A" = "Sort Type";
