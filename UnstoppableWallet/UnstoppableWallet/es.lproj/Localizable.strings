@@ -72,7 +72,7 @@
 "alert.cant_recognize" = "No se puede reconocer";
 
 "alert.fee_too_low" = "Tarifa Demasiado Baja";
-"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.rbf_not_Enabled" = "RBF (Reemplazar por tarifa) no habilitado";
 "alert.unable_to_replace" = "No se puede reemplazar";
 "alert.already_replaced" = "Ya reemplazado";
 
@@ -389,7 +389,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.used_addresses.title" = "Direcciones Utilizadas";
 "deposit.used_addresses.description" = "%@ direcciones cambian por privacidad y seguridad. A continuación, una lista de las direcciones utilizadas en esta billetera.";
 
-"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.external" = "Direcciones para recibir";
 "receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "¿Ya has poseído alguna moneda ZEC?";
@@ -460,27 +460,27 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.total" = "Összesen";
 "send.confirmation.fee" = "Comisión";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
+"send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
 
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
 "send.confirmation.sending" = "Enviar";
 "send.confirmation.sent" = "Enviado";
 
-"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.slide_to_approve" = "Deslizar para aprobar";
 "send.confirmation.approving" = "Aprobando";
 "send.confirmation.approved" = "Aprobar";
 
-"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.slide_to_revoke" = "Deslizar para revocar";
 "send.confirmation.revoking" = "Revocando";
 "send.confirmation.revoked" = "Revocada";
 
 "send.confirmation.slide_to_resend" = "Reenviar";
-"send.confirmation.slide_to_cancel" = "Cancel Transaction";
+"send.confirmation.slide_to_cancel" = "Cancelar transacción";
 "send.confirmation.resend" = "Reenviar";
 "send.confirmation.btc_cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola como una nueva transacción, enviando una cierta cantidad a sí misma. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que se invalide y se reemplace. Solo una de estas dos transacciones se incluirá en la cadena de bloques.";
-"send.confirmation.speed_up" = "Speed Up";
-"send.confirmation.cancel" = "Cancel Transaction";
+"send.confirmation.speed_up" = "Acelerar";
+"send.confirmation.cancel" = "Cancelar transacción";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Método";
 "send.confirmation.replace_by_fee.disabled" = "Desabilitado";
@@ -506,7 +506,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.lock_time" = "Timelock";
 
 "send.unspent_outputs" = "UTXOs";
-"send.unspent_outputs.send_to" = "Send To";
+"send.unspent_outputs.send_to" = "Enviar a";
 "send.unspent_outputs.change" = "Cambio";
 
 "approve.confirmation.you_approve" = "Apruebas";
@@ -593,13 +593,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "swap.price_impact" = "Impacto en el precio";
 "swap.price_impact.description" = "La desviación esperada del precio mostrado, típicamente aumenta con la cantidad de intercambio.";
-"swap.high_price_impact" = "High Price Impact";
+"swap.high_price_impact" = "Alto impacto en el precio";
 "swap.recipient" = "Destinatario";
-"swap.slippage" = "Slippage";
+"swap.slippage" = "Deslizamiento";
 
-"swap.affiliate_fee" = "Affiliate Fee";
-"swap.liquidity_fee" = "Liquidity Fee";
-"swap.outbound_fee" = "Outbound Fee";
+"swap.affiliate_fee" = "Tarifa de afiliado";
+"swap.liquidity_fee" = "Tarifa de liquidez";
+"swap.outbound_fee" = "Tarifa de salida";
 "swap.total_fee" = "Total Fee";
 
 // Swap Advanced Settings
@@ -1159,8 +1159,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.contact_name" = "Nombre de contacto";
 "tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
-"tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel Transaction";
+"tx_info.options.speed_up" = "Acelerar";
+"tx_info.options.cancel" = "Cancelar transacción";
 "tx_info.transaction.already_in_block" = "La transacción ya está en bloque";
 "tx_info.fee" = "Comisión";
 "tx_info.fee.estimated" = "Tarifa (est.)";
@@ -1792,7 +1792,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.inputs_outputs" = "Entradas/Salidas";
 "fee_settings.transaction_settings" = "Ajustes de la transacción";
 "fee_settings.transaction_settings.description" = "Haga que sus transacciones Bitcoin sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
-"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee" = "Reemplazar por tarifa";
 "fee_settings.replace_by_fee.description" = "Esta opción le permite volver a enviar una transacción bloqueada aumentando la cantidad de la tarifa.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock sólo funciona para enviar a direcciones BIP44 (comenzando con 1)";
@@ -2014,7 +2014,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "Filtro";
 "transaction_filter.description" = "El filtrado por contactos funciona en %@ blockchains. A continuación se muestran los contactos adecuados";
 
 "transaction_filter.blockchain" = "Blockchain";
