@@ -28,7 +28,7 @@
 "button.more" = "Daha Fazlası";
 "button.i_understand" = "Anlıyorum";
 "button.learn_more" = "Daha fazla bilgi edin";
-"button.unlock" = "Unlock";
+"button.unlock" = "Kilidi Aç";
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
@@ -73,7 +73,7 @@
 
 "alert.fee_too_low" = "Ücret Çok Düşük";
 "alert.rbf_not_Enabled" = "RBF not enabled";
-"alert.unable_to_replace" = "Unable to replace";
+"alert.unable_to_replace" = "Değiştirilemiyor";
 "alert.already_replaced" = "Already replaced";
 
 "no_results_found" = "Sonuç bulunamadı";
@@ -560,7 +560,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.minimum_short" = "(dk)";
 "swap.maximum_short" = "(azami)";
 
-"swap.rate_not_available" = "Rate not available";
+"swap.rate_not_available" = "Oran mevcut değil";
 "swap.select" = "Seç";
 "swap.quoting" = "Quoting";
 "swap.select_token_in" = "Girdi olarak jeton seçin";
@@ -579,7 +579,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.allowance" = "Ödenek";
 "swap.allowance.description" = "Bir takas işlemi gerçekleştirirken bir borsanın bir kullanıcı adına harcayabileceği miktar. Gerçek bir takas işlemi gerçekleşmeden önce yeterli izin belirleyen bir önceki işlem gereklidir.";
 "swap.pending_allowance" = "Pending Allowance";
-"swap.unlock" = "Unlock";
+"swap.unlock" = "Kilidi Aç";
 "swap.unlocking" = "Unlocking";
 "swap.allowance_error" = "Allowance Error";
 "swap.revoke" = "İptal et";
@@ -1367,7 +1367,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Unlock
 
-"unlock.title" = "Unlock";
+"unlock.title" = "Kilidi Aç";
 "unlock.passcode" = "Şifre Girin";
 "unlock.biometry_reason" = "Cüzdanı aç";
 "unlock.attempts_left" = "%@ deneme kaldı";
