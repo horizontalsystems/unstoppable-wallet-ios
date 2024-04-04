@@ -4,12 +4,11 @@ import ThemeKit
 import UIKit
 
 enum MarketCategoryModule {
-    static func viewController(category: CoinCategory, apiTag: String) -> UIViewController {
+    static func viewController(category: CoinCategory) -> UIViewController {
         let service = MarketCategoryService(
             category: category,
             marketKit: App.shared.marketKit,
-            languageManager: LanguageManager.shared,
-            apiTag: apiTag
+            languageManager: LanguageManager.shared
         )
 
         let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service, statPage: .coinCategory)

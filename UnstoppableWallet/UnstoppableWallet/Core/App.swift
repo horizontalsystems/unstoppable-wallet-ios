@@ -115,8 +115,6 @@ class App {
             cryptoCompareApiKey: AppConfig.cryptoCompareApiKey,
             defiYieldApiKey: AppConfig.defiYieldApiKey,
             hsProviderApiKey: AppConfig.hsProviderApiKey,
-            appVersion: AppConfig.appVersion,
-            appId: AppConfig.appId,
             minLogLevel: .error
         )
         marketKit.sync()
@@ -306,7 +304,7 @@ class App {
         )
 
         let statStorage = StatStorage(dbPool: dbPool)
-        statManager = StatManager(networkManager: networkManager, storage: statStorage, userDefaultsStorage: userDefaultsStorage)
+        statManager = StatManager(marketKit: marketKit, storage: statStorage, userDefaultsStorage: userDefaultsStorage)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 

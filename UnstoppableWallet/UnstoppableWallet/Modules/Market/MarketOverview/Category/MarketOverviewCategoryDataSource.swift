@@ -29,7 +29,7 @@ class MarketOverviewCategoryDataSource {
                 return
             }
 
-            let viewController = MarketCategoryModule.viewController(category: category, apiTag: "market_overview")
+            let viewController = MarketCategoryModule.viewController(category: category)
             self?.presentDelegate?.present(viewController: viewController)
 
             stat(page: .marketOverview, event: .openCategory(categoryUid: uid))

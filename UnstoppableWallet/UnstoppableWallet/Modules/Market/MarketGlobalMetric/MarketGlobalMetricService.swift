@@ -42,9 +42,9 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
             state = .loading
         }
 
-        Task { [weak self, marketKit, currency, metricsType] in
+        Task { [weak self, marketKit, currency] in
             do {
-                let marketInfos = try await marketKit.marketInfos(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code, apiTag: "global_metrics_\(metricsType)")
+                let marketInfos = try await marketKit.marketInfos(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code)
                 self?.sync(marketInfos: marketInfos)
             } catch {
                 self?.state = .failed(error: error)

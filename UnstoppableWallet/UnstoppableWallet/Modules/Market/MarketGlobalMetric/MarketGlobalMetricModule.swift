@@ -9,7 +9,7 @@ enum MarketGlobalMetricModule {
         switch type {
         case .totalMarketCap, .volume24h: viewController = globalMetricViewController(type: type)
         case .defiCap: viewController = defiCapViewController()
-        case .tvlInDefi: viewController = tvlInDefiViewController(apiTag: "global_metrics")
+        case .tvlInDefi: viewController = tvlInDefiViewController()
         }
 
         return ThemeNavigationController(rootViewController: viewController)
@@ -74,11 +74,10 @@ enum MarketGlobalMetricModule {
         return MarketGlobalMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, metricsType: MarketGlobalModule.MetricsType.defiCap)
     }
 
-    static func tvlInDefiViewController(apiTag: String) -> UIViewController {
+    static func tvlInDefiViewController() -> UIViewController {
         let service = MarketGlobalTvlMetricService(
             marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            apiTag: apiTag
+            currencyManager: App.shared.currencyManager
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(

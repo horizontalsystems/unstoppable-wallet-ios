@@ -82,7 +82,7 @@ extension AddressParserChain {
         public var errorDescription: String? {
             switch self {
             case .validationError: return "swap.advanced_settings.error.invalid_address".localized
-            case let .fetchError: return "swap.advanced_settings.error.invalid_address".localized
+            case .fetchError: return "swap.advanced_settings.error.invalid_address".localized
             }
         }
     }

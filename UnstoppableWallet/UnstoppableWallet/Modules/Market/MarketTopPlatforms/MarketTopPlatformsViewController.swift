@@ -64,7 +64,7 @@ class MarketTopPlatformsViewController: MarketListViewController {
             return
         }
 
-        present(TopPlatformModule.viewController(topPlatform: topPlatform, apiTag: "market_top_platforms"), animated: true)
+        present(TopPlatformModule.viewController(topPlatform: topPlatform), animated: true)
 
         stat(page: .topPlatforms, event: .openPlatform(chainUid: uid))
     }

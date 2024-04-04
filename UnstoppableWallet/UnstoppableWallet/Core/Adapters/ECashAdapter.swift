@@ -79,26 +79,26 @@ extension ECashAdapter {
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.clear(exceptFor: excludedWalletIds)
     }
-    
+
     static func firstAddress(accountType: AccountType) throws -> String {
         switch accountType {
         case .mnemonic:
             guard let seed = accountType.mnemonicSeed else {
                 throw AdapterError.unsupportedAccount
             }
-            
+
             let address = try ECashKit.Kit.firstAddress(
                 seed: seed,
                 networkType: networkType
             )
-            
+
             return address.stringValue
         case let .hdExtendedKey(key):
             let address = try ECashKit.Kit.firstAddress(
                 extendedKey: key,
                 networkType: networkType
             )
-            
+
             return address.stringValue
         case let .btcAddress(address, _, _):
             return address

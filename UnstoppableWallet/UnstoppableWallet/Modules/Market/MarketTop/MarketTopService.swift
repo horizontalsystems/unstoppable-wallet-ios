@@ -37,7 +37,6 @@ class MarketTopService: IMarketMultiSortHeaderService {
     }
 
     let initialIndex: Int
-    private let apiTag: String
 
     init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, marketTop: MarketModule.MarketTop, sortingField: MarketModule.SortingField, marketField: MarketModule.MarketField) {
         self.marketKit = marketKit
@@ -45,8 +44,6 @@ class MarketTopService: IMarketMultiSortHeaderService {
         self.marketTop = marketTop
         self.sortingField = sortingField
         initialIndex = marketField.rawValue
-
-        apiTag = "market_top_\(marketTop.rawValue)_\(sortingField.raw)_\(marketField.raw)"
 
         syncMarketInfos()
     }
@@ -58,9 +55,9 @@ class MarketTopService: IMarketMultiSortHeaderService {
             internalState = .loading
         }
 
-        Task { [weak self, marketKit, currency, apiTag] in
+        Task { [weak self, marketKit, currency] in
             do {
-                let marketInfos = try await marketKit.marketInfos(top: 1000, currencyCode: currency.code, apiTag: apiTag)
+                let marketInfos = try await marketKit.marketInfos(top: 1000, currencyCode: currency.code)
                 self?.internalState = .loaded(marketInfos: marketInfos)
             } catch {
                 self?.internalState = .failed(error: error)

@@ -375,7 +375,7 @@ class CoinAnalyticsViewController: ThemeViewController {
     }
 
     private func openTvlRank() {
-        let viewController = MarketGlobalMetricModule.tvlInDefiViewController(apiTag: "coin_analytics")
+        let viewController = MarketGlobalMetricModule.tvlInDefiViewController()
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 

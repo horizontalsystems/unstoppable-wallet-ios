@@ -32,7 +32,7 @@ class CoinAnalyticsService {
     private func loadPreview() {
         Task { [weak self, marketKit, fullCoin] in
             do {
-                let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid, apiTag: "")
+                let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid)
                 self?.state = .preview(analyticsPreview: analyticsPreview)
             } catch {
                 self?.state = .failed(error)
@@ -79,7 +79,7 @@ extension CoinAnalyticsService {
             Task { [weak self, subscriptionManager, marketKit, fullCoin, currency] in
                 try await subscriptionManager.fetch(
                     request: {
-                        try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code, apiTag: "")
+                        try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
                     },
                     onSuccess: { [weak self] analytics in
                         self?.state = .success(analytics: analytics)
