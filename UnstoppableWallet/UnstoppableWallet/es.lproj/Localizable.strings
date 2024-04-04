@@ -339,8 +339,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.locked" = "Bloqueado";
 "balance.token.locked.info.title" = "Timelock";
 "balance.token.locked.info.description" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
-"balance.token.not_relayed" = "Broadcasting";
-"balance.token.not_relayed.info.title" = "Broadcast";
+"balance.token.not_relayed" = "Transmisión";
+"balance.token.not_relayed.info.title" = "Transmitir";
 "balance.token.not_relayed.info.description" = "La transacción que contiene esta cantidad ha sido transmitida pero aún no ha sido aceptada por la red";
 "balance.token.processing" = "Procesando";
 "balance.token.processing.info.title" = "Detenido";
@@ -578,10 +578,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "swap.allowance" = "Permiso de acceso";
 "swap.allowance.description" = "La cantidad que un intercambio puede gastar en nombre de un usuario al ejecutar intercambios de tokens. Se requiere una transacción previa que establezca una autorización suficiente antes de que pueda tener lugar una transacción de intercambio real.";
-"swap.pending_allowance" = "Pending Allowance";
+"swap.pending_allowance" = "Asignación pendiente";
 "swap.unlock" = "Desbloquear";
 "swap.unlocking" = "Desbloqueando";
-"swap.allowance_error" = "Allowance Error";
+"swap.allowance_error" = "Error de asignación";
 "swap.revoke" = "Revocar";
 "swap.revoking" = "Revocando";
 "swap.revoke_warning" = "Puedes cambiar %@o necesitas revocar y aprobar la nueva cantidad";
@@ -600,7 +600,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.affiliate_fee" = "Tarifa de afiliado";
 "swap.liquidity_fee" = "Tarifa de liquidez";
 "swap.outbound_fee" = "Tarifa de salida";
-"swap.total_fee" = "Total Fee";
+"swap.total_fee" = "Tarifa Total";
 
 // Swap Advanced Settings
 
@@ -769,11 +769,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.advanced_search.price_change" = "Cambio de Precio";
 
 "market.advanced_search.technical_advice.risk_trade" = "Riesgo para el Comercio";
-"market.advanced_search.technical_advice.strong_buy" = "Strong Buy";
-"market.advanced_search.technical_advice.buy" = "Buy";
+"market.advanced_search.technical_advice.strong_buy" = "Compra Fuerte";
+"market.advanced_search.technical_advice.buy" = "Comprar";
 "market.advanced_search.technical_advice.neutral" = "Neutral";
-"market.advanced_search.technical_advice.sell" = "Sell";
-"market.advanced_search.technical_advice.strong_sell" = "Strong Sell";
+"market.advanced_search.technical_advice.sell" = "Vender";
+"market.advanced_search.technical_advice.strong_sell" = "Vender fuerte";
 
 "market.advanced_search.outperformed_btc" = "BTC superado";
 "market.advanced_search.outperformed_eth" = "ETH superado";
@@ -1179,7 +1179,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
 "tx_info.scam_warning" = "Esta transacción es sospechosa y podría ser una estafa. Por favor, no copies ninguna dirección de esta transacción.";
-"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
+"tx_info.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta.";
 
 // Settings
 
