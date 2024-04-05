@@ -112,7 +112,6 @@ class App {
 
         marketKit = try MarketKit.Kit.instance(
             hsApiBaseUrl: AppConfig.marketApiUrl,
-            cryptoCompareApiKey: AppConfig.cryptoCompareApiKey,
             defiYieldApiKey: AppConfig.defiYieldApiKey,
             hsProviderApiKey: AppConfig.hsProviderApiKey,
             minLogLevel: .error

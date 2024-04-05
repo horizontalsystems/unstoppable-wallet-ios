@@ -40,3 +40,4 @@ Production.xcconfig
 
 Package.resolved
 .swiftpm
+buildServer.json
