@@ -20,8 +20,8 @@
 "hrLfmt" = "Prix d'une seule cryptomonnaie";
 "nj8Co9-C1LmDj" = "Il y a ${count} options correspondant à 'Volume le plus bas'.";
 "nj8Co9-Rl3a0T" = "Il y a ${count} options correspondant à 'Top Gainers'.";
-"nj8Co9-qHGyuo" = "There are ${count} options matching ‘Highest Cap’.";
-"nj8Co9-t6AKQ5" = "There are ${count} options matching ‘Highest Volume’.";
-"nj8Co9-tVjZ7W" = "There are ${count} options matching ‘Lowest Cap’.";
+"nj8Co9-qHGyuo" = "Il y a ${count} options correspondant à 'Capitalisation la plus élevée'.";
+"nj8Co9-t6AKQ5" = "Il y a ${count} options correspondant à 'Volume le plus élevé'.";
+"nj8Co9-tVjZ7W" = "Il y a ${count} options correspondant à 'Capitalisation la plus faible'.";
 "nj8Co9-x1kK4T" = "There are ${count} options matching ‘Top Losers’.";
 "rCV9fg" = "Voir les prix des cryptomonnaies de la liste";
