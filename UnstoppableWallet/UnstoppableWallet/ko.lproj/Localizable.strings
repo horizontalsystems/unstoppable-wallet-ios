@@ -73,8 +73,8 @@
 
 "alert.fee_too_low" = "수수료가 너무 낮음";
 "alert.rbf_not_Enabled" = "RBF not enabled";
-"alert.unable_to_replace" = "Unable to replace";
-"alert.already_replaced" = "Already replaced";
+"alert.unable_to_replace" = "교체할 수 없음";
+"alert.already_replaced" = "이미 교체했습니다";
 
 "no_results_found" = "검색 결과가 없습니다";
 "action.loading" = "로딩중";
@@ -134,7 +134,7 @@
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
-"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
+"restore.wallet.passphrase_description" = "이 복구 문구를 생성할 때 사용한 암호를 입력하십시오. 새로운 암호로 기존 지갑을 복원하면 새로운 지갑이 생성됩니다.";
 "restore.passphrase_description" = "이 암호는 지갑의 백업 파일을 암호화하는 데 사용됩니다. 이 암호는 Apple iCloud 암호와는 관련이 없습니다. 만약 분실하거나 잊어버린 경우, 복구하거나 재설정할 수 없습니다.";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "restore.non_standard_import" = "비표준 복원";
@@ -337,9 +337,9 @@
 "balance.token.locked" = "잠김";
 "balance.token.locked.info.title" = "시간 자물쇠";
 "balance.token.locked.info.description" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
-"balance.token.not_relayed" = "Broadcasting";
-"balance.token.not_relayed.info.title" = "Broadcast";
-"balance.token.not_relayed.info.description" = "The transaction holding this amount is broadcasted but not yet accepted by the network";
+"balance.token.not_relayed" = "방송";
+"balance.token.not_relayed.info.title" = "방송";
+"balance.token.not_relayed.info.description" = "이 금액을 보유한 거래는 방송되었지만 아직 네트워크에서 수락되지 않았습니다.";
 "balance.token.processing" = "처리 중";
 "balance.token.processing.info.title" = "처리 중인 금액";
 "balance.token.processing.info.description" = "이 금액의 거래가 여전히 동기화 중입니다. 거래가 확인되면 이 토큰들은 사용할 수 있게 됩니다.";
@@ -380,14 +380,14 @@
 "deposit.set_amount" = "금액 설정";
 "deposit.enter_amount" = "금액 입력";
 "deposit.not_active" = "비활성화됨";
-"deposit.used_addresses" = "Used Addresses";
+"deposit.used_addresses" = "사용된 주소들";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
 
-"deposit.used_addresses.title" = "Used Addresses";
+"deposit.used_addresses.title" = "사용된 주소들";
 "deposit.used_addresses.description" = "%@ 주소는 개인 정보 보호와 보안을 위해 변경됩니다. 이 지갑에서 사용된 주소 목록은 아래와 같습니다.";
 
-"receive_used_addresses.external" = "Receive Addresses";
+"receive_used_addresses.external" = "받는 주소들";
 "receive_used_addresses.change" = "Change Addresses";
 
 "deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
@@ -458,18 +458,18 @@
 "send.confirmation.total" = "합계";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replace_by_fee" = "수수료로 대체";
+"send.confirmation.replaced_transactions" = "대체된 거래";
 
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.sent" = "전송됨";
 
-"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.slide_to_approve" = "승인하기 위해 슬라이드하십시오";
 "send.confirmation.approving" = "승인 중";
 "send.confirmation.approved" = "승인됨";
 
-"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.slide_to_revoke" = "취소하기 위해 슬라이드하십시오";
 "send.confirmation.revoking" = "철회";
 "send.confirmation.revoked" = "철회됨";
 
@@ -477,7 +477,7 @@
 "send.confirmation.slide_to_cancel" = "거래 취소";
 "send.confirmation.resend" = "재전송";
 "send.confirmation.btc_cancel_description" = "이 작업은 이전 거래를 무효화하려고 하며, 새로운 거래로 다시 보내면서 일부 금액을 자신에게 전송합니다. 원래 거래가 새 거래를 보낼 때까지 대기 중인 경우 (보장되지는 않음) 무효화되고 대체될 가능성이 높습니다. 두 거래 중 하나만 블록체인에 포함됩니다.";
-"send.confirmation.speed_up" = "Speed Up";
+"send.confirmation.speed_up" = "가속";
 "send.confirmation.cancel" = "거래 취소";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "메소드";
@@ -504,8 +504,8 @@
 "send.lock_time" = "시간 자물쇠";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.send_to" = "Send To";
-"send.unspent_outputs.change" = "Change";
+"send.unspent_outputs.send_to" = "보내기";
+"send.unspent_outputs.change" = "변경";
 
 "approve.confirmation.you_approve" = "승인합니다";
 "approve.confirmation.you_revoke" = "당신은 취소";
@@ -539,7 +539,7 @@
 "swap.approve.title" = "스왑 승인";
 "swap.approve.description" = "스마트 계약에 사용자 대신 지정된 토큰을 교환할 수 있는 권한을 부여해야 합니다. 이 권한은 스마트 계약에서 사용할 수 있는 금액을 설정합니다. 잔액에는 영향을 미치지 않지만 승인 거래를 실행하려면 소액의 수수료가 필요합니다.\n\n매 거래 전에 요청 시 이루어질 수 있지만, 향후 거래를 위해 사전에 더 많은 금액을 승인하는 것이 더 저렴합니다.";
 "swap.approve.amount_error.already_approved" = "귀하는 이미 이 금액에 대한 허용량을 가지고 있습니다.";
-"swap.approve.not_found" = "Can't approve these tokens";
+"swap.approve.not_found" = "이 토큰을 승인할 수 없습니다";
 "swap.approving_button" = "승인 중...";
 "swap.revoking_button" = "철회...";
 "swap.not_available_button" = "균형 N/A";
@@ -558,11 +558,11 @@
 "swap.minimum_short" = "(분)";
 "swap.maximum_short" = "(최대)";
 
-"swap.rate_not_available" = "Rate not available";
+"swap.rate_not_available" = "가격이 제공되지 않습니다";
 "swap.select" = "선택";
 "swap.quoting" = "Quoting";
-"swap.select_token_in" = "Select Token In";
-"swap.select_token_out" = "Select Token Out";
+"swap.select_token_in" = "토큰 인 선택";
+"swap.select_token_out" = "토큰 아웃 선택";
 "swap.no_providers" = "제공자 없음";
 "swap.enter_amount" = "금액 입력";
 "swap.no_quotes" = "No Quotes";
@@ -576,15 +576,15 @@
 
 "swap.allowance" = "허용량";
 "swap.allowance.description" = "토큰 스왑을 실행할 때 거래소가 사용자 대신 소비할 수 있는 금액입니다. 실제 스왑 거래가 발생하기 전에 충분한 할당을 설정하는 이전 거래가 필요합니다.";
-"swap.pending_allowance" = "Pending Allowance";
+"swap.pending_allowance" = "보류 중인 허용량";
 "swap.unlock" = "잠금 해제";
-"swap.unlocking" = "Unlocking";
-"swap.allowance_error" = "Allowance Error";
+"swap.unlocking" = "잠금 해제";
+"swap.allowance_error" = "허용량 오류";
 "swap.revoke" = "취소";
 "swap.revoking" = "철회";
 "swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
 
-"swap.unlock.title" = "Unlock Access";
+"swap.unlock.title" = "액세스 잠금 해제";
 "swap.unlock.subtitle" = "다음 금액에 대한 액세스 허용";
 "swap.unlock.description" = "스마트 계약에 토큰 거래 권한을 부여하여 지정된 허용 금액을 설정합니다. 귀하의 잔액에 영향을 주지 않지만 승인을 위한 소액 수수료가 발생합니다. \n\n미래 거래를 위해 미리 더 높은 금액을 승인하는 것은 요청에 따른 승인보다 비용 효율적입니다.";
 "swap.unlock.unlimited" = "무제한";
@@ -592,13 +592,13 @@
 "swap.price_impact" = "가격 영향";
 "swap.price_impact.description" = "일반적으로 보여진 가격으로부터 예상되는 가격 편차는 스왑 금액에 따라 증가합니다.";
 "swap.high_price_impact" = "높은 가격 영향";
-"swap.recipient" = "Recipient";
+"swap.recipient" = "수령인";
 "swap.slippage" = "Slippage";
 
-"swap.affiliate_fee" = "Affiliate Fee";
-"swap.liquidity_fee" = "Liquidity Fee";
-"swap.outbound_fee" = "Outbound Fee";
-"swap.total_fee" = "Total Fee";
+"swap.affiliate_fee" = "제휴 수수료";
+"swap.liquidity_fee" = "유동성 수수료";
+"swap.outbound_fee" = "송금 수수료";
+"swap.total_fee" = "총 수수료";
 
 // Swap Advanced Settings
 
@@ -634,7 +634,7 @@
 "swap.confirmation.title" = "확인";
 "swap.confirmation.quoting" = "Quoting...";
 "swap.confirmation.invalid_quote" = "Invalid Quote";
-"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.please_wait" = "기다려 주십시오";
 "swap.confirmation.quote_expires_in" = "Quote expires in %@";
 "swap.confirmation.quote_expired" = "Quote expired";
 "swap.confirmation.quote_failed" = "Failed to quote";
@@ -687,8 +687,8 @@
 "market.project_has_no_coin" = "이 프로젝트는 코인이 없습니다";
 
 "market.top.section.header.see_all" = "모두 보기";
-"market.top.section.header.top_gainers" = "최고 상승자";
-"market.top.section.header.top_losers" = "최고 하락자";
+"market.top.section.header.top_gainers" = "최고 승자";
+"market.top.section.header.top_losers" = "최고 패자";
 "market.top.section.header.sectors" = "분야";
 "market.top.section.header.news" = "뉴스";
 "market.top.volume.title" = "거래량";
@@ -712,8 +712,8 @@
 "market.top.lowest_cap" = "가장 낮은 시가총액";
 "market.top.highest_volume" = "가장 높은 거래량";
 "market.top.lowest_volume" = "가장 낮은 거래량";
-"market.top.top_gainers" = "최고 상승자";
-"market.top.top_losers" = "최고 하락자";
+"market.top.top_gainers" = "최고 승자";
+"market.top.top_losers" = "최고 패자";
 "market.top.top_collections" = "주요 NFT 컬렉션";
 "market.top.floor_price" = "바닥:";
 "market.top.top_market_pairs" = "상위 시장 페어";
@@ -767,11 +767,11 @@
 "market.advanced_search.price_change" = "가격 변경";
 
 "market.advanced_search.technical_advice.risk_trade" = "거래 위험";
-"market.advanced_search.technical_advice.strong_buy" = "Strong Buy";
-"market.advanced_search.technical_advice.buy" = "Buy";
-"market.advanced_search.technical_advice.neutral" = "Neutral";
-"market.advanced_search.technical_advice.sell" = "Sell";
-"market.advanced_search.technical_advice.strong_sell" = "Strong Sell";
+"market.advanced_search.technical_advice.strong_buy" = "강력한 매수";
+"market.advanced_search.technical_advice.buy" = "매수";
+"market.advanced_search.technical_advice.neutral" = "중립적";
+"market.advanced_search.technical_advice.sell" = "매도";
+"market.advanced_search.technical_advice.strong_sell" = "강력한 매도";
 
 "market.advanced_search.outperformed_btc" = "BTC를 능가했습니다";
 "market.advanced_search.outperformed_eth" = "ETH를 능가했습니다";
@@ -874,10 +874,10 @@
 "coin_overview.whitepaper" = "백서";
 
 // Coin Page -> Analytics
-"technical_advice.over.bought" = "overbought";
-"technical_advice.over.sold" = "oversold";
-"technical_advice.down" = "down";
-"technical_advice.up" = "up";
+"technical_advice.over.bought" = "과매수";
+"technical_advice.over.sold" = "과매도";
+"technical_advice.down" = "아래로";
+"technical_advice.up" = "위로";
 
 "technical_advice.over.main" = "해당 자산과 관련된 행동은 위험합니다.";
 "technical_advice.over.indicators.signal_date" = "Starting from the %@";
@@ -919,7 +919,7 @@
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "강한 매수";
 "coin_analytics.indicators.buy" = "매수";
-"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.neutral" = "중립적";
 "coin_analytics.indicators.sell" = "매도";
 "coin_analytics.indicators.strong_sell" = "강한 매도";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1158,7 +1158,7 @@
 "tx_info.contact_name" = "담당자 이름";
 "tx_info.button_explorer" = "%@에서 보기";
 "tx_info.rate" = "과거 환율";
-"tx_info.options.speed_up" = "Speed Up";
+"tx_info.options.speed_up" = "가속";
 "tx_info.options.cancel" = "거래 취소";
 "tx_info.transaction.already_in_block" = "이미 차단된 거래";
 "tx_info.fee" = "수수료";
@@ -1167,7 +1167,7 @@
 "tx_info.double_spent_note" = "이중 지출 위험!";
 "tx_info.locked_until" = "까지 잠그기 %@";
 "tx_info.unlocked_at" = "%@에서 잠금 해제됨";
-"tx_info.recipient_hash" = "Recipient";
+"tx_info.recipient_hash" = "수령인";
 "tx_info.raw_transaction" = "로우 트랜잭션";
 "tx_info.memo" = "Memo";
 "tx_info.service" = "서비스";
@@ -1178,7 +1178,7 @@
 "tx_info.you_got" = "받았던 금액";
 "tx_info.price" = "금액";
 "tx_info.scam_warning" = "이 거래는 의심스럽고 사기일 수 있습니다. 이 거래에서 주소를 복사하지 마십시오.";
-"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
+"tx_info.resend_description" = "이 작업은 이전 거래를 무효화하고 더 높은 수수료로 다시 전송하려고 시도합니다.";
 
 // Settings
 
@@ -1792,7 +1792,7 @@
 "fee_settings.inputs_outputs" = "입력/출력";
 "fee_settings.transaction_settings" = "거래 설정";
 "fee_settings.transaction_settings.description" = "트랜잭션이 구조화되는 방식을 변경하여 Bitcoin 트랜잭션을 추적하기 어렵게 만드십시오.";
-"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee" = "수수료로 대체";
 "fee_settings.replace_by_fee.description" = "이 옵션을 통해 거래가 멈춘 상태에서 수수료를 증가시켜 거래를 다시 보낼 수 있습니다.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
@@ -2014,7 +2014,7 @@
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "필터";
 "transaction_filter.description" = "연락처로 필터링이 %@개의 블록체인에서 작동합니다. 아래에 적합한 연락처가 표시됩니다.";
 
 "transaction_filter.blockchain" = "Blockchain";

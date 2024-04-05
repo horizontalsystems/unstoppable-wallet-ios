@@ -382,7 +382,7 @@
 
 "deposit.amount" = "Сумма";
 "deposit.set_amount" = "Установить сумму";
-"deposit.enter_amount" = "Ввести сумму";
+"deposit.enter_amount" = "Введите сумму";
 "deposit.not_active" = "Не активен";
 "deposit.used_addresses" = "Использованные адреса";
 "deposit.not_active.title" = "Неактивный адрес";
@@ -568,7 +568,7 @@
 "swap.select_token_in" = "Выберите токен для обмена";
 "swap.select_token_out" = "Выберите токен для получения";
 "swap.no_providers" = "Нет провайдеров";
-"swap.enter_amount" = "Ввести сумму";
+"swap.enter_amount" = "Введите сумму";
 "swap.no_quotes" = "Нет предложений";
 "swap.token_not_enabled" = "Токен не включен";
 "swap.token_syncing" = "Синхронизация токенов";
@@ -610,7 +610,7 @@
 "swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более чем на этот процент";
 "swap.advanced_settings.deadline" = "Срок выполнения транзакции";
 "swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если она останется в ожидании дольше этого времени.";
-"swap.advanced_settings.recipient.footer" = "После операции обмена сумма бдует переведена на указанный адрес";
+"swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
 "swap.advanced_settings.deadline_minute" = "%@ мин!";
 "swap.advanced_settings.recipient_address" = "Адрес получателя";
 "swap.advanced_settings.warning.unusual_slippage" = "Вашу транзакцию могут вытеснить (frontrun).";
