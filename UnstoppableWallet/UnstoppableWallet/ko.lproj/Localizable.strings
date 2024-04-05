@@ -687,8 +687,8 @@
 "market.project_has_no_coin" = "이 프로젝트는 코인이 없습니다";
 
 "market.top.section.header.see_all" = "모두 보기";
-"market.top.section.header.top_gainers" = "최고 상승자";
-"market.top.section.header.top_losers" = "최고 하락자";
+"market.top.section.header.top_gainers" = "최고 승자";
+"market.top.section.header.top_losers" = "최고 패자";
 "market.top.section.header.sectors" = "분야";
 "market.top.section.header.news" = "뉴스";
 "market.top.volume.title" = "거래량";
@@ -712,8 +712,8 @@
 "market.top.lowest_cap" = "가장 낮은 시가총액";
 "market.top.highest_volume" = "가장 높은 거래량";
 "market.top.lowest_volume" = "가장 낮은 거래량";
-"market.top.top_gainers" = "최고 상승자";
-"market.top.top_losers" = "최고 하락자";
+"market.top.top_gainers" = "최고 승자";
+"market.top.top_losers" = "최고 패자";
 "market.top.top_collections" = "주요 NFT 컬렉션";
 "market.top.floor_price" = "바닥:";
 "market.top.top_market_pairs" = "상위 시장 페어";
