@@ -93,6 +93,7 @@ enum StatEvent {
     case openCategory(categoryUid: String)
     case openCoin(coinUid: String)
     case openPlatform(chainUid: String)
+    case openReceive(coinUid: String)
     case open(page: StatPage)
 
     case switchTab(tab: StatTab)
@@ -121,12 +122,16 @@ enum StatEvent {
     case removeFromWallet
 
     case copy(entity: StatEntity)
+    case share
+
+    case setAmount
+    case removeAmount
 
     case add(entity: StatEntity)
 
     var name: String {
         switch self {
-        case .openCategory, .openCoin, .openPlatform, .open: return "open_page"
+        case .openCategory, .openCoin, .openPlatform, .openReceive, .open: return "open_page"
         case .switchTab: return "switch_tab"
         case .switchMarketTop: return "switch_market_top"
         case .switchPeriod: return "switch_period"
@@ -148,6 +153,9 @@ enum StatEvent {
         case .addToWallet: return "add_to_wallet"
         case .removeFromWallet: return "remove_from_wallet"
         case .copy: return "copy"
+        case .share: return "share"
+        case .setAmount: return "set_amount"
+        case .removeAmount: return "remove_amount"
         case .add: return "add"
         }
     }
@@ -157,6 +165,7 @@ enum StatEvent {
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
+        case let .openReceive(coinUid): return [.page: StatPage.receive.rawValue, .coinUid: coinUid]
         case let .open(page): return [.page: page.rawValue]
         case let .switchTab(tab): return [.tab: tab.rawValue]
         case let .switchMarketTop(marketTop): return [.marketTop: marketTop.rawValue]
@@ -240,5 +249,6 @@ enum StatMarketTop: String {
 enum StatEntity: String {
     case contractAddress = "contract_address"
     case evmSyncSource = "evm_sync_source"
+    case receiveAddress = "receive_address"
     case token
 }
