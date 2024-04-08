@@ -17,4 +17,11 @@ enum TransactionSettings {
         default: return nil
         }
     }
+
+    var satoshiPerByte: Int? {
+        switch self {
+        case let .bitcoin(satoshiPerByte): return satoshiPerByte
+        default: return nil
+        }
+    }
 }

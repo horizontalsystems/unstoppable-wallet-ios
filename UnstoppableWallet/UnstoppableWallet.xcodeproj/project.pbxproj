@@ -3173,6 +3173,12 @@
 		D3DD672F2BC3C5C400EC7F78 /* ThorChainMultiSwapEvmQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD672D2BC3C5C400EC7F78 /* ThorChainMultiSwapEvmQuote.swift */; };
 		D3DD67312BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67302BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift */; };
 		D3DD67322BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67302BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift */; };
+		D3DD67342BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67332BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift */; };
+		D3DD67352BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67332BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift */; };
+		D3DD67372BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67362BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift */; };
+		D3DD67382BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67362BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift */; };
+		D3DD673A2BC3CFF300EC7F78 /* BaseSendBtcData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67392BC3CFF300EC7F78 /* BaseSendBtcData.swift */; };
+		D3DD673B2BC3CFF300EC7F78 /* BaseSendBtcData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67392BC3CFF300EC7F78 /* BaseSendBtcData.swift */; };
 		D3E323C82AE7B8E400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C72AE7B8E400F73914 /* KeychainAccess */; };
 		D3E323CA2AE7B8F400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C92AE7B8F400F73914 /* KeychainAccess */; };
 		D3F7D6412A94D53500477BB1 /* BaseTransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B106BD8E4DBD67B7700 /* BaseTransactionsService.swift */; };
@@ -4830,6 +4836,9 @@
 		D3DD672A2BC3BF5200EC7F78 /* OneInchMultiSwapConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneInchMultiSwapConfirmationQuote.swift; sourceTree = "<group>"; };
 		D3DD672D2BC3C5C400EC7F78 /* ThorChainMultiSwapEvmQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapEvmQuote.swift; sourceTree = "<group>"; };
 		D3DD67302BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapEvmConfirmationQuote.swift; sourceTree = "<group>"; };
+		D3DD67332BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapBtcQuote.swift; sourceTree = "<group>"; };
+		D3DD67362BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapBtcConfirmationQuote.swift; sourceTree = "<group>"; };
+		D3DD67392BC3CFF300EC7F78 /* BaseSendBtcData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSendBtcData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6059,6 +6068,7 @@
 				11B3514BFFAE3CE09F4DB2EA /* TransactionSettings.swift */,
 				11B35B1EC5A29D1B77C1BCB6 /* EvmFeeData.swift */,
 				11B359F3E7E0DB7A55C079CD /* EvmFeeEstimator.swift */,
+				D3DD67392BC3CFF300EC7F78 /* BaseSendBtcData.swift */,
 			);
 			path = SendConfirmation;
 			sourceTree = "<group>";
@@ -6111,6 +6121,8 @@
 				D3DD672A2BC3BF5200EC7F78 /* OneInchMultiSwapConfirmationQuote.swift */,
 				D3DD672D2BC3C5C400EC7F78 /* ThorChainMultiSwapEvmQuote.swift */,
 				D3DD67302BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift */,
+				D3DD67332BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift */,
+				D3DD67362BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -9653,6 +9665,7 @@
 				1A5644271F4CD209136352EE /* FilterHeaderView.swift in Sources */,
 				11B3541D3F7AFB8C651BEE2B /* Guide.swift in Sources */,
 				D3DD67322BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift in Sources */,
+				D3DD673B2BC3CFF300EC7F78 /* BaseSendBtcData.swift in Sources */,
 				11B352CBDFAABC82F02F66E9 /* MarkdownHeader1Cell.swift in Sources */,
 				11B3520F7C6CEAF1710AAD45 /* MarkdownTextView.swift in Sources */,
 				11B35CD742378BF04CDB73F0 /* NSAttributedString.swift in Sources */,
@@ -9755,6 +9768,7 @@
 				11B351FF652F0F7BCEB682A9 /* InputCell.swift in Sources */,
 				11B3547B32F2E3458065F2EB /* AmountInputView.swift in Sources */,
 				11B354B34C4B6471F67F5471 /* InputPrefixWrapperView.swift in Sources */,
+				D3DD67352BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift in Sources */,
 				179E746F1E3D7BC613BD0AFC /* FavoriteCoinRecord.swift in Sources */,
 				11B35A42D28B8BC4CDA57D8E /* AccountRecord_v_0_19.swift in Sources */,
 				58AAAA8975F5B63340672D00 /* MarketWatchlistService.swift in Sources */,
@@ -10411,6 +10425,7 @@
 				11B354F237E59C24ED8F3759 /* TokenQuery.swift in Sources */,
 				11B35D106185086B3BEC5119 /* Blockchain.swift in Sources */,
 				11B35E9CEC6187783834860E /* BlockchainType.swift in Sources */,
+				D3DD67382BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift in Sources */,
 				11B3520C2D5B798791FC6223 /* Coin.swift in Sources */,
 				11B355756A2457C64C969024 /* CoinCategory.swift in Sources */,
 				11B35CCC9D6B7596502B4381 /* CoinInvestment.swift in Sources */,
@@ -11157,6 +11172,7 @@
 				1A56481FC0EAFA9FC32E1E21 /* ScanQrViewController.swift in Sources */,
 				1A564A7CB794B4367A87C5E2 /* FilterHeaderCell.swift in Sources */,
 				D3DD67312BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift in Sources */,
+				D3DD673A2BC3CFF300EC7F78 /* BaseSendBtcData.swift in Sources */,
 				1A564515554F7BCAF473FE65 /* FilterHeaderView.swift in Sources */,
 				11B35783103DBC24D9EB7E85 /* Guide.swift in Sources */,
 				11B35CC9464E639F3A086B29 /* MarkdownHeader1Cell.swift in Sources */,
@@ -11259,6 +11275,7 @@
 				11B35A2D7A19F6302DBC16D0 /* InputCell.swift in Sources */,
 				11B357EA92E2E9C39DEF08B0 /* AmountInputView.swift in Sources */,
 				11B35FF65FCE441A69822E1C /* InputPrefixWrapperView.swift in Sources */,
+				D3DD67342BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift in Sources */,
 				179E7EBD494842280D9F19A4 /* FavoriteCoinRecord.swift in Sources */,
 				11B35C3AFFA5B40481AF15B9 /* AccountRecord_v_0_19.swift in Sources */,
 				58AAA8D67EB6C19719BD760B /* MarketWatchlistService.swift in Sources */,
@@ -11915,6 +11932,7 @@
 				11B35DDD77B56489D1EB72C5 /* Token.swift in Sources */,
 				11B35C7BB534F9FFE5B6B3A6 /* TokenType.swift in Sources */,
 				11B358DC6827FC6035BF3225 /* TokenQuery.swift in Sources */,
+				D3DD67372BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift in Sources */,
 				11B3536884FEE247C144B395 /* Blockchain.swift in Sources */,
 				11B35E5F3C6070DF6E1F6BAD /* BlockchainType.swift in Sources */,
 				11B35D94B4E92789F681E293 /* Coin.swift in Sources */,

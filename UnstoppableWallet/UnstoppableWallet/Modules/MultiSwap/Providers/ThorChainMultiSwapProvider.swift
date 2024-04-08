@@ -64,6 +64,12 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 allowanceState: allowanceHelper.allowanceState(spenderAddress: spenderAddress, token: tokenIn, amount: amountIn)
             )
+        case .bitcoin, .bitcoinCash, .litecoin:
+            return ThorChainMultiSwapBtcQuote(
+                swapQuote: swapQuote,
+                recipient: storage.recipient(blockchainType: blockchainType),
+                slippage: slippage
+            )
         default:
             throw SwapError.unsupportedTokenIn
         }
@@ -127,6 +133,18 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 gasPrice: gasPrice,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce
+            )
+        case .bitcoin, .bitcoinCash, .litecoin:
+            let satoshiPerByte = transactionSettings?.satoshiPerByte
+
+            let bytes: Int? = nil // TODO: estimate
+
+            return ThorChainMultiSwapBtcConfirmationQuote(
+                swapQuote: swapQuote,
+                recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
+                slippage: slippage,
+                satoshiPerByte: satoshiPerByte,
+                bytes: bytes
             )
         default:
             throw SwapError.unsupportedTokenIn
