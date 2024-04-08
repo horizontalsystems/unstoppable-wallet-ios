@@ -24,12 +24,12 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
         }
     }
 
-    override func trade(rpcSource: RpcSource, chain: Chain, tokenIn: UniswapKit.Token, tokenOut: UniswapKit.Token, amountIn: Decimal, tradeOptions: TradeOptions) async throws -> Quote.Trade {
+    override func trade(rpcSource: RpcSource, chain: Chain, tokenIn: UniswapKit.Token, tokenOut: UniswapKit.Token, amountIn: Decimal, tradeOptions: TradeOptions) async throws -> BaseUniswapMultiSwapQuote.Trade {
         let bestTrade = try await kit.bestTradeExactIn(rpcSource: rpcSource, chain: chain, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, options: tradeOptions)
         return .v3(bestTrade: bestTrade)
     }
 
-    override func transactionData(receiveAddress: EvmKit.Address, chain: Chain, trade: Quote.Trade, tradeOptions: TradeOptions) throws -> TransactionData {
+    override func transactionData(receiveAddress: EvmKit.Address, chain: Chain, trade: BaseUniswapMultiSwapQuote.Trade, tradeOptions: TradeOptions) throws -> TransactionData {
         guard case let .v3(bestTrade) = trade else {
             throw SwapError.invalidTrade
         }
