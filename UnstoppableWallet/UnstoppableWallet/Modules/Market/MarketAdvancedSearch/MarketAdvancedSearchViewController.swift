@@ -452,79 +452,84 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        sections.append(Section(
-            id: "coin_list",
-            headerState: .margin(height: .margin12),
-            footerState: .margin(height: .margin24),
-            rows: [
-                row(cell: coinListCell, id: "coin_list") { [weak self] in
-                    self?.onTapCoinListCell()
-                },
-            ]
-        )
-        )
-
-        sections.append(Section(
-            id: "indicators",
-            headerState: tableView.sectionHeader(text: "market.advanced_search.indicators".localized.uppercased()),
-            footerState: .margin(height: .margin24),
-            rows: [
-                row(cell: technicalAdviceCell, id: "indicators") { [weak self] in
-                    self?.onTapTechnicalIndicatorCell()
-                },
-            ]
-        )
+        sections.append(
+            Section(
+                id: "coin_list",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin24),
+                rows: [
+                    row(cell: coinListCell, id: "coin_list") { [weak self] in
+                        self?.onTapCoinListCell()
+                    },
+                ]
+            )
         )
 
-        sections.append(Section(
-            id: "market_filters",
-            headerState: tableView.sectionHeader(text: "market.advanced_search.market_parameters".localized.uppercased()),
-            footerState: .margin(height: .margin24),
-            rows: [
-                row(cell: marketCapCell, id: "market_cap") { [weak self] in
-                    self?.onTapMarketCapCell()
-                },
-                row(cell: volumeCell, id: "volume") { [weak self] in
-                    self?.onTapVolumeCell()
-                },
-                row(cell: listedOnTopExchangesCell, id: "listed_on_top_exchanges", height: .heightCell56),
-                row(cell: goodCexVolumeCell, id: "good_cex_volume", height: .heightDoubleLineCell),
-                row(cell: goodDexVolumeCell, id: "good_dex_volume", height: .heightDoubleLineCell),
-                row(cell: goodDistributionCell, id: "good_distribution", height: .heightDoubleLineCell),
-            ]
-        )
-        )
-
-        sections.append(Section(
-            id: "network_filters",
-            headerState: tableView.sectionHeader(text: "market.advanced_search.network_parameters".localized.uppercased()),
-            footerState: .margin(height: .margin24),
-            rows: [
-                row(cell: blockchainsCell, id: "blockchains") { [weak self] in
-                    self?.onTapBlockchainsCell()
-                },
-            ]
-        )
+        sections.append(
+            Section(
+                id: "market_filters",
+                headerState: tableView.sectionHeader(text: "market.advanced_search.market_parameters".localized.uppercased()),
+                footerState: .margin(height: .margin24),
+                rows: [
+                    row(cell: marketCapCell, id: "market_cap") { [weak self] in
+                        self?.onTapMarketCapCell()
+                    },
+                    row(cell: volumeCell, id: "volume") { [weak self] in
+                        self?.onTapVolumeCell()
+                    },
+                    row(cell: listedOnTopExchangesCell, id: "listed_on_top_exchanges", height: .heightCell56),
+                    row(cell: goodCexVolumeCell, id: "good_cex_volume", height: .heightDoubleLineCell),
+                    row(cell: goodDexVolumeCell, id: "good_dex_volume", height: .heightDoubleLineCell),
+                    row(cell: goodDistributionCell, id: "good_distribution", height: .heightDoubleLineCell),
+                ]
+            )
         )
 
-        sections.append(Section(
-            id: "price_filters",
-            headerState: tableView.sectionHeader(text: "market.advanced_search.price_parameters".localized.uppercased()),
-            footerState: .margin(height: .margin32),
-            rows: [
-                row(cell: priceChangeCell, id: "price_change") { [weak self] in
-                    self?.onTapPriceChangeCell()
-                },
-                row(cell: periodCell, id: "price_period") { [weak self] in
-                    self?.onTapPeriodCell()
-                },
-                row(cell: outperformedBtcCell, id: "outperformed_btc", height: .heightCell56),
-                row(cell: outperformedEthCell, id: "outperformed_eth", height: .heightCell56),
-                row(cell: outperformedBnbCell, id: "outperformed_bnb", height: .heightCell56),
-                row(cell: priceCloseToAthCell, id: "price_close_to_ath", height: .heightCell56),
-                row(cell: priceCloseToAtlCell, id: "price_close_to_atl", height: .heightCell56),
-            ]
+        sections.append(
+            Section(
+                id: "price_filters",
+                headerState: tableView.sectionHeader(text: "market.advanced_search.price_parameters".localized.uppercased()),
+                footerState: .margin(height: .margin24),
+                rows: [
+                    row(cell: priceChangeCell, id: "price_change") { [weak self] in
+                        self?.onTapPriceChangeCell()
+                    },
+                    row(cell: periodCell, id: "price_period") { [weak self] in
+                        self?.onTapPeriodCell()
+                    },
+                    row(cell: outperformedBtcCell, id: "outperformed_btc", height: .heightCell56),
+                    row(cell: outperformedEthCell, id: "outperformed_eth", height: .heightCell56),
+                    row(cell: outperformedBnbCell, id: "outperformed_bnb", height: .heightCell56),
+                    row(cell: priceCloseToAthCell, id: "price_close_to_ath", height: .heightCell56),
+                    row(cell: priceCloseToAtlCell, id: "price_close_to_atl", height: .heightCell56),
+                ]
+            )
         )
+
+        sections.append(
+            Section(
+                id: "network_filters",
+                headerState: tableView.sectionHeader(text: "market.advanced_search.network_parameters".localized.uppercased()),
+                footerState: .margin(height: .margin24),
+                rows: [
+                    row(cell: blockchainsCell, id: "blockchains") { [weak self] in
+                        self?.onTapBlockchainsCell()
+                    },
+                ]
+            )
+        )
+
+        sections.append(
+            Section(
+                id: "indicators",
+                headerState: tableView.sectionHeader(text: "market.advanced_search.indicators".localized.uppercased()),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    row(cell: technicalAdviceCell, id: "indicators") { [weak self] in
+                        self?.onTapTechnicalIndicatorCell()
+                    },
+                ]
+            )
         )
 
         return sections
