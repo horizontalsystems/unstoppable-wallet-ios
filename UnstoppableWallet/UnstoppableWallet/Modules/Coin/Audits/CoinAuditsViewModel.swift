@@ -1,77 +1,56 @@
 import Combine
+import Foundation
 import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
 
 class CoinAuditsViewModel {
-    private let service: CoinAuditsService
-    private var cancellables = Set<AnyCancellable>()
+    let viewItems: [ViewItem]
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
-    private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
-
-    init(service: CoinAuditsService) {
-        self.service = service
-
-        service.$state
-            .sink { [weak self] in self?.sync(state: $0) }
-            .store(in: &cancellables)
-
-        sync(state: service.state)
+    init(items: [Analytics.Audit]) {
+        viewItems = CoinAuditsViewModel.convert(audits: items)
     }
 
-    private func sync(state: DataStatus<[CoinAuditsService.Item]>) {
-        switch state {
-        case .loading:
-            viewItemsRelay.accept(nil)
-            loadingRelay.accept(true)
-            syncErrorRelay.accept(false)
-        case let .completed(items):
-            viewItemsRelay.accept(items.map { viewItem(item: $0) })
-            loadingRelay.accept(false)
-            syncErrorRelay.accept(false)
-        case .failed:
-            viewItemsRelay.accept(nil)
-            loadingRelay.accept(false)
-            syncErrorRelay.accept(true)
+    private static func convert(audits: [Analytics.Audit]) -> [ViewItem] {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        var viewItems = [ViewItem]()
+        var grouped = [String: [AuditViewItem]]()
+
+        for audit in audits {
+            guard let partnerName = audit.partnerName else {
+                continue
+            }
+
+            guard let date = dateFormatter.date(from: audit.date) else {
+                continue
+            }
+
+            if grouped[partnerName] == nil {
+                grouped[partnerName] = [AuditViewItem]()
+            }
+
+            grouped[partnerName]?.append(AuditViewItem(
+                date: DateHelper.instance.formatFullDateOnly(from: date),
+                name: audit.name,
+                issues: "coin_analytics.audits.issues".localized + ": \(audit.techIssues ?? 0)",
+                reportUrl: audit.auditUrl
+            )
+            )
         }
-    }
 
-    private func auditViewItem(report: AuditReport) -> AuditViewItem {
-        AuditViewItem(
-            date: DateHelper.instance.formatFullDateOnly(from: report.date),
-            name: report.name,
-            issues: "coin_analytics.audits.issues".localized + ": \(report.issues)",
-            reportUrl: report.link
-        )
-    }
+        for (auditor, reports) in grouped {
+            viewItems.append(ViewItem(
+                logoUrl: Analytics.Audit.logoUrl(name: auditor),
+                name: auditor,
+                auditViewItems: reports
+            )
+            )
+        }
 
-    private func viewItem(item: CoinAuditsService.Item) -> ViewItem {
-        ViewItem(
-            logoUrl: item.logoUrl,
-            name: item.name,
-            auditViewItems: item.reports.map { auditViewItem(report: $0) }
-        )
-    }
-}
-
-extension CoinAuditsViewModel {
-    var viewItemsDriver: Driver<[ViewItem]?> {
-        viewItemsRelay.asDriver()
-    }
-
-    var loadingDriver: Driver<Bool> {
-        loadingRelay.asDriver()
-    }
-
-    var syncErrorDriver: Driver<Bool> {
-        syncErrorRelay.asDriver()
-    }
-
-    func onTapRetry() {
-        service.refresh()
+        return viewItems
     }
 }
 

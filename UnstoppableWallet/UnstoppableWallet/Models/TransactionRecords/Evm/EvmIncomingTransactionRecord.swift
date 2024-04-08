@@ -10,7 +10,16 @@ class EvmIncomingTransactionRecord: EvmTransactionRecord {
         self.from = from
         self.value = value
 
-        super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false)
+        let spam: Bool
+
+        switch value {
+        case let .coinValue(_, value):
+            spam = value == 0
+        default:
+            spam = false
+        }
+
+        super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, spam: spam)
     }
 
     override var mainValue: TransactionValue? {

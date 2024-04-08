@@ -394,8 +394,8 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openAudits(addresses: [String]) {
-        let viewController = CoinAuditsModule.viewController(addresses: addresses)
+    private func openAudits(audits: [Analytics.Audit]) {
+        let viewController = CoinAuditsModule.viewController(audits: audits)
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -1254,8 +1254,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
-    private func otherDataSection(investors: Previewable<String>?, treasuries: Previewable<String>?, reports: Previewable<String>?, auditAddresses: Previewable<[String]>?) -> SectionProtocol? {
-        let items: [Any?] = [investors, treasuries, reports, auditAddresses]
+    private func otherDataSection(investors: Previewable<String>?, treasuries: Previewable<String>?, reports: Previewable<String>?, audits: Previewable<[Analytics.Audit]>?) -> SectionProtocol? {
+        let items: [Any?] = [investors, treasuries, reports, audits]
         let rowCount = items.compactMap { $0 }.count
 
         guard rowCount > 0 else {
@@ -1312,7 +1312,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
             )
         }
 
-        if let auditAddresses {
+        if let audits {
             rows.append(
                 previewableRow(
                     id: "audits",
@@ -1320,8 +1320,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     accessoryType: .disclosure,
                     isFirst: rows.isEmpty,
                     isLast: rows.count == rowCount - 1,
-                    action: auditAddresses.previewableValue { addresses in { [weak self] in
-                        self?.openAudits(addresses: addresses)
+                    action: audits.previewableValue { audits in { [weak self] in
+                        self?.openAudits(audits: audits)
                     }}
                 )
             )
@@ -1388,7 +1388,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 investors: viewItem.investors,
                 treasuries: viewItem.treasuries,
                 reports: viewItem.reports,
-                auditAddresses: viewItem.auditAddresses
+                audits: viewItem.audits
             ) {
                 sections.append(otherDataSection)
             }

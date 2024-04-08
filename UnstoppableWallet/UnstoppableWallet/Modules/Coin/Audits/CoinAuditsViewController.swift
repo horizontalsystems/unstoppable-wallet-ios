@@ -10,14 +10,9 @@ import UIKit
 class CoinAuditsViewController: ThemeViewController {
     private let viewModel: CoinAuditsViewModel
     private let urlManager: UrlManager
-    private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
     private let emptyView = PlaceholderView()
-    private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderViewModule.reachabilityView()
-
-    private var viewItems: [CoinAuditsViewModel.ViewItem]?
 
     init(viewModel: CoinAuditsViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
@@ -55,46 +50,7 @@ class CoinAuditsViewController: ThemeViewController {
 
         emptyView.image = UIImage(named: "not_available_48")
         emptyView.text = "coin_analytics.audits.no_reports".localized
-
-        view.addSubview(spinner)
-        spinner.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
-
-        spinner.startAnimating()
-
-        view.addSubview(errorView)
-        errorView.snp.makeConstraints { maker in
-            maker.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
-
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in
-            self?.sync(viewItems: $0)
-        }
-        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
-            self?.spinner.isHidden = !loading
-        }
-        subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
-            self?.errorView.isHidden = !visible
-        }
-    }
-
-    @objc private func onRetry() {
-        viewModel.onTapRetry()
-    }
-
-    private func sync(viewItems: [CoinAuditsViewModel.ViewItem]?) {
-        self.viewItems = viewItems
-
-        if let viewItems {
-            tableView.bounces = true
-            emptyView.isHidden = !viewItems.isEmpty
-        } else {
-            tableView.bounces = false
-            emptyView.isHidden = true
-        }
+        emptyView.isHidden = !viewModel.viewItems.isEmpty
 
         tableView.reload()
     }
@@ -160,13 +116,13 @@ extension CoinAuditsViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        guard let viewItems, !viewItems.isEmpty else {
+        guard !viewModel.viewItems.isEmpty else {
             return []
         }
 
         var sections = [SectionProtocol]()
 
-        for (index, viewItem) in viewItems.enumerated() {
+        for (index, viewItem) in viewModel.viewItems.enumerated() {
             sections.append(contentsOf: [
                 Section(
                     id: "header-\(index)",

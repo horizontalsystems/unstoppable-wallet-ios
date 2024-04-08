@@ -382,7 +382,7 @@ class CoinAnalyticsViewModel {
             treasuries: analytics.treasuries
                 .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
                 .map { .regular(value: $0) },
-            auditAddresses: service.auditAddresses
+            audits: analytics.audits
                 .map { .regular(value: $0) },
             issueBlockchains: analytics.issueBlockchains.flatMap { issueBlockchainViewItems(issueBlockchains: $0) },
             technicalAdvice: viewItem(technicalAdvice: analytics.technicalAdvice)
@@ -405,7 +405,7 @@ class CoinAnalyticsViewModel {
             reports: data.reports ? .preview : nil,
             investors: data.fundsInvested ? .preview : nil,
             treasuries: data.treasuries ? .preview : nil,
-            auditAddresses: service.auditAddresses != nil ? .preview : nil,
+            audits: service.auditAddresses != nil ? .preview : nil,
             issueBlockchains: nil,
             technicalAdvice: nil
         )
@@ -497,7 +497,7 @@ extension CoinAnalyticsViewModel {
         let reports: Previewable<String>?
         let investors: Previewable<String>?
         let treasuries: Previewable<String>?
-        let auditAddresses: Previewable<[String]>?
+        let audits: Previewable<[Analytics.Audit]>?
         let issueBlockchains: [IssueBlockchainViewItem]?
         let technicalAdvice: TechnicalAdviceViewItem?
 
