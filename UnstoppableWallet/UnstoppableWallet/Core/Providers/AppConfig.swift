@@ -96,10 +96,6 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "SnowtraceApiKey") as? String) ?? ""
     }
 
-    static var defiYieldApiKey: String? {
-        (Bundle.main.object(forInfoDictionaryKey: "DefiYieldApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
-    }
-
     static var twitterBearerToken: String? {
         (Bundle.main.object(forInfoDictionaryKey: "TwitterBearerToken") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
