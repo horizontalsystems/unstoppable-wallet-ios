@@ -180,15 +180,21 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
             return
         }
         switch action {
-        case .amount: inputAmountPresented = true
-        case .share: shareText = data.copyValue
-        case .copy: CopyHelper.copyAndNotify(value: data.copyValue)
+        case .amount:
+            inputAmountPresented = true
+        case .share:
+            shareText = data.copyValue
+            stat(page: .receive, event: .share)
+        case .copy:
+            CopyHelper.copyAndNotify(value: data.copyValue)
+            stat(page: .receive, event: .copy(entity: .receiveAddress))
         }
     }
 
     private func updateAmount(success: Bool) {
         if success {
             viewModel.set(amount: inputText)
+            stat(page: .receive, event: .setAmount)
         } else {
             inputText = viewModel.amount == 0 ? "" : viewModel.amount.description
         }
@@ -202,6 +208,7 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
             Button(action: {
                 inputText = ""
                 viewModel.set(amount: "")
+                stat(page: .receive, event: .removeAmount)
             }, label: {
                 Image("trash_20").renderingMode(.template)
             })
