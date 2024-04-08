@@ -33,7 +33,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             }
         }
 
-        return ConfirmationQuote(
+        return BaseUniswapMultiSwapConfirmationQuote(
             quote: quote,
             transactionData: txData,
             transactionError: transactionError,
@@ -52,7 +52,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     }
 
     override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
-        guard let quote = quote as? ConfirmationQuote else {
+        guard let quote = quote as? BaseUniswapMultiSwapConfirmationQuote else {
             throw SwapError.invalidQuote
         }
 
@@ -84,15 +84,15 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    func trade(rpcSource _: RpcSource, chain _: Chain, tokenIn _: UniswapKit.Token, tokenOut _: UniswapKit.Token, amountIn _: Decimal, tradeOptions _: TradeOptions) async throws -> Quote.Trade {
+    func trade(rpcSource _: RpcSource, chain _: Chain, tokenIn _: UniswapKit.Token, tokenOut _: UniswapKit.Token, amountIn _: Decimal, tradeOptions _: TradeOptions) async throws -> BaseUniswapMultiSwapQuote.Trade {
         fatalError("Must be implemented in subclass")
     }
 
-    func transactionData(receiveAddress _: EvmKit.Address, chain _: Chain, trade _: Quote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
+    func transactionData(receiveAddress _: EvmKit.Address, chain _: Chain, trade _: BaseUniswapMultiSwapQuote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
         fatalError("Must be implemented in subclass")
     }
 
-    private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> Quote {
+    private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> BaseUniswapMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -117,7 +117,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         let trade = try await trade(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut, amountIn: amountIn, tradeOptions: tradeOptions)
 
-        return await Quote(
+        return await BaseUniswapMultiSwapQuote(
             trade: trade,
             tradeOptions: tradeOptions,
             recipient: recipient,
@@ -164,201 +164,6 @@ extension BaseUniswapMultiSwapProvider {
             case .forbidden: return .error
             default: return .regular
             }
-        }
-    }
-}
-
-extension BaseUniswapMultiSwapProvider {
-    class Quote: BaseEvmMultiSwapProvider.Quote {
-        let trade: Trade
-        let tradeOptions: TradeOptions
-        let recipient: Address?
-        let providerName: String
-
-        init(trade: Trade, tradeOptions: TradeOptions, recipient: Address?, providerName: String, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
-            self.trade = trade
-            self.tradeOptions = tradeOptions
-            self.recipient = recipient
-            self.providerName = providerName
-
-            super.init(allowanceState: allowanceState)
-        }
-
-        override var amountOut: Decimal {
-            trade.amountOut ?? 0
-        }
-
-        override var customButtonState: MultiSwapButtonState? {
-            if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) == .forbidden {
-                return .init(title: "swap.high_price_impact".localized, disabled: true)
-            }
-
-            return super.customButtonState
-        }
-
-        override var settingsModified: Bool {
-            super.settingsModified || recipient != nil || tradeOptions.allowedSlippage != MultiSwapSlippage.default
-        }
-
-        override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
-            var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate)
-
-            if let priceImpact = trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
-                fields.append(
-                    MultiSwapMainField(
-                        title: "swap.price_impact".localized,
-                        description: .init(title: "swap.price_impact".localized, description: "swap.price_impact.description".localized),
-                        value: "-\(priceImpact.rounded(decimal: 2))%",
-                        valueLevel: PriceImpactLevel(priceImpact: priceImpact).valueLevel
-                    )
-                )
-            }
-
-            if let recipient {
-                fields.append(
-                    MultiSwapMainField(
-                        title: "swap.recipient".localized,
-                        value: recipient.title,
-                        valueLevel: .regular
-                    )
-                )
-            }
-
-            let slippage = tradeOptions.allowedSlippage
-
-            if slippage != MultiSwapSlippage.default {
-                fields.append(
-                    MultiSwapMainField(
-                        title: "swap.slippage".localized,
-                        value: "\(slippage.description)%",
-                        valueLevel: MultiSwapSlippage.validate(slippage: slippage).valueLevel
-                    )
-                )
-            }
-
-            return fields
-        }
-
-        override func cautions() -> [CautionNew] {
-            var cautions = super.cautions()
-
-            if let priceImpact = trade.priceImpact {
-                switch PriceImpactLevel(priceImpact: priceImpact) {
-                case .warning: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_warning".localized, type: .warning))
-                case .forbidden: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(AppConfig.appName, providerName), type: .error))
-                default: ()
-                }
-            }
-
-            switch MultiSwapSlippage.validate(slippage: tradeOptions.allowedSlippage) {
-            case .none: ()
-            case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-            }
-
-            return cautions
-        }
-
-        enum Trade {
-            case v2(tradeData: TradeData)
-            case v3(bestTrade: TradeDataV3)
-
-            var amountOut: Decimal? {
-                switch self {
-                case let .v2(tradeData): return tradeData.amountOut
-                case let .v3(bestTrade): return bestTrade.amountOut
-                }
-            }
-
-            var priceImpact: Decimal? {
-                switch self {
-                case let .v2(tradeData): return tradeData.priceImpact.map { max(0, $0) }
-                case let .v3(bestTrade): return bestTrade.priceImpact.map { max(0, $0) }
-                }
-            }
-        }
-    }
-
-    class ConfirmationQuote: BaseEvmMultiSwapProvider.ConfirmationQuote {
-        let quote: Quote
-        let transactionData: TransactionData?
-        let transactionError: Error?
-
-        init(quote: Quote, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
-            self.quote = quote
-            self.transactionData = transactionData
-            self.transactionError = transactionError
-
-            super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
-        }
-
-        override var amountOut: Decimal {
-            quote.trade.amountOut ?? 0
-        }
-
-        override var canSwap: Bool {
-            super.canSwap && transactionData != nil
-        }
-
-        override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
-            var cautions = super.cautions(feeToken: feeToken)
-
-            if let transactionError {
-                cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
-            }
-
-            cautions.append(contentsOf: quote.cautions())
-
-            return cautions
-        }
-
-        override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [SendConfirmField] {
-            var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
-
-            if let priceImpact = quote.trade.priceImpact, PriceImpactLevel(priceImpact: priceImpact) != .negligible {
-                fields.append(
-                    .levelValue(
-                        title: "swap.price_impact".localized,
-                        value: "\(priceImpact.rounded(decimal: 2))%",
-                        level: PriceImpactLevel(priceImpact: priceImpact).valueLevel
-                    )
-                )
-            }
-
-            if let recipient = quote.recipient {
-                fields.append(
-                    .address(
-                        title: "swap.recipient".localized,
-                        value: recipient.title,
-                        blockchainType: tokenOut.blockchainType
-                    )
-                )
-            }
-
-            let slippage = quote.tradeOptions.allowedSlippage
-
-            if slippage != MultiSwapSlippage.default {
-                fields.append(
-                    .levelValue(
-                        title: "swap.slippage".localized,
-                        value: "\(slippage.description)%",
-                        level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
-                    )
-                )
-            }
-
-            let minAmountOut = amountOut * (1 - slippage / 100)
-
-            fields.append(
-                .value(
-                    title: "swap.confirmation.minimum_received".localized,
-                    description: nil,
-                    coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
-                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
-                    formatFull: true
-                )
-            )
-
-            return fields
         }
     }
 }
