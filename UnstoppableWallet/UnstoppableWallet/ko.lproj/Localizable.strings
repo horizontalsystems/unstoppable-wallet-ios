@@ -166,7 +166,7 @@
 
 "restore.cloud.password.title" = "암호를 입력하세요";
 "restore.cloud.password.placeholder" = "백업 비밀번호";
-"restore.cloud.password.description" = "iCloud에서 지갑을 가져오려면 백업 비밀번호를 입력하세요.";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
