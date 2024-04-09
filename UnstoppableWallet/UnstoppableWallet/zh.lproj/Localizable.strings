@@ -168,7 +168,7 @@
 
 "restore.cloud.password.title" = "请输入密码";
 "restore.cloud.password.placeholder" = "备份密码";
-"restore.cloud.password.description" = "请输入备份密码以从iCloud导入您的钱包。";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
