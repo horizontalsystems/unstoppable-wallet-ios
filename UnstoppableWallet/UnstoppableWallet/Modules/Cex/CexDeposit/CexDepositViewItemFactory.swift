@@ -1,9 +1,11 @@
 import Foundation
 
 class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
-    typealias Item = CexDepositService.Item
+    func viewItem(item: ReceiveAddress, amount _: String?) -> ReceiveAddressModule.ViewItem {
+        guard let item = item as? CexDepositService.DexReceiveAddress else {
+            return .empty(address: item.raw)
+        }
 
-    func viewItem(item: Item, amount _: String?) -> ReceiveAddressModule.ViewItem {
         let text = (item.memo == nil ? "" : "\("cex_deposit.warning_memo".localized)") + "deposit.warning".localized
         let style = item.memo == nil ? HighlightedDescriptionBaseView.Style.yellow : .red
 
@@ -29,15 +31,17 @@ class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
         )
     }
 
-    func popup(item: Item) -> ReceiveAddressModule.PopupWarningItem? {
-        item.memo.map { _ in
-            .init(title: "cex_deposit.memo_warning.title".localized,
-                  description: .init(text: "cex_deposit.memo_warning.description".localized, style: .red),
-                  doneButtonTitle: "button.i_understand".localized)
+    func popup(item: ReceiveAddress) -> ReceiveAddressModule.PopupWarningItem? {
+        guard let item = item as? CexDepositService.DexReceiveAddress, item.memo != nil else {
+            return nil
         }
+
+        return .init(title: "cex_deposit.memo_warning.title".localized,
+                     description: .init(text: "cex_deposit.memo_warning.description".localized, style: .red),
+                     doneButtonTitle: "button.i_understand".localized)
     }
 
-    func actions(item _: Item) -> [ReceiveAddressModule.ActionType] {
+    func actions(item _: ReceiveAddress) -> [ReceiveAddressModule.ActionType] {
         [.copy, .share]
     }
 }

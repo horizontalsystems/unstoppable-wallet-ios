@@ -21,10 +21,6 @@ enum CexDepositModule {
             return nil
         }
 
-        let service = CexDepositService(cexAsset: cexAsset, network: network, provider: cexAccount.depositProvider)
-        let viewItemFactory = CexDepositViewItemFactory()
-        let viewModel = ReceiveAddressViewModel(service: service, viewItemFactory: viewItemFactory, decimalParser: AmountDecimalParser())
-
-        return ReceiveAddressView(viewModel: viewModel).toViewController()
+        return ReceiveAddressView(cexAsset: cexAsset, network: network, provider: cexAccount.depositProvider).toViewController()
     }
 }

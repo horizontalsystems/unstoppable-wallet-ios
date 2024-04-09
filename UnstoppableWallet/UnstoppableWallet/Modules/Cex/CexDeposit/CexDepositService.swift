@@ -3,20 +3,18 @@ import Foundation
 import HsExtensions
 
 class CexDepositService {
-    typealias ServiceItem = CexDepositService.Item
-
     let cexAsset: CexAsset
     let network: CexDepositNetwork?
     private let provider: ICexDepositProvider
     private var tasks = Set<AnyTask>()
 
-    private(set) var state: DataStatus<ServiceItem> = .loading {
+    private(set) var state: DataStatus<ReceiveAddress> = .loading {
         didSet {
             stateUpdatedSubject.send(state)
         }
     }
 
-    private let stateUpdatedSubject = PassthroughSubject<DataStatus<ServiceItem>, Never>()
+    private let stateUpdatedSubject = PassthroughSubject<DataStatus<ReceiveAddress>, Never>()
 
     init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexDepositProvider) {
         self.cexAsset = cexAsset
@@ -44,7 +42,7 @@ class CexDepositService {
                     )
                 }
 
-                let item = ServiceItem(
+                let item = DexReceiveAddress(
                     address: address,
                     coinCode: cexAsset.coinCode,
                     imageUrl: cexAsset.coin?.imageUrl,
@@ -81,19 +79,28 @@ extension CexDepositService: IReceiveAddressService {
         cexAsset.coinCode
     }
 
-    var statusUpdatedPublisher: AnyPublisher<DataStatus<ServiceItem>, Never> {
+    var statusUpdatedPublisher: AnyPublisher<DataStatus<ReceiveAddress>, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
 }
 
 extension CexDepositService {
-    struct Item {
+    class DexReceiveAddress: ReceiveAddress {
         let address: String
-        let coinCode: String
-        let imageUrl: String?
         let memo: String?
         let networkName: String?
         let minAmount: CoinValue?
+
+        init(address: String, coinCode: String, imageUrl: String?, memo: String?, networkName: String?, minAmount: CoinValue?) {
+            self.address = address
+            self.memo = memo
+            self.networkName = networkName
+            self.minAmount = minAmount
+
+            super.init(coinCode: coinCode, imageUrl: imageUrl)
+        }
+
+        override var raw: String { address }
     }
 
     enum CexDepositError: LocalizedError {

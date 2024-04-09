@@ -3,16 +3,6 @@ import SwiftUI
 import UIKit
 
 enum ReceiveAddressModule {
-    static func view(wallet: Wallet, onDismiss: (() -> Void)? = nil) -> some View {
-        let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
-        let depositViewItemFactory = ReceiveAddressViewItemFactory()
-
-        let viewModel = ReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())
-        return ReceiveAddressView<ReceiveAddressService, ReceiveAddressViewItemFactory>(viewModel: viewModel, onDismiss: onDismiss)
-    }
-}
-
-extension ReceiveAddressModule {
     struct ErrorItem: Error {
         let icon: String
         let text: String
@@ -105,5 +95,17 @@ extension ReceiveAddressModule {
         let active: Bool
         let memo: String?
         let usedAddresses: [AddressType: [UsedAddress]]?
+
+        static func empty(address: String) -> Self {
+            .init(
+                copyValue: address,
+                highlightedDescription: nil,
+                qrItem: .init(address: address, uri: nil, networkName: nil),
+                amount: nil,
+                active: true,
+                memo: nil,
+                usedAddresses: nil
+            )
+        }
     }
 }

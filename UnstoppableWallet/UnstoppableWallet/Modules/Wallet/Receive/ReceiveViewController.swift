@@ -57,7 +57,7 @@ class ReceiveViewController: ThemeNavigationController {
     }
 
     private func showReceive(wallet: Wallet) {
-        let view = ReceiveAddressModule.view(wallet: wallet, onDismiss: { [weak self] in self?.dismiss(animated: true) })
+        let view = ReceiveAddressView(wallet: wallet, onDismiss: { [weak self] in self?.dismiss(animated: true) })
         pushViewController(view.toViewController(), animated: true)
         stat(page: .receiveTokenList, event: .openReceive(coinUid: wallet.coin.uid))
     }

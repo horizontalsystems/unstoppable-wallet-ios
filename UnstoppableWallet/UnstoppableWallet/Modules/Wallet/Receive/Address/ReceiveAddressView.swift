@@ -3,8 +3,8 @@ import SwiftUI
 private let qrSize: CGFloat = 203
 private let appIconSize: CGFloat = 47
 
-struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddressViewItemFactory>: View where Service.ServiceItem == Factory.Item {
-    @ObservedObject var viewModel: ReceiveAddressViewModel<Service, Factory>
+struct ReceiveAddressView: View {
+    @StateObject var viewModel: ReceiveAddressViewModel
     var onDismiss: (() -> Void)?
 
     @State private var hasAppeared = false
@@ -16,6 +16,19 @@ struct ReceiveAddressView<Service: IReceiveAddressService, Factory: IReceiveAddr
     @State private var inputText: String = ""
 
     @Environment(\.presentationMode) private var presentationMode
+
+    init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexDepositProvider) {
+        _viewModel = StateObject(wrappedValue: ReceiveAddressViewModel.instance(
+            cexAsset: cexAsset, network: network, provider: provider
+        )
+        )
+    }
+
+    init(wallet: Wallet, onDismiss: (() -> Void)? = nil) {
+        self.onDismiss = onDismiss
+
+        _viewModel = StateObject(wrappedValue: ReceiveAddressViewModel.instance(wallet: wallet))
+    }
 
     var body: some View {
         ScrollableThemeView {
