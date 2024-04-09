@@ -168,7 +168,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "restore.cloud.password.title" = "Entrez le mot de passe";
 "restore.cloud.password.placeholder" = "Mot de passe de la sauvegarde";
-"restore.cloud.password.description" = "Entrez le mot de passe de sauvegarde pour importer votre portefeuille depuis iCloud.";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
