@@ -78,7 +78,7 @@ extension CreateAccountService {
         PassphraseValidator.validate(text: text)
     }
 
-    func createAccount() throws {
+    func createAccount(advanced: Bool) throws {
         if passphraseEnabledRelay.value {
             guard !passphrase.isEmpty else {
                 throw CreateError.emptyPassphrase
@@ -105,6 +105,8 @@ extension CreateAccountService {
         try activateDefaultWallets(account: account)
 
         accountManager.set(lastCreatedAccount: account)
+
+        stat(page: advanced ? .newWalletAdvanced : .newWallet, event: .addWallet(wordCount: wordCount.rawValue, withPassphrase: !passphrase.isEmpty))
     }
 }
 

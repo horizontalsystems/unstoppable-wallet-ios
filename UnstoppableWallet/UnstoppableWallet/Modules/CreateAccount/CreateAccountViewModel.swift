@@ -129,11 +129,11 @@ extension CreateAccountViewModel {
         return validated
     }
 
-    func onTapCreate() {
+    func onTapCreate(advanced: Bool) {
         passphraseCautionRelay.accept(nil)
         passphraseConfirmationCautionRelay.accept(nil)
         do {
-            try service.createAccount()
+            try service.createAccount(advanced: advanced)
             finishRelay.accept(())
         } catch {
             if case CreateAccountService.CreateError.emptyPassphrase = error {
