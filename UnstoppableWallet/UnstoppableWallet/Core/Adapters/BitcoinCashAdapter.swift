@@ -63,15 +63,15 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
     }
 
     override var explorerTitle: String {
-        "btc.com"
+        "blockchair.com"
     }
 
     override func explorerUrl(transactionHash: String) -> String? {
-        "https://bch.btc.com/" + transactionHash
+        "https://blockchair.com/bitcoin-cash/transaction/" + transactionHash
     }
 
     override func explorerUrl(address: String) -> String? {
-        "https://bch.btc.com/bch/address/" + address
+        "https://blockchair.com/bitcoin-cash/address/" + address
     }
 }
 
