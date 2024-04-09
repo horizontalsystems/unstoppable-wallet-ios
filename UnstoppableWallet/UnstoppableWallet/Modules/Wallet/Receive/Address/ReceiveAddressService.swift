@@ -6,21 +6,19 @@ import RxCocoa
 import RxSwift
 
 class ReceiveAddressService {
-    typealias ServiceItem = Item
-
     private let adapterManager: AdapterManager
     private let wallet: Wallet
 
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
-    private(set) var state: DataStatus<Item> = .loading {
+    private(set) var state: DataStatus<ReceiveAddress> = .loading {
         didSet {
             stateUpdatedSubject.send(state)
         }
     }
 
-    private let stateUpdatedSubject = PassthroughSubject<DataStatus<Item>, Never>()
+    private let stateUpdatedSubject = PassthroughSubject<DataStatus<ReceiveAddress>, Never>()
 
     private var adapter: IDepositAdapter?
 
@@ -75,7 +73,7 @@ class ReceiveAddressService {
 
     private func updateStatus(status: DataStatus<DepositAddress>, usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?, isMainNet: Bool) {
         state = status.map { address in
-            Item(
+            AssetReceiveAddress(
                 address: address,
                 usedAddresses: usedAddresses,
                 token: wallet.token,
@@ -97,20 +95,29 @@ extension ReceiveAddressService: IReceiveAddressService {
         wallet.coin.name
     }
 
-    var statusUpdatedPublisher: AnyPublisher<DataStatus<ServiceItem>, Never> {
+    var statusUpdatedPublisher: AnyPublisher<DataStatus<ReceiveAddress>, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
 }
 
 extension ReceiveAddressService {
-    struct Item {
+    class AssetReceiveAddress: ReceiveAddress {
         let address: DepositAddress
         let usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?
         let token: Token
         let isMainNet: Bool
         let watchAccount: Bool
-        let coinCode: String
-        let imageUrl: String?
+
+        init(address: DepositAddress, usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?, token: Token, isMainNet: Bool, watchAccount: Bool, coinCode: String, imageUrl: String?) {
+            self.address = address
+            self.usedAddresses = usedAddresses
+            self.token = token
+            self.isMainNet = isMainNet
+            self.watchAccount = watchAccount
+            super.init(coinCode: coinCode, imageUrl: imageUrl)
+        }
+
+        override var raw: String { address.address }
     }
 
     enum AdapterError: LocalizedError {
@@ -122,4 +129,16 @@ extension ReceiveAddressService {
             }
         }
     }
+}
+
+class ReceiveAddress {
+    let coinCode: String
+    let imageUrl: String?
+
+    init(coinCode: String, imageUrl: String?) {
+        self.coinCode = coinCode
+        self.imageUrl = imageUrl
+    }
+
+    var raw: String { fatalError("must be overridden") }
 }

@@ -201,7 +201,7 @@ class WalletTokenBalanceDataSource: NSObject {
     }
 
     private func openReceive(wallet: Wallet) {
-        let view = ReceiveAddressModule.view(wallet: wallet)
+        let view = ReceiveAddressView(wallet: wallet)
         parentViewController?.present(view.toNavigationViewController(), animated: true)
         stat(page: .tokenPage, event: .openReceive(coinUid: wallet.coin.uid))
     }

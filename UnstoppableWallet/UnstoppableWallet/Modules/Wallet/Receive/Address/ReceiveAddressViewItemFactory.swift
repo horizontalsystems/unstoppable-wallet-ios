@@ -1,9 +1,13 @@
 import Foundation
 
 class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
-    typealias Item = ReceiveAddressService.Item
+    typealias Item = ReceiveAddress
 
-    func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem {
+    func viewItem(item: ReceiveAddress, amount: String?) -> ReceiveAddressModule.ViewItem {
+        guard let item = item as? ReceiveAddressService.AssetReceiveAddress else {
+            return .empty(address: item.raw)
+        }
+
         var description: ReceiveAddressModule.HighlightedDescription?
         if item.watchAccount {
             description = .init(
@@ -71,6 +75,10 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
     }
 
     func popup(item: Item) -> ReceiveAddressModule.PopupWarningItem? {
+        guard let item = item as? ReceiveAddressService.AssetReceiveAddress else {
+            return nil
+        }
+
         if let address = item.address as? ActivatedDepositAddress, !address.isActive {
             return .init(
                 title: "deposit.not_active.title".localized,
@@ -82,6 +90,10 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
     }
 
     func actions(item: Item) -> [ReceiveAddressModule.ActionType] {
+        guard let item = item as? ReceiveAddressService.AssetReceiveAddress else {
+            return [.copy, .share]
+        }
+
         if item.watchAccount {
             return [.copy, .share]
         }
