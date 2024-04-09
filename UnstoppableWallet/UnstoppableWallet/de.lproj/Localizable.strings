@@ -168,7 +168,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "restore.cloud.password.title" = "Passwort eingeben";
 "restore.cloud.password.placeholder" = "Passwort sichern";
-"restore.cloud.password.description" = "Geben Sie das Backup-Passwort ein, um Ihre Brieftasche aus iCloud zu importieren.";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
