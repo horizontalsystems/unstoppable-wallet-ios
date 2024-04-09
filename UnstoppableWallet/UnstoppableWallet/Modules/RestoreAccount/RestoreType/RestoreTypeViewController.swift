@@ -146,8 +146,12 @@ class RestoreTypeViewController: ThemeViewController {
         let viewController: UIViewController
         var viaPush = true
         switch type {
-        case .recoveryOrPrivateKey: viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController)
-        case .cloudRestore: viewController = RestoreCloudModule.viewController(returnViewController: returnViewController)
+        case .recoveryOrPrivateKey:
+            viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController)
+            stat(page: .importWallet, event: .open(page: .importWalletFromKey))
+        case .cloudRestore:
+            viewController = RestoreCloudModule.viewController(returnViewController: returnViewController)
+            stat(page: .importWallet, event: .open(page: .importWalletFromCloud))
         case .fileRestore:
             let documentPicker: UIDocumentPickerViewController
             let types = UTType.types(tag: "json", tagClass: UTTagClass.filenameExtension, conformingTo: nil)
@@ -158,7 +162,10 @@ class RestoreTypeViewController: ThemeViewController {
 
             viaPush = false
             viewController = documentPicker
-        case .cex: viewController = RestoreCexViewController(returnViewController: returnViewController)
+            stat(page: .importWallet, event: .open(page: .importWalletFromFiles))
+        case .cex:
+            viewController = RestoreCexViewController(returnViewController: returnViewController)
+            stat(page: .importWallet, event: .open(page: .importWalletFromExchangeWallet))
         }
 
         if viaPush {
@@ -169,7 +176,7 @@ class RestoreTypeViewController: ThemeViewController {
     }
 
     private func show(source: BackupModule.NamedSource) {
-        let viewController = RestorePassphraseModule.viewController(item: source, returnViewController: returnViewController)
+        let viewController = RestorePassphraseModule.viewController(item: source, statPage: .importWalletFromFiles, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

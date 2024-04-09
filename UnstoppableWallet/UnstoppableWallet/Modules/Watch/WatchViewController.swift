@@ -18,7 +18,7 @@ class WatchViewController: KeyboardAwareViewController {
 
     private let nameCell = TextFieldCell()
 
-    private let watchDataInputCell = TextInputCell()
+    private let watchDataInputCell = TextInputCell(statPage: .watchWallet, statEntity: .key)
     private let watchDataCautionCell = FormCautionCell()
 
     private var isLoaded = false

@@ -8,6 +8,7 @@ import UIKit
 
 class RestorePassphraseViewController: KeyboardAwareViewController {
     private let viewModel: RestorePassphraseViewModel
+    private let statPage: StatPage
     private var cancellables = Set<AnyCancellable>()
 
     private weak var returnViewController: UIViewController?
@@ -23,8 +24,9 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
     private var keyboardShown = false
     private var isLoaded = false
 
-    init(viewModel: RestorePassphraseViewModel, returnViewController: UIViewController?) {
+    init(viewModel: RestorePassphraseViewModel, statPage: StatPage, returnViewController: UIViewController?) {
         self.viewModel = viewModel
+        self.statPage = statPage
         self.returnViewController = returnViewController
 
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
@@ -173,6 +175,7 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
         let viewController = RestoreSelectModule.viewController(
             accountName: accountName,
             accountType: accountType,
+            statPage: statPage,
             isManualBackedUp: isManualBackedUp,
             isFileBackedUp: isFileBackedUp,
             returnViewController: returnViewController

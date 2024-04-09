@@ -19,7 +19,7 @@ class RestoreViewController: KeyboardAwareViewController {
 
     private let nameCell = TextFieldCell()
 
-    private let mnemonicInputCell = MnemonicInputCell()
+    private let mnemonicInputCell: MnemonicInputCell
     private let mnemonicCautionCell = FormCautionCell()
     private let wordListCell = BaseSelectableThemeCell()
 
@@ -30,7 +30,7 @@ class RestoreViewController: KeyboardAwareViewController {
 
     private let hintView = RestoreMnemonicHintView()
 
-    private let privateKeyInputCell = TextInputCell()
+    private let privateKeyInputCell: TextInputCell
     private let privateKeyCautionCell = FormCautionCell()
 
     private var restoreType: RestoreViewModel.RestoreType = .mnemonic
@@ -45,6 +45,9 @@ class RestoreViewController: KeyboardAwareViewController {
         self.mnemonicViewModel = mnemonicViewModel
         self.privateKeyViewModel = privateKeyViewModel
         self.returnViewController = returnViewController
+
+        mnemonicInputCell = MnemonicInputCell(statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey, statEntity: .recoveryPhrase)
+        privateKeyInputCell = TextInputCell(statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey, statEntity: .key)
 
         super.init(scrollViews: [tableView], accessoryView: hintView)
     }
@@ -232,7 +235,7 @@ class RestoreViewController: KeyboardAwareViewController {
     }
 
     private func openSelectCoins(accountName: String, accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, returnViewController: returnViewController)
+        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -273,6 +276,7 @@ class RestoreViewController: KeyboardAwareViewController {
     private func onTapNonStandardRestore() {
         let viewController = RestoreNonStandardModule.viewController(sourceViewController: self, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .importWalletFromKeyAdvanced, event: .open(page: .importWalletNonStandard))
     }
 }
 

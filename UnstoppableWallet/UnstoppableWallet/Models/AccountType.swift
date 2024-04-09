@@ -195,6 +195,40 @@ enum AccountType {
         }
     }
 
+    var statDescription: String {
+        switch self {
+        case let .mnemonic(words, salt, _):
+            let count = "\(words.count)"
+            return salt.isEmpty ? "mnemonic_\(count)" : "mnemonic_with_passphrase_\(count)"
+        case .evmPrivateKey:
+            return "evm_private_key"
+        case .evmAddress:
+            return "evm_address"
+        case .tronAddress:
+            return "tron_address"
+        case .tonAddress:
+            return "ton_address"
+        case let .hdExtendedKey(key):
+            switch key {
+            case .private:
+                switch key.derivedType {
+                case .master: return "bip32_root_key"
+                case .account: return "account_x_priv_key"
+                default: return ""
+                }
+            case .public:
+                switch key.derivedType {
+                case .account: return "account_x_pub_key"
+                default: return ""
+                }
+            }
+        case .btcAddress:
+            return "btc_address"
+        case .cex:
+            return "cex"
+        }
+    }
+
     var detailedDescription: String {
         switch self {
         case let .evmAddress(address):
