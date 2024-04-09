@@ -96,5 +96,7 @@ extension ChooseWatchService {
         let account = accountFactory.watchAccount(type: accountType, name: accountName)
         accountManager.save(account: account)
         enableWallets(account: account, enabledUids: enabledUids)
+
+        stat(page: .watchWallet, event: .watchWallet(walletType: accountType.statDescription))
     }
 }
