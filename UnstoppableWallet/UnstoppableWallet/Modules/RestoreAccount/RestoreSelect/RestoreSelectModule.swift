@@ -1,15 +1,17 @@
+import HdWalletKit
 import MarketKit
 import RxSwift
 import UIKit
 
 enum RestoreSelectModule {
-    static func viewController(accountName: String, accountType: AccountType, isManualBackedUp: Bool = true, isFileBackedUp: Bool = false, returnViewController: UIViewController?) -> UIViewController {
+    static func viewController(accountName: String, accountType: AccountType, statPage: StatPage, isManualBackedUp: Bool = true, isFileBackedUp: Bool = false, returnViewController: UIViewController?) -> UIViewController {
         let (blockchainTokensService, blockchainTokensView) = BlockchainTokensModule.module()
         let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module()
 
         let service = RestoreSelectService(
             accountName: accountName,
             accountType: accountType,
+            statPage: statPage,
             isManualBackedUp: isManualBackedUp,
             isFileBackedUp: isFileBackedUp,
             accountFactory: App.shared.accountFactory,

@@ -1,3 +1,4 @@
+import HdWalletKit
 import MarketKit
 import RxRelay
 import RxSwift
@@ -31,9 +32,12 @@ class RestoreSelectService {
         }
     }
 
-    init(accountName: String, accountType: AccountType, isManualBackedUp: Bool, isFileBackedUp: Bool, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, blockchainTokensService: BlockchainTokensService, restoreSettingsService: RestoreSettingsService) {
+    private let statPage: StatPage
+
+    init(accountName: String, accountType: AccountType, statPage: StatPage, isManualBackedUp: Bool, isFileBackedUp: Bool, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, blockchainTokensService: BlockchainTokensService, restoreSettingsService: RestoreSettingsService) {
         self.accountName = accountName
         self.accountType = accountType
+        self.statPage = statPage
         self.isManualBackedUp = isManualBackedUp
         self.isFileBackedUp = isFileBackedUp
         self.accountFactory = accountFactory
@@ -214,6 +218,8 @@ extension RestoreSelectService {
 
         let wallets = enabledTokens.map { Wallet(token: $0, account: account) }
         walletManager.save(wallets: wallets)
+
+        stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
     }
 }
 

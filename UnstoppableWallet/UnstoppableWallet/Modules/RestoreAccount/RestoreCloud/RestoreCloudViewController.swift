@@ -96,7 +96,7 @@ class RestoreCloudViewController: ThemeViewController {
     }
 
     private func restore(item: BackupModule.NamedSource) {
-        let viewController = RestorePassphraseModule.viewController(item: item, returnViewController: returnViewController)
+        let viewController = RestorePassphraseModule.viewController(item: item, statPage: .importWalletFromCloud, returnViewController: returnViewController)
 
         navigationController?.pushViewController(viewController, animated: true)
     }

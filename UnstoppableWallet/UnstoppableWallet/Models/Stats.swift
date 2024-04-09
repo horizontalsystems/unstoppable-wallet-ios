@@ -51,6 +51,12 @@ enum StatPage: String {
     case globalMetricsTvlInDefi = "global_metrics_tvl_in_defi"
     case guide
     case importWallet = "import_wallet"
+    case importWalletFromKey = "import_wallet_from_key"
+    case importWalletFromKeyAdvanced = "import_wallet_from_key_advacned"
+    case importWalletFromCloud = "import_wallet_from_cloud"
+    case importWalletFromFiles = "import_wallet_from_files"
+    case importWalletFromExchangeWallet = "import_wallet_from_exchange_wallet"
+    case importWalletNonStandard = "import_wallet_non_standard"
     case indicators
     case info
     case language
@@ -148,7 +154,14 @@ enum StatEvent {
     case edit(entity: StatEntity)
     case delete(entity: StatEntity)
 
-    case addWallet(wordCount: Int, withPassphrase: Bool)
+    case scanQr(entity: StatEntity)
+    case paste(entity: StatEntity)
+    case clear(entity: StatEntity)
+
+    case createWallet(walletType: String)
+    case importWallet(walletType: String)
+    case importWalletNonStandard(walletType: String)
+
     case add(entity: StatEntity)
 
     var name: String {
@@ -182,7 +195,13 @@ enum StatEvent {
         case .select: return "select"
         case .edit: return "edit"
         case .delete: return "delete"
-        case .addWallet, .add: return "add"
+        case .scanQr: return "scan_qr"
+        case .paste: return "paste"
+        case .clear: return "clear"
+        case .createWallet: return "create_wallet"
+        case .importWallet: return "import_wallet"
+        case .importWalletNonStandard: return "import_wallet_non_standard"
+        case .add: return "add"
         }
     }
 
@@ -209,7 +228,12 @@ enum StatEvent {
         case let .select(entity): return [.entity: entity.rawValue]
         case let .edit(entity): return [.entity: entity.rawValue]
         case let .delete(entity): return [.entity: entity.rawValue]
-        case let .addWallet(wordCount, withPassphrase): return [.entity: StatEntity.wallet.rawValue, .wordCount: wordCount, .withPassphrase: withPassphrase]
+        case let .scanQr(entity): return [.entity: entity.rawValue]
+        case let .paste(entity): return [.entity: entity.rawValue]
+        case let .clear(entity): return [.entity: entity.rawValue]
+        case let .createWallet(walletType): return [.walletType: walletType]
+        case let .importWallet(walletType): return [.walletType: walletType]
+        case let .importWalletNonStandard(walletType): return [.walletType: walletType]
         case let .add(entity): return [.entity: entity.rawValue]
         default: return nil
         }
@@ -229,8 +253,7 @@ enum StatParam: String {
     case tab
     case tvlChain = "tvl_chain"
     case type
-    case withPassphrase = "with_passphrase"
-    case wordCount = "word_count"
+    case walletType = "wallet_type"
 }
 
 enum StatTab: String {

@@ -20,7 +20,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
 
     private let nameCell = TextFieldCell()
 
-    private let mnemonicInputCell = MnemonicInputCell()
+    private let mnemonicInputCell = MnemonicInputCell(statPage: .importWalletNonStandard, statEntity: .recoveryPhrase)
     private let mnemonicCautionCell = FormCautionCell()
     private let wordListCell = BaseSelectableThemeCell()
 
@@ -195,7 +195,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
     }
 
     private func openSelectCoins(accountName: String, accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, returnViewController: returnViewController)
+        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: .importWalletNonStandard, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

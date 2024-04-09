@@ -32,8 +32,14 @@ class TextInputCell: UITableViewCell {
         }
     }
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    private let statPage: StatPage
+    private let statEntity: StatEntity
+
+    init(statPage: StatPage, statEntity: StatEntity) {
+        self.statPage = statPage
+        self.statEntity = statEntity
+
+        super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
         selectionStyle = .none
@@ -118,11 +124,14 @@ class TextInputCell: UITableViewCell {
 
     @objc private func onTapClear() {
         set(text: "")
+        stat(page: statPage, event: .clear(entity: statEntity))
     }
 
     @objc private func onTapQr() {
         let scanQrViewController = ScanQrViewController()
-        scanQrViewController.didFetch = { [weak self] in self?.set(text: $0) }
+        scanQrViewController.didFetch = { [weak self] in
+            self?.onScanQr(text: $0)
+        }
 
         onOpenViewController?(scanQrViewController)
     }
@@ -130,7 +139,13 @@ class TextInputCell: UITableViewCell {
     @objc private func onTapPaste() {
         if let string = UIPasteboard.general.string {
             set(text: string)
+            stat(page: statPage, event: .paste(entity: statEntity))
         }
+    }
+
+    private func onScanQr(text: String) {
+        set(text: text)
+        stat(page: statPage, event: .scanQr(entity: statEntity))
     }
 
     private func syncComponents() {

@@ -106,7 +106,7 @@ extension CreateAccountService {
 
         accountManager.set(lastCreatedAccount: account)
 
-        stat(page: advanced ? .newWalletAdvanced : .newWallet, event: .addWallet(wordCount: wordCount.rawValue, withPassphrase: !passphrase.isEmpty))
+        stat(page: advanced ? .newWalletAdvanced : .newWallet, event: .createWallet(walletType: accountType.statDescription))
     }
 }
 
