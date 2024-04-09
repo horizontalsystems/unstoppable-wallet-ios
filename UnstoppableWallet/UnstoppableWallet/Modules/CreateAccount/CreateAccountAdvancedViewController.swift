@@ -127,7 +127,7 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
     }
 
     @objc private func onTapCreate() {
-        viewModel.onTapCreate()
+        viewModel.onTapCreate(advanced: true)
     }
 
     private func syncTextSecurity(textSecure: Bool) {

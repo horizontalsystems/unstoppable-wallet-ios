@@ -8,8 +8,9 @@ enum StatPage: String {
     case advancedSearch = "advanced_search"
     case advancedSearchResults = "advanced_search_results"
     case appearance
-    case backupRequired = "backup_required"
     case backupManager = "backup_manager"
+    case backupPromptAfterCreate = "backup_prompt_after_create"
+    case backupRequired = "backup_required"
     case balance
     case baseCurrency = "base_currency"
     case bip32RootKey = "bip32_root_key"
@@ -62,6 +63,7 @@ enum StatPage: String {
     case marketSearch = "market_search"
     case news
     case newWallet = "new_wallet"
+    case newWalletAdvanced = "new_wallet_advacned"
     case privateKeys = "private_keys"
     case publicKeys = "public_keys"
     case rateUs = "rate_us"
@@ -146,6 +148,7 @@ enum StatEvent {
     case edit(entity: StatEntity)
     case delete(entity: StatEntity)
 
+    case addWallet(wordCount: Int, withPassphrase: Bool)
     case add(entity: StatEntity)
 
     var name: String {
@@ -179,7 +182,7 @@ enum StatEvent {
         case .select: return "select"
         case .edit: return "edit"
         case .delete: return "delete"
-        case .add: return "add"
+        case .addWallet, .add: return "add"
         }
     }
 
@@ -206,6 +209,7 @@ enum StatEvent {
         case let .select(entity): return [.entity: entity.rawValue]
         case let .edit(entity): return [.entity: entity.rawValue]
         case let .delete(entity): return [.entity: entity.rawValue]
+        case let .addWallet(wordCount, withPassphrase): return [.entity: StatEntity.wallet.rawValue, .wordCount: wordCount, .withPassphrase: withPassphrase]
         case let .add(entity): return [.entity: entity.rawValue]
         default: return nil
         }
@@ -225,6 +229,8 @@ enum StatParam: String {
     case tab
     case tvlChain = "tvl_chain"
     case type
+    case withPassphrase = "with_passphrase"
+    case wordCount = "word_count"
 }
 
 enum StatTab: String {

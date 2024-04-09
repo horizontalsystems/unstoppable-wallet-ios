@@ -85,12 +85,13 @@ class CreateAccountSimpleViewController: KeyboardAwareViewController {
     }
 
     @objc private func onTapCreate() {
-        viewModel.onTapCreate()
+        viewModel.onTapCreate(advanced: false)
     }
 
     @objc private func onTapAdvanced() {
         let module = CreateAccountModule.viewController(advanced: true, listener: listener)
         navigationController?.pushViewController(module, animated: true)
+        stat(page: .newWallet, event: .open(page: .newWalletAdvanced))
     }
 
     private func show(error: String) {
