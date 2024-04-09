@@ -168,7 +168,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "restore.cloud.password.title" = "Introduzca contraseña";
 "restore.cloud.password.placeholder" = "Copiar contraseña";
-"restore.cloud.password.description" = "Introduzca la contraseña de copia de seguridad para importar su cartera desde iCloud.";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
