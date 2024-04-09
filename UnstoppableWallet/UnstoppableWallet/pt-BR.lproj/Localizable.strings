@@ -168,7 +168,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "restore.cloud.password.title" = "Digite a senha";
 "restore.cloud.password.placeholder" = "Fazer Backup da Senha";
-"restore.cloud.password.description" = "Give me that backup password, folks. We're importing your wallet from iCloud, and security is the name of the game!";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
