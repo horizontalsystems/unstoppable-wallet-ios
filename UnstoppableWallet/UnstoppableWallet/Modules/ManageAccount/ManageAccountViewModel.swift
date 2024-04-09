@@ -174,6 +174,7 @@ extension ManageAccountViewModel {
     func onSave() {
         service.saveAccount()
         finishRelay.accept(())
+        stat(page: .manageWallet, event: .edit(entity: .walletName))
     }
 
     func onTapRecoveryPhrase() {
@@ -193,6 +194,7 @@ extension ManageAccountViewModel {
         do {
             try service.deleteCloudBackup()
             cloudBackupDeletedRelay.accept(true)
+            stat(page: .manageWallet, event: .delete(entity: .cloudBackup))
         } catch {
             cloudBackupDeletedRelay.accept(false)
         }

@@ -78,6 +78,8 @@ extension ManageAccountsViewModel {
         if mode == .switcher {
             finishRelay.accept(())
         }
+
+        stat(page: .manageWallets, event: .select(entity: .wallet))
     }
 }
 

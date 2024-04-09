@@ -36,6 +36,8 @@ extension SwitchAccountViewModel {
     func onSelect(accountId: String) {
         service.set(activeAccountId: accountId)
         finishRelay.accept(())
+
+        stat(page: .switchWallet, event: .select(entity: .wallet))
     }
 }
 

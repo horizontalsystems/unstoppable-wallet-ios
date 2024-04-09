@@ -59,11 +59,13 @@ class EvmAddressViewController: ThemeViewController {
 
         let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
         present(ThemeNavigationController(rootViewController: module), animated: true)
+        stat(page: .evmAddress, event: .open(page: .info))
     }
 
     @objc private func onTapCopy() {
         UIPasteboard.general.string = viewModel.address
         HudHelper.instance.show(banner: .copied)
+        stat(page: .evmAddress, event: .copy(entity: .evmAddress))
     }
 }
 

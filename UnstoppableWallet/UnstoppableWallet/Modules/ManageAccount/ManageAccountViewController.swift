@@ -114,16 +114,19 @@ class ManageAccountViewController: KeyboardAwareViewController {
         }
 
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .manageWallet, event: .open(page: .recoveryPhrase))
     }
 
     private func openPublicKeys() {
         let viewController = PublicKeysModule.viewController(account: viewModel.account)
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .manageWallet, event: .open(page: .publicKeys))
     }
 
     private func openPrivateKeys() {
         let viewController = PrivateKeysModule.viewController(account: viewModel.account)
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .manageWallet, event: .open(page: .privateKeys))
     }
 
     private func openBackup(account: Account, onComplete: (() -> Void)? = nil) {
@@ -132,11 +135,13 @@ class ManageAccountViewController: KeyboardAwareViewController {
         }
 
         present(viewController, animated: true)
+        stat(page: .manageWallet, event: .open(page: .manualBackup))
     }
 
     private func openCloudBackup(account: Account) {
         let viewController = BackupModule.cloudViewController(account: account)
         present(viewController, animated: true)
+        stat(page: .manageWallet, event: .open(page: .cloudBackup))
     }
 
     private func confirmDeleteCloudBackup(manualBackedUp: Bool) {
@@ -172,6 +177,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
     private func openUnlink(account: Account) {
         let viewController = UnlinkModule.viewController(account: account)
         present(viewController, animated: true)
+        stat(page: .manageWallet, event: .open(page: .unlinkWallet))
     }
 
     private func reloadTable() {

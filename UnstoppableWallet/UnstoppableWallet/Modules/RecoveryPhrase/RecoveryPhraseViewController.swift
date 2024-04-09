@@ -64,16 +64,20 @@ class RecoveryPhraseViewController: ThemeViewController {
 
         let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
         present(ThemeNavigationController(rootViewController: module), animated: true)
+        stat(page: .recoveryPhrase, event: .open(page: .info))
     }
 
     @objc private func onTapCopy() {
-        let viewController = BottomSheetModule.copyConfirmation(value: viewModel.words.joined(separator: " "))
+        let viewController = BottomSheetModule.copyConfirmation(value: viewModel.words.joined(separator: " ")) {
+            stat(page: .recoveryPhrase, event: .copy(entity: .recoveryPhrase))
+        }
         present(viewController, animated: true)
     }
 
     private func toggle() {
         visible = !visible
         tableView.reload()
+        stat(page: .recoveryPhrase, event: .toggleHidden)
     }
 }
 
@@ -124,6 +128,7 @@ extension RecoveryPhraseViewController: SectionsDataSource {
                         component.button.setTitle(visible ? passphrase : BalanceHiddenManager.placeholder, for: .normal)
                         component.onTap = {
                             CopyHelper.copyAndNotify(value: passphrase)
+                            stat(page: .recoveryPhrase, event: .copy(entity: .passphrase))
                         }
                     },
                 ]),

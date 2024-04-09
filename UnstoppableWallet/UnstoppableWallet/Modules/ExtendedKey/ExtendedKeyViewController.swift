@@ -69,15 +69,21 @@ class ExtendedKeyViewController: ThemeViewController {
 
         let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
         present(ThemeNavigationController(rootViewController: module), animated: true)
+        stat(page: viewModel.statPage, event: .open(page: .info))
     }
 
     @objc private func onTapCopy() {
+        let statPage = viewModel.statPage
+
         if viewItem.keyIsPrivate {
-            let viewController = BottomSheetModule.copyConfirmation(value: viewItem.key)
+            let viewController = BottomSheetModule.copyConfirmation(value: viewItem.key) {
+                stat(page: statPage, event: .copy(entity: .key))
+            }
             present(viewController, animated: true)
         } else {
             UIPasteboard.general.string = viewItem.key
             HudHelper.instance.show(banner: .copied)
+            stat(page: statPage, event: .copy(entity: .key))
         }
     }
 
@@ -90,6 +96,7 @@ class ExtendedKeyViewController: ThemeViewController {
     private func toggleKeyHidden() {
         keyHidden = !keyHidden
         tableView.reload()
+        stat(page: viewModel.statPage, event: .toggleHidden)
     }
 
     private func reloadTable() {

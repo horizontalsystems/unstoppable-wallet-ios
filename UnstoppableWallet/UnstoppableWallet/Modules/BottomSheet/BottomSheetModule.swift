@@ -16,7 +16,7 @@ enum BottomSheetModule {
 }
 
 extension BottomSheetModule {
-    static func copyConfirmation(value: String) -> UIViewController {
+    static func copyConfirmation(value: String, onCopy: (() -> Void)? = nil) -> UIViewController {
         viewController(
             image: .warning,
             title: "copy_warning.title".localized,
@@ -27,6 +27,7 @@ extension BottomSheetModule {
                 .init(style: .red, title: "copy_warning.i_will_risk_it".localized) {
                     UIPasteboard.general.string = value
                     HudHelper.instance.show(banner: .copied)
+                    onCopy?()
                 },
                 .init(style: .transparent, title: "copy_warning.dont_copy".localized),
             ]
