@@ -170,7 +170,7 @@
 
 "restore.cloud.password.title" = "Введите пароль";
 "restore.cloud.password.placeholder" = "Пароль резервной копии";
-"restore.cloud.password.description" = "Введите пароль резервной копии для импорта вашего кошелька из iCloud.";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
