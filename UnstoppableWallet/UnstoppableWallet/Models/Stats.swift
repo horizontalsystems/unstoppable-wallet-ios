@@ -115,6 +115,7 @@ enum StatEvent {
     case openCoin(coinUid: String)
     case openPlatform(chainUid: String)
     case openReceive(coinUid: String)
+    case openTokenPage(coinUid: String?, chainUid: String?, assetId: String?)
     case open(page: StatPage)
 
     case switchTab(tab: StatTab)
@@ -167,7 +168,7 @@ enum StatEvent {
 
     var name: String {
         switch self {
-        case .openCategory, .openCoin, .openPlatform, .openReceive, .open: return "open_page"
+        case .openCategory, .openCoin, .openPlatform, .openReceive, .openTokenPage, .open: return "open_page"
         case .switchTab: return "switch_tab"
         case .switchMarketTop: return "switch_market_top"
         case .switchPeriod: return "switch_period"
@@ -213,6 +214,12 @@ enum StatEvent {
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
         case let .openReceive(coinUid): return [.page: StatPage.receive.rawValue, .coinUid: coinUid]
+        case let .openTokenPage(coinUid, chainUid, assetId):
+            var params: [StatParam: Any] = [.page: StatPage.tokenPage.rawValue]
+            params[.coinUid] = coinUid
+            params[.chainUid] = chainUid
+            params[.assetId] = assetId
+            return params
         case let .open(page): return [.page: page.rawValue]
         case let .switchTab(tab): return [.tab: tab.rawValue]
         case let .switchMarketTop(marketTop): return [.marketTop: marketTop.rawValue]
@@ -244,6 +251,7 @@ enum StatEvent {
 }
 
 enum StatParam: String {
+    case assetId = "asset_id"
     case categoryUid = "category_uid"
     case chainUid = "chain_uid"
     case coinUid = "coin_uid"
