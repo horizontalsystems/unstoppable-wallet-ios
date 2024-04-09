@@ -31,7 +31,6 @@ class ReceiveAddressViewModel: ObservableObject {
         self.viewItemFactory = viewItemFactory
         self.decimalParser = decimalParser
 
-        print("INIT RECEIVE ADDRESS VIEWMODEL!")
         service.statusUpdatedPublisher
             .sink { [weak self] in self?.sync(state: $0) }
             .store(in: &cancellables)
