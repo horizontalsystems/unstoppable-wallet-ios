@@ -168,7 +168,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "restore.cloud.password.title" = "Parolanı Gir";
 "restore.cloud.password.placeholder" = "Yedek Şifre";
-"restore.cloud.password.description" = "Cüzdanınızı iCloud'dan içe aktarmak için yedek parolayı girin.";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
