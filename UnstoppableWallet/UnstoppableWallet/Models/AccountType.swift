@@ -319,7 +319,7 @@ extension AccountType {
         case .evmAddress:
             return (try? EvmKit.Address(hex: string)).map { AccountType.evmAddress(address: $0) }
         case .tronAddress:
-            return (try? TronKit.Address(address: string)).map { AccountType.tronAddress(address: $0) }
+            return (try? TronKit.Address(raw: Data(hex: string))).map { AccountType.tronAddress(address: $0) }
         case .tonAddress:
             return AccountType.tonAddress(address: string)
         case .cex:
