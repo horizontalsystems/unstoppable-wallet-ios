@@ -53,6 +53,7 @@ extension UnlinkViewModel {
     func onTapDelete() {
         service.deleteAccount()
         successRelay.accept(())
+        stat(page: .unlinkWallet, event: .delete(entity: .wallet))
     }
 }
 

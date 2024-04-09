@@ -109,16 +109,19 @@ class ManageAccountsViewController: ThemeViewController {
     private func onTapCreate() {
         let viewController = CreateAccountModule.viewController(sourceViewController: self, listener: createAccountListener ?? self)
         present(viewController, animated: true)
+        stat(page: .manageWallets, event: .open(page: .newWallet))
     }
 
     private func onTapRestore() {
         let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self, returnViewController: createAccountListener)
         present(viewController, animated: true)
+        stat(page: .manageWallets, event: .open(page: .importWallet))
     }
 
     private func onTapWatch() {
         let viewController = WatchModule.viewController(sourceViewController: createAccountListener)
         present(viewController, animated: true)
+        stat(page: .manageWallets, event: .open(page: .watchWallet))
     }
 
     private func onTapEdit(accountId: String) {
@@ -127,6 +130,7 @@ class ManageAccountsViewController: ThemeViewController {
         }
 
         present(viewController, animated: true)
+        stat(page: .manageWallets, event: .open(page: .manageWallet))
     }
 
     private func sync(viewState: ManageAccountsViewModel.ViewState) {

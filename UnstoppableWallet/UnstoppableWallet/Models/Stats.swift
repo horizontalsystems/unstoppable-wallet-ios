@@ -1,6 +1,8 @@
 enum StatPage: String {
     case aboutApp = "about_app"
     case academy
+    case accountExtendedPrivateKey = "account_extended_private_key"
+    case accountExtendedPublicKey = "account_extended_public_key"
     case addEvmSyncSource = "add_evm_sync_source"
     case addToken = "add_token"
     case advancedSearch = "advanced_search"
@@ -10,7 +12,9 @@ enum StatPage: String {
     case backupManager = "backup_manager"
     case balance
     case baseCurrency = "base_currency"
+    case bip32RootKey = "bip32_root_key"
     case blockchainSettings = "blockchain_settings"
+    case cloudBackup = "cloud_backup"
     case coinAnalytics = "coin_analytics"
     case coinAnalyticsCexVolume = "coin_analytics_cex_volume"
     case coinAnalyticsDexVolume = "coin_analytics_dex_volume"
@@ -27,6 +31,8 @@ enum StatPage: String {
     case contacts
     case contactUs = "contact_us"
     case donate
+    case evmAddress = "evm_address"
+    case evmPrivateKey = "evm_private_key"
     case externalBlockExplorer = "external_block_explorer"
     case externalCoinWebsite = "external_coin_website"
     case externalCoinWhitePaper = "external_coin_white_paper"
@@ -45,17 +51,23 @@ enum StatPage: String {
     case guide
     case importWallet = "import_wallet"
     case indicators
+    case info
     case language
     case main
+    case manageWallet = "manage_wallet"
     case manageWallets = "manage_wallets"
+    case manualBackup = "manual_backup"
     case markets
     case marketOverview = "market_overview"
     case marketSearch = "market_search"
     case news
     case newWallet = "new_wallet"
+    case privateKeys = "private_keys"
+    case publicKeys = "public_keys"
     case rateUs = "rate_us"
     case receive
     case receiveTokenList = "receive_token_list"
+    case recoveryPhrase = "recovery_phrase"
     case scanQrCode = "scan_qr_code"
     case security
     case send
@@ -73,6 +85,7 @@ enum StatPage: String {
     case transactions
     case transactionFilter = "transaction_filter"
     case transactionInfo = "transaction_info"
+    case unlinkWallet = "unlink_wallet"
     case walletConnect = "wallet_connect"
     case watchlist
     case watchWallet = "watch_wallet"
@@ -127,6 +140,12 @@ enum StatEvent {
     case setAmount
     case removeAmount
 
+    case toggleHidden
+
+    case select(entity: StatEntity)
+    case edit(entity: StatEntity)
+    case delete(entity: StatEntity)
+
     case add(entity: StatEntity)
 
     var name: String {
@@ -156,6 +175,10 @@ enum StatEvent {
         case .share: return "share"
         case .setAmount: return "set_amount"
         case .removeAmount: return "remove_amount"
+        case .toggleHidden: return "toggle_hidden"
+        case .select: return "select"
+        case .edit: return "edit"
+        case .delete: return "delete"
         case .add: return "add"
         }
     }
@@ -180,6 +203,9 @@ enum StatEvent {
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
         case let .toggleIndicators(shown): return [.shown: shown]
         case let .copy(entity): return [.entity: entity.rawValue]
+        case let .select(entity): return [.entity: entity.rawValue]
+        case let .edit(entity): return [.entity: entity.rawValue]
+        case let .delete(entity): return [.entity: entity.rawValue]
         case let .add(entity): return [.entity: entity.rawValue]
         default: return nil
         }
@@ -247,8 +273,19 @@ enum StatMarketTop: String {
 }
 
 enum StatEntity: String {
+    case account
+    case blockchain
+    case cloudBackup = "cloud_backup"
     case contractAddress = "contract_address"
+    case derivation
+    case evmAddress = "evm_address"
+    case evmPrivateKey = "evm_private_key"
     case evmSyncSource = "evm_sync_source"
+    case key
+    case passphrase
     case receiveAddress = "receive_address"
+    case recoveryPhrase = "recovery_phrase"
     case token
+    case wallet
+    case walletName = "wallet_name"
 }

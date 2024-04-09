@@ -71,16 +71,19 @@ class PrivateKeysViewController: ThemeViewController {
         }
 
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .privateKeys, event: .open(page: .evmPrivateKey))
     }
 
     private func openBip32RootKey(accountType: AccountType) {
         let viewController = ExtendedKeyModule.viewController(mode: .bip32RootKey, accountType: accountType)
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .privateKeys, event: .open(page: .bip32RootKey))
     }
 
     private func openAccountExtendedPrivateKey(accountType: AccountType) {
         let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPrivateKey, accountType: accountType)
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .privateKeys, event: .open(page: .accountExtendedPrivateKey))
     }
 }
 

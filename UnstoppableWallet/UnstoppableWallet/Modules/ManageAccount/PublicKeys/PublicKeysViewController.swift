@@ -55,11 +55,13 @@ class PublicKeysViewController: ThemeViewController {
         }
 
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .publicKeys, event: .open(page: .evmAddress))
     }
 
     private func openAccountExtendedPublicKey() {
         let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPublicKey, accountType: viewModel.accountType)
         navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .publicKeys, event: .open(page: .accountExtendedPublicKey))
     }
 }
 

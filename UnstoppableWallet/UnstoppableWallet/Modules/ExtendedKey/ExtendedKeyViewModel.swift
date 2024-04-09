@@ -71,16 +71,27 @@ extension ExtendedKeyViewModel {
         }
     }
 
+    var statPage: StatPage {
+        switch service.mode {
+        case .bip32RootKey: return .bip32RootKey
+        case .accountExtendedPrivateKey: return .accountExtendedPrivateKey
+        case .accountExtendedPublicKey: return .accountExtendedPublicKey
+        }
+    }
+
     func onSelectDerivation(index: Int) {
         service.set(derivation: MnemonicDerivation.allCases[index])
+        stat(page: statPage, event: .select(entity: .derivation))
     }
 
     func onSelectBlockchain(index: Int) {
         service.set(blockchain: service.supportedBlockchains[index])
+        stat(page: statPage, event: .select(entity: .blockchain))
     }
 
     func onSelectAccount(index: Int) {
         service.set(account: index)
+        stat(page: statPage, event: .select(entity: .account))
     }
 }
 
