@@ -50,4 +50,9 @@ extension TransactionInfoViewModel {
     var transactionRecord: TransactionRecord {
         service.item.record
     }
+
+    func togglePrice() {
+        factory.priceReversed.toggle()
+        reSyncServiceItem()
+    }
 }
