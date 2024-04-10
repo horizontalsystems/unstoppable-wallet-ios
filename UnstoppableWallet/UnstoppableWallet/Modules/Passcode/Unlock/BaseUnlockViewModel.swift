@@ -21,7 +21,7 @@ class BaseUnlockViewModel: ObservableObject {
 
     @Published var resolvedBiometryType: BiometryType?
     var biometryType: BiometryType?
-    var biometryEnabled: Bool
+    var biometryEnabledType: BiometryManager.BiometryEnabledType
     @Published var lockoutState: LockoutState {
         didSet {
             syncErrorText()
@@ -49,7 +49,7 @@ class BaseUnlockViewModel: ObservableObject {
         self.biometryAllowed = biometryAllowed
 
         biometryType = biometryManager.biometryType
-        biometryEnabled = biometryManager.biometryEnabled
+        biometryEnabledType = biometryManager.biometryEnabledType
         lockoutState = lockoutManager.lockoutState
 
         biometryManager.$biometryType
@@ -58,9 +58,9 @@ class BaseUnlockViewModel: ObservableObject {
                 self?.syncBiometryType()
             }
             .store(in: &cancellables)
-        biometryManager.$biometryEnabled
+        biometryManager.$biometryEnabledType
             .sink { [weak self] in
-                self?.biometryEnabled = $0
+                self?.biometryEnabledType = $0
                 self?.syncBiometryType()
             }
             .store(in: &cancellables)
@@ -76,7 +76,7 @@ class BaseUnlockViewModel: ObservableObject {
     }
 
     private func syncBiometryType() {
-        resolvedBiometryType = biometryEnabled && biometryAllowed && !lockoutState.isAttempted ? biometryType : nil
+        resolvedBiometryType = biometryEnabledType.isEnabled && biometryAllowed && !lockoutState.isAttempted ? biometryType : nil
     }
 
     func isValid(passcode _: String) -> Bool { false }
@@ -108,7 +108,7 @@ class BaseUnlockViewModel: ObservableObject {
     func onAppear() {
         blurManager.isEnabled = false
 
-        if resolvedBiometryType != nil {
+        if resolvedBiometryType != nil, biometryEnabledType.isAuto {
             unlockWithBiometrySubject.send()
         }
     }

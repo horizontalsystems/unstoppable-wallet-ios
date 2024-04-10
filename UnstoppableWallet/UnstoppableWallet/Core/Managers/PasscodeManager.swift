@@ -33,8 +33,8 @@ class PasscodeManager {
         isPasscodeSet = passcodes.last.map { !$0.isEmpty } ?? false
         isDuressPasscodeSet = passcodes.count > currentPasscodeLevel + 1
 
-        if !isPasscodeSet, biometryManager.biometryEnabled {
-            biometryManager.biometryEnabled = false
+        if !isPasscodeSet, biometryManager.biometryEnabledType.isEnabled {
+            biometryManager.biometryEnabledType = .off
         }
     }
 

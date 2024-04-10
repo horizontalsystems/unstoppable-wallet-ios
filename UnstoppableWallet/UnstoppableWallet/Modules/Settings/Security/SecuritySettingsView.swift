@@ -6,6 +6,7 @@ struct SecuritySettingsView: View {
     @State var createPasscodeReason: CreatePasscodeModule.CreatePasscodeReason?
     @State var unlockReason: UnlockReason?
 
+    @State var biometryEnabledTypePresented = false
     @State var editPasscodePresented = false
     @State var createDuressPasscodePresented = false
     @State var editDuressPasscodePresented = false
@@ -54,19 +55,36 @@ struct SecuritySettingsView: View {
 
                 if let biometryType = viewModel.biometryType {
                     ListSection {
-                        ListRow {
+                        ClickableRow(spacing: .margin8, action: {
+                            biometryEnabledTypePresented = true
+                        }) {
                             Image(biometryType.iconName)
-                            Toggle(isOn: $viewModel.isBiometryToggleOn) {
-                                Text(biometryType.title).themeBody()
-                            }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                            .onChange(of: viewModel.isBiometryToggleOn) { isOn in
-                                if !viewModel.isPasscodeSet, isOn {
-                                    createPasscodeReason = .biometry(type: biometryType)
-                                }
+                            Text(biometryType.title).themeBody()
+                            Spacer()
+
+                            Text(viewModel.biometryEnabledType.title).textSubhead1(color: viewModel.biometryEnabledType.isEnabled ? .themeLeah : .themeGray)
+                            Image("arrow_small_down_20").themeIcon()
+                        }
+                        .onChange(of: viewModel.biometryEnabledType) { type in
+                            if !viewModel.isPasscodeSet, type.isEnabled {
+                                createPasscodeReason = .biometry(enabledType: type, type: biometryType)
                             }
                         }
                     }
+                    .alert(
+                        isPresented: $biometryEnabledTypePresented,
+                        title: biometryType.title,
+                        viewItems: BiometryManager.BiometryEnabledType.allCases.map {
+                            .init(text: $0.title, description: $0.description, selected: $0 == viewModel.biometryEnabledType)
+                        },
+                        onTap: { index in
+                            let all = BiometryManager.BiometryEnabledType.allCases
+                            guard let index, index < all.count else {
+                                return
+                            }
+                            viewModel.biometryEnabledType = all[index]
+                        }
+                    )
                 }
 
                 VStack(spacing: 0) {
@@ -123,8 +141,8 @@ struct SecuritySettingsView: View {
                         showParentSheet: Binding(get: { createPasscodeReason != nil }, set: { if !$0 { createPasscodeReason = nil } }),
                         onCreate: {
                             switch reason {
-                            case .biometry:
-                                viewModel.set(biometryEnabled: true)
+                            case let .biometry(enabledType, _):
+                                viewModel.set(biometryEnabledType: enabledType)
                             case .duress:
                                 DispatchQueue.main.async {
                                     createDuressPasscodePresented = true
@@ -134,7 +152,7 @@ struct SecuritySettingsView: View {
                         },
                         onCancel: {
                             switch reason {
-                            case .biometry: viewModel.isBiometryToggleOn = false
+                            case .biometry: viewModel.biometryEnabledType = .off
                             default: ()
                             }
                         }
