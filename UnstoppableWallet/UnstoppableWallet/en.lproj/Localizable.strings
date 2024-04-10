@@ -1314,6 +1314,13 @@
 "settings_security.disable_duress_mode" = "Disable Duress Passcode";
 "settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
 
+"biometry.off" = "Off";
+"biometry.manual" = "Manual";
+"biometry.on" = "On";
+"biometry.off.description" = "Disabled in all cases";
+"biometry.manual.description" = "Scanning with the button";
+"biometry.on.description" = "Automatic scanning";
+
 // Create Passcode
 
 "create_passcode.title" = "Create Passcode";

@@ -18,10 +18,10 @@ class SecuritySettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var isBiometryToggleOn: Bool {
+    @Published var biometryEnabledType: BiometryManager.BiometryEnabledType {
         didSet {
-            if isBiometryToggleOn != biometryManager.biometryEnabled, isPasscodeSet {
-                set(biometryEnabled: isBiometryToggleOn)
+            if biometryEnabledType != biometryManager.biometryEnabledType, isPasscodeSet {
+                set(biometryEnabledType: biometryEnabledType)
             }
         }
     }
@@ -44,7 +44,7 @@ class SecuritySettingsViewModel: ObservableObject {
         biometryType = biometryManager.biometryType
         autoLockPeriod = lockManager.autoLockPeriod
 
-        isBiometryToggleOn = biometryManager.biometryEnabled
+        biometryEnabledType = biometryManager.biometryEnabledType
         balanceAutoHide = balanceHiddenManager.balanceAutoHide
 
         passcodeManager.$currentPasscodeLevel
@@ -59,8 +59,8 @@ class SecuritySettingsViewModel: ObservableObject {
         biometryManager.$biometryType
             .sink { [weak self] in self?.biometryType = $0 }
             .store(in: &cancellables)
-        biometryManager.$biometryEnabled
-            .sink { [weak self] in self?.isBiometryToggleOn = $0 }
+        biometryManager.$biometryEnabledType
+            .sink { [weak self] in self?.biometryEnabledType = $0 }
             .store(in: &cancellables)
     }
 
@@ -80,7 +80,7 @@ class SecuritySettingsViewModel: ObservableObject {
         }
     }
 
-    func set(biometryEnabled: Bool) {
-        biometryManager.biometryEnabled = biometryEnabled
+    func set(biometryEnabledType: BiometryManager.BiometryEnabledType) {
+        biometryManager.biometryEnabledType = biometryEnabledType
     }
 }
