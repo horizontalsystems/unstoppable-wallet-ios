@@ -209,25 +209,62 @@ enum CellComponent {
         )
     }
 
-    static func valueRow(tableView: UITableView, rowInfo: RowInfo, iconName _: String?, title _: String, value: String, type _: ValueType = .regular) -> RowProtocol {
-        CellBuilder.row(
-            elements: [.image20, .text, .text],
+    static func priceRow(tableView: UITableView, rowInfo: RowInfo, title: String, value: String, onTap: (() -> Void)? = nil) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let titleFont: UIFont = .subhead2
+        let valueFont: UIFont = .subhead1
+
+        return CellBuilderNew.row(
+            rootElement: .hStack([
+                .text { component in
+                    component.font = titleFont
+                    component.textColor = .themeGray
+                    component.text = title
+                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                },
+                .text { component in
+                    component.font = valueFont
+                    component.textColor = .themeLeah
+                    component.text = value
+                    component.textAlignment = .right
+                    component.numberOfLines = 0
+                },
+                .margin8,
+                .secondaryCircleButton { component in
+                    component.button.set(image: UIImage(named: "arrow_swap_3_20"), style: .transparent)
+                    component.onTap = onTap
+                },
+            ]),
             tableView: tableView,
-            id: "from-to-\(rowInfo.index)",
-            hash: value,
-            height: .heightCell48,
+            id: "price-\(rowInfo.index)",
+            hash: value + rowInfo.description,
+            dynamicHeight: { containerWidth in
+                CellBuilderNew.height(
+                    containerWidth: containerWidth,
+                    backgroundStyle: backgroundStyle,
+                    text: value,
+                    font: valueFont,
+                    elements: [
+                        .fixed(width: TextComponent.width(font: titleFont, text: title)),
+                        .multiline,
+                        .margin8,
+                        .fixed(width: SecondaryCircleButton.size),
+                    ]
+                )
+            },
             bind: { cell in
                 cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
             }
         )
     }
 
-    static func valueRow(tableView: SectionsTableView, rowInfo: RowInfo, iconName: String?, title: String, value: String, type: ValueType = .regular) -> RowProtocol {
+    static func valueRow(tableView: SectionsTableView, rowInfo: RowInfo, iconName: String?, title: String, value: String, type: ValueType = .regular, accessoryType: CellBuilderNew.CellElement.AccessoryType = .none) -> RowProtocol {
         tableView.universalRow48(
             id: "value-\(rowInfo.index)",
             image: iconName.flatMap { UIImage(named: $0)?.withTintColor(.themeGray) }.map { .local($0) },
             title: .subhead2(title),
             value: .subhead1(value, color: type.textColor),
+            accessoryType: accessoryType,
             hash: value,
             isFirst: rowInfo.isFirst,
             isLast: rowInfo.isLast

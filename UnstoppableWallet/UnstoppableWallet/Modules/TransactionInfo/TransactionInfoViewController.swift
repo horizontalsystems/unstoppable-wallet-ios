@@ -106,6 +106,10 @@ class TransactionInfoViewController: ThemeViewController {
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
+    private func togglePrice() {
+        viewModel.togglePrice()
+    }
+
     private func statusRow(rowInfo: RowInfo, status: TransactionStatus) -> RowProtocol {
         let hash: String
         var value: String
@@ -513,7 +517,7 @@ class TransactionInfoViewController: ThemeViewController {
         case let .fee(title, value):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value)
         case let .price(price):
-            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.price".localized, value: price)
+            return CellComponent.priceRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.price".localized, value: price, onTap: { [weak self] in self?.viewModel.togglePrice() })
         case let .doubleSpend(txHash, conflictingTxHash):
             return doubleSpendRow(rowInfo: rowInfo, txHash: txHash, conflictingTxHash: conflictingTxHash)
         case let .lockInfo(lockState):

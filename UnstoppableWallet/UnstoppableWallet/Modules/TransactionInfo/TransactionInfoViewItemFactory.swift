@@ -9,6 +9,7 @@ class TransactionInfoViewItemFactory {
     private let contactLabelService: ContactLabelService
 
     private let actionEnabled: Bool
+    var priceReversed = false
 
     init(evmLabelManager: EvmLabelManager, contactLabelService: ContactLabelService, actionEnabled: Bool) {
         self.evmLabelManager = evmLabelManager
@@ -85,12 +86,18 @@ class TransactionInfoViewItemFactory {
             return nil
         }
 
-        let priceDecimal = valueInDecimal.magnitude / valueOutDecimal.magnitude
-        let price = ValueFormatter.instance.formatFull(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: valueInToken.coin.code) ?? ""
-        let rate = coinPriceIn.map { CurrencyValue(currency: $0.currency, value: abs(priceDecimal * $0.value)) }
+        var priceDecimal = valueInDecimal.magnitude / valueOutDecimal.magnitude
+        if priceReversed {
+            priceDecimal = 1 / priceDecimal
+        }
+
+        let symbolOut = priceReversed ? valueInToken.coin.code : valueOutToken.coin.code
+        let symbolIn = priceReversed ? valueOutToken.coin.code : valueInToken.coin.code
+        let price = ValueFormatter.instance.formatFull(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: symbolIn) ?? ""
+        let rate = coinPriceIn.map { CurrencyValue(currency: $0.currency, value: abs((priceReversed ? 1 : priceDecimal) * $0.value)) }
         let rateFormatted = rate.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0).map { " (\($0))" } } ?? ""
 
-        return "\(valueOutToken.coin.code) = \(price)\(rateFormatted)"
+        return "\(symbolOut) = \(price)\(rateFormatted)"
     }
 
     private func rateString(currencyValue: CurrencyValue?, coinCode: String?) -> String {
