@@ -88,7 +88,9 @@ class CoinRankViewController: ThemeViewController {
 
 extension CoinRankViewController: SectionsDataSource {
     private func row(viewItem: CoinRankViewModel.ViewItem, index: Int, isLast: Bool) -> RowProtocol {
-        CellBuilderNew.row(
+        let statPage = viewModel.statPage
+
+        return CellBuilderNew.row(
             rootElement: .hStack([
                 .text { component in
                     component.font = .captionSB
@@ -124,7 +126,7 @@ extension CoinRankViewController: SectionsDataSource {
 
                 if let viewController = CoinPageModule.viewController(coinUid: coinUid) {
                     self?.present(viewController, animated: true)
-                    stat(page: .coinRank, event: .openCoin(coinUid: coinUid))
+                    stat(page: statPage, event: .openCoin(coinUid: coinUid))
                 }
             }
         )
