@@ -39,21 +39,14 @@ struct CoinMarketsView: View {
     @ViewBuilder private func list(viewItems: [CoinMarketsViewModel.ViewItem]) -> some View {
         VStack(spacing: 0) {
             HStack {
+                Spacer()
+
                 Button(action: {
                     viewModel.switchFilterType()
                 }) {
                     Text(viewModel.filterTypeInfo.text)
                 }
                 .buttonStyle(SelectorButtonStyle(count: viewModel.filterTypeInfo.count, selectedIndex: viewModel.filterTypeInfo.selectedIndex))
-
-                Spacer()
-
-                Button(action: {
-                    viewModel.switchVolumeType()
-                }) {
-                    Text(viewModel.volumeTypeInfo.text)
-                }
-                .buttonStyle(SelectorButtonStyle(count: viewModel.volumeTypeInfo.count, selectedIndex: viewModel.volumeTypeInfo.selectedIndex))
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
@@ -105,8 +98,8 @@ struct CoinMarketsView: View {
 
                 Spacer()
 
-                if let rate = viewItem.rate {
-                    Text(rate)
+                if let volume = viewItem.volume {
+                    Text(volume)
                         .font(.themeBody)
                         .foregroundColor(.themeLeah)
                         .lineLimit(1)
@@ -121,17 +114,11 @@ struct CoinMarketsView: View {
 
                 Spacer()
 
-                if let volume = viewItem.volume {
-                    HStack(spacing: .margin4) {
-                        Text("market.market_field.vol".localized)
-                            .font(.themeSubhead2)
-                            .foregroundColor(.themeJacob)
-
-                        Text(volume)
-                            .font(.themeSubhead2)
-                            .foregroundColor(.themeGray)
-                            .lineLimit(1)
-                    }
+                if let volumeUsdt = viewItem.volumeUsdt {
+                    Text(volumeUsdt)
+                        .font(.themeSubhead2)
+                        .foregroundColor(.themeGray)
+                        .lineLimit(1)
                 }
             }
         }
