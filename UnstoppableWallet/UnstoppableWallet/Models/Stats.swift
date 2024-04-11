@@ -28,7 +28,14 @@ enum StatPage: String {
     case coinOverview = "coin_overview"
     case coinPage = "coin_page"
     case coinCategory = "coin_category"
-    case coinRank = "coin_rank"
+    case coinRankAddress = "coin_rank_address"
+    case coinRankCexVolume = "coin_rank_cex_volume"
+    case coinRankDexLiquidity = "coin_rank_dex_liquidity"
+    case coinRankDexVolume = "coin_rank_dex_volume"
+    case coinRankFee = "coin_rank_fee"
+    case coinRankHolders = "coin_rank_holders"
+    case coinRankRevenue = "coin_rank_revenue"
+    case coinRankTxCount = "coin_rank_tx_count"
     case contacts
     case contactUs = "contact_us"
     case donate

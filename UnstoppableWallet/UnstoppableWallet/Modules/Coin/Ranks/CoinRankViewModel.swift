@@ -137,6 +137,19 @@ extension CoinRankViewModel {
         sortDirectionRelay.asDriver()
     }
 
+    var statPage: StatPage {
+        switch service.type {
+        case .cexVolume: return .coinRankCexVolume
+        case .dexVolume: return .coinRankDexVolume
+        case .dexLiquidity: return .coinRankDexLiquidity
+        case .address: return .coinRankAddress
+        case .txCount: return .coinRankTxCount
+        case .holders: return .coinRankHolders
+        case .fee: return .coinRankFee
+        case .revenue: return .coinRankRevenue
+        }
+    }
+
     func onToggleSortDirection() {
         service.sortDirectionAscending = !service.sortDirectionAscending
         sortDirectionRelay.accept(service.sortDirectionAscending)
