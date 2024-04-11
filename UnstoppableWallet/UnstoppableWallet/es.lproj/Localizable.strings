@@ -1317,6 +1317,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings_security.disable_duress_mode" = "Desactivar Duress Passcode";
 "settings_security.duress_mode.description" = "Un modo especializado diseñado para mantener seguras las carteras seleccionadas bajo coacción.";
 
+"biometry.off" = "Apagado";
+"biometry.manual" = "Manual";
+"biometry.on" = "On";
+"biometry.off.description" = "Disabled in all cases";
+"biometry.manual.description" = "Scanning with the button";
+"biometry.on.description" = "Automatic scanning";
+
 // Create Passcode
 
 "create_passcode.title" = "Crear contraseña";
