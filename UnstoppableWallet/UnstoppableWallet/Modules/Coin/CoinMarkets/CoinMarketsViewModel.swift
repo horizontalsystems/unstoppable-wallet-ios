@@ -25,25 +25,12 @@ class CoinMarketsViewModel: ObservableObject {
         }
     }
 
-    private var volumeType: VolumeType = .coin {
-        didSet {
-            syncVolumeTypeInfo()
-
-            DispatchQueue.global().async { [weak self] in
-                self?.syncState()
-            }
-
-            stat(page: .coinMarkets, event: .switchVolumeType(type: volumeType.rawValue))
-        }
-    }
-
     @Published var filterTypeInfo = SelectorButtonInfo(text: "", count: 0, selectedIndex: 0)
     @Published var volumeTypeInfo = SelectorButtonInfo(text: "", count: 0, selectedIndex: 0)
 
     init(coin: Coin) {
         self.coin = coin
 
-        syncVolumeTypeInfo()
         syncFilterTypeInfo()
     }
 
@@ -95,14 +82,14 @@ class CoinMarketsViewModel: ObservableObject {
             market: ticker.marketName,
             marketImageUrl: ticker.marketImageUrl,
             pair: "\(coin.code) / \(ticker.target)",
-            rate: ValueFormatter.instance.formatShort(value: ticker.rate, decimalCount: 8, symbol: ticker.target),
-            volume: volume(value: ticker.volume, price: price),
+            volume: volume(volumeType: .coin, value: ticker.volume, price: price),
+            volumeUsdt: volume(volumeType: .currency, value: ticker.volume, price: price),
             tradeUrl: ticker.tradeUrl,
             verified: ticker.verified
         )
     }
 
-    private func volume(value: Decimal, price: Decimal?) -> String? {
+    private func volume(volumeType: VolumeType, value: Decimal, price: Decimal?) -> String? {
         switch volumeType {
         case .coin:
             return ValueFormatter.instance.formatShort(value: value, decimalCount: 8, symbol: coin.code)
@@ -124,17 +111,6 @@ class CoinMarketsViewModel: ObservableObject {
 
         filterTypeInfo = SelectorButtonInfo(text: text, count: FilterType.allCases.count, selectedIndex: FilterType.allCases.firstIndex(of: filterType) ?? 0)
     }
-
-    private func syncVolumeTypeInfo() {
-        let text: String
-
-        switch volumeType {
-        case .coin: text = coin.code
-        case .currency: text = currency.code
-        }
-
-        volumeTypeInfo = SelectorButtonInfo(text: text, count: VolumeType.allCases.count, selectedIndex: VolumeType.allCases.firstIndex(of: volumeType) ?? 0)
-    }
 }
 
 extension CoinMarketsViewModel {
@@ -151,13 +127,6 @@ extension CoinMarketsViewModel {
         let currentIndex = allCases.firstIndex(of: filterType) ?? 0
         let newIndex = (currentIndex + 1) % allCases.count
         filterType = allCases[newIndex]
-    }
-
-    func switchVolumeType() {
-        let allCases = VolumeType.allCases
-        let currentIndex = allCases.firstIndex(of: volumeType) ?? 0
-        let newIndex = (currentIndex + 1) % allCases.count
-        volumeType = allCases[newIndex]
     }
 }
 
@@ -182,8 +151,8 @@ extension CoinMarketsViewModel {
         let market: String
         let marketImageUrl: String?
         let pair: String
-        let rate: String?
         let volume: String?
+        let volumeUsdt: String?
         let tradeUrl: String?
         let verified: Bool
 

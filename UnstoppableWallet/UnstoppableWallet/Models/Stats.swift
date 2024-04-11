@@ -126,7 +126,6 @@ enum StatEvent {
     case switchChartPeriod(period: StatPeriod)
     case switchTvlChain(chain: String)
     case switchFilterType(type: String)
-    case switchVolumeType(type: String)
     case toggleSortDirection
     case toggleTvlField
 
@@ -177,7 +176,6 @@ enum StatEvent {
         case .switchChartPeriod: return "switch_chart_period"
         case .switchTvlChain: return "switch_tvl_platform"
         case .switchFilterType: return "switch_filter_type"
-        case .switchVolumeType: return "switch_volume_type"
         case .toggleSortDirection: return "toggle_sort_direction"
         case .toggleTvlField: return "toggle_tvl_field"
         case .refresh: return "refresh"
@@ -229,7 +227,6 @@ enum StatEvent {
         case let .switchChartPeriod(period): return [.period: period.rawValue]
         case let .switchTvlChain(chain): return [.tvlChain: chain]
         case let .switchFilterType(type): return [.type: type]
-        case let .switchVolumeType(type): return [.type: type]
         case let .addToWatchlist(coinUid): return [.coinUid: coinUid]
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
         case let .toggleIndicators(shown): return [.shown: shown]
