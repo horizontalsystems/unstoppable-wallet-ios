@@ -180,6 +180,20 @@ struct MultiSwapView: View {
                             }
 
                             Button(action: {
+                                viewModel.clearAmountIn()
+                            }) {
+                                Image(systemName: "trash")
+                                    .font(.themeSubhead1)
+                                    .foregroundColor(.themeLeah)
+                            }
+                            .frame(maxWidth: .infinity)
+
+                            RoundedRectangle(cornerRadius: 0.5, style: .continuous)
+                                .fill(Color.themeSteel20)
+                                .frame(width: 1)
+                                .frame(maxHeight: .infinity)
+
+                            Button(action: {
                                 isInputActive = false
                             }) {
                                 Image(systemName: "keyboard.chevron.compact.down")
