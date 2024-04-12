@@ -646,7 +646,7 @@
 "swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
 
-"swap.confirmation.minimum_received" = "Minimum Received";
+"swap.confirmation.minimum_received" = "Guaranteed Amount";
 "swap.confirmation.maximum_sent" = "Maximum Sent";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
