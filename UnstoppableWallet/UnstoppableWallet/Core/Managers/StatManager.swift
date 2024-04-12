@@ -4,7 +4,7 @@ import HsToolKit
 import MarketKit
 
 func stat(page: StatPage, section: StatSection? = nil, event: StatEvent) {
-//    print("PAGE: \(page)\(section.map { ", SECTION: \($0)" } ?? ""), event: \(event.name)\(event.params.map { ", PARAMS: \($0)" } ?? "")")
+    // print("PAGE: \(page)\(section.map { ", SECTION: \($0)" } ?? ""), event: \(event.name)\(event.params.map { ", PARAMS: \($0)" } ?? "")")
     App.shared.statManager.logStat(eventPage: page, eventSection: section, event: event)
 }
 
@@ -39,6 +39,7 @@ class StatManager {
         }
 
         let record = StatRecord(
+            timestamp: Int(Date().timeIntervalSince1970),
             eventPage: eventPage.rawValue,
             eventSection: eventSection?.rawValue,
             event: event.name,
@@ -68,6 +69,7 @@ class StatManager {
 
             let stats = records.map { record in
                 var object: [String: Any] = [
+                    "time": record.timestamp,
                     "event_page": record.eventPage,
                     "event": record.event,
                 ]

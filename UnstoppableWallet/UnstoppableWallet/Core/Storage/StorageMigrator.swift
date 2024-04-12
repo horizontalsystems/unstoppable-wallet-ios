@@ -817,6 +817,12 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Add time to StatRecord") { db in
+            try db.alter(table: StatRecord.databaseTableName) { t in
+                t.add(column: StatRecord.Columns.timestamp.name, .integer).defaults(to: Int(Date().timeIntervalSince1970))
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 
