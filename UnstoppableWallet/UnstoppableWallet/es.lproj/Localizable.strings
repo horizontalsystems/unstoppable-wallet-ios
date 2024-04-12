@@ -648,7 +648,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.confirmation.impact_too_high" = "%@ ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
-"swap.confirmation.minimum_received" = "Mínimo Recibido";
+"swap.confirmation.minimum_received" = "Mínimo Obtenido";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
 
 "swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
@@ -1055,7 +1055,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.30_day_volume" = "Volumen de 30 días";
 
 "coin_analytics.analysis.title" = "Análisis de contratos inteligente";
-"coin_analytics.analysis.footer" = "Desarrollado por Escáner De.Fi";
+"coin_analytics.analysis.footer" = "Desarrollado por De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Elementos de Alto Riesgo";
 "coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
 "coin_analytics.analysis.attention_required" = "Attention Required";

@@ -648,7 +648,7 @@
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
-"swap.confirmation.minimum_received" = "收到的最小金额";
+"swap.confirmation.minimum_received" = "最小获取金额";
 "swap.confirmation.maximum_sent" = "最大支出";
 
 "swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
@@ -1055,7 +1055,7 @@
 "coin_analytics.30_day_volume" = "30天交易量";
 
 "coin_analytics.analysis.title" = "智能合约分析";
-"coin_analytics.analysis.footer" = "由 De.Fi Scanner 提供支持";
+"coin_analytics.analysis.footer" = "由 De.Fi 支持";
 "coin_analytics.analysis.high_risk_items" = "高风险项目";
 "coin_analytics.analysis.medium_risk_items" = "中等风险项目";
 "coin_analytics.analysis.attention_required" = "需要注意";

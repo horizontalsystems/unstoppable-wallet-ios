@@ -650,7 +650,7 @@
 "swap.confirmation.impact_too_high" = "%@ отключил действие обмена для этой сделки, потому что вы получаете крайне невыгодную цену. Это связано с крайне низкой ликвидностью.Если вы все равно хотите выполнить обмен, используйте вместо этого веб-сайт %@.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
 
-"swap.confirmation.minimum_received" = "Получено минимум";
+"swap.confirmation.minimum_received" = "Гарантированная сумма";
 "swap.confirmation.maximum_sent" = "Максимальная трата";
 
 "swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
@@ -1057,7 +1057,7 @@
 "coin_analytics.30_day_volume" = "Объем за 30д";
 
 "coin_analytics.analysis.title" = "Анализ смарт-контрактов";
-"coin_analytics.analysis.footer" = "Работает на основе De.Fi Scanner";
+"coin_analytics.analysis.footer" = "При поддержке De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Элементы высокого риска";
 "coin_analytics.analysis.medium_risk_items" = "Элементы среднего риска";
 "coin_analytics.analysis.attention_required" = "Требуется внимание";

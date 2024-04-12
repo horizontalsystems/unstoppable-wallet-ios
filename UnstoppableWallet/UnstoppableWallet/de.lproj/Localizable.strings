@@ -1055,7 +1055,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.30_day_volume" = "30-Tage Lautstärke";
 
 "coin_analytics.analysis.title" = "Analyse von Smart Contracts";
-"coin_analytics.analysis.footer" = "Betrieben von De.Fi Scanner";
+"coin_analytics.analysis.footer" = "Powered by De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Hochrisiko-Positionen";
 "coin_analytics.analysis.medium_risk_items" = "Mittlere Risiko-Positionen";
 "coin_analytics.analysis.attention_required" = "Aufmerksamkeit erforderlich";
