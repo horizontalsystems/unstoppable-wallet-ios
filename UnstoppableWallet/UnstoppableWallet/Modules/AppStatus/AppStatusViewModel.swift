@@ -20,6 +20,7 @@ class AppStatusViewModel {
                         .info(title: "App Version", value: systemInfoManager.appVersion.description),
                         .info(title: "Device Model", value: systemInfoManager.deviceModel),
                         .info(title: "iOS Version", value: systemInfoManager.osVersion),
+                        .info(title: "App ID", value: AppConfig.appId ?? "n/a"),
                     ],
                 ]
             )
