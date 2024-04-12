@@ -39,6 +39,7 @@ enum StatPage: String {
     case contacts
     case contactUs = "contact_us"
     case donate
+    case donateAddressList = "donate_address_list"
     case evmAddress = "evm_address"
     case evmPrivateKey = "evm_private_key"
     case externalBlockExplorer = "external_block_explorer"
@@ -121,7 +122,8 @@ enum StatEvent {
     case openCategory(categoryUid: String)
     case openCoin(coinUid: String)
     case openPlatform(chainUid: String)
-    case openReceive(coinUid: String)
+    case openReceive(coinUid: String, chainUid: String)
+    case openSend(coinUid: String, chainUid: String)
     case openTokenPage(coinUid: String?, chainUid: String?, assetId: String?)
     case open(page: StatPage)
 
@@ -150,6 +152,8 @@ enum StatEvent {
     case removeFromWallet
 
     case copy(entity: StatEntity)
+    case copyAddress(chainUid: String)
+
     case share
 
     case setAmount
@@ -173,7 +177,7 @@ enum StatEvent {
 
     var name: String {
         switch self {
-        case .openCategory, .openCoin, .openPlatform, .openReceive, .openTokenPage, .open: return "open_page"
+        case .openCategory, .openCoin, .openPlatform, .openReceive, .openSend, .openTokenPage, .open: return "open_page"
         case .switchTab: return "switch_tab"
         case .switchMarketTop: return "switch_market_top"
         case .switchPeriod: return "switch_period"
@@ -193,7 +197,7 @@ enum StatEvent {
         case .toggleIndicators: return "toggle_indicators"
         case .addToWallet: return "add_to_wallet"
         case .removeFromWallet: return "remove_from_wallet"
-        case .copy: return "copy"
+        case .copy, .copyAddress: return "copy"
         case .share: return "share"
         case .setAmount: return "set_amount"
         case .removeAmount: return "remove_amount"
@@ -216,7 +220,8 @@ enum StatEvent {
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
-        case let .openReceive(coinUid): return [.page: StatPage.receive.rawValue, .coinUid: coinUid]
+        case let .openReceive(coinUid, chainUid): return [.page: StatPage.receive.rawValue, .coinUid: coinUid, .chainUid: chainUid]
+        case let .openSend(coinUid, chainUid): return [.page: StatPage.send.rawValue, .coinUid: coinUid, .chainUid: chainUid]
         case let .openTokenPage(coinUid, chainUid, assetId):
             var params: [StatParam: Any] = [.page: StatPage.tokenPage.rawValue]
             params[.coinUid] = coinUid
@@ -236,6 +241,7 @@ enum StatEvent {
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
         case let .toggleIndicators(shown): return [.shown: shown]
         case let .copy(entity): return [.entity: entity.rawValue]
+        case let .copyAddress(chainUid): return [.entity: StatEntity.address.rawValue, .chainUid: chainUid]
         case let .select(entity): return [.entity: entity.rawValue]
         case let .edit(entity): return [.entity: entity.rawValue]
         case let .delete(entity): return [.entity: entity.rawValue]
@@ -315,6 +321,7 @@ enum StatMarketTop: String {
 
 enum StatEntity: String {
     case account
+    case address
     case blockchain
     case cloudBackup = "cloud_backup"
     case contractAddress = "contract_address"
