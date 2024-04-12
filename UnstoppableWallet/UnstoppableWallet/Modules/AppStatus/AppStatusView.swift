@@ -39,7 +39,9 @@ struct AppStatusView: View {
                                             switch field {
                                             case let .info(title, value):
                                                 Text(title).themeSubhead2()
-                                                Text(value).themeSubhead1(color: .themeLeah, alignment: .trailing)
+                                                Text(value)
+                                                    .themeSubhead1(color: .themeLeah, alignment: .trailing)
+                                                    .multilineTextAlignment(.trailing)
                                             case let .title(value):
                                                 Text(value).themeSubhead1(color: .themeLeah)
                                             case let .raw(text):
