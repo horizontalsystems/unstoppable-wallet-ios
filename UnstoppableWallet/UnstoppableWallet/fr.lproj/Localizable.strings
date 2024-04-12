@@ -168,7 +168,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "restore.cloud.password.title" = "Entrez le mot de passe";
 "restore.cloud.password.placeholder" = "Mot de passe de la sauvegarde";
-"restore.cloud.password.description" = "Enter the password to import your backup";
+"restore.cloud.password.description" = "Entrez le mot de passe pour importer votre sauvegarde";
 
 // Restore Cex
 
@@ -1318,10 +1318,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "biometry.off" = "Désactivé";
 "biometry.manual" = "Manuel";
-"biometry.on" = "On";
-"biometry.off.description" = "Disabled in all cases";
+"biometry.on" = "Activé";
+"biometry.off.description" = "Désactivé dans tous les cas";
 "biometry.manual.description" = "Numérisation avec le bouton";
-"biometry.on.description" = "Automatic scanning";
+"biometry.on.description" = "Numérisation automatique";
 
 // Create Passcode
 
