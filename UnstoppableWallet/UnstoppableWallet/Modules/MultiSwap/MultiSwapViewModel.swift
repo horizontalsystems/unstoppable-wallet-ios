@@ -485,6 +485,11 @@ extension MultiSwapViewModel {
         amountIn = availableBalance * Decimal(percent) / 100
     }
 
+    func clearAmountIn() {
+        enteringFiat = false
+        amountIn = nil
+    }
+
     func stopAutoQuoting() {
         timer?.invalidate()
     }
