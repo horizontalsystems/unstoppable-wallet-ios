@@ -1055,7 +1055,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.30_day_volume" = "Son 30 Gün Hacmi";
 
 "coin_analytics.analysis.title" = "Smart Contract Analysis";
-"coin_analytics.analysis.footer" = "Powered by De.Fi";
+"coin_analytics.analysis.footer" = "De.Fi tarafından desteklenmektedir";
 "coin_analytics.analysis.high_risk_items" = "High Risk Items";
 "coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
 "coin_analytics.analysis.attention_required" = "Attention Required";
