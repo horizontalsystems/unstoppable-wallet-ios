@@ -85,7 +85,12 @@ class MultiSwapViewModel: ObservableObject {
                 return
             }
 
-            amountIn = nil
+            if enteringFiat {
+                fiatAmountIn = nil
+            } else {
+                amountIn = nil
+            }
+
             internalTokenIn = tokenIn
 
             if internalTokenOut == tokenIn {
@@ -451,10 +456,18 @@ class MultiSwapViewModel: ObservableObject {
 
 extension MultiSwapViewModel {
     func interchange() {
+        let currentFiatAmountOut = fiatAmountOut
+        let currentAmountOut = currentQuote?.quote.amountOut
+
         let internalTokenIn = internalTokenIn
         self.internalTokenIn = internalTokenOut
         internalTokenOut = internalTokenIn
-        amountIn = currentQuote?.quote.amountOut
+
+        if enteringFiat {
+            fiatAmountIn = currentFiatAmountOut
+        } else {
+            amountIn = currentAmountOut
+        }
     }
 
     func flipPrice() {
