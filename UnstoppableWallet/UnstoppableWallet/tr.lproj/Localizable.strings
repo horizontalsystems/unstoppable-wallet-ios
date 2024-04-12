@@ -72,9 +72,9 @@
 "alert.cant_recognize" = "Tanıyamıyorum";
 
 "alert.fee_too_low" = "Ücret Çok Düşük";
-"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.rbf_not_Enabled" = "RBF (Ücretle Değiştir) etkin değil";
 "alert.unable_to_replace" = "Değiştirilemiyor";
-"alert.already_replaced" = "Already replaced";
+"alert.already_replaced" = "Zaten değiştirildi";
 
 "no_results_found" = "Sonuç bulunamadı";
 "action.loading" = "yükleniyor...";
@@ -168,7 +168,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "restore.cloud.password.title" = "Parolanı Gir";
 "restore.cloud.password.placeholder" = "Yedek Şifre";
-"restore.cloud.password.description" = "Enter the password to import your backup";
+"restore.cloud.password.description" = "Yedeğinizi içe aktarmak için şifreyi girin";
 
 // Restore Cex
 
@@ -341,7 +341,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.locked.info.description" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
 "balance.token.not_relayed" = "Broadcasting";
 "balance.token.not_relayed.info.title" = "Broadcast";
-"balance.token.not_relayed.info.description" = "The transaction holding this amount is broadcasted but not yet accepted by the network";
+"balance.token.not_relayed.info.description" = "Bu miktarı içeren işlem yayınlandı ancak henüz ağ tarafından kabul edilmedi";
 "balance.token.processing" = "İşleniyor";
 "balance.token.processing.info.title" = "İşlem Sayısı";
 "balance.token.processing.info.description" = "Bu tutardaki işlemler hâlâ senkronize ediliyor. Ve onaylandığında, bu tokenler harcama için kullanılabilir";
@@ -389,8 +389,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.used_addresses.title" = "Kullanılan Adresler";
 "deposit.used_addresses.description" = "%@ adresi gizlilik ve güvenlik nedeniyle değişiyor. Bu cüzdanın kullanılan adreslerinin bir listesi aşağıda verilmiştir.";
 
-"receive_used_addresses.external" = "Receive Addresses";
-"receive_used_addresses.change" = "Change Addresses";
+"receive_used_addresses.external" = "Alıcının adresi";
+"receive_used_addresses.change" = "Değişiklik Adresleri";
 
 "deposit.zcash.restore.description" = "Daha önce herhangi bir ZEC paranız var mıydı?";
 "deposit.zcash.restore.already_own" = "Evet, zaten sahibim";
@@ -450,7 +450,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.you_send" = "Gönderdiğiniz";
 "send.confirmation.transfer" = "Transfer";
 "send.confirmation.to" = "Alan";
-"send.confirmation.own" = "Own";
+"send.confirmation.own" = "Kendi";
 "send.confirmation.contact_name" = "Kişi Adı";
 "send.confirmation.domain" = "Alan adı";
 "send.confirmation.address" = "Adres";
@@ -460,18 +460,18 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.total" = "Toplam";
 "send.confirmation.fee" = "Ücret";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.replace_by_fee" = "Replace by Fee";
-"send.confirmation.replaced_transactions" = "Replaced Transactions";
+"send.confirmation.replace_by_fee" = "Ücretle Değiştir";
+"send.confirmation.replaced_transactions" = "Değiştirilmiş İşlemler";
 
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.sent" = "Gönderildi";
 
-"send.confirmation.slide_to_approve" = "Slide to Approve";
+"send.confirmation.slide_to_approve" = "Onaylamak İçin Kaydır";
 "send.confirmation.approving" = "Onaylayan";
 "send.confirmation.approved" = "Onayla";
 
-"send.confirmation.slide_to_revoke" = "Slide to Revoke";
+"send.confirmation.slide_to_revoke" = "İptal Etmek İçin Kaydır";
 "send.confirmation.revoking" = "İptal ediliyor";
 "send.confirmation.revoked" = "İptal et";
 
@@ -479,11 +479,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.slide_to_cancel" = "İşlemi İptal Et";
 "send.confirmation.resend" = "Yeniden Gönder";
 "send.confirmation.btc_cancel_description" = "Bu işlem, önceki işlemi geçersiz kılmak için onu yeni bir işlem olarak kendine bir miktar göndererek yeniden göndermeyi deneyecektir. Yeni bir işlem gönderildiğinde önceki işlem hala beklemekteyse, bu işlemin geçersiz kılınacağı ve yerine geçeceği yüksek bir olasılık vardır (garanti edilmez). Bu iki işlemden sadece biri blok zincirine dahil edilecektir.";
-"send.confirmation.speed_up" = "Speed Up";
+"send.confirmation.speed_up" = "Hızlandır";
 "send.confirmation.cancel" = "İşlemi İptal Et";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Yöntem";
-"send.confirmation.replace_by_fee.disabled" = "Disabled";
+"send.confirmation.replace_by_fee.disabled" = "Etkisizleştirildi";
 "send.amount_error.balance" = "Yetersiz bakiye";
 "send.address_error.own_address" = "TRX kendinize aktarılamıyor";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
@@ -562,7 +562,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "swap.rate_not_available" = "Oran mevcut değil";
 "swap.select" = "Seç";
-"swap.quoting" = "Quoting";
+"swap.quoting" = "Alıntı";
 "swap.select_token_in" = "Girdi olarak jeton seçin";
 "swap.select_token_out" = "Çıktı olarak jeton seçin";
 "swap.no_providers" = "Sağlayıcı Yok";
@@ -578,29 +578,29 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "swap.allowance" = "Ödenek";
 "swap.allowance.description" = "Bir takas işlemi gerçekleştirirken bir borsanın bir kullanıcı adına harcayabileceği miktar. Gerçek bir takas işlemi gerçekleşmeden önce yeterli izin belirleyen bir önceki işlem gereklidir.";
-"swap.pending_allowance" = "Pending Allowance";
+"swap.pending_allowance" = "Bekleyen İzin";
 "swap.unlock" = "Kilidi Aç";
-"swap.unlocking" = "Unlocking";
-"swap.allowance_error" = "Allowance Error";
+"swap.unlocking" = "Kilidi Açılıyor";
+"swap.allowance_error" = "İzin Hatası";
 "swap.revoke" = "İptal et";
 "swap.revoking" = "İptal ediliyor";
 "swap.revoke_warning" = "%@ alışverişi yapabilir veya yeni tutarı iptal edip onaylamanız gerekir";
 
-"swap.unlock.title" = "Unlock Access";
+"swap.unlock.title" = "Erişimi Aç";
 "swap.unlock.subtitle" = "Aşağıdaki miktar için erişime izin ver";
 "swap.unlock.description" = "Akıllı bir sözleşmeye, adınıza token ticareti yapabilmesi için izin verin ve izin verilen miktarı belirtin. Bakiyenize herhangi bir etkisi olmaz, ancak onay için küçük bir ücret alınır.\n\nGelecekteki işlemler için daha yüksek bir miktarın önceden onaylanması, talep üzerine onaylara göre maliyet açısından daha avantajlıdır.";
 "swap.unlock.unlimited" = "Sınırsız";
 
 "swap.price_impact" = "Fiyat Etkisi";
 "swap.price_impact.description" = "Gösterilen fiyattan beklenen fiyat sapması, genellikle takas miktarıyla artar.";
-"swap.high_price_impact" = "High Price Impact";
-"swap.recipient" = "Recipient";
-"swap.slippage" = "Slippage";
+"swap.high_price_impact" = "Yüksek Fiyat Etkisi";
+"swap.recipient" = "Alıcı";
+"swap.slippage" = "Kayma";
 
-"swap.affiliate_fee" = "Affiliate Fee";
-"swap.liquidity_fee" = "Liquidity Fee";
-"swap.outbound_fee" = "Outbound Fee";
-"swap.total_fee" = "Total Fee";
+"swap.affiliate_fee" = "Ortaklık Ücreti";
+"swap.liquidity_fee" = "Likidite Ücreti";
+"swap.outbound_fee" = "Dışa Çıkış Ücreti";
+"swap.total_fee" = "Toplam Ücret";
 
 // Swap Advanced Settings
 
@@ -634,12 +634,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Swap Confirmation
 
 "swap.confirmation.title" = "Onayla";
-"swap.confirmation.quoting" = "Quoting...";
-"swap.confirmation.invalid_quote" = "Invalid Quote";
-"swap.confirmation.please_wait" = "Please Wait";
-"swap.confirmation.quote_expires_in" = "Quote expires in %@";
-"swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
+"swap.confirmation.quoting" = "Alıntı...";
+"swap.confirmation.invalid_quote" = "Yanlış alıntı";
+"swap.confirmation.please_wait" = "Lütfen Bekleyin";
+"swap.confirmation.quote_expires_in" = "Alıntının geçerlilik süresi %@ sonra sona erecek";
+"swap.confirmation.quote_expired" = "Alıntı süresi doldu";
+"swap.confirmation.quote_failed" = "Alıntı yaparken hata";
 
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
@@ -1159,7 +1159,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.contact_name" = "Kişi Adı";
 "tx_info.button_explorer" = "%@ ile görüntüle";
 "tx_info.rate" = "Geçmiş Kur";
-"tx_info.options.speed_up" = "Speed Up";
+"tx_info.options.speed_up" = "Hızlandır";
 "tx_info.options.cancel" = "İşlemi İptal Et";
 "tx_info.transaction.already_in_block" = "İşlem zaten blokta";
 "tx_info.fee" = "Ücret";
@@ -1168,7 +1168,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.double_spent_note" = "Çifte Harcama Riski Var!";
 "tx_info.locked_until" = "Şu zamana kadar kitlendi %@";
 "tx_info.unlocked_at" = "Kilid açıldı %@";
-"tx_info.recipient_hash" = "Recipient";
+"tx_info.recipient_hash" = "Alıcı";
 "tx_info.raw_transaction" = "Ham işlem";
 "tx_info.memo" = "Not";
 "tx_info.service" = "Hizmet";
@@ -1179,7 +1179,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.you_got" = "Aldığınız Tutar";
 "tx_info.price" = "Fiyat";
 "tx_info.scam_warning" = "Bu işlem şüpheli ve dolandırıcılık olabilir. Lütfen bu işlemden herhangi bir adres kopyalamayın.";
-"tx_info.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee.";
+"tx_info.resend_description" = "Bu işlem, önceki işlemi geçersiz kılmak için onu daha yüksek bir ücretle yeniden göndermeye çalışacaktır.";
 
 // Settings
 
@@ -1321,11 +1321,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings_security.duress_mode.description" = "Seçilen cüzdanları zorlama altında güvende tutmak için tasarlanmış özel bir mod.";
 
 "biometry.off" = "Kapat";
-"biometry.manual" = "Manual";
-"biometry.on" = "On";
-"biometry.off.description" = "Disabled in all cases";
-"biometry.manual.description" = "Scanning with the button";
-"biometry.on.description" = "Automatic scanning";
+"biometry.manual" = "Manuel";
+"biometry.on" = "Açık";
+"biometry.off.description" = "Tüm durumlarda devre dışı";
+"biometry.manual.description" = "Düğme ile tarama";
+"biometry.on.description" = "Otomatik tarama";
 
 // Create Passcode
 
@@ -1802,7 +1802,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "fee_settings.inputs_outputs" = "Giriş/Çıkış";
 "fee_settings.transaction_settings" = "İşlem Ayarları";
 "fee_settings.transaction_settings.description" = "İşlemlerin yapılandırılma şeklini değiştirerek Bitcoin işlemlerinizin izlenilmesini zorlaştırın.";
-"fee_settings.replace_by_fee" = "Replace by Fee";
+"fee_settings.replace_by_fee" = "Ücretle Değiştir";
 "fee_settings.replace_by_fee.description" = "Bu seçenek, takılı kalmış bir işlemi ücret miktarını artırarak yeniden göndermenizi sağlar.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock yalnızca BIP44 adreslerine (1 ile başlar) göndermek için çalışır";
@@ -2028,7 +2028,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Transaction Filter
 
-"transaction_filter.title" = "Filter";
+"transaction_filter.title" = "Filtre";
 "transaction_filter.description" = "Kişi listesine göre filtreleme %@ blok zinciri üzerinde çalışır. Uygun kişiler aşağıda gösterilmiştir";
 
 "transaction_filter.blockchain" = "Blockchain";
