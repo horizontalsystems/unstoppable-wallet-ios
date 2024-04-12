@@ -1055,7 +1055,7 @@
 "coin_analytics.30_day_volume" = "30天交易量";
 
 "coin_analytics.analysis.title" = "智能合约分析";
-"coin_analytics.analysis.footer" = "Powered by De.Fi";
+"coin_analytics.analysis.footer" = "由 De.Fi 支持";
 "coin_analytics.analysis.high_risk_items" = "高风险项目";
 "coin_analytics.analysis.medium_risk_items" = "中等风险项目";
 "coin_analytics.analysis.attention_required" = "需要注意";
