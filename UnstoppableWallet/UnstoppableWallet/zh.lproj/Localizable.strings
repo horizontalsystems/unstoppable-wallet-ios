@@ -168,7 +168,7 @@
 
 "restore.cloud.password.title" = "请输入密码";
 "restore.cloud.password.placeholder" = "备份密码";
-"restore.cloud.password.description" = "请输入备份密码以从iCloud导入您的钱包。";
+"restore.cloud.password.description" = "输入密码以导入您的备份";
 
 // Restore Cex
 
@@ -1315,6 +1315,13 @@
 "settings_security.edit_duress_passcode" = "编辑货币密码";
 "settings_security.disable_duress_mode" = "禁用冒险密码";
 "settings_security.duress_mode.description" = "专用模式用于在胁迫下使选定的钱包安全。";
+
+"biometry.off" = "关";
+"biometry.manual" = "手册";
+"biometry.on" = "开启";
+"biometry.off.description" = "在所有情况下禁用";
+"biometry.manual.description" = "使用按钮扫描";
+"biometry.on.description" = "自动扫描";
 
 // Create Passcode
 

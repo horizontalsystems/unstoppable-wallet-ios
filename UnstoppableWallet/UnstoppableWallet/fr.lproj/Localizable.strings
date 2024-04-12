@@ -168,7 +168,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "restore.cloud.password.title" = "Entrez le mot de passe";
 "restore.cloud.password.placeholder" = "Mot de passe de la sauvegarde";
-"restore.cloud.password.description" = "Entrez le mot de passe de sauvegarde pour importer votre portefeuille depuis iCloud.";
+"restore.cloud.password.description" = "Entrez le mot de passe pour importer votre sauvegarde";
 
 // Restore Cex
 
@@ -1315,6 +1315,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings_security.edit_duress_passcode" = "Modifier le code de détresse";
 "settings_security.disable_duress_mode" = "Désactiver le mot de passe de détresse";
 "settings_security.duress_mode.description" = "Un mode spécialisé conçu pour protéger les portefeuilles sélectionnés en cas de contrainte.";
+
+"biometry.off" = "Désactivé";
+"biometry.manual" = "Manuel";
+"biometry.on" = "Activé";
+"biometry.off.description" = "Désactivé dans tous les cas";
+"biometry.manual.description" = "Numérisation avec le bouton";
+"biometry.on.description" = "Numérisation automatique";
 
 // Create Passcode
 

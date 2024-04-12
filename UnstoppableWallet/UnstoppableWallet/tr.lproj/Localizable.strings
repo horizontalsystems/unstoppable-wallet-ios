@@ -136,7 +136,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 "restore.passphrase" = "Parola";
 "restore.input.passphrase" = "Parola";
-"restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
+"restore.wallet.passphrase_description" = "Bu kurtarma cümlesini oluştururken kullandığınız parolayı girin. Mevcut bir cüzdanı yeni bir parola ile geri yüklemek tamamen yeni bir cüzdan oluşturacaktır.";
 "restore.passphrase_description" = "Bu şifre, cüzdanınızın yedek dosyasını şifrelemek için kullanılır. Apple iCloud parolanızla ilgili değil. Kaybolur veya unutulursa kurtarılamaz veya sıfırlanamaz.";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 "restore.non_standard_import" = "Standart Olmayan Yükleme";
@@ -168,7 +168,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "restore.cloud.password.title" = "Parolanı Gir";
 "restore.cloud.password.placeholder" = "Yedek Şifre";
-"restore.cloud.password.description" = "Cüzdanınızı iCloud'dan içe aktarmak için yedek parolayı girin.";
+"restore.cloud.password.description" = "Enter the password to import your backup";
 
 // Restore Cex
 
@@ -1319,6 +1319,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings_security.edit_duress_passcode" = "Duress Şifresini Düzenle";
 "settings_security.disable_duress_mode" = "Zorlama Şifresini Devre Dışı Bırak";
 "settings_security.duress_mode.description" = "Seçilen cüzdanları zorlama altında güvende tutmak için tasarlanmış özel bir mod.";
+
+"biometry.off" = "Kapat";
+"biometry.manual" = "Manual";
+"biometry.on" = "On";
+"biometry.off.description" = "Disabled in all cases";
+"biometry.manual.description" = "Scanning with the button";
+"biometry.on.description" = "Automatic scanning";
 
 // Create Passcode
 
