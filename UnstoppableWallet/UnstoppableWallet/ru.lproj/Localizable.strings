@@ -1320,7 +1320,7 @@
 
 "biometry.off" = "Выкл.";
 "biometry.manual" = "Вручную";
-"biometry.on" = "Вкл";
+"biometry.on" = "Вкл.";
 "biometry.off.description" = "Отключено во всех случаях";
 "biometry.manual.description" = "Сканирование с помощью кнопки";
 "biometry.on.description" = "Автоматическое сканирование";
