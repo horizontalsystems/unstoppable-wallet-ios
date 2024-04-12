@@ -2,12 +2,14 @@ import Foundation
 import GRDB
 
 class StatRecord: Record {
+    let timestamp: Int
     let eventPage: String
     let eventSection: String?
     let event: String
     let params: [String: Any]?
 
-    init(eventPage: String, eventSection: String?, event: String, params: [String: Any]?) {
+    init(timestamp: Int, eventPage: String, eventSection: String?, event: String, params: [String: Any]?) {
+        self.timestamp = timestamp
         self.eventPage = eventPage
         self.eventSection = eventSection
         self.event = event
@@ -21,10 +23,11 @@ class StatRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case eventPage, eventSection, event, params
+        case timestamp, eventPage, eventSection, event, params
     }
 
     required init(row: Row) throws {
+        timestamp = row[Columns.timestamp]
         eventPage = row[Columns.eventPage]
         eventSection = row[Columns.eventSection]
         event = row[Columns.event]
@@ -40,6 +43,7 @@ class StatRecord: Record {
     }
 
     override func encode(to container: inout PersistenceContainer) {
+        container[Columns.timestamp] = timestamp
         container[Columns.eventPage] = eventPage
         container[Columns.eventSection] = eventSection
         container[Columns.event] = event
