@@ -1317,10 +1317,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings_security.duress_mode.description" = "Un mode spécialisé conçu pour protéger les portefeuilles sélectionnés en cas de contrainte.";
 
 "biometry.off" = "Désactivé";
-"biometry.manual" = "Manual";
+"biometry.manual" = "Manuel";
 "biometry.on" = "On";
 "biometry.off.description" = "Disabled in all cases";
-"biometry.manual.description" = "Scanning with the button";
+"biometry.manual.description" = "Numérisation avec le bouton";
 "biometry.on.description" = "Automatic scanning";
 
 // Create Passcode
