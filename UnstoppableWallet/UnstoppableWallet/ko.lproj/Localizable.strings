@@ -72,7 +72,7 @@
 "alert.cant_recognize" = "인식할 수 없음";
 
 "alert.fee_too_low" = "수수료가 너무 낮음";
-"alert.rbf_not_Enabled" = "RBF not enabled";
+"alert.rbf_not_Enabled" = "RBF(수수료 변경)가 활성화되지 않았습니다";
 "alert.unable_to_replace" = "교체할 수 없음";
 "alert.already_replaced" = "이미 교체했습니다";
 
@@ -166,7 +166,7 @@
 
 "restore.cloud.password.title" = "암호를 입력하세요";
 "restore.cloud.password.placeholder" = "백업 비밀번호";
-"restore.cloud.password.description" = "Enter the password to import your backup";
+"restore.cloud.password.description" = "백업을 가져오기 위해 비밀번호를 입력하세요";
 
 // Restore Cex
 
@@ -388,7 +388,7 @@
 "deposit.used_addresses.description" = "%@ 주소는 개인 정보 보호와 보안을 위해 변경됩니다. 이 지갑에서 사용된 주소 목록은 아래와 같습니다.";
 
 "receive_used_addresses.external" = "받는 주소들";
-"receive_used_addresses.change" = "Change Addresses";
+"receive_used_addresses.change" = "거스름돈 주소";
 
 "deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
 "deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
@@ -448,7 +448,7 @@
 "send.confirmation.you_send" = "보냅니다";
 "send.confirmation.transfer" = "전송";
 "send.confirmation.to" = "에게";
-"send.confirmation.own" = "Own";
+"send.confirmation.own" = "아군";
 "send.confirmation.contact_name" = "담당자 이름";
 "send.confirmation.domain" = "도메인";
 "send.confirmation.address" = "주소";
@@ -560,12 +560,12 @@
 
 "swap.rate_not_available" = "가격이 제공되지 않습니다";
 "swap.select" = "선택";
-"swap.quoting" = "Quoting";
+"swap.quoting" = "견적";
 "swap.select_token_in" = "토큰 인 선택";
 "swap.select_token_out" = "토큰 아웃 선택";
 "swap.no_providers" = "제공자 없음";
 "swap.enter_amount" = "금액 입력";
-"swap.no_quotes" = "No Quotes";
+"swap.no_quotes" = "제안이 없습니다";
 "swap.token_not_enabled" = "토큰 활성화되지 않음";
 "swap.token_syncing" = "토큰 동기화 중";
 "swap.token_not_synced" = "토큰 동기화되지 않음";
@@ -632,12 +632,12 @@
 // Swap Confirmation
 
 "swap.confirmation.title" = "확인";
-"swap.confirmation.quoting" = "Quoting...";
-"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.quoting" = "견적";
+"swap.confirmation.invalid_quote" = "잘못된 견적";
 "swap.confirmation.please_wait" = "기다려 주십시오";
-"swap.confirmation.quote_expires_in" = "Quote expires in %@";
-"swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
+"swap.confirmation.quote_expires_in" = "견적 유효 기간이 %@ 후에 만료됩니다";
+"swap.confirmation.quote_expired" = "견적이 만료되었습니다";
+"swap.confirmation.quote_failed" = "견적 실패";
 
 "swap.confirmation.slide_to_swap" = "밀어서 결제하기";
 "swap.confirmation.swapping" = "스와핑";
@@ -1316,11 +1316,11 @@
 "settings_security.duress_mode.description" = "강요 상황에서 선택한 지갑을 안전하게 보관하기 위해 디자인된 특별한 모드입니다.";
 
 "biometry.off" = "끄기";
-"biometry.manual" = "Manual";
-"biometry.on" = "On";
-"biometry.off.description" = "Disabled in all cases";
-"biometry.manual.description" = "Scanning with the button";
-"biometry.on.description" = "Automatic scanning";
+"biometry.manual" = "수동";
+"biometry.on" = "켜기";
+"biometry.off.description" = "모든 경우에 비활성화";
+"biometry.manual.description" = "버튼으로 스캔하기";
+"biometry.on.description" = "자동 스캔";
 
 // Create Passcode
 
