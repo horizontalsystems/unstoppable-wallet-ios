@@ -1054,7 +1054,7 @@
 "coin_analytics.30_day_volume" = "30일 거래량";
 
 "coin_analytics.analysis.title" = "스마트 계약 분석";
-"coin_analytics.analysis.footer" = "Powered by De.Fi";
+"coin_analytics.analysis.footer" = "De.Fi에 의해 구동됨";
 "coin_analytics.analysis.high_risk_items" = "고위험 품목";
 "coin_analytics.analysis.medium_risk_items" = "중위험 품목";
 "coin_analytics.analysis.attention_required" = "주의 필요";
