@@ -167,7 +167,6 @@ enum StatEvent {
 
     case createWallet(walletType: String)
     case importWallet(walletType: String)
-    case importWalletNonStandard(walletType: String)
     case watchWallet(walletType: String)
 
     case add(entity: StatEntity)
@@ -207,7 +206,6 @@ enum StatEvent {
         case .clear: return "clear"
         case .createWallet: return "create_wallet"
         case .importWallet: return "import_wallet"
-        case .importWalletNonStandard: return "import_wallet_non_standard"
         case .watchWallet: return "watch_wallet"
         case .add: return "add"
         }
@@ -246,7 +244,6 @@ enum StatEvent {
         case let .clear(entity): return [.entity: entity.rawValue]
         case let .createWallet(walletType): return [.walletType: walletType]
         case let .importWallet(walletType): return [.walletType: walletType]
-        case let .importWalletNonStandard(walletType): return [.walletType: walletType]
         case let .watchWallet(walletType): return [.walletType: walletType]
         case let .add(entity): return [.entity: entity.rawValue]
         default: return nil
