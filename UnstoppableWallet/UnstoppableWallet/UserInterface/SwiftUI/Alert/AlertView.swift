@@ -45,6 +45,7 @@ struct ButtonsAlertView: View {
                         }
                     }, label: {
                         view(item: button)
+                            .frame(maxWidth: .infinity)
                     })
                     .disabled(button.disabled)
                 }
