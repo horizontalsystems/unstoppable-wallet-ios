@@ -1055,7 +1055,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.30_day_volume" = "Volumen de 30 días";
 
 "coin_analytics.analysis.title" = "Análisis de contratos inteligente";
-"coin_analytics.analysis.footer" = "Powered by De.Fi";
+"coin_analytics.analysis.footer" = "Desarrollado por De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Elementos de Alto Riesgo";
 "coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
 "coin_analytics.analysis.attention_required" = "Attention Required";
