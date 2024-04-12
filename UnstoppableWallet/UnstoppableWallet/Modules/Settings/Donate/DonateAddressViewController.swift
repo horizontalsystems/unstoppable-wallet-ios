@@ -73,6 +73,7 @@ class DonateAddressViewController: ThemeViewController {
                                     component.button.set(image: UIImage(named: "copy_20"))
                                     component.onTap = {
                                         CopyHelper.copyAndNotify(value: viewItem.2)
+                                        stat(page: .donateAddressList, event: .copyAddress(chainUid: viewItem.1.uid))
                                     }
                                 },
                             ]),

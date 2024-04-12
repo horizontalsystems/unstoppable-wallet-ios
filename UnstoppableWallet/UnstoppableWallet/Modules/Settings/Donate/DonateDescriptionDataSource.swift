@@ -8,6 +8,8 @@ class DonateDescriptionDataSource: NSObject, ISectionDataSource {
 
     private func showAddresses() {
         let viewController = DonateAddressModule.viewController
+
+        stat(page: .donate, event: .open(page: .donateAddressList))
         self.viewController?.navigationController?.pushViewController(viewController, animated: true)
     }
 
