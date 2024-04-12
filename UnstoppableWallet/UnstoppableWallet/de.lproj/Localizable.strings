@@ -168,7 +168,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "restore.cloud.password.title" = "Passwort eingeben";
 "restore.cloud.password.placeholder" = "Passwort sichern";
-"restore.cloud.password.description" = "Enter the password to import your backup";
+"restore.cloud.password.description" = "Geben Sie das Passwort ein, um Ihre Sicherung zu importieren";
 
 // Restore Cex
 
@@ -1317,11 +1317,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings_security.duress_mode.description" = "Ein spezialisierter Modus, der entworfen wurde, um ausgewählte Brieftaschen unter Zwang zu schützen.";
 
 "biometry.off" = "Aus";
-"biometry.manual" = "Manual";
-"biometry.on" = "On";
-"biometry.off.description" = "Disabled in all cases";
-"biometry.manual.description" = "Scanning with the button";
-"biometry.on.description" = "Automatic scanning";
+"biometry.manual" = "Manuell";
+"biometry.on" = "Aktiviert";
+"biometry.off.description" = "In allen Fällen deaktiviert";
+"biometry.manual.description" = "Scannen mit dem Knopf";
+"biometry.on.description" = "Automatisches Scannen";
 
 // Create Passcode
 
