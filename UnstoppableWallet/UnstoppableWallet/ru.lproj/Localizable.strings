@@ -1057,7 +1057,7 @@
 "coin_analytics.30_day_volume" = "Объем за 30д";
 
 "coin_analytics.analysis.title" = "Анализ смарт-контрактов";
-"coin_analytics.analysis.footer" = "Powered by De.Fi Yield App";
+"coin_analytics.analysis.footer" = "Powered by De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Элементы высокого риска";
 "coin_analytics.analysis.medium_risk_items" = "Элементы среднего риска";
 "coin_analytics.analysis.attention_required" = "Требуется внимание";
