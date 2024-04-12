@@ -168,7 +168,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "restore.cloud.password.title" = "Digite a senha";
 "restore.cloud.password.placeholder" = "Fazer Backup da Senha";
-"restore.cloud.password.description" = "Enter the password to import your backup";
+"restore.cloud.password.description" = "Insira a senha para importar seu backup";
 
 // Restore Cex
 
@@ -390,7 +390,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.used_addresses.description" = "O número de endereços %@ muda para privacidade e segurança. Abaixo está uma lista de endereços usados neste carteira.";
 
 "receive_used_addresses.external" = "Endereços de Recebimento";
-"receive_used_addresses.change" = "Change Addresses";
+"receive_used_addresses.change" = "Endereço de troco";
 
 "deposit.zcash.restore.description" = "Já possui alguma moeda ZEC?";
 "deposit.zcash.restore.already_own" = "Sim, eu já possuo";
@@ -450,7 +450,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.you_send" = "Enviar";
 "send.confirmation.transfer" = "Transferir";
 "send.confirmation.to" = "Para";
-"send.confirmation.own" = "Own";
+"send.confirmation.own" = "Próprio";
 "send.confirmation.contact_name" = "Nome do Contato";
 "send.confirmation.domain" = "Domínio";
 "send.confirmation.address" = "Endereço";
@@ -562,12 +562,12 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "swap.rate_not_available" = "Taxa não disponível";
 "swap.select" = "Selecionar";
-"swap.quoting" = "Quoting";
+"swap.quoting" = "Cotação";
 "swap.select_token_in" = "Selecionar Token em";
 "swap.select_token_out" = "Selecionar Token de Saída";
 "swap.no_providers" = "Sem provedores";
 "swap.enter_amount" = "Inserir Quantidade";
-"swap.no_quotes" = "No Quotes";
+"swap.no_quotes" = "Sem ofertas";
 "swap.token_not_enabled" = "Token não ativado";
 "swap.token_syncing" = "Sincronização do Token";
 "swap.token_not_synced" = "Token não sincronizado";
@@ -634,12 +634,12 @@ Go to Settings - > %@ and allow access to the camera.";
 // Swap Confirmation
 
 "swap.confirmation.title" = "Confirmar";
-"swap.confirmation.quoting" = "Quoting...";
-"swap.confirmation.invalid_quote" = "Invalid Quote";
+"swap.confirmation.quoting" = "Cotação...";
+"swap.confirmation.invalid_quote" = "Cotação incorreta";
 "swap.confirmation.please_wait" = "Por favor, aguarde";
-"swap.confirmation.quote_expires_in" = "Quote expires in %@";
-"swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
+"swap.confirmation.quote_expires_in" = "O prazo da cotação expira em %@";
+"swap.confirmation.quote_expired" = "A cotação expirou";
+"swap.confirmation.quote_failed" = "Erro ao cotar";
 
 "swap.confirmation.slide_to_swap" = "Deslize para trocar";
 "swap.confirmation.swapping" = "Trocando";
@@ -1318,10 +1318,10 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "biometry.off" = "Desligado";
 "biometry.manual" = "Manual";
-"biometry.on" = "On";
-"biometry.off.description" = "Disabled in all cases";
-"biometry.manual.description" = "Scanning with the button";
-"biometry.on.description" = "Automatic scanning";
+"biometry.on" = "Ligado";
+"biometry.off.description" = "Desativado em todos os casos";
+"biometry.manual.description" = "Digitalização com o botão";
+"biometry.on.description" = "Digitalização automática";
 
 // Create Passcode
 
