@@ -638,8 +638,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.confirmation.invalid_quote" = "Yanlış alıntı";
 "swap.confirmation.please_wait" = "Lütfen Bekleyin";
 "swap.confirmation.quote_expires_in" = "Alıntının geçerlilik süresi %@ sonra sona erecek";
-"swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
+"swap.confirmation.quote_expired" = "Alıntı süresi doldu";
+"swap.confirmation.quote_failed" = "Alıntı yaparken hata";
 
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
