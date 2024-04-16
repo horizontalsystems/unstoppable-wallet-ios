@@ -225,6 +225,8 @@ extension ManageWalletsService {
             restoreSettingsService.approveSettings(token: token, account: account)
         } else {
             save(token: token)
+
+            stat(page: .coinManager, event: .enableToken(token: token))
         }
     }
 
@@ -232,6 +234,8 @@ extension ManageWalletsService {
         let token = tokens[index]
         let walletsToDelete = wallets.filter { $0.token == token }
         walletManager.delete(wallets: Array(walletsToDelete))
+
+        stat(page: .coinManager, event: .disableToken(token: token))
     }
 
     func infoItem(index: Int) -> InfoItem? {

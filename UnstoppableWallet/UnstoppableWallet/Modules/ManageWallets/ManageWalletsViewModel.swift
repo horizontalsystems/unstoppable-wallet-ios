@@ -105,6 +105,8 @@ extension ManageWalletsViewModel {
         case let .contractAddress(value, explorerUrl):
             showContractRelay.accept(ContractViewItem(coin: coinViewItem, blockchainImageUrl: infoItem.token.blockchainType.imageUrl, value: value, explorerUrl: explorerUrl))
         }
+
+        stat(page: .coinManager, event: .openTokenInfo(token: infoItem.token))
     }
 
     func onUpdate(filter: String) {

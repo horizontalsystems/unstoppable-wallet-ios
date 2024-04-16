@@ -16,6 +16,7 @@ enum StatPage: String {
     case balance
     case baseCurrency = "base_currency"
     case bip32RootKey = "bip32_root_key"
+    case birthdayInput = "birthday_input"
     case blockchainSettings = "blockchain_settings"
     case blockchainSettingsBtc = "blockchain_settings_btc"
     case blockchainSettingsEvm = "blockchain_settings_evm"
@@ -94,6 +95,7 @@ enum StatPage: String {
     case receiveTokenList = "receive_token_list"
     case recoveryPhrase = "recovery_phrase"
     case restore
+    case restoreSelect = "restore_select"
     case scanQrCode = "scan_qr_code"
     case security
     case send
@@ -138,8 +140,9 @@ enum StatEvent {
     case createWallet(walletType: String)
     case delete(entity: StatEntity)
     case deleteCustomEvmSource(chainUid: String)
-    case disableToken
+    case disableToken(token: Token)
     case edit(entity: StatEntity)
+    case enableToken(token: Token)
     case importWallet(walletType: String)
     case open(page: StatPage)
     case openBlockchainSettingsBtc(chainUid: String)
@@ -150,6 +153,7 @@ enum StatEvent {
     case openPlatform(chainUid: String)
     case openReceive(token: Token)
     case openSend(token: Token)
+    case openTokenInfo(token: Token)
     case openTokenPage(element: WalletModule.Element)
     case paste(entity: StatEntity)
     case refresh
@@ -191,9 +195,11 @@ enum StatEvent {
         case .deleteCustomEvmSource: return "delete_custom_evm_source"
         case .disableToken: return "disable_token"
         case .edit: return "edit"
+        case .enableToken: return "enable_token"
         case .importWallet: return "import_wallet"
         case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openSend, .openTokenPage,
              .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"
+        case .openTokenInfo: return "open_token_info"
         case .paste: return "paste"
         case .refresh: return "refresh"
         case .removeAmount: return "remove_amount"
@@ -234,7 +240,9 @@ enum StatEvent {
         case let .createWallet(walletType): return [.walletType: walletType]
         case let .delete(entity): return [.entity: entity.rawValue]
         case let .deleteCustomEvmSource(coinUid): return [.page: StatPage.blockchainSettingsEvm.rawValue, .coinUid: coinUid]
+        case let .disableToken(token): return params(token: token)
         case let .edit(entity): return [.entity: entity.rawValue]
+        case let .enableToken(token): return params(token: token)
         case let .importWallet(walletType): return [.walletType: walletType]
         case let .open(page): return [.page: page.rawValue]
         case let .openBlockchainSettingsBtc(chainUid: chainUid): return [.page: StatPage.blockchainSettingsBtc.rawValue, .chainUid: chainUid]
@@ -243,24 +251,16 @@ enum StatEvent {
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
-        case let .openReceive(token):
-            var params: [StatParam: Any] = [.page: StatPage.receive.rawValue, .coinUid: token.coin.uid, .chainUid: token.blockchainType.uid]
-            params[.derivation] = token.type.derivation?.rawValue
-            params[.bitcoinCashCoinType] = token.type.bitcoinCashCoinType?.rawValue
-            return params
-        case let .openSend(token):
-            var params: [StatParam: Any] = [.page: StatPage.send.rawValue, .coinUid: token.coin.uid, .chainUid: token.blockchainType.uid]
-            params[.derivation] = token.type.derivation?.rawValue
-            params[.bitcoinCashCoinType] = token.type.bitcoinCashCoinType?.rawValue
-            return params
+        case let .openReceive(token): return params(token: token).merging([.page: StatPage.receive.rawValue]) { $1 }
+        case let .openSend(token): return params(token: token).merging([.page: StatPage.send.rawValue]) { $1 }
         case let .openTokenPage(element):
             var params: [StatParam: Any] = [.page: StatPage.tokenPage.rawValue]
-            params[.coinUid] = element.coin?.uid
-            params[.chainUid] = element.wallet?.token.blockchainType.uid
-            params[.derivation] = element.wallet?.token.type.derivation?.rawValue
-            params[.bitcoinCashCoinType] = element.wallet?.token.type.bitcoinCashCoinType?.rawValue
-            params[.assetId] = element.cexAsset?.id
+            switch element {
+            case let .wallet(wallet): params.merge(self.params(token: wallet.token)) { $1 }
+            case let .cexAsset(cexAsset): params[.assetId] = cexAsset.id
+            }
             return params
+        case let .openTokenInfo(token): return params(token: token)
         case let .paste(entity): return [.entity: entity.rawValue]
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
         case let .scanQr(entity): return [.entity: entity.rawValue]
@@ -279,6 +279,13 @@ enum StatEvent {
         case let .watchWallet(walletType): return [.walletType: walletType]
         default: return nil
         }
+    }
+
+    private func params(token: Token) -> [StatParam: Any] {
+        var params: [StatParam: Any] = [.coinUid: token.coin.uid, .chainUid: token.blockchainType.uid]
+        params[.derivation] = token.type.derivation?.rawValue
+        params[.bitcoinCashCoinType] = token.type.bitcoinCashCoinType?.rawValue
+        return params
     }
 }
 

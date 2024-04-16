@@ -525,7 +525,9 @@ class WalletViewController: ThemeViewController {
 
         viewModel.onDisable(element: element)
 
-        stat(page: .balance, event: .disableToken)
+        if let token = element.wallet?.token {
+            stat(page: .balance, event: .disableToken(token: token))
+        }
     }
 
     private func bindHeaderActions(cell: WalletHeaderCell) {
