@@ -1,3 +1,5 @@
+import MarketKit
+
 enum StatPage: String {
     case aboutApp = "about_app"
     case academy
@@ -146,9 +148,9 @@ enum StatEvent {
     case openCategory(categoryUid: String)
     case openCoin(coinUid: String)
     case openPlatform(chainUid: String)
-    case openReceive(coinUid: String, chainUid: String)
-    case openSend(coinUid: String, chainUid: String)
-    case openTokenPage(coinUid: String?, chainUid: String?, assetId: String?)
+    case openReceive(token: Token)
+    case openSend(token: Token)
+    case openTokenPage(element: WalletModule.Element)
     case paste(entity: StatEntity)
     case refresh
     case removeAmount
@@ -190,8 +192,8 @@ enum StatEvent {
         case .disableToken: return "disable_token"
         case .edit: return "edit"
         case .importWallet: return "import_wallet"
-        case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openSend, .openTokenPage, 
-            .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"
+        case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openSend, .openTokenPage,
+             .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"
         case .paste: return "paste"
         case .refresh: return "refresh"
         case .removeAmount: return "remove_amount"
@@ -241,13 +243,23 @@ enum StatEvent {
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
-        case let .openReceive(coinUid, chainUid): return [.page: StatPage.receive.rawValue, .coinUid: coinUid, .chainUid: chainUid]
-        case let .openSend(coinUid, chainUid): return [.page: StatPage.send.rawValue, .coinUid: coinUid, .chainUid: chainUid]
-        case let .openTokenPage(coinUid, chainUid, assetId):
+        case let .openReceive(token):
+            var params: [StatParam: Any] = [.page: StatPage.receive.rawValue, .coinUid: token.coin.uid, .chainUid: token.blockchainType.uid]
+            params[.derivation] = token.type.derivation?.rawValue
+            params[.bitcoinCashCoinType] = token.type.bitcoinCashCoinType?.rawValue
+            return params
+        case let .openSend(token):
+            var params: [StatParam: Any] = [.page: StatPage.send.rawValue, .coinUid: token.coin.uid, .chainUid: token.blockchainType.uid]
+            params[.derivation] = token.type.derivation?.rawValue
+            params[.bitcoinCashCoinType] = token.type.bitcoinCashCoinType?.rawValue
+            return params
+        case let .openTokenPage(element):
             var params: [StatParam: Any] = [.page: StatPage.tokenPage.rawValue]
-            params[.coinUid] = coinUid
-            params[.chainUid] = chainUid
-            params[.assetId] = assetId
+            params[.coinUid] = element.coin?.uid
+            params[.chainUid] = element.wallet?.token.blockchainType.uid
+            params[.derivation] = element.wallet?.token.type.derivation?.rawValue
+            params[.bitcoinCashCoinType] = element.wallet?.token.type.bitcoinCashCoinType?.rawValue
+            params[.assetId] = element.cexAsset?.id
             return params
         case let .paste(entity): return [.entity: entity.rawValue]
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
@@ -272,9 +284,11 @@ enum StatEvent {
 
 enum StatParam: String {
     case assetId = "asset_id"
+    case bitcoinCashCoinType = "bitcoin_cash_coin_type"
     case categoryUid = "category_uid"
     case chainUid = "chain_uid"
     case coinUid = "coin_uid"
+    case derivation
     case entity
     case field
     case marketTop = "market_top"
