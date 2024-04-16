@@ -132,6 +132,7 @@ enum StatSection: String {
 enum StatEvent {
     case add(entity: StatEntity)
     case addEvmSource(chainUid: String)
+    case addToken(token: Token)
     case addToWallet
     case addToWatchlist(coinUid: String)
     case clear(entity: StatEntity)
@@ -184,7 +185,7 @@ enum StatEvent {
 
     var name: String {
         switch self {
-        case .add: return "add"
+        case .add, .addToken: return "add"
         case .addEvmSource: return "add_evm_source"
         case .addToWallet: return "add_to_wallet"
         case .addToWatchlist: return "add_to_watchlist"
@@ -233,6 +234,7 @@ enum StatEvent {
         switch self {
         case let .add(entity): return [.entity: entity.rawValue]
         case let .addEvmSource(chainUid): return [.chainUid: chainUid]
+        case let .addToken(token): return params(token: token).merging([.entity: StatEntity.token.rawValue]) { $1 }
         case let .addToWatchlist(coinUid): return [.coinUid: coinUid]
         case let .clear(entity): return [.entity: entity.rawValue]
         case let .copy(entity): return [.entity: entity.rawValue]
