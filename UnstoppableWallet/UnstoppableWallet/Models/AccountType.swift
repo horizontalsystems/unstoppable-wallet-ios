@@ -319,7 +319,16 @@ extension AccountType {
         case .evmAddress:
             return (try? EvmKit.Address(hex: string)).map { AccountType.evmAddress(address: $0) }
         case .tronAddress:
-            return (try? TronKit.Address(raw: Data(hex: string))).map { AccountType.tronAddress(address: $0) }
+            let hexData = Data(hex: string)
+            
+            let address: TronKit.Address?
+            if !hexData.isEmpty {           // android convention address
+                address = try? TronKit.Address(raw: hexData)
+            } else {                        // old ios style
+                address = try? TronKit.Address(address: string)
+            }
+            
+            return address.map { AccountType.tronAddress(address: $0) }
         case .tonAddress:
             return AccountType.tonAddress(address: string)
         case .cex:
