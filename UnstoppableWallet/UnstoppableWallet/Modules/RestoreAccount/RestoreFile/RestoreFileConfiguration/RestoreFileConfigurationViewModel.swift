@@ -10,10 +10,13 @@ class RestoreFileConfigurationViewModel {
     private let showMergeAlertSubject = PassthroughSubject<Void, Never>()
     private let finishedSubject = PassthroughSubject<Bool, Never>()
 
-    init(cloudBackupManager: CloudBackupManager, appBackupProvider: AppBackupProvider, contactBookManager: ContactBookManager, rawBackup: RawFullBackup) {
+    let statPage: StatPage
+
+    init(cloudBackupManager: CloudBackupManager, appBackupProvider: AppBackupProvider, contactBookManager: ContactBookManager, statPage: StatPage, rawBackup: RawFullBackup) {
         self.cloudBackupManager = cloudBackupManager
         self.appBackupProvider = appBackupProvider
         self.contactBookManager = contactBookManager
+        self.statPage = statPage
         self.rawBackup = rawBackup
     }
 

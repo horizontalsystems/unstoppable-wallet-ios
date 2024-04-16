@@ -63,14 +63,18 @@ extension EvmNetworkService {
     }
 
     func setDefault(index: Int) {
-        setCurrent(syncSource: state.defaultItems[index].syncSource)
+        let syncSource = state.defaultItems[index].syncSource
+        stat(page: .blockchainSettingsEvm, event: .switchEvmSource(chainUid: blockchain.uid, name: syncSource.name))
+        setCurrent(syncSource: syncSource)
     }
 
     func setCustom(index: Int) {
+        stat(page: .blockchainSettingsEvm, event: .switchEvmSource(chainUid: blockchain.uid, name: "custom"))
         setCurrent(syncSource: state.customItems[index].syncSource)
     }
 
     func removeCustom(index: Int) {
+        stat(page: .blockchainSettingsEvm, event: .deleteCustomEvmSource(chainUid: blockchain.uid))
         evmSyncSourceManager.delete(syncSource: state.customItems[index].syncSource, blockchainType: blockchain.type)
     }
 }

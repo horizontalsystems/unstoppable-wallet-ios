@@ -83,6 +83,7 @@ class EvmNetworkViewController: ThemeViewController {
     }
 
     private func openAddNew() {
+        stat(page: .blockchainSettingsEvm, event: .openBlockchainSettingsEvmAdd(chainUid: viewModel.blockchainType.uid))
         let module = AddEvmSyncSourceModule.viewController(blockchainType: viewModel.blockchainType)
         present(module, animated: true)
     }

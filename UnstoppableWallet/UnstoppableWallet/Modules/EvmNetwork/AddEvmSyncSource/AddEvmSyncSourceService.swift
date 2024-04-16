@@ -44,6 +44,7 @@ extension AddEvmSyncSourceService {
 
         let auth = basicAuth.isEmpty ? nil : basicAuth
 
+        stat(page: .blockchainSettingsEvmAdd, event: .addEvmSource(chainUid: blockchainType.uid))
         evmSyncSourceManager.saveSyncSource(blockchainType: blockchainType, url: url, auth: auth)
     }
 }

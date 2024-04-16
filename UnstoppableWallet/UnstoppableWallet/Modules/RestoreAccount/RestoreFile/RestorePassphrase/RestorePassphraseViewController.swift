@@ -184,7 +184,7 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
     }
 
     private func openConfiguration(rawBackup: RawFullBackup) {
-        let viewController = RestoreFileConfigurationModule.viewController(rawBackup: rawBackup, returnViewController: returnViewController)
+        let viewController = RestoreFileConfigurationModule.viewController(rawBackup: rawBackup, statPage: statPage, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

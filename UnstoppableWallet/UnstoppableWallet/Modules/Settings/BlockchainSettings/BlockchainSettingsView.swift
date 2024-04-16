@@ -14,6 +14,7 @@ struct BlockchainSettingsView: View {
                 ListSection {
                     ForEach(viewModel.btcItems, id: \.blockchain.uid) { item in
                         ClickableRow(action: {
+                            stat(page: .blockchainSettings, event: .openBlockchainSettingsBtc(chainUid: item.blockchain.uid))
                             btcSheetBlockchain = item.blockchain
                         }) {
                             ItemView(
@@ -30,6 +31,7 @@ struct BlockchainSettingsView: View {
                 ListSection {
                     ForEach(viewModel.evmItems, id: \.blockchain.uid) { item in
                         ClickableRow(action: {
+                            stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))
                             evmSheetBlockchain = item.blockchain
                         }) {
                             ItemView(

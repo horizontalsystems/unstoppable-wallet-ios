@@ -20,7 +20,11 @@ struct BackupTypeView: View {
                         isAvailable: $viewModel.cloudAvailable,
                         isActive: $cloudNavigationPushed
                     ) {
-                        if viewModel.cloudAvailable { viewModel.destination = .cloud } else { cloudAlertPresented = true }
+                        if viewModel.cloudAvailable {
+                            viewModel.destination = .cloud
+                        } else {
+                            cloudAlertPresented = true
+                        }
                     }
                     .frame(minHeight: 106)
                 }
