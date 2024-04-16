@@ -11,6 +11,7 @@ class AddressMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFie
 
     @Published var addressResult: AddressInput.Result = .idle {
         didSet {
+            syncAddressCautionState()
             syncSubject.send()
         }
     }
@@ -39,12 +40,16 @@ class AddressMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFie
     }
 
     private func syncAddressCautionState() {
-        guard !isAddressActive else {
-            addressCautionState = .none
-            return
-        }
         switch addressResult {
-        case let .invalid(failure): addressCautionState = .caution(.init(text: failure.error.localizedDescription, type: .error))
+        case let .invalid(failure):
+            if let error = failure.error as? AddressParserChain.ParserError {
+                switch error {
+                case .validationError:
+                    addressCautionState = isAddressActive ? .none : .caution(.init(text: failure.error.localizedDescription, type: .error))
+                case .fetchError:
+                    addressCautionState = .caution(.init(text: failure.error.localizedDescription, type: .error))
+                }
+            }
         default: addressCautionState = .none
         }
     }
