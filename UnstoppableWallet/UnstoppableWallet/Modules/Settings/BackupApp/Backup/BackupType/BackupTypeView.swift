@@ -2,12 +2,17 @@ import SwiftUI
 import ThemeKit
 
 struct BackupTypeView: View {
-    @ObservedObject var viewModel: BackupAppViewModel
+    @StateObject var viewModel: BackupAppViewModel
     var onDismiss: (() -> Void)?
 
     @State var cloudNavigationPushed = false
     @State var localNavigationPushed = false
     @State var cloudAlertPresented = false
+
+    init(onDismiss: (() -> Void)?) {
+        self.onDismiss = onDismiss
+        _viewModel = StateObject(wrappedValue: BackupAppViewModel())
+    }
 
     var body: some View {
         ScrollableThemeView {
@@ -20,7 +25,11 @@ struct BackupTypeView: View {
                         isAvailable: $viewModel.cloudAvailable,
                         isActive: $cloudNavigationPushed
                     ) {
-                        if viewModel.cloudAvailable { viewModel.destination = .cloud } else { cloudAlertPresented = true }
+                        if viewModel.cloudAvailable {
+                            viewModel.destination = .cloud
+                        } else {
+                            cloudAlertPresented = true
+                        }
                     }
                     .frame(minHeight: 106)
                 }
@@ -67,9 +76,13 @@ struct BackupTypeView: View {
     }
 
     @ViewBuilder func navigation(image: String, text: String, description: String, isAvailable: Binding<Bool> = .constant(true), isActive: Binding<Bool>, action: @escaping () -> Void = {}) -> some View {
+        let statPage = viewModel.statPage
         if isAvailable.wrappedValue {
             NavigationRow(
-                destination: { BackupListView(viewModel: viewModel, onDismiss: onDismiss) },
+                destination: {
+                    BackupListView(viewModel: viewModel, onDismiss: onDismiss)
+                        .modifier(FirstAppear { stat(page: .exportFull, event: .open(page: statPage)) })
+                },
                 isActive: isActive
             ) {
                 row(image: image, text: text.localized, description: description)

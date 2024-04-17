@@ -78,7 +78,8 @@ class ResendBitcoinViewModel {
                         title: item.sentToSelf ? "send.confirmation.own".localized : "send.confirmation.to".localized,
                         value: item.receiver.raw,
                         valueTitle: item.receiver.title,
-                        contactAddress: contactData.contactAddress
+                        contactAddress: contactData.contactAddress,
+                        statSection: .addressTo
                     )
                 )
                 if let contactName = contactData.name {
@@ -210,7 +211,7 @@ extension ResendBitcoinViewModel {
 extension ResendBitcoinViewModel {
     enum ViewItem {
         case amount(title: String, token: Token, coinAmount: String, currencyAmount: String?, type: AmountType)
-        case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?)
+        case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?, statSection: StatSection)
         case value(iconName: String?, title: String, value: String, type: ValueType)
         case fee(title: String, coinAmount: String, currencyAmount: String?)
     }

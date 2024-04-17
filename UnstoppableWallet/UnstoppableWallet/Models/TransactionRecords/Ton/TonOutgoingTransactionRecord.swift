@@ -6,7 +6,7 @@ class TonOutgoingTransactionRecord: TonTransactionRecord {
     let transfers: [Transfer]
     let totalValue: TransactionValue
 
-    init(source: TransactionSource, transaction: TonTransaction, feeToken: Token, token: Token) {
+    init(source: TransactionSource, transaction: TonTransactionWithTransfers, feeToken: Token, token: Token) {
         var totalAmount: Decimal = 0
 
         transfers = transaction.transfers.map { transfer in
@@ -16,7 +16,7 @@ class TonOutgoingTransactionRecord: TonTransactionRecord {
             totalAmount += value
 
             return Transfer(
-                address: transfer.dest,
+                address: transfer.dest.getNonBounceable(),
                 value: .coinValue(token: token, value: value)
             )
         }

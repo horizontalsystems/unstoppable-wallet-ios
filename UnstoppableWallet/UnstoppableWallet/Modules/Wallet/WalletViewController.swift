@@ -450,7 +450,7 @@ class WalletViewController: ThemeViewController {
         if let viewController = WalletTokenModule.viewController(element: element) {
             navigationController?.pushViewController(viewController, animated: true)
 
-            stat(page: .balance, event: .openTokenPage(coinUid: element.coin?.uid, chainUid: element.wallet?.token.blockchain.uid, assetId: element.cexAsset?.id))
+            stat(page: .balance, event: .openTokenPage(element: element))
         }
     }
 
@@ -525,7 +525,9 @@ class WalletViewController: ThemeViewController {
 
         viewModel.onDisable(element: element)
 
-        stat(page: .balance, event: .disableToken)
+        if let token = element.wallet?.token {
+            stat(page: .balance, event: .disableToken(token: token))
+        }
     }
 
     private func bindHeaderActions(cell: WalletHeaderCell) {

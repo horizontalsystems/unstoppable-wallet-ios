@@ -4,11 +4,11 @@ import Foundation
 
 class BackupAppViewModel: ObservableObject {
     static let backupNamePrefix = "App Backup"
-    let accountManager: AccountManager
-    let contactManager: ContactBookManager
-    let cloudBackupManager: CloudBackupManager
-    let favoritesManager: FavoritesManager
-    let evmSyncSourceManager: EvmSyncSourceManager
+    private let accountManager = App.shared.accountManager
+    private let contactManager = App.shared.contactManager
+    private let cloudBackupManager = App.shared.cloudBackupManager
+    private let favoritesManager = App.shared.favoritesManager
+    private let evmSyncSourceManager = App.shared.evmSyncSourceManager
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -88,13 +88,7 @@ class BackupAppViewModel: ObservableObject {
     private var dismissSubject = PassthroughSubject<Void, Never>()
     @Published var sharePresented: URL?
 
-    init(accountManager: AccountManager, contactManager: ContactBookManager, cloudBackupManager: CloudBackupManager, favoritesManager: FavoritesManager, evmSyncSourceManager: EvmSyncSourceManager) {
-        self.accountManager = accountManager
-        self.contactManager = contactManager
-        self.cloudBackupManager = cloudBackupManager
-        self.favoritesManager = favoritesManager
-        self.evmSyncSourceManager = evmSyncSourceManager
-
+    init() {
         cloudAvailable = cloudBackupManager.iCloudUrl != nil
         cloudBackupManager.$state
             .sink(receiveValue: { [weak self] state in
@@ -255,6 +249,8 @@ extension BackupAppViewModel {
                     try cloudBackupManager.save(accountIds: selectedIds, passphrase: password, name: name)
                     passwordButtonProcessing = false
                     await showSuccess()
+
+                    stat(page: .exportFullToCloud, event: .exportFull)
                     dismissSubject.send()
                 } catch {
                     passwordButtonProcessing = false
@@ -277,6 +273,13 @@ extension BackupAppViewModel {
 extension BackupAppViewModel {
     var dismissPublisher: AnyPublisher<Void, Never> {
         dismissSubject.eraseToAnyPublisher()
+    }
+
+    var statPage: StatPage {
+        switch destination {
+        case .cloud: return .exportFullToCloud
+        default: return .exportFullToFiles
+        }
     }
 }
 

@@ -120,6 +120,8 @@ extension AddTokenService {
 
         let wallet = Wallet(token: token, account: account)
         walletManager.save(wallets: [wallet])
+
+        stat(page: .addToken, event: .addToken(token: token))
     }
 }
 

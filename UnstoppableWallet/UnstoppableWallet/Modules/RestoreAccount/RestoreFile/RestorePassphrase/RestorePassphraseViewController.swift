@@ -118,10 +118,7 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
 
         viewModel.successPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                HudHelper.instance.show(banner: .imported)
-                (self?.returnViewController ?? self)?.dismiss(animated: true)
-            }
+            .sink { [weak self] in self?.onSuccess(accountType: $0) }
             .store(in: &cancellables)
 
         showDefaultPassphrase()
@@ -171,6 +168,13 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
         HudHelper.instance.show(banner: .error(string: error))
     }
 
+    private func onSuccess(accountType: AccountType) {
+        HudHelper.instance.show(banner: .imported)
+
+        stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
+        (returnViewController ?? self)?.dismiss(animated: true)
+    }
+
     private func openSelectCoins(accountName: String, accountType: AccountType, isManualBackedUp: Bool, isFileBackedUp: Bool) {
         let viewController = RestoreSelectModule.viewController(
             accountName: accountName,
@@ -184,7 +188,7 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
     }
 
     private func openConfiguration(rawBackup: RawFullBackup) {
-        let viewController = RestoreFileConfigurationModule.viewController(rawBackup: rawBackup, returnViewController: returnViewController)
+        let viewController = RestoreFileConfigurationModule.viewController(rawBackup: rawBackup, statPage: statPage, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

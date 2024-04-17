@@ -9,8 +9,11 @@ class RestoreCloudViewModel {
     @Published private(set) var fullBackupViewItem: ViewItem = .empty
     private let restoreSubject = PassthroughSubject<BackupModule.NamedSource, Never>()
 
-    init(service: RestoreCloudService) {
+    let sourceType: BackupModule.Source.Abstract
+
+    init(service: RestoreCloudService, sourceType: BackupModule.Source.Abstract) {
         self.service = service
+        self.sourceType = sourceType
 
         service.$oneWalletItems
             .sink { [weak self] in self?.sync(type: .wallet, items: $0) }

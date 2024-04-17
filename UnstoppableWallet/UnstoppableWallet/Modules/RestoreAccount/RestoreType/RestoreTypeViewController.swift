@@ -145,13 +145,16 @@ class RestoreTypeViewController: ThemeViewController {
     private func show(type: RestoreTypeModule.RestoreType) {
         let viewController: UIViewController
         var viaPush = true
+
+        let isWallet = viewModel.sourceType == .wallet
+
         switch type {
         case .recoveryOrPrivateKey:
             viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController)
             stat(page: .importWallet, event: .open(page: .importWalletFromKey))
         case .cloudRestore:
-            viewController = RestoreCloudModule.viewController(returnViewController: returnViewController)
-            stat(page: .importWallet, event: .open(page: .importWalletFromCloud))
+            viewController = RestoreCloudModule.viewController(sourceType: viewModel.sourceType, returnViewController: returnViewController)
+            stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromCloud : .importFullFromCloud))
         case .fileRestore:
             let documentPicker: UIDocumentPickerViewController
             let types = UTType.types(tag: "json", tagClass: UTTagClass.filenameExtension, conformingTo: nil)
@@ -162,7 +165,7 @@ class RestoreTypeViewController: ThemeViewController {
 
             viaPush = false
             viewController = documentPicker
-            stat(page: .importWallet, event: .open(page: .importWalletFromFiles))
+            stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromFiles : .importFullFromFiles))
         case .cex:
             viewController = RestoreCexViewController(returnViewController: returnViewController)
             stat(page: .importWallet, event: .open(page: .importWalletFromExchangeWallet))
@@ -176,7 +179,9 @@ class RestoreTypeViewController: ThemeViewController {
     }
 
     private func show(source: BackupModule.NamedSource) {
-        let viewController = RestorePassphraseModule.viewController(item: source, statPage: .importWalletFromFiles, returnViewController: returnViewController)
+        let isWallet = viewModel.sourceType == .wallet
+
+        let viewController = RestorePassphraseModule.viewController(item: source, statPage: isWallet ? .importWalletFromFiles : .importFullFromFiles, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

@@ -197,7 +197,7 @@ struct ReceiveAddressView: View {
             inputAmountPresented = true
         case .share:
             shareText = data.copyValue
-            stat(page: .receive, event: .share)
+            stat(page: .receive, event: .share(entity: .receiveAddress))
         case .copy:
             CopyHelper.copyAndNotify(value: data.copyValue)
             stat(page: .receive, event: .copy(entity: .receiveAddress))

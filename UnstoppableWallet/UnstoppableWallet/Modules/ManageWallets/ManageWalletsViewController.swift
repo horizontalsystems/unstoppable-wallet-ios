@@ -96,6 +96,8 @@ class ManageWalletsViewController: ThemeSearchViewController {
         }
 
         present(module, animated: true)
+
+        stat(page: .coinManager, event: .open(page: .addToken))
     }
 
     private func onUpdate(viewItems: [ManageWalletsViewModel.ViewItem]) {

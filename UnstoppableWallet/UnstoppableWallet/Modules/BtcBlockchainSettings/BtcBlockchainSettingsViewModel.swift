@@ -55,6 +55,7 @@ extension BtcBlockchainSettingsViewModel {
     }
 
     func onTapSave() {
+        stat(page: .blockchainSettingsBtc, event: .switchBtcSource(chainUid: service.blockchain.uid, type: selectedRestoreMode))
         service.save(restoreMode: selectedRestoreMode)
     }
 }

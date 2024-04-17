@@ -6,7 +6,7 @@ class TonTransactionRecord: TransactionRecord {
     let fee: TransactionValue?
     let memo: String?
 
-    init(source: TransactionSource, transaction: TonTransaction, feeToken: Token) {
+    init(source: TransactionSource, transaction: TonTransactionWithTransfers, feeToken: Token) {
         fee = transaction.fee.map { .coinValue(token: feeToken, value: TonAdapter.amount(kitAmount: $0)) }
         memo = transaction.memo
 

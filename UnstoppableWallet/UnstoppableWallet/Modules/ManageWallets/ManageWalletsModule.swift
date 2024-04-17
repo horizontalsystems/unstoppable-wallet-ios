@@ -3,7 +3,7 @@ import UIKit
 
 enum ManageWalletsModule {
     static func viewController() -> UIViewController? {
-        let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module()
+        let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module(statPage: .coinManager)
 
         guard let service = ManageWalletsService(
             marketKit: App.shared.marketKit,

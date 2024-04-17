@@ -233,7 +233,7 @@ enum WalletModule {
             }
 
             if let module = SendModule.controller(wallet: wallet, mode: .predefined(address: address)) {
-                stat(page: .donate, event: .openSend(coinUid: wallet.coin.uid, chainUid: wallet.token.blockchain.uid))
+                stat(page: .donate, event: .openSend(token: wallet.token))
                 viewController?.navigationController?.pushViewController(module, animated: true)
             }
         }

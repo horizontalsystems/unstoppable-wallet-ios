@@ -6,7 +6,7 @@ import UIKit
 enum RestoreSelectModule {
     static func viewController(accountName: String, accountType: AccountType, statPage: StatPage, isManualBackedUp: Bool = true, isFileBackedUp: Bool = false, returnViewController: UIViewController?) -> UIViewController {
         let (blockchainTokensService, blockchainTokensView) = BlockchainTokensModule.module()
-        let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module()
+        let (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module(statPage: .restoreSelect)
 
         let service = RestoreSelectService(
             accountName: accountName,

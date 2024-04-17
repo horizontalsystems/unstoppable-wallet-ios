@@ -1,20 +1,6 @@
 import SwiftUI
 
 enum BackupAppModule {
-    static func view(onDismiss: (() -> Void)?) -> some View {
-        let viewModel = BackupAppViewModel(
-            accountManager: App.shared.accountManager,
-            contactManager: App.shared.contactManager,
-            cloudBackupManager: App.shared.cloudBackupManager,
-            favoritesManager: App.shared.favoritesManager,
-            evmSyncSourceManager: App.shared.evmSyncSourceManager
-        )
-
-        return BackupTypeView(viewModel: viewModel, onDismiss: onDismiss)
-    }
-}
-
-extension BackupAppModule {
     enum Destination: String, CaseIterable, Identifiable {
         case cloud
         case local
