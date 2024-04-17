@@ -5,10 +5,10 @@ import TonKitKmm
 class TonIncomingTransactionRecord: TonTransactionRecord {
     let transfer: Transfer?
 
-    init(source: TransactionSource, transaction: TonTransaction, feeToken: Token, token: Token) {
+    init(source: TransactionSource, transaction: TonTransactionWithTransfers, feeToken: Token, token: Token) {
         transfer = transaction.transfers.first.map { transfer in
             Transfer(
-                address: transfer.src,
+                address: transfer.src.getNonBounceable(),
                 value: .coinValue(token: token, value: TonAdapter.amount(kitAmount: transfer.amount))
             )
         }
