@@ -69,6 +69,8 @@ struct BackupPasswordView: View {
             .sheet(item: $viewModel.sharePresented) { url in
                 let completion: UIActivityViewController.CompletionWithItemsHandler = { _, success, _, error in
                     if success {
+                        stat(page: .exportFullToFiles, event: .exportFull)
+                        
                         onDismiss?()
                         showDone()
                     }

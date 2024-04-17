@@ -44,11 +44,13 @@ enum StatPage: String {
     case coinRankTxCount = "coin_rank_tx_count"
     case contacts
     case contactUs = "contact_us"
-    case createBackup = "create_backup"
     case donate
     case donateAddressList = "donate_address_list"
     case evmAddress = "evm_address"
     case evmPrivateKey = "evm_private_key"
+    case exportFull = "export_full"
+    case exportFullToCloud = "export_full_to_cloud"
+    case exportFullToFiles = "export_full_to_files"
     case externalBlockExplorer = "external_block_explorer"
     case externalCoinWebsite = "external_coin_website"
     case externalCoinWhitePaper = "external_coin_white_paper"
@@ -94,7 +96,6 @@ enum StatPage: String {
     case receive
     case receiveTokenList = "receive_token_list"
     case recoveryPhrase = "recovery_phrase"
-    case restore
     case restoreSelect = "restore_select"
     case scanQrCode = "scan_qr_code"
     case security
@@ -144,7 +145,9 @@ enum StatEvent {
     case disableToken(token: Token)
     case edit(entity: StatEntity)
     case enableToken(token: Token)
+    case exportFull
     case importWallet(walletType: String)
+    case importFull
     case open(page: StatPage)
     case openBlockchainSettingsBtc(chainUid: String)
     case openBlockchainSettingsEvm(chainUid: String)
@@ -197,6 +200,8 @@ enum StatEvent {
         case .disableToken: return "disable_token"
         case .edit: return "edit"
         case .enableToken: return "enable_token"
+        case .exportFull: return "export_full"
+        case .importFull: return "import_full"
         case .importWallet: return "import_wallet"
         case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openSend, .openTokenPage,
              .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"

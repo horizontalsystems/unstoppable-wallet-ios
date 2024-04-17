@@ -2145,6 +2145,8 @@
 		6B29072A2AF0CB8A006157D6 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29071E2AF0CB8A006157D6 /* EventHandler.swift */; };
 		6B55E33B2AF26D6400616B60 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6B55E33A2AF26D6400616B60 /* Starscream */; };
 		6B55E33D2AF26D7A00616B60 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6B55E33C2AF26D7A00616B60 /* Starscream */; };
+		6BA5117D2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
+		6BA5117E2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
@@ -4360,6 +4362,7 @@
 		6B29071B2AF0CB8A006157D6 /* WalletConnectAppShowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectAppShowView.swift; sourceTree = "<group>"; };
 		6B29071D2AF0CB8A006157D6 /* WidgetCoinAppShowModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetCoinAppShowModule.swift; sourceTree = "<group>"; };
 		6B29071E2AF0CB8A006157D6 /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppearModifier.swift; sourceTree = "<group>"; };
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
@@ -5487,6 +5490,7 @@
 				ABC9A0B48D3C4172D9C06DE7 /* SlideButton */,
 				ABC9A07015564A3BE995B0D7 /* Recipient */,
 				ABC9A49FE1A041CAC3B6C1E9 /* Alert */,
+				6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -10089,6 +10093,7 @@
 				58AAAA07DC05EF7F912EA184 /* MarketListTvlDecorator.swift in Sources */,
 				58AAAFC5FE754A2286161D16 /* MarketGlobalTvlFetcher.swift in Sources */,
 				11B354283B8AC609B65AADDF /* FavoriteCoinRecord_v_0_22.swift in Sources */,
+				6BA5117E2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */,
 				58AAAD1BFFE70A777DDF27A9 /* AddressParserChain.swift in Sources */,
 				58AAAB9E86439B6DE1D22538 /* EvmAddressParserItem.swift in Sources */,
 				58AAA13C1DC5FA79BCA1D732 /* UdnAddressParserItem.swift in Sources */,
@@ -11595,6 +11600,7 @@
 				11B35E48AA074CB56CAC4A9C /* CoinReportsService.swift in Sources */,
 				11B35EBC08855AC0CDC0AF09 /* PostCell.swift in Sources */,
 				58AAAAC777502E0C331C109F /* MarketGlobalDefiMetricService.swift in Sources */,
+				6BA5117D2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */,
 				58AAA153DF6764D7FEA99D63 /* MarketGlobalTvlMetricService.swift in Sources */,
 				58AAAEB0F729B839B9B99A04 /* MarketListDefiDecorator.swift in Sources */,
 				58AAA331B4A743D9183F8449 /* MarketListTvlDecorator.swift in Sources */,

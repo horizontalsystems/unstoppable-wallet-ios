@@ -60,7 +60,7 @@ class BackupManagerViewController: ThemeViewController {
 
     private func onRestore() {
         let viewController = RestoreTypeModule.viewController(type: .full, sourceViewController: self)
-        stat(page: .backupManager, event: .open(page: .restore))
+        stat(page: .backupManager, event: .open(page: .importFull))
         present(viewController, animated: true)
     }
 
@@ -73,12 +73,11 @@ class BackupManagerViewController: ThemeViewController {
     }
 
     private func onCreate() {
-        let viewController = BackupAppModule
-            .view { [weak self] in
-                self?.presentedViewController?.dismiss(animated: true)
+        let viewController = BackupTypeView { [weak self] in
+                (self?.presentedViewController ?? self)?.dismiss(animated: true)
             }.toNavigationViewController()
 
-        stat(page: .backupManager, event: .open(page: .createBackup))
+        stat(page: .backupManager, event: .open(page: .exportFull))
         present(viewController, animated: true)
     }
 }

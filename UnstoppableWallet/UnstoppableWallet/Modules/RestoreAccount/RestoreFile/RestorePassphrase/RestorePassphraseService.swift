@@ -38,7 +38,7 @@ extension RestorePassphraseService {
             switch rawBackup.account.type {
             case .cex:
                 appBackupProvider.restore(raws: [rawBackup])
-                return .success
+                return .success(rawBackup.account.type)
             default:
                 return .restoredAccount(rawBackup)
             }
@@ -53,6 +53,6 @@ extension RestorePassphraseService {
     enum RestoreResult {
         case restoredAccount(RawWalletBackup)
         case restoredFullBackup(RawFullBackup)
-        case success
+        case success(AccountType)
     }
 }
