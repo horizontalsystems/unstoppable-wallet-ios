@@ -124,14 +124,14 @@ extension CexWithdrawConfirmViewController: SectionsDataSource {
         switch viewItem {
         case let .amount(title, iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, title: title, imageUrl: iconUrl, placeholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
-        case let .address(title, value, contactAddress):
+        case let .address(title, value, contactAddress, statSection):
             var onAddToContact: (() -> Void)? = nil
             if let contactAddress {
                 onAddToContact = { [weak self] in
-                    ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+                    ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .cexWithdrawConfirmation, statSection: statSection)
                 }
             }
-            return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: nil, onAddToContact: onAddToContact)
+            return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: nil, statPage: .cexWithdrawConfirmation, statSection: statSection, onAddToContact: onAddToContact)
         case let .value(title, value, type):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value, type: type)
         case let .feeValue(title, coinAmount, currencyAmount):

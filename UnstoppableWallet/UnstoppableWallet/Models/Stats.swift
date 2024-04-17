@@ -21,6 +21,7 @@ enum StatPage: String {
     case blockchainSettingsBtc = "blockchain_settings_btc"
     case blockchainSettingsEvm = "blockchain_settings_evm"
     case blockchainSettingsEvmAdd = "blockchain_settings_evm_add"
+    case cexWithdrawConfirmation = "cex_withdraw_confirmation"
     case cloudBackup = "cloud_backup"
     case coinAnalytics = "coin_analytics"
     case coinAnalyticsActiveAddresses = "coin_analytics_active_addresses"
@@ -42,10 +43,13 @@ enum StatPage: String {
     case coinRankHolders = "coin_rank_holders"
     case coinRankRevenue = "coin_rank_revenue"
     case coinRankTxCount = "coin_rank_tx_count"
+    case contactAddToExisting = "contact_add_to_existing"
+    case contactNew = "contact_new"
     case contacts
     case contactUs = "contact_us"
     case donate
     case donateAddressList = "donate_address_list"
+    case doubleSpend = "double_spend"
     case evmAddress = "evm_address"
     case evmPrivateKey = "evm_private_key"
     case exportFull = "export_full"
@@ -96,10 +100,12 @@ enum StatPage: String {
     case receive
     case receiveTokenList = "receive_token_list"
     case recoveryPhrase = "recovery_phrase"
+    case resend
     case restoreSelect = "restore_select"
     case scanQrCode = "scan_qr_code"
     case security
     case send
+    case sendConfirmation = "send_confirmation"
     case sendTokenList = "send_token_list"
     case settings
     case swap
@@ -122,9 +128,16 @@ enum StatPage: String {
 }
 
 enum StatSection: String {
+    case addressFrom = "address_from"
+    case addressRecipient = "address_recipient"
+    case addressSpender = "address_spender"
+    case addressTo = "address_to"
+    case input
     case popular
     case recent
     case searchResults = "search_results"
+    case status
+    case timeLock = "time_lock"
     case topGainers = "top_gainers"
     case topLosers = "top_losers"
     case topPlatforms = "top_platforms"
@@ -156,6 +169,7 @@ enum StatEvent {
     case openCoin(coinUid: String)
     case openPlatform(chainUid: String)
     case openReceive(token: Token)
+    case openResend(chainUid: String, type: String)
     case openSend(token: Token)
     case openTokenInfo(token: Token)
     case openTokenPage(element: WalletModule.Element)
@@ -167,7 +181,7 @@ enum StatEvent {
     case scanQr(entity: StatEntity)
     case select(entity: StatEntity)
     case setAmount
-    case share
+    case share(entity: StatEntity)
     case switchBtcSource(chainUid: String, type: BtcRestoreMode)
     case switchChartPeriod(period: StatPeriod)
     case switchEvmSource(chainUid: String, name: String)
@@ -182,6 +196,7 @@ enum StatEvent {
     case toggleConversionCoin
     case toggleHidden
     case toggleIndicators(shown: Bool)
+    case togglePrice
     case toggleSortDirection
     case toggleTvlField
     case watchWallet(walletType: String)
@@ -203,7 +218,7 @@ enum StatEvent {
         case .exportFull: return "export_full"
         case .importFull: return "import_full"
         case .importWallet: return "import_wallet"
-        case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openSend, .openTokenPage,
+        case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSend, .openTokenPage,
              .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"
         case .openTokenInfo: return "open_token_info"
         case .paste: return "paste"
@@ -229,6 +244,7 @@ enum StatEvent {
         case .toggleConversionCoin: return "toggle_conversion_coin"
         case .toggleHidden: return "toggle_hidden"
         case .toggleIndicators: return "toggle_indicators"
+        case .togglePrice: return "toggle_price"
         case .toggleSortDirection: return "toggle_sort_direction"
         case .toggleTvlField: return "toggle_tvl_field"
         case .watchWallet: return "watch_wallet"
@@ -259,6 +275,7 @@ enum StatEvent {
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
         case let .openReceive(token): return params(token: token).merging([.page: StatPage.receive.rawValue]) { $1 }
+        case let .openResend(chainUid, type): return [.page: StatPage.resend.rawValue, .chainUid: chainUid, .type: type]
         case let .openSend(token): return params(token: token).merging([.page: StatPage.send.rawValue]) { $1 }
         case let .openTokenPage(element):
             var params: [StatParam: Any] = [.page: StatPage.tokenPage.rawValue]
@@ -272,6 +289,7 @@ enum StatEvent {
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
         case let .scanQr(entity): return [.entity: entity.rawValue]
         case let .select(entity): return [.entity: entity.rawValue]
+        case let .share(entity): return [.entity: entity.rawValue]
         case let .switchBtcSource(chainUid, type): return [.chainUid: chainUid, .type: type.rawValue]
         case let .switchChartPeriod(period): return [.period: period.rawValue]
         case let .switchEvmSource(chainUid, name): return [.chainUid: chainUid, .type: name]
@@ -375,6 +393,7 @@ enum StatEntity: String {
     case receiveAddress = "receive_address"
     case recoveryPhrase = "recovery_phrase"
     case token
+    case transactionId = "transaction_id"
     case wallet
     case walletName = "wallet_name"
 }

@@ -70,7 +70,7 @@ struct BackupPasswordView: View {
                 let completion: UIActivityViewController.CompletionWithItemsHandler = { _, success, _, error in
                     if success {
                         stat(page: .exportFullToFiles, event: .exportFull)
-                        
+
                         onDismiss?()
                         showDone()
                     }

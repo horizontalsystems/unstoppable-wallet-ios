@@ -10,18 +10,22 @@ protocol ContactBookSelectorDelegate: AnyObject {
 }
 
 enum ContactBookModule {
-    private static func showAddContact(mode: ContactBookModule.AddContactMode, contactAddress: ContactAddress) -> UIViewController? {
+    private static func showAddContact(mode: ContactBookModule.AddContactMode, contactAddress: ContactAddress, statPage: StatPage, statSection: StatSection? = nil) -> UIViewController? {
         switch mode {
         case .new:
             guard let module = ContactBookContactModule.viewController(mode: .add(contactAddress)) else {
                 return nil
             }
 
+            stat(page: statPage, section: statSection, event: .open(page: .contactNew))
+
             return module
         case .exist:
             guard let module = ContactBookModule.viewController(mode: .addToContact(contactAddress), presented: true) else {
                 return nil
             }
+
+            stat(page: statPage, section: statSection, event: .open(page: .contactAddToExisting))
 
             return module
         }
@@ -59,16 +63,16 @@ extension ContactBookModule {
         }
     }
 
-    static func showAddition(contactAddress: ContactAddress, parentViewController: UIViewController?) {
+    static func showAddition(contactAddress: ContactAddress, parentViewController: UIViewController?, statPage: StatPage, statSection: StatSection? = nil) {
         // if all contacts has address for blockchain just show add-new controller
-        if App.shared.contactManager.all?.isEmpty ?? true, let controller = showAddContact(mode: .new, contactAddress: contactAddress) {
+        if App.shared.contactManager.all?.isEmpty ?? true, let controller = showAddContact(mode: .new, contactAddress: contactAddress, statPage: statPage, statSection: statSection) {
             parentViewController?.present(controller, animated: true)
             return
         }
 
         // show alert and choose make new contact or add to existed
         let alertController = ContactBookModule.chooseAddContactMode(resultAfterClose: true) { [weak parentViewController] mode in
-            guard let controller = showAddContact(mode: mode, contactAddress: contactAddress) else {
+            guard let controller = showAddContact(mode: mode, contactAddress: contactAddress, statPage: statPage, statSection: statSection) else {
                 return
             }
             parentViewController?.present(controller, animated: true)

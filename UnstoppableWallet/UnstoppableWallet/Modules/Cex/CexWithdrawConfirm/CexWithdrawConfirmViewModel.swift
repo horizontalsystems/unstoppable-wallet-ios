@@ -78,7 +78,8 @@ class CexWithdrawConfirmViewModel {
             .address(
                 title: "send.confirmation.to".localized,
                 value: service.address,
-                contactAddress: contactData?.contactAddress
+                contactAddress: contactData?.contactAddress,
+                statSection: .addressTo
             ),
         ]
 
@@ -111,7 +112,7 @@ extension CexWithdrawConfirmViewModel {
 
     enum ViewItem {
         case amount(title: String, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
-        case address(title: String, value: String, contactAddress: ContactAddress?)
+        case address(title: String, value: String, contactAddress: ContactAddress?, statSection: StatSection)
         case value(title: String, value: String, type: ValueType)
         case feeValue(title: String, coinAmount: String, currencyAmount: String?)
     }

@@ -151,7 +151,7 @@ enum CellComponent {
         )
     }
 
-    static func fromToRow(tableView: UITableView, rowInfo: RowInfo, title: String, value: String, valueTitle _: String?, onAddToContact: (() -> Void)? = nil) -> RowProtocol {
+    static func fromToRow(tableView: UITableView, rowInfo: RowInfo, title: String, value: String, valueTitle _: String?, statPage: StatPage, statSection: StatSection, onAddToContact: (() -> Void)? = nil) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
         let titleFont: UIFont = .subhead2
         let valueFont: UIFont = .subhead1
@@ -183,6 +183,7 @@ enum CellComponent {
                     component.button.set(image: UIImage(named: "copy_20"))
                     component.onTap = {
                         CopyHelper.copyAndNotify(value: value)
+                        stat(page: statPage, section: statSection, event: .copy(entity: .address))
                     }
                 },
             ]),

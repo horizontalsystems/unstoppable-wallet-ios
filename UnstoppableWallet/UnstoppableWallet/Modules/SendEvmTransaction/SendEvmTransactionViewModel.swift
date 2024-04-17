@@ -286,7 +286,8 @@ class SendEvmTransactionViewModel {
                 title: "send.confirmation.to".localized,
                 value: toValue,
                 valueTitle: sendInfo?.domain ?? evmLabelManager.addressLabel(address: toValue),
-                contactAddress: contactData.contactAddress
+                contactAddress: contactData.contactAddress,
+                statSection: .addressTo
             ),
         ]
 
@@ -324,7 +325,8 @@ class SendEvmTransactionViewModel {
             title: "send.confirmation.to".localized,
             value: addressValue,
             valueTitle: addressTitle,
-            contactAddress: contactData.contactAddress
+            contactAddress: contactData.contactAddress,
+            statSection: .addressTo
         )
         )
         if let contactName = contactData.name {
@@ -356,7 +358,8 @@ class SendEvmTransactionViewModel {
             title: "send.confirmation.to".localized,
             value: addressValue,
             valueTitle: addressTitle,
-            contactAddress: contactData.contactAddress
+            contactAddress: contactData.contactAddress,
+            statSection: .addressTo
         )
         )
         if let contactName = contactData.name {
@@ -402,7 +405,8 @@ class SendEvmTransactionViewModel {
                 title: "approve.confirmation.spender".localized,
                 value: addressValue,
                 valueTitle: addressTitle,
-                contactAddress: contactData.contactAddress
+                contactAddress: contactData.contactAddress,
+                statSection: .addressSpender
             ),
         ]
 
@@ -474,7 +478,8 @@ class SendEvmTransactionViewModel {
                 title: "swap.advanced_settings.recipient_address".localized,
                 value: addressValue,
                 valueTitle: addressTitle,
-                contactAddress: contactData.contactAddress
+                contactAddress: contactData.contactAddress,
+                statSection: .addressRecipient
             )
             )
             if let contactName = contactData.name {
@@ -620,7 +625,8 @@ class SendEvmTransactionViewModel {
                 title: "swap.advanced_settings.recipient_address".localized,
                 value: addressValue,
                 valueTitle: addressTitle,
-                contactAddress: contactData.contactAddress
+                contactAddress: contactData.contactAddress,
+                statSection: .addressRecipient
             )
             )
             if let contactName = contactData.name {
@@ -646,7 +652,8 @@ class SendEvmTransactionViewModel {
                 title: "send.confirmation.to".localized,
                 value: toValue,
                 valueTitle: evmLabelManager.addressLabel(address: toValue),
-                contactAddress: contactData.contactAddress
+                contactAddress: contactData.contactAddress,
+                statSection: .addressTo
             ),
         ]
 
@@ -731,7 +738,7 @@ extension SendEvmTransactionViewModel {
         case amount(title: String, token: MarketKit.Token, coinAmount: String, currencyAmount: String?, type: AmountType)
         case nftAmount(iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType)
         case doubleAmount(title: String, coinAmount: String, currencyAmount: String?)
-        case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?)
+        case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?, statSection: StatSection)
         case value(title: String, value: String, type: ValueType)
         case input(value: String)
     }

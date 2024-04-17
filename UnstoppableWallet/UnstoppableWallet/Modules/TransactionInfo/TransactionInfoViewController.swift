@@ -76,16 +76,22 @@ class TransactionInfoViewController: ThemeViewController {
 
     private func openStatusInfo() {
         present(InfoModule.transactionStatusInfo, animated: true)
+
+        stat(page: .transactionInfo, section: .status, event: .open(page: .info))
     }
 
     private func openResend(type: ResendTransactionType) {
         do {
-            if adapter is BaseEvmAdapter {
+            if let evmAdapter = adapter as? BaseEvmAdapter {
                 let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, type: type, transactionHash: viewModel.transactionHash)
                 present(ThemeNavigationController(rootViewController: viewController), animated: true)
-            } else if adapter is BitcoinBaseAdapter, let transactionRecord = viewModel.transactionRecord as? BitcoinTransactionRecord {
+
+                stat(page: .transactionInfo, event: .openResend(chainUid: evmAdapter.evmKitWrapper.blockchainType.uid, type: type.rawValue))
+            } else if let btcAdapter = adapter as? BitcoinBaseAdapter, let transactionRecord = viewModel.transactionRecord as? BitcoinTransactionRecord {
                 let viewController = try ResendBitcoinModule.resendViewController(adapter: adapter, type: type, transactionRecord: transactionRecord)
                 present(ThemeNavigationController(rootViewController: viewController), animated: true)
+
+                stat(page: .transactionInfo, event: .openResend(chainUid: btcAdapter.token.blockchainType.uid, type: type.rawValue))
             }
         } catch {
             HudHelper.instance.show(banner: .error(string: error.localizedDescription))
@@ -98,16 +104,13 @@ class TransactionInfoViewController: ThemeViewController {
         }
 
         present(module, animated: true)
+
         stat(page: .transactionInfo, event: .openCoin(coinUid: coinUid))
     }
 
     private func openNftAsset(providerCollectionUid: String, nftUid: NftUid) {
         let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
         present(ThemeNavigationController(rootViewController: module), animated: true)
-    }
-
-    private func togglePrice() {
-        viewModel.togglePrice()
     }
 
     private func statusRow(rowInfo: RowInfo, status: TransactionStatus) -> RowProtocol {
@@ -210,40 +213,40 @@ class TransactionInfoViewController: ThemeViewController {
         var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
             onAddToContact = { [weak self] in
-                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .transactionInfo, statSection: .addressFrom)
             }
         }
-        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
+        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle, statPage: .transactionInfo, statSection: .addressFrom, onAddToContact: onAddToContact)
     }
 
     private func toRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
         var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
             onAddToContact = { [weak self] in
-                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .transactionInfo, statSection: .addressTo)
             }
         }
-        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
+        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle, statPage: .transactionInfo, statSection: .addressTo, onAddToContact: onAddToContact)
     }
 
     private func spenderRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
         var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
             onAddToContact = { [weak self] in
-                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .transactionInfo, statSection: .addressSpender)
             }
         }
-        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.spender".localized, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
+        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.spender".localized, value: value, valueTitle: valueTitle, statPage: .transactionInfo, statSection: .addressSpender, onAddToContact: onAddToContact)
     }
 
     private func recipientRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
         var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
             onAddToContact = { [weak self] in
-                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .transactionInfo, statSection: .addressRecipient)
             }
         }
-        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
+        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle, statPage: .transactionInfo, statSection: .addressRecipient, onAddToContact: onAddToContact)
     }
 
     private func idRow(rowInfo: RowInfo, value: String) -> RowProtocol {
@@ -256,6 +259,7 @@ class TransactionInfoViewController: ThemeViewController {
                     component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
                     component.onTap = {
                         CopyHelper.copyAndNotify(value: value)
+                        stat(page: .transactionInfo, event: .copy(entity: .transactionId))
                     }
                 },
                 .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) in
@@ -263,6 +267,7 @@ class TransactionInfoViewController: ThemeViewController {
                     component.onTap = {
                         let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
                         self?.present(activityViewController, animated: true)
+                        stat(page: .transactionInfo, event: .share(entity: .transactionId))
                     }
                 },
             ]),
@@ -363,6 +368,8 @@ class TransactionInfoViewController: ThemeViewController {
         ) { [weak self] in
             let viewController = DoubleSpendInfoViewController(transactionHash: txHash, conflictingTransactionHash: conflictingTxHash)
             self?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+
+            stat(page: .transactionInfo, event: .open(page: .doubleSpend))
         }
     }
 
@@ -374,6 +381,8 @@ class TransactionInfoViewController: ThemeViewController {
         if lockState.locked {
             return warningRow(rowInfo: rowInfo, id: id, image: image, text: "tx_info.locked_until".localized(formattedDate)) { [weak self] in
                 self?.present(InfoModule.timeLockInfo, animated: true)
+
+                stat(page: .transactionInfo, section: .timeLock, event: .open(page: .info))
             }
         } else {
             return noteRow(rowInfo: rowInfo, id: id, image: image, text: "tx_info.unlocked_at".localized(formattedDate))
@@ -456,6 +465,8 @@ class TransactionInfoViewController: ThemeViewController {
             action: { [weak self] in
                 if let url {
                     self?.urlManager.open(url: url, from: self)
+
+                    stat(page: .transactionInfo, event: .open(page: .externalBlockExplorer))
                 }
             }
         )

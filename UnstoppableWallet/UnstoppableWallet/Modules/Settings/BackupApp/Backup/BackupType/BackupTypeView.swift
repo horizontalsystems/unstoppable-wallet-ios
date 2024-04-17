@@ -79,7 +79,7 @@ struct BackupTypeView: View {
         let statPage = viewModel.statPage
         if isAvailable.wrappedValue {
             NavigationRow(
-                destination: { 
+                destination: {
                     BackupListView(viewModel: viewModel, onDismiss: onDismiss)
                         .modifier(FirstAppear { stat(page: .exportFull, event: .open(page: statPage)) })
                 },

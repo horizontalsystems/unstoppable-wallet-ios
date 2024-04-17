@@ -181,7 +181,7 @@ extension SendEvmConfirmationModule {
     }
 }
 
-enum ResendTransactionType {
-    case speedUp
+enum ResendTransactionType: String {
+    case speedUp = "speed_up"
     case cancel
 }

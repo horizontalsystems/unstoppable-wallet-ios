@@ -74,8 +74,8 @@ class BackupManagerViewController: ThemeViewController {
 
     private func onCreate() {
         let viewController = BackupTypeView { [weak self] in
-                (self?.presentedViewController ?? self)?.dismiss(animated: true)
-            }.toNavigationViewController()
+            (self?.presentedViewController ?? self)?.dismiss(animated: true)
+        }.toNavigationViewController()
 
         stat(page: .backupManager, event: .open(page: .exportFull))
         present(viewController, animated: true)

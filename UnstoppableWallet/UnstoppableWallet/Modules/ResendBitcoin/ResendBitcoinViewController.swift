@@ -111,14 +111,14 @@ class ResendBitcoinViewController: KeyboardAwareViewController, SectionsDataSour
         switch viewItem {
         case let .amount(title, token, coinAmount, currencyAmount, type):
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, title: title, subtitle: token.fullBadge, imageUrl: token.coin.imageUrl, placeholderImageName: token.placeholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
-        case let .address(title, value, valueTitle, contactAddress):
+        case let .address(title, value, valueTitle, contactAddress, statSection):
             var onAddToContact: (() -> Void)? = nil
             if let contactAddress {
                 onAddToContact = { [weak self] in
-                    ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+                    ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .resend, statSection: statSection)
                 }
             }
-            return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
+            return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, statPage: .resend, statSection: statSection, onAddToContact: onAddToContact)
         case let .value(iconName, title, value, type):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, title: title, value: value, type: type)
         case let .fee(title, coinValue, currencyValue):

@@ -54,5 +54,7 @@ extension TransactionInfoViewModel {
     func togglePrice() {
         factory.priceReversed.toggle()
         reSyncServiceItem()
+
+        stat(page: .transactionInfo, event: .togglePrice)
     }
 }

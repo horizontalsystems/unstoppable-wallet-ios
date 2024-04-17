@@ -277,8 +277,8 @@ extension BackupAppViewModel {
 
     var statPage: StatPage {
         switch destination {
-            case .cloud: return .exportFullToCloud
-            default: return .exportFullToFiles
+        case .cloud: return .exportFullToCloud
+        default: return .exportFullToFiles
         }
     }
 }

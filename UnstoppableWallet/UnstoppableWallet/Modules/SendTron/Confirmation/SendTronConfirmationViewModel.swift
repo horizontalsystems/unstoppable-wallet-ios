@@ -241,7 +241,8 @@ class SendTronConfirmationViewModel {
                 title: "send.confirmation.to".localized,
                 value: toValue,
                 valueTitle: evmLabelManager.addressLabel(address: toValue),
-                contactAddress: contactData.contactAddress
+                contactAddress: contactData.contactAddress,
+                statSection: .addressTo
             ),
         ]
 
@@ -275,7 +276,8 @@ class SendTronConfirmationViewModel {
             title: "send.confirmation.to".localized,
             value: addressValue,
             valueTitle: addressTitle,
-            contactAddress: contactData.contactAddress
+            contactAddress: contactData.contactAddress,
+            statSection: .addressTo
         )
         )
         if let contactName = contactData.name {
@@ -331,7 +333,7 @@ extension SendTronConfirmationViewModel {
 
     enum ViewItem {
         case amount(title: String, token: MarketKit.Token, coinAmount: String, currencyAmount: String?, type: AmountType)
-        case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?)
+        case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?, statSection: StatSection)
         case value(title: String, value: String, type: ValueType)
         case warning(text: String, title: String, info: String)
     }
