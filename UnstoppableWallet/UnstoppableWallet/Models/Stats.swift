@@ -9,6 +9,7 @@ enum StatPage: String {
     case addToken = "add_token"
     case advancedSearch = "advanced_search"
     case advancedSearchResults = "advanced_search_results"
+    case appStatus = "app_status"
     case appearance
     case backupManager = "backup_manager"
     case backupPromptAfterCreate = "backup_prompt_after_create"
@@ -65,6 +66,7 @@ enum StatPage: String {
     case externalReddit = "external_reddit"
     case externalTelegram = "external_telegram"
     case externalTwitter = "external_twitter"
+    case externalWebsite = "external_website"
     case faq
     case globalMetricsDefiCap = "global_metrics_defi_cap"
     case globalMetricsMarketCap = "global_metrics_market_cap"
@@ -94,6 +96,7 @@ enum StatPage: String {
     case news
     case newWallet = "new_wallet"
     case newWalletAdvanced = "new_wallet_advanced"
+    case privacy
     case privateKeys = "private_keys"
     case publicKeys = "public_keys"
     case rateUs = "rate_us"
@@ -111,6 +114,7 @@ enum StatPage: String {
     case swap
     case switchWallet = "switch_wallet"
     case tellFriends = "tell_friends"
+    case terms
     case tokenPage = "token_page"
     case topCoins = "top_coins"
     case topMarketPairs = "top_market_pairs"
@@ -124,6 +128,7 @@ enum StatPage: String {
     case walletConnect = "wallet_connect"
     case watchlist
     case watchWallet = "watch_wallet"
+    case whatsNews = "whats_news"
     case widget
 }
 
@@ -180,13 +185,22 @@ enum StatEvent {
     case removeFromWatchlist(coinUid: String)
     case scanQr(entity: StatEntity)
     case select(entity: StatEntity)
+    case selectAppIcon(iconUid: String)
+    case openArticle(relativeUrl: String)
+    case selectBalanceConversion(coinUid: String)
+    case selectBalanceValue(type: String)
+    case selectLaunchScreen(type: String)
+    case selectTheme(type: String)
     case setAmount
     case share(entity: StatEntity)
+    case showMarketsTab(shown: Bool)
+    case switchBaseCurrency(code: String)
     case switchBtcSource(chainUid: String, type: BtcRestoreMode)
     case switchChartPeriod(period: StatPeriod)
     case switchEvmSource(chainUid: String, name: String)
     case switchField(field: StatField)
     case switchFilterType(type: String)
+    case switchLanguage(language: String)
     case switchMarketTop(marketTop: StatMarketTop)
     case switchPeriod(period: StatPeriod)
     case switchSortType(sortType: StatSortType)
@@ -228,13 +242,22 @@ enum StatEvent {
         case .removeFromWatchlist: return "remove_from_watchlist"
         case .scanQr: return "scan_qr"
         case .select: return "select"
+        case .selectAppIcon: return "select_app_icon"
+        case .openArticle: return "open_article"
+        case .selectBalanceConversion: return "select_balance_conversion"
+        case .selectBalanceValue: return "select_balance_value"
+        case .selectLaunchScreen: return "select_launch_screen"
+        case .selectTheme: return "select_theme"
         case .setAmount: return "set_amount"
         case .share: return "share"
+        case .showMarketsTab: return "show_markets_tab"
+        case .switchBaseCurrency: return "switch_base_currency"
         case .switchBtcSource: return "switch_btc_source"
         case .switchChartPeriod: return "switch_chart_period"
         case .switchEvmSource: return "switch_evm_source"
         case .switchField: return "switch_field"
         case .switchFilterType: return "switch_filter_type"
+        case .switchLanguage: return "switch_language"
         case .switchMarketTop: return "switch_market_top"
         case .switchPeriod: return "switch_period"
         case .switchSortType: return "switch_sort_type"
@@ -273,6 +296,12 @@ enum StatEvent {
         case let .openBlockchainSettingsEvmAdd(chainUid: chainUid): return [.page: StatPage.blockchainSettingsEvmAdd.rawValue, .chainUid: chainUid]
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
+        case let .selectAppIcon(iconUid): return [.iconUid: iconUid]
+        case let .openArticle(relativeUrl): return [.relativeUrl: relativeUrl]
+        case let .selectBalanceConversion(coinUid): return [.coinUid: coinUid]
+        case let .selectBalanceValue(type): return [.type: type]
+        case let .selectLaunchScreen(type): return [.type: type]
+        case let .selectTheme(type): return [.type: type]
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
         case let .openReceive(token): return params(token: token).merging([.page: StatPage.receive.rawValue]) { $1 }
         case let .openResend(chainUid, type): return [.page: StatPage.resend.rawValue, .chainUid: chainUid, .type: type]
@@ -290,11 +319,14 @@ enum StatEvent {
         case let .scanQr(entity): return [.entity: entity.rawValue]
         case let .select(entity): return [.entity: entity.rawValue]
         case let .share(entity): return [.entity: entity.rawValue]
+        case let .showMarketsTab(shown): return [.shown: shown]
+        case let .switchBaseCurrency(code: code): return [.currencyCode: code]
         case let .switchBtcSource(chainUid, type): return [.chainUid: chainUid, .type: type.rawValue]
         case let .switchChartPeriod(period): return [.period: period.rawValue]
         case let .switchEvmSource(chainUid, name): return [.chainUid: chainUid, .type: name]
         case let .switchField(field): return [.field: field.rawValue]
         case let .switchFilterType(type): return [.type: type]
+        case let .switchLanguage(language): return [.language: language]
         case let .switchMarketTop(marketTop): return [.marketTop: marketTop.rawValue]
         case let .switchPeriod(period): return [.period: period.rawValue]
         case let .switchSortType(sortType): return [.type: sortType.rawValue]
@@ -319,13 +351,17 @@ enum StatParam: String {
     case bitcoinCashCoinType = "bitcoin_cash_coin_type"
     case categoryUid = "category_uid"
     case chainUid = "chain_uid"
+    case currencyCode = "currency_code"
     case coinUid = "coin_uid"
     case derivation
     case entity
     case field
+    case iconUid = "icon_uid"
+    case language
     case marketTop = "market_top"
     case page
     case period
+    case relativeUrl = "relative_url"
     case shown
     case tab
     case tvlChain = "tvl_chain"
@@ -392,6 +428,7 @@ enum StatEntity: String {
     case passphrase
     case receiveAddress = "receive_address"
     case recoveryPhrase = "recovery_phrase"
+    case status
     case token
     case transactionId = "transaction_id"
     case wallet

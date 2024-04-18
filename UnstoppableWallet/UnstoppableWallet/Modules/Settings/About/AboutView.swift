@@ -34,6 +34,7 @@ struct AboutView: View {
                         ListSection {
                             NavigationRow(destination: {
                                 MarkdownModule.gitReleaseNotesMarkdownView(url: releaseNotesUrl, presented: false)
+                                    .modifier(FirstAppear { stat(page: .aboutApp, event: .open(page: .whatsNews)) })
                                     .ignoresSafeArea()
                             }) {
                                 Image("circle_information_24").themeIcon()
@@ -46,6 +47,7 @@ struct AboutView: View {
                     ListSection {
                         NavigationRow(destination: {
                             AppStatusModule.view()
+                                .modifier(FirstAppear { stat(page: .aboutApp, event: .open(page: .appStatus)) })
                         }) {
                             Image("app_status_24").themeIcon()
                             Text("app_status.title".localized).themeBody()
@@ -53,6 +55,7 @@ struct AboutView: View {
                         }
 
                         ClickableRow(action: {
+                            stat(page: .aboutApp, event: .open(page: .terms))
                             termsPresented = true
                         }) {
                             Image("unordered_24").themeIcon()
@@ -68,6 +71,7 @@ struct AboutView: View {
                         NavigationRow(destination: {
                             PrivacyPolicyView(config: .privacy)
                                 .navigationTitle(PrivacyPolicyViewController.Config.privacy.title)
+                                .modifier(FirstAppear { stat(page: .aboutApp, event: .open(page: .privacy)) })
                                 .ignoresSafeArea()
                         }) {
                             Image("user_24").themeIcon()
@@ -78,6 +82,7 @@ struct AboutView: View {
 
                     ListSection {
                         ClickableRow(action: {
+                            stat(page: .aboutApp, event: .open(page: .externalGithub))
                             linkUrl = URL(string: "https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)")
                         }) {
                             Image("github_24").themeIcon()
@@ -86,6 +91,7 @@ struct AboutView: View {
                         }
 
                         ClickableRow(action: {
+                            stat(page: .aboutApp, event: .open(page: .externalWebsite))
                             linkUrl = URL(string: AppConfig.appWebPageLink)
                         }) {
                             Image("globe_24").themeIcon()

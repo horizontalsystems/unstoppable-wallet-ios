@@ -13,12 +13,12 @@ struct AppearanceView: View {
                     ListSection {
                         ForEach(viewModel.themeModes, id: \.self) { themeMode in
                             ClickableRow(action: {
-                                viewModel.themMode = themeMode
+                                viewModel.themeMode = themeMode
                             }) {
                                 icon(themeMode: themeMode).themeIcon()
                                 Text(title(themeMode: themeMode)).themeBody()
 
-                                if viewModel.themMode == themeMode {
+                                if viewModel.themeMode == themeMode {
                                     Image.checkIcon
                                 }
                             }

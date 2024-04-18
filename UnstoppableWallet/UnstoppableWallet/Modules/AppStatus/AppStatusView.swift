@@ -10,6 +10,7 @@ struct AppStatusView: View {
             VStack(spacing: .margin24) {
                 HStack(spacing: .margin8) {
                     Button(action: {
+                        stat(page: .appStatus, event: .copy(entity: .status))
                         CopyHelper.copyAndNotify(value: viewModel.rawStatus)
                     }) {
                         Text("button.copy".localized)
@@ -17,6 +18,7 @@ struct AppStatusView: View {
                     .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
                     Button(action: {
+                        stat(page: .appStatus, event: .share(entity: .status))
                         shareText = viewModel.rawStatus
                     }) {
                         Text("button.share".localized)
