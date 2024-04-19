@@ -68,13 +68,15 @@ protocol ITransactionsAdapter {
 protocol ISendBitcoinAdapter {
     var blockchainType: BlockchainType { get }
     var balanceData: BalanceData { get }
-    func availableBalance(feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
+    func availableBalance(params: SendParameters) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
-    func minimumSendAmount(address: String?) -> Decimal
+    func minimumSendAmount(params: SendParameters) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
-    var unspentOutputs: [UnspentOutputInfo] { get }
-    func sendInfo(amount: Decimal, feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData]) throws -> SendInfo
-    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, rbfEnabled: Bool, logger: HsToolKit.Logger) -> Single<Void>
+    func unspentOutputs(filters: UtxoFilters) -> [UnspentOutputInfo]
+    func sendInfo(params: SendParameters) throws -> SendInfo
+    func sendSingle(params: SendParameters, logger: HsToolKit.Logger) -> Single<Void>
+    func convertToSatoshi(value: Decimal) -> Int
+    func convertToKitSortMode(sort: TransactionDataSortMode) -> TransactionDataSortType
 }
 
 protocol ISendDashAdapter {

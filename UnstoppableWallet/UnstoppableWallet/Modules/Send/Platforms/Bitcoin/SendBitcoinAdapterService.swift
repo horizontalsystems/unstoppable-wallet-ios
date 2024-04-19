@@ -134,7 +134,9 @@ class SendBitcoinAdapterService {
         }
         sync(feeRate: feeRateService.status)
 
-        minimumSendAmount = adapter.minimumSendAmount(address: addressService.state.address?.raw)
+        let params = SendParameters(address: addressService.state.address?.raw)
+
+        minimumSendAmount = adapter.minimumSendAmount(params: params)
         maximumSendAmount = adapter.maximumSendAmount(pluginData: pluginData)
     }
 
@@ -161,12 +163,19 @@ class SendBitcoinAdapterService {
     }
 
     private func update(feeRate: Int, amount: Decimal, address: String?, pluginData: [UInt8: IBitcoinPluginData], updatedFrom: UpdatedField) {
-        let memo = memoService.memo
         queue.async { [weak self] in
+            let params = SendParameters(
+                address: address,
+                value: self?.adapter.convertToSatoshi(value: amount),
+                feeRate: feeRate,
+                memo: self?.memoService.memo,
+                unspentOutputs: self?.customOutputs,
+                pluginData: pluginData
+            )
+
             do {
-                if let sendInfo = try self?.adapter
-                    .sendInfo(amount: amount, feeRate: feeRate, address: address, memo: memo, unspentOutputs: self?.customOutputs, pluginData: pluginData)
-                {
+                if let adapter = self?.adapter {
+                    let sendInfo = try adapter.sendInfo(params: params)
                     self?.sendInfoState = .completed(sendInfo)
                 }
             } catch {
@@ -174,7 +183,7 @@ class SendBitcoinAdapterService {
             }
 
             if updatedFrom != .amount,
-               let availableBalance = self?.adapter.availableBalance(feeRate: feeRate, address: address, memo: memo, unspentOutputs: self?.customOutputs, pluginData: pluginData)
+               let availableBalance = self?.adapter.availableBalance(params: params)
             {
                 self?.availableBalance = .completed(availableBalance)
             }
@@ -182,7 +191,7 @@ class SendBitcoinAdapterService {
                 self?.maximumSendAmount = self?.adapter.maximumSendAmount(pluginData: pluginData)
             }
             if updatedFrom == .address {
-                self?.minimumSendAmount = self?.adapter.minimumSendAmount(address: address) ?? 0
+                self?.minimumSendAmount = self?.adapter.minimumSendAmount(params: params) ?? 0
             }
         }
     }
@@ -194,7 +203,7 @@ class SendBitcoinAdapterService {
 
 extension SendBitcoinAdapterService: ISendInfoValueService, ISendXFeeValueService, IAvailableBalanceService, ISendXSendAmountBoundsService {
     var unspentOutputs: [UnspentOutputInfo] {
-        adapter.unspentOutputs
+        adapter.unspentOutputs(filters: UtxoFilters())
     }
 
     var customOutputsUpdatedPublisher: AnyPublisher<Void, Never> {
@@ -244,18 +253,18 @@ extension SendBitcoinAdapterService: ISendService {
         }
 
         let sortMode = btcBlockchainManager.transactionSortMode(blockchainType: adapter.blockchainType)
-        let rbfEnabled = btcBlockchainManager.transactionRbfEnabled(blockchainType: adapter.blockchainType)
-        return adapter.sendSingle(
-            amount: amountInputService.amount,
+        let params = SendParameters(
             address: address.raw,
-            memo: memoService.memo,
+            value: adapter.convertToSatoshi(value: amountInputService.amount),
             feeRate: feeRate,
+            sortType: adapter.convertToKitSortMode(sort: sortMode),
+            rbfEnabled: btcBlockchainManager.transactionRbfEnabled(blockchainType: adapter.blockchainType),
+            memo: memoService.memo,
             unspentOutputs: customOutputs,
-            pluginData: pluginData,
-            sortMode: sortMode,
-            rbfEnabled: rbfEnabled,
-            logger: logger
+            pluginData: pluginData
         )
+
+        return adapter.sendSingle(params: params, logger: logger)
     }
 }
 

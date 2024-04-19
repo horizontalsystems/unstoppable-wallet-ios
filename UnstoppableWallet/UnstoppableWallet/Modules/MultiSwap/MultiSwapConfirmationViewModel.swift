@@ -67,7 +67,14 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 
         currency = currencyManager.baseCurrency
 
-        feeToken = try? marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
+        switch tokenIn.type {
+        case .native, .derived, .addressType:
+            feeToken = tokenIn
+        case .eip20, .bep2, .spl:
+            feeToken = try? marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
+        case .unsupported:
+            feeToken = nil
+        }
 
         transactionService?.updatePublisher
             .sink { [weak self] in

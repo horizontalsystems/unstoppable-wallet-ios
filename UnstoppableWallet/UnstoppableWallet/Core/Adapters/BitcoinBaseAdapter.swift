@@ -142,19 +142,6 @@ class BitcoinBaseAdapter {
         }
     }
 
-    private func convertToSatoshi(value: Decimal) -> Int {
-        let coinValue: Decimal = value * coinRate
-        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-        return NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
-    }
-
-    private func convertToKitSortMode(sort: TransactionDataSortMode) -> TransactionDataSortType {
-        switch sort {
-        case .shuffle: return .shuffle
-        case .bip69: return .bip69
-        }
-    }
-
     private func balanceData(balanceInfo: BalanceInfo) -> BalanceData {
         LockedBalanceData(
             available: Decimal(balanceInfo.spendable) / coinRate,
@@ -290,8 +277,8 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
 }
 
 extension BitcoinBaseAdapter {
-    func availableBalance(feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
-        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, memo: memo, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)) ?? 0
+    func availableBalance(params: SendParameters) -> Decimal {
+        let amount = (try? abstractKit.maxSpendableValue(params: params)) ?? 0
         return Decimal(amount) / coinRate
     }
 
@@ -299,9 +286,9 @@ extension BitcoinBaseAdapter {
         try? abstractKit.maxSpendLimit(pluginData: pluginData).flatMap { Decimal($0) / coinRate }
     }
 
-    func minimumSendAmount(address: String?) -> Decimal {
+    func minimumSendAmount(params: SendParameters) -> Decimal {
         do {
-            return try Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
+            return try Decimal(abstractKit.minSpendableValue(params: params)) / coinRate
         } catch {
             return 0
         }
@@ -315,10 +302,8 @@ extension BitcoinBaseAdapter {
         try validate(address: address, pluginData: [:])
     }
 
-    func sendInfo(amount: Decimal, feeRate: Int, address: String?, memo: String?, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws -> SendInfo {
-        let amount = convertToSatoshi(value: amount)
-
-        let info = try abstractKit.sendInfo(for: amount, toAddress: address, memo: memo, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)
+    func sendInfo(params: SendParameters) throws -> SendInfo {
+        let info = try abstractKit.sendInfo(params: params)
         return SendInfo(
             unspentOutputs: info.unspentOutputs.map(\.info),
             fee: Decimal(info.fee) / coinRate,
@@ -327,19 +312,16 @@ extension BitcoinBaseAdapter {
         )
     }
 
-    var unspentOutputs: [UnspentOutputInfo] {
-        abstractKit.unspentOutputs
+    func unspentOutputs(filters: UtxoFilters) -> [UnspentOutputInfo] {
+        abstractKit.unspentOutputs(filters: filters)
     }
 
-    func sendSingle(amount: Decimal, address: String, memo: String?, feeRate: Int, unspentOutputs: [UnspentOutputInfo]?, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, rbfEnabled: Bool, logger: Logger) -> Single<Void> {
-        let satoshiAmount = convertToSatoshi(value: amount)
-        let sortType = convertToKitSortMode(sort: sortMode)
-
-        return Single.create { [weak self] observer in
+    func sendSingle(params: SendParameters, logger: Logger) -> Single<Void> {
+        Single.create { [weak self] observer in
             do {
                 if let adapter = self {
                     logger.debug("Sending to \(String(reflecting: adapter.abstractKit))", save: true)
-                    _ = try adapter.abstractKit.send(to: address, memo: memo, value: satoshiAmount, feeRate: feeRate, sortType: sortType, rbfEnabled: rbfEnabled, unspentOutputs: unspentOutputs, pluginData: pluginData)
+                    _ = try adapter.abstractKit.send(params: params)
                 }
                 observer(.success(()))
             } catch {
@@ -347,6 +329,19 @@ extension BitcoinBaseAdapter {
             }
 
             return Disposables.create()
+        }
+    }
+
+    func convertToSatoshi(value: Decimal) -> Int {
+        let coinValue: Decimal = value * coinRate
+        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        return NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
+    }
+
+    func convertToKitSortMode(sort: TransactionDataSortMode) -> TransactionDataSortType {
+        switch sort {
+        case .shuffle: return .shuffle
+        case .bip69: return .bip69
         }
     }
 }
