@@ -85,6 +85,7 @@ extension BlockchainType {
     // used for EVM blockchains only
     var feePriceScale: FeePriceScale {
         switch self {
+        case .bitcoin, .bitcoinCash, .dash, .litecoin, .ecash: return .satoshi
         case .avalanche: return .nAvax
         default: return .gwei
         }

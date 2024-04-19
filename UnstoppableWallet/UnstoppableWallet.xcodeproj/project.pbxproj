@@ -2936,6 +2936,14 @@
 		D0DA740F272A6EFC0072BE86 /* UnicodeURL in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA740E272A6EFC0072BE86 /* UnicodeURL */; };
 		D0DA7411272A6F180072BE86 /* IDNSDK in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA7410272A6F180072BE86 /* IDNSDK */; };
 		D0DA7413272A6F180072BE86 /* UnicodeURL in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA7412272A6F180072BE86 /* UnicodeURL */; };
+		D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */; };
+		D0DEFF052BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */; };
+		D0DEFF062BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */; };
+		D0DEFF072BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */; };
+		D0DEFF0A2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */; };
+		D0DEFF0B2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */; };
+		D0DEFF0C2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */; };
+		D0DEFF0D2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */; };
 		D0E659BB2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */; };
 		D0E659BC2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */; };
 		D0EC34DB2A4450B100BB308B /* HCaptcha in Frameworks */ = {isa = PBXBuildFile; productRef = D0EC34DA2A4450B100BB308B /* HCaptcha */; };
@@ -4754,6 +4762,10 @@
 		D0C226182A66A703007101F7 /* PersonalSupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportViewModel.swift; sourceTree = "<group>"; };
 		D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputView.swift; sourceTree = "<group>"; };
 		D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsswordInputCell.swift; sourceTree = "<group>"; };
+		D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeSettingsViewModel.swift; sourceTree = "<group>"; };
+		D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeSettingsView.swift; sourceTree = "<group>"; };
+		D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTransactionService.swift; sourceTree = "<group>"; };
+		D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeData.swift; sourceTree = "<group>"; };
 		D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinViewModel.swift; sourceTree = "<group>"; };
 		D0EE557D2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D0EE557E2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -6051,6 +6063,8 @@
 		11B356D1F8AA459AEEF579D7 /* SendConfirmation */ = {
 			isa = PBXGroup;
 			children = (
+				D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */,
+				D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */,
 				11B35B91B5EAF2E193FDC04E /* SendConfirmationNewView.swift */,
 				11B35BEF6F80BDF166173819 /* SendConfirmationNewViewModel.swift */,
 				11B35B0F9BC5C4CDBC5B041D /* SendEvmHandler.swift */,
@@ -8969,6 +8983,8 @@
 		D0B462F12B5A470F0027815D /* FeeSettings */ = {
 			isa = PBXGroup;
 			children = (
+				D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */,
+				D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */,
 				D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */,
 				ABC9ABCA9E26E2B6A5E0D43E /* Eip1559FeeSettingsView.swift */,
 				ABC9A8E02C3486492E3B12F2 /* Eip1559FeeSettingsViewModel.swift */,
@@ -9517,6 +9533,7 @@
 				D384058C218317DF007D50AD /* LocalStorage.swift in Sources */,
 				D023D26B2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
 				D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */,
+				D0DEFF052BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D3840592218317DF007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D3840593218317DF007D50AD /* BitcoinAdapter.swift in Sources */,
 				D384059A218317DF007D50AD /* KeyboardObservingViewController.swift in Sources */,
@@ -9719,6 +9736,7 @@
 				11B355F32686B8689B4EC105 /* WalletConnectRequest.swift in Sources */,
 				6B2907222AF0CB8A006157D6 /* WalletConnectAppShowModule.swift in Sources */,
 				D008CA5B267C8DDF00001E0A /* EvmIncomingTransactionRecord.swift in Sources */,
+				D0DEFF0B2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */,
 				11B35C2FBF875F81E13CC575 /* CoinService.swift in Sources */,
 				1A5647072B937BE4B69FFA1D /* SendEthereumErrorCell.swift in Sources */,
 				58AAAAE261DEB08128441641 /* AmountDecimalParser.swift in Sources */,
@@ -10915,6 +10933,7 @@
 				11B35D098F3E0435A3C4512B /* MultiSwapButtonState.swift in Sources */,
 				11B3542DB7195238D606D057 /* MultiSwapConfirmationView.swift in Sources */,
 				11B35ED4BE062F70D930F92C /* MultiSwapSettingStorage.swift in Sources */,
+				D0DEFF072BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */,
 				D0740B1C2B87585100B085F9 /* ResendBitcoinService.swift in Sources */,
 				11B35CFBC57B9DF24CE0665C /* UniswapV2MultiSwapProvider.swift in Sources */,
 				11B35DC168B3102FB2293CE4 /* PancakeV3MultiSwapProvider.swift in Sources */,
@@ -10931,6 +10950,7 @@
 				ABC9ABB622E7AF7573E71C7A /* DebounceTextField.swift in Sources */,
 				ABC9AF8E2B0AC66EE65B81B9 /* BaseEvmMultiSwapProvider.swift in Sources */,
 				ABC9ABE0119C5E5EB43A9964 /* RightCheckingView.swift in Sources */,
+				D0DEFF0D2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */,
 				11B35BFFB56EA4955808B3E8 /* CoinAnalyticsIssueCell.swift in Sources */,
 				11B35D24064D9CE75ACCD59A /* CoinAnalyticsIssuesView.swift in Sources */,
 				11B35498BAB60D962C9C1172 /* QuickSwapMultiSwapProvider.swift in Sources */,
@@ -11024,6 +11044,7 @@
 				D384067E21831B3D007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D023D26A2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
+				D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
 				D384068921831B3D007D50AD /* KeyboardObservingViewController.swift in Sources */,
 				D384069021831B3D007D50AD /* Date.swift in Sources */,
@@ -11226,6 +11247,7 @@
 				11B350D6CBB602F510882F1E /* WalletConnectRequest.swift in Sources */,
 				D02A67CB272A7460009B2C1C /* TwitterUsersResponse.swift in Sources */,
 				D008CA5A267C8DDF00001E0A /* EvmIncomingTransactionRecord.swift in Sources */,
+				D0DEFF0A2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */,
 				11B358902CE8D7EF2AD38448 /* CoinService.swift in Sources */,
 				1A5643BCA38A75A63D57F1AB /* SendEthereumErrorCell.swift in Sources */,
 				58AAA0642CB9B7B19C6235B5 /* AmountDecimalParser.swift in Sources */,
@@ -12422,6 +12444,7 @@
 				11B358EC68642C5A57ACB803 /* IMultiSwapProvider.swift in Sources */,
 				11B35503841E40909EF690B3 /* MultiSwapCircularProgressView.swift in Sources */,
 				11B356A34BC00A9BEB4C13C2 /* MultiSwapQuotesView.swift in Sources */,
+				D0DEFF062BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */,
 				11B355D89EADD907D4FC3273 /* MultiSwapButtonState.swift in Sources */,
 				11B35CA3524A5FEA07135535 /* MultiSwapConfirmationView.swift in Sources */,
 				11B356075F51B38338958A4A /* MultiSwapSettingStorage.swift in Sources */,
@@ -12438,6 +12461,7 @@
 				ABC9A41BF96061D136A1D397 /* ShortcutButtonsView.swift in Sources */,
 				ABC9AF86EF899AF417E1F4AE /* AddressViewNew.swift in Sources */,
 				ABC9AF3418D0B0DE5FE4EC14 /* AddressViewModelNew.swift in Sources */,
+				D0DEFF0C2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */,
 				ABC9AB2CCF3AD358EA9F285C /* DebounceTextField.swift in Sources */,
 				ABC9AC3E675F159901A28E6F /* BaseEvmMultiSwapProvider.swift in Sources */,
 				ABC9A38568F5D28F0F48E44D /* RightCheckingView.swift in Sources */,
@@ -13247,7 +13271,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.6.4;
+				version = 3.0.0;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */ = {
@@ -13271,7 +13295,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ECashKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.2;
+				version = 3.0.1;
 			};
 		};
 		6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */ = {
@@ -13303,7 +13327,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Hodler.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.1;
+				version = 2.0.2;
 			};
 		};
 		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
@@ -13375,7 +13399,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.2;
+				version = 3.0.0;
 			};
 		};
 		D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit" */ = {
@@ -13383,7 +13407,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCashKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.2;
+				version = 3.0.0;
 			};
 		};
 		D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit" */ = {
@@ -13391,7 +13415,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/LitecoinKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.3.3;
+				version = 3.0.0;
 			};
 		};
 		D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit" */ = {
@@ -13431,7 +13455,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/DashKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.5;
+				version = 3.0.0;
 			};
 		};
 		D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */ = {

@@ -1,3 +1,4 @@
+import BitcoinCore
 import Foundation
 import MarketKit
 
@@ -5,13 +6,15 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
     let swapQuote: ThorChainMultiSwapProvider.SwapQuote
     let recipient: Address?
     let slippage: Decimal
+    let transactionError: Error?
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, bytes: Int?) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, sendInfo: SendInfo?, transactionError: Error?) {
         self.swapQuote = swapQuote
         self.recipient = recipient
         self.slippage = slippage
+        self.transactionError = transactionError
 
-        super.init(satoshiPerByte: satoshiPerByte, bytes: bytes)
+        super.init(satoshiPerByte: satoshiPerByte, sendInfo: sendInfo)
     }
 
     var amountOut: Decimal {
@@ -19,15 +22,19 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
     }
 
     var feeData: FeeData? {
-        bytes.map { .bitcoin(bytes: $0) }
+        sendInfo.map { .bitcoin(bitcoinFeeData: BitcoinFeeData(sendInfo: $0)) }
     }
 
     var canSwap: Bool {
-        satoshiPerByte != nil && bytes != nil
+        satoshiPerByte != nil && sendInfo != nil
     }
 
-    func cautions(feeToken _: MarketKit.Token?) -> [CautionNew] {
+    func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
         var cautions = [CautionNew]()
+
+        if let transactionError {
+            cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
+        }
 
         switch MultiSwapSlippage.validate(slippage: slippage) {
         case .none: ()
@@ -122,28 +129,15 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
             )
         }
 
+        if !feeFields.isEmpty {
+            sections.append(feeFields)
+        }
+
         if let feeToken, let tokenOutRate,
            let feeAmountData = amountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate),
            let feeCurrencyValue = feeAmountData.currencyValue
         {
             let totalFee = feeCurrencyValue.value + (swapQuote.affiliateFee + swapQuote.liquidityFee + swapQuote.outboundFee) * tokenOutRate
-            let currencyValue = CurrencyValue(currency: currency, value: totalFee)
-
-            if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
-                sections.append(
-                    [
-                        .levelValue(
-                            title: "swap.total_fee".localized,
-                            value: formatted,
-                            level: .regular
-                        ),
-                    ]
-                )
-            }
-        }
-
-        if let tokenOutRate {
-            let totalFee = (swapQuote.affiliateFee + swapQuote.liquidityFee + swapQuote.outboundFee) * tokenOutRate
             let currencyValue = CurrencyValue(currency: currency, value: totalFee)
 
             if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {

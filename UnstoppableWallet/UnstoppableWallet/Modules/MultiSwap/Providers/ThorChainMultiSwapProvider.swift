@@ -1,5 +1,6 @@
 import Alamofire
 import BigInt
+import BitcoinCore
 import EvmKit
 import Foundation
 import HsToolKit
@@ -10,15 +11,20 @@ import SwiftUI
 class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private let baseUrl = "https://thornode.ninerealms.com"
 
-    private let networkManager = App.shared.networkManager
-//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+//    private let networkManager = App.shared.networkManager
+    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let marketKit = App.shared.marketKit
     private let evmBlockchainManager = App.shared.evmBlockchainManager
+    private let btcBlockchainManager = App.shared.btcBlockchainManager
     private let accountManager = App.shared.accountManager
     private let adapterManager = App.shared.adapterManager
     private let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
+    private let utxoFilters = UtxoFilters(
+        scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh],
+        maxOutputsCountForInputs: 10
+    )
 
     var assets = [Asset]()
 
@@ -135,16 +141,41 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 nonce: transactionSettings?.nonce
             )
         case .bitcoin, .bitcoinCash, .litecoin:
-            let satoshiPerByte = transactionSettings?.satoshiPerByte
+            var transactionError: Error?
+            var satoshiPerByte: Int?
+            var sendInfo: SendInfo?
 
-            let bytes: Int? = nil // TODO: estimate
+            if let _satoshiPerByte = transactionSettings?.satoshiPerByte,
+               let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter
+            {
+                do {
+                    satoshiPerByte = _satoshiPerByte
+                    let params = SendParameters(
+                        address: swapQuote.inboundAddress,
+                        value: adapter.convertToSatoshi(value: amountIn),
+                        feeRate: _satoshiPerByte,
+                        sortType: .none,
+                        rbfEnabled: true,
+                        memo: swapQuote.memo,
+                        unspentOutputs: nil,
+                        dustThreshold: swapQuote.dustThreshold,
+                        utxoFilters: utxoFilters,
+                        changeToFirstInput: true
+                    )
+
+                    sendInfo = try adapter.sendInfo(params: params)
+                } catch {
+                    transactionError = error
+                }
+            }
 
             return ThorChainMultiSwapBtcConfirmationQuote(
                 swapQuote: swapQuote,
                 recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
                 slippage: slippage,
                 satoshiPerByte: satoshiPerByte,
-                bytes: bytes
+                sendInfo: sendInfo,
+                transactionError: transactionError
             )
         default:
             throw SwapError.unsupportedTokenIn
@@ -340,6 +371,8 @@ extension ThorChainMultiSwapProvider {
         let outboundFee: Decimal
         let liquidityFee: Decimal
 
+        let dustThreshold: Int
+
         init(map: Map) throws {
             inboundAddress = try map.value("inbound_address")
             expectedAmountOut = try map.value("expected_amount_out", using: Transform.stringToDecimalTransform) / pow(10, 8)
@@ -349,6 +382,8 @@ extension ThorChainMultiSwapProvider {
             affiliateFee = try map.value("fees.affiliate", using: Transform.stringToDecimalTransform) / pow(10, 8)
             outboundFee = try map.value("fees.outbound", using: Transform.stringToDecimalTransform) / pow(10, 8)
             liquidityFee = try map.value("fees.liquidity", using: Transform.stringToDecimalTransform) / pow(10, 8)
+
+            dustThreshold = try map.value("dust_threshold", using: Transform.stringToIntTransform)
         }
     }
 

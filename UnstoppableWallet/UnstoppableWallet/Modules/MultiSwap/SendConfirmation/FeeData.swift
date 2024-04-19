@@ -1,6 +1,6 @@
 enum FeeData {
     case evm(evmFeeData: EvmFeeData)
-    case bitcoin(bytes: Int)
+    case bitcoin(bitcoinFeeData: BitcoinFeeData)
 
     var gasLimit: Int? {
         switch self {

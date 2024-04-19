@@ -11,6 +11,10 @@ struct TransactionServiceFactory {
             return transactionService
         }
 
+        if BtcBlockchainManager.blockchainTypes.contains(blockchainType) {
+            return BitcoinTransactionService(blockchainType: blockchainType)
+        }
+
         return nil
     }
 }

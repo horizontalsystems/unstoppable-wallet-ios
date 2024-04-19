@@ -32,6 +32,23 @@ class FeeSettingsViewHelper {
         return (l2Value, l1Value, .value(primary: evmFeeData.gasLimit.description, secondary: nil))
     }
 
+    func feeAmount(feeToken: Token, currency: Currency, feeTokenRate: Decimal?, loading: Bool, feeData: FeeData?) -> FeeSettings.FeeValue {
+        guard !loading else {
+            return .spinner
+        }
+
+        guard case let .bitcoin(bitcoinFeeData) = feeData,
+              let amountData = bitcoinFeeData.amountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
+        else {
+            return FeeSettings.FeeValue.none
+        }
+
+        return .value(
+            primary: ValueFormatter.instance.formatShort(coinValue: amountData.coinValue) ?? "",
+            secondary: amountData.currencyValue.flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) } ?? "n/a".localized
+        )
+    }
+
     @ViewBuilder func row(title: String, feeValue: FeeSettings.FeeValue, description: ActionSheetView.InfoDescription) -> some View {
         HStack(spacing: .margin8) {
             Text(title)

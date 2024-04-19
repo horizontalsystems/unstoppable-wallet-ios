@@ -1,21 +1,22 @@
+import BitcoinCore
 import Foundation
 import MarketKit
 
 class BaseSendBtcData {
     let satoshiPerByte: Int?
-    let bytes: Int?
+    let sendInfo: SendInfo?
 
-    init(satoshiPerByte: Int?, bytes: Int?) {
+    init(satoshiPerByte: Int?, sendInfo: SendInfo?) {
         self.satoshiPerByte = satoshiPerByte
-        self.bytes = bytes
+        self.sendInfo = sendInfo
     }
 
     func amountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-        guard let satoshiPerByte, let bytes else {
+        guard let sendInfo else {
             return nil
         }
 
-        let amount = Decimal(satoshiPerByte) * Decimal(bytes) / pow(10, feeToken.decimals)
+        let amount = sendInfo.fee
 
         return AmountData(
             coinValue: CoinValue(kind: .token(token: feeToken), value: amount),
@@ -35,5 +36,27 @@ class BaseSendBtcData {
                 formatFull: true
             ),
         ]
+    }
+
+    func caution(transactionError: Error, feeToken: Token?) -> CautionNew {
+        let title: String
+        let text: String
+
+        if let error = transactionError as? BitcoinCoreErrors.SendValueErrors {
+            switch error {
+            case .notEnough:
+                title = "fee_settings.errors.insufficient_balance".localized
+                text = "fee_settings.errors.insufficient_balance.info".localized(feeToken?.coin.code ?? "")
+
+            default:
+                title = "Send Info error"
+                text = "Send Info error description"
+            }
+        } else {
+            title = "alert.error".localized
+            text = transactionError.convertedError.smartDescription
+        }
+
+        return CautionNew(title: title, text: text, type: .error)
     }
 }
