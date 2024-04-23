@@ -5,7 +5,6 @@ enum StatPage: String {
     case academy
     case accountExtendedPrivateKey = "account_extended_private_key"
     case accountExtendedPublicKey = "account_extended_public_key"
-    case addEvmSyncSource = "add_evm_sync_source"
     case addToken = "add_token"
     case advancedSearch = "advanced_search"
     case advancedSearchResults = "advanced_search_results"
@@ -126,6 +125,9 @@ enum StatPage: String {
     case transactions
     case unlinkWallet = "unlink_wallet"
     case walletConnect = "wallet_connect"
+    case walletConnectPairings = "wallet_connect_pairings"
+    case walletConnectRequest = "wallet_connect_request"
+    case walletConnectSession = "wallet_connect_session"
     case watchlist
     case watchWallet = "watch_wallet"
     case whatsNews = "whats_news"
@@ -137,6 +139,7 @@ enum StatSection: String {
     case addressRecipient = "address_recipient"
     case addressSpender = "address_spender"
     case addressTo = "address_to"
+    case deepLink = "deep_link"
     case input
     case popular
     case recent
@@ -146,6 +149,7 @@ enum StatSection: String {
     case topGainers = "top_gainers"
     case topLosers = "top_losers"
     case topPlatforms = "top_platforms"
+    case qrScan = "qr_scan"
 }
 
 enum StatEvent {
@@ -154,7 +158,10 @@ enum StatEvent {
     case addToken(token: Token)
     case addToWallet
     case addToWatchlist(coinUid: String)
+    case approveRequest(chainUid: String)
+    case cancel
     case clear(entity: StatEntity)
+    case connect, reconnect, disconnect, reject
     case copy(entity: StatEntity)
     case copyAddress(chainUid: String)
     case createWallet(walletType: String)
@@ -176,10 +183,12 @@ enum StatEvent {
     case openReceive(token: Token)
     case openResend(chainUid: String, type: String)
     case openSend(token: Token)
+    case openSendTokenList(coinUid: String?, chainUid: String?)
     case openTokenInfo(token: Token)
     case openTokenPage(element: WalletModule.Element)
     case paste(entity: StatEntity)
     case refresh
+    case rejectRequest(chainUid: String)
     case removeAmount
     case removeFromWallet
     case removeFromWatchlist(coinUid: String)
@@ -213,6 +222,7 @@ enum StatEvent {
     case togglePrice
     case toggleSortDirection
     case toggleTvlField
+    case walletConnectPair
     case watchWallet(walletType: String)
 
     var name: String {
@@ -221,22 +231,29 @@ enum StatEvent {
         case .addEvmSource: return "add_evm_source"
         case .addToWallet: return "add_to_wallet"
         case .addToWatchlist: return "add_to_watchlist"
+        case .approveRequest: return "approve_request"
+        case .cancel: return "cancel"
         case .clear: return "clear"
+        case .connect: return "connect"
         case .copy, .copyAddress: return "copy"
         case .createWallet: return "create_wallet"
         case .delete: return "delete"
         case .deleteCustomEvmSource: return "delete_custom_evm_source"
         case .disableToken: return "disable_token"
+        case .disconnect: return "disconnect"
         case .edit: return "edit"
         case .enableToken: return "enable_token"
         case .exportFull: return "export_full"
         case .importFull: return "import_full"
         case .importWallet: return "import_wallet"
-        case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSend, .openTokenPage,
+        case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSend, .openSendTokenList, .openTokenPage,
              .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"
         case .openTokenInfo: return "open_token_info"
         case .paste: return "paste"
+        case .reconnect: return "reconnect"
         case .refresh: return "refresh"
+        case .reject: return "disconnect"
+        case .rejectRequest: return "reject_request"
         case .removeAmount: return "remove_amount"
         case .removeFromWallet: return "remove_from_wallet"
         case .removeFromWatchlist: return "remove_from_watchlist"
@@ -270,6 +287,7 @@ enum StatEvent {
         case .togglePrice: return "toggle_price"
         case .toggleSortDirection: return "toggle_sort_direction"
         case .toggleTvlField: return "toggle_tvl_field"
+        case .walletConnectPair: return "wallet_connect_pair"
         case .watchWallet: return "watch_wallet"
         }
     }
@@ -280,6 +298,7 @@ enum StatEvent {
         case let .addEvmSource(chainUid): return [.chainUid: chainUid]
         case let .addToken(token): return params(token: token).merging([.entity: StatEntity.token.rawValue]) { $1 }
         case let .addToWatchlist(coinUid): return [.coinUid: coinUid]
+        case let .approveRequest(chainUid): return [.chainUid: chainUid]
         case let .clear(entity): return [.entity: entity.rawValue]
         case let .copy(entity): return [.entity: entity.rawValue]
         case let .copyAddress(chainUid): return [.entity: StatEntity.address.rawValue, .chainUid: chainUid]
@@ -296,8 +315,14 @@ enum StatEvent {
         case let .openBlockchainSettingsEvmAdd(chainUid: chainUid): return [.page: StatPage.blockchainSettingsEvmAdd.rawValue, .chainUid: chainUid]
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
+        case let .openSendTokenList(coinUid, chainUid): 
+            var params: [StatParam: Any] = [.page: StatPage.sendTokenList.rawValue]
+            params[.coinUid] = coinUid
+            params[.chainUid] = chainUid
+            return params
         case let .selectAppIcon(iconUid): return [.iconUid: iconUid]
         case let .openArticle(relativeUrl): return [.relativeUrl: relativeUrl]
+        case let .rejectRequest(chainUid): return [.chainUid: chainUid]
         case let .selectBalanceConversion(coinUid): return [.coinUid: coinUid]
         case let .selectBalanceValue(type): return [.type: type]
         case let .selectLaunchScreen(type): return [.type: type]
@@ -417,20 +442,22 @@ enum StatMarketTop: String {
 enum StatEntity: String {
     case account
     case address
+    case all
     case blockchain
     case cloudBackup = "cloud_backup"
     case contractAddress = "contract_address"
     case derivation
     case evmAddress = "evm_address"
     case evmPrivateKey = "evm_private_key"
-    case evmSyncSource = "evm_sync_source"
     case key
     case passphrase
     case receiveAddress = "receive_address"
     case recoveryPhrase = "recovery_phrase"
+    case session
     case status
     case token
     case transactionId = "transaction_id"
     case wallet
+    case walletConnectPair = "wallet_connect_pair"
     case walletName = "wallet_name"
 }

@@ -165,22 +165,27 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     @objc private func onTapCancel() {
+        stat(page: .walletConnectSession, event: .cancel)
         viewModel.cancel()
     }
 
     @objc private func onTapConnect() {
+        stat(page: .walletConnectSession, event: .connect)
         viewModel.connect()
     }
 
     @objc private func onTapReject() {
+        stat(page: .walletConnectSession, event: .reject)
         viewModel.reject()
     }
 
     @objc private func onTapDisconnect() {
+        stat(page: .walletConnectSession, event: .disconnect)
         viewModel.disconnect()
     }
 
     @objc private func onTapReconnect() {
+        stat(page: .walletConnectSession, event: .reconnect)
         viewModel.reconnect()
     }
 
@@ -224,6 +229,7 @@ class WalletConnectMainViewController: ThemeViewController {
             return
         case let .controller(controller):
             guard let controller else { return }
+            stat(page: .walletConnectSession, event: .open(page: .walletConnectRequest))
             present(ThemeNavigationController(rootViewController: controller), animated: true)
         }
     }

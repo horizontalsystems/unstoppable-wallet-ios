@@ -118,7 +118,7 @@ extension WalletConnectListViewModel {
 
             do {
                 self?.disableNewConnectionRelay.accept(true)
-                try await eventHandler.handle(event: string, eventType: .walletConnectUri)
+                try await eventHandler.handle(source: .walletConnect, event: string, eventType: .walletConnectUri)
             } catch {}
         }
     }
@@ -129,6 +129,7 @@ extension WalletConnectListViewModel {
     }
 
     func kill(id: Int) {
+        stat(page: .walletConnect, event: .delete(entity: .session))
         service.kill(id: id)
     }
 }

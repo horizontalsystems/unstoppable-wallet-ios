@@ -293,6 +293,7 @@ extension WalletConnectService {
         Task { [weak self] in
             do {
                 try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .response(result))
+                stat(page: .walletConnectRequest, event: .approveRequest(chainUid: request.chainId.absoluteString))
                 self?.pendingRequestsUpdatedRelay.accept(())
             }
         }
@@ -302,6 +303,7 @@ extension WalletConnectService {
         Task { [weak self] in
             do {
                 try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .error(.init(code: 5000, message: "Reject by User")))
+                stat(page: .walletConnectRequest, event: .rejectRequest(chainUid: request.chainId.absoluteString))
                 self?.pendingRequestsUpdatedRelay.accept(())
             }
         }

@@ -5,6 +5,7 @@ import UIKit
 class AddressAppShowModule {
     private let disposeBag = DisposeBag()
     private let parentViewController: UIViewController?
+    private let marketKit = App.shared.marketKit
 
     init(parentViewController: UIViewController?) {
         self.parentViewController = parentViewController
@@ -27,19 +28,31 @@ class AddressAppShowModule {
         }
     }
 
-    private func showSendTokenList(uri: AddressUri, allowedBlockchainTypes: [BlockchainType]? = nil) {
+    private func showSendTokenList(source: StatPage, eventType: EventHandler.EventType, uri: AddressUri, allowedBlockchainTypes: [BlockchainType]? = nil) {
         let allowedBlockchainTypes = allowedBlockchainTypes ?? uri.allowedBlockchainTypes
 
-        var allowedTokenTypes: [TokenType]?
+        var allowedTokenType: TokenType?
         if let tokenUid: String = uri.value(field: .tokenUid),
            let tokenType = TokenType(id: tokenUid)
         {
-            allowedTokenTypes = [tokenType]
+            allowedTokenType = tokenType
         }
+
+        var token: Token?
+        if let allowedTokenType,
+           let blockchainUid: String = uri.value(field: .blockchainUid),
+           let blockchain = try? marketKit.blockchain(uid: blockchainUid),
+           let selectedToken = try? marketKit.token(query: .init(blockchainType: blockchain.type, tokenType: allowedTokenType)) {
+            
+            token = selectedToken
+        }
+
+        let event = StatEvent.openSendTokenList(coinUid: token?.coin.uid, chainUid: token?.blockchain.uid)
+        stat(page: source, section: eventType.contains(.address) ? .qrScan : .deepLink, event: event)
 
         guard let viewController = WalletModule.sendTokenListViewController(
             allowedBlockchainTypes: allowedBlockchainTypes,
-            allowedTokenTypes: allowedTokenTypes,
+            allowedTokenTypes: allowedTokenType.map { [$0] },
             mode: .prefilled(address: uri.address, amount: uri.amount)
         ) else {
             return
@@ -50,14 +63,14 @@ class AddressAppShowModule {
 
 extension AddressAppShowModule: IEventHandler {
     @MainActor
-    func handle(event: Any, eventType: EventHandler.EventType) async throws {
+    func handle(source: StatPage, event: Any, eventType: EventHandler.EventType) async throws {
         // check if we parse deeplink with transfer address
         if eventType.contains(.deepLink) {
             if let event = event as? DeepLinkManager.DeepLink {
                 guard case let .transfer(parsed) = event else {
                     throw EventHandler.HandleError.noSuitableHandler
                 }
-                showSendTokenList(uri: parsed)
+                showSendTokenList(source: source, eventType: eventType, uri: parsed)
             } else {
                 return
             }
@@ -70,7 +83,7 @@ extension AddressAppShowModule: IEventHandler {
             }
 
             if let parsed = uri(text: text.trimmingCharacters(in: .whitespacesAndNewlines)) {
-                showSendTokenList(uri: parsed)
+                showSendTokenList(source: source, eventType: eventType, uri: parsed)
             } else {
                 let disposeBag = DisposeBag()
                 let chain = AddressParserFactory.parserChain(blockchainType: nil, withEns: false)
@@ -90,7 +103,6 @@ extension AddressAppShowModule: IEventHandler {
                 }
                 var uri = AddressUri(scheme: "")
                 uri.address = text
-                showSendTokenList(uri: uri, allowedBlockchainTypes: types)
                 return
             }
         }

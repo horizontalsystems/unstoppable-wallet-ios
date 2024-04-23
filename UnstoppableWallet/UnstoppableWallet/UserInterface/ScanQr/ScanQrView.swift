@@ -156,7 +156,7 @@ class ScanQrView: UIView {
 
     func startCaptureSession() {
         if let captureSession, !captureSession.isRunning {
-            DispatchQueue.main.async {
+            scanQueue.async {
                 captureSession.startRunning()
             }
         }

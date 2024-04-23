@@ -97,6 +97,7 @@ class WalletConnectAppShowView {
         case let .controller(controller):
             guard let controller else { return }
             let navigationController = ThemeNavigationController(rootViewController: controller)
+            stat(page: .main, event: .open(page: .walletConnectRequest))
             parentViewController?.visibleController.present(navigationController, animated: true)
         }
     }
@@ -153,8 +154,9 @@ extension WalletConnectAppShowView {
 extension WalletConnectAppShowView: IEventHandler {
     var eventType: EventHandler.EventType { [.deepLink, .walletConnectUri] }
 
-    func handle(event: Any, eventType _: EventHandler.EventType) async throws {
+    func handle(source: StatPage, event: Any, eventType _: EventHandler.EventType) async throws {
         var uri: String?
+        
         switch event {
         case let event as String:
             uri = event
@@ -175,6 +177,7 @@ extension WalletConnectAppShowView: IEventHandler {
             throw EventHandler.HandleError.noSuitableHandler
         }
 
+        stat(page: source, event: .walletConnectPair)
         try viewModel.handleWalletConnect(url: uri)
 
         isWaitingForSession = true
