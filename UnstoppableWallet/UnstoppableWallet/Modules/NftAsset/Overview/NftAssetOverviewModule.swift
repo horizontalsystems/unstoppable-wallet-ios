@@ -3,7 +3,6 @@ import UIKit
 enum NftAssetOverviewModule {
     static func viewController(providerCollectionUid: String, nftUid: NftUid) -> NftAssetOverviewViewController {
         let coinPriceService = WalletCoinPriceService(
-            tag: "nft-asset-overview",
             currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )

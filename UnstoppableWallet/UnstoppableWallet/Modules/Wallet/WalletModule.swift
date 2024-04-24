@@ -6,7 +6,6 @@ import UIKit
 enum WalletModule {
     static func viewController() -> UIViewController {
         let coinPriceService = WalletCoinPriceService(
-            tag: "wallet",
             currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )
@@ -57,7 +56,6 @@ enum WalletModule {
         }
 
         let coinPriceService = WalletCoinPriceService(
-            tag: "send-token-list",
             currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )
@@ -115,7 +113,6 @@ enum WalletModule {
         }
 
         let coinPriceService = WalletCoinPriceService(
-            tag: "swap-token-list",
             currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )
@@ -171,7 +168,6 @@ enum WalletModule {
         let service: IWalletTokenListService
         if let account = App.shared.accountManager.activeAccount, !account.watchAccount, !account.cexAccount {
             let coinPriceService = WalletCoinPriceService(
-                tag: "send-token-list",
                 currencyManager: App.shared.currencyManager,
                 marketKit: App.shared.marketKit
             )

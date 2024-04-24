@@ -182,7 +182,7 @@ extension CoinChartService {
     func start() {
         coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code)
 
-        marketKit.coinPricePublisher(tag: "coin-chart-service", coinUid: coinUid, currencyCode: currency.code)
+        marketKit.coinPricePublisher(coinUid: coinUid, currencyCode: currency.code)
             .sink { [weak self] coinPrice in
                 self?.coinPrice = coinPrice
                 self?.syncState()

@@ -43,7 +43,7 @@ class SendConfirmationNewViewModel: ObservableObject {
 
         if let feeToken {
             feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
-            marketKit.coinPricePublisher(tag: "send", coinUid: feeToken.coin.uid, currencyCode: currency.code)
+            marketKit.coinPricePublisher(coinUid: feeToken.coin.uid, currencyCode: currency.code)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] price in self?.feeTokenRate = price.value }
                 .store(in: &cancellables)

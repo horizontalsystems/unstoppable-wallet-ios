@@ -53,7 +53,7 @@ class BaseFiatService {
         sync(coinPrice: marketKit.coinPrice(coinUid: coin.uid, currencyCode: currency.code))
 
         if subscribe {
-            marketKit.coinPricePublisher(tag: "fiat-service", coinUid: coin.uid, currencyCode: currency.code)
+            marketKit.coinPricePublisher(coinUid: coin.uid, currencyCode: currency.code)
                 .sink { [weak self] coinPrice in
                     self?.sync(coinPrice: coinPrice)
                 }
