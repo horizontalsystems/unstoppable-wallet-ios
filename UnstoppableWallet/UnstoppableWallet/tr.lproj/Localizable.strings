@@ -686,6 +686,45 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
+"market.global.market_cap" = "Piyasa Değeri";
+"market.global.volume" = "Volume";
+"market.global.defi_cap" = "DeFi Cap";
+"market.global.defi_in_tvl" = "TVL in DeFi";
+
+"market.tab.news" = "Haberler";
+"market.tab.coins" = "Coins";
+"market.tab.watchlist" = "İzleme Listesi";
+"market.tab.platforms" = "Platforms";
+"market.tab.pairs" = "Pairs";
+"market.tab.sectors" = "Sektörler";
+
+"market.sort_by.title" = "Sırala";
+"market.sort_by.highest_cap" = "En Yüksek";
+"market.sort_by.lowest_cap" = "En Düşük";
+"market.sort_by.gainers" = "Gainers";
+"market.sort_by.losers" = "Losers";
+"market.sort_by.highest_volume" = "En Yüksek HacIm";
+"market.sort_by.lowest_volume" = "En Düşük HacIm";
+
+"market.top_coins.title" = "Coins";
+"market.top_coins" = "Top %@";
+
+"market.price_change_period.title" = "Period";
+"market.price_change_period.hour24" = "1 Gün";
+"market.price_change_period.week1" = "1 Hafta";
+"market.price_change_period.week2" = "2 Hafta";
+"market.price_change_period.month1" = "1 Ay";
+"market.price_change_period.month3" = "3 Months";
+"market.price_change_period.month6" = "6 Ay";
+"market.price_change_period.year1" = "1 Yıl";
+"market.price_change_period.hour24.short" = "24S";
+"market.price_change_period.week1.short" = "1W";
+"market.price_change_period.week2.short" = "2H";
+"market.price_change_period.month1.short" = "1A";
+"market.price_change_period.month3.short" = "3A";
+"market.price_change_period.month6.short" = "6A";
+"market.price_change_period.year1.short" = "1Y";
+
 "market.project_has_no_coin" = "Bu proje bir koin içermiyor";
 
 "market.top.section.header.see_all" = "Hepsini Gör";
