@@ -684,6 +684,45 @@
 "market.defi_cap" = "디파이(DeFi) 시가총액";
 "market.defi_tvl" = "디파이(DeFi)에서의 총 예치 가치";
 
+"market.global.market_cap" = "총 시가 총액";
+"market.global.volume" = "Volume";
+"market.global.defi_cap" = "디파이(DeFi) 시가총액";
+"market.global.defi_in_tvl" = "디파이(DeFi)에서의 총 예치 가치";
+
+"market.tab.news" = "뉴스";
+"market.tab.coins" = "Coins";
+"market.tab.watchlist" = "관심 목록";
+"market.tab.platforms" = "Platforms";
+"market.tab.pairs" = "Pairs";
+"market.tab.sectors" = "분야";
+
+"market.sort_by.title" = "정렬 기준";
+"market.sort_by.highest_cap" = "가장 높은 시가총액";
+"market.sort_by.lowest_cap" = "가장 낮은 시가총액";
+"market.sort_by.gainers" = "Gainers";
+"market.sort_by.losers" = "Losers";
+"market.sort_by.highest_volume" = "가장 높은 거래량";
+"market.sort_by.lowest_volume" = "가장 낮은 거래량";
+
+"market.top_coins.title" = "Coins";
+"market.top_coins" = "Top %@";
+
+"market.price_change_period.title" = "기간";
+"market.price_change_period.hour24" = "1 일";
+"market.price_change_period.week1" = "1 일주";
+"market.price_change_period.week2" = "이주";
+"market.price_change_period.month1" = "1 개월";
+"market.price_change_period.month3" = "3 Months";
+"market.price_change_period.month6" = "6 개월";
+"market.price_change_period.year1" = "일년";
+"market.price_change_period.hour24.short" = "24시";
+"market.price_change_period.week1.short" = "1W";
+"market.price_change_period.week2.short" = "2주";
+"market.price_change_period.month1.short" = "1개월";
+"market.price_change_period.month3.short" = "3개월";
+"market.price_change_period.month6.short" = "6개월";
+"market.price_change_period.year1.short" = "1년";
+
 "market.project_has_no_coin" = "이 프로젝트는 코인이 없습니다";
 
 "market.top.section.header.see_all" = "모두 보기";
