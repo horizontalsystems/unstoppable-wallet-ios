@@ -686,6 +686,45 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.defi_cap" = "DeFi MK";
 "market.defi_tvl" = "TVL in DeFi";
 
+"market.global.market_cap" = "Marktkappe";
+"market.global.volume" = "Volume";
+"market.global.defi_cap" = "DeFi MK";
+"market.global.defi_in_tvl" = "TVL in DeFi";
+
+"market.tab.news" = "Nachrichten";
+"market.tab.coins" = "Coins";
+"market.tab.watchlist" = "Merkliste";
+"market.tab.platforms" = "Platforms";
+"market.tab.pairs" = "Pairs";
+"market.tab.sectors" = "Sektoren";
+
+"market.sort_by.title" = "Sortieren nach";
+"market.sort_by.highest_cap" = "Höchste Obergrenze";
+"market.sort_by.lowest_cap" = "Niedrigste Obergrenze";
+"market.sort_by.gainers" = "Gainers";
+"market.sort_by.losers" = "Losers";
+"market.sort_by.highest_volume" = "Höchste Lautstärke";
+"market.sort_by.lowest_volume" = "Geringste Lautstärke";
+
+"market.top_coins.title" = "Coins";
+"market.top_coins" = "Top %@";
+
+"market.price_change_period.title" = "Zeitraum";
+"market.price_change_period.hour24" = "1 Tag";
+"market.price_change_period.week1" = "1Week";
+"market.price_change_period.week2" = "2 Wochen";
+"market.price_change_period.month1" = "1 Monat";
+"market.price_change_period.month3" = "3 Months";
+"market.price_change_period.month6" = "6 Monate";
+"market.price_change_period.year1" = "1 Jahr";
+"market.price_change_period.hour24.short" = "24Std";
+"market.price_change_period.week1.short" = "1W";
+"market.price_change_period.week2.short" = "2W";
+"market.price_change_period.month1.short" = "1M";
+"market.price_change_period.month3.short" = "3M";
+"market.price_change_period.month6.short" = "6M";
+"market.price_change_period.year1.short" = "1J";
+
 "market.project_has_no_coin" = "Dieses Projekt hat keine eigene Kryptowährung";
 
 "market.top.section.header.see_all" = "Alle anzeigen";
