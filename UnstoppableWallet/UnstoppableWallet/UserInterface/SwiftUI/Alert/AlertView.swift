@@ -85,7 +85,7 @@ struct ButtonsAlertView: View {
         case true:
             opacity = 0
 
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.9, blendDuration: 0).delay(0.2)) {
+            withAnimation(.easeIn(duration: 0.2)) {
                 opacity = 1
                 backgroundOpacity = 1
                 scale = 1

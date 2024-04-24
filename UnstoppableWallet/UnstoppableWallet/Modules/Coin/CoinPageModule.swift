@@ -64,3 +64,15 @@ extension CoinPageModule {
         }
     }
 }
+
+struct CoinPageViewNew: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let coinUid: String
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        CoinPageModule.viewController(coinUid: coinUid) ?? UIViewController()
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
+}
