@@ -10,6 +10,8 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let kit: OneInchKit.Kit
     private let networkManager = App.shared.networkManager
     private let evmFeeEstimator = EvmFeeEstimator()
+    private let commission: Decimal? = AppConfig.oneInchCommission
+    private let commissionAddress: String? = AppConfig.oneInchCommissionAddress
 
     init(kit: OneInchKit.Kit, storage: MultiSwapSettingStorage) {
         self.kit = kit
@@ -66,6 +68,8 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
                 toToken: address(token: tokenOut),
                 amount: amount,
                 slippage: slippage,
+                referrer: commissionAddress,
+                fee: commission,
                 recipient: storage.recipient(blockchainType: blockchainType).flatMap { try? EvmKit.Address(hex: $0.raw) },
                 gasPrice: gasPrice
             )
@@ -149,7 +153,8 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             chain: chain,
             fromToken: addressFrom,
             toToken: addressTo,
-            amount: amount
+            amount: amount,
+            fee: commission
         )
 
         return await OneInchMultiSwapQuote(
