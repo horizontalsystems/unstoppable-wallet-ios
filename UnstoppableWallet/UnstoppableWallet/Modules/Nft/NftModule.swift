@@ -4,7 +4,6 @@ import UIKit
 enum NftModule {
     static func viewController() -> UIViewController? {
         let coinPriceService = WalletCoinPriceService(
-            tag: "nft",
             currencyManager: App.shared.currencyManager,
             marketKit: App.shared.marketKit
         )

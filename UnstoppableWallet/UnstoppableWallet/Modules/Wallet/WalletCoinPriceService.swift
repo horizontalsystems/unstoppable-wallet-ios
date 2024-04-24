@@ -10,7 +10,6 @@ protocol IWalletCoinPriceServiceDelegate: AnyObject {
 class WalletCoinPriceService {
     weak var delegate: IWalletCoinPriceServiceDelegate?
 
-    private let tag: String
     private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
     private var cancellables = Set<AnyCancellable>()
@@ -21,8 +20,7 @@ class WalletCoinPriceService {
     private var feeCoinUids = Set<String>()
     private var conversionCoinUids = Set<String>()
 
-    init(tag: String, currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
-        self.tag = tag
+    init(currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
         self.currencyManager = currencyManager
         self.marketKit = marketKit
 
@@ -45,7 +43,7 @@ class WalletCoinPriceService {
         coinPriceCancellables = Set()
 
         if !coinUids.isEmpty {
-            marketKit.coinPriceMapPublisher(tag: tag, coinUids: Array(coinUids), currencyCode: currencyManager.baseCurrency.code)
+            marketKit.coinPriceMapPublisher(coinUids: Array(coinUids), currencyCode: currencyManager.baseCurrency.code)
                 .sink { [weak self] in
                     self?.onUpdate(coinPriceMap: $0)
                 }
@@ -53,13 +51,13 @@ class WalletCoinPriceService {
         }
 
         if !feeCoinUids.isEmpty {
-            marketKit.coinPriceMapPublisher(tag: "fee:\(tag)", coinUids: Array(feeCoinUids), currencyCode: currencyManager.baseCurrency.code)
+            marketKit.coinPriceMapPublisher(coinUids: Array(feeCoinUids), currencyCode: currencyManager.baseCurrency.code)
                 .sink { _ in }
                 .store(in: &coinPriceCancellables)
         }
 
         if !conversionCoinUids.isEmpty {
-            marketKit.coinPriceMapPublisher(tag: "conversion:\(tag)", coinUids: Array(conversionCoinUids), currencyCode: currencyManager.baseCurrency.code)
+            marketKit.coinPriceMapPublisher(coinUids: Array(conversionCoinUids), currencyCode: currencyManager.baseCurrency.code)
                 .sink { _ in }
                 .store(in: &coinPriceCancellables)
         }

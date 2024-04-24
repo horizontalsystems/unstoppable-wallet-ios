@@ -5,8 +5,6 @@ import SwiftUI
 struct CoinMarketsView: View {
     @StateObject private var viewModel: CoinMarketsViewModel
 
-    @State private var hasAppeared = false
-
     init(coin: Coin) {
         _viewModel = StateObject(wrappedValue: CoinMarketsViewModel(coin: coin))
     }
@@ -28,10 +26,7 @@ struct CoinMarketsView: View {
                 }
             }
         }
-        .onAppear {
-            guard !hasAppeared else { return }
-            hasAppeared = true
-
+        .onFirstAppear {
             viewModel.onFirstAppear()
         }
     }
@@ -114,8 +109,8 @@ struct CoinMarketsView: View {
 
                 Spacer()
 
-                if let volumeUsdt = viewItem.volumeUsdt {
-                    Text(volumeUsdt)
+                if let fiatVolume = viewItem.fiatVolume {
+                    Text(fiatVolume)
                         .font(.themeSubhead2)
                         .foregroundColor(.themeGray)
                         .lineLimit(1)

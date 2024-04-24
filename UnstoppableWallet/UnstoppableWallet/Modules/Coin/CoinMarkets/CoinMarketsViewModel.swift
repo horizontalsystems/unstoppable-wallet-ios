@@ -26,7 +26,6 @@ class CoinMarketsViewModel: ObservableObject {
     }
 
     @Published var filterTypeInfo = SelectorButtonInfo(text: "", count: 0, selectedIndex: 0)
-    @Published var volumeTypeInfo = SelectorButtonInfo(text: "", count: 0, selectedIndex: 0)
 
     init(coin: Coin) {
         self.coin = coin
@@ -43,7 +42,7 @@ class CoinMarketsViewModel: ObservableObject {
 
         Task { [weak self, marketKit, coin] in
             do {
-                let tickers = try await marketKit.marketTickers(coinUid: coin.uid)
+                let tickers = try await marketKit.marketTickers(coinUid: coin.uid, currencyCode: currency.code)
                 self?.tickers = tickers
                 self?.syncState()
             } catch {
@@ -68,37 +67,24 @@ class CoinMarketsViewModel: ObservableObject {
             filteredTickers = tickers.filter(\.verified)
         }
 
-        let sortedTickers = filteredTickers.sorted { $0.volume > $1.volume }
-        let price = marketKit.coinPrice(coinUid: coin.uid, currencyCode: currency.code)?.value
-        let viewItems = sortedTickers.map { viewItem(ticker: $0, price: price) }
+        let sortedTickers = filteredTickers.sorted { $0.fiatVolume > $1.fiatVolume }
+        let viewItems = sortedTickers.map { viewItem(ticker: $0) }
 
         DispatchQueue.main.async { [weak self] in
             self?.state = .loaded(viewItems: viewItems)
         }
     }
 
-    private func viewItem(ticker: MarketTicker, price: Decimal?) -> ViewItem {
+    private func viewItem(ticker: MarketTicker) -> ViewItem {
         ViewItem(
             market: ticker.marketName,
             marketImageUrl: ticker.marketImageUrl,
-            pair: "\(coin.code) / \(ticker.target)",
-            volume: volume(volumeType: .coin, value: ticker.volume, price: price),
-            volumeUsdt: volume(volumeType: .currency, value: ticker.volume, price: price),
+            pair: "\(ticker.base) / \(ticker.target)",
+            volume: ValueFormatter.instance.formatShort(value: ticker.volume, decimalCount: 8, symbol: ticker.base),
+            fiatVolume: ValueFormatter.instance.formatShort(currency: currency, value: ticker.fiatVolume),
             tradeUrl: ticker.tradeUrl,
             verified: ticker.verified
         )
-    }
-
-    private func volume(volumeType: VolumeType, value: Decimal, price: Decimal?) -> String? {
-        switch volumeType {
-        case .coin:
-            return ValueFormatter.instance.formatShort(value: value, decimalCount: 8, symbol: coin.code)
-        case .currency:
-            guard let price else {
-                return "n/a".localized
-            }
-            return ValueFormatter.instance.formatShort(currency: currency, value: value * price)
-        }
     }
 
     private func syncFilterTypeInfo() {
@@ -142,17 +128,12 @@ extension CoinMarketsViewModel {
         case verified
     }
 
-    private enum VolumeType: String, CaseIterable {
-        case coin
-        case currency
-    }
-
     struct ViewItem: Hashable {
         let market: String
         let marketImageUrl: String?
         let pair: String
         let volume: String?
-        let volumeUsdt: String?
+        let fiatVolume: String?
         let tradeUrl: String?
         let verified: Bool
 

@@ -85,20 +85,20 @@ class MultiSwapConfirmationViewModel: ObservableObject {
 
         if let feeToken {
             feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
-            marketKit.coinPricePublisher(tag: "swap", coinUid: feeToken.coin.uid, currencyCode: currency.code)
+            marketKit.coinPricePublisher(coinUid: feeToken.coin.uid, currencyCode: currency.code)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] price in self?.feeTokenRate = price.value }
                 .store(in: &cancellables)
         }
 
         rateIn = marketKit.coinPrice(coinUid: tokenIn.coin.uid, currencyCode: currency.code)?.value
-        marketKit.coinPricePublisher(tag: "swap", coinUid: tokenIn.coin.uid, currencyCode: currency.code)
+        marketKit.coinPricePublisher(coinUid: tokenIn.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] price in self?.rateIn = price.value }
             .store(in: &cancellables)
 
         rateOut = marketKit.coinPrice(coinUid: tokenOut.coin.uid, currencyCode: currency.code)?.value
-        marketKit.coinPricePublisher(tag: "swap", coinUid: tokenOut.coin.uid, currencyCode: currency.code)
+        marketKit.coinPricePublisher(coinUid: tokenOut.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] price in self?.rateOut = price.value }
             .store(in: &cancellables)

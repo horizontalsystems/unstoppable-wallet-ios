@@ -42,7 +42,7 @@ class MultiSwapViewModel: ObservableObject {
 
             if let internalTokenIn {
                 rateIn = marketKit.coinPrice(coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)?.value
-                rateInCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)
+                rateInCancellable = marketKit.coinPricePublisher(coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] price in self?.rateIn = price.value }
             } else {
@@ -118,7 +118,7 @@ class MultiSwapViewModel: ObservableObject {
 
             if let internalTokenOut {
                 rateOut = marketKit.coinPrice(coinUid: internalTokenOut.coin.uid, currencyCode: currency.code)?.value
-                rateOutCancellable = marketKit.coinPricePublisher(tag: "swap", coinUid: internalTokenOut.coin.uid, currencyCode: currency.code)
+                rateOutCancellable = marketKit.coinPricePublisher(coinUid: internalTokenOut.coin.uid, currencyCode: currency.code)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] price in self?.rateOut = price.value }
             } else {
