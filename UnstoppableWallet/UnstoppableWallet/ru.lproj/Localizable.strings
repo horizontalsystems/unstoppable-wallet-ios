@@ -688,6 +688,45 @@
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
+"market.global.market_cap" = "Рын. капитализация";
+"market.global.volume" = "Volume";
+"market.global.defi_cap" = "Капитализация DeFi";
+"market.global.defi_in_tvl" = "TVL в DeFi";
+
+"market.tab.news" = "Новости";
+"market.tab.coins" = "Coins";
+"market.tab.watchlist" = "Избранное";
+"market.tab.platforms" = "Platforms";
+"market.tab.pairs" = "Pairs";
+"market.tab.sectors" = "Секторы";
+
+"market.sort_by.title" = "Сортировать";
+"market.sort_by.highest_cap" = "Наивысшая кап.";
+"market.sort_by.lowest_cap" = "Наименьшая кап.";
+"market.sort_by.gainers" = "Gainers";
+"market.sort_by.losers" = "Losers";
+"market.sort_by.highest_volume" = "Наивысший объем";
+"market.sort_by.lowest_volume" = "Наименьший объем";
+
+"market.top_coins.title" = "Coins";
+"market.top_coins" = "Top %@";
+
+"market.price_change_period.title" = "Период";
+"market.price_change_period.hour24" = "1 день";
+"market.price_change_period.week1" = "1 неделя";
+"market.price_change_period.week2" = "2 недели";
+"market.price_change_period.month1" = "1 месяц";
+"market.price_change_period.month3" = "3 Months";
+"market.price_change_period.month6" = "6 месяцев";
+"market.price_change_period.year1" = "1 год";
+"market.price_change_period.hour24.short" = "24ч";
+"market.price_change_period.week1.short" = "1W";
+"market.price_change_period.week2.short" = "2Н";
+"market.price_change_period.month1.short" = "1M";
+"market.price_change_period.month3.short" = "3М";
+"market.price_change_period.month6.short" = "6М";
+"market.price_change_period.year1.short" = "1Г";
+
 "market.project_has_no_coin" = "У этого проекта нет токена";
 
 "market.top.section.header.see_all" = "Посмотреть всё";
