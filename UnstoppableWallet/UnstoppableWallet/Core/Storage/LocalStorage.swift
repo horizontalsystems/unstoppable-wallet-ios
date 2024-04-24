@@ -17,6 +17,7 @@ class LocalStorage {
     private let keyUserChartIndicatorsSync = "user-chart-indicators"
     private let keyIndicatorsShown = "indicators-shown"
     private let keyTelegramSupportRequested = "telegram-support-requested"
+    private let keyNewMarketTabEnabled = "new-market-tab-enabled"
 
     private let userDefaultsStorage: UserDefaultsStorage
 
@@ -90,6 +91,11 @@ extension LocalStorage {
     var telegramSupportRequested: Bool {
         get { userDefaultsStorage.value(for: keyTelegramSupportRequested) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyTelegramSupportRequested) }
+    }
+
+    var newMarketTabEnabled: Bool {
+        get { userDefaultsStorage.value(for: keyNewMarketTabEnabled) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyNewMarketTabEnabled) }
     }
 }
 
