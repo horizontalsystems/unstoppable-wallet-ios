@@ -81,7 +81,7 @@ struct BackupTypeView: View {
             NavigationRow(
                 destination: {
                     BackupListView(viewModel: viewModel, onDismiss: onDismiss)
-                        .modifier(FirstAppear { stat(page: .exportFull, event: .open(page: statPage)) })
+                        .onFirstAppear { stat(page: .exportFull, event: .open(page: statPage)) }
                 },
                 isActive: isActive
             ) {

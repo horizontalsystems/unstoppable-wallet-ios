@@ -37,6 +37,9 @@ struct TabHeaderView: View {
                                 offset = geo.size.width / CGFloat(tabs.count) * CGFloat(index)
                             }
                         }
+                        .onAppear {
+                            offset = geo.size.width / CGFloat(tabs.count) * CGFloat(currentTabIndex)
+                        }
                 }
                 .frame(height: 2)
             }

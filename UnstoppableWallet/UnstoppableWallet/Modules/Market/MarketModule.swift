@@ -141,6 +141,55 @@ enum MarketModule {
 }
 
 extension MarketModule {
+    enum SortBy: String, CaseIterable {
+        case highestCap
+        case lowestCap
+        case gainers
+        case losers
+        case highestVolume
+        case lowestVolume
+
+        var title: String {
+            switch self {
+            case .highestCap: return "market.sort_by.highest_cap".localized
+            case .lowestCap: return "market.sort_by.lowest_cap".localized
+            case .gainers: return "market.sort_by.gainers".localized
+            case .losers: return "market.sort_by.losers".localized
+            case .highestVolume: return "market.sort_by.highest_volume".localized
+            case .lowestVolume: return "market.sort_by.lowest_volume".localized
+            }
+        }
+    }
+
+    enum Top: Int, CaseIterable {
+        case top100 = 100
+        case top200 = 200
+        case top300 = 300
+        case top500 = 500
+
+        var title: String {
+            "market.top_coins".localized("\(rawValue)")
+        }
+    }
+
+    enum PriceChangePeriod: String, CaseIterable {
+        case hour24
+        case week1
+        case week2
+        case month1
+        case month3
+        case month6
+        case year1
+
+        var title: String {
+            "market.price_change_period.\(rawValue)".localized
+        }
+
+        var shortTitle: String {
+            "market.price_change_period.\(rawValue).short".localized
+        }
+    }
+
     enum Tab: String, CaseIterable {
         case overview
         case posts
@@ -305,9 +354,41 @@ extension MarketKit.MarketInfo {
         case .year: return priceChange1y
         }
     }
+
+    func priceChangeValue(period: MarketModule.PriceChangePeriod) -> Decimal? {
+        switch period {
+        case .hour24: return priceChange24h
+        case .week1: return priceChange7d
+        case .week2: return priceChange14d
+        case .month1: return priceChange30d
+        case .month3: return priceChange30d // TODO: 90d
+        case .month6: return priceChange200d
+        case .year1: return priceChange1y
+        }
+    }
 }
 
 extension [MarketKit.MarketInfo] {
+    func sorted(sortBy: MarketModule.SortBy, priceChangePeriod: MarketModule.PriceChangePeriod) -> [MarketKit.MarketInfo] {
+        sorted { lhsMarketInfo, rhsMarketInfo in
+            switch sortBy {
+            case .highestCap: return lhsMarketInfo.marketCap ?? 0 > rhsMarketInfo.marketCap ?? 0
+            case .lowestCap: return lhsMarketInfo.marketCap ?? 0 < rhsMarketInfo.marketCap ?? 0
+            case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
+            case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
+            case .gainers, .losers:
+                guard let rhsPriceChange = rhsMarketInfo.priceChangeValue(period: priceChangePeriod) else {
+                    return true
+                }
+                guard let lhsPriceChange = lhsMarketInfo.priceChangeValue(period: priceChangePeriod) else {
+                    return false
+                }
+
+                return sortBy == .gainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
+            }
+        }
+    }
+
     func sorted(sortingField: MarketModule.SortingField, priceChangeType: MarketModule.PriceChangeType) -> [MarketKit.MarketInfo] {
         sorted { lhsMarketInfo, rhsMarketInfo in
             switch sortingField {

@@ -1,7 +1,7 @@
 import SwiftUI
 import ThemeKit
 
-extension Text {
+extension View {
     func textBody(color: Color = .themeLeah) -> some View {
         foregroundColor(color).font(.themeBody)
     }

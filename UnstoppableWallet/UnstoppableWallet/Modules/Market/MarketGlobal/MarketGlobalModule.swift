@@ -5,8 +5,12 @@ import UIKit
 enum MarketGlobalModule {
     static let dominance = "dominance"
 
-    enum MetricsType {
+    enum MetricsType: Identifiable {
         case totalMarketCap, volume24h, defiCap, tvlInDefi
+
+        var id: Self {
+            self
+        }
 
         var title: String {
             switch self {
