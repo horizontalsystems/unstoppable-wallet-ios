@@ -686,6 +686,45 @@
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
 
+"market.global.market_cap" = "市场价值";
+"market.global.volume" = "Volume";
+"market.global.defi_cap" = "DeFi市场价值";
+"market.global.defi_in_tvl" = "DeFi中的TVL";
+
+"market.tab.news" = "发现";
+"market.tab.coins" = "Coins";
+"market.tab.watchlist" = "关注";
+"market.tab.platforms" = "Platforms";
+"market.tab.pairs" = "Pairs";
+"market.tab.sectors" = "行业";
+
+"market.sort_by.title" = "排序方式为";
+"market.sort_by.highest_cap" = "市值由高到低";
+"market.sort_by.lowest_cap" = "市值由低到高";
+"market.sort_by.gainers" = "Gainers";
+"market.sort_by.losers" = "Losers";
+"market.sort_by.highest_volume" = "成交量由高到低";
+"market.sort_by.lowest_volume" = "成交量由低到高";
+
+"market.top_coins.title" = "Coins";
+"market.top_coins" = "Top %@";
+
+"market.price_change_period.title" = "句号";
+"market.price_change_period.hour24" = "1天";
+"market.price_change_period.week1" = "1周";
+"market.price_change_period.week2" = "2周";
+"market.price_change_period.month1" = "1月";
+"market.price_change_period.month3" = "3 Months";
+"market.price_change_period.month6" = "6 个月";
+"market.price_change_period.year1" = "1 年";
+"market.price_change_period.hour24.short" = "24时";
+"market.price_change_period.week1.short" = "1W";
+"market.price_change_period.week2.short" = "2星期";
+"market.price_change_period.month1.short" = "1月";
+"market.price_change_period.month3.short" = "3个月";
+"market.price_change_period.month6.short" = "6个月";
+"market.price_change_period.year1.short" = "1年";
+
 "market.project_has_no_coin" = "此项目没有硬币";
 
 "market.top.section.header.see_all" = "查看全部";
