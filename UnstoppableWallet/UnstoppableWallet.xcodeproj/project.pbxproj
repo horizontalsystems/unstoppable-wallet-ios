@@ -13391,7 +13391,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/OneInchKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.1;
+				version = 3.0.3;
 			};
 		};
 		D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit" */ = {

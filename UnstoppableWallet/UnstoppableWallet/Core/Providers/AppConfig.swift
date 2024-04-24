@@ -117,7 +117,17 @@ enum AppConfig {
     }
 
     static var oneInchApiKey: String? {
-        (Bundle.main.object(forInfoDictionaryKey: "oneInchApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+        (Bundle.main.object(forInfoDictionaryKey: "OneInchApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
+    static var oneInchCommission: Decimal? {
+        (Bundle.main.object(forInfoDictionaryKey: "OneInchCommission") as? String).flatMap {
+            $0.isEmpty ? nil : Decimal(string: $0, locale: Locale(identifier: "en_US_POSIX"))
+        }
+    }
+
+    static var oneInchCommissionAddress: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "OneInchCommissionAddress") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
     static var defaultWords: String {
