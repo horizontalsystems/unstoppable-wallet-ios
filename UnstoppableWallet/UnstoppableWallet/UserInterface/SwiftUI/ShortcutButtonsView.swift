@@ -26,7 +26,7 @@ struct ShortcutButtonsView<Content: View>: View {
                         Button(action: {
                             onTap(index)
                         }, label: {
-                            Text(title).textSubhead1(color: .themeLeah)
+                            Text(title)
                         })
                         .buttonStyle(SecondaryButtonStyle(style: .default))
                     case let .icon(name):

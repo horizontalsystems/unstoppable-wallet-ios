@@ -14,12 +14,14 @@ struct SecondaryButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: .margin4) {
+        HStack(spacing: .margin2) {
             accessoryView(accessory: leftAccessory, configuration: configuration)
             labelView(configuration: configuration)
             accessoryView(accessory: rightAccessory, configuration: configuration)
         }
-        .padding(EdgeInsets(top: 5.5, leading: .margin16, bottom: 5.5, trailing: .margin16))
+        .padding(.leading, leftAccessory.padding)
+        .padding(.trailing, rightAccessory.padding)
+        .frame(height: 28)
         .background(style.backgroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
         .clipShape(Capsule(style: .continuous))
         .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
@@ -27,7 +29,7 @@ struct SecondaryButtonStyle: ButtonStyle {
 
     @ViewBuilder func labelView(configuration: Configuration) -> some View {
         configuration.label
-            .font(.themeSubhead1)
+            .font(.themeCaptionSB)
             .foregroundColor(style.foregroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
     }
 
@@ -75,6 +77,13 @@ struct SecondaryButtonStyle: ButtonStyle {
             case .dropDown: return "arrow_small_down_20"
             case .info: return "circle_information_20"
             case let .custom(icon, _, _, _): return icon
+            }
+        }
+
+        var padding: CGFloat {
+            switch self {
+            case .none: return .margin16
+            default: return .margin8
             }
         }
 
