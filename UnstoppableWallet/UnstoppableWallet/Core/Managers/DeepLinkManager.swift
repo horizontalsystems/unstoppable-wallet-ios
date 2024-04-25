@@ -4,6 +4,7 @@ import RxRelay
 import RxSwift
 
 class DeepLinkManager {
+    static let deepLinkScheme = "unstoppable.money"
     static let tonDeepLinkScheme = "ton"
 
     private let newSchemeRelay = BehaviorRelay<DeepLink?>(value: nil)
@@ -24,7 +25,7 @@ extension DeepLinkManager {
         let path = urlComponents.path
         let queryItems = urlComponents.queryItems
 
-        if (scheme == "unstoppable.money" && host == "wc") || (scheme == "https" && host == "unstoppable.money" && path == "/wc"),
+        if (scheme == DeepLinkManager.deepLinkScheme && host == "wc") || (scheme == "https" && host == DeepLinkManager.deepLinkScheme && path == "/wc"),
            let uri = queryItems?.first(where: { $0.name == "uri" })?.value
         {
             newSchemeRelay.accept(.walletConnect(url: uri))
@@ -41,7 +42,7 @@ extension DeepLinkManager {
             }
         }
 
-        if scheme == "unstoppable.money", host == "coin" {
+        if scheme == DeepLinkManager.deepLinkScheme, host == "coin" {
             let uid = path.replacingOccurrences(of: "/", with: "")
 
             newSchemeRelay.accept(.coin(uid: uid))

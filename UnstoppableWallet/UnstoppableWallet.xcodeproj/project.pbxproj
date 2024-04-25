@@ -2150,6 +2150,8 @@
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
+		6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A22BDA419200ABBD55 /* Web3Wallet */; };
+		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */; };
@@ -4940,6 +4942,7 @@
 				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
 				D3C187E2290FD00E00FE1900 /* ComponentKit in Frameworks */,
 				D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */,
+				6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */,
 				D08C93B12B91E3B400A7D1D5 /* Hodler in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4988,6 +4991,7 @@
 				D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */,
 				D3C187D2290FCF3D00FE1900 /* ComponentKit in Frameworks */,
 				D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */,
+				6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */,
 				D08C93AF2B91E39E00A7D1D5 /* Hodler in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9260,6 +9264,7 @@
 				D3E323C72AE7B8E400F73914 /* KeychainAccess */,
 				6B55E33C2AF26D7A00616B60 /* Starscream */,
 				D08C93B02B91E3B400A7D1D5 /* Hodler */,
+				6BBCE4A22BDA419200ABBD55 /* Web3Wallet */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -9321,6 +9326,7 @@
 				D3E323C92AE7B8F400F73914 /* KeychainAccess */,
 				6B55E33A2AF26D6400616B60 /* Starscream */,
 				D08C93AE2B91E39E00A7D1D5 /* Hodler */,
+				6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -13563,7 +13569,7 @@
 			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
 			requirement = {
 				kind = exactVersion;
-				version = 2.1.3;
+				version = 2.1.5;
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
@@ -13571,7 +13577,7 @@
 			repositoryURL = "https://github.com/WalletConnect/WalletConnectSwiftV2";
 			requirement = {
 				kind = exactVersion;
-				version = 1.6.10;
+				version = 1.18.5;
 			};
 		};
 		D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */ = {
@@ -13708,6 +13714,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B55E3392AF26D6400616B60 /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
+		};
+		6BBCE4A22BDA419200ABBD55 /* Web3Wallet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = Web3Wallet;
+		};
+		6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = Web3Wallet;
 		};
 		6BDA29AA29D6F37C003847ED /* ECashKit */ = {
 			isa = XCSwiftPackageProductDependency;

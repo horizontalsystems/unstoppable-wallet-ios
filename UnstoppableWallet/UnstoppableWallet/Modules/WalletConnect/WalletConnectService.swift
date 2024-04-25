@@ -11,6 +11,8 @@ import WalletConnectPairing
 import WalletConnectRelay
 import WalletConnectSign
 import WalletConnectUtils
+import Web3Wallet
+import HsCryptoKit
 
 extension Starscream.WebSocket: WebSocketConnecting {}
 
@@ -43,39 +45,53 @@ class WalletConnectService {
     private var publishers = [AnyCancellable]()
 
     init(connectionService: WalletConnectSocketConnectionService, info: WalletConnectClientInfo, logger: Logger? = nil) {
+        let bundleIdentifier: String = Bundle.main.bundleIdentifier ?? ""
+
+        Networking.configure(
+            groupIdentifier: "group.\(bundleIdentifier))",
+            projectId: info.projectId,
+            socketFactory: SocketFactory(),
+            socketConnectionType: .manual
+        )
+
         self.connectionService = connectionService
+
         self.logger = logger
         let metadata = WalletConnectSign.AppMetadata(
             name: info.name,
             description: info.description,
             url: info.url,
-            icons: info.icons
+            icons: info.icons,
+            redirect: .init(native: DeepLinkManager.deepLinkScheme + "://", universal: nil)
         )
 
-        Networking.configure(projectId: info.projectId, socketFactory: SocketFactory(), socketConnectionType: .manual)
-        Pair.configure(metadata: metadata)
+        Web3Wallet.configure(
+            metadata: metadata,
+            crypto: DefaultCryptoProvider()
+        )
+
         setUpAuthSubscribing()
 
-        connectionService.relayClient = Relay.instance
-
+        connectionService.relayClient = Networking.instance
+        
         updateSessions()
         updatePairings()
     }
 
     func setUpAuthSubscribing() {
-        Sign.instance.socketConnectionStatusPublisher
+        Web3Wallet.instance.socketConnectionStatusPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
                 self?.didChangeSocketConnectionStatus(status)
             }.store(in: &publishers)
 
-        Sign.instance.sessionProposalPublisher
+        Web3Wallet.instance.sessionProposalPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] sessionProposal in
                 self?.didReceive(sessionProposal: sessionProposal.proposal)
             }.store(in: &publishers)
 
-        Sign.instance.sessionSettlePublisher
+        Web3Wallet.instance.sessionSettlePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] session in
                 self?.didSettle(session: session)
@@ -87,13 +103,13 @@ class WalletConnectService {
                 self?.didUpdate(sessionTopic: pair.sessionTopic, namespaces: pair.namespaces)
             }.store(in: &publishers)
 
-        Sign.instance.sessionRequestPublisher
+        Web3Wallet.instance.sessionRequestPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] sessionRequest in
-                self?.didReceive(sessionRequest: sessionRequest.request)
+            .sink { [weak self] pair in
+                self?.didReceive(sessionRequest: pair.request)
             }.store(in: &publishers)
 
-        Sign.instance.sessionDeletePublisher
+        Web3Wallet.instance.sessionDeletePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] tuple in
                 self?.didDelete(sessionTopic: tuple.0, reason: tuple.1)
@@ -176,7 +192,7 @@ extension WalletConnectService {
 
     // works with pending requests
     public var pendingRequests: [WalletConnectSign.Request] {
-        Sign.instance.getPendingRequests()
+        Web3Wallet.instance.getPendingRequests().map { $0.request }
     }
 
     public var pendingRequestsUpdatedObservable: Observable<Void> {
@@ -185,7 +201,7 @@ extension WalletConnectService {
 
     // works with pairings
     public var pairings: [WalletConnectPairing.Pairing] {
-        Pair.instance.getPairings()
+        Web3Wallet.instance.getPairings()
     }
 
     public var pairingUpdatedObservable: Observable<Void> {
@@ -196,7 +212,7 @@ extension WalletConnectService {
         Single.create { observer in
             Task { [weak self] in
                 do {
-                    try await Pair.instance.disconnect(topic: topic)
+                    try await Web3Wallet.instance.disconnectPairing(topic: topic)
                     self?.updatePairings()
                     observer(.success(()))
                 } catch {
@@ -227,7 +243,7 @@ extension WalletConnectService {
 
     // works with dApp
     public func validate(uri: String) throws -> WalletConnectUtils.WalletConnectURI {
-        guard let uri = WalletConnectUtils.WalletConnectURI(string: uri) else {
+        guard let uri = try? WalletConnectUtils.WalletConnectURI(uriString: uri) else {
             throw WalletConnectUriHandler.ConnectionError.wrongUri
         }
         return uri
@@ -236,7 +252,7 @@ extension WalletConnectService {
     public func pair(uri: WalletConnectUtils.WalletConnectURI) async throws {
         Task.init { [weak self] in
             do {
-                try await Pair.instance.pair(uri: uri)
+                try await Web3Wallet.instance.pair(uri: uri)
                 self?.updatePairings()
             } catch {
                 // can't pair with dApp, duplicate pairing or can't parse uri
@@ -245,7 +261,7 @@ extension WalletConnectService {
         }
     }
 
-    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: Set<WalletConnectUtils.Account>, methods: Set<String>, events: Set<String>) async throws {
+    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: [WalletConnectUtils.Account], methods: Set<String>, events: Set<String>) async throws {
         logger?.debug("[WALLET] Approve Session: \(proposal.id)")
         Task { [logger] in
             do {
@@ -254,7 +270,7 @@ extension WalletConnectService {
                     methods: methods,
                     events: events
                 )
-                try await Sign.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
+                _ = try await Web3Wallet.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
             } catch {
                 logger?.error("WC v2 can't approve proposal, cause: \(error.localizedDescription)")
                 throw error
@@ -265,7 +281,7 @@ extension WalletConnectService {
     public func reject(proposal: WalletConnectSign.Session.Proposal) async throws {
         logger?.debug("[WALLET] Reject Session: \(proposal.id)")
         do {
-            try await Sign.instance.reject(proposalId: proposal.id, reason: .userRejected)
+            try await Web3Wallet.instance.rejectSession(proposalId: proposal.id, reason: .userRejected)
         } catch {
             logger?.error("WC v2 can't reject proposal, cause: \(error.localizedDescription)")
             throw error
@@ -275,7 +291,7 @@ extension WalletConnectService {
     public func disconnect(topic: String, reason _: WalletConnectSign.Reason) {
         Task { [weak self, logger] in
             do {
-                try await Sign.instance.disconnect(topic: topic)
+                try await Web3Wallet.instance.disconnect(topic: topic)
                 self?.updateSessions()
             } catch {
                 logger?.error("WC v2 can't disconnect topic, cause: \(error.localizedDescription)")
@@ -301,7 +317,7 @@ extension WalletConnectService {
     public func reject(request: WalletConnectSign.Request) {
         Task { [weak self] in
             do {
-                try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .error(.init(code: 5000, message: "Reject by User")))
+                try await Web3Wallet.instance.respond(topic: request.topic, requestId: request.id, response: .error(.init(code: 5000, message: "Reject by User")))
                 self?.pendingRequestsUpdatedRelay.accept(())
             }
         }
@@ -364,4 +380,23 @@ extension WalletConnectSign.SocketConnectionStatus {
         case .disconnected: return .disconnected
         }
     }
+}
+
+struct DefaultCryptoProvider: CryptoProvider {
+
+    public func recoverPubKey(signature: EthereumSignature, message: Data) throws -> Data {
+        let signature = Data(signature.r + signature.s + [signature.v])
+        let messageHash = keccak256(message)
+        var pubKey = HsCryptoKit.Crypto.ellipticPublicKey(signature: signature, of: messageHash, compressed: false)
+        pubKey?.remove(at: 0)
+        
+        return pubKey ?? Data()
+    }
+
+    public func keccak256(_ data: Data) -> Data {
+        let digest = SHA3(variant: .keccak256)
+        let hash = digest.calculate(for: [UInt8](data))
+        return Data(hash)
+    }
+
 }
