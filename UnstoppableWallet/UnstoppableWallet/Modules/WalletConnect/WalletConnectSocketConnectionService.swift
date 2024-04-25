@@ -7,6 +7,8 @@ import RxSwift
 import WalletConnectRelay
 import WalletConnectSign
 import WalletConnectUtils
+import Web3Wallet
+import UIKit
 
 class WalletConnectSocketConnectionService {
     private static let retryInterval = 10
@@ -20,12 +22,11 @@ class WalletConnectSocketConnectionService {
     private let statusRelay = PublishRelay<Status>()
     private(set) var status = Status.disconnected {
         didSet {
-            logger?.debug("wc v2 change socket status: \(status)")
             statusRelay.accept(status)
         }
     }
 
-    weak var relayClient: RelayClient? {
+    var relayClient: NetworkingClient? {
         didSet {
             updateClient()
         }

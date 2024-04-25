@@ -241,7 +241,7 @@ extension WalletConnectMainService {
 
         Task { [weak self, service, blockchains] in
             do {
-                try await service.approve(proposal: proposal, accounts: Set(accounts), methods: blockchains.methods, events: blockchains.events)
+                try await service.approve(proposal: proposal, accounts: accounts, methods: blockchains.methods, events: blockchains.events)
             } catch {
                 self?.errorRelay.accept(error)
             }
