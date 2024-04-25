@@ -7,9 +7,9 @@ struct SelectorButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: .margin4) {
+        HStack(spacing: .margin2) {
             configuration.label
-                .font(.themeSubhead1)
+                .font(.themeCaptionSB)
                 .foregroundColor(isEnabled ? (configuration.isPressed ? .themeGray : .themeLeah) : .themeGray50)
 
             VStack(spacing: count == 2 ? 4 : 2) {
@@ -28,7 +28,9 @@ struct SelectorButtonStyle: ButtonStyle {
             }
             .frame(width: .iconSize20, height: .iconSize20)
         }
-        .padding(EdgeInsets(top: .margin4, leading: .margin16, bottom: .margin4, trailing: .margin12))
+        .padding(.leading, .margin16)
+        .padding(.trailing, .margin12)
+        .frame(height: 28)
         .background(isEnabled ? (configuration.isPressed ? Color.themeSteel10 : Color.themeSteel20) : Color.themeSteel20)
         .clipShape(Capsule(style: .continuous))
         .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
