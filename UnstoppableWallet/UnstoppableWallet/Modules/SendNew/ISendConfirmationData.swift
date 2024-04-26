@@ -4,9 +4,9 @@ import MarketKit
 protocol ISendConfirmationData {
     var feeData: FeeData? { get }
     var canSend: Bool { get }
-    var customSendButtonTitle: String? { get }
-    var customSendingButtonTitle: String? { get }
-    var customSentButtonTitle: String? { get }
-    func cautions(feeToken: Token?) -> [CautionNew]
+    var sendButtonTitle: String { get }
+    var sendingButtonTitle: String { get }
+    var sentButtonTitle: String { get }
     func sections(feeToken: Token?, currency: Currency, feeTokenRate: Decimal?) -> [[SendConfirmField]]
+    func cautions(feeToken: Token?) -> [CautionNew]
 }

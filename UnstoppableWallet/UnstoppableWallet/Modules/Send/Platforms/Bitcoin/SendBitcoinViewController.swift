@@ -19,7 +19,7 @@ class SendBitcoinViewController: BaseSendViewController {
     init(confirmationFactory: ISendConfirmationFactory,
          feeSettingsFactory: ISendFeeSettingsFactory,
          outputSelectorFactory: ISendOutputSelectorFactory,
-         viewModel: SendViewModel,
+         viewModel: SendViewModelOld,
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,

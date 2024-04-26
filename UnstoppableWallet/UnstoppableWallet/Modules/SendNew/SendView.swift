@@ -1,228 +1,168 @@
+import ComponentKit
 import Kingfisher
+import MarketKit
 import SwiftUI
-import ThemeKit
 
 struct SendView: View {
-    @StateObject var viewModel: SendViewModelNew
+    @StateObject var viewModel: SendViewModel
+    private let onSend: () -> Void
 
-    @Environment(\.presentationMode) private var presentationMode
-    @FocusState private var focusField: FocusField?
-    @FocusState var isAddressFocused: Bool
+    @State private var feeSettingsPresented = false
 
-    init(wallet: Wallet) {
-        _viewModel = StateObject(wrappedValue: SendViewModelNew(wallet: wallet))
+    init(sendData: SendData, onSend: @escaping () -> Void) {
+        _viewModel = .init(wrappedValue: SendViewModel(handler: SendHandlerFactory.handler(sendData: sendData)))
+        self.onSend = onSend
     }
 
     var body: some View {
-        ScrollableThemeView {
-            VStack(spacing: .margin16) {
-                if let balanceValue = balanceValue() {
-                    availableBalanceView(value: balanceValue)
-                }
+        ThemeView {
+            if let handler = viewModel.handler {
+                switch viewModel.state {
+                case .syncing:
+                    VStack(spacing: .margin12) {
+                        ProgressView()
 
-                inputView()
-                addressView()
-                buttonView()
-            }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
-            .animation(.linear, value: viewModel.addressCautionState)
-        }
-        .navigationTitle("Send \(viewModel.token.coin.code)")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                KFImage.url(URL(string: viewModel.token.coin.imageUrl))
-                    .resizable()
-                    .frame(width: .iconSize24, height: .iconSize24)
-            }
-
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.cancel".localized) {
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }
-        }
-    }
-
-    @ViewBuilder private func availableBalanceView(value: String) -> some View {
-        ListSection {
-            HStack(spacing: .margin8) {
-                Text("send.available_balance".localized).textSubhead2()
-                Spacer()
-                Text(value)
-                    .textSubhead2(color: .themeLeah)
-                    .multilineTextAlignment(.trailing)
-            }
-            .padding(.vertical, .margin12)
-            .padding(.horizontal, .margin16)
-            .frame(minHeight: 40)
-        }
-        .themeListStyle(.bordered)
-    }
-
-    @ViewBuilder private func inputView() -> some View {
-        VStack(spacing: 3) {
-            TextField("", text: $viewModel.amountString, prompt: Text("0").foregroundColor(.themeGray))
-                .foregroundColor(.themeLeah)
-                .font(.themeHeadline1)
-                .keyboardType(.decimalPad)
-                .focused($focusField, equals: .amount)
-
-            if viewModel.rateIn != nil {
-                HStack(spacing: 0) {
-                    Text(viewModel.currency.symbol).textBody(color: .themeGray)
-
-                    TextField("", text: $viewModel.fiatAmountString, prompt: Text("0").foregroundColor(.themeGray))
-                        .foregroundColor(.themeGray)
-                        .font(.themeBody)
-                        .keyboardType(.decimalPad)
-                        .focused($focusField, equals: .fiatAmount)
-                        .frame(height: 20)
+                        if let syncingText = handler.syncingText {
+                            Text(syncingText).textSubhead2()
+                        }
+                    }
+                case let .success(data):
+                    dataView(data: data)
+                case let .failed(error):
+                    errorView(error: error)
                 }
             } else {
-                Text("swap.rate_not_available".localized)
-                    .themeSubhead2(color: .themeGray50, alignment: .leading)
-                    .frame(height: 20)
+                Text("No Handler")
             }
         }
-        .padding(.horizontal, .margin16)
-        .padding(.vertical, 20)
-        .modifier(ThemeListStyleModifier(cornerRadius: 18))
-        .onFirstAppear {
-            focusField = .amount
+        .sheet(isPresented: $feeSettingsPresented) {
+            if let transactionService = viewModel.transactionService, let feeToken = viewModel.feeToken {
+                transactionService.settingsView(
+                    feeData: Binding<FeeData?>(get: { viewModel.state.data?.feeData }, set: { _ in }),
+                    loading: Binding<Bool>(get: { viewModel.state.isSyncing }, set: { _ in }),
+                    feeToken: feeToken,
+                    currency: viewModel.currency,
+                    feeTokenRate: $viewModel.feeTokenRate
+                )
+            }
         }
+        .navigationTitle("send.confirmation.title".localized)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                if focusField != nil {
-                    HStack(spacing: 0) {
-                        if viewModel.availableBalance != nil {
-                            ForEach(1 ... 4, id: \.self) { multiplier in
-                                let percent = multiplier * 25
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    feeSettingsPresented = true
+                }) {
+                    Image("manage_2_20").renderingMode(.template)
+                }
+                .disabled(viewModel.state.isSyncing)
+            }
+        }
+        .onReceive(viewModel.errorSubject) { error in
+            HudHelper.instance.showError(subtitle: error)
+        }
+    }
 
-                                Button(action: {
-                                    viewModel.setAmountIn(percent: percent)
-                                    focusField = nil
-                                }) {
-                                    Text("\(percent)%").textSubhead1(color: .themeLeah)
+    @ViewBuilder private func dataView(data: ISendConfirmationData) -> some View {
+        VStack {
+            ScrollView {
+                VStack(spacing: .margin16) {
+                    let sections = data.sections(feeToken: viewModel.feeToken, currency: viewModel.currency, feeTokenRate: viewModel.feeTokenRate)
+
+                    if !sections.isEmpty {
+                        ForEach(sections.indices, id: \.self) { sectionIndex in
+                            let section = sections[sectionIndex]
+
+                            if !section.isEmpty {
+                                ListSection {
+                                    ForEach(section.indices, id: \.self) { index in
+                                        section[index].listRow
+                                    }
                                 }
-                                .frame(maxWidth: .infinity)
-
-                                RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                                    .fill(Color.themeSteel20)
-                                    .frame(width: 1)
-                                    .frame(maxHeight: .infinity)
                             }
-                        } else {
-                            Spacer()
                         }
-
-                        Button(action: {
-                            viewModel.clearAmountIn()
-                        }) {
-                            Image(systemName: "trash")
-                                .font(.themeSubhead1)
-                                .foregroundColor(.themeLeah)
-                        }
-                        .frame(maxWidth: .infinity)
-
-                        RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                            .fill(Color.themeSteel20)
-                            .frame(width: 1)
-                            .frame(maxHeight: .infinity)
-
-                        Button(action: {
-                            focusField = nil
-                        }) {
-                            Image(systemName: "keyboard.chevron.compact.down")
-                                .font(.themeSubhead1)
-                                .foregroundColor(.themeLeah)
-                        }
-                        .frame(maxWidth: .infinity)
                     }
-                    .padding(.horizontal, -16)
-                    .frame(maxWidth: .infinity)
+
+                    let cautions = (viewModel.transactionService?.cautions ?? []) + data.cautions(feeToken: viewModel.feeToken)
+
+                    if !cautions.isEmpty {
+                        VStack(spacing: .margin12) {
+                            ForEach(cautions.indices, id: \.self) { index in
+                                HighlightedTextView(caution: cautions[index])
+                            }
+                        }
+                    }
                 }
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
-        }
-    }
 
-    @ViewBuilder private func addressView() -> some View {
-        AddressViewNew(
-            initial: .init(
-                blockchainType: viewModel.token.blockchainType,
-                showContacts: true
-            ),
-            text: $viewModel.address,
-            result: $viewModel.addressResult
-        )
-        .focused($isAddressFocused)
-        .onChange(of: isAddressFocused) { active in
-            viewModel.changeAddressFocus(active: active)
-        }
-        .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
-        .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
-    }
-
-    @ViewBuilder private func buttonView() -> some View {
-        let (title, disabled, showProgress) = buttonState()
-
-        Button(action: {
-            // todo
-        }) {
-            HStack(spacing: .margin8) {
-                if showProgress {
-                    ProgressView()
+            if viewModel.timeLeft > 0 || viewModel.sending {
+                SlideButton(
+                    styling: .text(
+                        start: data.sendButtonTitle,
+                        end: data.sendingButtonTitle,
+                        success: data.sentButtonTitle
+                    ),
+                    action: {
+                        try await viewModel.send()
+                    }, completion: {
+                        onSend()
+                    }
+                )
+                .padding(.vertical, .margin16)
+                .padding(.horizontal, .margin16)
+            } else {
+                Button(action: {
+                    viewModel.sync()
+                }) {
+                    Text("send.confirmation.refresh".localized)
                 }
-
-                Text(title)
+                .buttonStyle(PrimaryButtonStyle(style: .gray))
+                .padding(.vertical, .margin16)
+                .padding(.horizontal, .margin16)
             }
+
+            let (bottomText, bottomTextColor) = bottomText()
+
+            Text(bottomText)
+                .textSubhead1(color: bottomTextColor)
+                .padding(.bottom, .margin8)
         }
-        .disabled(disabled)
-        .buttonStyle(PrimaryButtonStyle(style: .yellow))
     }
 
-    private func balanceValue() -> String? {
-        guard let availableBalance = viewModel.availableBalance else {
-            return nil
-        }
+    @ViewBuilder private func errorView(error: Error) -> some View {
+        VStack {
+            ScrollView {
+                VStack(spacing: .margin16) {
+                    HighlightedTextView(caution: CautionNew(text: error.smartDescription, type: .error))
+                }
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            }
 
-        return ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: viewModel.token), value: availableBalance))
+            Button(action: {
+                viewModel.sync()
+            }) {
+                Text("send.confirmation.refresh".localized)
+            }
+            .buttonStyle(PrimaryButtonStyle(style: .gray))
+            .padding(.vertical, .margin16)
+            .padding(.horizontal, .margin16)
+
+            Text("send.confirmation.sync_failed".localized)
+                .textSubhead1()
+                .padding(.bottom, .margin8)
+        }
     }
 
-    private func buttonState() -> (String, Bool, Bool) {
-        let title: String
-        var disabled = true
-        var showProgress = false
-
-        if viewModel.adapterState == nil {
-            title = "send.token_not_enabled".localized
-        } else if let adapterState = viewModel.adapterState, adapterState.syncing {
-            title = "send.token_syncing".localized
-            showProgress = true
-        } else if let adapterState = viewModel.adapterState, !adapterState.isSynced {
-            title = "send.token_not_synced".localized
-        } else if viewModel.amountIn == nil {
-            title = "send.enter_amount".localized
-        } else if let availableBalance = viewModel.availableBalance, let amountIn = viewModel.amountIn, amountIn > availableBalance {
-            title = "send.insufficient_balance".localized
-        } else if case .idle = viewModel.addressResult {
-            title = "send.enter_address".localized
-        } else if case .loading = viewModel.addressResult {
-            title = "send.enter_address".localized
-        } else if case .invalid = viewModel.addressResult {
-            title = "send.invalid_address".localized
+    private func bottomText() -> (String, Color) {
+        if let data = viewModel.state.data, !data.canSend {
+            return ("send.confirmation.invalid_data".localized, .themeGray)
+        } else if viewModel.sending {
+            return ("send.confirmation.please_wait".localized, .themeGray)
+        } else if viewModel.timeLeft > 0 {
+            return ("send.confirmation.expires_in".localized("\(viewModel.timeLeft)"), .themeJacob)
         } else {
-            title = "send.next_button".localized
-            disabled = false
+            return ("send.confirmation.expired".localized, .themeGray)
         }
-
-        return (title, disabled, showProgress)
-    }
-}
-
-extension SendView {
-    private enum FocusField: Int, Hashable {
-        case amount
-        case fiatAmount
     }
 }

@@ -10,7 +10,7 @@ protocol ISendBaseService {
     var stateObservable: Observable<SendBaseService.State> { get }
 }
 
-class SendViewModel {
+class SendViewModelOld {
     private let service: ISendBaseService
     private let disposeBag = DisposeBag()
 
@@ -42,7 +42,7 @@ class SendViewModel {
     }
 }
 
-extension SendViewModel {
+extension SendViewModelOld {
     var proceedEnableDriver: Driver<Bool> {
         proceedEnabledRelay.asDriver()
     }

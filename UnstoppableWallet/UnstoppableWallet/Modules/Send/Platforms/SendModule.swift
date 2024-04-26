@@ -117,7 +117,7 @@ enum SendModule {
         feeService.feeValueService = bitcoinAdapterService
 
         // ViewModels
-        let viewModel = SendViewModel(service: service)
+        let viewModel = SendViewModelOld(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: bitcoinAdapterService, coinService: coinService, switchService: switchService)
         let amountInputViewModel = AmountInputViewModel(
             service: amountInputService,
@@ -219,7 +219,7 @@ enum SendModule {
         feeService.feeValueService = service
 
         // ViewModels
-        let viewModel = SendViewModel(service: service)
+        let viewModel = SendViewModelOld(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)
         let amountInputViewModel = AmountInputViewModel(
             service: amountInputService,
@@ -311,7 +311,7 @@ enum SendModule {
         feeService.feeValueService = service
 
         // ViewModels
-        let viewModel = SendViewModel(service: service)
+        let viewModel = SendViewModelOld(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)
         let amountInputViewModel = AmountInputViewModel(
             service: amountInputService,
@@ -401,7 +401,7 @@ enum SendModule {
         feeService.feeValueService = service
 
         // ViewModels
-        let viewModel = SendViewModel(service: service)
+        let viewModel = SendViewModelOld(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)
         let amountInputViewModel = AmountInputViewModel(
             service: amountInputService,

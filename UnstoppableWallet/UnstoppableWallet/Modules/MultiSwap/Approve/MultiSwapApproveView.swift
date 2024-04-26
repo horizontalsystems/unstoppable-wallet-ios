@@ -61,7 +61,7 @@ struct MultiSwapApproveView: View {
                 NavigationLink(
                     isActive: $unlockPresented,
                     destination: {
-                        SendConfirmationNewView(sendData: .evm(blockchainType: viewModel.token.blockchainType, transactionData: transactionData)) {
+                        SendView(sendData: .evm(blockchainType: viewModel.token.blockchainType, transactionData: transactionData)) {
                             onSuccess()
                             isPresented = false
                         }

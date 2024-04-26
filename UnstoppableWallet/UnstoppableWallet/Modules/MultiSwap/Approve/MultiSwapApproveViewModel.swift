@@ -18,8 +18,6 @@ class MultiSwapApproveViewModel: ObservableObject {
         self.spenderAddress = spenderAddress
         approveDataProvider = App.shared.adapterManager.adapter(for: token) as? IApproveDataProvider
     }
-
-    private func syncState() {}
 }
 
 extension MultiSwapApproveViewModel {
@@ -34,13 +32,5 @@ extension MultiSwapApproveViewModel {
         }
 
         self.unlimitedAmount = unlimitedAmount
-
-        syncState()
-    }
-}
-
-extension MultiSwapApproveViewModel {
-    enum InitError: Error {
-        case noApproveDataProvider
     }
 }

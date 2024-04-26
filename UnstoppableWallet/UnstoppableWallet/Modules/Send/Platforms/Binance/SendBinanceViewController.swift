@@ -14,7 +14,7 @@ class SendBinanceViewController: BaseSendViewController {
     private let feeCautionCell = TitledHighlightedDescriptionCell()
 
     init(confirmationFactory: ISendConfirmationFactory,
-         viewModel: SendViewModel,
+         viewModel: SendViewModelOld,
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,
