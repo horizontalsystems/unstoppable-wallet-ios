@@ -1239,6 +1239,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.rate_us" = "Evaluez-nous";
 "settings.tell_friends" = "Partager avec ami";
 "settings.contact_us" = "Contactez-nous";
+"settings.social_networks.label" = "JOIN UNSTOPPABLES";
+"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
 
 // Settings -> Base Currency
 
