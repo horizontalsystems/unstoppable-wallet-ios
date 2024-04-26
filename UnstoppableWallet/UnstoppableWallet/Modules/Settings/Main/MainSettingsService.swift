@@ -14,7 +14,6 @@ class MainSettingsService {
     private let passcodeManager: PasscodeManager
     private let termsManager: TermsManager
     private let systemInfoManager: SystemInfoManager
-    private let currencyManager: CurrencyManager
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let subscriptionManager: SubscriptionManager
     private let rateAppManager: RateAppManager
@@ -23,7 +22,7 @@ class MainSettingsService {
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
     init(backupManager: BackupManager, cloudAccountBackupManager: CloudBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager, passcodeManager: PasscodeManager, termsManager: TermsManager,
-         systemInfoManager: SystemInfoManager, currencyManager: CurrencyManager, walletConnectSessionManager: WalletConnectSessionManager, subscriptionManager: SubscriptionManager, rateAppManager: RateAppManager)
+         systemInfoManager: SystemInfoManager, walletConnectSessionManager: WalletConnectSessionManager, subscriptionManager: SubscriptionManager, rateAppManager: RateAppManager)
     {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.backupManager = backupManager
@@ -33,7 +32,6 @@ class MainSettingsService {
         self.passcodeManager = passcodeManager
         self.termsManager = termsManager
         self.systemInfoManager = systemInfoManager
-        self.currencyManager = currencyManager
         self.walletConnectSessionManager = walletConnectSessionManager
         self.subscriptionManager = subscriptionManager
         self.rateAppManager = rateAppManager
@@ -104,18 +102,6 @@ extension MainSettingsService {
 
     var walletConnectPendingRequestCountObservable: Observable<Int> {
         walletConnectSessionManager.activePendingRequestsObservable.map(\.count)
-    }
-
-    var currentLanguageDisplayName: String? {
-        LanguageManager.shared.currentLanguageDisplayName
-    }
-
-    var baseCurrency: Currency {
-        currencyManager.baseCurrency
-    }
-
-    var baseCurrencyPublisher: AnyPublisher<Currency, Never> {
-        currencyManager.$baseCurrency
     }
 
     var appVersion: String {

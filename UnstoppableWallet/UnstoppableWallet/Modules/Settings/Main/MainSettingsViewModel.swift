@@ -13,7 +13,6 @@ class MainSettingsViewModel {
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
     private let iCloudSyncAlertRelay: BehaviorRelay<Bool>
     private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool, text: String)?>
-    private let baseCurrencyRelay: BehaviorRelay<String>
     private let aboutAlertRelay: BehaviorRelay<Bool>
     private let openWalletConnectRelay = PublishRelay<WalletConnectOpenMode>()
     private let openLinkRelay = PublishRelay<String>()
@@ -25,7 +24,6 @@ class MainSettingsViewModel {
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPasscodeSet)
         iCloudSyncAlertRelay = BehaviorRelay(value: service.isCloudAvailableError)
         walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
-        baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
 
         service.noWalletRequiredActionsObservable
@@ -61,12 +59,6 @@ class MainSettingsViewModel {
                 self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: self?.service.walletConnectSessionCount ?? 0, walletConnectPendingRequestCount: count))
             })
             .disposed(by: disposeBag)
-
-        service.baseCurrencyPublisher
-            .sink { [weak self] currency in
-                self?.baseCurrencyRelay.accept(currency.code)
-            }
-            .store(in: &cancellables)
 
         service.termsAcceptedPublisher
             .sink { [weak self] accepted in
@@ -108,16 +100,8 @@ extension MainSettingsViewModel {
         walletConnectCountRelay.asDriver()
     }
 
-    var baseCurrencyDriver: Driver<String> {
-        baseCurrencyRelay.asDriver()
-    }
-
     var aboutAlertDriver: Driver<Bool> {
         aboutAlertRelay.asDriver()
-    }
-
-    var currentLanguage: String? {
-        service.currentLanguageDisplayName
     }
 
     var appVersion: String {

@@ -22,8 +22,6 @@ class MainSettingsViewController: ThemeViewController {
     private let securityCell = BaseSelectableThemeCell()
     private let appearanceCell = BaseSelectableThemeCell()
     private let contactBookCell = BaseSelectableThemeCell()
-    private let baseCurrencyCell = BaseSelectableThemeCell()
-    private let languageCell = BaseSelectableThemeCell()
     private let themeModeCell = BaseSelectableThemeCell()
     private let aboutCell = BaseSelectableThemeCell()
     private let footerCell = MainSettingsFooterCell()
@@ -52,6 +50,7 @@ class MainSettingsViewController: ThemeViewController {
         title = "settings.title".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
+        tableView.registerHeaderFooter(forClass: HighlightedSubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.separatorStyle = .none
@@ -77,12 +76,6 @@ class MainSettingsViewController: ThemeViewController {
         contactBookCell.set(backgroundStyle: .lawrence)
         syncContactBookCell()
 
-        baseCurrencyCell.set(backgroundStyle: .lawrence)
-        syncBaseCurrency()
-
-        languageCell.set(backgroundStyle: .lawrence, isLast: true)
-        buildTitleValue(cell: languageCell, image: UIImage(named: "globe_24"), title: "settings.language".localized, value: viewModel.currentLanguage)
-
         aboutCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncAboutCell()
 
@@ -100,7 +93,6 @@ class MainSettingsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.walletConnectCountDriver) { [weak self] tuple in
             self?.syncWalletConnectCell(text: tuple?.text, highlighted: tuple?.highlighted ?? false)
         }
-        subscribe(disposeBag, viewModel.baseCurrencyDriver) { [weak self] in self?.syncBaseCurrency(value: $0) }
         subscribe(disposeBag, viewModel.aboutAlertDriver) { [weak self] in self?.syncAboutCell(alert: $0) }
 
         subscribe(disposeBag, viewModel.openWalletConnectSignal) { [weak self] in self?.openWalletConnect(mode: $0) }
@@ -168,10 +160,6 @@ class MainSettingsViewController: ThemeViewController {
         )
     }
 
-    private func syncBaseCurrency(value: String? = nil) {
-        buildTitleValue(cell: baseCurrencyCell, image: UIImage(named: "usd_24"), title: "settings.base_currency".localized, value: value)
-    }
-
     private func buildTitleValue(cell: BaseThemeCell, image: UIImage?, title: String, value: String? = nil, badge: String? = nil) {
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack([
             .image24 { (component: ImageComponent) in
@@ -234,6 +222,15 @@ class MainSettingsViewController: ThemeViewController {
                     stat(page: .settings, event: .open(page: .blockchainSettings))
                 }
             ),
+            StaticRow(
+                cell: walletConnectCell,
+                id: "wallet-connect",
+                height: .heightCell48,
+                autoDeselect: true,
+                action: { [weak self] in
+                    self?.viewModel.onTapWalletConnect()
+                }
+            ),
             tableView.universalRow48(
                 id: "backup-manager",
                 image: .local(UIImage(named: "icloud_24")),
@@ -245,20 +242,6 @@ class MainSettingsViewController: ThemeViewController {
                     self?.navigationController?.pushViewController(viewController, animated: true)
 
                     stat(page: .settings, event: .open(page: .backupManager))
-                }
-            ),
-        ]
-    }
-
-    private var walletConnectRows: [RowProtocol] {
-        [
-            StaticRow(
-                cell: walletConnectCell,
-                id: "wallet-connect",
-                height: .heightCell48,
-                autoDeselect: true,
-                action: { [weak self] in
-                    self?.viewModel.onTapWalletConnect()
                 }
             ),
         ]
@@ -301,27 +284,6 @@ class MainSettingsViewController: ThemeViewController {
                     stat(page: .settings, event: .open(page: .appearance))
                 }
             ),
-            StaticRow(
-                cell: baseCurrencyCell,
-                id: "base-currency",
-                height: .heightCell48,
-                action: { [weak self] in
-                    self?.navigationController?.pushViewController(BaseCurrencySettingsModule.view().toViewController(title: "settings.base_currency.title".localized), animated: true)
-
-                    stat(page: .settings, event: .open(page: .baseCurrency))
-                }
-            ),
-            StaticRow(
-                cell: languageCell,
-                id: "language",
-                height: .heightCell48,
-                action: { [weak self] in
-                    let module = LanguageSettingsModule.view().toViewController(title: "settings.language".localized)
-                    self?.navigationController?.pushViewController(module, animated: true)
-
-                    stat(page: .settings, event: .open(page: .language))
-                }
-            ),
         ]
     }
 
@@ -358,7 +320,7 @@ class MainSettingsViewController: ThemeViewController {
         [
             tableView.universalRow48(
                 id: "telegram",
-                image: .local(UIImage(named: "telegram_24")),
+                image: .local(UIImage(named: "filled_telegram_24")?.withTintColor(.themeJacob)),
                 title: .body("Telegram"),
                 accessoryType: .disclosure,
                 autoDeselect: true,
@@ -371,7 +333,7 @@ class MainSettingsViewController: ThemeViewController {
             ),
             tableView.universalRow48(
                 id: "twitter",
-                image: .local(UIImage(named: "twitter_24")),
+                image: .local(UIImage(named: "filled_twitter_24")?.withTintColor(.themeJacob)),
                 title: .body("Twitter"),
                 accessoryType: .disclosure,
                 autoDeselect: true,
@@ -526,10 +488,20 @@ extension MainSettingsViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(id: "account", headerState: .margin(height: AppConfig.donateEnabled ? .margin32 : .margin12), rows: accountRows),
-            Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
-            Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
+            Section(id: "appearance_settings", headerState: .margin(height: .margin32), footerState: .margin(height: .margin24), rows: appearanceRows),
+            Section(
+                id: "social",
+                headerState: .cellType(
+                    hash: "settings.social_networks.label".localized,
+                    binder: { (view: HighlightedSubtitleHeaderFooterView) in
+                        view.bind(text: "settings.social_networks.label".localized, color: .themeJacob, backgroundColor: UIColor.clear)
+                    },
+                    dynamicHeight: { _ in .margin32 }
+                ),
+                footerState: tableView.sectionFooter(text: "settings.social_networks.footer".localized, topMargin: .margin12, bottomMargin: .zero),
+                rows: socialRows
+            ),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
-            Section(id: "social", headerState: .margin(height: .margin32), rows: socialRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
@@ -578,5 +550,35 @@ extension MainSettingsViewController: SectionsDataSource {
 extension MainSettingsViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
         controller.dismiss(animated: true)
+    }
+}
+
+class HighlightedSubtitleHeaderFooterView: UITableViewHeaderFooterView {
+    private let label = UILabel()
+
+    override public init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+
+        backgroundView = UIView()
+
+        addSubview(label)
+        label.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin32)
+            maker.centerY.equalToSuperview()
+        }
+
+        label.font = .subhead1
+        label.textColor = .themeGray
+    }
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func bind(text: String?, color: UIColor = .clear, backgroundColor: UIColor = .clear) {
+        label.text = text?.uppercased()
+        label.textColor = color
+        backgroundView?.backgroundColor = backgroundColor
     }
 }

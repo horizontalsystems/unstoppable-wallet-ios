@@ -1237,6 +1237,8 @@
 "settings.rate_us" = "Rate Us";
 "settings.tell_friends" = "Tell Friends";
 "settings.contact_us" = "Contact Us";
+"settings.social_networks.label" = "JOIN UNSTOPPABLES";
+"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
 
 // Settings -> Base Currency
 

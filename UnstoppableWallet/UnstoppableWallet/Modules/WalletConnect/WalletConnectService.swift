@@ -1,6 +1,7 @@
 import Combine
 import CryptoSwift
 import Foundation
+import HsCryptoKit
 import HsToolKit
 import RxRelay
 import RxSwift
@@ -12,7 +13,6 @@ import WalletConnectRelay
 import WalletConnectSign
 import WalletConnectUtils
 import Web3Wallet
-import HsCryptoKit
 
 extension Starscream.WebSocket: WebSocketConnecting {}
 
@@ -73,7 +73,7 @@ class WalletConnectService {
         setUpAuthSubscribing()
 
         connectionService.relayClient = Networking.instance
-        
+
         updateSessions()
         updatePairings()
     }
@@ -192,7 +192,7 @@ extension WalletConnectService {
 
     // works with pending requests
     public var pendingRequests: [WalletConnectSign.Request] {
-        Web3Wallet.instance.getPendingRequests().map { $0.request }
+        Web3Wallet.instance.getPendingRequests().map(\.request)
     }
 
     public var pendingRequestsUpdatedObservable: Observable<Void> {
@@ -383,13 +383,12 @@ extension WalletConnectSign.SocketConnectionStatus {
 }
 
 struct DefaultCryptoProvider: CryptoProvider {
-
     public func recoverPubKey(signature: EthereumSignature, message: Data) throws -> Data {
         let signature = Data(signature.r + signature.s + [signature.v])
         let messageHash = keccak256(message)
         var pubKey = HsCryptoKit.Crypto.ellipticPublicKey(signature: signature, of: messageHash, compressed: false)
         pubKey?.remove(at: 0)
-        
+
         return pubKey ?? Data()
     }
 
@@ -398,5 +397,4 @@ struct DefaultCryptoProvider: CryptoProvider {
         let hash = digest.calculate(for: [UInt8](data))
         return Data(hash)
     }
-
 }
