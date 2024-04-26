@@ -1,16 +1,27 @@
+import Combine
 import MarketKit
 import SwiftUI
 import ThemeKit
 
 class AppearanceViewModel: ObservableObject {
+    private var cancellables = Set<AnyCancellable>()
+
     private let themeManager = App.shared.themeManager
     private let launchScreenManager = App.shared.launchScreenManager
     private let appIconManager = App.shared.appIconManager
     private let balancePrimaryValueManager = App.shared.balancePrimaryValueManager
     private let balanceConversionManager = App.shared.balanceConversionManager
+    private let currencyManager = App.shared.currencyManager
+    private let languageManager = LanguageManager.shared
 
     let themeModes: [ThemeMode] = [.system, .dark, .light]
     let conversionTokens: [Token]
+
+    var currentLanguageDisplayName: String? {
+        languageManager.currentLanguageDisplayName
+    }
+
+    @Published var baseCurrency: Currency
 
     @Published var themMode: ThemeMode {
         didSet {
@@ -57,5 +68,8 @@ class AppearanceViewModel: ObservableObject {
         conversionToken = balanceConversionManager.conversionToken
         balancePrimaryValue = balancePrimaryValueManager.balancePrimaryValue
         appIcon = appIconManager.appIcon
+        baseCurrency = currencyManager.baseCurrency
+
+        currencyManager.$baseCurrency.sink { [weak self] in self?.baseCurrency = $0 }.store(in: &cancellables)
     }
 }

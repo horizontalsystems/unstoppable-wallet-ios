@@ -9,6 +9,36 @@ struct AppearanceView: View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 VStack(spacing: 0) {
+                    ListSection {
+                        NavigationRow(spacing: .margin8, destination: {
+                            BaseCurrencySettingsModule.view()
+                        }) {
+                            HStack(spacing: .margin16) {
+                                Image("usd_24").themeIcon()
+                                Text("settings.base_currency".localized).textBody()
+                            }
+                            Spacer()
+                            Text(viewModel.baseCurrency.code).textSubhead1()
+                            Image.disclosureIcon
+                        }
+
+                        NavigationRow(spacing: .margin8, destination: {
+                            LanguageSettingsModule.view()
+                        }) {
+                            HStack(spacing: .margin16) {
+                                Image("globe_24").themeIcon()
+                                Text("settings.language".localized).textBody()
+                            }
+                            Spacer()
+                            if let language = viewModel.currentLanguageDisplayName {
+                                Text(language).textSubhead1()
+                            }
+                            Image.disclosureIcon
+                        }
+                    }
+                }
+
+                VStack(spacing: 0) {
                     ListSectionHeader(text: "appearance.theme".localized)
                     ListSection {
                         ForEach(viewModel.themeModes, id: \.self) { themeMode in

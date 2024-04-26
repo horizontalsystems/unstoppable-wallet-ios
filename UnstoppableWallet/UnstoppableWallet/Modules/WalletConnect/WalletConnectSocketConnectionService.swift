@@ -4,11 +4,11 @@ import HsToolKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import UIKit
 import WalletConnectRelay
 import WalletConnectSign
 import WalletConnectUtils
 import Web3Wallet
-import UIKit
 
 class WalletConnectSocketConnectionService {
     private static let retryInterval = 10
