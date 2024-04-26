@@ -7,7 +7,7 @@ class SendTonViewController: BaseSendViewController {
     private let feeCell: FeeCell
 
     init(confirmationFactory: ISendConfirmationFactory,
-         viewModel: SendViewModel,
+         viewModel: SendViewModelOld,
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,

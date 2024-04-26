@@ -172,7 +172,7 @@ class WalletTokenBalanceDataSource: NSObject {
             }
         case let .wallet(wallet):
             cell.actions[.send] = { [weak self] in
-                let viewController = SendView(wallet: wallet).toNavigationViewController()
+                let viewController = PreSendView(wallet: wallet).toNavigationViewController()
                 self?.parentViewController?.present(viewController, animated: true)
                 stat(page: .tokenPage, event: .openSend(token: wallet.token))
             }

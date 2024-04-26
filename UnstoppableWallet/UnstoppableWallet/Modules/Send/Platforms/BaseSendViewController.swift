@@ -8,7 +8,7 @@ import UIKit
 
 class BaseSendViewController: ThemeViewController, SectionsDataSource {
     private let disposeBag = DisposeBag()
-    let viewModel: SendViewModel
+    let viewModel: SendViewModelOld
 
     let tableView = SectionsTableView(style: .grouped)
 
@@ -34,7 +34,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
 
     init(confirmationFactory: ISendConfirmationFactory,
          feeSettingsFactory: ISendFeeSettingsFactory? = nil,
-         viewModel: SendViewModel,
+         viewModel: SendViewModelOld,
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: SendAmountCautionViewModel,

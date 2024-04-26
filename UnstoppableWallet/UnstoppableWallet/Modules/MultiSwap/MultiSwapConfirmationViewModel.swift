@@ -10,7 +10,6 @@ class MultiSwapConfirmationViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let accountManager = App.shared.accountManager
     private let walletManager = App.shared.walletManager
-    private let transactionServiceFactory = TransactionServiceFactory()
 
     private var quoteTask: AnyTask?
     private var timer: AnyCancellable?
@@ -63,7 +62,7 @@ class MultiSwapConfirmationViewModel: ObservableObject {
         self.amountIn = amountIn
         self.provider = provider
 
-        transactionService = transactionServiceFactory.transactionService(blockchainType: tokenIn.blockchainType)
+        transactionService = TransactionServiceFactory.transactionService(blockchainType: tokenIn.blockchainType)
 
         currency = currencyManager.baseCurrency
 

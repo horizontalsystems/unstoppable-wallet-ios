@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import RxSwift
 
-class SendViewModelNew: ObservableObject {
+class PreSendViewModel: ObservableObject {
     private let wallet: Wallet
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
@@ -16,14 +16,15 @@ class SendViewModelNew: ObservableObject {
 
     @Published var currency: Currency
 
-    var amountIn: Decimal? {
+    var amount: Decimal? {
         didSet {
-            syncFiatAmountIn()
+            syncFiatAmount()
+            syncSendData()
 
             let amount = Decimal(string: amountString)
 
-            if amount != amountIn {
-                amountString = amountIn?.description ?? ""
+            if amount != self.amount {
+                amountString = self.amount?.description ?? ""
             }
         }
     }
@@ -36,24 +37,24 @@ class SendViewModelNew: ObservableObject {
                 amount = nil
             }
 
-            guard amount != amountIn else {
+            guard amount != self.amount else {
                 return
             }
 
             enteringFiat = false
 
-            amountIn = amount
+            self.amount = amount
         }
     }
 
-    @Published var fiatAmountIn: Decimal? {
+    @Published var fiatAmount: Decimal? {
         didSet {
-            syncAmountIn()
+            syncAmount()
 
             let amount = Decimal(string: fiatAmountString)?.rounded(decimal: 2)
 
-            if amount != fiatAmountIn {
-                fiatAmountString = fiatAmountIn?.description ?? ""
+            if amount != fiatAmount {
+                fiatAmountString = fiatAmount?.description ?? ""
             }
         }
     }
@@ -62,19 +63,19 @@ class SendViewModelNew: ObservableObject {
         didSet {
             let amount = Decimal(string: fiatAmountString)?.rounded(decimal: 2)
 
-            guard amount != fiatAmountIn else {
+            guard amount != fiatAmount else {
                 return
             }
 
             enteringFiat = true
 
-            fiatAmountIn = amount
+            fiatAmount = amount
         }
     }
 
-    @Published var rateIn: Decimal? {
+    @Published var rate: Decimal? {
         didSet {
-            syncFiatAmountIn()
+            syncFiatAmount()
         }
     }
 
@@ -84,7 +85,12 @@ class SendViewModelNew: ObservableObject {
     private var enteringFiat = false
 
     @Published var address: String = ""
-    @Published var addressResult: AddressInput.Result = .idle
+    @Published var addressResult: AddressInput.Result = .idle {
+        didSet {
+            syncSendData()
+        }
+    }
+
     @Published var addressCautionState: CautionState = .none
 
     @Published var isAddressActive: Bool = false {
@@ -97,16 +103,20 @@ class SendViewModelNew: ObservableObject {
         }
     }
 
+    private var handler: IPreSendHandler?
+    @Published var sendData: SendData?
+
     init(wallet: Wallet) {
         self.wallet = wallet
+        handler = SendHandlerFactory.preSendHandler(wallet: wallet)
 
         currency = currencyManager.baseCurrency
 
         currencyManager.$baseCurrency.sink { [weak self] in self?.currency = $0 }.store(in: &cancellables)
-        rateIn = marketKit.coinPrice(coinUid: wallet.coin.uid, currencyCode: currency.code)?.value
+        rate = marketKit.coinPrice(coinUid: wallet.coin.uid, currencyCode: currency.code)?.value
         rateInCancellable = marketKit.coinPricePublisher(coinUid: wallet.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] price in self?.rateIn = price.value }
+            .sink { [weak self] price in self?.rate = price.value }
 
         if let adapter = adapterManager.balanceAdapter(for: wallet) {
             adapterState = adapter.balanceState
@@ -130,33 +140,33 @@ class SendViewModelNew: ObservableObject {
             availableBalance = nil
         }
 
-        syncFiatAmountIn()
+        syncFiatAmount()
     }
 
-    private func syncAmountIn() {
+    private func syncAmount() {
         guard enteringFiat else {
             return
         }
 
-        guard let rateIn, let fiatAmountIn else {
-            amountIn = nil
+        guard let rate, let fiatAmount else {
+            amount = nil
             return
         }
 
-        amountIn = fiatAmountIn / rateIn
+        amount = fiatAmount / rate
     }
 
-    private func syncFiatAmountIn() {
+    private func syncFiatAmount() {
         guard !enteringFiat else {
             return
         }
 
-        guard let rateIn, let amountIn else {
-            fiatAmountIn = nil
+        guard let rate, let amount else {
+            fiatAmount = nil
             return
         }
 
-        fiatAmountIn = (amountIn * rateIn).rounded(decimal: 2)
+        fiatAmount = (amount * rate).rounded(decimal: 2)
     }
 
     private func syncAddressCautionState() {
@@ -170,9 +180,28 @@ class SendViewModelNew: ObservableObject {
         default: addressCautionState = .none
         }
     }
+
+    private func syncSendData() {
+        guard let amount else {
+            sendData = nil
+            return
+        }
+
+        guard case let .valid(success) = addressResult else {
+            sendData = nil
+            return
+        }
+
+        guard let handler else {
+            sendData = nil
+            return
+        }
+
+        sendData = handler.sendData(amount: amount, address: success.address.raw, memo: nil)
+    }
 }
 
-extension SendViewModelNew {
+extension PreSendViewModel {
     var token: Token {
         wallet.token
     }
@@ -184,12 +213,12 @@ extension SendViewModelNew {
 
         enteringFiat = false
 
-        amountIn = availableBalance * Decimal(percent) / 100
+        amount = availableBalance * Decimal(percent) / 100
     }
 
     func clearAmountIn() {
         enteringFiat = false
-        amountIn = nil
+        amount = nil
     }
 
     func changeAddressFocus(active: Bool) {
