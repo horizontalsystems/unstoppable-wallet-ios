@@ -1238,6 +1238,8 @@
 "settings.rate_us" = "앱 평가";
 "settings.tell_friends" = "친구에게 추천하기";
 "settings.contact_us" = "문의하기";
+"settings.social_networks.label" = "JOIN UNSTOPPABLES";
+"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
 
 // Settings -> Base Currency
 
