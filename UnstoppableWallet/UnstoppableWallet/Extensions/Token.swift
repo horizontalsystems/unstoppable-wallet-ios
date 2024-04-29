@@ -74,6 +74,10 @@ extension Token: Comparable {
 }
 
 extension Token {
+    func decimalValue(value: BigUInt) -> Decimal {
+        Decimal(bigUInt: value, decimals: decimals) ?? 0
+    }
+
     func fractionalMonetaryValue(value: Decimal) -> BigUInt {
         BigUInt(value.hs.roundedString(decimal: decimals)) ?? 0
     }

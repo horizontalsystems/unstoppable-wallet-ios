@@ -1,3 +1,4 @@
+import ComponentKit
 import Foundation
 import Kingfisher
 import MarketKit
@@ -10,7 +11,7 @@ struct MultiSwapView: View {
     @State private var selectTokenInPresented: Bool
     @State private var selectTokenOutPresented = false
     @State private var quotesPresented = false
-    @State private var confirmPresented = false
+    @State private var sendPresented = false
     @State private var settingsPresented = false
     @State private var preSwapStep: MultiSwapPreSwapStep?
     @State private var presentedSettingId: String?
@@ -69,26 +70,23 @@ struct MultiSwapView: View {
                 }
 
                 NavigationLink(
-                    isActive: $confirmPresented,
+                    isActive: $sendPresented,
                     destination: {
                         if let tokenIn = viewModel.tokenIn,
                            let tokenOut = viewModel.tokenOut,
                            let amountIn = viewModel.amountIn,
                            let currentQuote = viewModel.currentQuote
                         {
-                            MultiSwapConfirmationView(
-                                tokenIn: tokenIn,
-                                tokenOut: tokenOut,
-                                amountIn: amountIn,
-                                provider: currentQuote.provider,
-                                swapPresentationMode: presentationMode
-                            )
+                            SendView(sendData: .swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: currentQuote.provider)) {
+                                HudHelper.instance.show(banner: .swapped)
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         }
                     }
                 ) {
                     EmptyView()
                 }
-                .onChange(of: confirmPresented) { presented in
+                .onChange(of: sendPresented) { presented in
                     if !presented {
                         viewModel.autoQuoteIfRequired()
                     }
@@ -339,7 +337,7 @@ struct MultiSwapView: View {
             if let preSwapStep {
                 self.preSwapStep = preSwapStep
             } else {
-                confirmPresented = true
+                sendPresented = true
             }
         }) {
             HStack(spacing: .margin8) {

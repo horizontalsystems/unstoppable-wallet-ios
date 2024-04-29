@@ -23,11 +23,11 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
         swapQuote.expectedAmountOut
     }
 
-    override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
-        var cautions = super.cautions(feeToken: feeToken)
+    override func cautions(baseToken: MarketKit.Token) -> [CautionNew] {
+        var cautions = super.cautions(baseToken: baseToken)
 
         if let transactionError {
-            cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
+            cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
         }
 
         switch MultiSwapSlippage.validate(slippage: slippage) {
@@ -38,8 +38,8 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
         return cautions
     }
 
-    override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [SendConfirmField] {
-        var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+    override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if let recipient {
             fields.append(
@@ -76,11 +76,11 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
         return fields
     }
 
-    override func otherSections(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
-        var sections = super.otherSections(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+    override func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [[SendField]] {
+        var sections = super.otherSections(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
-        if let feeToken, let tokenOutRate, let evmFeeData,
-           let evmFeeAmountData = evmFeeData.totalAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate),
+        if let tokenOutRate, let evmFeeData,
+           let evmFeeAmountData = evmFeeData.totalAmountData(gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate),
            let evmFeeCurrencyValue = evmFeeAmountData.currencyValue
         {
             let totalFee = evmFeeCurrencyValue.value + (swapQuote.affiliateFee + swapQuote.liquidityFee + swapQuote.outboundFee) * tokenOutRate
@@ -102,8 +102,8 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
         return sections
     }
 
-    override func additionalFeeFields(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [SendConfirmField] {
-        var fields = super.additionalFeeFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+    override func additionalFeeFields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = super.additionalFeeFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if swapQuote.affiliateFee > 0 {
             fields.append(

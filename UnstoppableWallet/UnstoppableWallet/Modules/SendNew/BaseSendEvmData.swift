@@ -13,7 +13,7 @@ class BaseSendEvmData {
         self.nonce = nonce
     }
 
-    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendConfirmField] {
+    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
         let amountData = evmFeeData.flatMap { $0.totalAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) }
 
         return [
@@ -27,7 +27,7 @@ class BaseSendEvmData {
         ]
     }
 
-    func caution(transactionError: Error, feeToken: Token?) -> CautionNew {
+    func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String
         let text: String
 
@@ -35,7 +35,7 @@ class BaseSendEvmData {
             switch reason {
             case .insufficientBalanceWithFee:
                 title = "fee_settings.errors.insufficient_balance".localized
-                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken?.coin.code ?? "")
+                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken.coin.code)
             case let .executionReverted(message):
                 title = "fee_settings.errors.unexpected_error".localized
                 text = message

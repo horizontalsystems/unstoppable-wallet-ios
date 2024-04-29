@@ -3,11 +3,12 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
-enum SendConfirmField {
+enum SendField {
     case amount(title: String, token: Token, coinValueType: CoinValueType, currencyValue: CurrencyValue?, type: AmountType)
     case value(title: String, description: ActionSheetView.InfoDescription?, coinValue: CoinValue?, currencyValue: CurrencyValue?, formatFull: Bool)
     case levelValue(title: String, value: String, level: ValueLevel)
     case address(title: String, value: String, blockchainType: BlockchainType)
+    case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
 
     @ViewBuilder var listRow: some View {
         switch self {
@@ -87,6 +88,8 @@ enum SendConfirmField {
             }
         case let .address(title, value, blockchainType):
             RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
+        case let .price(title, tokenA, tokenB, amountA, amountB):
+            PriceRow(title: title, tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB)
         }
     }
 

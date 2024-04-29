@@ -24,14 +24,14 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
         super.canSwap && swap != nil && !insufficientFeeBalance
     }
 
-    override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
-        var cautions = super.cautions(feeToken: feeToken)
+    override func cautions(baseToken: MarketKit.Token) -> [CautionNew] {
+        var cautions = super.cautions(baseToken: baseToken)
 
         if insufficientFeeBalance {
             cautions.append(
                 .init(
                     title: "fee_settings.errors.insufficient_balance".localized,
-                    text: "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken?.coin.code ?? ""),
+                    text: "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseToken.coin.code),
                     type: .error
                 )
             )
@@ -42,8 +42,8 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
         return cautions
     }
 
-    override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [SendConfirmField] {
-        var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+    override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if let recipient = quote.recipient {
             fields.append(

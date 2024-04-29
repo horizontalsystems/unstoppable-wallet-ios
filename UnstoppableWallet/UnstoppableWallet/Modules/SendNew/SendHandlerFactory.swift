@@ -7,8 +7,8 @@ enum SendHandlerFactory {
             return EvmSendHandler.instance(blockchainType: blockchainType, transactionData: transactionData)
         case .bitcoin:
             return nil
-        case .swap:
-            return nil
+        case let .swap(tokenIn, tokenOut, amountIn, provider):
+            return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
         }
     }
 
