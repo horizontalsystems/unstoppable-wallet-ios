@@ -64,13 +64,13 @@ class MainSettingsViewController: ThemeViewController {
         manageAccountsCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncManageAccountCell()
 
-        walletConnectCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        walletConnectCell.set(backgroundStyle: .lawrence)
         syncWalletConnectCell()
 
         securityCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncSecurityCell()
 
-        appearanceCell.set(backgroundStyle: .lawrence)
+        appearanceCell.set(backgroundStyle: .lawrence, isLast: true)
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
         contactBookCell.set(backgroundStyle: .lawrence)
