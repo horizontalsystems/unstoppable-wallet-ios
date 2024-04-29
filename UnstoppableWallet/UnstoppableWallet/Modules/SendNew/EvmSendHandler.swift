@@ -5,23 +5,33 @@ import Foundation
 import MarketKit
 
 class EvmSendHandler {
-    let coinServiceFactory: EvmCoinServiceFactory
+    let coinManager = App.shared.coinManager
+    let evmLabelManager = App.shared.evmLabelManager
+
+    let baseToken: Token
     let transactionData: TransactionData
     let evmKitWrapper: EvmKitWrapper
     let evmFeeEstimator = EvmFeeEstimator()
 
-    init(coinServiceFactory: EvmCoinServiceFactory, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
-        self.coinServiceFactory = coinServiceFactory
+    private let decoration: Decoration
+
+    init(baseToken: Token, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
+        self.baseToken = baseToken
         self.transactionData = transactionData
         self.evmKitWrapper = evmKitWrapper
+
+        let transactionDecoration = evmKitWrapper.evmKit.decorate(transactionData: transactionData)
+        decoration = Self.resolve(
+            baseToken: baseToken,
+            transactionData: transactionData,
+            coinManager: coinManager,
+            evmLabelManager: evmLabelManager,
+            transactionDecoration: transactionDecoration
+        )
     }
 }
 
 extension EvmSendHandler: ISendHandler {
-    var blockchainType: BlockchainType {
-        evmKitWrapper.blockchainType
-    }
-
     var syncingText: String? {
         nil
     }
@@ -30,7 +40,11 @@ extension EvmSendHandler: ISendHandler {
         10
     }
 
-    func confirmationData(transactionSettings: TransactionSettings?) async throws -> ISendConfirmationData {
+    var rateCoins: [Coin] {
+        decoration.rateCoins
+    }
+
+    func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let gasPrice = transactionSettings?.gasPrice
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
@@ -43,23 +57,17 @@ extension EvmSendHandler: ISendHandler {
             }
         }
 
-        let decoration = evmKitWrapper.evmKit.decorate(transactionData: transactionData)
-        let (sections, sendButtonTitle, sendingButtonTitle, sentButtonTitle) = resolve(decoration: decoration)
-
-        return ConfirmationData(
-            baseSections: sections,
+        return SendData(
+            decoration: decoration,
             transactionError: transactionError,
-            sendButtonTitle: sendButtonTitle,
-            sendingButtonTitle: sendingButtonTitle,
-            sentButtonTitle: sentButtonTitle,
             gasPrice: gasPrice,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )
     }
 
-    func send(data: ISendConfirmationData) async throws {
-        guard let data = data as? ConfirmationData else {
+    func send(data: ISendData) async throws {
+        guard let data = data as? SendData else {
             throw SendError.invalidData
         }
 
@@ -78,156 +86,16 @@ extension EvmSendHandler: ISendHandler {
             nonce: data.nonce
         )
     }
-
-    private func resolve(decoration: TransactionDecoration?) -> ([[SendConfirmField]], String, String, String) {
-        let sections: [[SendConfirmField]]
-        var sendButtonTitle = "send.confirmation.slide_to_send".localized
-        var sendingButtonTitle = "send.confirmation.sending".localized
-        var sentButtonTitle = "send.confirmation.sent".localized
-
-        switch decoration {
-        case let decoration as OutgoingDecoration:
-            sections = sendBaseCoinSections(
-                to: decoration.to,
-                value: decoration.value
-            )
-        case let decoration as OutgoingEip20Decoration:
-            sections = eip20TransferSections(
-                to: decoration.to,
-                value: decoration.value,
-                contractAddress: decoration.contractAddress
-            )
-        case let decoration as ApproveEip20Decoration:
-            sections = eip20ApproveSections(
-                spender: decoration.spender,
-                value: decoration.value,
-                contractAddress: decoration.contractAddress
-            )
-
-            let isRevoke = decoration.value == 0
-
-            sendButtonTitle = isRevoke ? "send.confirmation.slide_to_revoke".localized : "send.confirmation.slide_to_approve".localized
-            sendingButtonTitle = isRevoke ? "send.confirmation.revoking".localized : "send.confirmation.approving".localized
-            sentButtonTitle = isRevoke ? "send.confirmation.revoked".localized : "send.confirmation.approved".localized
-        default:
-            sections = []
-        }
-
-        return (sections, sendButtonTitle, sendingButtonTitle, sentButtonTitle)
-    }
-
-    private func sendBaseCoinSections(to: EvmKit.Address, value: BigUInt) -> [[SendConfirmField]] {
-        let coinService = coinServiceFactory.baseCoinService
-
-        return [
-            [
-                amountField(
-                    coinService: coinService,
-                    title: "send.confirmation.you_send".localized,
-                    value: value,
-                    type: .neutral
-                ),
-                .address(
-                    title: "send.confirmation.to".localized,
-                    value: to.eip55,
-                    blockchainType: coinService.token.blockchainType
-                ),
-            ],
-        ]
-    }
-
-    private func eip20TransferSections(to: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address) -> [[SendConfirmField]] {
-        guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
-            return []
-        }
-
-        return [
-            [
-                amountField(
-                    coinService: coinService,
-                    title: "send.confirmation.you_send".localized,
-                    value: value,
-                    type: .neutral
-                ),
-                .address(
-                    title: "send.confirmation.to".localized,
-                    value: to.eip55,
-                    blockchainType: coinService.token.blockchainType
-                ),
-            ],
-        ]
-    }
-
-    private func eip20ApproveSections(spender: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address) -> [[SendConfirmField]] {
-        guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
-            return []
-        }
-
-        let isRevokeAllowance = value == 0 // Check approved new value or revoked last allowance
-
-        let amountField: SendConfirmField
-
-        if isRevokeAllowance {
-            amountField = .amount(
-                title: "approve.confirmation.you_revoke".localized,
-                token: coinService.token,
-                coinValueType: .withoutAmount(kind: .token(token: coinService.token)),
-                currencyValue: nil,
-                type: .neutral
-            )
-        } else {
-            amountField = self.amountField(
-                coinService: coinService,
-                title: "approve.confirmation.you_approve".localized,
-                value: value,
-                type: .neutral
-            )
-        }
-
-        return [
-            [
-                amountField,
-                .address(
-                    title: "approve.confirmation.spender".localized,
-                    value: spender.eip55,
-                    blockchainType: coinService.token.blockchainType
-                ),
-            ],
-        ]
-    }
-
-    private func amountField(coinService: CoinService, title: String, value: BigUInt, type: SendConfirmField.AmountType) -> SendConfirmField {
-        amountField(coinService: coinService, title: title, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
-    }
-
-    private func amountField(coinService: CoinService, title: String, amountData: AmountData, type: SendConfirmField.AmountType) -> SendConfirmField {
-        let token = coinService.token
-        let value = amountData.coinValue
-
-        return .amount(
-            title: title,
-            token: token,
-            coinValueType: value.isMaxValue ? .infinity(kind: value.kind) : .regular(coinValue: value),
-            currencyValue: value.isMaxValue ? nil : amountData.currencyValue,
-            type: type
-        )
-    }
 }
 
 extension EvmSendHandler {
-    class ConfirmationData: BaseSendEvmData, ISendConfirmationData {
-        let baseSections: [[SendConfirmField]]
+    class SendData: BaseSendEvmData, ISendData {
+        let decoration: Decoration
         let transactionError: Error?
-        let sendButtonTitle: String
-        let sendingButtonTitle: String
-        let sentButtonTitle: String
 
-        init(baseSections: [[SendConfirmField]], transactionError: Error?, sendButtonTitle: String, sendingButtonTitle: String, sentButtonTitle: String, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
-            self.baseSections = baseSections
+        init(decoration: Decoration, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
+            self.decoration = decoration
             self.transactionError = transactionError
-            self.sendButtonTitle = sendButtonTitle
-            self.sendingButtonTitle = sendingButtonTitle
-            self.sentButtonTitle = sentButtonTitle
 
             super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
         }
@@ -240,18 +108,41 @@ extension EvmSendHandler {
             evmFeeData != nil
         }
 
-        func cautions(feeToken: Token?) -> [CautionNew] {
+        var sendButtonTitle: String {
+            decoration.sendButtonTitle
+        }
+
+        var sendingButtonTitle: String {
+            decoration.sendingButtonTitle
+        }
+
+        var sentButtonTitle: String {
+            decoration.sentButtonTitle
+        }
+
+        func cautions(baseToken: Token) -> [CautionNew] {
             var cautions = [CautionNew]()
 
             if let transactionError {
-                cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
+                cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
             }
 
             return cautions
         }
 
-        func sections(feeToken: Token?, currency: Currency, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
-            var sections = baseSections
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+            var sections: [[SendField]]
+
+            switch decoration.type {
+            case let .outoingEvm(to, value):
+                sections = outgoingSections(token: baseToken, to: to, value: value, currency: currency, rates: rates)
+            case let .outoingEip20(to, value, token):
+                sections = outgoingSections(token: token, to: to, value: value, currency: currency, rates: rates)
+            case let .approveEip20(spender, value, token):
+                sections = approveSections(token: token, spender: spender, value: value, currency: currency, rates: rates)
+            case let .unknown(to, value, input, method):
+                sections = unknownSections(baseToken: baseToken, to: to, value: value, input: input, method: method, currency: currency, rates: rates)
+            }
 
             if let nonce {
                 sections.append(
@@ -261,16 +152,125 @@ extension EvmSendHandler {
                 )
             }
 
-            if let feeToken {
-                sections.append(feeFields(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate))
-            }
+            sections.append(feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid]))
 
             return sections
+        }
+
+        private func outgoingSections(token: Token, to: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+            [
+                [
+                    amountField(
+                        title: "send.confirmation.you_send".localized,
+                        token: token,
+                        value: value,
+                        currency: currency,
+                        rate: rates[token.coin.uid],
+                        type: .neutral
+                    ),
+                    .address(
+                        title: "send.confirmation.to".localized,
+                        value: to.eip55,
+                        blockchainType: token.blockchainType
+                    ),
+                ],
+            ]
+        }
+
+        private func approveSections(token: Token, spender: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+            let isRevokeAllowance = value == 0 // Check approved new value or revoked last allowance
+
+            let amountField: SendField
+
+            if isRevokeAllowance {
+                amountField = .amount(
+                    title: "approve.confirmation.you_revoke".localized,
+                    token: token,
+                    coinValueType: .withoutAmount(kind: .token(token: token)),
+                    currencyValue: nil,
+                    type: .neutral
+                )
+            } else {
+                amountField = self.amountField(
+                    title: "approve.confirmation.you_approve".localized,
+                    token: token,
+                    value: value,
+                    currency: currency,
+                    rate: rates[token.coin.uid],
+                    type: .neutral
+                )
+            }
+
+            return [
+                [
+                    amountField,
+                    .address(
+                        title: "approve.confirmation.spender".localized,
+                        value: spender.eip55,
+                        blockchainType: token.blockchainType
+                    ),
+                ],
+            ]
+        }
+
+        private func unknownSections(baseToken: Token, to: EvmKit.Address, value: Decimal, input _: Data, method _: String?, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+            [
+                [
+                    amountField(
+                        title: "send.confirmation.transfer".localized,
+                        token: baseToken,
+                        value: value,
+                        currency: currency,
+                        rate: rates[baseToken.coin.uid],
+                        type: .neutral
+                    ),
+                    .address(
+                        title: "send.confirmation.to".localized,
+                        value: to.eip55,
+                        blockchainType: baseToken.blockchainType
+                    ),
+                    // TODO: show input and method
+                ],
+            ]
+        }
+
+        private func amountField(title: String, token: Token, value: Decimal, currency: Currency, rate: Decimal?, type: SendField.AmountType) -> SendField {
+            let coinValue = CoinValue(kind: .token(token: token), value: Decimal(sign: type.sign, exponent: value.exponent, significand: value.significand))
+
+            return .amount(
+                title: title,
+                token: token,
+                coinValueType: coinValue.isMaxValue ? .infinity(kind: coinValue.kind) : .regular(coinValue: coinValue),
+                currencyValue: coinValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },
+                type: type
+            )
         }
     }
 }
 
 extension EvmSendHandler {
+    struct Decoration {
+        let type: Type
+        let sendButtonTitle: String
+        let sendingButtonTitle: String
+        let sentButtonTitle: String
+
+        enum `Type` {
+            case outoingEvm(to: EvmKit.Address, value: Decimal)
+            case outoingEip20(to: EvmKit.Address, value: Decimal, token: Token)
+            case approveEip20(spender: EvmKit.Address, value: Decimal, token: Token)
+            case unknown(to: EvmKit.Address, value: Decimal, input: Data, method: String?)
+        }
+
+        var rateCoins: [Coin] {
+            switch type {
+            case let .outoingEip20(_, _, token): return [token.coin]
+            case let .approveEip20(_, _, token): return [token.coin]
+            default: return []
+            }
+        }
+    }
+
     enum SendError: Error {
         case invalidData
         case noGasPrice
@@ -280,12 +280,7 @@ extension EvmSendHandler {
 
 extension EvmSendHandler {
     static func instance(blockchainType: BlockchainType, transactionData: TransactionData) -> EvmSendHandler? {
-        guard let coinServiceFactory = EvmCoinServiceFactory(
-            blockchainType: blockchainType,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            coinManager: App.shared.coinManager
-        ) else {
+        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)) else {
             return nil
         }
 
@@ -294,9 +289,62 @@ extension EvmSendHandler {
         }
 
         return EvmSendHandler(
-            coinServiceFactory: coinServiceFactory,
+            baseToken: baseToken,
             transactionData: transactionData,
             evmKitWrapper: evmKitWrapper
+        )
+    }
+
+    private static func resolve(baseToken: Token, transactionData: TransactionData, coinManager: CoinManager, evmLabelManager: EvmLabelManager, transactionDecoration: TransactionDecoration?) -> Decoration {
+        var type: Decoration.`Type`?
+        var sendButtonTitle = "send.confirmation.slide_to_send".localized
+        var sendingButtonTitle = "send.confirmation.sending".localized
+        var sentButtonTitle = "send.confirmation.sent".localized
+
+        switch transactionDecoration {
+        case let decoration as OutgoingDecoration:
+            type = .outoingEvm(
+                to: decoration.to,
+                value: baseToken.decimalValue(value: decoration.value)
+            )
+
+        case let decoration as OutgoingEip20Decoration:
+            if let token = try? coinManager.token(query: .init(blockchainType: baseToken.blockchainType, tokenType: .eip20(address: decoration.contractAddress.hex))) {
+                type = .outoingEip20(
+                    to: decoration.to,
+                    value: token.decimalValue(value: decoration.value),
+                    token: token
+                )
+            }
+
+        case let decoration as ApproveEip20Decoration:
+            if let token = try? coinManager.token(query: .init(blockchainType: baseToken.blockchainType, tokenType: .eip20(address: decoration.contractAddress.hex))) {
+                type = .approveEip20(
+                    spender: decoration.spender,
+                    value: token.decimalValue(value: decoration.value),
+                    token: token
+                )
+
+                let isRevoke = decoration.value == 0
+
+                sendButtonTitle = isRevoke ? "send.confirmation.slide_to_revoke".localized : "send.confirmation.slide_to_approve".localized
+                sendingButtonTitle = isRevoke ? "send.confirmation.revoking".localized : "send.confirmation.approving".localized
+                sentButtonTitle = isRevoke ? "send.confirmation.revoked".localized : "send.confirmation.approved".localized
+            }
+        default:
+            ()
+        }
+
+        return Decoration(
+            type: type ?? .unknown(
+                to: transactionData.to,
+                value: baseToken.decimalValue(value: transactionData.value),
+                input: transactionData.input,
+                method: evmLabelManager.methodLabel(input: transactionData.input)
+            ),
+            sendButtonTitle: sendButtonTitle,
+            sendingButtonTitle: sendingButtonTitle,
+            sentButtonTitle: sentButtonTitle
         )
     }
 }

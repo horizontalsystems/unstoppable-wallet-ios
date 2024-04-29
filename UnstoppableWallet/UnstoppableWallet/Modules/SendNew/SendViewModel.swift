@@ -13,10 +13,10 @@ class SendViewModel: ObservableObject {
 
     let handler: ISendHandler?
     let transactionService: ITransactionService?
-    let feeToken: Token?
     let currency: Currency
 
-    @Published var feeTokenRate: Decimal?
+    @Published var rates: [String: Decimal]
+
     @Published var sending = false
     @Published var transactionSettingsModified = false
     @Published var timeLeft: Int = 0
@@ -41,16 +41,23 @@ class SendViewModel: ObservableObject {
 
     init(handler: ISendHandler?) {
         self.handler = handler
+        currency = currencyManager.baseCurrency
 
         if let handler {
-            transactionService = TransactionServiceFactory.transactionService(blockchainType: handler.blockchainType)
-            feeToken = try? marketKit.token(query: TokenQuery(blockchainType: handler.blockchainType, tokenType: .native))
+            transactionService = TransactionServiceFactory.transactionService(blockchainType: handler.baseToken.blockchainType)
+
+            let rateCoins = Array(Set([handler.baseToken.coin] + handler.rateCoins))
+            let rateCoinUids = rateCoins.map(\.uid)
+
+            rates = marketKit.coinPriceMap(coinUids: rateCoinUids, currencyCode: currency.code).mapValues { $0.value }
+            marketKit.coinPriceMapPublisher(coinUids: rateCoinUids, currencyCode: currency.code)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] rates in self?.rates = rates.mapValues { $0.value } }
+                .store(in: &cancellables)
         } else {
             transactionService = nil
-            feeToken = nil
+            rates = [:]
         }
-
-        currency = currencyManager.baseCurrency
 
         transactionService?.updatePublisher
             .sink { [weak self] in
@@ -58,14 +65,6 @@ class SendViewModel: ObservableObject {
                 self?.sync()
             }
             .store(in: &cancellables)
-
-        if let feeToken {
-            feeTokenRate = marketKit.coinPrice(coinUid: feeToken.coin.uid, currencyCode: currency.code)?.value
-            marketKit.coinPricePublisher(coinUid: feeToken.coin.uid, currencyCode: currency.code)
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] price in self?.feeTokenRate = price.value }
-                .store(in: &cancellables)
-        }
 
         sync()
     }
@@ -105,7 +104,7 @@ extension SendViewModel {
             do {
                 try await transactionService.sync()
 
-                let data = try await handler.confirmationData(transactionSettings: transactionService.transactionSettings)
+                let data = try await handler.sendData(transactionSettings: transactionService.transactionSettings)
                 state = .success(data: data)
             } catch {
                 state = .failed(error: error)
@@ -144,10 +143,10 @@ extension SendViewModel {
 extension SendViewModel {
     enum State {
         case syncing
-        case success(data: ISendConfirmationData)
+        case success(data: ISendData)
         case failed(error: Error)
 
-        var data: ISendConfirmationData? {
+        var data: ISendData? {
             switch self {
             case let .success(data): return data
             default: return nil

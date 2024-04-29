@@ -27,7 +27,7 @@ struct SendView: View {
                         }
                     }
                 case let .success(data):
-                    dataView(data: data)
+                    dataView(data: data, handler: handler)
                 case let .failed(error):
                     errorView(error: error)
                 }
@@ -36,13 +36,13 @@ struct SendView: View {
             }
         }
         .sheet(isPresented: $feeSettingsPresented) {
-            if let transactionService = viewModel.transactionService, let feeToken = viewModel.feeToken {
+            if let transactionService = viewModel.transactionService, let feeToken = viewModel.handler?.baseToken {
                 transactionService.settingsView(
                     feeData: Binding<FeeData?>(get: { viewModel.state.data?.feeData }, set: { _ in }),
                     loading: Binding<Bool>(get: { viewModel.state.isSyncing }, set: { _ in }),
                     feeToken: feeToken,
                     currency: viewModel.currency,
-                    feeTokenRate: $viewModel.feeTokenRate
+                    feeTokenRate: Binding<Decimal?>(get: { viewModel.rates[feeToken.coin.uid] }, set: { _ in })
                 )
             }
         }
@@ -63,11 +63,11 @@ struct SendView: View {
         }
     }
 
-    @ViewBuilder private func dataView(data: ISendConfirmationData) -> some View {
+    @ViewBuilder private func dataView(data: ISendData, handler: ISendHandler) -> some View {
         VStack {
             ScrollView {
                 VStack(spacing: .margin16) {
-                    let sections = data.sections(feeToken: viewModel.feeToken, currency: viewModel.currency, feeTokenRate: viewModel.feeTokenRate)
+                    let sections = data.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
 
                     if !sections.isEmpty {
                         ForEach(sections.indices, id: \.self) { sectionIndex in
@@ -83,7 +83,7 @@ struct SendView: View {
                         }
                     }
 
-                    let cautions = (viewModel.transactionService?.cautions ?? []) + data.cautions(feeToken: viewModel.feeToken)
+                    let cautions = (viewModel.transactionService?.cautions ?? []) + data.cautions(baseToken: handler.baseToken)
 
                     if !cautions.isEmpty {
                         VStack(spacing: .margin12) {

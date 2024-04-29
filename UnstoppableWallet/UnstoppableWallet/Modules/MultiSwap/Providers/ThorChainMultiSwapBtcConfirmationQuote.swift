@@ -29,11 +29,11 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
         satoshiPerByte != nil && sendInfo != nil
     }
 
-    func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
+    func cautions(baseToken: MarketKit.Token) -> [CautionNew] {
         var cautions = [CautionNew]()
 
         if let transactionError {
-            cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
+            cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
         }
 
         switch MultiSwapSlippage.validate(slippage: slippage) {
@@ -44,8 +44,8 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
         return cautions
     }
 
-    func priceSectionFields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, feeToken _: MarketKit.Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [SendConfirmField] {
-        var fields = [SendConfirmField]()
+    func priceSectionFields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken _: MarketKit.Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
+        var fields = [SendField]()
 
         if let recipient {
             fields.append(
@@ -82,14 +82,10 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
         return fields
     }
 
-    func otherSections(tokenIn _: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
-        var sections = [[SendConfirmField]]()
+    func otherSections(tokenIn _: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [[SendField]] {
+        var sections = [[SendField]]()
 
-        var feeFields = [SendConfirmField]()
-
-        if let feeToken {
-            feeFields.append(contentsOf: super.feeFields(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate))
-        }
+        var feeFields = super.feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate)
 
         if swapQuote.affiliateFee > 0 {
             feeFields.append(
@@ -133,8 +129,8 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
             sections.append(feeFields)
         }
 
-        if let feeToken, let tokenOutRate,
-           let feeAmountData = amountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate),
+        if let tokenOutRate,
+           let feeAmountData = amountData(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate),
            let feeCurrencyValue = feeAmountData.currencyValue
         {
             let totalFee = feeCurrencyValue.value + (swapQuote.affiliateFee + swapQuote.liquidityFee + swapQuote.outboundFee) * tokenOutRate

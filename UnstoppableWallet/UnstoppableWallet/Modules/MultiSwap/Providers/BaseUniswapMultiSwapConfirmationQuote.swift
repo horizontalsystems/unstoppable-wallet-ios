@@ -23,11 +23,11 @@ class BaseUniswapMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
         super.canSwap && transactionData != nil
     }
 
-    override func cautions(feeToken: MarketKit.Token?) -> [CautionNew] {
-        var cautions = super.cautions(feeToken: feeToken)
+    override func cautions(baseToken: MarketKit.Token) -> [CautionNew] {
+        var cautions = super.cautions(baseToken: baseToken)
 
         if let transactionError {
-            cautions.append(caution(transactionError: transactionError, feeToken: feeToken))
+            cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
         }
 
         cautions.append(contentsOf: quote.cautions())
@@ -35,8 +35,8 @@ class BaseUniswapMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
         return cautions
     }
 
-    override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, feeToken: MarketKit.Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [SendConfirmField] {
-        var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
+    override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if let priceImpact = quote.trade.priceImpact, BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact) != .negligible {
             fields.append(

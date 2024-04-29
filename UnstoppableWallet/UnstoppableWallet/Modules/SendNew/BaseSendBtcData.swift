@@ -24,7 +24,7 @@ class BaseSendBtcData {
         )
     }
 
-    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendConfirmField] {
+    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
         let amountData = amountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
 
         return [
@@ -38,7 +38,7 @@ class BaseSendBtcData {
         ]
     }
 
-    func caution(transactionError: Error, feeToken: Token?) -> CautionNew {
+    func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String
         let text: String
 
@@ -46,7 +46,7 @@ class BaseSendBtcData {
             switch error {
             case .notEnough:
                 title = "fee_settings.errors.insufficient_balance".localized
-                text = "fee_settings.errors.insufficient_balance.info".localized(feeToken?.coin.code ?? "")
+                text = "fee_settings.errors.insufficient_balance.info".localized(feeToken.coin.code)
 
             default:
                 title = "Send Info error"

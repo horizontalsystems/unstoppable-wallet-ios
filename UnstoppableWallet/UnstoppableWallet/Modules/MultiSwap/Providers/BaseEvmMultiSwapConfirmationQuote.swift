@@ -14,16 +14,16 @@ class BaseEvmMultiSwapConfirmationQuote: BaseSendEvmData, IMultiSwapConfirmation
         gasPrice != nil && evmFeeData != nil
     }
 
-    func cautions(feeToken _: Token?) -> [CautionNew] {
+    func cautions(baseToken _: Token) -> [CautionNew] {
         []
     }
 
-    func priceSectionFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [SendConfirmField] {
+    func priceSectionFields(tokenIn _: Token, tokenOut _: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
         []
     }
 
-    func otherSections(tokenIn: Token, tokenOut: Token, feeToken: Token?, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, feeTokenRate: Decimal?) -> [[SendConfirmField]] {
-        var sections = [[SendConfirmField]]()
+    func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [[SendField]] {
+        var sections = [[SendField]]()
 
         if let nonce {
             sections.append(
@@ -33,15 +33,13 @@ class BaseEvmMultiSwapConfirmationQuote: BaseSendEvmData, IMultiSwapConfirmation
             )
         }
 
-        if let feeToken {
-            let additionalFeeFields = additionalFeeFields(tokenIn: tokenIn, tokenOut: tokenOut, feeToken: feeToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, feeTokenRate: feeTokenRate)
-            sections.append(feeFields(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) + additionalFeeFields)
-        }
+        let additionalFeeFields = additionalFeeFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
+        sections.append(feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate) + additionalFeeFields)
 
         return sections
     }
 
-    func additionalFeeFields(tokenIn _: Token, tokenOut _: Token, feeToken _: Token?, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, feeTokenRate _: Decimal?) -> [SendConfirmField] {
+    func additionalFeeFields(tokenIn _: Token, tokenOut _: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
         []
     }
 }
