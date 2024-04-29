@@ -48,7 +48,7 @@ class WalletConnectService {
         let bundleIdentifier: String = Bundle.main.bundleIdentifier ?? ""
 
         Networking.configure(
-            groupIdentifier: "group.\(bundleIdentifier))",
+            groupIdentifier: "group.\(bundleIdentifier)",
             projectId: info.projectId,
             socketFactory: SocketFactory(),
             socketConnectionType: .manual
