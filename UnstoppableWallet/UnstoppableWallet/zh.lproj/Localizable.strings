@@ -463,6 +463,12 @@
 "send.confirmation.replace_by_fee" = "替换交易";
 "send.confirmation.replaced_transactions" = "已替换的交易";
 
+"send.confirmation.sync_failed" = "Sync Failed";
+"send.confirmation.invalid_data" = "Invalid Data";
+"send.confirmation.refresh" = "刷新";
+"send.confirmation.please_wait" = "请稍候";
+"send.confirmation.expires_in" = "Expires in %@";
+"send.confirmation.expired" = "Expired";
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.sent" = "已发送";
@@ -512,6 +518,14 @@
 "approve.confirmation.you_approve" = "您批准";
 "approve.confirmation.you_revoke" = "您已取消";
 "approve.confirmation.spender" = "消费人";
+
+"send.enter_amount" = "输入金额";
+"send.enter_address" = "Enter Address";
+"send.invalid_address" = "错误地址";
+"send.token_not_enabled" = "代币未启用";
+"send.token_syncing" = "代币同步";
+"send.token_not_synced" = "代币未同步";
+"send.insufficient_balance" = "可用额度不足";
 
 // Donate
 
