@@ -18,6 +18,7 @@ class LocalStorage {
     private let keyIndicatorsShown = "indicators-shown"
     private let keyTelegramSupportRequested = "telegram-support-requested"
     private let keyNewMarketTabEnabled = "new-market-tab-enabled"
+    private let keyNewSendEnabled = "new-send-enabled"
 
     private let userDefaultsStorage: UserDefaultsStorage
 
@@ -96,6 +97,11 @@ extension LocalStorage {
     var newMarketTabEnabled: Bool {
         get { userDefaultsStorage.value(for: keyNewMarketTabEnabled) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyNewMarketTabEnabled) }
+    }
+
+    var newSendEnabled: Bool {
+        get { userDefaultsStorage.value(for: keyNewSendEnabled) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyNewSendEnabled) }
     }
 }
 

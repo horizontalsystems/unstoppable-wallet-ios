@@ -517,6 +517,17 @@ extension MainSettingsViewController: SectionsDataSource {
                     footerState: .margin(height: .margin32),
                     rows: [
                         tableView.universalRow48(
+                            id: "new-send-switcher",
+                            title: .body("New Send"),
+                            accessoryType: .switch(
+                                isOn: App.shared.localStorage.newSendEnabled,
+                                onSwitch: { enabled in
+                                    App.shared.localStorage.newSendEnabled = enabled
+                                }
+                            ),
+                            isFirst: true
+                        ),
+                        tableView.universalRow48(
                             id: "new-market-tab-switcher",
                             title: .body("New Market Tab"),
                             accessoryType: .switch(
@@ -524,8 +535,7 @@ extension MainSettingsViewController: SectionsDataSource {
                                 onSwitch: { enabled in
                                     App.shared.localStorage.newMarketTabEnabled = enabled
                                 }
-                            ),
-                            isFirst: true
+                            )
                         ),
                         tableView.universalRow48(
                             id: "test-net-switcher",

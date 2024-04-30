@@ -99,7 +99,9 @@ enum WalletModule {
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
         dataSource.viewController = viewController
         dataSource.onSelectWallet = { [weak viewController] wallet in
-            if let module = SendModule.controller(wallet: wallet, mode: mode) {
+            let module = App.shared.localStorage.newSendEnabled ? PreSendView(wallet: wallet).toViewController() : SendModule.controller(wallet: wallet, mode: mode)
+
+            if let module {
                 viewController?.navigationController?.pushViewController(module, animated: true)
             }
         }
@@ -228,9 +230,11 @@ enum WalletModule {
                 return
             }
 
-            if let module = SendModule.controller(wallet: wallet, mode: .predefined(address: address)) {
-                stat(page: .donate, event: .openSend(token: wallet.token))
+            let module = App.shared.localStorage.newSendEnabled ? PreSendView(wallet: wallet).toViewController() : SendModule.controller(wallet: wallet, mode: .predefined(address: address))
+
+            if let module {
                 viewController?.navigationController?.pushViewController(module, animated: true)
+                stat(page: .donate, event: .openSend(token: wallet.token))
             }
         }
 
