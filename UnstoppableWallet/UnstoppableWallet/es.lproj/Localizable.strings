@@ -463,6 +463,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
 "send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
 
+"send.confirmation.sync_failed" = "Sync Failed";
+"send.confirmation.invalid_data" = "Invalid Data";
+"send.confirmation.refresh" = "Actualizar";
+"send.confirmation.please_wait" = "Por favor, espere";
+"send.confirmation.expires_in" = "Expires in %@";
+"send.confirmation.expired" = "Expired";
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
 "send.confirmation.sending" = "Enviar";
 "send.confirmation.sent" = "Enviado";
@@ -512,6 +518,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "approve.confirmation.you_approve" = "Apruebas";
 "approve.confirmation.you_revoke" = "Revocas";
 "approve.confirmation.spender" = "Gastador";
+
+"send.enter_amount" = "Introducir cantidad";
+"send.enter_address" = "Enter Address";
+"send.invalid_address" = "Dirección inválida";
+"send.token_not_enabled" = "Token no habilitado";
+"send.token_syncing" = "Sincronización de tokens";
+"send.token_not_synced" = "Token no sincronizado";
+"send.insufficient_balance" = "Saldo insuficiente";
 
 // Donate
 
