@@ -465,6 +465,12 @@
 "send.confirmation.replace_by_fee" = "Изменить комиссию";
 "send.confirmation.replaced_transactions" = "Замененные транзакции";
 
+"send.confirmation.sync_failed" = "Sync Failed";
+"send.confirmation.invalid_data" = "Invalid Data";
+"send.confirmation.refresh" = "Обновить";
+"send.confirmation.please_wait" = "Пожалуйста, подождите";
+"send.confirmation.expires_in" = "Expires in %@";
+"send.confirmation.expired" = "Expired";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.sent" = "Отправлено";
@@ -514,6 +520,14 @@
 "approve.confirmation.you_approve" = "Вы разрешаете";
 "approve.confirmation.you_revoke" = "Вы отменяете";
 "approve.confirmation.spender" = "Покупатель";
+
+"send.enter_amount" = "Введите сумму";
+"send.enter_address" = "Enter Address";
+"send.invalid_address" = "Неверный адрес";
+"send.token_not_enabled" = "Токен не включен";
+"send.token_syncing" = "Синхронизация токенов";
+"send.token_not_synced" = "Токен не синхронизирован";
+"send.insufficient_balance" = "Недостаточный баланс";
 
 // Donate
 
