@@ -463,6 +463,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.replace_by_fee" = "Ücretle Değiştir";
 "send.confirmation.replaced_transactions" = "Değiştirilmiş İşlemler";
 
+"send.confirmation.sync_failed" = "Sync Failed";
+"send.confirmation.invalid_data" = "Invalid Data";
+"send.confirmation.refresh" = "Yenile";
+"send.confirmation.please_wait" = "Lütfen Bekleyin";
+"send.confirmation.expires_in" = "Expires in %@";
+"send.confirmation.expired" = "Expired";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.sent" = "Gönderildi";
@@ -512,6 +518,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "approve.confirmation.you_approve" = "Sen Onaylıyorsun";
 "approve.confirmation.you_revoke" = "Sen iptal et";
 "approve.confirmation.spender" = "Harcayan";
+
+"send.enter_amount" = "Miktarı Girin";
+"send.enter_address" = "Enter Address";
+"send.invalid_address" = "Geçersiz Adres";
+"send.token_not_enabled" = "Jeton Etkin Değil";
+"send.token_syncing" = "Token Senkronizasyonu";
+"send.token_not_synced" = "Jeton Senkronize Edilmedi";
+"send.insufficient_balance" = "Yetersiz Bakiye";
 
 // Donate
 
