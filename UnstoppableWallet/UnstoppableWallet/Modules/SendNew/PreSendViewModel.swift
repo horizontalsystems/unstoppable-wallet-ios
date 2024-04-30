@@ -112,7 +112,11 @@ class PreSendViewModel: ObservableObject {
 
         currency = currencyManager.baseCurrency
 
-        currencyManager.$baseCurrency.sink { [weak self] in self?.currency = $0 }.store(in: &cancellables)
+        currencyManager.$baseCurrency
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.currency = $0 }
+            .store(in: &cancellables)
+
         rate = marketKit.coinPrice(coinUid: wallet.coin.uid, currencyCode: currency.code)?.value
         rateInCancellable = marketKit.coinPricePublisher(coinUid: wallet.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
@@ -213,7 +217,7 @@ extension PreSendViewModel {
 
         enteringFiat = false
 
-        amount = availableBalance * Decimal(percent) / 100
+        amount = (availableBalance * Decimal(percent) / 100).rounded(decimal: token.decimals)
     }
 
     func clearAmountIn() {

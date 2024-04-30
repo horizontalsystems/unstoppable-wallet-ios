@@ -476,13 +476,13 @@ extension MultiSwapViewModel {
     }
 
     func setAmountIn(percent: Int) {
-        guard let availableBalance else {
+        guard let tokenIn, let availableBalance else {
             return
         }
 
         enteringFiat = false
 
-        amountIn = availableBalance * Decimal(percent) / 100
+        amountIn = (availableBalance * Decimal(percent) / 100).rounded(decimal: tokenIn.decimals)
     }
 
     func clearAmountIn() {

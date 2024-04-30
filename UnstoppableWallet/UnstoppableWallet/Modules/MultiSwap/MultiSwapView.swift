@@ -28,11 +28,13 @@ struct MultiSwapView: View {
             ThemeView {
                 ScrollView {
                     VStack(spacing: .margin12) {
-                        amountsView()
-                        buttonView()
+                        VStack(spacing: .margin16) {
+                            VStack(spacing: .margin8) {
+                                amountsView()
+                                availableBalanceView(value: balanceValue())
+                            }
 
-                        if let balanceValue = balanceValue() {
-                            availableBalanceView(value: balanceValue)
+                            buttonView()
                         }
 
                         if let currentQuote = viewModel.currentQuote, let tokenIn = viewModel.tokenIn, let tokenOut = viewModel.tokenOut {
@@ -352,20 +354,15 @@ struct MultiSwapView: View {
         .buttonStyle(PrimaryButtonStyle(style: style))
     }
 
-    @ViewBuilder private func availableBalanceView(value: String) -> some View {
-        ListSection {
-            HStack(spacing: .margin8) {
-                Text("send.available_balance".localized).textSubhead2()
-                Spacer()
-                Text(value)
-                    .textSubhead2(color: .themeLeah)
-                    .multilineTextAlignment(.trailing)
-            }
-            .padding(.vertical, .margin12)
-            .padding(.horizontal, .margin16)
-            .frame(minHeight: 40)
+    @ViewBuilder private func availableBalanceView(value: String?) -> some View {
+        HStack(spacing: .margin8) {
+            Text("send.available_balance".localized).textCaption()
+            Spacer()
+            Text(value ?? "---")
+                .textCaption()
+                .multilineTextAlignment(.trailing)
         }
-        .themeListStyle(.bordered)
+        .padding(.horizontal, .margin16)
     }
 
     @ViewBuilder private func quoteView(currentQuote: MultiSwapViewModel.Quote, tokenIn: Token, tokenOut: Token) -> some View {
@@ -510,10 +507,7 @@ struct MultiSwapView: View {
     }
 
     private func balanceValue() -> String? {
-        guard viewModel.currentQuote == nil,
-              let availableBalance = viewModel.availableBalance,
-              let tokenIn = viewModel.tokenIn
-        else {
+        guard let availableBalance = viewModel.availableBalance, let tokenIn = viewModel.tokenIn else {
             return nil
         }
 
