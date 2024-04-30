@@ -19,11 +19,11 @@ struct PreSendView: View {
         ThemeView {
             ScrollView {
                 VStack(spacing: .margin16) {
-                    if let balanceValue = balanceValue() {
-                        availableBalanceView(value: balanceValue)
+                    VStack(spacing: .margin8) {
+                        inputView()
+                        availableBalanceView(value: balanceValue())
                     }
 
-                    inputView()
                     addressView()
                     buttonView()
                 }
@@ -61,20 +61,15 @@ struct PreSendView: View {
         }
     }
 
-    @ViewBuilder private func availableBalanceView(value: String) -> some View {
-        ListSection {
-            HStack(spacing: .margin8) {
-                Text("send.available_balance".localized).textSubhead2()
-                Spacer()
-                Text(value)
-                    .textSubhead2(color: .themeLeah)
-                    .multilineTextAlignment(.trailing)
-            }
-            .padding(.vertical, .margin12)
-            .padding(.horizontal, .margin16)
-            .frame(minHeight: 40)
+    @ViewBuilder private func availableBalanceView(value: String?) -> some View {
+        HStack(spacing: .margin8) {
+            Text("send.available_balance".localized).textCaption()
+            Spacer()
+            Text(value ?? "---")
+                .textCaption()
+                .multilineTextAlignment(.trailing)
         }
-        .themeListStyle(.bordered)
+        .padding(.horizontal, .margin16)
     }
 
     @ViewBuilder private func inputView() -> some View {

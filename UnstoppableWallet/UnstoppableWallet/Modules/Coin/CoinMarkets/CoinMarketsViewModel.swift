@@ -40,7 +40,7 @@ class CoinMarketsViewModel: ObservableObject {
             state = .loading
         }
 
-        Task { [weak self, marketKit, coin] in
+        Task { [weak self, marketKit, coin, currency] in
             do {
                 let tickers = try await marketKit.marketTickers(coinUid: coin.uid, currencyCode: currency.code)
                 self?.tickers = tickers
