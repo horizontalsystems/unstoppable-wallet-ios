@@ -9,13 +9,14 @@ class SendViewModel: ObservableObject {
 
     private var syncTask: AnyTask?
     private var timer: AnyCancellable?
+    private var ratesCancellable: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
 
     let handler: ISendHandler?
     let transactionService: ITransactionService?
     let currency: Currency
 
-    @Published var rates: [String: Decimal]
+    @Published var rates = [String: Decimal]()
 
     @Published var sending = false
     @Published var transactionSettingsModified = false
@@ -45,18 +46,8 @@ class SendViewModel: ObservableObject {
 
         if let handler {
             transactionService = TransactionServiceFactory.transactionService(blockchainType: handler.baseToken.blockchainType)
-
-            let rateCoins = Array(Set([handler.baseToken.coin] + handler.rateCoins))
-            let rateCoinUids = rateCoins.map(\.uid)
-
-            rates = marketKit.coinPriceMap(coinUids: rateCoinUids, currencyCode: currency.code).mapValues { $0.value }
-            marketKit.coinPriceMapPublisher(coinUids: rateCoinUids, currencyCode: currency.code)
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] rates in self?.rates = rates.mapValues { $0.value } }
-                .store(in: &cancellables)
         } else {
             transactionService = nil
-            rates = [:]
         }
 
         transactionService?.updatePublisher
@@ -79,6 +70,15 @@ class SendViewModel: ObservableObject {
 
     private func syncTransactionSettingsModified() {
         transactionSettingsModified = transactionService?.modified ?? false
+    }
+
+    private func syncRates(coins: [Coin]) {
+        let coinUids = Array(Set(coins)).map(\.uid)
+
+        rates = marketKit.coinPriceMap(coinUids: coinUids, currencyCode: currency.code).mapValues { $0.value }
+        ratesCancellable = marketKit.coinPriceMapPublisher(coinUids: coinUids, currencyCode: currency.code)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] rates in self?.rates = rates.mapValues { $0.value } }
     }
 
     @MainActor private func set(sending: Bool) {
@@ -105,6 +105,9 @@ extension SendViewModel {
                 try await transactionService.sync()
 
                 let data = try await handler.sendData(transactionSettings: transactionService.transactionSettings)
+
+                self?.syncRates(coins: [handler.baseToken.coin] + data.rateCoins)
+
                 state = .success(data: data)
             } catch {
                 state = .failed(error: error)

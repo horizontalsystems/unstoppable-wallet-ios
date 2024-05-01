@@ -32,7 +32,7 @@ struct EvmFeeEstimator {
 
         let surchargedGasLimit: Int
 
-        if evmBalance > totalAmount {
+        if !transactionData.input.isEmpty, evmBalance > totalAmount {
             let remainingBalance = evmBalance - totalAmount
 
             var additionalGasLimit = Int(Double(gasLimit) / 100.0 * Self.surchargePercent)

@@ -34,10 +34,6 @@ extension MultiSwapSendHandler: ISendHandler {
         15
     }
 
-    var rateCoins: [Coin] {
-        [tokenIn.coin, tokenOut.coin]
-    }
-
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let quote = try await provider.confirmationQuote(
             tokenIn: tokenIn,
@@ -83,6 +79,10 @@ extension MultiSwapSendHandler {
 
         var canSend: Bool {
             quote.canSwap
+        }
+
+        var rateCoins: [Coin] {
+            [tokenIn.coin, tokenOut.coin]
         }
 
         var sendButtonTitle: String {

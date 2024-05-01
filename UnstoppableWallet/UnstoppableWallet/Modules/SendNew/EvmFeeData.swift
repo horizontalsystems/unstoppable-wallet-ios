@@ -14,6 +14,10 @@ struct EvmFeeData {
         self.l1Fee = l1Fee
     }
 
+    func totalFee(gasPrice: GasPrice) -> BigUInt {
+        BigUInt(surchargedGasLimit * gasPrice.max) + (l1Fee ?? 0)
+    }
+
     func totalAmountData(gasPrice: GasPrice?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
         guard let gasPrice else {
             return nil
