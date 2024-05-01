@@ -5,7 +5,7 @@ import RxSwift
 
 protocol ISendBaseService {
     var token: Token { get }
-    var mode: SendBaseService.Mode { get }
+    var mode: PreSendViewModel.Mode { get }
     var state: SendBaseService.State { get }
     var stateObservable: Observable<SendBaseService.State> { get }
 }
@@ -57,14 +57,14 @@ extension SendViewModelOld {
 
     var title: String {
         switch service.mode {
-        case .send, .prefilled: return "send.title".localized(token.coin.code)
+        case .regular, .prefilled: return "send.title".localized(token.coin.code)
         case .predefined: return "donate.title".localized(token.coin.code)
         }
     }
 
     var showAddress: Bool {
         switch service.mode {
-        case .send, .prefilled: return true
+        case .regular, .prefilled: return true
         case .predefined: return false
         }
     }

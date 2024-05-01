@@ -50,7 +50,7 @@ enum WalletModule {
         return WalletViewController(viewModel: viewModel)
     }
 
-    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, mode: SendBaseService.Mode = .send) -> UIViewController? {
+    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, mode: PreSendViewModel.Mode = .regular) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil
         }
@@ -99,7 +99,7 @@ enum WalletModule {
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
         dataSource.viewController = viewController
         dataSource.onSelectWallet = { [weak viewController] wallet in
-            let module = App.shared.localStorage.newSendEnabled ? PreSendView(wallet: wallet).toViewController() : SendModule.controller(wallet: wallet, mode: mode)
+            let module = App.shared.localStorage.newSendEnabled ? PreSendView(wallet: wallet, mode: mode).toViewController() : SendModule.controller(wallet: wallet, mode: mode)
 
             if let module {
                 viewController?.navigationController?.pushViewController(module, animated: true)
@@ -230,7 +230,7 @@ enum WalletModule {
                 return
             }
 
-            let module = App.shared.localStorage.newSendEnabled ? PreSendView(wallet: wallet).toViewController() : SendModule.controller(wallet: wallet, mode: .predefined(address: address))
+            let module = App.shared.localStorage.newSendEnabled ? PreSendView(wallet: wallet, mode: .predefined(address: address)).toViewController() : SendModule.controller(wallet: wallet, mode: .predefined(address: address))
 
             if let module {
                 viewController?.navigationController?.pushViewController(module, animated: true)

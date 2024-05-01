@@ -47,14 +47,14 @@ class SendEvmViewModel {
 extension SendEvmViewModel {
     var title: String {
         switch service.mode {
-        case .send, .prefilled: return "send.title".localized(token.coin.code)
+        case .regular, .prefilled: return "send.title".localized(token.coin.code)
         case .predefined: return "donate.title".localized(token.coin.code)
         }
     }
 
     var showAddress: Bool {
         switch service.mode {
-        case .send, .prefilled: return true
+        case .regular, .prefilled: return true
         case .predefined: return false
         }
     }
