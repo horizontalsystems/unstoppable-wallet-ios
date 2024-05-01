@@ -4,6 +4,7 @@ import MarketKit
 protocol ISendData {
     var feeData: FeeData? { get }
     var canSend: Bool { get }
+    var rateCoins: [Coin] { get }
     var sendButtonTitle: String { get }
     var sendingButtonTitle: String { get }
     var sentButtonTitle: String { get }
