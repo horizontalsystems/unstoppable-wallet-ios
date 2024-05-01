@@ -8,7 +8,7 @@ import RxSwift
 
 class SendEvmService {
     let sendToken: Token
-    let mode: SendBaseService.Mode
+    let mode: PreSendViewModel.Mode
 
     private let disposeBag = DisposeBag()
     private let adapter: ISendEthereumAdapter
@@ -31,7 +31,7 @@ class SendEvmService {
         }
     }
 
-    init(token: Token, mode: SendBaseService.Mode, adapter: ISendEthereumAdapter, addressService: AddressService) {
+    init(token: Token, mode: PreSendViewModel.Mode, adapter: ISendEthereumAdapter, addressService: AddressService) {
         sendToken = token
         self.mode = mode
         self.adapter = adapter
@@ -42,7 +42,7 @@ class SendEvmService {
             addressService.set(text: address)
             if let amount { addressService.publishAmountRelay.accept(amount) }
         case let .predefined(address): addressService.set(text: address)
-        case .send: ()
+        case .regular: ()
         }
 
         subscribe(disposeBag, addressService.stateObservable) { [weak self] in self?.sync(addressState: $0) }

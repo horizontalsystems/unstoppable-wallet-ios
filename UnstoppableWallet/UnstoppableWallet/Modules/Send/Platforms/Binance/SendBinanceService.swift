@@ -9,7 +9,7 @@ class SendBinanceService {
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).send-bitcoin-service")
 
     let token: Token
-    let mode: SendBaseService.Mode
+    let mode: PreSendViewModel.Mode
 
     private let amountService: IAmountInputService
     private let amountCautionService: SendAmountCautionService
@@ -24,7 +24,7 @@ class SendBinanceService {
         }
     }
 
-    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, adapter: ISendBinanceAdapter, reachabilityManager: IReachabilityManager, token: Token, mode: SendBaseService.Mode) {
+    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, adapter: ISendBinanceAdapter, reachabilityManager: IReachabilityManager, token: Token, mode: PreSendViewModel.Mode) {
         self.amountService = amountService
         self.amountCautionService = amountCautionService
         self.addressService = addressService
@@ -38,7 +38,7 @@ class SendBinanceService {
             addressService.set(text: address)
             if let amount { addressService.publishAmountRelay.accept(amount) }
         case let .predefined(address): addressService.set(text: address)
-        case .send: ()
+        case .regular: ()
         }
 
         subscribe(MainScheduler.instance, disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in

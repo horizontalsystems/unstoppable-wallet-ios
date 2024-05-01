@@ -3,7 +3,7 @@ import ThemeKit
 import UIKit
 
 enum SendTronModule {
-    static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendTronAdapter) -> UIViewController {
+    static func viewController(token: Token, mode: PreSendViewModel.Mode, adapter: ISendTronAdapter) -> UIViewController {
         let tronAddressParserItem = TronAddressParser()
         let addressParserChain = AddressParserChain().append(handler: tronAddressParserItem)
 

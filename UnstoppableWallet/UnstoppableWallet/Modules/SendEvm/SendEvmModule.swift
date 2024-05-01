@@ -3,7 +3,7 @@ import ThemeKit
 import UIKit
 
 enum SendEvmModule {
-    static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendEthereumAdapter) -> UIViewController {
+    static func viewController(token: Token, mode: PreSendViewModel.Mode, adapter: ISendEthereumAdapter) -> UIViewController {
         let evmAddressParserItem = EvmAddressParser()
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: token.coin.code, token: token)
 

@@ -72,7 +72,7 @@ class SendViewModel: ObservableObject {
         transactionSettingsModified = transactionService?.modified ?? false
     }
 
-    private func syncRates(coins: [Coin]) {
+    @MainActor private func syncRates(coins: [Coin]) {
         let coinUids = Array(Set(coins)).map(\.uid)
 
         rates = marketKit.coinPriceMap(coinUids: coinUids, currencyCode: currency.code).mapValues { $0.value }
@@ -106,7 +106,7 @@ extension SendViewModel {
 
                 let data = try await handler.sendData(transactionSettings: transactionService.transactionSettings)
 
-                self?.syncRates(coins: [handler.baseToken.coin] + data.rateCoins)
+                await self?.syncRates(coins: [handler.baseToken.coin] + data.rateCoins)
 
                 state = .success(data: data)
             } catch {

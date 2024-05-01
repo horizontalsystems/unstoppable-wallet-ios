@@ -11,8 +11,8 @@ struct PreSendView: View {
 
     @State private var confirmPresented = false
 
-    init(wallet: Wallet) {
-        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet))
+    init(wallet: Wallet, mode: PreSendViewModel.Mode = .regular) {
+        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, mode: mode))
     }
 
     var body: some View {
@@ -24,7 +24,10 @@ struct PreSendView: View {
                         availableBalanceView(value: balanceValue())
                     }
 
-                    addressView()
+                    if viewModel.addressVisible {
+                        addressView()
+                    }
+
                     buttonView()
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))

@@ -5,6 +5,7 @@ import RxSwift
 
 class PreSendViewModel: ObservableObject {
     private let wallet: Wallet
+    private let mode: Mode
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
     private let walletManager = App.shared.walletManager
@@ -106,11 +107,31 @@ class PreSendViewModel: ObservableObject {
     private var handler: IPreSendHandler?
     @Published var sendData: SendData?
 
-    init(wallet: Wallet) {
-        self.wallet = wallet
-        handler = SendHandlerFactory.preSendHandler(wallet: wallet)
+    let addressVisible: Bool
 
+    init(wallet: Wallet, mode: Mode) {
+        self.wallet = wallet
+        self.mode = mode
+
+        handler = SendHandlerFactory.preSendHandler(wallet: wallet)
         currency = currencyManager.baseCurrency
+
+        switch mode {
+        case let .predefined(address):
+            addressResult = .valid(.init(address: .init(raw: address), uri: nil))
+            addressVisible = false
+        default:
+            addressVisible = true
+        }
+
+        defer {
+            switch mode {
+            case let .prefilled(address, amount):
+                self.address = address
+                self.amount = amount
+            default: ()
+            }
+        }
 
         currencyManager.$baseCurrency
             .receive(on: DispatchQueue.main)
@@ -227,5 +248,20 @@ extension PreSendViewModel {
 
     func changeAddressFocus(active: Bool) {
         isAddressActive = active
+    }
+}
+
+extension PreSendViewModel {
+    enum Mode {
+        case regular
+        case prefilled(address: String, amount: Decimal?)
+        case predefined(address: String)
+
+        var amount: Decimal? {
+            switch self {
+            case let .prefilled(_, amount): return amount
+            default: return nil
+            }
+        }
     }
 }
