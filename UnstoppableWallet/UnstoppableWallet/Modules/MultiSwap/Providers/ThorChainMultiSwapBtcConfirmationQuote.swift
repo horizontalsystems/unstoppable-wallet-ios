@@ -8,13 +8,13 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
     let slippage: Decimal
     let transactionError: Error?
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, sendInfo: SendInfo?, transactionError: Error?) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, transactionError: Error?) {
         self.swapQuote = swapQuote
         self.recipient = recipient
         self.slippage = slippage
         self.transactionError = transactionError
 
-        super.init(satoshiPerByte: satoshiPerByte, sendInfo: sendInfo)
+        super.init(satoshiPerByte: satoshiPerByte, fee: fee)
     }
 
     var amountOut: Decimal {
@@ -22,11 +22,11 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
     }
 
     var feeData: FeeData? {
-        sendInfo.map { .bitcoin(bitcoinFeeData: BitcoinFeeData(sendInfo: $0)) }
+        fee.map { .bitcoin(bitcoinFeeData: BitcoinFeeData(fee: $0)) }
     }
 
     var canSwap: Bool {
-        satoshiPerByte != nil && sendInfo != nil
+        satoshiPerByte != nil && fee != nil
     }
 
     func cautions(baseToken: MarketKit.Token) -> [CautionNew] {

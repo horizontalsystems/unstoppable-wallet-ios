@@ -4,23 +4,21 @@ import MarketKit
 
 class BaseSendBtcData {
     let satoshiPerByte: Int?
-    let sendInfo: SendInfo?
+    let fee: Decimal?
 
-    init(satoshiPerByte: Int?, sendInfo: SendInfo?) {
+    init(satoshiPerByte: Int?, fee: Decimal?) {
         self.satoshiPerByte = satoshiPerByte
-        self.sendInfo = sendInfo
+        self.fee = fee
     }
 
     func amountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-        guard let sendInfo else {
+        guard let fee else {
             return nil
         }
 
-        let amount = sendInfo.fee
-
         return AmountData(
-            coinValue: CoinValue(kind: .token(token: feeToken), value: amount),
-            currencyValue: feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
+            coinValue: CoinValue(kind: .token(token: feeToken), value: fee),
+            currencyValue: feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
         )
     }
 

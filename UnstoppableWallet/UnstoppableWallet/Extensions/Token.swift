@@ -78,6 +78,10 @@ extension Token {
         Decimal(bigUInt: value, decimals: decimals) ?? 0
     }
 
+    func decimalValue(value: Int) -> Decimal {
+        Decimal(sign: value >= 0 ? .plus : .minus, exponent: -decimals, significand: Decimal(value))
+    }
+
     func fractionalMonetaryValue(value: Decimal) -> BigUInt {
         BigUInt(value.hs.roundedString(decimal: decimals)) ?? 0
     }
