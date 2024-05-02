@@ -474,12 +474,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.sent" = "Enviado";
 
 "send.confirmation.slide_to_approve" = "Deslizar para aprobar";
-"send.confirmation.approving" = "Aprobando";
-"send.confirmation.approved" = "Aprobar";
-
 "send.confirmation.slide_to_revoke" = "Deslizar para revocar";
-"send.confirmation.revoking" = "Revocando";
-"send.confirmation.revoked" = "Revocada";
 
 "send.confirmation.slide_to_resend" = "Reenviar";
 "send.confirmation.slide_to_cancel" = "Cancelar transacción";
@@ -657,7 +652,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "swap.confirmation.slide_to_swap" = "Deslizar para intercambiar";
 "swap.confirmation.swapping" = "Intercambio";
-"swap.confirmation.swapped" = "Cambiado";
 "swap.confirmation.refresh" = "Actualizar";
 "swap.confirmation.impact_too_high" = "%@ ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
