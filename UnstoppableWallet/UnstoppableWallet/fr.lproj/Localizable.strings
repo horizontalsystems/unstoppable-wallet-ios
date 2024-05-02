@@ -474,12 +474,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.sent" = "Envoyée";
 
 "send.confirmation.slide_to_approve" = "Glisser pour approuver";
-"send.confirmation.approving" = "En cours d'approbation";
-"send.confirmation.approved" = "Approuvé";
-
 "send.confirmation.slide_to_revoke" = "Glisser pour révoquer";
-"send.confirmation.revoking" = "Révocation en cours";
-"send.confirmation.revoked" = "Révoqué";
 
 "send.confirmation.slide_to_resend" = "Réenvoyer";
 "send.confirmation.slide_to_cancel" = "Annuler la transaction";
@@ -657,7 +652,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "swap.confirmation.slide_to_swap" = "Glisser pour changer";
 "swap.confirmation.swapping" = "Swapping";
-"swap.confirmation.swapped" = "Échangé";
 "swap.confirmation.refresh" = "Actualiser";
 "swap.confirmation.impact_too_high" = "%@ a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
