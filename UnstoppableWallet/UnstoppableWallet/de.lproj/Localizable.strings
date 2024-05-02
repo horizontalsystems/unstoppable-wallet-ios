@@ -474,12 +474,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.sent" = "Gesendet";
 
 "send.confirmation.slide_to_approve" = "Zum Genehmigen wischen";
-"send.confirmation.approving" = "Wird bestätigt";
-"send.confirmation.approved" = "Bestätigt";
-
 "send.confirmation.slide_to_revoke" = "Zum Widerrufen wischen";
-"send.confirmation.revoking" = "Widerrufen";
-"send.confirmation.revoked" = "Widerrufen";
 
 "send.confirmation.slide_to_resend" = "Nochmal senden";
 "send.confirmation.slide_to_cancel" = "Transaktion abbrechen";
@@ -657,7 +652,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "swap.confirmation.slide_to_swap" = "Wischen zum Tauschen";
 "swap.confirmation.swapping" = "Swapping";
-"swap.confirmation.swapped" = "Swapped";
 "swap.confirmation.refresh" = "Aktualisieren";
 "swap.confirmation.impact_too_high" = "%@ hat Swap-Aktion für diesen Handel deaktiviert, da du einen extrem ungünstigen Preis bekommst. Dies ist auf extrem niedrige Liquidität zurückzuführen.\nWenn Sie trotzdem wechseln möchten, verwenden Sie stattdessen %@ Webseite.";
 "swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";
