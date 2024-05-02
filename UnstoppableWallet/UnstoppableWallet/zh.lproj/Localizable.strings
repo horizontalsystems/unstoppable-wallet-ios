@@ -474,12 +474,7 @@
 "send.confirmation.sent" = "已发送";
 
 "send.confirmation.slide_to_approve" = "滑动以批准";
-"send.confirmation.approving" = "审批中";
-"send.confirmation.approved" = "批准";
-
 "send.confirmation.slide_to_revoke" = "滑动以撤销";
-"send.confirmation.revoking" = "正在取消";
-"send.confirmation.revoked" = "已注销";
 
 "send.confirmation.slide_to_resend" = "重新发送";
 "send.confirmation.slide_to_cancel" = "取消交易";
@@ -657,7 +652,6 @@
 
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
-"swap.confirmation.swapped" = "已交换";
 "swap.confirmation.refresh" = "刷新";
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
