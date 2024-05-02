@@ -21,9 +21,7 @@ class EvmSendHandler {
 
     private func decorate(transactionData: TransactionData, transactionDecoration: TransactionDecoration?) -> Decoration {
         var type: Decoration.`Type`?
-        var sendButtonTitle = "send.confirmation.slide_to_send".localized
-        var sendingButtonTitle = "send.confirmation.sending".localized
-        var sentButtonTitle = "send.confirmation.sent".localized
+        var customSendButtonTitle: String?
 
         switch transactionDecoration {
         case let decoration as OutgoingDecoration:
@@ -51,9 +49,7 @@ class EvmSendHandler {
 
                 let isRevoke = decoration.value == 0
 
-                sendButtonTitle = isRevoke ? "send.confirmation.slide_to_revoke".localized : "send.confirmation.slide_to_approve".localized
-                sendingButtonTitle = isRevoke ? "send.confirmation.revoking".localized : "send.confirmation.approving".localized
-                sentButtonTitle = isRevoke ? "send.confirmation.revoked".localized : "send.confirmation.approved".localized
+                customSendButtonTitle = isRevoke ? "send.confirmation.slide_to_revoke".localized : "send.confirmation.slide_to_approve".localized
             }
         default:
             ()
@@ -66,9 +62,7 @@ class EvmSendHandler {
                 input: transactionData.input,
                 method: evmLabelManager.methodLabel(input: transactionData.input)
             ),
-            sendButtonTitle: sendButtonTitle,
-            sendingButtonTitle: sendingButtonTitle,
-            sentButtonTitle: sentButtonTitle
+            customSendButtonTitle: customSendButtonTitle
         )
     }
 }
@@ -173,16 +167,8 @@ extension EvmSendHandler {
             decoration.rateCoins
         }
 
-        var sendButtonTitle: String {
-            decoration.sendButtonTitle
-        }
-
-        var sendingButtonTitle: String {
-            decoration.sendingButtonTitle
-        }
-
-        var sentButtonTitle: String {
-            decoration.sentButtonTitle
+        var customSendButtonTitle: String? {
+            decoration.customSendButtonTitle
         }
 
         func cautions(baseToken: Token) -> [CautionNew] {
@@ -316,9 +302,7 @@ extension EvmSendHandler {
 extension EvmSendHandler {
     struct Decoration {
         let type: Type
-        let sendButtonTitle: String
-        let sendingButtonTitle: String
-        let sentButtonTitle: String
+        let customSendButtonTitle: String?
 
         enum `Type` {
             case outgoingEvm(to: EvmKit.Address, value: Decimal)

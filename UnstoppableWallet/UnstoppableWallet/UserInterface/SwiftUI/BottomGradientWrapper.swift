@@ -7,9 +7,7 @@ struct BottomGradientWrapper<Content: View, BottomContent: View>: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                ScrollView {
-                    content
-                }
+                content
 
                 VStack {
                     Spacer()

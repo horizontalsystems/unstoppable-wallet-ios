@@ -40,8 +40,8 @@ class SendViewModel: ObservableObject {
         }
     }
 
-    init(handler: ISendHandler?) {
-        self.handler = handler
+    init(sendData: SendData) {
+        handler = SendHandlerFactory.handler(sendData: sendData)
         currency = currencyManager.baseCurrency
 
         if let handler {

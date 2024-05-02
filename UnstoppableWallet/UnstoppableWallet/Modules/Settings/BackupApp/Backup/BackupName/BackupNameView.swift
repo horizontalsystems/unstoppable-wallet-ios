@@ -8,24 +8,26 @@ struct BackupNameView: View {
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
-                VStack(spacing: .margin24) {
-                    Text("backup_app.backup.name.description".localized)
-                        .themeSubhead2()
-                        .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin12, trailing: .margin16))
+                ScrollView {
+                    VStack(spacing: .margin24) {
+                        Text("backup_app.backup.name.description".localized)
+                            .themeSubhead2()
+                            .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin12, trailing: .margin16))
 
-                    InputTextRow {
-                        InputTextView(
-                            placeholder: "backup.cloud.name.placeholder".localized,
-                            text: $viewModel.name
-                        )
-                        .autocapitalization(.words)
-                        .autocorrectionDisabled()
+                        InputTextRow {
+                            InputTextView(
+                                placeholder: "backup.cloud.name.placeholder".localized,
+                                text: $viewModel.name
+                            )
+                            .autocapitalization(.words)
+                            .autocorrectionDisabled()
+                        }
+                        .modifier(CautionBorder(cautionState: $viewModel.nameCautionState))
+                        .modifier(CautionPrompt(cautionState: $viewModel.nameCautionState))
                     }
-                    .modifier(CautionBorder(cautionState: $viewModel.nameCautionState))
-                    .modifier(CautionPrompt(cautionState: $viewModel.nameCautionState))
+                    .animation(.default, value: viewModel.nameCautionState)
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
-                .animation(.default, value: viewModel.nameCautionState)
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             } bottomContent: {
                 NavigationLink(
                     destination: BackupPasswordView(viewModel: viewModel, onDismiss: onDismiss),

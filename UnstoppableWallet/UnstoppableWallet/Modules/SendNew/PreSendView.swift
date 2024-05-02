@@ -1,3 +1,4 @@
+import ComponentKit
 import Kingfisher
 import SwiftUI
 import ThemeKit
@@ -38,7 +39,8 @@ struct PreSendView: View {
                 isActive: $confirmPresented,
                 destination: {
                     if let sendData = viewModel.sendData {
-                        SendView(sendData: sendData) {
+                        RegularSendView(sendData: sendData) {
+                            HudHelper.instance.show(banner: .sent)
                             presentationMode.wrappedValue.dismiss()
                         }
                     }

@@ -472,12 +472,7 @@
 "send.confirmation.sent" = "Sent";
 
 "send.confirmation.slide_to_approve" = "Slide to Approve";
-"send.confirmation.approving" = "Approving";
-"send.confirmation.approved" = "Approved";
-
 "send.confirmation.slide_to_revoke" = "Slide to Revoke";
-"send.confirmation.revoking" = "Revoking";
-"send.confirmation.revoked" = "Revoked";
 
 "send.confirmation.slide_to_resend" = "Resend";
 "send.confirmation.slide_to_cancel" = "Cancel Transaction";
@@ -655,7 +650,6 @@
 
 "swap.confirmation.slide_to_swap" = "Slide to Swap";
 "swap.confirmation.swapping" = "Swapping";
-"swap.confirmation.swapped" = "Swapped";
 "swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
