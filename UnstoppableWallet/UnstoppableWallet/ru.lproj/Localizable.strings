@@ -476,12 +476,7 @@
 "send.confirmation.sent" = "Отправлено";
 
 "send.confirmation.slide_to_approve" = "Проведите для разрешения";
-"send.confirmation.approving" = "Разрешение";
-"send.confirmation.approved" = "Разрешено";
-
 "send.confirmation.slide_to_revoke" = "Проведите чтобы отозвать";
-"send.confirmation.revoking" = "Отмена";
-"send.confirmation.revoked" = "Отменен";
 
 "send.confirmation.slide_to_resend" = "Отправить повторно";
 "send.confirmation.slide_to_cancel" = "Отменить транзакцию";
@@ -659,7 +654,6 @@
 
 "swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
-"swap.confirmation.swapped" = "Обмен выполнен";
 "swap.confirmation.refresh" = "Обновить";
 "swap.confirmation.impact_too_high" = "%@ отключил действие обмена для этой сделки, потому что вы получаете крайне невыгодную цену. Это связано с крайне низкой ликвидностью.Если вы все равно хотите выполнить обмен, используйте вместо этого веб-сайт %@.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
