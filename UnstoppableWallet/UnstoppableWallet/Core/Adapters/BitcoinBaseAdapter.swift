@@ -316,12 +316,16 @@ extension BitcoinBaseAdapter {
         abstractKit.unspentOutputs(filters: filters)
     }
 
+    func send(params: SendParameters) throws {
+        _ = try abstractKit.send(params: params)
+    }
+
     func sendSingle(params: SendParameters, logger: Logger) -> Single<Void> {
         Single.create { [weak self] observer in
             do {
                 if let adapter = self {
                     logger.debug("Sending to \(String(reflecting: adapter.abstractKit))", save: true)
-                    _ = try adapter.abstractKit.send(params: params)
+                    try adapter.send(params: params)
                 }
                 observer(.success(()))
             } catch {

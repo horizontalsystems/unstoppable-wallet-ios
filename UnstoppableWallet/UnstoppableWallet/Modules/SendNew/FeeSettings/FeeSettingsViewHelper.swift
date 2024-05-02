@@ -37,8 +37,8 @@ class FeeSettingsViewHelper {
             return .spinner
         }
 
-        guard case let .bitcoin(bitcoinFeeData) = feeData,
-              let amountData = bitcoinFeeData.amountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
+        guard case let .bitcoin(sendInfo) = feeData,
+              let amountData = sendInfo.amountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
         else {
             return FeeSettings.FeeValue.none
         }

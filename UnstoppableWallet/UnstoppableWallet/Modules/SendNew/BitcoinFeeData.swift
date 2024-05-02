@@ -4,17 +4,15 @@ import Foundation
 import MarketKit
 
 struct BitcoinFeeData {
-    let sendInfo: SendInfo
+    let fee: Decimal
 
-    init(sendInfo: SendInfo) {
-        self.sendInfo = sendInfo
+    init(fee: Decimal) {
+        self.fee = fee
     }
 
     func amountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-        let amount = sendInfo.fee
-
-        let coinValue = CoinValue(kind: .token(token: feeToken), value: amount)
-        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
+        let coinValue = CoinValue(kind: .token(token: feeToken), value: fee)
+        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
 
         return AmountData(coinValue: coinValue, currencyValue: currencyValue)
     }

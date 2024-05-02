@@ -174,7 +174,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
                 slippage: slippage,
                 satoshiPerByte: satoshiPerByte,
-                sendInfo: sendInfo,
+                fee: sendInfo?.fee,
                 transactionError: transactionError
             )
         default:

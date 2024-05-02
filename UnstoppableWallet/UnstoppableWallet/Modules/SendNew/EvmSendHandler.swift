@@ -27,14 +27,14 @@ class EvmSendHandler {
 
         switch transactionDecoration {
         case let decoration as OutgoingDecoration:
-            type = .outoingEvm(
+            type = .outgoingEvm(
                 to: decoration.to,
                 value: baseToken.decimalValue(value: decoration.value)
             )
 
         case let decoration as OutgoingEip20Decoration:
             if let token = try? coinManager.token(query: .init(blockchainType: baseToken.blockchainType, tokenType: .eip20(address: decoration.contractAddress.hex))) {
-                type = .outoingEip20(
+                type = .outgoingEip20(
                     to: decoration.to,
                     value: token.decimalValue(value: decoration.value),
                     token: token
@@ -199,9 +199,9 @@ extension EvmSendHandler {
             var sections: [[SendField]]
 
             switch decoration.type {
-            case let .outoingEvm(to, value):
+            case let .outgoingEvm(to, value):
                 sections = outgoingSections(token: baseToken, to: to, value: value, currency: currency, rates: rates)
-            case let .outoingEip20(to, value, token):
+            case let .outgoingEip20(to, value, token):
                 sections = outgoingSections(token: token, to: to, value: value, currency: currency, rates: rates)
             case let .approveEip20(spender, value, token):
                 sections = approveSections(token: token, spender: spender, value: value, currency: currency, rates: rates)
@@ -321,15 +321,15 @@ extension EvmSendHandler {
         let sentButtonTitle: String
 
         enum `Type` {
-            case outoingEvm(to: EvmKit.Address, value: Decimal)
-            case outoingEip20(to: EvmKit.Address, value: Decimal, token: Token)
+            case outgoingEvm(to: EvmKit.Address, value: Decimal)
+            case outgoingEip20(to: EvmKit.Address, value: Decimal, token: Token)
             case approveEip20(spender: EvmKit.Address, value: Decimal, token: Token)
             case unknown(to: EvmKit.Address, value: Decimal, input: Data, method: String?)
         }
 
         var rateCoins: [Coin] {
             switch type {
-            case let .outoingEip20(_, _, token): return [token.coin]
+            case let .outgoingEip20(_, _, token): return [token.coin]
             case let .approveEip20(_, _, token): return [token.coin]
             default: return []
             }

@@ -2936,6 +2936,10 @@
 		D0DEFF0B2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */; };
 		D0DEFF0C2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */; };
 		D0DEFF0D2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */; };
+		D0E5E84F2BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
+		D0E5E8502BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
+		D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */; };
+		D0E5E8532BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */; };
 		D0E659BB2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */; };
 		D0E659BC2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */; };
 		D0EC34DB2A4450B100BB308B /* HCaptcha in Frameworks */ = {isa = PBXBuildFile; productRef = D0EC34DA2A4450B100BB308B /* HCaptcha */; };
@@ -4789,6 +4793,8 @@
 		D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTransactionService.swift; sourceTree = "<group>"; };
 		D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeData.swift; sourceTree = "<group>"; };
+		D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendHandler.swift; sourceTree = "<group>"; };
+		D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinPreSendHandler.swift; sourceTree = "<group>"; };
 		D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinViewModel.swift; sourceTree = "<group>"; };
 		D0EE557D2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D0EE557E2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -9105,6 +9111,8 @@
 				11B357FD9D760D9671A3DF24 /* PreSendViewModel.swift */,
 				D3B73E262BDBC6120067429D /* IPreSendHandler.swift */,
 				D3B73E292BDBC61D0067429D /* EvmPreSendHandler.swift */,
+				D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */,
+				D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -10541,6 +10549,7 @@
 				2FA5D50BFA714AAF76AC536B /* Eip1559GasPriceService.swift in Sources */,
 				11B35963D09A27ACE74B3A52 /* PublicKeysModule.swift in Sources */,
 				11B35B1F63DBDEEF57043C97 /* PublicKeysService.swift in Sources */,
+				D0E5E8532BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */,
 				11B3536008462BFF8CA245BE /* PublicKeysViewModel.swift in Sources */,
 				11B3509603841DEF2FC02F24 /* PublicKeysViewController.swift in Sources */,
 				11B358AE1CCD292DF2D2AC42 /* PrivateKeysViewModel.swift in Sources */,
@@ -10892,6 +10901,7 @@
 				11B35EBBFE0CA22D35BA4A94 /* KeychainManager.swift in Sources */,
 				11B3552937152C5A4169C018 /* PasscodeLockManager.swift in Sources */,
 				11B3558A626C2E58C2656FF6 /* KeychainStorage.swift in Sources */,
+				D0E5E8502BE22172005080A4 /* BitcoinSendHandler.swift in Sources */,
 				11B354908D10B00AF7FF0AA3 /* UserDefaultsStorage.swift in Sources */,
 				11B35993ADB991F644E5EE98 /* PasscodeLockState.swift in Sources */,
 				11B35F906F9708CFC86E53FB /* NoPasscodeViewController.swift in Sources */,
@@ -12065,6 +12075,7 @@
 				2FA5DDC853CB680F672C1B50 /* LegacyEvmFeeViewModel.swift in Sources */,
 				11B3504619330D3DB0E0ECD1 /* PublicKeysModule.swift in Sources */,
 				11B35E70BF95197591A052EF /* PublicKeysService.swift in Sources */,
+				D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */,
 				11B35281808DE30B8D717B73 /* PublicKeysViewModel.swift in Sources */,
 				11B3550E1FD46B02F0154CBC /* PublicKeysViewController.swift in Sources */,
 				6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */,
@@ -12416,6 +12427,7 @@
 				11B3520B4589E8C57FD4774F /* ScanQrBlurView.swift in Sources */,
 				11B3542290A3C8B680AA1943 /* ScanQrAlertView.swift in Sources */,
 				11B35082449BDCDAF7CECC3E /* KeychainManager.swift in Sources */,
+				D0E5E84F2BE22172005080A4 /* BitcoinSendHandler.swift in Sources */,
 				11B35CAD54059FA55DF81972 /* PasscodeLockManager.swift in Sources */,
 				11B35051B85C51018A1C7A3A /* KeychainStorage.swift in Sources */,
 				11B35A81895CBF7E86C0C437 /* UserDefaultsStorage.swift in Sources */,
@@ -13355,7 +13367,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.0;
+				version = 3.0.1;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */ = {
