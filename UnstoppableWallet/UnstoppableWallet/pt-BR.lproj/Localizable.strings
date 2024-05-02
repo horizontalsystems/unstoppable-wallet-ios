@@ -474,12 +474,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.sent" = "Enviado";
 
 "send.confirmation.slide_to_approve" = "Deslize para Aprovar";
-"send.confirmation.approving" = "Aprovando";
-"send.confirmation.approved" = "Aprovado";
-
 "send.confirmation.slide_to_revoke" = "Deslize para Revogar";
-"send.confirmation.revoking" = "Revogando";
-"send.confirmation.revoked" = "Revogado";
 
 "send.confirmation.slide_to_resend" = "Enviar novamente";
 "send.confirmation.slide_to_cancel" = "Cancelar transação";
@@ -657,7 +652,6 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "swap.confirmation.slide_to_swap" = "Deslize para trocar";
 "swap.confirmation.swapping" = "Trocando";
-"swap.confirmation.swapped" = "Trocado";
 "swap.confirmation.refresh" = "Atualizar";
 "swap.confirmation.impact_too_high" = "%@ desativou a ação de troca para essa troca porque você está obtendo um preço extremamente desfavorável. Isso se deve a liquidez extremamente baixa.\nSe você ainda quiser trocar, use o site %@.";
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
