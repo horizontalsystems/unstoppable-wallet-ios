@@ -1,4 +1,3 @@
-import ComponentKit
 import Foundation
 import Kingfisher
 import MarketKit
@@ -79,10 +78,13 @@ struct MultiSwapView: View {
                            let amountIn = viewModel.amountIn,
                            let currentQuote = viewModel.currentQuote
                         {
-                            SendView(sendData: .swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: currentQuote.provider)) {
-                                HudHelper.instance.show(banner: .swapped)
-                                presentationMode.wrappedValue.dismiss()
-                            }
+                            MultiSwapSendView(
+                                tokenIn: tokenIn,
+                                tokenOut: tokenOut,
+                                amountIn: amountIn,
+                                provider: currentQuote.provider,
+                                swapPresentationMode: presentationMode
+                            )
                         }
                     }
                 ) {

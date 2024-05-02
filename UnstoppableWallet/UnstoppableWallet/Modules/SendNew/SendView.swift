@@ -4,18 +4,12 @@ import MarketKit
 import SwiftUI
 
 struct SendView: View {
-    @StateObject var viewModel: SendViewModel
-    private let onSend: () -> Void
+    @ObservedObject var viewModel: SendViewModel
 
     @State private var feeSettingsPresented = false
 
-    init(sendData: SendData, onSend: @escaping () -> Void) {
-        _viewModel = .init(wrappedValue: SendViewModel(handler: SendHandlerFactory.handler(sendData: sendData)))
-        self.onSend = onSend
-    }
-
     var body: some View {
-        ThemeView {
+        ZStack {
             if let handler = viewModel.handler {
                 switch viewModel.state {
                 case .syncing:
@@ -46,8 +40,6 @@ struct SendView: View {
                 )
             }
         }
-        .navigationTitle("send.confirmation.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
@@ -64,105 +56,44 @@ struct SendView: View {
     }
 
     @ViewBuilder private func dataView(data: ISendData, handler: ISendHandler) -> some View {
-        VStack {
-            ScrollView {
-                VStack(spacing: .margin16) {
-                    let sections = data.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
+        ScrollView {
+            VStack(spacing: .margin16) {
+                let sections = data.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
 
-                    if !sections.isEmpty {
-                        ForEach(sections.indices, id: \.self) { sectionIndex in
-                            let section = sections[sectionIndex]
+                if !sections.isEmpty {
+                    ForEach(sections.indices, id: \.self) { sectionIndex in
+                        let section = sections[sectionIndex]
 
-                            if !section.isEmpty {
-                                ListSection {
-                                    ForEach(section.indices, id: \.self) { index in
-                                        section[index].listRow
-                                    }
+                        if !section.isEmpty {
+                            ListSection {
+                                ForEach(section.indices, id: \.self) { index in
+                                    section[index].listRow
                                 }
                             }
                         }
                     }
+                }
 
-                    let cautions = (viewModel.transactionService?.cautions ?? []) + data.cautions(baseToken: handler.baseToken)
+                let cautions = (viewModel.transactionService?.cautions ?? []) + data.cautions(baseToken: handler.baseToken)
 
-                    if !cautions.isEmpty {
-                        VStack(spacing: .margin12) {
-                            ForEach(cautions.indices, id: \.self) { index in
-                                HighlightedTextView(caution: cautions[index])
-                            }
+                if !cautions.isEmpty {
+                    VStack(spacing: .margin12) {
+                        ForEach(cautions.indices, id: \.self) { index in
+                            HighlightedTextView(caution: cautions[index])
                         }
                     }
                 }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
-
-            if viewModel.timeLeft > 0 || viewModel.sending {
-                SlideButton(
-                    styling: .text(
-                        start: data.sendButtonTitle,
-                        end: data.sendingButtonTitle,
-                        success: data.sentButtonTitle
-                    ),
-                    action: {
-                        try await viewModel.send()
-                    }, completion: {
-                        onSend()
-                    }
-                )
-                .padding(.vertical, .margin16)
-                .padding(.horizontal, .margin16)
-            } else {
-                Button(action: {
-                    viewModel.sync()
-                }) {
-                    Text("send.confirmation.refresh".localized)
-                }
-                .buttonStyle(PrimaryButtonStyle(style: .gray))
-                .padding(.vertical, .margin16)
-                .padding(.horizontal, .margin16)
-            }
-
-            let (bottomText, bottomTextColor) = bottomText()
-
-            Text(bottomText)
-                .textSubhead1(color: bottomTextColor)
-                .padding(.bottom, .margin8)
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
     }
 
     @ViewBuilder private func errorView(error: Error) -> some View {
-        VStack {
-            ScrollView {
-                VStack(spacing: .margin16) {
-                    HighlightedTextView(caution: CautionNew(text: error.smartDescription, type: .error))
-                }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+        ScrollView {
+            VStack(spacing: .margin16) {
+                HighlightedTextView(caution: CautionNew(text: error.smartDescription, type: .error))
             }
-
-            Button(action: {
-                viewModel.sync()
-            }) {
-                Text("send.confirmation.refresh".localized)
-            }
-            .buttonStyle(PrimaryButtonStyle(style: .gray))
-            .padding(.vertical, .margin16)
-            .padding(.horizontal, .margin16)
-
-            Text("send.confirmation.sync_failed".localized)
-                .textSubhead1()
-                .padding(.bottom, .margin8)
-        }
-    }
-
-    private func bottomText() -> (String, Color) {
-        if let data = viewModel.state.data, !data.canSend {
-            return ("send.confirmation.invalid_data".localized, .themeGray)
-        } else if viewModel.sending {
-            return ("send.confirmation.please_wait".localized, .themeGray)
-        } else if viewModel.timeLeft > 0 {
-            return ("send.confirmation.expires_in".localized("\(viewModel.timeLeft)"), .themeJacob)
-        } else {
-            return ("send.confirmation.expired".localized, .themeGray)
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
     }
 }

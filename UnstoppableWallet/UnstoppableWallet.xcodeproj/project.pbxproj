@@ -3222,6 +3222,10 @@
 		D3E323C82AE7B8E400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C72AE7B8E400F73914 /* KeychainAccess */; };
 		D3E323CA2AE7B8F400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C92AE7B8F400F73914 /* KeychainAccess */; };
 		D3F7D6412A94D53500477BB1 /* BaseTransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B106BD8E4DBD67B7700 /* BaseTransactionsService.swift */; };
+		D3F9B0252BE38AF1009FFA95 /* RegularSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */; };
+		D3F9B0262BE38AF1009FFA95 /* RegularSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */; };
+		D3F9B02B2BE3A9A1009FFA95 /* MultiSwapSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */; };
+		D3F9B02C2BE3A9A1009FFA95 /* MultiSwapSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4898,6 +4902,8 @@
 		D3DD67332BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapBtcQuote.swift; sourceTree = "<group>"; };
 		D3DD67362BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapBtcConfirmationQuote.swift; sourceTree = "<group>"; };
 		D3DD67392BC3CFF300EC7F78 /* BaseSendBtcData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSendBtcData.swift; sourceTree = "<group>"; };
+		D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSendView.swift; sourceTree = "<group>"; };
+		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6575,6 +6581,7 @@
 				11B358DD4F0C5E4E5A4EEBA4 /* MultiSwapPreSwapStep.swift */,
 				11B35EDC73170179EA8F4CBE /* MultiSwapModule.swift */,
 				D3B73E2C2BDF6B6D0067429D /* MultiSwapSendHandler.swift */,
+				D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */,
 			);
 			path = MultiSwap;
 			sourceTree = "<group>";
@@ -9113,6 +9120,7 @@
 				D3B73E292BDBC61D0067429D /* EvmPreSendHandler.swift */,
 				D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */,
 				D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */,
+				D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -10299,6 +10307,7 @@
 				1A5648AB801E8DAA9B3D288E /* MarketOverviewGlobalService.swift in Sources */,
 				1A5645CA87E32639CEE6681F /* MarketOverviewGlobalViewModel.swift in Sources */,
 				1A5642348A701CF7CF5CD805 /* MarketOverviewGlobalDataSource.swift in Sources */,
+				D3F9B02C2BE3A9A1009FFA95 /* MultiSwapSendView.swift in Sources */,
 				ABC9AB3DAD30AA400DEB719C /* SendBitcoinService.swift in Sources */,
 				ABC9AD49CCD14F97CD912454 /* SendBitcoinAdapterService.swift in Sources */,
 				ABC9AF9F8113DB5D54140E7A /* SendBitcoinViewController.swift in Sources */,
@@ -10414,6 +10423,7 @@
 				11B35BADA9ACC9921545BAD9 /* SecondaryButtonCell.swift in Sources */,
 				11B357DDBC0536428B997FE5 /* InputSecondaryCircleButtonWrapperView.swift in Sources */,
 				11B35567A098667C9955F1F9 /* RecoveryPhraseModule.swift in Sources */,
+				D3F9B0262BE38AF1009FFA95 /* RegularSendView.swift in Sources */,
 				11B35289269C634BC9219362 /* RecoveryPhraseViewController.swift in Sources */,
 				11B351D9E1CAF8AA5BCE39F5 /* RecoveryPhraseViewModel.swift in Sources */,
 				11B35F78F82224BE17D612AB /* RecoveryPhraseService.swift in Sources */,
@@ -11825,6 +11835,7 @@
 				1A56470F4D18CCC43B85DEB3 /* MarketOverviewCategoryViewModel.swift in Sources */,
 				1A564FC84916FF6D6224FB33 /* MarketOverviewCategoryCell.swift in Sources */,
 				1A56405220ED225C0B973A7F /* MarketOverviewTopCoinsService.swift in Sources */,
+				D3F9B02B2BE3A9A1009FFA95 /* MultiSwapSendView.swift in Sources */,
 				1A564A4CF522A7A959482AA6 /* MarketOverviewGlobalService.swift in Sources */,
 				1A564F3C50FC28F2AF4AF4ED /* MarketOverviewGlobalViewModel.swift in Sources */,
 				1A5643CB57594E84707686A3 /* MarketOverviewGlobalDataSource.swift in Sources */,
@@ -11940,6 +11951,7 @@
 				1A564C1395A1264F1A9B3AB5 /* TopPlatformModule.swift in Sources */,
 				1A5648B10B34B402167EEA84 /* TopPlatformService.swift in Sources */,
 				1A5640DE72AC306799695F48 /* TopPlatformMarketCapFetcher.swift in Sources */,
+				D3F9B0252BE38AF1009FFA95 /* RegularSendView.swift in Sources */,
 				11B357D1A2BD673DAB7B4C61 /* SecondaryButtonCell.swift in Sources */,
 				11B35B3C7A60FEE011EFBF73 /* InputSecondaryCircleButtonWrapperView.swift in Sources */,
 				11B35C1ACD5B3874921CEFDE /* RecoveryPhraseModule.swift in Sources */,

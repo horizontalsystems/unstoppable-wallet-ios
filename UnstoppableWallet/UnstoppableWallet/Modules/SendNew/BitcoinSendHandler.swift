@@ -78,16 +78,8 @@ extension BitcoinSendHandler {
             fee != nil
         }
 
-        var sendButtonTitle: String {
-            "send.confirmation.slide_to_send".localized
-        }
-
-        var sendingButtonTitle: String {
-            "send.confirmation.sending".localized
-        }
-
-        var sentButtonTitle: String {
-            "send.confirmation.sent".localized
+        var customSendButtonTitle: String? {
+            nil
         }
 
         var rateCoins: [MarketKit.Coin] {

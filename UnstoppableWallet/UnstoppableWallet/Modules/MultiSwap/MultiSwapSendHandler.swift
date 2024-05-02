@@ -85,16 +85,8 @@ extension MultiSwapSendHandler {
             [tokenIn.coin, tokenOut.coin]
         }
 
-        var sendButtonTitle: String {
-            "swap.confirmation.slide_to_swap".localized
-        }
-
-        var sendingButtonTitle: String {
-            "swap.confirmation.swapping".localized
-        }
-
-        var sentButtonTitle: String {
-            "swap.confirmation.swapped".localized
+        var customSendButtonTitle: String? {
+            nil
         }
 
         func cautions(baseToken: Token) -> [CautionNew] {
