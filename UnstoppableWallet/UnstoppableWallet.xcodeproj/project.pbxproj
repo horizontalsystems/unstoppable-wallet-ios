@@ -3226,6 +3226,10 @@
 		D3F9B0262BE38AF1009FFA95 /* RegularSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */; };
 		D3F9B02B2BE3A9A1009FFA95 /* MultiSwapSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */; };
 		D3F9B02C2BE3A9A1009FFA95 /* MultiSwapSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */; };
+		D3F9B0312BE3B39D009FFA95 /* EvmDecoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0302BE3B39D009FFA95 /* EvmDecoration.swift */; };
+		D3F9B0322BE3B39D009FFA95 /* EvmDecoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0302BE3B39D009FFA95 /* EvmDecoration.swift */; };
+		D3F9B0342BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */; };
+		D3F9B0352BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4904,6 +4908,8 @@
 		D3DD67392BC3CFF300EC7F78 /* BaseSendBtcData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSendBtcData.swift; sourceTree = "<group>"; };
 		D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSendView.swift; sourceTree = "<group>"; };
 		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
+		D3F9B0302BE3B39D009FFA95 /* EvmDecoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmDecoration.swift; sourceTree = "<group>"; };
+		D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmDecorator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -9121,6 +9127,8 @@
 				D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */,
 				D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */,
 				D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */,
+				D3F9B0302BE3B39D009FFA95 /* EvmDecoration.swift */,
+				D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -10402,6 +10410,7 @@
 				11B35A81973F6FB70B24AF7A /* PoolProvider.swift in Sources */,
 				11B3525DD29BC2286526669F /* PoolGroup.swift in Sources */,
 				11B35AB989198F423D880695 /* PoolGroupFactory.swift in Sources */,
+				D3F9B0352BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */,
 				D09D76952A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */,
 				11B358A1409FB729B1C3013E /* PoolSource.swift in Sources */,
 				ABC9A52E08E5C57665C07DBC /* PseudoAccessoryView.swift in Sources */,
@@ -10790,6 +10799,7 @@
 				11B35EEE72F3A78415A2A552 /* HorizontalDivider.swift in Sources */,
 				11B35AA627F0357B3FB5F9E8 /* ListRow.swift in Sources */,
 				11B35608F7D19B3E6318CB22 /* Text.swift in Sources */,
+				D3F9B0322BE3B39D009FFA95 /* EvmDecoration.swift in Sources */,
 				11B3501EA3658BFDC67DEB1F /* ThemeView.swift in Sources */,
 				ABC9A097A0BDD99777D5374D /* DonateDescriptionCell.swift in Sources */,
 				ABC9A02C18AACAA8CC930665 /* WalletTokenListDataSource.swift in Sources */,
@@ -11930,6 +11940,7 @@
 				11B35AB0C3F757E23D249330 /* TransactionTypeFilter.swift in Sources */,
 				11B35A3FD624D80C6D98A1CF /* TransactionSource.swift in Sources */,
 				11B3515A1106B2AE8509263E /* Pool.swift in Sources */,
+				D3F9B0342BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */,
 				11B3541BC8A0EF1066EBA464 /* NonSpamPoolProvider.swift in Sources */,
 				11B3594DD9B54E11190B4CD5 /* PoolProvider.swift in Sources */,
 				11B351E4BD2180A5D6D59F23 /* PoolGroup.swift in Sources */,
@@ -12318,6 +12329,7 @@
 				ABC9A2CA505DB49DE0FB28DD /* WalletTokenBalanceCustomAmountCell.swift in Sources */,
 				11B35A80AB419A754EF9955A /* ListSection.swift in Sources */,
 				11B35F91E53BA1F835DD4B4F /* HorizontalDivider.swift in Sources */,
+				D3F9B0312BE3B39D009FFA95 /* EvmDecoration.swift in Sources */,
 				11B35EECB57465598F305C5B /* ListRow.swift in Sources */,
 				11B3538D0F8C037E40623A81 /* Text.swift in Sources */,
 				11B35503B3E84FEFCDF1AFED /* ThemeView.swift in Sources */,
