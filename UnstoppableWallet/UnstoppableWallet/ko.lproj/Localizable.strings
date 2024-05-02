@@ -472,12 +472,7 @@
 "send.confirmation.sent" = "전송됨";
 
 "send.confirmation.slide_to_approve" = "승인하기 위해 슬라이드하십시오";
-"send.confirmation.approving" = "승인 중";
-"send.confirmation.approved" = "승인됨";
-
 "send.confirmation.slide_to_revoke" = "취소하기 위해 슬라이드하십시오";
-"send.confirmation.revoking" = "철회";
-"send.confirmation.revoked" = "철회됨";
 
 "send.confirmation.slide_to_resend" = "재전송";
 "send.confirmation.slide_to_cancel" = "거래 취소";
@@ -655,7 +650,6 @@
 
 "swap.confirmation.slide_to_swap" = "밀어서 결제하기";
 "swap.confirmation.swapping" = "스와핑";
-"swap.confirmation.swapped" = "스왑됨";
 "swap.confirmation.refresh" = "새로고침";
 "swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
