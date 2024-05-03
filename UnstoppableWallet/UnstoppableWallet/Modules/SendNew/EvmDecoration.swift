@@ -83,25 +83,29 @@ struct EvmDecoration {
         ]
     }
 
-    private func unknownSections(baseToken: Token, to: EvmKit.Address, value: Decimal, input _: Data, method _: String?, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
-        [
-            [
-                amountField(
-                    title: "send.confirmation.transfer".localized,
-                    token: baseToken,
-                    value: value,
-                    currency: currency,
-                    rate: rates[baseToken.coin.uid],
-                    type: .neutral
-                ),
-                .address(
-                    title: "send.confirmation.to".localized,
-                    value: to.eip55,
-                    blockchainType: baseToken.blockchainType
-                ),
-                // TODO: show input and method
-            ],
+    private func unknownSections(baseToken: Token, to: EvmKit.Address, value: Decimal, input: Data, method: String?, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+        var fields: [SendField] = [
+            amountField(
+                title: "send.confirmation.transfer".localized,
+                token: baseToken,
+                value: value,
+                currency: currency,
+                rate: rates[baseToken.coin.uid],
+                type: .neutral
+            ),
+            .address(
+                title: "send.confirmation.to".localized,
+                value: to.eip55,
+                blockchainType: baseToken.blockchainType
+            ),
+            .hex(title: "send.confirmation.input".localized, value: input.toHexString()),
         ]
+
+        if let method {
+            fields.append(.levelValue(title: "send.confirmation.method".localized, value: method, level: .regular))
+        }
+
+        return [fields]
     }
 
     private func amountField(title: String, token: Token, value: Decimal, currency: Currency, rate: Decimal?, type: SendField.AmountType) -> SendField {

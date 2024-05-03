@@ -9,6 +9,7 @@ enum SendField {
     case levelValue(title: String, value: String, level: ValueLevel)
     case address(title: String, value: String, blockchainType: BlockchainType)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
+    case hex(title: String, value: String)
 
     @ViewBuilder var listRow: some View {
         switch self {
@@ -90,6 +91,24 @@ enum SendField {
             RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
         case let .price(title, tokenA, tokenB, amountA, amountB):
             PriceRow(title: title, tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB)
+        case let .hex(title, value):
+            ListRow {
+                Text(title).textSubhead2()
+
+                Spacer()
+
+                Text(value)
+                    .textSubhead1(color: .themeLeah)
+                    .lineLimit(3)
+                    .truncationMode(.middle)
+
+                Button(action: {
+                    CopyHelper.copyAndNotify(value: value)
+                }) {
+                    Image("copy_20").renderingMode(.template)
+                }
+                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+            }
         }
     }
 
