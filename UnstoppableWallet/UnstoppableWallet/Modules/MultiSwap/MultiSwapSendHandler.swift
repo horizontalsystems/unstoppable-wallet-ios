@@ -30,7 +30,7 @@ extension MultiSwapSendHandler: ISendHandler {
         "swap.confirmation.quoting".localized
     }
 
-    var expirationDuration: Int {
+    var expirationDuration: Int? {
         15
     }
 

@@ -23,7 +23,7 @@ extension BitcoinSendHandler: ISendHandler {
         nil
     }
 
-    var expirationDuration: Int {
+    var expirationDuration: Int? {
         10
     }
 

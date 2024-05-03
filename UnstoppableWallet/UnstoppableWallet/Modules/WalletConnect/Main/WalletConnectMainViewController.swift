@@ -224,7 +224,7 @@ class WalletConnectMainViewController: ThemeViewController {
             return
         case let .controller(controller):
             guard let controller else { return }
-            present(ThemeNavigationController(rootViewController: controller), animated: true)
+            present(controller, animated: true)
         }
     }
 }

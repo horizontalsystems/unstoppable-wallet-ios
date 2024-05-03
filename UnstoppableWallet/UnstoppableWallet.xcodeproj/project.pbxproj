@@ -3131,6 +3131,10 @@
 		D3993DB828F42595008720FB /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DB728F42595008720FB /* WalletConnect */; };
 		D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DC128F42992008720FB /* UnstoppableDomainsResolution */; };
 		D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */; };
+		D3A580882BE4DAA2003953F4 /* EvmSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580872BE4DAA2003953F4 /* EvmSendData.swift */; };
+		D3A580892BE4DAA2003953F4 /* EvmSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580872BE4DAA2003953F4 /* EvmSendData.swift */; };
+		D3A5808B2BE4DB11003953F4 /* WalletConnectSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */; };
+		D3A5808C2BE4DB11003953F4 /* WalletConnectSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */; };
 		D3AF5A8929FFD85800C1399E /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8829FFD85800C1399E /* RxCocoa */; };
 		D3AF5A8B29FFD85800C1399E /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8A29FFD85800C1399E /* RxRelay */; };
 		D3AF5A8D29FFD85800C1399E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8C29FFD85800C1399E /* RxSwift */; };
@@ -3230,6 +3234,10 @@
 		D3F9B0322BE3B39D009FFA95 /* EvmDecoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0302BE3B39D009FFA95 /* EvmDecoration.swift */; };
 		D3F9B0342BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */; };
 		D3F9B0352BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */; };
+		D3F9B0372BE3B5AA009FFA95 /* WalletConnectSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0362BE3B5AA009FFA95 /* WalletConnectSendView.swift */; };
+		D3F9B0382BE3B5AA009FFA95 /* WalletConnectSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0362BE3B5AA009FFA95 /* WalletConnectSendView.swift */; };
+		D3F9B03A2BE3BB36009FFA95 /* WalletConnectSendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */; };
+		D3F9B03B2BE3BB36009FFA95 /* WalletConnectSendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4873,6 +4881,8 @@
 		D3948F192ADA88D800FAE566 /* IntentExtension Dev.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "IntentExtension Dev.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3948F1C2ADA88D900FAE566 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		D3948F1E2ADA88D900FAE566 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3A580872BE4DAA2003953F4 /* EvmSendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmSendData.swift; sourceTree = "<group>"; };
+		D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectSendHandler.swift; sourceTree = "<group>"; };
 		D3B476A321D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3B476A421D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B476A521D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -4910,6 +4920,8 @@
 		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
 		D3F9B0302BE3B39D009FFA95 /* EvmDecoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmDecoration.swift; sourceTree = "<group>"; };
 		D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmDecorator.swift; sourceTree = "<group>"; };
+		D3F9B0362BE3B5AA009FFA95 /* WalletConnectSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectSendView.swift; sourceTree = "<group>"; };
+		D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectSendViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -9129,6 +9141,10 @@
 				D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */,
 				D3F9B0302BE3B39D009FFA95 /* EvmDecoration.swift */,
 				D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */,
+				D3F9B0362BE3B5AA009FFA95 /* WalletConnectSendView.swift */,
+				D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */,
+				D3A580872BE4DAA2003953F4 /* EvmSendData.swift */,
+				D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -9972,6 +9988,7 @@
 				D003297B26CD2E89002EC21D /* TransactionDateHeaderView.swift in Sources */,
 				11B35BF47E99D33FE20AA279 /* EnabledWallet_v_0_20.swift in Sources */,
 				11B3585AC6E5D92F98A71758 /* RestoreSettingRecord.swift in Sources */,
+				D3A5808C2BE4DB11003953F4 /* WalletConnectSendHandler.swift in Sources */,
 				11B357388B82489E53C13772 /* RestoreSettingsManager.swift in Sources */,
 				11B3527F2E2D46DC307E6D3D /* RestoreSettingsViewModel.swift in Sources */,
 				D09200C3293F21720091981A /* RestoreNonStandardViewController.swift in Sources */,
@@ -10241,6 +10258,7 @@
 				11B359C05619611CBCFC89AC /* EvmBlockchainManager.swift in Sources */,
 				ABC9A2542EA47C2ED85C06B9 /* WalletConnectListViewController.swift in Sources */,
 				ABC9A7A9E27CC5F93BE5018B /* WalletConnectListService.swift in Sources */,
+				D3F9B0382BE3B5AA009FFA95 /* WalletConnectSendView.swift in Sources */,
 				ABC9A5C2E2976341520D2F6D /* WalletConnectListModule.swift in Sources */,
 				ABC9ADCDC949C4C63D1260DE /* WalletConnectListViewModel.swift in Sources */,
 				ABC9A85FAA53B6FB01F94171 /* WalletConnectScanQrViewModel.swift in Sources */,
@@ -10356,6 +10374,7 @@
 				11B352C0FB8BFE700B220E5B /* EvmLabelStorage.swift in Sources */,
 				11B35C5388370450DAF65C5B /* EvmUpdateStatus.swift in Sources */,
 				11B35A5CD6B04D269E281A6A /* SyncerState.swift in Sources */,
+				D3A580892BE4DAA2003953F4 /* EvmSendData.swift in Sources */,
 				11B35EE45B00510714693AA9 /* SyncerStateStorage.swift in Sources */,
 				1A564C2E1B66C2C508F8327D /* MarketOverviewTopPlatformsViewModel.swift in Sources */,
 				1A564D4581F280245579C9DF /* BaseMarketOverviewTopListDataSource.swift in Sources */,
@@ -10912,6 +10931,7 @@
 				11B359F812683F62595AFEE2 /* DateFormatterCache.swift in Sources */,
 				11B35483AFC1088E56BC7F37 /* LanguageHourFormatter.swift in Sources */,
 				11B35B298DCBAA8AE9DADA34 /* LanguageSettingsModule.swift in Sources */,
+				D3F9B03B2BE3BB36009FFA95 /* WalletConnectSendViewModel.swift in Sources */,
 				11B35C22C95B08142C13B14D /* LanguageSettingsViewModel.swift in Sources */,
 				11B355BDD19498AA9CD250BB /* LanguageSettingsView.swift in Sources */,
 				D0532CC22B149E110015DF40 /* WatchViewController.swift in Sources */,
@@ -11502,6 +11522,7 @@
 				11B3524401E294D8A919186E /* EnabledWallet_v_0_20.swift in Sources */,
 				11B3512E20E90C3332EFCC1B /* RestoreSettingRecord.swift in Sources */,
 				11B3504F9DECABF08D8C82BC /* RestoreSettingsManager.swift in Sources */,
+				D3A5808B2BE4DB11003953F4 /* WalletConnectSendHandler.swift in Sources */,
 				11B3588A5791AB25FA1BBEE0 /* RestoreSettingsViewModel.swift in Sources */,
 				11B35BC2641349F06DF6B6FF /* RestoreSettingsView.swift in Sources */,
 				D09200C2293F21720091981A /* RestoreNonStandardViewController.swift in Sources */,
@@ -11771,6 +11792,7 @@
 				1A5649CEE6EFCC06A10F69CF /* TraitCell.swift in Sources */,
 				ABC9A3C3FC55AB33A9896382 /* UIViewController.swift in Sources */,
 				6BE8A07B2ADE2F8D0012DE7F /* Currency.swift in Sources */,
+				D3F9B0372BE3B5AA009FFA95 /* WalletConnectSendView.swift in Sources */,
 				ABC9A9AC7890BE4AAE7DDC84 /* WalletConnectSessionManager.swift in Sources */,
 				2FA5D18A57B386FD3A4384BA /* Eip1559EvmFeeViewModel.swift in Sources */,
 				2FA5DA30F665BF2C170210C8 /* Eip1559EvmFeeDataSource.swift in Sources */,
@@ -11886,6 +11908,7 @@
 				11B352FF1C3FA152E2EEFE67 /* EvmMethodLabel.swift in Sources */,
 				11B35FB7BEC8C0DA32C1F670 /* EvmAddressLabel.swift in Sources */,
 				11B3535C10D649F8CD1BCDAF /* HsLabelProvider.swift in Sources */,
+				D3A580882BE4DAA2003953F4 /* EvmSendData.swift in Sources */,
 				11B35CADA5EE093B974C5A4A /* EvmLabelManager.swift in Sources */,
 				11B35C8A95E4C8D43F9279B6 /* EvmLabelStorage.swift in Sources */,
 				11B351DED0D2632D24084263 /* EvmUpdateStatus.swift in Sources */,
@@ -12442,6 +12465,7 @@
 				D350DDB22AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
 				11B35FD593B38EEEE5F18010 /* AppWidgetConstants.swift in Sources */,
 				11B35909DEBFA098976E1D87 /* DateFormatterCache.swift in Sources */,
+				D3F9B03A2BE3BB36009FFA95 /* WalletConnectSendViewModel.swift in Sources */,
 				11B350938ACDA1EEF888E846 /* LanguageHourFormatter.swift in Sources */,
 				6B2907252AF0CB8A006157D6 /* WalletConnectAppShowView.swift in Sources */,
 				11B357D1BFE20978857A2FDC /* LanguageSettingsModule.swift in Sources */,
