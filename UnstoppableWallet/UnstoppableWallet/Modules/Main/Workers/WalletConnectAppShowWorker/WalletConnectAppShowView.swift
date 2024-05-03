@@ -96,8 +96,7 @@ class WalletConnectAppShowView {
             return
         case let .controller(controller):
             guard let controller else { return }
-            let navigationController = ThemeNavigationController(rootViewController: controller)
-            parentViewController?.visibleController.present(navigationController, animated: true)
+            parentViewController?.visibleController.present(controller, animated: true)
         }
     }
 }

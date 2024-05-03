@@ -1,5 +1,4 @@
 import ComponentKit
-import Kingfisher
 import MarketKit
 import SwiftUI
 

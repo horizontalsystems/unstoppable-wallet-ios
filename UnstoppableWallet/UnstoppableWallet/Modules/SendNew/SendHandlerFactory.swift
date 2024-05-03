@@ -9,6 +9,8 @@ enum SendHandlerFactory {
             return BitcoinSendHandler.instance(token: token, params: params)
         case let .swap(tokenIn, tokenOut, amountIn, provider):
             return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
+        case let .walletConnect(request):
+            return WalletConnectSendHandler.instance(request: request)
         }
     }
 

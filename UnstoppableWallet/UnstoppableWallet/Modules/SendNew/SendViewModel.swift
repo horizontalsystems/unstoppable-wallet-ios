@@ -28,8 +28,8 @@ class SendViewModel: ObservableObject {
         didSet {
             timer?.cancel()
 
-            if let handler, let data = state.data, data.canSend {
-                timeLeft = handler.expirationDuration
+            if let handler, let expirationDuration = handler.expirationDuration, let data = state.data, data.canSend {
+                timeLeft = expirationDuration
 
                 timer = Timer.publish(every: 1, on: .main, in: .common)
                     .autoconnect()
@@ -134,7 +134,7 @@ extension SendViewModel {
 
             await set(sending: true)
 
-            try await handler.send(data: data)
+            _ = try await handler.send(data: data)
         } catch {
             await set(sending: false)
             errorSubject.send(error.smartDescription)

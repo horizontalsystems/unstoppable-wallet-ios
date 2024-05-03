@@ -2,27 +2,33 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class EvmSendHandler {
+class WalletConnectSendHandler {
+    private let request: WalletConnectRequest
+    private let payload: WCEthereumTransactionPayload
+    private let signService: IWalletConnectSignService = App.shared.walletConnectSessionManager.service
+
     let baseToken: Token
     private let transactionData: TransactionData
     private let evmKitWrapper: EvmKitWrapper
     private let decorator = EvmDecorator()
     private let evmFeeEstimator = EvmFeeEstimator()
 
-    init(baseToken: Token, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
+    init(request: WalletConnectRequest, payload: WCEthereumTransactionPayload, baseToken: Token, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
+        self.request = request
+        self.payload = payload
         self.baseToken = baseToken
         self.transactionData = transactionData
         self.evmKitWrapper = evmKitWrapper
     }
 }
 
-extension EvmSendHandler: ISendHandler {
+extension WalletConnectSendHandler: ISendHandler {
     var syncingText: String? {
         nil
     }
 
     var expirationDuration: Int? {
-        10
+        nil
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
@@ -30,24 +36,15 @@ extension EvmSendHandler: ISendHandler {
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        var transactionData = transactionData
-
         if let gasPrice {
-            let evmBalance = evmKitWrapper.evmKit.accountState?.balance ?? 0
-
-            do {
-                if transactionData.input.isEmpty, transactionData.value == evmBalance {
-                    let stubTransactionData = TransactionData(to: transactionData.to, value: 1, input: transactionData.input)
-                    let stubFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: stubTransactionData, gasPrice: gasPrice)
-                    let totalFee = stubFeeData.totalFee(gasPrice: gasPrice)
-
-                    evmFeeData = stubFeeData
-                    transactionData = TransactionData(to: transactionData.to, value: max(0, transactionData.value - totalFee), input: transactionData.input)
-                } else {
+            if let gasLimit = payload.transaction.gasLimit {
+                evmFeeData = EvmFeeData(gasLimit: gasLimit, surchargedGasLimit: gasLimit)
+            } else {
+                do {
                     evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPrice)
+                } catch {
+                    transactionError = error
                 }
-            } catch {
-                transactionError = error
             }
         }
 
@@ -81,16 +78,18 @@ extension EvmSendHandler: ISendHandler {
             throw SendError.noGasLimit
         }
 
-        _ = try await evmKitWrapper.send(
+        let fullTransaction = try await evmKitWrapper.send(
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
             nonce: data.nonce
         )
+
+        signService.approveRequest(id: request.id, result: fullTransaction.transaction.hash)
     }
 }
 
-extension EvmSendHandler {
+extension WalletConnectSendHandler {
     enum SendError: Error {
         case invalidData
         case noGasPrice
@@ -99,17 +98,28 @@ extension EvmSendHandler {
     }
 }
 
-extension EvmSendHandler {
-    static func instance(blockchainType: BlockchainType, transactionData: TransactionData) -> EvmSendHandler? {
-        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)) else {
+extension WalletConnectSendHandler {
+    static func instance(request: WalletConnectRequest) -> WalletConnectSendHandler? {
+        guard let payload = request.payload as? WCEthereumTransactionPayload,
+              let account = App.shared.accountManager.activeAccount,
+              let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account)
+        else {
             return nil
         }
 
-        guard let evmKitWrapper = App.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: evmKitWrapper.blockchainType, tokenType: .native)) else {
             return nil
         }
 
-        return EvmSendHandler(
+        let transactionData = TransactionData(
+            to: payload.transaction.to,
+            value: payload.transaction.value,
+            input: payload.transaction.data
+        )
+
+        return WalletConnectSendHandler(
+            request: request,
+            payload: payload,
             baseToken: baseToken,
             transactionData: transactionData,
             evmKitWrapper: evmKitWrapper
