@@ -320,7 +320,6 @@
 "balance.downloading_blocks" = "Загрузка блоков";
 "balance.scanning_blocks" = "Сканирование блоков";
 "balance.enhancing_transactions" = "Улучшение транзакций";
-"wait_for_synchronization" = "Дождитесь синхронизации";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Идет синхронизация... %@";
