@@ -460,6 +460,7 @@
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "수수료로 대체";
 "send.confirmation.replaced_transactions" = "대체된 거래";
+"send.confirmation.input" = "Input";
 
 "send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.invalid_data" = "Invalid Data";
