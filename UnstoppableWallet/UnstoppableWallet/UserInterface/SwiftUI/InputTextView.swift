@@ -4,6 +4,7 @@ import ThemeKit
 struct InputTextView: View {
     var placeholder: String = ""
     var multiline: Bool
+    var font: Font
 
     var text: Binding<String>
 
@@ -14,9 +15,10 @@ struct InputTextView: View {
 
     var isValidText: ((String) -> Bool)?
 
-    init(placeholder: String = "", multiline: Bool = false, text: Binding<String>, secured: Binding<Bool> = .constant(false), isValidText: ((String) -> Bool)? = nil) {
+    init(placeholder: String = "", multiline: Bool = false, font: Font = .themeBody, text: Binding<String>, secured: Binding<Bool> = .constant(false), isValidText: ((String) -> Bool)? = nil) {
         self.placeholder = placeholder
         self.multiline = multiline
+        self.font = font
         self.text = text
         _secured = secured
 
@@ -25,7 +27,7 @@ struct InputTextView: View {
 
     var body: some View {
         editView()
-            .font(.themeBody)
+            .font(font)
             .accentColor(.themeLeah)
             .modifier(Validated(text: text, isValidText: isValidText))
     }

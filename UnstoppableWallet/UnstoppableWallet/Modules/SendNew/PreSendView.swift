@@ -30,6 +30,10 @@ struct PreSendView: View {
                         addressView()
                     }
 
+                    if let handler = viewModel.handler, handler.hasMemo {
+                        memoView()
+                    }
+
                     buttonView()
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
@@ -192,6 +196,17 @@ struct PreSendView: View {
         }
         .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
         .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
+    }
+
+    @ViewBuilder private func memoView() -> some View {
+        InputTextRow {
+            InputTextView(
+                placeholder: "send.confirmation.memo_placeholder".localized,
+                multiline: true,
+                font: .themeBody.italic(),
+                text: $viewModel.memo
+            )
+        }
     }
 
     @ViewBuilder private func buttonView() -> some View {
