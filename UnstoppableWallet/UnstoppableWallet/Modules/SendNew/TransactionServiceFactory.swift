@@ -1,10 +1,10 @@
 import MarketKit
 
 enum TransactionServiceFactory {
-    static func transactionService(blockchainType: BlockchainType) -> ITransactionService? {
+    static func transactionService(blockchainType: BlockchainType, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
         if EvmBlockchainManager.blockchainTypes.contains(blockchainType),
            let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit,
-           let transactionService = EvmTransactionService(blockchainType: blockchainType, userAddress: evmKit.receiveAddress)
+           let transactionService = EvmTransactionService(blockchainType: blockchainType, userAddress: evmKit.receiveAddress, initialTransactionSettings: initialTransactionSettings)
         {
             return transactionService
         }

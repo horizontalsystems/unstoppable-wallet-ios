@@ -31,6 +31,21 @@ extension WalletConnectSendHandler: ISendHandler {
         nil
     }
 
+    var initialTransactionSettings: InitialTransactionSettings? {
+        let transaction = payload.transaction
+        var gasPrice: GasPrice?
+
+        if let maxFeePerGas = transaction.maxFeePerGas,
+           let maxPriorityFeePerGas = transaction.maxPriorityFeePerGas
+        {
+            gasPrice = .eip1559(maxFeePerGas: maxFeePerGas, maxPriorityFeePerGas: maxPriorityFeePerGas)
+        } else if let _gasPrice = transaction.gasPrice {
+            gasPrice = .legacy(gasPrice: _gasPrice)
+        }
+
+        return .evm(gasPrice: gasPrice, nonce: transaction.nonce)
+    }
+
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let gasPrice = transactionSettings?.gasPrice
         var evmFeeData: EvmFeeData?

@@ -2842,6 +2842,8 @@
 		D0532CC22B149E110015DF40 /* WatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0532CC02B149E110015DF40 /* WatchViewController.swift */; };
 		D0532CC42B149E450015DF40 /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0532CC32B149E450015DF40 /* WatchService.swift */; };
 		D0532CC52B149E450015DF40 /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0532CC32B149E450015DF40 /* WatchService.swift */; };
+		D054DAE32BE5123F0040B7C9 /* InitialTransactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */; };
+		D054DAE42BE5123F0040B7C9 /* InitialTransactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */; };
 		D05E968D2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E968C2A25D6C6002CCD71 /* Trc20Adapter.swift */; };
 		D05E968E2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E968C2A25D6C6002CCD71 /* Trc20Adapter.swift */; };
 		D05E96902A261D82002CCD71 /* TronTransactionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E968F2A261D82002CCD71 /* TronTransactionAdapter.swift */; };
@@ -2940,6 +2942,8 @@
 		D0E5E8502BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
 		D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */; };
 		D0E5E8532BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */; };
+		D0E5E8552BE38AA2005080A4 /* TronSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */; };
+		D0E5E8562BE38AA2005080A4 /* TronSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */; };
 		D0E659BB2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */; };
 		D0E659BC2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */; };
 		D0EC34DB2A4450B100BB308B /* HCaptcha in Frameworks */ = {isa = PBXBuildFile; productRef = D0EC34DA2A4450B100BB308B /* HCaptcha */; };
@@ -4765,6 +4769,7 @@
 		D0532CBD2B149DEE0015DF40 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
 		D0532CC02B149E110015DF40 /* WatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewController.swift; sourceTree = "<group>"; };
 		D0532CC32B149E450015DF40 /* WatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchService.swift; sourceTree = "<group>"; };
+		D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialTransactionSettings.swift; sourceTree = "<group>"; };
 		D05E968C2A25D6C6002CCD71 /* Trc20Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trc20Adapter.swift; sourceTree = "<group>"; };
 		D05E968F2A261D82002CCD71 /* TronTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronTransactionAdapter.swift; sourceTree = "<group>"; };
 		D05E96922A261DC1002CCD71 /* TronTransactionConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronTransactionConverter.swift; sourceTree = "<group>"; };
@@ -4811,6 +4816,7 @@
 		D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeData.swift; sourceTree = "<group>"; };
 		D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendHandler.swift; sourceTree = "<group>"; };
 		D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinPreSendHandler.swift; sourceTree = "<group>"; };
+		D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHandler.swift; sourceTree = "<group>"; };
 		D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinViewModel.swift; sourceTree = "<group>"; };
 		D0EE557D2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D0EE557E2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -9145,6 +9151,8 @@
 				D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */,
 				D3A580872BE4DAA2003953F4 /* EvmSendData.swift */,
 				D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */,
+				D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */,
+				D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -10212,6 +10220,7 @@
 				11B3547D1AEE88F583C3E5E5 /* CoinReportsService.swift in Sources */,
 				11B35F6092E0950714E277E4 /* PostCell.swift in Sources */,
 				58AAAEA69AA123E96665E2B7 /* MarketGlobalDefiMetricService.swift in Sources */,
+				D054DAE42BE5123F0040B7C9 /* InitialTransactionSettings.swift in Sources */,
 				58AAAB25F7EDB3EAE26E690C /* MarketGlobalTvlMetricViewController.swift in Sources */,
 				58AAA4C8FEC03BAFB1B4863E /* MarketGlobalTvlMetricService.swift in Sources */,
 				58AAA60557D3A9E3AE7372E0 /* MarketListDefiDecorator.swift in Sources */,
@@ -10422,6 +10431,7 @@
 				11B35858954659DEE0C44618 /* TransactionsViewItemFactory.swift in Sources */,
 				11B35C4D4120D85CD32CAD0F /* TransactionsViewController.swift in Sources */,
 				D09200BD293F21520091981A /* RestoreMnemonicNonStandardViewModel.swift in Sources */,
+				D0E5E8562BE38AA2005080A4 /* TronSendHandler.swift in Sources */,
 				11B35A82220538FEE57546FB /* TransactionTypeFilter.swift in Sources */,
 				11B35D7520519FBE9A899C2D /* TransactionSource.swift in Sources */,
 				11B359A4F6C0F8A705FDE18E /* Pool.swift in Sources */,
@@ -11746,6 +11756,7 @@
 				6BCD53042A161F4100993F20 /* ICloudBackupTermsViewController.swift in Sources */,
 				11B35E99BBF6DCCA72BDA4D1 /* CoinTreasuriesViewModel.swift in Sources */,
 				11B351F81CCF4675CBDAC9B0 /* DropdownSortHeaderView.swift in Sources */,
+				D054DAE32BE5123F0040B7C9 /* InitialTransactionSettings.swift in Sources */,
 				11B354542A3E929C1A7924FD /* CoinReportsViewController.swift in Sources */,
 				11B35FB74A0FAB9385945628 /* CoinReportsModule.swift in Sources */,
 				11B35CB98E9934D0C8EB4F08 /* CoinReportsViewModel.swift in Sources */,
@@ -11956,6 +11967,7 @@
 				1A564E69BA99DF8CD4562902 /* PlaceholderViewModule.swift in Sources */,
 				ABC9A91D03FB46F6AD21EEF4 /* WalletConnectSocketConnectionService.swift in Sources */,
 				11B3564FBC180A0E6D30BCFA /* TransactionsModule.swift in Sources */,
+				D0E5E8552BE38AA2005080A4 /* TronSendHandler.swift in Sources */,
 				11B3501BA3EA411F93E9C694 /* TransactionsService.swift in Sources */,
 				11B354DB9BD0F91CFF4EB9C6 /* TransactionsViewItemFactory.swift in Sources */,
 				11B352E420B3FBCD85612E63 /* TransactionsViewController.swift in Sources */,

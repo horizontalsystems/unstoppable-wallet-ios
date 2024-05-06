@@ -45,7 +45,7 @@ class SendViewModel: ObservableObject {
         currency = currencyManager.baseCurrency
 
         if let handler {
-            transactionService = TransactionServiceFactory.transactionService(blockchainType: handler.baseToken.blockchainType)
+            transactionService = TransactionServiceFactory.transactionService(blockchainType: handler.baseToken.blockchainType, initialTransactionSettings: handler.initialTransactionSettings)
         } else {
             transactionService = nil
         }

@@ -69,7 +69,7 @@ class EvmTransactionService: ITransactionService {
         return .evm(gasPrice: gasPrice, nonce: usingRecommendedNonce ? nil : nonce)
     }
 
-    init?(blockchainType: BlockchainType, userAddress: EvmKit.Address) {
+    init?(blockchainType: BlockchainType, userAddress: EvmKit.Address, initialTransactionSettings: InitialTransactionSettings?) {
         guard let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
             return nil
         }
@@ -78,6 +78,18 @@ class EvmTransactionService: ITransactionService {
         self.blockchainType = blockchainType
         self.userAddress = userAddress
         self.rpcSource = rpcSource
+
+        if case let .evm(gasPrice, nonce) = initialTransactionSettings {
+            if let gasPrice {
+                usingRecommendedGasPrice = false
+                self.gasPrice = gasPrice
+            }
+
+            if let nonce {
+                usingRecommendedNonce = false
+                self.nonce = nonce
+            }
+        }
     }
 
     private func validate() {
