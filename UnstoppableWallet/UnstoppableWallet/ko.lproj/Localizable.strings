@@ -316,7 +316,6 @@
 "balance.downloading_blocks" = "블록 다운로드";
 "balance.scanning_blocks" = "스캐닝 블록";
 "balance.enhancing_transactions" = "거래 향상";
-"wait_for_synchronization" = "동기화 대기 중";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "동기화 중... %@";
