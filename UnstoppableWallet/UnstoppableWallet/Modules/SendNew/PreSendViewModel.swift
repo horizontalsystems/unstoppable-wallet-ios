@@ -104,6 +104,12 @@ class PreSendViewModel: ObservableObject {
         }
     }
 
+    @Published var memo: String = "" {
+        didSet {
+            syncSendData()
+        }
+    }
+
     var handler: IPreSendHandler?
     @Published var sendData: SendData?
 
@@ -228,7 +234,7 @@ extension PreSendViewModel {
             return
         }
 
-        sendData = handler.sendData(amount: amount, address: success.address.raw, memo: nil)
+        sendData = handler.sendData(amount: amount, address: success.address.raw, memo: memo)
     }
 
     func setAmountIn(percent: Int) {

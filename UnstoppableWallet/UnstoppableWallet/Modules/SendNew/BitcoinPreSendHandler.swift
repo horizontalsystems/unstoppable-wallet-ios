@@ -20,6 +20,10 @@ class BitcoinPreSendHandler {
 }
 
 extension BitcoinPreSendHandler: IPreSendHandler {
+    var hasMemo: Bool {
+        true
+    }
+
     var hasSettings: Bool {
         true
     }
