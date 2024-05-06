@@ -318,7 +318,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.downloading_blocks" = "Blokları İndirme";
 "balance.scanning_blocks" = "Tarama Blokları";
 "balance.enhancing_transactions" = "İşlemleri Geliştirme";
-"wait_for_synchronization" = "Senkronizasyonu bekleyin";
 
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
