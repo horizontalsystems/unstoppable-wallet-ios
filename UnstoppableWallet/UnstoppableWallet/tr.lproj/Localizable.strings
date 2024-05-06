@@ -462,6 +462,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Ücretle Değiştir";
 "send.confirmation.replaced_transactions" = "Değiştirilmiş İşlemler";
+"send.confirmation.input" = "Input";
 
 "send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.invalid_data" = "Invalid Data";
