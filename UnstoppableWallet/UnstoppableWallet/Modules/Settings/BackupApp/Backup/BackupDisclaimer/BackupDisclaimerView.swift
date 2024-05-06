@@ -12,21 +12,23 @@ struct BackupDisclaimerView: View {
 
         ThemeView {
             BottomGradientWrapper {
-                VStack(spacing: .margin32) {
-                    HighlightedTextView(text: backupDisclaimer.highlightedDescription, style: .warning)
-                    ListSection {
-                        ClickableRow(action: {
-                            isOn.toggle()
-                        }) {
-                            Toggle(isOn: $isOn) {}
-                                .labelsHidden()
-                                .toggleStyle(CheckboxStyle())
+                ScrollView {
+                    VStack(spacing: .margin32) {
+                        HighlightedTextView(text: backupDisclaimer.highlightedDescription, style: .warning)
+                        ListSection {
+                            ClickableRow(action: {
+                                isOn.toggle()
+                            }) {
+                                Toggle(isOn: $isOn) {}
+                                    .labelsHidden()
+                                    .toggleStyle(CheckboxStyle())
 
-                            Text(backupDisclaimer.selectedCheckboxText).themeSubhead2(color: .themeLeah)
+                                Text(backupDisclaimer.selectedCheckboxText).themeSubhead2(color: .themeLeah)
+                            }
                         }
                     }
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             } bottomContent: {
                 NavigationLink(
                     destination: BackupNameView(viewModel: viewModel, onDismiss: onDismiss),

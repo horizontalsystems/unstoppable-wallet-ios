@@ -8,62 +8,64 @@ struct BackupListView: View {
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
-                VStack(spacing: .margin24) {
-                    if !viewModel.accountItems.isEmpty {
+                ScrollView {
+                    VStack(spacing: .margin24) {
+                        if !viewModel.accountItems.isEmpty {
+                            VStack(spacing: 0) {
+                                ListSectionHeader(text: "backup_app.backup_list.header.wallets".localized)
+
+                                ListSection {
+                                    ForEach(viewModel.accountItems, id: \.accountId) { (item: BackupAppModule.AccountItem) in
+                                        if viewModel.selected[item.id] != nil {
+                                            let selected = binding(for: item.accountId)
+
+                                            ClickableRow(action: {
+                                                viewModel.toggle(item: item)
+                                            }) {
+                                                HStack {
+                                                    AccountView(item: item)
+
+                                                    Toggle(isOn: selected) {}
+                                                        .labelsHidden()
+                                                        .toggleStyle(CheckboxStyle())
+                                                }
+                                            }
+                                        } else {
+                                            ListRow {
+                                                AccountView(item: item)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         VStack(spacing: 0) {
-                            ListSectionHeader(text: "backup_app.backup_list.header.wallets".localized)
+                            ListSectionHeader(text: "backup_app.backup_list.header.other".localized)
 
                             ListSection {
-                                ForEach(viewModel.accountItems, id: \.accountId) { (item: BackupAppModule.AccountItem) in
-                                    if viewModel.selected[item.id] != nil {
-                                        let selected = binding(for: item.accountId)
-
-                                        ClickableRow(action: {
-                                            viewModel.toggle(item: item)
-                                        }) {
+                                ForEach(viewModel.otherItems) { (item: BackupAppModule.Item) in
+                                    ListRow {
+                                        VStack(spacing: 1) {
                                             HStack {
-                                                AccountView(item: item)
+                                                Text(item.title).themeBody()
 
-                                                Toggle(isOn: selected) {}
-                                                    .labelsHidden()
-                                                    .toggleStyle(CheckboxStyle())
+                                                if let value = item.value {
+                                                    Text(value).themeSubhead1(alignment: .trailing)
+                                                }
                                             }
-                                        }
-                                    } else {
-                                        ListRow {
-                                            AccountView(item: item)
+
+                                            if let description = item.description {
+                                                Text(description).themeSubhead2()
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
-
-                    VStack(spacing: 0) {
-                        ListSectionHeader(text: "backup_app.backup_list.header.other".localized)
-
-                        ListSection {
-                            ForEach(viewModel.otherItems) { (item: BackupAppModule.Item) in
-                                ListRow {
-                                    VStack(spacing: 1) {
-                                        HStack {
-                                            Text(item.title).themeBody()
-
-                                            if let value = item.value {
-                                                Text(value).themeSubhead1(alignment: .trailing)
-                                            }
-                                        }
-
-                                        if let description = item.description {
-                                            Text(description).themeSubhead2()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             } bottomContent: {
                 NavigationLink(
                     destination: BackupDisclaimerView(viewModel: viewModel, onDismiss: onDismiss),

@@ -21,34 +21,36 @@ struct MultiSwapApproveView: View {
         ThemeView {
             if let transactionData = viewModel.transactionData {
                 BottomGradientWrapper {
-                    VStack(spacing: .margin12) {
-                        Text("swap.unlock.subtitle".localized)
-                            .themeHeadline1()
-                            .padding(.horizontal, .margin16)
-                            .padding(.bottom, .margin12)
+                    ScrollView {
+                        VStack(spacing: .margin12) {
+                            Text("swap.unlock.subtitle".localized)
+                                .themeHeadline1()
+                                .padding(.horizontal, .margin16)
+                                .padding(.bottom, .margin12)
 
-                        ListSection {
-                            ClickableRow(action: {
-                                viewModel.set(unlimitedAmount: false)
-                            }) {
-                                let coinValue = CoinValue(kind: .token(token: viewModel.token), value: viewModel.amount)
-                                let amountString = ValueFormatter.instance.formatFull(coinValue: coinValue) ?? ""
-                                row(text: amountString, selected: !viewModel.unlimitedAmount)
+                            ListSection {
+                                ClickableRow(action: {
+                                    viewModel.set(unlimitedAmount: false)
+                                }) {
+                                    let coinValue = CoinValue(kind: .token(token: viewModel.token), value: viewModel.amount)
+                                    let amountString = ValueFormatter.instance.formatFull(coinValue: coinValue) ?? ""
+                                    row(text: amountString, selected: !viewModel.unlimitedAmount)
+                                }
+                                ClickableRow(action: {
+                                    viewModel.set(unlimitedAmount: true)
+                                }) {
+                                    row(text: "swap.unlock.unlimited".localized, selected: viewModel.unlimitedAmount)
+                                }
                             }
-                            ClickableRow(action: {
-                                viewModel.set(unlimitedAmount: true)
-                            }) {
-                                row(text: "swap.unlock.unlimited".localized, selected: viewModel.unlimitedAmount)
-                            }
+
+                            Text("swap.unlock.description".localized)
+                                .themeSubhead2()
+                                .padding(.horizontal, .margin16)
+
+                            Spacer()
                         }
-
-                        Text("swap.unlock.description".localized)
-                            .themeSubhead2()
-                            .padding(.horizontal, .margin16)
-
-                        Spacer()
+                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 } bottomContent: {
                     Button(action: {
                         unlockPresented = true
