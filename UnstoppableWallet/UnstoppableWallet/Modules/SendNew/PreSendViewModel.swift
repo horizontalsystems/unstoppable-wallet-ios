@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 import MarketKit
-import RxSwift
 
 class PreSendViewModel: ObservableObject {
     private let wallet: Wallet
@@ -12,8 +11,6 @@ class PreSendViewModel: ObservableObject {
     private let adapterManager = App.shared.adapterManager
 
     private var cancellables = Set<AnyCancellable>()
-    private var rateInCancellable: AnyCancellable?
-    private var balanceDisposeBag = DisposeBag()
 
     @Published var currency: Currency
 
@@ -145,27 +142,24 @@ class PreSendViewModel: ObservableObject {
             .store(in: &cancellables)
 
         rate = marketKit.coinPrice(coinUid: wallet.coin.uid, currencyCode: currency.code)?.value
-        rateInCancellable = marketKit.coinPricePublisher(coinUid: wallet.coin.uid, currencyCode: currency.code)
+        marketKit.coinPricePublisher(coinUid: wallet.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] price in self?.rate = price.value }
+            .store(in: &cancellables)
 
-        if let adapter = adapterManager.balanceAdapter(for: wallet) {
-            adapterState = adapter.balanceState
-            availableBalance = adapter.balanceData.available
+        if let handler {
+            adapterState = handler.balanceState
+            availableBalance = handler.balanceData.available
 
-            adapter.balanceStateUpdatedObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe { [weak self] state in
-                    self?.adapterState = state
-                }
-                .disposed(by: balanceDisposeBag)
+            handler.balanceStatePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.adapterState = $0 }
+                .store(in: &cancellables)
 
-            adapter.balanceDataUpdatedObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe { [weak self] balanceData in
-                    self?.availableBalance = balanceData.available
-                }
-                .disposed(by: balanceDisposeBag)
+            handler.balanceDataPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.availableBalance = $0.available }
+                .store(in: &cancellables)
         } else {
             adapterState = nil
             availableBalance = nil

@@ -2974,6 +2974,10 @@
 		D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93E29126D2A00B895BE /* HsCryptoKit */; };
 		D3447DEA25E38300009928D9 /* WalletConnectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B968B299A67FC7FEAE3 /* WalletConnectManager.swift */; };
 		D3447DEB25E38300009928D9 /* WalletConnectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B968B299A67FC7FEAE3 /* WalletConnectManager.swift */; };
+		D34903172BE8DF48005F147B /* BinanceSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34903162BE8DF48005F147B /* BinanceSendHandler.swift */; };
+		D34903182BE8DF48005F147B /* BinanceSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34903162BE8DF48005F147B /* BinanceSendHandler.swift */; };
+		D349031A2BE8DF5F005F147B /* BinancePreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34903192BE8DF5F005F147B /* BinancePreSendHandler.swift */; };
+		D349031B2BE8DF5F005F147B /* BinancePreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34903192BE8DF5F005F147B /* BinancePreSendHandler.swift */; };
 		D350DDB02AE2526E00CF1989 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */; };
 		D350DDB12AE2526E00CF1989 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */; };
 		D350DDB22AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D350DDB92AE27E3B00CF1989 /* AppWidget.intentdefinition */; };
@@ -4840,6 +4844,8 @@
 		D3285F5120BD158F00644076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3373D9420BEC7B30082BC4A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D3373DB120C52F640082BC4A /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		D34903162BE8DF48005F147B /* BinanceSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceSendHandler.swift; sourceTree = "<group>"; };
+		D34903192BE8DF5F005F147B /* BinancePreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinancePreSendHandler.swift; sourceTree = "<group>"; };
 		D34E941B21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D34E941C21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -9161,6 +9167,8 @@
 				D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */,
 				D3A580932BE8AA80003953F4 /* BitcoinSendSettingsView.swift */,
 				D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */,
+				D34903162BE8DF48005F147B /* BinanceSendHandler.swift */,
+				D34903192BE8DF5F005F147B /* BinancePreSendHandler.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -9986,6 +9994,7 @@
 				11B3563E71C4AC16DFE8AB76 /* ActiveAccount.swift in Sources */,
 				6BCD530D2A161F4100993F20 /* ICloudBackupNameViewModel.swift in Sources */,
 				11B35056B69A06C8CFF3CBB6 /* BackupModule.swift in Sources */,
+				D349031B2BE8DF5F005F147B /* BinancePreSendHandler.swift in Sources */,
 				D0A980AA2B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */,
 				11B3598BE9C7A456A70B5DFD /* BackupVerifyWordsViewModel.swift in Sources */,
 				6BE8A0822ADE2FAB0012DE7F /* CurrencyManager.swift in Sources */,
@@ -10078,6 +10087,7 @@
 				58AAA0444AD1508917D349CF /* UniswapSettingsService.swift in Sources */,
 				D0C2261A2A66A703007101F7 /* PersonalSupportViewModel.swift in Sources */,
 				58AAA52F2D68C5C4397C4D10 /* UniswapSettings.swift in Sources */,
+				D34903182BE8DF48005F147B /* BinanceSendHandler.swift in Sources */,
 				58AAA81C7A95558DBD560C90 /* OneInchSettings.swift in Sources */,
 				6BCD53092A161F4100993F20 /* ICloudBackupNameService.swift in Sources */,
 				58AAA5A70BBDBD3A9D572261 /* OneInchSettingsService.swift in Sources */,
@@ -11524,6 +11534,7 @@
 				D02A67C8272A7460009B2C1C /* CoinTweetsViewController.swift in Sources */,
 				D02A67C2272A7460009B2C1C /* TwitterText.swift in Sources */,
 				6BE8A0812ADE2FAB0012DE7F /* CurrencyManager.swift in Sources */,
+				D349031A2BE8DF5F005F147B /* BinancePreSendHandler.swift in Sources */,
 				11B359F73F1D626BF832977F /* BackupModule.swift in Sources */,
 				D0A980A92B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */,
 				6BCD530C2A161F4100993F20 /* ICloudBackupNameViewModel.swift in Sources */,
@@ -11616,6 +11627,7 @@
 				58AAA63F99B1FC1B88B5C8A0 /* UniswapSettings.swift in Sources */,
 				58AAAD97F2A1F00258CF9E00 /* OneInchSettings.swift in Sources */,
 				D0C226192A66A703007101F7 /* PersonalSupportViewModel.swift in Sources */,
+				D34903172BE8DF48005F147B /* BinanceSendHandler.swift in Sources */,
 				58AAA126020F429D94D77A76 /* OneInchSettingsService.swift in Sources */,
 				58AAAB67059E3F289F557860 /* OneInchSettingsViewModel.swift in Sources */,
 				58AAA71839C54D05E04BC2EC /* UniswapSettingsDataSource.swift in Sources */,

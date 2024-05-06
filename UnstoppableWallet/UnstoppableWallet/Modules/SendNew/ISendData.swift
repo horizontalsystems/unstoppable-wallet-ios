@@ -9,3 +9,9 @@ protocol ISendData {
     func cautions(baseToken: Token) -> [CautionNew]
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]]
 }
+
+extension ISendData {
+    var customSendButtonTitle: String? {
+        nil
+    }
+}

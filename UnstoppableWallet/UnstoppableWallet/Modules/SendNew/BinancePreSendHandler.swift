@@ -1,20 +1,18 @@
-import BigInt
 import Combine
-import EvmKit
 import Foundation
 import MarketKit
 import RxSwift
 
-class EvmPreSendHandler {
+class BinancePreSendHandler {
     private let token: Token
-    private let adapter: ISendEthereumAdapter & IBalanceAdapter
+    private let adapter: ISendBinanceAdapter & IBalanceAdapter
 
     private let balanceStateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceDataSubject = PassthroughSubject<BalanceData, Never>()
 
     private let disposeBag = DisposeBag()
 
-    init(token: Token, adapter: ISendEthereumAdapter & IBalanceAdapter) {
+    init(token: Token, adapter: ISendBinanceAdapter & IBalanceAdapter) {
         self.token = token
         self.adapter = adapter
 
@@ -27,14 +25,22 @@ class EvmPreSendHandler {
 
         adapter.balanceDataUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe { [weak self] balanceData in
-                self?.balanceDataSubject.send(balanceData)
+            .subscribe { [weak self] _ in
+                self?.onUpdateBalance()
             }
             .disposed(by: disposeBag)
     }
+
+    private func onUpdateBalance() {
+        balanceDataSubject.send(BalanceData(available: adapter.availableBalance))
+    }
 }
 
-extension EvmPreSendHandler: IPreSendHandler {
+extension BinancePreSendHandler: IPreSendHandler {
+    var hasMemo: Bool {
+        true
+    }
+
     var balanceState: AdapterState {
         adapter.balanceState
     }
@@ -44,24 +50,15 @@ extension EvmPreSendHandler: IPreSendHandler {
     }
 
     var balanceData: BalanceData {
-        adapter.balanceData
+        BalanceData(available: adapter.availableBalance)
     }
 
     var balanceDataPublisher: AnyPublisher<BalanceData, Never> {
         balanceDataSubject.eraseToAnyPublisher()
     }
 
-    func sendData(amount: Decimal, address: String, memo _: String?) -> SendData? {
-        guard let evmAmount = BigUInt(amount.hs.roundedString(decimal: token.decimals)) else {
-            return nil
-        }
-
-        guard let evmAddress = try? EvmKit.Address(hex: address) else {
-            return nil
-        }
-
-        let transactionData = adapter.transactionData(amount: evmAmount, address: evmAddress)
-
-        return .evm(blockchainType: token.blockchainType, transactionData: transactionData)
+    func sendData(amount: Decimal, address: String, memo: String?) -> SendData? {
+        let memo = memo?.trimmingCharacters(in: .whitespaces)
+        return .binance(token: token, amount: amount, address: address, memo: memo.flatMap { $0.isEmpty ? nil : $0 })
     }
 }

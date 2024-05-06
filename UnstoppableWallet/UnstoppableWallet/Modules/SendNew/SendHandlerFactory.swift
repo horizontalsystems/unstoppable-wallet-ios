@@ -7,6 +7,8 @@ enum SendHandlerFactory {
             return EvmSendHandler.instance(blockchainType: blockchainType, transactionData: transactionData)
         case let .bitcoin(token, params):
             return BitcoinSendHandler.instance(token: token, params: params)
+        case let .binance(token, amount, address, memo):
+            return BinanceSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .swap(tokenIn, tokenOut, amountIn, provider):
             return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
         case let .walletConnect(request):
@@ -15,12 +17,18 @@ enum SendHandlerFactory {
     }
 
     static func preSendHandler(wallet: Wallet) -> IPreSendHandler? {
-        if let adapter = App.shared.adapterManager.adapter(for: wallet) as? ISendEthereumAdapter {
+        let adapter = App.shared.adapterManager.adapter(for: wallet)
+
+        if let adapter = adapter as? ISendEthereumAdapter & IBalanceAdapter {
             return EvmPreSendHandler(token: wallet.token, adapter: adapter)
         }
 
-        if let adapter = App.shared.adapterManager.adapter(for: wallet) as? BitcoinBaseAdapter {
+        if let adapter = adapter as? BitcoinBaseAdapter {
             return BitcoinPreSendHandler(token: wallet.token, adapter: adapter)
+        }
+
+        if let adapter = adapter as? ISendBinanceAdapter & IBalanceAdapter {
+            return BinancePreSendHandler(token: wallet.token, adapter: adapter)
         }
 
         return nil
