@@ -10,6 +10,7 @@ struct PreSendView: View {
     @FocusState private var focusField: FocusField?
     @FocusState var isAddressFocused: Bool
 
+    @State private var settingsPresented = false
     @State private var confirmPresented = false
 
     init(wallet: Wallet, mode: PreSendViewModel.Mode = .regular) {
@@ -59,8 +60,21 @@ struct PreSendView: View {
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.cancel".localized) {
-                    presentationMode.wrappedValue.dismiss()
+                if let handler = viewModel.handler, handler.hasSettings {
+                    Button(action: {
+                        settingsPresented = true
+                    }) {
+                        Image("settings_24")
+                            .renderingMode(.template)
+                            .foregroundColor(.themeJacob)
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $settingsPresented) {
+            if let handler = viewModel.handler {
+                handler.settingsView {
+                    viewModel.syncSendData()
                 }
             }
         }
