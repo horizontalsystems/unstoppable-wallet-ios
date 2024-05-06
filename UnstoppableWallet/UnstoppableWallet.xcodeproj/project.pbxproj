@@ -3139,6 +3139,10 @@
 		D3A580892BE4DAA2003953F4 /* EvmSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580872BE4DAA2003953F4 /* EvmSendData.swift */; };
 		D3A5808B2BE4DB11003953F4 /* WalletConnectSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */; };
 		D3A5808C2BE4DB11003953F4 /* WalletConnectSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */; };
+		D3A580942BE8AA80003953F4 /* BitcoinSendSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580932BE8AA80003953F4 /* BitcoinSendSettingsView.swift */; };
+		D3A580952BE8AA80003953F4 /* BitcoinSendSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580932BE8AA80003953F4 /* BitcoinSendSettingsView.swift */; };
+		D3A580972BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */; };
+		D3A580982BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */; };
 		D3AF5A8929FFD85800C1399E /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8829FFD85800C1399E /* RxCocoa */; };
 		D3AF5A8B29FFD85800C1399E /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8A29FFD85800C1399E /* RxRelay */; };
 		D3AF5A8D29FFD85800C1399E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8C29FFD85800C1399E /* RxSwift */; };
@@ -4889,6 +4893,8 @@
 		D3948F1E2ADA88D900FAE566 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3A580872BE4DAA2003953F4 /* EvmSendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmSendData.swift; sourceTree = "<group>"; };
 		D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectSendHandler.swift; sourceTree = "<group>"; };
+		D3A580932BE8AA80003953F4 /* BitcoinSendSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendSettingsView.swift; sourceTree = "<group>"; };
+		D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendSettingsViewModel.swift; sourceTree = "<group>"; };
 		D3B476A321D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3B476A421D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B476A521D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -9153,6 +9159,8 @@
 				D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */,
 				D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */,
 				D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */,
+				D3A580932BE8AA80003953F4 /* BitcoinSendSettingsView.swift */,
+				D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -10246,6 +10254,7 @@
 				1A56408B1A402BC99846F141 /* ZcashAddressParserItem.swift in Sources */,
 				11B35EE0660C0CE24235E4DF /* NftDatabaseStorage.swift in Sources */,
 				11B359F28FAF97AD4F7F6424 /* NftPriceRecord.swift in Sources */,
+				D3A580952BE8AA80003953F4 /* BitcoinSendSettingsView.swift in Sources */,
 				11B35D24B98C73BD43CCD80B /* NftAssetRecord.swift in Sources */,
 				11B351767B71D6C42A23C518 /* NftCollectionRecord.swift in Sources */,
 				11B35C8D53F838E7E5CA6EEC /* NftStorage.swift in Sources */,
@@ -10338,6 +10347,7 @@
 				1A564E1912184BFC886548D9 /* MarketOverviewCategoryDataSource.swift in Sources */,
 				1A564C6CCA15813506F20561 /* MarketOverviewCategoryViewModel.swift in Sources */,
 				1A5640D097E24A155C1F2E56 /* MarketOverviewCategoryCell.swift in Sources */,
+				D3A580982BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift in Sources */,
 				1A564335057D41EECDC8021B /* MarketOverviewTopCoinsService.swift in Sources */,
 				1A5648AB801E8DAA9B3D288E /* MarketOverviewGlobalService.swift in Sources */,
 				1A5645CA87E32639CEE6681F /* MarketOverviewGlobalViewModel.swift in Sources */,
@@ -11782,6 +11792,7 @@
 				1A5646632409BBC2A8790807 /* ReleaseNotesMarkdownConfig.swift in Sources */,
 				11B35B10C473B24F3AD2F1D3 /* EvmAccountManager.swift in Sources */,
 				11B35CFD84BE04CC93DE7DF9 /* UnlinkWatchViewController.swift in Sources */,
+				D3A580942BE8AA80003953F4 /* BitcoinSendSettingsView.swift in Sources */,
 				58AAAE0E85B0DFB61C94E14D /* BitcoinAddressParserItem.swift in Sources */,
 				1A5645C7334EED7FF57FFD47 /* DashAddressParserItem.swift in Sources */,
 				1A564AB8471E098F68FDB9D7 /* BinanceAddressParserItem.swift in Sources */,
@@ -11874,6 +11885,7 @@
 				11B351DDFD1A7BC393EFA6E1 /* CustomToken.swift in Sources */,
 				1A56405B48462C0750A47ECA /* MarketOverviewTopCoinsDataSource.swift in Sources */,
 				1A564A45605FA993F9680646 /* MarketOverviewTopCoinsViewModel.swift in Sources */,
+				D3A580972BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift in Sources */,
 				1A5649ADA72E39CE24BB64FC /* MarketOverviewCategoryDataSource.swift in Sources */,
 				1A56470F4D18CCC43B85DEB3 /* MarketOverviewCategoryViewModel.swift in Sources */,
 				1A564FC84916FF6D6224FB33 /* MarketOverviewCategoryCell.swift in Sources */,

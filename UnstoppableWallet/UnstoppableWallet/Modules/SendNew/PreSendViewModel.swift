@@ -104,7 +104,7 @@ class PreSendViewModel: ObservableObject {
         }
     }
 
-    private var handler: IPreSendHandler?
+    var handler: IPreSendHandler?
     @Published var sendData: SendData?
 
     let addressVisible: Bool
@@ -205,8 +205,14 @@ class PreSendViewModel: ObservableObject {
         default: addressCautionState = .none
         }
     }
+}
 
-    private func syncSendData() {
+extension PreSendViewModel {
+    var token: Token {
+        wallet.token
+    }
+
+    func syncSendData() {
         guard let amount else {
             sendData = nil
             return
@@ -223,12 +229,6 @@ class PreSendViewModel: ObservableObject {
         }
 
         sendData = handler.sendData(amount: amount, address: success.address.raw, memo: nil)
-    }
-}
-
-extension PreSendViewModel {
-    var token: Token {
-        wallet.token
     }
 
     func setAmountIn(percent: Int) {
