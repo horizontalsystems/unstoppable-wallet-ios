@@ -8,7 +8,6 @@ class WalletViewItemFactory {
 
     private func topViewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool) -> BalanceTopViewItem {
         let state = item.state
-        let sendEnabled = state.spendAllowed(beforeSync: item.balanceData.sendBeforeSync)
 
         return BalanceTopViewItem(
             isMainNet: item.isMainNet,
@@ -19,7 +18,6 @@ class WalletViewItemFactory {
             syncSpinnerProgress: syncSpinnerProgress(state: state),
             indefiniteSearchCircle: indefiniteSearchCircle(state: state),
             failedImageViewVisible: failedImageViewVisible(state: state),
-            sendEnabled: sendEnabled,
             primaryValue: balanceHidden ? nil : primaryValue(item: item, balancePrimaryValue: balancePrimaryValue),
             secondaryInfo: secondaryInfo(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
         )

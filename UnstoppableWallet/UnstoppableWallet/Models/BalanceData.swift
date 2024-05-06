@@ -20,10 +20,6 @@ class BalanceData: Codable, Equatable {
         available
     }
 
-    var sendBeforeSync: Bool {
-        false
-    }
-
     var customStates: [CustomState] {
         []
     }
@@ -124,7 +120,6 @@ class VerifiedBalanceData: BalanceData {
     let fullBalance: Decimal
 
     override var balanceTotal: Decimal { super.balanceTotal }
-    override var sendBeforeSync: Bool { true }
 
     init(fullBalance: Decimal, available: Decimal) {
         self.fullBalance = fullBalance

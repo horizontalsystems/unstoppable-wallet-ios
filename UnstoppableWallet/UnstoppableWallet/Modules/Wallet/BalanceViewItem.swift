@@ -17,7 +17,6 @@ struct BalanceTopViewItem {
     let syncSpinnerProgress: Int?
     let indefiniteSearchCircle: Bool
     let failedImageViewVisible: Bool
-    let sendEnabled: Bool
 
     let primaryValue: (text: String?, dimmed: Bool)?
     let secondaryInfo: BalanceSecondaryInfoViewItem
