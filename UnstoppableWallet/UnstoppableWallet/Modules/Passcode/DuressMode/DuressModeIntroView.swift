@@ -8,35 +8,37 @@ struct DuressModeIntroView: View {
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
-                VStack(spacing: 0) {
-                    PageDescription(text: "enable_duress_mode.intro.description".localized)
-
+                ScrollView {
                     VStack(spacing: 0) {
-                        ListSectionHeader(text: "enable_duress_mode.intro.notes".localized)
-                        ListSection {
-                            if let biometryType = viewModel.biometryType {
+                        PageDescription(text: "enable_duress_mode.intro.description".localized)
+
+                        VStack(spacing: 0) {
+                            ListSectionHeader(text: "enable_duress_mode.intro.notes".localized)
+                            ListSection {
+                                if let biometryType = viewModel.biometryType {
+                                    InfoRow(
+                                        icon: Image(biometryType.iconName),
+                                        title: biometryType.title,
+                                        description: "enable_duress_mode.intro.biometrics.description".localized(biometryType.title, biometryType.title)
+                                    )
+                                }
+
                                 InfoRow(
-                                    icon: Image(biometryType.iconName),
-                                    title: biometryType.title,
-                                    description: "enable_duress_mode.intro.biometrics.description".localized(biometryType.title, biometryType.title)
+                                    icon: Image("dialpad_alt_2_24"),
+                                    title: "enable_duress_mode.intro.passcode_disabling".localized,
+                                    description: "enable_duress_mode.intro.passcode_disabling.description".localized
+                                )
+
+                                InfoRow(
+                                    icon: Image("edit_24"),
+                                    title: "enable_duress_mode.intro.passcode_change".localized,
+                                    description: "enable_duress_mode.intro.passcode_change.description".localized
                                 )
                             }
-
-                            InfoRow(
-                                icon: Image("dialpad_alt_2_24"),
-                                title: "enable_duress_mode.intro.passcode_disabling".localized,
-                                description: "enable_duress_mode.intro.passcode_disabling.description".localized
-                            )
-
-                            InfoRow(
-                                icon: Image("edit_24"),
-                                title: "enable_duress_mode.intro.passcode_change".localized,
-                                description: "enable_duress_mode.intro.passcode_change.description".localized
-                            )
+                            .themeListStyle(.bordered)
                         }
-                        .themeListStyle(.bordered)
+                        .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }
-                    .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
                 NavigationLink(destination: {

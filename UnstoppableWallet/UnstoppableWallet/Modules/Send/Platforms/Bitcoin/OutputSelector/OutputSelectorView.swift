@@ -11,31 +11,33 @@ struct OutputSelectorView: View {
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
-                VStack(spacing: .margin16) {
-                    ListSection {
-                        ListRow(minHeight: .heightDoubleLineCell) {
-                            amount(subtitle: addressViewModel.address, viewItem: amountViewModel.viewItem)
-                        }
-                        ListRow(minHeight: .heightDoubleLineCell) {
-                            fee(value: feeViewModel.value, spinnerVisible: feeViewModel.spinnerVisible)
-                        }
-                        if let changeViewItem = viewModel.changeViewItem {
+                ScrollView {
+                    VStack(spacing: .margin16) {
+                        ListSection {
                             ListRow(minHeight: .heightDoubleLineCell) {
-                                change(viewItem: changeViewItem)
+                                amount(subtitle: addressViewModel.address, viewItem: amountViewModel.viewItem)
+                            }
+                            ListRow(minHeight: .heightDoubleLineCell) {
+                                fee(value: feeViewModel.value, spinnerVisible: feeViewModel.spinnerVisible)
+                            }
+                            if let changeViewItem = viewModel.changeViewItem {
+                                ListRow(minHeight: .heightDoubleLineCell) {
+                                    change(viewItem: changeViewItem)
+                                }
                             }
                         }
-                    }
-                    .themeListStyle(.borderedLawrence)
+                        .themeListStyle(.borderedLawrence)
 
-                    ListSection {
-                        ForEach(viewModel.outputsViewItems) { viewItem in
-                            output(viewItem: viewItem)
+                        ListSection {
+                            ForEach(viewModel.outputsViewItems) { viewItem in
+                                output(viewItem: viewItem)
+                            }
                         }
+                        .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
                     }
-                    .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
+                    .animation(.easeInOut, value: viewModel.changeViewItem)
+                    .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
                 }
-                .animation(.easeInOut, value: viewModel.changeViewItem)
-                .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
             } bottomContent: {
                 Button(action: {
                     viewModel.onTapDone()
