@@ -316,7 +316,6 @@
 "balance.downloading_blocks" = "Downloading Blocks";
 "balance.scanning_blocks" = "Scanning Blocks";
 "balance.enhancing_transactions" = "Enhancing Transactions";
-"wait_for_synchronization" = "Wait for synchronization";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Syncing... %@";

@@ -17,15 +17,11 @@ class WalletTokenBalanceViewItemFactory {
             if item.watchAccount {
                 buttons[.address] = .enabled
             } else {
-                let sendButtonState: ButtonState = item
-                    .state
-                    .spendAllowed(beforeSync: item.balanceData.sendBeforeSync) ? .enabled : .disabled
-
-                buttons[.send] = sendButtonState
+                buttons[.send] = .enabled
                 buttons[.receive] = .enabled
 
                 if AppConfig.swapEnabled, wallet.token.swappable {
-                    buttons[.swap] = sendButtonState
+                    buttons[.swap] = .enabled
                 }
             }
         case let .cexAsset(cexAsset):

@@ -31,7 +31,6 @@ class WalletTokenListViewModel {
 
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let noConnectionErrorRelay = PublishRelay<Void>()
-    private let showSyncingRelay = PublishRelay<Void>()
     private let selectWalletRelay = PublishRelay<Wallet>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
 
@@ -132,10 +131,6 @@ extension WalletTokenListViewModel {
         noConnectionErrorRelay.asSignal()
     }
 
-    var showSyncingSignal: Signal<Void> {
-        showSyncingRelay.asSignal()
-    }
-
     var selectWalletSignal: Signal<Wallet> {
         selectWalletRelay.asSignal()
     }
@@ -168,10 +163,6 @@ extension WalletTokenListViewModel {
     func didSelect(item: BalanceViewItem) {
         if item.topViewItem.failedImageViewVisible {
             onTapFailedIcon(element: item.element)
-            return
-        }
-        if !item.topViewItem.sendEnabled {
-            showSyncingRelay.accept(())
             return
         }
         if let wallet = item.element.wallet {
