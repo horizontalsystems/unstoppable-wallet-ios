@@ -42,12 +42,14 @@ struct SendView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    feeSettingsPresented = true
-                }) {
-                    Image("manage_2_20").renderingMode(.template)
+                if viewModel.transactionService != nil {
+                    Button(action: {
+                        feeSettingsPresented = true
+                    }) {
+                        Image("manage_2_20").renderingMode(.template)
+                    }
+                    .disabled(viewModel.state.isSyncing)
                 }
-                .disabled(viewModel.state.isSyncing)
             }
         }
         .onReceive(viewModel.errorSubject) { error in

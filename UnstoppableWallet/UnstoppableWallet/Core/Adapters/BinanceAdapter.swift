@@ -5,7 +5,7 @@ import RxSwift
 
 class BinanceAdapter {
     static let confirmationsThreshold = 1
-    static let transferFee: Decimal = 0.000075
+    static let transferFee: Decimal = .init(string: "0.000075") ?? 0.000075
 
     private let binanceKit: BinanceChainKit
     private let feeToken: Token
@@ -143,6 +143,10 @@ extension BinanceAdapter: ISendBinanceAdapter {
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void> {
         binanceKit.sendSingle(symbol: asset.symbol, to: address, amount: amount, memo: memo ?? "")
             .map { _ in () }
+    }
+
+    func send(amount: Decimal, address: String, memo: String?) async throws -> String {
+        try await binanceKit.send(symbol: asset.symbol, to: address, amount: amount, memo: memo ?? "")
     }
 }
 

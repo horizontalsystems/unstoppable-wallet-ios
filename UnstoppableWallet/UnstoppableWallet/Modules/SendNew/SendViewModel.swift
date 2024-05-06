@@ -88,7 +88,7 @@ class SendViewModel: ObservableObject {
 
 extension SendViewModel {
     func sync() {
-        guard let handler, let transactionService else {
+        guard let handler else {
             return
         }
 
@@ -102,9 +102,9 @@ extension SendViewModel {
             var state: State
 
             do {
-                try await transactionService.sync()
+                try await transactionService?.sync()
 
-                let data = try await handler.sendData(transactionSettings: transactionService.transactionSettings)
+                let data = try await handler.sendData(transactionSettings: transactionService?.transactionSettings)
 
                 await self?.syncRates(coins: [handler.baseToken.coin] + data.rateCoins)
 

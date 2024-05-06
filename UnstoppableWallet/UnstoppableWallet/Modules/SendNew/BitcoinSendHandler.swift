@@ -19,10 +19,6 @@ extension BitcoinSendHandler: ISendHandler {
         token
     }
 
-    var syncingText: String? {
-        nil
-    }
-
     var expirationDuration: Int? {
         10
     }

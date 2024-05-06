@@ -17,10 +17,6 @@ class EvmSendHandler {
 }
 
 extension EvmSendHandler: ISendHandler {
-    var syncingText: String? {
-        nil
-    }
-
     var expirationDuration: Int? {
         10
     }

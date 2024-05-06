@@ -10,6 +10,14 @@ protocol ISendHandler {
 }
 
 extension ISendHandler {
+    var syncingText: String? {
+        nil
+    }
+
+    var expirationDuration: Int? {
+        nil
+    }
+
     var initialTransactionSettings: InitialTransactionSettings? {
         nil
     }

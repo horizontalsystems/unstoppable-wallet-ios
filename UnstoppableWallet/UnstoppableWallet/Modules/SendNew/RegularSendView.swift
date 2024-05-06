@@ -21,7 +21,7 @@ struct RegularSendView: View {
                 case .syncing:
                     EmptyView()
                 case let .success(data):
-                    if sendViewModel.timeLeft > 0 || sendViewModel.sending {
+                    if sendViewModel.handler?.expirationDuration == nil || sendViewModel.timeLeft > 0 || sendViewModel.sending {
                         SlideButton(
                             styling: .text(start: data.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
                             action: {

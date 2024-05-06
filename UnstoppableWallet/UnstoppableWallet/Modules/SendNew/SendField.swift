@@ -85,7 +85,9 @@ enum SendField {
             ListRow {
                 Text(title).textSubhead2()
                 Spacer()
-                Text(value).textSubhead1(color: color(valueLevel: level))
+                Text(value)
+                    .textSubhead1(color: color(valueLevel: level))
+                    .multilineTextAlignment(.trailing)
             }
         case let .address(title, value, blockchainType):
             RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
