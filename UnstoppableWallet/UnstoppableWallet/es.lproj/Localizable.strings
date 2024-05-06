@@ -462,6 +462,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
 "send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
+"send.confirmation.input" = "Input";
 
 "send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.invalid_data" = "Invalid Data";
