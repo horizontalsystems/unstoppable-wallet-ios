@@ -79,27 +79,25 @@ class PreSendViewModel: ObservableObject {
 
     @Published var adapterState: AdapterState?
     @Published var availableBalance: Decimal?
+    @Published var hasMemo = false
 
     private var enteringFiat = false
 
     @Published var address: String = ""
     @Published var addressResult: AddressInput.Result = .idle {
         didSet {
+            syncAddressState()
+        }
+    }
+
+    @Published var addressState: AddressState = .empty {
+        didSet {
+            syncHasMemo()
             syncSendData()
         }
     }
 
     @Published var addressCautionState: CautionState = .none
-
-    @Published var isAddressActive: Bool = false {
-        didSet {
-            if isAddressActive {
-                addressCautionState = .none
-            } else {
-                syncAddressCautionState()
-            }
-        }
-    }
 
     @Published var memo: String = "" {
         didSet {
@@ -121,7 +119,7 @@ class PreSendViewModel: ObservableObject {
 
         switch mode {
         case let .predefined(address):
-            addressResult = .valid(.init(address: .init(raw: address), uri: nil))
+            addressState = .valid(address: address)
             addressVisible = false
         default:
             addressVisible = true
@@ -148,21 +146,19 @@ class PreSendViewModel: ObservableObject {
             .store(in: &cancellables)
 
         if let handler {
-            adapterState = handler.balanceState
-            availableBalance = handler.balanceData.available
+            adapterState = handler.state
+            availableBalance = handler.balance
+            hasMemo = handler.hasMemo(address: nil)
 
-            handler.balanceStatePublisher
+            handler.statePublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in self?.adapterState = $0 }
                 .store(in: &cancellables)
 
-            handler.balanceDataPublisher
+            handler.balancePublisher
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.availableBalance = $0.available }
+                .sink { [weak self] in self?.availableBalance = $0 }
                 .store(in: &cancellables)
-        } else {
-            adapterState = nil
-            availableBalance = nil
         }
 
         syncFiatAmount()
@@ -194,16 +190,34 @@ class PreSendViewModel: ObservableObject {
         fiatAmount = (amount * rate).rounded(decimal: 2)
     }
 
-    private func syncAddressCautionState() {
-        guard !isAddressActive else {
+    private func syncAddressState() {
+        switch addressResult {
+        case .idle:
+            addressState = .empty
             addressCautionState = .none
+        case .loading, .invalid:
+            addressState = .invalid
+            addressCautionState = .none
+        case let .valid(success):
+            let address = success.address.raw
+
+            if let handler, let caution = handler.validate(address: address) {
+                addressState = .invalid
+                addressCautionState = .caution(caution)
+            } else {
+                addressState = .valid(address: address)
+                addressCautionState = .none
+            }
+        }
+    }
+
+    private func syncHasMemo() {
+        guard let handler else {
+            hasMemo = false
             return
         }
 
-        switch addressResult {
-        case let .invalid(failure): addressCautionState = .caution(.init(text: failure.error.localizedDescription, type: .error))
-        default: addressCautionState = .none
-        }
+        hasMemo = handler.hasMemo(address: addressState.address)
     }
 }
 
@@ -218,7 +232,7 @@ extension PreSendViewModel {
             return
         }
 
-        guard case let .valid(success) = addressResult else {
+        guard case let .valid(address) = addressState else {
             sendData = nil
             return
         }
@@ -228,7 +242,17 @@ extension PreSendViewModel {
             return
         }
 
-        sendData = handler.sendData(amount: amount, address: success.address.raw, memo: memo)
+        let trimmedMemo = memo.trimmingCharacters(in: .whitespaces)
+        let memo = hasMemo && !trimmedMemo.isEmpty ? trimmedMemo : nil
+
+        let result = handler.sendData(amount: amount, address: address, memo: memo)
+
+        switch result {
+        case let .valid(sendData):
+            self.sendData = sendData
+        case .invalid:
+            sendData = nil
+        }
     }
 
     func setAmountIn(percent: Int) {
@@ -245,10 +269,6 @@ extension PreSendViewModel {
         enteringFiat = false
         amount = nil
     }
-
-    func changeAddressFocus(active: Bool) {
-        isAddressActive = active
-    }
 }
 
 extension PreSendViewModel {
@@ -260,6 +280,19 @@ extension PreSendViewModel {
         var amount: Decimal? {
             switch self {
             case let .prefilled(_, amount): return amount
+            default: return nil
+            }
+        }
+    }
+
+    enum AddressState {
+        case empty
+        case invalid
+        case valid(address: String)
+
+        var address: String? {
+            switch self {
+            case let .valid(address): return address
             default: return nil
             }
         }

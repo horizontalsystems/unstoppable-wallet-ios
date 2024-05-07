@@ -2966,6 +2966,10 @@
 		D311DA262BD23C890013DB8F /* ScrollableTabHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D311DA242BD23C890013DB8F /* ScrollableTabHeaderView.swift */; };
 		D311DA282BD27F5F0013DB8F /* MarketGlobalMetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D311DA272BD27F5F0013DB8F /* MarketGlobalMetricsView.swift */; };
 		D311DA292BD27F5F0013DB8F /* MarketGlobalMetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D311DA272BD27F5F0013DB8F /* MarketGlobalMetricsView.swift */; };
+		D31369862BEA187E00BA6B5B /* ZcashSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31369852BEA187E00BA6B5B /* ZcashSendHandler.swift */; };
+		D31369872BEA187E00BA6B5B /* ZcashSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31369852BEA187E00BA6B5B /* ZcashSendHandler.swift */; };
+		D31369892BEA188D00BA6B5B /* ZcashPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31369882BEA188D00BA6B5B /* ZcashPreSendHandler.swift */; };
+		D313698A2BEA188D00BA6B5B /* ZcashPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31369882BEA188D00BA6B5B /* ZcashPreSendHandler.swift */; };
 		D31C4760238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4763238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
@@ -4837,6 +4841,8 @@
 		D311DA212BD23C230013DB8F /* MarketAdvancedSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchView.swift; sourceTree = "<group>"; };
 		D311DA242BD23C890013DB8F /* ScrollableTabHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableTabHeaderView.swift; sourceTree = "<group>"; };
 		D311DA272BD27F5F0013DB8F /* MarketGlobalMetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketGlobalMetricsView.swift; sourceTree = "<group>"; };
+		D31369852BEA187E00BA6B5B /* ZcashSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashSendHandler.swift; sourceTree = "<group>"; };
+		D31369882BEA188D00BA6B5B /* ZcashPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashPreSendHandler.swift; sourceTree = "<group>"; };
 		D31C4759238BF175008CB818 /* MnemonicDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicDerivation.swift; sourceTree = "<group>"; };
 		D31C475A238BF175008CB818 /* FeeRateState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateState.swift; sourceTree = "<group>"; };
 		D3285F4520BD158E00644076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -9169,6 +9175,8 @@
 				D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */,
 				D34903162BE8DF48005F147B /* BinanceSendHandler.swift */,
 				D34903192BE8DF5F005F147B /* BinancePreSendHandler.swift */,
+				D31369852BEA187E00BA6B5B /* ZcashSendHandler.swift */,
+				D31369882BEA188D00BA6B5B /* ZcashPreSendHandler.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -10837,6 +10845,7 @@
 				ABC9AD46AE6B5F432E0D2085 /* WalletTokenBalanceViewModel.swift in Sources */,
 				ABC9A69264C2086E4B3B09D2 /* WalletTokenBalanceService.swift in Sources */,
 				ABC9A2A6C3A1EFDD33D53287 /* WalletTokenBalanceModule.swift in Sources */,
+				D313698A2BEA188D00BA6B5B /* ZcashPreSendHandler.swift in Sources */,
 				ABC9A55470228BD7B1535B9B /* WalletTokenBalanceViewItemFactory.swift in Sources */,
 				ABC9ABD7DA0C144C545EE228 /* WalletTokenBalanceCell.swift in Sources */,
 				ABC9AC7B5E1E2EE48117EFC4 /* BalanceButtonsCell.swift in Sources */,
@@ -10859,6 +10868,7 @@
 				11B35ACD13702502B1ED3362 /* HighlightedTextView.swift in Sources */,
 				11B35F134E5EF8572BF330CB /* NavigationRow.swift in Sources */,
 				11B35FA70EB07440E1576A56 /* RowButtonStyle.swift in Sources */,
+				D31369872BEA187E00BA6B5B /* ZcashSendHandler.swift in Sources */,
 				11B35CA92AA402BE72B4F5D6 /* Image.swift in Sources */,
 				ABC9AD2688A8DF327A3F92FC /* NoAccountWalletTokenListService.swift in Sources */,
 				ABC9A3FCFC46EC73A7E57EA3 /* WalletConnectPairingModule.swift in Sources */,
@@ -12377,6 +12387,7 @@
 				ABC9AFAB3BB4A1D2BFD4283B /* DataSourceChain.swift in Sources */,
 				ABC9A30A4C740609D0898809 /* WalletTokenBalanceDataSource.swift in Sources */,
 				ABC9A427B3166B8A0630EC8A /* WalletTokenBalanceViewModel.swift in Sources */,
+				D31369892BEA188D00BA6B5B /* ZcashPreSendHandler.swift in Sources */,
 				ABC9A2692A01293B1229EF50 /* WalletTokenBalanceService.swift in Sources */,
 				ABC9AC8ACB374C9B96F05B3C /* WalletTokenBalanceModule.swift in Sources */,
 				ABC9A462CFF86970878025CE /* WalletTokenBalanceViewItemFactory.swift in Sources */,
@@ -12399,6 +12410,7 @@
 				ABC9A994D6AC5771ED49EFD1 /* DonateAddressViewModel.swift in Sources */,
 				ABC9A140CD70E91A1F4A3A5B /* DonateAddressModule.swift in Sources */,
 				11B353FD73E7731A9BC50C4E /* HighlightedTextView.swift in Sources */,
+				D31369862BEA187E00BA6B5B /* ZcashSendHandler.swift in Sources */,
 				11B3574287AAA5FC16E3E3DA /* NavigationRow.swift in Sources */,
 				11B35631BD5C6570C9359BEC /* RowButtonStyle.swift in Sources */,
 				11B3541ED37746BAFF1832BA /* Image.swift in Sources */,
@@ -13627,7 +13639,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BinanceChainKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.3;
+				version = 2.0.4;
 			};
 		};
 		D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit" */ = {

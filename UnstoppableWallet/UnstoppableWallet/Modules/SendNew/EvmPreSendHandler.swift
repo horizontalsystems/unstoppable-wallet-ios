@@ -9,8 +9,8 @@ class EvmPreSendHandler {
     private let token: Token
     private let adapter: ISendEthereumAdapter & IBalanceAdapter
 
-    private let balanceStateSubject = PassthroughSubject<AdapterState, Never>()
-    private let balanceDataSubject = PassthroughSubject<BalanceData, Never>()
+    private let stateSubject = PassthroughSubject<AdapterState, Never>()
+    private let balanceSubject = PassthroughSubject<Decimal, Never>()
 
     private let disposeBag = DisposeBag()
 
@@ -21,47 +21,47 @@ class EvmPreSendHandler {
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] state in
-                self?.balanceStateSubject.send(state)
+                self?.stateSubject.send(state)
             }
             .disposed(by: disposeBag)
 
         adapter.balanceDataUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] balanceData in
-                self?.balanceDataSubject.send(balanceData)
+                self?.balanceSubject.send(balanceData.available)
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension EvmPreSendHandler: IPreSendHandler {
-    var balanceState: AdapterState {
+    var state: AdapterState {
         adapter.balanceState
     }
 
-    var balanceStatePublisher: AnyPublisher<AdapterState, Never> {
-        balanceStateSubject.eraseToAnyPublisher()
+    var statePublisher: AnyPublisher<AdapterState, Never> {
+        stateSubject.eraseToAnyPublisher()
     }
 
-    var balanceData: BalanceData {
-        adapter.balanceData
+    var balance: Decimal {
+        adapter.balanceData.available
     }
 
-    var balanceDataPublisher: AnyPublisher<BalanceData, Never> {
-        balanceDataSubject.eraseToAnyPublisher()
+    var balancePublisher: AnyPublisher<Decimal, Never> {
+        balanceSubject.eraseToAnyPublisher()
     }
 
-    func sendData(amount: Decimal, address: String, memo _: String?) -> SendData? {
+    func sendData(amount: Decimal, address: String, memo _: String?) -> SendDataResult {
         guard let evmAmount = BigUInt(amount.hs.roundedString(decimal: token.decimals)) else {
-            return nil
+            return .invalid(cautions: [])
         }
 
         guard let evmAddress = try? EvmKit.Address(hex: address) else {
-            return nil
+            return .invalid(cautions: [])
         }
 
         let transactionData = adapter.transactionData(amount: evmAmount, address: evmAddress)
 
-        return .evm(blockchainType: token.blockchainType, transactionData: transactionData)
+        return .valid(sendData: .evm(blockchainType: token.blockchainType, transactionData: transactionData))
     }
 }
