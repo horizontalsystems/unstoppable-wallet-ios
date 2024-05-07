@@ -779,6 +779,23 @@ extension ZcashAdapter: ISendZcashAdapter {
         }
     }
 
+    func send(amount: Decimal, address: Recipient, memo: Memo?) async throws {
+        guard let spendingKey else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        let pendingEntity = try await synchronizer.sendToAddress(
+            spendingKey: spendingKey,
+            zatoshi: Zatoshi.from(decimal: amount),
+            toAddress: address,
+            memo: memo
+        )
+
+        logger?.log(level: .debug, message: "Successful send TX: : \(pendingEntity.value.decimalValue.description):")
+
+        reSyncPending()
+    }
+
     func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {
         try? Recipient(stringEncodedAddress, network: network.networkType)
     }

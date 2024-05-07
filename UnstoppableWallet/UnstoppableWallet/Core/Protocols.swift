@@ -131,6 +131,7 @@ protocol ISendZcashAdapter {
     func validate(address: String, checkSendToSelf: Bool) throws -> ZcashAdapter.AddressType
     var fee: Decimal { get }
     func sendSingle(amount: Decimal, address: Recipient, memo: Memo?) -> Single<Void>
+    func send(amount: Decimal, address: Recipient, memo: Memo?) async throws
     func recipient(from stringEncodedAddress: String) -> Recipient?
 }
 

@@ -15,8 +15,8 @@ class BitcoinPreSendHandler {
     var pluginData = [UInt8: IPluginData]()
     var unspentOutputs: [UnspentOutputInfo]?
 
-    private let balanceStateSubject = PassthroughSubject<AdapterState, Never>()
-    private let balanceDataSubject = PassthroughSubject<BalanceData, Never>()
+    private let stateSubject = PassthroughSubject<AdapterState, Never>()
+    private let balanceSubject = PassthroughSubject<Decimal, Never>()
 
     private let disposeBag = DisposeBag()
 
@@ -27,42 +27,42 @@ class BitcoinPreSendHandler {
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] state in
-                self?.balanceStateSubject.send(state)
+                self?.stateSubject.send(state)
             }
             .disposed(by: disposeBag)
 
         adapter.balanceDataUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] balanceData in
-                self?.balanceDataSubject.send(balanceData)
+                self?.balanceSubject.send(balanceData.available)
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension BitcoinPreSendHandler: IPreSendHandler {
-    var hasMemo: Bool {
-        true
-    }
-
     var hasSettings: Bool {
         true
     }
 
-    var balanceState: AdapterState {
+    var state: AdapterState {
         adapter.balanceState
     }
 
-    var balanceStatePublisher: AnyPublisher<AdapterState, Never> {
-        balanceStateSubject.eraseToAnyPublisher()
+    var statePublisher: AnyPublisher<AdapterState, Never> {
+        stateSubject.eraseToAnyPublisher()
     }
 
-    var balanceData: BalanceData {
-        adapter.balanceData
+    var balance: Decimal {
+        adapter.balanceData.available
     }
 
-    var balanceDataPublisher: AnyPublisher<BalanceData, Never> {
-        balanceDataSubject.eraseToAnyPublisher()
+    var balancePublisher: AnyPublisher<Decimal, Never> {
+        balanceSubject.eraseToAnyPublisher()
+    }
+
+    func hasMemo(address _: String?) -> Bool {
+        true
     }
 
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView {
@@ -73,7 +73,7 @@ extension BitcoinPreSendHandler: IPreSendHandler {
         return AnyView(view)
     }
 
-    func sendData(amount: Decimal, address: String, memo: String?) -> SendData? {
+    func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         let params = SendParameters(
             address: address,
             value: adapter.convertToSatoshi(value: amount),
@@ -84,6 +84,6 @@ extension BitcoinPreSendHandler: IPreSendHandler {
             pluginData: pluginData
         )
 
-        return .bitcoin(token: token, params: params)
+        return .valid(sendData: .bitcoin(token: token, params: params))
     }
 }

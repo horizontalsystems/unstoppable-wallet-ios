@@ -3,16 +3,16 @@ import Foundation
 import MarketKit
 import RxSwift
 
-class BinancePreSendHandler {
+class ZcashPreSendHandler {
     private let token: Token
-    private let adapter: ISendBinanceAdapter & IBalanceAdapter
+    private let adapter: ISendZcashAdapter & IBalanceAdapter
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
 
     private let disposeBag = DisposeBag()
 
-    init(token: Token, adapter: ISendBinanceAdapter & IBalanceAdapter) {
+    init(token: Token, adapter: ISendZcashAdapter & IBalanceAdapter) {
         self.token = token
         self.adapter = adapter
 
@@ -25,14 +25,15 @@ class BinancePreSendHandler {
 
         adapter.balanceDataUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe { [weak self, adapter] _ in
-                self?.balanceSubject.send(adapter.availableBalance)
+            .subscribe { [weak self, adapter] balanceData in
+                let balance = max(0, balanceData.available - adapter.fee)
+                self?.balanceSubject.send(balance)
             }
             .disposed(by: disposeBag)
     }
 }
 
-extension BinancePreSendHandler: IPreSendHandler {
+extension ZcashPreSendHandler: IPreSendHandler {
     var state: AdapterState {
         adapter.balanceState
     }
@@ -42,19 +43,37 @@ extension BinancePreSendHandler: IPreSendHandler {
     }
 
     var balance: Decimal {
-        adapter.availableBalance
+        max(0, adapter.balanceData.available - adapter.fee)
     }
 
     var balancePublisher: AnyPublisher<Decimal, Never> {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    func hasMemo(address _: String?) -> Bool {
-        true
+    func validate(address: String) -> Caution? {
+        do {
+            _ = try adapter.validate(address: address, checkSendToSelf: true)
+            return nil
+        } catch {
+            return Caution(text: error.smartDescription, type: .error)
+        }
+    }
+
+    func hasMemo(address: String?) -> Bool {
+        guard let address, let addressType = try? adapter.validate(address: address, checkSendToSelf: true) else {
+            return false
+        }
+
+        return addressType == .shielded
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
-        let sendData: SendData = .binance(token: token, amount: amount, address: address, memo: memo)
+        guard let recipient = adapter.recipient(from: address) else {
+            return .invalid(cautions: [])
+        }
+
+        let sendData: SendData = .zcash(amount: amount, recipient: recipient, memo: memo)
+
         return .valid(sendData: sendData)
     }
 }

@@ -8,7 +8,6 @@ struct PreSendView: View {
 
     @Environment(\.presentationMode) private var presentationMode
     @FocusState private var focusField: FocusField?
-    @FocusState var isAddressFocused: Bool
 
     @State private var settingsPresented = false
     @State private var confirmPresented = false
@@ -30,7 +29,7 @@ struct PreSendView: View {
                         addressView()
                     }
 
-                    if let handler = viewModel.handler, handler.hasMemo {
+                    if viewModel.hasMemo {
                         memoView()
                     }
 
@@ -38,6 +37,7 @@ struct PreSendView: View {
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
                 .animation(.linear, value: viewModel.addressCautionState)
+                .animation(.linear, value: viewModel.hasMemo)
             }
 
             NavigationLink(
@@ -190,10 +190,6 @@ struct PreSendView: View {
             text: $viewModel.address,
             result: $viewModel.addressResult
         )
-        .focused($isAddressFocused)
-        .onChange(of: isAddressFocused) { active in
-            viewModel.changeAddressFocus(active: active)
-        }
         .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
         .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
     }
@@ -251,11 +247,9 @@ struct PreSendView: View {
             title = "send.enter_amount".localized
         } else if let availableBalance = viewModel.availableBalance, let amount = viewModel.amount, amount > availableBalance {
             title = "send.insufficient_balance".localized
-        } else if case .idle = viewModel.addressResult {
+        } else if case .empty = viewModel.addressState {
             title = "send.enter_address".localized
-        } else if case .loading = viewModel.addressResult {
-            title = "send.enter_address".localized
-        } else if case .invalid = viewModel.addressResult {
+        } else if case .invalid = viewModel.addressState {
             title = "send.invalid_address".localized
         } else {
             title = "send.next_button".localized
