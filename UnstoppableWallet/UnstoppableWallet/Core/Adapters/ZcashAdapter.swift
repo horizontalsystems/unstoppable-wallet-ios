@@ -10,7 +10,7 @@ import UIKit
 import ZcashLightClientKit
 
 class ZcashAdapter {
-    private static let endPoint = "mainnet.lightwalletd.com" // "lightwalletd.electriccoin.co"
+    private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
     private var cancellables: [AnyCancellable] = []
@@ -66,7 +66,8 @@ class ZcashAdapter {
     private(set) var syncing: Bool = true
 
     init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
-        logger = App.shared.logger.scoped(with: "ZCashKit") // HsToolKit.Logger(minLogLevel: .debug) //
+        logger = App.shared.logger.scoped(with: "ZCashKit")
+//        logger = HsToolKit.Logger(minLogLevel: .debug)
 
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
@@ -501,7 +502,7 @@ extension ZcashAdapter {
             fsBlockDbRoot: fsBlockDbRootURL(uniqueId: uniqueId, network: network),
             generalStorageURL: generalStorageURL(uniqueId: uniqueId, network: network),
             dataDbURL: dataDbURL(uniqueId: uniqueId, network: network),
-            endpoint: LightWalletEndpoint(address: endPoint, port: 9067, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
+            endpoint: LightWalletEndpoint(address: endPoint, port: 443, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
             network: network,
             spendParamsURL: spendParamsURL(uniqueId: uniqueId),
             outputParamsURL: outputParamsURL(uniqueId: uniqueId),
