@@ -5,6 +5,8 @@ import ThemeKit
 
 struct PreSendView: View {
     @StateObject var viewModel: PreSendViewModel
+    private let showIcon: Bool
+    private let onDismiss: (() -> Void)?
 
     @Environment(\.presentationMode) private var presentationMode
     @FocusState private var focusField: FocusField?
@@ -12,8 +14,10 @@ struct PreSendView: View {
     @State private var settingsPresented = false
     @State private var confirmPresented = false
 
-    init(wallet: Wallet, mode: PreSendViewModel.Mode = .regular) {
+    init(wallet: Wallet, mode: PreSendViewModel.Mode = .regular, showIcon: Bool = false, onDismiss: (() -> Void)? = nil) {
         _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, mode: mode))
+        self.showIcon = showIcon
+        self.onDismiss = onDismiss
     }
 
     var body: some View {
@@ -46,7 +50,12 @@ struct PreSendView: View {
                     if let sendData = viewModel.sendData {
                         RegularSendView(sendData: sendData) {
                             HudHelper.instance.show(banner: .sent)
-                            presentationMode.wrappedValue.dismiss()
+
+                            if let onDismiss {
+                                onDismiss()
+                            } else {
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         }
                     }
                 }
@@ -58,9 +67,11 @@ struct PreSendView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                KFImage.url(URL(string: viewModel.token.coin.imageUrl))
-                    .resizable()
-                    .frame(width: .iconSize24, height: .iconSize24)
+                if showIcon {
+                    KFImage.url(URL(string: viewModel.token.coin.imageUrl))
+                        .resizable()
+                        .frame(width: .iconSize24, height: .iconSize24)
+                }
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -82,6 +93,7 @@ struct PreSendView: View {
                 }
             }
         }
+        .accentColor(.themeJacob)
     }
 
     @ViewBuilder private func availableBalanceView(value: String?) -> some View {
