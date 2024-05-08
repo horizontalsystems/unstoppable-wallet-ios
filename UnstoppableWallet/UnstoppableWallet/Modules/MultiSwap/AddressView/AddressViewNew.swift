@@ -61,10 +61,12 @@ struct AddressViewNew: View {
             ScanQrViewNew(pasteEnabled: true) {
                 viewModel.didFetch(qrText: $0)
             }
+            .ignoresSafeArea()
         }
         .sheet(isPresented: $viewModel.contactsPresented) {
             if let blockchainType = viewModel.blockchainType {
                 ContactBookView(mode: .select(blockchainType, viewModel), presented: true)
+                    .ignoresSafeArea()
             }
         }
     }
