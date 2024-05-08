@@ -66,17 +66,6 @@ class ReleaseNotesViewController: MarkdownViewController {
         telegramButton.addTarget(self, action: #selector(onTelegramTap), for: .touchUpInside)
         telegramButton.setImage(UIImage(named: "filled_telegram_24"), for: .normal)
 
-        let redditButton = UIButton()
-        bottomHolder.addSubview(redditButton)
-        redditButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(telegramButton.snp.trailing).offset(CGFloat.margin8)
-            maker.top.bottom.equalToSuperview()
-            maker.width.equalTo(52)
-        }
-
-        redditButton.addTarget(self, action: #selector(onRedditTap), for: .touchUpInside)
-        redditButton.setImage(UIImage(named: "filled_reddit_24"), for: .normal)
-
         let followUsLabel = UILabel()
         bottomHolder.addSubview(followUsLabel)
         followUsLabel.snp.makeConstraints { maker in
@@ -115,10 +104,6 @@ class ReleaseNotesViewController: MarkdownViewController {
 
     @objc private func onTelegramTap() {
         urlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)", from: nil)
-    }
-
-    @objc private func onRedditTap() {
-        urlManager.open(url: "https://www.reddit.com/r/\(AppConfig.appRedditAccount)", from: nil)
     }
 }
 
