@@ -55,6 +55,7 @@ struct SendView: View {
         .onReceive(viewModel.errorSubject) { error in
             HudHelper.instance.showError(subtitle: error)
         }
+        .accentColor(.themeJacob)
     }
 
     @ViewBuilder private func dataView(data: ISendData, handler: ISendHandler) -> some View {
