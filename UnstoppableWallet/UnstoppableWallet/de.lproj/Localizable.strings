@@ -707,6 +707,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.tab.sectors" = "Sektoren";
 
 "market.sort_by.title" = "Sortieren nach";
+"market.sort_by.manual" = "Manuell";
 "market.sort_by.highest_cap" = "Höchste Obergrenze";
 "market.sort_by.lowest_cap" = "Niedrigste Obergrenze";
 "market.sort_by.gainers" = "Gainers";
@@ -788,6 +789,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market_discovery.not_found" = "Keine Ergebnisse gefunden";
 
 "market_watchlist.empty.caption" = "Ihre Beobachtungsliste ist leer.";
+"market.watchlist.signals" = "Signals";
+"market.watchlist.empty" = "Your watchlist is empty";
 
 "market.advanced_search.title" = "Filter";
 "market.advanced_search.show_results" = "Ergebnisse anzeigen";
