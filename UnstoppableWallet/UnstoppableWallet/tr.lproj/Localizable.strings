@@ -707,6 +707,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.tab.sectors" = "Sektörler";
 
 "market.sort_by.title" = "Sırala";
+"market.sort_by.manual" = "Manuel";
 "market.sort_by.highest_cap" = "En Yüksek";
 "market.sort_by.lowest_cap" = "En Düşük";
 "market.sort_by.gainers" = "Gainers";
@@ -788,6 +789,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market_discovery.not_found" = "Sonuç bulunamadı";
 
 "market_watchlist.empty.caption" = "İzleme listeniz boş.";
+"market.watchlist.signals" = "Signals";
+"market.watchlist.empty" = "Your watchlist is empty";
 
 "market.advanced_search.title" = "Filtreler";
 "market.advanced_search.show_results" = "Sonuçları Göster";
