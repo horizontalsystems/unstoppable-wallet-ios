@@ -707,6 +707,7 @@
 "market.tab.sectors" = "行业";
 
 "market.sort_by.title" = "排序方式为";
+"market.sort_by.manual" = "手册";
 "market.sort_by.highest_cap" = "市值由高到低";
 "market.sort_by.lowest_cap" = "市值由低到高";
 "market.sort_by.gainers" = "Gainers";
@@ -788,6 +789,8 @@
 "market_discovery.not_found" = "未发现结果";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
+"market.watchlist.signals" = "Signals";
+"market.watchlist.empty" = "Your watchlist is empty";
 
 "market.advanced_search.title" = "过滤器";
 "market.advanced_search.show_results" = "显示结果";
