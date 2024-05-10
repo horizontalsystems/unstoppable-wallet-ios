@@ -16,7 +16,7 @@ enum MarketWatchlistModule {
         )
 
         let decorator = MarketWatchlistDecorator(service: service)
-        let viewModel = MarketWatchlistViewModel(service: service)
+        let viewModel = MarketWatchlistViewModelOld(service: service)
         let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: decorator)
         let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
 

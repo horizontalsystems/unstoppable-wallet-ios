@@ -1,4 +1,4 @@
-class MarketWatchlistViewModel {
+class MarketWatchlistViewModelOld {
     private let service: MarketWatchlistService
 
     init(service: MarketWatchlistService) {
@@ -6,7 +6,7 @@ class MarketWatchlistViewModel {
     }
 }
 
-extension MarketWatchlistViewModel {
+extension MarketWatchlistViewModelOld {
     func onLoad() {
         service.load()
     }

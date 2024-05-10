@@ -142,6 +142,7 @@ enum MarketModule {
 
 extension MarketModule {
     enum SortBy: String, CaseIterable {
+        case manual
         case highestCap
         case lowestCap
         case gainers
@@ -151,6 +152,7 @@ extension MarketModule {
 
         var title: String {
             switch self {
+            case .manual: return "market.sort_by.manual".localized
             case .highestCap: return "market.sort_by.highest_cap".localized
             case .lowestCap: return "market.sort_by.lowest_cap".localized
             case .gainers: return "market.sort_by.gainers".localized
@@ -385,6 +387,7 @@ extension [MarketKit.MarketInfo] {
                 }
 
                 return sortBy == .gainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
+            default: return true
             }
         }
     }

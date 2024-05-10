@@ -2,11 +2,10 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
-struct MarketCoinsView: View {
-    @ObservedObject var viewModel: MarketCoinsViewModel
+struct MarketWatchlistView: View {
+    @ObservedObject var viewModel: MarketWatchlistViewModel
 
     @State private var sortBySelectorPresented = false
-    @State private var topSelectorPresented = false
     @State private var priceChangePeriodSelectorPresented = false
 
     @State private var presentedFullCoin: FullCoin?
@@ -17,9 +16,13 @@ struct MarketCoinsView: View {
             case .loading:
                 loadingList()
             case let .loaded(marketInfos):
-                VStack(spacing: 0) {
-                    header()
-                    list(marketInfos: marketInfos)
+                if marketInfos.isEmpty {
+                    PlaceholderViewNew(image: Image("rate_48"), text: "market.watchlist.empty".localized)
+                } else {
+                    VStack(spacing: 0) {
+                        header()
+                        list(marketInfos: marketInfos)
+                    }
                 }
             case .failed:
                 SyncErrorView {
@@ -45,18 +48,17 @@ struct MarketCoinsView: View {
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
 
                 Button(action: {
-                    topSelectorPresented = true
-                }) {
-                    Text(viewModel.top.title)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-
-                Button(action: {
                     priceChangePeriodSelectorPresented = true
                 }) {
                     Text(viewModel.priceChangePeriod.shortTitle)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+
+                if viewModel.showSignals {
+                    signalsButton().buttonStyle(SecondaryActiveButtonStyle())
+                } else {
+                    signalsButton().buttonStyle(SecondaryButtonStyle())
+                }
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
@@ -74,18 +76,6 @@ struct MarketCoinsView: View {
             }
         )
         .alert(
-            isPresented: $topSelectorPresented,
-            title: "market.top_coins.title".localized,
-            viewItems: viewModel.tops.map { .init(text: $0.title, selected: viewModel.top == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.top = viewModel.tops[index]
-            }
-        )
-        .alert(
             isPresented: $priceChangePeriodSelectorPresented,
             title: "market.price_change_period.title".localized,
             viewItems: viewModel.priceChangePeriods.map { .init(text: $0.shortTitle, selected: viewModel.priceChangePeriod == $0) },
@@ -97,6 +87,14 @@ struct MarketCoinsView: View {
                 viewModel.priceChangePeriod = viewModel.priceChangePeriods[index]
             }
         )
+    }
+
+    @ViewBuilder private func signalsButton() -> some View {
+        Button(action: {
+            viewModel.showSignals.toggle()
+        }) {
+            Text("market.watchlist.signals".localized)
+        }
     }
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
