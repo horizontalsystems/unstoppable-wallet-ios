@@ -705,6 +705,7 @@
 "market.tab.sectors" = "Sectors";
 
 "market.sort_by.title" = "Sort By";
+"market.sort_by.manual" = "Manual";
 "market.sort_by.highest_cap" = "Highest Cap";
 "market.sort_by.lowest_cap" = "Lowest Cap";
 "market.sort_by.gainers" = "Gainers";
@@ -786,6 +787,8 @@
 "market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
+"market.watchlist.signals" = "Signals";
+"market.watchlist.empty" = "Your watchlist is empty";
 
 "market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Show Results";

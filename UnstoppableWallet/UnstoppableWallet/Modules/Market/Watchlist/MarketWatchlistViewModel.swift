@@ -2,12 +2,18 @@ import Combine
 import Foundation
 import HsExtensions
 import MarketKit
+import RxSwift
 
-class MarketCoinsViewModel: ObservableObject {
+class MarketWatchlistViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
+    private let favoritesManager = App.shared.favoritesManager
 
+    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
+
+    private var coinUids = [String]()
 
     private var internalState: State = .loading {
         didSet {
@@ -23,16 +29,33 @@ class MarketCoinsViewModel: ObservableObject {
         }
     }
 
-    var top: MarketModule.Top = .top100 {
+    var priceChangePeriod: MarketModule.PriceChangePeriod = .hour24 {
         didSet {
             syncState()
         }
     }
 
-    var priceChangePeriod: MarketModule.PriceChangePeriod = .hour24 {
+    var showSignals: Bool = false {
         didSet {
             syncState()
         }
+    }
+
+    private func syncCoinUids() {
+        coinUids = favoritesManager.allCoinUids
+
+        if case let .loaded(marketInfos) = internalState {
+            let newMarketInfos = marketInfos.filter { marketInfo in
+                coinUids.contains(marketInfo.fullCoin.coin.uid)
+            }
+
+            if newMarketInfos.count == coinUids.count {
+                internalState = .loaded(marketInfos: newMarketInfos)
+                return
+            }
+        }
+
+        syncMarketInfos()
     }
 
     private func syncMarketInfos() {
@@ -44,14 +67,21 @@ class MarketCoinsViewModel: ObservableObject {
     }
 
     private func _syncMarketInfos() async {
-        if case .failed = state {
+        if coinUids.isEmpty {
+            await MainActor.run { [weak self] in
+                self?.internalState = .loaded(marketInfos: [])
+            }
+            return
+        }
+
+        if case .failed = internalState {
             await MainActor.run { [weak self] in
                 self?.internalState = .loading
             }
         }
 
         do {
-            let marketInfos = try await marketKit.marketInfos(top: 500, currencyCode: currency.code)
+            let marketInfos = try await marketKit.marketInfos(coinUids: coinUids, currencyCode: currency.code)
 
             await MainActor.run { [weak self] in
                 self?.internalState = .loaded(marketInfos: marketInfos)
@@ -68,7 +98,6 @@ class MarketCoinsViewModel: ObservableObject {
         case .loading:
             state = .loading
         case let .loaded(marketInfos):
-            let marketInfos: [MarketInfo] = Array(marketInfos.prefix(top.rawValue))
             state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, priceChangePeriod: priceChangePeriod))
         case let .failed(error):
             state = .failed(error: error)
@@ -76,17 +105,13 @@ class MarketCoinsViewModel: ObservableObject {
     }
 }
 
-extension MarketCoinsViewModel {
+extension MarketWatchlistViewModel {
     var currency: Currency {
         currencyManager.baseCurrency
     }
 
     var sortBys: [MarketModule.SortBy] {
-        [.highestCap, .lowestCap, .gainers, .losers, .highestVolume, .lowestVolume]
-    }
-
-    var tops: [MarketModule.Top] {
-        [.top100, .top200, .top300, .top500]
+        [.manual, .highestCap, .lowestCap, .gainers, .losers, .highestVolume, .lowestVolume]
     }
 
     var priceChangePeriods: [MarketModule.PriceChangePeriod] {
@@ -94,7 +119,15 @@ extension MarketCoinsViewModel {
     }
 
     func load() {
-        syncMarketInfos()
+        currencyManager.$baseCurrency
+            .sink { [weak self] _ in
+                self?.syncMarketInfos()
+            }
+            .store(in: &cancellables)
+
+        subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
+
+        syncCoinUids()
     }
 
     func refresh() async {
@@ -102,7 +135,7 @@ extension MarketCoinsViewModel {
     }
 }
 
-extension MarketCoinsViewModel {
+extension MarketWatchlistViewModel {
     enum State {
         case loading
         case loaded(marketInfos: [MarketInfo])

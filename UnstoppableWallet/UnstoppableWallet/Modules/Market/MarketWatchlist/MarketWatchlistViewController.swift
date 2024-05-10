@@ -6,7 +6,7 @@ import UIKit
 class MarketWatchlistViewController: MarketListViewController {
     weak var parentNavigationController: UINavigationController?
 
-    private let viewModel: MarketWatchlistViewModel
+    private let viewModel: MarketWatchlistViewModelOld
 
     private let singleSortHeaderView: MarketSingleSortHeaderView
     private let placeholderView = PlaceholderView()
@@ -15,7 +15,7 @@ class MarketWatchlistViewController: MarketListViewController {
     override var headerView: UITableViewHeaderFooterView? { singleSortHeaderView }
     override var emptyView: UIView? { placeholderView }
 
-    init(viewModel: MarketWatchlistViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketSingleSortHeaderViewModel) {
+    init(viewModel: MarketWatchlistViewModelOld, listViewModel: IMarketListViewModel, headerViewModel: MarketSingleSortHeaderViewModel) {
         self.viewModel = viewModel
         singleSortHeaderView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
 
