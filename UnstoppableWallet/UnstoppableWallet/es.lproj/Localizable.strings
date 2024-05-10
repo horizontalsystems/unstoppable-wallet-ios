@@ -707,6 +707,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.tab.sectors" = "Sectores";
 
 "market.sort_by.title" = "Ordenar por";
+"market.sort_by.manual" = "Manual";
 "market.sort_by.highest_cap" = "Capitalización Mayor";
 "market.sort_by.lowest_cap" = "Capitalización Menor";
 "market.sort_by.gainers" = "Gainers";
@@ -788,6 +789,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market_discovery.not_found" = "No se han encontrado resultados";
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
+"market.watchlist.signals" = "Signals";
+"market.watchlist.empty" = "Your watchlist is empty";
 
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
