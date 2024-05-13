@@ -442,6 +442,8 @@
 "send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "Confirm";
 "send.confirmation.you_send" = "You Send";
@@ -505,6 +507,7 @@
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "Send To";
 "send.unspent_outputs.change" = "Change";
 
