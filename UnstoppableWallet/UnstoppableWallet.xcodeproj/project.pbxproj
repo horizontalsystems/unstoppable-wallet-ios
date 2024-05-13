@@ -2884,6 +2884,10 @@
 		D07157E52A2DDAA6006F141F /* SendTronViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157E32A2DDAA6006F141F /* SendTronViewController.swift */; };
 		D0740B1B2B87585000B085F9 /* ResendBitcoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0740B1A2B87585000B085F9 /* ResendBitcoinService.swift */; };
 		D0740B1C2B87585100B085F9 /* ResendBitcoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0740B1A2B87585000B085F9 /* ResendBitcoinService.swift */; };
+		D084F6BE2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */; };
+		D084F6BF2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */; };
+		D084F6C12BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */; };
+		D084F6C22BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */; };
 		D087627329815DAE00E6FFD4 /* ChooseWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */; };
 		D087627429815DAE00E6FFD4 /* ChooseWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */; };
 		D087627629815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */; };
@@ -4824,6 +4828,8 @@
 		D07157E02A2DDA17006F141F /* SendTronViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewModel.swift; sourceTree = "<group>"; };
 		D07157E32A2DDAA6006F141F /* SendTronViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewController.swift; sourceTree = "<group>"; };
 		D0740B1A2B87585000B085F9 /* ResendBitcoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinService.swift; sourceTree = "<group>"; };
+		D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputSelectView2.swift; sourceTree = "<group>"; };
+		D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputSelectorViewModel2.swift; sourceTree = "<group>"; };
 		D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewController.swift; sourceTree = "<group>"; };
 		D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewModel.swift; sourceTree = "<group>"; };
 		D090AF60297D725D00699916 /* TransparentIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentIconButtonView.swift; sourceTree = "<group>"; };
@@ -9217,6 +9223,8 @@
 				D34903192BE8DF5F005F147B /* BinancePreSendHandler.swift */,
 				D31369852BEA187E00BA6B5B /* ZcashSendHandler.swift */,
 				D31369882BEA188D00BA6B5B /* ZcashPreSendHandler.swift */,
+				D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */,
+				D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -9771,6 +9779,7 @@
 				11B357FE4C2E1EC8E26ED68F /* StorageMigrator.swift in Sources */,
 				11B35406710372339144C92D /* AuthData.swift in Sources */,
 				5046E672259C491100A941E5 /* InfoSeparatorHeaderView.swift in Sources */,
+				D084F6BF2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */,
 				3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */,
 				58AAA3BE2D0DEF53CE6CEE97 /* EvmKitManager.swift in Sources */,
 				58AAABE8E8374ED4211F610C /* Eip20Adapter.swift in Sources */,
@@ -10030,6 +10039,7 @@
 				11B35321C9FCFD1DFA4401A3 /* SendEvmService.swift in Sources */,
 				11B3564C551C6C76ECCE387D /* SendEvmViewModel.swift in Sources */,
 				11B35FF681C01782693B3C4A /* SendEvmConfirmationViewController.swift in Sources */,
+				D084F6C22BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */,
 				11B35249863079AB40D81F62 /* SendAvailableBalanceCell.swift in Sources */,
 				11B35AF2A7175246F8586F09 /* SendEvmModule.swift in Sources */,
 				11B35972FDF15D690466B792 /* SendAvailableBalanceViewModel.swift in Sources */,
@@ -11324,6 +11334,7 @@
 				11B35A3495FF00B1A3FF4197 /* AuthData.swift in Sources */,
 				5046E671259C491000A941E5 /* InfoSeparatorHeaderView.swift in Sources */,
 				3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */,
+				D084F6BE2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */,
 				58AAA745D76A13D06800BDD1 /* EvmKitManager.swift in Sources */,
 				58AAA82745E47084A2B18F95 /* Eip20Adapter.swift in Sources */,
 				58AAAF011B2E9CDF8455CA7B /* BaseEvmAdapter.swift in Sources */,
@@ -11583,6 +11594,7 @@
 				11B35063C586D8E1365E9DFF /* SendEvmConfirmationViewController.swift in Sources */,
 				11B355984178BF117AB606F5 /* SendAvailableBalanceCell.swift in Sources */,
 				11B355C78B016FC2EDDAECCC /* SendEvmModule.swift in Sources */,
+				D084F6C12BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */,
 				11B353E61A5496074178741C /* SendAvailableBalanceViewModel.swift in Sources */,
 				58AAA8757A05F21766ED0EA5 /* SimpleSheetTitleView.swift in Sources */,
 				11B3516FFFEA842D66C51988 /* AmountTypeSwitchService.swift in Sources */,

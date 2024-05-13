@@ -1,4 +1,4 @@
-enum TransactionDataSortMode: String, CaseIterable {
+enum TransactionDataSortMode: String, CaseIterable, Identifiable {
     case shuffle
     case bip69
 
@@ -8,5 +8,9 @@ enum TransactionDataSortMode: String, CaseIterable {
 
     var description: String {
         "btc_transaction_sort_mode.\(self).description".localized
+    }
+
+    var id: Self {
+        self
     }
 }
