@@ -157,7 +157,7 @@ extension CoinRankViewModel {
 
     var selectorItems: [String]? {
         switch service.type {
-        case .cexVolume, .dexVolume, .address, .txCount, .fee, .revenue: return timePeriods.map(\.title)
+        case .cexVolume, .dexVolume, .address, .txCount, .fee, .revenue: return timePeriods.map(\.shortTitle)
         case .dexLiquidity, .holders: return nil
         }
     }

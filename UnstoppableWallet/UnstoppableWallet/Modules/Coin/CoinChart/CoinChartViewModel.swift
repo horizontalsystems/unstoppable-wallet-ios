@@ -26,7 +26,7 @@ class CoinChartViewModel: ObservableObject {
     @Published private(set) var indicatorsShown: Bool
 
     var intervals: [String] {
-        service.validIntervals.map(\.title)
+        service.validIntervals.map(\.shortTitle)
     }
 
     init(service: CoinChartService, factory: CoinChartFactory) {
@@ -165,22 +165,6 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
 
     public func touchUp() {
         pointSelectedItemRelay.accept(nil)
-    }
-}
-
-extension HsTimePeriod {
-    var title: String {
-        switch self {
-        case .day1: return "chart.time_duration.day".localized
-        case .week1: return "chart.time_duration.week".localized
-        case .week2: return "chart.time_duration.week2".localized
-        case .month1: return "chart.time_duration.month".localized
-        case .month3: return "chart.time_duration.month3".localized
-        case .month6: return "chart.time_duration.halfyear".localized
-        case .year1: return "chart.time_duration.year".localized
-        case .year2: return "chart.time_duration.year2".localized
-        case .year5: return "chart.time_duration.year5".localized
-        }
     }
 }
 

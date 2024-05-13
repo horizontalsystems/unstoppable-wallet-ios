@@ -2,27 +2,23 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
-struct MarketWatchlistView: View {
-    @ObservedObject var viewModel: MarketWatchlistViewModel
+struct MarketPlatformsView: View {
+    @ObservedObject var viewModel: MarketPlatformsViewModel
 
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
 
-    @State private var presentedFullCoin: FullCoin?
+    @State private var presentedPlatform: TopPlatform?
 
     var body: some View {
         ThemeView {
             switch viewModel.state {
             case .loading:
                 loadingList()
-            case let .loaded(marketInfos):
-                if marketInfos.isEmpty {
-                    PlaceholderViewNew(image: Image("rate_48"), text: "market.watchlist.empty".localized)
-                } else {
-                    VStack(spacing: 0) {
-                        header()
-                        list(marketInfos: marketInfos)
-                    }
+            case let .loaded(platforms):
+                VStack(spacing: 0) {
+                    header()
+                    list(platforms: platforms)
                 }
             case .failed:
                 SyncErrorView {
@@ -32,8 +28,8 @@ struct MarketWatchlistView: View {
                 }
             }
         }
-        .sheet(item: $presentedFullCoin) { fullCoin in
-            CoinPageViewNew(coinUid: fullCoin.coin.uid)
+        .sheet(item: $presentedPlatform) { platform in
+            MarketPlatformView(platform: platform).ignoresSafeArea()
         }
     }
 
@@ -53,12 +49,6 @@ struct MarketWatchlistView: View {
                     Text(viewModel.timePeriod.shortTitle)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-
-                if viewModel.showSignals {
-                    signalsButton().buttonStyle(SecondaryActiveButtonStyle())
-                } else {
-                    signalsButton().buttonStyle(SecondaryButtonStyle())
-                }
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
@@ -89,44 +79,38 @@ struct MarketWatchlistView: View {
         )
     }
 
-    @ViewBuilder private func signalsButton() -> some View {
-        Button(action: {
-            viewModel.showSignals.toggle()
-        }) {
-            Text("market.watchlist.signals".localized)
-        }
-    }
-
-    @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
+    @ViewBuilder private func list(platforms: [TopPlatform]) -> some View {
         ScrollViewReader { _ in
-            ThemeList(items: marketInfos) { marketInfo in
+            ThemeList(items: platforms) { platform in
                 ClickableRow(action: {
-                    presentedFullCoin = marketInfo.fullCoin
+                    presentedPlatform = platform
                 }) {
-                    let coin = marketInfo.fullCoin.coin
+                    let blockchain = platform.blockchain
 
-                    KFImage.url(URL(string: coin.imageUrl))
+                    KFImage.url(URL(string: blockchain.type.imageUrl))
                         .resizable()
-                        .placeholder { Circle().fill(Color.themeSteel20) }
+                        .placeholder { RoundedRectangle(cornerRadius: .cornerRadius4).fill(Color.themeSteel20) }
                         .frame(width: .iconSize32, height: .iconSize32)
 
                     VStack(spacing: 1) {
                         HStack(spacing: .margin8) {
-                            Text(coin.code).textBody()
+                            Text(blockchain.name).textBody()
                             Spacer()
-                            Text(marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized).textBody()
+                            Text(platform.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized).textBody()
                         }
 
                         HStack(spacing: .margin8) {
                             HStack(spacing: .margin4) {
-                                if let rank = marketInfo.marketCapRank {
-                                    BadgeViewNew(text: "\(rank)")
+                                if let rank = platform.rank {
+                                    BadgeViewNew(text: "\(rank)", change: platform.ranks[viewModel.timePeriod].map { $0 - rank })
                                 }
 
-                                Text(coin.name).textSubhead2()
+                                if let protocolsCount = platform.protocolsCount {
+                                    Text("market.top.protocols".localized(String(protocolsCount))).textSubhead2()
+                                }
                             }
                             Spacer()
-                            DiffText(marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod))
+                            DiffText(platform.changes[viewModel.timePeriod])
                         }
                     }
                 }
@@ -141,22 +125,22 @@ struct MarketWatchlistView: View {
     @ViewBuilder private func loadingList() -> some View {
         ThemeList(items: Array(0 ... 10)) { _ in
             ListRow {
-                Circle()
+                RoundedRectangle(cornerRadius: .cornerRadius4)
                     .fill(Color.themeSteel20)
                     .frame(width: .iconSize32, height: .iconSize32)
                     .shimmering()
 
                 VStack(spacing: 1) {
                     HStack(spacing: .margin8) {
-                        Text("USDT").textBody().redacted(value: nil)
+                        Text("Ethereum").textBody().redacted(value: nil)
                         Spacer()
-                        Text("$12345").textBody().redacted(value: nil)
+                        Text("$123.4 B").textBody().redacted(value: nil)
                     }
 
                     HStack(spacing: .margin8) {
                         HStack(spacing: .margin4) {
                             Text("12").textBody().redacted(value: nil)
-                            Text("Bitcoin").textSubhead2().redacted(value: nil)
+                            Text("Protocols: 123").textSubhead2().redacted(value: nil)
                         }
                         Spacer()
                         DiffText(12.34).redacted(value: nil)

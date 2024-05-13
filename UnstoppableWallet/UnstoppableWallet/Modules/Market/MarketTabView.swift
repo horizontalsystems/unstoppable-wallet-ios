@@ -4,6 +4,7 @@ import ThemeKit
 struct MarketTabView: View {
     @StateObject var coinsViewModel: MarketCoinsViewModel
     @StateObject var watchlistViewModel: MarketWatchlistViewModel
+    @StateObject var platformsViewModel: MarketPlatformsViewModel
 
     @State private var currentTabIndex: Int = Tab.coins.rawValue
     @State private var loadedTabs = [Tab]()
@@ -11,6 +12,7 @@ struct MarketTabView: View {
     init() {
         _coinsViewModel = StateObject(wrappedValue: MarketCoinsViewModel())
         _watchlistViewModel = StateObject(wrappedValue: MarketWatchlistViewModel())
+        _platformsViewModel = StateObject(wrappedValue: MarketPlatformsViewModel())
     }
 
     var body: some View {
@@ -28,7 +30,10 @@ struct MarketTabView: View {
                     .tag(Tab.watchlist.rawValue)
 
                 Text("News Content").tag(Tab.news.rawValue)
-                Text("Platforms Content").tag(Tab.platforms.rawValue)
+
+                MarketPlatformsView(viewModel: platformsViewModel)
+                    .tag(Tab.platforms.rawValue)
+
                 Text("Pairs Content").tag(Tab.pairs.rawValue)
                 Text("Sectors Content").tag(Tab.sectors.rawValue)
             }
@@ -58,7 +63,7 @@ struct MarketTabView: View {
         case .coins: coinsViewModel.load()
         case .watchlist: watchlistViewModel.load()
         case .news: ()
-        case .platforms: ()
+        case .platforms: platformsViewModel.load()
         case .pairs: ()
         case .sectors: ()
         }

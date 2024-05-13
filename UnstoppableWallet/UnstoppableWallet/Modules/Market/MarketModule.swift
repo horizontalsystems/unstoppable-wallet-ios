@@ -174,24 +174,6 @@ extension MarketModule {
         }
     }
 
-    enum PriceChangePeriod: String, CaseIterable {
-        case hour24
-        case week1
-        case week2
-        case month1
-        case month3
-        case month6
-        case year1
-
-        var title: String {
-            "market.price_change_period.\(rawValue)".localized
-        }
-
-        var shortTitle: String {
-            "market.price_change_period.\(rawValue).short".localized
-        }
-    }
-
     enum Tab: String, CaseIterable {
         case overview
         case posts
@@ -357,21 +339,22 @@ extension MarketKit.MarketInfo {
         }
     }
 
-    func priceChangeValue(period: MarketModule.PriceChangePeriod) -> Decimal? {
-        switch period {
-        case .hour24: return priceChange24h
+    func priceChangeValue(timePeriod: HsTimePeriod) -> Decimal? {
+        switch timePeriod {
+        case .day1: return priceChange24h
         case .week1: return priceChange7d
         case .week2: return priceChange14d
         case .month1: return priceChange30d
-        case .month3: return priceChange30d // TODO: 90d
+        case .month3: return priceChange90d
         case .month6: return priceChange200d
         case .year1: return priceChange1y
+        default: return nil
         }
     }
 }
 
 extension [MarketKit.MarketInfo] {
-    func sorted(sortBy: MarketModule.SortBy, priceChangePeriod: MarketModule.PriceChangePeriod) -> [MarketKit.MarketInfo] {
+    func sorted(sortBy: MarketModule.SortBy, timePeriod: HsTimePeriod) -> [MarketKit.MarketInfo] {
         sorted { lhsMarketInfo, rhsMarketInfo in
             switch sortBy {
             case .highestCap: return lhsMarketInfo.marketCap ?? 0 > rhsMarketInfo.marketCap ?? 0
@@ -379,10 +362,10 @@ extension [MarketKit.MarketInfo] {
             case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
             case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
             case .gainers, .losers:
-                guard let rhsPriceChange = rhsMarketInfo.priceChangeValue(period: priceChangePeriod) else {
+                guard let rhsPriceChange = rhsMarketInfo.priceChangeValue(timePeriod: timePeriod) else {
                     return true
                 }
-                guard let lhsPriceChange = lhsMarketInfo.priceChangeValue(period: priceChangePeriod) else {
+                guard let lhsPriceChange = lhsMarketInfo.priceChangeValue(timePeriod: timePeriod) else {
                     return false
                 }
 
@@ -408,6 +391,40 @@ extension [MarketKit.MarketInfo] {
                 }
 
                 return sortingField == .topGainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
+            }
+        }
+    }
+}
+
+extension [MarketKit.TopPlatform] {
+    func sorted(sortBy: MarketModule.SortBy, timePeriod: HsTimePeriod) -> [TopPlatform] {
+        sorted { lhsPlatform, rhsPlatform in
+            let lhsCap = lhsPlatform.marketCap
+            let rhsCap = rhsPlatform.marketCap
+
+            let lhsChange = lhsPlatform.changes[timePeriod]
+            let rhsChange = rhsPlatform.changes[timePeriod]
+
+            switch sortBy {
+            case .highestCap, .lowestCap:
+                guard let lhsCap else {
+                    return true
+                }
+                guard let rhsCap else {
+                    return false
+                }
+
+                return sortBy == .highestCap ? lhsCap > rhsCap : lhsCap < rhsCap
+            case .gainers, .losers:
+                guard let lhsChange else {
+                    return false
+                }
+                guard let rhsChange else {
+                    return true
+                }
+
+                return sortBy == .gainers ? lhsChange > rhsChange : lhsChange < rhsChange
+            default: return true
             }
         }
     }
@@ -456,5 +473,15 @@ extension MarketModule { // ViewModel Items
             case .full: return 0
             }
         }
+    }
+}
+
+extension HsTimePeriod {
+    var title: String {
+        "market.time_period.\(rawValue)".localized
+    }
+
+    var shortTitle: String {
+        "market.time_period.\(rawValue).short".localized
     }
 }

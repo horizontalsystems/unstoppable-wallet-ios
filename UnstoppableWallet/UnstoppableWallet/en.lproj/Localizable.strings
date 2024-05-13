@@ -716,21 +716,25 @@
 "market.top_coins.title" = "Coins";
 "market.top_coins" = "Top %@";
 
-"market.price_change_period.title" = "Period";
-"market.price_change_period.hour24" = "1 Day";
-"market.price_change_period.week1" = "1 Week";
-"market.price_change_period.week2" = "2 Weeks";
-"market.price_change_period.month1" = "1 Month";
-"market.price_change_period.month3" = "3 Months";
-"market.price_change_period.month6" = "6 Months";
-"market.price_change_period.year1" = "1 Year";
-"market.price_change_period.hour24.short" = "24H";
-"market.price_change_period.week1.short" = "1W";
-"market.price_change_period.week2.short" = "2W";
-"market.price_change_period.month1.short" = "1M";
-"market.price_change_period.month3.short" = "3M";
-"market.price_change_period.month6.short" = "6M";
-"market.price_change_period.year1.short" = "1Y";
+"market.time_period.title" = "Period";
+"market.time_period.1d" = "1 Day";
+"market.time_period.1w" = "1 Week";
+"market.time_period.2w" = "2 Weeks";
+"market.time_period.1m" = "1 Month";
+"market.time_period.3m" = "3 Months";
+"market.time_period.6m" = "6 Months";
+"market.time_period.1y" = "1 Year";
+"market.time_period.2y" = "2 Years";
+"market.time_period.5y" = "5 Years";
+"market.time_period.1d.short" = "24H";
+"market.time_period.1w.short" = "1W";
+"market.time_period.2w.short" = "2W";
+"market.time_period.1m.short" = "1M";
+"market.time_period.3m.short" = "3M";
+"market.time_period.6m.short" = "6M";
+"market.time_period.1y.short" = "1Y";
+"market.time_period.2y.short" = "2Y";
+"market.time_period.5y.short" = "5Y";
 
 "market.project_has_no_coin" = "This project doesn’t have a coin";
 

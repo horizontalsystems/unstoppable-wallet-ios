@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "↑%lld" : {
+
+    },
+    "↓%lld" : {
+
+    },
     "single_coin_price.description" : {
       "extractionState" : "manual",
       "localizations" : {
