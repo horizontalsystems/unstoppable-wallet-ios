@@ -28,7 +28,7 @@ extension NftCollectionsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewMode
     }
 
     var rightSelectorItems: [String] {
-        MarketNftTopCollectionsModule.selectorValues.map(\.title)
+        MarketNftTopCollectionsModule.selectorValues.map(\.shortTitle)
     }
 
     var rightSelectorIndex: Int {

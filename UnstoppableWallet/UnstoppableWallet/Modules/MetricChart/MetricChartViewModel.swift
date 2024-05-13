@@ -100,7 +100,7 @@ extension MetricChartViewModel: IChartViewModel {
         errorRelay.asDriver()
     }
 
-    var intervals: [String] { service.intervals.timePeriods.map { $0.title.uppercased() } }
+    var intervals: [String] { service.intervals.timePeriods.map { $0.shortTitle.uppercased() } }
 
     func onSelectInterval(at index: Int) {
         let chartTypes = service.intervals

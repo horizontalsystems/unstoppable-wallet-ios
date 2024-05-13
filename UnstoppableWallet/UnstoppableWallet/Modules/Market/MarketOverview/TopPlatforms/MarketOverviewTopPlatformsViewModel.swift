@@ -40,7 +40,7 @@ extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewMod
     }
 
     var selectorTitles: [String] {
-        MarketTopPlatformsModule.selectorValues.map(\.title)
+        MarketTopPlatformsModule.selectorValues.map(\.shortTitle)
     }
 
     var selectorIndex: Int {

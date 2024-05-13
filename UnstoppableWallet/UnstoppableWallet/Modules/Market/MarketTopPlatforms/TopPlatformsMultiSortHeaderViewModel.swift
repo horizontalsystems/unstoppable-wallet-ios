@@ -28,7 +28,7 @@ extension TopPlatformsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel 
     }
 
     var rightSelectorItems: [String] {
-        MarketTopPlatformsModule.selectorValues.map(\.title)
+        MarketTopPlatformsModule.selectorValues.map(\.shortTitle)
     }
 
     var rightSelectorIndex: Int {

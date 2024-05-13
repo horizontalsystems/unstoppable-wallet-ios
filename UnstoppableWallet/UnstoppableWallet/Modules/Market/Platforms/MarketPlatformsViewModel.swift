@@ -3,7 +3,7 @@ import Foundation
 import HsExtensions
 import MarketKit
 
-class MarketCoinsViewModel: ObservableObject {
+class MarketPlatformsViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
 
@@ -24,13 +24,7 @@ class MarketCoinsViewModel: ObservableObject {
         }
     }
 
-    var top: MarketModule.Top = .top100 {
-        didSet {
-            syncState()
-        }
-    }
-
-    var timePeriod: HsTimePeriod = .day1 {
+    var timePeriod: HsTimePeriod = .week1 {
         didSet {
             syncState()
         }
@@ -52,10 +46,10 @@ class MarketCoinsViewModel: ObservableObject {
         }
 
         do {
-            let marketInfos = try await marketKit.topCoinsMarketInfos(top: MarketModule.Top.top500.rawValue, currencyCode: currency.code)
+            let platforms = try await marketKit.topPlatforms(currencyCode: currency.code)
 
             await MainActor.run { [weak self] in
-                self?.internalState = .loaded(marketInfos: marketInfos)
+                self?.internalState = .loaded(platforms: platforms)
             }
         } catch {
             await MainActor.run { [weak self] in
@@ -68,30 +62,25 @@ class MarketCoinsViewModel: ObservableObject {
         switch internalState {
         case .loading:
             state = .loading
-        case let .loaded(marketInfos):
-            let marketInfos: [MarketInfo] = Array(marketInfos.prefix(top.rawValue))
-            state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, timePeriod: timePeriod))
+        case let .loaded(platforms):
+            state = .loaded(platforms: platforms.sorted(sortBy: sortBy, timePeriod: timePeriod))
         case let .failed(error):
             state = .failed(error: error)
         }
     }
 }
 
-extension MarketCoinsViewModel {
+extension MarketPlatformsViewModel {
     var currency: Currency {
         currencyManager.baseCurrency
     }
 
     var sortBys: [MarketModule.SortBy] {
-        [.highestCap, .lowestCap, .gainers, .losers, .highestVolume, .lowestVolume]
-    }
-
-    var tops: [MarketModule.Top] {
-        [.top100, .top200, .top300, .top500]
+        [.highestCap, .lowestCap, .gainers, .losers]
     }
 
     var timePeriods: [HsTimePeriod] {
-        [.day1, .week1, .month1, .month3]
+        [.week1, .month1, .month3]
     }
 
     func load() {
@@ -109,10 +98,10 @@ extension MarketCoinsViewModel {
     }
 }
 
-extension MarketCoinsViewModel {
+extension MarketPlatformsViewModel {
     enum State {
         case loading
-        case loaded(marketInfos: [MarketInfo])
+        case loaded(platforms: [TopPlatform])
         case failed(error: Error)
     }
 }

@@ -7,7 +7,7 @@ struct MarketCoinsView: View {
 
     @State private var sortBySelectorPresented = false
     @State private var topSelectorPresented = false
-    @State private var priceChangePeriodSelectorPresented = false
+    @State private var timePeriodSelectorPresented = false
 
     @State private var presentedFullCoin: FullCoin?
 
@@ -52,9 +52,9 @@ struct MarketCoinsView: View {
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
 
                 Button(action: {
-                    priceChangePeriodSelectorPresented = true
+                    timePeriodSelectorPresented = true
                 }) {
-                    Text(viewModel.priceChangePeriod.shortTitle)
+                    Text(viewModel.timePeriod.shortTitle)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
             }
@@ -86,15 +86,15 @@ struct MarketCoinsView: View {
             }
         )
         .alert(
-            isPresented: $priceChangePeriodSelectorPresented,
-            title: "market.price_change_period.title".localized,
-            viewItems: viewModel.priceChangePeriods.map { .init(text: $0.shortTitle, selected: viewModel.priceChangePeriod == $0) },
+            isPresented: $timePeriodSelectorPresented,
+            title: "market.time_period.title".localized,
+            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
             onTap: { index in
                 guard let index else {
                     return
                 }
 
-                viewModel.priceChangePeriod = viewModel.priceChangePeriods[index]
+                viewModel.timePeriod = viewModel.timePeriods[index]
             }
         )
     }
@@ -128,7 +128,7 @@ struct MarketCoinsView: View {
                                 Text(coin.name).textSubhead2()
                             }
                             Spacer()
-                            DiffText(marketInfo.priceChangeValue(period: viewModel.priceChangePeriod))
+                            DiffText(marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod))
                         }
                     }
                 }

@@ -29,7 +29,7 @@ class MarketWatchlistViewModel: ObservableObject {
         }
     }
 
-    var priceChangePeriod: MarketModule.PriceChangePeriod = .hour24 {
+    var timePeriod: HsTimePeriod = .day1 {
         didSet {
             syncState()
         }
@@ -98,7 +98,7 @@ class MarketWatchlistViewModel: ObservableObject {
         case .loading:
             state = .loading
         case let .loaded(marketInfos):
-            state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, priceChangePeriod: priceChangePeriod))
+            state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, timePeriod: timePeriod))
         case let .failed(error):
             state = .failed(error: error)
         }
@@ -114,8 +114,8 @@ extension MarketWatchlistViewModel {
         [.manual, .highestCap, .lowestCap, .gainers, .losers, .highestVolume, .lowestVolume]
     }
 
-    var priceChangePeriods: [MarketModule.PriceChangePeriod] {
-        [.hour24, .week1, .month1, .month3]
+    var timePeriods: [HsTimePeriod] {
+        [.day1, .week1, .month1, .month3]
     }
 
     func load() {
