@@ -444,6 +444,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "A ordem das saídas da transação é aleatória em cada transação. Às vezes, a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confiar no desenvolvedor do aplicativo, considere essa uma opção recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Determinístico";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "Confirmar";
 "send.confirmation.you_send" = "Enviar";
@@ -507,6 +509,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.lock_time" = "TravaTempo";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "Enviar para";
 "send.unspent_outputs.change" = "Alterar";
 
