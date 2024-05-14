@@ -71,7 +71,7 @@ protocol ISendBitcoinAdapter {
     func availableBalance(params: SendParameters) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(params: SendParameters) -> Decimal
-    func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
+    func validate(address: String, pluginData: [UInt8: IPluginData]) throws
     func unspentOutputs(filters: UtxoFilters) -> [UnspentOutputInfo]
     func sendInfo(params: SendParameters) throws -> SendInfo
     func sendSingle(params: SendParameters, logger: HsToolKit.Logger) -> Single<Void>

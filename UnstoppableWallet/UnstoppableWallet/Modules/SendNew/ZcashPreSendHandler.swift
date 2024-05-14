@@ -50,15 +50,6 @@ extension ZcashPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    func validate(address: String) -> Caution? {
-        do {
-            _ = try adapter.validate(address: address, checkSendToSelf: true)
-            return nil
-        } catch {
-            return Caution(text: error.smartDescription, type: .error)
-        }
-    }
-
     func hasMemo(address: String?) -> Bool {
         guard let address, let addressType = try? adapter.validate(address: address, checkSendToSelf: true) else {
             return false
@@ -68,6 +59,12 @@ extension ZcashPreSendHandler: IPreSendHandler {
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
+        do {
+            _ = try adapter.validate(address: address, checkSendToSelf: true)
+        } catch {
+            return .invalid(cautions: [CautionNew(text: error.smartDescription, type: .error)])
+        }
+
         guard let recipient = adapter.recipient(from: address) else {
             return .invalid(cautions: [])
         }

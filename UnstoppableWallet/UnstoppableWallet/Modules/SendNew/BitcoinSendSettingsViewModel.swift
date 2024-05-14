@@ -7,11 +7,29 @@ class BitcoinSendSettingsViewModel: ObservableObject {
 
     let handler: BitcoinPreSendHandler
 
-    @Published var sortMode: TransactionDataSortMode
-    @Published var rbfEnabled: Bool
-    @Published var lockTimeInterval: HodlerPlugin.LockTimeInterval?
-    @Published var resetEnabled = false
-    @Published var doneEnabled = true
+    @Published var sortMode: TransactionDataSortMode {
+        didSet {
+            handler.sortMode = sortMode
+        }
+    }
+
+    @Published var rbfEnabled: Bool {
+        didSet {
+            handler.rbfEnabled = rbfEnabled
+        }
+    }
+
+    @Published var lockTimeInterval: HodlerPlugin.LockTimeInterval? {
+        didSet {
+            handler.lockTimeInterval = lockTimeInterval
+        }
+    }
+
+    @Published var resetEnabled: Bool {
+        didSet {
+            print("resetEnabled: \(resetEnabled)")
+        }
+    }
 
     @Published var utxos: String = ""
 
@@ -21,6 +39,13 @@ class BitcoinSendSettingsViewModel: ObservableObject {
         sortMode = handler.sortMode
         rbfEnabled = handler.rbfEnabled
         lockTimeInterval = handler.lockTimeInterval
+
+        resetEnabled = handler.settingsModified
+
+        handler.settingsModifiedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.resetEnabled = $0 }
+            .store(in: &cancellables)
 
         handler.balancePublisher
             .receive(on: DispatchQueue.main)
@@ -39,11 +64,7 @@ class BitcoinSendSettingsViewModel: ObservableObject {
 }
 
 extension BitcoinSendSettingsViewModel {
-    func reset() {}
-
-    func applySettings() {
-        handler.sortMode = sortMode
-        handler.rbfEnabled = rbfEnabled
-        handler.lockTimeInterval = lockTimeInterval
+    func reset() {
+        handler.reset()
     }
 }

@@ -171,11 +171,9 @@ struct BitcoinSendSettingsView: View {
 
             ToolbarItem(placement: .confirmationAction) {
                 Button("button.done".localized) {
-                    viewModel.applySettings()
                     onChangeSettings()
                     presentationMode.wrappedValue.dismiss()
                 }
-                .disabled(!viewModel.doneEnabled)
             }
         }
     }
