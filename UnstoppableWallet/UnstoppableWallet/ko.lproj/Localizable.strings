@@ -772,6 +772,7 @@
 "market.top.top_platforms" = "주요 플랫폼";
 "market.top.protocols" = "프로토콜";
 
+"market.pairs.volume" = "Volume";
 "top_pairs.title" = "상위 시장 페어";
 "top_pairs.description" = "각 거래소에서 거래량 상위 페어";
 
