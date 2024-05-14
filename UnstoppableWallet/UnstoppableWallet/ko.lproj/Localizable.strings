@@ -442,6 +442,8 @@
 "send.transaction_inputs_outputs_info.shuffle.description" = "트랜잭션 출력의 순서는 모든 트랜잭션에서 무작위로 지정됩니다. 때로는 변화가 첫 번째 출력이 될 수도 있고 때로는 두 번째 출력이 될 수도 있습니다. 사용자가 앱 개발자를 신뢰하는 경우 권장 옵션으로 간주합니다.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "거래 출력을 정렬하는 데에는 일반적으로 합의된 표준이 있습니다(이것은 BIP69로 알려져 있습니다). 오픈 소스 지갑에서는 이 표준이 지갑 사용자가 앱 개발자가 출력 순서를 어떻게 구현하는지 신뢰할 필요가 없도록 보장합니다. 이 표준은 새로운 것이기 때문에 아직 많은 지갑이 이를 구현하지 않았습니다. 그 결과, 블록체인에서 특정 거래가 이 표준을 사용하는 지갑에서 보내졌는지 여부를 어느 정도 파악할 수 있습니다.";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "확인";
 "send.confirmation.you_send" = "보냅니다";
@@ -505,6 +507,7 @@
 "send.lock_time" = "시간 자물쇠";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "보내기";
 "send.unspent_outputs.change" = "변경";
 
