@@ -776,6 +776,7 @@
 "market.top.top_platforms" = "Топ платформы";
 "market.top.protocols" = "Протоколы";
 
+"market.pairs.volume" = "Volume";
 "top_pairs.title" = "Лучшие рыночные пары";
 "top_pairs.description" = "Лучшие торговые пары по объему на каждой бирже";
 
