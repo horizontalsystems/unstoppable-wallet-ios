@@ -774,6 +774,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.top.top_platforms" = "En İyi Platformlar";
 "market.top.protocols" = "Protokoller";
 
+"market.pairs.volume" = "Volume";
 "top_pairs.title" = "Top Market Pairs";
 "top_pairs.description" = "Her borsada hacme göre en üstte olan işlem çiftleri";
 
