@@ -11,7 +11,7 @@ struct RedactedModifier: ViewModifier {
 }
 
 extension View {
-    func redacted(value: Any?) -> some View {
+    func redacted(value: Any? = nil) -> some View {
         modifier(RedactedModifier(value: value))
     }
 }

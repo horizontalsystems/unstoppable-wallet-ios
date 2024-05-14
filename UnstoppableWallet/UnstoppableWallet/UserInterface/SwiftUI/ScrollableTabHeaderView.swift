@@ -27,10 +27,13 @@ struct ScrollableTabHeaderView: View {
                     }
                     .padding(.horizontal, .margin12)
                 }
-                .onChange(of: currentTabIndex) { _ in
+                .onChange(of: currentTabIndex) { index in
                     withAnimation(.spring().speed(1.5)) {
-                        proxy.scrollTo(currentTabIndex, anchor: .center)
+                        proxy.scrollTo(index, anchor: .center)
                     }
+                }
+                .onFirstAppear {
+                    proxy.scrollTo(currentTabIndex, anchor: .center)
                 }
             }
         }

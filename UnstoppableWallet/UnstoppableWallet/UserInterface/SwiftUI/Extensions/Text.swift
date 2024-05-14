@@ -18,8 +18,16 @@ extension View {
         foregroundColor(color).font(.themeCaption)
     }
 
+    func textCaptionSB(color: Color = .themeGray) -> some View {
+        foregroundColor(color).font(.themeCaptionSB)
+    }
+
     func textHeadline1(color: Color = .themeLeah) -> some View {
         foregroundColor(color).font(.themeHeadline1)
+    }
+
+    func textHeadline2(color: Color = .themeLeah) -> some View {
+        foregroundColor(color).font(.themeHeadline2)
     }
 
     func textMicro(color: Color = .themeGray) -> some View {
@@ -43,9 +51,7 @@ extension View {
     }
 
     func themeCaptionSB(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
-        frame(maxWidth: .infinity, alignment: alignment)
-            .foregroundColor(color)
-            .font(.themeCaptionSB)
+        textCaptionSB(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }
 
     func themeHeadline1(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
@@ -53,8 +59,10 @@ extension View {
     }
 
     func themeHeadline2(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
-        frame(maxWidth: .infinity, alignment: alignment)
-            .foregroundColor(color)
-            .font(.themeHeadline2)
+        textHeadline2(color: color).frame(maxWidth: .infinity, alignment: alignment)
+    }
+
+    func themeMicro(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
+        textMicro(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }
 }

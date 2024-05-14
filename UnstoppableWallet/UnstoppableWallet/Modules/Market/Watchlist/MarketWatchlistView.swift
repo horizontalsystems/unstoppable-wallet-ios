@@ -14,14 +14,17 @@ struct MarketWatchlistView: View {
         ThemeView {
             switch viewModel.state {
             case .loading:
-                loadingList()
-            case let .loaded(marketInfos):
+                VStack(spacing: 0) {
+                    header(disabled: true)
+                    loadingList()
+                }
+            case let .loaded(marketInfos, signals):
                 if marketInfos.isEmpty {
                     PlaceholderViewNew(image: Image("rate_48"), text: "market.watchlist.empty".localized)
                 } else {
                     VStack(spacing: 0) {
                         header()
-                        list(marketInfos: marketInfos)
+                        list(marketInfos: marketInfos, signals: signals)
                     }
                 }
             case .failed:
@@ -37,7 +40,7 @@ struct MarketWatchlistView: View {
         }
     }
 
-    @ViewBuilder private func header() -> some View {
+    @ViewBuilder private func header(disabled: Bool = false) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
@@ -46,6 +49,7 @@ struct MarketWatchlistView: View {
                     Text(viewModel.sortBy.title)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .disabled(disabled)
 
                 Button(action: {
                     timePeriodSelectorPresented = true
@@ -53,11 +57,16 @@ struct MarketWatchlistView: View {
                     Text(viewModel.timePeriod.shortTitle)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .disabled(disabled)
 
                 if viewModel.showSignals {
-                    signalsButton().buttonStyle(SecondaryActiveButtonStyle())
+                    signalsButton()
+                        .buttonStyle(SecondaryActiveButtonStyle())
+                        .disabled(disabled)
                 } else {
-                    signalsButton().buttonStyle(SecondaryButtonStyle())
+                    signalsButton()
+                        .buttonStyle(SecondaryButtonStyle())
+                        .disabled(disabled)
                 }
             }
             .padding(.horizontal, .margin16)
@@ -97,74 +106,96 @@ struct MarketWatchlistView: View {
         }
     }
 
-    @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
-        ScrollViewReader { _ in
-            ThemeList(items: marketInfos) { marketInfo in
-                ClickableRow(action: {
-                    presentedFullCoin = marketInfo.fullCoin
-                }) {
-                    let coin = marketInfo.fullCoin.coin
+    @ViewBuilder private func list(marketInfos: [MarketInfo], signals: [String: TechnicalAdvice.Advice]) -> some View {
+        ThemeList(items: marketInfos) { marketInfo in
+            ClickableRow(action: {
+                presentedFullCoin = marketInfo.fullCoin
+            }) {
+                let coin = marketInfo.fullCoin.coin
 
-                    KFImage.url(URL(string: coin.imageUrl))
-                        .resizable()
-                        .placeholder { Circle().fill(Color.themeSteel20) }
-                        .frame(width: .iconSize32, height: .iconSize32)
-
-                    VStack(spacing: 1) {
-                        HStack(spacing: .margin8) {
-                            Text(coin.code).textBody()
-                            Spacer()
-                            Text(marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized).textBody()
-                        }
-
-                        HStack(spacing: .margin8) {
-                            HStack(spacing: .margin4) {
-                                if let rank = marketInfo.marketCapRank {
-                                    BadgeViewNew(text: "\(rank)")
-                                }
-
-                                Text(coin.name).textSubhead2()
-                            }
-                            Spacer()
-                            DiffText(marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod))
-                        }
-                    }
-                }
+                itemContent(
+                    imageUrl: URL(string: coin.imageUrl),
+                    code: coin.code,
+                    name: coin.name,
+                    price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                    rank: marketInfo.marketCapRank,
+                    diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod),
+                    signal: viewModel.showSignals ? signals[coin.uid] : nil
+                )
             }
-            .themeListStyle(.transparent)
-            .refreshable {
-                await viewModel.refresh()
-            }
+        }
+        .themeListStyle(.transparent)
+        .refreshable {
+            await viewModel.refresh()
         }
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        ThemeList(items: Array(0 ... 10)) { _ in
+        ThemeList(items: Array(0 ... 10)) { index in
             ListRow {
-                Circle()
-                    .fill(Color.themeSteel20)
-                    .frame(width: .iconSize32, height: .iconSize32)
-                    .shimmering()
-
-                VStack(spacing: 1) {
-                    HStack(spacing: .margin8) {
-                        Text("USDT").textBody().redacted(value: nil)
-                        Spacer()
-                        Text("$12345").textBody().redacted(value: nil)
-                    }
-
-                    HStack(spacing: .margin8) {
-                        HStack(spacing: .margin4) {
-                            Text("12").textBody().redacted(value: nil)
-                            Text("Bitcoin").textSubhead2().redacted(value: nil)
-                        }
-                        Spacer()
-                        DiffText(12.34).redacted(value: nil)
-                    }
-                }
+                itemContent(
+                    imageUrl: nil,
+                    code: "CODE",
+                    name: "Coin Name",
+                    price: "$123.45",
+                    rank: 12,
+                    diff: index % 2 == 0 ? 12.34 : -12.34,
+                    signal: nil
+                )
+                .redacted()
             }
         }
         .themeListStyle(.transparent)
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+    }
+
+    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, name: String, price: String, rank: Int?, diff: Decimal?, signal: TechnicalAdvice.Advice?) -> some View {
+        KFImage.url(imageUrl)
+            .resizable()
+            .placeholder { Circle().fill(Color.themeSteel20) }
+            .clipShape(Circle())
+            .frame(width: .iconSize32, height: .iconSize32)
+
+        VStack(spacing: 1) {
+            HStack(spacing: .margin8) {
+                HStack(spacing: .margin12) {
+                    Text(code).textBody()
+
+                    if let signal {
+                        Text(signal.title)
+                            .font(.themeMicroSB)
+                            .foregroundColor(.themeTyler)
+                            .padding(.horizontal, .margin4)
+                            .padding(.vertical, .margin2)
+                            .background(RoundedRectangle(cornerRadius: .cornerRadius4, style: .continuous).fill(color(signal: signal)))
+                            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius4, style: .continuous))
+                    }
+                }
+
+                Spacer()
+                Text(price).textBody()
+            }
+
+            HStack(spacing: .margin8) {
+                HStack(spacing: .margin4) {
+                    if let rank {
+                        BadgeViewNew(text: "\(rank)")
+                    }
+
+                    Text(name).textSubhead2()
+                }
+                Spacer()
+                DiffText(diff)
+            }
+        }
+    }
+
+    private func color(signal: TechnicalAdvice.Advice) -> Color {
+        switch signal {
+        case .oversold, .overbought: return .themeLucian
+        case .strongSell, .strongBuy: return .themeRemus
+        case .sell, .buy: return .themeStronbuy
+        case .neutral: return .themeLeah
+        }
     }
 }
