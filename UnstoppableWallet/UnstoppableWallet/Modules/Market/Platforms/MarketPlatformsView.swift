@@ -14,7 +14,10 @@ struct MarketPlatformsView: View {
         ThemeView {
             switch viewModel.state {
             case .loading:
-                loadingList()
+                VStack(spacing: 0) {
+                    header(disabled: true)
+                    loadingList()
+                }
             case let .loaded(platforms):
                 VStack(spacing: 0) {
                     header()
@@ -33,7 +36,7 @@ struct MarketPlatformsView: View {
         }
     }
 
-    @ViewBuilder private func header() -> some View {
+    @ViewBuilder private func header(disabled: Bool = false) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
@@ -42,6 +45,7 @@ struct MarketPlatformsView: View {
                     Text(viewModel.sortBy.title)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .disabled(disabled)
 
                 Button(action: {
                     timePeriodSelectorPresented = true
@@ -49,6 +53,7 @@ struct MarketPlatformsView: View {
                     Text(viewModel.timePeriod.shortTitle)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .disabled(disabled)
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
@@ -80,75 +85,75 @@ struct MarketPlatformsView: View {
     }
 
     @ViewBuilder private func list(platforms: [TopPlatform]) -> some View {
-        ScrollViewReader { _ in
-            ThemeList(items: platforms) { platform in
-                ClickableRow(action: {
-                    presentedPlatform = platform
-                }) {
-                    let blockchain = platform.blockchain
+        ThemeList(items: platforms) { platform in
+            ClickableRow(action: {
+                presentedPlatform = platform
+            }) {
+                let blockchain = platform.blockchain
 
-                    KFImage.url(URL(string: blockchain.type.imageUrl))
-                        .resizable()
-                        .placeholder { RoundedRectangle(cornerRadius: .cornerRadius4).fill(Color.themeSteel20) }
-                        .frame(width: .iconSize32, height: .iconSize32)
-
-                    VStack(spacing: 1) {
-                        HStack(spacing: .margin8) {
-                            Text(blockchain.name).textBody()
-                            Spacer()
-                            Text(platform.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized).textBody()
-                        }
-
-                        HStack(spacing: .margin8) {
-                            HStack(spacing: .margin4) {
-                                if let rank = platform.rank {
-                                    BadgeViewNew(text: "\(rank)", change: platform.ranks[viewModel.timePeriod].map { $0 - rank })
-                                }
-
-                                if let protocolsCount = platform.protocolsCount {
-                                    Text("market.top.protocols".localized(String(protocolsCount))).textSubhead2()
-                                }
-                            }
-                            Spacer()
-                            DiffText(platform.changes[viewModel.timePeriod])
-                        }
-                    }
-                }
+                itemContent(
+                    imageUrl: URL(string: blockchain.type.imageUrl),
+                    name: blockchain.name,
+                    marketCap: platform.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                    protocolsCount: platform.protocolsCount,
+                    rank: platform.rank,
+                    rankChange: platform.rank.flatMap { rank in platform.ranks[viewModel.timePeriod].map { $0 - rank } },
+                    diff: platform.changes[viewModel.timePeriod]
+                )
             }
-            .themeListStyle(.transparent)
-            .refreshable {
-                await viewModel.refresh()
-            }
+        }
+        .themeListStyle(.transparent)
+        .refreshable {
+            await viewModel.refresh()
         }
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        ThemeList(items: Array(0 ... 10)) { _ in
+        ThemeList(items: Array(0 ... 10)) { index in
             ListRow {
-                RoundedRectangle(cornerRadius: .cornerRadius4)
-                    .fill(Color.themeSteel20)
-                    .frame(width: .iconSize32, height: .iconSize32)
-                    .shimmering()
-
-                VStack(spacing: 1) {
-                    HStack(spacing: .margin8) {
-                        Text("Ethereum").textBody().redacted(value: nil)
-                        Spacer()
-                        Text("$123.4 B").textBody().redacted(value: nil)
-                    }
-
-                    HStack(spacing: .margin8) {
-                        HStack(spacing: .margin4) {
-                            Text("12").textBody().redacted(value: nil)
-                            Text("Protocols: 123").textSubhead2().redacted(value: nil)
-                        }
-                        Spacer()
-                        DiffText(12.34).redacted(value: nil)
-                    }
-                }
+                itemContent(
+                    imageUrl: nil,
+                    name: "Blockchain",
+                    marketCap: "$123.4 B",
+                    protocolsCount: 123,
+                    rank: 12,
+                    rankChange: nil,
+                    diff: index % 2 == 0 ? 12.34 : -12.34
+                )
+                .redacted()
             }
         }
         .themeListStyle(.transparent)
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+    }
+
+    @ViewBuilder private func itemContent(imageUrl: URL?, name: String, marketCap: String, protocolsCount: Int?, rank: Int?, rankChange: Int?, diff: Decimal?) -> some View {
+        KFImage.url(imageUrl)
+            .resizable()
+            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+            .frame(width: .iconSize32, height: .iconSize32)
+
+        VStack(spacing: 1) {
+            HStack(spacing: .margin8) {
+                Text(name).textBody()
+                Spacer()
+                Text(marketCap).textBody()
+            }
+
+            HStack(spacing: .margin8) {
+                HStack(spacing: .margin4) {
+                    if let rank {
+                        BadgeViewNew(text: "\(rank)", change: rankChange)
+                    }
+
+                    if let protocolsCount {
+                        Text("market.top.protocols".localized(String(protocolsCount))).textSubhead2()
+                    }
+                }
+                Spacer()
+                DiffText(diff)
+            }
+        }
     }
 }

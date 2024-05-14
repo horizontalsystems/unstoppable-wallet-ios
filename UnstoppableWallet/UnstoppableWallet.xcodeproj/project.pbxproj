@@ -3078,6 +3078,16 @@
 		D3833AEB2BEE4CAA00ACECFB /* TopPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AE92BEE4CAA00ACECFB /* TopPlatform.swift */; };
 		D3833AEE2BF1F0C400ACECFB /* MarketPlatformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AED2BF1F0C400ACECFB /* MarketPlatformView.swift */; };
 		D3833AEF2BF1F0C400ACECFB /* MarketPlatformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AED2BF1F0C400ACECFB /* MarketPlatformView.swift */; };
+		D3833AF22BF20B8600ACECFB /* MarketPairsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AF12BF20B8600ACECFB /* MarketPairsView.swift */; };
+		D3833AF32BF20B8600ACECFB /* MarketPairsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AF12BF20B8600ACECFB /* MarketPairsView.swift */; };
+		D3833AF52BF20B8D00ACECFB /* MarketPairsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AF42BF20B8D00ACECFB /* MarketPairsViewModel.swift */; };
+		D3833AF62BF20B8D00ACECFB /* MarketPairsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AF42BF20B8D00ACECFB /* MarketPairsViewModel.swift */; };
+		D3833AF82BF2181800ACECFB /* MarketPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AF72BF2181800ACECFB /* MarketPair.swift */; };
+		D3833AF92BF2181800ACECFB /* MarketPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AF72BF2181800ACECFB /* MarketPair.swift */; };
+		D3833AFC2BF335C700ACECFB /* MarketNewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AFB2BF335C700ACECFB /* MarketNewsView.swift */; };
+		D3833AFD2BF335C700ACECFB /* MarketNewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AFB2BF335C700ACECFB /* MarketNewsView.swift */; };
+		D3833AFF2BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */; };
+		D3833B002BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */; };
 		D38404E4218317DF007D50AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D38404E8218317DF007D50AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D38404F9218317DF007D50AD /* MainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B96D2BC5994AC8EC794 /* MainModule.swift */; };
@@ -4907,6 +4917,11 @@
 		D3833AE02BEE3FE800ACECFB /* MarketPlatformsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformsViewModel.swift; sourceTree = "<group>"; };
 		D3833AE92BEE4CAA00ACECFB /* TopPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPlatform.swift; sourceTree = "<group>"; };
 		D3833AED2BF1F0C400ACECFB /* MarketPlatformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformView.swift; sourceTree = "<group>"; };
+		D3833AF12BF20B8600ACECFB /* MarketPairsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPairsView.swift; sourceTree = "<group>"; };
+		D3833AF42BF20B8D00ACECFB /* MarketPairsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPairsViewModel.swift; sourceTree = "<group>"; };
+		D3833AF72BF2181800ACECFB /* MarketPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPair.swift; sourceTree = "<group>"; };
+		D3833AFB2BF335C700ACECFB /* MarketNewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketNewsView.swift; sourceTree = "<group>"; };
+		D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketNewsViewModel.swift; sourceTree = "<group>"; };
 		D38405CE218317DF007D50AD /* Unstoppable D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable D.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406BE21831B3D007D50AD /* Unstoppable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unstoppable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406C3218327B1007D50AD /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
@@ -5480,6 +5495,7 @@
 				11B35ED0A8819AB7EA27D368 /* StatExtensions.swift */,
 				D3DB51B12BD912A00091BBDB /* MarketInfo.swift */,
 				D3833AE92BEE4CAA00ACECFB /* TopPlatform.swift */,
+				D3833AF72BF2181800ACECFB /* MarketPair.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -7689,6 +7705,8 @@
 		58AAA9EB9618EBC895D0B123 /* Market */ = {
 			isa = PBXGroup;
 			children = (
+				D3833AFA2BF335B800ACECFB /* News */,
+				D3833AF02BF20B7200ACECFB /* Pairs */,
 				D3833AEC2BF1F0AC00ACECFB /* Platform */,
 				D3833ADC2BEE3FC200ACECFB /* Platforms */,
 				D3833AD52BEE1A2900ACECFB /* Watchlist */,
@@ -9276,6 +9294,24 @@
 			path = Platform;
 			sourceTree = "<group>";
 		};
+		D3833AF02BF20B7200ACECFB /* Pairs */ = {
+			isa = PBXGroup;
+			children = (
+				D3833AF12BF20B8600ACECFB /* MarketPairsView.swift */,
+				D3833AF42BF20B8D00ACECFB /* MarketPairsViewModel.swift */,
+			);
+			path = Pairs;
+			sourceTree = "<group>";
+		};
+		D3833AFA2BF335B800ACECFB /* News */ = {
+			isa = PBXGroup;
+			children = (
+				D3833AFB2BF335C700ACECFB /* MarketNewsView.swift */,
+				D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
 		D3948EF52ADA846400FAE566 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
@@ -9785,6 +9821,7 @@
 				D02A67BD272A7460009B2C1C /* TweetCell.swift in Sources */,
 				11B3527D20636D21F0F45C80 /* CurrentDateProvider.swift in Sources */,
 				11B35DA5492B0C4EC7130A19 /* AppConfig.swift in Sources */,
+				D3833AF32BF20B8600ACECFB /* MarketPairsView.swift in Sources */,
 				11B350B22CCCFCD466BEB808 /* FeeRateProvider.swift in Sources */,
 				6BCD53172A161F4800993F20 /* BackupViewController.swift in Sources */,
 				11B35B3F384758B223A7218C /* MainSettingsFooterCell.swift in Sources */,
@@ -10015,6 +10052,7 @@
 				1A564D209D3AFA40F808C8FB /* PerformanceContentCollectionViewCell.swift in Sources */,
 				1A564E8CA0CFBE8B1E232B60 /* PerformanceTableViewCell.swift in Sources */,
 				1A564BAB51E12A8F37D870B5 /* PerformanceSideCollectionViewCell.swift in Sources */,
+				D3833B002BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */,
 				58AAAA71882CB345D56BBA00 /* CoinChartFactory.swift in Sources */,
 				11B35DD9C17FDD3ED40BA321 /* CoinInvestorsModule.swift in Sources */,
 				11B358D913A404C1DA7D4E0E /* CoinInvestorsViewModel.swift in Sources */,
@@ -10049,6 +10087,7 @@
 				11B350860CB79E9C5F032166 /* ManageAccountViewModel.swift in Sources */,
 				11B3563E71C4AC16DFE8AB76 /* ActiveAccount.swift in Sources */,
 				6BCD530D2A161F4100993F20 /* ICloudBackupNameViewModel.swift in Sources */,
+				D3833AF92BF2181800ACECFB /* MarketPair.swift in Sources */,
 				11B35056B69A06C8CFF3CBB6 /* BackupModule.swift in Sources */,
 				D349031B2BE8DF5F005F147B /* BinancePreSendHandler.swift in Sources */,
 				D0A980AA2B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */,
@@ -10121,6 +10160,7 @@
 				D00267BD2A57E72700D6B2D5 /* ResendPasteInputView.swift in Sources */,
 				58AAA3FE5DE72D3CEFFE4399 /* MarketPostService.swift in Sources */,
 				1A564CFD8F22A2F5FDB346EA /* JailbreakService.swift in Sources */,
+				D3833AFD2BF335C700ACECFB /* MarketNewsView.swift in Sources */,
 				D05E96A72A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				58AAA097F8417B30693547FE /* CoinPageMarkdownParser.swift in Sources */,
 				1A564BB34D0EAA2E8BE8B498 /* DeepLinkManager.swift in Sources */,
@@ -10826,6 +10866,7 @@
 				ABC9AD27E074CF3FA292C647 /* IndicatorAdviceView.swift in Sources */,
 				ABC9A305CBB28F2B19EB00D2 /* CoinDetailAdviceViewController.swift in Sources */,
 				ABC9AADE6C4251FCC9222125 /* ManageBarButtonView.swift in Sources */,
+				D3833AF62BF20B8D00ACECFB /* MarketPairsViewModel.swift in Sources */,
 				ABC9AB11FDD018A96BB86557 /* BottomGradientHolder.swift in Sources */,
 				11B35311CEEC40EA3089293D /* SubscriptionInfoViewController.swift in Sources */,
 				11B35A5DA8197D193B7CF8D9 /* AmountData.swift in Sources */,
@@ -11333,6 +11374,7 @@
 				D0532CBE2B149DEE0015DF40 /* WatchViewModel.swift in Sources */,
 				11B3540F182F3EDE74245EC7 /* MainSettingsFooterCell.swift in Sources */,
 				6BCD53162A161F4800993F20 /* BackupViewController.swift in Sources */,
+				D3833AF22BF20B8600ACECFB /* MarketPairsView.swift in Sources */,
 				58AAAD33B32694AFA2E954D6 /* GradientLayer.swift in Sources */,
 				58AAAE430A2184D5A12202EA /* DebugModule.swift in Sources */,
 				58AAA54CF2169C04A4A38817 /* DebugRouter.swift in Sources */,
@@ -11563,6 +11605,7 @@
 				1A564D81725888B31D56F389 /* PerformanceContentCollectionViewCell.swift in Sources */,
 				1A5648B6D95710939690F22A /* PerformanceTableViewCell.swift in Sources */,
 				1A564E09FB049006167E033B /* PerformanceSideCollectionViewCell.swift in Sources */,
+				D3833AFF2BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */,
 				D36DE0D8272FD887000BC916 /* OneInchDataSource.swift in Sources */,
 				58AAA2EBAFC1C443C48BA857 /* CoinChartFactory.swift in Sources */,
 				11B355EE734C8CAC81BA1BF9 /* CoinInvestorsModule.swift in Sources */,
@@ -11597,6 +11640,7 @@
 				11B356C6E9FC6594917B3FF6 /* ActiveAccount.swift in Sources */,
 				D02A67C8272A7460009B2C1C /* CoinTweetsViewController.swift in Sources */,
 				D02A67C2272A7460009B2C1C /* TwitterText.swift in Sources */,
+				D3833AF82BF2181800ACECFB /* MarketPair.swift in Sources */,
 				6BE8A0812ADE2FAB0012DE7F /* CurrencyManager.swift in Sources */,
 				D349031A2BE8DF5F005F147B /* BinancePreSendHandler.swift in Sources */,
 				11B359F73F1D626BF832977F /* BackupModule.swift in Sources */,
@@ -11669,6 +11713,7 @@
 				D00267BC2A57E72700D6B2D5 /* ResendPasteInputView.swift in Sources */,
 				1A56464440899E3299F79D32 /* JailbreakService.swift in Sources */,
 				58AAAE5341084CFA30D4832C /* CoinPageMarkdownParser.swift in Sources */,
+				D3833AFC2BF335C700ACECFB /* MarketNewsView.swift in Sources */,
 				D05E96A62A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				1A5640D6FDF86EDB54213F9B /* DeepLinkManager.swift in Sources */,
 				D36DE0EC272FD89B000BC916 /* SwapSettingsModule.swift in Sources */,
@@ -12374,6 +12419,7 @@
 				ABC9A74F192AB94CFD1D1649 /* IndicatorAdviceCell.swift in Sources */,
 				ABC9AFE47A405844612EB01A /* IndicatorAdviceView.swift in Sources */,
 				ABC9A0866C672D2D560DA23C /* CoinDetailAdviceViewController.swift in Sources */,
+				D3833AF52BF20B8D00ACECFB /* MarketPairsViewModel.swift in Sources */,
 				ABC9AD3001AAA0570B503876 /* ManageBarButtonView.swift in Sources */,
 				ABC9A54FFFFBFC3C7B23F0B8 /* BottomGradientHolder.swift in Sources */,
 				11B354AC828E53D98222EE71 /* SubscriptionInfoViewController.swift in Sources */,
@@ -13675,7 +13721,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.3;
+				version = 3.0.4;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {

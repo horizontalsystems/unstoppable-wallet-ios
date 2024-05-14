@@ -163,6 +163,18 @@ extension MarketModule {
         }
     }
 
+    enum SortOrder {
+        case asc
+        case desc
+
+        mutating func toggle() {
+            switch self {
+            case .asc: self = .desc
+            case .desc: self = .asc
+            }
+        }
+    }
+
     enum Top: Int, CaseIterable {
         case top100 = 100
         case top200 = 200

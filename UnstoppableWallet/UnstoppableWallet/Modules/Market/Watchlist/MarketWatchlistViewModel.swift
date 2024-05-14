@@ -44,13 +44,13 @@ class MarketWatchlistViewModel: ObservableObject {
     private func syncCoinUids() {
         coinUids = favoritesManager.allCoinUids
 
-        if case let .loaded(marketInfos) = internalState {
+        if case let .loaded(marketInfos, signals) = internalState {
             let newMarketInfos = marketInfos.filter { marketInfo in
                 coinUids.contains(marketInfo.fullCoin.coin.uid)
             }
 
             if newMarketInfos.count == coinUids.count {
-                internalState = .loaded(marketInfos: newMarketInfos)
+                internalState = .loaded(marketInfos: newMarketInfos, signals: signals)
                 return
             }
         }
@@ -69,7 +69,7 @@ class MarketWatchlistViewModel: ObservableObject {
     private func _syncMarketInfos() async {
         if coinUids.isEmpty {
             await MainActor.run { [weak self] in
-                self?.internalState = .loaded(marketInfos: [])
+                self?.internalState = .loaded(marketInfos: [], signals: [:])
             }
             return
         }
@@ -81,10 +81,13 @@ class MarketWatchlistViewModel: ObservableObject {
         }
 
         do {
-            let marketInfos = try await marketKit.marketInfos(coinUids: coinUids, currencyCode: currency.code)
+            async let _marketInfos = try marketKit.marketInfos(coinUids: coinUids, currencyCode: currency.code)
+            async let _signals = try marketKit.signals(coinUids: coinUids)
+
+            let (marketInfos, signals) = try await (_marketInfos, _signals)
 
             await MainActor.run { [weak self] in
-                self?.internalState = .loaded(marketInfos: marketInfos)
+                self?.internalState = .loaded(marketInfos: marketInfos, signals: signals)
             }
         } catch {
             await MainActor.run { [weak self] in
@@ -97,8 +100,8 @@ class MarketWatchlistViewModel: ObservableObject {
         switch internalState {
         case .loading:
             state = .loading
-        case let .loaded(marketInfos):
-            state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, timePeriod: timePeriod))
+        case let .loaded(marketInfos, signals):
+            state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, timePeriod: timePeriod), signals: signals)
         case let .failed(error):
             state = .failed(error: error)
         }
@@ -138,7 +141,7 @@ extension MarketWatchlistViewModel {
 extension MarketWatchlistViewModel {
     enum State {
         case loading
-        case loaded(marketInfos: [MarketInfo])
+        case loaded(marketInfos: [MarketInfo], signals: [String: TechnicalAdvice.Advice])
         case failed(error: Error)
     }
 }

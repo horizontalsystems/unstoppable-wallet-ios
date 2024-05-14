@@ -15,7 +15,10 @@ struct MarketCoinsView: View {
         ThemeView {
             switch viewModel.state {
             case .loading:
-                loadingList()
+                VStack(spacing: 0) {
+                    header(disabled: true)
+                    loadingList()
+                }
             case let .loaded(marketInfos):
                 VStack(spacing: 0) {
                     header()
@@ -34,7 +37,7 @@ struct MarketCoinsView: View {
         }
     }
 
-    @ViewBuilder private func header() -> some View {
+    @ViewBuilder private func header(disabled: Bool = false) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
@@ -43,6 +46,7 @@ struct MarketCoinsView: View {
                     Text(viewModel.sortBy.title)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .disabled(disabled)
 
                 Button(action: {
                     topSelectorPresented = true
@@ -50,6 +54,7 @@ struct MarketCoinsView: View {
                     Text(viewModel.top.title)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .disabled(disabled)
 
                 Button(action: {
                     timePeriodSelectorPresented = true
@@ -57,6 +62,7 @@ struct MarketCoinsView: View {
                     Text(viewModel.timePeriod.shortTitle)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .disabled(disabled)
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
@@ -100,73 +106,71 @@ struct MarketCoinsView: View {
     }
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
-        ScrollViewReader { _ in
-            ThemeList(items: marketInfos) { marketInfo in
-                ClickableRow(action: {
-                    presentedFullCoin = marketInfo.fullCoin
-                }) {
-                    let coin = marketInfo.fullCoin.coin
+        ThemeList(items: marketInfos) { marketInfo in
+            ClickableRow(action: {
+                presentedFullCoin = marketInfo.fullCoin
+            }) {
+                let coin = marketInfo.fullCoin.coin
 
-                    KFImage.url(URL(string: coin.imageUrl))
-                        .resizable()
-                        .placeholder { Circle().fill(Color.themeSteel20) }
-                        .frame(width: .iconSize32, height: .iconSize32)
-
-                    VStack(spacing: 1) {
-                        HStack(spacing: .margin8) {
-                            Text(coin.code).textBody()
-                            Spacer()
-                            Text(marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized).textBody()
-                        }
-
-                        HStack(spacing: .margin8) {
-                            HStack(spacing: .margin4) {
-                                if let rank = marketInfo.marketCapRank {
-                                    BadgeViewNew(text: "\(rank)")
-                                }
-
-                                Text(coin.name).textSubhead2()
-                            }
-                            Spacer()
-                            DiffText(marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod))
-                        }
-                    }
-                }
+                itemContent(
+                    imageUrl: URL(string: coin.imageUrl),
+                    code: coin.code,
+                    name: coin.name,
+                    price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                    rank: marketInfo.marketCapRank,
+                    diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
+                )
             }
-            .themeListStyle(.transparent)
-            .refreshable {
-                await viewModel.refresh()
-            }
+        }
+        .themeListStyle(.transparent)
+        .refreshable {
+            await viewModel.refresh()
         }
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        ThemeList(items: Array(0 ... 10)) { _ in
+        ThemeList(items: Array(0 ... 10)) { index in
             ListRow {
-                Circle()
-                    .fill(Color.themeSteel20)
-                    .frame(width: .iconSize32, height: .iconSize32)
-                    .shimmering()
-
-                VStack(spacing: 1) {
-                    HStack(spacing: .margin8) {
-                        Text("USDT").textBody().redacted(value: nil)
-                        Spacer()
-                        Text("$12345").textBody().redacted(value: nil)
-                    }
-
-                    HStack(spacing: .margin8) {
-                        HStack(spacing: .margin4) {
-                            Text("12").textBody().redacted(value: nil)
-                            Text("Bitcoin").textSubhead2().redacted(value: nil)
-                        }
-                        Spacer()
-                        DiffText(12.34).redacted(value: nil)
-                    }
-                }
+                itemContent(
+                    imageUrl: nil,
+                    code: "CODE",
+                    name: "Coin Name",
+                    price: "$123.45",
+                    rank: 12,
+                    diff: index % 2 == 0 ? 12.34 : -12.34
+                )
+                .redacted()
             }
         }
         .themeListStyle(.transparent)
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+    }
+
+    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, name: String, price: String, rank: Int?, diff: Decimal?) -> some View {
+        KFImage.url(imageUrl)
+            .resizable()
+            .placeholder { Circle().fill(Color.themeSteel20) }
+            .clipShape(Circle())
+            .frame(width: .iconSize32, height: .iconSize32)
+
+        VStack(spacing: 1) {
+            HStack(spacing: .margin8) {
+                Text(code).textBody()
+                Spacer()
+                Text(price).textBody()
+            }
+
+            HStack(spacing: .margin8) {
+                HStack(spacing: .margin4) {
+                    if let rank {
+                        BadgeViewNew(text: "\(rank)")
+                    }
+
+                    Text(name).textSubhead2()
+                }
+                Spacer()
+                DiffText(diff)
+            }
+        }
     }
 }

@@ -4,15 +4,19 @@ import ThemeKit
 struct MarketTabView: View {
     @StateObject var coinsViewModel: MarketCoinsViewModel
     @StateObject var watchlistViewModel: MarketWatchlistViewModel
+    @StateObject var newsViewModel: MarketNewsViewModel
     @StateObject var platformsViewModel: MarketPlatformsViewModel
+    @StateObject var pairsViewModel: MarketPairsViewModel
 
-    @State private var currentTabIndex: Int = Tab.coins.rawValue
+    @State private var currentTabIndex: Int = Tab.pairs.rawValue
     @State private var loadedTabs = [Tab]()
 
     init() {
         _coinsViewModel = StateObject(wrappedValue: MarketCoinsViewModel())
         _watchlistViewModel = StateObject(wrappedValue: MarketWatchlistViewModel())
+        _newsViewModel = StateObject(wrappedValue: MarketNewsViewModel())
         _platformsViewModel = StateObject(wrappedValue: MarketPlatformsViewModel())
+        _pairsViewModel = StateObject(wrappedValue: MarketPairsViewModel())
     }
 
     var body: some View {
@@ -22,28 +26,23 @@ struct MarketTabView: View {
                 currentTabIndex: $currentTabIndex
             )
 
-            TabView(selection: $currentTabIndex) {
-                MarketCoinsView(viewModel: coinsViewModel)
-                    .tag(Tab.coins.rawValue)
-
-                MarketWatchlistView(viewModel: watchlistViewModel)
-                    .tag(Tab.watchlist.rawValue)
-
-                Text("News Content").tag(Tab.news.rawValue)
-
-                MarketPlatformsView(viewModel: platformsViewModel)
-                    .tag(Tab.platforms.rawValue)
-
-                Text("Pairs Content").tag(Tab.pairs.rawValue)
-                Text("Sectors Content").tag(Tab.sectors.rawValue)
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .frame(maxHeight: .infinity)
-            .onChange(of: currentTabIndex) { index in
-                loadTab(index: index)
-            }
-            .onFirstAppear {
-                loadTab(index: currentTabIndex)
+            if let tab = Tab(rawValue: currentTabIndex) {
+                VStack {
+                    switch tab {
+                    case .coins: MarketCoinsView(viewModel: coinsViewModel)
+                    case .watchlist: MarketWatchlistView(viewModel: watchlistViewModel)
+                    case .news: MarketNewsView(viewModel: newsViewModel)
+                    case .platforms: MarketPlatformsView(viewModel: platformsViewModel)
+                    case .pairs: MarketPairsView(viewModel: pairsViewModel)
+                    }
+                }
+                .frame(maxHeight: .infinity)
+                .onChange(of: currentTabIndex) { index in
+                    loadTab(index: index)
+                }
+                .onFirstAppear {
+                    loadTab(index: currentTabIndex)
+                }
             }
         }
     }
@@ -62,10 +61,9 @@ struct MarketTabView: View {
         switch tab {
         case .coins: coinsViewModel.load()
         case .watchlist: watchlistViewModel.load()
-        case .news: ()
+        case .news: newsViewModel.load()
         case .platforms: platformsViewModel.load()
-        case .pairs: ()
-        case .sectors: ()
+        case .pairs: pairsViewModel.load()
         }
     }
 }
@@ -77,7 +75,7 @@ extension MarketTabView {
         case news
         case platforms
         case pairs
-        case sectors
+        // case sectors
 
         var title: String {
             switch self {
@@ -86,7 +84,7 @@ extension MarketTabView {
             case .news: return "market.tab.news".localized
             case .platforms: return "market.tab.platforms".localized
             case .pairs: return "market.tab.pairs".localized
-            case .sectors: return "market.tab.sectors".localized
+                // case .sectors: return "market.tab.sectors".localized
             }
         }
     }

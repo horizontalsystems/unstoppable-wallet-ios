@@ -34,8 +34,8 @@ struct SecondaryButtonStyle: ButtonStyle {
     }
 
     @ViewBuilder func accessoryView(accessory: Accessory, configuration: Configuration) -> some View {
-        if let icon = accessory.icon {
-            Image(icon)
+        if let image = accessory.image {
+            image
                 .renderingMode(.template)
                 .foregroundColor(accessory.foregroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
         } else {
@@ -69,14 +69,14 @@ struct SecondaryButtonStyle: ButtonStyle {
         case none
         case dropDown
         case info
-        case custom(icon: String, pressedColor: Color = Self.pressedColor, activeColor: Color = Self.enabledColor, disabledColor: Color = Self.disabledColor)
+        case custom(image: Image, pressedColor: Color = Self.pressedColor, activeColor: Color = Self.enabledColor, disabledColor: Color = Self.disabledColor)
 
-        var icon: String? {
+        var image: Image? {
             switch self {
             case .none: return nil
-            case .dropDown: return "arrow_small_down_20"
-            case .info: return "circle_information_20"
-            case let .custom(icon, _, _, _): return icon
+            case .dropDown: return Image("arrow_small_down_20")
+            case .info: return Image("circle_information_20")
+            case let .custom(image, _, _, _): return image
             }
         }
 
