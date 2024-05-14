@@ -774,6 +774,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.top.top_platforms" = "Top Plattformen";
 "market.top.protocols" = "Protocols";
 
+"market.pairs.volume" = "Volume";
 "top_pairs.title" = "Top Marktpaare";
 "top_pairs.description" = "Top-Handelspaare nach Volumen in jedem Exchange";
 
