@@ -774,6 +774,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market.top.top_platforms" = "Meilleures plateformes";
 "market.top.protocols" = "Protocoles";
 
+"market.pairs.volume" = "Volume";
 "top_pairs.title" = "Principaux paires de marché";
 "top_pairs.description" = "Principales paires de trading par volume sur chaque bourse";
 
