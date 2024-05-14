@@ -444,6 +444,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "L'ordre des sorties de transaction est aléatoire à chaque transaction. Parfois, le changement peut être la première sortie, parfois la deuxième. Si un utilisateur fait confiance au développeur de l'application, alors considérez cela comme une option recommandée.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Déterministe";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Il existe une norme communément acceptée pour l'ordonnancement des sorties de transaction, connue sous le nom de BIP69 (Bitcoin Improvement Proposal 69). Dans les portefeuilles open source, cette norme garantit que les utilisateurs de portefeuille n'ont pas besoin de faire confiance à la manière dont les développeurs de l'application implémentent l'ordonnancement des sorties. Comme cette norme est relativement récente, peu de portefeuilles l'ont encore mise en œuvre. Par conséquent, il est quelque peu possible de déterminer sur la blockchain si une transaction a été envoyée depuis un portefeuille qui utilise cette norme ou non.";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "Confirmer";
 "send.confirmation.you_send" = "Vous envoyez";
@@ -507,6 +509,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "Envoyer à";
 "send.unspent_outputs.change" = "Changer";
 
