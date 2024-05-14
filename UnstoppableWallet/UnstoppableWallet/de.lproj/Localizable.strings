@@ -444,6 +444,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "Die Reihenfolge der Transaktionsausgänge wird bei jeder Transaktion zufällig. Manchmal können Änderungen die erste Ausgabe sein, manchmal kann es die zweite sein. Wenn ein Benutzer dem Entwickler der App vertraut, dann erwäge dies eine empfohlene Option.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Es gibt einen allgemein vereinbarten Standard für die Bestellung von Transaktionsausgängen (bekannt als BIP69). In Open-Source-Brieftaschen stellt dieser Standard sicher, dass Wallet-Benutzer nicht darauf vertrauen müssen, wie Entwickler der App die Reihenfolge der Ausgaben implementieren. Da dieser Standard neu ist, haben noch nicht viele Brieftaschen ihn implementiert. Infolgedessen ist es einigermaßen möglich, auf der Blockchain zu sehen, ob eine Transaktion von einer Brieftasche gesendet wurde, die diesen Standard verwendet hat oder nicht.";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "Bestätigen";
 "send.confirmation.you_send" = "Sie Senden";
@@ -507,6 +509,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "Senden an";
 "send.unspent_outputs.change" = "Ändern";
 
