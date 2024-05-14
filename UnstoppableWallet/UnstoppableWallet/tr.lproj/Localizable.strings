@@ -444,6 +444,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "İşlem çıktılarının sırası her işlemde rastgele belirlenir. Bazen değişim ilk çıktı olabilir, bazen ikinci olabilir. Bir kullanıcı uygulamanın geliştiricisine güveniyorsa bunu önerilen bir seçenek olarak değerlendirin.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "İşlem çıktılarını sipariş etmek için yaygın olarak kabul edilen bir standart vardır (BIP69 olarak bilinir). Açık kaynaklı (open-source) cüzdanlarda, bu standart, cüzdan kullanıcılarının uygulamanın geliştiricilerinin çıktıların sıralanmasını nasıl uyguladıklarına güvenmelerine gerek kalmamasını sağlar. Bu standart yeni olduğundan, henüz pek çok cüzdan bunu uygulamamıştır. Sonuç olarak, bir işlemin bu standardı kullanan bir cüzdandan gönderilip gönderilmediğini blok zincirinde görmek mümkündür.";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
@@ -507,6 +509,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "Göndermek için";
 "send.unspent_outputs.change" = "Değiştir";
 
