@@ -774,6 +774,7 @@
 "market.top.top_platforms" = "前列平台";
 "market.top.protocols" = "协议";
 
+"market.pairs.volume" = "Volume";
 "top_pairs.title" = "热门市场交易对";
 "top_pairs.description" = "每个交易所的交易量最高的交易对";
 
