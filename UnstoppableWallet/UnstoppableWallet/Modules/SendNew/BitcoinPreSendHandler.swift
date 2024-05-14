@@ -10,13 +10,30 @@ import SwiftUI
 class BitcoinPreSendHandler {
     let token: Token
 
-    var sortMode: TransactionDataSortMode
-    var rbfEnabled: Bool
-    var lockTimeInterval: HodlerPlugin.LockTimeInterval?
-
     var customUtxos: [UnspentOutputInfo]? {
         didSet {
-            syncBalance()
+            balanceSubject.send(availableBalanceDecimal)
+            settingsModifiedSubject.send(settingsModified)
+        }
+    }
+
+    var sortMode: TransactionDataSortMode {
+        didSet {
+            blockchainManager.save(transactionSortMode: sortMode, blockchainType: token.blockchainType)
+            settingsModifiedSubject.send(settingsModified)
+        }
+    }
+
+    var rbfEnabled: Bool {
+        didSet {
+            blockchainManager.save(rbfEnabled: rbfEnabled, blockchainType: token.blockchainType)
+            settingsModifiedSubject.send(settingsModified)
+        }
+    }
+
+    var lockTimeInterval: HodlerPlugin.LockTimeInterval? {
+        didSet {
+            settingsModifiedSubject.send(settingsModified)
         }
     }
 
@@ -26,10 +43,20 @@ class BitcoinPreSendHandler {
         return utxos.map(\.value).reduce(0, +)
     }
 
+    var availableBalanceDecimal: Decimal {
+        let coinRate = pow(10, token.decimals)
+        return Decimal(availableBalance) / coinRate
+    }
+
     private let adapter: BitcoinBaseAdapter
+    private let blockchainManager: BtcBlockchainManager
     private let disposeBag = DisposeBag()
+
+    private let defaultSortMode: TransactionDataSortMode
+    private let defaultRbfEnabled: Bool
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
+    private let settingsModifiedSubject = PassthroughSubject<Bool, Never>()
 
     private var pluginData: [UInt8: IPluginData] {
         guard let lockTimeInterval else {
@@ -44,10 +71,13 @@ class BitcoinPreSendHandler {
         self.adapter = adapter
 
         let blockchainType = token.blockchainType
-        let blockchainManager = App.shared.btcBlockchainManager
+        blockchainManager = App.shared.btcBlockchainManager
 
-        sortMode = blockchainManager.transactionSortMode(blockchainType: blockchainType)
-        rbfEnabled = blockchainManager.transactionRbfEnabled(blockchainType: blockchainType)
+        defaultSortMode = blockchainManager.transactionSortMode(blockchainType: blockchainType)
+        sortMode = defaultSortMode
+
+        defaultRbfEnabled = blockchainManager.transactionRbfEnabled(blockchainType: blockchainType)
+        rbfEnabled = defaultRbfEnabled
 
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -68,10 +98,16 @@ class BitcoinPreSendHandler {
 
     private func syncBalance() {
         allUtxos = adapter.unspentOutputs(filters: .init())
-
-        let coinRate = pow(10, token.decimals)
-        let availableBalanceDecimal = Decimal(availableBalance) / coinRate
         balanceSubject.send(availableBalanceDecimal)
+    }
+}
+
+extension BitcoinPreSendHandler {
+    func reset() {
+        sortMode = defaultSortMode
+        rbfEnabled = defaultRbfEnabled
+        lockTimeInterval = nil
+        customUtxos = nil
     }
 }
 
@@ -89,11 +125,19 @@ extension BitcoinPreSendHandler: IPreSendHandler {
     }
 
     var balance: Decimal {
-        adapter.balanceData.available
+        availableBalanceDecimal
     }
 
     var balancePublisher: AnyPublisher<Decimal, Never> {
         balanceSubject.eraseToAnyPublisher()
+    }
+
+    var settingsModified: Bool {
+        sortMode != defaultSortMode || rbfEnabled != defaultRbfEnabled || customUtxos != nil || lockTimeInterval != nil
+    }
+
+    var settingsModifiedPublisher: AnyPublisher<Bool, Never> {
+        settingsModifiedSubject.eraseToAnyPublisher()
     }
 
     func hasMemo(address _: String?) -> Bool {
@@ -109,6 +153,12 @@ extension BitcoinPreSendHandler: IPreSendHandler {
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
+        do {
+            try adapter.validate(address: address, pluginData: pluginData)
+        } catch {
+            return .invalid(cautions: [CautionNew(text: error.localizedDescription, type: .error)])
+        }
+
         let params = SendParameters(
             address: address,
             value: adapter.convertToSatoshi(value: amount),

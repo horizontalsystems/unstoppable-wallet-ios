@@ -159,6 +159,11 @@ class PreSendViewModel: ObservableObject {
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in self?.availableBalance = $0 }
                 .store(in: &cancellables)
+
+            handler.settingsModifiedPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in self?.syncSendData() }
+                .store(in: &cancellables)
         }
 
         syncFiatAmount()
@@ -200,14 +205,8 @@ class PreSendViewModel: ObservableObject {
             addressCautionState = .none
         case let .valid(success):
             let address = success.address.raw
-
-            if let handler, let caution = handler.validate(address: address) {
-                addressState = .invalid
-                addressCautionState = .caution(caution)
-            } else {
-                addressState = .valid(address: address)
-                addressCautionState = .none
-            }
+            addressState = .valid(address: address)
+            addressCautionState = .none
         }
     }
 
