@@ -444,6 +444,8 @@
 "send.transaction_inputs_outputs_info.shuffle.description" = "交易输出的顺序是随机的每次交易。有时更改可以是第一次输出，有时可以是第二次。 如果用户信任应用程序的开发者，则考虑这个推荐选项。";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "存在一个公认的交易输出排序标准（称为BIP69）。在开源钱包中，该标准确保钱包用户不需要信任应用开发者如何实现输出的排序。由于这个标准是新的，目前还没有多少钱包实施它。因此，在区块链上有可能某种程度上看出交易是否来自使用该标准的钱包。";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "确认";
 "send.confirmation.you_send" = "您发送";
@@ -507,6 +509,7 @@
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "发送至";
 "send.unspent_outputs.change" = "更改";
 
