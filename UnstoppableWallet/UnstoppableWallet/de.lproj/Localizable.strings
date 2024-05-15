@@ -1508,6 +1508,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "appearance.tab_settings" = "Tab-Einstellungen";
 "appearance.markets_tab" = "Markt-Tab";
+"appearance.buttons_show" = "Balance Tab Buttons";
 "appearance.launch_screen" = "Startbildschirm";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Guthaben";
