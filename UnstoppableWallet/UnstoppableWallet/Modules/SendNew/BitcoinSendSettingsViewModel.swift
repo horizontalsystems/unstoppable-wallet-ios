@@ -25,11 +25,7 @@ class BitcoinSendSettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var resetEnabled: Bool {
-        didSet {
-            print("resetEnabled: \(resetEnabled)")
-        }
-    }
+    @Published var resetEnabled: Bool
 
     @Published var utxos: String = ""
 
@@ -39,7 +35,6 @@ class BitcoinSendSettingsViewModel: ObservableObject {
         sortMode = handler.sortMode
         rbfEnabled = handler.rbfEnabled
         lockTimeInterval = handler.lockTimeInterval
-
         resetEnabled = handler.settingsModified
 
         handler.settingsModifiedPublisher
@@ -65,6 +60,10 @@ class BitcoinSendSettingsViewModel: ObservableObject {
 
 extension BitcoinSendSettingsViewModel {
     func reset() {
-        handler.reset()
+        sortMode = handler.defaultSortMode
+        rbfEnabled = handler.defaultRbfEnabled
+        lockTimeInterval = nil
+        handler.customUtxos = nil
+        resetEnabled = handler.settingsModified
     }
 }

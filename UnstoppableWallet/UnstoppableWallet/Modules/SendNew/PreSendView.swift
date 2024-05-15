@@ -38,9 +38,12 @@ struct PreSendView: View {
                     }
 
                     buttonView()
+
+                    if !viewModel.cautions.isEmpty {
+                        cautionsView()
+                    }
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
-                .animation(.linear, value: viewModel.addressCautionState)
                 .animation(.linear, value: viewModel.hasMemo)
             }
 
@@ -202,8 +205,6 @@ struct PreSendView: View {
             text: $viewModel.address,
             result: $viewModel.addressResult
         )
-        .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
-        .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
     }
 
     @ViewBuilder private func memoView() -> some View {
@@ -233,6 +234,16 @@ struct PreSendView: View {
         }
         .disabled(disabled)
         .buttonStyle(PrimaryButtonStyle(style: .yellow))
+    }
+
+    @ViewBuilder private func cautionsView() -> some View {
+        let cautions = viewModel.cautions
+
+        VStack(spacing: .margin12) {
+            ForEach(cautions.indices, id: \.self) { index in
+                HighlightedTextView(caution: cautions[index])
+            }
+        }
     }
 
     private func balanceValue() -> String? {
