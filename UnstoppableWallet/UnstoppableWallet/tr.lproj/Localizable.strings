@@ -1512,6 +1512,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "appearance.tab_settings" = "Tab Ayarları";
 "appearance.markets_tab" = "Piyasalar Sekmesi";
+"appearance.buttons_show" = "Balance Tab Buttons";
 "appearance.launch_screen" = "Başlangıç Ekranı";
 "appearance.launch_screen.auto" = "Oto";
 "appearance.launch_screen.balance" = "Bakiye";
