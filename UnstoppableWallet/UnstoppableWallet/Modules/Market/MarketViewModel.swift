@@ -10,7 +10,7 @@ class MarketViewModel {
     private let marketKit = App.shared.marketKit
     private let favoritesManager = App.shared.favoritesManager
 
-    @Published var currentTab: MarketModule.Tab {
+    @Published var currentTab: MarketModule.TabOld {
         didSet {
             userDefaultsStorage.set(value: currentTab.rawValue, for: keyTab)
         }
@@ -28,11 +28,11 @@ class MarketViewModel {
     private let unfavoritedSubject = PassthroughSubject<Void, Never>()
 
     init() {
-        let currentTab: MarketModule.Tab
+        let currentTab: MarketModule.TabOld
 
         switch launchScreenManager.launchScreen {
         case .auto:
-            if let storedValue: String = userDefaultsStorage.value(for: keyTab), let storedTab = MarketModule.Tab(rawValue: storedValue) {
+            if let storedValue: String = userDefaultsStorage.value(for: keyTab), let storedTab = MarketModule.TabOld(rawValue: storedValue) {
                 currentTab = storedTab
             } else {
                 currentTab = .overview

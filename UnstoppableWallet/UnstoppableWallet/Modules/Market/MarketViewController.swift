@@ -58,7 +58,7 @@ class MarketViewController: ThemeSearchViewController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
 
-        tabsView.reload(filters: MarketModule.Tab.allCases.map {
+        tabsView.reload(filters: MarketModule.TabOld.allCases.map {
             FilterView.ViewItem.item(title: $0.title)
         })
 
@@ -92,7 +92,7 @@ class MarketViewController: ThemeSearchViewController {
 
         viewModel.$currentTab
             .sink { [weak self] currentTab in
-                self?.tabsView.select(index: MarketModule.Tab.allCases.firstIndex(of: currentTab) ?? 0)
+                self?.tabsView.select(index: MarketModule.TabOld.allCases.firstIndex(of: currentTab) ?? 0)
                 self?.setViewPager(tab: currentTab)
             }
             .store(in: &cancellables)
@@ -147,22 +147,22 @@ class MarketViewController: ThemeSearchViewController {
     }
 
     private func onSelectTab(index: Int) {
-        guard index < MarketModule.Tab.allCases.count else {
+        guard index < MarketModule.TabOld.allCases.count else {
             return
         }
 
-        let tab = MarketModule.Tab.allCases[index]
+        let tab = MarketModule.TabOld.allCases[index]
 
         viewModel.currentTab = tab
 
         stat(page: .markets, event: .switchTab(tab: tab.statTab))
     }
 
-    private func setViewPager(tab: MarketModule.Tab) {
+    private func setViewPager(tab: MarketModule.TabOld) {
         pageViewController.setViewControllers([viewController(tab: tab)], direction: .forward, animated: false)
     }
 
-    private func viewController(tab: MarketModule.Tab) -> UIViewController {
+    private func viewController(tab: MarketModule.TabOld) -> UIViewController {
         switch tab {
         case .overview: return marketOverviewViewController ?? UIViewController()
         case .posts: return postViewController

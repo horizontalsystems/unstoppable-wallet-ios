@@ -2,16 +2,19 @@ import SwiftUI
 import ThemeKit
 
 struct MarketTabView: View {
+    @StateObject var viewModel: MarketTabViewModel
+
     @StateObject var coinsViewModel: MarketCoinsViewModel
     @StateObject var watchlistViewModel: MarketWatchlistViewModel
     @StateObject var newsViewModel: MarketNewsViewModel
     @StateObject var platformsViewModel: MarketPlatformsViewModel
     @StateObject var pairsViewModel: MarketPairsViewModel
 
-    @State private var currentTabIndex: Int = Tab.pairs.rawValue
-    @State private var loadedTabs = [Tab]()
+    @State private var loadedTabs = [MarketModule.Tab]()
 
     init() {
+        _viewModel = StateObject(wrappedValue: MarketTabViewModel())
+
         _coinsViewModel = StateObject(wrappedValue: MarketCoinsViewModel())
         _watchlistViewModel = StateObject(wrappedValue: MarketWatchlistViewModel())
         _newsViewModel = StateObject(wrappedValue: MarketNewsViewModel())
@@ -22,36 +25,37 @@ struct MarketTabView: View {
     var body: some View {
         VStack(spacing: 0) {
             ScrollableTabHeaderView(
-                tabs: Tab.allCases.map(\.title),
-                currentTabIndex: $currentTabIndex
+                tabs: MarketModule.Tab.allCases.map(\.title),
+                currentTabIndex: Binding(
+                    get: {
+                        MarketModule.Tab.allCases.firstIndex(of: viewModel.currentTab) ?? 0
+                    },
+                    set: { index in
+                        viewModel.currentTab = MarketModule.Tab.allCases[index]
+                    }
+                )
             )
 
-            if let tab = Tab(rawValue: currentTabIndex) {
-                VStack {
-                    switch tab {
-                    case .coins: MarketCoinsView(viewModel: coinsViewModel)
-                    case .watchlist: MarketWatchlistView(viewModel: watchlistViewModel)
-                    case .news: MarketNewsView(viewModel: newsViewModel)
-                    case .platforms: MarketPlatformsView(viewModel: platformsViewModel)
-                    case .pairs: MarketPairsView(viewModel: pairsViewModel)
-                    }
+            VStack {
+                switch viewModel.currentTab {
+                case .coins: MarketCoinsView(viewModel: coinsViewModel)
+                case .watchlist: MarketWatchlistView(viewModel: watchlistViewModel)
+                case .news: MarketNewsView(viewModel: newsViewModel)
+                case .platforms: MarketPlatformsView(viewModel: platformsViewModel)
+                case .pairs: MarketPairsView(viewModel: pairsViewModel)
                 }
-                .frame(maxHeight: .infinity)
-                .onChange(of: currentTabIndex) { index in
-                    loadTab(index: index)
-                }
-                .onFirstAppear {
-                    loadTab(index: currentTabIndex)
-                }
+            }
+            .frame(maxHeight: .infinity)
+            .onChange(of: viewModel.currentTab) { tab in
+                load(tab: tab)
+            }
+            .onFirstAppear {
+                load(tab: viewModel.currentTab)
             }
         }
     }
 
-    private func loadTab(index: Int) {
-        guard let tab = Tab(rawValue: index) else {
-            return
-        }
-
+    private func load(tab: MarketModule.Tab) {
         guard !loadedTabs.contains(tab) else {
             return
         }
@@ -64,28 +68,6 @@ struct MarketTabView: View {
         case .news: newsViewModel.load()
         case .platforms: platformsViewModel.load()
         case .pairs: pairsViewModel.load()
-        }
-    }
-}
-
-extension MarketTabView {
-    enum Tab: Int, CaseIterable {
-        case coins
-        case watchlist
-        case news
-        case platforms
-        case pairs
-        // case sectors
-
-        var title: String {
-            switch self {
-            case .coins: return "market.tab.coins".localized
-            case .watchlist: return "market.tab.watchlist".localized
-            case .news: return "market.tab.news".localized
-            case .platforms: return "market.tab.platforms".localized
-            case .pairs: return "market.tab.pairs".localized
-                // case .sectors: return "market.tab.sectors".localized
-            }
         }
     }
 }
