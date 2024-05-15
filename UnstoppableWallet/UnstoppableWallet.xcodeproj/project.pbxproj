@@ -2890,6 +2890,8 @@
 		D084F6BF2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */; };
 		D084F6C12BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */; };
 		D084F6C22BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */; };
+		D086A9162BF4D08400462024 /* SendParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D086A9152BF4D08400462024 /* SendParameters.swift */; };
+		D086A9172BF4D08400462024 /* SendParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D086A9152BF4D08400462024 /* SendParameters.swift */; };
 		D087627329815DAE00E6FFD4 /* ChooseWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */; };
 		D087627429815DAE00E6FFD4 /* ChooseWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */; };
 		D087627629815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */; };
@@ -4841,6 +4843,7 @@
 		D0740B1A2B87585000B085F9 /* ResendBitcoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinService.swift; sourceTree = "<group>"; };
 		D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputSelectView2.swift; sourceTree = "<group>"; };
 		D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputSelectorViewModel2.swift; sourceTree = "<group>"; };
+		D086A9152BF4D08400462024 /* SendParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendParameters.swift; sourceTree = "<group>"; };
 		D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewController.swift; sourceTree = "<group>"; };
 		D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewModel.swift; sourceTree = "<group>"; };
 		D090AF60297D725D00699916 /* TransparentIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentIconButtonView.swift; sourceTree = "<group>"; };
@@ -5517,6 +5520,7 @@
 				D3DB51B12BD912A00091BBDB /* MarketInfo.swift */,
 				D3833AE92BEE4CAA00ACECFB /* TopPlatform.swift */,
 				D3833AF72BF2181800ACECFB /* MarketPair.swift */,
+				D086A9152BF4D08400462024 /* SendParameters.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -10234,6 +10238,7 @@
 				D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
 				58AAA2CEB9DB7E34921D7778 /* SwapDeadlineViewModel.swift in Sources */,
 				58AAAF041A3FE53A28893E74 /* RecipientAddressViewModel.swift in Sources */,
+				D086A9172BF4D08400462024 /* SendParameters.swift in Sources */,
 				D36DE0E2272FD887000BC916 /* OneInchProvider.swift in Sources */,
 				D3DB51A02BD6854A0091BBDB /* MarketSearchView.swift in Sources */,
 				D36DE100272FD92F000BC916 /* SwapSelectProviderViewModel.swift in Sources */,
@@ -11794,6 +11799,7 @@
 				58AAA289FEAE983739189B8D /* RecipientAddressViewModel.swift in Sources */,
 				58AAA49049C7EA04AABC41E9 /* SwapSlippageViewModel.swift in Sources */,
 				58AAA9ABBBA6A19CBC351D52 /* AddressResolutionProvider.swift in Sources */,
+				D086A9162BF4D08400462024 /* SendParameters.swift in Sources */,
 				D0D5BCBC2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
 				D3DB519F2BD6854A0091BBDB /* MarketSearchView.swift in Sources */,
 				58AAA10B748931BA5FA867DA /* SwapViewModel.swift in Sources */,

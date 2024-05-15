@@ -27,9 +27,17 @@ extension BitcoinSendHandler: ISendHandler {
         let satoshiPerByte = transactionSettings?.satoshiPerByte
         var feeData: BitcoinFeeData?
         var transactionError: Error?
+        var params = params.copy()
 
         if let satoshiPerByte {
             params.feeRate = satoshiPerByte
+
+            let balance = adapter.balanceData.available
+            let decimalValue = params.value.map { Decimal($0) / adapter.coinRate }
+            if decimalValue == balance {
+                params.value = adapter.convertToSatoshi(value: adapter.availableBalance(params: params))
+            }
+
             do {
                 let sendInfo = try adapter.sendInfo(params: params)
                 feeData = .init(fee: sendInfo.fee)
