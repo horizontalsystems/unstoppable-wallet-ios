@@ -8,21 +8,22 @@ on:
 jobs:
   build_and_deploy:
     name: Build and Deploy to AppCenter
-    runs-on: macos-13
+    runs-on: macos-14
 
     steps:
-      - name: Setup Xcode to 15.0
+      - name: Setup Xcode to 15.3
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15.0'
+          xcode-version: '15.3'
 
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Ruby v3
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.2
+          bundler-cache: true
 
       - name: Setup Rust and Cargo
         uses: actions-rs/toolchain@v1
@@ -36,7 +37,7 @@ jobs:
         run: rustup target add aarch64-apple-ios x86_64-apple-ios
 
       - name: Run Fastlane (build, upload to AppCenter)
-        uses: maierj/fastlane-action@v2.0.1
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: dev
         env:
