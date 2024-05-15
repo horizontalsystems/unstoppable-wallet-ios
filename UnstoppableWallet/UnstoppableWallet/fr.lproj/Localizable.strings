@@ -1508,6 +1508,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "appearance.tab_settings" = "Paramètres des onglets";
 "appearance.markets_tab" = "Onglet Marchés";
+"appearance.buttons_show" = "Balance Tab Buttons";
 "appearance.launch_screen" = "Écran de démarrage";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Solde";
