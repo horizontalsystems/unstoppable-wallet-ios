@@ -1510,6 +1510,7 @@
 
 "appearance.tab_settings" = "Настройки вкладки";
 "appearance.markets_tab" = "Вкладка рынки";
+"appearance.buttons_show" = "Balance Tab Buttons";
 "appearance.launch_screen" = "Запуск экрана";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
