@@ -1509,6 +1509,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "appearance.tab_settings" = "Ajustes de pestaña";
 "appearance.markets_tab" = "Pestaña de Mercados";
+"appearance.buttons_show" = "Balance Tab Buttons";
 "appearance.launch_screen" = "Pantalla de lanzamiento";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Saldo";
