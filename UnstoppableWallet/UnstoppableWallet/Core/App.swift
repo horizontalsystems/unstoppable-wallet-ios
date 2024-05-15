@@ -39,6 +39,7 @@ class App {
     let balancePrimaryValueManager: BalancePrimaryValueManager
     let balanceHiddenManager: BalanceHiddenManager
     let balanceConversionManager: BalanceConversionManager
+    let walletButtonHiddenManager: WalletButtonHiddenManager
 
     let appVersionStorage: AppVersionStorage
     let appVersionManager: AppVersionManager
@@ -139,6 +140,7 @@ class App {
         balancePrimaryValueManager = BalancePrimaryValueManager(userDefaultsStorage: userDefaultsStorage)
         balanceHiddenManager = BalanceHiddenManager(userDefaultsStorage: userDefaultsStorage)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, userDefaultsStorage: userDefaultsStorage)
+        walletButtonHiddenManager = WalletButtonHiddenManager(userDefaultsStorage: userDefaultsStorage)
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)

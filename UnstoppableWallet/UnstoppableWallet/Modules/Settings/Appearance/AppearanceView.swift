@@ -66,6 +66,13 @@ struct AppearanceView: View {
                             }
                             .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                         }
+                        ListRow {
+                            Image("arrow_swap_24").themeIcon()
+                            Toggle(isOn: $viewModel.showBalanceButtons.animation()) {
+                                Text("appearance.buttons_show".localized).themeBody()
+                            }
+                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                        }
                     }
                 }
 

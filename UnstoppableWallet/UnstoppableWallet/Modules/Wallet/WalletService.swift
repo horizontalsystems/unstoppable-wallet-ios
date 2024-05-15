@@ -34,6 +34,7 @@ class WalletService {
     private let reachabilityManager: IReachabilityManager
     private let balancePrimaryValueManager: BalancePrimaryValueManager
     private let balanceHiddenManager: BalanceHiddenManager
+    private let buttonHiddenManager: WalletButtonHiddenManager
     private let balanceConversionManager: BalanceConversionManager
     private let cloudAccountBackupManager: CloudBackupManager
     private let rateAppManager: RateAppManager
@@ -75,7 +76,8 @@ class WalletService {
 
     init(elementServiceFactory: WalletElementServiceFactory, coinPriceService: WalletCoinPriceService, accountManager: AccountManager,
          cacheManager: EnabledWalletCacheManager, accountRestoreWarningManager: AccountRestoreWarningManager, reachabilityManager: IReachabilityManager,
-         balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager,
+         balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager,
+         buttonHiddenManager: WalletButtonHiddenManager, balanceConversionManager: BalanceConversionManager,
          cloudAccountBackupManager: CloudBackupManager, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider,
          userDefaultsStorage: UserDefaultsStorage)
     {
@@ -87,6 +89,7 @@ class WalletService {
         self.reachabilityManager = reachabilityManager
         self.balancePrimaryValueManager = balancePrimaryValueManager
         self.balanceHiddenManager = balanceHiddenManager
+        self.buttonHiddenManager = buttonHiddenManager
         self.balanceConversionManager = balanceConversionManager
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.rateAppManager = rateAppManager
@@ -437,6 +440,10 @@ extension WalletService {
         balanceHiddenManager.balanceHiddenObservable
     }
 
+    var buttonHiddenObservable: Observable<Bool> {
+        buttonHiddenManager.buttonHiddenObservable
+    }
+
     var activeAccount: Account? {
         accountManager.activeAccount
     }
@@ -459,6 +466,10 @@ extension WalletService {
 
     var balanceHidden: Bool {
         balanceHiddenManager.balanceHidden
+    }
+
+    var buttonHidden: Bool {
+        buttonHiddenManager.buttonHidden
     }
 
     var isReachable: Bool {
