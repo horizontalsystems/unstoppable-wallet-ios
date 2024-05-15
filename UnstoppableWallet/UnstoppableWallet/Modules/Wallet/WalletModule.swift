@@ -25,6 +25,7 @@ enum WalletModule {
             reachabilityManager: App.shared.reachabilityManager,
             balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
             balanceHiddenManager: App.shared.balanceHiddenManager,
+            buttonHiddenManager: App.shared.walletButtonHiddenManager,
             balanceConversionManager: App.shared.balanceConversionManager,
             cloudAccountBackupManager: App.shared.cloudBackupManager,
             rateAppManager: App.shared.rateAppManager,

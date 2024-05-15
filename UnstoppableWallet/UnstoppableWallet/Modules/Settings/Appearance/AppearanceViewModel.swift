@@ -11,6 +11,7 @@ class AppearanceViewModel: ObservableObject {
     private let appIconManager = App.shared.appIconManager
     private let balancePrimaryValueManager = App.shared.balancePrimaryValueManager
     private let balanceConversionManager = App.shared.balanceConversionManager
+    private let walletButtonHiddenManager = App.shared.walletButtonHiddenManager
     private let currencyManager = App.shared.currencyManager
     private let languageManager = LanguageManager.shared
 
@@ -32,6 +33,12 @@ class AppearanceViewModel: ObservableObject {
     @Published var showMarketTab: Bool {
         didSet {
             launchScreenManager.showMarket = showMarketTab
+        }
+    }
+
+    @Published var showBalanceButtons: Bool {
+        didSet {
+            walletButtonHiddenManager.buttonHidden = !showBalanceButtons
         }
     }
 
@@ -69,6 +76,7 @@ class AppearanceViewModel: ObservableObject {
         balancePrimaryValue = balancePrimaryValueManager.balancePrimaryValue
         appIcon = appIconManager.appIcon
         baseCurrency = currencyManager.baseCurrency
+        showBalanceButtons = !walletButtonHiddenManager.buttonHidden
 
         currencyManager.$baseCurrency.sink { [weak self] in self?.baseCurrency = $0 }.store(in: &cancellables)
     }

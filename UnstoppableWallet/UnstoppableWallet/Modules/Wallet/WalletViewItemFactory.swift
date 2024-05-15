@@ -164,7 +164,7 @@ extension WalletViewItemFactory {
         )
     }
 
-    func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, account: Account?) -> WalletModule.HeaderViewItem {
+    func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, buttonHidden: Bool, account: Account?) -> WalletModule.HeaderViewItem {
         let amount = balanceHidden ? BalanceHiddenManager.placeholder : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
 
         let convertedValue: String
@@ -181,7 +181,7 @@ extension WalletViewItemFactory {
             amountExpired: balanceHidden ? false : totalItem.expired,
             convertedValue: convertedValue,
             convertedValueExpired: balanceHidden ? false : totalItem.convertedValueExpired,
-            buttons: headerButtons(account: account)
+            buttons: buttonHidden ? [:] : headerButtons(account: account)
         )
     }
 }

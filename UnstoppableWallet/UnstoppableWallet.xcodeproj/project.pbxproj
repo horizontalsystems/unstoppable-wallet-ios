@@ -2140,6 +2140,8 @@
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
+		6BB14F6B2BF49E7100E879B2 /* WalletButtonHiddenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */; };
+		6BB14F6C2BF49E7100E879B2 /* WalletButtonHiddenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */; };
 		6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A22BDA419200ABBD55 /* Web3Wallet */; };
 		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
@@ -4459,6 +4461,7 @@
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
+		6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletButtonHiddenManager.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -5729,6 +5732,7 @@
 				11B35196B818E6069195BAF1 /* KeychainManager.swift */,
 				11B3505A43D9C2787B3BD153 /* PasscodeLockManager.swift */,
 				11B359980AA45D6B44151D7A /* StatManager.swift */,
+				6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -10765,6 +10769,7 @@
 				ABC9AE042D6A3D70CA64F959 /* ContactBookModule.swift in Sources */,
 				ABC9AFFD730AC3274811DA61 /* ContactBookContactViewController.swift in Sources */,
 				ABC9ACDDAD1927EB799150D2 /* ContactBookContactViewModel.swift in Sources */,
+				6BB14F6C2BF49E7100E879B2 /* WalletButtonHiddenManager.swift in Sources */,
 				ABC9ACC4CA8C9CBCA7C1A182 /* ContactBookContactService.swift in Sources */,
 				ABC9A6F88E51293F2605CACD /* ContactBookContactModule.swift in Sources */,
 				ABC9A69A1A01DBD07CAAC9CD /* ContactBookAddressViewController.swift in Sources */,
@@ -12320,6 +12325,7 @@
 				ABC9A05D9F96BE464CFC90CC /* ContactBookModule.swift in Sources */,
 				ABC9A30629619D5BD6CEB952 /* ContactBookContactViewController.swift in Sources */,
 				ABC9A20A25C4C683A73CB994 /* ContactBookContactViewModel.swift in Sources */,
+				6BB14F6B2BF49E7100E879B2 /* WalletButtonHiddenManager.swift in Sources */,
 				ABC9A2BE94B97921C3017C3F /* ContactBookContactService.swift in Sources */,
 				ABC9A307AAD83C3ED0D591C7 /* ContactBookContactModule.swift in Sources */,
 				ABC9AF81A6F30F0041FE1FAC /* ContactBookAddressViewController.swift in Sources */,

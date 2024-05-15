@@ -42,6 +42,7 @@ class WalletViewModel {
 
         subscribe(disposeBag, service.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
+        subscribe(disposeBag, service.buttonHiddenObservable) { [weak self] _ in self?.onUpdateButtonHidden() }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
         subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
@@ -103,12 +104,16 @@ class WalletViewModel {
         sync(totalItem: service.totalItem)
     }
 
+    private func onUpdateButtonHidden() {
+        sync(totalItem: service.totalItem)
+    }
+
     private func onUpdateBalancePrimaryValue() {
         sync(serviceState: service.state)
     }
 
     private func sync(totalItem: WalletService.TotalItem?) {
-        headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, account: service.activeAccount) }
+        headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, buttonHidden: service.buttonHidden, account: service.activeAccount) }
     }
 
     private func sync(sortType: WalletModule.SortType, scrollToTop: Bool) {
