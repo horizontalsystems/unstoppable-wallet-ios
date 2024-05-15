@@ -3094,6 +3094,8 @@
 		D3833B002BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */; };
 		D3833B022BF38A8000ACECFB /* MarketTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833B012BF38A8000ACECFB /* MarketTabViewModel.swift */; };
 		D3833B032BF38A8000ACECFB /* MarketTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833B012BF38A8000ACECFB /* MarketTabViewModel.swift */; };
+		D3833B052BF4AFB800ACECFB /* MarqueeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833B042BF4AFB800ACECFB /* MarqueeView.swift */; };
+		D3833B062BF4AFB800ACECFB /* MarqueeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833B042BF4AFB800ACECFB /* MarqueeView.swift */; };
 		D38404E4218317DF007D50AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D38404E8218317DF007D50AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D38404F9218317DF007D50AD /* MainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B96D2BC5994AC8EC794 /* MainModule.swift */; };
@@ -4931,6 +4933,7 @@
 		D3833AFB2BF335C700ACECFB /* MarketNewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketNewsView.swift; sourceTree = "<group>"; };
 		D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketNewsViewModel.swift; sourceTree = "<group>"; };
 		D3833B012BF38A8000ACECFB /* MarketTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTabViewModel.swift; sourceTree = "<group>"; };
+		D3833B042BF4AFB800ACECFB /* MarqueeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeView.swift; sourceTree = "<group>"; };
 		D38405CE218317DF007D50AD /* Unstoppable D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable D.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406BE21831B3D007D50AD /* Unstoppable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unstoppable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406C3218327B1007D50AD /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
@@ -5649,6 +5652,7 @@
 				D3DB519B2BD685180091BBDB /* RedactedModifier.swift */,
 				D3DB51AE2BD7AF860091BBDB /* DiffText.swift */,
 				D3B73E2F2BDFC5580067429D /* PriceRow.swift */,
+				D3833B042BF4AFB800ACECFB /* MarqueeView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -11010,6 +11014,7 @@
 				11B35FFC8C3E4CF638397650 /* UnlockView.swift in Sources */,
 				11B3564236FEF4E5ACC8C838 /* UnlockModule.swift in Sources */,
 				11B3527C3BD088DCCA6959C3 /* ModuleUnlockView.swift in Sources */,
+				D3833B062BF4AFB800ACECFB /* MarqueeView.swift in Sources */,
 				11B3531640EE1F9D29B63325 /* AppUnlockViewModel.swift in Sources */,
 				11B3561679C05C31F16EDC77 /* BaseUnlockViewModel.swift in Sources */,
 				11B35F98393E6F3B76381ECF /* ModuleUnlockViewModel.swift in Sources */,
@@ -12566,6 +12571,7 @@
 				11B35C9570D3C283E9C943D5 /* CreatePasscodeViewModel.swift in Sources */,
 				11B356A5B50D4E6EF2282398 /* EditDuressPasscodeViewModel.swift in Sources */,
 				11B35C5F856FB531028F8C0A /* CreateDuressPasscodeViewModel.swift in Sources */,
+				D3833B052BF4AFB800ACECFB /* MarqueeView.swift in Sources */,
 				11B35F655F8C5ECDB870712D /* UnlockView.swift in Sources */,
 				11B35251E1B11235D00E6565 /* UnlockModule.swift in Sources */,
 				11B35F1949F7203F34347550 /* ModuleUnlockView.swift in Sources */,
