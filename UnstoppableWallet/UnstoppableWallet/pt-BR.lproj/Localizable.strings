@@ -1508,6 +1508,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "appearance.tab_settings" = "Configurações de Abas";
 "appearance.markets_tab" = "Guia de Mercados";
+"appearance.buttons_show" = "Balance Tab Buttons";
 "appearance.launch_screen" = "Tela Inicial";
 "appearance.launch_screen.auto" = "Automático";
 "appearance.launch_screen.balance" = "Saldo";
