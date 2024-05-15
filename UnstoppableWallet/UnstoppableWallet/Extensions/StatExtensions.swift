@@ -37,7 +37,7 @@ extension MainModule.Tab {
     }
 }
 
-extension MarketModule.Tab {
+extension MarketModule.TabOld {
     var statTab: StatTab {
         switch self {
         case .overview: return .overview

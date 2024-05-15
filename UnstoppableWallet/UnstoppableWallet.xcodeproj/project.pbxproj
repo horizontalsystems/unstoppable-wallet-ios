@@ -3094,6 +3094,8 @@
 		D3833AFD2BF335C700ACECFB /* MarketNewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AFB2BF335C700ACECFB /* MarketNewsView.swift */; };
 		D3833AFF2BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */; };
 		D3833B002BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */; };
+		D3833B022BF38A8000ACECFB /* MarketTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833B012BF38A8000ACECFB /* MarketTabViewModel.swift */; };
+		D3833B032BF38A8000ACECFB /* MarketTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833B012BF38A8000ACECFB /* MarketTabViewModel.swift */; };
 		D38404E4218317DF007D50AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D38404E8218317DF007D50AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D38404F9218317DF007D50AD /* MainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B96D2BC5994AC8EC794 /* MainModule.swift */; };
@@ -4931,6 +4933,7 @@
 		D3833AF72BF2181800ACECFB /* MarketPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPair.swift; sourceTree = "<group>"; };
 		D3833AFB2BF335C700ACECFB /* MarketNewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketNewsView.swift; sourceTree = "<group>"; };
 		D3833AFE2BF335D100ACECFB /* MarketNewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketNewsViewModel.swift; sourceTree = "<group>"; };
+		D3833B012BF38A8000ACECFB /* MarketTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTabViewModel.swift; sourceTree = "<group>"; };
 		D38405CE218317DF007D50AD /* Unstoppable D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable D.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406BE21831B3D007D50AD /* Unstoppable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unstoppable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406C3218327B1007D50AD /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
@@ -7747,6 +7750,7 @@
 				D3DB519E2BD6854A0091BBDB /* MarketSearchView.swift */,
 				D3DB51A12BD6857E0091BBDB /* MarketGlobalView.swift */,
 				D3DB51A42BD685B40091BBDB /* MarketTabView.swift */,
+				D3833B012BF38A8000ACECFB /* MarketTabViewModel.swift */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -11267,6 +11271,7 @@
 				11B351354518B4193A672044 /* EvmFeeEstimator.swift in Sources */,
 				ABC9A07B88375991F5749391 /* SlideButton.swift in Sources */,
 				ABC9A4DE73BE3055DD97343B /* ShimmerEffect.swift in Sources */,
+				D3833B032BF38A8000ACECFB /* MarketTabViewModel.swift in Sources */,
 				ABC9A6C591067D34C6DF2673 /* SlideButtonStyling.swift in Sources */,
 				11B35A32114022EF422E6602 /* MultiSwapRevokeView.swift in Sources */,
 				11B357DCC0BA9E888DE64CB1 /* MultiSwapRevokeViewModel.swift in Sources */,
@@ -12823,6 +12828,7 @@
 				11B35BEDD1017EA9EDA7F2FB /* TransactionServiceFactory.swift in Sources */,
 				11B3566FB55E128CD6F22DAE /* TransactionSettings.swift in Sources */,
 				11B352B9206C86492CDDC9A7 /* EvmFeeData.swift in Sources */,
+				D3833B022BF38A8000ACECFB /* MarketTabViewModel.swift in Sources */,
 				11B35A920F2DB5784F178BDA /* EvmFeeEstimator.swift in Sources */,
 				11B3545369350E4253688D91 /* MultiSwapRevokeView.swift in Sources */,
 				11B35CBF59F85C3DAB5FE751 /* MultiSwapRevokeViewModel.swift in Sources */,
