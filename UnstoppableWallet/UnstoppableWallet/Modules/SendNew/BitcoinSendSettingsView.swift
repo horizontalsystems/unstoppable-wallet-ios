@@ -26,7 +26,7 @@ struct BitcoinSendSettingsView: View {
                         NavigationRow(
                             destination: { OutputSelectorView2(handler: viewModel.handler) }
                         ) {
-                            HStack(spacing: .margin16) {
+                            HStack(spacing: .margin8) {
                                 Text("send.unspent_outputs".localized).textBody()
 
                                 Spacer()
@@ -43,7 +43,7 @@ struct BitcoinSendSettingsView: View {
                 VStack(spacing: 0) {
                     ListSection {
                         ListRow {
-                            HStack(spacing: .margin16) {
+                            HStack(spacing: .margin8) {
                                 Text("fee_settings.inputs_outputs".localized).textBody()
 
                                 Spacer()
@@ -51,7 +51,7 @@ struct BitcoinSendSettingsView: View {
                                 Button(action: {
                                     chooseSortModePresented = true
                                 }) {
-                                    Text(viewModel.sortMode.title).textCaption(color: .themeLeah)
+                                    Text(viewModel.sortMode.title)
                                 }
                                 .buttonStyle(SecondaryButtonStyle(rightAccessory: .dropDown))
                             }
@@ -62,7 +62,7 @@ struct BitcoinSendSettingsView: View {
                 VStack(spacing: 0) {
                     ListSection {
                         ListRow {
-                            HStack(spacing: .margin16) {
+                            HStack(spacing: .margin8) {
                                 Text("fee_settings.time_lock".localized).textBody()
 
                                 Spacer()
@@ -80,10 +80,14 @@ struct BitcoinSendSettingsView: View {
                                 }
                                 .buttonStyle(SecondaryButtonStyle(rightAccessory: .dropDown))
                             }
-                            .alert(isPresented: $chooseLockPeriodPresented, title: "fee_settings.time_lock".localized, viewItems:
-                                [.init(text: "send.hodler_locktime_off".localized)] + HodlerPlugin.LockTimeInterval.allCases.map {
-                                    AlertViewItem(text: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0))
-                                }, onTap: { index in
+                            .alert(
+                                isPresented: $chooseLockPeriodPresented,
+                                title: "fee_settings.time_lock".localized,
+                                viewItems: [.init(text: "send.hodler_locktime_off".localized)] +
+                                    HodlerPlugin.LockTimeInterval.allCases.map {
+                                        AlertViewItem(text: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0))
+                                    },
+                                onTap: { index in
                                     guard let index else {
                                         return
                                     }
@@ -95,7 +99,8 @@ struct BitcoinSendSettingsView: View {
                                     case 4: viewModel.lockTimeInterval = .year
                                     default: ()
                                     }
-                                })
+                                }
+                            )
                         }
                     }
 
@@ -118,7 +123,7 @@ struct BitcoinSendSettingsView: View {
         }
         .bottomSheet(isPresented: $chooseSortModePresented) {
             VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
+                HStack(spacing: .margin8) {
                     Image("arrow_medium_2_up_right_24").themeIcon(color: .gray)
 
                     Text("fee_settings.transaction_settings".localized).themeHeadline2()

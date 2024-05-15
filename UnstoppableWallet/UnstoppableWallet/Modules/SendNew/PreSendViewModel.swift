@@ -97,8 +97,6 @@ class PreSendViewModel: ObservableObject {
         }
     }
 
-    @Published var addressCautionState: CautionState = .none
-
     @Published var memo: String = "" {
         didSet {
             syncSendData()
@@ -107,6 +105,7 @@ class PreSendViewModel: ObservableObject {
 
     var handler: IPreSendHandler?
     @Published var sendData: SendData?
+    @Published var cautions = [CautionNew]()
 
     let addressVisible: Bool
 
@@ -199,14 +198,11 @@ class PreSendViewModel: ObservableObject {
         switch addressResult {
         case .idle:
             addressState = .empty
-            addressCautionState = .none
         case .loading, .invalid:
             addressState = .invalid
-            addressCautionState = .none
         case let .valid(success):
             let address = success.address.raw
             addressState = .valid(address: address)
-            addressCautionState = .none
         }
     }
 
@@ -249,8 +245,10 @@ extension PreSendViewModel {
         switch result {
         case let .valid(sendData):
             self.sendData = sendData
-        case .invalid:
+            cautions = []
+        case let .invalid(cautions):
             sendData = nil
+            self.cautions = cautions
         }
     }
 

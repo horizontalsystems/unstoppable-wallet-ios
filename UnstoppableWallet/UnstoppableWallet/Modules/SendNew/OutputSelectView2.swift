@@ -39,7 +39,6 @@ struct OutputSelectorView2: View {
                                 viewModel.selectUnselectAll()
                             }) {
                                 Text(viewModel.allSelected ? "send.unselect_all".localized : "send.select_all".localized)
-                                    .textCaption(color: .themeLeah)
                             }
                             .buttonStyle(SecondaryButtonStyle())
                         }

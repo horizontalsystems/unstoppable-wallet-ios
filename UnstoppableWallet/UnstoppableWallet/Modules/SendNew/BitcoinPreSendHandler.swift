@@ -9,6 +9,8 @@ import SwiftUI
 
 class BitcoinPreSendHandler {
     let token: Token
+    let defaultSortMode: TransactionDataSortMode
+    let defaultRbfEnabled: Bool
 
     var customUtxos: [UnspentOutputInfo]? {
         didSet {
@@ -52,8 +54,6 @@ class BitcoinPreSendHandler {
     private let blockchainManager: BtcBlockchainManager
     private let disposeBag = DisposeBag()
 
-    private let defaultSortMode: TransactionDataSortMode
-    private let defaultRbfEnabled: Bool
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
     private let settingsModifiedSubject = PassthroughSubject<Bool, Never>()
@@ -102,15 +102,6 @@ class BitcoinPreSendHandler {
     }
 }
 
-extension BitcoinPreSendHandler {
-    func reset() {
-        sortMode = defaultSortMode
-        rbfEnabled = defaultRbfEnabled
-        lockTimeInterval = nil
-        customUtxos = nil
-    }
-}
-
 extension BitcoinPreSendHandler: IPreSendHandler {
     var hasSettings: Bool {
         true
@@ -156,7 +147,7 @@ extension BitcoinPreSendHandler: IPreSendHandler {
         do {
             try adapter.validate(address: address, pluginData: pluginData)
         } catch {
-            return .invalid(cautions: [CautionNew(text: error.localizedDescription, type: .error)])
+            return .invalid(cautions: [CautionNew(title: error.title, text: error.convertedError.localizedDescription, type: .error)])
         }
 
         let params = SendParameters(

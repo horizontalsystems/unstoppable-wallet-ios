@@ -86,3 +86,18 @@ extension AppError: LocalizedError {
         }
     }
 }
+
+extension AppError {
+    var title: String? {
+        switch self {
+        case .notSupportedByHodler: return "fee_settings.time_lock".localized
+        default: return nil
+        }
+    }
+}
+
+extension Error {
+    var title: String? {
+        (convertedError as? AppError).flatMap(\.title)
+    }
+}
