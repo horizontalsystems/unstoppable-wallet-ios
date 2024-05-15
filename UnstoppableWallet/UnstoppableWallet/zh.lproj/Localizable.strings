@@ -1508,6 +1508,7 @@
 
 "appearance.tab_settings" = "标签设置";
 "appearance.markets_tab" = "市场选项卡";
+"appearance.buttons_show" = "Balance Tab Buttons";
 "appearance.launch_screen" = "启动屏幕";
 "appearance.launch_screen.auto" = "自动";
 "appearance.launch_screen.balance" = "余额";
