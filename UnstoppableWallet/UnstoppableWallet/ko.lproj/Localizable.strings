@@ -1507,6 +1507,7 @@
 
 "appearance.tab_settings" = "탭 설정";
 "appearance.markets_tab" = "마켓 탭";
+"appearance.buttons_show" = "Balance Tab Buttons";
 "appearance.launch_screen" = "시작 화면";
 "appearance.launch_screen.auto" = "자동";
 "appearance.launch_screen.balance" = "잔액";
