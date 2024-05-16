@@ -10,11 +10,20 @@ enum InfoModule {
 }
 
 extension InfoModule {
-    enum ViewItem {
+    enum ViewItem: Identifiable {
         case header1(text: String)
         case header3(text: String)
         case text(text: String)
         case listItem(text: String)
+
+        var id: String {
+            switch self {
+            case let .header1(text): return text
+            case let .header3(text): return text
+            case let .text(text): return text
+            case let .listItem(text): return text
+            }
+        }
     }
 
     static var feeInfo: UIViewController {
