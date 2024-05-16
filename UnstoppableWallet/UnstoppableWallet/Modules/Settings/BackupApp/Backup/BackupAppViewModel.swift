@@ -149,7 +149,7 @@ extension BackupAppViewModel {
 
         return BackupAppModule.items(
             watchAccountCount: accounts(watch: true).count,
-            watchlistCount: favoritesManager.allCoinUids.count,
+            watchlistCount: favoritesManager.coinUids.count,
             contactAddressCount: contacts.count,
             blockchainSourcesCount: evmSyncSourceManager.customSyncSources(blockchainType: nil).count
         )

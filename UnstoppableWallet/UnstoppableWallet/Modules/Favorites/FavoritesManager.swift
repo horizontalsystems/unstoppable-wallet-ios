@@ -1,58 +1,65 @@
-import RxCocoa
-import RxSwift
+import Combine
 import WidgetKit
 
 class FavoritesManager {
     private let storage: FavoriteCoinRecordStorage
     private let sharedStorage: SharedLocalStorage
 
-    private let coinUidsUpdatedRelay = PublishRelay<Void>()
+    private let coinUidsSubject = PassthroughSubject<Set<String>, Never>()
+
+    var coinUids: Set<String> {
+        didSet {
+            coinUidsSubject.send(coinUids)
+            syncSharedStorage()
+        }
+    }
 
     init(storage: FavoriteCoinRecordStorage, sharedStorage: SharedLocalStorage) {
         self.storage = storage
         self.sharedStorage = sharedStorage
 
+        do {
+            let records = try storage.favoriteCoinRecords()
+            coinUids = Set(records.map(\.coinUid))
+        } catch {
+            coinUids = Set()
+        }
+
         syncSharedStorage()
     }
 
     private func syncSharedStorage() {
-        sharedStorage.set(value: allCoinUids, for: AppWidgetConstants.keyFavoriteCoinUids)
+        sharedStorage.set(value: Array(coinUids), for: AppWidgetConstants.keyFavoriteCoinUids)
         WidgetCenter.shared.reloadTimelines(ofKind: AppWidgetConstants.watchlistWidgetKind)
     }
 }
 
 extension FavoritesManager {
-    var coinUidsUpdatedObservable: Observable<Void> {
-        coinUidsUpdatedRelay.asObservable()
-    }
-
-    var allCoinUids: [String] {
-        storage.favoriteCoinRecords.map(\.coinUid)
+    var coinUidsPublisher: AnyPublisher<Set<String>, Never> {
+        coinUidsSubject.eraseToAnyPublisher()
     }
 
     func add(coinUid: String) {
-        storage.save(favoriteCoinRecord: FavoriteCoinRecord(coinUid: coinUid))
-        coinUidsUpdatedRelay.accept(())
-        syncSharedStorage()
+        coinUids.insert(coinUid)
+        try? storage.save(favoriteCoinRecord: FavoriteCoinRecord(coinUid: coinUid))
     }
 
     func add(coinUids: [String]) {
-        storage.save(favoriteCoinRecords: coinUids.map { FavoriteCoinRecord(coinUid: $0) })
-        coinUidsUpdatedRelay.accept(())
-        syncSharedStorage()
+        self.coinUids.formUnion(coinUids)
+        try? storage.save(favoriteCoinRecords: coinUids.map { FavoriteCoinRecord(coinUid: $0) })
     }
 
     func removeAll() {
-        storage.deleteAll()
+        coinUids = Set()
+        try? storage.deleteAll()
     }
 
     func remove(coinUid: String) {
-        storage.deleteFavoriteCoinRecord(coinUid: coinUid)
-        coinUidsUpdatedRelay.accept(())
-        syncSharedStorage()
+        coinUids.remove(coinUid)
+        try? storage.deleteFavoriteCoinRecord(coinUid: coinUid)
     }
 
     func isFavorite(coinUid: String) -> Bool {
-        storage.favoriteCoinRecordExists(coinUid: coinUid)
+        coinUids.contains(coinUid)
     }
 }

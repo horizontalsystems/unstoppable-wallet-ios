@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MarketKit
 import RxRelay
@@ -6,7 +7,7 @@ import RxSwift
 class CoinPageService {
     let fullCoin: FullCoin
     private let favoritesManager: FavoritesManager
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let favoriteRelay = PublishRelay<Bool>()
     private(set) var favorite: Bool = false {
@@ -21,7 +22,9 @@ class CoinPageService {
         self.fullCoin = fullCoin
         self.favoritesManager = favoritesManager
 
-        subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncFavorite() }
+        favoritesManager.coinUidsPublisher
+            .sink { [weak self] _ in self?.syncFavorite() }
+            .store(in: &cancellables)
 
         syncFavorite()
     }

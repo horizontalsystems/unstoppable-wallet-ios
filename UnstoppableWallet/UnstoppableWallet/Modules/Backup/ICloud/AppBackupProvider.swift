@@ -125,7 +125,7 @@ class AppBackupProvider {
         let syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: selected, custom: [])
         return RawFullBackup(
             accounts: accounts,
-            watchlistIds: favoritesManager.allCoinUids,
+            watchlistIds: Array(favoritesManager.coinUids),
             contacts: contactManager.backupContactBook?.contacts ?? [],
             settings: settings(evmSyncSources: syncSources),
             customSyncSources: custom

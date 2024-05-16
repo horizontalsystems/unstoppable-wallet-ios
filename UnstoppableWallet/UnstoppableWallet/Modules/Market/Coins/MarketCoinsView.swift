@@ -4,6 +4,7 @@ import SwiftUI
 
 struct MarketCoinsView: View {
     @ObservedObject var viewModel: MarketCoinsViewModel
+    @StateObject var favoritesViewModel = FavoritesViewModel()
 
     @State private var sortBySelectorPresented = false
     @State private var topSelectorPresented = false
@@ -107,11 +108,11 @@ struct MarketCoinsView: View {
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
         ThemeList(items: marketInfos) { marketInfo in
+            let coin = marketInfo.fullCoin.coin
+
             ClickableRow(action: {
                 presentedFullCoin = marketInfo.fullCoin
             }) {
-                let coin = marketInfo.fullCoin.coin
-
                 itemContent(
                     imageUrl: URL(string: coin.imageUrl),
                     code: coin.code,
@@ -121,6 +122,7 @@ struct MarketCoinsView: View {
                     diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
                 )
             }
+            .favoriteSwipeActions(viewModel: favoritesViewModel, coinUid: coin.uid)
         }
         .themeListStyle(.transparent)
         .refreshable {
