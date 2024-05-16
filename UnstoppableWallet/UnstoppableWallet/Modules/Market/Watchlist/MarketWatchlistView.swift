@@ -108,11 +108,11 @@ struct MarketWatchlistView: View {
 
     @ViewBuilder private func list(marketInfos: [MarketInfo], signals: [String: TechnicalAdvice.Advice]) -> some View {
         ThemeList(items: marketInfos) { marketInfo in
+            let coin = marketInfo.fullCoin.coin
+
             ClickableRow(action: {
                 presentedFullCoin = marketInfo.fullCoin
             }) {
-                let coin = marketInfo.fullCoin.coin
-
                 itemContent(
                     imageUrl: URL(string: coin.imageUrl),
                     code: coin.code,
@@ -122,6 +122,14 @@ struct MarketWatchlistView: View {
                     diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod),
                     signal: viewModel.showSignals ? signals[coin.uid] : nil
                 )
+            }
+            .swipeActions {
+                Button(role: .destructive) {
+                    viewModel.remove(coinUid: coin.uid)
+                } label: {
+                    Image("star_off_24").renderingMode(.template)
+                }
+                .tint(.themeLucian)
             }
         }
         .themeListStyle(.transparent)

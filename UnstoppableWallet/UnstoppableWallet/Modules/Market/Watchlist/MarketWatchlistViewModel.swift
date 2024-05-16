@@ -2,14 +2,17 @@ import Combine
 import Foundation
 import HsExtensions
 import MarketKit
-import RxSwift
 
 class MarketWatchlistViewModel: ObservableObject {
+    private let keySortBy = "market-watchlist-sort-by"
+    private let keyTimePeriod = "market-watchlist-time-period"
+    private let keyShowSignals = "market-watchlist-show-signals"
+
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
     private let favoritesManager = App.shared.favoritesManager
+    private let userDefaultsStorage = App.shared.userDefaultsStorage
 
-    private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
@@ -23,26 +26,42 @@ class MarketWatchlistViewModel: ObservableObject {
 
     @Published var state: State = .loading
 
-    var sortBy: MarketModule.SortBy = .gainers {
+    var sortBy: MarketModule.SortBy {
         didSet {
             syncState()
+
+            userDefaultsStorage.set(value: sortBy.rawValue, for: keySortBy)
         }
     }
 
-    var timePeriod: HsTimePeriod = .day1 {
+    var timePeriod: HsTimePeriod {
         didSet {
             syncState()
+
+            userDefaultsStorage.set(value: timePeriod.rawValue, for: keyTimePeriod)
         }
     }
 
-    var showSignals: Bool = false {
+    var showSignals: Bool {
         didSet {
             syncState()
+
+            userDefaultsStorage.set(value: showSignals, for: keyShowSignals)
         }
+    }
+
+    init() {
+        let sortByRaw: String? = userDefaultsStorage.value(for: keySortBy)
+        sortBy = sortByRaw.flatMap { MarketModule.SortBy(rawValue: $0) } ?? .gainers
+
+        let timePeriodRaw: String? = userDefaultsStorage.value(for: keyTimePeriod)
+        timePeriod = timePeriodRaw.flatMap { HsTimePeriod(rawValue: $0) } ?? .day1
+
+        showSignals = userDefaultsStorage.value(for: keyShowSignals) ?? true
     }
 
     private func syncCoinUids() {
-        coinUids = favoritesManager.allCoinUids
+        coinUids = Array(favoritesManager.coinUids)
 
         if case let .loaded(marketInfos, signals) = internalState {
             let newMarketInfos = marketInfos.filter { marketInfo in
@@ -128,13 +147,19 @@ extension MarketWatchlistViewModel {
             }
             .store(in: &cancellables)
 
-        subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
+        favoritesManager.coinUidsPublisher
+            .sink { [weak self] _ in self?.syncCoinUids() }
+            .store(in: &cancellables)
 
         syncCoinUids()
     }
 
     func refresh() async {
         await _syncMarketInfos()
+    }
+
+    func remove(coinUid: String) {
+        favoritesManager.remove(coinUid: coinUid)
     }
 }
 

@@ -43,7 +43,7 @@ class MarketWatchlistService: IMarketSingleSortHeaderService {
     }
 
     private func syncCoinUids() {
-        coinUids = favoritesManager.allCoinUids
+        coinUids = Array(favoritesManager.coinUids)
 
         if case let .loaded(marketInfos, _, _) = state {
             let newMarketInfos = marketInfos.filter { marketInfo in
@@ -107,7 +107,10 @@ extension MarketWatchlistService: IMarketListService {
             }
             .store(in: &cancellables)
 
-        subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
+        favoritesManager.coinUidsPublisher
+            .sink { [weak self] _ in self?.syncCoinUids() }
+            .store(in: &cancellables)
+
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncMarketInfos() }
 
         syncCoinUids()
