@@ -2834,6 +2834,8 @@
 		D02A67D5272A7460009B2C1C /* CoinTweetsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02A67BA272A7460009B2C1C /* CoinTweetsService.swift */; };
 		D02A67D7272A7460009B2C1C /* CoinTweetsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */; };
 		D02A67D8272A7460009B2C1C /* CoinTweetsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */; };
+		D033289F2BF6199600BBB364 /* InfoNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoNewView.swift */; };
+		D03328A02BF6199600BBB364 /* InfoNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoNewView.swift */; };
 		D04D98EA268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04D98EB268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04DD5412B68C0EF00219B87 /* HighlightedTiltledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */; };
@@ -4815,6 +4817,7 @@
 		D02A67B9272A7460009B2C1C /* TweetsPageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetsPageResponse.swift; sourceTree = "<group>"; };
 		D02A67BA272A7460009B2C1C /* CoinTweetsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsService.swift; sourceTree = "<group>"; };
 		D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsModule.swift; sourceTree = "<group>"; };
+		D033289E2BF6199600BBB364 /* InfoNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNewView.swift; sourceTree = "<group>"; };
 		D04D98E9268055A2001A3135 /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
 		D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedTiltledTextView.swift; sourceTree = "<group>"; };
 		D0532CBD2B149DEE0015DF40 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
@@ -5874,6 +5877,7 @@
 				11B35E2F913B2546A041D0AE /* NoPasscode */,
 				11B35B779976BD7D47FFD40C /* MultiSwap */,
 				D0118E462B7C99F700D55CE6 /* ResendBitcoin */,
+				D033289D2BF6196E00BBB364 /* InfoNew */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -9002,6 +9006,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		D033289D2BF6196E00BBB364 /* InfoNew */ = {
+			isa = PBXGroup;
+			children = (
+				D033289E2BF6199600BBB364 /* InfoNewView.swift */,
+			);
+			path = InfoNew;
+			sourceTree = "<group>";
+		};
 		D04D98ED268061EF001A3135 /* Bitcoin */ = {
 			isa = PBXGroup;
 			children = (
@@ -9925,6 +9937,7 @@
 				1A5646F57C3677EBC462673C /* AppError.swift in Sources */,
 				1A564E0B7DB0060B9600FCB1 /* BalanceErrorViewController.swift in Sources */,
 				1A5643A263F288A4E83409FA /* BalanceErrorViewModel.swift in Sources */,
+				D03328A02BF6199600BBB364 /* InfoNewView.swift in Sources */,
 				1A564504E164177DD6EECFBA /* BalanceErrorService.swift in Sources */,
 				1A564168590F031AA453E1D1 /* BalanceErrorModule.swift in Sources */,
 				11B351FB99274553725754E4 /* GuidesModule.swift in Sources */,
@@ -11486,6 +11499,7 @@
 				D36DE0F9272FD92F000BC916 /* SwapSelectProviderModule.swift in Sources */,
 				D36DE0E7272FD887000BC916 /* OneInchModule.swift in Sources */,
 				1A5649169A405D3288324442 /* BalanceErrorViewController.swift in Sources */,
+				D033289F2BF6199600BBB364 /* InfoNewView.swift in Sources */,
 				1A564D3DB55C8CB8B5AED664 /* BalanceErrorViewModel.swift in Sources */,
 				D36DE0DE272FD887000BC916 /* OneInchViewModel.swift in Sources */,
 				1A5649926B0064083045BEEB /* BalanceErrorService.swift in Sources */,

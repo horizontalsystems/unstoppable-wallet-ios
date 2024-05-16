@@ -10,6 +10,7 @@ struct BitcoinSendSettingsView: View {
     @State private var chooseUtxos: Bool = false
     @State private var chooseSortModePresented: Bool = false
     @State private var chooseLockPeriodPresented: Bool = false
+    @State private var inputsOutputsDescriptionPresented: Bool = false
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -44,7 +45,14 @@ struct BitcoinSendSettingsView: View {
                     ListSection {
                         ListRow {
                             HStack(spacing: .margin8) {
-                                Text("fee_settings.inputs_outputs".localized).textBody()
+                                Button(action: {
+                                    inputsOutputsDescriptionPresented = true
+                                }, label: {
+                                    HStack(spacing: .margin8) {
+                                        Text("fee_settings.inputs_outputs".localized).textBody()
+                                        Image("circle_information_20").themeIcon()
+                                    }
+                                })
 
                                 Spacer()
 
@@ -120,6 +128,21 @@ struct BitcoinSendSettingsView: View {
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+        }
+        .sheet(isPresented: $inputsOutputsDescriptionPresented) {
+            ThemeNavigationView {
+                InfoNewView(
+                    viewItems: [
+                        .header1(text: "send.transaction_inputs_outputs_info.title".localized),
+                        .text(text: "send.transaction_inputs_outputs_info.description".localized(AppConfig.appName, AppConfig.appName)),
+                        .header3(text: "send.transaction_inputs_outputs_info.shuffle.title".localized),
+                        .text(text: "send.transaction_inputs_outputs_info.shuffle.description".localized),
+                        .header3(text: "send.transaction_inputs_outputs_info.deterministic.title".localized),
+                        .text(text: "send.transaction_inputs_outputs_info.deterministic.description".localized),
+                    ],
+                    isPresented: $inputsOutputsDescriptionPresented
+                )
+            }
         }
         .bottomSheet(isPresented: $chooseSortModePresented) {
             VStack(spacing: 0) {
