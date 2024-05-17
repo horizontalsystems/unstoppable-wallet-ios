@@ -22,25 +22,24 @@ extension EvmSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
-        let gasPrice = transactionSettings?.gasPrice
+        let gasPriceData = transactionSettings?.gasPriceData
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
-
         var transactionData = transactionData
 
-        if let gasPrice {
+        if let gasPriceData {
             let evmBalance = evmKitWrapper.evmKit.accountState?.balance ?? 0
 
             do {
                 if transactionData.input.isEmpty, transactionData.value == evmBalance {
                     let stubTransactionData = TransactionData(to: transactionData.to, value: 1, input: transactionData.input)
-                    let stubFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: stubTransactionData, gasPrice: gasPrice)
-                    let totalFee = stubFeeData.totalFee(gasPrice: gasPrice)
+                    let stubFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: stubTransactionData, gasPriceData: gasPriceData)
+                    let totalFee = stubFeeData.totalFee(gasPrice: gasPriceData.userDefined)
 
                     evmFeeData = stubFeeData
                     transactionData = TransactionData(to: transactionData.to, value: max(0, transactionData.value - totalFee), input: transactionData.input)
                 } else {
-                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPrice)
+                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                 }
             } catch {
                 transactionError = error
@@ -54,7 +53,7 @@ extension EvmSendHandler: ISendHandler {
             decoration: decoration,
             transactionData: transactionData,
             transactionError: transactionError,
-            gasPrice: gasPrice,
+            gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )

@@ -50,13 +50,13 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
 
         let blockchainType = tokenIn.blockchainType
-        let gasPrice = transactionSettings?.gasPrice
+        let gasPriceData = transactionSettings?.gasPriceData
         var evmFeeData: EvmFeeData?
         var resolvedSwap: Swap?
         var insufficientFeeBalance = false
 
         if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper,
-           let gasPrice,
+           let gasPriceData,
            let amount = rawAmount(amount: amountIn, token: tokenIn)
         {
             let evmKit = evmKitWrapper.evmKit
@@ -71,14 +71,14 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
                 referrer: commissionAddress,
                 fee: commission,
                 recipient: storage.recipient(blockchainType: blockchainType).flatMap { try? EvmKit.Address(hex: $0.raw) },
-                gasPrice: gasPrice
+                gasPrice: gasPriceData.userDefined
             )
 
             resolvedSwap = swap
 
             let evmBalance = evmKit.accountState?.balance ?? 0
             let txAmount = swap.transaction.value
-            let feeAmount = BigUInt(swap.transaction.gasLimit * gasPrice.max)
+            let feeAmount = BigUInt(swap.transaction.gasLimit * gasPriceData.userDefined.max)
             let totalAmount = txAmount + feeAmount
 
             insufficientFeeBalance = totalAmount > evmBalance
@@ -86,7 +86,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             evmFeeData = try await evmFeeEstimator.estimateFee(
                 evmKitWrapper: evmKitWrapper,
                 transactionData: swap.transactionData,
-                gasPrice: gasPrice,
+                gasPriceData: gasPriceData,
                 predefinedGasLimit: swap.transaction.gasLimit
             )
         }

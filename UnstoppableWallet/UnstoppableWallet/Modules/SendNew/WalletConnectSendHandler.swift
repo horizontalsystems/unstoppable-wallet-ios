@@ -47,16 +47,16 @@ extension WalletConnectSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
-        let gasPrice = transactionSettings?.gasPrice
+        let gasPriceData = transactionSettings?.gasPriceData
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        if let gasPrice {
+        if let gasPriceData {
             if let gasLimit = payload.transaction.gasLimit {
                 evmFeeData = EvmFeeData(gasLimit: gasLimit, surchargedGasLimit: gasLimit)
             } else {
                 do {
-                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPrice)
+                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                 } catch {
                     transactionError = error
                 }
@@ -70,7 +70,7 @@ extension WalletConnectSendHandler: ISendHandler {
             decoration: decoration,
             transactionData: transactionData,
             transactionError: transactionError,
-            gasPrice: gasPrice,
+            gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )
