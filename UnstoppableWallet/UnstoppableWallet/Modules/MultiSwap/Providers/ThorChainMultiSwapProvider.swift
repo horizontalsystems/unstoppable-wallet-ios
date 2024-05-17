@@ -118,13 +118,13 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
             }
 
             let blockchainType = tokenIn.blockchainType
-            let gasPrice = transactionSettings?.gasPrice
+            let gasPriceData = transactionSettings?.gasPriceData
             var evmFeeData: EvmFeeData?
             var transactionError: Error?
 
-            if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPrice {
+            if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
                 do {
-                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPrice)
+                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                 } catch {
                     transactionError = error
                 }
@@ -136,7 +136,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 transactionData: transactionData,
                 transactionError: transactionError,
-                gasPrice: gasPrice,
+                gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce
             )

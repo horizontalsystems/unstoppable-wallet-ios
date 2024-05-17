@@ -1,12 +1,12 @@
 import EvmKit
 
 enum TransactionSettings {
-    case evm(gasPrice: GasPrice, nonce: Int?)
+    case evm(gasPriceData: GasPriceData, nonce: Int?)
     case bitcoin(satoshiPerByte: Int)
 
-    var gasPrice: GasPrice? {
+    var gasPriceData: GasPriceData? {
         switch self {
-        case let .evm(gasPrice, _): return gasPrice
+        case let .evm(gasPriceData, _): return gasPriceData
         default: return nil
         }
     }

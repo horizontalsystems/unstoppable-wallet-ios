@@ -2836,6 +2836,8 @@
 		D02A67D8272A7460009B2C1C /* CoinTweetsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */; };
 		D033289F2BF6199600BBB364 /* InfoNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoNewView.swift */; };
 		D03328A02BF6199600BBB364 /* InfoNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoNewView.swift */; };
+		D03F74822BF76D0A004FBCFA /* GasPriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03F74812BF76D0A004FBCFA /* GasPriceData.swift */; };
+		D03F74832BF76D0A004FBCFA /* GasPriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03F74812BF76D0A004FBCFA /* GasPriceData.swift */; };
 		D04D98EA268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04D98EB268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04DD5412B68C0EF00219B87 /* HighlightedTiltledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */; };
@@ -4818,6 +4820,7 @@
 		D02A67BA272A7460009B2C1C /* CoinTweetsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsService.swift; sourceTree = "<group>"; };
 		D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsModule.swift; sourceTree = "<group>"; };
 		D033289E2BF6199600BBB364 /* InfoNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNewView.swift; sourceTree = "<group>"; };
+		D03F74812BF76D0A004FBCFA /* GasPriceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceData.swift; sourceTree = "<group>"; };
 		D04D98E9268055A2001A3135 /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
 		D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedTiltledTextView.swift; sourceTree = "<group>"; };
 		D0532CBD2B149DEE0015DF40 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
@@ -9260,6 +9263,7 @@
 				D31369882BEA188D00BA6B5B /* ZcashPreSendHandler.swift */,
 				D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */,
 				D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */,
+				D03F74812BF76D0A004FBCFA /* GasPriceData.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -10756,6 +10760,7 @@
 				2FA5D68102F8CD6FB793A158 /* EvmSendSettingsModule.swift in Sources */,
 				2FA5D4C40B723434DB9D2DBE /* EvmSendSettingsService.swift in Sources */,
 				2FA5D987AC6D91F7929DE933 /* EvmSendSettingsViewController.swift in Sources */,
+				D03F74832BF76D0A004FBCFA /* GasPriceData.swift in Sources */,
 				D05E96AA2A28657F002CCD71 /* TronAccountManager.swift in Sources */,
 				2FA5D61F4FA6E818D25C4A96 /* EvmSendSettingsViewModel.swift in Sources */,
 				2FA5D201AED8FB83968A5220 /* StepperAmountInputView.swift in Sources */,
@@ -12318,6 +12323,7 @@
 				11B35CA6259EDA3708695416 /* FaqUrlHelper.swift in Sources */,
 				11B3534B12C5E7596E4953F0 /* RestoreSettingsModule.swift in Sources */,
 				2FA5DF494C667E041B22C804 /* EvmSendSettingsModule.swift in Sources */,
+				D03F74822BF76D0A004FBCFA /* GasPriceData.swift in Sources */,
 				D05E96A92A28657F002CCD71 /* TronAccountManager.swift in Sources */,
 				2FA5DBD32AA258A75A2FDD95 /* EvmSendSettingsService.swift in Sources */,
 				2FA5D7C86A2A55B906953B76 /* EvmSendSettingsViewController.swift in Sources */,

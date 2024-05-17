@@ -62,11 +62,14 @@ class EvmTransactionService: ITransactionService {
     }
 
     var transactionSettings: TransactionSettings? {
-        guard let gasPrice else {
+        guard let gasPrice, let recommendedGasPrice else {
             return nil
         }
 
-        return .evm(gasPrice: gasPrice, nonce: usingRecommendedNonce ? nil : nonce)
+        return .evm(
+            gasPriceData: GasPriceData(recommended: recommendedGasPrice, userDefined: gasPrice),
+            nonce: usingRecommendedNonce ? nil : nonce
+        )
     }
 
     init?(blockchainType: BlockchainType, userAddress: EvmKit.Address, initialTransactionSettings: InitialTransactionSettings?) {

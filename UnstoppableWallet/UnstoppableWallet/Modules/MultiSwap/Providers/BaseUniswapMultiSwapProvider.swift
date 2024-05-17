@@ -17,17 +17,17 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
 
         let blockchainType = tokenIn.blockchainType
-        let gasPrice = transactionSettings?.gasPrice
+        let gasPriceData = transactionSettings?.gasPriceData
         var txData: TransactionData?
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPrice {
+        if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
             do {
                 let evmKit = evmKitWrapper.evmKit
                 let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, trade: quote.trade, tradeOptions: quote.tradeOptions)
                 txData = transactionData
-                evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPrice)
+                evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
             } catch {
                 transactionError = error
             }
@@ -37,7 +37,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             quote: quote,
             transactionData: txData,
             transactionError: transactionError,
-            gasPrice: gasPrice,
+            gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )
