@@ -1,27 +1,39 @@
-"6ebp42" = "已选硬币";
-"8vJheC" = "排序方式为";
-"qHGyuo" = "市值由高到低";
-"tVjZ7W" = "市值由低到高";
-"t6AKQ5" = "成交量由高到低";
-"C1LmDj" = "成交量由低到高";
-"Rl3a0T" = "涨幅榜";
-"x1kK4T" = "跌幅榜";
-
 "2puq80" = "数字货币价格列表";
-"Iodq3O-C1LmDj" = "只是确认一下，你想要'最低交易量'对吗？";
-"Iodq3O-Rl3a0T" = "只是确认一下，您想要‘涨幅最大’对吗？";
+
+"6ebp42" = "已选硬币";
+
+"8vJheC" = "排序方式为";
+
+"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
+
 "Iodq3O-qHGyuo" = "只是确认一下，您想要‘最高市值’对吗？";
-"Iodq3O-t6AKQ5" = "只是确认一下，您想要‘最高交易量’对吗？";
+
 "Iodq3O-tVjZ7W" = "只是确认一下，您想要‘最低市值’对吗？";
-"Iodq3O-x1kK4T" = "只是确认一下，您想要‘最大跌幅’对吗？";
+
+"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Losers’?";
+
 "OkcYOj" = "查看所选币种的价格";
+
+"Rl3a0T" = "Gainers";
+
 "VXTxGF" = "小部件币";
+
 "ZBHf6A" = "排序类型";
+
 "hrLfmt" = "单个币种价格";
-"nj8Co9-C1LmDj" = "有 ${count} 个选项符合“最低成交量”。";
-"nj8Co9-Rl3a0T" = "有 ${count} 个选项符合“涨幅最高”。";
+
+"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Gainers’.";
+
 "nj8Co9-qHGyuo" = "有 ${count} 个选项符合“最高市值”。";
-"nj8Co9-t6AKQ5" = "有 ${count} 个选项符合“最高成交量”。";
+
 "nj8Co9-tVjZ7W" = "有 ${count} 个选项符合“市值最低”。";
-"nj8Co9-x1kK4T" = "有 ${count} 个选项符合“跌幅最大”。";
+
+"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
+
+"qHGyuo" = "市值由高到低";
+
 "rCV9fg" = "查看币种列表的币价。";
+
+"tVjZ7W" = "市值由低到高";
+
+"x1kK4T" = "Losers";
