@@ -16,25 +16,50 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
             baseFee = feeViewItemFactory.description(value: recommendedMaxFeePerGas, step: baseStep)
         }
 
-        sync()
+        syncFromService()
     }
 
     @Published var baseFee: String = ""
     @Published var maxFeeCautionState: FieldCautionState = .none
-    @Published var maxFee: String = ""
+    @Published var maxFee: String = "" {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.handleGasPrice()
+            }
+        }
+    }
+
     @Published var maxTipsCautionState: FieldCautionState = .none
-    @Published var maxTips: String = ""
+    @Published var maxTips: String = "" {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.handleGasPrice()
+            }
+        }
+    }
+
     @Published var nonceCautionState: FieldCautionState = .none
-    @Published var nonce: String = ""
+    @Published var nonce: String = "" {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.handleNonce()
+            }
+        }
+    }
+
     @Published var resetEnabled = false
 
-    private func sync() {
+    private func syncFromService() {
         if case let .eip1559(maxFee, maxTips) = service.gasPrice {
             self.maxFee = feeViewItemFactory.decimalValue(value: maxFee).description
             self.maxTips = feeViewItemFactory.decimalValue(value: maxTips).description
         }
 
         nonce = "\(service.nonce ?? 0)"
+        sync()
+    }
+
+    private func sync() {
         resetEnabled = service.modified
 
         if service.warnings.contains(where: { $0 is EvmFeeModule.GasDataWarning }) {
@@ -65,7 +90,6 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
             maxFeePerGas: feeViewItemFactory.intValue(value: maxFeeDecimal),
             maxPriorityFeePerGas: feeViewItemFactory.intValue(value: maxTipsDecimal)
         ))
-
         sync()
     }
 
@@ -95,26 +119,23 @@ extension Eip1559FeeSettingsViewModel {
     func stepChangeMaxFee(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: maxFee, direction: direction) {
             maxFee = newValue.description
-            handleGasPrice()
         }
     }
 
     func stepChangeMaxTips(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: maxTips, direction: direction) {
             maxTips = newValue.description
-            handleGasPrice()
         }
     }
 
     func stepChangeNonce(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: nonce, direction: direction) {
             nonce = newValue.description
-            handleNonce()
         }
     }
 
     func onReset() {
         service.useRecommended()
-        sync()
+        syncFromService()
     }
 }
