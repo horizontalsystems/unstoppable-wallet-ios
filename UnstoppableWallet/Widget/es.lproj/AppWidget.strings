@@ -1,27 +1,39 @@
-"6ebp42" = "Moneda seleccionada";
-"8vJheC" = "Ordenar por";
-"qHGyuo" = "Capitalización Mayor";
-"tVjZ7W" = "Capitalización Menor";
-"t6AKQ5" = "Mayor Volumen";
-"C1LmDj" = "Menor Volumen";
-"Rl3a0T" = "Máximos Ganadores";
-"x1kK4T" = "Máximos Perdedores";
-
 "2puq80" = "Lista de precios de criptomonedas";
-"Iodq3O-C1LmDj" = "Para confirmar, ¿quieres \"Menor Volumen\"?";
-"Iodq3O-Rl3a0T" = "Para confirmar, ¿quieres 'Principales Ganadores'?";
+
+"6ebp42" = "Moneda seleccionada";
+
+"8vJheC" = "Ordenar por";
+
+"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
+
 "Iodq3O-qHGyuo" = "Para confirmar, ¿querías 'Capitalización Mayor'?";
-"Iodq3O-t6AKQ5" = "Para confirmar, ¿querías 'Mayor Volumen'?";
+
 "Iodq3O-tVjZ7W" = "Para confirmar, ¿querías 'Capitalización Menor?";
-"Iodq3O-x1kK4T" = "Para confirmar, ¿querías 'Máximos Perdedores'?";
+
+"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Losers’?";
+
 "OkcYOj" = "Ver el precio de la moneda seleccionada";
+
+"Rl3a0T" = "Gainers";
+
 "VXTxGF" = "Widget de moneda";
+
 "ZBHf6A" = "Tipo de ordenamiento";
+
 "hrLfmt" = "Precio de una sola moneda";
-"nj8Co9-C1LmDj" = "Hay ${count} opciones que coinciden con 'Menor Volumen'.";
-"nj8Co9-Rl3a0T" = "Hay ${count} opciones que coinciden con 'Principales Ganadores'.";
+
+"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Gainers’.";
+
 "nj8Co9-qHGyuo" = "Hay ${count} opciones que coinciden con 'Capitalización Mayor'.";
-"nj8Co9-t6AKQ5" = "Hay ${count} opciones que coinciden con 'Mayor Volumen'.";
+
 "nj8Co9-tVjZ7W" = "Hay ${count} opciones que coinciden con 'Capitalización Menor'.";
-"nj8Co9-x1kK4T" = "Hay ${count} opciones que coinciden con 'Máximos Perdedores'.";
+
+"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
+
+"qHGyuo" = "Capitalización Mayor";
+
 "rCV9fg" = "Ver precios de las monedas en la lista de monedas";
+
+"tVjZ7W" = "Capitalización Menor";
+
+"x1kK4T" = "Losers";
