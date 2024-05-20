@@ -1,26 +1,26 @@
 import Combine
 
 class FavoritesViewModel: ObservableObject {
-    private let favoritesManager = App.shared.favoritesManager
+    private let watchlistManager = App.shared.watchlistManager
     private var cancellables = Set<AnyCancellable>()
 
     @Published var coinUids: Set<String>
 
     init() {
-        coinUids = favoritesManager.coinUids
+        coinUids = Set(watchlistManager.coinUids)
 
-        favoritesManager.coinUidsPublisher
-            .sink { [weak self] in self?.coinUids = $0 }
+        watchlistManager.coinUidsPublisher
+            .sink { [weak self] in self?.coinUids = Set($0) }
             .store(in: &cancellables)
     }
 }
 
 extension FavoritesViewModel {
     func add(coinUid: String) {
-        favoritesManager.add(coinUid: coinUid)
+        watchlistManager.add(coinUid: coinUid)
     }
 
     func remove(coinUid: String) {
-        favoritesManager.remove(coinUid: coinUid)
+        watchlistManager.remove(coinUid: coinUid)
     }
 }

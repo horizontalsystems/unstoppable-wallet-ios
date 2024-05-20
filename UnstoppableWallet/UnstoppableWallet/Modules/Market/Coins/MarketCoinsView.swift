@@ -116,7 +116,7 @@ struct MarketCoinsView: View {
                 itemContent(
                     imageUrl: URL(string: coin.imageUrl),
                     code: coin.code,
-                    name: coin.name,
+                    marketCap: marketInfo.marketCap,
                     price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
                     rank: marketInfo.marketCapRank,
                     diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
@@ -136,7 +136,7 @@ struct MarketCoinsView: View {
                 itemContent(
                     imageUrl: nil,
                     code: "CODE",
-                    name: "Coin Name",
+                    marketCap: 123_456,
                     price: "$123.45",
                     rank: 12,
                     diff: index % 2 == 0 ? 12.34 : -12.34
@@ -148,7 +148,7 @@ struct MarketCoinsView: View {
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, name: String, price: String, rank: Int?, diff: Decimal?) -> some View {
+    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
         KFImage.url(imageUrl)
             .resizable()
             .placeholder { Circle().fill(Color.themeSteel20) }
@@ -168,7 +168,9 @@ struct MarketCoinsView: View {
                         BadgeViewNew(text: "\(rank)")
                     }
 
-                    Text(name).textSubhead2()
+                    if let marketCap, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: marketCap) {
+                        Text(formatted).textSubhead2()
+                    }
                 }
                 Spacer()
                 DiffText(diff)

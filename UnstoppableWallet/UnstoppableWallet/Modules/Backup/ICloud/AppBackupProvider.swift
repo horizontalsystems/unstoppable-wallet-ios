@@ -8,7 +8,7 @@ class AppBackupProvider {
     private let accountManager: AccountManager
     private let accountFactory: AccountFactory
     private let walletManager: WalletManager
-    private let favoritesManager: FavoritesManager
+    private let watchlistManager: WatchlistManager
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let btcBlockchainManager: BtcBlockchainManager
     private let restoreSettingsManager: RestoreSettingsManager
@@ -27,7 +27,7 @@ class AppBackupProvider {
     init(accountManager: AccountManager,
          accountFactory: AccountFactory,
          walletManager: WalletManager,
-         favoritesManager: FavoritesManager,
+         watchlistManager: WatchlistManager,
          evmSyncSourceManager: EvmSyncSourceManager,
          btcBlockchainManager: BtcBlockchainManager,
          restoreSettingsManager: RestoreSettingsManager,
@@ -46,7 +46,7 @@ class AppBackupProvider {
         self.accountManager = accountManager
         self.accountFactory = accountFactory
         self.walletManager = walletManager
-        self.favoritesManager = favoritesManager
+        self.watchlistManager = watchlistManager
         self.evmSyncSourceManager = evmSyncSourceManager
         self.btcBlockchainManager = btcBlockchainManager
         self.restoreSettingsManager = restoreSettingsManager
@@ -125,7 +125,7 @@ class AppBackupProvider {
         let syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: selected, custom: [])
         return RawFullBackup(
             accounts: accounts,
-            watchlistIds: Array(favoritesManager.coinUids),
+            watchlistIds: watchlistManager.coinUids,
             contacts: contactManager.backupContactBook?.contacts ?? [],
             settings: settings(evmSyncSources: syncSources),
             customSyncSources: custom
@@ -186,7 +186,7 @@ extension AppBackupProvider {
         for wallet in raw.accounts {
             restore(raws: [wallet])
         }
-        favoritesManager.add(coinUids: raw.watchlistIds)
+        watchlistManager.add(coinUids: raw.watchlistIds)
 
         if !raw.contacts.isEmpty {
             try? contactManager.restore(contacts: raw.contacts, mergePolitics: .replace)

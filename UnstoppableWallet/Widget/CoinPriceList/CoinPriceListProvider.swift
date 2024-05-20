@@ -3,8 +3,6 @@ import SwiftUI
 import WidgetKit
 
 struct CoinPriceListProvider: IntentTimelineProvider {
-    let mode: CoinPriceListMode
-
     func placeholder(in context: Context) -> CoinPriceListEntry {
         let count: Int
 
@@ -15,20 +13,9 @@ struct CoinPriceListProvider: IntentTimelineProvider {
 
         return CoinPriceListEntry(
             date: Date(),
-            mode: mode,
             sortType: .highestCap,
             maxItemCount: count,
-            items: (1 ... count).map { index in
-                CoinPriceListEntry.Item(
-                    uid: "coin\(index)",
-                    icon: nil,
-                    code: "COD\(index)",
-                    name: "Coin Name \(index)",
-                    price: "$1234",
-                    priceChange: "1.23",
-                    priceChangeType: .unknown
-                )
-            }
+            items: (1 ... count).map { CoinItem.stub(index: $0) }
         )
     }
 
@@ -61,13 +48,12 @@ struct CoinPriceListProvider: IntentTimelineProvider {
 
         switch sortType {
         case .highestCap, .lowestCap, .unknown: listType = .mcap
-        case .highestVolume, .lowestVolume: listType = .volume
-        case .topGainers, .topLosers: listType = .price
+        case .gainers, .losers: listType = .priceChange24h
         }
 
         switch sortType {
-        case .highestCap, .highestVolume, .topGainers, .unknown: listOrder = .desc
-        case .lowestCap, .lowestVolume, .topLosers: listOrder = .asc
+        case .highestCap, .gainers, .unknown: listOrder = .desc
+        case .lowestCap, .losers: listOrder = .asc
         }
 
         switch family {
@@ -75,35 +61,22 @@ struct CoinPriceListProvider: IntentTimelineProvider {
         default: limit = 6
         }
 
-        let coins: [Coin]
-
-        switch mode {
-        case .topCoins:
-            coins = try await apiProvider.listCoins(type: listType, order: listOrder, limit: limit, currencyCode: currency.code)
-        case .watchlist:
-            let coinUids: [String]? = storage.value(for: AppWidgetConstants.keyFavoriteCoinUids)
-
-            if let coinUids, !coinUids.isEmpty {
-                coins = try await apiProvider.listCoins(uids: coinUids, type: listType, order: listOrder, limit: limit, currencyCode: currency.code)
-            } else {
-                coins = []
-            }
-        }
+        let coins = try await apiProvider.listCoins(type: listType, order: listOrder, limit: limit, currencyCode: currency.code)
 
         return CoinPriceListEntry(
             date: Date(),
-            mode: mode,
             sortType: sortType,
             maxItemCount: limit,
             items: coins.map { coin in
-                CoinPriceListEntry.Item(
+                CoinItem(
                     uid: coin.uid,
                     icon: coin.image,
                     code: coin.code,
-                    name: coin.name,
+                    marketCap: coin.marketCap.flatMap { ValueFormatter.formatShort(currency: currency, value: $0) },
+                    rank: coin.rank.map { "\($0)" },
                     price: coin.formattedPrice(currency: currency),
-                    priceChange: coin.formattedPriceChange,
-                    priceChangeType: coin.priceChangeType
+                    priceChange: coin.formattedPriceChange(),
+                    priceChangeType: coin.priceChangeType()
                 )
             }
         )

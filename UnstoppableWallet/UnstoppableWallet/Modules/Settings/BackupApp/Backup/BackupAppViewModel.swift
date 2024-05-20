@@ -7,7 +7,7 @@ class BackupAppViewModel: ObservableObject {
     private let accountManager = App.shared.accountManager
     private let contactManager = App.shared.contactManager
     private let cloudBackupManager = App.shared.cloudBackupManager
-    private let favoritesManager = App.shared.favoritesManager
+    private let watchlistManager = App.shared.watchlistManager
     private let evmSyncSourceManager = App.shared.evmSyncSourceManager
 
     private var cancellables = Set<AnyCancellable>()
@@ -149,7 +149,7 @@ extension BackupAppViewModel {
 
         return BackupAppModule.items(
             watchAccountCount: accounts(watch: true).count,
-            watchlistCount: favoritesManager.coinUids.count,
+            watchlistCount: watchlistManager.coinUids.count,
             contactAddressCount: contacts.count,
             blockchainSourcesCount: evmSyncSourceManager.customSyncSources(blockchainType: nil).count
         )

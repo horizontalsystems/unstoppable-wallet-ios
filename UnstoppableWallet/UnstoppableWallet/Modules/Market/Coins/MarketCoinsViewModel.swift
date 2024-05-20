@@ -83,7 +83,7 @@ extension MarketCoinsViewModel {
     }
 
     var sortBys: [MarketModule.SortBy] {
-        [.highestCap, .lowestCap, .gainers, .losers, .highestVolume, .lowestVolume]
+        [.highestCap, .lowestCap, .gainers, .losers]
     }
 
     var tops: [MarketModule.Top] {

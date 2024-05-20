@@ -52,7 +52,7 @@ class App {
     let networkManager: NetworkManager
     let guidesManager: GuidesManager
     let termsManager: TermsManager
-    let favoritesManager: FavoritesManager
+    let watchlistManager: WatchlistManager
     let contactManager: ContactBookManager
     let subscriptionManager: SubscriptionManager
 
@@ -160,8 +160,7 @@ class App {
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(userDefaultsStorage: userDefaultsStorage)
 
-        let favoriteCoinRecordStorage = FavoriteCoinRecordStorage(dbPool: dbPool)
-        favoritesManager = FavoritesManager(storage: favoriteCoinRecordStorage, sharedStorage: sharedLocalStorage)
+        watchlistManager = WatchlistManager(storage: sharedLocalStorage)
 
         contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: AppConfig.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
         subscriptionManager = SubscriptionManager(userDefaultsStorage: userDefaultsStorage, marketKit: marketKit)
@@ -281,7 +280,7 @@ class App {
             accountManager: accountManager,
             accountFactory: accountFactory,
             walletManager: walletManager,
-            favoritesManager: favoritesManager,
+            watchlistManager: watchlistManager,
             evmSyncSourceManager: evmSyncSourceManager,
             btcBlockchainManager: btcBlockchainManager,
             restoreSettingsManager: restoreSettingsManager,

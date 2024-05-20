@@ -5,7 +5,7 @@ import UIKit
 
 enum CoinPageModule {
     static func view(fullCoin: FullCoin) -> some View {
-        let viewModel = CoinPageViewModelNew(fullCoin: fullCoin, favoritesManager: App.shared.favoritesManager)
+        let viewModel = CoinPageViewModelNew(fullCoin: fullCoin, watchlistManager: App.shared.watchlistManager)
 
         let overviewView = CoinOverviewModule.view(coinUid: fullCoin.coin.uid)
         let analyticsView = CoinAnalyticsModule.view(fullCoin: fullCoin)
@@ -26,7 +26,7 @@ enum CoinPageModule {
 
         let service = CoinPageService(
             fullCoin: fullCoin,
-            favoritesManager: App.shared.favoritesManager
+            watchlistManager: App.shared.watchlistManager
         )
 
         let viewModel = CoinPageViewModel(service: service)

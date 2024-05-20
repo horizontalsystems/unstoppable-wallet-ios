@@ -1,6 +1,6 @@
 import GRDB
 
-class FavoriteCoinRecord: Record {
+class FavoriteCoinRecord_v_0_38: Record {
     let coinUid: String
 
     init(coinUid: String) {

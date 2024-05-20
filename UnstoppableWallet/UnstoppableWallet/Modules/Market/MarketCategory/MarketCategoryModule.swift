@@ -12,7 +12,7 @@ enum MarketCategoryModule {
         )
 
         let listService = MarketFilteredListService(currencyManager: App.shared.currencyManager, provider: service, statPage: .coinCategory)
-        let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, favoritesManager: App.shared.favoritesManager, statPage: .coinCategory)
+        let watchlistToggleService = MarketWatchlistToggleService(coinUidService: listService, watchlistManager: App.shared.watchlistManager, statPage: .coinCategory)
 
         let marketCapFetcher = MarketCategoryMarketCapFetcher(currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, category: category.uid)
         let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .byPeriod(.day1), statPage: .coinCategory)

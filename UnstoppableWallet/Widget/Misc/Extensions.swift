@@ -15,15 +15,24 @@ extension Coin {
         price.flatMap { ValueFormatter.format(currency: currency, value: $0) } ?? "n/a"
     }
 
-    var formattedPriceChange: String {
-        priceChange24h.flatMap { ValueFormatter.format(percentValue: $0) } ?? "n/a"
+    func formattedPriceChange(timePeriod: WatchlistTimePeriod = .day1) -> String {
+        priceChange(timePeriod: timePeriod).flatMap { ValueFormatter.format(percentValue: $0) } ?? "n/a"
     }
 
-    var priceChangeType: PriceChangeType {
-        guard let priceChange24h else {
+    func priceChangeType(timePeriod: WatchlistTimePeriod = .day1) -> PriceChangeType {
+        guard let priceChange = priceChange(timePeriod: timePeriod) else {
             return .unknown
         }
 
-        return priceChange24h >= 0 ? .up : .down
+        return priceChange >= 0 ? .up : .down
+    }
+
+    private func priceChange(timePeriod: WatchlistTimePeriod) -> Decimal? {
+        switch timePeriod {
+        case .day1: return priceChange24h
+        case .week1: return priceChange1w
+        case .month1: return priceChange1m
+        case .month3: return priceChange3m
+        }
     }
 }

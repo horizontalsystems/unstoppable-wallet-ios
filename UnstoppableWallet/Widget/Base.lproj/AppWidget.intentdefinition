@@ -47,43 +47,23 @@
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Highest Volume</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>t6AKQ5</string>
-					<key>INEnumValueIndex</key>
-					<integer>3</integer>
-					<key>INEnumValueName</key>
-					<string>highestVolume</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Lowest Volume</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>C1LmDj</string>
-					<key>INEnumValueIndex</key>
-					<integer>4</integer>
-					<key>INEnumValueName</key>
-					<string>lowestVolume</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Top Gainers</string>
+					<string>Gainers</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>Rl3a0T</string>
 					<key>INEnumValueIndex</key>
-					<integer>5</integer>
+					<integer>3</integer>
 					<key>INEnumValueName</key>
-					<string>topGainers</string>
+					<string>gainers</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Top Losers</string>
+					<string>Losers</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>x1kK4T</string>
 					<key>INEnumValueIndex</key>
-					<integer>6</integer>
+					<integer>4</integer>
 					<key>INEnumValueName</key>
-					<string>topLosers</string>
+					<string>losers</string>
 				</dict>
 			</array>
 		</dict>
@@ -93,11 +73,11 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>5N3KPh</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>23B81</string>
+	<string>23E224</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>15A240d</string>
+	<string>15E204a</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>15.0</string>
+	<string>15.3</string>
 	<key>INIntents</key>
 	<array>
 		<dict>

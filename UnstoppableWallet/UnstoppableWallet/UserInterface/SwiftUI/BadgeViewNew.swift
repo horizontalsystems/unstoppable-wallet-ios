@@ -18,11 +18,11 @@ struct BadgeViewNew: View {
 
             if let change, change != 0 {
                 if change > 0 {
-                    Text("↑\(change)")
+                    Text(verbatim: "↑\(change)")
                         .font(.themeMicroSB)
                         .foregroundColor(.themeRemus)
                 } else {
-                    Text("↓\(abs(change))")
+                    Text(verbatim: "↓\(abs(change))")
                         .font(.themeMicroSB)
                         .foregroundColor(.themeLucian)
                 }

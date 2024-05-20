@@ -2,14 +2,14 @@ import RxSwift
 
 class MarketWatchlistToggleService {
     private let coinUidService: IMarketListCoinUidService
-    private let favoritesManager: FavoritesManager
+    private let watchlistManager: WatchlistManager
     private let statPage: StatPage
 
     private let statusSubject = PublishSubject<State>()
 
-    init(coinUidService: IMarketListCoinUidService, favoritesManager: FavoritesManager, statPage: StatPage) {
+    init(coinUidService: IMarketListCoinUidService, watchlistManager: WatchlistManager, statPage: StatPage) {
         self.coinUidService = coinUidService
-        self.favoritesManager = favoritesManager
+        self.watchlistManager = watchlistManager
         self.statPage = statPage
     }
 }
@@ -24,7 +24,7 @@ extension MarketWatchlistToggleService {
             return nil
         }
 
-        return favoritesManager.isFavorite(coinUid: coinUid)
+        return watchlistManager.isWatched(coinUid: coinUid)
     }
 
     func favorite(index: Int) {
@@ -33,7 +33,7 @@ extension MarketWatchlistToggleService {
             return
         }
 
-        favoritesManager.add(coinUid: coinUid)
+        watchlistManager.add(coinUid: coinUid)
 
         statusSubject.onNext(.favorite)
 
@@ -46,7 +46,7 @@ extension MarketWatchlistToggleService {
             return
         }
 
-        favoritesManager.remove(coinUid: coinUid)
+        watchlistManager.remove(coinUid: coinUid)
 
         statusSubject.onNext(.unfavorite)
 
