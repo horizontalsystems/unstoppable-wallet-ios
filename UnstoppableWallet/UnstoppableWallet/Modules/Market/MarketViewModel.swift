@@ -8,7 +8,7 @@ class MarketViewModel {
     private let userDefaultsStorage = App.shared.userDefaultsStorage
     private let launchScreenManager = App.shared.launchScreenManager
     private let marketKit = App.shared.marketKit
-    private let favoritesManager = App.shared.favoritesManager
+    private let watchlistManager = App.shared.watchlistManager
 
     @Published var currentTab: MarketModule.TabOld {
         didSet {
@@ -77,18 +77,18 @@ extension MarketViewModel {
     }
 
     func isFavorite(coinUid: String) -> Bool {
-        favoritesManager.isFavorite(coinUid: coinUid)
+        watchlistManager.isWatched(coinUid: coinUid)
     }
 
     func favorite(coinUid: String) {
-        favoritesManager.add(coinUid: coinUid)
+        watchlistManager.add(coinUid: coinUid)
         favoritedSubject.send()
 
         stat(page: .marketSearch, event: .addToWatchlist(coinUid: coinUid))
     }
 
     func unfavorite(coinUid: String) {
-        favoritesManager.remove(coinUid: coinUid)
+        watchlistManager.remove(coinUid: coinUid)
         unfavoritedSubject.send()
 
         stat(page: .marketSearch, event: .removeFromWatchlist(coinUid: coinUid))

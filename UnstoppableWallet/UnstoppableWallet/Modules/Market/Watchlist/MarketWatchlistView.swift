@@ -75,25 +75,25 @@ struct MarketWatchlistView: View {
         .alert(
             isPresented: $sortBySelectorPresented,
             title: "market.sort_by.title".localized,
-            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+            viewItems: WatchlistSortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
             onTap: { index in
                 guard let index else {
                     return
                 }
 
-                viewModel.sortBy = viewModel.sortBys[index]
+                viewModel.sortBy = WatchlistSortBy.allCases[index]
             }
         )
         .alert(
             isPresented: $timePeriodSelectorPresented,
             title: "market.time_period.title".localized,
-            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+            viewItems: WatchlistTimePeriod.allCases.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
             onTap: { index in
                 guard let index else {
                     return
                 }
 
-                viewModel.timePeriod = viewModel.timePeriods[index]
+                viewModel.timePeriod = WatchlistTimePeriod.allCases[index]
             }
         )
     }
@@ -116,7 +116,7 @@ struct MarketWatchlistView: View {
                 itemContent(
                     imageUrl: URL(string: coin.imageUrl),
                     code: coin.code,
-                    name: coin.name,
+                    marketCap: marketInfo.marketCap,
                     price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
                     rank: marketInfo.marketCapRank,
                     diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod),
@@ -144,7 +144,7 @@ struct MarketWatchlistView: View {
                 itemContent(
                     imageUrl: nil,
                     code: "CODE",
-                    name: "Coin Name",
+                    marketCap: 123_456,
                     price: "$123.45",
                     rank: 12,
                     diff: index % 2 == 0 ? 12.34 : -12.34,
@@ -157,7 +157,7 @@ struct MarketWatchlistView: View {
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, name: String, price: String, rank: Int?, diff: Decimal?, signal: TechnicalAdvice.Advice?) -> some View {
+    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?, signal: TechnicalAdvice.Advice?) -> some View {
         KFImage.url(imageUrl)
             .resizable()
             .placeholder { Circle().fill(Color.themeSteel20) }
@@ -190,7 +190,9 @@ struct MarketWatchlistView: View {
                         BadgeViewNew(text: "\(rank)")
                     }
 
-                    Text(name).textSubhead2()
+                    if let marketCap, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: marketCap) {
+                        Text(formatted).textSubhead2()
+                    }
                 }
                 Spacer()
                 DiffText(diff)

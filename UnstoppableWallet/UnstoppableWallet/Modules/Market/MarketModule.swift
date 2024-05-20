@@ -142,7 +142,6 @@ enum MarketModule {
 
 extension MarketModule {
     enum SortBy: String, CaseIterable {
-        case manual
         case highestCap
         case lowestCap
         case gainers
@@ -152,7 +151,6 @@ extension MarketModule {
 
         var title: String {
             switch self {
-            case .manual: return "market.sort_by.manual".localized
             case .highestCap: return "market.sort_by.highest_cap".localized
             case .lowestCap: return "market.sort_by.lowest_cap".localized
             case .gainers: return "market.sort_by.gainers".localized
@@ -383,26 +381,51 @@ extension MarketKit.MarketInfo {
         default: return nil
         }
     }
+
+    func priceChangeValue(timePeriod: WatchlistTimePeriod) -> Decimal? {
+        switch timePeriod {
+        case .day1: return priceChange24h
+        case .week1: return priceChange7d
+        case .month1: return priceChange30d
+        case .month3: return priceChange90d
+        }
+    }
 }
 
 extension [MarketKit.MarketInfo] {
-    func sorted(sortBy: MarketModule.SortBy, timePeriod: HsTimePeriod) -> [MarketKit.MarketInfo] {
-        sorted { lhsMarketInfo, rhsMarketInfo in
-            switch sortBy {
-            case .highestCap: return lhsMarketInfo.marketCap ?? 0 > rhsMarketInfo.marketCap ?? 0
-            case .lowestCap: return lhsMarketInfo.marketCap ?? 0 < rhsMarketInfo.marketCap ?? 0
-            case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
-            case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
-            case .gainers, .losers:
-                guard let rhsPriceChange = rhsMarketInfo.priceChangeValue(timePeriod: timePeriod) else {
-                    return true
-                }
-                guard let lhsPriceChange = lhsMarketInfo.priceChangeValue(timePeriod: timePeriod) else {
+    func sorted(sortBy: WatchlistSortBy, timePeriod: WatchlistTimePeriod) -> [MarketKit.MarketInfo] {
+        switch sortBy {
+        case .manual: return self
+        case .highestCap: return sorted { $0.marketCap ?? 0 > $1.marketCap ?? 0 }
+        case .lowestCap: return sorted { $0.marketCap ?? 0 < $1.marketCap ?? 0 }
+        case .gainers, .losers: return sorted {
+                guard let lhsPriceChange = $0.priceChangeValue(timePeriod: timePeriod) else {
                     return false
+                }
+                guard let rhsPriceChange = $1.priceChangeValue(timePeriod: timePeriod) else {
+                    return true
                 }
 
                 return sortBy == .gainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
-            default: return true
+            }
+        }
+    }
+
+    func sorted(sortBy: MarketModule.SortBy, timePeriod: HsTimePeriod) -> [MarketKit.MarketInfo] {
+        switch sortBy {
+        case .highestCap: return sorted { $0.marketCap ?? 0 > $1.marketCap ?? 0 }
+        case .lowestCap: return sorted { $0.marketCap ?? 0 < $1.marketCap ?? 0 }
+        case .highestVolume: return sorted { $0.totalVolume ?? 0 > $1.totalVolume ?? 0 }
+        case .lowestVolume: return sorted { $0.totalVolume ?? 0 < $1.totalVolume ?? 0 }
+        case .gainers, .losers: return sorted {
+                guard let lhsPriceChange = $0.priceChangeValue(timePeriod: timePeriod) else {
+                    return false
+                }
+                guard let rhsPriceChange = $1.priceChangeValue(timePeriod: timePeriod) else {
+                    return true
+                }
+
+                return sortBy == .gainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
             }
         }
     }
@@ -515,5 +538,27 @@ extension HsTimePeriod {
 
     var shortTitle: String {
         "market.time_period.\(rawValue).short".localized
+    }
+}
+
+extension WatchlistTimePeriod {
+    var title: String {
+        "market.time_period.\(rawValue)".localized
+    }
+
+    var shortTitle: String {
+        "market.time_period.\(rawValue).short".localized
+    }
+}
+
+extension WatchlistSortBy {
+    var title: String {
+        switch self {
+        case .manual: return "market.sort_by.manual".localized
+        case .highestCap: return "market.sort_by.highest_cap".localized
+        case .lowestCap: return "market.sort_by.lowest_cap".localized
+        case .gainers: return "market.sort_by.gainers".localized
+        case .losers: return "market.sort_by.losers".localized
+        }
     }
 }

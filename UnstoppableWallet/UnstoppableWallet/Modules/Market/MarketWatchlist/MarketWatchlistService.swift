@@ -12,7 +12,7 @@ class MarketWatchlistService: IMarketSingleSortHeaderService {
 
     private let marketKit: MarketKit.Kit
     private let currencyManager: CurrencyManager
-    private let favoritesManager: FavoritesManager
+    private let watchlistManager: WatchlistManager
     private let appManager: IAppManager
     private let userDefaultsStorage: UserDefaultsStorage
     private let disposeBag = DisposeBag()
@@ -32,10 +32,10 @@ class MarketWatchlistService: IMarketSingleSortHeaderService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, favoritesManager: FavoritesManager, appManager: IAppManager, userDefaultsStorage: UserDefaultsStorage) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, watchlistManager: WatchlistManager, appManager: IAppManager, userDefaultsStorage: UserDefaultsStorage) {
         self.marketKit = marketKit
         self.currencyManager = currencyManager
-        self.favoritesManager = favoritesManager
+        self.watchlistManager = watchlistManager
         self.appManager = appManager
         self.userDefaultsStorage = userDefaultsStorage
 
@@ -43,7 +43,7 @@ class MarketWatchlistService: IMarketSingleSortHeaderService {
     }
 
     private func syncCoinUids() {
-        coinUids = Array(favoritesManager.coinUids)
+        coinUids = watchlistManager.coinUids
 
         if case let .loaded(marketInfos, _, _) = state {
             let newMarketInfos = marketInfos.filter { marketInfo in
@@ -107,7 +107,7 @@ extension MarketWatchlistService: IMarketListService {
             }
             .store(in: &cancellables)
 
-        favoritesManager.coinUidsPublisher
+        watchlistManager.coinUidsPublisher
             .sink { [weak self] _ in self?.syncCoinUids() }
             .store(in: &cancellables)
 

@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>OneInchCommissionAddress</key>
-	<string>${one_inch_commission_address}</string>
-	<key>OneInchCommission</key>
-	<string>${one_inch_commission}</string>
 	<key>ArbiscanApiKey</key>
 	<string>${arbiscan_api_key}</string>
 	<key>BscscanApiKey</key>
@@ -113,6 +109,12 @@
 	</array>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
+	<key>OneInchApiKey</key>
+	<string>${one_inch_api_key}</string>
+	<key>OneInchCommission</key>
+	<string>${one_inch_commission}</string>
+	<key>OneInchCommissionAddress</key>
+	<string>${one_inch_commission_address}</string>
 	<key>OpenSeaApiKey</key>
 	<string>${open_sea_api_key}</string>
 	<key>OptimismEtherscanApiKey</key>
@@ -162,7 +164,5 @@
 	<string>${unstoppable_domains_api_key}</string>
 	<key>WallectConnectV2ProjectKey</key>
 	<string>${wallet_connect_v2_project_key}</string>
-	<key>OneInchApiKey</key>
-	<string>${one_inch_api_key}</string>
 </dict>
 </plist>

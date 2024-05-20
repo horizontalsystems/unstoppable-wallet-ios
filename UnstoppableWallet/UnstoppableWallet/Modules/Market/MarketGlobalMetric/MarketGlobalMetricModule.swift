@@ -24,7 +24,7 @@ enum MarketGlobalMetricModule {
 
         let watchlistToggleService = MarketWatchlistToggleService(
             coinUidService: service,
-            favoritesManager: App.shared.favoritesManager,
+            watchlistManager: App.shared.watchlistManager,
             statPage: type.statPage
         )
 
@@ -53,7 +53,7 @@ enum MarketGlobalMetricModule {
 
         let watchlistToggleService = MarketWatchlistToggleService(
             coinUidService: service,
-            favoritesManager: App.shared.favoritesManager,
+            watchlistManager: App.shared.watchlistManager,
             statPage: .globalMetricsDefiCap
         )
 
@@ -82,7 +82,7 @@ enum MarketGlobalMetricModule {
 
         let watchlistToggleService = MarketWatchlistToggleService(
             coinUidService: service,
-            favoritesManager: App.shared.favoritesManager,
+            watchlistManager: App.shared.watchlistManager,
             statPage: .globalMetricsTvlInDefi
         )
 

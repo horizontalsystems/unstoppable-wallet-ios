@@ -4,14 +4,9 @@ import HsExtensions
 import MarketKit
 
 class MarketWatchlistViewModel: ObservableObject {
-    private let keySortBy = "market-watchlist-sort-by"
-    private let keyTimePeriod = "market-watchlist-time-period"
-    private let keyShowSignals = "market-watchlist-show-signals"
-
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
-    private let favoritesManager = App.shared.favoritesManager
-    private let userDefaultsStorage = App.shared.userDefaultsStorage
+    private let watchlistManager = App.shared.watchlistManager
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
@@ -26,42 +21,35 @@ class MarketWatchlistViewModel: ObservableObject {
 
     @Published var state: State = .loading
 
-    var sortBy: MarketModule.SortBy {
+    @Published var sortBy: WatchlistSortBy {
         didSet {
             syncState()
-
-            userDefaultsStorage.set(value: sortBy.rawValue, for: keySortBy)
+            watchlistManager.sortBy = sortBy
         }
     }
 
-    var timePeriod: HsTimePeriod {
+    @Published var timePeriod: WatchlistTimePeriod {
         didSet {
             syncState()
-
-            userDefaultsStorage.set(value: timePeriod.rawValue, for: keyTimePeriod)
+            watchlistManager.timePeriod = timePeriod
         }
     }
 
-    var showSignals: Bool {
+    @Published var showSignals: Bool {
         didSet {
             syncState()
-
-            userDefaultsStorage.set(value: showSignals, for: keyShowSignals)
+            watchlistManager.showSignals = showSignals
         }
     }
 
     init() {
-        let sortByRaw: String? = userDefaultsStorage.value(for: keySortBy)
-        sortBy = sortByRaw.flatMap { MarketModule.SortBy(rawValue: $0) } ?? .gainers
-
-        let timePeriodRaw: String? = userDefaultsStorage.value(for: keyTimePeriod)
-        timePeriod = timePeriodRaw.flatMap { HsTimePeriod(rawValue: $0) } ?? .day1
-
-        showSignals = userDefaultsStorage.value(for: keyShowSignals) ?? true
+        sortBy = watchlistManager.sortBy
+        timePeriod = watchlistManager.timePeriod
+        showSignals = watchlistManager.showSignals
     }
 
     private func syncCoinUids() {
-        coinUids = Array(favoritesManager.coinUids)
+        coinUids = watchlistManager.coinUids
 
         if case let .loaded(marketInfos, signals) = internalState {
             let newMarketInfos = marketInfos.filter { marketInfo in
@@ -105,8 +93,11 @@ class MarketWatchlistViewModel: ObservableObject {
 
             let (marketInfos, signals) = try await (_marketInfos, _signals)
 
+            let marketInfoMap = marketInfos.reduce(into: [String: MarketInfo]()) { $0[$1.fullCoin.coin.uid] = $1 }
+            let orderedMarketInfos = coinUids.compactMap { marketInfoMap[$0] }
+
             await MainActor.run { [weak self] in
-                self?.internalState = .loaded(marketInfos: marketInfos, signals: signals)
+                self?.internalState = .loaded(marketInfos: orderedMarketInfos, signals: signals)
             }
         } catch {
             await MainActor.run { [weak self] in
@@ -132,14 +123,6 @@ extension MarketWatchlistViewModel {
         currencyManager.baseCurrency
     }
 
-    var sortBys: [MarketModule.SortBy] {
-        [.manual, .highestCap, .lowestCap, .gainers, .losers, .highestVolume, .lowestVolume]
-    }
-
-    var timePeriods: [HsTimePeriod] {
-        [.day1, .week1, .month1, .month3]
-    }
-
     func load() {
         currencyManager.$baseCurrency
             .sink { [weak self] _ in
@@ -147,7 +130,7 @@ extension MarketWatchlistViewModel {
             }
             .store(in: &cancellables)
 
-        favoritesManager.coinUidsPublisher
+        watchlistManager.coinUidsPublisher
             .sink { [weak self] _ in self?.syncCoinUids() }
             .store(in: &cancellables)
 
@@ -159,7 +142,7 @@ extension MarketWatchlistViewModel {
     }
 
     func remove(coinUid: String) {
-        favoritesManager.remove(coinUid: coinUid)
+        watchlistManager.remove(coinUid: coinUid)
     }
 }
 

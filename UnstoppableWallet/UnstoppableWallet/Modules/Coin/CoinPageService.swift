@@ -6,7 +6,7 @@ import RxSwift
 
 class CoinPageService {
     let fullCoin: FullCoin
-    private let favoritesManager: FavoritesManager
+    private let watchlistManager: WatchlistManager
     private var cancellables = Set<AnyCancellable>()
 
     private let favoriteRelay = PublishRelay<Bool>()
@@ -18,11 +18,11 @@ class CoinPageService {
         }
     }
 
-    init(fullCoin: FullCoin, favoritesManager: FavoritesManager) {
+    init(fullCoin: FullCoin, watchlistManager: WatchlistManager) {
         self.fullCoin = fullCoin
-        self.favoritesManager = favoritesManager
+        self.watchlistManager = watchlistManager
 
-        favoritesManager.coinUidsPublisher
+        watchlistManager.coinUidsPublisher
             .sink { [weak self] _ in self?.syncFavorite() }
             .store(in: &cancellables)
 
@@ -30,7 +30,7 @@ class CoinPageService {
     }
 
     private func syncFavorite() {
-        favorite = favoritesManager.isFavorite(coinUid: fullCoin.coin.uid)
+        favorite = watchlistManager.isWatched(coinUid: fullCoin.coin.uid)
     }
 }
 
@@ -43,10 +43,10 @@ extension CoinPageService {
         let coinUid = fullCoin.coin.uid
 
         if favorite {
-            favoritesManager.remove(coinUid: coinUid)
+            watchlistManager.remove(coinUid: coinUid)
             stat(page: .coinPage, event: .addToWatchlist(coinUid: coinUid))
         } else {
-            favoritesManager.add(coinUid: coinUid)
+            watchlistManager.add(coinUid: coinUid)
             stat(page: .coinPage, event: .removeFromWatchlist(coinUid: coinUid))
         }
     }

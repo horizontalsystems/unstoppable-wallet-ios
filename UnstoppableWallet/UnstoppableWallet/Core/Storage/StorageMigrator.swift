@@ -331,16 +331,6 @@ enum StorageMigrator {
             try db.drop(table: CoinRecord_v19.databaseTableName)
         }
 
-        migrator.registerMigration("recreateFavoriteCoins") { db in
-            if try db.tableExists("favorite_coins") {
-                try db.drop(table: "favorite_coins")
-            }
-
-            try db.create(table: "favorite_coins_v20") { t in
-                t.column("coinType", .text).notNull()
-            }
-        }
-
         migrator.registerMigration("createActiveAccount") { db in
             try db.create(table: ActiveAccount_v_0_36.databaseTableName) { t in
                 t.column(ActiveAccount_v_0_36.Columns.uniqueId.name, .text).notNull()
@@ -509,12 +499,6 @@ enum StorageMigrator {
                 t.column(CustomToken.Columns.decimals.name, .integer).notNull()
 
                 t.primaryKey([CustomToken.Columns.coinTypeId.name], onConflict: .replace)
-            }
-        }
-
-        migrator.registerMigration("newStructureForFavoriteCoins") { db in
-            try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
-                t.column(FavoriteCoinRecord.Columns.coinUid.name, .text).primaryKey()
             }
         }
 
@@ -820,6 +804,20 @@ enum StorageMigrator {
         migrator.registerMigration("Add time to StatRecord") { db in
             try db.alter(table: StatRecord.databaseTableName) { t in
                 t.add(column: StatRecord.Columns.timestamp.name, .integer).defaults(to: Int(Date().timeIntervalSince1970))
+            }
+        }
+
+        migrator.registerMigration("Migrate watchlist coin uids to local storage") { db in
+            if try db.tableExists(FavoriteCoinRecord_v_0_38.databaseTableName) {
+                let records = try FavoriteCoinRecord_v_0_38.fetchAll(db)
+                let coinUids = Array(Set(records.map(\.coinUid)))
+
+                if !coinUids.isEmpty {
+                    let sharedLocalStorage = SharedLocalStorage()
+                    sharedLocalStorage.set(value: coinUids.sorted(), for: "watchlist-coin-uids")
+                }
+
+                try db.drop(table: FavoriteCoinRecord_v_0_38.databaseTableName)
             }
         }
 

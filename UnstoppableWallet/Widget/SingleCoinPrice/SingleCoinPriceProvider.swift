@@ -65,8 +65,8 @@ struct SingleCoinPriceProvider: IntentTimelineProvider {
             icon: coin.image,
             code: coin.code,
             price: coin.formattedPrice(currency: currency),
-            priceChange: coin.formattedPriceChange,
-            priceChangeType: coin.priceChangeType,
+            priceChange: coin.formattedPriceChange(),
+            priceChangeType: coin.priceChangeType(),
             chartPoints: chartPoints
         )
     }

@@ -1,27 +1,40 @@
-"6ebp42" = "Selecionar moeda";
-"8vJheC" = "Organizar por";
-"qHGyuo" = "Maior capitalização";
-"tVjZ7W" = "Menor capitalização";
-"t6AKQ5" = "Maior volume";
-"C1LmDj" = "Menor volume";
-"Rl3a0T" = "Maiores Altas";
-"x1kK4T" = "Maiores Quedas";
+"2puq80" = "Coin Price List";
 
-"2puq80" = "Lista de Preços de Moedas";
-"Iodq3O-C1LmDj" = "Para confirmar, você queria 'Menor volume'?";
-"Iodq3O-Rl3a0T" = "Para confirmar, você queria 'Maiores Altas'?";
-"Iodq3O-qHGyuo" = "Para confirmar, você queria 'Maior capitalização'?";
-"Iodq3O-t6AKQ5" = "Para confirmar, você queria 'Maior volume'?";
-"Iodq3O-tVjZ7W" = "Para confirmar, você queria 'Menor capitalização'?";
-"Iodq3O-x1kK4T" = "Para confirmar, você queria 'Maiores Quedas'?";
-"OkcYOj" = "Ver el precio de la moneda seleccionada";
-"VXTxGF" = "Widget Moeda";
-"ZBHf6A" = "Tipo de Classificação";
-"hrLfmt" = "Preço de uma Única Moeda";
-"nj8Co9-C1LmDj" = "Há ${count} opções correspondentes a 'Menor volume'.";
-"nj8Co9-Rl3a0T" = "Há ${count} opções correspondentes a 'Maiores Altas'.";
-"nj8Co9-qHGyuo" = "Há ${count} opções correspondentes a 'Maior capitalização'.";
-"nj8Co9-t6AKQ5" = "Há ${count} opções correspondentes a 'Maior volume'.";
-"nj8Co9-tVjZ7W" = "Há ${count} opções correspondentes a 'Menor capitalização'.";
-"nj8Co9-x1kK4T" = "Há ${count} opções correspondentes a 'Maiores Quedas'.";
-"rCV9fg" = "Ver preços das moedas na lista de moedas";
+"6ebp42" = "Selected Coin";
+
+"8vJheC" = "Sort By";
+
+"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
+
+"Iodq3O-qHGyuo" = "Just to confirm, you wanted ‘Highest Cap’?";
+
+"Iodq3O-tVjZ7W" = "Just to confirm, you wanted ‘Lowest Cap’?";
+
+"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Losers’?";
+
+"OkcYOj" = "View coin price for selected coin";
+
+"Rl3a0T" = "Gainers";
+
+"VXTxGF" = "Widget Coin";
+
+"ZBHf6A" = "Sort Type";
+
+"hrLfmt" = "Single Coin Price";
+
+"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Gainers’.";
+
+"nj8Co9-qHGyuo" = "There are ${count} options matching ‘Highest Cap’.";
+
+"nj8Co9-tVjZ7W" = "There are ${count} options matching ‘Lowest Cap’.";
+
+"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
+
+"qHGyuo" = "Highest Cap";
+
+"rCV9fg" = "See coin prices for coin list";
+
+"tVjZ7W" = "Lowest Cap";
+
+"x1kK4T" = "Losers";
+

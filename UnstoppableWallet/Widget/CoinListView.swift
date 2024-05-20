@@ -2,8 +2,11 @@ import Charts
 import SwiftUI
 import WidgetKit
 
-struct CoinPriceListView: View {
-    var entry: CoinPriceListProvider.Entry
+struct CoinListView: View {
+    let items: [CoinItem]
+    let maxItemCount: Int
+    let title: LocalizedStringKey
+    let subtitle: LocalizedStringKey
 
     @Environment(\.widgetFamily) private var family
 
@@ -43,14 +46,14 @@ struct CoinPriceListView: View {
     @ViewBuilder private func largeView() -> some View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
-                Text(entry.mode.title)
+                Text(title)
                     .lineLimit(1)
                     .font(.themeSubhead1)
                     .foregroundColor(.themeLeah)
 
                 Spacer()
 
-                Text(title(sortType: entry.sortType))
+                Text(subtitle)
                     .lineLimit(1)
                     .font(.themeSubhead2)
                     .foregroundColor(.themeGray)
@@ -66,56 +69,30 @@ struct CoinPriceListView: View {
         .padding(.vertical, .margin4)
     }
 
-    @ViewBuilder private func list(verticalPadding: CGFloat, rowBuilder: @escaping (CoinPriceListEntry.Item) -> some View) -> some View {
-        if entry.mode.isWatchlist, entry.items.isEmpty {
-            VStack(spacing: .margin16) {
-                switch family {
-                case .systemLarge:
-                    ZStack {
-                        Circle()
-                            .fill(Color.themeRaina)
-                            .frame(width: 100, height: 100)
-
-                        Image("rate_48")
-                            .renderingMode(.template)
-                            .foregroundColor(.themeGray)
+    @ViewBuilder private func list(verticalPadding: CGFloat, rowBuilder: @escaping (CoinItem) -> some View) -> some View {
+        GeometryReader { proxy in
+            ListSection {
+                ForEach(items, id: \.uid) { item in
+                    Link(destination: URL(string: "unstoppable.money://coin/\(item.uid)")!) {
+                        rowBuilder(item)
+                            .padding(.horizontal, .margin16)
+                            .frame(maxHeight: .infinity)
+                            .frame(maxHeight: proxy.size.height / CGFloat(maxItemCount))
                     }
-                default:
-                    EmptyView()
+                    .buttonStyle(PlainButtonStyle())
                 }
 
-                Text("watchlist.empty")
-                    .multilineTextAlignment(.center)
-                    .font(.themeSubhead2)
-                    .foregroundColor(.themeGray)
-            }
-            .frame(maxHeight: .infinity)
-            .padding(.margin16)
-        } else {
-            GeometryReader { proxy in
-                ListSection {
-                    ForEach(entry.items, id: \.uid) { item in
-                        Link(destination: URL(string: "unstoppable.money://coin/\(item.uid)")!) {
-                            rowBuilder(item)
-                                .padding(.horizontal, .margin16)
-                                .frame(maxHeight: .infinity)
-                                .frame(maxHeight: proxy.size.height / CGFloat(entry.maxItemCount))
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-
-                    if entry.items.count < entry.maxItemCount {
-                        Spacer()
-                    }
+                if items.count < maxItemCount {
+                    Spacer()
                 }
-                .themeListStyle(.transparentInline)
             }
-            .frame(maxHeight: .infinity)
-            .padding(.vertical, verticalPadding)
+            .themeListStyle(.transparentInline)
         }
+        .frame(maxHeight: .infinity)
+        .padding(.vertical, verticalPadding)
     }
 
-    @ViewBuilder private func row(item: CoinPriceListEntry.Item) -> some View {
+    @ViewBuilder private func row(item: CoinItem) -> some View {
         HStack(spacing: .margin16) {
             icon(image: item.icon)
 
@@ -133,9 +110,17 @@ struct CoinPriceListView: View {
                 }
 
                 HStack(spacing: .margin16) {
-                    Text(item.name)
-                        .font(.themeSubhead2)
-                        .foregroundColor(.themeGray)
+                    HStack(spacing: .margin4) {
+                        if let rank = item.rank {
+                            BadgeViewNew(text: rank)
+                        }
+
+                        if let marketCap = item.marketCap {
+                            Text(marketCap)
+                                .font(.themeSubhead2)
+                                .foregroundColor(.themeGray)
+                        }
+                    }
 
                     Spacer()
 
@@ -157,17 +142,6 @@ struct CoinPriceListView: View {
             Circle()
                 .fill(Color.themeGray)
                 .frame(width: .iconSize32, height: .iconSize32)
-        }
-    }
-
-    private func title(sortType: SortType) -> LocalizedStringKey {
-        switch sortType {
-        case .highestCap, .unknown: return "sort_type.highest_cap"
-        case .lowestCap: return "sort_type.lowest_cap"
-        case .highestVolume: return "sort_type.highest_volume"
-        case .lowestVolume: return "sort_type.lowest_volume"
-        case .topGainers: return "sort_type.top_gainers"
-        case .topLosers: return "sort_type.top_losers"
         }
     }
 }

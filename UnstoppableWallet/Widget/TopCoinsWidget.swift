@@ -7,13 +7,13 @@ struct TopCoinsWidget: Widget {
         IntentConfiguration(
             kind: AppWidgetConstants.topCoinsWidgetKind,
             intent: CoinPriceListIntent.self,
-            provider: CoinPriceListProvider(mode: .topCoins)
+            provider: CoinPriceListProvider()
         ) { entry in
             if #available(iOS 17.0, *) {
-                CoinPriceListView(entry: entry)
+                view(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
             } else {
-                CoinPriceListView(entry: entry)
+                view(entry: entry)
                     .background()
             }
         }
@@ -25,5 +25,18 @@ struct TopCoinsWidget: Widget {
             .systemMedium,
             .systemLarge,
         ])
+    }
+
+    @ViewBuilder private func view(entry: CoinPriceListEntry) -> some View {
+        CoinListView(items: entry.items, maxItemCount: entry.maxItemCount, title: "top_coins.title", subtitle: title(sortType: entry.sortType))
+    }
+
+    private func title(sortType: SortType) -> LocalizedStringKey {
+        switch sortType {
+        case .highestCap, .unknown: return "sort_type.highest_cap"
+        case .lowestCap: return "sort_type.lowest_cap"
+        case .gainers: return "sort_type.gainers"
+        case .losers: return "sort_type.losers"
+        }
     }
 }

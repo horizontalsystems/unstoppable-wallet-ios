@@ -13,12 +13,6 @@ class ApiProvider {
 
         var headers = HTTPHeaders()
         headers.add(name: "widget", value: "true")
-        headers.add(name: "app_platform", value: "ios")
-        headers.add(name: "app_version", value: WidgetConfig.appVersion)
-
-        if let appId = WidgetConfig.appId {
-            headers.add(name: "app_id", value: appId)
-        }
 
         if let apiKey = WidgetConfig.hsProviderApiKey {
             headers.add(name: "apikey", value: apiKey)
@@ -87,25 +81,37 @@ class ApiProvider {
     }
 
     enum ListType: String {
-        case price
-        case volume
+        case priceChange24h = "price_change_24h"
+        case priceChange1w = "price_change_1w"
+        case priceChange1m = "price_change_1m"
+        case priceChange3m = "price_change_3m"
         case mcap
     }
 }
 
 struct Coin: ImmutableMappable {
     let uid: String
-    let name: String
     let code: String
+    let name: String
+    let marketCap: Decimal?
+    let rank: Int?
     let price: Decimal?
     let priceChange24h: Decimal?
+    let priceChange1w: Decimal?
+    let priceChange1m: Decimal?
+    let priceChange3m: Decimal?
 
     init(map: Map) throws {
         uid = try map.value("uid")
-        name = try map.value("name")
         code = try map.value("code")
+        name = try map.value("name")
+        marketCap = try? map.value("market_cap", using: Transform.stringToDecimalTransform)
+        rank = try? map.value("market_cap_rank")
         price = try? map.value("price", using: Transform.stringToDecimalTransform)
         priceChange24h = try? map.value("price_change_24h", using: Transform.stringToDecimalTransform)
+        priceChange1w = try? map.value("price_change_1w", using: Transform.stringToDecimalTransform)
+        priceChange1m = try? map.value("price_change_1m", using: Transform.stringToDecimalTransform)
+        priceChange3m = try? map.value("price_change_3m", using: Transform.stringToDecimalTransform)
     }
 }
 
