@@ -1,27 +1,39 @@
-"6ebp42" = "선택한 코인";
-"8vJheC" = "정렬 기준";
-"qHGyuo" = "가장 높은 시가총액";
-"tVjZ7W" = "가장 낮은 시가총액";
-"t6AKQ5" = "가장 높은 거래량";
-"C1LmDj" = "가장 낮은 거래량";
-"Rl3a0T" = "최고 승자";
-"x1kK4T" = "최고 패자";
-
 "2puq80" = "동전 가격표";
-"Iodq3O-C1LmDj" = "확인용으로, '최저 거래량'을 원하셨나요?";
-"Iodq3O-Rl3a0T" = "확인용으로, '최고 승자'을 원하셨나요?";
+
+"6ebp42" = "선택한 코인";
+
+"8vJheC" = "정렬 기준";
+
+"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
+
 "Iodq3O-qHGyuo" = "확인용으로, '가장 높은 시가총액'을 원하셨나요?";
-"Iodq3O-t6AKQ5" = "확인용으로, '가장 높은 거래량'을 원하셨나요?";
+
 "Iodq3O-tVjZ7W" = "확인용으로, '가장 낮은 시가총액'을 원하셨나요?";
-"Iodq3O-x1kK4T" = "확인용으로, '최고 패자'을 원하셨나요?";
+
+"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Losers’?";
+
 "OkcYOj" = "선택한 코인의 가격 보기";
+
+"Rl3a0T" = "Gainers";
+
 "VXTxGF" = "위젯 코인";
+
 "ZBHf6A" = "정렬 유형";
+
 "hrLfmt" = "단일 코인 가격";
-"nj8Co9-C1LmDj" = "'최저 거래량'과 일치하는 옵션은 ${count} 개 있습니다.";
-"nj8Co9-Rl3a0T" = "'최고 승자'과 일치하는 옵션은 ${count} 개 있습니다.";
+
+"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Gainers’.";
+
 "nj8Co9-qHGyuo" = "'가장 높은 시가총액' 과 일치하는 옵션은 ${count} 개 있습니다.";
-"nj8Co9-t6AKQ5" = "'가장 높은 거래량'과 일치하는 옵션은 ${count} 개 있습니다.";
+
 "nj8Co9-tVjZ7W" = "'가장 낮은 시가총액'과 일치하는 옵션은 ${count} 개 있습니다.";
-"nj8Co9-x1kK4T" = "'최고 패자'과 일치하는 옵션은 ${count} 개 있습니다.";
+
+"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
+
+"qHGyuo" = "가장 높은 시가총액";
+
 "rCV9fg" = "코인 목록의 가격을 확인하세요";
+
+"tVjZ7W" = "가장 낮은 시가총액";
+
+"x1kK4T" = "Losers";
