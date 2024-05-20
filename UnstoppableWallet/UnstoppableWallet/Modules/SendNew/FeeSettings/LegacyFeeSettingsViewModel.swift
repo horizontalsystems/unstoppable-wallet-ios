@@ -11,21 +11,38 @@ class LegacyFeeSettingsViewModel: ObservableObject {
         self.service = service
         self.feeViewItemFactory = feeViewItemFactory
 
-        sync()
+        syncFromService()
     }
 
     @Published var gasPriceCautionState: FieldCautionState = .none
-    @Published var gasPrice: String = ""
+    @Published var gasPrice: String = "" {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.handleGasPrice()
+            }
+        }
+    }
+
     @Published var nonceCautionState: FieldCautionState = .none
-    @Published var nonce: String = ""
+    @Published var nonce: String = "" {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.handleNonce()
+            }
+        }
+    }
+
     @Published var resetEnabled = false
 
-    private func sync() {
+    private func syncFromService() {
         if case let .legacy(gasPrice) = service.gasPrice {
             self.gasPrice = feeViewItemFactory.decimalValue(value: gasPrice).description
         }
-
         nonce = "\(service.nonce ?? 0)"
+        sync()
+    }
+
+    private func sync() {
         resetEnabled = service.modified
 
         if service.warnings.contains(where: { $0 is EvmFeeModule.GasDataWarning }) {
@@ -77,19 +94,17 @@ extension LegacyFeeSettingsViewModel {
     func stepChangeGasPrice(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: gasPrice, direction: direction) {
             gasPrice = newValue.description
-            handleGasPrice()
         }
     }
 
     func stepChangeNonce(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: nonce, direction: direction) {
             nonce = newValue.description
-            handleNonce()
         }
     }
 
     func onReset() {
         service.useRecommended()
-        sync()
+        syncFromService()
     }
 }
