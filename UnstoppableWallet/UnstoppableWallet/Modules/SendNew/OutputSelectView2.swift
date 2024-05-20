@@ -10,8 +10,8 @@ struct OutputSelectorView2: View {
     }
 
     var body: some View {
-        ScrollableThemeView {
-            VStack(spacing: 0) {
+        ThemeView {
+            VStack {
                 ListSection {
                     ListRow(minHeight: .heightDoubleLineCell) {
                         HStack(spacing: .margin8) {
@@ -32,27 +32,34 @@ struct OutputSelectorView2: View {
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
 
-                ListSection {
-                    ListRow {
-                        HStack(spacing: 0) {
-                            Button(action: {
-                                viewModel.selectUnselectAll()
-                            }) {
-                                Text(viewModel.allSelected ? "send.unselect_all".localized : "send.select_all".localized)
-                            }
-                            .buttonStyle(SecondaryButtonStyle())
+                ScrollView {
+                    ListSection {
+                        ForEach(viewModel.outputsViewItems) { viewItem in
+                            output(viewItem: viewItem)
                         }
+                    }
+                    .themeListStyle(.transparent)
+                }
 
-                        Spacer()
+                HorizontalDivider(color: .themeSteel10, height: .heightOneDp)
+
+                HStack {
+                    Button(action: {
+                        viewModel.unselectAll()
+                    }) {
+                        Text("send.unselect_all".localized).themeBody(color: viewModel.selectedSet.isEmpty ? .themeGray50 : .themeJacob)
                     }
 
-                    ForEach(viewModel.outputsViewItems) { viewItem in
-                        output(viewItem: viewItem)
+                    Spacer()
+
+                    Button(action: {
+                        viewModel.selectAll()
+                    }) {
+                        Text("send.select_all".localized).themeBody(color: viewModel.allSelected ? .themeGray50 : .themeJacob, alignment: .trailing)
                     }
                 }
-                .themeListStyle(.transparent)
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: CGFloat(43), trailing: .margin16))
             }
-            .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
         }
         .navigationTitle("send.unspent_outputs".localized)
         .navigationBarTitleDisplayMode(.inline)

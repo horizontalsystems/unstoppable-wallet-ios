@@ -49,7 +49,7 @@ struct EvmFeeEstimator {
         return .init(gasLimit: gasLimit, surchargedGasLimit: surchargedGasLimit, l1Fee: l1Fee)
     }
 
-    func estimateFee(evmKitWrapper: EvmKitWrapper, transactionData: TransactionData, gasPriceData: GasPriceData, predefinedGasLimit: Int? = nil) async throws -> EvmFeeData {
+    func estimateFee(evmKitWrapper: EvmKitWrapper, transactionData: TransactionData, gasPriceData: GasPriceData, predefinedGasLimit _: Int? = nil) async throws -> EvmFeeData {
         do {
             return try await _estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPriceData.userDefined)
         } catch {
