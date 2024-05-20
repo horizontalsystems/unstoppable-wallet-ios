@@ -95,13 +95,13 @@ extension OutputSelectorViewModel2 {
         sync()
     }
 
-    func selectUnselectAll() {
-        if allSelected {
-            handler.customUtxos = []
-        } else {
-            handler.customUtxos = handler.allUtxos
-        }
+    func unselectAll() {
+        handler.customUtxos = []
+        sync()
+    }
 
+    func selectAll() {
+        handler.customUtxos = handler.allUtxos
         sync()
     }
 
