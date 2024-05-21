@@ -2976,6 +2976,10 @@
 		D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4763238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
 		D31C4764238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
+		D3384D092BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */; };
+		D3384D0A2BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */; };
+		D3384D0C2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */; };
+		D3384D0D2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */; };
 		D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93C29126D0F00B895BE /* HsCryptoKit */; };
 		D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93E29126D2A00B895BE /* HsCryptoKit */; };
 		D3402AEE2BF5D58B003BF6F8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */; };
@@ -4901,6 +4905,8 @@
 		D3285F5120BD158F00644076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3373D9420BEC7B30082BC4A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D3373DB120C52F640082BC4A /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWatchlistSignalsView.swift; sourceTree = "<group>"; };
+		D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWatchlistSignalBadge.swift; sourceTree = "<group>"; };
 		D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistModifier.swift; sourceTree = "<group>"; };
 		D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
@@ -9329,6 +9335,8 @@
 				D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */,
 				D3833AD62BEE1A7900ACECFB /* MarketWatchlistView.swift */,
 				D3833AD92BEE1A8300ACECFB /* MarketWatchlistViewModel.swift */,
+				D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */,
+				D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */,
 			);
 			path = Watchlist;
 			sourceTree = "<group>";
@@ -9851,6 +9859,7 @@
 				11B358B0576F63BE43947DD5 /* Account.swift in Sources */,
 				11B35BEB439509EACB41AB06 /* AccountType.swift in Sources */,
 				11B35F663F7E12BFDDE3C88B /* AccountManager.swift in Sources */,
+				D3384D0D2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */,
 				11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */,
 				3C7B9BAF807355796DCA80C4 /* WelcomeScreenViewController.swift in Sources */,
 				11B35BCD6D0462E31D7EBA06 /* BackupManager.swift in Sources */,
@@ -11205,6 +11214,7 @@
 				11B3523804E0F4F1DA8A1D9E /* BaseCurrencySettingsViewModel.swift in Sources */,
 				11B35F18FEEEAA9EC6043CA6 /* BaseCurrencySettingsView.swift in Sources */,
 				11B35E749106C1ABD9335778 /* TransactionFilterModule.swift in Sources */,
+				D3384D0A2BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */,
 				11B3591E867F4E701F5458F9 /* TransactionFilterView.swift in Sources */,
 				11B352E8348A715EB537F643 /* TransactionFilterViewModel.swift in Sources */,
 				11B35AAD64D68265B2128C25 /* TransactionBlockchainSelectView.swift in Sources */,
@@ -11414,6 +11424,7 @@
 				11B35068E05BC58C6C9A93D7 /* AccountManager.swift in Sources */,
 				11B35C8621E221DA1F157A5B /* AccountFactory.swift in Sources */,
 				3C7B9F51D15FBB02710E5EEB /* WelcomeScreenViewController.swift in Sources */,
+				D3384D0C2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */,
 				11B35BC6DFCA197FA842873B /* BackupManager.swift in Sources */,
 				11B35590A4DA4BCFB3D38DDF /* AppManager.swift in Sources */,
 				D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */,
@@ -12768,6 +12779,7 @@
 				ABC9AE558CE5912B5C15B6EB /* ActionSheetControllerNew.swift in Sources */,
 				11B3537EE13B3EFB2E979821 /* BadgeViewNew.swift in Sources */,
 				11B35955EE2F47EFAFCBCE9F /* BaseCurrencySettingsViewModel.swift in Sources */,
+				D3384D092BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */,
 				11B3565D4E4EAD663143ED9B /* BaseCurrencySettingsView.swift in Sources */,
 				11B353BAEF83867422611E7B /* TransactionFilterModule.swift in Sources */,
 				11B35B09AADB1FBF7DDE765C /* TransactionFilterView.swift in Sources */,

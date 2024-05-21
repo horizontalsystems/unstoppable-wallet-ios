@@ -485,7 +485,7 @@ extension TechnicalAdvice.Advice {
 
     var searchTitle: String {
         switch self {
-        case .oversold, .overbought: return "market.advanced_search.technical_advice.risk_trade".localized
+        case .oversold, .overbought: return "market.advanced_search.technical_advice.risky".localized
         case .strongBuy: return "market.advanced_search.technical_advice.strong_buy".localized
         case .buy: return "market.advanced_search.technical_advice.buy".localized
         case .neutral: return "market.advanced_search.technical_advice.neutral".localized

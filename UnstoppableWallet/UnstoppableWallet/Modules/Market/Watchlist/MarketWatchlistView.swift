@@ -8,6 +8,7 @@ struct MarketWatchlistView: View {
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
     @State private var presentedFullCoin: FullCoin?
+    @State private var signalsPresented = false
 
     @State private var editMode: EditMode = .inactive
 
@@ -111,11 +112,20 @@ struct MarketWatchlistView: View {
                 viewModel.timePeriod = WatchlistTimePeriod.allCases[index]
             }
         )
+        .sheet(isPresented: $signalsPresented) {
+            MarketWatchlistSignalsView(viewModel: viewModel, isPresented: $signalsPresented)
+        }
     }
 
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
-            viewModel.showSignals.toggle()
+            if viewModel.showSignals {
+                viewModel.showSignals = false
+            } else if viewModel.signalsApproved {
+                viewModel.showSignals = true
+            } else {
+                signalsPresented = true
+            }
         }) {
             Text("market.watchlist.signals".localized)
         }
@@ -191,17 +201,11 @@ struct MarketWatchlistView: View {
 
         VStack(spacing: 1) {
             HStack(spacing: .margin8) {
-                HStack(spacing: .margin12) {
+                HStack(spacing: .margin8) {
                     Text(code).textBody()
 
                     if let signal {
-                        Text(signal.searchTitle)
-                            .font(.themeMicroSB)
-                            .foregroundColor(foregroundColor(signal: signal))
-                            .padding(.horizontal, .margin6)
-                            .padding(.vertical, .margin2)
-                            .background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(backgroundColor(signal: signal)))
-                            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
+                        MarketWatchlistSignalBadge(signal: signal)
                     }
                 }
 
@@ -222,27 +226,6 @@ struct MarketWatchlistView: View {
                 Spacer()
                 DiffText(diff)
             }
-        }
-    }
-
-    private func foregroundColor(signal: TechnicalAdvice.Advice) -> Color {
-        switch signal {
-        case .neutral: return .themeBran
-        case .buy: return .themeRemus
-        case .sell: return .themeLucian
-        case .strongBuy, .strongSell: return .themeTyler
-        case .overbought, .oversold: return .themeJacob
-        }
-    }
-
-    private func backgroundColor(signal: TechnicalAdvice.Advice) -> Color {
-        switch signal {
-        case .neutral: return .themeSteel20
-        case .buy: return .themeGreen.opacity(0.2)
-        case .sell: return .themeRed.opacity(0.2)
-        case .strongBuy: return .themeRemus
-        case .strongSell: return .themeLucian
-        case .overbought, .oversold: return .themeYellow20
         }
     }
 }
