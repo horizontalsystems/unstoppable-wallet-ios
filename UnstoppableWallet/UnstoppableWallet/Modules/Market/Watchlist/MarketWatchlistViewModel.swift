@@ -4,9 +4,12 @@ import HsExtensions
 import MarketKit
 
 class MarketWatchlistViewModel: ObservableObject {
+    private let keySignalsApproved = "market-watchlist-signals-approved"
+
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
     private let watchlistManager = App.shared.watchlistManager
+    private let userDefaultsStorage = App.shared.userDefaultsStorage
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
@@ -42,10 +45,17 @@ class MarketWatchlistViewModel: ObservableObject {
         }
     }
 
+    var signalsApproved: Bool {
+        didSet {
+            userDefaultsStorage.set(value: true, for: keySignalsApproved)
+        }
+    }
+
     init() {
         sortBy = watchlistManager.sortBy
         timePeriod = watchlistManager.timePeriod
         showSignals = watchlistManager.showSignals
+        signalsApproved = userDefaultsStorage.value(for: keySignalsApproved) ?? false
     }
 
     private func syncCoinUids() {

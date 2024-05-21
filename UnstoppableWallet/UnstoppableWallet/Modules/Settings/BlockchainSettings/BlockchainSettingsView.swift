@@ -41,7 +41,7 @@ struct BlockchainSettingsView: View {
                         }
                     }
                     .sheet(item: $evmSheetBlockchain) { blockchain in
-                        EvmNetworkView(blockchain: blockchain)
+                        EvmNetworkView(blockchain: blockchain).ignoresSafeArea()
                     }
                 }
             }
