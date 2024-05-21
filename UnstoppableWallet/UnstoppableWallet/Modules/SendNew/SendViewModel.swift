@@ -40,6 +40,28 @@ class SendViewModel: ObservableObject {
         }
     }
 
+    var cautions: [CautionNew] {
+        var cautions = transactionService?.cautions ?? []
+
+        if let data = state.data, let baseToken = handler?.baseToken {
+            cautions.append(contentsOf: data.cautions(baseToken: baseToken))
+        }
+
+        return cautions
+    }
+
+    var canSend: Bool {
+        guard let data = state.data, data.canSend else {
+            return false
+        }
+
+        guard let service = transactionService, !service.cautions.contains(where: { $0.type == .error }) else {
+            return false
+        }
+
+        return true
+    }
+
     init(sendData: SendData) {
         handler = SendHandlerFactory.handler(sendData: sendData)
         currency = currencyManager.baseCurrency

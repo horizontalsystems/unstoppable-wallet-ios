@@ -79,7 +79,7 @@ extension BitcoinSendHandler {
         }
 
         var canSend: Bool {
-            fee != nil
+            fee != nil && transactionError == nil
         }
 
         var customSendButtonTitle: String? {

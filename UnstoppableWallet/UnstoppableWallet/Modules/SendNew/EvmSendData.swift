@@ -20,7 +20,7 @@ class EvmSendData: BaseSendEvmData, ISendData {
     }
 
     var canSend: Bool {
-        evmFeeData != nil
+        evmFeeData != nil && transactionError == nil
     }
 
     var rateCoins: [Coin] {

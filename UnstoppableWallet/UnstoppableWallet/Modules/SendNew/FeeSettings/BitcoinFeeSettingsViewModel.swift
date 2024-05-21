@@ -12,18 +12,29 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
             self.satoshiPerByte = satoshiPerByte.description
         }
 
-        sync()
+        syncFromService()
     }
 
-    @Published var satoshiPerByte: String = ""
+    @Published var satoshiPerByte: String = "" {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.handle()
+            }
+        }
+    }
+
     @Published var satoshiPerByteCautionState: FieldCautionState = .none
     @Published var resetEnabled = false
 
-    private func sync() {
+    private func syncFromService() {
         if let satoshiPerByte = service.satoshiPerByte {
             self.satoshiPerByte = satoshiPerByte.description
         }
 
+        sync()
+    }
+
+    private func sync() {
         resetEnabled = service.modified
 
         if let caution = service.cautions.first {
@@ -59,12 +70,11 @@ extension BitcoinFeeSettingsViewModel {
     func stepChangesatoshiPerByte(_ direction: StepChangeButtonsViewDirection) {
         if let newValue = updateByStep(value: satoshiPerByte, direction: direction) {
             satoshiPerByte = newValue.description
-            handle()
         }
     }
 
     func onReset() {
         service.useRecommended()
-        sync()
+        syncFromService()
     }
 }
