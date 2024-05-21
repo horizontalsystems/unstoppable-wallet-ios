@@ -8,6 +8,7 @@ struct BitcoinFeeSettingsView: View {
     private var feeToken: Token
     private var currency: Currency
     @Binding private var feeTokenRate: Decimal?
+    @State private var feeRateInfoPresented: Bool = false
 
     private var helper = FeeSettingsViewHelper()
     @Environment(\.presentationMode) private var presentationMode
@@ -33,13 +34,19 @@ struct BitcoinFeeSettingsView: View {
                 }
 
                 VStack(spacing: 0) {
-                    helper.headerRow(
-                        title: "fee_settings.fee_rate".localized + " (Sat/Byte)".localized,
-                        description: .init(
-                            title: "fee-rate-description-cell".localized,
-                            description: "fee_settings.fee_rate.description".localized
-                        )
-                    )
+                    Button(action: {
+                        feeRateInfoPresented = true
+                    }, label: {
+                        HStack(spacing: .margin8) {
+                            HStack(spacing: .margin8) {
+                                Text("fee_settings.fee_rate".localized + " (Sat/Byte)".localized).textSubhead1()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Image("circle_information_20").themeIcon()
+                            }
+                            .padding(EdgeInsets(top: 5.5, leading: .margin16, bottom: 5.5, trailing: .margin16))
+                        }
+                    })
+
                     helper.inputNumberWithSteps(
                         placeholder: "",
                         text: $viewModel.satoshiPerByte,
@@ -72,6 +79,17 @@ struct BitcoinFeeSettingsView: View {
                 Button("button.done".localized) {
                     presentationMode.wrappedValue.dismiss()
                 }
+            }
+        }
+        .sheet(isPresented: $feeRateInfoPresented) {
+            ThemeNavigationView {
+                InfoNewView(
+                    viewItems: [
+                        .header1(text: "send.fee_info.title".localized),
+                        .text(text: "send.fee_info.description".localized),
+                    ],
+                    isPresented: $feeRateInfoPresented
+                )
             }
         }
     }

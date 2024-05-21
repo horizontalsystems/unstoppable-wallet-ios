@@ -77,7 +77,7 @@ struct SendView: View {
                     }
                 }
 
-                let cautions = (viewModel.transactionService?.cautions ?? []) + data.cautions(baseToken: handler.baseToken)
+                let cautions = viewModel.cautions
 
                 if !cautions.isEmpty {
                     VStack(spacing: .margin12) {
