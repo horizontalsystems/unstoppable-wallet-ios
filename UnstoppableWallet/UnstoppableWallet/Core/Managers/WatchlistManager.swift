@@ -68,6 +68,10 @@ extension WatchlistManager {
         coinUidsSubject.eraseToAnyPublisher()
     }
 
+    func set(coinUids: [String]) {
+        self.coinUids = coinUids
+    }
+
     func add(coinUid: String) {
         guard !coinUids.contains(coinUid) else {
             return
