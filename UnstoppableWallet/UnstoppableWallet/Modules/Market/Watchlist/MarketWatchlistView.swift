@@ -7,8 +7,9 @@ struct MarketWatchlistView: View {
 
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
-
     @State private var presentedFullCoin: FullCoin?
+
+    @State private var editMode: EditMode = .inactive
 
     var body: some View {
         ThemeView {
@@ -36,7 +37,7 @@ struct MarketWatchlistView: View {
             }
         }
         .sheet(item: $presentedFullCoin) { fullCoin in
-            CoinPageViewNew(coinUid: fullCoin.coin.uid)
+            CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
         }
     }
 
@@ -50,6 +51,20 @@ struct MarketWatchlistView: View {
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
                 .disabled(disabled)
+
+                if viewModel.sortBy == .manual {
+                    Button(action: {
+                        if editMode == .active {
+                            editMode = .inactive
+                        } else {
+                            editMode = .active
+                        }
+                    }) {
+                        Image("edit2_20").renderingMode(.template)
+                    }
+                    .buttonStyle(SecondaryCircleButtonStyle(style: .default, isActive: editMode == .active))
+                    .disabled(disabled)
+                }
 
                 Button(action: {
                     timePeriodSelectorPresented = true
@@ -107,7 +122,12 @@ struct MarketWatchlistView: View {
     }
 
     @ViewBuilder private func list(marketInfos: [MarketInfo], signals: [String: TechnicalAdvice.Advice]) -> some View {
-        ThemeList(items: marketInfos) { marketInfo in
+        ThemeList(
+            items: marketInfos,
+            onMove: viewModel.sortBy == .manual ? { source, destination in
+                viewModel.move(source: source, destination: destination)
+            } : nil
+        ) { marketInfo in
             let coin = marketInfo.fullCoin.coin
 
             ClickableRow(action: {
@@ -133,8 +153,13 @@ struct MarketWatchlistView: View {
             }
         }
         .themeListStyle(.transparent)
+        .environment(\.editMode, $editMode)
         .refreshable {
             await viewModel.refresh()
+        }
+        .animation(.default, value: editMode)
+        .onChange(of: viewModel.sortBy) { _ in
+            editMode = .inactive
         }
     }
 

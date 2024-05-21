@@ -27,7 +27,7 @@ extension BitcoinSendHandler: ISendHandler {
         let satoshiPerByte = transactionSettings?.satoshiPerByte
         var feeData: BitcoinFeeData?
         var transactionError: Error?
-        var params = params.copy()
+        let params = params.copy()
 
         if let satoshiPerByte {
             params.feeRate = satoshiPerByte

@@ -49,7 +49,13 @@ class MarketWatchlistViewModel: ObservableObject {
     }
 
     private func syncCoinUids() {
-        coinUids = watchlistManager.coinUids
+        let coinUids = watchlistManager.coinUids
+
+        guard coinUids != self.coinUids else {
+            return
+        }
+
+        self.coinUids = coinUids
 
         if case let .loaded(marketInfos, signals) = internalState {
             let newMarketInfos = marketInfos.filter { marketInfo in
@@ -143,6 +149,23 @@ extension MarketWatchlistViewModel {
 
     func remove(coinUid: String) {
         watchlistManager.remove(coinUid: coinUid)
+    }
+
+    func move(source: IndexSet, destination: Int) {
+        guard case let .loaded(marketInfos, signals) = internalState else {
+            return
+        }
+
+        var newCoinUids = coinUids
+        var newMarketInfos = marketInfos
+
+        newCoinUids.move(fromOffsets: source, toOffset: destination)
+        newMarketInfos.move(fromOffsets: source, toOffset: destination)
+
+        coinUids = newCoinUids
+        internalState = .loaded(marketInfos: newMarketInfos, signals: signals)
+
+        watchlistManager.set(coinUids: coinUids)
     }
 }
 

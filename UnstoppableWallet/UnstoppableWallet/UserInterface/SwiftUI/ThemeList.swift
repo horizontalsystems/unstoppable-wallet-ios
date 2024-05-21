@@ -1,10 +1,17 @@
 import SwiftUI
 
 struct ThemeList<Content: View, Item: Hashable>: View {
-    let items: [Item]
-    @ViewBuilder let itemContent: (Item) -> Content
+    private let items: [Item]
+    private let onMove: ((IndexSet, Int) -> Void)?
+    private let itemContent: (Item) -> Content
 
     @Environment(\.themeListStyle) var themeListStyle
+
+    init(items: [Item], onMove: ((IndexSet, Int) -> Void)? = nil, @ViewBuilder itemContent: @escaping (Item) -> Content) {
+        self.items = items
+        self.onMove = onMove
+        self.itemContent = itemContent
+    }
 
     var body: some View {
         switch themeListStyle {
@@ -26,6 +33,7 @@ struct ThemeList<Content: View, Item: Hashable>: View {
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
                 }
+                .onMove(perform: onMove)
 
                 Spacer()
                     .frame(height: .margin16)

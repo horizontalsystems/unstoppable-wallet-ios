@@ -34,7 +34,7 @@ struct MarketCoinsView: View {
             }
         }
         .sheet(item: $presentedFullCoin) { fullCoin in
-            CoinPageViewNew(coinUid: fullCoin.coin.uid)
+            CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
         }
     }
 
