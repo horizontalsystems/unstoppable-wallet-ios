@@ -4,7 +4,7 @@ import SwiftUI
 
 struct MarketCoinsView: View {
     @ObservedObject var viewModel: MarketCoinsViewModel
-    @StateObject var favoritesViewModel = FavoritesViewModel()
+    @ObservedObject var watchlistViewModel: WatchlistViewModel
 
     @State private var sortBySelectorPresented = false
     @State private var topSelectorPresented = false
@@ -122,7 +122,7 @@ struct MarketCoinsView: View {
                     diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
                 )
             }
-            .favoriteSwipeActions(viewModel: favoritesViewModel, coinUid: coin.uid)
+            .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
         }
         .themeListStyle(.transparent)
         .refreshable {

@@ -5,6 +5,7 @@ import ThemeKit
 
 struct MarketSearchView: View {
     @ObservedObject var viewModel: MarketSearchViewModel
+    @ObservedObject var watchlistViewModel: WatchlistViewModel
 
     @State private var presentedFullCoin: FullCoin?
 
@@ -37,19 +38,22 @@ struct MarketSearchView: View {
     }
 
     @ViewBuilder private func itemContent(fullCoin: FullCoin) -> some View {
+        let coin = fullCoin.coin
+
         ClickableRow(action: {
-            viewModel.handleOpen(coinUid: fullCoin.coin.uid)
+            viewModel.handleOpen(coinUid: coin.uid)
             presentedFullCoin = fullCoin
         }) {
-            KFImage.url(URL(string: fullCoin.coin.imageUrl))
+            KFImage.url(URL(string: coin.imageUrl))
                 .resizable()
                 .placeholder { Circle().fill(Color.themeSteel20) }
                 .frame(width: .iconSize32, height: .iconSize32)
 
             VStack(spacing: 1) {
-                Text(fullCoin.coin.code).themeBody()
-                Text(fullCoin.coin.name).themeSubhead2()
+                Text(coin.code).themeBody()
+                Text(coin.name).themeSubhead2()
             }
         }
+        .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
     }
 }

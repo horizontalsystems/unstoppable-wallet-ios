@@ -3,20 +3,22 @@ import ThemeKit
 
 struct MarketTabView: View {
     @StateObject var viewModel: MarketTabViewModel
+    @ObservedObject var watchlistViewModel: WatchlistViewModel
 
     @StateObject var coinsViewModel: MarketCoinsViewModel
-    @StateObject var watchlistViewModel: MarketWatchlistViewModel
+    @StateObject var marketWatchlistViewModel: MarketWatchlistViewModel
     @StateObject var newsViewModel: MarketNewsViewModel
     @StateObject var platformsViewModel: MarketPlatformsViewModel
     @StateObject var pairsViewModel: MarketPairsViewModel
 
     @State private var loadedTabs = [MarketModule.Tab]()
 
-    init() {
+    init(watchlistViewModel: WatchlistViewModel) {
         _viewModel = StateObject(wrappedValue: MarketTabViewModel())
+        self.watchlistViewModel = watchlistViewModel
 
         _coinsViewModel = StateObject(wrappedValue: MarketCoinsViewModel())
-        _watchlistViewModel = StateObject(wrappedValue: MarketWatchlistViewModel())
+        _marketWatchlistViewModel = StateObject(wrappedValue: MarketWatchlistViewModel())
         _newsViewModel = StateObject(wrappedValue: MarketNewsViewModel())
         _platformsViewModel = StateObject(wrappedValue: MarketPlatformsViewModel())
         _pairsViewModel = StateObject(wrappedValue: MarketPairsViewModel())
@@ -38,8 +40,8 @@ struct MarketTabView: View {
 
             VStack {
                 switch viewModel.currentTab {
-                case .coins: MarketCoinsView(viewModel: coinsViewModel)
-                case .watchlist: MarketWatchlistView(viewModel: watchlistViewModel)
+                case .coins: MarketCoinsView(viewModel: coinsViewModel, watchlistViewModel: watchlistViewModel)
+                case .watchlist: MarketWatchlistView(viewModel: marketWatchlistViewModel)
                 case .news: MarketNewsView(viewModel: newsViewModel)
                 case .platforms: MarketPlatformsView(viewModel: platformsViewModel)
                 case .pairs: MarketPairsView(viewModel: pairsViewModel)
@@ -64,7 +66,7 @@ struct MarketTabView: View {
 
         switch tab {
         case .coins: coinsViewModel.load()
-        case .watchlist: watchlistViewModel.load()
+        case .watchlist: marketWatchlistViewModel.load()
         case .news: newsViewModel.load()
         case .platforms: platformsViewModel.load()
         case .pairs: pairsViewModel.load()
