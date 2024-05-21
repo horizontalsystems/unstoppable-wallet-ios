@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct FavoritesModifier: ViewModifier {
-    @ObservedObject var viewModel: FavoritesViewModel
+struct WatchlistModifier: ViewModifier {
+    @ObservedObject var viewModel: WatchlistViewModel
     let coinUid: String
 
     func body(content: Content) -> some View {
@@ -27,7 +27,7 @@ struct FavoritesModifier: ViewModifier {
 }
 
 extension View {
-    func favoriteSwipeActions(viewModel: FavoritesViewModel, coinUid: String) -> some View {
-        modifier(FavoritesModifier(viewModel: viewModel, coinUid: coinUid))
+    func watchlistSwipeActions(viewModel: WatchlistViewModel, coinUid: String) -> some View {
+        modifier(WatchlistModifier(viewModel: viewModel, coinUid: coinUid))
     }
 }

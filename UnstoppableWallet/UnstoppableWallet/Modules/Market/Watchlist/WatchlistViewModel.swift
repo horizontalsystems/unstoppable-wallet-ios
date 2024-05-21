@@ -1,6 +1,6 @@
 import Combine
 
-class FavoritesViewModel: ObservableObject {
+class WatchlistViewModel: ObservableObject {
     private let watchlistManager = App.shared.watchlistManager
     private var cancellables = Set<AnyCancellable>()
 
@@ -15,7 +15,7 @@ class FavoritesViewModel: ObservableObject {
     }
 }
 
-extension FavoritesViewModel {
+extension WatchlistViewModel {
     func add(coinUid: String) {
         watchlistManager.add(coinUid: coinUid)
     }

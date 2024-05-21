@@ -6,6 +6,7 @@ import ThemeKit
 struct MarketView: View {
     @StateObject var searchViewModel: MarketSearchViewModel
     @StateObject var globalViewModel: MarketGlobalViewModel
+    @StateObject var watchlistViewModel: WatchlistViewModel
 
     @FocusState var searchFocused: Bool
     @State private var advancedSearchPresented = false
@@ -13,6 +14,7 @@ struct MarketView: View {
     init() {
         _searchViewModel = StateObject(wrappedValue: MarketSearchViewModel())
         _globalViewModel = StateObject(wrappedValue: MarketGlobalViewModel())
+        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel())
     }
 
     var body: some View {
@@ -23,11 +25,11 @@ struct MarketView: View {
                 ZStack {
                     VStack(spacing: 0) {
                         MarketGlobalView(viewModel: globalViewModel)
-                        MarketTabView()
+                        MarketTabView(watchlistViewModel: watchlistViewModel)
                     }
 
                     if searchFocused {
-                        MarketSearchView(viewModel: searchViewModel)
+                        MarketSearchView(viewModel: searchViewModel, watchlistViewModel: watchlistViewModel)
                     }
                 }
             }
