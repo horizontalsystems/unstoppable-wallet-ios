@@ -903,6 +903,14 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.global.tvl_in_defi.multi_chain" = "Multi-Cadeia";
 "market.global.tvl_in_defi.filter_by_chain" = "Filtrar por cadeia";
 
+"market.etf.title" = "Total Net Inflow";
+"market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
+"market.etf.sort_by.highest_assets" = "Highest Assets";
+"market.etf.sort_by.lowest_assets" = "Lowest Assets";
+"market.etf.sort_by.inflow" = "Inflow";
+"market.etf.sort_by.outflow" = "Outflow";
+"market.etf.period.all" = "Todos";
+
 // Coin Page
 
 "coin_page.overview" = "Preço";
