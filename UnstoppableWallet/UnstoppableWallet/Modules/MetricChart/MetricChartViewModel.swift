@@ -7,7 +7,7 @@ import RxCocoa
 import RxRelay
 import RxSwift
 
-class MetricChartViewModel {
+class MetricChartViewModel: ObservableObject {
     private let service: MetricChartService
     private let factory: MetricChartFactory
     private var cancellables = Set<AnyCancellable>()
@@ -137,5 +137,19 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
 
     public func touchUp() {
         pointSelectedItemRelay.accept(nil)
+    }
+}
+
+extension MetricChartViewModel {
+    static func instance(type: MarketGlobalModule.MetricsType) -> MetricChartViewModel {
+        let fetcher = MarketGlobalFetcher(currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, metricsType: type)
+        let service = MetricChartService(
+            chartFetcher: fetcher,
+            interval: .byPeriod(.day1),
+            statPage: type.statPage
+        )
+
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
+        return MetricChartViewModel(service: service, factory: factory)
     }
 }
