@@ -80,17 +80,7 @@ struct ThemeLazyListSection<Content: View, Item: Hashable>: View {
             Text("todo")
         case .transparent:
             Section {
-                ForEach(items, id: \.self) { item in
-                    VStack(spacing: 0) {
-                        if items.first == item {
-                            HorizontalDivider()
-                        }
-
-                        itemContent(item)
-
-                        HorizontalDivider()
-                    }
-                }
+                ThemeLazyListSectionContent(items: items, itemContent: itemContent)
             } header: {
                 Text(header)
                     .themeSubhead1(alignment: .leading)
@@ -99,6 +89,25 @@ struct ThemeLazyListSection<Content: View, Item: Hashable>: View {
                     .frame(height: 44)
                     .frame(maxWidth: .infinity)
                     .background(Color.themeTyler)
+            }
+        }
+    }
+}
+
+struct ThemeLazyListSectionContent<Content: View, Item: Hashable>: View {
+    let items: [Item]
+    @ViewBuilder let itemContent: (Item) -> Content
+
+    var body: some View {
+        ForEach(items, id: \.self) { item in
+            VStack(spacing: 0) {
+                if items.first == item {
+                    HorizontalDivider()
+                }
+
+                itemContent(item)
+
+                HorizontalDivider()
             }
         }
     }

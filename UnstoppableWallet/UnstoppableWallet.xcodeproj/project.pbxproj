@@ -2980,6 +2980,12 @@
 		D3384D0A2BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */; };
 		D3384D0C2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */; };
 		D3384D0D2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */; };
+		D3384D102BFDCBDE00515664 /* MarketEtfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */; };
+		D3384D112BFDCBDE00515664 /* MarketEtfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */; };
+		D3384D132BFDCBE700515664 /* MarketEtfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D122BFDCBE700515664 /* MarketEtfViewModel.swift */; };
+		D3384D142BFDCBE700515664 /* MarketEtfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D122BFDCBE700515664 /* MarketEtfViewModel.swift */; };
+		D3384D162BFDEF6800515664 /* Etf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D152BFDEF6800515664 /* Etf.swift */; };
+		D3384D172BFDEF6800515664 /* Etf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D152BFDEF6800515664 /* Etf.swift */; };
 		D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93C29126D0F00B895BE /* HsCryptoKit */; };
 		D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93E29126D2A00B895BE /* HsCryptoKit */; };
 		D3402AEE2BF5D58B003BF6F8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */; };
@@ -4907,6 +4913,9 @@
 		D3373DB120C52F640082BC4A /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWatchlistSignalsView.swift; sourceTree = "<group>"; };
 		D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWatchlistSignalBadge.swift; sourceTree = "<group>"; };
+		D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfView.swift; sourceTree = "<group>"; };
+		D3384D122BFDCBE700515664 /* MarketEtfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfViewModel.swift; sourceTree = "<group>"; };
+		D3384D152BFDEF6800515664 /* Etf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Etf.swift; sourceTree = "<group>"; };
 		D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistModifier.swift; sourceTree = "<group>"; };
 		D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
@@ -5542,6 +5551,7 @@
 				D3833AE92BEE4CAA00ACECFB /* TopPlatform.swift */,
 				D3833AF72BF2181800ACECFB /* MarketPair.swift */,
 				D086A9152BF4D08400462024 /* SendParameters.swift */,
+				D3384D152BFDEF6800515664 /* Etf.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -7744,6 +7754,7 @@
 		58AAA9EB9618EBC895D0B123 /* Market */ = {
 			isa = PBXGroup;
 			children = (
+				D3384D0E2BFDCBD100515664 /* Etf */,
 				D3833AFA2BF335B800ACECFB /* News */,
 				D3833AF02BF20B7200ACECFB /* Pairs */,
 				D3833AEC2BF1F0AC00ACECFB /* Platform */,
@@ -9319,6 +9330,15 @@
 			path = UnstoppableWallet;
 			sourceTree = "<group>";
 		};
+		D3384D0E2BFDCBD100515664 /* Etf */ = {
+			isa = PBXGroup;
+			children = (
+				D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */,
+				D3384D122BFDCBE700515664 /* MarketEtfViewModel.swift */,
+			);
+			path = Etf;
+			sourceTree = "<group>";
+		};
 		D36E50882BF7656E00C361BD /* Watchlist */ = {
 			isa = PBXGroup;
 			children = (
@@ -10753,6 +10773,7 @@
 				11B353D3A4F2305366835086 /* NftActivityHeaderView.swift in Sources */,
 				11B350D00FA0A18EF540C945 /* BottomSingleSelectorViewController.swift in Sources */,
 				11B359F1AB3B0B00DD42E61C /* TokenProtocol.swift in Sources */,
+				D3384D112BFDCBDE00515664 /* MarketEtfView.swift in Sources */,
 				11B3588C582E45D149BB42BB /* Token.swift in Sources */,
 				11B35FC689D745FFBB3684C4 /* TokenType.swift in Sources */,
 				11B354F237E59C24ED8F3759 /* TokenQuery.swift in Sources */,
@@ -10822,6 +10843,7 @@
 				11B352B8015606DD9D48A092 /* CoinAnalyticsHoldersCell.swift in Sources */,
 				ABC9AFA89983A9BCB78E4575 /* Contact.swift in Sources */,
 				ABC9A57DE6436FB8795F50E4 /* ContactBookViewController.swift in Sources */,
+				D3384D142BFDCBE700515664 /* MarketEtfViewModel.swift in Sources */,
 				ABC9ACE1EDEA27A054EDC2C4 /* ContactBookService.swift in Sources */,
 				ABC9A3510E5BE401AD04DA98 /* ContactBookViewModel.swift in Sources */,
 				ABC9AE042D6A3D70CA64F959 /* ContactBookModule.swift in Sources */,
@@ -11011,6 +11033,7 @@
 				ABC9AD46AE6B5F432E0D2085 /* WalletTokenBalanceViewModel.swift in Sources */,
 				ABC9A69264C2086E4B3B09D2 /* WalletTokenBalanceService.swift in Sources */,
 				ABC9A2A6C3A1EFDD33D53287 /* WalletTokenBalanceModule.swift in Sources */,
+				D3384D172BFDEF6800515664 /* Etf.swift in Sources */,
 				D313698A2BEA188D00BA6B5B /* ZcashPreSendHandler.swift in Sources */,
 				ABC9A55470228BD7B1535B9B /* WalletTokenBalanceViewItemFactory.swift in Sources */,
 				ABC9ABD7DA0C144C545EE228 /* WalletTokenBalanceCell.swift in Sources */,
@@ -12318,6 +12341,7 @@
 				11B35B7D8E3DA75CFD13E1FF /* ReservoirNftProvider.swift in Sources */,
 				11B3519760CB3D8D8C97F689 /* NftContractMetadata.swift in Sources */,
 				11B352C452D8E9C00FD26E8A /* NftActivityHeaderView.swift in Sources */,
+				D3384D102BFDCBDE00515664 /* MarketEtfView.swift in Sources */,
 				11B3589541E87A032D9D2D50 /* BottomSingleSelectorViewController.swift in Sources */,
 				11B359752E118A95F4705B95 /* TokenProtocol.swift in Sources */,
 				11B35DDD77B56489D1EB72C5 /* Token.swift in Sources */,
@@ -12387,6 +12411,7 @@
 				11B35F3F123BFF155DA7F417 /* CoinAnalyticsHoldersCell.swift in Sources */,
 				ABC9A06BE632BD33E5CA4106 /* Contact.swift in Sources */,
 				ABC9A2AA80535822D8731DA4 /* ContactBookViewController.swift in Sources */,
+				D3384D132BFDCBE700515664 /* MarketEtfViewModel.swift in Sources */,
 				ABC9ADD2EA3745F828763EB4 /* ContactBookService.swift in Sources */,
 				ABC9AD6C3EE6EDD0FB3D623A /* ContactBookViewModel.swift in Sources */,
 				ABC9A05D9F96BE464CFC90CC /* ContactBookModule.swift in Sources */,
@@ -12576,6 +12601,7 @@
 				ABC9AFAB3BB4A1D2BFD4283B /* DataSourceChain.swift in Sources */,
 				ABC9A30A4C740609D0898809 /* WalletTokenBalanceDataSource.swift in Sources */,
 				ABC9A427B3166B8A0630EC8A /* WalletTokenBalanceViewModel.swift in Sources */,
+				D3384D162BFDEF6800515664 /* Etf.swift in Sources */,
 				D31369892BEA188D00BA6B5B /* ZcashPreSendHandler.swift in Sources */,
 				ABC9A2692A01293B1229EF50 /* WalletTokenBalanceService.swift in Sources */,
 				ABC9AC8ACB374C9B96F05B3C /* WalletTokenBalanceModule.swift in Sources */,
@@ -13819,7 +13845,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.4;
+				version = 3.0.5;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {

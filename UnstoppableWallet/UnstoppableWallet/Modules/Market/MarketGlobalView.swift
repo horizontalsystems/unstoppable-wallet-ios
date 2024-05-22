@@ -5,6 +5,7 @@ struct MarketGlobalView: View {
     @ObservedObject var viewModel: MarketGlobalViewModel
 
     @State private var presentedGlobalMarketMetricsType: MarketGlobalModule.MetricsType?
+    @State private var etfPresented = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -32,6 +33,9 @@ struct MarketGlobalView: View {
         .sheet(item: $presentedGlobalMarketMetricsType) { metricsType in
             MarketGlobalMetricsView(metricsType: metricsType).ignoresSafeArea()
         }
+        .sheet(isPresented: $etfPresented) {
+            MarketEtfView(isPresented: $etfPresented)
+        }
     }
 
     @ViewBuilder private func content(globalMarketData: MarketGlobalViewModel.GlobalMarketData?) -> some View {
@@ -55,7 +59,10 @@ struct MarketGlobalView: View {
         .padding(.horizontal, .margin8)
         .padding(.vertical, .margin16)
         .onTapGesture {
-            presentedGlobalMarketMetricsType = metricsType
+            switch metricsType {
+            case .defiCap: etfPresented = true
+            default: presentedGlobalMarketMetricsType = metricsType
+            }
         }
     }
 }
