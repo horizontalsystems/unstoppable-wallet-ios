@@ -799,6 +799,16 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market_watchlist.empty.caption" = "Ihre Beobachtungsliste ist leer.";
 "market.watchlist.signals" = "Signals";
 "market.watchlist.empty" = "Your watchlist is empty";
+"market.watchlist.signals.description" = "Signals are based on the Bollinger Bands + RSI strategy to determine trading signals. All calculations are candlesticks and provide based on daily advice for a moderately long term.";
+"market.watchlist.signals.strong_buy.description" = "High confidence in asset price growth.";
+"market.watchlist.signals.buy.description" = "Indicates likely price increase in near future.";
+"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium.";
+"market.watchlist.signals.sell.description" = "Likely price decrease, considers current market conditions.";
+"market.watchlist.signals.strong_sell.description" = "High probability of price decrease.";
+"market.watchlist.signals.risky.description" = "Elevated risk level, requires cautious approach.";
+"market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
+"market.watchlist.signals.dont_show_again" = "Don't show it again";
+"market.watchlist.signals.turn_on" = "Turn On";
 
 "market.advanced_search.title" = "Filter";
 "market.advanced_search.show_results" = "Ergebnisse anzeigen";
@@ -826,7 +836,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.price_period" = "Preiszeitraum";
 "market.advanced_search.price_change" = "Preisänderung";
 
-"market.advanced_search.technical_advice.risk_trade" = "Handelsrisiko";
+"market.advanced_search.technical_advice.risky" = "Riskant";
 "market.advanced_search.technical_advice.strong_buy" = "Starker Kauf";
 "market.advanced_search.technical_advice.buy" = "Kaufen";
 "market.advanced_search.technical_advice.neutral" = "Neutral";
