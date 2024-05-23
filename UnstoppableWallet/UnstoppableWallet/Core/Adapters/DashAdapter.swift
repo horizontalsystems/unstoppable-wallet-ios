@@ -57,15 +57,15 @@ class DashAdapter: BitcoinBaseAdapter {
     }
 
     override var explorerTitle: String {
-        "dash.org"
+        "blockchair.com"
     }
 
     override func explorerUrl(transactionHash: String) -> String? {
-        "https://insight.dash.org/insight/tx/" + transactionHash
+        "https://https://blockchair.com/dash/transaction/" + transactionHash
     }
 
     override func explorerUrl(address: String) -> String? {
-        "https://insight.dash.org/insight/address/" + address
+        "https://blockchair.com/dash/address/" + address
     }
 }
 
