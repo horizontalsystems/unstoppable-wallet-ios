@@ -33,7 +33,6 @@ class SendTronConfirmationViewModel {
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.sendStateObservable) { [weak self] in self?.sync(sendState: $0) }
-        subscribe(disposeBag, service.sendAdressActiveObservable) { [weak self] _ in self?.reSyncServiceState() }
         subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncServiceState() }
 
         sync(state: service.state)
@@ -183,16 +182,6 @@ class SendTronConfirmationViewModel {
         }
     }
 
-    private func addressActiveViewItems() -> [ViewItem] {
-        guard !service.sendAdressActive else {
-            return []
-        }
-
-        return [
-            .warning(text: "tron.send.inactive_address".localized, title: "tron.send.activation_fee".localized, info: "tron.send.activation_fee.info".localized),
-        ]
-    }
-
     private func amountViewItem(title: String, coinService: CoinService, value: BigUInt, type: AmountType) -> ViewItem {
         amountViewItem(title: title, coinService: coinService, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
     }
@@ -250,7 +239,7 @@ class SendTronConfirmationViewModel {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
 
-        return [SectionViewItem(viewItems: viewItems + addressActiveViewItems())]
+        return [SectionViewItem(viewItems: viewItems)]
     }
 
     private func eip20TransferItems(to: TronKit.Address, value: BigUInt, contractAddress: TronKit.Address) -> [SectionViewItem]? {
@@ -284,7 +273,7 @@ class SendTronConfirmationViewModel {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
 
-        return [SectionViewItem(viewItems: viewItems + addressActiveViewItems())]
+        return [SectionViewItem(viewItems: viewItems)]
     }
 
     private func coinService(token: MarketKit.Token) -> CoinService {

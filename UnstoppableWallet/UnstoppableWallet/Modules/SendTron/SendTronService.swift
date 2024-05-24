@@ -39,8 +39,6 @@ class SendTronService {
         }
     }
 
-    private let activeAddressRelay = PublishRelay<Bool>()
-
     init(token: Token, mode: PreSendViewModel.Mode, adapter: ISendTronAdapter, addressService: AddressService, memoService: SendMemoInputService) {
         sendToken = token
         self.mode = mode
@@ -107,10 +105,6 @@ extension SendTronService {
 
     var addressErrorObservable: Observable<Error?> {
         addressErrorRelay.asObservable()
-    }
-
-    var activeAddressObservable: Observable<Bool> {
-        activeAddressRelay.asObservable()
     }
 }
 
@@ -185,24 +179,6 @@ extension SendTronService: IAmountInputService {
             addressError = AddressError.ownAddress
             return
         }
-
-        Single<Bool>
-            .create { [weak self] observer in
-                let task = Task { [weak self] in
-                    let active = await self?.adapter.accountActive(address: tronAddress) ?? false
-                    observer(.success(active))
-                }
-
-                return Disposables.create {
-                    task.cancel()
-                }
-            }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onSuccess: { [weak self] active in
-                self?.activeAddressRelay.accept(active)
-            })
-            .disposed(by: disposeBag)
     }
 }
 

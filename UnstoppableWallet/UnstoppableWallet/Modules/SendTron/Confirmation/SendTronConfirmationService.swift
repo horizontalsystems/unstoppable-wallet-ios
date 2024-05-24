@@ -13,7 +13,6 @@ class SendTronConfirmationService {
     private let feeService: SendFeeService
     private let tronKitWrapper: TronKitWrapper
     private let evmLabelManager: EvmLabelManager
-    private let sendAddress: TronKit.Address?
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady(errors: []) {
@@ -28,13 +27,6 @@ class SendTronConfirmationService {
             if !feeState.equalTo(oldValue) {
                 feeStateRelay.accept(feeState)
             }
-        }
-    }
-
-    private let sendAdressActiveRelay = PublishRelay<Bool>()
-    private(set) var sendAdressActive: Bool = true {
-        didSet {
-            sendAdressActiveRelay.accept(sendAdressActive)
         }
     }
 
@@ -59,23 +51,8 @@ class SendTronConfirmationService {
             decoration: tronKitWrapper.tronKit.decorate(contract: contract)
         )
 
-        switch contract {
-        case let transfer as TransferContract:
-            sendAddress = transfer.toAddress
-
-        case is TriggerSmartContract:
-            if let transfer = dataState.decoration as? OutgoingEip20Decoration {
-                sendAddress = transfer.to
-            } else {
-                sendAddress = nil
-            }
-
-        default: sendAddress = nil
-        }
-
         feeService.feeValueService = self
         syncFees()
-        syncAddress()
     }
 
     private var tronKit: TronKit.Kit {
@@ -143,17 +120,6 @@ class SendTronConfirmationService {
 
         state = .ready(fees: fees)
     }
-
-    private func syncAddress() {
-        guard let sendAddress else {
-            return
-        }
-
-        Task { [weak self, tronKit] in
-            let active = try? await tronKit.accountActive(address: sendAddress)
-            self?.sendAdressActive = active ?? true
-        }.store(in: &tasks)
-    }
 }
 
 extension SendTronConfirmationService: ISendXFeeValueService {
@@ -169,10 +135,6 @@ extension SendTronConfirmationService {
 
     var sendStateObservable: Observable<SendState> {
         sendStateRelay.asObservable()
-    }
-
-    var sendAdressActiveObservable: Observable<Bool> {
-        sendAdressActiveRelay.asObservable()
     }
 
     func send() {
