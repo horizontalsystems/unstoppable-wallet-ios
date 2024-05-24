@@ -226,6 +226,7 @@
 "extended_key.purpose" = "목적";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "계정";
+"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
 "extended_key.tap_to_show" = "탭하여 extended private key 표시";
 
 // Backup
