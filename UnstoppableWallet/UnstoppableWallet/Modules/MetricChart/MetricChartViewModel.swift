@@ -152,4 +152,16 @@ extension MetricChartViewModel {
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         return MetricChartViewModel(service: service, factory: factory)
     }
+    
+    static var etfInstance: MetricChartViewModel {
+        let fetcher = MarketEtfFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
+        let service = MetricChartService(
+            chartFetcher: fetcher,
+            interval: .byPeriod(.day1),
+            statPage: StatPage.globalMetricsEtf
+        )
+
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
+        return MetricChartViewModel(service: service, factory: factory)
+    }
 }

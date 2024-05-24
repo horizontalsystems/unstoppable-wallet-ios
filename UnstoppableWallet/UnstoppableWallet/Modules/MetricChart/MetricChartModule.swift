@@ -48,6 +48,7 @@ enum MetricChartModule {
 
     enum ItemType {
         case regular
+        case etf
         case aggregated(value: Decimal?)
     }
 

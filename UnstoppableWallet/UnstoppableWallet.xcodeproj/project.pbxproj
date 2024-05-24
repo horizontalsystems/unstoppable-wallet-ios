@@ -2132,6 +2132,8 @@
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
 		6BB14F6B2BF49E7100E879B2 /* WalletButtonHiddenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */; };
 		6BB14F6C2BF49E7100E879B2 /* WalletButtonHiddenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */; };
+		6BB14F722BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */; };
+		6BB14F732BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */; };
 		6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A22BDA419200ABBD55 /* Web3Wallet */; };
 		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
@@ -4489,6 +4491,7 @@
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
 		6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletButtonHiddenManager.swift; sourceTree = "<group>"; };
+		6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfFetcher.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -7862,6 +7865,7 @@
 		58AAAC5B31C9DD58D57A3EA9 /* MarketGlobalMetric */ = {
 			isa = PBXGroup;
 			children = (
+				6BB14F702BFE54F200E879B2 /* Etf */,
 				58AAA7B3EA0C8B9FDEC41837 /* MarketGlobalMetricService.swift */,
 				58AAA775FE9B46DA2910F508 /* MarketGlobalMetricModule.swift */,
 				58AAA02D981360FF0CC50A19 /* MarketGlobalMetricViewController.swift */,
@@ -7973,6 +7977,14 @@
 				6B29071D2AF0CB8A006157D6 /* WidgetCoinAppShowModule.swift */,
 			);
 			path = WidgetCoinAppShowWorker;
+			sourceTree = "<group>";
+		};
+		6BB14F702BFE54F200E879B2 /* Etf */ = {
+			isa = PBXGroup;
+			children = (
+				6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */,
+			);
+			path = Etf;
 			sourceTree = "<group>";
 		};
 		6BCD52F62A161F4100993F20 /* ICloud */ = {
@@ -10264,6 +10276,7 @@
 				D02A67C9272A7460009B2C1C /* CoinTweetsViewController.swift in Sources */,
 				D36DE0DF272FD887000BC916 /* OneInchViewModel.swift in Sources */,
 				D02A67C6272A7460009B2C1C /* CoinTweetsViewModel.swift in Sources */,
+				6BB14F732BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */,
 				D09200C6293F21720091981A /* RestoreNonStandardViewModel.swift in Sources */,
 				11B35F20127C070137781ED5 /* AddTokenModule.swift in Sources */,
 				11B35D722A70E8B4776AB5A8 /* AddBep2TokenBlockchainService.swift in Sources */,
@@ -11832,6 +11845,7 @@
 				D36DE0C0272FD864000BC916 /* UniswapService.swift in Sources */,
 				11B35ED22837284580055F0A /* BalanceData.swift in Sources */,
 				11B3534B567884E30A871F32 /* AddTokenModule.swift in Sources */,
+				6BB14F722BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */,
 				11B35758262A961566ABB87F /* AddBep2TokenBlockchainService.swift in Sources */,
 				58AAADEE16D9605E4FA0390A /* UniswapSettingsViewModel.swift in Sources */,
 				D09200C5293F21720091981A /* RestoreNonStandardViewModel.swift in Sources */,
@@ -13853,7 +13867,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Chart.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.0;
+				version = 3.0.1;
 			};
 		};
 		D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit" */ = {

@@ -18,6 +18,11 @@ class DiffLabel: UILabel {
         textColor = Self.color(value: value, highlight: highlightText)
     }
 
+    func set(value: ValueDiff?) {
+        text = value?.value
+        textColor = value?.trend == .down ? .themeLucian : .themeRemus
+    }
+
     func set(text: String?, color: UIColor) {
         self.text = text
         textColor = color

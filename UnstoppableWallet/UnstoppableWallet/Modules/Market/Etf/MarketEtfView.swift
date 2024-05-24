@@ -12,7 +12,7 @@ struct MarketEtfView: View {
 
     init(isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketEtfViewModel())
-        _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.instance(type: .totalMarketCap))
+        _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.etfInstance)
         _isPresented = isPresented
     }
 
@@ -72,7 +72,7 @@ struct MarketEtfView: View {
     }
 
     @ViewBuilder private func chart() -> some View {
-        ChartView(viewModel: chartViewModel, configuration: .marketCapChart)
+        ChartView(viewModel: chartViewModel, configuration: .baseHistogramChart)
             .frame(maxWidth: .infinity)
             .onFirstAppear {
                 chartViewModel.start()

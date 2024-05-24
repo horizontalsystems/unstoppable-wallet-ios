@@ -69,6 +69,7 @@ enum StatPage: String {
     case globalMetricsDefiCap = "global_metrics_defi_cap"
     case globalMetricsMarketCap = "global_metrics_market_cap"
     case globalMetricsTvlInDefi = "global_metrics_tvl_in_defi"
+    case globalMetricsEtf = "global_metrics_etf"
     case globalMetricsVolume = "global_metrics_volume"
     case guide
     case importFull = "import_full"

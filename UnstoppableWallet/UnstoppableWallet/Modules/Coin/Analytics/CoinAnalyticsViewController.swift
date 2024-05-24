@@ -475,7 +475,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
             switch chartCurveType {
             case .line: chartTrend = viewItem.chartTrend
-            case .bars: chartTrend = .neutral
+            case .bars, .histogram: chartTrend = .neutral
             }
         }
 

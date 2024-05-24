@@ -19,6 +19,10 @@ extension ChartConfiguration {
         ChartConfiguration().applyColors().applyBase().applyBars()
     }
 
+    static var baseHistogramChart: ChartConfiguration {
+        ChartConfiguration().applyColors().applyBase().applyHistogram()
+    }
+
     static var volumeBarChart: ChartConfiguration {
         baseBarChart.applyVolume()
     }
@@ -50,6 +54,15 @@ extension ChartConfiguration {
         return self
     }
 
+    @discardableResult private func clearGradients() -> Self {
+        let clear = [UIColor.clear]
+        trendUpGradient = clear
+        trendDownGradient = clear
+        pressedGradient = clear
+        neutralGradient = clear
+        return self
+    }
+
     @discardableResult private func applyPreview(height: CGFloat, curveWidth: CGFloat = 2) -> Self {
         mainHeight = height
         indicatorHeight = 0
@@ -63,11 +76,7 @@ extension ChartConfiguration {
         showVerticalLines = false
         isInteractive = false
 
-        let clear = [UIColor.clear]
-        trendUpGradient = clear
-        trendDownGradient = clear
-        pressedGradient = clear
-        neutralGradient = clear
+        clearGradients()
 
         return self
     }
@@ -76,10 +85,19 @@ extension ChartConfiguration {
         curveType = .bars
         curveBottomInset = 18
 
-        trendUpGradient = [.clear]
-        trendDownGradient = [.clear]
-        pressedGradient = [.clear]
-        neutralGradient = [.clear]
+        clearGradients()
+
+        return self
+    }
+
+    @discardableResult private func applyHistogram() -> Self {
+        curveType = .histogram
+        curveBottomInset = 18
+
+        indicatorHeight = 0
+        timelineHeight = 0
+
+        clearGradients()
 
         return self
     }
@@ -135,6 +153,24 @@ public extension ChartIndicator.LineConfiguration {
 
     static var dominanceId: String {
         let indicator = PrecalculatedIndicator(id: MarketGlobalModule.dominance, enabled: true, values: [], configuration: dominance)
+        return indicator.json
+    }
+
+    static var totalAssets: Self {
+        Self(color: ChartColor(.themeNina.withAlphaComponent(0.5)), width: 1)
+    }
+
+    static var totalAssetId: String {
+        let indicator = PrecalculatedIndicator(id: MarketGlobalModule.totalAssets, enabled: true, values: [], configuration: totalAssets)
+        return indicator.json
+    }
+
+    static var totalInflow: Self {
+        Self(color: ChartColor(.themeNina.withAlphaComponent(0.5)), width: 1)
+    }
+
+    static var totalInflowId: String {
+        let indicator = PrecalculatedIndicator(id: MarketGlobalModule.totalInflow, enabled: false, values: [], configuration: totalAssets)
         return indicator.json
     }
 }
