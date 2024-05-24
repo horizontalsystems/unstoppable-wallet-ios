@@ -230,6 +230,7 @@
 "extended_key.purpose" = "Purpose";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Account";
+"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
 "extended_key.tap_to_show" = "Нажмите, чтобы показать extended private key";
 
 // Backup
