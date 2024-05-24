@@ -137,18 +137,53 @@ class ExtendedKeyViewController: ThemeViewController {
 
         present(alertController, animated: true)
     }
+
+    private func openInfo(title: String, description: String) {
+        let viewController = BottomSheetModule.description(title: title, text: description)
+        present(viewController, animated: true)
+    }
 }
 
 extension ExtendedKeyViewController: SectionsDataSource {
     private func controlRow(item: ControlItem, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
-        tableView.universalRow48(
+        var elements = [CellBuilderNew.CellElement]()
+
+        if let description = item.description {
+            elements.append(contentsOf: [
+                .secondaryButton { [weak self] component in
+                    component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                    component.button.setTitle(item.title, for: .normal)
+                    component.button.setTitleColor(.themeLeah, for: .normal)
+                    component.button.titleLabel?.font = .body
+
+                    component.button.snp.makeConstraints { maker in
+                        maker.edges.equalToSuperview()
+                        maker.centerY.equalToSuperview()
+                    }
+
+                    component.onTap = { [weak self] in
+                        self?.openInfo(title: item.title, description: description)
+                    }
+                },
+                .margin0,
+                .text { _ in },
+            ])
+        } else {
+            elements.append(.textElement(text: .body(item.title)))
+        }
+
+        elements.append(.textElement(text: .subhead1(item.value, color: .themeGray), parameters: .allCompression))
+        elements.append(contentsOf: CellBuilderNew.CellElement.accessoryElements(item.action == nil ? .none : .dropdown))
+
+        return CellBuilderNew.row(
+            rootElement: .hStack(elements),
+            tableView: tableView,
             id: item.id,
-            title: .body(item.title),
-            value: .subhead1(item.value, color: .themeGray),
-            accessoryType: item.action == nil ? .none : .dropdown,
+            height: .heightCell48,
             autoDeselect: true,
-            isFirst: isFirst,
-            isLast: isLast,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+            },
             action: item.action
         )
     }
@@ -159,6 +194,7 @@ extension ExtendedKeyViewController: SectionsDataSource {
                 id: "derivation",
                 title: "extended_key.purpose".localized,
                 value: viewItem.derivation,
+                description: nil,
                 action: viewItem.derivationSwitchable ? { [weak self] in
                     self?.onTapDerivation()
                 } : nil
@@ -171,6 +207,7 @@ extension ExtendedKeyViewController: SectionsDataSource {
                     id: "blockchain",
                     title: "extended_key.blockchain".localized,
                     value: blockchain,
+                    description: nil,
                     action: viewItem.blockchainSwitchable ? { [weak self] in
                         self?.onTapBlockchain()
                     } : nil
@@ -184,6 +221,7 @@ extension ExtendedKeyViewController: SectionsDataSource {
                     id: "account",
                     title: "extended_key.account".localized,
                     value: account,
+                    description: "extended_key.account.description".localized,
                     action: { [weak self] in
                         self?.onTapAccount()
                     }
@@ -268,6 +306,7 @@ extension ExtendedKeyViewController {
         let id: String
         let title: String
         let value: String
+        let description: String?
         var action: (() -> Void)?
     }
 }
