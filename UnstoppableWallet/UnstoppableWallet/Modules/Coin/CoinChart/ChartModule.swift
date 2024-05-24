@@ -12,18 +12,18 @@ enum ChartModule {
         let chartData: ChartData
         let indicators: [ChartIndicator]
         let chartTrend: MovementTrend
-        let chartDiff: Decimal?
+        let chartDiff: ValueDiff?
 
         let limitFormatter: ((Decimal) -> String?)?
     }
 
     struct SelectedPointViewItem {
         let value: String?
-        let diff: Decimal?
+        let diff: ValueDiff?
         let date: String
         let rightSideMode: RightSideMode
 
-        init(value: String?, diff: Decimal? = nil, date: String, rightSideMode: RightSideMode) {
+        init(value: String?, diff: ValueDiff? = nil, date: String, rightSideMode: RightSideMode) {
             self.value = value
             self.diff = diff
             self.date = date
@@ -35,6 +35,7 @@ enum ChartModule {
         case none
         case volume(value: String?)
         case dominance(value: Decimal?, diff: Decimal?)
+        case custom(title: String, value: String?)
         case indicators(top: NSAttributedString?, bottom: NSAttributedString?)
     }
 }
@@ -53,6 +54,11 @@ enum MovementTrend {
         case .ignored: return .pressed
         }
     }
+}
+
+struct ValueDiff {
+    let value: String
+    let trend: MovementTrend
 }
 
 protocol IChartViewModel {

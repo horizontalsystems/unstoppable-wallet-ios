@@ -6,6 +6,7 @@ class MetricChartFactory {
     private static let noChangesLimitPercent: Decimal = 0.2
 
     private let dateFormatter = DateFormatter()
+    private let currencyManager = App.shared.currencyManager
 
     init(currentLocale: Locale) {
         dateFormatter.locale = currentLocale
@@ -37,7 +38,7 @@ class MetricChartFactory {
             return [valueString, coin.code].compactMap { $0 }.joined(separator: " ")
         case let .compactCurrencyValue(currency):
             if exactlyValue {
-                return ValueFormatter.instance.formatFull(currency: currency, value: value)
+                return ValueFormatter.instance.formatFull(currency: currency, value: value, showSign: true)
             } else {
                 return ValueFormatter.instance.formatShort(currency: currency, value: value)
             }
@@ -73,17 +74,35 @@ extension MetricChartFactory {
 
         let chartTrend: MovementTrend
         var value: String?
-        var valueDiff: Decimal?
+        var valueDiff: ValueDiff?
         var rightSideMode: ChartModule.RightSideMode = .none
 
         switch itemData.type {
         case .regular:
             value = Self.format(value: lastItem.value, valueType: valueType)
-            chartTrend = (lastItem.value - firstItem.value).isSignMinus ? .down : .up
-            valueDiff = (lastItem.value - firstItem.value) / firstItem.value * 100
+            let diff = (lastItem.value - firstItem.value) / firstItem.value * 100
+            chartTrend = diff.isSignMinus ? .down : .up
+
+            let valueString = ValueFormatter.instance.format(percentValue: diff, showSign: true)
+            valueDiff = valueString.map { ValueDiff(value: $0, trend: chartTrend) }
 
             if let first = itemData.indicators[MarketGlobalModule.dominance]?.first, let last = itemData.indicators[MarketGlobalModule.dominance]?.last {
                 rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
+            }
+        case .etf:
+            if let last = itemData.indicators[MarketGlobalModule.totalInflow]?.last { // etf chart
+                value = Self.format(value: last, valueType: valueType)
+            }
+
+            let valueString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: lastItem.value)
+            valueDiff = valueString.map { ValueDiff(value: $0, trend: lastItem.value.isSignMinus ? .down : .up) }
+            chartTrend = .neutral
+
+            if let last = itemData.indicators[MarketGlobalModule.totalAssets]?.last {
+                rightSideMode = .custom(
+                    title: "market.etf.total_net_assets".localized,
+                    value: ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: last)
+                )
             }
         case let .aggregated(aggregatedValue):
             value = Self.format(value: aggregatedValue, valueType: valueType)
@@ -111,6 +130,24 @@ extension MetricChartFactory {
 
             indicators.append(dominanceIndicator)
         }
+        if let totalAssets = itemData.indicators[MarketGlobalModule.totalAssets] {
+            let totalIndicator = PrecalculatedIndicator(
+                id: MarketGlobalModule.totalAssets,
+                enabled: true,
+                values: totalAssets,
+                configuration: ChartIndicator.LineConfiguration.totalAssets
+            )
+            indicators.append(totalIndicator)
+        }
+        if let totalInflow = itemData.indicators[MarketGlobalModule.totalInflow] {
+            let totalIndicator = PrecalculatedIndicator(
+                id: MarketGlobalModule.totalInflow,
+                enabled: false,
+                values: totalInflow,
+                configuration: ChartIndicator.LineConfiguration.totalInflow
+            )
+            indicators.append(totalIndicator)
+        }
 
         return ChartModule.ViewItem(
             value: value,
@@ -131,15 +168,33 @@ extension MetricChartFactory {
 
         let date = Date(timeIntervalSince1970: chartItem.timestamp)
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
-        let formattedValue = Self.format(value: value, valueType: valueType)
 
         var rightSideMode: ChartModule.RightSideMode = .none
 
         if let dominance = chartItem.indicators[ChartIndicator.LineConfiguration.dominanceId] {
             rightSideMode = .dominance(value: dominance, diff: nil)
+        } else if let totalAssets = chartItem.indicators[ChartIndicator.LineConfiguration.totalAssetId] {
+            let value = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: totalAssets)
+            rightSideMode = .custom(title: "market.etf.total_net_assets".localized, value: value)
         } else if let volume = chartItem.indicators[ChartData.volume] {
             rightSideMode = .volume(value: Self.format(value: volume, valueType: valueType))
         }
+
+        // if etf chart
+        if let totalInflow = chartItem.indicators[ChartIndicator.LineConfiguration.totalInflowId] {
+            let formattedValue = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: totalInflow)
+            let diffString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: value)
+            let diff = diffString.map { ValueDiff(value: $0, trend: value.isSignMinus ? .down : .up) }
+
+            return ChartModule.SelectedPointViewItem(
+                value: formattedValue,
+                diff: diff,
+                date: formattedDate,
+                rightSideMode: rightSideMode
+            )
+        }
+
+        let formattedValue = Self.format(value: value, valueType: valueType)
 
         return ChartModule.SelectedPointViewItem(
             value: formattedValue,
