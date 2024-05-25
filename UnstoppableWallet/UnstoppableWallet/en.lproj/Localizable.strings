@@ -1532,11 +1532,11 @@
 // Settings -> Privacy
 
 "settings.privacy" = "Privacy";
-"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
-"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
+"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
-"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
-"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
+"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.allow" = "Share UI Data";
 
 // Settings -> Appearance
 
