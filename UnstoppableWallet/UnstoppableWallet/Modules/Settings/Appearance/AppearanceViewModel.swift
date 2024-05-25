@@ -30,15 +30,15 @@ class AppearanceViewModel: ObservableObject {
         }
     }
 
-    @Published var showMarketTab: Bool {
+    @Published var hideMarketTab: Bool {
         didSet {
-            launchScreenManager.showMarket = showMarketTab
+            launchScreenManager.showMarket = !hideMarketTab
         }
     }
 
-    @Published var showBalanceButtons: Bool {
+    @Published var hideBalanceButtons: Bool {
         didSet {
-            walletButtonHiddenManager.buttonHidden = !showBalanceButtons
+            walletButtonHiddenManager.buttonHidden = hideBalanceButtons
         }
     }
 
@@ -70,13 +70,13 @@ class AppearanceViewModel: ObservableObject {
         conversionTokens = balanceConversionManager.conversionTokens
 
         themMode = themeManager.themeMode
-        showMarketTab = launchScreenManager.showMarket
+        hideMarketTab = !launchScreenManager.showMarket
         launchScreen = launchScreenManager.launchScreen
         conversionToken = balanceConversionManager.conversionToken
         balancePrimaryValue = balancePrimaryValueManager.balancePrimaryValue
         appIcon = appIconManager.appIcon
         baseCurrency = currencyManager.baseCurrency
-        showBalanceButtons = !walletButtonHiddenManager.buttonHidden
+        hideBalanceButtons = walletButtonHiddenManager.buttonHidden
 
         currencyManager.$baseCurrency.sink { [weak self] in self?.baseCurrency = $0 }.store(in: &cancellables)
     }

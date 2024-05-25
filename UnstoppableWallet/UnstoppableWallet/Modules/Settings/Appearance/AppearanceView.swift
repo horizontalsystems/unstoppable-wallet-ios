@@ -61,22 +61,29 @@ struct AppearanceView: View {
                     ListSection {
                         ListRow {
                             Image("markets_24").themeIcon()
-                            Toggle(isOn: $viewModel.showMarketTab.animation()) {
+                            Toggle(isOn: $viewModel.hideMarketTab.animation()) {
                                 Text("appearance.markets_tab".localized).themeBody()
-                            }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                        }
-                        ListRow {
-                            Image("arrow_swap_24").themeIcon()
-                            Toggle(isOn: $viewModel.showBalanceButtons.animation()) {
-                                Text("appearance.buttons_show".localized).themeBody()
                             }
                             .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                         }
                     }
                 }
 
-                if viewModel.showMarketTab {
+                VStack(spacing: 0) {
+                    ListSectionHeader(text: "appearance.balance_tab".localized)
+                    ListSection {
+                        ListRow {
+                            Image("more_24").themeIcon()
+                            Toggle(isOn: $viewModel.hideBalanceButtons.animation()) {
+                                Text("appearance.balance_buttons".localized).themeBody()
+                            }
+                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                        }
+                    }
+                    ListSectionFooter(text: "appearance.balance_buttons.description".localized)
+                }
+
+                if !viewModel.hideMarketTab {
                     VStack(spacing: 0) {
                         ListSectionHeader(text: "appearance.launch_screen".localized)
                         ListSection {

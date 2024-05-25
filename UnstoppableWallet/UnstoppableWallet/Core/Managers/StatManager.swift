@@ -1,4 +1,5 @@
 import Alamofire
+import Combine
 import Foundation
 import HsToolKit
 import MarketKit
@@ -10,6 +11,8 @@ func stat(page: StatPage, section: StatSection? = nil, event: StatEvent) {
 
 class StatManager {
     private static let keyLastSent = "stat_last_sent"
+    private static let keySendingAllowed = "sending_allowed"
+
     private static let sendThreshold: TimeInterval = 1 * 60 * 60 // 1 hour
 
     private let marketKit: MarketKit.Kit
@@ -18,6 +21,18 @@ class StatManager {
     private let appVersion: String
     private let appId: String?
 
+    var allowed: Bool {
+        didSet {
+            userDefaultsStorage.set(value: allowed, for: Self.keySendingAllowed)
+            allowedSubject.send(allowed)
+        }
+    }
+
+    private let allowedSubject = PassthroughSubject<Bool, Never>()
+    var allowedPublisher: AnyPublisher<Bool, Never> {
+        allowedSubject.eraseToAnyPublisher()
+    }
+
     init(marketKit: MarketKit.Kit, storage: StatStorage, userDefaultsStorage: UserDefaultsStorage) {
         self.marketKit = marketKit
         self.storage = storage
@@ -25,9 +40,11 @@ class StatManager {
 
         appVersion = AppConfig.appVersion
         appId = AppConfig.appId
+        allowed = userDefaultsStorage.value(for: StatManager.keySendingAllowed) ?? true
     }
 
     func logStat(eventPage: StatPage, eventSection: StatSection? = nil, event: StatEvent) {
+        guard allowed else { return }
         var parameters: [String: Any]?
 
         if let params = event.params {
@@ -54,6 +71,7 @@ class StatManager {
     }
 
     func sendStats() {
+        guard allowed else { return }
         let lastSent: Double? = userDefaultsStorage.value(for: Self.keyLastSent)
 
         if let lastSent, Date().timeIntervalSince1970 - lastSent < Self.sendThreshold {

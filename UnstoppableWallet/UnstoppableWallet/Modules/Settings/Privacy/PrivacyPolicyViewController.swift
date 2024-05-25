@@ -55,8 +55,32 @@ class PrivacyPolicyViewController: ThemeViewController {
         return [
             Section(
                 id: "privacy-section",
-                footerState: .margin(height: .margin32),
+                footerState: .margin(height: .margin16),
                 rows: infoRows
+            ),
+        ]
+    }
+
+    private var statAllowedSections: [SectionProtocol] {
+        [
+            Section(
+                id: "stat-allowed-section",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.universalRow48(
+                        id: "stat-allowed-cell",
+                        image: .local(UIImage(named: "share_1_24")),
+                        title: .body("settings.privacy.allow".localized),
+                        accessoryType: .switch(
+                            isOn: App.shared.statManager.allowed,
+                            onSwitch: { enabled in
+                                App.shared.statManager.allowed = enabled
+                            }
+                        ),
+                        isFirst: true,
+                        isLast: true
+                    ),
+                ]
             ),
         ]
     }
@@ -64,7 +88,7 @@ class PrivacyPolicyViewController: ThemeViewController {
 
 extension PrivacyPolicyViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
-        privacySections
+        privacySections + statAllowedSections
     }
 }
 
@@ -79,9 +103,8 @@ extension PrivacyPolicyViewController {
                 title: "settings.privacy".localized,
                 description: "settings.privacy.description".localized(AppConfig.appName),
                 viewItems: [
-                    "settings.privacy.statement.user_data_storage".localized,
                     "settings.privacy.statement.data_usage".localized,
-                    "settings.privacy.statement.data_privacy".localized,
+                    "settings.privacy.statement.data_storage".localized,
                     "settings.privacy.statement.user_account".localized,
                 ]
             )
