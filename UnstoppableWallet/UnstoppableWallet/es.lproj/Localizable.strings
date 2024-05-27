@@ -915,6 +915,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.etf.sort_by.outflow" = "Outflow";
 "market.etf.period.all" = "Todo";
 
+"market.market_cap.title" = "Cap.Total del Mercado";
+"market.market_cap.description" = "Valor total del mercado de todas las criptomonedas";
+"market.market_cap.market_cap" = "Capitalización del Mercado";
+
+"market.volume.title" = "Volume";
+"market.volume.description" = "El volumen de operaciones 24h del mercado de criptomonedas";
+"market.volume.volume" = "Volume";
+
 // Coin Page
 
 "coin_page.overview" = "Precio";
