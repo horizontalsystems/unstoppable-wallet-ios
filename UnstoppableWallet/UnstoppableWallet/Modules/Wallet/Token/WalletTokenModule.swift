@@ -21,11 +21,25 @@ enum WalletTokenModule {
         dataSourceChain.append(source: tokenBalanceDataSource)
 
         if let wallet = element.wallet {
+            if let cautionDataSource = cautionDataSource(wallet: wallet) {
+                dataSourceChain.append(source: cautionDataSource)
+            }
+
             let transactionsDataSource = TransactionsModule.dataSource(token: wallet.token, statPage: .tokenPage)
             transactionsDataSource.viewController = viewController
             dataSourceChain.append(source: transactionsDataSource)
         }
 
         return viewController
+    }
+
+    static func cautionDataSource(wallet: Wallet) -> ISectionDataSource? {
+        guard wallet.token.blockchainType == .tron,
+              let adapter = App.shared.adapterManager.adapter(for: wallet) as? BaseTronAdapter
+        else {
+            return nil
+        }
+
+        return CautionDataSource(viewModel: TronAccountInactiveViewModel(adapter: adapter))
     }
 }

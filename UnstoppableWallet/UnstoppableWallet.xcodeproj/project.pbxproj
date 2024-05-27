@@ -2914,6 +2914,10 @@
 		D09D76942A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */; };
 		D09D76952A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */; };
 		D09D76992A2F3682004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
+		D0A6902B2C00ACF600E59296 /* CautionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */; };
+		D0A6902C2C00ACF600E59296 /* CautionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */; };
+		D0A6902E2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
+		D0A6902F2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
 		D0A980A92B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AA2B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AF2B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */; };
@@ -4878,6 +4882,8 @@
 		D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewController.swift; sourceTree = "<group>"; };
 		D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewModel.swift; sourceTree = "<group>"; };
 		D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationService.swift; sourceTree = "<group>"; };
+		D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSource.swift; sourceTree = "<group>"; };
+		D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSourceViewModel.swift; sourceTree = "<group>"; };
 		D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepChangeButtonsView.swift; sourceTree = "<group>"; };
 		D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0C2260F2A66A3BC007101F7 /* PersonalSupportModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportModule.swift; sourceTree = "<group>"; };
@@ -8274,6 +8280,8 @@
 			children = (
 				ABC9A22311B6AA64B7D93CB4 /* DataSourceChain.swift */,
 				ABC9AFF00631C853B04007AC /* WalletTokenBalance */,
+				D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */,
+				D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -9895,6 +9903,7 @@
 				11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */,
 				3C7B9BAF807355796DCA80C4 /* WelcomeScreenViewController.swift in Sources */,
 				11B35BCD6D0462E31D7EBA06 /* BackupManager.swift in Sources */,
+				D0A6902F2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */,
 				11B358D1687049E5DACEBC96 /* AppManager.swift in Sources */,
 				D31C4760238BF176008CB818 /* MnemonicDerivation.swift in Sources */,
 				11B356C6FEEFD7A1B854FB46 /* AccountRecord.swift in Sources */,
@@ -10324,6 +10333,7 @@
 				11B35448AE945A8647EF4856 /* SwitchAccountModule.swift in Sources */,
 				58AAA1AAD335F236D130FCBB /* SwapConfirmationModule.swift in Sources */,
 				58AAAA3F2EF03D83A5500228 /* SwapConfirmationViewController.swift in Sources */,
+				D0A6902C2C00ACF600E59296 /* CautionDataSource.swift in Sources */,
 				58AAA3A6458CB87F359F6366 /* SwapConfirmationAmountCell.swift in Sources */,
 				2FA5D584622BFDB5E3A55771 /* TransactionInfoModule.swift in Sources */,
 				2FA5D8B40E95A9F8617EB4CA /* TransactionInfoService.swift in Sources */,
@@ -11464,6 +11474,7 @@
 				11B35BC6DFCA197FA842873B /* BackupManager.swift in Sources */,
 				11B35590A4DA4BCFB3D38DDF /* AppManager.swift in Sources */,
 				D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */,
+				D0A6902E2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */,
 				11B3597622438E522E0F7AE1 /* AccountRecord.swift in Sources */,
 				11B35262A6D3AB8C41E2E245 /* AccountStorage.swift in Sources */,
 				1A56416B9DC6DA281AD34575 /* AdapterState.swift in Sources */,
@@ -11893,6 +11904,7 @@
 				58AAA926E1D95F61CA06EFB8 /* SwapConfirmationModule.swift in Sources */,
 				58AAA1152EEEBC93FCC3CAAC /* SwapConfirmationViewController.swift in Sources */,
 				58AAAC9A4813120F3B786D18 /* SwapConfirmationAmountCell.swift in Sources */,
+				D0A6902B2C00ACF600E59296 /* CautionDataSource.swift in Sources */,
 				2FA5DEDEAF3C1D6251B47CB4 /* TransactionInfoModule.swift in Sources */,
 				2FA5DE68EF4783154A53CCEB /* TransactionInfoService.swift in Sources */,
 				2FA5D5FCFC8A89956755FAA3 /* TransactionInfoViewController.swift in Sources */,
