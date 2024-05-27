@@ -2,17 +2,18 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
-struct MarketEtfView: View {
-    @StateObject var viewModel: MarketEtfViewModel
+struct MarketVolumeView: View {
+    @StateObject var viewModel: MarketVolumeViewModel
     @StateObject var chartViewModel: MetricChartViewModel
+    @StateObject var watchlistViewModel: WatchlistViewModel
     @Binding var isPresented: Bool
 
-    @State private var sortBySelectorPresented = false
-    @State private var timePeriodSelectorPresented = false
+    @State private var presentedFullCoin: FullCoin?
 
     init(isPresented: Binding<Bool>) {
-        _viewModel = StateObject(wrappedValue: MarketEtfViewModel())
-        _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.etfInstance)
+        _viewModel = StateObject(wrappedValue: MarketVolumeViewModel())
+        _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.instance(type: .volume24h))
+        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel())
         _isPresented = isPresented
     }
 
@@ -35,7 +36,7 @@ struct MarketEtfView: View {
                         loadingList()
                     }
                     .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
-                case let .loaded(etfs):
+                case let .loaded(marketInfos):
                     ThemeList(bottomSpacing: .margin16) {
                         header()
                             .listRowBackground(Color.clear)
@@ -47,7 +48,7 @@ struct MarketEtfView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
 
-                        list(etfs: etfs)
+                        list(marketInfos: marketInfos)
                     }
                 case .failed:
                     VStack(spacing: 0) {
@@ -68,18 +69,21 @@ struct MarketEtfView: View {
                     }
                 }
             }
+            .sheet(item: $presentedFullCoin) { fullCoin in
+                CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
+            }
         }
     }
 
     @ViewBuilder private func header() -> some View {
         HStack(spacing: .margin32) {
             VStack(spacing: .margin8) {
-                Text("market.etf.title".localized).themeHeadline1()
-                Text("market.etf.description".localized).themeSubhead2()
+                Text("market.volume.title".localized).themeHeadline1()
+                Text("market.volume.description".localized).themeSubhead2()
             }
             .padding(.vertical, .margin12)
 
-            KFImage.url(URL(string: "https://cdn.blocksdecoded.com/category-icons/lending@3x.png"))
+            KFImage.url(URL(string: "total_volume".headerImageUrl))
                 .resizable()
                 .frame(width: 76, height: 108)
         }
@@ -87,7 +91,7 @@ struct MarketEtfView: View {
     }
 
     @ViewBuilder private func chart() -> some View {
-        ChartView(viewModel: chartViewModel, configuration: .baseHistogramChart)
+        ChartView(viewModel: chartViewModel, configuration: .baseChart)
             .frame(maxWidth: .infinity)
             .onFirstAppear {
                 chartViewModel.start()
@@ -98,62 +102,36 @@ struct MarketEtfView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    sortBySelectorPresented = true
+                    viewModel.sortOrder.toggle()
                 }) {
-                    Text(viewModel.sortBy.title)
+                    Text("market.volume.volume".localized)
                 }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
-
-                Button(action: {
-                    timePeriodSelectorPresented = true
-                }) {
-                    Text(viewModel.timePeriod.shortTitle)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .custom(image: sortIcon())))
                 .disabled(disabled)
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $sortBySelectorPresented,
-            title: "market.sort_by.title".localized,
-            viewItems: MarketEtfViewModel.SortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortBy = MarketEtfViewModel.SortBy.allCases[index]
-            }
-        )
-        .alert(
-            isPresented: $timePeriodSelectorPresented,
-            title: "market.time_period.title".localized,
-            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.timePeriod = viewModel.timePeriods[index]
-            }
-        )
     }
 
-    @ViewBuilder private func list(etfs: [Etf]) -> some View {
+    @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
         Section {
-            ListForEach(etfs) { etf in
-                ListRow {
+            ListForEach(marketInfos) { marketInfo in
+                let coin = marketInfo.fullCoin.coin
+
+                ClickableRow(action: {
+                    presentedFullCoin = marketInfo.fullCoin
+                }) {
                     itemContent(
-                        imageUrl: nil,
-                        ticker: etf.ticker,
-                        name: etf.name,
-                        totalAssets: etf.totalAssets,
-                        change: etf.inflow(timePeriod: viewModel.timePeriod)
+                        imageUrl: URL(string: coin.imageUrl),
+                        code: coin.code,
+                        volume: marketInfo.totalVolume,
+                        price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                        rank: marketInfo.marketCapRank,
+                        diff: marketInfo.priceChangeValue(timePeriod: HsTimePeriod.day1)
                     )
                 }
+                .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
             }
         } header: {
             listHeader()
@@ -168,51 +146,56 @@ struct MarketEtfView: View {
                 ListRow {
                     itemContent(
                         imageUrl: nil,
-                        ticker: "ABCD",
-                        name: "Ticker Name",
-                        totalAssets: 123_345_678,
-                        change: index % 2 == 0 ? 123_456 : -123_456
+                        code: "CODE",
+                        volume: 123_456,
+                        price: "$123.45",
+                        rank: 12,
+                        diff: index % 2 == 0 ? 12.34 : -12.34
                     )
                     .redacted()
                 }
             }
         } header: {
-            listHeader()
+            listHeader(disabled: true)
                 .listRowInsets(EdgeInsets())
                 .background(Color.themeTyler)
         }
     }
 
-    @ViewBuilder private func itemContent(imageUrl: URL?, ticker: String, name: String, totalAssets: Decimal?, change: Decimal?) -> some View {
+    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, volume: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
         KFImage.url(imageUrl)
             .resizable()
-            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+            .placeholder { Circle().fill(Color.themeSteel20) }
+            .clipShape(Circle())
             .frame(width: .iconSize32, height: .iconSize32)
 
         VStack(spacing: 1) {
             HStack(spacing: .margin8) {
-                Text(ticker).textBody()
+                Text(code).textBody()
                 Spacer()
-                Text(totalAssets.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized).textBody()
+                Text(price).textBody()
             }
 
             HStack(spacing: .margin8) {
-                Text(name).textSubhead2()
-                Spacer()
-
-                if let change, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: change) {
-                    if change == 0 {
-                        Text(formatted).textSubhead2()
-                    } else if change > 0 {
-                        Text("+\(formatted)").textSubhead2(color: .themeRemus)
-                    } else {
-                        Text("-\(formatted)").textSubhead2(color: .themeLucian)
+                HStack(spacing: .margin4) {
+                    if let rank {
+                        BadgeViewNew(text: "\(rank)")
                     }
-                } else {
-                    Text("----").textSubhead2()
+
+                    if let volume, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: volume) {
+                        Text(formatted).textSubhead2()
+                    }
                 }
+                Spacer()
+                DiffText(diff)
             }
+        }
+    }
+
+    private func sortIcon() -> Image {
+        switch viewModel.sortOrder {
+        case .asc: return Image("arrow_medium_2_up_20")
+        case .desc: return Image("arrow_medium_2_down_20")
         }
     }
 }

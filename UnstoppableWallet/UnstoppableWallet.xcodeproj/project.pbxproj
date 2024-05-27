@@ -2992,6 +2992,14 @@
 		D3384D142BFDCBE700515664 /* MarketEtfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D122BFDCBE700515664 /* MarketEtfViewModel.swift */; };
 		D3384D162BFDEF6800515664 /* Etf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D152BFDEF6800515664 /* Etf.swift */; };
 		D3384D172BFDEF6800515664 /* Etf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D152BFDEF6800515664 /* Etf.swift */; };
+		D3384D1A2BFF0CAF00515664 /* MarketMarketCapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D192BFF0CAF00515664 /* MarketMarketCapView.swift */; };
+		D3384D1B2BFF0CAF00515664 /* MarketMarketCapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D192BFF0CAF00515664 /* MarketMarketCapView.swift */; };
+		D3384D1D2BFF0CB800515664 /* MarketMarketCapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D1C2BFF0CB800515664 /* MarketMarketCapViewModel.swift */; };
+		D3384D1E2BFF0CB800515664 /* MarketMarketCapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D1C2BFF0CB800515664 /* MarketMarketCapViewModel.swift */; };
+		D3384D212BFF0CCA00515664 /* MarketVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D202BFF0CCA00515664 /* MarketVolumeView.swift */; };
+		D3384D222BFF0CCA00515664 /* MarketVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D202BFF0CCA00515664 /* MarketVolumeView.swift */; };
+		D3384D242BFF0CD100515664 /* MarketVolumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D232BFF0CD100515664 /* MarketVolumeViewModel.swift */; };
+		D3384D252BFF0CD100515664 /* MarketVolumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D232BFF0CD100515664 /* MarketVolumeViewModel.swift */; };
 		D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93C29126D0F00B895BE /* HsCryptoKit */; };
 		D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93E29126D2A00B895BE /* HsCryptoKit */; };
 		D3402AEE2BF5D58B003BF6F8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */; };
@@ -4925,6 +4933,10 @@
 		D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfView.swift; sourceTree = "<group>"; };
 		D3384D122BFDCBE700515664 /* MarketEtfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfViewModel.swift; sourceTree = "<group>"; };
 		D3384D152BFDEF6800515664 /* Etf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Etf.swift; sourceTree = "<group>"; };
+		D3384D192BFF0CAF00515664 /* MarketMarketCapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketMarketCapView.swift; sourceTree = "<group>"; };
+		D3384D1C2BFF0CB800515664 /* MarketMarketCapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketMarketCapViewModel.swift; sourceTree = "<group>"; };
+		D3384D202BFF0CCA00515664 /* MarketVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVolumeView.swift; sourceTree = "<group>"; };
+		D3384D232BFF0CD100515664 /* MarketVolumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVolumeViewModel.swift; sourceTree = "<group>"; };
 		D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistModifier.swift; sourceTree = "<group>"; };
 		D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
@@ -7763,6 +7775,8 @@
 		58AAA9EB9618EBC895D0B123 /* Market */ = {
 			isa = PBXGroup;
 			children = (
+				D3384D1F2BFF0CBD00515664 /* Volume */,
+				D3384D182BFF0C9900515664 /* MarketCap */,
 				D3384D0E2BFDCBD100515664 /* Etf */,
 				D3833AFA2BF335B800ACECFB /* News */,
 				D3833AF02BF20B7200ACECFB /* Pairs */,
@@ -9359,6 +9373,24 @@
 			path = Etf;
 			sourceTree = "<group>";
 		};
+		D3384D182BFF0C9900515664 /* MarketCap */ = {
+			isa = PBXGroup;
+			children = (
+				D3384D192BFF0CAF00515664 /* MarketMarketCapView.swift */,
+				D3384D1C2BFF0CB800515664 /* MarketMarketCapViewModel.swift */,
+			);
+			path = MarketCap;
+			sourceTree = "<group>";
+		};
+		D3384D1F2BFF0CBD00515664 /* Volume */ = {
+			isa = PBXGroup;
+			children = (
+				D3384D202BFF0CCA00515664 /* MarketVolumeView.swift */,
+				D3384D232BFF0CD100515664 /* MarketVolumeViewModel.swift */,
+			);
+			path = Volume;
+			sourceTree = "<group>";
+		};
 		D36E50882BF7656E00C361BD /* Watchlist */ = {
 			isa = PBXGroup;
 			children = (
@@ -9958,6 +9990,7 @@
 				58AAA34F0F6195DF86596A41 /* ChartConfiguration.swift in Sources */,
 				58AAA75358DF98C1D7191B81 /* DoubleSpendInfoViewController.swift in Sources */,
 				58AAA747269D5AE1BBDDA2F7 /* LastBlockInfo.swift in Sources */,
+				D3384D252BFF0CD100515664 /* MarketVolumeViewModel.swift in Sources */,
 				58AAA4A4D0D7398E7184E7AB /* UITextView.swift in Sources */,
 				5039F973269C5A9B004711B8 /* ReleaseNotesViewController.swift in Sources */,
 				58AAA12167F3BC03D0FA55DF /* LockDelegate.swift in Sources */,
@@ -10911,6 +10944,7 @@
 				11B35BC602EA104EE1C0540C /* BinanceChainKit.swift in Sources */,
 				11B35DE5BD5716307300AD2F /* OneInchKit.swift in Sources */,
 				D3833AD82BEE1A7900ACECFB /* MarketWatchlistView.swift in Sources */,
+				D3384D1B2BFF0CAF00515664 /* MarketMarketCapView.swift in Sources */,
 				ABC9ADDC1F55F835C68DB4C7 /* UniswapV3Provider.swift in Sources */,
 				D0F132A22B6B98E100C7310E /* RbfService.swift in Sources */,
 				ABC9A3CC73251E7F83A94181 /* UniswapV3TradeService.swift in Sources */,
@@ -10958,6 +10992,7 @@
 				11B3562D78E70F5F14B81B3A /* CexWithdrawNetwork.swift in Sources */,
 				11B354DEFBE83147106A5FFE /* CexAssetRecord.swift in Sources */,
 				11B35C4A0250F05179488A91 /* CexWithdrawNetworkRaw.swift in Sources */,
+				D3384D1E2BFF0CB800515664 /* MarketMarketCapViewModel.swift in Sources */,
 				11B357573D364030813F231C /* CexAssetManager.swift in Sources */,
 				11B350BFC559991F9BA7A63F /* CexAssetRecordStorage.swift in Sources */,
 				11B357EE5114E13940C0D631 /* CexAssetResponse.swift in Sources */,
@@ -11158,6 +11193,7 @@
 				ABC9A8AC5E635D9CB1704568 /* BackupDisclaimerView.swift in Sources */,
 				ABC9A437473D0E77F9DBEB42 /* RestoreAppViewModel.swift in Sources */,
 				ABC9AE7DA8EFD812710C7BE4 /* RestorePassphraseViewModel.swift in Sources */,
+				D3384D222BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
 				ABC9A93E05AAF5D98C1DF4D6 /* RestorePassphraseService.swift in Sources */,
 				ABC9AA016413C37F4CC95080 /* RestorePassphraseViewController.swift in Sources */,
 				ABC9A453F337BA22A5698DCC /* RestorePassphraseModule.swift in Sources */,
@@ -11529,6 +11565,7 @@
 				58AAA2100166FDFB110FA6D0 /* ChartConfiguration.swift in Sources */,
 				58AAA415B26725FEF4A1128D /* DoubleSpendInfoViewController.swift in Sources */,
 				58AAA39A983D2E97066C3959 /* LastBlockInfo.swift in Sources */,
+				D3384D242BFF0CD100515664 /* MarketVolumeViewModel.swift in Sources */,
 				58AAA550B894B6F8FC8DA1B1 /* UITextView.swift in Sources */,
 				58AAA8E5EA8901CF69DDE43D /* LockDelegate.swift in Sources */,
 				58AAA6A77A2B953931A1D7FC /* DataStatus.swift in Sources */,
@@ -12482,6 +12519,7 @@
 				11B35146CA9BE897C858AB73 /* BinanceChainKit.swift in Sources */,
 				11B352309B81355B88BF6B66 /* OneInchKit.swift in Sources */,
 				D3833AD72BEE1A7900ACECFB /* MarketWatchlistView.swift in Sources */,
+				D3384D1A2BFF0CAF00515664 /* MarketMarketCapView.swift in Sources */,
 				ABC9A7E1F93B0A85976C826D /* UniswapV3Provider.swift in Sources */,
 				ABC9AC900545DC0DD2201DEE /* UniswapV3TradeService.swift in Sources */,
 				ABC9ACCD1ED14FA216AF1E65 /* UniswapV3Service.swift in Sources */,
@@ -12529,6 +12567,7 @@
 				11B3511098C99D7B7D5A492A /* CexWithdrawNetwork.swift in Sources */,
 				11B350C214D423CE2DCD6853 /* CexAssetRecord.swift in Sources */,
 				11B355B56270FCD8A17A49B5 /* CexWithdrawNetworkRaw.swift in Sources */,
+				D3384D1D2BFF0CB800515664 /* MarketMarketCapViewModel.swift in Sources */,
 				11B35841E0B353B727DCD9CF /* CexAssetManager.swift in Sources */,
 				6B2907212AF0CB8A006157D6 /* WalletConnectAppShowModule.swift in Sources */,
 				11B35C95EA77972246D5F3BD /* CexAssetRecordStorage.swift in Sources */,
@@ -12729,6 +12768,7 @@
 				ABC9A04FAB83D7A8D251DA90 /* BackupPasswordView.swift in Sources */,
 				D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */,
 				ABC9A0CE0155F89F12350DFC /* BackupListView.swift in Sources */,
+				D3384D212BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
 				ABC9A4465982823773CE1B50 /* BackupDisclaimerView.swift in Sources */,
 				ABC9AA18996E714C955E7E13 /* RestoreAppViewModel.swift in Sources */,
 				ABC9AF04946C86FA6DBD4225 /* RestorePassphraseViewModel.swift in Sources */,

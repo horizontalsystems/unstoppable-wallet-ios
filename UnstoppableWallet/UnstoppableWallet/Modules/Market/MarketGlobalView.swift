@@ -5,6 +5,8 @@ struct MarketGlobalView: View {
     @ObservedObject var viewModel: MarketGlobalViewModel
 
     @State private var presentedGlobalMarketMetricsType: MarketGlobalModule.MetricsType?
+    @State private var marketCapPresented = false
+    @State private var volumePresented = false
     @State private var etfPresented = false
 
     var body: some View {
@@ -33,6 +35,12 @@ struct MarketGlobalView: View {
         .sheet(item: $presentedGlobalMarketMetricsType) { metricsType in
             MarketGlobalMetricsView(metricsType: metricsType).ignoresSafeArea()
         }
+        .sheet(isPresented: $marketCapPresented) {
+            MarketMarketCapView(isPresented: $marketCapPresented)
+        }
+        .sheet(isPresented: $volumePresented) {
+            MarketVolumeView(isPresented: $volumePresented)
+        }
         .sheet(isPresented: $etfPresented) {
             MarketEtfView(isPresented: $etfPresented)
         }
@@ -60,6 +68,8 @@ struct MarketGlobalView: View {
         .padding(.vertical, .margin16)
         .onTapGesture {
             switch metricsType {
+            case .totalMarketCap: marketCapPresented = true
+            case .volume24h: volumePresented = true
             case .defiCap: etfPresented = true
             default: presentedGlobalMarketMetricsType = metricsType
             }

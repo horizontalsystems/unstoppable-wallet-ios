@@ -13,23 +13,31 @@ struct MarketSearchView: View {
         ThemeView {
             switch viewModel.state {
             case let .placeholder(recentFullCoins, popularFullCoins):
-                ThemeLazyList {
+                ThemeList {
                     if !recentFullCoins.isEmpty {
-                        ThemeLazyListSection(header: "market.search.recent".localized, items: recentFullCoins) { fullCoin in
-                            itemContent(fullCoin: fullCoin)
+                        Section {
+                            ListForEach(recentFullCoins) { fullCoin in
+                                itemContent(fullCoin: fullCoin)
+                            }
+                        } header: {
+                            ThemeListSectionHeader(text: "market.search.recent".localized)
                         }
                     }
 
-                    ThemeLazyListSection(header: "market.search.popular".localized, items: popularFullCoins) { fullCoin in
+                    Section {
+                        ListForEach(popularFullCoins) { fullCoin in
+                            itemContent(fullCoin: fullCoin)
+                        }
+                    } header: {
+                        ThemeListSectionHeader(text: "market.search.popular".localized)
+                    }
+                }
+            case let .searchResults(fullCoins):
+                ThemeList {
+                    ListForEach(fullCoins) { fullCoin in
                         itemContent(fullCoin: fullCoin)
                     }
                 }
-                .themeListStyle(.transparent)
-            case let .searchResults(fullCoins):
-                ThemeList(items: fullCoins) { fullCoin in
-                    itemContent(fullCoin: fullCoin)
-                }
-                .themeListStyle(.transparent)
             }
         }
         .sheet(item: $presentedFullCoin) { fullCoin in
