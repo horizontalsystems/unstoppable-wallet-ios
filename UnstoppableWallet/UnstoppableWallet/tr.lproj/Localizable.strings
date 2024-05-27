@@ -351,6 +351,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "Frozen title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
+"balance.token.account.inactive.title" = "Account Not Active";
+"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
 
 // Account switcher
 
@@ -2048,7 +2050,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tron.send.fee.info" = "Ağda belirli bir işlemi göndermenin tahmini maliyeti. (Enerji, Bant Genişliği ve Aktivasyon Ücreti hariç)";
 "tron.send.resources_consumed.info" = "Bandwidth, blockchain veritabanında saklanan işlem baytlarının boyutunu ölçen birimdir. İşlem ne kadar büyük olursa, o kadar fazla bant genişliği kaynağı tüketilir.\n\nEnergy, TRON sanal makinesinin TRON ağında belirli işlemleri gerçekleştirmek için ihtiyaç duyduğu hesaplama miktarını ölçen birimdir.\n\nAkıllı sözleşmeden beri işlemlerin yürütülmesi için bilgi işlem kaynakları gerekir, her akıllı sözleşme işleminin energy ücretini ödemesi gerekir.";
 "tron.send.activation_fee.info" = "TRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir.";
-"tron.send.inactive_address" = "Bu adres aktif değil";
 
 // Cex Coin Select
 
