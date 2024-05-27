@@ -917,6 +917,14 @@
 "market.etf.sort_by.outflow" = "Outflow";
 "market.etf.period.all" = "Все";
 
+"market.market_cap.title" = "Полная рын. кап.";
+"market.market_cap.description" = "Общая рыночная стоимость всех криптовалют";
+"market.market_cap.market_cap" = "Рын. капитализация";
+
+"market.volume.title" = "Volume";
+"market.volume.description" = "24-часовой объем крипторынка";
+"market.volume.volume" = "Volume";
+
 // Coin Page
 
 "coin_page.overview" = "Цена";
