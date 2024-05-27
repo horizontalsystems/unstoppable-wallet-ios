@@ -906,6 +906,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "market.etf.title" = "Total Net Inflow";
 "market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
+"market.etf.total_net_assets" = "Total Net Assets";
 "market.etf.sort_by.highest_assets" = "Highest Assets";
 "market.etf.sort_by.lowest_assets" = "Lowest Assets";
 "market.etf.sort_by.inflow" = "Inflow";
