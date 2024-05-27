@@ -915,6 +915,14 @@
 "market.etf.sort_by.outflow" = "Outflow";
 "market.etf.period.all" = "所有";
 
+"market.market_cap.title" = "总市场价值";
+"market.market_cap.description" = "所有加密货币的总市场价值";
+"market.market_cap.market_cap" = "市场价值";
+
+"market.volume.title" = "Volume";
+"market.volume.description" = "加密货币市场24小时交易量";
+"market.volume.volume" = "Volume";
+
 // Coin Page
 
 "coin_page.overview" = "价格";
