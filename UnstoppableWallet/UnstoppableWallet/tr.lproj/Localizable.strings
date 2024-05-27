@@ -915,6 +915,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.etf.sort_by.outflow" = "Outflow";
 "market.etf.period.all" = "Hepsi";
 
+"market.market_cap.title" = "Toplam Piyasa Değeri";
+"market.market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
+"market.market_cap.market_cap" = "Piyasa Değeri";
+
+"market.volume.title" = "Volume";
+"market.volume.description" = "Kripto piyasa 24 saatlik işlem hacmi";
+"market.volume.volume" = "Volume";
+
 // Coin Page
 
 "coin_page.overview" = "Fiyat";
