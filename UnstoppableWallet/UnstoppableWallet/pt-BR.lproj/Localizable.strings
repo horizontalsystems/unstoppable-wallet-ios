@@ -351,6 +351,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.frozen" = "Travado";
 "balance.token.frozen.info.title" = "Tempo de congelamento";
 "balance.token.frozen.info.description" = "Texto de Descrição Congelada";
+"balance.token.account.inactive.title" = "Account Not Active";
+"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
 
 // Account switcher
 
@@ -2040,7 +2042,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "tron.send.fee.info" = "O custo estimado de envio de determinada transação na rede. (Sem excluir Energy, Bandwidth e Taxa de Ativação)";
 "tron.send.resources_consumed.info" = "A bandwidth é a unidade que mede o tamanho dos bytes de transação armazenados no banco de dados blockchain. Quanto maior a transação, mais recursos de largura de banda serão consumidos.\n\nEnergy é a unidade que mede a quantidade de computação necessária pela máquina virtual TRON para realizar operações específicas na rede TRON.\n\nComo as transações de contrato inteligente exigem recursos de computação para executar, cada transação de contrato inteligente requer o pagamento da taxa de energy.";
 "tron.send.activation_fee.info" = "Transferir tokens TRX ou TRC-10 para um endereço de conta inativo ativará a conta.";
-"tron.send.inactive_address" = "Este endereço não está ativo";
 
 // Cex Coin Select
 
