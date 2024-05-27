@@ -133,7 +133,7 @@ struct MarketWatchlistView: View {
 
     @ViewBuilder private func list(marketInfos: [MarketInfo], signals: [String: TechnicalAdvice.Advice]) -> some View {
         ThemeList(
-            items: marketInfos,
+            marketInfos,
             onMove: viewModel.sortBy == .manual ? { source, destination in
                 viewModel.move(source: source, destination: destination)
             } : nil
@@ -174,7 +174,7 @@ struct MarketWatchlistView: View {
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        ThemeList(items: Array(0 ... 10)) { index in
+        ThemeList(Array(0 ... 10)) { index in
             ListRow {
                 itemContent(
                     imageUrl: nil,

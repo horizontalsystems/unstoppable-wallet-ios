@@ -47,7 +47,7 @@ struct CoinMarketsView: View {
             .padding(.vertical, .margin8)
 
             ScrollViewReader { proxy in
-                ThemeList(items: viewItems) { viewItem in
+                ThemeList(viewItems, bottomSpacing: .margin16) { viewItem in
                     if let tradeUrl = viewItem.tradeUrl {
                         ClickableRow(action: {
                             UrlManager.open(url: tradeUrl)
@@ -61,7 +61,6 @@ struct CoinMarketsView: View {
                         }
                     }
                 }
-                .themeListStyle(.transparent)
                 .onChange(of: viewModel.filterTypeInfo) { _ in
                     withAnimation {
                         proxy.scrollTo(viewItems.first!)

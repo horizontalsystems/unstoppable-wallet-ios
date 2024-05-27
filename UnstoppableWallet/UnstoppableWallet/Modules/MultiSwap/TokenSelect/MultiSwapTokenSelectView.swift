@@ -23,7 +23,7 @@ struct MultiSwapTokenSelectView: View {
                 VStack(spacing: 0) {
                     SearchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
 
-                    ThemeList(items: viewModel.items) { item in
+                    ThemeList(viewModel.items, bottomSpacing: .margin16) { item in
                         ClickableRow(action: {
                             currentToken = item.token
                             isPresented = false
@@ -67,7 +67,6 @@ struct MultiSwapTokenSelectView: View {
                             }
                         }
                     }
-                    .themeListStyle(.transparent)
                 }
                 .navigationTitle(title)
                 .navigationBarTitleDisplayMode(.inline)

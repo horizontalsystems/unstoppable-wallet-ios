@@ -107,7 +107,7 @@ struct MarketCoinsView: View {
     }
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
-        ThemeList(items: marketInfos) { marketInfo in
+        ThemeList(marketInfos) { marketInfo in
             let coin = marketInfo.fullCoin.coin
 
             ClickableRow(action: {
@@ -124,14 +124,13 @@ struct MarketCoinsView: View {
             }
             .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
         }
-        .themeListStyle(.transparent)
         .refreshable {
             await viewModel.refresh()
         }
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        ThemeList(items: Array(0 ... 10)) { index in
+        ThemeList(Array(0 ... 10)) { index in
             ListRow {
                 itemContent(
                     imageUrl: nil,
@@ -144,7 +143,6 @@ struct MarketCoinsView: View {
                 .redacted()
             }
         }
-        .themeListStyle(.transparent)
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 

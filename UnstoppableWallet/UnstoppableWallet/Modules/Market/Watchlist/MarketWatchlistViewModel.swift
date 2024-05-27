@@ -61,7 +61,7 @@ class MarketWatchlistViewModel: ObservableObject {
     private func syncCoinUids() {
         let coinUids = watchlistManager.coinUids
 
-        guard coinUids != self.coinUids else {
+        if case .loaded = internalState, coinUids == self.coinUids {
             return
         }
 

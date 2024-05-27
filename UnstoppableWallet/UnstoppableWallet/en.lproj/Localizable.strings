@@ -913,6 +913,14 @@
 "market.etf.sort_by.outflow" = "Outflow";
 "market.etf.period.all" = "All";
 
+"market.market_cap.title" = "Total Market Cap";
+"market.market_cap.description" = "Total market value of all cryptocurrencies";
+"market.market_cap.market_cap" = "Market Cap";
+
+"market.volume.title" = "Volume";
+"market.volume.description" = "The 24h trading volume of crypto market";
+"market.volume.volume" = "Volume";
+
 // Coin Page
 
 "coin_page.overview" = "Price";

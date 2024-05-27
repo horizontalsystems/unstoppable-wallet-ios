@@ -45,7 +45,7 @@ struct MarketPairsView: View {
     }
 
     @ViewBuilder private func list(pairs: [MarketPair]) -> some View {
-        ThemeList(items: pairs) { pair in
+        ThemeList(pairs) { pair in
             ClickableRow(action: {
                 if let tradeUrl = pair.tradeUrl {
                     UrlManager.open(url: tradeUrl)
@@ -70,7 +70,7 @@ struct MarketPairsView: View {
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        ThemeList(items: Array(0 ... 10)) { _ in
+        ThemeList(Array(0 ... 10)) { _ in
             ListRow {
                 itemContent(
                     frontImageUrl: nil,

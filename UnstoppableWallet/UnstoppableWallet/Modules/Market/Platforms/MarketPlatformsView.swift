@@ -85,7 +85,7 @@ struct MarketPlatformsView: View {
     }
 
     @ViewBuilder private func list(platforms: [TopPlatform]) -> some View {
-        ThemeList(items: platforms) { platform in
+        ThemeList(platforms) { platform in
             ClickableRow(action: {
                 presentedPlatform = platform
             }) {
@@ -109,7 +109,7 @@ struct MarketPlatformsView: View {
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        ThemeList(items: Array(0 ... 10)) { index in
+        ThemeList(Array(0 ... 10)) { index in
             ListRow {
                 itemContent(
                     imageUrl: nil,
