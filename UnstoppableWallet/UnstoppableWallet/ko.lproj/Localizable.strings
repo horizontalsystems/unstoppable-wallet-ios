@@ -913,6 +913,14 @@
 "market.etf.sort_by.outflow" = "Outflow";
 "market.etf.period.all" = "전체";
 
+"market.market_cap.title" = "총 시장 자본금";
+"market.market_cap.description" = "모든 암호화폐의 총 시장 가치\" or \"모든 가상 화폐의 총 시장 가치";
+"market.market_cap.market_cap" = "총 시가 총액";
+
+"market.volume.title" = "Volume";
+"market.volume.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
+"market.volume.volume" = "Volume";
+
 // Coin Page
 
 "coin_page.overview" = "금액";
