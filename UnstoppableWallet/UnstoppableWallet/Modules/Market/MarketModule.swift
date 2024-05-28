@@ -293,12 +293,12 @@ extension MarketModule {
 
         var title: String {
             switch self {
-            case .day: return "market.advanced_search.day".localized
-            case .week: return "market.advanced_search.week".localized
-            case .week2: return "market.advanced_search.week2".localized
-            case .month: return "market.advanced_search.month".localized
-            case .month6: return "market.advanced_search.month6".localized
-            case .year: return "market.advanced_search.year".localized
+            case .day: return "market.time_period.24h".localized
+            case .week: return "market.time_period.1w".localized
+            case .week2: return "market.time_period.2w".localized
+            case .month: return "market.time_period.1m".localized
+            case .month6: return "market.time_period.6m".localized
+            case .year: return "market.time_period.1y".localized
             }
         }
 
@@ -533,21 +533,33 @@ extension MarketModule { // ViewModel Items
 
 extension HsTimePeriod {
     var title: String {
-        "market.time_period.\(rawValue)".localized
+        switch self {
+        case .day1: return "market.time_period.24h".localized
+        default: return "market.time_period.\(rawValue)".localized
+        }
     }
 
     var shortTitle: String {
-        "market.time_period.\(rawValue).short".localized
+        switch self {
+        case .day1: return "market.time_period.24h.short".localized
+        default: return "market.time_period.\(rawValue).short".localized
+        }
     }
 }
 
 extension WatchlistTimePeriod {
     var title: String {
-        "market.time_period.\(rawValue)".localized
+        switch self {
+        case .day1: return "market.time_period.24h".localized
+        default: return "market.time_period.\(rawValue)".localized
+        }
     }
 
     var shortTitle: String {
-        "market.time_period.\(rawValue).short".localized
+        switch self {
+        case .day1: return "market.time_period.24h.short".localized
+        default: return "market.time_period.\(rawValue).short".localized
+        }
     }
 }
 
