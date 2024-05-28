@@ -86,14 +86,7 @@ struct MultiSwapApproveView: View {
 
     @ViewBuilder func row(text: String, selected: Bool) -> some View {
         HStack(spacing: .margin16) {
-            Image("check_2_20")
-                .themeIcon(color: .themeJacob)
-                .opacity(selected ? 1 : 0)
-                .frame(width: .iconSize20, height: .iconSize20, alignment: .center)
-                .overlay(
-                    RoundedRectangle(cornerRadius: .cornerRadius4, style: .continuous)
-                        .stroke(Color.themeGray, lineWidth: .heightOneDp + .heightOnePixel)
-                )
+            CheckBoxUiView(checked: .init(get: { selected }, set: { _ in }))
 
             Text(text).themeSubhead2(color: .themeLeah)
         }

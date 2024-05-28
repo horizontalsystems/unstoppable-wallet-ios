@@ -71,13 +71,7 @@ struct OutputSelectorView2: View {
             viewModel.toggle(viewItem: viewItem)
         }) {
             HStack(spacing: .margin16) {
-                Image("check_2_20")
-                    .themeIcon(color: .themeJacob)
-                    .opacity(viewModel.selectedSet.contains(viewItem.id) ? 1 : 0)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: .cornerRadius4, style: .continuous)
-                            .stroke(Color.themeGray, lineWidth: .heightOneDp + .heightOnePixel)
-                    )
+                CheckBoxUiView(checked: .init(get: { viewModel.selectedSet.contains(viewItem.id) }, set: { _ in }))
 
                 VStack(spacing: 1) {
                     Text(viewItem.date).themeBody()

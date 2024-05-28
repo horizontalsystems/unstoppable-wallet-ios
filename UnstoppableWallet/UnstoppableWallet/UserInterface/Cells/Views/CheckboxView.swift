@@ -26,18 +26,17 @@ class CheckboxView: UIView {
             maker.size.equalTo(CheckboxView.checkBoxSize)
         }
 
-        checkBoxView.layer.cornerRadius = .cornerRadius4
-        checkBoxView.layer.cornerCurve = .continuous
-        checkBoxView.layer.borderColor = UIColor.themeGray.cgColor
-        checkBoxView.layer.borderWidth = .heightOneDp + .heightOnePixel
+        checkBoxView.layer.cornerRadius = .cornerRadius12
+        checkBoxView.layer.backgroundColor = UIColor.themeSteel20.cgColor
 
         checkBoxView.addSubview(checkBoxImageView)
         checkBoxImageView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
 
-        checkBoxImageView.image = UIImage(named: "check_2_20")?.withRenderingMode(.alwaysTemplate)
-        checkBoxImageView.tintColor = .themeJacob
+        checkBoxImageView.image = UIImage(named: "check_2_24")?.withRenderingMode(.alwaysTemplate)
+        checkBoxImageView.isHidden = true
+        checkBoxImageView.tintColor = .themeDark
 
         addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
@@ -68,7 +67,10 @@ class CheckboxView: UIView {
 
     var checked: Bool {
         get { !checkBoxImageView.isHidden }
-        set { checkBoxImageView.isHidden = !newValue }
+        set {
+            checkBoxImageView.isHidden = !newValue
+            checkBoxView.layer.backgroundColor = newValue ? UIColor.themeYellowD.cgColor : UIColor.themeSteel20.cgColor
+        }
     }
 }
 

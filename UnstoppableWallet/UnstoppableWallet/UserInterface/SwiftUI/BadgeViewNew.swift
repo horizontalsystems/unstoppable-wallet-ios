@@ -28,9 +28,9 @@ struct BadgeViewNew: View {
                 }
             }
         }
-        .padding(.horizontal, .margin4)
+        .padding(.horizontal, .margin6)
         .padding(.vertical, .margin2)
-        .background(RoundedRectangle(cornerRadius: .cornerRadius4, style: .continuous).fill(Color.themeJeremy))
-        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius4, style: .continuous))
+        .background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeJeremy))
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
     }
 }
