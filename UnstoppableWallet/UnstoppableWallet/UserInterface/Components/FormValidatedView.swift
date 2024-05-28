@@ -19,7 +19,7 @@ class FormValidatedView: UIView {
         }
 
         wrapperView.backgroundColor = .themeLawrence
-        wrapperView.layer.cornerRadius = .cornerRadius8
+        wrapperView.layer.cornerRadius = InputView.cornerRadius
         wrapperView.layer.cornerCurve = .continuous
         wrapperView.layer.borderWidth = CGFloat.heightOneDp
         wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
@@ -37,6 +37,10 @@ class FormValidatedView: UIView {
 }
 
 extension FormValidatedView {
+    func set(cornerRadius: CGFloat) {
+        wrapperView.layer.cornerRadius = cornerRadius
+    }
+
     func set(cautionType: CautionType?) {
         let borderColor: UIColor
 

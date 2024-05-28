@@ -58,7 +58,7 @@ extension SwitchAccountViewController: SectionsDataSource {
         CellBuilderNew.row(
             rootElement: .hStack([
                 .image24 { component in
-                    component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
+                    component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24") : UIImage(named: "circle_radiooff_24")
                 },
                 .vStackCentered([
                     .text { component in

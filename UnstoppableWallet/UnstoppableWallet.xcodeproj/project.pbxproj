@@ -2134,6 +2134,8 @@
 		6BB14F6C2BF49E7100E879B2 /* WalletButtonHiddenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */; };
 		6BB14F722BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */; };
 		6BB14F732BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */; };
+		6BB14F752C01D04200E879B2 /* CheckBoxUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */; };
+		6BB14F762C01D04200E879B2 /* CheckBoxUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */; };
 		6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A22BDA419200ABBD55 /* Web3Wallet */; };
 		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
@@ -4504,6 +4506,7 @@
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
 		6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletButtonHiddenManager.swift; sourceTree = "<group>"; };
 		6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfFetcher.swift; sourceTree = "<group>"; };
+		6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxUiView.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -5718,6 +5721,7 @@
 				D3DB51AE2BD7AF860091BBDB /* DiffText.swift */,
 				D3B73E2F2BDFC5580067429D /* PriceRow.swift */,
 				D3833B042BF4AFB800ACECFB /* MarqueeView.swift */,
+				6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -10468,6 +10472,7 @@
 				11B3518BEA8865CADA5DA684 /* LaunchScreenManager.swift in Sources */,
 				D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */,
 				11B35A82532EC55909EFBAD8 /* LaunchScreen.swift in Sources */,
+				6BB14F762C01D04200E879B2 /* CheckBoxUiView.swift in Sources */,
 				11B35B925CE6EB25DF542611 /* CoinInvestorsService.swift in Sources */,
 				11B3545B8A5568792A4C43D8 /* CoinTreasuriesModule.swift in Sources */,
 				11B357ADA154348A3C1A987B /* CoinTreasuriesViewController.swift in Sources */,
@@ -12043,6 +12048,7 @@
 				11B3529CFD24A94DC35B476E /* CoinAnalyticsViewModel.swift in Sources */,
 				2FA5DE2F0DF6317DB807B7F3 /* TweetAttachmentView.swift in Sources */,
 				2FA5D6224C65D97B910F3A20 /* TweetPollView.swift in Sources */,
+				6BB14F752C01D04200E879B2 /* CheckBoxUiView.swift in Sources */,
 				2FA5D3C9CDBD7CF26508E1E9 /* ReferencedTweetView.swift in Sources */,
 				11B3551E5E9A6D167F7BA078 /* LaunchScreenManager.swift in Sources */,
 				11B35FA6F9EE876BD65E9AD6 /* LaunchScreen.swift in Sources */,
@@ -14055,7 +14061,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ComponentKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.12;
+				version = 2.0.13;
 			};
 		};
 		D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD" */ = {

@@ -82,7 +82,7 @@ struct CautionBorder: ViewModifier {
     let cornerRadius: CGFloat
     @Binding var cautionState: CautionState
 
-    init(cornerRadius: CGFloat = .cornerRadius8, cautionState: Binding<CautionState>) {
+    init(cornerRadius: CGFloat = InputView.cornerRadius, cautionState: Binding<CautionState>) {
         self.cornerRadius = cornerRadius
         _cautionState = cautionState
     }
@@ -100,7 +100,7 @@ struct FieldCautionBorder: ViewModifier {
     let cornerRadius: CGFloat
     @Binding var cautionState: FieldCautionState
 
-    init(cornerRadius: CGFloat = .cornerRadius8, cautionState: Binding<FieldCautionState>) {
+    init(cornerRadius: CGFloat = InputView.cornerRadius, cautionState: Binding<FieldCautionState>) {
         self.cornerRadius = cornerRadius
         _cautionState = cautionState
     }

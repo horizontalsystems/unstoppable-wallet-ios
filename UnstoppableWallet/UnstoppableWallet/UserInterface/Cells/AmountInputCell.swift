@@ -3,12 +3,15 @@ import ThemeKit
 import UIKit
 
 class AmountInputCell: UITableViewCell {
+    static let cornerRadius: CGFloat = .cornerRadius8
+
     private let formValidatedView: FormValidatedView
     private let formAmountInputView: FormAmountInputView
 
     init(viewModel: AmountInputViewModel) {
         formAmountInputView = FormAmountInputView(viewModel: viewModel)
         formValidatedView = FormValidatedView(contentView: formAmountInputView)
+        formValidatedView.set(cornerRadius: AmountInputCell.cornerRadius)
 
         super.init(style: .default, reuseIdentifier: nil)
 

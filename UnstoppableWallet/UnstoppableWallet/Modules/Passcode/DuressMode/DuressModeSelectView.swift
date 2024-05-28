@@ -72,15 +72,7 @@ struct DuressModeSelectView: View {
                     Text(account.type.detailedDescription).themeSubhead2()
                 }
 
-                ZStack {
-                    RoundedRectangle(cornerRadius: .cornerRadius4, style: .continuous)
-                        .stroke(Color.themeGray, lineWidth: 1.5)
-                        .frame(width: .margin24, height: .margin24)
-
-                    if selectedAccountIds.contains(account.id) {
-                        Image("check_2_20").themeIcon(color: .themeJacob)
-                    }
-                }
+                CheckBoxUiView(checked: .init(get: { selectedAccountIds.contains(account.id) }, set: { _ in }))
             }
         }
     }
