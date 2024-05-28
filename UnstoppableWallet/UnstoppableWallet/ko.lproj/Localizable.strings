@@ -698,10 +698,11 @@
 "market.defi_cap" = "디파이(DeFi) 시가총액";
 "market.defi_tvl" = "디파이(DeFi)에서의 총 예치 가치";
 
-"market.global.market_cap" = "총 시가 총액";
-"market.global.volume" = "Volume";
-"market.global.defi_cap" = "디파이(DeFi) 시가총액";
-"market.global.defi_in_tvl" = "디파이(DeFi)에서의 총 예치 가치";
+"market.global.market_cap" = "Total Cap";
+"market.global.volume" = "24h Vol.";
+"market.global.btc_dominance" = "BTC Dominance";
+"market.global.etf_inflow" = "ETF Inflow";
+"market.global.tvl_in_defi" = "디파이(DeFi)에서의 총 예치 가치";
 
 "market.tab.news" = "뉴스";
 "market.tab.coins" = "Coins";
@@ -723,6 +724,7 @@
 "market.top_coins" = "Top %@";
 
 "market.time_period.title" = "기간";
+"market.time_period.24h" = "24 Hours";
 "market.time_period.1d" = "1 일";
 "market.time_period.1w" = "1 일주";
 "market.time_period.2w" = "이주";
@@ -732,7 +734,8 @@
 "market.time_period.1y" = "일년";
 "market.time_period.2y" = "2 Years";
 "market.time_period.5y" = "5 Years";
-"market.time_period.1d.short" = "24시";
+"market.time_period.24h.short" = "24시";
+"market.time_period.1d.short" = "1D";
 "market.time_period.1w.short" = "1W";
 "market.time_period.2w.short" = "2주";
 "market.time_period.1m.short" = "1개월";
@@ -800,15 +803,14 @@
 "market_watchlist.empty.caption" = "관심 목록이 비어 있습니다.";
 "market.watchlist.signals" = "Signals";
 "market.watchlist.empty" = "Your watchlist is empty";
-"market.watchlist.signals.description" = "Signals are based on the Bollinger Bands + RSI strategy to determine trading signals. All calculations are candlesticks and provide based on daily advice for a moderately long term.";
-"market.watchlist.signals.strong_buy.description" = "High confidence in asset price growth.";
-"market.watchlist.signals.buy.description" = "Indicates likely price increase in near future.";
-"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium.";
-"market.watchlist.signals.sell.description" = "Likely price decrease, considers current market conditions.";
-"market.watchlist.signals.strong_sell.description" = "High probability of price decrease.";
-"market.watchlist.signals.risky.description" = "Elevated risk level, requires cautious approach.";
+"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
+"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
+"market.watchlist.signals.buy.description" = "Likely price increase in near future";
+"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
+"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
+"market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
+"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
 "market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
-"market.watchlist.signals.dont_show_again" = "Don't show it again";
 "market.watchlist.signals.turn_on" = "Turn On";
 
 "market.advanced_search.title" = "필터";
