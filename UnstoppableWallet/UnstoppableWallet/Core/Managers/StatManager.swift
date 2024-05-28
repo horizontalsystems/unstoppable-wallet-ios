@@ -27,7 +27,7 @@ class StatManager {
         appId = AppConfig.appId
     }
 
-    func logStat(eventPage: StatPage, eventSection: StatSection? = nil, event: StatEvent) {
+    func logStat(eventPage _: StatPage, eventSection _: StatSection? = nil, event _: StatEvent) {
 //        var parameters: [String: Any]?
 //
 //        if let params = event.params {
@@ -87,9 +87,9 @@ class StatManager {
 //                return object
 //            }
 //
-////            let data = try JSONSerialization.data(withJSONObject: stats)
-////            let string = String(data: data, encoding: .utf8)
-////            print(string ?? "N/A")
+        ////            let data = try JSONSerialization.data(withJSONObject: stats)
+        ////            let string = String(data: data, encoding: .utf8)
+        ////            print(string ?? "N/A")
 //
 //            try await marketKit.send(stats: stats, appVersion: appVersion, appId: appId)
 //

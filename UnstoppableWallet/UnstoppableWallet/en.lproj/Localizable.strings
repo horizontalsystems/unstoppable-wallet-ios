@@ -698,10 +698,11 @@
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.global.market_cap" = "Market Cap";
-"market.global.volume" = "Volume";
-"market.global.defi_cap" = "DeFi Cap";
-"market.global.defi_in_tvl" = "TVL in DeFi";
+"market.global.market_cap" = "Total Cap";
+"market.global.volume" = "24h Vol.";
+"market.global.btc_dominance" = "BTC Dominance";
+"market.global.etf_inflow" = "ETF Inflow";
+"market.global.tvl_in_defi" = "TVL in DeFi";
 
 "market.tab.news" = "News";
 "market.tab.coins" = "Coins";

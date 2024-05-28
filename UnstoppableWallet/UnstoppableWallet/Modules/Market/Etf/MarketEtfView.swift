@@ -200,18 +200,7 @@ struct MarketEtfView: View {
             HStack(spacing: .margin8) {
                 Text(name).textSubhead2()
                 Spacer()
-
-                if let change, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: change) {
-                    if change == 0 {
-                        Text(formatted).textSubhead2()
-                    } else if change > 0 {
-                        Text("+\(formatted)").textSubhead2(color: .themeRemus)
-                    } else {
-                        Text("-\(formatted)").textSubhead2(color: .themeLucian)
-                    }
-                } else {
-                    Text("----").textSubhead2()
-                }
+                DiffText(change, currency: viewModel.currency)
             }
         }
     }

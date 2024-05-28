@@ -1,24 +1,25 @@
+import MarketKit
 import SwiftUI
 import ThemeKit
 
 struct MarketGlobalView: View {
     @ObservedObject var viewModel: MarketGlobalViewModel
 
-    @State private var presentedGlobalMarketMetricsType: MarketGlobalModule.MetricsType?
     @State private var marketCapPresented = false
     @State private var volumePresented = false
     @State private var etfPresented = false
+    @State private var tvlPresented = false
 
     var body: some View {
         VStack(spacing: 0) {
-            if let globalMarketData = viewModel.globalMarketData {
+            if let marketGlobal = viewModel.marketGlobal {
                 MarqueeView(targetVelocity: 30) {
-                    content(globalMarketData: globalMarketData)
+                    content(marketGlobal: marketGlobal, redacted: marketGlobal)
                 }
             } else {
                 ZStack {
                     HStack(spacing: .margin8) {
-                        content(globalMarketData: nil)
+                        content(marketGlobal: nil, redacted: nil)
                     }
                     .padding(.leading, .margin8)
                     .fixedSize()
@@ -31,9 +32,9 @@ struct MarketGlobalView: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: 1)
         }
-        .animation(.default, value: viewModel.globalMarketData == nil)
-        .sheet(item: $presentedGlobalMarketMetricsType) { metricsType in
-            MarketGlobalMetricsView(metricsType: metricsType).ignoresSafeArea()
+        .animation(.default, value: viewModel.marketGlobal == nil)
+        .sheet(isPresented: $tvlPresented) {
+            MarketGlobalMetricsView(metricsType: .tvlInDefi).ignoresSafeArea()
         }
         .sheet(isPresented: $marketCapPresented) {
             MarketMarketCapView(isPresented: $marketCapPresented)
@@ -46,33 +47,66 @@ struct MarketGlobalView: View {
         }
     }
 
-    @ViewBuilder private func content(globalMarketData: MarketGlobalViewModel.GlobalMarketData?) -> some View {
-        itemView(title: "market.global.market_cap".localized, item: globalMarketData?.marketCap, metricsType: .totalMarketCap)
-        itemView(title: "market.global.volume".localized, item: globalMarketData?.volume, metricsType: .volume24h)
-        itemView(title: "market.global.defi_cap".localized, item: globalMarketData?.defiCap, metricsType: .defiCap)
-        itemView(title: "market.global.defi_in_tvl".localized, item: globalMarketData?.tvlInDefi, metricsType: .tvlInDefi)
+    @ViewBuilder private func content(marketGlobal: MarketGlobal?, redacted: Any?) -> some View {
+        diffView(
+            title: "market.global.market_cap".localized,
+            amount: marketGlobal?.marketCap,
+            diff: marketGlobal?.marketCapChange.map { .percent(value: $0) },
+            redacted: redacted
+        ) {
+            marketCapPresented = true
+        }
+
+        diffView(
+            title: "market.global.volume".localized,
+            amount: marketGlobal?.volume,
+            diff: marketGlobal?.volumeChange.map { .percent(value: $0) },
+            redacted: redacted
+        ) {
+            volumePresented = true
+        }
+
+        diffView(
+            title: "market.global.btc_dominance".localized,
+            amount: marketGlobal?.btcDominance,
+            diff: marketGlobal?.btcDominanceChange.map { .percent(value: $0) },
+            redacted: redacted
+        ) {
+            marketCapPresented = true
+        }
+
+        diffView(
+            title: "market.global.etf_inflow".localized,
+            amount: marketGlobal?.etfTotalInflow,
+            diff: marketGlobal?.etfDailyInflow.map { .change(value: $0, currency: viewModel.currency) },
+            redacted: redacted
+        ) {
+            etfPresented = true
+        }
+
+        diffView(
+            title: "market.global.tvl_in_defi".localized,
+            amount: marketGlobal?.tvl,
+            diff: marketGlobal?.tvlChange.map { .percent(value: $0) },
+            redacted: redacted
+        ) {
+            tvlPresented = true
+        }
     }
 
-    @ViewBuilder private func itemView(title: String, item: MarketGlobalViewModel.GlobalMarketItem?, metricsType: MarketGlobalModule.MetricsType) -> some View {
+    @ViewBuilder private func diffView(title: String, amount: Decimal?, diff: DiffText.Diff?, redacted: Any?, onTap: @escaping () -> Void) -> some View {
         HStack(spacing: .margin4) {
             Text(title).textCaption()
 
-            Text(item?.amount ?? "$2.34T")
+            Text(amount.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "----")
                 .textCaption(color: .themeBran)
-                .redacted(value: item?.amount)
+                .redacted(value: redacted)
 
-            DiffText(item?.diff, font: .themeCaption)
-                .redacted(value: item?.diff)
+            DiffText(diff, font: .themeCaption)
+                .redacted(value: redacted)
         }
         .padding(.horizontal, .margin8)
         .padding(.vertical, .margin16)
-        .onTapGesture {
-            switch metricsType {
-            case .totalMarketCap: marketCapPresented = true
-            case .volume24h: volumePresented = true
-            case .defiCap: etfPresented = true
-            default: presentedGlobalMarketMetricsType = metricsType
-            }
-        }
+        .onTapGesture(perform: onTap)
     }
 }
