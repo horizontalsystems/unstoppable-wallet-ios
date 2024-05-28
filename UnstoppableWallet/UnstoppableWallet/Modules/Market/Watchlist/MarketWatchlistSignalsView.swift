@@ -6,7 +6,6 @@ struct MarketWatchlistSignalsView: View {
     @Binding var isPresented: Bool
 
     @State private var maxBadgeWidth: CGFloat = .zero
-    @State private var doNotShowAgain = false
 
     var body: some View {
         ThemeNavigationView {
@@ -32,38 +31,12 @@ struct MarketWatchlistSignalsView: View {
                             }
 
                             HighlightedTextView(text: "market.watchlist.signals.warning".localized, style: .warning)
-
-                            ListSection {
-                                ClickableRow(action: {
-                                    doNotShowAgain.toggle()
-                                }) {
-                                    if doNotShowAgain {
-                                        ZStack {
-                                            Circle().fill(Color.themeJacob)
-                                            Image("check_2_24").themeIcon(color: .themeDark)
-                                        }
-                                        .frame(width: .iconSize24, height: .iconSize24)
-                                    } else {
-                                        Circle()
-                                            .fill(Color.themeSteel20)
-                                            .frame(width: .iconSize24, height: .iconSize24)
-                                    }
-
-                                    Text("market.watchlist.signals.dont_show_again".localized).themeSubhead2(color: .themeLeah)
-                                }
-                            }
-                            .themeListStyle(.lawrence)
                         }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }
                 } bottomContent: {
                     Button(action: {
                         viewModel.showSignals = true
-
-                        if doNotShowAgain {
-                            viewModel.signalsApproved = true
-                        }
-
                         isPresented = false
                     }) {
                         Text("market.watchlist.signals.turn_on".localized)

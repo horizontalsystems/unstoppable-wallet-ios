@@ -121,8 +121,6 @@ struct MarketWatchlistView: View {
         Button(action: {
             if viewModel.showSignals {
                 viewModel.showSignals = false
-            } else if viewModel.signalsApproved {
-                viewModel.showSignals = true
             } else {
                 signalsPresented = true
             }
