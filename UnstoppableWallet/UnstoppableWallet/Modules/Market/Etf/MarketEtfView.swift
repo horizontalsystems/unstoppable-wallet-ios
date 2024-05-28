@@ -21,20 +21,12 @@ struct MarketEtfView: View {
             ThemeView {
                 switch viewModel.state {
                 case .loading:
-                    ThemeList(bottomSpacing: .margin16) {
+                    VStack(spacing: 0) {
                         header()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-
-                        chart()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-
-                        loadingList()
+                        Spacer()
+                        ProgressView()
+                        Spacer()
                     }
-                    .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
                 case let .loaded(etfs):
                     ThemeList(bottomSpacing: .margin16) {
                         header()
@@ -52,7 +44,6 @@ struct MarketEtfView: View {
                 case .failed:
                     VStack(spacing: 0) {
                         header()
-                        chart()
 
                         SyncErrorView {
                             viewModel.sync()

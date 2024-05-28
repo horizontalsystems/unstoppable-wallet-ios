@@ -50,7 +50,7 @@ struct MarketGlobalView: View {
     @ViewBuilder private func content(marketGlobal: MarketGlobal?, redacted: Any?) -> some View {
         diffView(
             title: "market.global.market_cap".localized,
-            amount: marketGlobal?.marketCap,
+            amount: marketGlobal?.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
             diff: marketGlobal?.marketCapChange.map { .percent(value: $0) },
             redacted: redacted
         ) {
@@ -59,7 +59,7 @@ struct MarketGlobalView: View {
 
         diffView(
             title: "market.global.volume".localized,
-            amount: marketGlobal?.volume,
+            amount: marketGlobal?.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
             diff: marketGlobal?.volumeChange.map { .percent(value: $0) },
             redacted: redacted
         ) {
@@ -68,7 +68,7 @@ struct MarketGlobalView: View {
 
         diffView(
             title: "market.global.btc_dominance".localized,
-            amount: marketGlobal?.btcDominance,
+            amount: marketGlobal?.btcDominance.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) },
             diff: marketGlobal?.btcDominanceChange.map { .percent(value: $0) },
             redacted: redacted
         ) {
@@ -77,7 +77,7 @@ struct MarketGlobalView: View {
 
         diffView(
             title: "market.global.etf_inflow".localized,
-            amount: marketGlobal?.etfTotalInflow,
+            amount: marketGlobal?.etfTotalInflow.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
             diff: marketGlobal?.etfDailyInflow.map { .change(value: $0, currency: viewModel.currency) },
             redacted: redacted
         ) {
@@ -86,7 +86,7 @@ struct MarketGlobalView: View {
 
         diffView(
             title: "market.global.tvl_in_defi".localized,
-            amount: marketGlobal?.tvl,
+            amount: marketGlobal?.tvl.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
             diff: marketGlobal?.tvlChange.map { .percent(value: $0) },
             redacted: redacted
         ) {
@@ -94,11 +94,11 @@ struct MarketGlobalView: View {
         }
     }
 
-    @ViewBuilder private func diffView(title: String, amount: Decimal?, diff: DiffText.Diff?, redacted: Any?, onTap: @escaping () -> Void) -> some View {
+    @ViewBuilder private func diffView(title: String, amount: String?, diff: DiffText.Diff?, redacted: Any?, onTap: @escaping () -> Void) -> some View {
         HStack(spacing: .margin4) {
             Text(title).textCaption()
 
-            Text(amount.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "----")
+            Text(amount ?? "----")
                 .textCaption(color: .themeBran)
                 .redacted(value: redacted)
 
