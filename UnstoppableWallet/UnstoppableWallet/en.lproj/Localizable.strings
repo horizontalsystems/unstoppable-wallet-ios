@@ -724,6 +724,7 @@
 "market.top_coins" = "Top %@";
 
 "market.time_period.title" = "Period";
+"market.time_period.24h" = "24 Hours";
 "market.time_period.1d" = "1 Day";
 "market.time_period.1w" = "1 Week";
 "market.time_period.2w" = "2 Weeks";
@@ -733,7 +734,8 @@
 "market.time_period.1y" = "1 Year";
 "market.time_period.2y" = "2 Years";
 "market.time_period.5y" = "5 Years";
-"market.time_period.1d.short" = "24H";
+"market.time_period.24h.short" = "24H";
+"market.time_period.1d.short" = "1D";
 "market.time_period.1w.short" = "1W";
 "market.time_period.2w.short" = "2W";
 "market.time_period.1m.short" = "1M";

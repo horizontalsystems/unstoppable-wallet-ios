@@ -109,14 +109,14 @@ extension MarketEtfViewModel {
 
         var title: String {
             switch self {
-            case let .period(timePeriod): return timePeriod.title
+            case let .period(timePeriod): return "market.time_period.\(timePeriod.rawValue)".localized
             case .all: return "market.etf.period.all".localized
             }
         }
 
         var shortTitle: String {
             switch self {
-            case let .period(timePeriod): return timePeriod.shortTitle
+            case let .period(timePeriod): return "market.time_period.\(timePeriod.rawValue).short".localized
             case .all: return "market.etf.period.all".localized
             }
         }
