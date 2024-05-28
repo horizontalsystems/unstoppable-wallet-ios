@@ -68,7 +68,14 @@ struct WatchlistProvider: TimelineProvider {
         default: limit = 6
         }
 
-        let coinUids = watchlistManager.coinUids
+        let coinUids: [String]
+
+        switch watchlistManager.sortBy {
+        case .manual:
+            coinUids = Array(watchlistManager.coinUids.prefix(limit))
+        default:
+            coinUids = watchlistManager.coinUids
+        }
 
         let coins: [Coin]
 
