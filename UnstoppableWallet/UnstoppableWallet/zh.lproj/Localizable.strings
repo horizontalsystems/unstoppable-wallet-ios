@@ -1538,22 +1538,26 @@
 "appearance.theme.dark" = "深色";
 "appearance.theme.light" = "浅色";
 
-"appearance.tab_settings" = "标签设置";
 "appearance.markets_tab" = "市场选项卡";
-"appearance.buttons_show" = "Balance Tab Buttons";
+"appearance.hide_markets" = "Hide Markets";
+"appearance.price_change" = "价格变动";
+"appearance.price_change.24h" = "24时";
+"appearance.price_change.midnight_utc" = "Midnight UTC";
+
 "appearance.launch_screen" = "启动屏幕";
 "appearance.launch_screen.auto" = "自动";
 "appearance.launch_screen.balance" = "余额";
 "appearance.launch_screen.market_overview" = "行情";
 "appearance.launch_screen.watchlist" = "关注";
 
-"appearance.app_icon" = "应用图标";
-
+"appearance.balance_tab" = "Balance Tab";
+"appearance.hide_buttons" = "Hide Buttons";
+"appearance.balance_value" = "余额值";
+"appearance.balance_value.coin_fiat" = "Coin / Fiat";
+"appearance.balance_value.fiat_coin" = "Fiat / Coin";
 "appearance.balance_conversion" = "余额转换";
 
-"appearance.balance_value" = "余额值";
-"appearance.balance_value.coin_value" = "币值";
-"appearance.balance_value.fiat_value" = "纤维值";
+"appearance.app_icon" = "应用图标";
 
 // Settings -> Contacts
 
