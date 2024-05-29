@@ -1509,9 +1509,7 @@
 // Settings -> About App
 
 "settings.about_app.title" = "关于应用";
-"settings.about_app.app_name" = "%@钱包";
-"settings.about_app.description" = "%@ 钱包是为那些寻求投资和以私人和独立方式存储加密货币的人建造的。\n\n它是一个非保管的、对等的钱包，在那里只有用户能够控制资金。 它不收集任何数据，并且通过不将用户的资金锁定到特定的钱包应用程序来保持用户独立。\n\n %@ 钱包完全开源，任何人都可以确认应用程序的工作完全如其所声称的那样正常。";
-"settings.about_app.whats_new" = "新增内容";
+"settings.about_app.app_version" = "App Version";
 "settings.about_app.website" = "网站";
 
 // Settings -> About App -> Contact
