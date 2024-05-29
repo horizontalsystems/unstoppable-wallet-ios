@@ -114,8 +114,7 @@ struct MarketCoinsView: View {
                 presentedFullCoin = marketInfo.fullCoin
             }) {
                 itemContent(
-                    imageUrl: URL(string: coin.imageUrl),
-                    code: coin.code,
+                    coin: coin,
                     marketCap: marketInfo.marketCap,
                     price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
                     rank: marketInfo.marketCapRank,
@@ -133,8 +132,7 @@ struct MarketCoinsView: View {
         ThemeList(Array(0 ... 10)) { index in
             ListRow {
                 itemContent(
-                    imageUrl: nil,
-                    code: "CODE",
+                    coin: nil,
                     marketCap: 123_456,
                     price: "$123.45",
                     rank: 12,
@@ -146,16 +144,12 @@ struct MarketCoinsView: View {
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
-        KFImage.url(imageUrl)
-            .resizable()
-            .placeholder { Circle().fill(Color.themeSteel20) }
-            .clipShape(Circle())
-            .frame(width: .iconSize32, height: .iconSize32)
+    @ViewBuilder private func itemContent(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
+        CoinIconView(coin: coin)
 
         VStack(spacing: 1) {
             HStack(spacing: .margin8) {
-                Text(code).textBody()
+                Text(coin?.code ?? "CODE").textBody()
                 Spacer()
                 Text(price).textBody()
             }

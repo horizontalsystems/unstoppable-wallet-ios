@@ -1,4 +1,5 @@
 import ComponentKit
+import MarketKit
 import UIKit
 
 extension CellBuilderNew.CellElement { // prepared cell elements for most frequency used layouts
@@ -42,9 +43,12 @@ extension CellBuilderNew.CellElement { // prepared cell elements for most freque
                 if let image = image.image { // setup local image
                     component.imageView.image = image
                 } else if let url = image.url { // setup global url with placeholder
-                    component.imageView.setImage(withUrlString: url, placeholder: image.placeholder.flatMap {
-                        UIImage(named: $0)
-                    })
+                    component.imageView.setImage(
+                        withUrlString: url,
+                        placeholder: image.placeholder.flatMap { UIImage(named: $0) }
+                    )
+                } else if let coin = image.coin {
+                    component.imageView.setImage(coin: coin)
                 } else {
                     component.isHidden = true
                 }
@@ -84,12 +88,14 @@ extension CellBuilderNew.CellElement { // prepared cell elements for most freque
 
 extension CellBuilderNew.CellElement {
     struct Image {
-        static func local(_ image: UIImage?) -> Self { Image(image: image, url: nil, placeholder: nil) }
-        static func url(_ url: String?, placeholder: String? = nil) -> Self { Image(image: nil, url: url, placeholder: placeholder) }
+        static func local(_ image: UIImage?) -> Self { Image(image: image, url: nil, placeholder: nil, coin: nil) }
+        static func url(_ url: String?, placeholder: String? = nil) -> Self { Image(image: nil, url: url, placeholder: placeholder, coin: nil) }
+        static func url(_ coin: Coin?) -> Self { Image(image: nil, url: nil, placeholder: nil, coin: coin) }
 
         let image: UIImage?
         let url: String?
         let placeholder: String?
+        let coin: Coin?
     }
 
     enum ImageSize {

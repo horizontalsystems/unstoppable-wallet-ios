@@ -64,7 +64,7 @@ class SendTronViewController: ThemeViewController {
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)
         }
-        iconImageView.setImage(withUrlString: viewModel.token.coin.imageUrl, placeholder: UIImage(named: viewModel.token.placeholderImageName))
+        iconImageView.setImage(coin: viewModel.token.coin, placeholder: viewModel.token.placeholderImageName)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

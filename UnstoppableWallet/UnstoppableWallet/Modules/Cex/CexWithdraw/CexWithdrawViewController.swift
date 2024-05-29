@@ -56,7 +56,7 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)
         }
-        iconImageView.setImage(withUrlString: viewModel.coinImageUrl, placeholder: nil)
+        iconImageView.setImage(coin: viewModel.coin)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

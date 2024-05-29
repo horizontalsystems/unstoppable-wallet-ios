@@ -15,13 +15,7 @@ enum SendField {
         switch self {
         case let .amount(title, token, coinValueType, currencyValue, type):
             ListRow {
-                KFImage.url(URL(string: token.coin.imageUrl))
-                    .resizable()
-                    .placeholder {
-                        Circle().fill(Color.themeSteel20)
-                    }
-                    .clipShape(Circle())
-                    .frame(width: .iconSize32, height: .iconSize32)
+                CoinIconView(coin: token.coin)
 
                 HStack(spacing: .margin4) {
                     VStack(alignment: .leading, spacing: 1) {

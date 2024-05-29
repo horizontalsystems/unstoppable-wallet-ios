@@ -52,10 +52,7 @@ struct MarketSearchView: View {
             viewModel.handleOpen(coinUid: coin.uid)
             presentedFullCoin = fullCoin
         }) {
-            KFImage.url(URL(string: coin.imageUrl))
-                .resizable()
-                .placeholder { Circle().fill(Color.themeSteel20) }
-                .frame(width: .iconSize32, height: .iconSize32)
+            CoinIconView(coin: coin)
 
             VStack(spacing: 1) {
                 Text(coin.code).themeBody()

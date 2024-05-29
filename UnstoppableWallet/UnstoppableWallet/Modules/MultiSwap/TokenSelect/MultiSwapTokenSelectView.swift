@@ -28,12 +28,7 @@ struct MultiSwapTokenSelectView: View {
                             currentToken = item.token
                             isPresented = false
                         }) {
-                            KFImage.url(URL(string: item.token.coin.imageUrl))
-                                .resizable()
-                                .placeholder {
-                                    Image(item.token.placeholderImageName)
-                                }
-                                .frame(width: .iconSize32, height: .iconSize32)
+                            CoinIconView(coin: item.token.coin, placeholder: item.token.placeholderImageName)
 
                             VStack(spacing: 1) {
                                 HStack(spacing: .margin8) {

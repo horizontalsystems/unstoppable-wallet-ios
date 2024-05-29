@@ -2908,6 +2908,8 @@
 		D09200C6293F21720091981A /* RestoreNonStandardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */; };
 		D09200C8293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
 		D09200C9293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
+		D09C5C632C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
+		D09C5C642C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
 		D09D768C2A2E066E004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
 		D09D768E2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */; };
 		D09D768F2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */; };
@@ -2920,6 +2922,8 @@
 		D0A6902C2C00ACF600E59296 /* CautionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */; };
 		D0A6902E2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
 		D0A6902F2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
+		D0A690342C05D01C00E59296 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690332C05D01C00E59296 /* UIImageView.swift */; };
+		D0A690352C05D01C00E59296 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690332C05D01C00E59296 /* UIImageView.swift */; };
 		D0A980A92B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AA2B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AF2B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */; };
@@ -4893,12 +4897,14 @@
 		D09200BF293F21700091981A /* RestoreNonStandardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewController.swift; sourceTree = "<group>"; };
 		D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewModel.swift; sourceTree = "<group>"; };
 		D09200C1293F21720091981A /* RestoreNonStandardModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardModule.swift; sourceTree = "<group>"; };
+		D09C5C622C076C0E00E6909E /* CoinIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinIconView.swift; sourceTree = "<group>"; };
 		D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationModule.swift; sourceTree = "<group>"; };
 		D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewController.swift; sourceTree = "<group>"; };
 		D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewModel.swift; sourceTree = "<group>"; };
 		D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationService.swift; sourceTree = "<group>"; };
 		D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSource.swift; sourceTree = "<group>"; };
 		D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSourceViewModel.swift; sourceTree = "<group>"; };
+		D0A690332C05D01C00E59296 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepChangeButtonsView.swift; sourceTree = "<group>"; };
 		D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0C2260F2A66A3BC007101F7 /* PersonalSupportModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportModule.swift; sourceTree = "<group>"; };
@@ -5494,6 +5500,7 @@
 				ABC9AF26FDCB363793BF66E1 /* Integer.swift */,
 				ABC9A776346AF62265896CA1 /* CellElement.swift */,
 				11B353356496AA219686B993 /* UIWindow.swift */,
+				D0A690332C05D01C00E59296 /* UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5728,6 +5735,7 @@
 				D3B73E2F2BDFC5580067429D /* PriceRow.swift */,
 				D3833B042BF4AFB800ACECFB /* MarqueeView.swift */,
 				6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */,
+				D09C5C622C076C0E00E6909E /* CoinIconView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -10717,6 +10725,7 @@
 				11B35AB989198F423D880695 /* PoolGroupFactory.swift in Sources */,
 				D3F9B0352BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */,
 				D09D76952A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */,
+				D09C5C642C076C0E00E6909E /* CoinIconView.swift in Sources */,
 				11B358A1409FB729B1C3013E /* PoolSource.swift in Sources */,
 				ABC9A52E08E5C57665C07DBC /* PseudoAccessoryView.swift in Sources */,
 				ABC9AC10D815702B812CFFB7 /* NftAssetOverviewService.swift in Sources */,
@@ -10794,6 +10803,7 @@
 				ABC9A04655D81FE5198B786F /* SendEip1155ViewModel.swift in Sources */,
 				ABC9A0B58626A1E0C4248162 /* SendEip1155Service.swift in Sources */,
 				ABC9A140E5EF9D0AD4234689 /* SendEip1155ViewController.swift in Sources */,
+				D0A690352C05D01C00E59296 /* UIImageView.swift in Sources */,
 				ABC9AF1729BA19223BB39E06 /* SendEip721ViewModel.swift in Sources */,
 				ABC9AFA3570AE29F26623FBF /* SendEip721ViewController.swift in Sources */,
 				ABC9A95E667DD7BD26602D8E /* SendEip721Service.swift in Sources */,
@@ -12295,6 +12305,7 @@
 				11B3515A1106B2AE8509263E /* Pool.swift in Sources */,
 				D3F9B0342BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */,
 				11B3541BC8A0EF1066EBA464 /* NonSpamPoolProvider.swift in Sources */,
+				D09C5C632C076C0E00E6909E /* CoinIconView.swift in Sources */,
 				11B3594DD9B54E11190B4CD5 /* PoolProvider.swift in Sources */,
 				11B351E4BD2180A5D6D59F23 /* PoolGroup.swift in Sources */,
 				11B35AC389ACC3E4096EC645 /* PoolGroupFactory.swift in Sources */,
@@ -12372,6 +12383,7 @@
 				11B355028142F82D805752AF /* NftDoubleCell.swift in Sources */,
 				11B35FF1D956D812F815FA86 /* NftImageView.swift in Sources */,
 				11B35DF3813AEB74E254A05A /* NftAssetView.swift in Sources */,
+				D0A690342C05D01C00E59296 /* UIImageView.swift in Sources */,
 				ABC9A13DB3ADB580D59F66E4 /* SendEip1155ViewModel.swift in Sources */,
 				ABC9A4CD35CF43C88EC13909 /* SendEip1155Service.swift in Sources */,
 				ABC9ACA04EBC7AF903A01FE3 /* SendEip1155ViewController.swift in Sources */,
@@ -13929,7 +13941,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.6;
+				version = 3.0.8;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {

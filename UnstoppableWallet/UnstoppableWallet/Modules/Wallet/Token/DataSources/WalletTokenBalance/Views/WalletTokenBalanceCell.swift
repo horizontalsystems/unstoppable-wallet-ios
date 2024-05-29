@@ -71,7 +71,7 @@ class WalletTokenBalanceCell: UITableViewCell {
     func bind(viewItem: WalletTokenBalanceViewModel.ViewItem, onTapError: (() -> Void)?) {
         testnetImageView.isHidden = viewItem.isMainNet
         coinIconView.bind(
-            iconUrlString: viewItem.iconUrlString,
+            coin: viewItem.coin,
             placeholderIconName: viewItem.placeholderIconName,
             spinnerProgress: viewItem.syncSpinnerProgress,
             indefiniteSearchCircle: viewItem.indefiniteSearchCircle,

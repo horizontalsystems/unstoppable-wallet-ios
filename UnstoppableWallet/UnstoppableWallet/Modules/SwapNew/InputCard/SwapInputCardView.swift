@@ -138,11 +138,7 @@ extension SwapInputCardView {
     }
 
     private func set(tokenViewItem: SwapCoinCardViewModel.TokenViewItem?) {
-        if let urlString = tokenViewItem?.iconUrlString {
-            tokenSelectView.tokenImage.setImage(urlString: urlString, placeholder: tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) })
-        } else {
-            tokenSelectView.tokenImage.imageView.image = tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) } ?? UIImage(named: "placeholder_circle_32")
-        }
+        tokenSelectView.tokenImage.imageView.setImage(coin: tokenViewItem?.coin, placeholder: tokenViewItem?.placeholderIconName)
 
         if let tokenViewItem {
             tokenSelectView.tokenButton.setTitle(tokenViewItem.title, for: .normal)

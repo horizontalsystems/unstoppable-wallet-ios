@@ -1,5 +1,6 @@
 import Combine
 import ComponentKit
+import MarketKit
 import RxCocoa
 import RxSwift
 import SectionsTableView
@@ -133,9 +134,9 @@ class ManageWalletsViewController: ThemeSearchViewController {
 
     private func showBottomSheet(viewItem: ManageWalletsViewModel.CoinViewItem, items: [BottomSheetModule.Item]) {
         let viewController = BottomSheetModule.viewController(
-            image: .remote(url: viewItem.coinImageUrl, placeholder: viewItem.coinPlaceholderImageName),
-            title: viewItem.coinCode,
-            subtitle: viewItem.coinName,
+            image: .remote(url: viewItem.coin.imageUrl, placeholder: viewItem.coinPlaceholderImageName),
+            title: viewItem.coin.code,
+            subtitle: viewItem.coin.name,
             items: items
         )
 
@@ -163,14 +164,11 @@ extension ManageWalletsViewController: SectionsDataSource {
     private func rootElement(index: Int, viewItem: ManageWalletsViewModel.ViewItem, forceToggleOn: Bool? = nil) -> CellBuilderNew.CellElement {
         .hStack([
             .image32 { component in
-                component.setImage(
-                    urlString: viewItem.imageUrl,
-                    placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) }
-                )
+                component.imageView.setImage(coin: viewItem.coin, placeholder: viewItem.placeholderImageName)
             },
             .vStackCentered([
                 .hStack([
-                    .textElement(text: .body(viewItem.title), parameters: .highHugging),
+                    .textElement(text: .body(viewItem.coin.code), parameters: .highHugging),
                     .margin8,
                     .badge { component in
                         component.isHidden = viewItem.badge == nil
@@ -181,7 +179,7 @@ extension ManageWalletsViewController: SectionsDataSource {
                     .text { _ in },
                 ]),
                 .margin(1),
-                .textElement(text: .subhead2(viewItem.subtitle)),
+                .textElement(text: .subhead2(viewItem.coin.name)),
             ]),
             .secondaryCircleButton { [weak self] component in
                 component.isHidden = !viewItem.hasInfo

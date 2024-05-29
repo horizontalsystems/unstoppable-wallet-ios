@@ -52,8 +52,8 @@ struct MarketPairsView: View {
                 }
             }) {
                 itemContent(
-                    frontImageUrl: pair.baseCoinUid.flatMap { URL(string: Coin.imageUrl(uid: $0)) },
-                    backImageUrl: pair.targetCoinUid.flatMap { URL(string: Coin.imageUrl(uid: $0)) },
+                    frontCoin: pair.baseCoin,
+                    backCoin: pair.targetCoin,
                     base: pair.base,
                     target: pair.target,
                     volume: pair.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
@@ -73,8 +73,8 @@ struct MarketPairsView: View {
         ThemeList(Array(0 ... 10)) { _ in
             ListRow {
                 itemContent(
-                    frontImageUrl: nil,
-                    backImageUrl: nil,
+                    frontCoin: nil,
+                    backCoin: nil,
                     base: "CODE",
                     target: "CODE",
                     volume: "$123.4 B",
@@ -89,7 +89,7 @@ struct MarketPairsView: View {
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(frontImageUrl: URL?, backImageUrl: URL?, base: String, target: String, volume: String, marketName: String, rank: Int, price: String) -> some View {
+    @ViewBuilder private func itemContent(frontCoin: Coin?, backCoin: Coin?, base: String, target: String, volume: String, marketName: String, rank: Int, price: String) -> some View {
         ZStack(alignment: .leading) {
             HStack {
                 Spacer()
@@ -98,11 +98,7 @@ struct MarketPairsView: View {
                         .fill(Color.themeTyler)
                         .frame(width: .iconSize32, height: .iconSize32)
 
-                    KFImage.url(backImageUrl)
-                        .resizable()
-                        .placeholder { Circle().fill(Color.themeSteel20) }
-                        .clipShape(Circle())
-                        .frame(width: .iconSize32, height: .iconSize32)
+                    CoinIconView(coin: backCoin)
                 }
             }
 
@@ -111,11 +107,7 @@ struct MarketPairsView: View {
                     .fill(Color.themeTyler)
                     .frame(width: .iconSize32, height: .iconSize32)
 
-                KFImage.url(frontImageUrl)
-                    .resizable()
-                    .placeholder { Circle().fill(Color.themeSteel20) }
-                    .clipShape(Circle())
-                    .frame(width: .iconSize32, height: .iconSize32)
+                CoinIconView(coin: frontCoin)
             }
         }
         .frame(width: 52)

@@ -29,10 +29,8 @@ class ManageWalletsViewModel {
 
         return ViewItem(
             uid: String(item.token.hashValue),
-            imageUrl: token.coin.imageUrl,
+            coin: token.coin,
             placeholderImageName: token.placeholderImageName,
-            title: token.coin.code,
-            subtitle: token.coin.name,
             badge: item.token.badge,
             enabled: item.enabled,
             hasInfo: item.hasInfo
@@ -88,10 +86,8 @@ extension ManageWalletsViewModel {
         }
 
         let coinViewItem = CoinViewItem(
-            coinImageUrl: infoItem.token.coin.imageUrl,
-            coinPlaceholderImageName: infoItem.token.placeholderImageName,
-            coinName: infoItem.token.coin.name,
-            coinCode: infoItem.token.coin.code
+            coin: infoItem.token.coin,
+            coinPlaceholderImageName: infoItem.token.placeholderImageName
         )
 
         switch infoItem.type {
@@ -119,20 +115,16 @@ extension ManageWalletsViewModel {
 extension ManageWalletsViewModel {
     struct ViewItem {
         let uid: String
-        let imageUrl: String
+        let coin: Coin
         let placeholderImageName: String?
-        let title: String
-        let subtitle: String
         let badge: String?
         let enabled: Bool
         let hasInfo: Bool
     }
 
     struct CoinViewItem {
-        let coinImageUrl: String
+        let coin: Coin
         let coinPlaceholderImageName: String
-        let coinName: String
-        let coinCode: String
     }
 
     struct InfoViewItem {

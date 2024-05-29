@@ -1,5 +1,6 @@
 import ComponentKit
 import HUD
+import MarketKit
 import ThemeKit
 import UIKit
 
@@ -49,12 +50,12 @@ class BalanceCoinIconHolder: UIView {
         onTapError?()
     }
 
-    func bind(iconUrlString: String?, placeholderIconName: String, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> Void)?) {
+    func bind(coin: Coin?, placeholderIconName: String?, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> Void)?) {
         self.onTapError = onTapError
 
-        coinIconImageView.isHidden = iconUrlString == nil
-        if let iconUrlString {
-            coinIconImageView.setImage(withUrlString: iconUrlString, placeholder: UIImage(named: placeholderIconName))
+        coinIconImageView.isHidden = coin == nil
+        if let coin {
+            coinIconImageView.setImage(coin: coin, placeholder: placeholderIconName)
         } else {
             coinIconImageView.image = nil
         }

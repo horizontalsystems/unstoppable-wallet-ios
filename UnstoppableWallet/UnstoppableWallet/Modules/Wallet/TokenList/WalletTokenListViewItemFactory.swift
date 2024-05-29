@@ -11,8 +11,8 @@ class WalletTokenListViewItemFactory {
 
         return BalanceTopViewItem(
             isMainNet: item.isMainNet,
-            iconUrlString: iconUrlString(coin: item.element.coin, state: state),
-            placeholderIconName: item.element.wallet?.token.placeholderImageName ?? "placeholder_circle_32",
+            coin: stateAwareCoin(coin: item.element.coin, state: state),
+            placeholderIconName: item.element.wallet?.token.placeholderImageName,
             name: item.element.name,
             blockchainBadge: item.element.wallet?.badge,
             syncSpinnerProgress: syncSpinnerProgress(state: state),
@@ -43,10 +43,10 @@ class WalletTokenListViewItemFactory {
         }
     }
 
-    private func iconUrlString(coin: Coin?, state: AdapterState) -> String? {
+    private func stateAwareCoin(coin: Coin?, state: AdapterState) -> Coin? {
         switch state {
         case .notSynced: return nil
-        default: return coin?.imageUrl
+        default: return coin
         }
     }
 
