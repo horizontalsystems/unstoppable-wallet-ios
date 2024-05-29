@@ -12,33 +12,26 @@ class AppearanceViewModel: ObservableObject {
     private let balancePrimaryValueManager = App.shared.balancePrimaryValueManager
     private let balanceConversionManager = App.shared.balanceConversionManager
     private let walletButtonHiddenManager = App.shared.walletButtonHiddenManager
-    private let currencyManager = App.shared.currencyManager
-    private let languageManager = LanguageManager.shared
+    private let priceChangeModeManager = App.shared.priceChangeModeManager
 
     let themeModes: [ThemeMode] = [.system, .dark, .light]
     let conversionTokens: [Token]
 
-    var currentLanguageDisplayName: String? {
-        languageManager.currentLanguageDisplayName
-    }
-
-    @Published var baseCurrency: Currency
-
-    @Published var themMode: ThemeMode {
+    @Published var themeMode: ThemeMode {
         didSet {
-            themeManager.themeMode = themMode
+            themeManager.themeMode = themeMode
         }
     }
 
-    @Published var showMarketTab: Bool {
+    @Published var hideMarkets: Bool {
         didSet {
-            launchScreenManager.showMarket = showMarketTab
+            launchScreenManager.showMarket = !hideMarkets
         }
     }
 
-    @Published var showBalanceButtons: Bool {
+    @Published var priceChangeMode: PriceChangeMode {
         didSet {
-            walletButtonHiddenManager.buttonHidden = !showBalanceButtons
+            priceChangeModeManager.priceChangeMode = priceChangeMode
         }
     }
 
@@ -48,15 +41,21 @@ class AppearanceViewModel: ObservableObject {
         }
     }
 
-    @Published var conversionToken: Token? {
+    @Published var hideBalanceButtons: Bool {
         didSet {
-            balanceConversionManager.set(conversionToken: conversionToken)
+            walletButtonHiddenManager.buttonHidden = hideBalanceButtons
         }
     }
 
     @Published var balancePrimaryValue: BalancePrimaryValue {
         didSet {
             balancePrimaryValueManager.balancePrimaryValue = balancePrimaryValue
+        }
+    }
+
+    @Published var conversionToken: Token? {
+        didSet {
+            balanceConversionManager.set(conversionToken: conversionToken)
         }
     }
 
@@ -69,15 +68,15 @@ class AppearanceViewModel: ObservableObject {
     init() {
         conversionTokens = balanceConversionManager.conversionTokens
 
-        themMode = themeManager.themeMode
-        showMarketTab = launchScreenManager.showMarket
+        themeMode = themeManager.themeMode
+        hideMarkets = !launchScreenManager.showMarket
+        priceChangeMode = priceChangeModeManager.priceChangeMode
         launchScreen = launchScreenManager.launchScreen
-        conversionToken = balanceConversionManager.conversionToken
+        hideBalanceButtons = walletButtonHiddenManager.buttonHidden
         balancePrimaryValue = balancePrimaryValueManager.balancePrimaryValue
+        conversionToken = balanceConversionManager.conversionToken
         appIcon = appIconManager.appIcon
-        baseCurrency = currencyManager.baseCurrency
-        showBalanceButtons = !walletButtonHiddenManager.buttonHidden
 
-        currencyManager.$baseCurrency.sink { [weak self] in self?.baseCurrency = $0 }.store(in: &cancellables)
+        balanceConversionManager.$conversionToken.sink { [weak self] in self?.conversionToken = $0 }.store(in: &cancellables)
     }
 }

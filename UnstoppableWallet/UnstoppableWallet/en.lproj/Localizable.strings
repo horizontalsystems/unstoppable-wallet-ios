@@ -1536,22 +1536,26 @@
 "appearance.theme.dark" = "Dark";
 "appearance.theme.light" = "Light";
 
-"appearance.tab_settings" = "Tab Settings";
 "appearance.markets_tab" = "Markets Tab";
-"appearance.buttons_show" = "Balance Tab Buttons";
+"appearance.hide_markets" = "Hide Markets";
+"appearance.price_change" = "Price Change";
+"appearance.price_change.24h" = "24H";
+"appearance.price_change.midnight_utc" = "Midnight UTC";
+
 "appearance.launch_screen" = "Launch Screen";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Balance";
 "appearance.launch_screen.market_overview" = "Market Overview";
 "appearance.launch_screen.watchlist" = "Watchlist";
 
-"appearance.app_icon" = "App Icon";
-
+"appearance.balance_tab" = "Balance Tab";
+"appearance.hide_buttons" = "Hide Buttons";
+"appearance.balance_value" = "Balance Value";
+"appearance.balance_value.coin_fiat" = "Coin / Fiat";
+"appearance.balance_value.fiat_coin" = "Fiat / Coin";
 "appearance.balance_conversion" = "Balance Conversion";
 
-"appearance.balance_value" = "Balance Value";
-"appearance.balance_value.coin_value" = "Coin Value";
-"appearance.balance_value.fiat_value" = "Fiat Value";
+"appearance.app_icon" = "App Icon";
 
 // Settings -> Contacts
 

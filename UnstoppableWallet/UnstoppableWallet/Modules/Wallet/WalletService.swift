@@ -42,6 +42,7 @@ class WalletService {
     private let userDefaultsStorage: UserDefaultsStorage
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private var internalState: State = .loading {
         didSet {
@@ -122,9 +123,8 @@ class WalletService {
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
             self?.coinPriceService.refresh()
         }
-        subscribe(disposeBag, balanceConversionManager.conversionTokenObservable) { [weak self] _ in
-            self?.syncTotalItem()
-        }
+
+        balanceConversionManager.$conversionToken.sink { [weak self] _ in self?.syncTotalItem() }.store(in: &cancellables)
 
         sync(activeAccount: accountManager.activeAccount)
     }

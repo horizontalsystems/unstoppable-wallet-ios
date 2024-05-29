@@ -1,6 +1,5 @@
+import HsExtensions
 import MarketKit
-import RxRelay
-import RxSwift
 
 class BalanceConversionManager {
     private let tokenQueries = [
@@ -15,10 +14,8 @@ class BalanceConversionManager {
 
     let conversionTokens: [Token]
 
-    private let conversionTokenRelay = PublishRelay<Token?>()
-    private(set) var conversionToken: Token? {
+    @PostPublished private(set) var conversionToken: Token? {
         didSet {
-            conversionTokenRelay.accept(conversionToken)
             userDefaultsStorage.set(value: conversionToken?.blockchain.uid, for: keyBlockchainUid)
         }
     }
@@ -48,10 +45,6 @@ class BalanceConversionManager {
 }
 
 extension BalanceConversionManager {
-    var conversionTokenObservable: Observable<Token?> {
-        conversionTokenRelay.asObservable()
-    }
-
     func toggleConversionToken() {
         guard conversionTokens.count > 1, let conversionToken else {
             return
@@ -63,6 +56,10 @@ extension BalanceConversionManager {
     }
 
     func set(conversionToken: Token?) {
+        guard self.conversionToken != conversionToken else {
+            return
+        }
+
         self.conversionToken = conversionToken
     }
 

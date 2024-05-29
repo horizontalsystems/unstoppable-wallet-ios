@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MarketKit
 import RxRelay
@@ -13,6 +14,7 @@ class NftService {
     private let coinPriceService: WalletCoinPriceService
     private let disposeBag = DisposeBag()
     private var adapterDisposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     var mode: Mode = .lastSale {
         didSet {
@@ -52,7 +54,7 @@ class NftService {
         self.coinPriceService = coinPriceService
 
         subscribe(disposeBag, nftAdapterManager.adaptersUpdatedObservable) { [weak self] in self?.handle(adapterMap: $0) }
-        subscribe(disposeBag, balanceConversionManager.conversionTokenObservable) { [weak self] _ in self?.syncTotalItem() }
+        balanceConversionManager.$conversionToken.sink { [weak self] _ in self?.syncTotalItem() }.store(in: &cancellables)
 
         _handle(adapterMap: nftAdapterManager.adapterMap)
     }

@@ -3002,6 +3002,10 @@
 		D3384D222BFF0CCA00515664 /* MarketVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D202BFF0CCA00515664 /* MarketVolumeView.swift */; };
 		D3384D242BFF0CD100515664 /* MarketVolumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D232BFF0CD100515664 /* MarketVolumeViewModel.swift */; };
 		D3384D252BFF0CD100515664 /* MarketVolumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D232BFF0CD100515664 /* MarketVolumeViewModel.swift */; };
+		D3384D4E2C07020300515664 /* PriceChangeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D4D2C07020300515664 /* PriceChangeMode.swift */; };
+		D3384D4F2C07020300515664 /* PriceChangeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D4D2C07020300515664 /* PriceChangeMode.swift */; };
+		D3384D512C0703B400515664 /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
+		D3384D522C0703B400515664 /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
 		D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93C29126D0F00B895BE /* HsCryptoKit */; };
 		D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93E29126D2A00B895BE /* HsCryptoKit */; };
 		D3402AEE2BF5D58B003BF6F8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */; };
@@ -4940,6 +4944,8 @@
 		D3384D1C2BFF0CB800515664 /* MarketMarketCapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketMarketCapViewModel.swift; sourceTree = "<group>"; };
 		D3384D202BFF0CCA00515664 /* MarketVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVolumeView.swift; sourceTree = "<group>"; };
 		D3384D232BFF0CD100515664 /* MarketVolumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVolumeViewModel.swift; sourceTree = "<group>"; };
+		D3384D4D2C07020300515664 /* PriceChangeMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceChangeMode.swift; sourceTree = "<group>"; };
+		D3384D502C0703B400515664 /* PriceChangeModeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceChangeModeManager.swift; sourceTree = "<group>"; };
 		D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistModifier.swift; sourceTree = "<group>"; };
 		D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
@@ -5807,6 +5813,7 @@
 				11B359980AA45D6B44151D7A /* StatManager.swift */,
 				6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */,
 				D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */,
+				D3384D502C0703B400515664 /* PriceChangeModeManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -6194,6 +6201,7 @@
 				11B35B9F4421EE65B8B09370 /* StatRecord.swift */,
 				D36E50832BF75B6900C361BD /* WatchlistTimePeriod.swift */,
 				D34A29B52BFB4E3200F63036 /* WatchlistSortBy.swift */,
+				D3384D4D2C07020300515664 /* PriceChangeMode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -10414,6 +10422,7 @@
 				11B3555B8D452B7F64815FAC /* WalletStorage.swift in Sources */,
 				11B35205EDD1A11067E1AC91 /* CoinManager.swift in Sources */,
 				11B35FB28152F8881369DD9D /* AdapterManager.swift in Sources */,
+				D3384D522C0703B400515664 /* PriceChangeModeManager.swift in Sources */,
 				11B350388CD7F33B10BD3F4B /* AdapterFactory.swift in Sources */,
 				D02A67D2272A7460009B2C1C /* TweetsPageResponse.swift in Sources */,
 				11B358362F756E91646878D0 /* CoinValue.swift in Sources */,
@@ -11281,6 +11290,7 @@
 				ABC9A5361D9712C95F456376 /* Extensions.swift in Sources */,
 				D3DD672C2BC3BF5200EC7F78 /* OneInchMultiSwapConfirmationQuote.swift in Sources */,
 				ABC9A50D63AD21802AF5DE22 /* BaseAnimation.swift in Sources */,
+				D3384D4F2C07020300515664 /* PriceChangeMode.swift in Sources */,
 				ABC9A8F221BB603CA4EBFA1D /* AlphaDismissAnimation.swift in Sources */,
 				ABC9A724798E2748EAC06A36 /* AlphaPresentAnimation.swift in Sources */,
 				ABC9A1FD7594369D1F36C4EB /* MovingDismissAnimation.swift in Sources */,
@@ -11990,6 +12000,7 @@
 				11B35E4FE3117F6B681F6748 /* Wallet.swift in Sources */,
 				11B35CAD5A7E0C8709559FD2 /* WalletManager.swift in Sources */,
 				11B35D80D1A22BA2EB8F31B8 /* WalletStorage.swift in Sources */,
+				D3384D512C0703B400515664 /* PriceChangeModeManager.swift in Sources */,
 				11B355A29CDAF16148F1C546 /* CoinManager.swift in Sources */,
 				D36DE0B0272FD689000BC916 /* SwapModule.swift in Sources */,
 				11B3580B9C21B55ACC07B043 /* AdapterManager.swift in Sources */,
@@ -12857,6 +12868,7 @@
 				11B35DCCBE18D2F1F16C01C5 /* PlaceholderViewNew.swift in Sources */,
 				D3DD672B2BC3BF5200EC7F78 /* OneInchMultiSwapConfirmationQuote.swift in Sources */,
 				11B35ED9F3C0EA3CCC4C0FF4 /* SyncErrorView.swift in Sources */,
+				D3384D4E2C07020300515664 /* PriceChangeMode.swift in Sources */,
 				ABC9AE362775FBF83C15C231 /* Extensions.swift in Sources */,
 				ABC9A1109D59CD5F71FBC153 /* BaseAnimation.swift in Sources */,
 				ABC9A9A71EA9758D096AAA68 /* AlphaDismissAnimation.swift in Sources */,
