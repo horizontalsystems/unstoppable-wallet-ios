@@ -1513,9 +1513,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> About App
 
 "settings.about_app.title" = "Uygulama Hakkında";
-"settings.about_app.app_name" = "%@ Cüzdanı";
-"settings.about_app.description" = "%@ cüzdan, kripto para birimlerine özel ve bağımsız bir şekilde yatırım yapmak ve depolamak isteyenler için tasarlanmıştır.\n\nBu, fonlar üzerinde yalnızca kullanıcının kontrolüne sahip olduğu, velayet gerektirmeyen, eşler arası bir cüzdandır. Herhangi bir veri toplamaz ve kullanıcının fonlarını belirli bir cüzdan uygulamasına kilitlemeyerek kullanıcıyı bağımsız tutar.\n\n%@ cüzdan tamamen açık kaynaklıdır ve herkes uygulamanın tam olarak iddia ettiği gibi çalıştığını onaylayabilir.";
-"settings.about_app.whats_new" = "Yenilikler";
+"settings.about_app.app_version" = "App Version";
 "settings.about_app.website" = "Website";
 
 // Settings -> About App -> Contact
