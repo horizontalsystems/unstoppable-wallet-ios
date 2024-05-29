@@ -1538,22 +1538,26 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.theme.dark" = "Escuro";
 "appearance.theme.light" = "Claro";
 
-"appearance.tab_settings" = "Configurações de Abas";
 "appearance.markets_tab" = "Guia de Mercados";
-"appearance.buttons_show" = "Balance Tab Buttons";
+"appearance.hide_markets" = "Hide Markets";
+"appearance.price_change" = "Mudança de Preço";
+"appearance.price_change.24h" = "24h";
+"appearance.price_change.midnight_utc" = "Midnight UTC";
+
 "appearance.launch_screen" = "Tela Inicial";
 "appearance.launch_screen.auto" = "Automático";
 "appearance.launch_screen.balance" = "Saldo";
 "appearance.launch_screen.market_overview" = "Visão geral do mercado";
 "appearance.launch_screen.watchlist" = "Lista de observação";
 
-"appearance.app_icon" = "Ícone do Aplicativo";
-
+"appearance.balance_tab" = "Balance Tab";
+"appearance.hide_buttons" = "Hide Buttons";
+"appearance.balance_value" = "Valor Patrimonial";
+"appearance.balance_value.coin_fiat" = "Coin / Fiat";
+"appearance.balance_value.fiat_coin" = "Fiat / Coin";
 "appearance.balance_conversion" = "Conversão de saldo";
 
-"appearance.balance_value" = "Valor Patrimonial";
-"appearance.balance_value.coin_value" = "Valor da Moeda";
-"appearance.balance_value.fiat_value" = "Valor Fiat";
+"appearance.app_icon" = "Ícone do Aplicativo";
 
 // Settings -> Contacts
 
