@@ -53,7 +53,7 @@ class ReleaseNotesViewController: MarkdownViewController {
         }
 
         twitterButton.addTarget(self, action: #selector(onTwitterTap), for: .touchUpInside)
-        twitterButton.setImage(UIImage(named: "filled_twitter_24"), for: .normal)
+        twitterButton.setImage(UIImage(named: "filled_twitter_24")?.withTintColor(.themeJacob), for: .normal)
 
         let telegramButton = UIButton()
         bottomHolder.addSubview(telegramButton)
@@ -64,7 +64,7 @@ class ReleaseNotesViewController: MarkdownViewController {
         }
 
         telegramButton.addTarget(self, action: #selector(onTelegramTap), for: .touchUpInside)
-        telegramButton.setImage(UIImage(named: "filled_telegram_24"), for: .normal)
+        telegramButton.setImage(UIImage(named: "filled_telegram_24")?.withTintColor(.themeJacob), for: .normal)
 
         let followUsLabel = UILabel()
         bottomHolder.addSubview(followUsLabel)
@@ -74,7 +74,7 @@ class ReleaseNotesViewController: MarkdownViewController {
         }
 
         followUsLabel.font = .caption
-        followUsLabel.textColor = .themeGray
+        followUsLabel.textColor = .themeJacob
         followUsLabel.text = "release_notes.follow_us".localized
     }
 

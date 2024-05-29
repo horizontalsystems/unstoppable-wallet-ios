@@ -11,6 +11,7 @@ enum MainSettingsModule {
             passcodeManager: App.shared.passcodeManager,
             termsManager: App.shared.termsManager,
             systemInfoManager: App.shared.systemInfoManager,
+            currencyManager: App.shared.currencyManager,
             walletConnectSessionManager: App.shared.walletConnectSessionManager,
             subscriptionManager: App.shared.subscriptionManager,
             rateAppManager: App.shared.rateAppManager

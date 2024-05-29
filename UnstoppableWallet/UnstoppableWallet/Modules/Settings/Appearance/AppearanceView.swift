@@ -5,135 +5,147 @@ import ThemeKit
 struct AppearanceView: View {
     @StateObject var viewModel = AppearanceViewModel()
 
+    @State private var themeSelectorPresented = false
+    @State private var priceChangeSelectorPresented = false
+    @State private var launchScreenSelectorPresented = false
+    @State private var balanceValueSelectorPresented = false
+    @State private var conversionSelectorPresented = false
+
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
-                VStack(spacing: 0) {
-                    ListSection {
-                        NavigationRow(spacing: .margin8, destination: {
-                            BaseCurrencySettingsModule.view()
-                        }) {
-                            HStack(spacing: .margin16) {
-                                Image("usd_24").themeIcon()
-                                Text("settings.base_currency".localized).textBody()
-                            }
-                            Spacer()
-                            Text(viewModel.baseCurrency.code).textSubhead1()
-                            Image.disclosureIcon
-                        }
-
-                        NavigationRow(spacing: .margin8, destination: {
-                            LanguageSettingsModule.view()
-                        }) {
-                            HStack(spacing: .margin16) {
-                                Image("globe_24").themeIcon()
-                                Text("settings.language".localized).textBody()
-                            }
-                            Spacer()
-                            if let language = viewModel.currentLanguageDisplayName {
-                                Text(language).textSubhead1()
-                            }
-                            Image.disclosureIcon
-                        }
+                ListSection {
+                    ClickableRow(spacing: .margin8) {
+                        themeSelectorPresented = true
+                    } content: {
+                        Text("appearance.theme".localized).textBody()
+                        Spacer()
+                        Text(title(themeMode: viewModel.themeMode)).textSubhead1()
+                        Image("arrow_small_down_20").themeIcon()
                     }
+                    .alert(
+                        isPresented: $themeSelectorPresented,
+                        title: "appearance.theme".localized,
+                        viewItems: viewModel.themeModes.map { .init(text: title(themeMode: $0), selected: viewModel.themeMode == $0) },
+                        onTap: { index in
+                            guard let index else {
+                                return
+                            }
+
+                            viewModel.themeMode = viewModel.themeModes[index]
+                        }
+                    )
                 }
 
                 VStack(spacing: 0) {
-                    ListSectionHeader(text: "appearance.theme".localized)
-                    ListSection {
-                        ForEach(viewModel.themeModes, id: \.self) { themeMode in
-                            ClickableRow(action: {
-                                viewModel.themMode = themeMode
-                            }) {
-                                icon(themeMode: themeMode).themeIcon()
-                                Text(title(themeMode: themeMode)).themeBody()
-
-                                if viewModel.themMode == themeMode {
-                                    Image.checkIcon
-                                }
-                            }
-                        }
-                    }
-                }
-
-                VStack(spacing: 0) {
-                    ListSectionHeader(text: "appearance.tab_settings".localized)
+                    ListSectionHeader(text: "appearance.markets_tab".localized)
                     ListSection {
                         ListRow {
-                            Image("markets_24").themeIcon()
-                            Toggle(isOn: $viewModel.showMarketTab.animation()) {
-                                Text("appearance.markets_tab".localized).themeBody()
+                            Toggle(isOn: $viewModel.hideMarkets.animation()) {
+                                Text("appearance.hide_markets".localized).themeBody()
                             }
                             .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                         }
+
+                        ClickableRow(spacing: .margin8) {
+                            priceChangeSelectorPresented = true
+                        } content: {
+                            Text("appearance.price_change".localized).textBody()
+                            Spacer()
+                            Text(title(priceChangeMode: viewModel.priceChangeMode)).textSubhead1()
+                            Image("arrow_small_down_20").themeIcon()
+                        }
+                        .alert(
+                            isPresented: $priceChangeSelectorPresented,
+                            title: "appearance.price_change".localized,
+                            viewItems: PriceChangeMode.allCases.map { .init(text: title(priceChangeMode: $0), selected: viewModel.priceChangeMode == $0) },
+                            onTap: { index in
+                                guard let index else {
+                                    return
+                                }
+
+                                viewModel.priceChangeMode = PriceChangeMode.allCases[index]
+                            }
+                        )
+                    }
+                }
+
+                if !viewModel.hideMarkets {
+                    ListSection {
+                        ClickableRow(spacing: .margin8) {
+                            launchScreenSelectorPresented = true
+                        } content: {
+                            Text("appearance.launch_screen".localized).textBody()
+                            Spacer()
+                            Text(viewModel.launchScreen.title).textSubhead1()
+                            Image("arrow_small_down_20").themeIcon()
+                        }
+                        .alert(
+                            isPresented: $launchScreenSelectorPresented,
+                            title: "appearance.launch_screen".localized,
+                            viewItems: LaunchScreen.allCases.map { .init(text: $0.title, selected: viewModel.launchScreen == $0) },
+                            onTap: { index in
+                                guard let index else {
+                                    return
+                                }
+
+                                viewModel.launchScreen = LaunchScreen.allCases[index]
+                            }
+                        )
+                    }
+                }
+
+                VStack(spacing: 0) {
+                    ListSectionHeader(text: "appearance.balance_tab".localized)
+                    ListSection {
                         ListRow {
-                            Image("arrow_swap_24").themeIcon()
-                            Toggle(isOn: $viewModel.showBalanceButtons.animation()) {
-                                Text("appearance.buttons_show".localized).themeBody()
+                            Toggle(isOn: $viewModel.hideBalanceButtons.animation()) {
+                                Text("appearance.hide_buttons".localized).themeBody()
                             }
                             .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                         }
-                    }
-                }
 
-                if viewModel.showMarketTab {
-                    VStack(spacing: 0) {
-                        ListSectionHeader(text: "appearance.launch_screen".localized)
-                        ListSection {
-                            ForEach(LaunchScreen.allCases, id: \.self) { launchScreen in
-                                ClickableRow(action: {
-                                    viewModel.launchScreen = launchScreen
-                                }) {
-                                    Image(launchScreen.iconName).themeIcon()
-                                    Text(launchScreen.title).themeBody()
-
-                                    if viewModel.launchScreen == launchScreen {
-                                        Image.checkIcon
-                                    }
-                                }
-                            }
+                        ClickableRow(spacing: .margin8) {
+                            balanceValueSelectorPresented = true
+                        } content: {
+                            Text("appearance.balance_value".localized).textBody()
+                            Spacer()
+                            Text(title(balancePrimaryValue: viewModel.balancePrimaryValue)).textSubhead1()
+                            Image("arrow_small_down_20").themeIcon()
                         }
-                    }
-                }
-
-                VStack(spacing: 0) {
-                    ListSectionHeader(text: "appearance.balance_conversion".localized)
-                    ListSection {
-                        ForEach(viewModel.conversionTokens, id: \.self) { token in
-                            ClickableRow(action: {
-                                viewModel.conversionToken = token
-                            }) {
-                                KFImage.url(URL(string: token.coin.imageUrl))
-                                    .resizable()
-                                    .frame(width: .iconSize32, height: .iconSize32)
-
-                                Text(token.coin.code).themeBody()
-
-                                if viewModel.conversionToken == token {
-                                    Image.checkIcon
+                        .alert(
+                            isPresented: $balanceValueSelectorPresented,
+                            title: "appearance.balance_value".localized,
+                            viewItems: BalancePrimaryValue.allCases.map { .init(text: title(balancePrimaryValue: $0), selected: viewModel.balancePrimaryValue == $0) },
+                            onTap: { index in
+                                guard let index else {
+                                    return
                                 }
+
+                                viewModel.balancePrimaryValue = BalancePrimaryValue.allCases[index]
                             }
+                        )
+
+                        ClickableRow(spacing: .margin8) {
+                            conversionSelectorPresented = true
+                        } content: {
+                            Text("appearance.balance_conversion".localized).textBody()
+                            Spacer()
+                            Text(viewModel.conversionToken?.coin.code ?? "").textSubhead1()
+                            Image("arrow_small_down_20").themeIcon()
                         }
-                    }
-                }
-
-                VStack(spacing: 0) {
-                    ListSectionHeader(text: "appearance.balance_value".localized)
-                    ListSection {
-                        ForEach(BalancePrimaryValue.allCases, id: \.self) { balancePrimaryValue in
-                            ClickableRow(action: {
-                                viewModel.balancePrimaryValue = balancePrimaryValue
-                            }) {
-                                VStack(spacing: 1) {
-                                    Text(balancePrimaryValue.title).themeBody()
-                                    Text(balancePrimaryValue.subtitle).themeSubhead2()
+                        .alert(
+                            isPresented: $conversionSelectorPresented,
+                            title: "appearance.balance_conversion".localized,
+                            viewItems: viewModel.conversionTokens.map { .init(text: $0.coin.code, selected: viewModel.conversionToken == $0) },
+                            onTap: { index in
+                                guard let index else {
+                                    return
                                 }
 
-                                if viewModel.balancePrimaryValue == balancePrimaryValue {
-                                    Image.checkIcon
-                                }
+                                viewModel.conversionToken = viewModel.conversionTokens[index]
                             }
-                        }
+                        )
                     }
                 }
 
@@ -164,6 +176,7 @@ struct AppearanceView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("appearance.title".localized)
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     func title(themeMode: ThemeMode) -> String {
@@ -174,11 +187,17 @@ struct AppearanceView: View {
         }
     }
 
-    func icon(themeMode: ThemeMode) -> Image {
-        switch themeMode {
-        case .system: return Image("settings_24")
-        case .dark: return Image("dark_24")
-        case .light: return Image("light_24")
+    func title(balancePrimaryValue: BalancePrimaryValue) -> String {
+        switch balancePrimaryValue {
+        case .coin: return "appearance.balance_value.coin_fiat".localized
+        case .currency: return "appearance.balance_value.fiat_coin".localized
+        }
+    }
+
+    func title(priceChangeMode: PriceChangeMode) -> String {
+        switch priceChangeMode {
+        case .hour24: return "appearance.price_change.24h".localized
+        case .midnightUtc: return "appearance.price_change.midnight_utc".localized
         }
     }
 }
