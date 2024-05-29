@@ -1509,9 +1509,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> About App
 
 "settings.about_app.title" = "Sobre o App";
-"settings.about_app.app_name" = "Carteira %@";
-"settings.about_app.description" = "A carteira %@ foi construída para aqueles que buscam investir e armazenar criptomoedas de forma privada e independente.\n\nÉ uma carteira não-custódia, peer-to-peer onde apenas o usuário tem controle sobre os fundos. Não coleta nenhum dado e mantém o usuário independente ao não bloquear os fundos do usuário para um aplicativo específico de carteira.\n\nA carteira %@ é totalmente de código aberto e qualquer um pode confirmar que o aplicativo funciona exatamente como afirma.";
-"settings.about_app.whats_new" = "O que há de novo";
+"settings.about_app.app_version" = "App Version";
 "settings.about_app.website" = "Site";
 
 // Settings -> About App -> Contact
