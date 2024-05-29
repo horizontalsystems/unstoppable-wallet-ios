@@ -42,9 +42,11 @@ extension CellBuilderNew.CellElement { // prepared cell elements for most freque
                 if let image = image.image { // setup local image
                     component.imageView.image = image
                 } else if let url = image.url { // setup global url with placeholder
-                    component.imageView.setImage(withUrlString: url, placeholder: image.placeholder.flatMap {
-                        UIImage(named: $0)
-                    })
+                    component.imageView.setImage(
+                        withUrlString: url,
+                        placeholder: image.placeholder.flatMap { UIImage(named: $0) },
+                        alternativeUrlString: image.alternativeUrlString
+                    )
                 } else {
                     component.isHidden = true
                 }
@@ -84,12 +86,13 @@ extension CellBuilderNew.CellElement { // prepared cell elements for most freque
 
 extension CellBuilderNew.CellElement {
     struct Image {
-        static func local(_ image: UIImage?) -> Self { Image(image: image, url: nil, placeholder: nil) }
-        static func url(_ url: String?, placeholder: String? = nil) -> Self { Image(image: nil, url: url, placeholder: placeholder) }
+        static func local(_ image: UIImage?) -> Self { Image(image: image, url: nil, placeholder: nil, alternativeUrlString: nil) }
+        static func url(_ url: String?, placeholder: String? = nil, alternativeUrlString: String? = nil) -> Self { Image(image: nil, url: url, placeholder: placeholder, alternativeUrlString: alternativeUrlString) }
 
         let image: UIImage?
         let url: String?
         let placeholder: String?
+        let alternativeUrlString: String?
     }
 
     enum ImageSize {

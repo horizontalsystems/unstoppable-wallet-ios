@@ -300,15 +300,13 @@ struct MultiSwapView: View {
     @ViewBuilder private func selectorButton(token: Token?, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: .margin8) {
-                KFImage.url(token.flatMap {
-                    URL(string: $0.coin.imageUrl)
-                })
-                .resizable()
-                .placeholder {
-                    Circle().fill(Color.themeSteel20)
-                }
-                .clipShape(Circle())
-                .frame(width: .iconSize32, height: .iconSize32)
+                KFImage.url(token.map(\.coin))
+                    .resizable()
+                    .placeholder {
+                        Circle().fill(Color.themeSteel20)
+                    }
+                    .clipShape(Circle())
+                    .frame(width: .iconSize32, height: .iconSize32)
 
                 if let token {
                     VStack(alignment: .leading, spacing: 1) {

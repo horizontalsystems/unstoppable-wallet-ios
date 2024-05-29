@@ -28,7 +28,7 @@ struct MultiSwapTokenSelectView: View {
                             currentToken = item.token
                             isPresented = false
                         }) {
-                            KFImage.url(URL(string: item.token.coin.imageUrl))
+                            KFImage.url(item.token.coin)
                                 .resizable()
                                 .placeholder {
                                     Image(item.token.placeholderImageName)

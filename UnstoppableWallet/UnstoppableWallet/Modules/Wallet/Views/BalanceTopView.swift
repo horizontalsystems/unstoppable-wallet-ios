@@ -104,6 +104,7 @@ class BalanceTopView: UIView {
         coinIconView.bind(
             iconUrlString: viewItem.iconUrlString,
             placeholderIconName: viewItem.placeholderIconName,
+            alternativeUrlString: viewItem.alternativeUrlString,
             spinnerProgress: viewItem.syncSpinnerProgress,
             indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
             failViewVisible: viewItem.failedImageViewVisible,

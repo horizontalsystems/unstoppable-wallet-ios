@@ -60,7 +60,7 @@ class SendEvmViewController: ThemeViewController {
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)
         }
-        iconImageView.setImage(withUrlString: viewModel.token.coin.imageUrl, placeholder: UIImage(named: viewModel.token.placeholderImageName))
+        iconImageView.setImage(withUrlString: viewModel.token.coin.imageUrl, placeholder: UIImage(named: viewModel.token.placeholderImageName), alternativeUrlString: viewModel.token.coin.image)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

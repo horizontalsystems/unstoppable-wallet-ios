@@ -88,7 +88,7 @@ extension ReceiveSelectCoinViewController: SectionsDataSource {
 
                     return tableView.universalRow62(
                         id: viewItem.uid,
-                        image: .url(viewItem.imageUrl, placeholder: "placeholder_circle_32"),
+                        image: .url(viewItem.imageUrl, placeholder: "placeholder_circle_32", alternativeUrlString: viewItem.alternativeUrlString),
                         title: .body(viewItem.title),
                         description: .subhead2(viewItem.description),
                         backgroundStyle: .transparent,

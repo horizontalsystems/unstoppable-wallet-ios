@@ -15,7 +15,7 @@ enum SendField {
         switch self {
         case let .amount(title, token, coinValueType, currencyValue, type):
             ListRow {
-                KFImage.url(URL(string: token.coin.imageUrl))
+                KFImage.url(token.coin)
                     .resizable()
                     .placeholder {
                         Circle().fill(Color.themeSteel20)

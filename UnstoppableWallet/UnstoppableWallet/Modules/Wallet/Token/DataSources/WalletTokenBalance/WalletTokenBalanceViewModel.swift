@@ -140,6 +140,7 @@ extension WalletTokenBalanceViewModel {
         let isMainNet: Bool
         let iconUrlString: String?
         let placeholderIconName: String
+        let alternativeUrlString: String?
 
         let syncSpinnerProgress: Int?
         let indefiniteSearchCircle: Bool

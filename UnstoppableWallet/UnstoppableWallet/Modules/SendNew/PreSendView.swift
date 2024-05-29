@@ -71,7 +71,7 @@ struct PreSendView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 if showIcon {
-                    KFImage.url(URL(string: viewModel.token.coin.imageUrl))
+                    KFImage.url(viewModel.token.coin)
                         .resizable()
                         .frame(width: .iconSize24, height: .iconSize24)
                 }

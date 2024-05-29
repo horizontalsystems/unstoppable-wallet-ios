@@ -2920,6 +2920,10 @@
 		D0A6902C2C00ACF600E59296 /* CautionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */; };
 		D0A6902E2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
 		D0A6902F2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
+		D0A690312C05B27700E59296 /* KingFisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690302C05B27700E59296 /* KingFisher.swift */; };
+		D0A690322C05B27700E59296 /* KingFisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690302C05B27700E59296 /* KingFisher.swift */; };
+		D0A690342C05D01C00E59296 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690332C05D01C00E59296 /* UIImageView.swift */; };
+		D0A690352C05D01C00E59296 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690332C05D01C00E59296 /* UIImageView.swift */; };
 		D0A980A92B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AA2B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AF2B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */; };
@@ -4899,6 +4903,8 @@
 		D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationService.swift; sourceTree = "<group>"; };
 		D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSource.swift; sourceTree = "<group>"; };
 		D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSourceViewModel.swift; sourceTree = "<group>"; };
+		D0A690302C05B27700E59296 /* KingFisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisher.swift; sourceTree = "<group>"; };
+		D0A690332C05D01C00E59296 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepChangeButtonsView.swift; sourceTree = "<group>"; };
 		D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0C2260F2A66A3BC007101F7 /* PersonalSupportModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportModule.swift; sourceTree = "<group>"; };
@@ -5494,6 +5500,8 @@
 				ABC9AF26FDCB363793BF66E1 /* Integer.swift */,
 				ABC9A776346AF62265896CA1 /* CellElement.swift */,
 				11B353356496AA219686B993 /* UIWindow.swift */,
+				D0A690302C05B27700E59296 /* KingFisher.swift */,
+				D0A690332C05D01C00E59296 /* UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -10794,6 +10802,7 @@
 				ABC9A04655D81FE5198B786F /* SendEip1155ViewModel.swift in Sources */,
 				ABC9A0B58626A1E0C4248162 /* SendEip1155Service.swift in Sources */,
 				ABC9A140E5EF9D0AD4234689 /* SendEip1155ViewController.swift in Sources */,
+				D0A690352C05D01C00E59296 /* UIImageView.swift in Sources */,
 				ABC9AF1729BA19223BB39E06 /* SendEip721ViewModel.swift in Sources */,
 				ABC9AFA3570AE29F26623FBF /* SendEip721ViewController.swift in Sources */,
 				ABC9A95E667DD7BD26602D8E /* SendEip721Service.swift in Sources */,
@@ -11150,6 +11159,7 @@
 				6BE8A07F2ADE2F950012DE7F /* CurrencyValue.swift in Sources */,
 				11B350CA618DD7BBA452FC33 /* AppearanceViewModel.swift in Sources */,
 				ABC9A13D78DD5F176A170B65 /* FullBackup.swift in Sources */,
+				D0A690322C05B27700E59296 /* KingFisher.swift in Sources */,
 				ABC9AA39ED35D6EF41A5353D /* SettingsBackup.swift in Sources */,
 				ABC9AE1E60CABA0101D62738 /* FullCoin.swift in Sources */,
 				ABC9A6A9C28C95352232B062 /* ThemeMode.swift in Sources */,
@@ -12372,6 +12382,7 @@
 				11B355028142F82D805752AF /* NftDoubleCell.swift in Sources */,
 				11B35FF1D956D812F815FA86 /* NftImageView.swift in Sources */,
 				11B35DF3813AEB74E254A05A /* NftAssetView.swift in Sources */,
+				D0A690342C05D01C00E59296 /* UIImageView.swift in Sources */,
 				ABC9A13DB3ADB580D59F66E4 /* SendEip1155ViewModel.swift in Sources */,
 				ABC9A4CD35CF43C88EC13909 /* SendEip1155Service.swift in Sources */,
 				ABC9ACA04EBC7AF903A01FE3 /* SendEip1155ViewController.swift in Sources */,
@@ -12728,6 +12739,7 @@
 				11B35B6E11AE440A79D53E0F /* BlockchainSettingsView.swift in Sources */,
 				11B35245CD0D5B0E44E413F4 /* AppearanceView.swift in Sources */,
 				6BE8A07E2ADE2F950012DE7F /* CurrencyValue.swift in Sources */,
+				D0A690312C05B27700E59296 /* KingFisher.swift in Sources */,
 				6B2907292AF0CB8A006157D6 /* EventHandler.swift in Sources */,
 				11B35A18AA61F8C06AB1C15B /* AppearanceViewModel.swift in Sources */,
 				ABC9A2C4301447E0EEA1D16F /* FullBackup.swift in Sources */,
@@ -13929,7 +13941,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.6;
+				version = 3.0.7;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {

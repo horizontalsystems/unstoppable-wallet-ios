@@ -49,12 +49,12 @@ class BalanceCoinIconHolder: UIView {
         onTapError?()
     }
 
-    func bind(iconUrlString: String?, placeholderIconName: String, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> Void)?) {
+    func bind(iconUrlString: String?, placeholderIconName: String, alternativeUrlString: String?, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> Void)?) {
         self.onTapError = onTapError
 
         coinIconImageView.isHidden = iconUrlString == nil
         if let iconUrlString {
-            coinIconImageView.setImage(withUrlString: iconUrlString, placeholder: UIImage(named: placeholderIconName))
+            coinIconImageView.setImage(withUrlString: iconUrlString, placeholder: UIImage(named: placeholderIconName), alternativeUrlString: alternativeUrlString)
         } else {
             coinIconImageView.image = nil
         }

@@ -146,7 +146,11 @@ extension SwapCoinCardCell {
 
     private func set(tokenViewItem: SwapCoinCardViewModel.TokenViewItem?) {
         if let urlString = tokenViewItem?.iconUrlString {
-            tokenIconImageView.setImage(withUrlString: urlString, placeholder: tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) })
+            tokenIconImageView.setImage(
+                withUrlString: urlString,
+                placeholder: tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) },
+                alternativeUrlString: tokenViewItem?.iconAlternativeUrlString
+            )
         } else {
             tokenIconImageView.image = tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) }
         }

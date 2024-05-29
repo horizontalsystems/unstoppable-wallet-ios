@@ -27,7 +27,7 @@ struct CoinOverviewView: View {
                     ScrollView {
                         VStack(spacing: 0) {
                             HStack(spacing: .margin16) {
-                                KFImage.url(URL(string: coin.imageUrl))
+                                KFImage.url(coin)
                                     .resizable()
                                     .placeholder {
                                         Circle().fill(Color.themeSteel20)

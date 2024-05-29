@@ -214,7 +214,8 @@ extension CoinOverviewViewItemFactory {
                 name: coin.name,
                 marketCapRank: marketCapRank,
                 imageUrl: coin.imageUrl,
-                imagePlaceholderName: "placeholder_circle_32"
+                imagePlaceholderName: "placeholder_circle_32",
+                alternativeUrlString: coin.image
             ),
 
             marketCapRank: marketCapRank,

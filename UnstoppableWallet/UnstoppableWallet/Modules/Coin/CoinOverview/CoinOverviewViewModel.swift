@@ -107,6 +107,7 @@ extension CoinOverviewViewModel {
         let marketCapRank: String?
         let imageUrl: String
         let imagePlaceholderName: String
+        let alternativeUrlString: String?
     }
 
     struct ViewItem {

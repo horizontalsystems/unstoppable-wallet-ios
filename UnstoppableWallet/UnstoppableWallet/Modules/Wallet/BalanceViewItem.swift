@@ -11,6 +11,7 @@ struct BalanceTopViewItem {
     let isMainNet: Bool
     let iconUrlString: String?
     let placeholderIconName: String
+    let alternativeUrlString: String?
     let name: String
     let blockchainBadge: String?
 

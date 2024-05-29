@@ -163,9 +163,10 @@ extension ManageWalletsViewController: SectionsDataSource {
     private func rootElement(index: Int, viewItem: ManageWalletsViewModel.ViewItem, forceToggleOn: Bool? = nil) -> CellBuilderNew.CellElement {
         .hStack([
             .image32 { component in
-                component.setImage(
-                    urlString: viewItem.imageUrl,
-                    placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) }
+                component.imageView.setImage(
+                    withUrlString: viewItem.imageUrl,
+                    placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) },
+                    alternativeUrlString: viewItem.alternativeImageUrl
                 )
             },
             .vStackCentered([

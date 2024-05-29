@@ -31,6 +31,7 @@ class ManageWalletsViewModel {
             uid: String(item.token.hashValue),
             imageUrl: token.coin.imageUrl,
             placeholderImageName: token.placeholderImageName,
+            alternativeImageUrl: token.coin.image,
             title: token.coin.code,
             subtitle: token.coin.name,
             badge: item.token.badge,
@@ -121,6 +122,7 @@ extension ManageWalletsViewModel {
         let uid: String
         let imageUrl: String
         let placeholderImageName: String?
+        let alternativeImageUrl: String?
         let title: String
         let subtitle: String
         let badge: String?

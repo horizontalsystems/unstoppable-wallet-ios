@@ -36,7 +36,7 @@ struct TransactionTokenSelectView: View {
                                 viewModel.set(currentToken: token)
                                 presentationMode.wrappedValue.dismiss()
                             }) {
-                                KFImage.url(URL(string: token.coin.imageUrl))
+                                KFImage.url(token.coin)
                                     .resizable()
                                     .placeholder { Image(token.placeholderImageName) }
                                     .frame(width: .iconSize32, height: .iconSize32)

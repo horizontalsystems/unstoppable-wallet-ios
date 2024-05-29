@@ -41,6 +41,7 @@ class WalletTokenBalanceViewItemFactory {
             isMainNet: item.isMainNet,
             iconUrlString: iconUrlString(coin: item.element.coin, state: state),
             placeholderIconName: item.element.wallet?.token.placeholderImageName ?? "placeholder_circle_32",
+            alternativeUrlString: item.element.coin?.image,
             syncSpinnerProgress: syncSpinnerProgress(state: state),
             indefiniteSearchCircle: indefiniteSearchCircle(state: state),
             failedImageViewVisible: failedImageViewVisible(state: state),

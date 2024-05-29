@@ -22,7 +22,7 @@ class ReceiveSelectCoinViewModel {
 
     private func sync(coins: [FullCoin]) {
         viewItems = coins.map { fullCoin -> ViewItem in
-            ViewItem(uid: fullCoin.coin.uid, imageUrl: fullCoin.coin.imageUrl, title: fullCoin.coin.code, description: fullCoin.coin.name)
+            ViewItem(uid: fullCoin.coin.uid, imageUrl: fullCoin.coin.imageUrl, title: fullCoin.coin.code, description: fullCoin.coin.name, alternativeUrlString: fullCoin.coin.image)
         }
     }
 }
@@ -45,5 +45,6 @@ extension ReceiveSelectCoinViewModel {
         let imageUrl: String?
         let title: String
         let description: String
+        let alternativeUrlString: String?
     }
 }

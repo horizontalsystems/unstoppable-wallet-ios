@@ -69,6 +69,10 @@ extension CexWithdrawViewModel {
         service.cexAsset.coin?.imageUrl ?? ""
     }
 
+    var coinImageAlternativeUrl: String? {
+        service.cexAsset.coin?.image
+    }
+
     var selectedNetworkIndex: Int? {
         service.networks.firstIndex(where: { $0.id == service.selectedNetwork.id })
     }
