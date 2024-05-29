@@ -228,7 +228,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "extended_key.purpose" = "Zweck";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Account";
-"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
+"extended_key.account.description" = "Dies ist eine Einstellung für fortgeschrittene Benutzer. Wenn Sie versuchen, ein Wallet (über einen erweiterten privaten Schlüssel) oder eine Transaktionsliste (über einen erweiterten öffentlichen Schlüssel) zu importieren, benötigen Sie das Konto 0.";
 "extended_key.tap_to_show" = "Zum Anzeigen des erweiterten privaten Schlüssels tippen";
 
 // Backup
@@ -512,7 +512,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
+"send.unspent_outputs.description" = "Manuell die UTxO auswählen, um die Mittel im Guthaben auszugeben";
 "send.unspent_outputs.send_to" = "Senden an";
 "send.unspent_outputs.change" = "Ändern";
 
@@ -521,7 +521,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "approve.confirmation.spender" = "Spender";
 
 "send.enter_amount" = "Betrag eingeben";
-"send.enter_address" = "Enter Address";
+"send.enter_address" = "Adresse eingeben";
 "send.invalid_address" = "Ungültige Adresse";
 "send.token_not_enabled" = "Token nicht aktiviert";
 "send.token_syncing" = "Token-Synchronisation";
@@ -701,43 +701,43 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.defi_tvl" = "TVL in DeFi";
 
 "market.global.market_cap" = "Total Cap";
-"market.global.volume" = "24h Vol.";
-"market.global.btc_dominance" = "BTC Dominance";
+"market.global.volume" = "24 Std. Vol.";
+"market.global.btc_dominance" = "BTC-Dominanz";
 "market.global.etf_inflow" = "ETF Inflow";
 "market.global.tvl_in_defi" = "TVL in DeFi";
 
 "market.tab.news" = "Nachrichten";
-"market.tab.coins" = "Coins";
+"market.tab.coins" = "Münzen";
 "market.tab.watchlist" = "Merkliste";
-"market.tab.platforms" = "Platforms";
-"market.tab.pairs" = "Pairs";
+"market.tab.platforms" = "Plattformen";
+"market.tab.pairs" = "Paare";
 "market.tab.sectors" = "Sektoren";
 
 "market.sort_by.title" = "Sortieren nach";
 "market.sort_by.manual" = "Manuell";
 "market.sort_by.highest_cap" = "Höchste Obergrenze";
 "market.sort_by.lowest_cap" = "Niedrigste Obergrenze";
-"market.sort_by.gainers" = "Gainers";
-"market.sort_by.losers" = "Losers";
+"market.sort_by.gainers" = "Gewinner";
+"market.sort_by.losers" = "Verlierer";
 "market.sort_by.highest_volume" = "Höchste Lautstärke";
 "market.sort_by.lowest_volume" = "Geringste Lautstärke";
 
-"market.top_coins.title" = "Coins";
+"market.top_coins.title" = "Münzen";
 "market.top_coins" = "Top %@";
 
 "market.time_period.title" = "Zeitraum";
-"market.time_period.24h" = "24 Hours";
+"market.time_period.24h" = "24 Stunden";
 "market.time_period.1d" = "1 Tag";
 "market.time_period.1w" = "1Week";
 "market.time_period.2w" = "2 Wochen";
 "market.time_period.1m" = "1 Monat";
-"market.time_period.3m" = "3 Months";
+"market.time_period.3m" = "3 Monate";
 "market.time_period.6m" = "6 Monate";
 "market.time_period.1y" = "1 Jahr";
-"market.time_period.2y" = "2 Years";
-"market.time_period.5y" = "5 Years";
+"market.time_period.2y" = "2 Jahre";
+"market.time_period.5y" = "5 Jahre";
 "market.time_period.24h.short" = "24Std";
-"market.time_period.1d.short" = "1D";
+"market.time_period.1d.short" = "1T";
 "market.time_period.1w.short" = "1W";
 "market.time_period.2w.short" = "2W";
 "market.time_period.1m.short" = "1M";
@@ -803,15 +803,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market_discovery.not_found" = "Keine Ergebnisse gefunden";
 
 "market_watchlist.empty.caption" = "Ihre Beobachtungsliste ist leer.";
-"market.watchlist.signals" = "Signals";
-"market.watchlist.empty" = "Your watchlist is empty";
-"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
-"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
-"market.watchlist.signals.buy.description" = "Likely price increase in near future";
-"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
-"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
-"market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
-"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
+"market.watchlist.signals" = "Signale";
+"market.watchlist.empty" = "Ihre Beobachtungsliste ist leer";
+"market.watchlist.signals.description" = "Die folgenden Signale basieren auf den Bollinger-Bändern und dem RSI-technischen Preisindikator über etwa die letzten 30 Tage. Diese Signale sind algorithmisch und können sich häufig ändern.";
+"market.watchlist.signals.strong_buy.description" = "Hohe Zuversicht in Preisanstieg";
+"market.watchlist.signals.buy.description" = "Voraussichtlicher Preisanstieg in naher Zukunft";
+"market.watchlist.signals.neutral.description" = "Kein klarer Trend, der Markt befindet sich im Gleichgewicht";
+"market.watchlist.signals.sell.description" = "Voraussichtlicher Preisanstieg in naher Zukunft";
+"market.watchlist.signals.strong_sell.description" = "Hohe Wahrscheinlichkeit für Preissenkungen";
+"market.watchlist.signals.risky.description" = "Erhöhtes Risikoniveau, erfordert Vorsicht";
 "market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
 "market.watchlist.signals.turn_on" = "Turn On";
 
@@ -1509,9 +1509,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Settings -> About App
 
 "settings.about_app.title" = "Über die App";
-"settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" = "Die Brieftasche %@ wurde für diejenigen gebaut, die Kryptowährungen auf private und unabhängige Weise investieren und speichern möchten.\n\nEs handelt sich um eine nicht-Custodial, Peer-to-Peer-Wallet, bei der nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem er das Guthaben des Benutzers nicht an eine bestimmte Wallet-App sperrt.\n\nDie %@ Brieftasche ist vollständig Open-Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.";
-"settings.about_app.whats_new" = "Das ist neu";
+"settings.about_app.app_version" = "App Version";
 "settings.about_app.website" = "Website";
 
 // Settings -> About App -> Contact
@@ -1542,7 +1540,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "appearance.hide_markets" = "Hide Markets";
 "appearance.price_change" = "Preisänderung";
 "appearance.price_change.24h" = "24Std";
-"appearance.price_change.midnight_utc" = "Midnight UTC";
+"appearance.price_change.midnight_utc" = "Mitternacht UTC";
 
 "appearance.launch_screen" = "Startbildschirm";
 "appearance.launch_screen.auto" = "Auto";
@@ -2010,7 +2008,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "nft.activity.empty_list" = "Noch keine Artikel-Aktivität";
 "nft.activity.event_types" = "Ereignistypen";
 "nft.activity.event_type.all" = "Alle Ereignisse";
-"nft.activity.event_type.sale" = "Sale";
+"nft.activity.event_type.sale" = "Kauf";
 "nft.activity.event_type.transfer" = "Überweisung";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Liste";
