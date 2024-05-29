@@ -1507,9 +1507,7 @@
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
-"settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" =  "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
-"settings.about_app.whats_new" = "What's New";
+"settings.about_app.app_version" = "App Version";
 "settings.about_app.website" = "Website";
 
 // Settings -> About App -> Contact

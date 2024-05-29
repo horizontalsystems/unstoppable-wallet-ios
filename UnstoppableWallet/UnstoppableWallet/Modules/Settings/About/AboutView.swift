@@ -8,95 +8,76 @@ struct AboutView: View {
 
     var body: some View {
         ScrollableThemeView {
-            VStack(spacing: .margin24) {
-                HStack(spacing: .margin16) {
-                    Image(uiImage: UIImage(named: AppIcon.main.imageName) ?? UIImage())
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
-                        .frame(width: 72, height: 72)
-
-                    VStack(spacing: .margin8) {
-                        Text("settings.about_app.app_name".localized(AppConfig.appName)).themeHeadline1()
-                        Text("version".localized(viewModel.appVersion)).themeSubhead2()
-                    }
-                }
-                .padding(.horizontal, .margin24)
-
-                Text("settings.about_app.description".localized(AppConfig.appName, AppConfig.appName))
-                    .font(.themeBody)
-                    .foregroundColor(.themeBran)
-                    .padding(.horizontal, .margin32)
-                    .padding(.vertical, .margin12)
-
-                VStack(spacing: .margin32) {
-                    if let releaseNotesUrl = viewModel.releaseNotesUrl {
-                        ListSection {
-                            NavigationRow(destination: {
-                                MarkdownModule.gitReleaseNotesMarkdownView(url: releaseNotesUrl, presented: false)
-                                    .ignoresSafeArea()
-                            }) {
-                                Image("circle_information_24").themeIcon()
-                                Text("settings.about_app.whats_new".localized).themeBody()
-                                Image.disclosureIcon
-                            }
-                        }
-                    }
-
+            VStack(spacing: .margin32) {
+                if let releaseNotesUrl = viewModel.releaseNotesUrl {
                     ListSection {
-                        NavigationRow(destination: {
-                            AppStatusModule.view()
-                        }) {
-                            Image("app_status_24").themeIcon()
-                            Text("app_status.title".localized).themeBody()
-                            Image.disclosureIcon
-                        }
-
-                        ClickableRow(action: {
-                            termsPresented = true
-                        }) {
-                            Image("unordered_24").themeIcon()
-                            Text("terms.title".localized).themeBody()
-
-                            if viewModel.termsAlert {
-                                Image("warning_2_20").themeIcon(color: .themeLucian).padding(.trailing, -.margin8)
-                            }
-
-                            Image.disclosureIcon
-                        }
-
-                        NavigationRow(destination: {
-                            PrivacyPolicyView(config: .privacy)
-                                .navigationTitle(PrivacyPolicyViewController.Config.privacy.title)
+                        NavigationRow(spacing: .margin8, destination: {
+                            MarkdownModule.gitReleaseNotesMarkdownView(url: releaseNotesUrl, presented: false)
                                 .ignoresSafeArea()
                         }) {
-                            Image("user_24").themeIcon()
-                            Text("settings.privacy".localized).themeBody()
-                            Image.disclosureIcon
-                        }
-                    }
-
-                    ListSection {
-                        ClickableRow(action: {
-                            linkUrl = URL(string: "https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)")
-                        }) {
-                            Image("github_24").themeIcon()
-                            Text("GitHub").themeBody()
-                            Image.disclosureIcon
-                        }
-
-                        ClickableRow(action: {
-                            linkUrl = URL(string: AppConfig.appWebPageLink)
-                        }) {
-                            Image("globe_24").themeIcon()
-                            Text("settings.about_app.website".localized).themeBody()
+                            HStack(spacing: .margin16) {
+                                Image("circle_information_24").themeIcon()
+                                Text("settings.about_app.app_version".localized).textBody()
+                            }
+                            Spacer()
+                            Text(viewModel.appVersion).textSubhead1()
                             Image.disclosureIcon
                         }
                     }
                 }
-                .padding(.horizontal, .margin16)
+
+                ListSection {
+                    NavigationRow(destination: {
+                        AppStatusModule.view()
+                    }) {
+                        Image("app_status_24").themeIcon()
+                        Text("app_status.title".localized).themeBody()
+                        Image.disclosureIcon
+                    }
+
+                    ClickableRow(action: {
+                        termsPresented = true
+                    }) {
+                        Image("unordered_24").themeIcon()
+                        Text("terms.title".localized).themeBody()
+
+                        if viewModel.termsAlert {
+                            Image("warning_2_20").themeIcon(color: .themeLucian).padding(.trailing, -.margin8)
+                        }
+
+                        Image.disclosureIcon
+                    }
+
+                    NavigationRow(destination: {
+                        PrivacyPolicyView(config: .privacy)
+                            .navigationTitle(PrivacyPolicyViewController.Config.privacy.title)
+                            .ignoresSafeArea()
+                    }) {
+                        Image("user_24").themeIcon()
+                        Text("settings.privacy".localized).themeBody()
+                        Image.disclosureIcon
+                    }
+                }
+
+                ListSection {
+                    ClickableRow(action: {
+                        linkUrl = URL(string: "https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)")
+                    }) {
+                        Image("github_24").themeIcon()
+                        Text("GitHub").themeBody()
+                        Image.disclosureIcon
+                    }
+
+                    ClickableRow(action: {
+                        linkUrl = URL(string: AppConfig.appWebPageLink)
+                    }) {
+                        Image("globe_24").themeIcon()
+                        Text("settings.about_app.website".localized).themeBody()
+                        Image.disclosureIcon
+                    }
+                }
             }
-            .padding(EdgeInsets(top: .margin24, leading: 0, bottom: .margin32, trailing: 0))
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             .sheet(isPresented: $termsPresented) {
                 TermsModule.view()
                     .ignoresSafeArea()
@@ -107,5 +88,6 @@ struct AboutView: View {
             }
         }
         .navigationTitle("settings.about_app.title".localized)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
