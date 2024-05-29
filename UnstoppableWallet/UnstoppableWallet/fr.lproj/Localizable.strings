@@ -228,7 +228,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "extended_key.purpose" = "Objectif";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Compte";
-"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
+"extended_key.account.description" = "Il s'agit d'un paramètre pour les utilisateurs avancés. Si vous essayez d'importer un portefeuille (via une clé privée étendue) ou une liste de transactions (via une clé publique étendue), vous avez besoin du compte 0.";
 "extended_key.tap_to_show" = "Appuyez pour afficher extended private key";
 
 // Backup
@@ -351,8 +351,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.frozen" = "Gelée";
 "balance.token.frozen.info.title" = "Titre gelé";
 "balance.token.frozen.info.description" = "Texte de description gelé";
-"balance.token.account.inactive.title" = "Account Not Active";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
+"balance.token.account.inactive.title" = "Compte non actif";
+"balance.token.account.inactive.description" = "Les nouveaux portefeuilles TRON nécessitent un dépôt d'au moins 1 TRX pour devenir actifs. Les portefeuilles inactifs peuvent recevoir et détenir des jetons, mais les soldes ne seront pas corrigés tant qu'ils ne seront pas activés.";
 
 // Account switcher
 
@@ -447,8 +447,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "L'ordre des sorties de transaction est aléatoire à chaque transaction. Parfois, le changement peut être la première sortie, parfois la deuxième. Si un utilisateur fait confiance au développeur de l'application, alors considérez cela comme une option recommandée.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Déterministe";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Il existe une norme communément acceptée pour l'ordonnancement des sorties de transaction, connue sous le nom de BIP69 (Bitcoin Improvement Proposal 69). Dans les portefeuilles open source, cette norme garantit que les utilisateurs de portefeuille n'ont pas besoin de faire confiance à la manière dont les développeurs de l'application implémentent l'ordonnancement des sorties. Comme cette norme est relativement récente, peu de portefeuilles l'ont encore mise en œuvre. Par conséquent, il est quelque peu possible de déterminer sur la blockchain si une transaction a été envoyée depuis un portefeuille qui utilise cette norme ou non.";
-"send.select_all" = "Select All";
-"send.unselect_all" = "Unselect All";
+"send.select_all" = "Tout sélectionner";
+"send.unselect_all" = "Désélectionner tout";
 
 "send.confirmation.title" = "Confirmer";
 "send.confirmation.you_send" = "Vous envoyez";
@@ -466,14 +466,14 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Remplacer par frais";
 "send.confirmation.replaced_transactions" = "Transactions remplacées";
-"send.confirmation.input" = "Input";
+"send.confirmation.input" = "Entrées";
 
-"send.confirmation.sync_failed" = "Sync Failed";
-"send.confirmation.invalid_data" = "Invalid Data";
+"send.confirmation.sync_failed" = "Échec de synchronisation";
+"send.confirmation.invalid_data" = "Données invalides";
 "send.confirmation.refresh" = "Actualiser";
 "send.confirmation.please_wait" = "Veuillez patienter";
-"send.confirmation.expires_in" = "Expires in %@";
-"send.confirmation.expired" = "Expired";
+"send.confirmation.expires_in" = "Expire dans %@";
+"send.confirmation.expired" = "Expiré";
 "send.confirmation.slide_to_send" = "Glisser pour envoyer";
 "send.confirmation.sending" = "En attente";
 "send.confirmation.sent" = "Envoyée";
@@ -512,7 +512,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
+"send.unspent_outputs.description" = "Choisissez manuellement les UTxO à dépenser les fonds du solde";
 "send.unspent_outputs.send_to" = "Envoyer à";
 "send.unspent_outputs.change" = "Changer";
 
@@ -1538,22 +1538,26 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "appearance.theme.dark" = "Sombre";
 "appearance.theme.light" = "Classique";
 
-"appearance.tab_settings" = "Paramètres des onglets";
 "appearance.markets_tab" = "Onglet Marchés";
-"appearance.buttons_show" = "Balance Tab Buttons";
+"appearance.hide_markets" = "Hide Markets";
+"appearance.price_change" = "Variation de prix";
+"appearance.price_change.24h" = "24H";
+"appearance.price_change.midnight_utc" = "Midnight UTC";
+
 "appearance.launch_screen" = "Écran de démarrage";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Solde";
 "appearance.launch_screen.market_overview" = "Vue d'ensemble du marché";
 "appearance.launch_screen.watchlist" = "Liste de suivi";
 
-"appearance.app_icon" = "Icône de l’app";
-
+"appearance.balance_tab" = "Balance Tab";
+"appearance.hide_buttons" = "Hide Buttons";
+"appearance.balance_value" = "Valeur du solde";
+"appearance.balance_value.coin_fiat" = "Coin / Fiat";
+"appearance.balance_value.fiat_coin" = "Fiat / Coin";
 "appearance.balance_conversion" = "Conversion du solde";
 
-"appearance.balance_value" = "Valeur du solde";
-"appearance.balance_value.coin_value" = "Valeur de la pièce";
-"appearance.balance_value.fiat_value" = "Valeur Fiat";
+"appearance.app_icon" = "Icône de l’app";
 
 // Settings -> Contacts
 
