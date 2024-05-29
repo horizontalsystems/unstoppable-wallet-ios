@@ -9,8 +9,8 @@ struct BalanceViewItem {
 
 struct BalanceTopViewItem {
     let isMainNet: Bool
-    let iconUrlString: String?
-    let placeholderIconName: String
+    let coin: Coin?
+    let placeholderIconName: String?
     let name: String
     let blockchainBadge: String?
 
@@ -43,7 +43,7 @@ enum BalanceDiffType {
 extension BalanceTopViewItem: Equatable {
     static func == (lhs: BalanceTopViewItem, rhs: BalanceTopViewItem) -> Bool {
         lhs.isMainNet == rhs.isMainNet &&
-            lhs.iconUrlString == rhs.iconUrlString &&
+            lhs.coin == rhs.coin &&
             lhs.name == rhs.name &&
             lhs.blockchainBadge == rhs.blockchainBadge &&
             lhs.syncSpinnerProgress == rhs.syncSpinnerProgress &&
@@ -100,7 +100,7 @@ extension BalanceViewItem: CustomStringConvertible {
 
 extension BalanceTopViewItem: CustomStringConvertible {
     var description: String {
-        "[iconUrlString: \(iconUrlString ?? "nil"); name: \(name); blockchainBadge: \(blockchainBadge ?? "nil"); syncSpinnerProgress: \(syncSpinnerProgress.map { "\($0)" } ?? "nil"); indefiniteSearchCircle: \(indefiniteSearchCircle); failedImageViewVisible: \(failedImageViewVisible); primaryValue: \(primaryValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); secondaryInfo: \(secondaryInfo)]"
+        "[coin: \(coin?.name ?? "nil"); name: \(name); blockchainBadge: \(blockchainBadge ?? "nil"); syncSpinnerProgress: \(syncSpinnerProgress.map { "\($0)" } ?? "nil"); indefiniteSearchCircle: \(indefiniteSearchCircle); failedImageViewVisible: \(failedImageViewVisible); primaryValue: \(primaryValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); secondaryInfo: \(secondaryInfo)]"
     }
 }
 

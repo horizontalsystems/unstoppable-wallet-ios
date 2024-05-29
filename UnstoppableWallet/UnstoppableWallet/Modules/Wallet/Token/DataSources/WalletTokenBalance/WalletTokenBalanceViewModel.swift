@@ -138,8 +138,8 @@ extension WalletTokenBalanceViewModel {
 
     struct ViewItem {
         let isMainNet: Bool
-        let iconUrlString: String?
-        let placeholderIconName: String
+        let coin: Coin?
+        let placeholderIconName: String?
 
         let syncSpinnerProgress: Int?
         let indefiniteSearchCircle: Bool

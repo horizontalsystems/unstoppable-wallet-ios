@@ -2,6 +2,7 @@ import BigInt
 import Combine
 import Foundation
 import HsExtensions
+import MarketKit
 import RxCocoa
 import RxSwift
 
@@ -65,8 +66,8 @@ extension CexWithdrawViewModel {
         service.cexAsset.coinCode
     }
 
-    var coinImageUrl: String {
-        service.cexAsset.coin?.imageUrl ?? ""
+    var coin: Coin? {
+        service.cexAsset.coin
     }
 
     var selectedNetworkIndex: Int? {

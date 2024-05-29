@@ -53,7 +53,7 @@ class SwapCoinCardViewModel {
     }
 
     private func sync(token: MarketKit.Token?) {
-        tokenViewItemRelay.accept(token.map { TokenViewItem(title: $0.coin.code, iconUrlString: $0.coin.imageUrl, placeholderIconName: $0.placeholderImageName) })
+        tokenViewItemRelay.accept(token.map { TokenViewItem(title: $0.coin.code, coin: $0.coin, placeholderIconName: $0.placeholderImageName) })
     }
 
     private func sync(balance: Decimal?) {
@@ -119,7 +119,7 @@ extension SwapCoinCardViewModel {
 extension SwapCoinCardViewModel {
     struct TokenViewItem {
         let title: String
-        let iconUrlString: String
+        let coin: Coin
         let placeholderIconName: String
     }
 }

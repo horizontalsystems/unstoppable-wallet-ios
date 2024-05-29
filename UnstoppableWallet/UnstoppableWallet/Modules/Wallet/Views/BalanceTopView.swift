@@ -102,7 +102,7 @@ class BalanceTopView: UIView {
 
     func bind(viewItem: BalanceTopViewItem, onTapError: (() -> Void)?) {
         coinIconView.bind(
-            iconUrlString: viewItem.iconUrlString,
+            coin: viewItem.coin,
             placeholderIconName: viewItem.placeholderIconName,
             spinnerProgress: viewItem.syncSpinnerProgress,
             indefiniteSearchCircle: viewItem.indefiniteSearchCircle,

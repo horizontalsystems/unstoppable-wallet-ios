@@ -103,10 +103,8 @@ extension CoinOverviewViewModel {
 
 extension CoinOverviewViewModel {
     struct CoinViewItem {
-        let name: String
         let marketCapRank: String?
-        let imageUrl: String
-        let imagePlaceholderName: String
+        let coin: Coin
     }
 
     struct ViewItem {
