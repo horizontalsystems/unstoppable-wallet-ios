@@ -721,7 +721,7 @@
 "market.sort_by.lowest_volume" = "가장 낮은 거래량";
 
 "market.top_coins.title" = "Coins";
-"market.top_coins" = "Top %@";
+"market.top_coins" = "상위 %@";
 
 "market.time_period.title" = "기간";
 "market.time_period.24h" = "24 Hours";
@@ -1508,9 +1508,7 @@
 // Settings -> About App
 
 "settings.about_app.title" = "앱 정보";
-"settings.about_app.app_name" = "%@ 지갑";
-"settings.about_app.description" = "%@ 지갑은 암호화폐를 개인적이고 독립적인 방식으로 투자하고 보관하려는 사람들을 위해 만들어졌습니다. \n\n이 지갑은 사용자만이 자금에 대한 통제를 갖는 비보관형 P2P 지갑입니다. 데이터를 수집하지 않으며 사용자의 자금을 특정 지갑 앱에 잠그지 않아 독립성을 유지합니다. \n\n%@ 지갑은 완전한 오픈소스이며 누구든지 앱이 주장하는 대로 정확하게 작동하는지 확인할 수 있습니다.";
-"settings.about_app.whats_new" = "새로운 기능";
+"settings.about_app.app_version" = "App Version";
 "settings.about_app.website" = "웹사이트";
 
 // Settings -> About App -> Contact
