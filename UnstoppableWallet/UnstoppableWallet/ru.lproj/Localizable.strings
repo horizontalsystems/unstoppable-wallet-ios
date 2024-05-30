@@ -905,11 +905,6 @@
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.defi_cap.description" = "Общая рыночная стоимость проектов DeFi";
 
-"market.global.tvl_in_defi.title" = "TVL в DeFi";
-"market.global.tvl_in_defi.description" = "Всего заблокировано (TVL) в DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Мультичейн";
-"market.global.tvl_in_defi.filter_by_chain" = "Сортировать по блокчейну";
-
 "market.etf.title" = "Total Net Inflow";
 "market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
 "market.etf.total_net_assets" = "Total Net Assets";
@@ -922,6 +917,13 @@
 "market.market_cap.title" = "Полная рын. кап.";
 "market.market_cap.description" = "Общая рыночная стоимость всех криптовалют";
 "market.market_cap.market_cap" = "Рын. капитализация";
+
+"market.tvl_in_defi.title" = "TVL в DeFi";
+"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.tvl" = "TVL";
+"market.tvl_in_defi.multi_chain" = "Multi-chain";
+"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.filter.all" = "Все";
 
 "market.volume.title" = "Volume";
 "market.volume.description" = "24-часовой объем крипторынка";
