@@ -228,6 +228,7 @@
 "extended_key.purpose" = "目的";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "账户";
+"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
 "extended_key.tap_to_show" = "点击點擊顯示 extended private key 显示扩展私钥";
 
 // Backup
@@ -318,7 +319,6 @@
 "balance.downloading_blocks" = "正在下载块";
 "balance.scanning_blocks" = "扫描块";
 "balance.enhancing_transactions" = "加强交易";
-"wait_for_synchronization" = "等待同步";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
@@ -351,6 +351,8 @@
 "balance.token.frozen" = "冰雪奇缘";
 "balance.token.frozen.info.title" = "冰冻标题";
 "balance.token.frozen.info.description" = "冻结描述文本";
+"balance.token.account.inactive.title" = "Account Not Active";
+"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
 
 // Account switcher
 
@@ -445,6 +447,8 @@
 "send.transaction_inputs_outputs_info.shuffle.description" = "交易输出的顺序是随机的每次交易。有时更改可以是第一次输出，有时可以是第二次。 如果用户信任应用程序的开发者，则考虑这个推荐选项。";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "存在一个公认的交易输出排序标准（称为BIP69）。在开源钱包中，该标准确保钱包用户不需要信任应用开发者如何实现输出的排序。由于这个标准是新的，目前还没有多少钱包实施它。因此，在区块链上有可能某种程度上看出交易是否来自使用该标准的钱包。";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "确认";
 "send.confirmation.you_send" = "您发送";
@@ -462,18 +466,20 @@
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "替换交易";
 "send.confirmation.replaced_transactions" = "已替换的交易";
+"send.confirmation.input" = "Input";
 
+"send.confirmation.sync_failed" = "Sync Failed";
+"send.confirmation.invalid_data" = "Invalid Data";
+"send.confirmation.refresh" = "Refresh";
+"send.confirmation.please_wait" = "Please Wait";
+"send.confirmation.expires_in" = "Expires in %@";
+"send.confirmation.expired" = "Expired";
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.sent" = "已发送";
 
 "send.confirmation.slide_to_approve" = "滑动以批准";
-"send.confirmation.approving" = "审批中";
-"send.confirmation.approved" = "批准";
-
 "send.confirmation.slide_to_revoke" = "滑动以撤销";
-"send.confirmation.revoking" = "正在取消";
-"send.confirmation.revoked" = "已注销";
 
 "send.confirmation.slide_to_resend" = "重新发送";
 "send.confirmation.slide_to_cancel" = "取消交易";
@@ -506,12 +512,21 @@
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "发送至";
 "send.unspent_outputs.change" = "更改";
 
 "approve.confirmation.you_approve" = "您批准";
 "approve.confirmation.you_revoke" = "您已取消";
 "approve.confirmation.spender" = "消费人";
+
+"send.enter_amount" = "输入金额";
+"send.enter_address" = "Enter Address";
+"send.invalid_address" = "Invalid Address";
+"send.token_not_enabled" = "Token Not Enabled";
+"send.token_syncing" = "Token Syncing";
+"send.token_not_synced" = "Token Not Synced";
+"send.insufficient_balance" = "可用额度不足";
 
 // Donate
 
@@ -568,9 +583,9 @@
 "swap.no_providers" = "没有提供者";
 "swap.enter_amount" = "输入金额";
 "swap.no_quotes" = "没有报价";
-"swap.token_not_enabled" = "代币未启用";
-"swap.token_syncing" = "代币同步";
-"swap.token_not_synced" = "代币未同步";
+"swap.token_not_enabled" = "Token Not Enabled";
+"swap.token_syncing" = "Token Syncing";
+"swap.token_not_synced" = "Token Not Synced";
 "swap.insufficient_balance" = "可用额度不足";
 
 "swap.quotes.providers" = "服务提供商";
@@ -615,7 +630,7 @@
 "swap.advanced_settings.service_fee_description" = "典型平台上交换动作的服务费：0.3% 或 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "下跌容忍不得高于%@%%";
-"swap.advanced_settings.error.invalid_address" = "错误地址";
+"swap.advanced_settings.error.invalid_address" = "Invalid Address";
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
@@ -636,15 +651,14 @@
 "swap.confirmation.title" = "确认";
 "swap.confirmation.quoting" = "引述...";
 "swap.confirmation.invalid_quote" = "无效的报价";
-"swap.confirmation.please_wait" = "请稍候";
+"swap.confirmation.please_wait" = "Please Wait";
 "swap.confirmation.quote_expires_in" = "报价在 %@ 后失效";
 "swap.confirmation.quote_expired" = "报价已过期";
 "swap.confirmation.quote_failed" = "无法提供报价";
 
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
-"swap.confirmation.swapped" = "已交换";
-"swap.confirmation.refresh" = "刷新";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
@@ -686,12 +700,59 @@
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
 
+"market.global.market_cap" = "Total Cap";
+"market.global.volume" = "24h Vol.";
+"market.global.btc_dominance" = "BTC Dominance";
+"market.global.etf_inflow" = "ETF Inflow";
+"market.global.tvl_in_defi" = "DeFi中的TVL";
+
+"market.tab.news" = "发现";
+"market.tab.coins" = "Coins";
+"market.tab.watchlist" = "关注";
+"market.tab.platforms" = "Platforms";
+"market.tab.pairs" = "Pairs";
+"market.tab.sectors" = "Sectors";
+
+"market.sort_by.title" = "Sort By";
+"market.sort_by.manual" = "Manual";
+"market.sort_by.highest_cap" = "Highest Cap";
+"market.sort_by.lowest_cap" = "Lowest Cap";
+"market.sort_by.gainers" = "Gainers";
+"market.sort_by.losers" = "Losers";
+"market.sort_by.highest_volume" = "Highest Volume";
+"market.sort_by.lowest_volume" = "Lowest Volume";
+
+"market.top_coins.title" = "Coins";
+"market.top_coins" = "Top %@";
+
+"market.time_period.title" = "Period";
+"market.time_period.24h" = "24 Hours";
+"market.time_period.1d" = "1 Day";
+"market.time_period.1w" = "1 Week";
+"market.time_period.2w" = "2 Weeks";
+"market.time_period.1m" = "1 Month";
+"market.time_period.3m" = "3 Months";
+"market.time_period.6m" = "6 Months";
+"market.time_period.1y" = "1 Year";
+"market.time_period.2y" = "2 Years";
+"market.time_period.5y" = "5 Years";
+"market.time_period.24h.short" = "24H";
+"market.time_period.1d.short" = "1D";
+"market.time_period.1w.short" = "1W";
+"market.time_period.2w.short" = "2W";
+"market.time_period.1m.short" = "1M";
+"market.time_period.3m.short" = "3M";
+"market.time_period.6m.short" = "6M";
+"market.time_period.1y.short" = "1Y";
+"market.time_period.2y.short" = "2Y";
+"market.time_period.5y.short" = "5Y";
+
 "market.project_has_no_coin" = "此项目没有硬币";
 
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
 "market.top.section.header.top_losers" = "跌幅榜";
-"market.top.section.header.sectors" = "行业";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "发现";
 "market.top.volume.title" = "成交量";
 "market.top.market_cap.title" = "市值";
@@ -705,15 +766,15 @@
 
 "market.tvl.platform_field.all" = "所有";
 
-"market.sort_by" = "排序方式为";
+"market.sort_by" = "Sort By";
 
 "market.top.title" = "前列代币";
 "market.top.description" = "币种排名描述";
 
-"market.top.highest_cap" = "市值由高到低";
-"market.top.lowest_cap" = "市值由低到高";
-"market.top.highest_volume" = "成交量由高到低";
-"market.top.lowest_volume" = "成交量由低到高";
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
 "market.top.top_gainers" = "涨幅榜";
 "market.top.top_losers" = "跌幅榜";
 "market.top.top_collections" = "前列 NFT 收藏";
@@ -722,6 +783,7 @@
 "market.top.top_platforms" = "前列平台";
 "market.top.protocols" = "协议";
 
+"market.pairs.volume" = "Volume";
 "top_pairs.title" = "热门市场交易对";
 "top_pairs.description" = "每个交易所的交易量最高的交易对";
 
@@ -741,6 +803,17 @@
 "market_discovery.not_found" = "未发现结果";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
+"market.watchlist.signals" = "Signals";
+"market.watchlist.empty" = "Your watchlist is empty";
+"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
+"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
+"market.watchlist.signals.buy.description" = "Likely price increase in near future";
+"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
+"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
+"market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
+"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
+"market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
+"market.watchlist.signals.turn_on" = "Turn On";
 
 "market.advanced_search.title" = "过滤器";
 "market.advanced_search.show_results" = "显示结果";
@@ -768,7 +841,7 @@
 "market.advanced_search.price_period" = "价格区间";
 "market.advanced_search.price_change" = "价格变动";
 
-"market.advanced_search.technical_advice.risk_trade" = "交易风险";
+"market.advanced_search.technical_advice.risky" = "Risky";
 "market.advanced_search.technical_advice.strong_buy" = "强烈建议买入";
 "market.advanced_search.technical_advice.buy" = "购买";
 "market.advanced_search.technical_advice.neutral" = "中性";
@@ -808,16 +881,16 @@
 "market.advanced_search.more_50_b" = "> 50十亿";
 "market.advanced_search.more_500_b" = "> 500十亿";
 
-"market.advanced_search.day" = "1天";
-"market.advanced_search.week" = "1周";
-"market.advanced_search.week2" = "2周";
-"market.advanced_search.month" = "1月";
-"market.advanced_search.month6" = "6 个月";
-"market.advanced_search.year" = "1 年";
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Weeks";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Months";
+"market.advanced_search.year" = "1 Year";
 
-"market.advanced_search.day.short" = "24时";
+"market.advanced_search.day.short" = "24H";
 "market.advanced_search.week.short" = "7天";
-"market.advanced_search.month.short" = "1月";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "搜索结果";
 
@@ -834,6 +907,23 @@
 "market.global.tvl_in_defi.description" = "去中心金融（DeFi）中的锁定总价值（TVL）";
 "market.global.tvl_in_defi.multi_chain" = "多链";
 "market.global.tvl_in_defi.filter_by_chain" = "通过区块链过滤";
+
+"market.etf.title" = "Total Net Inflow";
+"market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
+"market.etf.total_net_assets" = "Total Net Assets";
+"market.etf.sort_by.highest_assets" = "Highest Assets";
+"market.etf.sort_by.lowest_assets" = "Lowest Assets";
+"market.etf.sort_by.inflow" = "Inflow";
+"market.etf.sort_by.outflow" = "Outflow";
+"market.etf.period.all" = "所有";
+
+"market.market_cap.title" = "总市场价值";
+"market.market_cap.description" = "所有加密货币的总市场价值";
+"market.market_cap.market_cap" = "市场价值";
+
+"market.volume.title" = "Volume";
+"market.volume.description" = "加密货币市场24小时交易量";
+"market.volume.volume" = "Volume";
 
 // Coin Page
 
@@ -854,12 +944,12 @@
 "coin_overview.genesis_date" = "起始日期";
 "coin_overview.trading_volume" = "成交量";
 
-"coin_overview.roi.hour24" = "1天";
-"coin_overview.roi.day7" = "1周";
-"coin_overview.roi.day14" = "2周";
-"coin_overview.roi.day30" = "1月";
+"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.day7" = "1 Week";
+"coin_overview.roi.day14" = "2 Weeks";
+"coin_overview.roi.day30" = "1 Month";
 "coin_overview.roi.day200" = "6月";
-"coin_overview.roi.year1" = "1 年";
+"coin_overview.roi.year1" = "1 Year";
 
 "coin_overview.overview" = "行情";
 "coin_overview.description_warning" = "这是一个基于给定的加密货币所提供的参考材料生成的 AI 描述。它可能包含错误。";
@@ -924,7 +1014,7 @@
 "coin_analytics.indicators.sell" = "出售";
 "coin_analytics.indicators.strong_sell" = "强烈建议卖出";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
-"coin_analytics.period" = "句号";
+"coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "选择时间段";
 "coin_analytics.period.1h" = "1 小时";
 "coin_analytics.period.4h" = "4 小时";
@@ -1090,7 +1180,7 @@
 
 "chart_indicators.settings.ma.description" = "在技术分析中，EMA、SMA和WMA正在移动平均值：\n\nEMA强调最近的价格以便更快的反应。\n一般趋势视图的SMA平均价格数据。\nWMA 通过线性加权最近数据平衡敏感度和噪声减少";
 "chart_indicators.settings.ma.type_title" = "类型";
-"chart_indicators.settings.ma.period_title" = "句号";
+"chart_indicators.settings.ma.period_title" = "Period";
 
 "chart_indicators.settings.rsi.title" = "RSI";
 "chart_indicators.settings.rsi.description" = "相对力量指数（RSI）是一种衡量价格速度和变化的动力，能够识别出已经购买(超过70)或出售过量(低于30)市场条件。 它还能够通过差异发现价格逆转。";
@@ -1200,6 +1290,8 @@
 "settings.rate_us" = "评价我们";
 "settings.tell_friends" = "分享给好友";
 "settings.contact_us" = "联系我们";
+"settings.social_networks.label" = "JOIN UNSTOPPABLES";
+"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
 
 // Settings -> Base Currency
 
@@ -1317,7 +1409,7 @@
 "settings_security.duress_mode.description" = "专用模式用于在胁迫下使选定的钱包安全。";
 
 "biometry.off" = "关";
-"biometry.manual" = "手册";
+"biometry.manual" = "Manual";
 "biometry.on" = "开启";
 "biometry.off.description" = "在所有情况下禁用";
 "biometry.manual.description" = "使用按钮扫描";
@@ -1417,9 +1509,7 @@
 // Settings -> About App
 
 "settings.about_app.title" = "关于应用";
-"settings.about_app.app_name" = "%@钱包";
-"settings.about_app.description" = "%@ 钱包是为那些寻求投资和以私人和独立方式存储加密货币的人建造的。\n\n它是一个非保管的、对等的钱包，在那里只有用户能够控制资金。 它不收集任何数据，并且通过不将用户的资金锁定到特定的钱包应用程序来保持用户独立。\n\n %@ 钱包完全开源，任何人都可以确认应用程序的工作完全如其所声称的那样正常。";
-"settings.about_app.whats_new" = "新增内容";
+"settings.about_app.app_version" = "App Version";
 "settings.about_app.website" = "网站";
 
 // Settings -> About App -> Contact
@@ -1446,21 +1536,26 @@
 "appearance.theme.dark" = "深色";
 "appearance.theme.light" = "浅色";
 
-"appearance.tab_settings" = "标签设置";
 "appearance.markets_tab" = "市场选项卡";
+"appearance.hide_markets" = "Hide Markets";
+"appearance.price_change" = "价格变动";
+"appearance.price_change.24h" = "24H";
+"appearance.price_change.midnight_utc" = "Midnight UTC";
+
 "appearance.launch_screen" = "启动屏幕";
 "appearance.launch_screen.auto" = "自动";
 "appearance.launch_screen.balance" = "余额";
 "appearance.launch_screen.market_overview" = "行情";
 "appearance.launch_screen.watchlist" = "关注";
 
-"appearance.app_icon" = "应用图标";
-
+"appearance.balance_tab" = "Balance Tab";
+"appearance.hide_buttons" = "Hide Buttons";
+"appearance.balance_value" = "余额值";
+"appearance.balance_value.coin_fiat" = "Coin / Fiat";
+"appearance.balance_value.fiat_coin" = "Fiat / Coin";
 "appearance.balance_conversion" = "余额转换";
 
-"appearance.balance_value" = "余额值";
-"appearance.balance_value.coin_value" = "币值";
-"appearance.balance_value.fiat_value" = "纤维值";
+"appearance.app_icon" = "应用图标";
 
 // Settings -> Contacts
 
@@ -1523,15 +1618,15 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24时";
+"chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7天";
-"chart.time_duration.week2" = "2星期";
-"chart.time_duration.month" = "1月";
-"chart.time_duration.month3" = "3个月";
-"chart.time_duration.halfyear" = "6个月";
-"chart.time_duration.year" = "1年";
-"chart.time_duration.year2" = "2年";
-"chart.time_duration.year5" = "5年";
+"chart.time_duration.week2" = "2W";
+"chart.time_duration.month" = "1M";
+"chart.time_duration.month3" = "3M";
+"chart.time_duration.halfyear" = "6M";
+"chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
+"chart.time_duration.year5" = "5Y";
 "chart.time_duration.all" = "所有";
 
 "chart.market_cap" = "市场价值";
@@ -1830,7 +1925,7 @@
 "fee_settings.errors.transaction_underpriced" = "低交易费用";
 "fee_settings.errors.tips_higher_than_max_fee" = "最高费用过低";
 "fee_settings.errors.zero_amount.info" = "无法传输 0 TRX";
-"fee_settings.warning.risk_of_getting_stuck" = "有风险";
+"fee_settings.warning.risk_of_getting_stuck" = "Risky";
 "fee_settings.warning.risk_of_getting_stuck.info" = "交易可能会在一段时间内仍然处于待处理状态或完全失败。";
 "fee_settings.warning.overpricing" = "费用太高";
 "fee_settings.warning.overpricing.info" = "当前设置的交易费用高于处理此交易所需的费用。";
@@ -1959,7 +2054,6 @@
 "tron.send.fee.info" = "估算在网络上发送特定交易所需的成本，包括能源、带宽和激活费";
 "tron.send.resources_consumed.info" = "Bandwidth 是衡量存储在区块链数据库中的交易字节大小的单位。 交易越大，消耗的带宽资源就越多。\n\nEnergy 是衡量波场虚拟机在波场网络上执行特定操作所需计算量的单位。\n\n自智能合约 交易需要计算资源来执行，每笔智能合约交易都需要支付 energy费用。";
 "tron.send.activation_fee.info" = "正在将TRX或 TRC-10令牌传输到一个非活动帐户地址将激活帐户。";
-"tron.send.inactive_address" = "此地址未激活";
 
 // Cex Coin Select
 
