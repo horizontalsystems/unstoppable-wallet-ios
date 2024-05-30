@@ -34,7 +34,7 @@ struct MarketGlobalView: View {
         }
         .animation(.default, value: viewModel.marketGlobal == nil)
         .sheet(isPresented: $tvlPresented) {
-            MarketGlobalMetricsView(metricsType: .tvlInDefi).ignoresSafeArea()
+            MarketTvlView(isPresented: $tvlPresented)
         }
         .sheet(isPresented: $marketCapPresented) {
             MarketMarketCapView(isPresented: $marketCapPresented)

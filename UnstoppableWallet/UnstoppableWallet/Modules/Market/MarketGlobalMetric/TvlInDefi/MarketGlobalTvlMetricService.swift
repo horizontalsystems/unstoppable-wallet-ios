@@ -168,4 +168,11 @@ extension DefiCoin {
         default: return chainTvls[marketPlatformField.chain]
         }
     }
+
+    func tvl(platforms: MarketTvlViewModel.Platforms) -> Decimal? {
+        switch platforms {
+        case .all: return tvl
+        default: return chainTvls[platforms.chain]
+        }
+    }
 }
