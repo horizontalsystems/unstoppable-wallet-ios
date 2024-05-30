@@ -903,11 +903,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
 
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.tvl_in_defi.description" = "DeFi'deki Toplam Kilit Değer (TVL)";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Zincir ile filtrele";
-
 "market.etf.title" = "Total Net Inflow";
 "market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
 "market.etf.total_net_assets" = "Total Net Assets";
@@ -920,6 +915,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.market_cap.title" = "Toplam Piyasa Değeri";
 "market.market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
 "market.market_cap.market_cap" = "Piyasa Değeri";
+
+"market.tvl_in_defi.title" = "TVL in DeFi";
+"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.tvl" = "TVL";
+"market.tvl_in_defi.multi_chain" = "Multi-chain";
+"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.filter.all" = "Hepsi";
 
 "market.volume.title" = "Volume";
 "market.volume.description" = "Kripto piyasa 24 saatlik işlem hacmi";
