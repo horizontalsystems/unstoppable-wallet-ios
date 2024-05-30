@@ -36,7 +36,7 @@ struct TransactionTokenSelectView: View {
                                 viewModel.set(currentToken: token)
                                 presentationMode.wrappedValue.dismiss()
                             }) {
-                                CoinIconView(coin: token.coin, placeholder: token.placeholderImageName)
+                                CoinIconView(coin: token.coin, placeholderImage: Image(token.placeholderImageName))
 
                                 VStack(spacing: 1) {
                                     HStack(spacing: .margin8) {

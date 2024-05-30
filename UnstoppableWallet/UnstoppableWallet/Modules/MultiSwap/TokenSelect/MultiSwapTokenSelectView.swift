@@ -28,7 +28,7 @@ struct MultiSwapTokenSelectView: View {
                             currentToken = item.token
                             isPresented = false
                         }) {
-                            CoinIconView(coin: item.token.coin, placeholder: item.token.placeholderImageName)
+                            CoinIconView(coin: item.token.coin, placeholderImage: Image(item.token.placeholderImageName))
 
                             VStack(spacing: 1) {
                                 HStack(spacing: .margin8) {
