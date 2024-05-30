@@ -903,11 +903,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.global.defi_cap.title" = "Mercado de DeFi";
 "market.global.defi_cap.description" = "Valor total de mercado de projetos DeFi";
 
-"market.global.tvl_in_defi.title" = "TVL no DeFi";
-"market.global.tvl_in_defi.description" = "Valor total bloqueado (TVL) no DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Cadeia";
-"market.global.tvl_in_defi.filter_by_chain" = "Filtrar por cadeia";
-
 "market.etf.title" = "Total Net Inflow";
 "market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
 "market.etf.total_net_assets" = "Total Net Assets";
@@ -920,6 +915,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.market_cap.title" = "Capitalização Total de Mercado";
 "market.market_cap.description" = "Valor total de mercado de todas as criptomoedas";
 "market.market_cap.market_cap" = "Capitalização de Mercado";
+
+"market.tvl_in_defi.title" = "TVL no DeFi";
+"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.tvl" = "TVL";
+"market.tvl_in_defi.multi_chain" = "Multi-chain";
+"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.filter.all" = "Todos";
 
 "market.volume.title" = "Volume";
 "market.volume.description" = "O volume de operação em 24h do mercado de cripto";
