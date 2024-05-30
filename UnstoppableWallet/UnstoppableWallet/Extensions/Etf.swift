@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import UIKit
 
 extension Etf: Hashable {
     public static func == (lhs: Etf, rhs: Etf) -> Bool {
@@ -12,6 +13,11 @@ extension Etf: Hashable {
 }
 
 extension Etf {
+    var imageUrl: String {
+        let scale = Int(UIScreen.main.scale)
+        return "https://cdn.blocksdecoded.com/etf-tresuries/\(ticker)@\(scale)x.png"
+    }
+
     func inflow(timePeriod: MarketEtfViewModel.TimePeriod) -> Decimal? {
         switch timePeriod {
         case let .period(timePeriod): return inflows[timePeriod]
