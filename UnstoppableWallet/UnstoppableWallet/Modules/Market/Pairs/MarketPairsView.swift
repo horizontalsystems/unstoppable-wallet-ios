@@ -52,8 +52,8 @@ struct MarketPairsView: View {
                 }
             }) {
                 itemContent(
-                    frontCoin: pair.baseCoin,
-                    backCoin: pair.targetCoin,
+                    baseCoin: pair.baseCoin,
+                    targetCoin: pair.targetCoin,
                     base: pair.base,
                     target: pair.target,
                     volume: pair.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
@@ -73,8 +73,8 @@ struct MarketPairsView: View {
         ThemeList(Array(0 ... 10)) { _ in
             ListRow {
                 itemContent(
-                    frontCoin: nil,
-                    backCoin: nil,
+                    baseCoin: nil,
+                    targetCoin: nil,
                     base: "CODE",
                     target: "CODE",
                     volume: "$123.4 B",
@@ -89,26 +89,14 @@ struct MarketPairsView: View {
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(frontCoin: Coin?, backCoin: Coin?, base: String, target: String, volume: String, marketName: String, rank: Int, price: String) -> some View {
+    @ViewBuilder private func itemContent(baseCoin: Coin?, targetCoin: Coin?, base: String, target: String, volume: String, marketName: String, rank: Int, price: String) -> some View {
         ZStack(alignment: .leading) {
             HStack {
                 Spacer()
-                ZStack {
-                    Circle()
-                        .fill(Color.themeTyler)
-                        .frame(width: .iconSize32, height: .iconSize32)
-
-                    CoinIconView(coin: backCoin)
-                }
+                icon(coin: targetCoin, ticker: target)
             }
 
-            ZStack {
-                Circle()
-                    .fill(Color.themeTyler)
-                    .frame(width: .iconSize32, height: .iconSize32)
-
-                CoinIconView(coin: frontCoin)
-            }
+            icon(coin: baseCoin, ticker: base)
         }
         .frame(width: 52)
 
@@ -126,6 +114,24 @@ struct MarketPairsView: View {
                 }
                 Spacer()
                 Text(price).textSubhead2()
+            }
+        }
+    }
+
+    @ViewBuilder private func icon(coin: Coin?, ticker: String) -> some View {
+        ZStack {
+            Circle()
+                .fill(Color.themeTyler)
+                .frame(width: .iconSize32, height: .iconSize32)
+
+            if let coin {
+                CoinIconView(coin: coin)
+            } else {
+                KFImage.url(URL(string: ticker.fiatImageUrl))
+                    .resizable()
+                    .placeholder { Circle().fill(Color.themeSteel20) }
+                    .clipShape(Circle())
+                    .frame(width: .iconSize32, height: .iconSize32)
             }
         }
     }

@@ -70,7 +70,7 @@ struct MarketEtfView: View {
             }
             .padding(.vertical, .margin12)
 
-            KFImage.url(URL(string: "https://cdn.blocksdecoded.com/category-icons/lending@3x.png"))
+            KFImage.url(URL(string: "ETF_bitcoin".headerImageUrl))
                 .resizable()
                 .frame(width: 76, height: 108)
         }
@@ -138,7 +138,7 @@ struct MarketEtfView: View {
             ListForEach(etfs) { etf in
                 ListRow {
                     itemContent(
-                        imageUrl: nil,
+                        imageUrl: URL(string: etf.imageUrl),
                         ticker: etf.ticker,
                         name: etf.name,
                         totalAssets: etf.totalAssets,
