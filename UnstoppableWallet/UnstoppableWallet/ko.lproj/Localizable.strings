@@ -901,11 +901,6 @@
 "market.global.defi_cap.title" = "디파이(DeFi) 시가총액";
 "market.global.defi_cap.description" = "디파이 프로젝트의 총 시장 가치";
 
-"market.global.tvl_in_defi.title" = "디파이(DeFi)에서의 총 예치 가치";
-"market.global.tvl_in_defi.description" = "디파이 (DeFi)에서의 총 예치 가치 (TVL)";
-"market.global.tvl_in_defi.multi_chain" = "다중 체인";
-"market.global.tvl_in_defi.filter_by_chain" = "체인별 필터링";
-
 "market.etf.title" = "Total Net Inflow";
 "market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
 "market.etf.total_net_assets" = "Total Net Assets";
@@ -918,6 +913,13 @@
 "market.market_cap.title" = "총 시장 자본금";
 "market.market_cap.description" = "모든 암호화폐의 총 시장 가치\" or \"모든 가상 화폐의 총 시장 가치";
 "market.market_cap.market_cap" = "총 시가 총액";
+
+"market.tvl_in_defi.title" = "디파이(DeFi)에서의 총 예치 가치";
+"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.tvl" = "TVL";
+"market.tvl_in_defi.multi_chain" = "Multi-chain";
+"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.filter.all" = "전체";
 
 "market.volume.title" = "Volume";
 "market.volume.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
