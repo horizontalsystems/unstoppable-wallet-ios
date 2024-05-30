@@ -4,11 +4,11 @@ import SwiftUI
 
 struct CoinIconView: View {
     let coin: Coin?
-    let placeholder: String
+    let placeholderImage: Image?
 
-    init(coin: Coin?, placeholder: String = "placeholder_circle_32") {
+    init(coin: Coin?, placeholderImage: Image? = nil) {
         self.coin = coin
-        self.placeholder = placeholder
+        self.placeholderImage = placeholderImage
     }
 
     var body: some View {
@@ -33,7 +33,11 @@ struct CoinIconView: View {
         KFImage.url(url)
             .resizable()
             .placeholder {
-                Image(placeholder)
+                if let placeholderImage {
+                    placeholderImage
+                } else {
+                    Circle().fill(Color.themeSteel20)
+                }
             }
     }
 }
