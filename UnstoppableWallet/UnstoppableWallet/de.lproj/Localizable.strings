@@ -903,11 +903,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.global.defi_cap.title" = "DeFi MK";
 "market.global.defi_cap.description" = "Gesamter Marktwert von DeFi-Projekten";
 
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.tvl_in_defi.description" = "Gesamtwert gesperrt (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Mehrkettig";
-"market.global.tvl_in_defi.filter_by_chain" = "Filtern nach Kette";
-
 "market.etf.title" = "Gesamtnettonzufluss";
 "market.etf.description" = "Der Nettogeldzufluss eines ETFs entspricht seinen Geldeingängen abzüglich der Abflüsse.";
 "market.etf.total_net_assets" = "Gesamte Netto-Assets";
@@ -920,6 +915,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.market_cap.title" = "Gesamtmarktzahl";
 "market.market_cap.description" = "Gesamtmarktwert aller Kryptowährungen";
 "market.market_cap.market_cap" = "Marktkappe";
+
+"market.tvl_in_defi.title" = "TVL in DeFi";
+"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.tvl" = "TVL";
+"market.tvl_in_defi.multi_chain" = "Multi-chain";
+"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.filter.all" = "Alle";
 
 "market.volume.title" = "Lautstärke";
 "market.volume.description" = "Das 24h Handelsvolumen des Krypto-Marktes";

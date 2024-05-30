@@ -228,7 +228,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "extended_key.purpose" = "Propósito";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Account";
-"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
+"extended_key.account.description" = "Esta es una configuración para usuarios avanzados. Si estás intentando importar una billetera (a través de una clave privada extendida) o una lista de transacciones (a través de una clave pública extendida), necesitas la cuenta 0.";
 "extended_key.tap_to_show" = "Toque para mostrar extended private key";
 
 // Backup
@@ -351,8 +351,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.frozen" = "Congelados";
 "balance.token.frozen.info.title" = "Título congelado";
 "balance.token.frozen.info.description" = "Texto de descripción congelada";
-"balance.token.account.inactive.title" = "Account Not Active";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
+"balance.token.account.inactive.title" = "Cuenta No Activa";
+"balance.token.account.inactive.description" = "Las nuevas billeteras TRON requieren un depósito de al menos 1 TRX para activarse. Las billeteras inactivas pueden mantener y recibir tokens, pero no corregirán los saldos hasta que se activen.";
 
 // Account switcher
 
@@ -447,8 +447,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, considere esta una opción recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe un estándar comúnmente acordado para ordenar las salidas de las transacciones (conocido como BIP69). En carteras de código abierto, ese estándar asegura que los usuarios de la cartera no necesiten confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Dado que este estándar es nuevo, todavía no muchos monederos lo han implementado. Como resultado, es algo posible ver en la cadena de bloques si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
-"send.select_all" = "Select All";
-"send.unselect_all" = "Unselect All";
+"send.select_all" = "Seleccionar Todo";
+"send.unselect_all" = "Deseleccionar Todo";
 
 "send.confirmation.title" = "Confirmar";
 "send.confirmation.you_send" = "Usted envía";
@@ -466,14 +466,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
 "send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
-"send.confirmation.input" = "Input";
+"send.confirmation.input" = "Entrada";
 
-"send.confirmation.sync_failed" = "Sync Failed";
-"send.confirmation.invalid_data" = "Invalid Data";
-"send.confirmation.refresh" = "Refresh";
-"send.confirmation.please_wait" = "Please Wait";
-"send.confirmation.expires_in" = "Expires in %@";
-"send.confirmation.expired" = "Expired";
+"send.confirmation.sync_failed" = "Error de sincronización";
+"send.confirmation.invalid_data" = "Datos no válidos";
+"send.confirmation.refresh" = "Actualizar";
+"send.confirmation.please_wait" = "Por favor, espere";
+"send.confirmation.expires_in" = "Expira en %@";
+"send.confirmation.expired" = "Expirado";
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
 "send.confirmation.sending" = "Enviar";
 "send.confirmation.sent" = "Enviado";
@@ -512,7 +512,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.lock_time" = "Timelock";
 
 "send.unspent_outputs" = "UTXOs";
-"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
+"send.unspent_outputs.description" = "Seleccione manualmente UTxO para gastar los fondos en el saldo";
 "send.unspent_outputs.send_to" = "Enviar a";
 "send.unspent_outputs.change" = "Cambio";
 
@@ -521,11 +521,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "approve.confirmation.spender" = "Gastador";
 
 "send.enter_amount" = "Introducir cantidad";
-"send.enter_address" = "Enter Address";
-"send.invalid_address" = "Invalid Address";
-"send.token_not_enabled" = "Token Not Enabled";
-"send.token_syncing" = "Token Syncing";
-"send.token_not_synced" = "Token Not Synced";
+"send.enter_address" = "Introduce una dirección";
+"send.invalid_address" = "Dirección inválida";
+"send.token_not_enabled" = "Token no habilitado";
+"send.token_syncing" = "Sincronización de tokens";
+"send.token_not_synced" = "Token no sincronizado";
 "send.insufficient_balance" = "Saldo insuficiente";
 
 // Donate
@@ -583,9 +583,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.no_providers" = "No hay proveedores";
 "swap.enter_amount" = "Introducir cantidad";
 "swap.no_quotes" = "Sin ofertas";
-"swap.token_not_enabled" = "Token Not Enabled";
-"swap.token_syncing" = "Token Syncing";
-"swap.token_not_synced" = "Token Not Synced";
+"swap.token_not_enabled" = "Token no habilitado";
+"swap.token_syncing" = "Sincronización de tokens";
+"swap.token_not_synced" = "Token no sincronizado";
 "swap.insufficient_balance" = "Saldo insuficiente";
 
 "swap.quotes.providers" = "Proveedores";
@@ -630,7 +630,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.advanced_settings.service_fee_description" = "Tasa de servicio para la acción de intercambio en la plataforma típicamente de 0,3% o 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Es probable que su transacción falle.";
 "swap.advanced_settings.error.higher_slippage" = "Tolerancia de deslizamiento no puede ser más de %@%%";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Dirección inválida";
 "swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
 
@@ -651,14 +651,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.confirmation.title" = "Confirmar";
 "swap.confirmation.quoting" = "Cotización...";
 "swap.confirmation.invalid_quote" = "Cotización no válida";
-"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.please_wait" = "Por favor, espere";
 "swap.confirmation.quote_expires_in" = "La cotización expira en %@";
 "swap.confirmation.quote_expired" = "Cotización expirada";
 "swap.confirmation.quote_failed" = "Error al cotizar";
 
 "swap.confirmation.slide_to_swap" = "Deslizar para intercambiar";
 "swap.confirmation.swapping" = "Intercambio";
-"swap.confirmation.refresh" = "Refresh";
+"swap.confirmation.refresh" = "Actualizar";
 "swap.confirmation.impact_too_high" = "%@ ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
@@ -700,59 +700,59 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL en DeFi";
 
-"market.global.market_cap" = "Total Cap";
-"market.global.volume" = "24h Vol.";
-"market.global.btc_dominance" = "BTC Dominance";
-"market.global.etf_inflow" = "ETF Inflow";
+"market.global.market_cap" = "Capitalización Total";
+"market.global.volume" = "Vol. de 24 h";
+"market.global.btc_dominance" = "Dominio de BTC";
+"market.global.etf_inflow" = "Entrada ETF";
 "market.global.tvl_in_defi" = "TVL en DeFi";
 
 "market.tab.news" = "Noticias";
-"market.tab.coins" = "Coins";
+"market.tab.coins" = "Monedas";
 "market.tab.watchlist" = "Lista de Seguimiento";
-"market.tab.platforms" = "Platforms";
-"market.tab.pairs" = "Pairs";
-"market.tab.sectors" = "Sectors";
+"market.tab.platforms" = "Plataformas";
+"market.tab.pairs" = "Pares";
+"market.tab.sectors" = "Sectores";
 
-"market.sort_by.title" = "Sort By";
+"market.sort_by.title" = "Ordenar por";
 "market.sort_by.manual" = "Manual";
-"market.sort_by.highest_cap" = "Highest Cap";
-"market.sort_by.lowest_cap" = "Lowest Cap";
-"market.sort_by.gainers" = "Gainers";
-"market.sort_by.losers" = "Losers";
-"market.sort_by.highest_volume" = "Highest Volume";
-"market.sort_by.lowest_volume" = "Lowest Volume";
+"market.sort_by.highest_cap" = "Cap Mayor";
+"market.sort_by.lowest_cap" = "Cap Menor";
+"market.sort_by.gainers" = "Ganadores";
+"market.sort_by.losers" = "Perdedores";
+"market.sort_by.highest_volume" = "Mayor Volumen";
+"market.sort_by.lowest_volume" = "Menor Volumen";
 
-"market.top_coins.title" = "Coins";
+"market.top_coins.title" = "Monedas";
 "market.top_coins" = "Top %@";
 
 "market.time_period.title" = "Period";
-"market.time_period.24h" = "24 Hours";
-"market.time_period.1d" = "1 Day";
-"market.time_period.1w" = "1 Week";
-"market.time_period.2w" = "2 Weeks";
-"market.time_period.1m" = "1 Month";
-"market.time_period.3m" = "3 Months";
-"market.time_period.6m" = "6 Months";
-"market.time_period.1y" = "1 Year";
-"market.time_period.2y" = "2 Years";
-"market.time_period.5y" = "5 Years";
+"market.time_period.24h" = "24 Horas";
+"market.time_period.1d" = "1 Día";
+"market.time_period.1w" = "1 Semana";
+"market.time_period.2w" = "2 Semanas";
+"market.time_period.1m" = "1 Mes";
+"market.time_period.3m" = "3 Meses";
+"market.time_period.6m" = "6 Meses";
+"market.time_period.1y" = "1 Año";
+"market.time_period.2y" = "2 Años";
+"market.time_period.5y" = "5 Años";
 "market.time_period.24h.short" = "24H";
 "market.time_period.1d.short" = "1D";
-"market.time_period.1w.short" = "1W";
-"market.time_period.2w.short" = "2W";
+"market.time_period.1w.short" = "1S";
+"market.time_period.2w.short" = "2S";
 "market.time_period.1m.short" = "1M";
 "market.time_period.3m.short" = "3M";
 "market.time_period.6m.short" = "6M";
-"market.time_period.1y.short" = "1Y";
-"market.time_period.2y.short" = "2Y";
-"market.time_period.5y.short" = "5Y";
+"market.time_period.1y.short" = "1A";
+"market.time_period.2y.short" = "2A";
+"market.time_period.5y.short" = "5A";
 
 "market.project_has_no_coin" = "Este proyecto no tiene una moneda";
 
 "market.top.section.header.see_all" = "Ver Todos";
 "market.top.section.header.top_gainers" = "Máximos Ganadores";
 "market.top.section.header.top_losers" = "Máximos Perdedores";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "Sectores";
 "market.top.section.header.news" = "Noticias";
 "market.top.volume.title" = "Volumen";
 "market.top.market_cap.title" = "Capitalización de Mercado";
@@ -766,15 +766,15 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "market.tvl.platform_field.all" = "Todo";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Ordenar por";
 
 "market.top.title" = "Monedas Top";
 "market.top.description" = "Mejores monedas por rango de límite de mercado";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
+"market.top.highest_cap" = "Cap Mayor";
+"market.top.lowest_cap" = "Cap Menor";
+"market.top.highest_volume" = "Mayor Volumen";
+"market.top.lowest_volume" = "Menor Volumen";
 "market.top.top_gainers" = "Máximos Ganadores";
 "market.top.top_losers" = "Máximos Perdedores";
 "market.top.top_collections" = "Mejores colecciones NFT";
@@ -783,7 +783,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.top.top_platforms" = "Plataformas superiores";
 "market.top.protocols" = "Protocolos";
 
-"market.pairs.volume" = "Volume";
+"market.pairs.volume" = "Volumen";
 "top_pairs.title" = "Mejores pares de mercado";
 "top_pairs.description" = "Mejores pares de trading por volumen en cada bolsa";
 
@@ -803,17 +803,17 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market_discovery.not_found" = "No se han encontrado resultados";
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
-"market.watchlist.signals" = "Signals";
-"market.watchlist.empty" = "Your watchlist is empty";
-"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
-"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
-"market.watchlist.signals.buy.description" = "Likely price increase in near future";
-"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
-"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
+"market.watchlist.signals" = "Señales";
+"market.watchlist.empty" = "Tu Watchlist está vacía";
+"market.watchlist.signals.description" = "Las señales a continuación se basan en los indicadores técnicos de precio Bollinger Bands y RSI durante aproximadamente los últimos 30 días. Estas señales son algorítmicas y pueden cambiar con frecuencia.";
+"market.watchlist.signals.strong_buy.description" = "Alta confianza en aumento del precio";
+"market.watchlist.signals.buy.description" = "Probable aumento del precio en el futuro cercano";
+"market.watchlist.signals.neutral.description" = "No hay una tendencia clara, el mercado está en equilibrio";
+"market.watchlist.signals.sell.description" = "Probable disminución del precio en el futuro cercano";
 "market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
-"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
-"market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
-"market.watchlist.signals.turn_on" = "Turn On";
+"market.watchlist.signals.risky.description" = "Nivel de riesgo elevado, requiere precaución";
+"market.watchlist.signals.warning" = "Recuerda siempre aplicar gestión de riesgos, y ten en cuenta que esto no es un consejo financiero.";
+"market.watchlist.signals.turn_on" = "Activar";
 
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
@@ -841,7 +841,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.advanced_search.price_period" = "Período de Precio";
 "market.advanced_search.price_change" = "Cambio de Precio";
 
-"market.advanced_search.technical_advice.risky" = "Risky";
+"market.advanced_search.technical_advice.risky" = "Arriesgado";
 "market.advanced_search.technical_advice.strong_buy" = "Compra Fuerte";
 "market.advanced_search.technical_advice.buy" = "Comprar";
 "market.advanced_search.technical_advice.neutral" = "Neutral";
@@ -881,12 +881,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.advanced_search.more_50_b" = "> 50MM";
 "market.advanced_search.more_500_b" = "> 500MM";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1 Día";
+"market.advanced_search.week" = "1 Semana";
+"market.advanced_search.week2" = "2 Semanas";
+"market.advanced_search.month" = "1 Mes";
+"market.advanced_search.month6" = "6 Meses";
+"market.advanced_search.year" = "1 Año";
 
 "market.advanced_search.day.short" = "24H";
 "market.advanced_search.week.short" = "7D";
@@ -903,27 +903,29 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "Valor total del mercado de proyectos DeFi";
 
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
-"market.global.tvl_in_defi.description" = "Valor total bloqueado (TVL) en DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Cadena múltiple";
-"market.global.tvl_in_defi.filter_by_chain" = "Filtrar por cadena";
-
-"market.etf.title" = "Total Net Inflow";
-"market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
-"market.etf.total_net_assets" = "Total Net Assets";
-"market.etf.sort_by.highest_assets" = "Highest Assets";
-"market.etf.sort_by.lowest_assets" = "Lowest Assets";
-"market.etf.sort_by.inflow" = "Inflow";
-"market.etf.sort_by.outflow" = "Outflow";
+"market.etf.title" = "Ingreso Neto Total";
+"market.etf.description" = "El ingreso neto de un ETF es igual a sus entradas de efectivo menos las salidas.";
+"market.etf.total_net_assets" = "Activos Netos Totales";
+"market.etf.sort_by.highest_assets" = "Mayores Activos";
+"market.etf.sort_by.lowest_assets" = "Activos Más Bajos";
+"market.etf.sort_by.inflow" = "Ingreso";
+"market.etf.sort_by.outflow" = "Salida";
 "market.etf.period.all" = "Todo";
 
 "market.market_cap.title" = "Cap.Total del Mercado";
 "market.market_cap.description" = "Valor total del mercado de todas las criptomonedas";
 "market.market_cap.market_cap" = "Capitalización del Mercado";
 
-"market.volume.title" = "Volume";
+"market.tvl_in_defi.title" = "TVL en DeFi";
+"market.tvl_in_defi.description" = "Valor total bloqueado (TVL) en DeFi";
+"market.tvl_in_defi.tvl" = "TVL";
+"market.tvl_in_defi.multi_chain" = "Multi-chain";
+"market.tvl_in_defi.filter_by_chain" = "Filtrar por cadena";
+"market.tvl_in_defi.filter.all" = "Todo";
+
+"market.volume.title" = "Volumen";
 "market.volume.description" = "El volumen de operaciones 24h del mercado de criptomonedas";
-"market.volume.volume" = "Volume";
+"market.volume.volume" = "Volumen";
 
 // Coin Page
 
@@ -944,12 +946,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_overview.genesis_date" = "Fecha de inicio";
 "coin_overview.trading_volume" = "Volumen de Comercio";
 
-"coin_overview.roi.hour24" = "1 Day";
-"coin_overview.roi.day7" = "1 Week";
-"coin_overview.roi.day14" = "2 Weeks";
-"coin_overview.roi.day30" = "1 Month";
+"coin_overview.roi.hour24" = "1 Día";
+"coin_overview.roi.day7" = "1 Semana";
+"coin_overview.roi.day14" = "2 Semanas";
+"coin_overview.roi.day30" = "1 Mes";
 "coin_overview.roi.day200" = "6 Months";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.year1" = "1 Año";
 
 "coin_overview.overview" = "Información General";
 "coin_overview.description_warning" = "Esta es una descripción generada por IA basada en el material de referencia proporcionado para la criptomoneda dada. Puede contener errores.";
@@ -965,46 +967,46 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_overview.whitepaper" = "Libro blanco";
 
 // Coin Page -> Analytics
-"technical_advice.over.bought" = "overbought";
-"technical_advice.over.sold" = "oversold";
-"technical_advice.down" = "down";
-"technical_advice.up" = "up";
+"technical_advice.over.bought" = "sobrecomprado";
+"technical_advice.over.sold" = "sobrevendido";
+"technical_advice.down" = "abajo";
+"technical_advice.up" = "abajo";
 
-"technical_advice.over.main" = "The actions with the asset are risky.";
-"technical_advice.over.indicators.signal_date" = "Starting from the %@";
-"technical_advice.over.indicators" = "The asset is outside the Bollinger Band channel and %@.";
-"technical_advice.over.rsi" = " RSI = %@, This also indicates that the asset is %@.";
-"technical_advice.over.advice" = " There might be a strong %@ward movement, so it's better to wait for the asset price to return to the channel.";
+"technical_advice.over.main" = "Las acciones con el activo son riesgosas.";
+"technical_advice.over.indicators.signal_date" = "Comenzando desde el %@";
+"technical_advice.over.indicators" = "El activo está fuera del canal de bandas de Bollinger y %@.";
+"technical_advice.over.rsi" = " RSI = %@. Esto también indica que el activo está %@.";
+"technical_advice.over.advice" = " Podría haber un fuerte movimiento hacia %@, por lo que es mejor esperar a que el precio del activo regrese al canal.";
 
-"technical_advice.strong.indicators" = "The asset was %@, but now it has returned to the Bollinger Band channel. This indicates a possible trend reversal.";
-"technical_advice.strong.rsi" = " Meanwhile, the RSI is %@, which still indicates that it is %@.";
-"technical_advice.strong.advice" = " This could be a very strong signal to enter the market. Keep in mind that there may be several attempts of %@ward movement after returning to the channel, so do not forget about risk management.";
+"technical_advice.strong.indicators" = "El activo estaba %@, pero ahora ha regresado al canal de Bandas de Bollinger. Esto indica una posible reversión de la tendencia.";
+"technical_advice.strong.rsi" = " Mientras tanto, el RSI es %@, lo que aún indica que está %@.";
+"technical_advice.strong.advice" = " Este podría ser una señal muy fuerte para ingresar al mercado. Ten en cuenta que puede haber varios intentos de movimiento hacia %@ después de regresar al canal, así que no olvides el manejo del riesgo.";
 
-"technical_advice.stable.rsi" = " Meanwhile, the RSI is %@, which also indicates a trend reversal (RSI crossed the boundary at 70%).";
-"technical_advice.stable.advice" = "The price is returning to neutral levels, however, there is still potential for upward movement. Keep in mind that RSI = 50 and the middle of the Bollinger Bands are strong resistances and possible trend reversal points. Do not forget about risk management.";
+"technical_advice.stable.rsi" = " Mientras tanto, el RSI es %@, lo que también indica una reversión de la tendencia (el RSI cruzó el límite del 70%).";
+"technical_advice.stable.advice" = "El precio está volviendo a niveles neutrales; sin embargo, aún existe potencial para movimientos hacia arriba. Ten en cuenta que RSI = 50 y el centro de las Bandas de Bollinger son resistencias fuertes y posibles puntos de reversión de la tendencia. No olvides el manejo del riesgo.";
 
-"technical_advice.neutral.rsi" = "RSI = %@ also confirms the absence of a strong trend.";
-"technical_advice.neutral.indicators" = "The asset was in the overbought/oversold zone, but at the moment the price has returned to the Bollinger Band channel in the neutral zone. The RSI is %@ also confirms the absence of a strong trend, so overall the asset price is moving towards averaging and further movement is possible in any direction.";
-"technical_advice.neutral.advice" = " In general, the asset price is moving towards averaging and further movement is possible in any direction.";
+"technical_advice.neutral.rsi" = "RSI = %@ también confirma la ausencia de una tendencia fuerte.";
+"technical_advice.neutral.indicators" = "El activo estaba en la zona de sobrecompra/sobreventa, pero en este momento el precio ha regresado al canal de las Bandas de Bollinger en la zona neutral. El RSI es %@, lo que también confirma la ausencia de una tendencia fuerte, por lo que en general el precio del activo se está moviendo hacia la media y es posible un movimiento adicional en cualquier dirección.";
+"technical_advice.neutral.advice" = " En general, el precio del activo se está moviendo hacia la media y es posible que se produzca un movimiento en cualquier dirección.";
 
-"technical_advice.other.title" = "Please note:";
+"technical_advice.other.title" = "Por favor, toma nota:";
 
-"technical_advice.ema.above" = "above";
-"technical_advice.ema.below" = "below";
-"technical_advice.ema.growth" = "growth";
-"technical_advice.ema.decrease" = "decrease";
-"technical_advice.ema.advice" = "EMA 200. Determines the overall sentiment and trend. The daily price of the asset is located %@ the EMA (%@). This means that globally the asset is set for %@.";
+"technical_advice.ema.above" = "arriba";
+"technical_advice.ema.below" = "abajo";
+"technical_advice.ema.growth" = "crecimiento";
+"technical_advice.ema.decrease" = "disminución";
+"technical_advice.ema.advice" = "EMA 200. Determina el sentimiento y la tendencia general. El precio diario del activo se encuentra %@ la EMA (%@). Esto significa que globalmente el activo está configurado para %@.";
 
-"technical_advice.macd.positive" = "above";
-"technical_advice.macd.negative" = "below";
-"technical_advice.macd.advice" = "MACD. Assesses the strength of the trend considering the average price change. The daily value of the histogram is %@ (%@). The price of the asset globally may move %@.";
+"technical_advice.macd.positive" = "arriba";
+"technical_advice.macd.negative" = "abajo";
+"technical_advice.macd.advice" = "MACD. Evalúa la fuerza de la tendencia considerando el cambio promedio de precio. El valor diario del histograma es %@ (%@). El precio del activo a nivel global puede moverse %@.";
 
 "coin_analytics.indicators.title" = "Indicadores técnicos";
-"coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
-"coin_analytics.indicators.info.title" = "Technical Indicators";
-"coin_analytics.indicators.info.description" = "We use the Bollinger Bands + RSI strategy to determine trading signals. All calculations are based on daily candlesticks and provide advice for a moderately long term. The essence of the strategy is that the asset price should reach an extreme, breaking out of the Bollinger Bands channel, and the RSI should be in the overbought/oversold zone. After the price returns to the channel, there is a high probability of the price returning to the mean values or attempting to break the channel from the other side. Note that the strategy may give several false signals during strong market movements before a correct signal appears.\n\nPlease remember that it is very important to apply risk management to trading and remember to cut losses if the market situation changes! ";
-"coin_analytics.indicators.hide_details" = "Hide Details";
-"coin_analytics.indicators.show_details" = "Show Details";
+"coin_analytics.indicators.disclaimer" = "Recuerda siempre aplicar gestión de riesgos, y ten en cuenta que esto no es un consejo financiero.";
+"coin_analytics.indicators.info.title" = "Indicadores Técnicos";
+"coin_analytics.indicators.info.description" = "Utilizamos la estrategia de Bollinger Bands + RSI para determinar señales de trading. Todos los cálculos se basan en velas diarias y proporcionan consejos para un término moderadamente largo. La esencia de la estrategia es que el precio del activo debe alcanzar un extremo, saliendo del canal de las Bandas de Bollinger, y el RSI debe estar en la zona de sobrecompra/sobreventa. Después de que el precio regrese al canal, hay una alta probabilidad de que el precio regrese a los valores medios o intente romper el canal desde el otro lado. Ten en cuenta que la estrategia puede dar varias señales falsas durante movimientos fuertes del mercado antes de que aparezca una señal correcta.\n\n¡Recuerda que es muy importante aplicar la gestión del riesgo al trading y recordar cortar pérdidas si la situación del mercado cambia! ";
+"coin_analytics.indicators.hide_details" = "Ocultar Detalles";
+"coin_analytics.indicators.show_details" = "Mostrar Detalles";
 "coin_analytics.indicators.summary" = "Resumen";
 "coin_analytics.indicators.no_data" = "No hay datos";
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
@@ -1026,7 +1028,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "coin_analytics.not_available" = "Este proyecto no tiene datos analíticos";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators" = "Indicadores Técnicos";
 "coin_analytics.technical_indicators.info1" = "Resumen: Esta es una visión general de los técnicos de un activo, considerando una variedad de indicadores técnicos y plazos. Proporciona un punto de vista de consenso (Compra, Venta o Neutral) basado en estos indicadores.";
 "coin_analytics.technical_indicators.info2" = "Promedio de movimiento (MA): Estos son indicadores técnicos comúnmente utilizados que suavizan los datos de precios para crear un indicador que sigue la tendencia. Ellos muestran el precio medio en un período de tiempo determinado. Hay varios tipos de EMg:\n\nMedia simple de movimiento (SMA): Esto calcula el promedio de un rango de precios seleccionado. por lo general cerrando los precios, por el número de períodos en ese rango.\n\nMedia de movimiento exponencial (EMA): Esto da más peso a los precios recientes, respondiendo así más rápidamente a los cambios recientes de precios.";
 "coin_analytics.technical_indicators.info3" = "Osciladores: son indicadores técnicos que fluctúan con el tiempo dentro de una banda (por encima y por debajo de una línea central o entre niveles establecidos). Están diseñados para ayudar a identificar condiciones de sobrecompra y sobreventa en un mercado. Aquí hay algunos osciladores comunes:\n\nÍndice de Fuerza Relativa (RSI): esto mide la velocidad y el cambio de los movimientos de precios. Por lo general, se utiliza para identificar condiciones de sobrecompra o sobreventa.\n\nConvergencia y Divergencia de Medias Móviles (MACD): se utiliza para identificar posibles señales de compra y venta. Dispara señales técnicas cuando cruza por encima (para comprar) o por debajo (para vender) de su línea de señal.";
@@ -1147,8 +1149,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.analysis.title" = "Análisis de contratos inteligente";
 "coin_analytics.analysis.footer" = "Desarrollado por De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Elementos de Alto Riesgo";
-"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
-"coin_analytics.analysis.attention_required" = "Attention Required";
+"coin_analytics.analysis.medium_risk_items" = "Elementos de Riesgo Medio";
+"coin_analytics.analysis.attention_required" = "Atención Requerida";
 "coin_analytics.analysis.token_detectors" = "Detectores de Tokens";
 "coin_analytics.analysis.general_detectors" = "Detectores Generales";
 "coin_analytics.analysis.issues" = "Issues: %@";
@@ -1290,8 +1292,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.rate_us" = "Califícanos";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.contact_us" = "Contáctenos";
-"settings.social_networks.label" = "JOIN UNSTOPPABLES";
-"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
+"settings.social_networks.label" = "ÚNETE A UNSTOPPABLES";
+"settings.social_networks.footer" = "Mantente al tanto de los acontecimientos de Unstoppable. ¡Sé el primero en enterarte de las nuevas funciones, problemas reportados por los usuarios y en qué estamos trabajando!";
 
 // Settings -> Base Currency
 
@@ -1510,7 +1512,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Settings -> About App
 
 "settings.about_app.title" = "Sobre la App";
-"settings.about_app.app_version" = "App Version";
+"settings.about_app.app_version" = "Versión de la Aplicación";
 "settings.about_app.website" = "Website";
 
 // Settings -> About App -> Contact
@@ -1538,10 +1540,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.theme.light" = "Claro";
 
 "appearance.markets_tab" = "Pestaña de Mercados";
-"appearance.hide_markets" = "Hide Markets";
+"appearance.hide_markets" = "Ocultar Mercados";
 "appearance.price_change" = "Cambio de Precio";
 "appearance.price_change.24h" = "24H";
-"appearance.price_change.midnight_utc" = "Midnight UTC";
+"appearance.price_change.midnight_utc" = "Medianoche UTC";
 
 "appearance.launch_screen" = "Pantalla de lanzamiento";
 "appearance.launch_screen.auto" = "Auto";
@@ -1550,10 +1552,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.launch_screen.watchlist" = "Lista de Seguimiento";
 
 "appearance.balance_tab" = "Balance Tab";
-"appearance.hide_buttons" = "Hide Buttons";
+"appearance.hide_buttons" = "Ocultar Botones";
 "appearance.balance_value" = "Valor de Saldo";
-"appearance.balance_value.coin_fiat" = "Coin / Fiat";
-"appearance.balance_value.fiat_coin" = "Fiat / Coin";
+"appearance.balance_value.coin_fiat" = "Moneda / Fiat";
+"appearance.balance_value.fiat_coin" = "Fiat / Moneda";
 "appearance.balance_conversion" = "Conversión de balance";
 
 "appearance.app_icon" = "Icono de la App";
@@ -1621,13 +1623,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2W";
+"chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halfyear" = "6M";
-"chart.time_duration.year" = "1Y";
-"chart.time_duration.year2" = "2Y";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year" = "1A";
+"chart.time_duration.year2" = "2A";
+"chart.time_duration.year5" = "5A";
 "chart.time_duration.all" = "TODO";
 
 "chart.market_cap" = "Capitalización del Mercado";
@@ -1926,7 +1928,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.errors.transaction_underpriced" = "Tarifa baja para la transacción";
 "fee_settings.errors.tips_higher_than_max_fee" = "Tarifa máxima es demasiado baja";
 "fee_settings.errors.zero_amount.info" = "No se puede transferir 0 TRX";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck" = "Arriesgado";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transacción puede permanecer pendiente por un tiempo o fallar por completo.";
 "fee_settings.warning.overpricing" = "Cuota demasiado alta";
 "fee_settings.warning.overpricing.info" = "La tarifa de transacción establecida es mayor de lo necesario para procesar esta transacción ahora.";

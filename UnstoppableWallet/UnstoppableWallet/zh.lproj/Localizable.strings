@@ -903,11 +903,6 @@
 "market.global.defi_cap.title" = "DeFi市场价值";
 "market.global.defi_cap.description" = "去中心化金融（DeFi）项目的总市场价值";
 
-"market.global.tvl_in_defi.title" = "DeFi中的TVL";
-"market.global.tvl_in_defi.description" = "去中心金融（DeFi）中的锁定总价值（TVL）";
-"market.global.tvl_in_defi.multi_chain" = "多链";
-"market.global.tvl_in_defi.filter_by_chain" = "通过区块链过滤";
-
 "market.etf.title" = "Total Net Inflow";
 "market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
 "market.etf.total_net_assets" = "Total Net Assets";
@@ -920,6 +915,13 @@
 "market.market_cap.title" = "总市场价值";
 "market.market_cap.description" = "所有加密货币的总市场价值";
 "market.market_cap.market_cap" = "市场价值";
+
+"market.tvl_in_defi.title" = "DeFi中的TVL";
+"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.tvl" = "TVL";
+"market.tvl_in_defi.multi_chain" = "Multi-chain";
+"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.filter.all" = "所有";
 
 "market.volume.title" = "Volume";
 "market.volume.description" = "加密货币市场24小时交易量";
