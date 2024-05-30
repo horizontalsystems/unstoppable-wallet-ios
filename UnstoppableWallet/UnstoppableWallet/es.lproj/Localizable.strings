@@ -352,7 +352,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.frozen.info.title" = "Título congelado";
 "balance.token.frozen.info.description" = "Texto de descripción congelada";
 "balance.token.account.inactive.title" = "Cuenta No Activa";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
+"balance.token.account.inactive.description" = "Las nuevas billeteras TRON requieren un depósito de al menos 1 TRX para activarse. Las billeteras inactivas pueden mantener y recibir tokens, pero no corregirán los saldos hasta que se activen.";
 
 // Account switcher
 
@@ -447,8 +447,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, considere esta una opción recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe un estándar comúnmente acordado para ordenar las salidas de las transacciones (conocido como BIP69). En carteras de código abierto, ese estándar asegura que los usuarios de la cartera no necesiten confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Dado que este estándar es nuevo, todavía no muchos monederos lo han implementado. Como resultado, es algo posible ver en la cadena de bloques si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
-"send.select_all" = "Select All";
-"send.unselect_all" = "Unselect All";
+"send.select_all" = "Seleccionar Todo";
+"send.unselect_all" = "Deseleccionar Todo";
 
 "send.confirmation.title" = "Confirmar";
 "send.confirmation.you_send" = "Usted envía";
@@ -466,14 +466,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
 "send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
-"send.confirmation.input" = "Input";
+"send.confirmation.input" = "Entrada";
 
-"send.confirmation.sync_failed" = "Sync Failed";
-"send.confirmation.invalid_data" = "Invalid Data";
-"send.confirmation.refresh" = "Refresh";
-"send.confirmation.please_wait" = "Please Wait";
-"send.confirmation.expires_in" = "Expires in %@";
-"send.confirmation.expired" = "Expired";
+"send.confirmation.sync_failed" = "Error de sincronización";
+"send.confirmation.invalid_data" = "Datos no válidos";
+"send.confirmation.refresh" = "Actualizar";
+"send.confirmation.please_wait" = "Por favor, espere";
+"send.confirmation.expires_in" = "Expira en %@";
+"send.confirmation.expired" = "Expirado";
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
 "send.confirmation.sending" = "Enviar";
 "send.confirmation.sent" = "Enviado";
@@ -521,11 +521,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "approve.confirmation.spender" = "Gastador";
 
 "send.enter_amount" = "Introducir cantidad";
-"send.enter_address" = "Enter Address";
-"send.invalid_address" = "Invalid Address";
-"send.token_not_enabled" = "Token Not Enabled";
-"send.token_syncing" = "Token Syncing";
-"send.token_not_synced" = "Token Not Synced";
+"send.enter_address" = "Introduce una dirección";
+"send.invalid_address" = "Dirección inválida";
+"send.token_not_enabled" = "Token no habilitado";
+"send.token_syncing" = "Sincronización de tokens";
+"send.token_not_synced" = "Token no sincronizado";
 "send.insufficient_balance" = "Saldo insuficiente";
 
 // Donate
@@ -583,9 +583,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.no_providers" = "No hay proveedores";
 "swap.enter_amount" = "Introducir cantidad";
 "swap.no_quotes" = "Sin ofertas";
-"swap.token_not_enabled" = "Token Not Enabled";
-"swap.token_syncing" = "Token Syncing";
-"swap.token_not_synced" = "Token Not Synced";
+"swap.token_not_enabled" = "Token no habilitado";
+"swap.token_syncing" = "Sincronización de tokens";
+"swap.token_not_synced" = "Token no sincronizado";
 "swap.insufficient_balance" = "Saldo insuficiente";
 
 "swap.quotes.providers" = "Proveedores";
@@ -630,7 +630,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.advanced_settings.service_fee_description" = "Tasa de servicio para la acción de intercambio en la plataforma típicamente de 0,3% o 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Es probable que su transacción falle.";
 "swap.advanced_settings.error.higher_slippage" = "Tolerancia de deslizamiento no puede ser más de %@%%";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Dirección inválida";
 "swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
 
@@ -651,14 +651,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.confirmation.title" = "Confirmar";
 "swap.confirmation.quoting" = "Cotización...";
 "swap.confirmation.invalid_quote" = "Cotización no válida";
-"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.please_wait" = "Por favor, espere";
 "swap.confirmation.quote_expires_in" = "La cotización expira en %@";
 "swap.confirmation.quote_expired" = "Cotización expirada";
 "swap.confirmation.quote_failed" = "Error al cotizar";
 
 "swap.confirmation.slide_to_swap" = "Deslizar para intercambiar";
 "swap.confirmation.swapping" = "Intercambio";
-"swap.confirmation.refresh" = "Refresh";
+"swap.confirmation.refresh" = "Actualizar";
 "swap.confirmation.impact_too_high" = "%@ ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
@@ -700,10 +700,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL en DeFi";
 
-"market.global.market_cap" = "Total Cap";
-"market.global.volume" = "24h Vol.";
-"market.global.btc_dominance" = "BTC Dominance";
-"market.global.etf_inflow" = "ETF Inflow";
+"market.global.market_cap" = "Capitalización Total";
+"market.global.volume" = "Vol. de 24 h";
+"market.global.btc_dominance" = "Dominio de BTC";
+"market.global.etf_inflow" = "Entrada ETF";
 "market.global.tvl_in_defi" = "TVL en DeFi";
 
 "market.tab.news" = "Noticias";
@@ -738,14 +738,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.time_period.5y" = "5 Años";
 "market.time_period.24h.short" = "24H";
 "market.time_period.1d.short" = "1D";
-"market.time_period.1w.short" = "1W";
-"market.time_period.2w.short" = "2W";
+"market.time_period.1w.short" = "1S";
+"market.time_period.2w.short" = "2S";
 "market.time_period.1m.short" = "1M";
 "market.time_period.3m.short" = "3M";
 "market.time_period.6m.short" = "6M";
-"market.time_period.1y.short" = "1Y";
-"market.time_period.2y.short" = "2Y";
-"market.time_period.5y.short" = "5Y";
+"market.time_period.1y.short" = "1A";
+"market.time_period.2y.short" = "2A";
+"market.time_period.5y.short" = "5A";
 
 "market.project_has_no_coin" = "Este proyecto no tiene una moneda";
 
@@ -803,16 +803,16 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market_discovery.not_found" = "No se han encontrado resultados";
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
-"market.watchlist.signals" = "Signals";
-"market.watchlist.empty" = "Your watchlist is empty";
-"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
-"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
-"market.watchlist.signals.buy.description" = "Likely price increase in near future";
-"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
-"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
+"market.watchlist.signals" = "Señales";
+"market.watchlist.empty" = "Tu Watchlist está vacía";
+"market.watchlist.signals.description" = "Las señales a continuación se basan en los indicadores técnicos de precio Bollinger Bands y RSI durante aproximadamente los últimos 30 días. Estas señales son algorítmicas y pueden cambiar con frecuencia.";
+"market.watchlist.signals.strong_buy.description" = "Alta confianza en aumento del precio";
+"market.watchlist.signals.buy.description" = "Probable aumento del precio en el futuro cercano";
+"market.watchlist.signals.neutral.description" = "No hay una tendencia clara, el mercado está en equilibrio";
+"market.watchlist.signals.sell.description" = "Probable disminución del precio en el futuro cercano";
 "market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
-"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
-"market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
+"market.watchlist.signals.risky.description" = "Nivel de riesgo elevado, requiere precaución";
+"market.watchlist.signals.warning" = "Recuerda siempre aplicar gestión de riesgos, y ten en cuenta que esto no es un consejo financiero.";
 "market.watchlist.signals.turn_on" = "Activar";
 
 "market.advanced_search.title" = "Filtros";
@@ -987,22 +987,22 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "technical_advice.neutral.rsi" = "RSI = %@ también confirma la ausencia de una tendencia fuerte.";
 "technical_advice.neutral.indicators" = "El activo estaba en la zona de sobrecompra/sobreventa, pero en este momento el precio ha regresado al canal de las Bandas de Bollinger en la zona neutral. El RSI es %@, lo que también confirma la ausencia de una tendencia fuerte, por lo que en general el precio del activo se está moviendo hacia la media y es posible un movimiento adicional en cualquier dirección.";
-"technical_advice.neutral.advice" = " In general, the asset price is moving towards averaging and further movement is possible in any direction.";
+"technical_advice.neutral.advice" = " En general, el precio del activo se está moviendo hacia la media y es posible que se produzca un movimiento en cualquier dirección.";
 
-"technical_advice.other.title" = "Please note:";
+"technical_advice.other.title" = "Por favor, toma nota:";
 
-"technical_advice.ema.above" = "above";
-"technical_advice.ema.below" = "below";
-"technical_advice.ema.growth" = "growth";
-"technical_advice.ema.decrease" = "decrease";
+"technical_advice.ema.above" = "arriba";
+"technical_advice.ema.below" = "abajo";
+"technical_advice.ema.growth" = "crecimiento";
+"technical_advice.ema.decrease" = "disminución";
 "technical_advice.ema.advice" = "EMA 200. Determina el sentimiento y la tendencia general. El precio diario del activo se encuentra %@ la EMA (%@). Esto significa que globalmente el activo está configurado para %@.";
 
-"technical_advice.macd.positive" = "above";
-"technical_advice.macd.negative" = "below";
+"technical_advice.macd.positive" = "arriba";
+"technical_advice.macd.negative" = "abajo";
 "technical_advice.macd.advice" = "MACD. Evalúa la fuerza de la tendencia considerando el cambio promedio de precio. El valor diario del histograma es %@ (%@). El precio del activo a nivel global puede moverse %@.";
 
 "coin_analytics.indicators.title" = "Indicadores técnicos";
-"coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
+"coin_analytics.indicators.disclaimer" = "Recuerda siempre aplicar gestión de riesgos, y ten en cuenta que esto no es un consejo financiero.";
 "coin_analytics.indicators.info.title" = "Indicadores Técnicos";
 "coin_analytics.indicators.info.description" = "Utilizamos la estrategia de Bollinger Bands + RSI para determinar señales de trading. Todos los cálculos se basan en velas diarias y proporcionan consejos para un término moderadamente largo. La esencia de la estrategia es que el precio del activo debe alcanzar un extremo, saliendo del canal de las Bandas de Bollinger, y el RSI debe estar en la zona de sobrecompra/sobreventa. Después de que el precio regrese al canal, hay una alta probabilidad de que el precio regrese a los valores medios o intente romper el canal desde el otro lado. Ten en cuenta que la estrategia puede dar varias señales falsas durante movimientos fuertes del mercado antes de que aparezca una señal correcta.\n\n¡Recuerda que es muy importante aplicar la gestión del riesgo al trading y recordar cortar pérdidas si la situación del mercado cambia! ";
 "coin_analytics.indicators.hide_details" = "Ocultar Detalles";
@@ -1623,13 +1623,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2W";
+"chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halfyear" = "6M";
-"chart.time_duration.year" = "1Y";
-"chart.time_duration.year2" = "2Y";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.year" = "1A";
+"chart.time_duration.year2" = "2A";
+"chart.time_duration.year5" = "5A";
 "chart.time_duration.all" = "TODO";
 
 "chart.market_cap" = "Capitalización del Mercado";
