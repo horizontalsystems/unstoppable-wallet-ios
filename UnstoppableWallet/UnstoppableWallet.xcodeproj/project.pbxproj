@@ -2136,6 +2136,12 @@
 		6BB14F732BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */; };
 		6BB14F752C01D04200E879B2 /* CheckBoxUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */; };
 		6BB14F762C01D04200E879B2 /* CheckBoxUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */; };
+		6BB14F7B2C05FBAC00E879B2 /* MarketTvlViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F7A2C05FAB600E879B2 /* MarketTvlViewModel.swift */; };
+		6BB14F7C2C05FBAD00E879B2 /* MarketTvlViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F7A2C05FAB600E879B2 /* MarketTvlViewModel.swift */; };
+		6BB14F7D2C05FBAF00E879B2 /* MarketTvlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F792C05FAB600E879B2 /* MarketTvlView.swift */; };
+		6BB14F7E2C05FBB000E879B2 /* MarketTvlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F792C05FAB600E879B2 /* MarketTvlView.swift */; };
+		6BB14F802C06F19300E879B2 /* DefiCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F7F2C06F19300E879B2 /* DefiCoin.swift */; };
+		6BB14F812C06F19300E879B2 /* DefiCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB14F7F2C06F19300E879B2 /* DefiCoin.swift */; };
 		6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A22BDA419200ABBD55 /* Web3Wallet */; };
 		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
@@ -4515,6 +4521,9 @@
 		6BB14F6A2BF49E7100E879B2 /* WalletButtonHiddenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletButtonHiddenManager.swift; sourceTree = "<group>"; };
 		6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfFetcher.swift; sourceTree = "<group>"; };
 		6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxUiView.swift; sourceTree = "<group>"; };
+		6BB14F792C05FAB600E879B2 /* MarketTvlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTvlView.swift; sourceTree = "<group>"; };
+		6BB14F7A2C05FAB600E879B2 /* MarketTvlViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTvlViewModel.swift; sourceTree = "<group>"; };
+		6BB14F7F2C06F19300E879B2 /* DefiCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefiCoin.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -5085,7 +5094,6 @@
 				6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */,
 				D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */,
-				D3BC25802B0B5E1E0092F682 /* TonKitKmm.xcframework in Frameworks */,
 				D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */,
 				D023D2652A24B9DC004F65B0 /* TronKit in Frameworks */,
 				D3C187BC2907CFC200FE1900 /* Checkpoints in Frameworks */,
@@ -5589,6 +5597,7 @@
 				D3833AF72BF2181800ACECFB /* MarketPair.swift */,
 				D086A9152BF4D08400462024 /* SendParameters.swift */,
 				D3384D152BFDEF6800515664 /* Etf.swift */,
+				6BB14F7F2C06F19300E879B2 /* DefiCoin.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -7795,6 +7804,7 @@
 		58AAA9EB9618EBC895D0B123 /* Market */ = {
 			isa = PBXGroup;
 			children = (
+				6BB14F782C05FAA600E879B2 /* Tvl */,
 				D3384D1F2BFF0CBD00515664 /* Volume */,
 				D3384D182BFF0C9900515664 /* MarketCap */,
 				D3384D0E2BFDCBD100515664 /* Etf */,
@@ -8025,6 +8035,15 @@
 				6BB14F712BFE550600E879B2 /* MarketEtfFetcher.swift */,
 			);
 			path = Etf;
+			sourceTree = "<group>";
+		};
+		6BB14F782C05FAA600E879B2 /* Tvl */ = {
+			isa = PBXGroup;
+			children = (
+				6BB14F792C05FAB600E879B2 /* MarketTvlView.swift */,
+				6BB14F7A2C05FAB600E879B2 /* MarketTvlViewModel.swift */,
+			);
+			path = Tvl;
 			sourceTree = "<group>";
 		};
 		6BCD52F62A161F4100993F20 /* ICloud */ = {
@@ -10313,6 +10332,7 @@
 				58AAA900E2644527A2C78863 /* MetricChartService.swift in Sources */,
 				58AAAEDDF791C28174360A15 /* MetricChartFactory.swift in Sources */,
 				58AAA4B64068280C684EE5C1 /* MetricChartModule.swift in Sources */,
+				6BB14F7C2C05FBAD00E879B2 /* MarketTvlViewModel.swift in Sources */,
 				58AAA48ED47FD19F368385FA /* MetricChartViewController.swift in Sources */,
 				58AAAE020611495B6294ED96 /* MarketGlobalModule.swift in Sources */,
 				D3DB51B32BD912A00091BBDB /* MarketInfo.swift in Sources */,
@@ -10569,6 +10589,7 @@
 				ABC9AF77EF53B4A7B0C0E55A /* SendAmountCautionViewModel.swift in Sources */,
 				1A564CC4790F0CED826C131F /* MarketOverviewViewModel.swift in Sources */,
 				11B359C198AA7A141522E5E9 /* EvmAccountManagerFactory.swift in Sources */,
+				6BB14F7E2C05FBB000E879B2 /* MarketTvlView.swift in Sources */,
 				11B350918797E615D4FF6677 /* BlockchainSettingRecordStorage.swift in Sources */,
 				11B35B7132B99D12DC745064 /* BtcBlockchainSettingsModule.swift in Sources */,
 				6B2907202AF0CB8A006157D6 /* WalletConnectAppShowService.swift in Sources */,
@@ -11204,6 +11225,7 @@
 				ABC9ABE3F52BF2307533D8FB /* InputTextRow.swift in Sources */,
 				ABC9A36D3A4EEABF6EA6DBA0 /* Shake.swift in Sources */,
 				ABC9A4A21CFBA188A7EEC930 /* ActivityView.swift in Sources */,
+				6BB14F812C06F19300E879B2 /* DefiCoin.swift in Sources */,
 				11B357740CC018527301C4AE /* AppStatusView.swift in Sources */,
 				11B359BD68E234293DCF33CC /* AppStatusViewModel.swift in Sources */,
 				11B356562D2B4F5BCAB4FC80 /* AboutView.swift in Sources */,
@@ -11893,6 +11915,7 @@
 				58AAAFD1F07293D4691F2294 /* MetricChartFactory.swift in Sources */,
 				58AAAAE64799E5DD40D4C54A /* MetricChartModule.swift in Sources */,
 				58AAA0CA81351C80C4F2E168 /* MetricChartViewController.swift in Sources */,
+				6BB14F7B2C05FBAC00E879B2 /* MarketTvlViewModel.swift in Sources */,
 				58AAA4109DE36F8934808DE0 /* MarketGlobalModule.swift in Sources */,
 				11B352840E06275F96EFFCDB /* BaseCurrencySettingsModule.swift in Sources */,
 				D3DB51B22BD912A00091BBDB /* MarketInfo.swift in Sources */,
@@ -12149,6 +12172,7 @@
 				ABC9ADF2CFB90B882B5DE3F9 /* WalletConnectService.swift in Sources */,
 				ABC9A4F4B7F17169DC240A98 /* WalletConnectUriHandler.swift in Sources */,
 				ABC9AA27A709AC5F85176A53 /* WalletConnectModule.swift in Sources */,
+				6BB14F7D2C05FBAF00E879B2 /* MarketTvlView.swift in Sources */,
 				ABC9ABC375B65451761D4766 /* SendFeeViewModel.swift in Sources */,
 				ABC9A933C2603486BA181B19 /* SendFeeService.swift in Sources */,
 				ABC9A4B643D98FB95F431401 /* SendBitcoinAmountInputService.swift in Sources */,
@@ -12784,6 +12808,7 @@
 				ABC9A2035980B70E1C0790A8 /* CheckboxStyle.swift in Sources */,
 				ABC9A99A45187C36D48840F8 /* BackupAppModule.swift in Sources */,
 				ABC9AE51262C09EABF5CCEEE /* InputTextView.swift in Sources */,
+				6BB14F802C06F19300E879B2 /* DefiCoin.swift in Sources */,
 				ABC9A542CA987F09C93F04A9 /* InputTextRow.swift in Sources */,
 				ABC9A7C2087C3A641C3F9AD4 /* Shake.swift in Sources */,
 				ABC9A12A4D114A2E4F4C711A /* ActivityView.swift in Sources */,
@@ -13941,7 +13966,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.8;
+				version = 3.0.9;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {

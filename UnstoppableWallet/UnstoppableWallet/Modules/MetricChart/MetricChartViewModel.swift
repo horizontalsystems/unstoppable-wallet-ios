@@ -19,9 +19,12 @@ class MetricChartViewModel: ObservableObject {
     private let errorRelay = BehaviorRelay<Bool>(value: false)
     private let needUpdateIntervalsRelay = BehaviorRelay<Int>(value: 0)
 
+    @Published var periodType: HsPeriodType
+
     init(service: MetricChartService, factory: MetricChartFactory) {
         self.service = service
         self.factory = factory
+        periodType = service.interval
 
         service.$interval
             .sink { [weak self] in self?.sync(interval: $0) }
@@ -107,8 +110,9 @@ extension MetricChartViewModel: IChartViewModel {
         guard chartTypes.count > index else {
             return
         }
-
-        service.interval = chartTypes[index]
+        let interval = chartTypes[index]
+        service.interval = interval
+        periodType = interval
     }
 
     func start() {

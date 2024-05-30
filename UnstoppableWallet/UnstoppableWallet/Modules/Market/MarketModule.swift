@@ -171,6 +171,8 @@ extension MarketModule {
             case .desc: self = .asc
             }
         }
+
+        var isAsc: Bool { self == .asc }
     }
 
     enum Top: Int, CaseIterable {
@@ -392,6 +394,32 @@ extension MarketKit.MarketInfo {
     }
 }
 
+extension MarketKit.DefiCoin {
+    func tvlChangeValue(type: MarketModule.PriceChangeType) -> Decimal? {
+        switch type {
+        case .day: return tvlChange1d
+        case .week: return tvlChange1w
+        case .week2: return tvlChange2w
+        case .month: return tvlChange1m
+        case .month6: return tvlChange6m
+        case .year: return tvlChange1y
+        }
+    }
+
+    func tvlChangeValue(timePeriod: HsTimePeriod) -> Decimal? {
+        switch timePeriod {
+        case .day1: return tvlChange1d
+        case .week1: return tvlChange1w
+        case .week2: return tvlChange2w
+        case .month1: return tvlChange1m
+        case .month3: return tvlChange6m
+        case .month6: return tvlChange6m
+        case .year1: return tvlChange1y
+        default: return nil
+        }
+    }
+}
+
 extension [MarketKit.MarketInfo] {
     func sorted(sortBy: WatchlistSortBy, timePeriod: WatchlistTimePeriod) -> [MarketKit.MarketInfo] {
         switch sortBy {
@@ -544,6 +572,13 @@ extension HsTimePeriod {
         case .day1: return "market.time_period.24h.short".localized
         default: return "market.time_period.\(rawValue).short".localized
         }
+    }
+
+    init?(_ periodType: HsPeriodType) {
+        guard case let .byPeriod(timePeriod) = periodType else {
+            return nil
+        }
+        self = timePeriod
     }
 }
 
