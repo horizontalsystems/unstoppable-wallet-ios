@@ -228,6 +228,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "extended_key.purpose" = "Purpose";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Account";
+"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
 "extended_key.tap_to_show" = "Extended private key göstermek için dokunun";
 
 // Backup
@@ -318,7 +319,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.downloading_blocks" = "Blokları İndirme";
 "balance.scanning_blocks" = "Tarama Blokları";
 "balance.enhancing_transactions" = "İşlemleri Geliştirme";
-"wait_for_synchronization" = "Senkronizasyonu bekleyin";
 
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
@@ -351,6 +351,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "Frozen title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
+"balance.token.account.inactive.title" = "Account Not Active";
+"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
 
 // Account switcher
 
@@ -445,6 +447,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "İşlem çıktılarının sırası her işlemde rastgele belirlenir. Bazen değişim ilk çıktı olabilir, bazen ikinci olabilir. Bir kullanıcı uygulamanın geliştiricisine güveniyorsa bunu önerilen bir seçenek olarak değerlendirin.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "İşlem çıktılarını sipariş etmek için yaygın olarak kabul edilen bir standart vardır (BIP69 olarak bilinir). Açık kaynaklı (open-source) cüzdanlarda, bu standart, cüzdan kullanıcılarının uygulamanın geliştiricilerinin çıktıların sıralanmasını nasıl uyguladıklarına güvenmelerine gerek kalmamasını sağlar. Bu standart yeni olduğundan, henüz pek çok cüzdan bunu uygulamamıştır. Sonuç olarak, bir işlemin bu standardı kullanan bir cüzdandan gönderilip gönderilmediğini blok zincirinde görmek mümkündür.";
+"send.select_all" = "Select All";
+"send.unselect_all" = "Unselect All";
 
 "send.confirmation.title" = "Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
@@ -462,18 +466,20 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Ücretle Değiştir";
 "send.confirmation.replaced_transactions" = "Değiştirilmiş İşlemler";
+"send.confirmation.input" = "Input";
 
+"send.confirmation.sync_failed" = "Sync Failed";
+"send.confirmation.invalid_data" = "Invalid Data";
+"send.confirmation.refresh" = "Refresh";
+"send.confirmation.please_wait" = "Please Wait";
+"send.confirmation.expires_in" = "Expires in %@";
+"send.confirmation.expired" = "Expired";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.sent" = "Gönderildi";
 
 "send.confirmation.slide_to_approve" = "Onaylamak İçin Kaydır";
-"send.confirmation.approving" = "Onaylayan";
-"send.confirmation.approved" = "Onayla";
-
 "send.confirmation.slide_to_revoke" = "İptal Etmek İçin Kaydır";
-"send.confirmation.revoking" = "İptal ediliyor";
-"send.confirmation.revoked" = "İptal et";
 
 "send.confirmation.slide_to_resend" = "Yeniden Gönder";
 "send.confirmation.slide_to_cancel" = "İşlemi İptal Et";
@@ -506,12 +512,21 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
 "send.unspent_outputs.send_to" = "Göndermek için";
 "send.unspent_outputs.change" = "Değiştir";
 
 "approve.confirmation.you_approve" = "Sen Onaylıyorsun";
 "approve.confirmation.you_revoke" = "Sen iptal et";
 "approve.confirmation.spender" = "Harcayan";
+
+"send.enter_amount" = "Miktarı Girin";
+"send.enter_address" = "Enter Address";
+"send.invalid_address" = "Invalid Address";
+"send.token_not_enabled" = "Token Not Enabled";
+"send.token_syncing" = "Token Syncing";
+"send.token_not_synced" = "Token Not Synced";
+"send.insufficient_balance" = "Yetersiz Bakiye";
 
 // Donate
 
@@ -568,9 +583,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.no_providers" = "Sağlayıcı Yok";
 "swap.enter_amount" = "Miktarı Girin";
 "swap.no_quotes" = "Teklif Yok";
-"swap.token_not_enabled" = "Jeton Etkin Değil";
-"swap.token_syncing" = "Token Senkronizasyonu";
-"swap.token_not_synced" = "Jeton Senkronize Edilmedi";
+"swap.token_not_enabled" = "Token Not Enabled";
+"swap.token_syncing" = "Token Syncing";
+"swap.token_not_synced" = "Token Not Synced";
 "swap.insufficient_balance" = "Yetersiz Bakiye";
 
 "swap.quotes.providers" = "Sağlayıcılar";
@@ -615,7 +630,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.advanced_settings.service_fee_description" = "Platformdaki takas işlemi için bir hizmet ücreti genellikle %0,3 veya %0,6'dır";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
 "swap.advanced_settings.error.higher_slippage" = "Slipaj Toleransı %@%% üzerinde olamaz";
-"swap.advanced_settings.error.invalid_address" = "Geçersiz Adres";
+"swap.advanced_settings.error.invalid_address" = "Invalid Address";
 "swap.advanced_settings.error.invalid_slippage" = "Geçersiz Kayma";
 "swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
@@ -636,15 +651,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.confirmation.title" = "Onayla";
 "swap.confirmation.quoting" = "Alıntı...";
 "swap.confirmation.invalid_quote" = "Yanlış alıntı";
-"swap.confirmation.please_wait" = "Lütfen Bekleyin";
+"swap.confirmation.please_wait" = "Please Wait";
 "swap.confirmation.quote_expires_in" = "Alıntının geçerlilik süresi %@ sonra sona erecek";
 "swap.confirmation.quote_expired" = "Alıntı süresi doldu";
 "swap.confirmation.quote_failed" = "Alıntı yaparken hata";
 
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
-"swap.confirmation.swapped" = "Takas Edildi";
-"swap.confirmation.refresh" = "Yenile";
+"swap.confirmation.refresh" = "Refresh";
 "swap.confirmation.impact_too_high" = "%@, son derece elverişsiz bir fiyat aldığınız için bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
@@ -686,12 +700,59 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
+"market.global.market_cap" = "Total Cap";
+"market.global.volume" = "24h Vol.";
+"market.global.btc_dominance" = "BTC Dominance";
+"market.global.etf_inflow" = "ETF Inflow";
+"market.global.tvl_in_defi" = "TVL in DeFi";
+
+"market.tab.news" = "Haberler";
+"market.tab.coins" = "Coins";
+"market.tab.watchlist" = "İzleme Listesi";
+"market.tab.platforms" = "Platforms";
+"market.tab.pairs" = "Pairs";
+"market.tab.sectors" = "Sectors";
+
+"market.sort_by.title" = "Sort By";
+"market.sort_by.manual" = "Manual";
+"market.sort_by.highest_cap" = "Highest Cap";
+"market.sort_by.lowest_cap" = "Lowest Cap";
+"market.sort_by.gainers" = "Gainers";
+"market.sort_by.losers" = "Losers";
+"market.sort_by.highest_volume" = "Highest Volume";
+"market.sort_by.lowest_volume" = "Lowest Volume";
+
+"market.top_coins.title" = "Coins";
+"market.top_coins" = "Top %@";
+
+"market.time_period.title" = "Period";
+"market.time_period.24h" = "24 Hours";
+"market.time_period.1d" = "1 Day";
+"market.time_period.1w" = "1 Week";
+"market.time_period.2w" = "2 Weeks";
+"market.time_period.1m" = "1 Month";
+"market.time_period.3m" = "3 Months";
+"market.time_period.6m" = "6 Months";
+"market.time_period.1y" = "1 Year";
+"market.time_period.2y" = "2 Years";
+"market.time_period.5y" = "5 Years";
+"market.time_period.24h.short" = "24H";
+"market.time_period.1d.short" = "1D";
+"market.time_period.1w.short" = "1W";
+"market.time_period.2w.short" = "2W";
+"market.time_period.1m.short" = "1M";
+"market.time_period.3m.short" = "3M";
+"market.time_period.6m.short" = "6M";
+"market.time_period.1y.short" = "1Y";
+"market.time_period.2y.short" = "2Y";
+"market.time_period.5y.short" = "5Y";
+
 "market.project_has_no_coin" = "Bu proje bir koin içermiyor";
 
 "market.top.section.header.see_all" = "Hepsini Gör";
 "market.top.section.header.top_gainers" = "En Kazançlılar";
 "market.top.section.header.top_losers" = "Çok Kaybedenler";
-"market.top.section.header.sectors" = "Sektörler";
+"market.top.section.header.sectors" = "Sectors";
 "market.top.section.header.news" = "Haberler";
 "market.top.volume.title" = "Hacim";
 "market.top.market_cap.title" = "P. Değeri";
@@ -705,15 +766,15 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.tvl.platform_field.all" = "Hepsi";
 
-"market.sort_by" = "Sırala";
+"market.sort_by" = "Sort By";
 
 "market.top.title" = "En iyi Coinler";
 "market.top.description" = "P. Değerine Göre En Iyi Coinler";
 
-"market.top.highest_cap" = "En Yüksek";
-"market.top.lowest_cap" = "En Düşük";
-"market.top.highest_volume" = "En Yüksek HacIm";
-"market.top.lowest_volume" = "En Düşük HacIm";
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
 "market.top.top_gainers" = "En Kazançlılar";
 "market.top.top_losers" = "Çok Kaybedenler";
 "market.top.top_collections" = "En İyi NFT Koleksiyonlar";
@@ -722,6 +783,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.top.top_platforms" = "En İyi Platformlar";
 "market.top.protocols" = "Protokoller";
 
+"market.pairs.volume" = "Volume";
 "top_pairs.title" = "Top Market Pairs";
 "top_pairs.description" = "Her borsada hacme göre en üstte olan işlem çiftleri";
 
@@ -741,6 +803,17 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market_discovery.not_found" = "Sonuç bulunamadı";
 
 "market_watchlist.empty.caption" = "İzleme listeniz boş.";
+"market.watchlist.signals" = "Signals";
+"market.watchlist.empty" = "Your watchlist is empty";
+"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
+"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
+"market.watchlist.signals.buy.description" = "Likely price increase in near future";
+"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
+"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
+"market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
+"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
+"market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
+"market.watchlist.signals.turn_on" = "Turn On";
 
 "market.advanced_search.title" = "Filtreler";
 "market.advanced_search.show_results" = "Sonuçları Göster";
@@ -768,7 +841,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.price_period" = "Fiyat Periyodu";
 "market.advanced_search.price_change" = "Fiyat Değişimi";
 
-"market.advanced_search.technical_advice.risk_trade" = "Ticaret Riski";
+"market.advanced_search.technical_advice.risky" = "Risky";
 "market.advanced_search.technical_advice.strong_buy" = "Kuvvetli Al";
 "market.advanced_search.technical_advice.buy" = "Al";
 "market.advanced_search.technical_advice.neutral" = "Nötr";
@@ -808,16 +881,16 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.more_50_b" = "> 50B";
 "market.advanced_search.more_500_b" = "> 500B";
 
-"market.advanced_search.day" = "1 Gün";
-"market.advanced_search.week" = "1 Hafta";
-"market.advanced_search.week2" = "2 Hafta";
-"market.advanced_search.month" = "1 Ay";
-"market.advanced_search.month6" = "6 Ay";
-"market.advanced_search.year" = "1 Yıl";
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Weeks";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Months";
+"market.advanced_search.year" = "1 Year";
 
-"market.advanced_search.day.short" = "24S";
+"market.advanced_search.day.short" = "24H";
 "market.advanced_search.week.short" = "7G";
-"market.advanced_search.month.short" = "1A";
+"market.advanced_search.month.short" = "1M";
 
 "market.advanced_search_results.title" = "Sonuçlar";
 
@@ -834,6 +907,23 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.global.tvl_in_defi.description" = "DeFi'deki Toplam Kilit Değer (TVL)";
 "market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
 "market.global.tvl_in_defi.filter_by_chain" = "Zincir ile filtrele";
+
+"market.etf.title" = "Total Net Inflow";
+"market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
+"market.etf.total_net_assets" = "Total Net Assets";
+"market.etf.sort_by.highest_assets" = "Highest Assets";
+"market.etf.sort_by.lowest_assets" = "Lowest Assets";
+"market.etf.sort_by.inflow" = "Inflow";
+"market.etf.sort_by.outflow" = "Outflow";
+"market.etf.period.all" = "Hepsi";
+
+"market.market_cap.title" = "Toplam Piyasa Değeri";
+"market.market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
+"market.market_cap.market_cap" = "Piyasa Değeri";
+
+"market.volume.title" = "Volume";
+"market.volume.description" = "Kripto piyasa 24 saatlik işlem hacmi";
+"market.volume.volume" = "Volume";
 
 // Coin Page
 
@@ -854,12 +944,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_overview.genesis_date" = "Başlangıç ​​tarihi";
 "coin_overview.trading_volume" = "İşlem Hacmi";
 
-"coin_overview.roi.hour24" = "1 Gün";
-"coin_overview.roi.day7" = "1 Hafta";
-"coin_overview.roi.day14" = "2 Hafta";
-"coin_overview.roi.day30" = "1 Ay";
+"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.day7" = "1 Week";
+"coin_overview.roi.day14" = "2 Weeks";
+"coin_overview.roi.day30" = "1 Month";
 "coin_overview.roi.day200" = "6 Ay";
-"coin_overview.roi.year1" = "1 Yıl";
+"coin_overview.roi.year1" = "1 Year";
 
 "coin_overview.overview" = "İzleme";
 "coin_overview.description_warning" = "Bu, verilen kripto para birimi için sağlanan referans materyale dayanarak yapay zeka tarafından oluşturulmuş bir açıklamadır. Hatalar içerebilir.";
@@ -1204,6 +1294,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.rate_us" = "Bizi Değerlendirin";
 "settings.tell_friends" = "Arkadaşlarına bahset";
 "settings.contact_us" = "Bize Ulaşın";
+"settings.social_networks.label" = "JOIN UNSTOPPABLES";
+"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
 
 // Settings -> Base Currency
 
@@ -1321,7 +1413,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings_security.duress_mode.description" = "Seçilen cüzdanları zorlama altında güvende tutmak için tasarlanmış özel bir mod.";
 
 "biometry.off" = "Kapat";
-"biometry.manual" = "Manuel";
+"biometry.manual" = "Manual";
 "biometry.on" = "Açık";
 "biometry.off.description" = "Tüm durumlarda devre dışı";
 "biometry.manual.description" = "Düğme ile tarama";
@@ -1421,9 +1513,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> About App
 
 "settings.about_app.title" = "Uygulama Hakkında";
-"settings.about_app.app_name" = "%@ Cüzdanı";
-"settings.about_app.description" = "%@ cüzdan, kripto para birimlerine özel ve bağımsız bir şekilde yatırım yapmak ve depolamak isteyenler için tasarlanmıştır.\n\nBu, fonlar üzerinde yalnızca kullanıcının kontrolüne sahip olduğu, velayet gerektirmeyen, eşler arası bir cüzdandır. Herhangi bir veri toplamaz ve kullanıcının fonlarını belirli bir cüzdan uygulamasına kilitlemeyerek kullanıcıyı bağımsız tutar.\n\n%@ cüzdan tamamen açık kaynaklıdır ve herkes uygulamanın tam olarak iddia ettiği gibi çalıştığını onaylayabilir.";
-"settings.about_app.whats_new" = "Yenilikler";
+"settings.about_app.app_version" = "App Version";
 "settings.about_app.website" = "Website";
 
 // Settings -> About App -> Contact
@@ -1450,21 +1540,26 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.theme.dark" = "Karanlık";
 "appearance.theme.light" = "Açık";
 
-"appearance.tab_settings" = "Tab Ayarları";
 "appearance.markets_tab" = "Piyasalar Sekmesi";
+"appearance.hide_markets" = "Hide Markets";
+"appearance.price_change" = "Fiyat Değişimi";
+"appearance.price_change.24h" = "24H";
+"appearance.price_change.midnight_utc" = "Midnight UTC";
+
 "appearance.launch_screen" = "Başlangıç Ekranı";
 "appearance.launch_screen.auto" = "Oto";
 "appearance.launch_screen.balance" = "Bakiye";
 "appearance.launch_screen.market_overview" = "Piyasaya Genel Bakış";
 "appearance.launch_screen.watchlist" = "İzleme Listesi";
 
-"appearance.app_icon" = "Uygulama İkonları";
-
+"appearance.balance_tab" = "Balance Tab";
+"appearance.hide_buttons" = "Hide Buttons";
+"appearance.balance_value" = "Bakiye değeri";
+"appearance.balance_value.coin_fiat" = "Coin / Fiat";
+"appearance.balance_value.fiat_coin" = "Fiat / Coin";
 "appearance.balance_conversion" = "Bakiye çevrimi";
 
-"appearance.balance_value" = "Bakiye değeri";
-"appearance.balance_value.coin_value" = "Para değeri";
-"appearance.balance_value.fiat_value" = "Fiat Değeri";
+"appearance.app_icon" = "Uygulama İkonları";
 
 // Settings -> Contacts
 
@@ -1527,12 +1622,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Key Types
 
-"chart.time_duration.day" = "24S";
+"chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7G";
-"chart.time_duration.week2" = "2H";
-"chart.time_duration.month" = "1A";
-"chart.time_duration.month3" = "3A";
-"chart.time_duration.halfyear" = "6A";
+"chart.time_duration.week2" = "2W";
+"chart.time_duration.month" = "1M";
+"chart.time_duration.month3" = "3M";
+"chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
 "chart.time_duration.year5" = "5Y";
@@ -1834,7 +1929,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "fee_settings.errors.transaction_underpriced" = "İşlem Ücreti Düşük";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Fee çok düşük";
 "fee_settings.errors.zero_amount.info" = "0 TRX aktarılamıyor";
-"fee_settings.warning.risk_of_getting_stuck" = "Riskli";
+"fee_settings.warning.risk_of_getting_stuck" = "Risky";
 "fee_settings.warning.risk_of_getting_stuck.info" = "İşlem bir süre beklemede kalabilir veya tamamen başarısız olabilir.";
 "fee_settings.warning.overpricing" = "Ücret Çok Yüksek";
 "fee_settings.warning.overpricing.info" = "Belirlenen işlem ücreti, bu işlemin şimdi işlenmesi için gereken ücretten daha yüksek.";
@@ -1967,7 +2062,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tron.send.fee.info" = "Ağda belirli bir işlemi göndermenin tahmini maliyeti. (Enerji, Bant Genişliği ve Aktivasyon Ücreti hariç)";
 "tron.send.resources_consumed.info" = "Bandwidth, blockchain veritabanında saklanan işlem baytlarının boyutunu ölçen birimdir. İşlem ne kadar büyük olursa, o kadar fazla bant genişliği kaynağı tüketilir.\n\nEnergy, TRON sanal makinesinin TRON ağında belirli işlemleri gerçekleştirmek için ihtiyaç duyduğu hesaplama miktarını ölçen birimdir.\n\nAkıllı sözleşmeden beri işlemlerin yürütülmesi için bilgi işlem kaynakları gerekir, her akıllı sözleşme işleminin energy ücretini ödemesi gerekir.";
 "tron.send.activation_fee.info" = "TRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir.";
-"tron.send.inactive_address" = "Bu adres aktif değil";
 
 // Cex Coin Select
 

@@ -1,40 +1,39 @@
-"2puq80" = "Coin Price List";
+"2puq80" = "Liste des prix des cryptomonnaies";
 
-"6ebp42" = "Selected Coin";
+"6ebp42" = "Pièce sélectionnée";
 
-"8vJheC" = "Sort By";
+"8vJheC" = "Classer par";
 
-"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
+"Iodq3O-Rl3a0T" = "Juste pour confirmer, vous vouliez 'Gagnants'?";
 
-"Iodq3O-qHGyuo" = "Just to confirm, you wanted ‘Highest Cap’?";
+"Iodq3O-qHGyuo" = "Juste pour confirmer, vous vouliez 'Capitalisation la plus élevée'?";
 
-"Iodq3O-tVjZ7W" = "Just to confirm, you wanted ‘Lowest Cap’?";
+"Iodq3O-tVjZ7W" = "Juste pour confirmer, vous vouliez 'Capitalisation la plus faible'?";
 
-"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Losers’?";
+"Iodq3O-x1kK4T" = "Juste pour confirmer, vous vouliez 'Perdants'?";
 
-"OkcYOj" = "View coin price for selected coin";
+"OkcYOj" = "Afficher le prix de la cryptomonnaie sélectionnée";
 
-"Rl3a0T" = "Gainers";
+"Rl3a0T" = "Gagnants";
 
-"VXTxGF" = "Widget Coin";
+"VXTxGF" = "Widget de la cryptomonnaie";
 
-"ZBHf6A" = "Sort Type";
+"ZBHf6A" = "Type de tri";
 
-"hrLfmt" = "Single Coin Price";
+"hrLfmt" = "Prix d'une seule cryptomonnaie";
 
-"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Gainers’.";
+"nj8Co9-Rl3a0T" = "Il y a ${count} options correspondant à 'Gagnants'.";
 
-"nj8Co9-qHGyuo" = "There are ${count} options matching ‘Highest Cap’.";
+"nj8Co9-qHGyuo" = "Il y a ${count} options correspondant à 'Capitalisation la plus élevée'.";
 
-"nj8Co9-tVjZ7W" = "There are ${count} options matching ‘Lowest Cap’.";
+"nj8Co9-tVjZ7W" = "Il y a ${count} options correspondant à 'Capitalisation la plus faible'.";
 
-"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
+"nj8Co9-x1kK4T" = "Il y a ${count} options correspondant à 'Perdants'.";
 
-"qHGyuo" = "Highest Cap";
+"qHGyuo" = "Cap. marché la plus forte";
 
-"rCV9fg" = "See coin prices for coin list";
+"rCV9fg" = "Voir les prix des cryptomonnaies de la liste";
 
-"tVjZ7W" = "Lowest Cap";
+"tVjZ7W" = "Cap. marché la plus basse";
 
-"x1kK4T" = "Losers";
-
+"x1kK4T" = "Perdants";
