@@ -67,7 +67,7 @@ class MainSettingsViewController: ThemeViewController {
         manageAccountsCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncManageAccountCell()
 
-        walletConnectCell.set(backgroundStyle: .lawrence, isLast: true)
+        walletConnectCell.set(backgroundStyle: .lawrence)
         syncWalletConnectCell()
 
         securityCell.set(backgroundStyle: .lawrence, isFirst: true)
@@ -244,6 +244,20 @@ class MainSettingsViewController: ThemeViewController {
                     self?.viewModel.onTapWalletConnect()
                 }
             ),
+            tableView.universalRow48(
+                id: "backup-manager",
+                image: .local(UIImage(named: "icloud_24")),
+                title: .body("settings.backup_manager".localized),
+                accessoryType: .disclosure,
+                isFirst: false,
+                isLast: true,
+                action: { [weak self] in
+                    let viewController = BackupManagerModule.viewController()
+                    self?.navigationController?.pushViewController(viewController, animated: true)
+
+                    stat(page: .settings, event: .open(page: .backupManager))
+                }
+            )
         ]
     }
 
@@ -332,25 +346,6 @@ class MainSettingsViewController: ThemeViewController {
                     self?.navigationController?.pushViewController(GuidesModule.instance(), animated: true)
 
                     stat(page: .settings, event: .open(page: .academy))
-                }
-            ),
-        ]
-    }
-
-    private var backupRows: [RowProtocol] {
-        [
-            tableView.universalRow48(
-                id: "backup-manager",
-                image: .local(UIImage(named: "icloud_24")),
-                title: .body("settings.backup_manager".localized),
-                accessoryType: .disclosure,
-                isFirst: true,
-                isLast: true,
-                action: { [weak self] in
-                    let viewController = BackupManagerModule.viewController()
-                    self?.navigationController?.pushViewController(viewController, animated: true)
-
-                    stat(page: .settings, event: .open(page: .backupManager))
                 }
             ),
         ]
@@ -542,7 +537,6 @@ extension MainSettingsViewController: SectionsDataSource {
                 rows: socialRows
             ),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
-            Section(id: "backup", headerState: .margin(height: .margin32), rows: backupRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
