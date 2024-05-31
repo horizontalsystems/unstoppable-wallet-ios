@@ -147,6 +147,7 @@ extension FaqViewController: SectionsDataSource {
                             return
                         }
 
+                        stat(page: .faq, event: .openArticle(relativeUrl: url.relativePath))
                         let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
                         self?.navigationController?.pushViewController(module, animated: true)
                     }

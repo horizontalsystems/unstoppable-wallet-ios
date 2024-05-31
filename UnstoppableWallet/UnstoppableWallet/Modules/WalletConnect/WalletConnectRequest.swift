@@ -28,6 +28,10 @@ class WalletConnectRequest {
             self.chainName = chainName
             self.address = address
         }
+
+        var description: String {
+            chainName ?? id.description
+        }
     }
 }
 

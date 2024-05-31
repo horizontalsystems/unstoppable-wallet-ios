@@ -20,6 +20,7 @@ class MarketMarketCapViewModel: ObservableObject {
 
     var sortOrder: MarketModule.SortOrder = .desc {
         didSet {
+            stat(page: .globalMetricsMarketCap, event: .toggleSortDirection)
             syncState()
         }
     }

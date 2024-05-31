@@ -50,10 +50,12 @@ extension WalletConnectPairingViewModel {
     }
 
     func onDisconnect(topic: String) {
+        stat(page: .walletConnectPairings, event: .delete(entity: .walletConnectPair))
         service.disconnect(topic: topic)
     }
 
     func onDisconnectAll() {
+        stat(page: .walletConnectPairings, event: .delete(entity: .all))
         service.disconnectAll()
     }
 }

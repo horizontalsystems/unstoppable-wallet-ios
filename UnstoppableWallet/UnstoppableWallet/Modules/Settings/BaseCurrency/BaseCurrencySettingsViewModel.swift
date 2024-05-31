@@ -8,6 +8,7 @@ class BaseCurrencySettingsViewModel: ObservableObject {
 
     var baseCurrency: Currency {
         didSet {
+            stat(page: .baseCurrency, event: .switchBaseCurrency(code: baseCurrency.code))
             currencyManager.baseCurrency = baseCurrency
         }
     }

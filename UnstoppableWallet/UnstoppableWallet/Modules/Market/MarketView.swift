@@ -14,7 +14,7 @@ struct MarketView: View {
     init() {
         _searchViewModel = StateObject(wrappedValue: MarketSearchViewModel())
         _globalViewModel = StateObject(wrappedValue: MarketGlobalViewModel())
-        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel())
+        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: .markets, section: .coins))
     }
 
     var body: some View {
@@ -30,6 +30,7 @@ struct MarketView: View {
 
                     if searchFocused {
                         MarketSearchView(viewModel: searchViewModel, watchlistViewModel: watchlistViewModel)
+                        .onFirstAppear { stat(page: .markets, event: .open(page: .marketSearch)) }
                     }
                 }
             }
@@ -39,6 +40,7 @@ struct MarketView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    stat(page: .markets, event: .open(page: .advancedSearch))
                     advancedSearchPresented = true
                 }) {
                     Image("manage_2_24")

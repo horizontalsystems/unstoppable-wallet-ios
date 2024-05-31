@@ -134,6 +134,8 @@ extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
 
+        stat(page: .academy, event: .openArticle(relativeUrl: url.relativePath))
+
         let module = MarkdownModule.viewController(url: url)
         navigationController?.pushViewController(module, animated: true)
     }

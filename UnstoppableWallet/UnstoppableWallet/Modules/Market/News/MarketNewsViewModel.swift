@@ -46,6 +46,7 @@ extension MarketNewsViewModel {
 
     func refresh() async {
         await _sync()
+        stat(page: .markets, section: .news, event: .refresh)
     }
 }
 

@@ -20,6 +20,7 @@ class MarketPairsViewModel: ObservableObject {
 
     var volumeSortOrder: MarketModule.SortOrder = .desc {
         didSet {
+            stat(page: .markets, section: .pairs, event: .switchSortType(sortType: volumeSortOrder.statVolumeSortType))
             syncState()
         }
     }

@@ -30,4 +30,13 @@ extension LaunchScreen: Codable {
         case marketOverview = "market_overview"
         case watchlist
     }
+
+    var statType: String {
+        switch self {
+        case .auto: return "auto"
+        case .balance: return "balance"
+        case .marketOverview: return "market_overview"
+        case .watchlist: return "watchlist"
+        }
+    }
 }

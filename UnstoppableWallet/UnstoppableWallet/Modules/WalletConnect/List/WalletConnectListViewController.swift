@@ -97,6 +97,7 @@ class WalletConnectListViewController: ThemeViewController {
         let scanQrViewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
         scanQrViewController.didFetch = { [weak self] in self?.viewModel.didScan(string: $0) }
 
+        stat(page: .walletConnect, event: .open(page: .scanQrCode))
         present(scanQrViewController, animated: true)
     }
 
@@ -105,12 +106,14 @@ class WalletConnectListViewController: ThemeViewController {
             return
         }
 
+        stat(page: .walletConnect, event: .open(page: .walletConnectSession))
         navigationController?.present(viewController, animated: true)
     }
 
     private func showPairings() {
         let viewController = WalletConnectPairingModule.viewController()
 
+        stat(page: .walletConnect, event: .open(page: .walletConnectPairings))
         navigationController?.pushViewController(viewController, animated: true)
     }
 

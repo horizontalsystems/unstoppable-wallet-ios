@@ -2,7 +2,7 @@ import ComponentKit
 import Foundation
 
 protocol IEventHandler {
-    func handle(event: Any, eventType: EventHandler.EventType) async throws
+    func handle(source: StatPage, event: Any, eventType: EventHandler.EventType) async throws
 }
 
 class EventHandler {
@@ -26,11 +26,11 @@ class EventHandler {
 }
 
 extension EventHandler: IEventHandler {
-    func handle(event: Any, eventType: EventHandler.EventType = .all) async throws {
+    func handle(source: StatPage, event: Any, eventType: EventHandler.EventType = .all) async throws {
         var lastError: Error?
         for handler in eventHandlers {
             do {
-                try await handler.handle(event: event, eventType: eventType)
+                try await handler.handle(source: source, event: event, eventType: eventType)
                 return
             } catch {
                 lastError = error

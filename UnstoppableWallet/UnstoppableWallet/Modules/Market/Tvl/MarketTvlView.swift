@@ -14,7 +14,7 @@ struct MarketTvlView: View {
     init(isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketTvlViewModel())
         _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.instance(type: .tvlInDefi))
-        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel())
+        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: .globalMetricsTvlInDefi))
         _isPresented = isPresented
     }
 
@@ -65,6 +65,7 @@ struct MarketTvlView: View {
             }
             .sheet(item: $presentedFullCoin) { fullCoin in
                 CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
+                    .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: fullCoin.coin.uid)) }
             }
         }
     }

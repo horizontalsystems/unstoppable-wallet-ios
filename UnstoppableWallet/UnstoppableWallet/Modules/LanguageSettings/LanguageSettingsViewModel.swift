@@ -5,6 +5,7 @@ class LanguageSettingsViewModel: ObservableObject {
 
     @Published var currentLanguage: String {
         didSet {
+            stat(page: .language, event: .switchLanguage(language: currentLanguage))
             LanguageManager.shared.currentLanguage = currentLanguage
         }
     }
