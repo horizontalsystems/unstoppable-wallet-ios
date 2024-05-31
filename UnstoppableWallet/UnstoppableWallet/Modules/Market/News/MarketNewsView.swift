@@ -32,6 +32,7 @@ struct MarketNewsView: View {
                             padding: EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: .margin16),
                             action: {
                                 UrlManager.open(url: post.url)
+                                stat(page: .markets, section: .news, event: .open(page: .externalNews))
                             }
                         ) {
                             itemContent(

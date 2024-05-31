@@ -16,6 +16,15 @@ extension HsTimePeriod {
     }
 }
 
+extension MarketEtfViewModel.TimePeriod {
+    var statPeriod: StatPeriod {
+        switch self {
+            case .all: return .all
+            case let .period(timePeriod): return timePeriod.statPeriod
+        }
+    }
+}
+
 extension HsPeriodType {
     var statPeriod: StatPeriod {
         switch self {
@@ -33,6 +42,18 @@ extension MainModule.Tab {
         case .balance: return .balance
         case .transactions: return .transactions
         case .settings: return .settings
+        }
+    }
+}
+
+extension MarketModule.Tab {
+    var statTab: StatTab {
+        switch self {
+        case .coins: return .coins
+        case .news: return .news
+        case .pairs: return .pairs
+        case .platforms: return .platforms
+        case .watchlist: return .watchlist
         }
     }
 }
@@ -103,6 +124,17 @@ extension CoinProChartModule.ProChartType {
     }
 }
 
+extension MarketModule.Top {
+    var statMarketTop: StatMarketTop {
+        switch self {
+        case .top100: return .top100
+        case .top200: return .top200
+        case .top300: return .top300
+        case .top500: return .top500
+        }
+    }
+}
+
 extension MarketModule.MarketTop {
     var statMarketTop: StatMarketTop {
         switch self {
@@ -141,6 +173,96 @@ extension MarketModule.MarketPlatformField {
         switch self {
         case .all: return "all"
         default: return chain
+        }
+    }
+}
+
+extension MarketModule.SortBy {
+    var statSortType: StatSortType {
+        switch self {
+        case .highestCap: return .highestCap
+        case .lowestCap: return .lowestCap
+        case .highestVolume: return .highestVolume
+        case .lowestVolume: return .lowestVolume
+        case .gainers: return .topGainers
+        case .losers: return .topLosers
+        }
+    }
+}
+
+extension WatchlistSortBy {
+    var statSortType: StatSortType {
+        switch self {
+        case .manual: return .manual
+        case .highestCap: return .highestCap
+        case .lowestCap: return .lowestCap
+        case .gainers: return .topGainers
+        case .losers: return .topLosers
+        }
+    }
+}
+
+extension MarketModule.SortOrder {
+    var statVolumeSortType: StatSortType {
+        switch self {
+        case .asc: return .lowestVolume
+        case .desc: return .highestVolume
+        }
+    }
+}
+
+extension MarketModule.MarketTvlField {
+    var statField: String {
+        switch self {
+        case .value: return "currency"
+        case .diff: return "percent"
+        }
+    }
+}
+
+extension MarketTvlViewModel.DiffType {
+    var statField: String {
+        switch self {
+            case .percent: return "percent"
+            case .currencyValue: return "currency"
+        }
+    }
+}
+
+extension MarketTvlViewModel.Platforms {
+    var statPlatform: String {
+        switch self {
+        case .all: return "all"
+        case .ethereum: return "Ethereum"
+        case .solana: return "Solana"
+        case .binance: return "Binance"
+        case .avalanche: return "Avalanche"
+        case .terra: return "Terra"
+        case .fantom: return "Fantom"
+        case .arbitrum: return "Arbitrum"
+        case .polygon: return "Polygon"
+        }
+    }
+}
+
+extension MarketEtfViewModel.SortBy {
+    var statSortBy: StatSortType {
+        switch self {
+        case .highestAssets: return .highestAssets
+        case .lowestAssets: return .lowestAssets
+        case .inflow: return .inflow
+        case .outflow: return .outflow
+        }
+    }
+}
+
+extension WatchlistTimePeriod {
+    var statPeriod: StatPeriod {
+        switch self {
+        case .day1: return .day1
+        case .week1: return .week1
+        case .month1: return .month1
+        case .month3: return .month3
         }
     }
 }

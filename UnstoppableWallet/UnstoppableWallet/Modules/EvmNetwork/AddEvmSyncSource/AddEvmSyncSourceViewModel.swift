@@ -35,7 +35,7 @@ extension AddEvmSyncSourceViewModel {
     func onTapAdd() {
         do {
             try service.save()
-            stat(page: .addEvmSyncSource, event: .add(entity: .evmSyncSource))
+            stat(page: .blockchainSettingsEvmAdd, event: .addEvmSource(chainUid: service.blockchainType.uid))
             finishRelay.accept(())
         } catch AddEvmSyncSourceService.UrlError.alreadyExists {
             urlCautionRelay.accept(Caution(text: "add_evm_sync_source.warning.url_exists".localized, type: .warning))

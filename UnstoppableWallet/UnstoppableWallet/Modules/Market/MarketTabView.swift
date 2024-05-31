@@ -49,6 +49,7 @@ struct MarketTabView: View {
             }
             .frame(maxHeight: .infinity)
             .onChange(of: viewModel.currentTab) { tab in
+                stat(page: .markets, event: .switchTab(tab: tab.statTab))
                 load(tab: tab)
             }
             .onFirstAppear {

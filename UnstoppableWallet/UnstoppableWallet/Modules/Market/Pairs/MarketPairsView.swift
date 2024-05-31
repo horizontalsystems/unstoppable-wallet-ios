@@ -49,6 +49,7 @@ struct MarketPairsView: View {
             ClickableRow(action: {
                 if let tradeUrl = pair.tradeUrl {
                     UrlManager.open(url: tradeUrl)
+                    stat(page: .markets, section: .pairs, event: .open(page: .externalMarketPair))
                 }
             }) {
                 itemContent(

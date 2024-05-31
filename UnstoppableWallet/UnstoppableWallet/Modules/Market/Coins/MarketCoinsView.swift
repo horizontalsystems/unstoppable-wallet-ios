@@ -35,6 +35,7 @@ struct MarketCoinsView: View {
         }
         .sheet(item: $presentedFullCoin) { fullCoin in
             CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
+                .onFirstAppear { stat(page: .markets, section: .coins, event: .openCoin(coinUid: fullCoin.coin.uid)) }
         }
     }
 

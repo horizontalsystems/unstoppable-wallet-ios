@@ -20,6 +20,7 @@ class MarketVolumeViewModel: ObservableObject {
 
     var sortOrder: MarketModule.SortOrder = .desc {
         didSet {
+            stat(page: .globalMetricsVolume, event: .toggleSortDirection)
             syncState()
         }
     }

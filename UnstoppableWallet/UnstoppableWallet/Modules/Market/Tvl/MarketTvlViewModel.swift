@@ -20,18 +20,24 @@ class MarketTvlViewModel: ObservableObject {
 
     var platforms: MarketTvlViewModel.Platforms = .all {
         didSet {
+            stat(page: .globalMetricsTvlInDefi, event: .switchTvlChain(chain: platforms.statPlatform))
             syncState()
         }
     }
 
     var sortOrder: MarketModule.SortOrder = .desc {
         didSet {
+            stat(page: .globalMetricsTvlInDefi, event: .toggleSortDirection)
             syncState()
         }
     }
 
     @Published var timePeriod: HsTimePeriod = .day1
-    @Published var diffType: DiffType = .percent
+    @Published var diffType: DiffType = .percent {
+        didSet {
+            stat(page: .globalMetricsTvlInDefi, event: .toggleTvlField(field: diffType.statField))
+        }
+    }
 
     init() {
         currencyManager.$baseCurrency
@@ -104,7 +110,7 @@ extension MarketTvlViewModel {
         case .all:
             tvl = defiCoin.tvl
 
-            var tvlChange: Decimal? = defiCoin.tvlChangeValue(timePeriod: timePeriod)
+            let tvlChange: Decimal? = defiCoin.tvlChangeValue(timePeriod: timePeriod)
 
             switch diffType {
             case .percent: diff = tvlChange.map { .percent(value: $0) }

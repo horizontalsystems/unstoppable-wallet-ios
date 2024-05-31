@@ -57,7 +57,7 @@ class MainViewModel {
         deepLinkService.setDeepLinkShown()
         Task {
             do {
-                try await eventHandler.handle(event: deepLink, eventType: .deepLink)
+                try await eventHandler.handle(source: .main, event: deepLink, eventType: .deepLink)
             } catch {
                 print("Can't handle Deep Link \(error)")
             }

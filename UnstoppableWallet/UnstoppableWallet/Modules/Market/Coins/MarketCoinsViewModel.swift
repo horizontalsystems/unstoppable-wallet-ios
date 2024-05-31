@@ -20,18 +20,21 @@ class MarketCoinsViewModel: ObservableObject {
 
     var sortBy: MarketModule.SortBy = .gainers {
         didSet {
+            stat(page: .markets, section: .coins, event: .switchSortType(sortType: sortBy.statSortType))
             syncState()
         }
     }
 
     var top: MarketModule.Top = .top100 {
         didSet {
+            stat(page: .markets, event: .switchMarketTop(marketTop: top.statMarketTop))
             syncState()
         }
     }
 
     var timePeriod: HsTimePeriod = .day1 {
         didSet {
+            stat(page: .markets, section: .coins, event: .switchPeriod(period: timePeriod.statPeriod))
             syncState()
         }
     }

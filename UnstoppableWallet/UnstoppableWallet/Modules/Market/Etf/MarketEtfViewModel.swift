@@ -20,12 +20,14 @@ class MarketEtfViewModel: ObservableObject {
 
     var sortBy: SortBy = .highestAssets {
         didSet {
+            stat(page: .globalMetricsEtf, event: .switchSortType(sortType: sortBy.statSortBy))
             syncState()
         }
     }
 
     var timePeriod: TimePeriod = .period(timePeriod: .day1) {
         didSet {
+            stat(page: .globalMetricsEtf, event: .switchPeriod(period: timePeriod.statPeriod))
             syncState()
         }
     }

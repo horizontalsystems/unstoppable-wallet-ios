@@ -10,7 +10,7 @@ class WidgetCoinAppShowModule {
 
 extension WidgetCoinAppShowModule: IEventHandler {
     @MainActor
-    func handle(event: Any, eventType: EventHandler.EventType) async throws {
+    func handle(source _: StatPage, event: Any, eventType: EventHandler.EventType) async throws {
         guard eventType.contains(.deepLink) else {
             throw EventHandler.HandleError.noSuitableHandler
         }

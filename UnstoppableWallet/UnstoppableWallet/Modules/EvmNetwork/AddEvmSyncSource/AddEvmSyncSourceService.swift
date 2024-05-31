@@ -5,7 +5,7 @@ import RxRelay
 import RxSwift
 
 class AddEvmSyncSourceService {
-    private let blockchainType: BlockchainType
+    let blockchainType: BlockchainType
     private let evmSyncSourceManager: EvmSyncSourceManager
     private var disposeBag = DisposeBag()
 

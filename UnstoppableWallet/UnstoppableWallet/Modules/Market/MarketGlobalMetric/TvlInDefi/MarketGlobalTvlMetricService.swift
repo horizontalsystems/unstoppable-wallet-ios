@@ -46,7 +46,7 @@ class MarketGlobalTvlMetricService {
         didSet {
             syncIfPossible()
 
-            stat(page: .globalMetricsTvlInDefi, event: .toggleTvlField)
+            stat(page: .globalMetricsTvlInDefi, event: .toggleTvlField(field: marketTvlField.statField))
         }
     }
 

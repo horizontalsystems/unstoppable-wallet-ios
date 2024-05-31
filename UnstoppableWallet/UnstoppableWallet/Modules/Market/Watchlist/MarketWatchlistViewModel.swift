@@ -24,6 +24,7 @@ class MarketWatchlistViewModel: ObservableObject {
 
     @Published var sortBy: WatchlistSortBy {
         didSet {
+            stat(page: .markets, section: .watchlist, event: .switchSortType(sortType: sortBy.statSortType))
             syncState()
             watchlistManager.sortBy = sortBy
         }
@@ -31,6 +32,7 @@ class MarketWatchlistViewModel: ObservableObject {
 
     @Published var timePeriod: WatchlistTimePeriod {
         didSet {
+            stat(page: .markets, section: .watchlist, event: .switchPeriod(period: timePeriod.statPeriod))
             syncState()
             watchlistManager.timePeriod = timePeriod
         }
@@ -38,6 +40,7 @@ class MarketWatchlistViewModel: ObservableObject {
 
     @Published var showSignals: Bool {
         didSet {
+            stat(page: .markets, section: .watchlist, event: .showSignals(shown: showSignals))
             syncState()
             watchlistManager.showSignals = showSignals
         }
@@ -150,6 +153,7 @@ extension MarketWatchlistViewModel {
 
     func remove(coinUid: String) {
         watchlistManager.remove(coinUid: coinUid)
+        stat(page: .markets, section: .watchlist, event: .removeFromWatchlist(coinUid: coinUid))
     }
 
     func move(source: IndexSet, destination: Int) {

@@ -33,6 +33,7 @@ struct MarketPlatformsView: View {
         }
         .sheet(item: $presentedPlatform) { platform in
             MarketPlatformView(platform: platform).ignoresSafeArea()
+                .onFirstAppear { stat(page: .markets, section: .platforms, event: .openPlatform(chainUid: platform.blockchain.uid)) }
         }
     }
 

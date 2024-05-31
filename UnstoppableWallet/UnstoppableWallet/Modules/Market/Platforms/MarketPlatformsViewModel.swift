@@ -20,12 +20,14 @@ class MarketPlatformsViewModel: ObservableObject {
 
     var sortBy: MarketModule.SortBy = .gainers {
         didSet {
+            stat(page: .markets, section: .platforms, event: .switchSortType(sortType: sortBy.statSortType))
             syncState()
         }
     }
 
     var timePeriod: HsTimePeriod = .week1 {
         didSet {
+            stat(page: .markets, section: .platforms, event: .switchPeriod(period: timePeriod.statPeriod))
             syncState()
         }
     }

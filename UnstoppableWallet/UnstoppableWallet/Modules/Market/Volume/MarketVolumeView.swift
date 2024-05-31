@@ -13,7 +13,7 @@ struct MarketVolumeView: View {
     init(isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketVolumeViewModel())
         _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.instance(type: .volume24h))
-        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel())
+        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: .globalMetricsVolume))
         _isPresented = isPresented
     }
 
@@ -62,6 +62,7 @@ struct MarketVolumeView: View {
             }
             .sheet(item: $presentedFullCoin) { fullCoin in
                 CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
+                    .onFirstAppear { stat(page: .globalMetricsVolume, event: .openCoin(coinUid: fullCoin.coin.uid)) }
             }
         }
     }
