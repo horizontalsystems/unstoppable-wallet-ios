@@ -23,6 +23,8 @@ class AppBackupProvider {
     private let balanceConversionManager: BalanceConversionManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let contactManager: ContactBookManager
+    private let priceChangeModeManager: PriceChangeModeManager
+    private let walletButtonHiddenManager: WalletButtonHiddenManager
 
     init(accountManager: AccountManager,
          accountFactory: AccountFactory,
@@ -41,7 +43,9 @@ class AppBackupProvider {
          balancePrimaryValueManager: BalancePrimaryValueManager,
          balanceConversionManager: BalanceConversionManager,
          balanceHiddenManager: BalanceHiddenManager,
-         contactManager: ContactBookManager)
+         contactManager: ContactBookManager,
+         priceChangeModeManager: PriceChangeModeManager,
+         walletButtonHiddenManager: WalletButtonHiddenManager)
     {
         self.accountManager = accountManager
         self.accountFactory = accountFactory
@@ -61,6 +65,8 @@ class AppBackupProvider {
         self.balanceConversionManager = balanceConversionManager
         self.balanceHiddenManager = balanceHiddenManager
         self.contactManager = contactManager
+        self.priceChangeModeManager = priceChangeModeManager
+        self.walletButtonHiddenManager = walletButtonHiddenManager
     }
 
     // Parts of backups
@@ -98,8 +104,10 @@ class AppBackupProvider {
             baseCurrency: currencyManager.baseCurrency.code,
             mode: themeManager.themeMode,
             showMarketTab: launchScreenManager.showMarket,
+            priceChangeMode: priceChangeModeManager.priceChangeMode,
             launchScreen: launchScreenManager.launchScreen,
             conversionTokenQueryId: balanceConversionManager.conversionToken?.tokenQuery.id,
+            balanceHideButtons: walletButtonHiddenManager.buttonHidden,
             balancePrimaryValue: balancePrimaryValueManager.balancePrimaryValue,
             balanceAutoHide: balanceHiddenManager.balanceAutoHide,
             appIcon: appIconManager.appIcon.title
@@ -204,8 +212,10 @@ extension AppBackupProvider {
         themeManager.themeMode = raw.settings.mode
         launchScreenManager.showMarket = raw.settings.showMarketTab
         launchScreenManager.launchScreen = raw.settings.launchScreen
+        priceChangeModeManager.priceChangeMode = raw.settings.priceChangeMode
         balancePrimaryValueManager.balancePrimaryValue = raw.settings.balancePrimaryValue
 
+        walletButtonHiddenManager.buttonHidden = raw.settings.balanceHideButtons
         balanceConversionManager.set(tokenQueryId: raw.settings.conversionTokenQueryId)
         balanceHiddenManager.set(balanceAutoHide: raw.settings.balanceAutoHide)
         let appIcon = AppIconManager.allAppIcons.first { $0.title == raw.settings.appIcon } ?? .main

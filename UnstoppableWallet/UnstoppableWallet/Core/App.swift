@@ -296,7 +296,9 @@ class App {
             balancePrimaryValueManager: balancePrimaryValueManager,
             balanceConversionManager: balanceConversionManager,
             balanceHiddenManager: balanceHiddenManager,
-            contactManager: contactManager
+            contactManager: contactManager,
+            priceChangeModeManager: priceChangeModeManager,
+            walletButtonHiddenManager: walletButtonHiddenManager
         )
         cloudBackupManager = CloudBackupManager(
             ubiquityContainerIdentifier: AppConfig.sharedCloudContainer,

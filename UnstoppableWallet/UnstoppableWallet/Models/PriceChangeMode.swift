@@ -1,6 +1,6 @@
 enum PriceChangeMode: String, CaseIterable, Codable {
-    case hour24
-    case midnightUtc
+    case hour24 = "hour_24"
+    case midnightUtc = "midnight_utc"
 }
 
 extension PriceChangeMode {
