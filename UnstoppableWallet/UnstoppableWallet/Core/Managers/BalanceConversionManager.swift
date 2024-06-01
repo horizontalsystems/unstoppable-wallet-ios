@@ -5,7 +5,6 @@ class BalanceConversionManager {
     private let tokenQueries = [
         TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)),
         TokenQuery(blockchainType: .ethereum, tokenType: .native),
-        TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
     ]
     private let keyBlockchainUid = "conversion-blockchain-uid"
 
@@ -66,6 +65,7 @@ extension BalanceConversionManager {
     func set(tokenQueryId: String?) {
         conversionToken = tokenQueryId
             .flatMap { TokenQuery(id: $0) }
+            .flatMap { tokenQueries.contains($0) ? $0 : nil }
             .flatMap { try? marketKit.token(query: $0) } ??
             conversionTokens.first
     }

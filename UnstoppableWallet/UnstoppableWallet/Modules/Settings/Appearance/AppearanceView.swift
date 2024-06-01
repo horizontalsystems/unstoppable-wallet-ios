@@ -9,7 +9,6 @@ struct AppearanceView: View {
     @State private var priceChangeSelectorPresented = false
     @State private var launchScreenSelectorPresented = false
     @State private var balanceValueSelectorPresented = false
-    @State private var conversionSelectorPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -123,27 +122,6 @@ struct AppearanceView: View {
                                 }
 
                                 viewModel.balancePrimaryValue = BalancePrimaryValue.allCases[index]
-                            }
-                        )
-
-                        ClickableRow(spacing: .margin8) {
-                            conversionSelectorPresented = true
-                        } content: {
-                            Text("appearance.balance_conversion".localized).textBody()
-                            Spacer()
-                            Text(viewModel.conversionToken?.coin.code ?? "").textSubhead1()
-                            Image("arrow_small_down_20").themeIcon()
-                        }
-                        .alert(
-                            isPresented: $conversionSelectorPresented,
-                            title: "appearance.balance_conversion".localized,
-                            viewItems: viewModel.conversionTokens.map { .init(text: $0.coin.code, selected: viewModel.conversionToken == $0) },
-                            onTap: { index in
-                                guard let index else {
-                                    return
-                                }
-
-                                viewModel.conversionToken = viewModel.conversionTokens[index]
                             }
                         )
                     }

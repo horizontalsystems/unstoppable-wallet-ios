@@ -1556,7 +1556,6 @@
 "appearance.balance_value" = "Balance Value";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "Balance Conversion";
 
 "appearance.app_icon" = "App Icon";
 
