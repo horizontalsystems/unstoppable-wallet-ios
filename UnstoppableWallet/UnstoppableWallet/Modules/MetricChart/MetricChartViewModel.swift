@@ -168,4 +168,11 @@ extension MetricChartViewModel {
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         return MetricChartViewModel(service: service, factory: factory)
     }
+
+    static func platformInstance(platform: TopPlatform) -> MetricChartViewModel {
+        let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, topPlatform: platform)
+        let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .byPeriod(.week1), statPage: .topPlatform)
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale, hardcodedRightMode: "top_platform.total_cap".localized)
+        return MetricChartViewModel(service: chartService, factory: factory)
+    }
 }

@@ -7,9 +7,11 @@ class MetricChartFactory {
 
     private let dateFormatter = DateFormatter()
     private let currencyManager = App.shared.currencyManager
+    private let hardcodedRightMode: String?
 
-    init(currentLocale: Locale) {
+    init(currentLocale: Locale, hardcodedRightMode: String? = nil) {
         dateFormatter.locale = currentLocale
+        self.hardcodedRightMode = hardcodedRightMode
     }
 
     private static func format(value: Decimal?, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
@@ -86,7 +88,9 @@ extension MetricChartFactory {
             let valueString = ValueFormatter.instance.format(percentValue: diff, showSign: true)
             valueDiff = valueString.map { ValueDiff(value: $0, trend: chartTrend) }
 
-            if let first = itemData.indicators[MarketGlobalModule.dominance]?.first, let last = itemData.indicators[MarketGlobalModule.dominance]?.last {
+            if let hardcodedRightMode {
+                rightSideMode = .custom(title: hardcodedRightMode, value: nil)
+            } else if let first = itemData.indicators[MarketGlobalModule.dominance]?.first, let last = itemData.indicators[MarketGlobalModule.dominance]?.last {
                 rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
             }
         case .etf:
