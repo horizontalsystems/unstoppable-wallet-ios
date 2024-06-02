@@ -236,7 +236,7 @@ class ChartUiView: UIView {
         .heightDoubleLineCell
             + configuration.mainHeight
             + (configuration.showIndicatorArea ? configuration.indicatorHeight : 0)
-            + (timePeriodView.isHidden ? 0 : (.margin8 + .heightCell48))
+            + (timePeriodView.isHidden ? 0 : .heightCell48)
             + .margin8
     }
 
@@ -370,8 +370,8 @@ class ChartUiView: UIView {
                 chartSecondaryDiffLabel.isHidden = true
             }
         case let .custom(title, value):
-            currentSecondaryTitleLabel.isHidden = false
-            currentSecondaryValueLabel.isHidden = false
+            chartSecondaryTitleLabel.isHidden = false
+            chartSecondaryValueLabel.isHidden = false
             chartSecondaryDiffLabel.isHidden = true
 
             chartSecondaryTitleLabel.text = title

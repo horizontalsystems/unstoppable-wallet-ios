@@ -790,6 +790,8 @@
 
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.description" = "Market cap of all protocols on the %@ chain";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "Recent";
 "market.search.popular" = "Popular";
