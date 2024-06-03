@@ -1,137 +1,128 @@
+import Combine
+import Foundation
+import HsExtensions
 import MarketKit
-import RxCocoa
-import RxRelay
-import RxSwift
 
-class CoinTreasuriesViewModel {
-    private let service: CoinTreasuriesService
-    private let disposeBag = DisposeBag()
+class CoinTreasuriesViewModel: ObservableObject {
+    private let coin: Coin
+    private let marketKit = App.shared.marketKit
+    private let currencyManager = App.shared.currencyManager
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
-    private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
-    private let scrollToTopRelay = PublishRelay<Void>()
+    private var cancellables = Set<AnyCancellable>()
+    private var tasks = Set<AnyTask>()
 
-    private let dropdownValueRelay = BehaviorRelay<String>(value: "")
-    private let sortDirectionAscendingRelay = BehaviorRelay<Bool>(value: false)
-
-    init(service: CoinTreasuriesService) {
-        self.service = service
-
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.typeFilterObservable) { [weak self] in self?.sync(typeFilter: $0) }
-        subscribe(disposeBag, service.sortDirectionAscendingObservable) { [weak self] in self?.sync(sortDirectionAscending: $0) }
-
-        sync(state: service.state)
-        sync(typeFilter: service.typeFilter)
-        sync(sortDirectionAscending: service.sortDirectionAscending)
-    }
-
-    private func sync(state: CoinTreasuriesService.State) {
-        switch state {
-        case .loading:
-            viewItemsRelay.accept(nil)
-            loadingRelay.accept(true)
-            syncErrorRelay.accept(false)
-        case let .loaded(treasuries, reorder):
-            viewItemsRelay.accept(treasuries.map { viewItem(treasury: $0) })
-            loadingRelay.accept(false)
-            syncErrorRelay.accept(false)
-
-            if reorder {
-                scrollToTopRelay.accept(())
+    private var internalState: State = .loading {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.syncState()
             }
-        case .failed:
-            viewItemsRelay.accept(nil)
-            loadingRelay.accept(false)
-            syncErrorRelay.accept(true)
         }
     }
 
-    private func sync(typeFilter: CoinTreasuriesService.TypeFilter) {
-        dropdownValueRelay.accept(title(typeFilter: typeFilter))
-    }
+    @Published var state: State = .loading
+    @Published var orderedAscending: Bool = false
 
-    private func sync(sortDirectionAscending: Bool) {
-        sortDirectionAscendingRelay.accept(sortDirectionAscending)
-    }
-
-    private func viewItem(treasury: CoinTreasury) -> ViewItem {
-        ViewItem(
-            logoUrl: treasury.fundLogoUrl,
-            fund: treasury.fund,
-            country: treasury.country,
-            amount: ValueFormatter.instance.formatShort(value: treasury.amount, decimalCount: 8, symbol: service.coinCode) ?? "---",
-            amountInCurrency: ValueFormatter.instance.formatShort(currency: service.currency, value: treasury.amountInCurrency) ?? "---"
-        )
-    }
-
-    private func title(typeFilter: CoinTreasuriesService.TypeFilter) -> String {
-        switch typeFilter {
-        case .all: return "coin_analytics.treasuries.filter.all".localized
-        case .public: return "coin_analytics.treasuries.filter.public".localized
-        case .private: return "coin_analytics.treasuries.filter.private".localized
-        case .etf: return "coin_analytics.treasuries.filter.etf".localized
-        }
-    }
-}
-
-extension CoinTreasuriesViewModel: IDropdownSortHeaderViewModel {
-    var dropdownTitle: String {
-        "coin_analytics.treasuries.filters".localized
-    }
-
-    var dropdownViewItems: [AlertViewItem] {
-        CoinTreasuriesService.TypeFilter.allCases.map { typeFilter in
-            AlertViewItem(text: title(typeFilter: typeFilter), selected: service.typeFilter == typeFilter)
+    var filter: Filter = .all {
+        didSet {
+            syncState()
         }
     }
 
-    var dropdownValueDriver: Driver<String> {
-        dropdownValueRelay.asDriver()
+    init(coin: Coin) {
+        self.coin = coin
+
+        sync()
     }
 
-    func onSelectDropdown(index: Int) {
-        service.typeFilter = CoinTreasuriesService.TypeFilter.allCases[index]
+    private func sync() {
+        tasks = Set()
+
+        if case .failed = state {
+            internalState = .loading
+        }
+
+        Task { [weak self, marketKit, coin, currencyManager] in
+            do {
+                let treasuries = try await marketKit.treasuries(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code)
+                DispatchQueue.main.async { [weak self] in
+                    self?.internalState = .loaded(treasuries)
+                }
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.internalState = .failed(error)
+                }
+            }
+        }.store(in: &tasks)
     }
 
-    var sortDirectionAscendingDriver: Driver<Bool> {
-        sortDirectionAscendingRelay.asDriver()
-    }
+    private func syncState() {
+        switch internalState {
+        case .loading:
+            state = .loading
+        case let .loaded(treasuries):
+            let treasuries = treasuries
+                .filter {
+                    switch filter {
+                    case .all: return true
+                    case .public: return $0.type == .public
+                    case .private: return $0.type == .private
+                    case .etf: return $0.type == .etf
+                    }
+                }
+                .sorted { lhsTreasury, rhsTreasury in
+                    orderedAscending ? lhsTreasury.amount < rhsTreasury.amount : lhsTreasury.amount > rhsTreasury.amount
+                }
 
-    func onToggleSortDirection() {
-        service.sortDirectionAscending = !service.sortDirectionAscending
-    }
-}
-
-extension CoinTreasuriesViewModel {
-    var viewItemsDriver: Driver<[ViewItem]?> {
-        viewItemsRelay.asDriver()
-    }
-
-    var loadingDriver: Driver<Bool> {
-        loadingRelay.asDriver()
-    }
-
-    var syncErrorDriver: Driver<Bool> {
-        syncErrorRelay.asDriver()
-    }
-
-    var scrollToTopSignal: Signal<Void> {
-        scrollToTopRelay.asSignal()
-    }
-
-    func onTapRetry() {
-        service.refresh()
+            state = .loaded(treasuries)
+        case let .failed(error):
+            state = .failed(error)
+        }
     }
 }
 
 extension CoinTreasuriesViewModel {
-    struct ViewItem {
-        let logoUrl: String
-        let fund: String
-        let country: String
-        let amount: String
-        let amountInCurrency: String
+    var currency: Currency {
+        currencyManager.baseCurrency
+    }
+
+    var coinCode: String {
+        coin.code
+    }
+
+    var filters: [Filter] {
+        Filter.allCases
+    }
+
+    func toggleSortBy() {
+        orderedAscending = !orderedAscending
+        syncState()
+    }
+
+    func refresh() async {
+        sync()
+    }
+}
+
+extension CoinTreasuriesViewModel {
+    enum State {
+        case loading
+        case loaded(_ treasuries: [CoinTreasury])
+        case failed(_ error: Error)
+    }
+
+    enum Filter: String, CaseIterable {
+        case all
+        case `public`
+        case `private`
+        case etf
+
+        var title: String {
+            switch self {
+            case .all: return "coin_analytics.treasuries.filter.all".localized
+            case .public: return "coin_analytics.treasuries.filter.public".localized
+            case .private: return "coin_analytics.treasuries.filter.private".localized
+            case .etf: return "coin_analytics.treasuries.filter.etf".localized
+            }
+        }
     }
 }
