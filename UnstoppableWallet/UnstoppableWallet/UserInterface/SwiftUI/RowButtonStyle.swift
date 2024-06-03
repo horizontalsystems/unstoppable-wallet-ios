@@ -5,6 +5,7 @@ struct RowButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
+            .contentShape(Rectangle())
             .modifier(ThemeListStyleButtonModifier(themeListStyle: listStyle, isPressed: configuration.isPressed))
     }
 }

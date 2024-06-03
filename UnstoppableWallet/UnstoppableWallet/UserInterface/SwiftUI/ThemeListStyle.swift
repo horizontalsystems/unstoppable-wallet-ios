@@ -31,7 +31,7 @@ struct ThemeListStyleModifier: ViewModifier {
         case .bordered:
             content
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(selected ? Color.themeJacob : Color.themeSteel20, lineWidth: .heightOneDp))
+                .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(selected ? Color.themeJacob : Color.themeSteel20, lineWidth: .heightOneDp))
         case .transparent, .transparentInline:
             content
         }
@@ -45,7 +45,8 @@ struct ThemeListStyleButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         switch themeListStyle {
         case .lawrence, .borderedLawrence: content.background(isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
-        case .bordered, .transparent, .transparentInline: content.background(isPressed ? Color.themeLawrencePressed : Color.themeTyler)
+        case .bordered: content.background(isPressed ? Color.themeLawrencePressed : Color.clear)
+        case .transparent, .transparentInline: content.background(isPressed ? Color.themeLawrencePressed : Color.themeTyler)
         }
     }
 }

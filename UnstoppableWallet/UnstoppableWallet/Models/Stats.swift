@@ -158,7 +158,7 @@ enum StatSection: String {
     case watchlist
 }
 
-enum StatEvent {    
+enum StatEvent {
     case add(entity: StatEntity)
     case addEvmSource(chainUid: String)
     case addToken(token: Token)
@@ -460,8 +460,11 @@ enum StatField: String {
 enum StatMarketTop: String {
     case top100
     case top200
+    case top250
     case top300
     case top500
+    case top1000
+    case top1500
 }
 
 enum StatEntity: String {

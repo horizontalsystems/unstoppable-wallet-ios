@@ -19,8 +19,8 @@ extension HsTimePeriod {
 extension MarketEtfViewModel.TimePeriod {
     var statPeriod: StatPeriod {
         switch self {
-            case .all: return .all
-            case let .period(timePeriod): return timePeriod.statPeriod
+        case .all: return .all
+        case let .period(timePeriod): return timePeriod.statPeriod
         }
     }
 }
@@ -129,8 +129,11 @@ extension MarketModule.Top {
         switch self {
         case .top100: return .top100
         case .top200: return .top200
+        case .top250: return .top250
         case .top300: return .top300
         case .top500: return .top500
+        case .top1000: return .top1000
+        case .top1500: return .top1500
         }
     }
 }
@@ -223,8 +226,8 @@ extension MarketModule.MarketTvlField {
 extension MarketTvlViewModel.DiffType {
     var statField: String {
         switch self {
-            case .percent: return "percent"
-            case .currencyValue: return "currency"
+        case .percent: return "percent"
+        case .currencyValue: return "currency"
         }
     }
 }

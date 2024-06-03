@@ -33,8 +33,8 @@ struct MarketPlatformsView: View {
         }
         .sheet(item: $presentedPlatform) { platform in
             let isPresented = Binding<Bool>(
-                get: { presentedPlatform != nil }, 
-                set: { newValue in if !newValue { presentedPlatform = nil }} 
+                get: { presentedPlatform != nil },
+                set: { newValue in if !newValue { presentedPlatform = nil }}
             )
 
             MarketPlatformViewNew(isPresented: isPresented, platform: platform).ignoresSafeArea()

@@ -171,10 +171,10 @@ class MarketViewController: ThemeSearchViewController {
     }
 
     @objc private func onTapFilter() {
-        let viewController = MarketAdvancedSearchModule.viewController()
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+        // let viewController = MarketAdvancedSearchModule.viewController()
+        // present(ThemeNavigationController(rootViewController: viewController), animated: true)
 
-        stat(page: .markets, event: .open(page: .advancedSearch))
+        // stat(page: .markets, event: .open(page: .advancedSearch))
     }
 
     func willPresentSearchController(_: UISearchController) {

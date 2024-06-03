@@ -257,7 +257,7 @@ class MainSettingsViewController: ThemeViewController {
 
                     stat(page: .settings, event: .open(page: .backupManager))
                 }
-            )
+            ),
         ]
     }
 

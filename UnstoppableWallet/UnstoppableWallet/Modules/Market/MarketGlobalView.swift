@@ -35,19 +35,19 @@ struct MarketGlobalView: View {
         .animation(.default, value: viewModel.marketGlobal == nil)
         .sheet(isPresented: $tvlPresented) {
             MarketTvlView(isPresented: $tvlPresented)
-            .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsTvlInDefi)) }
+                .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsTvlInDefi)) }
         }
         .sheet(isPresented: $marketCapPresented) {
             MarketMarketCapView(isPresented: $marketCapPresented)
-            .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsMarketCap)) }
+                .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsMarketCap)) }
         }
         .sheet(isPresented: $volumePresented) {
             MarketVolumeView(isPresented: $volumePresented)
-            .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsVolume)) }
+                .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsVolume)) }
         }
         .sheet(isPresented: $etfPresented) {
             MarketEtfView(isPresented: $etfPresented)
-            .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsEtf)) }
+                .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsEtf)) }
         }
     }
 
