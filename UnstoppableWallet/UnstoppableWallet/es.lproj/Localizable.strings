@@ -792,6 +792,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "top_platform.title" = "Ecosistema %@";
 "top_platform.description" = "Límite de mercado de todos los protocolos en la cadena %@";
+"top_platform.total_cap" = "Capitalización Total";
+
 
 "market.search.recent" = "Reciente";
 "market.search.popular" = "Popular";
