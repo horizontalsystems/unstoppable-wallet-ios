@@ -792,6 +792,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "top_platform.title" = "Écosystème %@";
 "top_platform.description" = "Capitalisation boursière de tous les protocoles de la chaîne %@";
+"top_platform.total_cap" = "Cap Totale";
+
 
 "market.search.recent" = "Récentes";
 "market.search.popular" = "Populaire";
