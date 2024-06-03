@@ -175,14 +175,21 @@ extension MarketModule {
         var isAsc: Bool { self == .asc }
     }
 
-    enum Top: Int, CaseIterable {
+    enum Top: Int, CaseIterable, Identifiable {
         case top100 = 100
         case top200 = 200
+        case top250 = 250
         case top300 = 300
         case top500 = 500
+        case top1000 = 1000
+        case top1500 = 1500
 
         var title: String {
             "market.top_coins".localized("\(rawValue)")
+        }
+
+        var id: Int {
+            rawValue
         }
     }
 

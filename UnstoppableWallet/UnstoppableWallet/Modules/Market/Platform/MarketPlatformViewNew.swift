@@ -118,7 +118,7 @@ struct MarketPlatformViewNew: View {
             }
         )
     }
-    
+
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
         Section {
             ListForEach(marketInfos) { marketInfo in

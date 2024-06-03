@@ -5,7 +5,7 @@ struct MarketWatchlistSignalBadge: View {
     let signal: TechnicalAdvice.Advice
 
     var body: some View {
-        Text(signal.searchTitle)
+        Text(signal.shortTitle)
             .font(.themeMicroSB)
             .foregroundColor(foregroundColor)
             .padding(.horizontal, .margin6)

@@ -42,7 +42,7 @@ class SettingsBackup: Codable {
         case balanceAutoHide = "balance_auto_hide"
         case appIcon = "app_icon"
     }
-    
+
     init(
         evmSyncSources: EvmSyncSourceManager.SyncSourceBackup,
         btcModes: [BtcBlockchainManager.BtcRestoreModeBackup],
@@ -60,24 +60,25 @@ class SettingsBackup: Codable {
         balanceHideButtons: Bool,
         balancePrimaryValue: BalancePrimaryValue,
         balanceAutoHide: Bool,
-        appIcon: String) {
-            self.evmSyncSources = evmSyncSources
-            self.btcModes = btcModes
-            self.remoteContactsSync = remoteContactsSync
-            self.swapProviders = swapProviders
-            self.chartIndicators = chartIndicators
-            self.indicatorsShown = indicatorsShown
-            self.currentLanguage = currentLanguage
-            self.baseCurrency = baseCurrency
-            self.mode = mode
-            self.showMarketTab = showMarketTab
-            self.priceChangeMode = priceChangeMode
-            self.launchScreen = launchScreen
-            self.conversionTokenQueryId = conversionTokenQueryId
-            self.balanceHideButtons = balanceHideButtons
-            self.balancePrimaryValue = balancePrimaryValue
-            self.balanceAutoHide = balanceAutoHide
-            self.appIcon = appIcon
+        appIcon: String
+    ) {
+        self.evmSyncSources = evmSyncSources
+        self.btcModes = btcModes
+        self.remoteContactsSync = remoteContactsSync
+        self.swapProviders = swapProviders
+        self.chartIndicators = chartIndicators
+        self.indicatorsShown = indicatorsShown
+        self.currentLanguage = currentLanguage
+        self.baseCurrency = baseCurrency
+        self.mode = mode
+        self.showMarketTab = showMarketTab
+        self.priceChangeMode = priceChangeMode
+        self.launchScreen = launchScreen
+        self.conversionTokenQueryId = conversionTokenQueryId
+        self.balanceHideButtons = balanceHideButtons
+        self.balancePrimaryValue = balancePrimaryValue
+        self.balanceAutoHide = balanceAutoHide
+        self.appIcon = appIcon
     }
 
     required init(from decoder: Decoder) throws {
@@ -100,7 +101,6 @@ class SettingsBackup: Codable {
         balanceAutoHide = try container.decode(Bool.self, forKey: .balanceAutoHide)
         appIcon = try container.decode(String.self, forKey: .appIcon)
     }
-
 }
 
 extension SettingsBackup {

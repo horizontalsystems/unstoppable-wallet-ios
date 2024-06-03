@@ -43,7 +43,7 @@ class MarketPlatformViewModel: ObservableObject {
         case .loading:
             state = .loading
         case let .loaded(marketInfos):
-           state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, timePeriod: .day1))
+            state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, timePeriod: .day1))
         case let .failed(error):
             state = .failed(error: error)
         }

@@ -20,6 +20,5 @@ struct ClickableRow<Content: View>: View {
             }
         })
         .buttonStyle(RowButtonStyle())
-        .contentShape(Rectangle())
     }
 }

@@ -30,7 +30,7 @@ struct MarketView: View {
 
                     if searchFocused {
                         MarketSearchView(viewModel: searchViewModel, watchlistViewModel: watchlistViewModel)
-                        .onFirstAppear { stat(page: .markets, event: .open(page: .marketSearch)) }
+                            .onFirstAppear { stat(page: .markets, event: .open(page: .marketSearch)) }
                     }
                 }
             }
@@ -50,7 +50,7 @@ struct MarketView: View {
             }
         }
         .sheet(isPresented: $advancedSearchPresented) {
-            MarketAdvancedSearchView().ignoresSafeArea()
+            MarketAdvancedSearchView(isPresented: $advancedSearchPresented)
         }
     }
 }
