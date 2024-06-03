@@ -1,3 +1,4 @@
+import SwiftUI
 import ThemeKit
 import UIKit
 
@@ -13,6 +14,11 @@ enum CoinRankModule {
         let viewController = CoinRankViewController(viewModel: viewModel)
 
         return ThemeNavigationController(rootViewController: viewController)
+    }
+
+    static func newView(type: RankType) -> UIViewController {
+        let isPresented = Binding<Bool>(get: { true }, set: { _ in })
+        return RankView(isPresented: isPresented, type: type).toViewController()
     }
 }
 

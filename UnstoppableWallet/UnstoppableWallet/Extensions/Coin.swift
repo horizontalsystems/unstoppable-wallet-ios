@@ -12,3 +12,7 @@ extension Coin {
         return "https://cdn.blocksdecoded.com/coin-icons/32px/\(uid)@\(scale)x.png"
     }
 }
+
+extension Coin: Identifiable {
+    public var id: String { uid }
+}
