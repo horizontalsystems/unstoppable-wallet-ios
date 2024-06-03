@@ -792,6 +792,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "top_platform.title" = "%@ Ecossistema";
 "top_platform.description" = "Valor de mercado de todos procolos na cadeia %@";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "Recentes";
 "market.search.popular" = "Populares";
