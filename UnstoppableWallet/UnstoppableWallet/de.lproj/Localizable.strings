@@ -792,6 +792,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "top_platform.title" = "%@ Ökosystem";
 "top_platform.description" = "Marktkapitalisierung aller Protokolle auf der %@ Kette";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "Neueste";
 "market.search.popular" = "Beliebt";
