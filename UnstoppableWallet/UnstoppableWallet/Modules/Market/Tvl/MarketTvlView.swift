@@ -159,8 +159,7 @@ struct MarketTvlView: View {
                         presentedFullCoin = fullCoin
                     }) {
                         itemContent(
-                            imageUrl: URL(string: coin.imageUrl),
-                            code: coin.code,
+                            coin: coin,
                             platform: platform,
                             rank: defiCoin.tvlRank,
                             tvl: values.0,
@@ -209,6 +208,31 @@ struct MarketTvlView: View {
         VStack(spacing: 1) {
             HStack(spacing: .margin8) {
                 Text(code).textBody()
+                Spacer()
+                if let tvl, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: tvl) {
+                    Text(formatted).textBody()
+                }
+            }
+
+            HStack(spacing: .margin8) {
+                HStack(spacing: .margin4) {
+                    if let rank {
+                        BadgeViewNew(text: "\(rank)")
+                    }
+                    Text(platform).textSubhead2()
+                }
+                Spacer()
+                DiffText(diff)
+            }
+        }
+    }
+
+    @ViewBuilder private func itemContent(coin: Coin?, platform: String, rank: Int?, tvl: Decimal?, diff: DiffText.Diff?) -> some View {
+        CoinIconView(coin: coin)
+
+        VStack(spacing: 1) {
+            HStack(spacing: .margin8) {
+                Text(coin?.code ?? "CODE").textBody()
                 Spacer()
                 if let tvl, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: tvl) {
                     Text(formatted).textBody()

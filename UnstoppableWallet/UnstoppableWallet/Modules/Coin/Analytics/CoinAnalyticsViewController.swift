@@ -385,7 +385,7 @@ class CoinAnalyticsViewController: ThemeViewController {
     }
 
     private func openTreasuries() {
-        let viewController = CoinTreasuriesModule.viewController(coin: viewModel.coin)
+        let viewController = CoinTreasuriesView(coin: viewModel.coin).toViewController(title: "coin_analytics.treasuries".localized)
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
