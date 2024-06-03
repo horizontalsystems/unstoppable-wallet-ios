@@ -820,6 +820,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
 "market.advanced_search.empty_results" = "Nenhum resultado";
+"market.advanced_search.retry" = "Tentar de Novo";
 "market.advanced_search.dex_description" = "Esta configuração se aplica a tokens operados na Ethereum (Uniswap DEX) e na Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
@@ -839,16 +840,9 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "market.advanced_search.liquidity" = "Liquidez DEX";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.technical_advice" = "Sinais de negociação";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "Período de Preço";
 "market.advanced_search.price_change" = "Mudança de Preço";
-
-"market.advanced_search.technical_advice.risky" = "Risky";
-"market.advanced_search.technical_advice.strong_buy" = "Compra forte";
-"market.advanced_search.technical_advice.buy" = "Comprar";
-"market.advanced_search.technical_advice.neutral" = "Neutra";
-"market.advanced_search.technical_advice.sell" = "Vender";
-"market.advanced_search.technical_advice.strong_sell" = "Venda Forte";
 
 "market.advanced_search.outperformed_btc" = "BTC superado";
 "market.advanced_search.outperformed_eth" = "ETH superado";
@@ -928,6 +922,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.volume.title" = "Volume";
 "market.volume.description" = "O volume de operação em 24h do mercado de cripto";
 "market.volume.volume" = "Volume";
+
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
 
 // Coin Page
 
@@ -1014,7 +1015,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "Compra forte";
 "coin_analytics.indicators.buy" = "Comprar";
-"coin_analytics.indicators.neutral" = "Neutra";
+"coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "Irá vender";
 "coin_analytics.indicators.strong_sell" = "Venda forte";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1557,7 +1558,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.balance_value" = "Valor Patrimonial";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "Conversão de saldo";
 
 "appearance.app_icon" = "Ícone do Aplicativo";
 
