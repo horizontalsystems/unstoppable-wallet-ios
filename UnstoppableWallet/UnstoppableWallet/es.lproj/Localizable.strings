@@ -820,6 +820,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
 "market.advanced_search.empty_results" = "Resultados Vacíos";
+"market.advanced_search.retry" = "Reintentar";
 "market.advanced_search.dex_description" = "Esta opción se aplica a las fichas negociadas en Ethereum (Uniswap DEX) y Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24 horas";
 
@@ -839,16 +840,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "market.advanced_search.liquidity" = "Liquidez DEX";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.technical_advice" = "Señales de Trading";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "Período de Precio";
 "market.advanced_search.price_change" = "Cambio de Precio";
-
-"market.advanced_search.technical_advice.risky" = "Arriesgado";
-"market.advanced_search.technical_advice.strong_buy" = "Compra Fuerte";
-"market.advanced_search.technical_advice.buy" = "Comprar";
-"market.advanced_search.technical_advice.neutral" = "Neutral";
-"market.advanced_search.technical_advice.sell" = "Vender";
-"market.advanced_search.technical_advice.strong_sell" = "Vender fuerte";
 
 "market.advanced_search.outperformed_btc" = "BTC superado";
 "market.advanced_search.outperformed_eth" = "ETH superado";
@@ -928,6 +922,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.volume.title" = "Volumen";
 "market.volume.description" = "El volumen de operaciones 24h del mercado de criptomonedas";
 "market.volume.volume" = "Volumen";
+
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
 
 // Coin Page
 
@@ -1558,7 +1559,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.balance_value" = "Valor de Saldo";
 "appearance.balance_value.coin_fiat" = "Moneda / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Moneda";
-"appearance.balance_conversion" = "Conversión de balance";
 
 "appearance.app_icon" = "Icono de la App";
 
@@ -1930,7 +1930,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.errors.transaction_underpriced" = "Tarifa baja para la transacción";
 "fee_settings.errors.tips_higher_than_max_fee" = "Tarifa máxima es demasiado baja";
 "fee_settings.errors.zero_amount.info" = "No se puede transferir 0 TRX";
-"fee_settings.warning.risk_of_getting_stuck" = "Arriesgado";
+"fee_settings.warning.risk_of_getting_stuck" = "Risky";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transacción puede permanecer pendiente por un tiempo o fallar por completo.";
 "fee_settings.warning.overpricing" = "Cuota demasiado alta";
 "fee_settings.warning.overpricing.info" = "La tarifa de transacción establecida es mayor de lo necesario para procesar esta transacción ahora.";
