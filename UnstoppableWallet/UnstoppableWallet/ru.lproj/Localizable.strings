@@ -794,6 +794,8 @@
 
 "top_platform.title" = "%@ Экосистема";
 "top_platform.description" = "Капитализация рынка всех протоколов на блокчейне %@ ";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "Недавние";
 "market.search.popular" = "Популярные";
