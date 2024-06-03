@@ -822,6 +822,7 @@
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать результаты";
 "market.advanced_search.empty_results" = "Сбросить результаты";
+"market.advanced_search.retry" = "Повторить";
 "market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24ч";
 
@@ -841,16 +842,9 @@
 
 "market.advanced_search.liquidity" = "Ликвидность DEX";
 "market.advanced_search.blockchains" = "Блокчейны";
-"market.advanced_search.technical_advice" = "Торговые сигналы";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "Ценовой период";
 "market.advanced_search.price_change" = "по изменению цены (%)";
-
-"market.advanced_search.technical_advice.risky" = "Risky";
-"market.advanced_search.technical_advice.strong_buy" = "Активно покупать";
-"market.advanced_search.technical_advice.buy" = "Покупать";
-"market.advanced_search.technical_advice.neutral" = "Нейтрально";
-"market.advanced_search.technical_advice.sell" = "Продавать";
-"market.advanced_search.technical_advice.strong_sell" = "Активно продавать";
 
 "market.advanced_search.outperformed_btc" = "Обошел BTC";
 "market.advanced_search.outperformed_eth" = "Обошел ETH";
@@ -930,6 +924,13 @@
 "market.volume.title" = "Volume";
 "market.volume.description" = "24-часовой объем крипторынка";
 "market.volume.volume" = "Volume";
+
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
 
 // Coin Page
 
@@ -1016,7 +1017,7 @@
 "coin_analytics.indicators.oversold" = "Очень рискованная торговля";
 "coin_analytics.indicators.strong_buy" = "Активно покупать";
 "coin_analytics.indicators.buy" = "Покупать";
-"coin_analytics.indicators.neutral" = "Нейтрально";
+"coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "Продавать";
 "coin_analytics.indicators.strong_sell" = "Активно продавать";
 "coin_analytics.indicators.overbought" = "Очень рискованная торговля";
@@ -1559,7 +1560,6 @@
 "appearance.balance_value" = "Значение баланса";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "Конвертация баланса";
 
 "appearance.app_icon" = "Иконка приложения";
 
