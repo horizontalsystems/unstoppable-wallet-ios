@@ -12,6 +12,7 @@ struct MarketAdvancedSearchView: View {
     @State var signalsPresented = false
     @State var priceChangePresented = false
     @State var pricePeriodPresented = false
+    @State var resultsPresented = false
 
     var body: some View {
         ThemeNavigationView {
@@ -72,7 +73,7 @@ struct MarketAdvancedSearchView: View {
                             .disabled(true)
                     case let .loaded(marketInfos):
                         Button {
-                            // todo
+                            resultsPresented = true
                         } label: {
                             Text(marketInfos.isEmpty ? "market.advanced_search.empty_results".localized : "\("market.advanced_search.show_results".localized): \(marketInfos.count)")
                         }
@@ -86,6 +87,17 @@ struct MarketAdvancedSearchView: View {
                         }
                         .buttonStyle(PrimaryButtonStyle(style: .gray))
                     }
+                }
+
+                NavigationLink(
+                    isActive: $resultsPresented,
+                    destination: {
+                        if case let .loaded(marketInfos) = viewModel.state {
+                            MarketAdvancedSearchResultsView(marketInfos: marketInfos, timePeriod: viewModel.priceChangePeriod, isParentPresented: $isPresented)
+                        }
+                    }
+                ) {
+                    EmptyView()
                 }
             }
             .navigationTitle("market.advanced_search.title".localized)
