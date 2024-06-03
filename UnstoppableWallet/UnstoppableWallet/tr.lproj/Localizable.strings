@@ -820,6 +820,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.title" = "Filtreler";
 "market.advanced_search.show_results" = "Sonuçları Göster";
 "market.advanced_search.empty_results" = "Boş Sonuçlar";
+"market.advanced_search.retry" = "Yeniden Dene";
 "market.advanced_search.dex_description" = "Bu ayar, Ethereum (Uniswap DEX) ve Binance Smart Chain (Pancake DEX) üzerinde işlem gören tokenlar için geçerlidir.";
 "market.advanced_search.24h" = "24 sa";
 
@@ -839,16 +840,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.advanced_search.liquidity" = "DEX Likiditesi";
 "market.advanced_search.blockchains" = "Blockchain'ler";
-"market.advanced_search.technical_advice" = "Ticaret Sinyalleri";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "Fiyat Periyodu";
 "market.advanced_search.price_change" = "Fiyat Değişimi";
-
-"market.advanced_search.technical_advice.risky" = "Risky";
-"market.advanced_search.technical_advice.strong_buy" = "Kuvvetli Al";
-"market.advanced_search.technical_advice.buy" = "Al";
-"market.advanced_search.technical_advice.neutral" = "Nötr";
-"market.advanced_search.technical_advice.sell" = "Sat";
-"market.advanced_search.technical_advice.strong_sell" = "Kuvvetli Satış";
 
 "market.advanced_search.outperformed_btc" = "BTC'yi Geride Bıraktı";
 "market.advanced_search.outperformed_eth" = "ETH'yi Geride Bıraktı";
@@ -928,6 +922,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.volume.title" = "Volume";
 "market.volume.description" = "Kripto piyasa 24 saatlik işlem hacmi";
 "market.volume.volume" = "Volume";
+
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
 
 // Coin Page
 
@@ -1014,7 +1015,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "Strong Buy";
 "coin_analytics.indicators.buy" = "Buy";
-"coin_analytics.indicators.neutral" = "Nötr";
+"coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "Sell";
 "coin_analytics.indicators.strong_sell" = "Strong Sell";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1561,7 +1562,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.balance_value" = "Bakiye değeri";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "Bakiye çevrimi";
 
 "appearance.app_icon" = "Uygulama İkonları";
 
