@@ -792,6 +792,8 @@
 
 "top_platform.title" = "%@ 星系";
 "top_platform.description" = "%@ 链上所有协议的市场上限";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "最近";
 "market.search.popular" = "流行";
