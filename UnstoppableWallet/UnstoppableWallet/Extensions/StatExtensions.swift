@@ -124,6 +124,21 @@ extension CoinProChartModule.ProChartType {
     }
 }
 
+extension CoinRankModule.RankType {
+    var statRankType: StatPage {
+        switch self {
+        case .cexVolume: return .coinRankCexVolume
+        case .dexVolume: return .coinRankDexVolume
+        case .dexLiquidity: return .coinRankDexLiquidity
+        case .address: return .coinRankAddress
+        case .txCount: return .coinRankTxCount
+        case .holders: return .coinRankHolders
+        case .fee: return .coinRankFee
+        case .revenue: return .coinRankRevenue
+        }
+    }
+}
+
 extension MarketModule.Top {
     var statMarketTop: StatMarketTop {
         switch self {

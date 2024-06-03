@@ -405,7 +405,7 @@ class CoinAnalyticsViewController: ThemeViewController {
     }
 
     private func openRanks(type: CoinRankModule.RankType) {
-        let viewController = CoinRankModule.viewController(type: type)
+        let viewController = CoinRankModule.newView(type: type)
         parentNavigationController?.present(viewController, animated: true)
     }
 
