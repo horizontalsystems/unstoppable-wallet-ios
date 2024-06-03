@@ -818,6 +818,7 @@
 "market.advanced_search.title" = "필터";
 "market.advanced_search.show_results" = "결과 보기";
 "market.advanced_search.empty_results" = "결과 없음";
+"market.advanced_search.retry" = "재시도";
 "market.advanced_search.dex_description" = "이 설정은 이더리움(Uniswap DEX) 과 바이낸스 스마트체인(Pancake DEX) 에서 거래되는 토큰에 적용됩니다.";
 "market.advanced_search.24h" = "24시간";
 
@@ -837,16 +838,9 @@
 
 "market.advanced_search.liquidity" = "DEX 유동성";
 "market.advanced_search.blockchains" = "블록체인";
-"market.advanced_search.technical_advice" = "전반적인 점수가 좋거나 우수합니다";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "가격 기간";
 "market.advanced_search.price_change" = "가격 변경";
-
-"market.advanced_search.technical_advice.risky" = "Risky";
-"market.advanced_search.technical_advice.strong_buy" = "강력한 매수";
-"market.advanced_search.technical_advice.buy" = "매수";
-"market.advanced_search.technical_advice.neutral" = "중립적";
-"market.advanced_search.technical_advice.sell" = "매도";
-"market.advanced_search.technical_advice.strong_sell" = "강력한 매도";
 
 "market.advanced_search.outperformed_btc" = "BTC를 능가했습니다";
 "market.advanced_search.outperformed_eth" = "ETH를 능가했습니다";
@@ -926,6 +920,13 @@
 "market.volume.title" = "Volume";
 "market.volume.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
 "market.volume.volume" = "Volume";
+
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
 
 // Coin Page
 
@@ -1013,7 +1014,7 @@
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "강한 매수";
 "coin_analytics.indicators.buy" = "매수";
-"coin_analytics.indicators.neutral" = "중립적";
+"coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "매도";
 "coin_analytics.indicators.strong_sell" = "강한 매도";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1556,7 +1557,6 @@
 "appearance.balance_value" = "균형 가치";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "잔액 변환";
 
 "appearance.app_icon" = "앱 아이콘";
 
