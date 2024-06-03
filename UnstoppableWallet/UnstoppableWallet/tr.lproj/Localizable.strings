@@ -792,6 +792,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "top_platform.title" = "%@ Ekosistemi";
 "top_platform.description" = "%@ zincirindeki tüm protokollerin piyasa değeri";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "Son";
 "market.search.popular" = "Popüler";
