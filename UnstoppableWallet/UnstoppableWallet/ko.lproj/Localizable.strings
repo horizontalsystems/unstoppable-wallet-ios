@@ -790,6 +790,8 @@
 
 "top_platform.title" = "%@ 생태계";
 "top_platform.description" = "%@ 체인상의 모든 프로토콜의 시가총액";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "최근의";
 "market.search.popular" = "인기있는";
