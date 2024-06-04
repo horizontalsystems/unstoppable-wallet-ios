@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import RxSwift
 import UIKit
@@ -24,7 +25,8 @@ class AppManager {
     private let nftMetadataSyncer: NftMetadataSyncer
 
     private let didBecomeActiveSubject = PublishSubject<Void>()
-    private let willEnterForegroundSubject = PublishSubject<Void>()
+    private let willEnterForegroundSubjectOld = PublishSubject<Void>()
+    private let willEnterForegroundSubject = PassthroughSubject<Void, Never>()
 
     init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
          keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager, blurManager: BlurManager,
@@ -105,7 +107,9 @@ extension AppManager {
 
         blurManager.willEnterForeground()
         debugBackgroundLogger?.logEnterForeground()
-        willEnterForegroundSubject.onNext(())
+
+        willEnterForegroundSubjectOld.onNext(())
+        willEnterForegroundSubject.send()
 
         passcodeLockManager.handleForeground()
         lockManager.willEnterForeground()
@@ -128,12 +132,18 @@ extension AppManager {
     }
 }
 
+extension AppManager {
+    var willEnterForegroundPublisher: AnyPublisher<Void, Never> {
+        willEnterForegroundSubject.eraseToAnyPublisher()
+    }
+}
+
 extension AppManager: IAppManager {
     var didBecomeActiveObservable: Observable<Void> {
         didBecomeActiveSubject.asObservable()
     }
 
     var willEnterForegroundObservable: Observable<Void> {
-        willEnterForegroundSubject.asObservable()
+        willEnterForegroundSubjectOld.asObservable()
     }
 }

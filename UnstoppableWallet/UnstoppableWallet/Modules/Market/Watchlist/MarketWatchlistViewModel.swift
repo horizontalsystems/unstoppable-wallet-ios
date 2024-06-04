@@ -8,7 +8,7 @@ class MarketWatchlistViewModel: ObservableObject {
     private let currencyManager = App.shared.currencyManager
     private let watchlistManager = App.shared.watchlistManager
     private let userDefaultsStorage = App.shared.userDefaultsStorage
-
+    private let appManager = App.shared.appManager
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
@@ -138,6 +138,10 @@ extension MarketWatchlistViewModel {
             .sink { [weak self] _ in
                 self?.syncMarketInfos()
             }
+            .store(in: &cancellables)
+
+        appManager.willEnterForegroundPublisher
+            .sink { [weak self] in self?.syncMarketInfos() }
             .store(in: &cancellables)
 
         watchlistManager.coinUidsPublisher

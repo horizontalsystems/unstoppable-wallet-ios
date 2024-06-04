@@ -22,6 +22,10 @@ class MarketGlobalViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        appManager.willEnterForegroundPublisher
+            .sink { [weak self] in self?.syncState() }
+            .store(in: &cancellables)
+
         syncState()
     }
 
