@@ -34,7 +34,7 @@ struct MarketGlobalView: View {
         }
         .animation(.default, value: viewModel.marketGlobal == nil)
         .sheet(isPresented: $tvlPresented) {
-            MarketTvlView(isPresented: $tvlPresented)
+            ThemeNavigationView { MarketTvlView() }
                 .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsTvlInDefi)) }
         }
         .sheet(isPresented: $marketCapPresented) {

@@ -6,67 +6,65 @@ struct MarketTvlView: View {
     @StateObject var viewModel: MarketTvlViewModel
     @StateObject var chartViewModel: MetricChartViewModel
     @StateObject var watchlistViewModel: WatchlistViewModel
-    @Binding var isPresented: Bool
+
+    @Environment(\.presentationMode) private var presentationMode
 
     @State private var filterBySelectorPresented = false
     @State private var presentedFullCoin: FullCoin?
 
-    init(isPresented: Binding<Bool>) {
+    init() {
         _viewModel = StateObject(wrappedValue: MarketTvlViewModel())
         _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.instance(type: .tvlInDefi))
         _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: .globalMetricsTvlInDefi))
-        _isPresented = isPresented
     }
 
     var body: some View {
-        ThemeNavigationView {
-            ThemeView {
-                switch viewModel.state {
-                case .loading:
-                    VStack(spacing: 0) {
-                        header()
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
-                case let .loaded(defiCoins):
-                    ThemeList(bottomSpacing: .margin16) {
-                        header()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-                        chart()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+        ThemeView {
+            switch viewModel.state {
+            case .loading:
+                VStack(spacing: 0) {
+                    header()
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }
+            case let .loaded(defiCoins):
+                ThemeList(bottomSpacing: .margin16) {
+                    header()
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                    chart()
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
 
-                        list(defiCoins: defiCoins)
-                    }
-                case .failed:
-                    VStack(spacing: 0) {
-                        header()
+                    list(defiCoins: defiCoins)
+                }
+            case .failed:
+                VStack(spacing: 0) {
+                    header()
 
-                        SyncErrorView {
-                            viewModel.sync()
-                        }
+                    SyncErrorView {
+                        viewModel.sync()
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.close".localized) {
-                        isPresented = false
-                    }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("button.close".localized) {
+                    presentationMode.wrappedValue.dismiss()
                 }
             }
-            .onReceive(chartViewModel.$periodType) { periodType in
-                viewModel.timePeriod = HsTimePeriod(periodType) ?? .day1
-            }
-            .sheet(item: $presentedFullCoin) { fullCoin in
-                CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
-                    .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: fullCoin.coin.uid)) }
-            }
+        }
+        .onReceive(chartViewModel.$periodType) { periodType in
+            viewModel.timePeriod = HsTimePeriod(periodType) ?? .day1
+        }
+        .sheet(item: $presentedFullCoin) { fullCoin in
+            CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
+                .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: fullCoin.coin.uid)) }
         }
     }
 

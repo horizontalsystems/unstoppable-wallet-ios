@@ -375,7 +375,7 @@ class CoinAnalyticsViewController: ThemeViewController {
     }
 
     private func openTvlRank() {
-        let viewController = MarketGlobalMetricModule.tvlInDefiViewController()
+        let viewController = MarketTvlView().toViewController()
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -404,8 +404,8 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.present(viewController, animated: true)
     }
 
-    private func openRanks(type: CoinRankModule.RankType) {
-        let viewController = CoinRankModule.newView(type: type)
+    private func openRanks(type: RankViewModel.RankType) {
+        let viewController = RankView(type: type).toViewController()
         parentNavigationController?.present(viewController, animated: true)
     }
 

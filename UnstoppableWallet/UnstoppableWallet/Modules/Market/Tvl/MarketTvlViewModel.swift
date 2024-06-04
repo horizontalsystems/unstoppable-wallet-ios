@@ -63,13 +63,20 @@ class MarketTvlViewModel: ObservableObject {
                     }
                 }
                 .sorted { lhsDefiCoin, rhsDefiCoin in
-                    let lhsTvl = lhsDefiCoin.tvl(platforms: platforms) ?? 0
-                    let rhsTvl = rhsDefiCoin.tvl(platforms: platforms) ?? 0
+                    let lhsTvl = tvl(defiCoin: lhsDefiCoin, platforms: platforms) ?? 0
+                    let rhsTvl = tvl(defiCoin: rhsDefiCoin, platforms: platforms) ?? 0
                     return asc ? lhsTvl < rhsTvl : lhsTvl > rhsTvl
                 }
             state = .loaded(defiCoins: defiCoins)
         case let .failed(error):
             state = .failed(error: error)
+        }
+    }
+
+    private func tvl(defiCoin: DefiCoin, platforms: MarketTvlViewModel.Platforms) -> Decimal? {
+        switch platforms {
+        case .all: return defiCoin.tvl
+        default: return defiCoin.chainTvls[platforms.chain]
         }
     }
 }
