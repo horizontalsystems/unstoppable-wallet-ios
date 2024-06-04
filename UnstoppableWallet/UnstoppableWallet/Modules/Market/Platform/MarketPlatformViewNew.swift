@@ -30,17 +30,20 @@ struct MarketPlatformViewNew: View {
                         Spacer()
                     }
                 case let .loaded(marketInfos):
-                    ThemeList(bottomSpacing: .margin16) {
-                        header()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-                        chart()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+                    ScrollViewReader { proxy in
+                        ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
+                            header()
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                            chart()
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
 
-                        list(marketInfos: marketInfos)
+                            list(marketInfos: marketInfos)
+                        }
+                        .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                     }
                 case .failed:
                     VStack(spacing: 0) {

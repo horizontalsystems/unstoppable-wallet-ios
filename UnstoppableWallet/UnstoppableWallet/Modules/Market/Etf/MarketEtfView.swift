@@ -28,18 +28,22 @@ struct MarketEtfView: View {
                         Spacer()
                     }
                 case let .loaded(etfs):
-                    ThemeList(bottomSpacing: .margin16) {
-                        header()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+                    ScrollViewReader { proxy in
+                        ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
+                            header()
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
 
-                        chart()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+                            chart()
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
 
-                        list(etfs: etfs)
+                            list(etfs: etfs)
+                        }
+                        .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+                        .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                     }
                 case .failed:
                     VStack(spacing: 0) {

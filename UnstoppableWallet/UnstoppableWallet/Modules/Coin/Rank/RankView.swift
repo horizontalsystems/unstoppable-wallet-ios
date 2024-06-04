@@ -28,13 +28,17 @@ struct RankView: View {
                         Spacer()
                     }
                 case let .loaded(items):
-                    ThemeList(bottomSpacing: .margin16) {
-                        header()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+                    ScrollViewReader { proxy in
+                        ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
+                            header()
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
 
-                        list(items: items)
+                            list(items: items)
+                        }
+                        .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+                        .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                     }
                 case .failed:
                     VStack(spacing: 0) {

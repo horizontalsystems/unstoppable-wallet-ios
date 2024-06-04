@@ -1,17 +1,29 @@
 import SwiftUI
 import UIKit
 
+let themeListTopViewId = "theme_list_top_view_id"
+
 struct ThemeList<Content: View>: View {
     private let content: () -> Content
     private let bottomSpacing: CGFloat?
+    private let invisibleTopView: Bool
 
-    init(bottomSpacing: CGFloat? = nil, @ViewBuilder _ content: @escaping () -> Content) {
+    init(bottomSpacing: CGFloat? = nil, invisibleTopView: Bool = false, @ViewBuilder _ content: @escaping () -> Content) {
         self.bottomSpacing = bottomSpacing
+        self.invisibleTopView = invisibleTopView
         self.content = content
     }
 
-    init<Item: Hashable, ItemContent: View>(_ items: [Item], bottomSpacing: CGFloat? = nil, onMove: ((IndexSet, Int) -> Void)? = nil, @ViewBuilder itemContent: @escaping (Item) -> ItemContent) where Content == ListForEach<ItemContent, Item> {
+    init<Item: Hashable, ItemContent: View>(
+        _ items: [Item],
+        bottomSpacing: CGFloat? = nil,
+        invisibleTopView: Bool = false,
+        onMove: ((IndexSet, Int) -> Void)? = nil,
+        @ViewBuilder itemContent: @escaping (Item) -> ItemContent
+    ) where Content == ListForEach<ItemContent, Item> {
         self.bottomSpacing = bottomSpacing
+        self.invisibleTopView = invisibleTopView
+
         content = {
             ListForEach(items, onMove: onMove, itemContent: itemContent)
         }
@@ -19,6 +31,15 @@ struct ThemeList<Content: View>: View {
 
     var body: some View {
         List {
+            if invisibleTopView {
+                Color.clear
+                    .id(themeListTopViewId)
+                    .frame(height: 0)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+            }
+
             content()
 
             if let bottomSpacing {
@@ -29,6 +50,7 @@ struct ThemeList<Content: View>: View {
                     .listRowSeparator(.hidden)
             }
         }
+        .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
         .themeListStyle(.transparent)
     }

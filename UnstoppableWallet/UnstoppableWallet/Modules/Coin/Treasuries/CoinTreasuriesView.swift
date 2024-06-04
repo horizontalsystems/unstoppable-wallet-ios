@@ -16,19 +16,23 @@ struct CoinTreasuriesView: View {
             switch viewModel.state {
             case .loading:
                 VStack(spacing: 0) {
-                    header()
+                    header(disabled: true)
                     loadingList()
                 }
             case let .loaded(treasuries):
                 VStack(spacing: 0) {
                     header()
 
-                    ThemeList(bottomSpacing: .margin32) {
-                        list(treasuries: treasuries)
-                        footer()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+                    ScrollViewReader { proxy in
+                        ThemeList(bottomSpacing: .margin32, invisibleTopView: true) {
+                            list(treasuries: treasuries)
+                            footer()
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                        }
+                        .onChange(of: viewModel.filter) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+                        .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                     }
                 }
             case .failed:
@@ -41,7 +45,7 @@ struct CoinTreasuriesView: View {
         }
     }
 
-    @ViewBuilder private func header() -> some View {
+    @ViewBuilder private func header(disabled: Bool = false) -> some View {
         HorizontalDivider(color: .themeSteel10)
         HStack {
             HStack {
@@ -51,42 +55,46 @@ struct CoinTreasuriesView: View {
                     Text(viewModel.filter.title)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .transparent, rightAccessory: .dropDown))
+                .disabled(disabled)
             }
             .alert(
                 isPresented: $filterSelectorPresented,
                 title: "coin_analytics.treasuries.filters".localized,
-                viewItems: viewModel.filters.map { .init(text: $0.title, selected: viewModel.filter == $0) },
+                viewItems: CoinTreasuriesViewModel.Filter.allCases.map { .init(text: $0.title, selected: viewModel.filter == $0) },
                 onTap: { index in
                     guard let index else {
                         return
                     }
 
-                    viewModel.filter = viewModel.filters[index]
+                    viewModel.filter = CoinTreasuriesViewModel.Filter.allCases[index]
                 }
             )
 
             Spacer()
 
             Button(action: {
-                viewModel.toggleSortBy()
+                viewModel.sortOrder.toggle()
             }) {
-                Image(viewModel.orderedAscending ? "sort_l2h_20" : "sort_h2l_20").renderingMode(.template)
+                sortIcon().renderingMode(.template)
             }
             .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             .padding(.trailing, .margin16)
+            .disabled(disabled)
         }
         .padding(.vertical, .margin8)
     }
 
     @ViewBuilder private func list(treasuries: [CoinTreasury]) -> some View {
         ListForEach(treasuries) { treasury in
-            itemContent(
-                logoUrl: treasury.fundLogoUrl,
-                fund: treasury.fund,
-                amount: ValueFormatter.instance.formatShort(value: treasury.amount, decimalCount: 8, symbol: viewModel.coinCode) ?? "---",
-                country: treasury.country,
-                amountInCurrency: ValueFormatter.instance.formatShort(currency: viewModel.currency, value: treasury.amountInCurrency) ?? "---"
-            )
+            ListRow {
+                itemContent(
+                    imageUrl: URL(string: treasury.fundLogoUrl),
+                    fund: treasury.fund,
+                    amount: ValueFormatter.instance.formatShort(value: treasury.amount, decimalCount: 8, symbol: viewModel.coinCode) ?? "---",
+                    country: treasury.country,
+                    amountInCurrency: ValueFormatter.instance.formatShort(currency: viewModel.currency, value: treasury.amountInCurrency) ?? "---"
+                )
+            }
         }
     }
 
@@ -102,11 +110,11 @@ struct CoinTreasuriesView: View {
         ThemeList(Array(0 ... 10)) { _ in
             ListRow {
                 itemContent(
-                    logoUrl: nil,
-                    fund: "",
-                    amount: "",
-                    country: "",
-                    amountInCurrency: ""
+                    imageUrl: nil,
+                    fund: "Unstoppable",
+                    amount: "123.45 BTC",
+                    country: "KG",
+                    amountInCurrency: "$123.45"
                 )
                 .redacted()
             }
@@ -114,27 +122,32 @@ struct CoinTreasuriesView: View {
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(logoUrl: String?, fund: String, amount: String, country: String, amountInCurrency: String) -> some View {
-        ListRow {
-            if let url = logoUrl.flatMap({ URL(string: $0) }) {
-                KFImage.url(url)
-                    .resizable()
-                    .frame(width: .iconSize32, height: .iconSize32)
+    @ViewBuilder private func itemContent(imageUrl: URL?, fund: String, amount: String, country: String, amountInCurrency: String) -> some View {
+        KFImage.url(imageUrl)
+            .resizable()
+            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+            .frame(width: .iconSize32, height: .iconSize32)
+
+        VStack(spacing: 1) {
+            HStack(spacing: .margin8) {
+                Text(fund).textBody()
+                Spacer()
+                Text(amount).textBody()
             }
 
-            VStack(spacing: 1) {
-                HStack(spacing: .margin8) {
-                    Text(fund).textBody()
-                    Spacer()
-                    Text(amount).textBody()
-                }
-
-                HStack(spacing: .margin8) {
-                    Text(country).textSubhead2()
-                    Spacer()
-                    Text(amountInCurrency).textSubhead2(color: .themeJacob)
-                }
+            HStack(spacing: .margin8) {
+                Text(country).textSubhead2()
+                Spacer()
+                Text(amountInCurrency).textSubhead2(color: .themeJacob)
             }
+        }
+    }
+
+    private func sortIcon() -> Image {
+        switch viewModel.sortOrder {
+        case .asc: return Image("sort_l2h_20")
+        case .desc: return Image("sort_h2l_20")
         }
     }
 }
