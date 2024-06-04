@@ -29,17 +29,21 @@ struct MarketTvlView: View {
                     Spacer()
                 }
             case let .loaded(defiCoins):
-                ThemeList(bottomSpacing: .margin16) {
-                    header()
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                    chart()
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
+                ScrollViewReader { proxy in
+                    ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
+                        header()
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                        chart()
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
 
-                    list(defiCoins: defiCoins)
+                        list(defiCoins: defiCoins)
+                    }
+                    .onChange(of: viewModel.platforms) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+                    .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                 }
             case .failed:
                 VStack(spacing: 0) {

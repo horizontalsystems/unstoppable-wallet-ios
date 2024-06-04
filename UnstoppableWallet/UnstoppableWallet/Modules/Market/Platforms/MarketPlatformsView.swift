@@ -91,26 +91,30 @@ struct MarketPlatformsView: View {
     }
 
     @ViewBuilder private func list(platforms: [TopPlatform]) -> some View {
-        ThemeList(platforms) { platform in
-            ClickableRow(action: {
-                presentedPlatform = platform
-            }) {
-                let blockchain = platform.blockchain
+        ScrollViewReader { proxy in
+            ThemeList(platforms, invisibleTopView: true) { platform in
+                ClickableRow(action: {
+                    presentedPlatform = platform
+                }) {
+                    let blockchain = platform.blockchain
 
-                itemContent(
-                    imageUrl: URL(string: blockchain.type.imageUrl),
-                    name: blockchain.name,
-                    marketCap: platform.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                    protocolsCount: platform.protocolsCount,
-                    rank: platform.rank,
-                    rankChange: platform.rank.flatMap { rank in platform.ranks[viewModel.timePeriod].map { $0 - rank } },
-                    diff: platform.changes[viewModel.timePeriod]
-                )
+                    itemContent(
+                        imageUrl: URL(string: blockchain.type.imageUrl),
+                        name: blockchain.name,
+                        marketCap: platform.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                        protocolsCount: platform.protocolsCount,
+                        rank: platform.rank,
+                        rankChange: platform.rank.flatMap { rank in platform.ranks[viewModel.timePeriod].map { $0 - rank } },
+                        diff: platform.changes[viewModel.timePeriod]
+                    )
+                }
             }
-        }
-        .themeListStyle(.transparent)
-        .refreshable {
-            await viewModel.refresh()
+            .themeListStyle(.transparent)
+            .refreshable {
+                await viewModel.refresh()
+            }
+            .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+            .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
         }
     }
 

@@ -21,21 +21,24 @@ struct MarketAdvancedSearchResultsView: View {
             VStack(spacing: 0) {
                 header()
 
-                ThemeList(viewModel.marketInfos, bottomSpacing: .margin16) { marketInfo in
-                    let coin = marketInfo.fullCoin.coin
+                ScrollViewReader { proxy in
+                    ThemeList(viewModel.marketInfos, bottomSpacing: .margin16, invisibleTopView: true) { marketInfo in
+                        let coin = marketInfo.fullCoin.coin
 
-                    ClickableRow(action: {
-                        presentedFullCoin = marketInfo.fullCoin
-                    }) {
-                        itemContent(
-                            coin: coin,
-                            marketCap: marketInfo.marketCap,
-                            price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                            rank: marketInfo.marketCapRank,
-                            diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
-                        )
+                        ClickableRow(action: {
+                            presentedFullCoin = marketInfo.fullCoin
+                        }) {
+                            itemContent(
+                                coin: coin,
+                                marketCap: marketInfo.marketCap,
+                                price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                                rank: marketInfo.marketCapRank,
+                                diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
+                            )
+                        }
+                        .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
                     }
-                    .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
+                    .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                 }
             }
         }

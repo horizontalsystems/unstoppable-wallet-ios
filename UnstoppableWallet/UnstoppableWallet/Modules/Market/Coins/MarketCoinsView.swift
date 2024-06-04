@@ -108,24 +108,29 @@ struct MarketCoinsView: View {
     }
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
-        ThemeList(marketInfos) { marketInfo in
-            let coin = marketInfo.fullCoin.coin
+        ScrollViewReader { proxy in
+            ThemeList(marketInfos, invisibleTopView: true) { marketInfo in
+                let coin = marketInfo.fullCoin.coin
 
-            ClickableRow(action: {
-                presentedFullCoin = marketInfo.fullCoin
-            }) {
-                itemContent(
-                    coin: coin,
-                    marketCap: marketInfo.marketCap,
-                    price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                    rank: marketInfo.marketCapRank,
-                    diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
-                )
+                ClickableRow(action: {
+                    presentedFullCoin = marketInfo.fullCoin
+                }) {
+                    itemContent(
+                        coin: coin,
+                        marketCap: marketInfo.marketCap,
+                        price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                        rank: marketInfo.marketCapRank,
+                        diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
+                    )
+                }
+                .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
             }
-            .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
-        }
-        .refreshable {
-            await viewModel.refresh()
+            .refreshable {
+                await viewModel.refresh()
+            }
+            .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+            .onChange(of: viewModel.top) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+            .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
         }
     }
 

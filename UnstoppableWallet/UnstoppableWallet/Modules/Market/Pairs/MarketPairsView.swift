@@ -45,28 +45,31 @@ struct MarketPairsView: View {
     }
 
     @ViewBuilder private func list(pairs: [MarketPair]) -> some View {
-        ThemeList(pairs) { pair in
-            ClickableRow(action: {
-                if let tradeUrl = pair.tradeUrl {
-                    UrlManager.open(url: tradeUrl)
-                    stat(page: .markets, section: .pairs, event: .open(page: .externalMarketPair))
+        ScrollViewReader { proxy in
+            ThemeList(pairs, invisibleTopView: true) { pair in
+                ClickableRow(action: {
+                    if let tradeUrl = pair.tradeUrl {
+                        UrlManager.open(url: tradeUrl)
+                        stat(page: .markets, section: .pairs, event: .open(page: .externalMarketPair))
+                    }
+                }) {
+                    itemContent(
+                        baseCoin: pair.baseCoin,
+                        targetCoin: pair.targetCoin,
+                        base: pair.base,
+                        target: pair.target,
+                        volume: pair.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                        marketName: pair.marketName,
+                        rank: pair.rank,
+                        price: pair.price.flatMap { ValueFormatter.instance.formatShort(value: $0, decimalCount: 8, symbol: pair.target) } ?? "n/a".localized
+                    )
                 }
-            }) {
-                itemContent(
-                    baseCoin: pair.baseCoin,
-                    targetCoin: pair.targetCoin,
-                    base: pair.base,
-                    target: pair.target,
-                    volume: pair.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                    marketName: pair.marketName,
-                    rank: pair.rank,
-                    price: pair.price.flatMap { ValueFormatter.instance.formatShort(value: $0, decimalCount: 8, symbol: pair.target) } ?? "n/a".localized
-                )
             }
-        }
-        .themeListStyle(.transparent)
-        .refreshable {
-            await viewModel.refresh()
+            .themeListStyle(.transparent)
+            .refreshable {
+                await viewModel.refresh()
+            }
+            .onChange(of: viewModel.volumeSortOrder) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
         }
     }
 

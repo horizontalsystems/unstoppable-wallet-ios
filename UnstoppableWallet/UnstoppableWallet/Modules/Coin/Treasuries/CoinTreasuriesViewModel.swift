@@ -7,22 +7,23 @@ class CoinTreasuriesViewModel: ObservableObject {
     private let coin: Coin
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
-
-    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     private var internalState: State = .loading {
         didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.syncState()
-            }
+            syncState()
         }
     }
 
     @Published var state: State = .loading
-    @Published var orderedAscending: Bool = false
 
-    var filter: Filter = .all {
+    @Published var filter: Filter = .all {
+        didSet {
+            syncState()
+        }
+    }
+
+    @Published var sortOrder: MarketModule.SortOrder = .desc {
         didSet {
             syncState()
         }
@@ -44,15 +45,17 @@ class CoinTreasuriesViewModel: ObservableObject {
         Task { [weak self, marketKit, coin, currencyManager] in
             do {
                 let treasuries = try await marketKit.treasuries(coinUid: coin.uid, currencyCode: currencyManager.baseCurrency.code)
-                DispatchQueue.main.async { [weak self] in
+
+                await MainActor.run { [weak self] in
                     self?.internalState = .loaded(treasuries)
                 }
             } catch {
-                DispatchQueue.main.async { [weak self] in
+                await MainActor.run { [weak self] in
                     self?.internalState = .failed(error)
                 }
             }
-        }.store(in: &tasks)
+        }
+        .store(in: &tasks)
     }
 
     private func syncState() {
@@ -70,7 +73,10 @@ class CoinTreasuriesViewModel: ObservableObject {
                     }
                 }
                 .sorted { lhsTreasury, rhsTreasury in
-                    orderedAscending ? lhsTreasury.amount < rhsTreasury.amount : lhsTreasury.amount > rhsTreasury.amount
+                    switch sortOrder {
+                    case .asc: lhsTreasury.amount < rhsTreasury.amount
+                    case .desc: lhsTreasury.amount > rhsTreasury.amount
+                    }
                 }
 
             state = .loaded(treasuries)
@@ -87,15 +93,6 @@ extension CoinTreasuriesViewModel {
 
     var coinCode: String {
         coin.code
-    }
-
-    var filters: [Filter] {
-        Filter.allCases
-    }
-
-    func toggleSortBy() {
-        orderedAscending = !orderedAscending
-        syncState()
     }
 
     func refresh() async {

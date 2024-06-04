@@ -131,44 +131,48 @@ struct MarketWatchlistView: View {
     }
 
     @ViewBuilder private func list(marketInfos: [MarketInfo], signals: [String: TechnicalAdvice.Advice]) -> some View {
-        ThemeList(
-            marketInfos,
-            onMove: viewModel.sortBy == .manual ? { source, destination in
-                viewModel.move(source: source, destination: destination)
-            } : nil
-        ) { marketInfo in
-            let coin = marketInfo.fullCoin.coin
+        ScrollViewReader { proxy in
+            ThemeList(
+                marketInfos,
+                invisibleTopView: true,
+                onMove: viewModel.sortBy == .manual ? { source, destination in
+                    viewModel.move(source: source, destination: destination)
+                } : nil
+            ) { marketInfo in
+                let coin = marketInfo.fullCoin.coin
 
-            ClickableRow(action: {
-                presentedFullCoin = marketInfo.fullCoin
-            }) {
-                itemContent(
-                    imageUrl: URL(string: coin.imageUrl),
-                    code: coin.code,
-                    marketCap: marketInfo.marketCap,
-                    price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                    rank: marketInfo.marketCapRank,
-                    diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod),
-                    signal: viewModel.showSignals ? signals[coin.uid] : nil
-                )
-            }
-            .swipeActions {
-                Button(role: .destructive) {
-                    viewModel.remove(coinUid: coin.uid)
-                } label: {
-                    Image("star_off_24").renderingMode(.template)
+                ClickableRow(action: {
+                    presentedFullCoin = marketInfo.fullCoin
+                }) {
+                    itemContent(
+                        imageUrl: URL(string: coin.imageUrl),
+                        code: coin.code,
+                        marketCap: marketInfo.marketCap,
+                        price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                        rank: marketInfo.marketCapRank,
+                        diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod),
+                        signal: viewModel.showSignals ? signals[coin.uid] : nil
+                    )
                 }
-                .tint(.themeLucian)
+                .swipeActions {
+                    Button(role: .destructive) {
+                        viewModel.remove(coinUid: coin.uid)
+                    } label: {
+                        Image("star_off_24").renderingMode(.template)
+                    }
+                    .tint(.themeLucian)
+                }
             }
-        }
-        .themeListStyle(.transparent)
-        .environment(\.editMode, $editMode)
-        .refreshable {
-            await viewModel.refresh()
-        }
-        .animation(.default, value: editMode)
-        .onChange(of: viewModel.sortBy) { _ in
-            editMode = .inactive
+            .environment(\.editMode, $editMode)
+            .refreshable {
+                await viewModel.refresh()
+            }
+            .animation(.default, value: editMode)
+            .onChange(of: viewModel.sortBy) { _ in
+                editMode = .inactive
+                withAnimation { proxy.scrollTo(themeListTopViewId) }
+            }
+            .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
         }
     }
 
