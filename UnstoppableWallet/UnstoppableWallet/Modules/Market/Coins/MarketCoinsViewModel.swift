@@ -6,7 +6,7 @@ import MarketKit
 class MarketCoinsViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
-
+    private let appManager = App.shared.appManager
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
@@ -102,6 +102,10 @@ extension MarketCoinsViewModel {
             .sink { [weak self] _ in
                 self?.syncMarketInfos()
             }
+            .store(in: &cancellables)
+
+        appManager.willEnterForegroundPublisher
+            .sink { [weak self] in self?.syncMarketInfos() }
             .store(in: &cancellables)
 
         syncMarketInfos()

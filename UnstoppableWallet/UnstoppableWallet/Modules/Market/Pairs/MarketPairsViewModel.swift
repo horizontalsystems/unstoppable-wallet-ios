@@ -6,7 +6,7 @@ import MarketKit
 class MarketPairsViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
-
+    private let appManager = App.shared.appManager
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
@@ -30,7 +30,8 @@ class MarketPairsViewModel: ObservableObject {
 
         Task { [weak self] in
             await self?._sync()
-        }.store(in: &tasks)
+        }
+        .store(in: &tasks)
     }
 
     private func _sync() async {
@@ -75,6 +76,10 @@ extension MarketPairsViewModel {
             .sink { [weak self] _ in
                 self?.sync()
             }
+            .store(in: &cancellables)
+
+        appManager.willEnterForegroundPublisher
+            .sink { [weak self] in self?.sync() }
             .store(in: &cancellables)
 
         sync()

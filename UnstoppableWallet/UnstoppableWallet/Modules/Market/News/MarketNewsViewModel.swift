@@ -5,7 +5,8 @@ import MarketKit
 
 class MarketNewsViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
-
+    private let appManager = App.shared.appManager
+    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     @Published var state: State = .loading
@@ -15,7 +16,8 @@ class MarketNewsViewModel: ObservableObject {
 
         Task { [weak self] in
             await self?._sync()
-        }.store(in: &tasks)
+        }
+        .store(in: &tasks)
     }
 
     private func _sync() async {
@@ -41,6 +43,10 @@ class MarketNewsViewModel: ObservableObject {
 
 extension MarketNewsViewModel {
     func load() {
+        appManager.willEnterForegroundPublisher
+            .sink { [weak self] in self?.sync() }
+            .store(in: &cancellables)
+
         sync()
     }
 
