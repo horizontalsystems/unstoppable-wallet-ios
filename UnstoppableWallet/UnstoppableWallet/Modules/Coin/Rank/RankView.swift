@@ -5,15 +5,15 @@ import SwiftUI
 struct RankView: View {
     @StateObject var viewModel: RankViewModel
     @StateObject var watchlistViewModel: WatchlistViewModel
-    @Binding var isPresented: Bool
+
+    @Environment(\.presentationMode) private var presentationMode
 
     @State private var presentedCoin: Coin?
     @State private var timePeriodSelectorPresented = false
 
-    init(isPresented: Binding<Bool>, type: CoinRankModule.RankType) {
+    init(type: RankViewModel.RankType) {
         _viewModel = StateObject(wrappedValue: RankViewModel(type: type))
         _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: type.statRankType))
-        _isPresented = isPresented
     }
 
     var body: some View {
@@ -50,7 +50,7 @@ struct RankView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("button.close".localized) {
-                        isPresented = false
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
             }

@@ -6,7 +6,7 @@ import MarketKit
 class RankViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
-    let type: CoinRankModule.RankType
+    let type: RankType
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
@@ -33,7 +33,7 @@ class RankViewModel: ObservableObject {
         }
     }
 
-    init(type: CoinRankModule.RankType) {
+    init(type: RankType) {
         self.type = type
 
         currencyManager.$baseCurrency
@@ -180,56 +180,67 @@ extension RankMultiValue {
     }
 }
 
-extension CoinRankModule.RankType {
-    var title: String {
-        switch self {
-        case .cexVolume: return "coin_analytics.cex_volume_rank".localized
-        case .dexVolume: return "coin_analytics.dex_volume_rank".localized
-        case .dexLiquidity: return "coin_analytics.dex_liquidity_rank".localized
-        case .address: return "coin_analytics.active_addresses_rank".localized
-        case .txCount: return "coin_analytics.transaction_count_rank".localized
-        case .holders: return "coin_analytics.holders_rank".localized
-        case .fee: return "coin_analytics.project_fee_rank".localized
-        case .revenue: return "coin_analytics.project_revenue_rank".localized
-        }
-    }
+extension RankViewModel {
+    enum RankType {
+        case cexVolume
+        case dexVolume
+        case dexLiquidity
+        case address
+        case txCount
+        case holders
+        case fee
+        case revenue
 
-    var description: String {
-        switch self {
-        case .cexVolume: return "coin_analytics.cex_volume_rank.description".localized
-        case .dexVolume: return "coin_analytics.dex_volume_rank.description".localized
-        case .dexLiquidity: return "coin_analytics.dex_liquidity_rank.description".localized
-        case .address: return "coin_analytics.active_addresses_rank.description".localized
-        case .txCount: return "coin_analytics.transaction_count_rank.description".localized
-        case .holders: return "coin_analytics.holders_rank.description".localized
-        case .fee: return "coin_analytics.project_fee_rank.description".localized
-        case .revenue: return "coin_analytics.project_revenue_rank.description".localized
+        var title: String {
+            switch self {
+            case .cexVolume: return "coin_analytics.cex_volume_rank".localized
+            case .dexVolume: return "coin_analytics.dex_volume_rank".localized
+            case .dexLiquidity: return "coin_analytics.dex_liquidity_rank".localized
+            case .address: return "coin_analytics.active_addresses_rank".localized
+            case .txCount: return "coin_analytics.transaction_count_rank".localized
+            case .holders: return "coin_analytics.holders_rank".localized
+            case .fee: return "coin_analytics.project_fee_rank".localized
+            case .revenue: return "coin_analytics.project_revenue_rank".localized
+            }
         }
-    }
 
-    var imageUid: String {
-        switch self {
-        case .cexVolume: return "cex_volume"
-        case .dexVolume: return "dex_volume"
-        case .dexLiquidity: return "dex_liquidity"
-        case .address: return "active_addresses"
-        case .txCount: return "trx_count"
-        case .holders: return "holders"
-        case .fee: return "fee"
-        case .revenue: return "revenue"
+        var description: String {
+            switch self {
+            case .cexVolume: return "coin_analytics.cex_volume_rank.description".localized
+            case .dexVolume: return "coin_analytics.dex_volume_rank.description".localized
+            case .dexLiquidity: return "coin_analytics.dex_liquidity_rank.description".localized
+            case .address: return "coin_analytics.active_addresses_rank.description".localized
+            case .txCount: return "coin_analytics.transaction_count_rank.description".localized
+            case .holders: return "coin_analytics.holders_rank.description".localized
+            case .fee: return "coin_analytics.project_fee_rank.description".localized
+            case .revenue: return "coin_analytics.project_revenue_rank.description".localized
+            }
         }
-    }
 
-    var sortingField: String {
-        switch self {
-        case .cexVolume: return "coin_analytics.cex_volume_rank.sorting_field".localized
-        case .dexVolume: return "coin_analytics.dex_volume_rank.sorting_field".localized
-        case .dexLiquidity: return "coin_analytics.dex_liquidity_rank.sorting_field".localized
-        case .address: return "coin_analytics.active_addresses_rank.sorting_field".localized
-        case .txCount: return "coin_analytics.transaction_count_rank.sorting_field".localized
-        case .holders: return "coin_analytics.holders_rank.sorting_field".localized
-        case .fee: return "coin_analytics.project_fee_rank.sorting_field".localized
-        case .revenue: return "coin_analytics.project_revenue_rank.sorting_field".localized
+        var imageUid: String {
+            switch self {
+            case .cexVolume: return "cex_volume"
+            case .dexVolume: return "dex_volume"
+            case .dexLiquidity: return "dex_liquidity"
+            case .address: return "active_addresses"
+            case .txCount: return "trx_count"
+            case .holders: return "holders"
+            case .fee: return "fee"
+            case .revenue: return "revenue"
+            }
+        }
+
+        var sortingField: String {
+            switch self {
+            case .cexVolume: return "coin_analytics.cex_volume_rank.sorting_field".localized
+            case .dexVolume: return "coin_analytics.dex_volume_rank.sorting_field".localized
+            case .dexLiquidity: return "coin_analytics.dex_liquidity_rank.sorting_field".localized
+            case .address: return "coin_analytics.active_addresses_rank.sorting_field".localized
+            case .txCount: return "coin_analytics.transaction_count_rank.sorting_field".localized
+            case .holders: return "coin_analytics.holders_rank.sorting_field".localized
+            case .fee: return "coin_analytics.project_fee_rank.sorting_field".localized
+            case .revenue: return "coin_analytics.project_revenue_rank.sorting_field".localized
+            }
         }
     }
 }

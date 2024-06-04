@@ -84,18 +84,11 @@ class MainViewController: ThemeTabBarController {
     private func sync(balanceTabState _: MainViewModel.BalanceTabState) {
         var viewControllers = [UIViewController]()
         if viewModel.showMarket {
-            if App.shared.localStorage.newMarketTabEnabled {
-                let marketModule = marketModule ?? MarketView().toNavigationViewController()
-                marketModule.tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
-                self.marketModule = marketModule
+            let marketModule = marketModule ?? MarketView().toNavigationViewController()
+            marketModule.tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
+            self.marketModule = marketModule
 
-                viewControllers.append(marketModule)
-            } else {
-                let marketModule = marketModule ?? ThemeNavigationController(rootViewController: MarketModule.viewController())
-                self.marketModule = marketModule
-
-                viewControllers.append(marketModule)
-            }
+            viewControllers.append(marketModule)
         } else {
             marketModule = nil
         }

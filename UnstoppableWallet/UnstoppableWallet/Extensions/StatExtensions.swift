@@ -58,16 +58,6 @@ extension MarketModule.Tab {
     }
 }
 
-extension MarketModule.TabOld {
-    var statTab: StatTab {
-        switch self {
-        case .overview: return .overview
-        case .posts: return .news
-        case .watchlist: return .watchlist
-        }
-    }
-}
-
 extension CoinPageModule.Tab {
     var statTab: StatTab {
         switch self {
@@ -124,7 +114,7 @@ extension CoinProChartModule.ProChartType {
     }
 }
 
-extension CoinRankModule.RankType {
+extension RankViewModel.RankType {
     var statRankType: StatPage {
         switch self {
         case .cexVolume: return .coinRankCexVolume
@@ -149,48 +139,6 @@ extension MarketModule.Top {
         case .top500: return .top500
         case .top1000: return .top1000
         case .top1500: return .top1500
-        }
-    }
-}
-
-extension MarketModule.MarketTop {
-    var statMarketTop: StatMarketTop {
-        switch self {
-        case .top100: return .top100
-        case .top200: return .top200
-        case .top300: return .top300
-        }
-    }
-}
-
-extension MarketModule.PriceChangeType {
-    var statPeriod: StatPeriod {
-        switch self {
-        case .day: return .day1
-        case .week: return .week1
-        case .week2: return .week2
-        case .month: return .month1
-        case .month6: return .month6
-        case .year: return .year1
-        }
-    }
-}
-
-extension MarketModule.MarketField {
-    var statField: StatField {
-        switch self {
-        case .marketCap: return .marketCap
-        case .volume: return .volume
-        case .price: return .price
-        }
-    }
-}
-
-extension MarketModule.MarketPlatformField {
-    var statTvlChain: String {
-        switch self {
-        case .all: return "all"
-        default: return chain
         }
     }
 }
@@ -225,15 +173,6 @@ extension MarketModule.SortOrder {
         switch self {
         case .asc: return .lowestVolume
         case .desc: return .highestVolume
-        }
-    }
-}
-
-extension MarketModule.MarketTvlField {
-    var statField: String {
-        switch self {
-        case .value: return "currency"
-        case .diff: return "percent"
         }
     }
 }
@@ -281,30 +220,6 @@ extension WatchlistTimePeriod {
         case .week1: return .week1
         case .month1: return .month1
         case .month3: return .month3
-        }
-    }
-}
-
-extension MarketModule.SortingField {
-    var statSortType: StatSortType {
-        switch self {
-        case .highestCap: return .highestCap
-        case .lowestCap: return .lowestCap
-        case .highestVolume: return .highestVolume
-        case .lowestVolume: return .lowestVolume
-        case .topGainers: return .topGainers
-        case .topLosers: return .topLosers
-        }
-    }
-}
-
-extension MarketTopPlatformsModule.SortType {
-    var statSortType: StatSortType {
-        switch self {
-        case .highestCap: return .highestCap
-        case .lowestCap: return .lowestCap
-        case .topGainers: return .topGainers
-        case .topLosers: return .topLosers
         }
     }
 }
