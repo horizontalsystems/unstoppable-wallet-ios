@@ -949,7 +949,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_overview.genesis_date" = "Date de création";
 "coin_overview.trading_volume" = "Volume de trading";
 
-"coin_overview.roi.hour24" = "1 Jour";
+"coin_overview.roi.hour24" = "24 Heures";
+"coin_overview.roi.day1" = "1 Jour";
 "coin_overview.roi.day7" = "1 Semaine";
 "coin_overview.roi.day14" = "2 Semaines";
 "coin_overview.roi.day30" = "1 Mois";
@@ -1553,7 +1554,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "appearance.hide_markets" = "Masquer les marchés";
 "appearance.price_change" = "Variation de prix";
 "appearance.price_change.24h" = "24H";
-"appearance.price_change.midnight_utc" = "Minuit UTC";
+"appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "Écran de démarrage";
 "appearance.launch_screen.auto" = "Auto";
