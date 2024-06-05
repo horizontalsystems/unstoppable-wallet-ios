@@ -1536,11 +1536,11 @@
 // Settings -> Privacy
 
 "settings.privacy" = "Приватность";
-"settings.privacy.description" = "%@ не собирает данные и не использует инструменты аналитики, которые могут раскрывать любые данные о своих пользователях. Кошелек разработан для обеспечения высокого уровня конфиденциальности для своих пользователей.";
-"settings.privacy.statement.user_data_storage" = "Данные пользователя всегда остаются на устройстве пользователя.";
+"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "Кошелек не собирает никаких данных о пользователях.";
-"settings.privacy.statement.data_privacy" = "Кошелек не передает никаких данных о пользователях.";
-"settings.privacy.statement.user_account" = "Нет учетных записей или баз данных, хранящих данные пользователя в другом месте.";
+"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.allow" = "Share UI Data";
 
 // Settings -> Appearance
 
