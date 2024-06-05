@@ -1534,11 +1534,11 @@
 // Settings -> Privacy
 
 "settings.privacy" = "隐私保护";
-"settings.privacy.description" = "%@ 不收集任何数据或使用分析工具来揭露任何用户数据。 钱包的设计是为了确保用户高度的隐私。";
-"settings.privacy.statement.user_data_storage" = "用户数据总是保留在用户的设备上。";
+"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "钱包没有收集任何有关用户的数据。";
-"settings.privacy.statement.data_privacy" = "钱包没有收集任何有关用户的数据。";
-"settings.privacy.statement.user_account" = "没有用户帐户或数据库存放其他地方的用户数据。";
+"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.allow" = "Share UI Data";
 
 // Settings -> Appearance
 
