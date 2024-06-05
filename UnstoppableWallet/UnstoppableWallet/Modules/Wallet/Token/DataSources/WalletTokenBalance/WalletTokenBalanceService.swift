@@ -181,6 +181,5 @@ extension WalletTokenBalanceService: IWalletCoinPriceServiceDelegate {
         }
     }
 
-    func didUpdateBaseCurrency() {}
-    func didUpdate(itemsMap _: [String: WalletCoinPriceService.Item]) {}
+    func didUpdate(itemsMap _: [String: WalletCoinPriceService.Item]?) {}
 }

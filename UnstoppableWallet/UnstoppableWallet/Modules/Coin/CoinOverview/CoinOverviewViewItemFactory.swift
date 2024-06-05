@@ -12,7 +12,8 @@ class CoinOverviewViewItemFactory {
 
     private func roiTitle(timePeriod: HsTimePeriod) -> String {
         switch timePeriod {
-        case .day1: return "coin_overview.roi.hour24".localized
+        case .hour24: return "coin_overview.roi.hour24".localized
+        case .day1: return "coin_overview.roi.day1".localized
         case .week1: return "coin_overview.roi.day7".localized
         case .week2: return "coin_overview.roi.day14".localized
         case .month1: return "coin_overview.roi.day30".localized

@@ -263,17 +263,16 @@ class NftService {
 }
 
 extension NftService: IWalletCoinPriceServiceDelegate {
-    func didUpdateBaseCurrency() {
+    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]?) {
         queue.async {
-            self.updatePriceItems(items: self.items, map: self.coinPriceService.itemMap(coinUids: Array(self.allCoinUids(items: self.items))))
-            self.items = self.sort(items: self.items)
-            self.syncTotalItem()
-        }
-    }
+            let _itemsMap: [String: WalletCoinPriceService.Item]
+            if let itemsMap {
+                _itemsMap = itemsMap
+            } else {
+                _itemsMap = self.coinPriceService.itemMap(coinUids: Array(self.allCoinUids(items: self.items)))
+            }
 
-    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
-        queue.async {
-            self.updatePriceItems(items: self.items, map: itemsMap)
+            self.updatePriceItems(items: self.items, map: _itemsMap)
             self.items = self.sort(items: self.items)
             self.syncTotalItem()
         }

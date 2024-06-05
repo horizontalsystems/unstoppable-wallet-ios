@@ -7,6 +7,8 @@ class MarketCoinsViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
     private let appManager = App.shared.appManager
+    private let priceChangeModeManager = App.shared.priceChangeModeManager
+
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
@@ -32,11 +34,25 @@ class MarketCoinsViewModel: ObservableObject {
         }
     }
 
-    var timePeriod: HsTimePeriod = .day1 {
+    var timePeriod: HsTimePeriod {
         didSet {
             stat(page: .markets, section: .coins, event: .switchPeriod(period: timePeriod.statPeriod))
             syncState()
         }
+    }
+
+    init() {
+        timePeriod = priceChangeModeManager.day1Period
+
+        priceChangeModeManager.$priceChangeMode
+            .sink { [weak self] _ in
+                self?.syncPeriod()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func syncPeriod() {
+        timePeriod = priceChangeModeManager.convert(period: timePeriod)
     }
 
     private func syncMarketInfos() {
@@ -94,7 +110,7 @@ extension MarketCoinsViewModel {
     }
 
     var timePeriods: [HsTimePeriod] {
-        [.day1, .week1, .month1, .month3]
+        [priceChangeModeManager.day1Period, .week1, .month1, .month3]
     }
 
     func load() {

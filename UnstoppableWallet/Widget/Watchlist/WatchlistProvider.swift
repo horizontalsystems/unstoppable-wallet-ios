@@ -51,7 +51,7 @@ struct WatchlistProvider: TimelineProvider {
         case .highestCap, .lowestCap: listType = .mcap
         case .gainers, .losers, .manual:
             switch watchlistManager.timePeriod {
-            case .day1: listType = .priceChange24h
+            case .day1: listType = .priceChange1d
             case .week1: listType = .priceChange1w
             case .month1: listType = .priceChange1m
             case .month3: listType = .priceChange3m

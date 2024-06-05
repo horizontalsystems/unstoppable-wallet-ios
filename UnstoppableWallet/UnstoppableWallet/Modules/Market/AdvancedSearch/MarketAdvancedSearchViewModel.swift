@@ -28,6 +28,8 @@ class MarketAdvancedSearchViewModel: ObservableObject {
 
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
+    private let priceChangeModeManager = App.shared.priceChangeModeManager
+    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     private var internalState: State = .loading {
@@ -102,7 +104,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         }
     }
 
-    @Published var priceChangePeriod: HsTimePeriod = .day1 {
+    @Published var priceChangePeriod: HsTimePeriod {
         didSet {
             syncState()
         }
@@ -152,6 +154,16 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             allBlockchains = []
         }
 
+        priceChangePeriod = priceChangeModeManager.day1Period
+
+        priceChangeModeManager.$priceChangeMode
+            .sink { [weak self] _ in
+                if let strongSelf = self {
+                    strongSelf.priceChangePeriod = strongSelf.priceChangeModeManager.day1Period
+                }
+            }
+            .store(in: &cancellables)
+
         syncMarketInfos()
     }
 
@@ -179,7 +191,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             || !blockchains.isEmpty
             || signal != nil
             || priceChange != .none
-            || priceChangePeriod != .day1
+            || priceChangePeriod != priceChangeModeManager.day1Period
             || outperformedBtc != false
             || outperformedEth != false
             || outperformedBnb != false
@@ -307,7 +319,7 @@ extension MarketAdvancedSearchViewModel {
     }
 
     var priceChangePeriods: [HsTimePeriod] {
-        [.day1, .week1, .week2, .month1, .month6, .year1]
+        [priceChangeModeManager.day1Period, .week1, .week2, .month1, .month6, .year1]
     }
 
     func syncMarketInfos() {
@@ -343,7 +355,7 @@ extension MarketAdvancedSearchViewModel {
         blockchains = Set()
         signal = nil
         priceChange = .none
-        priceChangePeriod = .day1
+        priceChangePeriod = priceChangeModeManager.day1Period
         outperformedBtc = false
         outperformedEth = false
         outperformedBnb = false

@@ -75,7 +75,7 @@ class CoinChartService {
         self.indicatorRepository = indicatorRepository
         self.coinUid = coinUid
 
-        periodType = .byCustomPoints(.day1, indicatorRepository.extendedPointCount)
+        periodType = .byCustomPoints(App.shared.priceChangeModeManager.day1Period, indicatorRepository.extendedPointCount)
         indicatorRepository.updatedPublisher
             .sink { [weak self] in
                 self?.fetchWithUpdatedIndicators()
@@ -122,7 +122,8 @@ class CoinChartService {
         let item = Item(
             coinUid: coinUid,
             rate: coinPrice.value,
-            rateDiff24h: coinPrice.diff,
+            rateDiff24h: coinPrice.diff24h,
+            rateDiff1d: coinPrice.diff1d,
             timestamp: coinPrice.timestamp,
             chartPointsItem: chartPointsItem,
             indicators: indicatorRepository.indicators,
@@ -223,6 +224,7 @@ extension CoinChartService {
         let coinUid: String
         let rate: Decimal
         let rateDiff24h: Decimal?
+        let rateDiff1d: Decimal?
         let timestamp: TimeInterval
         let chartPointsItem: ChartPointsItem
         let indicators: [ChartIndicator]
