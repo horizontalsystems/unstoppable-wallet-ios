@@ -1,4 +1,5 @@
 import Combine
+import ComponentKit
 
 class WatchlistViewModel: ObservableObject {
     private let watchlistManager = App.shared.watchlistManager
@@ -23,11 +24,15 @@ class WatchlistViewModel: ObservableObject {
 extension WatchlistViewModel {
     func add(coinUid: String) {
         watchlistManager.add(coinUid: coinUid)
+        HudHelper.instance.show(banner: .addedToWatchlist)
+
         stat(page: page, section: section, event: .addToWatchlist(coinUid: coinUid))
     }
 
     func remove(coinUid: String) {
         watchlistManager.remove(coinUid: coinUid)
+        HudHelper.instance.show(banner: .removedFromWatchlist)
+
         stat(page: page, section: section, event: .removeFromWatchlist(coinUid: coinUid))
     }
 }
