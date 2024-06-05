@@ -48,7 +48,7 @@ class ApiProvider {
     func coinWithPrice(uid: String, currencyCode: String) async throws -> Coin {
         let parameters: Parameters = [
             "uids": uid,
-            "fields": "uid,name,code,price,price_change_24h",
+            "fields": "uid,name,code,price,price_change_24h,price_change_1d",
             "currency": currencyCode.lowercased(),
         ]
 
@@ -82,6 +82,7 @@ class ApiProvider {
 
     enum ListType: String {
         case priceChange24h = "price_change_24h"
+        case priceChange1d = "price_change_1d"
         case priceChange1w = "price_change_1w"
         case priceChange1m = "price_change_1m"
         case priceChange3m = "price_change_3m"
@@ -97,6 +98,7 @@ struct Coin: ImmutableMappable {
     let rank: Int?
     let price: Decimal?
     let priceChange24h: Decimal?
+    let priceChange1d: Decimal?
     let priceChange1w: Decimal?
     let priceChange1m: Decimal?
     let priceChange3m: Decimal?
@@ -109,6 +111,7 @@ struct Coin: ImmutableMappable {
         rank = try? map.value("market_cap_rank")
         price = try? map.value("price", using: Transform.stringToDecimalTransform)
         priceChange24h = try? map.value("price_change_24h", using: Transform.stringToDecimalTransform)
+        priceChange1d = try? map.value("price_change_1d", using: Transform.stringToDecimalTransform)
         priceChange1w = try? map.value("price_change_1w", using: Transform.stringToDecimalTransform)
         priceChange1m = try? map.value("price_change_1m", using: Transform.stringToDecimalTransform)
         priceChange3m = try? map.value("price_change_3m", using: Transform.stringToDecimalTransform)

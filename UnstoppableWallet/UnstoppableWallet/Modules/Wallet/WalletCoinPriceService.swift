@@ -3,14 +3,14 @@ import Foundation
 import MarketKit
 
 protocol IWalletCoinPriceServiceDelegate: AnyObject {
-    func didUpdateBaseCurrency()
-    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item])
+    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]?)
 }
 
 class WalletCoinPriceService {
     weak var delegate: IWalletCoinPriceServiceDelegate?
 
     private let currencyManager: CurrencyManager
+    private let priceChangeModeManager: PriceChangeModeManager
     private let marketKit: MarketKit.Kit
     private var cancellables = Set<AnyCancellable>()
     private var coinPriceCancellables = Set<AnyCancellable>()
@@ -20,9 +20,10 @@ class WalletCoinPriceService {
     private var feeCoinUids = Set<String>()
     private var conversionCoinUids = Set<String>()
 
-    init(currencyManager: CurrencyManager, marketKit: MarketKit.Kit) {
+    init(currencyManager: CurrencyManager, priceChangeModeManager: PriceChangeModeManager, marketKit: MarketKit.Kit) {
         self.currencyManager = currencyManager
         self.marketKit = marketKit
+        self.priceChangeModeManager = priceChangeModeManager
 
         currency = currencyManager.baseCurrency
 
@@ -31,12 +32,18 @@ class WalletCoinPriceService {
                 self?.onUpdate(baseCurrency: currency)
             }
             .store(in: &cancellables)
+
+        priceChangeModeManager.$priceChangeMode
+            .sink { [weak self] _ in
+                self?.delegate?.didUpdate(itemsMap: nil)
+            }
+            .store(in: &cancellables)
     }
 
     private func onUpdate(baseCurrency: Currency) {
         currency = baseCurrency
         subscribeToCoinPrices()
-        delegate?.didUpdateBaseCurrency()
+        delegate?.didUpdate(itemsMap: nil)
     }
 
     private func subscribeToCoinPrices() {
@@ -71,9 +78,17 @@ class WalletCoinPriceService {
     private func item(coinPrice: CoinPrice) -> Item {
         let currency = currencyManager.baseCurrency
 
+        let diff: Decimal?
+        switch priceChangeModeManager.priceChangeMode {
+        case .hour24:
+            diff = coinPrice.diff24h
+        case .day1:
+            diff = coinPrice.diff1d
+        }
+
         return Item(
             price: CurrencyValue(currency: currency, value: coinPrice.value),
-            diff: coinPrice.diff,
+            diff: diff,
             expired: coinPrice.expired
         )
     }

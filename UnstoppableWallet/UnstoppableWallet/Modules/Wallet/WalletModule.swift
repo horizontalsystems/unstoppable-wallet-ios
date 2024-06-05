@@ -7,6 +7,7 @@ enum WalletModule {
     static func viewController() -> UIViewController {
         let coinPriceService = WalletCoinPriceService(
             currencyManager: App.shared.currencyManager,
+            priceChangeModeManager: App.shared.priceChangeModeManager,
             marketKit: App.shared.marketKit
         )
 
@@ -58,6 +59,7 @@ enum WalletModule {
 
         let coinPriceService = WalletCoinPriceService(
             currencyManager: App.shared.currencyManager,
+            priceChangeModeManager: App.shared.priceChangeModeManager,
             marketKit: App.shared.marketKit
         )
 
@@ -119,6 +121,7 @@ enum WalletModule {
 
         let coinPriceService = WalletCoinPriceService(
             currencyManager: App.shared.currencyManager,
+            priceChangeModeManager: App.shared.priceChangeModeManager,
             marketKit: App.shared.marketKit
         )
 
@@ -174,6 +177,7 @@ enum WalletModule {
         if let account = App.shared.accountManager.activeAccount, !account.watchAccount, !account.cexAccount {
             let coinPriceService = WalletCoinPriceService(
                 currencyManager: App.shared.currencyManager,
+                priceChangeModeManager: App.shared.priceChangeModeManager,
                 marketKit: App.shared.marketKit
             )
 

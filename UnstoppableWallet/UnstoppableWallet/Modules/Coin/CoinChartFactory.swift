@@ -22,21 +22,30 @@ class CoinChartFactory {
             points.append(point)
             lastPoint = point
 
-            // for daily chart we need change oldest visible point to 24h back timestamp-same point
-            if periodType.in([.day1]), let rateDiff24 = item.rateDiff24h {
+            var pointToPrepend: ChartPoint?
+
+            if periodType.in([.hour24]), let rateDiff24 = item.rateDiff24h {
+                // for 24h chart we need change oldest visible point to 24h back timestamp-same point
                 let timestamp = item.timestamp - 24 * 60 * 60
                 let value = 100 * item.rate / (100 + rateDiff24)
 
-                let point = ChartPoint(timestamp: timestamp, value: value)
+                pointToPrepend = ChartPoint(timestamp: timestamp, value: value)
+            } else if periodType.in([.day1]), let rateDiff1d = item.rateDiff1d {
+                // for 1day chart we need change oldest visible point to 24h back timestamp-same point
+                let value = 100 * item.rate / (100 + rateDiff1d)
 
-                if let index = points.firstIndex(where: { $0.timestamp > timestamp }) {
-                    points.insert(point, at: index)
+                pointToPrepend = ChartPoint(timestamp: TimeInterval.midnightUTC(), value: value)
+            }
+
+            if let pointToPrepend {
+                if let index = points.firstIndex(where: { $0.timestamp > pointToPrepend.timestamp }) {
+                    points.insert(pointToPrepend, at: index)
                     if index > 0 {
                         points.remove(at: index - 1)
                     }
                 }
 
-                firstPoint = point
+                firstPoint = pointToPrepend
             }
         }
 

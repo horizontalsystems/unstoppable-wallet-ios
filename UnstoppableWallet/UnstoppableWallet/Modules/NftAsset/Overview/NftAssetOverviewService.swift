@@ -160,24 +160,18 @@ class NftAssetOverviewService {
 }
 
 extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
-    func didUpdateBaseCurrency() {
+    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]?) {
         queue.async {
             guard case let .completed(item) = self.state else {
                 return
             }
 
-            self._fillCoinPrices(item: item, coinUids: self._allCoinUids(item: item))
-            self.state = .completed(item)
-        }
-    }
-
-    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
-        queue.async {
-            guard case let .completed(item) = self.state else {
-                return
+            if let itemsMap {
+                self._fillCoinPrices(item: item, map: itemsMap)
+            } else {
+                self._fillCoinPrices(item: item, coinUids: self._allCoinUids(item: item))
             }
 
-            self._fillCoinPrices(item: item, map: itemsMap)
             self.state = .completed(item)
         }
     }

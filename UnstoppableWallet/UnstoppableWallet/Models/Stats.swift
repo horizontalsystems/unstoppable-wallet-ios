@@ -439,6 +439,7 @@ enum StatSortType: String {
 }
 
 enum StatPeriod: String {
+    case hour24 = "24h"
     case day1 = "1d"
     case week1 = "1w"
     case week2 = "2w"

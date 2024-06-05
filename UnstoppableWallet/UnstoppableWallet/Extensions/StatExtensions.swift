@@ -3,6 +3,7 @@ import MarketKit
 extension HsTimePeriod {
     var statPeriod: StatPeriod {
         switch self {
+        case .hour24: return .hour24
         case .day1: return .day1
         case .week1: return .week1
         case .week2: return .week2

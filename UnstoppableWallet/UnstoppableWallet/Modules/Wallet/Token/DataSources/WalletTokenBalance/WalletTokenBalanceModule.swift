@@ -8,6 +8,7 @@ enum WalletTokenBalanceModule {
 
         let coinPriceService = WalletCoinPriceService(
             currencyManager: App.shared.currencyManager,
+            priceChangeModeManager: App.shared.priceChangeModeManager,
             marketKit: App.shared.marketKit
         )
 

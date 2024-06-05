@@ -175,7 +175,7 @@ struct AppearanceView: View {
     func title(priceChangeMode: PriceChangeMode) -> String {
         switch priceChangeMode {
         case .hour24: return "appearance.price_change.24h".localized
-        case .midnightUtc: return "appearance.price_change.midnight_utc".localized
+        case .day1: return "appearance.price_change.1d".localized
         }
     }
 }

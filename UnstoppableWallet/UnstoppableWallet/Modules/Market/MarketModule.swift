@@ -78,7 +78,8 @@ enum MarketModule {
 extension MarketKit.MarketInfo {
     func priceChangeValue(timePeriod: HsTimePeriod) -> Decimal? {
         switch timePeriod {
-        case .day1: return priceChange24h
+        case .day1: return priceChange1d
+        case .hour24: return priceChange24h
         case .week1: return priceChange7d
         case .week2: return priceChange14d
         case .month1: return priceChange30d
@@ -91,7 +92,7 @@ extension MarketKit.MarketInfo {
 
     func priceChangeValue(timePeriod: WatchlistTimePeriod) -> Decimal? {
         switch timePeriod {
-        case .day1: return priceChange24h
+        case .day1: return priceChange1d
         case .week1: return priceChange7d
         case .month1: return priceChange30d
         case .month3: return priceChange90d
@@ -189,17 +190,11 @@ extension [MarketKit.TopPlatform] {
 
 extension HsTimePeriod {
     var title: String {
-        switch self {
-        case .day1: return "market.time_period.24h".localized
-        default: return "market.time_period.\(rawValue)".localized
-        }
+        "market.time_period.\(rawValue)".localized
     }
 
     var shortTitle: String {
-        switch self {
-        case .day1: return "market.time_period.24h.short".localized
-        default: return "market.time_period.\(rawValue).short".localized
-        }
+        "market.time_period.\(rawValue).short".localized
     }
 
     init?(_ periodType: HsPeriodType) {
@@ -212,17 +207,11 @@ extension HsTimePeriod {
 
 extension WatchlistTimePeriod {
     var title: String {
-        switch self {
-        case .day1: return "market.time_period.24h".localized
-        default: return "market.time_period.\(rawValue)".localized
-        }
+        "market.time_period.\(rawValue)".localized
     }
 
     var shortTitle: String {
-        switch self {
-        case .day1: return "market.time_period.24h.short".localized
-        default: return "market.time_period.\(rawValue).short".localized
-        }
+        "market.time_period.\(rawValue).short".localized
     }
 }
 

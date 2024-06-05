@@ -252,24 +252,21 @@ extension WalletTokenListService: IWalletCoinPriceServiceDelegate {
         internalState = .loaded(items: _sorted(items: items))
     }
 
-    func didUpdateBaseCurrency() {
+    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]?) {
         queue.async {
             guard case let .loaded(items) = self.internalState else {
                 return
             }
 
-            let coinUids = Array(Set(items.compactMap(\.element.priceCoinUid)))
-            self._handleUpdated(priceItemMap: self.coinPriceService.itemMap(coinUids: coinUids), items: items)
-        }
-    }
-
-    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
-        queue.async {
-            guard case let .loaded(items) = self.internalState else {
-                return
+            let _itemsMap: [String: WalletCoinPriceService.Item]
+            if let itemsMap {
+                _itemsMap = itemsMap
+            } else {
+                let coinUids = Array(Set(items.compactMap(\.element.priceCoinUid)))
+                _itemsMap = self.coinPriceService.itemMap(coinUids: coinUids)
             }
 
-            self._handleUpdated(priceItemMap: itemsMap, items: items)
+            self._handleUpdated(priceItemMap: _itemsMap, items: items)
         }
     }
 }
