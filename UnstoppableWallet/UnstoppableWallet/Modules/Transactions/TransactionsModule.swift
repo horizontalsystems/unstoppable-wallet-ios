@@ -84,7 +84,7 @@ struct TransactionFilter: Equatable {
             return
         }
 
-        // reset contact if it's doesnt have address for selected blockchain
+        // reset contact if it's doesn't have address for selected blockchain
         guard contact.has(blockchainUId: blockchain.uid) else {
             self.contact = nil
             return
