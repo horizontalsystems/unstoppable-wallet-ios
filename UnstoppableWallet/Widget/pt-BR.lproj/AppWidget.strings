@@ -2,7 +2,7 @@
 
 "6ebp42" = "Selected Coin";
 
-"8vJheC" = "Sort By";
+"8vJheC" = "Organizar por";
 
 "Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
 
@@ -14,7 +14,7 @@
 
 "OkcYOj" = "View coin price for selected coin";
 
-"Rl3a0T" = "Gainers";
+"Rl3a0T" = "Ganhadores";
 
 "VXTxGF" = "Widget Coin";
 
@@ -30,10 +30,10 @@
 
 "nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
 
-"qHGyuo" = "Highest Cap";
+"qHGyuo" = "Maior capitalização";
 
 "rCV9fg" = "See coin prices for coin list";
 
-"tVjZ7W" = "Lowest Cap";
+"tVjZ7W" = "Menor capitalização";
 
-"x1kK4T" = "Losers";
+"x1kK4T" = "Perdedores";
