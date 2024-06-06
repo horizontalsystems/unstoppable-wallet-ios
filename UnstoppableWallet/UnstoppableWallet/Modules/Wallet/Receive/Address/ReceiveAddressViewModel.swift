@@ -25,6 +25,11 @@ class ReceiveAddressViewModel: ObservableObject {
     @Published private(set) var popup: ReceiveAddressModule.PopupWarningItem?
     @Published private(set) var actions: [ReceiveAddressModule.ActionType] = []
     @Published private(set) var amount: Decimal = 0
+    
+    private var amountFieldChangedSuccessSubject = PassthroughSubject<Bool, Never>()
+    var amountFieldChangedSuccessPublisher: AnyPublisher<Bool, Never> {
+        amountFieldChangedSuccessSubject.eraseToAnyPublisher()
+    }
 
     init(service: IReceiveAddressService, viewItemFactory: IReceiveAddressViewItemFactory, decimalParser: AmountDecimalParser) {
         self.service = service
@@ -76,6 +81,15 @@ extension ReceiveAddressViewModel {
     func onFirstAppear() {
         hasAppeared = true
         syncPopup(state: service.state)
+    }
+    
+    func onAmountChanged(_ text: String) {
+        set(amount: text)
+        stat(page: .receive, event: .setAmount)
+    }
+    
+    var initialText: String {
+        amount == 0 ? "" : amount.description
     }
 }
 

@@ -1929,6 +1929,8 @@
 		6B5F5E162C0DDD7500E03EB2 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E142C0DDD7100E03EB2 /* RankView.swift */; };
 		6B5F5E182C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
 		6B5F5E192C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
+		6B8BD39E2C11B959003ADE10 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */; };
+		6B8BD39F2C11B959003ADE10 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */; };
 		6BA5117D2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
 		6BA5117E2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
@@ -4225,6 +4227,7 @@
 		6B5F5E102C0C660900E03EB2 /* MarketPlatformViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformViewModel.swift; sourceTree = "<group>"; };
 		6B5F5E142C0DDD7100E03EB2 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
+		6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
 		6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppearModifier.swift; sourceTree = "<group>"; };
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
@@ -7805,6 +7808,7 @@
 				ABC9AB43B35D4DE04BDB5734 /* AlertView.swift */,
 				ABC9A77CEB528EACD0244E73 /* ActionSheetModifier.swift */,
 				ABC9AA428B57E9309477EC96 /* TransparentFullScreenCover.swift */,
+				6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -9650,6 +9654,7 @@
 				11B354B34C4B6471F67F5471 /* InputPrefixWrapperView.swift in Sources */,
 				D3DD67352BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift in Sources */,
 				11B35A42D28B8BC4CDA57D8E /* AccountRecord_v_0_19.swift in Sources */,
+				6B8BD39F2C11B959003ADE10 /* TextFieldAlert.swift in Sources */,
 				D0E659BC2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */,
 				11B35B501A30615698B04C96 /* AddEvmTokenBlockchainService.swift in Sources */,
 				11B35E57C6406D2249A23E6F /* SendEvmTransactionService.swift in Sources */,
@@ -11138,6 +11143,7 @@
 				11B35FF65FCE441A69822E1C /* InputPrefixWrapperView.swift in Sources */,
 				D3DD67342BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift in Sources */,
 				11B35C3AFFA5B40481AF15B9 /* AccountRecord_v_0_19.swift in Sources */,
+				6B8BD39E2C11B959003ADE10 /* TextFieldAlert.swift in Sources */,
 				11B3556FCACE2ECE022138DF /* AddEvmTokenBlockchainService.swift in Sources */,
 				D0E659BB2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */,
 				11B355FAD0E7823AF5F8EC83 /* SendEvmTransactionService.swift in Sources */,

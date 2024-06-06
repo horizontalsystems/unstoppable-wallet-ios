@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 private let qrSize: CGFloat = 203
 private let appIconSize: CGFloat = 47
@@ -12,9 +13,7 @@ struct ReceiveAddressView: View {
 
     @State private var shareText: String?
     @State private var inputAmountPresented: Bool = false
-
-    @State private var inputText: String = ""
-
+    
     @Environment(\.presentationMode) private var presentationMode
 
     init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexDepositProvider) {
@@ -90,15 +89,15 @@ struct ReceiveAddressView: View {
         .sheet(item: $shareText) { shareText in
             ActivityView.view(activityItems: [shareText])
         }
-        .alert("deposit.enter_amount".localized, isPresented: $inputAmountPresented, actions: {
-            TextField("deposit.enter_amount".localized, text: $inputText) // TODO: Can't check valid numbers in default alertview
-                .keyboardType(.decimalPad)
-            Button("button.cancel".localized) {
-                updateAmount(success: false)
-            }
-            Button("button.confirm".localized) {
-                updateAmount(success: true)
-            }
+        .textFieldAlert(
+            isPresented: $inputAmountPresented,
+            amountChanged: viewModel.onAmountChanged(_:),
+            content: {
+                TextFieldAlert(
+                    title: "deposit.enter_amount".localized,
+                    message: nil,
+                    initial: viewModel.initialText
+                )
         })
         .alertButtonTint(color: .themeJacob)
         .bottomSheet(item: $warningAlertPopup) { popup in
@@ -204,22 +203,12 @@ struct ReceiveAddressView: View {
         }
     }
 
-    private func updateAmount(success: Bool) {
-        if success {
-            viewModel.set(amount: inputText)
-            stat(page: .receive, event: .setAmount)
-        } else {
-            inputText = viewModel.amount == 0 ? "" : viewModel.amount.description
-        }
-    }
-
     @ViewBuilder func view(amount: String) -> some View {
         ListRow {
             Text("deposit.amount".localized).textSubhead2()
             Spacer()
             Text(amount).textSubhead1(color: .themeLeah)
             Button(action: {
-                inputText = ""
                 viewModel.set(amount: "")
                 stat(page: .receive, event: .removeAmount)
             }, label: {
