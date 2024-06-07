@@ -2,7 +2,7 @@
 
 "6ebp42" = "Selected Coin";
 
-"8vJheC" = "Sort By";
+"8vJheC" = "정렬 기준";
 
 "Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
 
@@ -14,7 +14,7 @@
 
 "OkcYOj" = "View coin price for selected coin";
 
-"Rl3a0T" = "Gainers";
+"Rl3a0T" = "이득자";
 
 "VXTxGF" = "Widget Coin";
 
@@ -30,10 +30,10 @@
 
 "nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
 
-"qHGyuo" = "Highest Cap";
+"qHGyuo" = "가장 높은 시가총액";
 
 "rCV9fg" = "See coin prices for coin list";
 
-"tVjZ7W" = "Lowest Cap";
+"tVjZ7W" = "가장 낮은 시가총액";
 
-"x1kK4T" = "Losers";
+"x1kK4T" = "해자";
