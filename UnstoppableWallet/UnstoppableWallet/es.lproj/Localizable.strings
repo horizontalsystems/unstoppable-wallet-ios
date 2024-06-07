@@ -840,7 +840,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "market.advanced_search.liquidity" = "Liquidez DEX";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.signal" = "Trading Signal";
+"market.advanced_search.signal" = "Señal de Trading";
 "market.advanced_search.price_period" = "Período de Precio";
 "market.advanced_search.price_change" = "Cambio de Precio";
 
@@ -923,12 +923,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.volume.description" = "El volumen de operaciones 24h del mercado de criptomonedas";
 "market.volume.volume" = "Volumen";
 
-"market.signal.risky" = "Risky";
-"market.signal.strong_buy" = "Strong Buy";
-"market.signal.buy" = "Buy";
+"market.signal.risky" = "Arriesgado";
+"market.signal.strong_buy" = "Compra Fuerte";
+"market.signal.buy" = "Comprar";
 "market.signal.neutral" = "Neutral";
-"market.signal.sell" = "Sell";
-"market.signal.strong_sell" = "Strong Sell";
+"market.signal.sell" = "Vender";
+"market.signal.strong_sell" = "Vender fuerte";
 
 // Coin Page
 
@@ -1061,7 +1061,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.dex_liquidity" = "Liquidez DEX";
 "coin_analytics.dex_liquidity_rank" = "Rango de liquidez DEX";
 "coin_analytics.dex_liquidity_rank.description" = "Tokens clasificados por liquidez disponible en los intercambios descentralizados.";
-"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidez";
 "coin_analytics.dex_liquidity.info1" = "Liquidez total actualmente disponible para el token en los principales exchanges descentralizados.";
 "coin_analytics.dex_liquidity.info2" = "Gráfico que muestra la variación en la liquidez disponible para el token en los principales exchanges descentralizados durante un período de 1 año.";
 "coin_analytics.dex_liquidity.info3" = "Lista de todos los tokens clasificados según la liquidez disponible del token en los principales exchanges descentralizados.";
@@ -1073,7 +1073,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "Direcciones únicas de 30 días";
 "coin_analytics.active_addresses_rank" = "Rango de direcciones activas";
 "coin_analytics.active_addresses_rank.description" = "Tokens clasificados por el número de direcciones únicas que transaccionan con el token.";
-"coin_analytics.active_addresses_rank.sorting_field" = "Active";
+"coin_analytics.active_addresses_rank.sorting_field" = "Activo";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Gráfico que muestra la variación en el recuento diario de direcciones activas durante un período de 1 año.";
 "coin_analytics.active_addresses.info3" = "Número total de direcciones únicas de blockchain que realizan transacciones con el token durante un período de 30 días.";
@@ -1083,7 +1083,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.transaction_count" = "Número de transacciones";
 "coin_analytics.transaction_count_rank" = "Rango de conteo Tx";
 "coin_analytics.transaction_count_rank.description" = "Tokens clasificados por el número de transacciones en una cadena de bloques.";
-"coin_analytics.transaction_count_rank.sorting_field" = "Count";
+"coin_analytics.transaction_count_rank.sorting_field" = "Contador";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "Gráfico que muestra la variación en el número de transacciones durante un período de 1 año.";
 "coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
@@ -1118,7 +1118,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.project_revenue" = "Ingresos del Proyecto";
 "coin_analytics.project_revenue_rank" = "Rango de Ingresos del Proyecto";
 "coin_analytics.project_revenue_rank.description" = "Las fichas clasificadas por los ingresos generados para los titulares a través de mecanismos como estocar o quemar fichas.";
-"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
+"coin_analytics.project_revenue_rank.sorting_field" = "Ingresos";
 
 "coin_analytics.other_data" = "Otros Datos";
 
@@ -1536,11 +1536,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privacidad";
-"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
+"settings.privacy.description" = "%@ no recopila datos personales que exponen su información privada, es decir, saldos de monedas o direcciones. Mientras recopilamos algunas estadísticas de uso de la interfaz de usuario, es sólo para entender nuestras tendencias de uso de la base de usuarios y de la aplicación. Esto puede desactivarse si lo desea.";
 "settings.privacy.statement.data_usage" = "La cartera no recopila ningún dato sobre los usuarios.";
-"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
-"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
-"settings.privacy.allow" = "Share UI Data";
+"settings.privacy.statement.data_storage" = "No hay cuentas de usuario o bases de datos almacenando datos de usuario.";
+"settings.privacy.statement.user_account" = "Si se permite el monedero compartirá los hábitos de uso de la aplicación con el equipo imparable. Esto es para entender qué características están siendo utilizadas (o no) por nuestros usuarios. Siendo una aplicación enfocada a la privacidad, necesitamos alguna forma de evaluar nuestros esfuerzos y sin esto no tenemos ni idea de si las características que construimos están siendo usadas o no.";
+"settings.privacy.allow" = "Compartir datos de UI";
 
 // Settings -> Appearance
 
@@ -1555,7 +1555,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.hide_markets" = "Ocultar Mercados";
 "appearance.price_change" = "Cambio de Precio";
 "appearance.price_change.24h" = "24H";
-"appearance.price_change.1d" = "Midnight UTC";
+"appearance.price_change.1d" = "Medianoche UTC";
 
 "appearance.launch_screen" = "Pantalla de lanzamiento";
 "appearance.launch_screen.auto" = "Auto";
@@ -1939,7 +1939,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.errors.transaction_underpriced" = "Tarifa baja para la transacción";
 "fee_settings.errors.tips_higher_than_max_fee" = "Tarifa máxima es demasiado baja";
 "fee_settings.errors.zero_amount.info" = "No se puede transferir 0 TRX";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck" = "Arriesgado";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transacción puede permanecer pendiente por un tiempo o fallar por completo.";
 "fee_settings.warning.overpricing" = "Cuota demasiado alta";
 "fee_settings.warning.overpricing.info" = "La tarifa de transacción establecida es mayor de lo necesario para procesar esta transacción ahora.";
