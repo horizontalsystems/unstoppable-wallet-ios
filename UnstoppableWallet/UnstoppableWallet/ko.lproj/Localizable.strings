@@ -226,7 +226,7 @@
 "extended_key.purpose" = "목적";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "계정";
-"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
+"extended_key.account.description" = "이 설정은 고급 사용자용입니다. 지갑을 가져오려면 (확장 개인 키를 통해) 또는 거래 목록을 가져오려면 (확장 공개 키를 통해) 계정 0이 필요합니다.";
 "extended_key.tap_to_show" = "탭하여 extended private key 표시";
 
 // Backup
@@ -349,8 +349,8 @@
 "balance.token.frozen" = "잠김";
 "balance.token.frozen.info.title" = "겨울왕국 제목";
 "balance.token.frozen.info.description" = "고정된 설명 텍스트";
-"balance.token.account.inactive.title" = "Account Not Active";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
+"balance.token.account.inactive.title" = "계정이 활성화되지 않음";
+"balance.token.account.inactive.description" = "새로운 TRON 지갑은 활성화되기 위해 최소 1 TRX의 입금이 필요합니다. 비활성 지갑은 토큰을 보유하고 받을 수는 있지만, 활성화될 때까지 잔액이 정확히 표시되지 않습니다.";
 
 // Account switcher
 
@@ -445,8 +445,8 @@
 "send.transaction_inputs_outputs_info.shuffle.description" = "트랜잭션 출력의 순서는 모든 트랜잭션에서 무작위로 지정됩니다. 때로는 변화가 첫 번째 출력이 될 수도 있고 때로는 두 번째 출력이 될 수도 있습니다. 사용자가 앱 개발자를 신뢰하는 경우 권장 옵션으로 간주합니다.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "거래 출력을 정렬하는 데에는 일반적으로 합의된 표준이 있습니다(이것은 BIP69로 알려져 있습니다). 오픈 소스 지갑에서는 이 표준이 지갑 사용자가 앱 개발자가 출력 순서를 어떻게 구현하는지 신뢰할 필요가 없도록 보장합니다. 이 표준은 새로운 것이기 때문에 아직 많은 지갑이 이를 구현하지 않았습니다. 그 결과, 블록체인에서 특정 거래가 이 표준을 사용하는 지갑에서 보내졌는지 여부를 어느 정도 파악할 수 있습니다.";
-"send.select_all" = "Select All";
-"send.unselect_all" = "Unselect All";
+"send.select_all" = "전체 선택";
+"send.unselect_all" = "전체 선택 해제";
 
 "send.confirmation.title" = "확인";
 "send.confirmation.you_send" = "보냅니다";
@@ -466,12 +466,12 @@
 "send.confirmation.replaced_transactions" = "대체된 거래";
 "send.confirmation.input" = "입력";
 
-"send.confirmation.sync_failed" = "Sync Failed";
-"send.confirmation.invalid_data" = "Invalid Data";
-"send.confirmation.refresh" = "Refresh";
-"send.confirmation.please_wait" = "Please Wait";
-"send.confirmation.expires_in" = "Expires in %@";
-"send.confirmation.expired" = "Expired";
+"send.confirmation.sync_failed" = "동기화 실패";
+"send.confirmation.invalid_data" = "유효하지 않은 데이터";
+"send.confirmation.refresh" = "새로고침";
+"send.confirmation.please_wait" = "기다려 주십시오";
+"send.confirmation.expires_in" = "%@ 후 만료됩니다";
+"send.confirmation.expired" = "만료";
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.sent" = "전송됨";
@@ -510,7 +510,7 @@
 "send.lock_time" = "시간 자물쇠";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
+"send.unspent_outputs.description" = "잔액에서 자금을 사용하기 위해 수동으로 UTxO를 선택하세요.";
 "send.unspent_outputs.send_to" = "보내기";
 "send.unspent_outputs.change" = "변경";
 
@@ -519,11 +519,11 @@
 "approve.confirmation.spender" = "스펜더";
 
 "send.enter_amount" = "금액 입력";
-"send.enter_address" = "Enter Address";
-"send.invalid_address" = "Invalid Address";
-"send.token_not_enabled" = "Token Not Enabled";
-"send.token_syncing" = "Token Syncing";
-"send.token_not_synced" = "Token Not Synced";
+"send.enter_address" = "주소 입력";
+"send.invalid_address" = "잘못된 주소";
+"send.token_not_enabled" = "토큰 활성화되지 않음";
+"send.token_syncing" = "토큰 동기화 중";
+"send.token_not_synced" = "토큰 동기화되지 않음";
 "send.insufficient_balance" = "잔액 부족";
 
 // Donate
@@ -581,9 +581,9 @@
 "swap.no_providers" = "제공자 없음";
 "swap.enter_amount" = "금액 입력";
 "swap.no_quotes" = "제안이 없습니다";
-"swap.token_not_enabled" = "Token Not Enabled";
-"swap.token_syncing" = "Token Syncing";
-"swap.token_not_synced" = "Token Not Synced";
+"swap.token_not_enabled" = "토큰 활성화되지 않음";
+"swap.token_syncing" = "토큰 동기화 중";
+"swap.token_not_synced" = "토큰 동기화되지 않음";
 "swap.insufficient_balance" = "잔액 부족";
 
 "swap.quotes.providers" = "제공자";
@@ -608,7 +608,7 @@
 "swap.price_impact.description" = "일반적으로 보여진 가격으로부터 예상되는 가격 편차는 스왑 금액에 따라 증가합니다.";
 "swap.high_price_impact" = "높은 가격 영향";
 "swap.recipient" = "수령인";
-"swap.slippage" = "Slippage";
+"swap.slippage" = "미끄러짐";
 
 "swap.affiliate_fee" = "제휴 수수료";
 "swap.liquidity_fee" = "유동성 수수료";
@@ -628,7 +628,7 @@
 "swap.advanced_settings.service_fee_description" = "플랫폼에서 스왑 작업에 대한 서비스 수수료는 일반적으로 0.3% 또는 0.6%입니다.";
 "swap.advanced_settings.error.lower_slippage" = "귀하의 거래가 실패할 것 같습니다.";
 "swap.advanced_settings.error.higher_slippage" = "슬리피지 허용 오차는 %@%%를 초과할 수 없습니다.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "잘못된 주소";
 "swap.advanced_settings.error.invalid_slippage" = "올바르지 않은 슬립";
 "swap.advanced_settings.error.invalid_deadline" = "올바르지 않은 마감 시간";
 
@@ -649,14 +649,14 @@
 "swap.confirmation.title" = "확인";
 "swap.confirmation.quoting" = "견적";
 "swap.confirmation.invalid_quote" = "잘못된 견적";
-"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.please_wait" = "기다려 주십시오";
 "swap.confirmation.quote_expires_in" = "견적 유효 기간이 %@ 후에 만료됩니다";
 "swap.confirmation.quote_expired" = "견적이 만료되었습니다";
 "swap.confirmation.quote_failed" = "견적 실패";
 
 "swap.confirmation.slide_to_swap" = "밀어서 결제하기";
 "swap.confirmation.swapping" = "스와핑";
-"swap.confirmation.refresh" = "Refresh";
+"swap.confirmation.refresh" = "새로고침";
 "swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
@@ -698,32 +698,32 @@
 "market.defi_cap" = "디파이(DeFi) 시가총액";
 "market.defi_tvl" = "디파이(DeFi)에서의 총 예치 가치";
 
-"market.global.market_cap" = "Total Cap";
-"market.global.volume" = "24h Vol.";
+"market.global.market_cap" = "시가 총액";
+"market.global.volume" = "24h 거래량";
 "market.global.btc_dominance" = "BTC 지배력";
-"market.global.etf_inflow" = "ETF Inflow";
+"market.global.etf_inflow" = "ETF 유입액";
 "market.global.tvl_in_defi" = "디파이(DeFi)에서의 총 예치 가치";
 
 "market.tab.news" = "뉴스";
 "market.tab.coins" = "코인";
 "market.tab.watchlist" = "관심 목록";
-"market.tab.platforms" = "Platforms";
-"market.tab.pairs" = "Pairs";
-"market.tab.sectors" = "Sectors";
+"market.tab.platforms" = "플랫폼";
+"market.tab.pairs" = "쌍";
+"market.tab.sectors" = "부문";
 
-"market.sort_by.title" = "Sort By";
-"market.sort_by.manual" = "Manual";
-"market.sort_by.highest_cap" = "Highest Cap";
-"market.sort_by.lowest_cap" = "Lowest Cap";
-"market.sort_by.gainers" = "Gainers";
-"market.sort_by.losers" = "Losers";
-"market.sort_by.highest_volume" = "Highest Volume";
-"market.sort_by.lowest_volume" = "Lowest Volume";
+"market.sort_by.title" = "정렬 기준";
+"market.sort_by.manual" = "수동";
+"market.sort_by.highest_cap" = "가장 높은 시가총액";
+"market.sort_by.lowest_cap" = "가장 낮은 시가총액";
+"market.sort_by.gainers" = "이득자";
+"market.sort_by.losers" = "해자";
+"market.sort_by.highest_volume" = "가장 높은 거래량";
+"market.sort_by.lowest_volume" = "가장 낮은 거래량";
 
 "market.top_coins.title" = "코인";
-"market.top_coins" = "Top %@";
+"market.top_coins" = "상위 %@";
 
-"market.time_period.title" = "Period";
+"market.time_period.title" = "기간";
 "market.time_period.24h" = "24 시간";
 "market.time_period.1d" = "1 일";
 "market.time_period.1w" = "1일주";
@@ -736,21 +736,21 @@
 "market.time_period.5y" = "5 년";
 "market.time_period.24h.short" = "24시";
 "market.time_period.1d.short" = "1하루";
-"market.time_period.1w.short" = "1W";
-"market.time_period.2w.short" = "2W";
-"market.time_period.1m.short" = "1M";
-"market.time_period.3m.short" = "3M";
-"market.time_period.6m.short" = "6M";
-"market.time_period.1y.short" = "1Y";
-"market.time_period.2y.short" = "2Y";
-"market.time_period.5y.short" = "5Y";
+"market.time_period.1w.short" = "1주일";
+"market.time_period.2w.short" = "2주일";
+"market.time_period.1m.short" = "1개월";
+"market.time_period.3m.short" = "3개월";
+"market.time_period.6m.short" = "6개월";
+"market.time_period.1y.short" = "1년";
+"market.time_period.2y.short" = "2년";
+"market.time_period.5y.short" = "5년";
 
 "market.project_has_no_coin" = "이 프로젝트는 코인이 없습니다";
 
 "market.top.section.header.see_all" = "모두 보기";
 "market.top.section.header.top_gainers" = "최고 승자";
 "market.top.section.header.top_losers" = "최고 패자";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "부문";
 "market.top.section.header.news" = "뉴스";
 "market.top.volume.title" = "거래량";
 "market.top.market_cap.title" = "시가총액";
@@ -764,15 +764,15 @@
 
 "market.tvl.platform_field.all" = "전체";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "정렬 기준";
 
 "market.top.title" = "주요 코인";
 "market.top.description" = "시가총액 순위별 주요 코인";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
+"market.top.highest_cap" = "가장 높은 시가총액";
+"market.top.lowest_cap" = "가장 낮은 시가총액";
+"market.top.highest_volume" = "가장 높은 거래량";
+"market.top.lowest_volume" = "가장 낮은 거래량";
 "market.top.top_gainers" = "최고 승자";
 "market.top.top_losers" = "최고 패자";
 "market.top.top_collections" = "주요 NFT 컬렉션";
@@ -781,7 +781,7 @@
 "market.top.top_platforms" = "주요 플랫폼";
 "market.top.protocols" = "프로토콜";
 
-"market.pairs.volume" = "Volume";
+"market.pairs.volume" = "거래량";
 "top_pairs.title" = "상위 시장 페어";
 "top_pairs.description" = "각 거래소에서 거래량 상위 페어";
 
@@ -790,7 +790,7 @@
 
 "top_platform.title" = "%@ 생태계";
 "top_platform.description" = "%@ 체인상의 모든 프로토콜의 시가총액";
-"top_platform.total_cap" = "Total Cap";
+"top_platform.total_cap" = "시가 총액";
 
 
 "market.search.recent" = "최근의";
@@ -803,17 +803,17 @@
 "market_discovery.not_found" = "검색 결과가 없습니다";
 
 "market_watchlist.empty.caption" = "관심 목록이 비어 있습니다.";
-"market.watchlist.signals" = "Signals";
-"market.watchlist.empty" = "Your watchlist is empty";
-"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
-"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
-"market.watchlist.signals.buy.description" = "Likely price increase in near future";
-"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
-"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
-"market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
-"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
-"market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
-"market.watchlist.signals.turn_on" = "Turn On";
+"market.watchlist.signals" = "신호";
+"market.watchlist.empty" = "관심 목록이 비어 있습니다";
+"market.watchlist.signals.description" = "아래 신호는 대략 최근 30일 동안의 볼린저 밴드와 RSI 기술적 가격 지표를 기반으로 합니다. 이러한 신호는 알고리즘에 기반하며 자주 변경될 수 있습니다.";
+"market.watchlist.signals.strong_buy.description" = "가격 상승에 대한 높은 신뢰도";
+"market.watchlist.signals.buy.description" = "가까운 미래에 가능성 있는 가격 상승";
+"market.watchlist.signals.neutral.description" = "명확한 트렌드가 없으며, 시장은 균형 상태에 있습니다";
+"market.watchlist.signals.sell.description" = "가까운 미래에 가능성 있는 가격 하락";
+"market.watchlist.signals.strong_sell.description" = "가격 하락의 높은 확률";
+"market.watchlist.signals.risky.description" = "고위험 수준, 주의가 필요합니다";
+"market.watchlist.signals.warning" = "언제나 위험 관리를 적용하는 것을 기억하세요. 이것은 금융 조언이 아님을 유의하세요.";
+"market.watchlist.signals.turn_on" = "켜기";
 
 "market.advanced_search.title" = "필터";
 "market.advanced_search.show_results" = "결과 보기";
@@ -838,7 +838,7 @@
 
 "market.advanced_search.liquidity" = "DEX 유동성";
 "market.advanced_search.blockchains" = "블록체인";
-"market.advanced_search.signal" = "Trading Signal";
+"market.advanced_search.signal" = "거래 신호";
 "market.advanced_search.price_period" = "가격 기간";
 "market.advanced_search.price_change" = "가격 변경";
 
@@ -884,7 +884,7 @@
 
 "market.advanced_search.day.short" = "24시";
 "market.advanced_search.week.short" = "7일";
-"market.advanced_search.month.short" = "1M";
+"market.advanced_search.month.short" = "1개월";
 
 "market.advanced_search_results.title" = "결과";
 
@@ -897,13 +897,13 @@
 "market.global.defi_cap.title" = "디파이(DeFi) 시가총액";
 "market.global.defi_cap.description" = "디파이 프로젝트의 총 시장 가치";
 
-"market.etf.title" = "Total Net Inflow";
-"market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
-"market.etf.total_net_assets" = "Total Net Assets";
-"market.etf.sort_by.highest_assets" = "Highest Assets";
-"market.etf.sort_by.lowest_assets" = "Lowest Assets";
-"market.etf.sort_by.inflow" = "Inflow";
-"market.etf.sort_by.outflow" = "Outflow";
+"market.etf.title" = "총 순유입액";
+"market.etf.description" = "ETF의 순유입액은 현금 유입에서 유출을 뺀 것과 같습니다.";
+"market.etf.total_net_assets" = "총 순자산";
+"market.etf.sort_by.highest_assets" = "최고 자산";
+"market.etf.sort_by.lowest_assets" = "최저 자산";
+"market.etf.sort_by.inflow" = "유입";
+"market.etf.sort_by.outflow" = "유출";
 "market.etf.period.all" = "전체";
 
 "market.market_cap.title" = "총 시장 자본금";
@@ -911,15 +911,15 @@
 "market.market_cap.market_cap" = "총 시가 총액";
 
 "market.tvl_in_defi.title" = "디파이(DeFi)에서의 총 예치 가치";
-"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.description" = "디파이 (DeFi)에서의 총 예치 가치 (TVL)";
 "market.tvl_in_defi.tvl" = "TVL";
 "market.tvl_in_defi.multi_chain" = "다중 체인";
 "market.tvl_in_defi.filter_by_chain" = "체인별 필터링";
 "market.tvl_in_defi.filter.all" = "전체";
 
-"market.volume.title" = "Volume";
+"market.volume.title" = "거래량";
 "market.volume.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
-"market.volume.volume" = "Volume";
+"market.volume.volume" = "거래량";
 
 "market.signal.risky" = "위험";
 "market.signal.strong_buy" = "강력한 매수";
@@ -982,34 +982,34 @@
 "technical_advice.over.advice" = " There might be a strong %@ward movement, so it's better to wait for the asset price to return to the channel.";
 
 "technical_advice.strong.indicators" = "The asset was %@, but now it has returned to the Bollinger Band channel. This indicates a possible trend reversal.";
-"technical_advice.strong.rsi" = " Meanwhile, the RSI is %@, which still indicates that it is %@.";
+"technical_advice.strong.rsi" = " 한편, RSI는 %@이며, 여전히 %@임을 나타냅니다.";
 "technical_advice.strong.advice" = " This could be a very strong signal to enter the market. Keep in mind that there may be several attempts of %@ward movement after returning to the channel, so do not forget about risk management.";
 
-"technical_advice.stable.rsi" = " Meanwhile, the RSI is %@, which also indicates a trend reversal (RSI crossed the boundary at 70%).";
+"technical_advice.stable.rsi" = " 한편, RSI는 %@이며, 이는 추세 반전을 나타냅니다 (RSI가 경계선을 넘었습니다. 70%에서).";
 "technical_advice.stable.advice" = "The price is returning to neutral levels, however, there is still potential for upward movement. Keep in mind that RSI = 50 and the middle of the Bollinger Bands are strong resistances and possible trend reversal points. Do not forget about risk management.";
 
-"technical_advice.neutral.rsi" = "RSI = %@ also confirms the absence of a strong trend.";
-"technical_advice.neutral.indicators" = "The asset was in the overbought/oversold zone, but at the moment the price has returned to the Bollinger Band channel in the neutral zone. The RSI is %@ also confirms the absence of a strong trend, so overall the asset price is moving towards averaging and further movement is possible in any direction.";
-"technical_advice.neutral.advice" = " In general, the asset price is moving towards averaging and further movement is possible in any direction.";
+"technical_advice.neutral.rsi" = "RSI = %@도 강한 추세의 부재를 확인합니다.";
+"technical_advice.neutral.indicators" = "해당 자산은 과매수/과매도 구간에 있었지만, 현재 가격은 중립 구간의 볼린저 밴드 채널로 복귀했습니다. RSI가 %@이며 강한 추세의 부재를 확인합니다. 따라서 전반적으로 자산 가격은 평균화되며 더 이상의 이동은 어느 방향으로든 가능합니다.";
+"technical_advice.neutral.advice" = " 일반적으로, 자산 가격은 평균화로 향하고 더 이상의 움직임은 어느 방향으로든 가능합니다.";
 
-"technical_advice.other.title" = "Please note:";
+"technical_advice.other.title" = "주의하세요:";
 
-"technical_advice.ema.above" = "above";
-"technical_advice.ema.below" = "below";
-"technical_advice.ema.growth" = "growth";
-"technical_advice.ema.decrease" = "decrease";
-"technical_advice.ema.advice" = "EMA 200. Determines the overall sentiment and trend. The daily price of the asset is located %@ the EMA (%@). This means that globally the asset is set for %@.";
+"technical_advice.ema.above" = "위";
+"technical_advice.ema.below" = "아래";
+"technical_advice.ema.growth" = "성장";
+"technical_advice.ema.decrease" = "감소";
+"technical_advice.ema.advice" = "EMA 200. 전반적인 센티먼트와 트렌드를 결정합니다. 자산의 일일 가격은 EMA(%@)에 %@ 위치합니다. 이는 전반적으로 자산이 %@으로 설정되어 있음을 의미합니다.";
 
-"technical_advice.macd.positive" = "above";
-"technical_advice.macd.negative" = "below";
-"technical_advice.macd.advice" = "MACD. Assesses the strength of the trend considering the average price change. The daily value of the histogram is %@ (%@). The price of the asset globally may move %@.";
+"technical_advice.macd.positive" = "위";
+"technical_advice.macd.negative" = "아래";
+"technical_advice.macd.advice" = "MACD. 평균 가격 변화를 고려하여 추세의 강도를 평가합니다. 히스토그램의 일일 값은 %@입니다 (%@). 전반적으로 자산의 가격이 %@ 움직일 수 있습니다.";
 
 "coin_analytics.indicators.title" = "기술적 지표";
-"coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
-"coin_analytics.indicators.info.title" = "Technical Indicators";
-"coin_analytics.indicators.info.description" = "We use the Bollinger Bands + RSI strategy to determine trading signals. All calculations are based on daily candlesticks and provide advice for a moderately long term. The essence of the strategy is that the asset price should reach an extreme, breaking out of the Bollinger Bands channel, and the RSI should be in the overbought/oversold zone. After the price returns to the channel, there is a high probability of the price returning to the mean values or attempting to break the channel from the other side. Note that the strategy may give several false signals during strong market movements before a correct signal appears.\n\nPlease remember that it is very important to apply risk management to trading and remember to cut losses if the market situation changes! ";
-"coin_analytics.indicators.hide_details" = "Hide Details";
-"coin_analytics.indicators.show_details" = "Show Details";
+"coin_analytics.indicators.disclaimer" = "언제나 위험 관리를 적용하는 것을 기억하세요. 이것은 금융 조언이 아님을 유의하세요.";
+"coin_analytics.indicators.info.title" = "기술적 지표";
+"coin_analytics.indicators.info.description" = "우리는 볼린저 밴드 + RSI 전략을 사용하여 거래 신호를 결정합니다. 모든 계산은 일일 양봉을 기반으로 하며, 중장기적인 조언을 제공합니다. 이 전략의 본질은 자산 가격이 극단에 도달하여 볼린저 밴드 채널을 벗어나야 하며, RSI가 과매수/과매도 구간에 있어야 한다는 것입니다. 가격이 채널로 복귀한 후, 가격이 평균값으로 복귀하거나 다른 측면에서 채널을 뚫으려는 높은 확률이 있습니다. 강한 시장 움직임 중에는 올바른 신호가 나타나기 전에 여러 가질 수도 있음을 유의하십시오.\n\n거래에 위험 관리를 적용하는 것이 매우 중요하며, 시장 상황이 변할 경우 손실을 줄이는 것을 기억하세요! ";
+"coin_analytics.indicators.hide_details" = "세부 사항 숨기기";
+"coin_analytics.indicators.show_details" = "세부 정보 보기";
 "coin_analytics.indicators.summary" = "요약";
 "coin_analytics.indicators.no_data" = "데이터 없음";
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
@@ -1019,7 +1019,7 @@
 "coin_analytics.indicators.sell" = "매도";
 "coin_analytics.indicators.strong_sell" = "강한 매도";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
-"coin_analytics.period" = "Period";
+"coin_analytics.period" = "기간";
 "coin_analytics.period.select_title" = "기간 선택";
 "coin_analytics.period.1h" = "1시간";
 "coin_analytics.period.4h" = "4 시간";
@@ -1031,7 +1031,7 @@
 
 "coin_analytics.not_available" = "이 프로젝트에는 분석 데이터가 없습니다.";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators" = "기술적 지표";
 "coin_analytics.technical_indicators.info1" = "요약: 이것은 다양한 기술적 지표와 시간대를 고려하여 자산의 기술적 특성을 일반적으로 개요합니다. 이러한 지표를 기반으로 한 공통된 견해 (매수, 매도 또는 중립)를 제공합니다.";
 "coin_analytics.technical_indicators.info2" = "이동평균 (MA): 이것들은 추세를 따르는 지표를 만들기 위해 가격 데이터를 평활하게 하는 데 사용되는 일반적인 기술 지표입니다. 이것들은 특정 시간 기간 동안의 평균 가격을 보여줍니다. 다양한 종류의 이동평균이 있습니다:\n\n단순 이동평균 (SMA): 이것은 선택한 가격 범위, 보통 종가, 내의 기간 수로 평균을 계산합니다.\n\n지수 이동평균 (EMA): 이것은 최근 가격에 더 많은 가중치를 부여하여 최근 가격 변동에 더 빨리 반응합니다.";
 "coin_analytics.technical_indicators.info3" = "오실레이터(Oscillators): 이것들은 일정한 범위 내에서 시간에 따라 변동하는 기술 지표로 (중심선 위 및 아래 또는 설정된 수준 사이에서), 시장에서 과매수 및 과매도 상태를 식별하는 데 도움을 주도록 설계되었습니다. 여기 일반적인 오실레이터 중 일부가 있습니다:\n\n상대강도지수 (RSI): 이것은 가격 움직임의 속도와 변화를 측정합니다. 주로 과매수 또는 과매도 상태를 식별하는 데 사용됩니다.\n\n이동평균수렴확산 (MACD): 이것은 잠재적인 매수 및 매도 신호를 식별하는 데 사용됩니다. MACD는 신호선을 크로스할 때 (매수) 또는 (매도) 아래로 크로스할 때 기술적 신호를 생성합니다.";
@@ -1039,7 +1039,7 @@
 "coin_analytics.cex_volume" = "CEX 거래량";
 "coin_analytics.cex_volume_rank" = "CEX 거래량 순위";
 "coin_analytics.cex_volume_rank.description" = "중앙화 거래소에서의 토큰 거래량을 기준으로 순위가 매겨진 토큰들.";
-"coin_analytics.cex_volume_rank.sorting_field" = "Volume";
+"coin_analytics.cex_volume_rank.sorting_field" = "거래량";
 "coin_analytics.cex_volume.info1" = "주요 중앙화 거래소에서의 토큰의 30일 동안의 총 거래량.";
 "coin_analytics.cex_volume.info2" = "주요 중앙화 거래소에서의 토큰의 1년 동안 일일 거래량 변동을 보여주는 차트.";
 "coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
@@ -1048,7 +1048,7 @@
 "coin_analytics.dex_volume" = "DEX 거래량";
 "coin_analytics.dex_volume_rank" = "DEX 거래량 순위";
 "coin_analytics.dex_volume_rank.description" = "탈중앙화 거래소에서의 토큰 거래량을 기준으로 순위가 매겨진 토큰들.";
-"coin_analytics.dex_volume_rank.sorting_field" = "Volume";
+"coin_analytics.dex_volume_rank.sorting_field" = "거래량";
 "coin_analytics.dex_volume.info1" = "주요 탈중앙화 거래소에서의 토큰의 30일 동안의 총 거래량.";
 "coin_analytics.dex_volume.info2" = "1년 동안 주요 탈중앙화 거래소에서의 토큰의 일일 거래량 변동을 보여주는 차트.";
 "coin_analytics.dex_volume.info3" = "주요 탈중앙화 거래소에서 30일 동안의 거래량을 기반으로 한 토큰의 순위.";
@@ -1112,12 +1112,12 @@
 "coin_analytics.project_fee" = "프로젝트 수수료";
 "coin_analytics.project_fee_rank" = "프로젝트 수수료 순위";
 "coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
-"coin_analytics.project_fee_rank.sorting_field" = "Volume";
+"coin_analytics.project_fee_rank.sorting_field" = "거래량";
 
 "coin_analytics.project_revenue" = "프로젝트 수익";
 "coin_analytics.project_revenue_rank" = "프로젝트 수익 순위";
 "coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
-"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
+"coin_analytics.project_revenue_rank.sorting_field" = "매출";
 
 "coin_analytics.other_data" = "기타 데이터";
 
@@ -1193,7 +1193,7 @@
 
 "chart_indicators.settings.ma.description" = "EMA, SMA 및 WMA는 기술 분석에서 사용되는 이동 평균 지표입니다:\n\nEMA는 더 빠른 반응을 위해 최근 가격을 강조합니다.\nSMA는 일반적인 추세를 파악하기 위해 가격 데이터를 평균화합니다.\nWMA는 최근 데이터에 선형 가중치를 두어 민감도와 잡음 감소를 균형잡히게 조절합니다.";
 "chart_indicators.settings.ma.type_title" = "유형";
-"chart_indicators.settings.ma.period_title" = "Period";
+"chart_indicators.settings.ma.period_title" = "기간";
 
 "chart_indicators.settings.rsi.title" = "RSI";
 "chart_indicators.settings.rsi.description" = "상대 강도 지수(RSI)는 가격 속도와 변화를 측정하는 모멘텀 오실레이터로, 과매수(70 이상) 또는 과매도(30 이하) 시장 상황을 식별합니다. 또한, 가격 역전을 발산을 통해 감지할 수도 있습니다.";
@@ -1304,7 +1304,7 @@
 "settings.tell_friends" = "친구에게 추천하기";
 "settings.contact_us" = "문의하기";
 "settings.social_networks.label" = "JOIN UNSTOPPABLES";
-"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
+"settings.social_networks.footer" = "Unstoppable의 소식을 놓치지 마세요. 새로운 기능, 사용자로부터 보고된 문제 및 저희가 작업 중인 사항을 가장 먼저 알아보세요!";
 
 // Settings -> Base Currency
 
@@ -1422,7 +1422,7 @@
 "settings_security.duress_mode.description" = "강요 상황에서 선택한 지갑을 안전하게 보관하기 위해 디자인된 특별한 모드입니다.";
 
 "biometry.off" = "끄기";
-"biometry.manual" = "Manual";
+"biometry.manual" = "수동";
 "biometry.on" = "켜기";
 "biometry.off.description" = "모든 경우에 비활성화";
 "biometry.manual.description" = "버튼으로 스캔하기";
@@ -1522,7 +1522,7 @@
 // Settings -> About App
 
 "settings.about_app.title" = "앱 정보";
-"settings.about_app.app_version" = "App Version";
+"settings.about_app.app_version" = "앱버전";
 "settings.about_app.website" = "웹사이트";
 
 // Settings -> About App -> Contact
@@ -1534,11 +1534,11 @@
 // Settings -> Privacy
 
 "settings.privacy" = "개인정보";
-"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
+"settings.privacy.description" = "%@는 코인 잔액이나 주소와 같은 개인 정보를 노출하는 개인 데이터를 수집하지 않습니다. UI 사용 통계를 수집하긴 하지만, 이는 사용자 기반 및 앱 사용 트렌드를 이해하기 위한 것입니다. 원하신다면 비활성화할 수 있습니다.";
 "settings.privacy.statement.data_usage" = "지갑은 사용자에 대한 데이터를 수집하지 않습니다.";
-"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
-"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
-"settings.privacy.allow" = "Share UI Data";
+"settings.privacy.statement.data_storage" = "사용자 계정이나 사용자 데이터를 저장하는 데이터베이스가 없습니다.";
+"settings.privacy.statement.user_account" = "허용된 경우, 지갑은 앱 사용 습관을 Unstoppable 팀과 공유할 것입니다. 이는 사용자가 어떤 기능을 사용하고 있는지 (또는 사용하지 않는지) 이해하기 위한 것입니다. 개인 정보 보호를 중시하는 앱이지만, 우리의 노력을 평가할 방법이 필요합니다. 이를 통해 만든 기능이 사용되고 있는지 여부를 알 수 없기 때문입니다.";
+"settings.privacy.allow" = "UI 데이터 공유";
 
 // Settings -> Appearance
 
@@ -1550,10 +1550,10 @@
 "appearance.theme.light" = "밝은";
 
 "appearance.markets_tab" = "마켓 탭";
-"appearance.hide_markets" = "Hide Markets";
+"appearance.hide_markets" = "마켓 숨기기";
 "appearance.price_change" = "가격 변경";
 "appearance.price_change.24h" = "24시";
-"appearance.price_change.1d" = "Midnight UTC";
+"appearance.price_change.1d" = "UTC 자정";
 
 "appearance.launch_screen" = "시작 화면";
 "appearance.launch_screen.auto" = "자동";
@@ -1561,7 +1561,7 @@
 "appearance.launch_screen.market_overview" = "시장 개요";
 "appearance.launch_screen.watchlist" = "관심 목록";
 
-"appearance.balance_tab" = "Balance Tab";
+"appearance.balance_tab" = "잔고 탭";
 "appearance.hide_buttons" = "숨김 버튼";
 "appearance.balance_value" = "균형 가치";
 "appearance.balance_value.coin_fiat" = "코인/피아트";
@@ -1632,13 +1632,13 @@
 
 "chart.time_duration.day" = "24시";
 "chart.time_duration.week" = "7일";
-"chart.time_duration.week2" = "2W";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.month3" = "3M";
-"chart.time_duration.halfyear" = "6M";
-"chart.time_duration.year" = "1Y";
-"chart.time_duration.year2" = "2Y";
-"chart.time_duration.year5" = "5Y";
+"chart.time_duration.week2" = "2주일";
+"chart.time_duration.month" = "1개월";
+"chart.time_duration.month3" = "3개월";
+"chart.time_duration.halfyear" = "6개월";
+"chart.time_duration.year" = "1년";
+"chart.time_duration.year2" = "2년";
+"chart.time_duration.year5" = "5년";
 "chart.time_duration.all" = "모든";
 
 "chart.market_cap" = "총 시가 총액";
