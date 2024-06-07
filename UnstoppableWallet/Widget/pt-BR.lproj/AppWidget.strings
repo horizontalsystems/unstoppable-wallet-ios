@@ -4,13 +4,13 @@
 
 "8vJheC" = "Organizar por";
 
-"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
+"Iodq3O-Rl3a0T" = "Para confirmar, você queria 'Ganhadores'?";
 
 "Iodq3O-qHGyuo" = "Para confirmar, você queria 'Maior capitalização'?";
 
 "Iodq3O-tVjZ7W" = "Para confirmar, você queria 'Menor capitalização'?";
 
-"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Losers’?";
+"Iodq3O-x1kK4T" = "Para confirmar, você queria 'Perdedores'?";
 
 "OkcYOj" = "Ver el precio de la moneda seleccionada";
 
@@ -22,17 +22,17 @@
 
 "hrLfmt" = "Preço de uma Única Moeda";
 
-"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Gainers’.";
+"nj8Co9-Rl3a0T" = "Há ${count} opções correspondentes a 'Ganhadores'.";
 
 "nj8Co9-qHGyuo" = "Há ${count} opções correspondentes a 'Maior capitalização'.";
 
 "nj8Co9-tVjZ7W" = "Há ${count} opções correspondentes a 'Menor capitalização'.";
 
-"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
+"nj8Co9-x1kK4T" = "Há ${count} opções correspondentes a 'Perdedores'.";
 
 "qHGyuo" = "Maior capitalização";
 
-"rCV9fg" = "See coin prices for coin list";
+"rCV9fg" = "Ver preços das moedas na lista de moedas";
 
 "tVjZ7W" = "Menor capitalização";
 
