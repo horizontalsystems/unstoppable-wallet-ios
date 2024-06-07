@@ -181,7 +181,7 @@ extension RankMultiValue {
 }
 
 extension RankViewModel {
-    enum RankType {
+    enum RankType: Identifiable {
         case cexVolume
         case dexVolume
         case dexLiquidity
@@ -190,6 +190,10 @@ extension RankViewModel {
         case holders
         case fee
         case revenue
+
+        var id: Self {
+            self
+        }
 
         var title: String {
             switch self {

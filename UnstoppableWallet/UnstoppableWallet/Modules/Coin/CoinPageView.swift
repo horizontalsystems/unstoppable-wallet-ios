@@ -1,14 +1,26 @@
+import MarketKit
 import SwiftUI
 
-struct CoinPageView<Overview: View, Analytics: View, Markets: View>: View {
-    @ObservedObject var viewModel: CoinPageViewModelNew
+struct CoinPageView: View {
+    @StateObject private var viewModel: CoinPageViewModelNew
 
-    @ViewBuilder let overviewView: Overview
-    @ViewBuilder let analyticsView: Analytics
-    @ViewBuilder let marketsView: Markets
+    @StateObject private var overviewViewModel: CoinOverviewViewModelNew
+    @StateObject private var chartViewModel: CoinChartViewModel
+    @StateObject private var analyticsViewModel: CoinAnalyticsViewModelNew
+    @StateObject private var marketsViewModel: CoinMarketsViewModel
 
     @Environment(\.presentationMode) private var presentationMode
-    @State private var currentTabIndex: Int = Tab.overview.rawValue
+
+    @State private var currentTab: Tab = .overview
+    @State private var loadedTabs = [Tab]()
+
+    init(fullCoin: FullCoin) {
+        _viewModel = StateObject(wrappedValue: CoinPageViewModelNew(fullCoin: fullCoin))
+        _overviewViewModel = StateObject(wrappedValue: CoinOverviewViewModelNew(coinUid: fullCoin.coin.uid))
+        _chartViewModel = StateObject(wrappedValue: CoinChartViewModel.instance(coinUid: fullCoin.coin.uid))
+        _analyticsViewModel = StateObject(wrappedValue: CoinAnalyticsViewModelNew(fullCoin: fullCoin))
+        _marketsViewModel = StateObject(wrappedValue: CoinMarketsViewModel(coin: fullCoin.coin))
+    }
 
     var body: some View {
         ThemeNavigationView {
@@ -16,20 +28,34 @@ struct CoinPageView<Overview: View, Analytics: View, Markets: View>: View {
                 VStack(spacing: 0) {
                     TabHeaderView(
                         tabs: Tab.allCases.map(\.title),
-                        currentTabIndex: $currentTabIndex
+                        currentTabIndex: Binding(
+                            get: {
+                                Tab.allCases.firstIndex(of: currentTab) ?? 0
+                            },
+                            set: { index in
+                                currentTab = Tab.allCases[index]
+                            }
+                        )
                     )
 
-                    TabView(selection: $currentTabIndex) {
-                        overviewView.tag(Tab.overview.rawValue)
-                        analyticsView.tag(Tab.analytics.rawValue)
-                        marketsView.tag(Tab.markets.rawValue)
+                    VStack {
+                        switch currentTab {
+                        case .overview: CoinOverviewView(viewModel: overviewViewModel, chartViewModel: chartViewModel)
+                        case .analytics: CoinAnalyticsView(viewModel: analyticsViewModel)
+                        case .markets: CoinMarketsView(viewModel: marketsViewModel)
+                        }
                     }
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    .ignoresSafeArea(edges: .bottom)
+                    .frame(maxHeight: .infinity)
+                    .onChange(of: currentTab) { tab in
+                        load(tab: tab)
+                    }
+                    .onFirstAppear {
+                        load(tab: currentTab)
+                    }
                 }
             }
             .navigationTitle(viewModel.fullCoin.coin.code)
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("button.close".localized) {
@@ -47,6 +73,20 @@ struct CoinPageView<Overview: View, Analytics: View, Markets: View>: View {
                     }
                 }
             }
+        }
+    }
+
+    private func load(tab: Tab) {
+        guard !loadedTabs.contains(tab) else {
+            return
+        }
+
+        loadedTabs.append(tab)
+
+        switch tab {
+        case .overview: overviewViewModel.load()
+        case .analytics: analyticsViewModel.load()
+        case .markets: marketsViewModel.load()
         }
     }
 }

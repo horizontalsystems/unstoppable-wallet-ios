@@ -25,13 +25,17 @@ enum CoinProChartModule {
 }
 
 extension CoinProChartModule {
-    enum ProChartType {
+    enum ProChartType: Identifiable {
         case cexVolume
         case dexVolume
         case dexLiquidity
         case activeAddresses
         case txCount
         case tvl
+
+        var id: Self {
+            self
+        }
 
         var title: String {
             switch self {

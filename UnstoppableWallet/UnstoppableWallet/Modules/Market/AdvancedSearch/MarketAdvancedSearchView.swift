@@ -311,7 +311,7 @@ struct MarketAdvancedSearchView: View {
             Spacer()
 
             if let signal = viewModel.signal {
-                Text(signal.shortTitle).textSubhead1(color: .themeLeah)
+                Text(signal.title).textSubhead1(color: .themeLeah)
             } else {
                 Text("selector.any".localized).textSubhead1()
             }
@@ -345,7 +345,7 @@ struct MarketAdvancedSearchView: View {
                             viewModel.signal = signal
                             signalsPresented = false
                         } content: {
-                            Text(signal.shortTitle).themeBody()
+                            Text(signal.title).themeBody()
 
                             if viewModel.signal == signal {
                                 Image("check_1_20").themeIcon(color: .themeJacob)

@@ -12,39 +12,42 @@ struct ListSection<Content: View>: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            _VariadicView.Tree(Layout(themeListStyle: themeListStyle)) {
-                content
-            }
-            .modifier(ThemeListStyleModifier(themeListStyle: themeListStyle, selected: selected))
+        _VariadicView.Tree(Layout(themeListStyle: themeListStyle, selected: selected)) {
+            content
         }
     }
 
-    struct Layout: _VariadicView_UnaryViewRoot {
+    struct Layout: _VariadicView_MultiViewRoot {
         let themeListStyle: ThemeListStyle
+        let selected: Bool
 
         @ViewBuilder
         func body(children: _VariadicView.Children) -> some View {
-            let last = children.last?.id
+            if children.isEmpty {
+                EmptyView()
+            } else {
+                let last = children.last?.id
 
-            VStack(spacing: 0) {
-                switch themeListStyle {
-                case .lawrence, .bordered, .transparentInline:
-                    ForEach(children) { child in
-                        child
+                VStack(spacing: 0) {
+                    switch themeListStyle {
+                    case .lawrence, .bordered, .transparentInline:
+                        ForEach(children) { child in
+                            child
 
-                        if child.id != last {
+                            if child.id != last {
+                                HorizontalDivider()
+                            }
+                        }
+                    case .transparent, .borderedLawrence:
+                        HorizontalDivider()
+
+                        ForEach(children) { child in
+                            child
                             HorizontalDivider()
                         }
                     }
-                case .transparent, .borderedLawrence:
-                    HorizontalDivider()
-
-                    ForEach(children) { child in
-                        child
-                        HorizontalDivider()
-                    }
                 }
+                .modifier(ThemeListStyleModifier(themeListStyle: themeListStyle, selected: selected))
             }
         }
     }

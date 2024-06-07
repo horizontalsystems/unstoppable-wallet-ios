@@ -18,7 +18,7 @@ class CoinChartService {
     private let marketKit: MarketKit.Kit
     private let localStorage: LocalStorage
     private let currencyManager: CurrencyManager
-    private let indicatorRepository: IChartIndicatorsRepository
+    let indicatorRepository: IChartIndicatorsRepository
     private let coinUid: String
 
     private let indicatorsShownUpdatedRelay = PublishRelay<Void>()

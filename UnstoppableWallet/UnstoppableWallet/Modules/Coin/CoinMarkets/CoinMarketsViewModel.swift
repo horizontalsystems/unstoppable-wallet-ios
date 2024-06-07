@@ -100,7 +100,7 @@ class CoinMarketsViewModel: ObservableObject {
 }
 
 extension CoinMarketsViewModel {
-    func onFirstAppear() {
+    func load() {
         syncTickers()
     }
 

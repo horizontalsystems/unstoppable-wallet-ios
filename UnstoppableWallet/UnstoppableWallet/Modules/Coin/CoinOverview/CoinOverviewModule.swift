@@ -3,37 +3,30 @@ import MarketKit
 import SwiftUI
 
 enum CoinOverviewModule {
-    static func view(coinUid: String) -> some View {
-        let repository = ChartIndicatorsRepository(
-            localStorage: App.shared.localStorage,
-            subscriptionManager: App.shared.subscriptionManager
-        )
-        let chartService = CoinChartService(
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            localStorage: App.shared.localStorage,
-            indicatorRepository: repository,
-            coinUid: coinUid
-        )
-        let chartFactory = CoinChartFactory(currentLocale: LanguageManager.shared.currentLocale)
-        let chartViewModel = CoinChartViewModel(service: chartService, factory: chartFactory)
+    // static func view(coinUid: String) -> some View {
+    //     let repository = ChartIndicatorsRepository(
+    //         localStorage: App.shared.localStorage,
+    //         subscriptionManager: App.shared.subscriptionManager
+    //     )
+    //     let chartService = CoinChartService(
+    //         marketKit: App.shared.marketKit,
+    //         currencyManager: App.shared.currencyManager,
+    //         localStorage: App.shared.localStorage,
+    //         indicatorRepository: repository,
+    //         coinUid: coinUid
+    //     )
+    //     let chartFactory = CoinChartFactory(currentLocale: LanguageManager.shared.currentLocale)
+    //     let chartViewModel = CoinChartViewModel(service: chartService, factory: chartFactory)
 
-        let viewModel = CoinOverviewViewModelNew(
-            coinUid: coinUid,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            languageManager: LanguageManager.shared,
-            accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager
-        )
+    //     let viewModel = CoinOverviewViewModelNew(coinUid: coinUid)
 
-        return CoinOverviewView(
-            viewModel: viewModel,
-            chartViewModel: chartViewModel,
-            chartIndicatorRepository: repository,
-            chartPointFetcher: chartService
-        )
-    }
+    //     return CoinOverviewView(
+    //         viewModel: viewModel,
+    //         chartViewModel: chartViewModel,
+    //         chartIndicatorRepository: repository,
+    //         chartPointFetcher: chartService
+    //     )
+    // }
 
     static func viewController(coinUid: String) -> CoinOverviewViewController {
         let service = CoinOverviewService(

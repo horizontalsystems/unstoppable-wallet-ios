@@ -42,12 +42,17 @@ struct SecuritySettingsView: View {
 
                 if viewModel.isPasscodeSet {
                     ListSection {
-                        NavigationRow(destination: {
+                        NavigationRow(spacing: .margin8, destination: {
                             AutoLockView(period: $viewModel.autoLockPeriod)
                         }) {
-                            Image("lock_24").themeIcon()
-                            Text("settings_security.auto_lock".localized).themeBody()
-                            Text(viewModel.autoLockPeriod.title).themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8)
+                            HStack(spacing: .margin16) {
+                                Image("lock_24").themeIcon()
+                                Text("settings_security.auto_lock".localized).textBody()
+                            }
+
+                            Spacer()
+
+                            Text(viewModel.autoLockPeriod.title).textSubhead1()
                             Image.disclosureIcon
                         }
                     }
@@ -58,8 +63,11 @@ struct SecuritySettingsView: View {
                         ClickableRow(spacing: .margin8, action: {
                             biometryEnabledTypePresented = true
                         }) {
-                            Image(biometryType.iconName)
-                            Text(biometryType.title).themeBody()
+                            HStack(spacing: .margin16) {
+                                Image(biometryType.iconName)
+                                Text(biometryType.title).textBody()
+                            }
+
                             Spacer()
 
                             Text(viewModel.biometryEnabledType.title).textSubhead1(color: viewModel.biometryEnabledType.isEnabled ? .themeLeah : .themeGray)

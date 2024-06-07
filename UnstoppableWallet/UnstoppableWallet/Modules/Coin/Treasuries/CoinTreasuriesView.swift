@@ -43,6 +43,7 @@ struct CoinTreasuriesView: View {
                 }
             }
         }
+        .navigationTitle("coin_analytics.treasuries".localized)
     }
 
     @ViewBuilder private func header(disabled: Bool = false) -> some View {

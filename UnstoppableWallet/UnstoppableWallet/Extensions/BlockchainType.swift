@@ -1,6 +1,7 @@
 import EvmKit
 import MarketKit
 import NftKit
+import SwiftUI
 import UIKit
 
 extension BlockchainType {
@@ -163,6 +164,18 @@ extension BlockchainType {
         case .avalanche: return UIColor(hex: 0xD74F49)
         case .optimism: return UIColor(hex: 0xEB3431)
         case .arbitrumOne: return UIColor(hex: 0x96BEDC)
+        default: return nil
+        }
+    }
+
+    var brandColorNew: Color? {
+        switch self {
+        case .ethereum: return Color(hex: 0x6B7196)
+        case .binanceSmartChain: return Color(hex: 0xF3BA2F)
+        case .polygon: return Color(hex: 0x8247E5)
+        case .avalanche: return Color(hex: 0xD74F49)
+        case .optimism: return Color(hex: 0xEB3431)
+        case .arbitrumOne: return Color(hex: 0x96BEDC)
         default: return nil
         }
     }

@@ -1239,8 +1239,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                         cell.bind(viewItem: viewItem)
                     },
                     action: { [weak self] _ in
-                        let viewController = CoinAnalyticsIssuesView(viewItem: viewItem).toNavigationViewController()
-                        self?.parentNavigationController?.present(viewController, animated: true)
+                        // let viewController = CoinAnalyticsIssuesView(viewItem: viewItem).toNavigationViewController()
+                        // self?.parentNavigationController?.present(viewController, animated: true)
                     }
                 )
             )

@@ -64,7 +64,7 @@ extension CoinPageModule.Tab {
         switch self {
         case .overview: return .overview
         case .analytics: return .analytics
-        case .markets: return .markets
+            // case .markets: return .markets
         }
     }
 }

@@ -82,15 +82,13 @@ struct BitcoinFeeSettingsView: View {
             }
         }
         .sheet(isPresented: $feeRateInfoPresented) {
-            ThemeNavigationView {
-                InfoNewView(
-                    viewItems: [
-                        .header1(text: "send.fee_info.title".localized),
-                        .text(text: "send.fee_info.description".localized),
-                    ],
-                    isPresented: $feeRateInfoPresented
-                )
-            }
+            InfoView(
+                items: [
+                    .header1(text: "send.fee_info.title".localized),
+                    .text(text: "send.fee_info.description".localized),
+                ],
+                isPresented: $feeRateInfoPresented
+            )
         }
     }
 }

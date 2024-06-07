@@ -52,3 +52,21 @@ struct ReleaseNotesView: UIViewControllerRepresentable {
 
     func updateUIViewController(_: UIViewController, context _: Context) {}
 }
+
+struct MarkdownView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    private let url: URL
+    private let handleRelativeUrl: Bool
+
+    init(url: URL, handleRelativeUrl: Bool = true) {
+        self.url = url
+        self.handleRelativeUrl = handleRelativeUrl
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        MarkdownModule.viewController(url: url, handleRelativeUrl: handleRelativeUrl)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
+}

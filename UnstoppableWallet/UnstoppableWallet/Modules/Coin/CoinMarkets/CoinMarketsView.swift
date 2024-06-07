@@ -3,11 +3,7 @@ import MarketKit
 import SwiftUI
 
 struct CoinMarketsView: View {
-    @StateObject private var viewModel: CoinMarketsViewModel
-
-    init(coin: Coin) {
-        _viewModel = StateObject(wrappedValue: CoinMarketsViewModel(coin: coin))
-    }
+    @ObservedObject var viewModel: CoinMarketsViewModel
 
     var body: some View {
         ThemeView {
@@ -25,9 +21,6 @@ struct CoinMarketsView: View {
                     viewModel.onRetry()
                 }
             }
-        }
-        .onFirstAppear {
-            viewModel.onFirstAppear()
         }
     }
 

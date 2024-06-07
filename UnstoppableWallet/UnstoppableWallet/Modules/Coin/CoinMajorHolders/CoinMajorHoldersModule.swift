@@ -1,4 +1,5 @@
 import MarketKit
+import SwiftUI
 import ThemeKit
 import UIKit
 
@@ -11,4 +12,17 @@ enum CoinMajorHoldersModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
+}
+
+struct CoinMajorHoldersView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let coin: Coin
+    let blockchain: Blockchain
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        CoinMajorHoldersModule.viewController(coin: coin, blockchain: blockchain)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
