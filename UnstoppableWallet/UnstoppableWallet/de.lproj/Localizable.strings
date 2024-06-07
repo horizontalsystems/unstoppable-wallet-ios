@@ -840,7 +840,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "market.advanced_search.liquidity" = "DEX-Liquidität";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.signal" = "Trading Signal";
+"market.advanced_search.signal" = "Handelssignal";
 "market.advanced_search.price_period" = "Preiszeitraum";
 "market.advanced_search.price_change" = "Preisänderung";
 
@@ -913,10 +913,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.market_cap.market_cap" = "Marktkappe";
 
 "market.tvl_in_defi.title" = "TVL in DeFi";
-"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.description" = "Gesamtwert gesperrt (TVL) in DeFi";
 "market.tvl_in_defi.tvl" = "TVL";
-"market.tvl_in_defi.multi_chain" = "Multi-chain";
-"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.multi_chain" = "Mehrketten";
+"market.tvl_in_defi.filter_by_chain" = "Filtern nach Kette";
 "market.tvl_in_defi.filter.all" = "Alle";
 
 "market.volume.title" = "Lautstärke";
@@ -1061,7 +1061,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.dex_liquidity" = "DEX-Liquidität";
 "coin_analytics.dex_liquidity_rank" = "DEX Liquiditätsrang";
 "coin_analytics.dex_liquidity_rank.description" = "Token, sortiert nach verfügbarer Liquidität auf dezentralen Börsen.";
-"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidität";
 "coin_analytics.dex_liquidity.info1" = "Gesamte derzeit verfügbare Liquidität für den Token an führenden dezentralen Börsen.";
 "coin_analytics.dex_liquidity.info2" = "Diagramm, das die Schwankungen in der verfügbaren Liquidität für den Token an führenden dezentralen Börsen über einen Zeitraum von 1 Jahr zeigt.";
 "coin_analytics.dex_liquidity.info3" = "Liste aller Tokens basierend auf der verfügbaren Liquidität für das Token an führenden dezentralen Börsen.";
@@ -1073,7 +1073,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Tage Einzigartige Adressen";
 "coin_analytics.active_addresses_rank" = "Aktive Adressen Rang";
 "coin_analytics.active_addresses_rank.description" = "Token, die nach der Anzahl der eindeutigen Adressen eingestuft werden, die mit dem Token Transaktionen tätigen.";
-"coin_analytics.active_addresses_rank.sorting_field" = "Active";
+"coin_analytics.active_addresses_rank.sorting_field" = "Aktiv";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Diagramm, das die Schwankungen in der Anzahl der täglich aktiven Adressen über einen Zeitraum von einem Jahr zeigt.";
 "coin_analytics.active_addresses.info3" = "Gesamtzahl der eindeutigen Blockchain-Adressen, die über einen Zeitraum von 30 Tagen mit einem Token handeln.";
@@ -1083,7 +1083,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.transaction_count" = "Transaktionsanzahl";
 "coin_analytics.transaction_count_rank" = "Rang nach Transaktionsanzahl";
 "coin_analytics.transaction_count_rank.description" = "Token werden nach der Anzahl von Transaktionen auf einer Blockchain eingestuft.";
-"coin_analytics.transaction_count_rank.sorting_field" = "Count";
+"coin_analytics.transaction_count_rank.sorting_field" = "Anzahl";
 "coin_analytics.transaction_count.info1" = "Gesamtzahl der einzigartigen Blockchain-Transaktionen mit Token über einen Zeitraum von 30 Tagen.";
 "coin_analytics.transaction_count.info2" = "Diagramm, das die Schwankungen in der Anzahl der Transaktionen über einen Zeitraum von einem Jahr zeigt.";
 "coin_analytics.transaction_count.info3" = "Der Rang des Tokens basiert auf der Anzahl der Transaktionen innerhalb des 30-Tage-Zeitraums des Tokens.";
@@ -1118,7 +1118,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.project_revenue" = "Projekteinnahmen";
 "coin_analytics.project_revenue_rank" = "Projekt-Umsatzrang";
 "coin_analytics.project_revenue_rank.description" = "Token werden nach Einnahmen klassifiziert, die über Mechanismen wie Stapel- oder Tokenbrennen für Inhaber generiert werden.";
-"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
+"coin_analytics.project_revenue_rank.sorting_field" = "Umsatz";
 
 "coin_analytics.other_data" = "Andere Daten";
 
@@ -1535,11 +1535,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privatsphäre";
-"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
+"settings.privacy.description" = "%@ sammelt keine persönlichen Daten, die Ihre privaten Informationen offen legen, z.B. Münzsalden oder Adressen. Während wir einige UI-Nutzungsstatistiken sammeln, dient es allein dazu, unsere Benutzer- und App-Nutzungstrends zu verstehen. Dies kann deaktiviert werden, wenn Sie es wünschen.";
 "settings.privacy.statement.data_usage" = "Das Wallet sammelt keine Daten über Benutzer.";
-"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
-"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
-"settings.privacy.allow" = "Share UI Data";
+"settings.privacy.statement.data_storage" = "Es gibt keine Benutzerkonten oder Datenbanken, die Benutzerdaten speichern.";
+"settings.privacy.statement.user_account" = "Wenn erlaubt, teilt die Brieftasche App-Nutzungsgewohnheiten mit dem unaufhaltsamen Team. Dies ist zu verstehen, welche Funktionen von unseren Benutzern verwendet werden (oder nicht). Als datenschutzorientierte App brauchen wir eine Möglichkeit, unsere Bemühungen zu bewerten, und ohne dies haben wir keine Ahnung, ob die von uns erstellten Funktionen genutzt werden oder nicht.";
+"settings.privacy.allow" = "UI-Daten teilen";
 
 // Settings -> Appearance
 
@@ -1554,7 +1554,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "appearance.hide_markets" = "Märkte ausblenden";
 "appearance.price_change" = "Preisänderung";
 "appearance.price_change.24h" = "24Std";
-"appearance.price_change.1d" = "Midnight UTC";
+"appearance.price_change.1d" = "Mitternacht UTC";
 
 "appearance.launch_screen" = "Startbildschirm";
 "appearance.launch_screen.auto" = "Auto";
