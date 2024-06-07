@@ -792,6 +792,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "top_platform.title" = "%@ Ökosystem";
 "top_platform.description" = "Marktkapitalisierung aller Protokolle auf der %@ Kette";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "Neueste";
 "market.search.popular" = "Beliebt";
@@ -818,6 +820,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.title" = "Filter";
 "market.advanced_search.show_results" = "Ergebnisse anzeigen";
 "market.advanced_search.empty_results" = "Leere Ergebnisse";
+"market.advanced_search.retry" = "Wiederholen";
 "market.advanced_search.dex_description" = "Diese Einstellung gilt für Token, die auf Ethereum (Uniswap DEX) und Binance Smart Chain (Pancake DEX) gehandelt werden.";
 "market.advanced_search.24h" = "24 Std";
 
@@ -837,16 +840,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "market.advanced_search.liquidity" = "DEX-Liquidität";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.technical_advice" = "Handelssignale";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "Preiszeitraum";
 "market.advanced_search.price_change" = "Preisänderung";
-
-"market.advanced_search.technical_advice.risky" = "Riskant";
-"market.advanced_search.technical_advice.strong_buy" = "Starker Kauf";
-"market.advanced_search.technical_advice.buy" = "Kaufen";
-"market.advanced_search.technical_advice.neutral" = "Neutral";
-"market.advanced_search.technical_advice.sell" = "Verkaufen";
-"market.advanced_search.technical_advice.strong_sell" = "Starker Verkauf";
 
 "market.advanced_search.outperformed_btc" = "Übertraf BTC";
 "market.advanced_search.outperformed_eth" = "Übertraf ETH";
@@ -927,6 +923,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.volume.description" = "Das 24h Handelsvolumen des Krypto-Marktes";
 "market.volume.volume" = "Lautstärke";
 
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
+
 // Coin Page
 
 "coin_page.overview" = "Preis";
@@ -946,7 +949,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_overview.genesis_date" = "Startdatum";
 "coin_overview.trading_volume" = "Handelsvolumen";
 
-"coin_overview.roi.hour24" = "1 Tag";
+"coin_overview.roi.hour24" = "24 Stunden";
+"coin_overview.roi.day1" = "1 Tag";
 "coin_overview.roi.day7" = "1 Woche";
 "coin_overview.roi.day14" = "2 Wochen";
 "coin_overview.roi.day30" = "1 Monate";
@@ -1036,6 +1040,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.cex_volume" = "CEX-Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volumenrang";
 "coin_analytics.cex_volume_rank.description" = "Token, sortiert nach Handelsvolumen für den Token auf zentralisierten Börsen.";
+"coin_analytics.cex_volume_rank.sorting_field" = "Lautstärke";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Diagramm, das die Schwankungen im täglichen Handelsvolumen des Tokens an führenden zentralisierten Börsen über einen Zeitraum von 1 Jahr zeigt.";
 "coin_analytics.cex_volume.info3" = "Die Rangfolge des Tokens basiert auf dem Handelsvolumen an führenden zentralisierten Börsen über einen Zeitraum von 30 Tagen.";
@@ -1044,6 +1049,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.dex_volume" = "DEX-Volume";
 "coin_analytics.dex_volume_rank" = "DEX-Volumenrang";
 "coin_analytics.dex_volume_rank.description" = "Token, sortiert nach Handelsvolumen für den Token auf dezentralen Börsen.";
+"coin_analytics.dex_volume_rank.sorting_field" = "Lautstärke";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Diagramm, das die Schwankungen im täglichen Handelsvolumen des Tokens an führenden dezentralen Börsen über einen Zeitraum von 1 Jahr zeigt.";
 "coin_analytics.dex_volume.info3" = "Rang des Tokens basierend auf dem Handelsvolumen an führenden dezentralen Börsen über einen Zeitraum von 30 Tagen.";
@@ -1055,6 +1061,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.dex_liquidity" = "DEX-Liquidität";
 "coin_analytics.dex_liquidity_rank" = "DEX Liquiditätsrang";
 "coin_analytics.dex_liquidity_rank.description" = "Token, sortiert nach verfügbarer Liquidität auf dezentralen Börsen.";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
 "coin_analytics.dex_liquidity.info1" = "Gesamte derzeit verfügbare Liquidität für den Token an führenden dezentralen Börsen.";
 "coin_analytics.dex_liquidity.info2" = "Diagramm, das die Schwankungen in der verfügbaren Liquidität für den Token an führenden dezentralen Börsen über einen Zeitraum von 1 Jahr zeigt.";
 "coin_analytics.dex_liquidity.info3" = "Liste aller Tokens basierend auf der verfügbaren Liquidität für das Token an führenden dezentralen Börsen.";
@@ -1066,6 +1073,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Tage Einzigartige Adressen";
 "coin_analytics.active_addresses_rank" = "Aktive Adressen Rang";
 "coin_analytics.active_addresses_rank.description" = "Token, die nach der Anzahl der eindeutigen Adressen eingestuft werden, die mit dem Token Transaktionen tätigen.";
+"coin_analytics.active_addresses_rank.sorting_field" = "Active";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Diagramm, das die Schwankungen in der Anzahl der täglich aktiven Adressen über einen Zeitraum von einem Jahr zeigt.";
 "coin_analytics.active_addresses.info3" = "Gesamtzahl der eindeutigen Blockchain-Adressen, die über einen Zeitraum von 30 Tagen mit einem Token handeln.";
@@ -1075,6 +1083,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.transaction_count" = "Transaktionsanzahl";
 "coin_analytics.transaction_count_rank" = "Rang nach Transaktionsanzahl";
 "coin_analytics.transaction_count_rank.description" = "Token werden nach der Anzahl von Transaktionen auf einer Blockchain eingestuft.";
+"coin_analytics.transaction_count_rank.sorting_field" = "Count";
 "coin_analytics.transaction_count.info1" = "Gesamtzahl der einzigartigen Blockchain-Transaktionen mit Token über einen Zeitraum von 30 Tagen.";
 "coin_analytics.transaction_count.info2" = "Diagramm, das die Schwankungen in der Anzahl der Transaktionen über einen Zeitraum von einem Jahr zeigt.";
 "coin_analytics.transaction_count.info3" = "Der Rang des Tokens basiert auf der Anzahl der Transaktionen innerhalb des 30-Tage-Zeitraums des Tokens.";
@@ -1084,6 +1093,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.holders" = "Halter";
 "coin_analytics.holders_rank" = "Halter Rang";
 "coin_analytics.holders_rank.description" = "Ranking von Token nach einzigartigen Adressen, die diese auf mehreren Blockchains halten.";
+"coin_analytics.holders_rank.sorting_field" = "Halter";
 "coin_analytics.holders.info1" = "Gesamtzahl der einzigartigen Adressen, die den Token auf verschiedenen Blockchains halten.";
 "coin_analytics.holders.info2" = "Die Top 10 Wallets, die den Token auf jeder Blockchain halten.";
 "coin_analytics.holders.tracked_blockchains" = "Verfolgte Blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -1103,10 +1113,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.project_fee" = "Projektgebühr";
 "coin_analytics.project_fee_rank" = "Projektgebührenrang";
 "coin_analytics.project_fee_rank.description" = "Token werden nach den von den jeweiligen Projekten generierten Gebühren eingestuft. Die Art und Weise, wie Gebühren gesammelt werden, variiert von Projekt zu Projekt.";
+"coin_analytics.project_fee_rank.sorting_field" = "Lautstärke";
 
 "coin_analytics.project_revenue" = "Projekteinnahmen";
 "coin_analytics.project_revenue_rank" = "Projekt-Umsatzrang";
 "coin_analytics.project_revenue_rank.description" = "Token werden nach Einnahmen klassifiziert, die über Mechanismen wie Stapel- oder Tokenbrennen für Inhaber generiert werden.";
+"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
 
 "coin_analytics.other_data" = "Andere Daten";
 
@@ -1523,11 +1535,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privatsphäre";
-"settings.privacy.description" = "%@ sammelt keine Daten oder nutzt Analysewerkzeuge, die möglicherweise Daten über ihre Benutzer enthüllen. Die Brieftasche ist so konzipiert, dass sie den Benutzern ein hohes Maß an Privatsphäre garantiert.";
-"settings.privacy.statement.user_data_storage" = "Benutzerdaten bleiben immer auf dem Gerät des Benutzers.";
+"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "Das Wallet sammelt keine Daten über Benutzer.";
-"settings.privacy.statement.data_privacy" = "Das Wallet teilt keine Daten über Benutzer.";
-"settings.privacy.statement.user_account" = "Es gibt keine Benutzerkonten oder Datenbanken, die Benutzerdaten woanders speichern.";
+"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.allow" = "Share UI Data";
 
 // Settings -> Appearance
 
@@ -1542,7 +1554,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "appearance.hide_markets" = "Märkte ausblenden";
 "appearance.price_change" = "Preisänderung";
 "appearance.price_change.24h" = "24Std";
-"appearance.price_change.midnight_utc" = "Mitternacht UTC";
+"appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "Startbildschirm";
 "appearance.launch_screen.auto" = "Auto";
@@ -1555,7 +1567,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "appearance.balance_value" = "Saldo Wert";
 "appearance.balance_value.coin_fiat" = "Münze / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Münze";
-"appearance.balance_conversion" = "Saldokonvertierung";
 
 "appearance.app_icon" = "App-Symbol";
 
@@ -1927,7 +1938,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "fee_settings.errors.transaction_underpriced" = "Niedrige Transaktionsgebühr";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Gebühr ist zu niedrig";
 "fee_settings.errors.zero_amount.info" = "Kann 0 TRX nicht übertragen";
-"fee_settings.warning.risk_of_getting_stuck" = "Riskant";
+"fee_settings.warning.risk_of_getting_stuck" = "Risky";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Die Transaktion kann eine Zeit lang ausstehend bleiben oder ganz fehlschlagen.";
 "fee_settings.warning.overpricing" = "Gebühr zu hoch";
 "fee_settings.warning.overpricing.info" = "Die festgelegte Transaktionsgebühr ist höher als für die Bearbeitung dieser Transaktion jetzt erforderlich.";

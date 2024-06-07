@@ -794,6 +794,8 @@
 
 "top_platform.title" = "%@ Экосистема";
 "top_platform.description" = "Капитализация рынка всех протоколов на блокчейне %@ ";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "Недавние";
 "market.search.popular" = "Популярные";
@@ -820,6 +822,7 @@
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать результаты";
 "market.advanced_search.empty_results" = "Сбросить результаты";
+"market.advanced_search.retry" = "Повторить";
 "market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24ч";
 
@@ -839,16 +842,9 @@
 
 "market.advanced_search.liquidity" = "Ликвидность DEX";
 "market.advanced_search.blockchains" = "Блокчейны";
-"market.advanced_search.technical_advice" = "Торговые сигналы";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "Ценовой период";
 "market.advanced_search.price_change" = "по изменению цены (%)";
-
-"market.advanced_search.technical_advice.risky" = "Risky";
-"market.advanced_search.technical_advice.strong_buy" = "Активно покупать";
-"market.advanced_search.technical_advice.buy" = "Покупать";
-"market.advanced_search.technical_advice.neutral" = "Нейтрально";
-"market.advanced_search.technical_advice.sell" = "Продавать";
-"market.advanced_search.technical_advice.strong_sell" = "Активно продавать";
 
 "market.advanced_search.outperformed_btc" = "Обошел BTC";
 "market.advanced_search.outperformed_eth" = "Обошел ETH";
@@ -929,6 +925,13 @@
 "market.volume.description" = "24-часовой объем крипторынка";
 "market.volume.volume" = "Volume";
 
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
+
 // Coin Page
 
 "coin_page.overview" = "Цена";
@@ -948,7 +951,8 @@
 "coin_overview.genesis_date" = "Дата старта";
 "coin_overview.trading_volume" = "Объем торговли";
 
-"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.hour24" = "24 Hours";
+"coin_overview.roi.day1" = "1 Day";
 "coin_overview.roi.day7" = "1 Week";
 "coin_overview.roi.day14" = "2 Weeks";
 "coin_overview.roi.day30" = "1 Month";
@@ -1014,7 +1018,7 @@
 "coin_analytics.indicators.oversold" = "Очень рискованная торговля";
 "coin_analytics.indicators.strong_buy" = "Активно покупать";
 "coin_analytics.indicators.buy" = "Покупать";
-"coin_analytics.indicators.neutral" = "Нейтрально";
+"coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "Продавать";
 "coin_analytics.indicators.strong_sell" = "Активно продавать";
 "coin_analytics.indicators.overbought" = "Очень рискованная торговля";
@@ -1038,6 +1042,7 @@
 "coin_analytics.cex_volume" = "Объем CEX";
 "coin_analytics.cex_volume_rank" = "Рейтинг объема CEX";
 "coin_analytics.cex_volume_rank.description" = "Торговый объем токена на централизованных биржах.";
+"coin_analytics.cex_volume_rank.sorting_field" = "Volume";
 "coin_analytics.cex_volume.info1" = "Общий объем торгов по токену на ведущих централизованных биржах за 30-дневный период.";
 "coin_analytics.cex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих централизованных биржах за 1 год.";
 "coin_analytics.cex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих централизованных биржах за 30-дневный период.";
@@ -1046,6 +1051,7 @@
 "coin_analytics.dex_volume" = "Объем DEX";
 "coin_analytics.dex_volume_rank" = "Рейтинг объема DEX";
 "coin_analytics.dex_volume_rank.description" = "Торговый объем токена на децентрализованных биржах.";
+"coin_analytics.dex_volume_rank.sorting_field" = "Volume";
 "coin_analytics.dex_volume.info1" = "Общий объем торгов по токену на ведущих децентрализованных биржах за 30-дневный период.";
 "coin_analytics.dex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих децентрализованных биржах за 1 год.";
 "coin_analytics.dex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих децентрализованных биржах за 30-дневный период.";
@@ -1057,6 +1063,7 @@
 "coin_analytics.dex_liquidity" = "Ликвидность DEX";
 "coin_analytics.dex_liquidity_rank" = "Рейтинг ликвидности DEX";
 "coin_analytics.dex_liquidity_rank.description" = "Рейтинг токенов основан по доступной ликвидности на децентрализованных биржах.";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
 "coin_analytics.dex_liquidity.info1" = "Общая ликвидность, доступная в настоящий момент для токена на ведущих децентрализованных биржах.";
 "coin_analytics.dex_liquidity.info2" = "График, отражающий колебания доступной ликвидности для токена на ведущих децентрализованных биржах за 1 год.";
 "coin_analytics.dex_liquidity.info3" = "Список всех токенов, ранжированных по доступной ликвидности на ведущих децентрализованных биржах.";
@@ -1068,6 +1075,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "Уникальные адреса за 30 дней";
 "coin_analytics.active_addresses_rank" = "Рейтинг активных адресов";
 "coin_analytics.active_addresses_rank.description" = "Список токенов, ранжированных по количеству уникальных адресов транзакций с токеном.";
+"coin_analytics.active_addresses_rank.sorting_field" = "Active";
 "coin_analytics.active_addresses.info1" = "Общее количество уникальных ежедневных активных адресов за 24 часа.";
 "coin_analytics.active_addresses.info2" = "График, показывающий вариацию количества ежедневных активных адресов в течение 1 года.";
 "coin_analytics.active_addresses.info3" = "Общее количество уникальных адресов блокчейна, с которых проводились транзакции с токеном за 30 дней.";
@@ -1077,6 +1085,7 @@
 "coin_analytics.transaction_count" = "Количество транзакций";
 "coin_analytics.transaction_count_rank" = "Рейтинг кол-ва транзакций";
 "coin_analytics.transaction_count_rank.description" = "Токены ранжируются по количеству транзакций в блокчейне.";
+"coin_analytics.transaction_count_rank.sorting_field" = "Count";
 "coin_analytics.transaction_count.info1" = "Общее количество уникальных транзакций блокчейна с токеном более 30 дней.";
 "coin_analytics.transaction_count.info2" = "График, отражающий колебания количества транзакций за 1 год.";
 "coin_analytics.transaction_count.info3" = "Рейтинг токена основан на количестве транзакций с токеном за 30-дневный период.";
@@ -1086,6 +1095,7 @@
 "coin_analytics.holders" = "Держатели";
 "coin_analytics.holders_rank" = "Рейтинг держателей";
 "coin_analytics.holders_rank.description" = "Рейтинг токенов по уникальным адресам, содержащим их в нескольких блокчейнах.";
+"coin_analytics.holders_rank.sorting_field" = "Держатели";
 "coin_analytics.holders.info1" = "Общее количество уникальных адресов с токенами в различных блокчейнах.";
 "coin_analytics.holders.info2" = "Топ-10 кошельков с токенами в каждом блокчейне.";
 "coin_analytics.holders.tracked_blockchains" = "Отслеживаемые блокчейны: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -1105,10 +1115,12 @@
 "coin_analytics.project_fee" = "Комиссия проекта";
 "coin_analytics.project_fee_rank" = "Рейтинг оплаты за проект";
 "coin_analytics.project_fee_rank.description" = "Токены ранжируются в соответствии с платами, полученными в рамках соответствующих проектов.";
+"coin_analytics.project_fee_rank.sorting_field" = "Volume";
 
 "coin_analytics.project_revenue" = "Доход от проекта";
 "coin_analytics.project_revenue_rank" = "Рейтинг доходов";
 "coin_analytics.project_revenue_rank.description" = "Токены ранжируются по пассивному доходу владельцев, получаемому через стекинг или сжигание токенов.";
+"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
 
 "coin_analytics.other_data" = "Другие данные";
 
@@ -1525,11 +1537,11 @@
 // Settings -> Privacy
 
 "settings.privacy" = "Приватность";
-"settings.privacy.description" = "%@ не собирает данные и не использует инструменты аналитики, которые могут раскрывать любые данные о своих пользователях. Кошелек разработан для обеспечения высокого уровня конфиденциальности для своих пользователей.";
-"settings.privacy.statement.user_data_storage" = "Данные пользователя всегда остаются на устройстве пользователя.";
+"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "Кошелек не собирает никаких данных о пользователях.";
-"settings.privacy.statement.data_privacy" = "Кошелек не передает никаких данных о пользователях.";
-"settings.privacy.statement.user_account" = "Нет учетных записей или баз данных, хранящих данные пользователя в другом месте.";
+"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.allow" = "Share UI Data";
 
 // Settings -> Appearance
 
@@ -1544,7 +1556,7 @@
 "appearance.hide_markets" = "Hide Markets";
 "appearance.price_change" = "по изменению цены (%)";
 "appearance.price_change.24h" = "24H";
-"appearance.price_change.midnight_utc" = "Midnight UTC";
+"appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "Запуск экрана";
 "appearance.launch_screen.auto" = "По умолчанию";
@@ -1557,7 +1569,6 @@
 "appearance.balance_value" = "Значение баланса";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "Конвертация баланса";
 
 "appearance.app_icon" = "Иконка приложения";
 

@@ -790,6 +790,8 @@
 
 "top_platform.title" = "%@ 생태계";
 "top_platform.description" = "%@ 체인상의 모든 프로토콜의 시가총액";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "최근의";
 "market.search.popular" = "인기있는";
@@ -816,6 +818,7 @@
 "market.advanced_search.title" = "필터";
 "market.advanced_search.show_results" = "결과 보기";
 "market.advanced_search.empty_results" = "결과 없음";
+"market.advanced_search.retry" = "재시도";
 "market.advanced_search.dex_description" = "이 설정은 이더리움(Uniswap DEX) 과 바이낸스 스마트체인(Pancake DEX) 에서 거래되는 토큰에 적용됩니다.";
 "market.advanced_search.24h" = "24시간";
 
@@ -835,16 +838,9 @@
 
 "market.advanced_search.liquidity" = "DEX 유동성";
 "market.advanced_search.blockchains" = "블록체인";
-"market.advanced_search.technical_advice" = "전반적인 점수가 좋거나 우수합니다";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "가격 기간";
 "market.advanced_search.price_change" = "가격 변경";
-
-"market.advanced_search.technical_advice.risky" = "Risky";
-"market.advanced_search.technical_advice.strong_buy" = "강력한 매수";
-"market.advanced_search.technical_advice.buy" = "매수";
-"market.advanced_search.technical_advice.neutral" = "중립적";
-"market.advanced_search.technical_advice.sell" = "매도";
-"market.advanced_search.technical_advice.strong_sell" = "강력한 매도";
 
 "market.advanced_search.outperformed_btc" = "BTC를 능가했습니다";
 "market.advanced_search.outperformed_eth" = "ETH를 능가했습니다";
@@ -925,6 +921,13 @@
 "market.volume.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
 "market.volume.volume" = "Volume";
 
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
+
 // Coin Page
 
 "coin_page.overview" = "금액";
@@ -945,7 +948,8 @@
 "coin_overview.genesis_date" = "창립일";
 "coin_overview.trading_volume" = "거래량";
 
-"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.hour24" = "24 Hours";
+"coin_overview.roi.day1" = "1 Day";
 "coin_overview.roi.day7" = "1 Week";
 "coin_overview.roi.day14" = "2 Weeks";
 "coin_overview.roi.day30" = "1 Month";
@@ -1011,7 +1015,7 @@
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "강한 매수";
 "coin_analytics.indicators.buy" = "매수";
-"coin_analytics.indicators.neutral" = "중립적";
+"coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "매도";
 "coin_analytics.indicators.strong_sell" = "강한 매도";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1035,6 +1039,7 @@
 "coin_analytics.cex_volume" = "CEX 거래량";
 "coin_analytics.cex_volume_rank" = "CEX 거래량 순위";
 "coin_analytics.cex_volume_rank.description" = "중앙화 거래소에서의 토큰 거래량을 기준으로 순위가 매겨진 토큰들.";
+"coin_analytics.cex_volume_rank.sorting_field" = "Volume";
 "coin_analytics.cex_volume.info1" = "주요 중앙화 거래소에서의 토큰의 30일 동안의 총 거래량.";
 "coin_analytics.cex_volume.info2" = "주요 중앙화 거래소에서의 토큰의 1년 동안 일일 거래량 변동을 보여주는 차트.";
 "coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
@@ -1043,6 +1048,7 @@
 "coin_analytics.dex_volume" = "DEX 거래량";
 "coin_analytics.dex_volume_rank" = "DEX 거래량 순위";
 "coin_analytics.dex_volume_rank.description" = "탈중앙화 거래소에서의 토큰 거래량을 기준으로 순위가 매겨진 토큰들.";
+"coin_analytics.dex_volume_rank.sorting_field" = "Volume";
 "coin_analytics.dex_volume.info1" = "주요 탈중앙화 거래소에서의 토큰의 30일 동안의 총 거래량.";
 "coin_analytics.dex_volume.info2" = "1년 동안 주요 탈중앙화 거래소에서의 토큰의 일일 거래량 변동을 보여주는 차트.";
 "coin_analytics.dex_volume.info3" = "주요 탈중앙화 거래소에서 30일 동안의 거래량을 기반으로 한 토큰의 순위.";
@@ -1054,6 +1060,7 @@
 "coin_analytics.dex_liquidity" = "DEX 유동성";
 "coin_analytics.dex_liquidity_rank" = "DEX 유동성 순위";
 "coin_analytics.dex_liquidity_rank.description" = "탈중앙화 거래소에서 사용 가능한 유동성을 기준으로 한 토큰들의 순위.";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
 "coin_analytics.dex_liquidity.info1" = "주요 탈중앙화 거래소에서 해당 토큰의 현재 사용 가능한 유동성 총액.";
 "coin_analytics.dex_liquidity.info2" = "주요 탈중앙화 거래소에서의 해당 토큰의 1년 동안 사용 가능한 유동성 변동을 보여주는 차트.";
 "coin_analytics.dex_liquidity.info3" = "주요 탈중앙화 거래소에서의 해당 토큰의 사용 가능한 유동성을 기준으로 순위 매겨진 모든 토큰의 목록.";
@@ -1065,6 +1072,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30일 동안의 고유 주소";
 "coin_analytics.active_addresses_rank" = "활성 주소 순위";
 "coin_analytics.active_addresses_rank.description" = "토큰과 거래하는 고유 주소의 수에 따라 순위가 매겨진 토큰들.";
+"coin_analytics.active_addresses_rank.sorting_field" = "Active";
 "coin_analytics.active_addresses.info1" = "24시간 동안의 고유 일일 활성 주소 총 수.";
 "coin_analytics.active_addresses.info2" = "1년 동안 일일 활성 주소 수의 변동을 보여주는 차트.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
@@ -1074,6 +1082,7 @@
 "coin_analytics.transaction_count" = "트랜잭션 수";
 "coin_analytics.transaction_count_rank" = "거래 수 순위";
 "coin_analytics.transaction_count_rank.description" = "토큰은 블록체인에서의 거래 수에 따라 순위가 매겨집니다.";
+"coin_analytics.transaction_count_rank.sorting_field" = "Count";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "1년 동안의 거래 수 변동을 보여주는 차트.";
 "coin_analytics.transaction_count.info3" = "토큰의 순위는 30일 동안의 토큰 거래 수를 기준으로 합니다.";
@@ -1083,6 +1092,7 @@
 "coin_analytics.holders" = "소유주";
 "coin_analytics.holders_rank" = "소유주 순위";
 "coin_analytics.holders_rank.description" = "여러 블록체인에서 그들을 보유한 고유 주소에 의해 토큰을 순위 매김.";
+"coin_analytics.holders_rank.sorting_field" = "소유주";
 "coin_analytics.holders.info1" = "다양한 블록체인에서 토큰을 보유한 고유 주소의 총 수.";
 "coin_analytics.holders.info2" = "각 블록체인에서 토큰을 보유한 상위 10개 지갑.";
 "coin_analytics.holders.tracked_blockchains" = "추적되는 블록체인: 이더리움, 바이낸스 스마트 체인, 옵티미즘, 아비트럼, 셀로, 크로노스, 아발란체, 팬텀, 폴리곤";
@@ -1102,10 +1112,12 @@
 "coin_analytics.project_fee" = "프로젝트 수수료";
 "coin_analytics.project_fee_rank" = "프로젝트 수수료 순위";
 "coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee_rank.sorting_field" = "Volume";
 
 "coin_analytics.project_revenue" = "프로젝트 수익";
 "coin_analytics.project_revenue_rank" = "프로젝트 수익 순위";
 "coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
 
 "coin_analytics.other_data" = "기타 데이터";
 
@@ -1522,11 +1534,11 @@
 // Settings -> Privacy
 
 "settings.privacy" = "개인정보";
-"settings.privacy.description" = "%@은 사용자에 대한 데이터를 노출할 수 있는 데이터를 수집하거나 분석 도구를 사용하지 않습니다. 지갑은 사용자에게 높은 수준의 개인 정보를 보장하도록 설계되었습니다.";
-"settings.privacy.statement.user_data_storage" = "사용자 데이터는 항상 사용자의 장치에 남아 있습니다.";
+"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "지갑은 사용자에 대한 데이터를 수집하지 않습니다.";
-"settings.privacy.statement.data_privacy" = "지갑은 사용자에 대한 데이터를 공유하지 않습니다.";
-"settings.privacy.statement.user_account" = "사용자 데이터를 다른 곳에 보관하는 사용자 계정이나 데이터베이스가 없습니다.";
+"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.allow" = "Share UI Data";
 
 // Settings -> Appearance
 
@@ -1541,7 +1553,7 @@
 "appearance.hide_markets" = "Hide Markets";
 "appearance.price_change" = "가격 변경";
 "appearance.price_change.24h" = "24H";
-"appearance.price_change.midnight_utc" = "Midnight UTC";
+"appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "시작 화면";
 "appearance.launch_screen.auto" = "자동";
@@ -1554,7 +1566,6 @@
 "appearance.balance_value" = "균형 가치";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "잔액 변환";
 
 "appearance.app_icon" = "앱 아이콘";
 

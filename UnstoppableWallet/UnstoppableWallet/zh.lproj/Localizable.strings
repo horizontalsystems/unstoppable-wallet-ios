@@ -792,6 +792,8 @@
 
 "top_platform.title" = "%@ 星系";
 "top_platform.description" = "%@ 链上所有协议的市场上限";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "最近";
 "market.search.popular" = "流行";
@@ -818,6 +820,7 @@
 "market.advanced_search.title" = "过滤器";
 "market.advanced_search.show_results" = "显示结果";
 "market.advanced_search.empty_results" = "空结果";
+"market.advanced_search.retry" = "重试";
 "market.advanced_search.dex_description" = "此设置将应用于在以太坊（Uniswap DEX）和币安智能链（Pancake DEX）上交易的代币。";
 "market.advanced_search.24h" = "24小时";
 
@@ -837,16 +840,9 @@
 
 "market.advanced_search.liquidity" = "DEX流动性";
 "market.advanced_search.blockchains" = "区块链";
-"market.advanced_search.technical_advice" = "交易信号";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "价格区间";
 "market.advanced_search.price_change" = "价格变动";
-
-"market.advanced_search.technical_advice.risky" = "Risky";
-"market.advanced_search.technical_advice.strong_buy" = "强烈建议买入";
-"market.advanced_search.technical_advice.buy" = "购买";
-"market.advanced_search.technical_advice.neutral" = "中性";
-"market.advanced_search.technical_advice.sell" = "出售";
-"market.advanced_search.technical_advice.strong_sell" = "强烈建议卖出";
 
 "market.advanced_search.outperformed_btc" = "跑赢BTC";
 "market.advanced_search.outperformed_eth" = "跑赢ETH";
@@ -927,6 +923,13 @@
 "market.volume.description" = "加密货币市场24小时交易量";
 "market.volume.volume" = "Volume";
 
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
+
 // Coin Page
 
 "coin_page.overview" = "价格";
@@ -946,7 +949,8 @@
 "coin_overview.genesis_date" = "起始日期";
 "coin_overview.trading_volume" = "成交量";
 
-"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.hour24" = "24 Hours";
+"coin_overview.roi.day1" = "1 Day";
 "coin_overview.roi.day7" = "1 Week";
 "coin_overview.roi.day14" = "2 Weeks";
 "coin_overview.roi.day30" = "1 Month";
@@ -1012,7 +1016,7 @@
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "强烈建议买入";
 "coin_analytics.indicators.buy" = "购买";
-"coin_analytics.indicators.neutral" = "中性";
+"coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "出售";
 "coin_analytics.indicators.strong_sell" = "强烈建议卖出";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1036,6 +1040,7 @@
 "coin_analytics.cex_volume" = "CEX交易量";
 "coin_analytics.cex_volume_rank" = "CEX交易量排名";
 "coin_analytics.cex_volume_rank.description" = "对中心化交易所的代币按交易量排名的代币。";
+"coin_analytics.cex_volume_rank.sorting_field" = "Volume";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "图表显示了过去一年内该代币在主要中心化交易所的日交易量变化。";
 "coin_analytics.cex_volume.info3" = "代币的排名基于过去30天内在主要中心化交易所的交易量。";
@@ -1044,6 +1049,7 @@
 "coin_analytics.dex_volume" = "DEX交易量";
 "coin_analytics.dex_volume_rank" = "DEX交易量排名";
 "coin_analytics.dex_volume_rank.description" = "对去中心化交易所的代币按交易量排名的代币。";
+"coin_analytics.dex_volume_rank.sorting_field" = "Volume";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "图表显示了过去一年内该代币在主要去中心化交易所的日交易量变化。";
 "coin_analytics.dex_volume.info3" = "代币的排名基于在主要去中心化交易所过去30天的交易量。";
@@ -1055,6 +1061,7 @@
 "coin_analytics.dex_liquidity" = "DEX流动性";
 "coin_analytics.dex_liquidity_rank" = "DEX流通性排名";
 "coin_analytics.dex_liquidity_rank.description" = "对去中心化交易所上按可用流通性排名的代币。";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
 "coin_analytics.dex_liquidity.info1" = "该代币在主要去中心化交易所当前可用的总流动性。";
 "coin_analytics.dex_liquidity.info2" = "图表显示了过去一年内该代币在主要去中心化交易所可用流动性的变化。";
 "coin_analytics.dex_liquidity.info3" = "根据在主要去中心化交易所的代币可用流动性排名的所有代币列表。";
@@ -1066,6 +1073,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30天唯一地址";
 "coin_analytics.active_addresses_rank" = "活跃地址排名";
 "coin_analytics.active_addresses_rank.description" = "按与代币交易的唯一地址的数量排名的代币。";
+"coin_analytics.active_addresses_rank.sorting_field" = "Active";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "图表显示了过去一年内每日活跃地址数量的变化。";
 "coin_analytics.active_addresses.info3" = "过去30天内与代币进行交易的独特区块链地址的总数。";
@@ -1075,6 +1083,7 @@
 "coin_analytics.transaction_count" = "交易数";
 "coin_analytics.transaction_count_rank" = "Tx计数排名";
 "coin_analytics.transaction_count_rank.description" = "代币按区块链上的交易数量排名。";
+"coin_analytics.transaction_count_rank.sorting_field" = "Count";
 "coin_analytics.transaction_count.info1" = "30天内代币独特区块链交易的总数。";
 "coin_analytics.transaction_count.info2" = "显示1年周期的交易计数变化的图表。";
 "coin_analytics.transaction_count.info3" = "代币的排名基于30天内代币交易的数量。";
@@ -1084,6 +1093,7 @@
 "coin_analytics.holders" = "持有者";
 "coin_analytics.holders_rank" = "Classement des titulaires";
 "coin_analytics.holders_rank.description" = "通过在多个区块链上持有它们的独特地址来排名令牌。";
+"coin_analytics.holders_rank.sorting_field" = "持有者";
 "coin_analytics.holders.info1" = "在各种区块链上持有代币的唯一地址的总数。";
 "coin_analytics.holders.info2" = "在每一个区块链上持有代币的前10大钱包。";
 "coin_analytics.holders.tracked_blockchains" = "已追踪区块链：以太坊、币安智能链、Optimism、Arbitrum、Celo、Cronos、Avalanche、Fantom、Polygon";
@@ -1103,10 +1113,12 @@
 "coin_analytics.project_fee" = "项目费用";
 "coin_analytics.project_fee_rank" = "项目收费等级";
 "coin_analytics.project_fee_rank.description" = "代币根据各自项目产生的费用进行排名。收取费用的方式因项目而异。";
+"coin_analytics.project_fee_rank.sorting_field" = "Volume";
 
 "coin_analytics.project_revenue" = "项目收入";
 "coin_analytics.project_revenue_rank" = "项目收入排名";
 "coin_analytics.project_revenue_rank.description" = "代币按照通过机制（如质押或代币销毁）为持有者产生的收入进行排名。";
+"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
 
 "coin_analytics.other_data" = "其它数据";
 
@@ -1523,11 +1535,11 @@
 // Settings -> Privacy
 
 "settings.privacy" = "隐私保护";
-"settings.privacy.description" = "%@ 不收集任何数据或使用分析工具来揭露任何用户数据。 钱包的设计是为了确保用户高度的隐私。";
-"settings.privacy.statement.user_data_storage" = "用户数据总是保留在用户的设备上。";
+"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "钱包没有收集任何有关用户的数据。";
-"settings.privacy.statement.data_privacy" = "钱包没有收集任何有关用户的数据。";
-"settings.privacy.statement.user_account" = "没有用户帐户或数据库存放其他地方的用户数据。";
+"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.allow" = "Share UI Data";
 
 // Settings -> Appearance
 
@@ -1542,7 +1554,7 @@
 "appearance.hide_markets" = "Hide Markets";
 "appearance.price_change" = "价格变动";
 "appearance.price_change.24h" = "24H";
-"appearance.price_change.midnight_utc" = "Midnight UTC";
+"appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "启动屏幕";
 "appearance.launch_screen.auto" = "自动";
@@ -1555,7 +1567,6 @@
 "appearance.balance_value" = "余额值";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "余额转换";
 
 "appearance.app_icon" = "应用图标";
 

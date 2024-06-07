@@ -792,6 +792,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "top_platform.title" = "%@ Ekosistemi";
 "top_platform.description" = "%@ zincirindeki tüm protokollerin piyasa değeri";
+"top_platform.total_cap" = "Total Cap";
+
 
 "market.search.recent" = "Son";
 "market.search.popular" = "Popüler";
@@ -818,6 +820,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.title" = "Filtreler";
 "market.advanced_search.show_results" = "Sonuçları Göster";
 "market.advanced_search.empty_results" = "Boş Sonuçlar";
+"market.advanced_search.retry" = "Yeniden Dene";
 "market.advanced_search.dex_description" = "Bu ayar, Ethereum (Uniswap DEX) ve Binance Smart Chain (Pancake DEX) üzerinde işlem gören tokenlar için geçerlidir.";
 "market.advanced_search.24h" = "24 sa";
 
@@ -837,16 +840,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.advanced_search.liquidity" = "DEX Likiditesi";
 "market.advanced_search.blockchains" = "Blockchain'ler";
-"market.advanced_search.technical_advice" = "Ticaret Sinyalleri";
+"market.advanced_search.signal" = "Trading Signal";
 "market.advanced_search.price_period" = "Fiyat Periyodu";
 "market.advanced_search.price_change" = "Fiyat Değişimi";
-
-"market.advanced_search.technical_advice.risky" = "Risky";
-"market.advanced_search.technical_advice.strong_buy" = "Kuvvetli Al";
-"market.advanced_search.technical_advice.buy" = "Al";
-"market.advanced_search.technical_advice.neutral" = "Nötr";
-"market.advanced_search.technical_advice.sell" = "Sat";
-"market.advanced_search.technical_advice.strong_sell" = "Kuvvetli Satış";
 
 "market.advanced_search.outperformed_btc" = "BTC'yi Geride Bıraktı";
 "market.advanced_search.outperformed_eth" = "ETH'yi Geride Bıraktı";
@@ -927,6 +923,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.volume.description" = "Kripto piyasa 24 saatlik işlem hacmi";
 "market.volume.volume" = "Volume";
 
+"market.signal.risky" = "Risky";
+"market.signal.strong_buy" = "Strong Buy";
+"market.signal.buy" = "Buy";
+"market.signal.neutral" = "Neutral";
+"market.signal.sell" = "Sell";
+"market.signal.strong_sell" = "Strong Sell";
+
 // Coin Page
 
 "coin_page.overview" = "Fiyat";
@@ -946,7 +949,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_overview.genesis_date" = "Başlangıç ​​tarihi";
 "coin_overview.trading_volume" = "İşlem Hacmi";
 
-"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.hour24" = "24 Hours";
+"coin_overview.roi.day1" = "1 Day";
 "coin_overview.roi.day7" = "1 Week";
 "coin_overview.roi.day14" = "2 Weeks";
 "coin_overview.roi.day30" = "1 Month";
@@ -1012,7 +1016,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "Strong Buy";
 "coin_analytics.indicators.buy" = "Buy";
-"coin_analytics.indicators.neutral" = "Nötr";
+"coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "Sell";
 "coin_analytics.indicators.strong_sell" = "Strong Sell";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1036,6 +1040,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.cex_volume" = "CEX Hacmi";
 "coin_analytics.cex_volume_rank" = "CEX Hacim Sıralaması";
 "coin_analytics.cex_volume_rank.description" = "Merkezi borsalarda token için işlem hacmine göre sıralanan tokenlar.";
+"coin_analytics.cex_volume_rank.sorting_field" = "Volume";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Önde gelen merkezi borsalarda token için günlük işlem hacmindeki değişimi gösteren 1 yıllık döneme ait grafik.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
@@ -1044,6 +1049,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.dex_volume" = "DEX Hacmi";
 "coin_analytics.dex_volume_rank" = "DEX Hacim Sıralaması";
 "coin_analytics.dex_volume_rank.description" = "Merkezi olmayan borsalarda token için işlem hacmine göre sıralanan tokenlar.";
+"coin_analytics.dex_volume_rank.sorting_field" = "Volume";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Bir yıllık süre zarfında önde gelen merkezi olmayan borsalarda token için günlük işlem hacmindeki değişikliği gösteren grafik.";
 "coin_analytics.dex_volume.info3" = "30 günlük süre içinde önde gelen merkezi olmayan borsalarda işlem hacmine göre token sıralaması.";
@@ -1055,6 +1061,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.dex_liquidity" = "DEX Likiditesi";
 "coin_analytics.dex_liquidity_rank" = "DEX Likidite Sıralaması";
 "coin_analytics.dex_liquidity_rank.description" = "Merkezi olmayan borsalarda mevcut likiditeye göre sıralanan tokenlar.";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
 "coin_analytics.dex_liquidity.info1" = "Önde gelen merkezi olmayan borsalarda token için şu anda mevcut olan toplam likidite.";
 "coin_analytics.dex_liquidity.info2" = "Bir yıllık süre zarfında önde gelen merkezi olmayan borsalarda token için mevcut likiditedeki değişikliği gösteren grafik.";
 "coin_analytics.dex_liquidity.info3" = "Önde gelen merkezi olmayan borsalarda token için mevcut likiditeye göre sıralanan tüm tokenlerin listesi.";
@@ -1066,6 +1073,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30 Günlük Benzersiz Adresler";
 "coin_analytics.active_addresses_rank" = "Aktif Adresler Sıralaması";
 "coin_analytics.active_addresses_rank.description" = "Token ile işlem yapan benzersiz adreslerin sayısına göre sıralanan tokenlar.";
+"coin_analytics.active_addresses_rank.sorting_field" = "Active";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Bir yıllık süre zarfında günlük aktif adres sayısındaki değişimi gösteren grafik.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
@@ -1075,6 +1083,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.transaction_count" = "İşlem Sayısı";
 "coin_analytics.transaction_count_rank" = "İşlem Sayısı Sıralaması";
 "coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
+"coin_analytics.transaction_count_rank.sorting_field" = "Count";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "Bir yıllık süre zarfında işlem sayısındaki değişimi gösteren grafik.";
 "coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
@@ -1084,6 +1093,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.holders" = "Sahipler";
 "coin_analytics.holders_rank" = "Sahipler Sıralaması";
 "coin_analytics.holders_rank.description" = "Çoklu blockchain'lerde onları tutan benzersiz adreslere göre tokenleri sıralama.";
+"coin_analytics.holders_rank.sorting_field" = "Sahipler";
 "coin_analytics.holders.info1" = "Çeşitli blockchain'lerde tokeni tutan benzersiz adreslerin toplam sayısı.";
 "coin_analytics.holders.info2" = "Her blok zincirinde tokenı tutan en iyi 10 cüzdan.";
 "coin_analytics.holders.tracked_blockchains" = "İzlenen blok zincirleri: Ethereum, Binance Smart Chain, İyimserlik, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -1103,10 +1113,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.project_fee" = "Proje Ücreti";
 "coin_analytics.project_fee_rank" = "Proje Ücret Sıralaması";
 "coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee_rank.sorting_field" = "Volume";
 
 "coin_analytics.project_revenue" = "Proje Geliri";
 "coin_analytics.project_revenue_rank" = "Proje Gelir Sıralaması";
 "coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
 
 "coin_analytics.other_data" = "Diğer Veriler";
 
@@ -1527,11 +1539,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> Privacy
 
 "settings.privacy" = "Gizlilik";
-"settings.privacy.description" = "%@ herhangi bir veri toplamaz veya kullanıcıları hakkında herhangi bir veriyi ifşa edebilecek analiz araçları kullanmaz. Сüzdanı kullanıcıları için yüksek düzeyde gizlilik sağlamak üzere tasarlanmıştır.";
-"settings.privacy.statement.user_data_storage" = "Kullanıcı verileri her zaman kullanıcının cihazında kalır.";
+"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri toplamaz.";
-"settings.privacy.statement.data_privacy" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri paylaşmaz.";
-"settings.privacy.statement.user_account" = "Kullanıcı verilerini herhangi bir yerde kaida alan hesaplar veya veritabanları yoktur.";
+"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.allow" = "Share UI Data";
 
 // Settings -> Appearance
 
@@ -1546,7 +1558,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.hide_markets" = "Hide Markets";
 "appearance.price_change" = "Fiyat Değişimi";
 "appearance.price_change.24h" = "24H";
-"appearance.price_change.midnight_utc" = "Midnight UTC";
+"appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "Başlangıç Ekranı";
 "appearance.launch_screen.auto" = "Oto";
@@ -1559,7 +1571,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.balance_value" = "Bakiye değeri";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
-"appearance.balance_conversion" = "Bakiye çevrimi";
 
 "appearance.app_icon" = "Uygulama İkonları";
 
