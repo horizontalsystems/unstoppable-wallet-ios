@@ -186,18 +186,6 @@ extension CoinIndicatorViewItemFactory {
 }
 
 extension TechnicalAdvice.Advice {
-    var title: String {
-        switch self {
-        case .oversold: return "coin_analytics.indicators.oversold".localized
-        case .strongSell: return "coin_analytics.indicators.strong_sell".localized
-        case .sell: return "coin_analytics.indicators.sell".localized
-        case .neutral: return "coin_analytics.indicators.neutral".localized
-        case .buy: return "coin_analytics.indicators.buy".localized
-        case .strongBuy: return "coin_analytics.indicators.strong_buy".localized
-        case .overbought: return "coin_analytics.indicators.overbought".localized
-        }
-    }
-
     var sliderIndex: Int {
         switch self {
         case .oversold: return 0

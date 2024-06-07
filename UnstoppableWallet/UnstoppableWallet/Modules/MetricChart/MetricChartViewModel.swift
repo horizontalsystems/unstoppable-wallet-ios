@@ -175,4 +175,17 @@ extension MetricChartViewModel {
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale, hardcodedRightMode: "top_platform.total_cap".localized)
         return MetricChartViewModel(service: chartService, factory: factory)
     }
+
+    static func instance(coin: Coin, type: CoinProChartModule.ProChartType) -> MetricChartViewModel {
+        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, coin: coin, type: type)
+
+        let chartService = MetricChartService(
+            chartFetcher: chartFetcher,
+            interval: .byPeriod(.month1),
+            statPage: type.statPage
+        )
+
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
+        return MetricChartViewModel(service: chartService, factory: factory)
+    }
 }

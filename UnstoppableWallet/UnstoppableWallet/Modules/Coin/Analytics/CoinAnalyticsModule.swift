@@ -4,10 +4,6 @@ import ThemeKit
 import UIKit
 
 enum CoinAnalyticsModule {
-    static func view(fullCoin: FullCoin) -> some View {
-        CoinAnalyticsView(fullCoin: fullCoin)
-    }
-
     static func viewController(fullCoin: FullCoin) -> CoinAnalyticsViewController {
         let service = CoinAnalyticsService(
             fullCoin: fullCoin,
@@ -32,11 +28,15 @@ enum CoinAnalyticsModule {
 }
 
 extension CoinAnalyticsModule {
-    enum Rating: String, CaseIterable {
+    enum Rating: String, CaseIterable, Identifiable {
         case excellent
         case good
         case fair
         case poor
+
+        var id: Self {
+            self
+        }
 
         var title: String {
             "coin_analytics.overall_score.\(rawValue)".localized
@@ -44,6 +44,10 @@ extension CoinAnalyticsModule {
 
         var image: UIImage? {
             UIImage(named: "rating_\(rawValue)_24")
+        }
+
+        var imageNew: Image? {
+            Image("rating_\(rawValue)_24")
         }
 
         var color: UIColor {
@@ -54,17 +58,14 @@ extension CoinAnalyticsModule {
             case .poor: return .themeRedD
             }
         }
+
+        var colorNew: Color {
+            switch self {
+            case .excellent: return .themeGreen
+            case .good: return .themeYellow
+            case .fair: return Color(hex: 0xFF7A00)
+            case .poor: return .themeRed
+            }
+        }
     }
-}
-
-struct CoinAnalyticsView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    let fullCoin: FullCoin
-
-    func makeUIViewController(context _: Context) -> UIViewController {
-        CoinAnalyticsModule.viewController(fullCoin: fullCoin)
-    }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

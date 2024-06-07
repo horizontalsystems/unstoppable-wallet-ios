@@ -130,19 +130,17 @@ struct BitcoinSendSettingsView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .sheet(isPresented: $inputsOutputsDescriptionPresented) {
-            ThemeNavigationView {
-                InfoNewView(
-                    viewItems: [
-                        .header1(text: "send.transaction_inputs_outputs_info.title".localized),
-                        .text(text: "send.transaction_inputs_outputs_info.description".localized(AppConfig.appName, AppConfig.appName)),
-                        .header3(text: "send.transaction_inputs_outputs_info.shuffle.title".localized),
-                        .text(text: "send.transaction_inputs_outputs_info.shuffle.description".localized),
-                        .header3(text: "send.transaction_inputs_outputs_info.deterministic.title".localized),
-                        .text(text: "send.transaction_inputs_outputs_info.deterministic.description".localized),
-                    ],
-                    isPresented: $inputsOutputsDescriptionPresented
-                )
-            }
+            InfoView(
+                items: [
+                    .header1(text: "send.transaction_inputs_outputs_info.title".localized),
+                    .text(text: "send.transaction_inputs_outputs_info.description".localized(AppConfig.appName, AppConfig.appName)),
+                    .header3(text: "send.transaction_inputs_outputs_info.shuffle.title".localized),
+                    .text(text: "send.transaction_inputs_outputs_info.shuffle.description".localized),
+                    .header3(text: "send.transaction_inputs_outputs_info.deterministic.title".localized),
+                    .text(text: "send.transaction_inputs_outputs_info.deterministic.description".localized),
+                ],
+                isPresented: $inputsOutputsDescriptionPresented
+            )
         }
         .bottomSheet(isPresented: $chooseSortModePresented) {
             VStack(spacing: 0) {

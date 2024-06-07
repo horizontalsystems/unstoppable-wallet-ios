@@ -44,16 +44,6 @@ extension InfoModule {
         )
     }
 
-    static var restoreSourceInfo: some View {
-        InfoView(
-            viewItems: [
-                .header1(text: "blockchain_settings.info.restore_source".localized),
-                .text(text: "blockchain_settings.info.restore_source.content".localized(AppConfig.appName)),
-            ]
-        )
-        .ignoresSafeArea()
-    }
-
     static var transactionInputsOutputsInfo: UIViewController {
         viewController(
             viewItems: [
@@ -91,16 +81,4 @@ extension InfoModule {
             ]
         )
     }
-}
-
-struct InfoView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    let viewItems: [InfoModule.ViewItem]
-
-    func makeUIViewController(context _: Context) -> UIViewController {
-        InfoModule.viewController(viewItems: viewItems)
-    }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

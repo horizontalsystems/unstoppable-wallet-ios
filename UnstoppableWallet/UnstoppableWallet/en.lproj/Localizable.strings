@@ -1005,6 +1005,7 @@
 "coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
 "coin_analytics.indicators.info.title" = "Technical Indicators";
 "coin_analytics.indicators.info.description" = "We use the Bollinger Bands + RSI strategy to determine trading signals. All calculations are based on daily candlesticks and provide advice for a moderately long term. The essence of the strategy is that the asset price should reach an extreme, breaking out of the Bollinger Bands channel, and the RSI should be in the overbought/oversold zone. After the price returns to the channel, there is a high probability of the price returning to the mean values or attempting to break the channel from the other side. Note that the strategy may give several false signals during strong market movements before a correct signal appears.\n\nPlease remember that it is very important to apply risk management to trading and remember to cut losses if the market situation changes! ";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "Hide Details";
 "coin_analytics.indicators.show_details" = "Show Details";
 "coin_analytics.indicators.summary" = "Summary";
@@ -1656,6 +1657,7 @@
 "chart.about.read_less" = "Read Less";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 

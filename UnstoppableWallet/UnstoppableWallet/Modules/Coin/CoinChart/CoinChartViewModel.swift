@@ -8,7 +8,7 @@ import RxRelay
 import RxSwift
 
 class CoinChartViewModel: ObservableObject {
-    private let service: CoinChartService
+    let service: CoinChartService
     private let factory: CoinChartFactory
     private let disposeBag = DisposeBag()
 
@@ -165,6 +165,24 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
 
     public func touchUp() {
         pointSelectedItemRelay.accept(nil)
+    }
+}
+
+extension CoinChartViewModel {
+    static func instance(coinUid: String) -> CoinChartViewModel {
+        let repository = ChartIndicatorsRepository(
+            localStorage: App.shared.localStorage,
+            subscriptionManager: App.shared.subscriptionManager
+        )
+        let chartService = CoinChartService(
+            marketKit: App.shared.marketKit,
+            currencyManager: App.shared.currencyManager,
+            localStorage: App.shared.localStorage,
+            indicatorRepository: repository,
+            coinUid: coinUid
+        )
+        let chartFactory = CoinChartFactory(currentLocale: LanguageManager.shared.currentLocale)
+        return CoinChartViewModel(service: chartService, factory: chartFactory)
     }
 }
 

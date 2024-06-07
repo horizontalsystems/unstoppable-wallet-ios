@@ -1,152 +1,91 @@
 import Combine
+import ComponentKit
 import Foundation
 import HsExtensions
 import MarketKit
+import RxSwift
 
 class CoinOverviewViewModelNew: ObservableObject {
-    private var tasks = Set<AnyTask>()
-
     private let coinUid: String
-    private let marketKit: MarketKit.Kit
-    private let currencyManager: CurrencyManager
-    private let languageManager: LanguageManager
-    private let accountManager: AccountManager
-    private let walletManager: WalletManager
-    private let viewItemFactory = CoinOverviewViewItemFactory()
+    private let marketKit = App.shared.marketKit
+    private let currencyManager = App.shared.currencyManager
+    private let languageManager = LanguageManager.shared
+    private let walletManager = App.shared.walletManager
+    private var tasks = Set<AnyTask>()
+    private var disposeBag = DisposeBag()
 
-    let currency: Currency
+    @Published private(set) var state: State = .loading
+    @Published private(set) var walletData: WalletManager.WalletData
 
-    @Published private(set) var state: DataStatus<Item> = .loading
-
-    init(coinUid: String, marketKit: MarketKit.Kit, currencyManager: CurrencyManager, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager) {
+    init(coinUid: String) {
         self.coinUid = coinUid
-        self.marketKit = marketKit
-        self.currencyManager = currencyManager
-        self.languageManager = languageManager
-        self.accountManager = accountManager
-        self.walletManager = walletManager
 
-        currency = currencyManager.baseCurrency
-    }
+        walletData = walletManager.activeWalletData
 
-    private func handleSuccess(info: MarketInfoOverview) {
-        let account = accountManager.activeAccount
-
-        let tokens = info.fullCoin.tokens
-            .filter {
-                switch $0.type {
-                case let .unsupported(_, reference): return reference != nil
-                default: return true
-                }
-            }
-
-        let walletTokens = walletManager.activeWallets.map(\.token)
-
-        let tokenItems = tokens
-            .sorted { lhsToken, rhsToken in
-                let lhsTypeOrder = lhsToken.type.order
-                let rhsTypeOrder = rhsToken.type.order
-
-                guard lhsTypeOrder == rhsTypeOrder else {
-                    return lhsTypeOrder < rhsTypeOrder
-                }
-
-                return lhsToken.blockchainType.order < rhsToken.blockchainType.order
-            }
-            .map { token in
-                let state: TokenItemState
-
-                if let account, !account.watchAccount, account.type.supports(token: token) {
-                    if walletTokens.contains(token) {
-                        state = .alreadyAdded
-                    } else {
-                        state = .canBeAdded
-                    }
-                } else {
-                    state = .cannotBeAdded
-                }
-
-                return TokenItem(
-                    token: token,
-                    state: state
-                )
-            }
-
-        DispatchQueue.main.async {
-            self.state = .completed(Item(info: info, tokens: tokenItems, guideUrl: self.guideUrl))
-        }
-    }
-
-    private func handleFailure(error: Error) {
-        DispatchQueue.main.async {
-            self.state = .failed(error)
-        }
-    }
-
-    private var guideUrl: URL? {
-        guard let guideFileUrl else {
-            return nil
-        }
-
-        return URL(string: guideFileUrl, relativeTo: AppConfig.guidesIndexUrl)
-    }
-
-    private var guideFileUrl: String? {
-        switch coinUid {
-        case "bitcoin": return "guides/token_guides/en/bitcoin.md"
-        case "ethereum": return "guides/token_guides/en/ethereum.md"
-        case "bitcoin-cash": return "guides/token_guides/en/bitcoin-cash.md"
-        case "zcash": return "guides/token_guides/en/zcash.md"
-        case "uniswap": return "guides/token_guides/en/uniswap.md"
-        case "curve-dao-token": return "guides/token_guides/en/curve-finance.md"
-        case "balancer": return "guides/token_guides/en/balancer-dex.md"
-        case "synthetix-network-token": return "guides/token_guides/en/synthetix.md"
-        case "tether": return "guides/token_guides/en/tether.md"
-        case "maker": return "guides/token_guides/en/makerdao.md"
-        case "dai": return "guides/token_guides/en/makerdao.md"
-        case "aave": return "guides/token_guides/en/aave.md"
-        case "compound": return "guides/token_guides/en/compound.md"
-        default: return nil
-        }
+        walletManager.activeWalletDataUpdatedObservable
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in self?.walletData = $0 })
+            .disposed(by: disposeBag)
     }
 }
 
 extension CoinOverviewViewModelNew {
-    func sync() {
+    var currency: Currency {
+        currencyManager.baseCurrency
+    }
+
+    func load() {
         tasks = Set()
 
         state = .loading
 
         Task { [weak self, marketKit, coinUid, currencyManager, languageManager] in
             do {
-                let info = try await marketKit.marketInfoOverview(
-                    coinUid: coinUid,
-                    currencyCode: currencyManager.baseCurrency.code,
-                    languageCode: languageManager.currentLanguage
-                )
-                self?.handleSuccess(info: info)
+                let overview = try await marketKit.marketInfoOverview(coinUid: coinUid, currencyCode: currencyManager.baseCurrency.code, languageCode: languageManager.currentLanguage)
+
+                await MainActor.run { [weak self] in
+                    self?.state = .loaded(overview: overview)
+                }
             } catch {
-                self?.handleFailure(error: error)
+                await MainActor.run { [weak self] in
+                    self?.state = .failed
+                }
             }
-        }.store(in: &tasks)
+        }
+        .store(in: &tasks)
+    }
+
+    func addToWallet(token: Token) {
+        guard let account = walletData.account else {
+            return
+        }
+
+        let wallet = Wallet(token: token, account: account)
+        walletManager.save(wallets: [wallet])
+
+        HudHelper.instance.show(banner: .addedToWallet)
+
+        stat(page: .coinOverview, event: .addToWallet)
+    }
+
+    func removeFromWallet(token: Token) {
+        guard let account = walletData.account else {
+            return
+        }
+
+        let wallet = Wallet(token: token, account: account)
+        walletManager.delete(wallets: [wallet])
+
+        HudHelper.instance.show(banner: .removedFromWallet)
+
+        stat(page: .coinOverview, event: .removeFromWallet)
     }
 }
 
 extension CoinOverviewViewModelNew {
-    struct Item {
-        let info: MarketInfoOverview
-        let tokens: [TokenItem]
-        let guideUrl: URL?
-    }
-
-    struct TokenItem {
-        let token: Token
-        let state: TokenItemState
-    }
-
-    enum TokenItemState {
-        case canBeAdded
-        case alreadyAdded
-        case cannotBeAdded
+    enum State {
+        case loading
+        case loaded(overview: MarketInfoOverview)
+        case failed
     }
 }

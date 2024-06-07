@@ -15,17 +15,17 @@ class CoinPageViewController: ThemeViewController {
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private let overviewController: CoinOverviewViewController
-    private let marketsController: UIViewController
+    // private let marketsController: UIViewController
     private let analyticsController: CoinAnalyticsViewController
 //    private let tweetsController: CoinTweetsViewController
 
     private var favorite = false
 
-    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, analyticsController: CoinAnalyticsViewController, marketsController: UIViewController) {
+    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, analyticsController: CoinAnalyticsViewController) {
         self.viewModel = viewModel
         self.overviewController = overviewController
         self.analyticsController = analyticsController
-        self.marketsController = marketsController
+        // self.marketsController = marketsController
 //        self.tweetsController = tweetsController
 
         super.init()
@@ -110,7 +110,7 @@ class CoinPageViewController: ThemeViewController {
         switch tab {
         case .overview: return overviewController
         case .analytics: return analyticsController
-        case .markets: return marketsController
+            // case .markets: return marketsController
 //        case .tweets: return tweetsController
         }
     }
