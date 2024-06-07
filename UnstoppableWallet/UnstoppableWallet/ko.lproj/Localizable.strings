@@ -1726,7 +1726,7 @@
 "add_token.contract_address_not_found" = "%@ 블록체인에서 계약 주소를 찾을 수 없습니다.";
 "add_token.bep2_symbol_not_found" = "BEP2 기호를 찾을 수 없음";
 "add_token.input_placeholder.contract_address" = "계약 주소";
-"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.input_placeholder.bep2_symbol" = "BEP2 심볼";
 "add_token.coin_name" = "코인 이름";
 "add_token.symbol" = "기호";
 "add_token.decimals" = "소수점";
