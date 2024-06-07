@@ -2,7 +2,7 @@
 
 "6ebp42" = "Selected Coin";
 
-"8vJheC" = "Sort By";
+"8vJheC" = "排序方式为";
 
 "Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
 
@@ -14,7 +14,7 @@
 
 "OkcYOj" = "View coin price for selected coin";
 
-"Rl3a0T" = "Gainers";
+"Rl3a0T" = "涨幅最大者";
 
 "VXTxGF" = "Widget Coin";
 
@@ -30,10 +30,10 @@
 
 "nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
 
-"qHGyuo" = "Highest Cap";
+"qHGyuo" = "市值由高到低";
 
 "rCV9fg" = "See coin prices for coin list";
 
-"tVjZ7W" = "Lowest Cap";
+"tVjZ7W" = "市值由低到高";
 
-"x1kK4T" = "Losers";
+"x1kK4T" = "跌幅最大者";
