@@ -464,7 +464,7 @@
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "수수료로 대체";
 "send.confirmation.replaced_transactions" = "대체된 거래";
-"send.confirmation.input" = "Input";
+"send.confirmation.input" = "입력";
 
 "send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.invalid_data" = "Invalid Data";
@@ -700,12 +700,12 @@
 
 "market.global.market_cap" = "Total Cap";
 "market.global.volume" = "24h Vol.";
-"market.global.btc_dominance" = "BTC Dominance";
+"market.global.btc_dominance" = "BTC 지배력";
 "market.global.etf_inflow" = "ETF Inflow";
 "market.global.tvl_in_defi" = "디파이(DeFi)에서의 총 예치 가치";
 
 "market.tab.news" = "뉴스";
-"market.tab.coins" = "Coins";
+"market.tab.coins" = "코인";
 "market.tab.watchlist" = "관심 목록";
 "market.tab.platforms" = "Platforms";
 "market.tab.pairs" = "Pairs";
@@ -720,22 +720,22 @@
 "market.sort_by.highest_volume" = "Highest Volume";
 "market.sort_by.lowest_volume" = "Lowest Volume";
 
-"market.top_coins.title" = "Coins";
+"market.top_coins.title" = "코인";
 "market.top_coins" = "Top %@";
 
 "market.time_period.title" = "Period";
-"market.time_period.24h" = "24 Hours";
-"market.time_period.1d" = "1 Day";
-"market.time_period.1w" = "1 Week";
-"market.time_period.2w" = "2 Weeks";
-"market.time_period.1m" = "1 Month";
-"market.time_period.3m" = "3 Months";
-"market.time_period.6m" = "6 Months";
-"market.time_period.1y" = "1 Year";
-"market.time_period.2y" = "2 Years";
-"market.time_period.5y" = "5 Years";
-"market.time_period.24h.short" = "24H";
-"market.time_period.1d.short" = "1D";
+"market.time_period.24h" = "24 시간";
+"market.time_period.1d" = "1 일";
+"market.time_period.1w" = "1일주";
+"market.time_period.2w" = "2이주";
+"market.time_period.1m" = "1개월";
+"market.time_period.3m" = "3 개월";
+"market.time_period.6m" = "6 개월";
+"market.time_period.1y" = "일년";
+"market.time_period.2y" = "2 년";
+"market.time_period.5y" = "5 년";
+"market.time_period.24h.short" = "24시";
+"market.time_period.1d.short" = "1하루";
 "market.time_period.1w.short" = "1W";
 "market.time_period.2w.short" = "2W";
 "market.time_period.1m.short" = "1M";
@@ -875,14 +875,14 @@
 "market.advanced_search.more_50_b" = "> 500억";
 "market.advanced_search.more_500_b" = "> 5000억";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1 일";
+"market.advanced_search.week" = "1일주";
+"market.advanced_search.week2" = "2이주";
+"market.advanced_search.month" = "1개월";
+"market.advanced_search.month6" = "6 개월";
+"market.advanced_search.year" = "일년";
 
-"market.advanced_search.day.short" = "24H";
+"market.advanced_search.day.short" = "24시";
 "market.advanced_search.week.short" = "7일";
 "market.advanced_search.month.short" = "1M";
 
@@ -913,20 +913,20 @@
 "market.tvl_in_defi.title" = "디파이(DeFi)에서의 총 예치 가치";
 "market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
 "market.tvl_in_defi.tvl" = "TVL";
-"market.tvl_in_defi.multi_chain" = "Multi-chain";
-"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.multi_chain" = "다중 체인";
+"market.tvl_in_defi.filter_by_chain" = "체인별 필터링";
 "market.tvl_in_defi.filter.all" = "전체";
 
 "market.volume.title" = "Volume";
 "market.volume.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
 "market.volume.volume" = "Volume";
 
-"market.signal.risky" = "Risky";
-"market.signal.strong_buy" = "Strong Buy";
-"market.signal.buy" = "Buy";
-"market.signal.neutral" = "Neutral";
-"market.signal.sell" = "Sell";
-"market.signal.strong_sell" = "Strong Sell";
+"market.signal.risky" = "위험";
+"market.signal.strong_buy" = "강력한 매수";
+"market.signal.buy" = "매수";
+"market.signal.neutral" = "중립적";
+"market.signal.sell" = "매도";
+"market.signal.strong_sell" = "강력한 매도";
 
 // Coin Page
 
@@ -948,13 +948,13 @@
 "coin_overview.genesis_date" = "창립일";
 "coin_overview.trading_volume" = "거래량";
 
-"coin_overview.roi.hour24" = "24 Hours";
-"coin_overview.roi.day1" = "1 Day";
-"coin_overview.roi.day7" = "1 Week";
-"coin_overview.roi.day14" = "2 Weeks";
-"coin_overview.roi.day30" = "1 Month";
+"coin_overview.roi.hour24" = "24 시간";
+"coin_overview.roi.day1" = "1 일";
+"coin_overview.roi.day7" = "1일주";
+"coin_overview.roi.day14" = "2이주";
+"coin_overview.roi.day30" = "1개월";
 "coin_overview.roi.day200" = "6개월";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.year1" = "일년";
 
 "coin_overview.overview" = "개요";
 "coin_overview.description_warning" = "이것은 주어진 암호화폐에 대한 참고 자료를 기반으로 한 AI 생성된 설명입니다. 오류가 포함될 수 있습니다.";
@@ -1015,7 +1015,7 @@
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "강한 매수";
 "coin_analytics.indicators.buy" = "매수";
-"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.neutral" = "중립적";
 "coin_analytics.indicators.sell" = "매도";
 "coin_analytics.indicators.strong_sell" = "강한 매도";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1060,7 +1060,7 @@
 "coin_analytics.dex_liquidity" = "DEX 유동성";
 "coin_analytics.dex_liquidity_rank" = "DEX 유동성 순위";
 "coin_analytics.dex_liquidity_rank.description" = "탈중앙화 거래소에서 사용 가능한 유동성을 기준으로 한 토큰들의 순위.";
-"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "유동성";
 "coin_analytics.dex_liquidity.info1" = "주요 탈중앙화 거래소에서 해당 토큰의 현재 사용 가능한 유동성 총액.";
 "coin_analytics.dex_liquidity.info2" = "주요 탈중앙화 거래소에서의 해당 토큰의 1년 동안 사용 가능한 유동성 변동을 보여주는 차트.";
 "coin_analytics.dex_liquidity.info3" = "주요 탈중앙화 거래소에서의 해당 토큰의 사용 가능한 유동성을 기준으로 순위 매겨진 모든 토큰의 목록.";
@@ -1072,7 +1072,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30일 동안의 고유 주소";
 "coin_analytics.active_addresses_rank" = "활성 주소 순위";
 "coin_analytics.active_addresses_rank.description" = "토큰과 거래하는 고유 주소의 수에 따라 순위가 매겨진 토큰들.";
-"coin_analytics.active_addresses_rank.sorting_field" = "Active";
+"coin_analytics.active_addresses_rank.sorting_field" = "활성";
 "coin_analytics.active_addresses.info1" = "24시간 동안의 고유 일일 활성 주소 총 수.";
 "coin_analytics.active_addresses.info2" = "1년 동안 일일 활성 주소 수의 변동을 보여주는 차트.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
@@ -1082,7 +1082,7 @@
 "coin_analytics.transaction_count" = "트랜잭션 수";
 "coin_analytics.transaction_count_rank" = "거래 수 순위";
 "coin_analytics.transaction_count_rank.description" = "토큰은 블록체인에서의 거래 수에 따라 순위가 매겨집니다.";
-"coin_analytics.transaction_count_rank.sorting_field" = "Count";
+"coin_analytics.transaction_count_rank.sorting_field" = "수량";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "1년 동안의 거래 수 변동을 보여주는 차트.";
 "coin_analytics.transaction_count.info3" = "토큰의 순위는 30일 동안의 토큰 거래 수를 기준으로 합니다.";
@@ -1552,7 +1552,7 @@
 "appearance.markets_tab" = "마켓 탭";
 "appearance.hide_markets" = "Hide Markets";
 "appearance.price_change" = "가격 변경";
-"appearance.price_change.24h" = "24H";
+"appearance.price_change.24h" = "24시";
 "appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "시작 화면";
@@ -1562,10 +1562,10 @@
 "appearance.launch_screen.watchlist" = "관심 목록";
 
 "appearance.balance_tab" = "Balance Tab";
-"appearance.hide_buttons" = "Hide Buttons";
+"appearance.hide_buttons" = "숨김 버튼";
 "appearance.balance_value" = "균형 가치";
-"appearance.balance_value.coin_fiat" = "Coin / Fiat";
-"appearance.balance_value.fiat_coin" = "Fiat / Coin";
+"appearance.balance_value.coin_fiat" = "코인/피아트";
+"appearance.balance_value.fiat_coin" = "피아트/코인";
 
 "appearance.app_icon" = "앱 아이콘";
 
@@ -1630,7 +1630,7 @@
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
+"chart.time_duration.day" = "24시";
 "chart.time_duration.week" = "7일";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -1939,7 +1939,7 @@
 "fee_settings.errors.transaction_underpriced" = "낮은 거래 수수료";
 "fee_settings.errors.tips_higher_than_max_fee" = "최대 수수료가 너무 낮습니다.";
 "fee_settings.errors.zero_amount.info" = "0 TRX 을(를) 전송할 수 없습니다.";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck" = "위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 잠시 동안 보류 상태로 유지되거나 완전히 실패할 수 있습니다.";
 "fee_settings.warning.overpricing" = "수수료가 너무 높음";
 "fee_settings.warning.overpricing.info" = "설정된 거래 수수료가 지금 이 거래를 처리하는 데 필요한 것보다 높습니다.";
