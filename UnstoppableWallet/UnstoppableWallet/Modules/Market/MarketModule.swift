@@ -78,8 +78,8 @@ enum MarketModule {
 extension MarketKit.MarketInfo {
     func priceChangeValue(timePeriod: HsTimePeriod) -> Decimal? {
         switch timePeriod {
-        case .day1: return priceChange1d
         case .hour24: return priceChange24h
+        case .day1: return priceChange1d
         case .week1: return priceChange7d
         case .week2: return priceChange14d
         case .month1: return priceChange30d
@@ -92,6 +92,7 @@ extension MarketKit.MarketInfo {
 
     func priceChangeValue(timePeriod: WatchlistTimePeriod) -> Decimal? {
         switch timePeriod {
+        case .hour24: return priceChange24h
         case .day1: return priceChange1d
         case .week1: return priceChange7d
         case .month1: return priceChange30d

@@ -34,7 +34,10 @@ class MarketWatchlistViewModel: ObservableObject {
         didSet {
             stat(page: .markets, section: .watchlist, event: .switchPeriod(period: timePeriod.statPeriod))
             syncState()
-            watchlistManager.timePeriod = timePeriod
+
+            if timePeriod != oldValue {
+                watchlistManager.timePeriod = timePeriod
+            }
         }
     }
 
@@ -50,6 +53,12 @@ class MarketWatchlistViewModel: ObservableObject {
         sortBy = watchlistManager.sortBy
         timePeriod = watchlistManager.timePeriod
         showSignals = watchlistManager.showSignals
+
+        watchlistManager.$timePeriod
+            .sink { [weak self] timePeriod in
+                self?.timePeriod = timePeriod
+            }
+            .store(in: &cancellables)
     }
 
     private func syncCoinUids() {
@@ -131,6 +140,10 @@ class MarketWatchlistViewModel: ObservableObject {
 extension MarketWatchlistViewModel {
     var currency: Currency {
         currencyManager.baseCurrency
+    }
+
+    var timePeriods: [WatchlistTimePeriod] {
+        watchlistManager.timePeriods
     }
 
     func load() {

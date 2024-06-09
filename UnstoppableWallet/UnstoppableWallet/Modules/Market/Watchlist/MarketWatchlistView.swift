@@ -104,13 +104,13 @@ struct MarketWatchlistView: View {
         .alert(
             isPresented: $timePeriodSelectorPresented,
             title: "market.time_period.title".localized,
-            viewItems: WatchlistTimePeriod.allCases.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
             onTap: { index in
                 guard let index else {
                     return
                 }
 
-                viewModel.timePeriod = WatchlistTimePeriod.allCases[index]
+                viewModel.timePeriod = viewModel.timePeriods[index]
             }
         )
         .sheet(isPresented: $signalsPresented) {
@@ -145,8 +145,7 @@ struct MarketWatchlistView: View {
                     presentedFullCoin = marketInfo.fullCoin
                 }) {
                     itemContent(
-                        imageUrl: URL(string: coin.imageUrl),
-                        code: coin.code,
+                        coin: coin,
                         marketCap: marketInfo.marketCap,
                         price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
                         rank: marketInfo.marketCapRank,
@@ -180,8 +179,7 @@ struct MarketWatchlistView: View {
         ThemeList(Array(0 ... 10)) { index in
             ListRow {
                 itemContent(
-                    imageUrl: nil,
-                    code: "CODE",
+                    coin: nil,
                     marketCap: 123_456,
                     price: "$123.45",
                     rank: 12,
@@ -195,17 +193,13 @@ struct MarketWatchlistView: View {
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?, signal: TechnicalAdvice.Advice?) -> some View {
-        KFImage.url(imageUrl)
-            .resizable()
-            .placeholder { Circle().fill(Color.themeSteel20) }
-            .clipShape(Circle())
-            .frame(width: .iconSize32, height: .iconSize32)
+    @ViewBuilder private func itemContent(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?, signal: TechnicalAdvice.Advice?) -> some View {
+        CoinIconView(coin: coin)
 
         VStack(spacing: 1) {
             HStack(spacing: .margin8) {
                 HStack(spacing: .margin8) {
-                    Text(code).textBody()
+                    Text(coin?.code ?? "CODE").textBody()
 
                     if let signal {
                         MarketWatchlistSignalBadge(signal: signal)

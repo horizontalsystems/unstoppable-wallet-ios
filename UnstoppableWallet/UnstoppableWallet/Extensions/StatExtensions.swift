@@ -217,6 +217,7 @@ extension MarketEtfViewModel.SortBy {
 extension WatchlistTimePeriod {
     var statPeriod: StatPeriod {
         switch self {
+        case .hour24: return .hour24
         case .day1: return .day1
         case .week1: return .week1
         case .month1: return .month1

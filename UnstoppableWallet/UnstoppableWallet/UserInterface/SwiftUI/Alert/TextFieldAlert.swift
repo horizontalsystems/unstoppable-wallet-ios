@@ -14,7 +14,7 @@ class TextFieldAlertViewController: UIViewController {
     init(title: String, message: String?, initial: String, isPresented: Binding<Bool>?, amountChanged: ((String) -> Void)?) {
         alertTitle = title
         self.message = message
-        self.text = initial
+        text = initial
         self.isPresented = isPresented
         self.amountChanged = amountChanged
 
@@ -70,8 +70,8 @@ struct TextFieldAlert {
     let title: String
     let message: String?
     let initial: String
-    var isPresented: Binding<Bool>? = nil
-    var amountChanged: ((String) -> Void)? = nil
+    var isPresented: Binding<Bool>?
+    var amountChanged: ((String) -> Void)?
 
     // MARK: Modifiers
 
@@ -97,7 +97,7 @@ extension TextFieldAlert: UIViewControllerRepresentable {
 struct TextFieldWrapper<PresentingView: View>: View {
     @Binding var isPresented: Bool
     var amountChanged: ((String) -> Void)? = nil
-    
+
     let presentingView: PresentingView
     let content: () -> TextFieldAlert
 
