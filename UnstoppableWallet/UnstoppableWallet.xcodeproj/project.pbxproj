@@ -2718,6 +2718,12 @@
 		D09200C6293F21720091981A /* RestoreNonStandardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */; };
 		D09200C8293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
 		D09200C9293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
+		D092C5882C12DC8D0060D915 /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
+		D092C5892C12DC8E0060D915 /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
+		D092C58B2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C58A2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift */; };
+		D092C58C2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C58A2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift */; };
+		D092C58D2C12DE800060D915 /* PriceChangeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D4D2C07020300515664 /* PriceChangeMode.swift */; };
+		D092C58E2C12DE810060D915 /* PriceChangeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D4D2C07020300515664 /* PriceChangeMode.swift */; };
 		D09C5C632C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
 		D09C5C642C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
 		D09D768C2A2E066E004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
@@ -4619,6 +4625,7 @@
 		D09200BF293F21700091981A /* RestoreNonStandardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewController.swift; sourceTree = "<group>"; };
 		D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewModel.swift; sourceTree = "<group>"; };
 		D09200C1293F21720091981A /* RestoreNonStandardModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardModule.swift; sourceTree = "<group>"; };
+		D092C58A2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PriceChangeManager+HsTimePeriod.swift"; sourceTree = "<group>"; };
 		D09C5C622C076C0E00E6909E /* CoinIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinIconView.swift; sourceTree = "<group>"; };
 		D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationModule.swift; sourceTree = "<group>"; };
 		D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewController.swift; sourceTree = "<group>"; };
@@ -5284,6 +5291,7 @@
 				6BB14F7F2C06F19300E879B2 /* DefiCoin.swift */,
 				D389BC452C0DCF4100724504 /* Advice.swift */,
 				D389BC482C0DDA8F00724504 /* HsTimePeriod.swift */,
+				D092C58A2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -9985,6 +9993,7 @@
 				1A564DBDAA43925DC8E39164 /* TraitsCell.swift in Sources */,
 				1A56441AD76BA80CB74902CB /* TraitCell.swift in Sources */,
 				ABC9A9CF9BC0D1D10C291FDD /* UIViewController.swift in Sources */,
+				D092C58C2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift in Sources */,
 				ABC9A40EB6EC886116806130 /* WalletConnectSessionManager.swift in Sources */,
 				2FA5DC4BBDF469873662BDEE /* Eip1559EvmFeeViewModel.swift in Sources */,
 				2FA5D3C3D3AB41202B592640 /* Eip1559EvmFeeDataSource.swift in Sources */,
@@ -11474,6 +11483,7 @@
 				11B35CF897C3C30DACC27693 /* NftStorage.swift in Sources */,
 				2FA5D3AFFBE0E51DD79236EF /* LegacyEvmFeeDataSource.swift in Sources */,
 				2FA5DB404D05A47AD451C1B5 /* LegacyGasPriceService.swift in Sources */,
+				D092C58B2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift in Sources */,
 				2FA5D7E8805931F9F566668E /* SendEvmCautionsFactory.swift in Sources */,
 				2FA5D5189F8BE0AD6E10BA6B /* FeeCell.swift in Sources */,
 				11B353F671EA70F8BE7F02F0 /* NftAssetTitleCell.swift in Sources */,
@@ -12351,6 +12361,7 @@
 			files = (
 				D3948EF72ADA846400FAE566 /* AppWidgetBundle.swift in Sources */,
 				11B350F24818BABB6DB6512A /* SingleCoinPriceView.swift in Sources */,
+				D092C5892C12DC8E0060D915 /* PriceChangeModeManager.swift in Sources */,
 				11B3543EF331DA9E5E33822A /* SingleCoinPriceEntry.swift in Sources */,
 				11B3525BA3799B70B25CF2FC /* SingleCoinPriceProvider.swift in Sources */,
 				11B356509E6083B971F37E0F /* Currency.swift in Sources */,
@@ -12376,6 +12387,7 @@
 				D36E508E2BF76FB400C361BD /* WatchlistProvider.swift in Sources */,
 				11B35287E46AFFBC47162F67 /* Extensions.swift in Sources */,
 				11B3541E8CB5F0F743E9CDF3 /* AppWidgetConstants.swift in Sources */,
+				D092C58E2C12DE810060D915 /* PriceChangeMode.swift in Sources */,
 				11B354FA80BD8C5512B5ACFE /* WidgetConfig.swift in Sources */,
 				11B35B31D808ED62EFB3D38B /* BadgeViewNew.swift in Sources */,
 			);
@@ -12398,6 +12410,7 @@
 			files = (
 				D3BA257F2ADFAD7C002B13EA /* AppWidgetBundle.swift in Sources */,
 				D3BA25842ADFAD7C002B13EA /* SingleCoinPriceView.swift in Sources */,
+				D092C5882C12DC8D0060D915 /* PriceChangeModeManager.swift in Sources */,
 				D3BA25852ADFAD7C002B13EA /* SingleCoinPriceEntry.swift in Sources */,
 				D3BA25862ADFAD7C002B13EA /* SingleCoinPriceProvider.swift in Sources */,
 				11B35202BE66E6E764026D63 /* Currency.swift in Sources */,
@@ -12423,6 +12436,7 @@
 				D36E508D2BF76FB400C361BD /* WatchlistProvider.swift in Sources */,
 				11B35700253CCD66C4CCE354 /* Extensions.swift in Sources */,
 				11B35B2E335C24608DE32B0A /* AppWidgetConstants.swift in Sources */,
+				D092C58D2C12DE800060D915 /* PriceChangeMode.swift in Sources */,
 				11B35BE346FCE9B2BE4096A8 /* WidgetConfig.swift in Sources */,
 				11B35C8BF55C38F198C3DAE6 /* BadgeViewNew.swift in Sources */,
 			);

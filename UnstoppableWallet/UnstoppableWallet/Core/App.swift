@@ -122,6 +122,7 @@ class App {
         userDefaultsStorage = UserDefaultsStorage()
         localStorage = LocalStorage(userDefaultsStorage: userDefaultsStorage)
         keychainStorage = KeychainStorage(service: "io.horizontalsystems.bank.dev")
+        let sharedLocalStorage = SharedLocalStorage()
 
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager()
@@ -142,7 +143,7 @@ class App {
         balanceHiddenManager = BalanceHiddenManager(userDefaultsStorage: userDefaultsStorage)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, userDefaultsStorage: userDefaultsStorage)
         walletButtonHiddenManager = WalletButtonHiddenManager(userDefaultsStorage: userDefaultsStorage)
-        priceChangeModeManager = PriceChangeModeManager(userDefaultsStorage: userDefaultsStorage)
+        priceChangeModeManager = PriceChangeModeManager(storage: sharedLocalStorage)
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
@@ -156,13 +157,12 @@ class App {
             debugLogger = DebugLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
         }
 
-        let sharedLocalStorage = SharedLocalStorage()
         currencyManager = CurrencyManager(storage: sharedLocalStorage)
         networkManager = NetworkManager(logger: logger)
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(userDefaultsStorage: userDefaultsStorage)
 
-        watchlistManager = WatchlistManager(storage: sharedLocalStorage)
+        watchlistManager = WatchlistManager(storage: sharedLocalStorage, priceChangeModeManager: priceChangeModeManager)
 
         contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: AppConfig.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
         subscriptionManager = SubscriptionManager(userDefaultsStorage: userDefaultsStorage, marketKit: marketKit)

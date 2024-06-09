@@ -39,7 +39,8 @@ struct WatchlistProvider: TimelineProvider {
 
     private func fetch(family: WidgetFamily) async throws -> WatchlistEntry {
         let storage = SharedLocalStorage()
-        let watchlistManager = WatchlistManager(storage: storage)
+        let priceChangeModeManager = PriceChangeModeManager(storage: storage)
+        let watchlistManager = WatchlistManager(storage: storage, priceChangeModeManager: priceChangeModeManager)
         let currency = CurrencyManager(storage: storage).baseCurrency
         let apiProvider = ApiProvider()
 
@@ -51,6 +52,7 @@ struct WatchlistProvider: TimelineProvider {
         case .highestCap, .lowestCap: listType = .mcap
         case .gainers, .losers, .manual:
             switch watchlistManager.timePeriod {
+            case .hour24: listType = .priceChange24h
             case .day1: listType = .priceChange1d
             case .week1: listType = .priceChange1w
             case .month1: listType = .priceChange1m

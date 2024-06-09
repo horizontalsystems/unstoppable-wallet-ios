@@ -1,5 +1,5 @@
-import SwiftUI
 import Combine
+import SwiftUI
 
 private let qrSize: CGFloat = 203
 private let appIconSize: CGFloat = 47
@@ -13,7 +13,7 @@ struct ReceiveAddressView: View {
 
     @State private var shareText: String?
     @State private var inputAmountPresented: Bool = false
-    
+
     @Environment(\.presentationMode) private var presentationMode
 
     init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexDepositProvider) {
@@ -98,7 +98,8 @@ struct ReceiveAddressView: View {
                     message: nil,
                     initial: viewModel.initialText
                 )
-        })
+            }
+        )
         .alertButtonTint(color: .themeJacob)
         .bottomSheet(item: $warningAlertPopup) { popup in
             ActionSheetView(

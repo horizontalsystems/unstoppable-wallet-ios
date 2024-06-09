@@ -1,4 +1,5 @@
 import Combine
+import HsExtensions
 import WidgetKit
 
 class WatchlistManager {
@@ -8,6 +9,8 @@ class WatchlistManager {
     private let keyShowSignals = "watchlist-show-signals"
 
     private let storage: SharedLocalStorage
+    private let priceChangeModeManager: PriceChangeModeManager
+    private var cancellables = Set<AnyCancellable>()
 
     private let coinUidsSubject = PassthroughSubject<[String], Never>()
 
@@ -31,8 +34,12 @@ class WatchlistManager {
         }
     }
 
-    var timePeriod: WatchlistTimePeriod {
+    @PostPublished var timePeriod: WatchlistTimePeriod {
         didSet {
+            guard timePeriod != oldValue else {
+                return
+            }
+
             storage.set(value: timePeriod.rawValue, for: keyTimePeriod)
             WidgetCenter.shared.reloadTimelines(ofKind: AppWidgetConstants.watchlistWidgetKind)
         }
@@ -45,8 +52,9 @@ class WatchlistManager {
         }
     }
 
-    init(storage: SharedLocalStorage) {
+    init(storage: SharedLocalStorage, priceChangeModeManager: PriceChangeModeManager) {
         self.storage = storage
+        self.priceChangeModeManager = priceChangeModeManager
 
         coinUids = storage.value(for: keyCoinUids) ?? []
         coinUidSet = Set(coinUids)
@@ -55,17 +63,31 @@ class WatchlistManager {
         sortBy = sortByRaw.flatMap { WatchlistSortBy(rawValue: $0) } ?? .manual
 
         let timePeriodRaw: String? = storage.value(for: keyTimePeriod)
-        timePeriod = timePeriodRaw.flatMap { WatchlistTimePeriod(rawValue: $0) } ?? .day1
+        timePeriod = timePeriodRaw.flatMap { WatchlistTimePeriod(rawValue: $0) } ?? priceChangeModeManager.day1WatchlistPeriod
 
         showSignals = storage.value(for: keyShowSignals) ?? true
 
         WidgetCenter.shared.reloadTimelines(ofKind: AppWidgetConstants.watchlistWidgetKind)
+
+        priceChangeModeManager.$priceChangeMode
+            .sink { [weak self] _ in
+                self?.syncPeriod()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func syncPeriod() {
+        timePeriod = priceChangeModeManager.convert(period: timePeriod)
     }
 }
 
 extension WatchlistManager {
     var coinUidsPublisher: AnyPublisher<[String], Never> {
         coinUidsSubject.eraseToAnyPublisher()
+    }
+
+    var timePeriods: [WatchlistTimePeriod] {
+        [priceChangeModeManager.day1WatchlistPeriod, .week1, .month1, .month3]
     }
 
     func set(coinUids: [String]) {

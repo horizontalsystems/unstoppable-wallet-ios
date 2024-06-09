@@ -29,6 +29,7 @@ extension Coin {
 
     private func priceChange(timePeriod: WatchlistTimePeriod) -> Decimal? {
         switch timePeriod {
+        case .hour24: return priceChange24h
         case .day1: return priceChange1d
         case .week1: return priceChange1w
         case .month1: return priceChange1m
