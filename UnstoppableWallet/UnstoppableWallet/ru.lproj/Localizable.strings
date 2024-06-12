@@ -1015,13 +1015,13 @@
 "coin_analytics.indicators.show_details" = "Показать детали";
 "coin_analytics.indicators.summary" = "Общая оценка";
 "coin_analytics.indicators.no_data" = "Нет данных";
-"coin_analytics.indicators.oversold" = "Очень рискованная торговля";
+"coin_analytics.indicators.oversold" = "Risky";
 "coin_analytics.indicators.strong_buy" = "Активно покупать";
 "coin_analytics.indicators.buy" = "Покупать";
 "coin_analytics.indicators.neutral" = "Нейтрально";
 "coin_analytics.indicators.sell" = "Продавать";
 "coin_analytics.indicators.strong_sell" = "Активно продавать";
-"coin_analytics.indicators.overbought" = "Очень рискованная торговля";
+"coin_analytics.indicators.overbought" = "Risky";
 "coin_analytics.period" = "Период";
 "coin_analytics.period.select_title" = "Выберите период";
 "coin_analytics.period.1h" = "1 час";
@@ -1306,8 +1306,8 @@
 "settings.rate_us" = "Оцените нас";
 "settings.tell_friends" = "Расскажите друзьям";
 "settings.contact_us" = "Свяжитесь с нами";
-"settings.social_networks.label" = "JOIN UNSTOPPABLES";
-"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
+"settings.social_networks.label" = "Be Unstoppable";
+"settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
 
 // Settings -> Base Currency
 
