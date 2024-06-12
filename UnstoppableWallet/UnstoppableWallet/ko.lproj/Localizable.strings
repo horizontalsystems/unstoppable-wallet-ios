@@ -724,7 +724,6 @@
 "market.top_coins" = "상위 %@";
 
 "market.time_period.title" = "기간";
-"market.time_period.24h" = "24 시간";
 "market.time_period.1d" = "1 일";
 "market.time_period.1w" = "1일주";
 "market.time_period.2w" = "2이주";
@@ -734,7 +733,6 @@
 "market.time_period.1y" = "일년";
 "market.time_period.2y" = "2 년";
 "market.time_period.5y" = "5 년";
-"market.time_period.24h.short" = "24시";
 "market.time_period.1d.short" = "1하루";
 "market.time_period.1w.short" = "1주일";
 "market.time_period.2w.short" = "2주일";
