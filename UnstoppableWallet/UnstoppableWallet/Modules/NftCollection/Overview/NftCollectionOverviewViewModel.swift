@@ -50,7 +50,7 @@ class NftCollectionOverviewViewModel {
             contracts: collection.contracts.map { contractViewItem(contract: $0) },
             links: linkViewItems(collection: collection),
             statsViewItems: statViewItem(collection: collection),
-            royalty: collection.royalty.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) },
+            royalty: collection.royalty.flatMap { ValueFormatter.instance.format(percentValue: $0, signType: .never) },
             inceptionDate: collection.inceptionDate.map { DateFormatter.cachedFormatter(format: "MMMM d, yyyy").string(from: $0) }
         )
     }

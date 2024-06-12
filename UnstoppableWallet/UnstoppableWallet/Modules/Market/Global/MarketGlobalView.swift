@@ -72,7 +72,7 @@ struct MarketGlobalView: View {
 
         diffView(
             title: "market.global.btc_dominance".localized,
-            amount: marketGlobal?.btcDominance.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) },
+            amount: marketGlobal?.btcDominance.flatMap { ValueFormatter.instance.format(percentValue: $0, signType: .never) },
             diff: marketGlobal?.btcDominanceChange.map { .percent(value: $0) },
             redacted: redacted
         ) {

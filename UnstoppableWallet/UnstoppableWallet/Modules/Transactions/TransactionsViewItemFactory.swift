@@ -25,8 +25,8 @@ class TransactionsViewItemFactory {
         contactLabelService.contactData(for: address, blockchainType: blockchainType).name ?? evmLabelManager.mapped(address: address)
     }
 
-    private func coinString(from transactionValue: TransactionValue, showSign: Bool = true) -> String {
-        guard let value = transactionValue.formattedShort(showSign: showSign) else {
+    private func coinString(from transactionValue: TransactionValue, signType: ValueFormatter.SignType = .always) -> String {
+        guard let value = transactionValue.formattedShort(signType: signType) else {
             return "n/a".localized
         }
 
@@ -192,7 +192,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
             secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
 
             sentToSelf = record.sentToSelf
@@ -229,7 +229,7 @@ class TransactionsViewItemFactory {
                 primaryValue = BaseTransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
                 secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
             } else {
-                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: false), type: .neutral)
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, signType: .never), type: .neutral)
 
                 if let currencyValue = item.currencyValue {
                     secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
@@ -290,7 +290,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = record.to.flatMap { "transactions.to".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
-            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
 
             if let currencyValue = item.currencyValue {
                 secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
@@ -317,7 +317,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
 
             if let currencyValue = item.currencyValue {
                 secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
@@ -341,7 +341,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
-            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
             secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
 
             sentToSelf = record.sentToSelf
@@ -355,7 +355,7 @@ class TransactionsViewItemFactory {
                 primaryValue = BaseTransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
                 secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
             } else {
-                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, showSign: false), type: .neutral)
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, signType: .never), type: .neutral)
 
                 if let currencyValue = item.currencyValue {
                     secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)

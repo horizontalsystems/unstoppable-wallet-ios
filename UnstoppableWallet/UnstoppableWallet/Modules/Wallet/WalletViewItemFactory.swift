@@ -92,7 +92,7 @@ class WalletViewItemFactory {
             return nil
         }
 
-        guard let formattedValue = ValueFormatter.instance.format(percentValue: value, showSign: true) else {
+        guard let formattedValue = ValueFormatter.instance.format(percentValue: value, signType: .always) else {
             return nil
         }
 

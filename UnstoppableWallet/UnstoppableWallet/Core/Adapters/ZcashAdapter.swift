@@ -858,7 +858,7 @@ enum ZCashAdapterState: Equatable {
         case let .downloadingSapling(progress):
             return .customSyncing(main: "balance.downloading_sapling".localized(progress), secondary: nil, progress: progress)
         case let .downloadingBlocks(progress, _):
-            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), showSign: false)
+            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), signType: .never)
             return .customSyncing(main: "balance.downloading_blocks".localized, secondary: percentValue, progress: Int(progress * 100))
         case let .notSynced(error): return .notSynced(error: error)
         }
@@ -872,7 +872,7 @@ enum ZCashAdapterState: Equatable {
         case let .syncing(progress, lastDate): return "Syncing: progress = \(progress?.description ?? "N/A"), lastBlockDate: \(lastDate?.description ?? "N/A")"
         case let .downloadingSapling(progress): return "downloadingSapling: progress = \(progress)"
         case let .downloadingBlocks(progress, _):
-            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), showSign: false)
+            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), signType: .never)
             return "Downloading Blocks: \(percentValue?.description ?? "N/A") : \(Int(progress * 100))"
         case let .notSynced(error): return "Not synced \(error.localizedDescription)"
         }

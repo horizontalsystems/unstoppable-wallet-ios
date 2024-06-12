@@ -44,7 +44,7 @@ struct DiffText: View {
 
         switch diff {
         case let .percent(value): return ValueFormatter.instance.format(percentValue: value).map { ($0, value) }
-        case let .change(value, currency): return ValueFormatter.instance.formatShort(currency: currency, value: value, showSign: true).map { ($0, value) }
+        case let .change(value, currency): return ValueFormatter.instance.formatShort(currency: currency, value: value, signType: .always).map { ($0, value) }
         }
     }
 }
