@@ -807,14 +807,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market_watchlist.empty.caption" = "İzleme listeniz boş.";
 "market.watchlist.signals" = "Sinyaller";
 "market.watchlist.empty" = "İzleme listeniz boş";
-"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
-"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
-"market.watchlist.signals.buy.description" = "Likely price increase in near future";
-"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
-"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
-"market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
-"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
-"market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
+"market.watchlist.signals.description" = "Aşağıdaki sinyaller yaklaşık olarak son 30 gün boyunca Bollinger Bantları ve RSI teknik fiyat göstergelerine dayanmaktadır. Bu sinyaller algoritmiktir ve sık sık değişebilir.";
+"market.watchlist.signals.strong_buy.description" = "Fiyat artışında yüksek güven";
+"market.watchlist.signals.buy.description" = "Yakın gelecekte muhtemel fiyat artışı";
+"market.watchlist.signals.neutral.description" = "Net bir trend yok, piyasa denge durumunda";
+"market.watchlist.signals.sell.description" = "Yakın gelecekte muhtemel fiyat düşüşü";
+"market.watchlist.signals.strong_sell.description" = "Fiyatın yüksek olasılıkla düşeceği";
+"market.watchlist.signals.risky.description" = "Yüksek risk seviyesi, dikkat gerektirir";
+"market.watchlist.signals.warning" = "Her zaman risk yönetimini uygulamayı unutmayın ve bu finansal tavsiye değildir.";
 "market.watchlist.signals.turn_on" = "Turn On";
 
 "market.advanced_search.title" = "Filtreler";
@@ -840,7 +840,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.advanced_search.liquidity" = "DEX Likiditesi";
 "market.advanced_search.blockchains" = "Blockchain'ler";
-"market.advanced_search.signal" = "Trading Signal";
+"market.advanced_search.signal" = "Alım Satım Sinyali";
 "market.advanced_search.price_period" = "Fiyat Periyodu";
 "market.advanced_search.price_change" = "Fiyat Değişimi";
 
@@ -850,7 +850,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.price_close_to_ath" = "ATH'ye Yakın Fiyat";
 "market.advanced_search.price_close_to_atl" = "ATL'ye Yakın Fiyat";
 
-"market.advanced_search.top" = "Top %d";
+"market.advanced_search.top" = "En İyiler %d";
 "market.advanced_search.reset_all" = "Sıfırla";
 
 "market.advanced_search.less_5_m" = "< 5M";
@@ -899,7 +899,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
 
-"market.etf.title" = "Total Net Inflow";
+"market.etf.title" = "Toplam Net Giriş";
 "market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
 "market.etf.total_net_assets" = "Total Net Assets";
 "market.etf.sort_by.highest_assets" = "Highest Assets";
@@ -973,40 +973,40 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Coin Page -> Analytics
 "technical_advice.over.bought" = "aşırı alım";
 "technical_advice.over.sold" = "aşırı satım";
-"technical_advice.down" = "down";
-"technical_advice.up" = "up";
+"technical_advice.down" = "aşağı";
+"technical_advice.up" = "yukarı";
 
-"technical_advice.over.main" = "The actions with the asset are risky.";
+"technical_advice.over.main" = "Varlık ile yapılan işlemler risklidir.";
 "technical_advice.over.indicators.signal_date" = "%@'den başlayarak";
-"technical_advice.over.indicators" = "The asset is outside the Bollinger Band channel and %@.";
-"technical_advice.over.rsi" = " RSI = %@, This also indicates that the asset is %@.";
-"technical_advice.over.advice" = " There might be a strong %@ward movement, so it's better to wait for the asset price to return to the channel.";
+"technical_advice.over.indicators" = "Varlık, Bollinger Band kanalı dışında ve %@.";
+"technical_advice.over.rsi" = " RSI = %@, Bu aynı zamanda varlığın %@ olduğunu gösterir.";
+"technical_advice.over.advice" = " Güçlü bir %@ yönlü hareket olabilir, bu yüzden varlık fiyatının kanala dönmesini beklemek daha iyi olur.";
 
-"technical_advice.strong.indicators" = "The asset was %@, but now it has returned to the Bollinger Band channel. This indicates a possible trend reversal.";
-"technical_advice.strong.rsi" = " Meanwhile, the RSI is %@, which still indicates that it is %@.";
-"technical_advice.strong.advice" = " This could be a very strong signal to enter the market. Keep in mind that there may be several attempts of %@ward movement after returning to the channel, so do not forget about risk management.";
+"technical_advice.strong.indicators" = "Varlık %@ idi, ancak şimdi Bollinger Band kanalına geri döndü. Bu, olası bir trend dönüşünü gösterir.";
+"technical_advice.strong.rsi" = " Bu arada, RSI %@, hala %@ olduğunu gösteriyor.";
+"technical_advice.strong.advice" = " Bu piyasaya giriş için çok güçlü bir sinyal olabilir. Kanala dönüşten sonra %@ yönlü hareketin birkaç denemesi olabileceğini unutmayın, bu yüzden risk yönetimini unutmayın.";
 
-"technical_advice.stable.rsi" = " Meanwhile, the RSI is %@, which also indicates a trend reversal (RSI crossed the boundary at 70%).";
-"technical_advice.stable.advice" = "The price is returning to neutral levels, however, there is still potential for upward movement. Keep in mind that RSI = 50 and the middle of the Bollinger Bands are strong resistances and possible trend reversal points. Do not forget about risk management.";
+"technical_advice.stable.rsi" = " Bu arada, RSI %@, bu da bir trend dönüşünü gösteriyor (RSI 70 sınırını geçti).";
+"technical_advice.stable.advice" = "Fiyat nötr seviyelere geri dönüyor, ancak hala yukarı yönlü hareket potansiyeli var. RSI = 50 ve Bollinger Bantlarının ortası güçlü dirençler ve olası trend dönüş noktalarıdır. Risk yönetimini unutmayın.";
 
-"technical_advice.neutral.rsi" = "RSI = %@ also confirms the absence of a strong trend.";
-"technical_advice.neutral.indicators" = "The asset was in the overbought/oversold zone, but at the moment the price has returned to the Bollinger Band channel in the neutral zone. The RSI is %@ also confirms the absence of a strong trend, so overall the asset price is moving towards averaging and further movement is possible in any direction.";
-"technical_advice.neutral.advice" = " In general, the asset price is moving towards averaging and further movement is possible in any direction.";
+"technical_advice.neutral.rsi" = "RSI = %@ ayrıca güçlü bir trendin olmadığını doğruluyor.";
+"technical_advice.neutral.indicators" = "Varlık aşırı alım/aşırı satım bölgesindeydi, ancak şu anda fiyat nötr bölgedeki Bollinger Band kanalına geri döndü. RSI = %@ ayrıca güçlü bir trendin olmadığını doğruluyor, bu nedenle genel olarak varlık fiyatı ortalama yapmaya doğru hareket ediyor ve daha fazla hareket herhangi bir yönde mümkün olabilir.";
+"technical_advice.neutral.advice" = " Genel olarak, varlık fiyatı ortalama hareket ediyor ve daha fazla hareket herhangi bir yönde mümkün olabilir.";
 
-"technical_advice.other.title" = "Please note:";
+"technical_advice.other.title" = "Lütfen dikkate alın:";
 
-"technical_advice.ema.above" = "above";
-"technical_advice.ema.below" = "below";
-"technical_advice.ema.growth" = "growth";
+"technical_advice.ema.above" = "yukarıda";
+"technical_advice.ema.below" = "aşağıda";
+"technical_advice.ema.growth" = "büyüme";
 "technical_advice.ema.decrease" = "decrease";
 "technical_advice.ema.advice" = "EMA 200. Determines the overall sentiment and trend. The daily price of the asset is located %@ the EMA (%@). This means that globally the asset is set for %@.";
 
-"technical_advice.macd.positive" = "above";
-"technical_advice.macd.negative" = "below";
+"technical_advice.macd.positive" = "yukarıda";
+"technical_advice.macd.negative" = "aşağıda";
 "technical_advice.macd.advice" = "MACD. Assesses the strength of the trend considering the average price change. The daily value of the histogram is %@ (%@). The price of the asset globally may move %@.";
 
 "coin_analytics.indicators.title" = "Teknik Göstergeleri";
-"coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
+"coin_analytics.indicators.disclaimer" = "Her zaman risk yönetimini uygulamayı unutmayın ve bu finansal tavsiye değildir.";
 "coin_analytics.indicators.info.title" = "Technical Indicators";
 "coin_analytics.indicators.info.description" = "We use the Bollinger Bands + RSI strategy to determine trading signals. All calculations are based on daily candlesticks and provide advice for a moderately long term. The essence of the strategy is that the asset price should reach an extreme, breaking out of the Bollinger Bands channel, and the RSI should be in the overbought/oversold zone. After the price returns to the channel, there is a high probability of the price returning to the mean values or attempting to break the channel from the other side. Note that the strategy may give several false signals during strong market movements before a correct signal appears.\n\nPlease remember that it is very important to apply risk management to trading and remember to cut losses if the market situation changes! ";
 "coin_analytics.indicators.hide_details" = "Hide Details";
@@ -1541,7 +1541,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.privacy" = "Gizlilik";
 "settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
 "settings.privacy.statement.data_usage" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri toplamaz.";
-"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
+"settings.privacy.statement.data_storage" = "Kullanıcı hesapları veya kullanıcı verilerini depolayan veritabanları yoktur.";
 "settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
 "settings.privacy.allow" = "Share UI Data";
 
