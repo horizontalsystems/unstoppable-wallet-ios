@@ -1013,13 +1013,13 @@
 "coin_analytics.indicators.show_details" = "显示详细信息";
 "coin_analytics.indicators.summary" = "总结";
 "coin_analytics.indicators.no_data" = "无数据";
-"coin_analytics.indicators.oversold" = "Very Risky to Trade";
+"coin_analytics.indicators.oversold" = "有风险";
 "coin_analytics.indicators.strong_buy" = "强烈建议买入";
 "coin_analytics.indicators.buy" = "购买";
 "coin_analytics.indicators.neutral" = "中性";
 "coin_analytics.indicators.sell" = "出售";
 "coin_analytics.indicators.strong_sell" = "强烈建议卖出";
-"coin_analytics.indicators.overbought" = "Very Risky to Trade";
+"coin_analytics.indicators.overbought" = "有风险";
 "coin_analytics.period" = "句号";
 "coin_analytics.period.select_title" = "选择时间段";
 "coin_analytics.period.1h" = "1 小时";
@@ -1304,8 +1304,8 @@
 "settings.rate_us" = "评价我们";
 "settings.tell_friends" = "分享给好友";
 "settings.contact_us" = "联系我们";
-"settings.social_networks.label" = "JOIN UNSTOPPABLES";
-"settings.social_networks.footer" = "留在不可阻挡的事件之上。成为第一个了解新功能、用户报告的问题和我们正在处理的事情的人！";
+"settings.social_networks.label" = "Be Unstoppable";
+"settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
 
 // Settings -> Base Currency
 
