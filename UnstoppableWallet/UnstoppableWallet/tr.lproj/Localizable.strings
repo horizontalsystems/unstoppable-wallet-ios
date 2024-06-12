@@ -713,19 +713,19 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.tab.pairs" = "Pairs";
 "market.tab.sectors" = "Sectors";
 
-"market.sort_by.title" = "Sort By";
+"market.sort_by.title" = "Sırala";
 "market.sort_by.manual" = "Manual";
-"market.sort_by.highest_cap" = "Highest Cap";
-"market.sort_by.lowest_cap" = "Lowest Cap";
-"market.sort_by.gainers" = "Gainers";
-"market.sort_by.losers" = "Losers";
-"market.sort_by.highest_volume" = "Highest Volume";
-"market.sort_by.lowest_volume" = "Lowest Volume";
+"market.sort_by.highest_cap" = "En Yüksek Piyasa Değeri";
+"market.sort_by.lowest_cap" = "En Düşük Piyasa Değeri";
+"market.sort_by.gainers" = "Kazanlar";
+"market.sort_by.losers" = "Kaybedenler";
+"market.sort_by.highest_volume" = "En Yüksek Hacim";
+"market.sort_by.lowest_volume" = "En Düşük Hacim";
 
 "market.top_coins.title" = "Coins";
-"market.top_coins" = "Top %@";
+"market.top_coins" = "En İyiler %@";
 
-"market.time_period.title" = "Period";
+"market.time_period.title" = "Periyot";
 "market.time_period.24h" = "24 Saat";
 "market.time_period.1d" = "1 Gün";
 "market.time_period.1w" = "1 Hafta";
@@ -766,25 +766,25 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.tvl.platform_field.all" = "Hepsi";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Sırala";
 
 "market.top.title" = "En iyi Coinler";
 "market.top.description" = "P. Değerine Göre En Iyi Coinler";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
+"market.top.highest_cap" = "En Yüksek Piyasa Değeri";
+"market.top.lowest_cap" = "En Düşük Piyasa Değeri";
+"market.top.highest_volume" = "En Yüksek Hacim";
+"market.top.lowest_volume" = "En Düşük Hacim";
 "market.top.top_gainers" = "En Kazançlılar";
 "market.top.top_losers" = "Çok Kaybedenler";
 "market.top.top_collections" = "En İyi NFT Koleksiyonlar";
 "market.top.floor_price" = "Taban:";
-"market.top.top_market_pairs" = "Top Market Pairs";
+"market.top.top_market_pairs" = "En İyi Piyasa Çiftleri";
 "market.top.top_platforms" = "En İyi Platformlar";
 "market.top.protocols" = "Protokoller";
 
-"market.pairs.volume" = "Volume";
-"top_pairs.title" = "Top Market Pairs";
+"market.pairs.volume" = "Hacim";
+"top_pairs.title" = "En İyi Piyasa Çiftleri";
 "top_pairs.description" = "Her borsada hacme göre en üstte olan işlem çiftleri";
 
 "top_platforms.title" = "Platformlar Sıralaması";
@@ -805,7 +805,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market_discovery.not_found" = "Sonuç bulunamadı";
 
 "market_watchlist.empty.caption" = "İzleme listeniz boş.";
-"market.watchlist.signals" = "Signals";
+"market.watchlist.signals" = "Sinyaller";
 "market.watchlist.empty" = "İzleme listeniz boş";
 "market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
 "market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
@@ -919,9 +919,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.tvl_in_defi.filter_by_chain" = "Filter by chain";
 "market.tvl_in_defi.filter.all" = "Hepsi";
 
-"market.volume.title" = "Volume";
+"market.volume.title" = "Hacim";
 "market.volume.description" = "Kripto piyasa 24 saatlik işlem hacmi";
-"market.volume.volume" = "Volume";
+"market.volume.volume" = "Hacim";
 
 "market.signal.risky" = "Risky";
 "market.signal.strong_buy" = "Strong Buy";
@@ -971,8 +971,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
-"technical_advice.over.bought" = "overbought";
-"technical_advice.over.sold" = "oversold";
+"technical_advice.over.bought" = "aşırı alım";
+"technical_advice.over.sold" = "aşırı satım";
 "technical_advice.down" = "down";
 "technical_advice.up" = "up";
 
@@ -1020,7 +1020,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.indicators.sell" = "Sell";
 "coin_analytics.indicators.strong_sell" = "Strong Sell";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
-"coin_analytics.period" = "Period";
+"coin_analytics.period" = "Periyot";
 "coin_analytics.period.select_title" = "Periyot Seç";
 "coin_analytics.period.1h" = "1 saat";
 "coin_analytics.period.4h" = "4 saat";
@@ -1040,7 +1040,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.cex_volume" = "CEX Hacmi";
 "coin_analytics.cex_volume_rank" = "CEX Hacim Sıralaması";
 "coin_analytics.cex_volume_rank.description" = "Merkezi borsalarda token için işlem hacmine göre sıralanan tokenlar.";
-"coin_analytics.cex_volume_rank.sorting_field" = "Volume";
+"coin_analytics.cex_volume_rank.sorting_field" = "Hacim";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Önde gelen merkezi borsalarda token için günlük işlem hacmindeki değişimi gösteren 1 yıllık döneme ait grafik.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
@@ -1049,7 +1049,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.dex_volume" = "DEX Hacmi";
 "coin_analytics.dex_volume_rank" = "DEX Hacim Sıralaması";
 "coin_analytics.dex_volume_rank.description" = "Merkezi olmayan borsalarda token için işlem hacmine göre sıralanan tokenlar.";
-"coin_analytics.dex_volume_rank.sorting_field" = "Volume";
+"coin_analytics.dex_volume_rank.sorting_field" = "Hacim";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Bir yıllık süre zarfında önde gelen merkezi olmayan borsalarda token için günlük işlem hacmindeki değişikliği gösteren grafik.";
 "coin_analytics.dex_volume.info3" = "30 günlük süre içinde önde gelen merkezi olmayan borsalarda işlem hacmine göre token sıralaması.";
@@ -1113,7 +1113,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.project_fee" = "Proje Ücreti";
 "coin_analytics.project_fee_rank" = "Proje Ücret Sıralaması";
 "coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
-"coin_analytics.project_fee_rank.sorting_field" = "Volume";
+"coin_analytics.project_fee_rank.sorting_field" = "Hacim";
 
 "coin_analytics.project_revenue" = "Proje Geliri";
 "coin_analytics.project_revenue_rank" = "Proje Gelir Sıralaması";
@@ -1194,7 +1194,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "chart_indicators.settings.ma.description" = "EMA, SMA ve WMA, teknik analizde kullanılan hareketli ortalamalardır:\n\nEMA, daha hızlı tepkiler için yakın dönem fiyatlarına vurgu yapar.\nSMA, genel bir trend görünümü için fiyat verilerini ortalayır.\nWMA, yakın dönem verilerini lineer olarak ağırlıklandırarak hassasiyeti ve gürültü azaltmayı dengelemektedir";
 "chart_indicators.settings.ma.type_title" = "Tür";
-"chart_indicators.settings.ma.period_title" = "Period";
+"chart_indicators.settings.ma.period_title" = "Periyot";
 
 "chart_indicators.settings.rsi.title" = "RSI";
 "chart_indicators.settings.rsi.description" = "Göreceli Güç Endeksi (RSI), fiyat hızını ve değişimini ölçen, aşırı alım (70 üzeri) veya aşırı satım (30 altı) piyasa koşullarını tanımlayan bir momentum osilatörüdür. Ayrıca fiyat ters dönüşlerini değişimler yoluyla tespit edebilir.";
