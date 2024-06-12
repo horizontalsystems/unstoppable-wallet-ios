@@ -1013,13 +1013,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.indicators.show_details" = "Mostrar detalhes";
 "coin_analytics.indicators.summary" = "Resumo";
 "coin_analytics.indicators.no_data" = "Sem dados";
-"coin_analytics.indicators.oversold" = "Very Risky to Trade";
+"coin_analytics.indicators.oversold" = "Arriscado";
 "coin_analytics.indicators.strong_buy" = "Compra forte";
 "coin_analytics.indicators.buy" = "Comprar";
 "coin_analytics.indicators.neutral" = "Neutra";
-"coin_analytics.indicators.sell" = "Irá vender";
-"coin_analytics.indicators.strong_sell" = "Venda forte";
-"coin_analytics.indicators.overbought" = "Very Risky to Trade";
+"coin_analytics.indicators.sell" = "Vender";
+"coin_analytics.indicators.strong_sell" = "Venda Forte";
+"coin_analytics.indicators.overbought" = "Arriscado";
 "coin_analytics.period" = "Período";
 "coin_analytics.period.select_title" = "Selecionar Período";
 "coin_analytics.period.1h" = "1 hora";
@@ -1304,8 +1304,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.rate_us" = "Avalie-Nos";
 "settings.tell_friends" = "Indique para amigos";
 "settings.contact_us" = "Fale Conosco";
-"settings.social_networks.label" = "JOIN UNSTOPPABLES";
-"settings.social_networks.footer" = "Mantenha-se informado sobre os acontecimentos imparáveis. Seja o primeiro a saber sobre novos recursos, problemas relatados pelos usuários e os trabalhos em que estamos envolvidos!";
+"settings.social_networks.label" = "Seja Unstoppable";
+"settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
 
 // Settings -> Base Currency
 
