@@ -61,7 +61,7 @@ class CoinChartFactory {
 
         let chartData = ChartData(items: items, startWindow: firstPoint.timestamp, endWindow: lastPoint.timestamp)
         let diff = (lastPoint.value - firstPoint.value) / firstPoint.value * 100
-        let diffString = ValueFormatter.instance.format(percentValue: diff, showSign: true)
+        let diffString = ValueFormatter.instance.format(percentValue: diff, signType: .always)
         let valueDiff = diffString.map { ValueDiff(value: $0, trend: diff.isSignMinus ? .down : .up) }
         return ChartModule.ViewItem(
             value: ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: item.rate)),

@@ -87,7 +87,7 @@ extension CoinIndicatorViewItemFactory {
             rsiLine = "70%"
         }
 
-        let rsiValue = technicalAdvice.rsi.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) }
+        let rsiValue = technicalAdvice.rsi.flatMap { ValueFormatter.instance.format(percentValue: $0, signType: .never) }
         let signalTimeString = technicalAdvice.signalTimestamp.flatMap {
             let date = DateHelper.instance.formatShortDateOnly(date: Date(timeIntervalSince1970: $0))
             return "technical_advice.over.indicators.signal_date".localized(date)

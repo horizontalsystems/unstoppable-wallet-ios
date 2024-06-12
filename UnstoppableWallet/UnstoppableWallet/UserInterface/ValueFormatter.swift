@@ -142,7 +142,7 @@ class ValueFormatter {
         return (value: value, digits: max(digits, minDigits))
     }
 
-    private func decorated(string: String, suffix: String? = nil, symbol: String? = nil, signValue: Decimal? = nil, tooSmall: Bool = false) -> String {
+    private func decorated(string: String, suffix: String? = nil, symbol: String? = nil, signType: SignType = .never, signValue: Decimal, tooSmall: Bool = false) -> String {
         var string = string
 
         if let suffix {
@@ -153,12 +153,14 @@ class ValueFormatter {
             string = "\(string) \(symbol)"
         }
 
-        if let signValue {
-            var sign = ""
-            if !signValue.isZero {
-                sign = signValue.isSignMinus ? "-" : "+"
-            }
-            string = "\(sign)\(string)"
+        var sign = ""
+        if !signValue.isZero {
+            sign = signValue.isSignMinus ? "-" : "+"
+        }
+        switch signType {
+        case .never: ()
+        case .always: string = "\(sign)\(string)"
+        case .auto: if signValue.isSignMinus { string = "\(sign)\(string)" }
         }
 
         if tooSmall {
@@ -189,7 +191,7 @@ class ValueFormatter {
             return nil
         }
 
-        return pattern.replacingOccurrences(of: "1", with: decorated(string: string, suffix: suffix))
+        return pattern.replacingOccurrences(of: "1", with: decorated(string: string, suffix: suffix, signValue: value))
     }
 }
 
@@ -206,10 +208,10 @@ extension ValueFormatter {
             return nil
         }
 
-        return decorated(string: string, suffix: suffix, tooSmall: tooSmall)
+        return decorated(string: string, suffix: suffix, signValue: value, tooSmall: tooSmall)
     }
 
-    func formatShort(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
+    func formatShort(value: Decimal, decimalCount: Int, symbol: String? = nil, signType: SignType = .never) -> String? {
         let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDigits: decimalCount)
 
         let string: String? = rawFormatterQueue.sync {
@@ -221,7 +223,7 @@ extension ValueFormatter {
             return nil
         }
 
-        return decorated(string: string, suffix: suffix, symbol: symbol, signValue: showSign ? value : nil, tooSmall: tooSmall)
+        return decorated(string: string, suffix: suffix, symbol: symbol, signType: signType, signValue: value, tooSmall: tooSmall)
     }
 
     func formatFull(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
@@ -236,46 +238,46 @@ extension ValueFormatter {
             return nil
         }
 
-        return decorated(string: string, symbol: symbol, signValue: showSign ? value : nil)
+        return decorated(string: string, symbol: symbol, signValue: value)
     }
 
-    func formatShort(coinValue: CoinValue, showCode: Bool = true, showSign: Bool = false) -> String? {
-        formatShort(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.symbol : nil, showSign: showSign)
+    func formatShort(coinValue: CoinValue, showCode: Bool = true, signType: SignType = .never) -> String? {
+        formatShort(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.symbol : nil, signType: signType)
     }
 
     func formatFull(coinValue: CoinValue, showCode: Bool = true, showSign: Bool = false) -> String? {
         formatFull(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.symbol : nil, showSign: showSign)
     }
 
-    func formatShort(currency: Currency, value: Decimal, showSign: Bool = false) -> String? {
+    func formatShort(currency: Currency, value: Decimal, signType: SignType = .never) -> String? {
         let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value)
 
         guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol, suffix: suffix) else {
             return nil
         }
 
-        return decorated(string: string, signValue: showSign ? value : nil, tooSmall: tooSmall)
+        return decorated(string: string, signType: signType, signValue: value, tooSmall: tooSmall)
     }
 
-    func formatShort(currencyValue: CurrencyValue, showSign: Bool = false) -> String? {
-        formatShort(currency: currencyValue.currency, value: currencyValue.value, showSign: showSign)
+    func formatShort(currencyValue: CurrencyValue, signType: SignType = .never) -> String? {
+        formatShort(currency: currencyValue.currency, value: currencyValue.value, signType: signType)
     }
 
-    func formatFull(currency: Currency, value: Decimal, showSign: Bool = false) -> String? {
+    func formatFull(currency: Currency, value: Decimal, signType: SignType = .never) -> String? {
         let (transformedValue, digits) = transformedFull(value: value, maxDigits: 18)
 
         guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol) else {
             return nil
         }
 
-        return decorated(string: string, signValue: showSign ? value : nil)
+        return decorated(string: string, signType: signType, signValue: value)
     }
 
-    func formatFull(currencyValue: CurrencyValue, showSign: Bool = false) -> String? {
-        formatFull(currency: currencyValue.currency, value: currencyValue.value, showSign: showSign)
+    func formatFull(currencyValue: CurrencyValue, signType: SignType = .never) -> String? {
+        formatFull(currency: currencyValue.currency, value: currencyValue.value, signType: signType)
     }
 
-    func format(percentValue: Decimal, showSign: Bool = true) -> String? {
+    func format(percentValue: Decimal, signType: SignType = .never) -> String? {
         let (transformedValue, digits) = transformedFull(value: percentValue, maxDigits: 2)
 
         let string: String? = rawFormatterQueue.sync {
@@ -287,6 +289,14 @@ extension ValueFormatter {
             return nil
         }
 
-        return decorated(string: string, signValue: showSign ? percentValue : nil) + "%"
+        return decorated(string: string, signType: signType, signValue: percentValue) + "%"
+    }
+}
+
+extension ValueFormatter {
+    enum SignType {
+        case never
+        case auto
+        case always
     }
 }

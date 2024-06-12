@@ -21,7 +21,7 @@ class MetricChartFactory {
 
         switch valueType {
         case .percent:
-            return ValueFormatter.instance.format(percentValue: value, showSign: false)
+            return ValueFormatter.instance.format(percentValue: value, signType: .never)
         case let .currencyValue(currency):
             return ValueFormatter.instance.formatFull(currency: currency, value: value)
         case .counter:
@@ -40,9 +40,9 @@ class MetricChartFactory {
             return [valueString, coin.code].compactMap { $0 }.joined(separator: " ")
         case let .compactCurrencyValue(currency):
             if exactlyValue {
-                return ValueFormatter.instance.formatFull(currency: currency, value: value, showSign: true)
+                return ValueFormatter.instance.formatFull(currency: currency, value: value, signType: .always)
             } else {
-                return ValueFormatter.instance.formatShort(currency: currency, value: value)
+                return ValueFormatter.instance.formatShort(currency: currency, value: value, signType: .auto)
             }
         }
     }
@@ -85,7 +85,7 @@ extension MetricChartFactory {
             let diff = (lastItem.value - firstItem.value) / firstItem.value * 100
             chartTrend = diff.isSignMinus ? .down : .up
 
-            let valueString = ValueFormatter.instance.format(percentValue: diff, showSign: true)
+            let valueString = ValueFormatter.instance.format(percentValue: diff, signType: .always)
             valueDiff = valueString.map { ValueDiff(value: $0, trend: chartTrend) }
 
             if let hardcodedRightMode {
@@ -98,7 +98,7 @@ extension MetricChartFactory {
                 value = Self.format(value: last, valueType: valueType)
             }
 
-            let valueString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: lastItem.value)
+            let valueString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: lastItem.value, signType: .always)
             valueDiff = valueString.map { ValueDiff(value: $0, trend: lastItem.value.isSignMinus ? .down : .up) }
             chartTrend = .neutral
 
@@ -187,7 +187,7 @@ extension MetricChartFactory {
         // if etf chart
         if let totalInflow = chartItem.indicators[ChartIndicator.LineConfiguration.totalInflowId] {
             let formattedValue = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: totalInflow)
-            let diffString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: value)
+            let diffString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: value, signType: .always)
             let diff = diffString.map { ValueDiff(value: $0, trend: value.isSignMinus ? .down : .up) }
 
             return ChartModule.SelectedPointViewItem(
