@@ -1012,13 +1012,13 @@
 "coin_analytics.indicators.show_details" = "세부 정보 보기";
 "coin_analytics.indicators.summary" = "요약";
 "coin_analytics.indicators.no_data" = "데이터 없음";
-"coin_analytics.indicators.oversold" = "Very Risky to Trade";
-"coin_analytics.indicators.strong_buy" = "강한 매수";
+"coin_analytics.indicators.oversold" = "위험";
+"coin_analytics.indicators.strong_buy" = "강력한 매수";
 "coin_analytics.indicators.buy" = "매수";
 "coin_analytics.indicators.neutral" = "중립적";
 "coin_analytics.indicators.sell" = "매도";
-"coin_analytics.indicators.strong_sell" = "강한 매도";
-"coin_analytics.indicators.overbought" = "Very Risky to Trade";
+"coin_analytics.indicators.strong_sell" = "강력한 매도";
+"coin_analytics.indicators.overbought" = "위험";
 "coin_analytics.period" = "기간";
 "coin_analytics.period.select_title" = "기간 선택";
 "coin_analytics.period.1h" = "1시간";
@@ -1303,8 +1303,8 @@
 "settings.rate_us" = "앱 평가";
 "settings.tell_friends" = "친구에게 추천하기";
 "settings.contact_us" = "문의하기";
-"settings.social_networks.label" = "JOIN UNSTOPPABLES";
-"settings.social_networks.footer" = "Unstoppable의 소식을 놓치지 마세요. 새로운 기능, 사용자로부터 보고된 문제 및 저희가 작업 중인 사항을 가장 먼저 알아보세요!";
+"settings.social_networks.label" = "Be Unstoppable";
+"settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
 
 // Settings -> Base Currency
 
