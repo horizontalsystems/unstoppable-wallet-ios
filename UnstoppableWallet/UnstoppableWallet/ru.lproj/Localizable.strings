@@ -449,8 +449,8 @@
 "send.transaction_inputs_outputs_info.shuffle.description" = "Порядок выхода транзакций меняется случайным образом в каждой транзакции. Иногда изменение может быть первым выводом, иногда - вторым. Если пользователь доверяет разработчику приложения, то рекомендуем использовать этот вариант.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Существует широко признанный стандарт для упорядочивания выходов транзакции, известный как BIP69. В открытых кошельках этот стандарт обеспечивает, чтобы пользователи кошелька не должны были полагаться на то, как разработчики приложения реализуют упорядочивание выходов. Поскольку этот стандарт относительно новый, не многие кошельки его уже реализовали. В результате, на блокчейне в некоторых случаях можно узнать, отправлена ли транзакция из кошелька, который использует этот стандарт или нет.";
-"send.select_all" = "Select All";
-"send.unselect_all" = "Unselect All";
+"send.select_all" = "Выбрать все";
+"send.unselect_all" = "Снять выделение";
 
 "send.confirmation.title" = "Подтвердить";
 "send.confirmation.you_send" = "Вы отправляете";
@@ -468,11 +468,11 @@
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Изменить комиссию";
 "send.confirmation.replaced_transactions" = "Замененные транзакции";
-"send.confirmation.input" = "Input";
+"send.confirmation.input" = "Ввод";
 
-"send.confirmation.sync_failed" = "Sync Failed";
-"send.confirmation.invalid_data" = "Invalid Data";
-"send.confirmation.refresh" = "Refresh";
+"send.confirmation.sync_failed" = "Ошибка синхронизации";
+"send.confirmation.invalid_data" = "Неверные данные";
+"send.confirmation.refresh" = "Обновить";
 "send.confirmation.please_wait" = "Please Wait";
 "send.confirmation.expires_in" = "Expires in %@";
 "send.confirmation.expired" = "Expired";
@@ -523,8 +523,8 @@
 "approve.confirmation.spender" = "Покупатель";
 
 "send.enter_amount" = "Введите сумму";
-"send.enter_address" = "Enter Address";
-"send.invalid_address" = "Invalid Address";
+"send.enter_address" = "Введите адрес";
+"send.invalid_address" = "Неверный адрес";
 "send.token_not_enabled" = "Токен не включен";
 "send.token_syncing" = "Синхронизация токенов";
 "send.token_not_synced" = "Токен не синхронизирован";
@@ -632,7 +632,7 @@
 "swap.advanced_settings.service_fee_description" = "Комиссия за услугу обмена на платформе обычно 0.3% или 0.6%!";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не выполнится успешно.";
 "swap.advanced_settings.error.higher_slippage" = "Допустимая величина проскальзывания не может быть больше %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Неверный адрес";
 "swap.advanced_settings.error.invalid_slippage" = "Недействительное отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недействительный срок выполнения";
 
@@ -660,7 +660,7 @@
 
 "swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
-"swap.confirmation.refresh" = "Refresh";
+"swap.confirmation.refresh" = "Обновить";
 "swap.confirmation.impact_too_high" = "%@ отключил действие обмена для этой сделки, потому что вы получаете крайне невыгодную цену. Это связано с крайне низкой ликвидностью.Если вы все равно хотите выполнить обмен, используйте вместо этого веб-сайт %@.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
 
@@ -717,12 +717,12 @@
 
 "market.sort_by.title" = "Sort By";
 "market.sort_by.manual" = "Manual";
-"market.sort_by.highest_cap" = "Highest Cap";
-"market.sort_by.lowest_cap" = "Lowest Cap";
+"market.sort_by.highest_cap" = "Наивысшей кап.";
+"market.sort_by.lowest_cap" = "Наименьшей кап.";
 "market.sort_by.gainers" = "Gainers";
 "market.sort_by.losers" = "Losers";
-"market.sort_by.highest_volume" = "Highest Volume";
-"market.sort_by.lowest_volume" = "Lowest Volume";
+"market.sort_by.highest_volume" = "Наивысшему обьему";
+"market.sort_by.lowest_volume" = "Наименьшему объему";
 
 "market.top_coins.title" = "Coins";
 "market.top_coins" = "Топ %@";
@@ -773,10 +773,10 @@
 "market.top.title" = "Лучшие токены";
 "market.top.description" = "Топ токенов по рыночной капитализации";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
+"market.top.highest_cap" = "Наивысшей кап.";
+"market.top.lowest_cap" = "Наименьшей кап.";
+"market.top.highest_volume" = "Наивысшему обьему";
+"market.top.lowest_volume" = "Наименьшему объему";
 "market.top.top_gainers" = "Показывают рост";
 "market.top.top_losers" = "Теряют в цене";
 "market.top.top_collections" = "Топ NFT коллекции";
@@ -904,8 +904,8 @@
 "market.etf.title" = "Total Net Inflow";
 "market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
 "market.etf.total_net_assets" = "Total Net Assets";
-"market.etf.sort_by.highest_assets" = "Highest Assets";
-"market.etf.sort_by.lowest_assets" = "Lowest Assets";
+"market.etf.sort_by.highest_assets" = "Наивысшие активы";
+"market.etf.sort_by.lowest_assets" = "Наименьшие активы";
 "market.etf.sort_by.inflow" = "Inflow";
 "market.etf.sort_by.outflow" = "Outflow";
 "market.etf.period.all" = "Все";
@@ -915,10 +915,10 @@
 "market.market_cap.market_cap" = "Рын. капитализация";
 
 "market.tvl_in_defi.title" = "TVL в DeFi";
-"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.description" = "Всего заблокировано (TVL) в DeFi";
 "market.tvl_in_defi.tvl" = "TVL";
 "market.tvl_in_defi.multi_chain" = "Multi-chain";
-"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.filter_by_chain" = "Сортировать по блокчейну";
 "market.tvl_in_defi.filter.all" = "Все";
 
 "market.volume.title" = "Объем";
@@ -926,11 +926,11 @@
 "market.volume.volume" = "Объем";
 
 "market.signal.risky" = "Risky";
-"market.signal.strong_buy" = "Strong Buy";
-"market.signal.buy" = "Buy";
-"market.signal.neutral" = "Neutral";
-"market.signal.sell" = "Sell";
-"market.signal.strong_sell" = "Strong Sell";
+"market.signal.strong_buy" = "Активно покупать";
+"market.signal.buy" = "Покупать";
+"market.signal.neutral" = "Нейтрально";
+"market.signal.sell" = "Продавать";
+"market.signal.strong_sell" = "Активно продавать";
 
 // Coin Page
 
@@ -1018,7 +1018,7 @@
 "coin_analytics.indicators.oversold" = "Очень рискованная торговля";
 "coin_analytics.indicators.strong_buy" = "Активно покупать";
 "coin_analytics.indicators.buy" = "Покупать";
-"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.neutral" = "Нейтрально";
 "coin_analytics.indicators.sell" = "Продавать";
 "coin_analytics.indicators.strong_sell" = "Активно продавать";
 "coin_analytics.indicators.overbought" = "Очень рискованная торговля";
@@ -1525,7 +1525,7 @@
 // Settings -> About App
 
 "settings.about_app.title" = "О приложении";
-"settings.about_app.app_version" = "App Version";
+"settings.about_app.app_version" = "Версия приложения";
 "settings.about_app.website" = "Веб-сайт";
 
 // Settings -> About App -> Contact
@@ -1541,7 +1541,7 @@
 "settings.privacy.statement.data_usage" = "Кошелек не собирает никаких данных о пользователях.";
 "settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
 "settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
-"settings.privacy.allow" = "Share UI Data";
+"settings.privacy.allow" = "Поделиться данными UI";
 
 // Settings -> Appearance
 
@@ -1556,7 +1556,7 @@
 "appearance.hide_markets" = "Hide Markets";
 "appearance.price_change" = "по изменению цены (%)";
 "appearance.price_change.24h" = "24ч";
-"appearance.price_change.1d" = "Midnight UTC";
+"appearance.price_change.1d" = "Полночь по UTC";
 
 "appearance.launch_screen" = "Запуск экрана";
 "appearance.launch_screen.auto" = "По умолчанию";
@@ -1565,10 +1565,10 @@
 "appearance.launch_screen.watchlist" = "Избранное";
 
 "appearance.balance_tab" = "Balance Tab";
-"appearance.hide_buttons" = "Hide Buttons";
+"appearance.hide_buttons" = "Скрыть кнопки";
 "appearance.balance_value" = "Значение баланса";
-"appearance.balance_value.coin_fiat" = "Coin / Fiat";
-"appearance.balance_value.fiat_coin" = "Fiat / Coin";
+"appearance.balance_value.coin_fiat" = "Монета / Фиат";
+"appearance.balance_value.fiat_coin" = "Фиат / Монета";
 
 "appearance.app_icon" = "Иконка приложения";
 
