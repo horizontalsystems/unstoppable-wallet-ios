@@ -728,7 +728,6 @@
 "market.top_coins" = "Топ %@";
 
 "market.time_period.title" = "Период";
-"market.time_period.24h" = "24 Часа";
 "market.time_period.1d" = "1 День";
 "market.time_period.1w" = "1 Неделя";
 "market.time_period.2w" = "2 Недели";
@@ -738,7 +737,6 @@
 "market.time_period.1y" = "1 Год";
 "market.time_period.2y" = "2 Года";
 "market.time_period.5y" = "5 Лет";
-"market.time_period.24h.short" = "24ч";
 "market.time_period.1d.short" = "1Д";
 "market.time_period.1w.short" = "1Н";
 "market.time_period.2w.short" = "2Н";
