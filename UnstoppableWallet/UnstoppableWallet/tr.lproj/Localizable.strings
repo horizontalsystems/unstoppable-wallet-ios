@@ -228,7 +228,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "extended_key.purpose" = "Purpose";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Account";
-"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
+"extended_key.account.description" = "Bu, ileri düzey kullanıcılar için bir ayar. Eğer cüzdanı (genişletilmiş özel anahtar aracılığıyla) veya işlem listesini (genişletilmiş genel anahtar aracılığıyla) içe aktarmaya çalışıyorsanız, hesap 0'a ihtiyacınız var.";
 "extended_key.tap_to_show" = "Extended private key göstermek için dokunun";
 
 // Backup
@@ -339,8 +339,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.locked" = "Kilitli";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
-"balance.token.not_relayed" = "Broadcasting";
-"balance.token.not_relayed.info.title" = "Broadcast";
+"balance.token.not_relayed" = "Yayınlama";
+"balance.token.not_relayed.info.title" = "Yayın";
 "balance.token.not_relayed.info.description" = "Bu miktarı içeren işlem yayınlandı ancak henüz ağ tarafından kabul edilmedi";
 "balance.token.processing" = "İşleniyor";
 "balance.token.processing.info.title" = "İşlem Sayısı";
@@ -351,8 +351,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "Frozen title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
-"balance.token.account.inactive.title" = "Account Not Active";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
+"balance.token.account.inactive.title" = "Hesap aktif değil";
+"balance.token.account.inactive.description" = "Yeni TRON cüzdanları aktif hale gelmek için en az 1 TRX yatırılmasını gerektirir. Aktif olmayan cüzdanlar, tokenları alabilir ve saklayabilir, ancak etkinleştirilene kadar bakiyeleri güncellemez.";
 
 // Account switcher
 
@@ -447,12 +447,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.transaction_inputs_outputs_info.shuffle.description" = "İşlem çıktılarının sırası her işlemde rastgele belirlenir. Bazen değişim ilk çıktı olabilir, bazen ikinci olabilir. Bir kullanıcı uygulamanın geliştiricisine güveniyorsa bunu önerilen bir seçenek olarak değerlendirin.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "İşlem çıktılarını sipariş etmek için yaygın olarak kabul edilen bir standart vardır (BIP69 olarak bilinir). Açık kaynaklı (open-source) cüzdanlarda, bu standart, cüzdan kullanıcılarının uygulamanın geliştiricilerinin çıktıların sıralanmasını nasıl uyguladıklarına güvenmelerine gerek kalmamasını sağlar. Bu standart yeni olduğundan, henüz pek çok cüzdan bunu uygulamamıştır. Sonuç olarak, bir işlemin bu standardı kullanan bir cüzdandan gönderilip gönderilmediğini blok zincirinde görmek mümkündür.";
-"send.select_all" = "Select All";
-"send.unselect_all" = "Unselect All";
+"send.select_all" = "Hepsini Seç";
+"send.unselect_all" = "Tüm Seçimleri Kaldır";
 
 "send.confirmation.title" = "Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
-"send.confirmation.transfer" = "Transfer";
+"send.confirmation.transfer" = "Aktar";
 "send.confirmation.to" = "Alan";
 "send.confirmation.own" = "Kendi";
 "send.confirmation.contact_name" = "Kişi Adı";
@@ -466,14 +466,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Ücretle Değiştir";
 "send.confirmation.replaced_transactions" = "Değiştirilmiş İşlemler";
-"send.confirmation.input" = "Input";
+"send.confirmation.input" = "Giriş";
 
-"send.confirmation.sync_failed" = "Sync Failed";
-"send.confirmation.invalid_data" = "Invalid Data";
-"send.confirmation.refresh" = "Refresh";
-"send.confirmation.please_wait" = "Please Wait";
-"send.confirmation.expires_in" = "Expires in %@";
-"send.confirmation.expired" = "Expired";
+"send.confirmation.sync_failed" = "Senkronizasyon Başarısız";
+"send.confirmation.invalid_data" = "Geçersiz Veri";
+"send.confirmation.refresh" = "Yenile";
+"send.confirmation.please_wait" = "Lütfen Bekleyin";
+"send.confirmation.expires_in" = "%@ içinde sona erer";
+"send.confirmation.expired" = "Süresi Dolmuş";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.sent" = "Gönderildi";
@@ -521,11 +521,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "approve.confirmation.spender" = "Harcayan";
 
 "send.enter_amount" = "Miktarı Girin";
-"send.enter_address" = "Enter Address";
-"send.invalid_address" = "Invalid Address";
-"send.token_not_enabled" = "Token Not Enabled";
-"send.token_syncing" = "Token Syncing";
-"send.token_not_synced" = "Token Not Synced";
+"send.enter_address" = "Adresini Giriniz";
+"send.invalid_address" = "Geçersiz Adres";
+"send.token_not_enabled" = "Jeton Etkin Değil";
+"send.token_syncing" = "Token Senkronizasyonu";
+"send.token_not_synced" = "Jeton Senkronize Edilmedi";
 "send.insufficient_balance" = "Yetersiz Bakiye";
 
 // Donate
@@ -583,9 +583,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.no_providers" = "Sağlayıcı Yok";
 "swap.enter_amount" = "Miktarı Girin";
 "swap.no_quotes" = "Teklif Yok";
-"swap.token_not_enabled" = "Token Not Enabled";
-"swap.token_syncing" = "Token Syncing";
-"swap.token_not_synced" = "Token Not Synced";
+"swap.token_not_enabled" = "Jeton Etkin Değil";
+"swap.token_syncing" = "Token Senkronizasyonu";
+"swap.token_not_synced" = "Jeton Senkronize Edilmedi";
 "swap.insufficient_balance" = "Yetersiz Bakiye";
 
 "swap.quotes.providers" = "Sağlayıcılar";
@@ -630,7 +630,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.advanced_settings.service_fee_description" = "Platformdaki takas işlemi için bir hizmet ücreti genellikle %0,3 veya %0,6'dır";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
 "swap.advanced_settings.error.higher_slippage" = "Slipaj Toleransı %@%% üzerinde olamaz";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Geçersiz Adres";
 "swap.advanced_settings.error.invalid_slippage" = "Geçersiz Kayma";
 "swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
@@ -651,14 +651,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.confirmation.title" = "Onayla";
 "swap.confirmation.quoting" = "Alıntı...";
 "swap.confirmation.invalid_quote" = "Yanlış alıntı";
-"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.please_wait" = "Lütfen Bekleyin";
 "swap.confirmation.quote_expires_in" = "Alıntının geçerlilik süresi %@ sonra sona erecek";
 "swap.confirmation.quote_expired" = "Alıntı süresi doldu";
 "swap.confirmation.quote_failed" = "Alıntı yaparken hata";
 
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
-"swap.confirmation.refresh" = "Refresh";
+"swap.confirmation.refresh" = "Yenile";
 "swap.confirmation.impact_too_high" = "%@, son derece elverişsiz bir fiyat aldığınız için bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
@@ -698,23 +698,23 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.total_market_cap" = "Total Cap";
 "market.24h_volume" = "24 saat hacim";
 "market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "TVL in DeFi";
+"market.defi_tvl" = "DeFi'de TVL";
 
-"market.global.market_cap" = "Total Cap";
-"market.global.volume" = "24h Vol.";
-"market.global.btc_dominance" = "BTC Dominance";
-"market.global.etf_inflow" = "ETF Inflow";
-"market.global.tvl_in_defi" = "TVL in DeFi";
+"market.global.market_cap" = "Toplam Piyasa Değeri";
+"market.global.volume" = "24s Hacim";
+"market.global.btc_dominance" = "BTC Hakimiyeti";
+"market.global.etf_inflow" = "ETF Girişi";
+"market.global.tvl_in_defi" = "DeFi'de TVL";
 
 "market.tab.news" = "Haberler";
-"market.tab.coins" = "Coins";
+"market.tab.coins" = "Coin'ler";
 "market.tab.watchlist" = "İzleme Listesi";
-"market.tab.platforms" = "Platforms";
-"market.tab.pairs" = "Pairs";
-"market.tab.sectors" = "Sectors";
+"market.tab.platforms" = "Platformlar";
+"market.tab.pairs" = "Çiftler";
+"market.tab.sectors" = "Sektörler";
 
 "market.sort_by.title" = "Sırala";
-"market.sort_by.manual" = "Manual";
+"market.sort_by.manual" = "Manuel";
 "market.sort_by.highest_cap" = "En Yüksek Piyasa Değeri";
 "market.sort_by.lowest_cap" = "En Düşük Piyasa Değeri";
 "market.sort_by.gainers" = "Kazanlar";
@@ -722,7 +722,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.sort_by.highest_volume" = "En Yüksek Hacim";
 "market.sort_by.lowest_volume" = "En Düşük Hacim";
 
-"market.top_coins.title" = "Coins";
+"market.top_coins.title" = "Coin'ler";
 "market.top_coins" = "En İyiler %@";
 
 "market.time_period.title" = "Periyot";
@@ -752,7 +752,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.top.section.header.see_all" = "Hepsini Gör";
 "market.top.section.header.top_gainers" = "En Kazançlılar";
 "market.top.section.header.top_losers" = "Çok Kaybedenler";
-"market.top.section.header.sectors" = "Sectors";
+"market.top.section.header.sectors" = "Sektörler";
 "market.top.section.header.news" = "Haberler";
 "market.top.volume.title" = "Hacim";
 "market.top.market_cap.title" = "P. Değeri";
@@ -792,7 +792,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "top_platform.title" = "%@ Ekosistemi";
 "top_platform.description" = "%@ zincirindeki tüm protokollerin piyasa değeri";
-"top_platform.total_cap" = "Total Cap";
+"top_platform.total_cap" = "Toplam Piyasa Değeri";
 
 
 "market.search.recent" = "Son";
@@ -815,7 +815,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.watchlist.signals.strong_sell.description" = "Fiyatın yüksek olasılıkla düşeceği";
 "market.watchlist.signals.risky.description" = "Yüksek risk seviyesi, dikkat gerektirir";
 "market.watchlist.signals.warning" = "Her zaman risk yönetimini uygulamayı unutmayın ve bu finansal tavsiye değildir.";
-"market.watchlist.signals.turn_on" = "Turn On";
+"market.watchlist.signals.turn_on" = "Açık Konum";
 
 "market.advanced_search.title" = "Filtreler";
 "market.advanced_search.show_results" = "Sonuçları Göster";
@@ -900,35 +900,35 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
 
 "market.etf.title" = "Toplam Net Giriş";
-"market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
-"market.etf.total_net_assets" = "Total Net Assets";
-"market.etf.sort_by.highest_assets" = "Highest Assets";
-"market.etf.sort_by.lowest_assets" = "Lowest Assets";
-"market.etf.sort_by.inflow" = "Inflow";
-"market.etf.sort_by.outflow" = "Outflow";
+"market.etf.description" = "Bir ETF'nin net girişi, nakit girişlerinin çıkışlardan çıkarılmasıyla eşittir.";
+"market.etf.total_net_assets" = "Toplam Net Varlıklar";
+"market.etf.sort_by.highest_assets" = "En Yüksek Varlıklar";
+"market.etf.sort_by.lowest_assets" = "En Düşük Varlıklar";
+"market.etf.sort_by.inflow" = "Giriş";
+"market.etf.sort_by.outflow" = "Çıkış";
 "market.etf.period.all" = "Hepsi";
 
 "market.market_cap.title" = "Toplam Piyasa Değeri";
 "market.market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
 "market.market_cap.market_cap" = "Piyasa Değeri";
 
-"market.tvl_in_defi.title" = "TVL in DeFi";
-"market.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.tvl_in_defi.title" = "DeFi'de TVL";
+"market.tvl_in_defi.description" = "DeFi'deki Toplam Kilit Değer (TVL)";
 "market.tvl_in_defi.tvl" = "TVL";
-"market.tvl_in_defi.multi_chain" = "Multi-chain";
-"market.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.tvl_in_defi.multi_chain" = "Çoklu Zincir";
+"market.tvl_in_defi.filter_by_chain" = "Zincir ile filtrele";
 "market.tvl_in_defi.filter.all" = "Hepsi";
 
 "market.volume.title" = "Hacim";
 "market.volume.description" = "Kripto piyasa 24 saatlik işlem hacmi";
 "market.volume.volume" = "Hacim";
 
-"market.signal.risky" = "Risky";
-"market.signal.strong_buy" = "Strong Buy";
-"market.signal.buy" = "Buy";
-"market.signal.neutral" = "Neutral";
-"market.signal.sell" = "Sell";
-"market.signal.strong_sell" = "Strong Sell";
+"market.signal.risky" = "Riskli";
+"market.signal.strong_buy" = "Kuvvetli Al";
+"market.signal.buy" = "Al";
+"market.signal.neutral" = "Tarafsız";
+"market.signal.sell" = "Sat";
+"market.signal.strong_sell" = "Kuvvetli Satış";
 
 // Coin Page
 
@@ -998,25 +998,25 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "technical_advice.ema.above" = "yukarıda";
 "technical_advice.ema.below" = "aşağıda";
 "technical_advice.ema.growth" = "büyüme";
-"technical_advice.ema.decrease" = "decrease";
-"technical_advice.ema.advice" = "EMA 200. Determines the overall sentiment and trend. The daily price of the asset is located %@ the EMA (%@). This means that globally the asset is set for %@.";
+"technical_advice.ema.decrease" = "azalış";
+"technical_advice.ema.advice" = "EMA 200. Genel duygu ve trendi belirler. Varlığın günlük fiyatı EMA (%@) 'nin %@'den geçtiği yerde bulunuyor. Bu, genel olarak varlığın %@ olduğu anlamına gelir.";
 
 "technical_advice.macd.positive" = "yukarıda";
 "technical_advice.macd.negative" = "aşağıda";
-"technical_advice.macd.advice" = "MACD. Assesses the strength of the trend considering the average price change. The daily value of the histogram is %@ (%@). The price of the asset globally may move %@.";
+"technical_advice.macd.advice" = "MACD. Ortalama fiyat değişimini dikkate alarak trendin gücünü değerlendirir. Histogramın günlük değeri %@ (%@). Varlığın fiyatı genel olarak %@ hareket edebilir.";
 
 "coin_analytics.indicators.title" = "Teknik Göstergeleri";
 "coin_analytics.indicators.disclaimer" = "Her zaman risk yönetimini uygulamayı unutmayın ve bu finansal tavsiye değildir.";
-"coin_analytics.indicators.info.title" = "Technical Indicators";
-"coin_analytics.indicators.info.description" = "We use the Bollinger Bands + RSI strategy to determine trading signals. All calculations are based on daily candlesticks and provide advice for a moderately long term. The essence of the strategy is that the asset price should reach an extreme, breaking out of the Bollinger Bands channel, and the RSI should be in the overbought/oversold zone. After the price returns to the channel, there is a high probability of the price returning to the mean values or attempting to break the channel from the other side. Note that the strategy may give several false signals during strong market movements before a correct signal appears.\n\nPlease remember that it is very important to apply risk management to trading and remember to cut losses if the market situation changes! ";
-"coin_analytics.indicators.hide_details" = "Hide Details";
-"coin_analytics.indicators.show_details" = "Show Details";
+"coin_analytics.indicators.info.title" = "Teknik Göstergeleri";
+"coin_analytics.indicators.info.description" = "Bollinger Bantları + RSI stratejisini kullanarak işlem sinyallerini belirliyoruz. Tüm hesaplamalar günlük mum grafiklerine dayanmakta ve ortalama uzun vadeli bir strateji için tavsiyeler sunmaktadır. Stratejinin özü, varlık fiyatının Bollinger Bantları kanalından çıkarak aşırı seviyelere ulaşması ve RSI'nin aşırı alım/aşırı satım bölgesinde olması gerektiğidir. Fiyat kanala geri döndükten sonra, fiyatın ortalama değerlere geri dönme veya kanalı diğer taraftan kırmaya yönelik yüksek bir olasılığı vardır. Stratejinin güçlü piyasa hareketleri sırasında birkaç yanlış sinyal verebileceğini unutmayın, doğru bir sinyal ortaya çıkmadan önce.\n\nLütfen ticarette risk yönetimini uygulamanın çok önemli olduğunu ve piyasa durumu değişirse kayıpları kesmeyi unutmayın! ";
+"coin_analytics.indicators.hide_details" = "Detayları Gizle";
+"coin_analytics.indicators.show_details" = "Detayları Göster";
 "coin_analytics.indicators.summary" = "Kısa özet";
 "coin_analytics.indicators.no_data" = "Veri Yok";
 "coin_analytics.indicators.oversold" = "Very Risky to Trade";
 "coin_analytics.indicators.strong_buy" = "Strong Buy";
 "coin_analytics.indicators.buy" = "Buy";
-"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.neutral" = "Tarafsız";
 "coin_analytics.indicators.sell" = "Sell";
 "coin_analytics.indicators.strong_sell" = "Strong Sell";
 "coin_analytics.indicators.overbought" = "Very Risky to Trade";
@@ -1032,7 +1032,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "coin_analytics.not_available" = "This project has no analytical data";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators" = "Teknik Göstergeleri";
 "coin_analytics.technical_indicators.info1" = "Özet: Bu, bir varlığın teknikleri ile ilgili çeşitli teknik göstergeleri ve zaman dilimlerini göz önünde bulunduran genel bir bakıştır. Bu göstergelere dayalı olarak bir uzlaşı görüşü sunar (Al, Sat veya Tarafsız).";
 "coin_analytics.technical_indicators.info2" = "Hareketli Ortalamalar (MA): Bunlar, eğilimi takip eden bir gösterge oluşturmak için fiyat verilerini düzleştiren yaygın olarak kullanılan teknik göstergelerdir. Belirli bir zaman dilimi içinde ortalama fiyatı gösterirler. Birden fazla MA türü bulunur:\n\nBasit Hareketli Ortalama (SMA): Bu, genellikle kapanış fiyatları gibi belirli bir fiyat aralığının ortalamasını, o aralıktaki dönem sayısına göre hesaplar.\n\nÜstel Hareketli Ortalama (EMA): Bu, daha yeni fiyatlara daha fazla ağırlık verir ve bu nedenle daha yeni fiyat değişikliklerine daha hızlı tepki verir.";
 "coin_analytics.technical_indicators.info3" = "Osilatörler: Bunlar, zaman içinde bir bant içinde (bir merkez çizginin üstünde ve altında veya belirlenen seviyeler arasında) dalgalanan teknik göstergelerdir. Piyasada aşırı alım ve aşırı satım koşullarını belirlemeye yardımcı olmak için tasarlanmışlardır. İşte bazı yaygın osilatörler:\n\nGüç Endeksi (RSI - Relative Strength Index): Bu, fiyat hareketlerinin hızını ve değişimini ölçer. Genellikle aşırı alım veya aşırı satım koşullarını belirlemek için kullanılır.\n\nHareketli Ortalama Yakınsama Sapma (MACD - Moving Average Convergence Divergence): Bu, potansiyel alım ve satış sinyallerini belirlemek için kullanılır. Teknik sinyalleri tetiklerken sinyal çizgisinin üzerinden (alış) veya altından (satış) geçtiğinde çalışır.";
@@ -1061,7 +1061,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.dex_liquidity" = "DEX Likiditesi";
 "coin_analytics.dex_liquidity_rank" = "DEX Likidite Sıralaması";
 "coin_analytics.dex_liquidity_rank.description" = "Merkezi olmayan borsalarda mevcut likiditeye göre sıralanan tokenlar.";
-"coin_analytics.dex_liquidity_rank.sorting_field" = "Liquidity";
+"coin_analytics.dex_liquidity_rank.sorting_field" = "Likidite";
 "coin_analytics.dex_liquidity.info1" = "Önde gelen merkezi olmayan borsalarda token için şu anda mevcut olan toplam likidite.";
 "coin_analytics.dex_liquidity.info2" = "Bir yıllık süre zarfında önde gelen merkezi olmayan borsalarda token için mevcut likiditedeki değişikliği gösteren grafik.";
 "coin_analytics.dex_liquidity.info3" = "Önde gelen merkezi olmayan borsalarda token için mevcut likiditeye göre sıralanan tüm tokenlerin listesi.";
@@ -1073,7 +1073,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30 Günlük Benzersiz Adresler";
 "coin_analytics.active_addresses_rank" = "Aktif Adresler Sıralaması";
 "coin_analytics.active_addresses_rank.description" = "Token ile işlem yapan benzersiz adreslerin sayısına göre sıralanan tokenlar.";
-"coin_analytics.active_addresses_rank.sorting_field" = "Active";
+"coin_analytics.active_addresses_rank.sorting_field" = "Aktif";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Bir yıllık süre zarfında günlük aktif adres sayısındaki değişimi gösteren grafik.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
@@ -1083,7 +1083,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.transaction_count" = "İşlem Sayısı";
 "coin_analytics.transaction_count_rank" = "İşlem Sayısı Sıralaması";
 "coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
-"coin_analytics.transaction_count_rank.sorting_field" = "Count";
+"coin_analytics.transaction_count_rank.sorting_field" = "Sayı";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "Bir yıllık süre zarfında işlem sayısındaki değişimi gösteren grafik.";
 "coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
@@ -1102,13 +1102,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.holders.see_all" = "Hepsini Gör";
 
 "coin_analytics.project_tvl" = "Proje TVL";
-"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
+"coin_analytics.tvl_ratio" = "Piyasa Değeri / TVL Oranı";
 "coin_analytics.project_tvl.info_title" = "Proje TVL (Toplam Değer)";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
 "coin_analytics.project_tvl.info2" = "Projenin akıllı sözleşmelerindeki Toplam Kilit Değerdeki değişimi gösteren 1 yıllık döneme ait grafik.";
 "coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info4" = "Mevcut Toplam Kilit Değere göre sıralanan tüm tokenların listesi.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info5" = "Projenin Piyasa Değeri / TVL oranı.";
 
 "coin_analytics.project_fee" = "Proje Ücreti";
 "coin_analytics.project_fee_rank" = "Proje Ücret Sıralaması";
@@ -1118,7 +1118,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.project_revenue" = "Proje Geliri";
 "coin_analytics.project_revenue_rank" = "Proje Gelir Sıralaması";
 "coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
-"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
+"coin_analytics.project_revenue_rank.sorting_field" = "Gelir";
 
 "coin_analytics.other_data" = "Diğer Veriler";
 
@@ -1158,14 +1158,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.30_day_rank" = "Son 30 Gün Sıralaması";
 "coin_analytics.30_day_volume" = "Son 30 Gün Hacmi";
 
-"coin_analytics.analysis.title" = "Smart Contract Analysis";
+"coin_analytics.analysis.title" = "Akıllı Kontrat Analizi";
 "coin_analytics.analysis.footer" = "De.Fi tarafından desteklenmektedir";
-"coin_analytics.analysis.high_risk_items" = "High Risk Items";
-"coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
-"coin_analytics.analysis.attention_required" = "Attention Required";
-"coin_analytics.analysis.token_detectors" = "Token Detectors";
-"coin_analytics.analysis.general_detectors" = "General Detectors";
-"coin_analytics.analysis.issues" = "Issues: %@";
+"coin_analytics.analysis.high_risk_items" = "Yüksek Riskli Ögeler";
+"coin_analytics.analysis.medium_risk_items" = "Orta Riskli Ögeler";
+"coin_analytics.analysis.attention_required" = "İlgilenmeniz Gerekiyor";
+"coin_analytics.analysis.token_detectors" = "Token Tespit Ediciler";
+"coin_analytics.analysis.general_detectors" = "Genel Tespit Ediciler";
+"coin_analytics.analysis.issues" = "Sorunlar: %@";
 
 // Coin Page -> Markets
 
@@ -1308,8 +1308,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.rate_us" = "Bizi Değerlendirin";
 "settings.tell_friends" = "Arkadaşlarına bahset";
 "settings.contact_us" = "Bize Ulaşın";
-"settings.social_networks.label" = "JOIN UNSTOPPABLES";
-"settings.social_networks.footer" = "Stay on top of Unstoppable happenings. Be the first to know about new features, user reported issues and things we work on!";
+"settings.social_networks.label" = "KATIL UNSTOPPABLES";
+"settings.social_networks.footer" = "Unstoppable'daki gelişmelerden haberdar olun. Yeni özelliklerden, kullanıcı tarafından bildirilen sorunlardan ve üzerinde çalıştığımız konulardan ilk siz haberdar olun!";
 
 // Settings -> Base Currency
 
@@ -1427,7 +1427,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings_security.duress_mode.description" = "Seçilen cüzdanları zorlama altında güvende tutmak için tasarlanmış özel bir mod.";
 
 "biometry.off" = "Kapat";
-"biometry.manual" = "Manual";
+"biometry.manual" = "Manuel";
 "biometry.on" = "Açık";
 "biometry.off.description" = "Tüm durumlarda devre dışı";
 "biometry.manual.description" = "Düğme ile tarama";
@@ -1527,7 +1527,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> About App
 
 "settings.about_app.title" = "Uygulama Hakkında";
-"settings.about_app.app_version" = "App Version";
+"settings.about_app.app_version" = "Uygulama Sürümü";
 "settings.about_app.website" = "Website";
 
 // Settings -> About App -> Contact
@@ -1539,11 +1539,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> Privacy
 
 "settings.privacy" = "Gizlilik";
-"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
+"settings.privacy.description" = "%@, coin bakiyelerinizi veya adreslerinizi açığa çıkaran kişisel verileri toplamaz. Biraz kullanıcı arayüzü kullanım istatistikleri topluyoruz, ancak bunlar yalnızca kullanıcı tabanımızı ve uygulama kullanım eğilimlerini anlamak içindir. İsterseniz bunu devre dışı bırakabilirsiniz.";
 "settings.privacy.statement.data_usage" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri toplamaz.";
 "settings.privacy.statement.data_storage" = "Kullanıcı hesapları veya kullanıcı verilerini depolayan veritabanları yoktur.";
-"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
-"settings.privacy.allow" = "Share UI Data";
+"settings.privacy.statement.user_account" = "İzin verilirse, cüzdan, Unstoppable ekibiyle uygulama kullanım alışkanlıklarını paylaşacak. Bu, kullanıcılarımızın hangi özellikleri kullandığını (veya kullanmadığını) anlamak için. Gizliliğe odaklanan bir uygulama olarak, çabalarımızı değerlendirmenin bir yolu olmalı ve bu olmadan, oluşturduğumuz özelliklerin kullanılıp kullanılmadığını bilmiyoruz.";
+"settings.privacy.allow" = "UI Verilerini Paylaş";
 
 // Settings -> Appearance
 
@@ -1555,10 +1555,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.theme.light" = "Açık";
 
 "appearance.markets_tab" = "Piyasalar Sekmesi";
-"appearance.hide_markets" = "Hide Markets";
+"appearance.hide_markets" = "Piyasaları Gizle";
 "appearance.price_change" = "Fiyat Değişimi";
 "appearance.price_change.24h" = "24S";
-"appearance.price_change.1d" = "Midnight UTC";
+"appearance.price_change.1d" = "Gece Yarısı UTC";
 
 "appearance.launch_screen" = "Başlangıç Ekranı";
 "appearance.launch_screen.auto" = "Oto";
@@ -1566,11 +1566,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.launch_screen.market_overview" = "Piyasaya Genel Bakış";
 "appearance.launch_screen.watchlist" = "İzleme Listesi";
 
-"appearance.balance_tab" = "Balance Tab";
-"appearance.hide_buttons" = "Hide Buttons";
+"appearance.balance_tab" = "Bakiye Sekmesi";
+"appearance.hide_buttons" = "Düğmeleri Gizle";
 "appearance.balance_value" = "Bakiye değeri";
-"appearance.balance_value.coin_fiat" = "Coin / Fiat";
-"appearance.balance_value.fiat_coin" = "Fiat / Coin";
+"appearance.balance_value.coin_fiat" = "Coin/Fiat";
+"appearance.balance_value.fiat_coin" = "Fiat/Coin";
 
 "appearance.app_icon" = "Uygulama İkonları";
 
@@ -1732,7 +1732,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 sembolü";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.symbol" = "Sembol";
-"add_token.decimals" = "Decimals";
+"add_token.decimals" = "Ondalıklar";
 
 // Wallet Connect
 
@@ -1942,7 +1942,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "fee_settings.errors.transaction_underpriced" = "İşlem Ücreti Düşük";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Fee çok düşük";
 "fee_settings.errors.zero_amount.info" = "0 TRX aktarılamıyor";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck" = "Riskli";
 "fee_settings.warning.risk_of_getting_stuck.info" = "İşlem bir süre beklemede kalabilir veya tamamen başarısız olabilir.";
 "fee_settings.warning.overpricing" = "Ücret Çok Yüksek";
 "fee_settings.warning.overpricing.info" = "Belirlenen işlem ücreti, bu işlemin şimdi işlenmesi için gereken ücretten daha yüksek.";
@@ -2026,7 +2026,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "nft.activity.event_types" = "Etkinlik Türleri";
 "nft.activity.event_type.all" = "Tüm Etkinlikler";
 "nft.activity.event_type.sale" = "İndirim";
-"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.transfer" = "Aktar";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Liste";
 "nft.activity.event_type.listCancel" = "Liste İptal";
