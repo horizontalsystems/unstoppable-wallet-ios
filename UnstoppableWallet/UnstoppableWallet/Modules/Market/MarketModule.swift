@@ -191,11 +191,17 @@ extension [MarketKit.TopPlatform] {
 
 extension HsTimePeriod {
     var title: String {
-        "market.time_period.\(rawValue)".localized
+        switch self {
+        case .hour24: return "market.time_period.1d".localized
+        default: return "market.time_period.\(rawValue)".localized
+        }
     }
 
     var shortTitle: String {
-        "market.time_period.\(rawValue).short".localized
+        switch self {
+        case .hour24: return "market.time_period.1d.short".localized
+        default: return "market.time_period.\(rawValue).short".localized
+        }
     }
 
     init?(_ periodType: HsPeriodType) {
@@ -208,11 +214,17 @@ extension HsTimePeriod {
 
 extension WatchlistTimePeriod {
     var title: String {
-        "market.time_period.\(rawValue)".localized
+        switch self {
+        case .hour24: return "market.time_period.1d".localized
+        default: return "market.time_period.\(rawValue)".localized
+        }
     }
 
     var shortTitle: String {
-        "market.time_period.\(rawValue).short".localized
+        switch self {
+        case .hour24: return "market.time_period.1d.short".localized
+        default: return "market.time_period.\(rawValue).short".localized
+        }
     }
 }
 

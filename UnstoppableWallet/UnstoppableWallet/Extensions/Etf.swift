@@ -2,16 +2,6 @@ import Foundation
 import MarketKit
 import UIKit
 
-extension Etf: Hashable {
-    public static func == (lhs: Etf, rhs: Etf) -> Bool {
-        lhs.ticker == rhs.ticker
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(ticker)
-    }
-}
-
 extension Etf {
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
@@ -26,9 +16,25 @@ extension Etf {
     }
 }
 
-extension [Etf] {
-    func sorted(sortBy: MarketEtfViewModel.SortBy, timePeriod: MarketEtfViewModel.TimePeriod) -> [Etf] {
-        sorted { lhsEtf, rhsEtf in
+struct RankedEtf: Hashable {
+    let etf: Etf
+    let rank: Int
+
+    public static func == (lhs: RankedEtf, rhs: RankedEtf) -> Bool {
+        lhs.etf.ticker == rhs.etf.ticker
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(etf.ticker)
+    }
+}
+
+extension [RankedEtf] {
+    func sorted(sortBy: MarketEtfViewModel.SortBy, timePeriod: MarketEtfViewModel.TimePeriod) -> [RankedEtf] {
+        sorted { lhsRankedEtf, rhsRankedEtf in
+            let lhsEtf = lhsRankedEtf.etf
+            let rhsEtf = rhsRankedEtf.etf
+
             switch sortBy {
             case .highestAssets, .lowestAssets:
                 guard let lhsAssets = lhsEtf.totalAssets else {
