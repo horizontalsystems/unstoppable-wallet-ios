@@ -46,8 +46,8 @@ class MarketEtfViewModel: ObservableObject {
         switch internalState {
         case .loading:
             state = .loading
-        case let .loaded(etfs):
-            state = .loaded(etfs: etfs.sorted(sortBy: sortBy, timePeriod: timePeriod))
+        case let .loaded(rankedEtfs):
+            state = .loaded(rankedEtfs: rankedEtfs.sorted(sortBy: sortBy, timePeriod: timePeriod))
         case let .failed(error):
             state = .failed(error: error)
         }
@@ -73,9 +73,11 @@ extension MarketEtfViewModel {
         Task { [weak self, marketKit, currency] in
             do {
                 let etfs = try await marketKit.etfs(currencyCode: currency.code)
+                let sortedEtfs = etfs.sorted { $0.totalAssets ?? 0 > $1.totalAssets ?? 0 }
+                let rankedEtfs = sortedEtfs.enumerated().map { RankedEtf(etf: $1, rank: $0 + 1) }
 
                 await MainActor.run { [weak self] in
-                    self?.internalState = .loaded(etfs: etfs)
+                    self?.internalState = .loaded(rankedEtfs: rankedEtfs)
                 }
             } catch {
                 await MainActor.run { [weak self] in
@@ -90,7 +92,7 @@ extension MarketEtfViewModel {
 extension MarketEtfViewModel {
     enum State {
         case loading
-        case loaded(etfs: [Etf])
+        case loaded(rankedEtfs: [RankedEtf])
         case failed(error: Error)
     }
 
@@ -111,14 +113,14 @@ extension MarketEtfViewModel {
 
         var title: String {
             switch self {
-            case let .period(timePeriod): return "market.time_period.\(timePeriod.rawValue)".localized
+            case let .period(timePeriod): return timePeriod.title
             case .all: return "market.etf.period.all".localized
             }
         }
 
         var shortTitle: String {
             switch self {
-            case let .period(timePeriod): return "market.time_period.\(timePeriod.rawValue).short".localized
+            case let .period(timePeriod): return timePeriod.shortTitle
             case .all: return "market.etf.period.all".localized
             }
         }

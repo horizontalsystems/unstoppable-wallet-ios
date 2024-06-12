@@ -27,7 +27,7 @@ struct MarketEtfView: View {
                         ProgressView()
                         Spacer()
                     }
-                case let .loaded(etfs):
+                case let .loaded(rankedEtfs):
                     ScrollViewReader { proxy in
                         ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
                             header()
@@ -40,7 +40,7 @@ struct MarketEtfView: View {
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
 
-                            list(etfs: etfs)
+                            list(rankedEtfs: rankedEtfs)
                         }
                         .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                         .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
@@ -137,14 +137,17 @@ struct MarketEtfView: View {
         )
     }
 
-    @ViewBuilder private func list(etfs: [Etf]) -> some View {
+    @ViewBuilder private func list(rankedEtfs: [RankedEtf]) -> some View {
         Section {
-            ListForEach(etfs) { etf in
+            ListForEach(rankedEtfs) { rankedEtf in
+                let etf = rankedEtf.etf
+
                 ListRow {
                     itemContent(
                         imageUrl: URL(string: etf.imageUrl),
                         ticker: etf.ticker,
                         name: etf.name,
+                        rank: rankedEtf.rank,
                         totalAssets: etf.totalAssets,
                         change: etf.inflow(timePeriod: viewModel.timePeriod)
                     )
@@ -165,6 +168,7 @@ struct MarketEtfView: View {
                         imageUrl: nil,
                         ticker: "ABCD",
                         name: "Ticker Name",
+                        rank: 12,
                         totalAssets: 123_345_678,
                         change: index % 2 == 0 ? 123_456 : -123_456
                     )
@@ -178,7 +182,7 @@ struct MarketEtfView: View {
         }
     }
 
-    @ViewBuilder private func itemContent(imageUrl: URL?, ticker: String, name: String, totalAssets: Decimal?, change: Decimal?) -> some View {
+    @ViewBuilder private func itemContent(imageUrl: URL?, ticker: String, name: String, rank: Int, totalAssets: Decimal?, change: Decimal?) -> some View {
         KFImage.url(imageUrl)
             .resizable()
             .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
@@ -193,7 +197,10 @@ struct MarketEtfView: View {
             }
 
             HStack(spacing: .margin8) {
-                Text(name).textSubhead2()
+                HStack(spacing: .margin4) {
+                    BadgeViewNew(text: "\(rank)")
+                    Text(name).textSubhead2()
+                }
                 Spacer()
                 DiffText(change, currency: viewModel.currency)
             }
