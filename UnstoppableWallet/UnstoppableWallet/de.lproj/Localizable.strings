@@ -921,12 +921,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.volume.description" = "Das 24h Handelsvolumen des Krypto-Marktes";
 "market.volume.volume" = "Lautstärke";
 
-"market.signal.risky" = "Risky";
-"market.signal.strong_buy" = "Strong Buy";
-"market.signal.buy" = "Buy";
+"market.signal.risky" = "Riskant";
+"market.signal.strong_buy" = "Starker Kauf";
+"market.signal.buy" = "Kaufen";
 "market.signal.neutral" = "Neutral";
-"market.signal.sell" = "Sell";
-"market.signal.strong_sell" = "Strong Sell";
+"market.signal.sell" = "Verkaufen";
+"market.signal.strong_sell" = "Starker Verkauf";
 
 // Coin Page
 
@@ -1011,13 +1011,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.indicators.show_details" = "Details anzeigen";
 "coin_analytics.indicators.summary" = "Zusammenfassung";
 "coin_analytics.indicators.no_data" = "Keine Daten";
-"coin_analytics.indicators.oversold" = "Risky";
-"coin_analytics.indicators.strong_buy" = "Strong Buy";
-"coin_analytics.indicators.buy" = "Buy";
+"coin_analytics.indicators.oversold" = "Riskant";
+"coin_analytics.indicators.strong_buy" = "Starker Kauf";
+"coin_analytics.indicators.buy" = "Kaufen";
 "coin_analytics.indicators.neutral" = "Neutral";
-"coin_analytics.indicators.sell" = "Sell";
-"coin_analytics.indicators.strong_sell" = "Strong Sell";
-"coin_analytics.indicators.overbought" = "Risky";
+"coin_analytics.indicators.sell" = "Verkaufen";
+"coin_analytics.indicators.strong_sell" = "Starker Verkauf";
+"coin_analytics.indicators.overbought" = "Riskant";
 "coin_analytics.period" = "Zeitraum";
 "coin_analytics.period.select_title" = "Zeitraum auswählen";
 "coin_analytics.period.1h" = "1 Stunde";
@@ -1303,7 +1303,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.tell_friends" = "Freunden erzählen";
 "settings.contact_us" = "Kontaktiere uns";
 "settings.social_networks.label" = "Be Unstoppable";
-"settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
+"settings.social_networks.footer" = "Lernen Sie Kryptographie über exklusive Videos. Lernen Sie uns informell kennen. Sei der Erste, der Dinge sieht, an denen wir arbeiten.";
 
 // Settings -> Base Currency
 
@@ -1936,7 +1936,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "fee_settings.errors.transaction_underpriced" = "Niedrige Transaktionsgebühr";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Gebühr ist zu niedrig";
 "fee_settings.errors.zero_amount.info" = "Kann 0 TRX nicht übertragen";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck" = "Riskant";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Die Transaktion kann eine Zeit lang ausstehend bleiben oder ganz fehlschlagen.";
 "fee_settings.warning.overpricing" = "Gebühr zu hoch";
 "fee_settings.warning.overpricing.info" = "Die festgelegte Transaktionsgebühr ist höher als für die Bearbeitung dieser Transaktion jetzt erforderlich.";
