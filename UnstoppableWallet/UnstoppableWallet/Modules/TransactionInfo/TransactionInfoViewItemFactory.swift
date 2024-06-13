@@ -30,7 +30,7 @@ class TransactionInfoViewItemFactory {
                 coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : "∞ \(transactionValue.coinCode)",
                 currencyAmount: balanceHidden ? BalanceHiddenManager.placeholder : "transactions.value.unlimited".localized,
                 type: type,
-                coinUid: transactionValue.coin?.uid
+                coin: transactionValue.coin
             )
         } else {
             var currencyValue: CurrencyValue?
@@ -47,7 +47,7 @@ class TransactionInfoViewItemFactory {
                 coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(signType: type.signType) ?? "n/a".localized,
                 currencyAmount: balanceHidden ? BalanceHiddenManager.placeholder : currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                 type: type,
-                coinUid: transactionValue.coin?.uid
+                coin: transactionValue.coin
             )
         }
     }

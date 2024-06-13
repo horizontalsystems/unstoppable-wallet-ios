@@ -14,12 +14,12 @@ struct CoinPageView: View {
     @State private var currentTab: Tab = .overview
     @State private var loadedTabs = [Tab]()
 
-    init(fullCoin: FullCoin) {
-        _viewModel = StateObject(wrappedValue: CoinPageViewModelNew(fullCoin: fullCoin))
-        _overviewViewModel = StateObject(wrappedValue: CoinOverviewViewModelNew(coinUid: fullCoin.coin.uid))
-        _chartViewModel = StateObject(wrappedValue: CoinChartViewModel.instance(coinUid: fullCoin.coin.uid))
-        _analyticsViewModel = StateObject(wrappedValue: CoinAnalyticsViewModelNew(fullCoin: fullCoin))
-        _marketsViewModel = StateObject(wrappedValue: CoinMarketsViewModel(coin: fullCoin.coin))
+    init(coin: Coin) {
+        _viewModel = StateObject(wrappedValue: CoinPageViewModelNew(coin: coin))
+        _overviewViewModel = StateObject(wrappedValue: CoinOverviewViewModelNew(coinUid: coin.uid))
+        _chartViewModel = StateObject(wrappedValue: CoinChartViewModel.instance(coinUid: coin.uid))
+        _analyticsViewModel = StateObject(wrappedValue: CoinAnalyticsViewModelNew(coin: coin))
+        _marketsViewModel = StateObject(wrappedValue: CoinMarketsViewModel(coinUid: coin.uid))
     }
 
     var body: some View {
@@ -54,7 +54,7 @@ struct CoinPageView: View {
                     }
                 }
             }
-            .navigationTitle(viewModel.fullCoin.coin.code)
+            .navigationTitle(viewModel.coin.code)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

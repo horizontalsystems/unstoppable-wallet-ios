@@ -4,7 +4,7 @@ import HsExtensions
 import MarketKit
 
 class CoinMarketsViewModel: ObservableObject {
-    private let coin: Coin
+    private let coinUid: String
     private let marketKit = App.shared.marketKit
     private let currency = App.shared.currencyManager.baseCurrency
     private var tasks = Set<AnyTask>()
@@ -27,8 +27,8 @@ class CoinMarketsViewModel: ObservableObject {
 
     @Published var filterTypeInfo = SelectorButtonInfo(text: "", count: 0, selectedIndex: 0)
 
-    init(coin: Coin) {
-        self.coin = coin
+    init(coinUid: String) {
+        self.coinUid = coinUid
 
         syncFilterTypeInfo()
     }
@@ -40,9 +40,9 @@ class CoinMarketsViewModel: ObservableObject {
             state = .loading
         }
 
-        Task { [weak self, marketKit, coin, currency] in
+        Task { [weak self, marketKit, coinUid, currency] in
             do {
-                let tickers = try await marketKit.marketTickers(coinUid: coin.uid, currencyCode: currency.code)
+                let tickers = try await marketKit.marketTickers(coinUid: coinUid, currencyCode: currency.code)
                 self?.tickers = tickers
                 self?.syncState()
             } catch {

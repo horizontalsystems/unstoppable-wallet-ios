@@ -10,7 +10,7 @@ struct MarketTvlView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     @State private var filterBySelectorPresented = false
-    @State private var presentedFullCoin: FullCoin?
+    @State private var presentedCoin: Coin?
 
     init() {
         _viewModel = StateObject(wrappedValue: MarketTvlViewModel())
@@ -66,9 +66,9 @@ struct MarketTvlView: View {
         .onReceive(chartViewModel.$periodType) { periodType in
             viewModel.timePeriod = HsTimePeriod(periodType) ?? .day1
         }
-        .sheet(item: $presentedFullCoin) { fullCoin in
-            CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
-                .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: fullCoin.coin.uid)) }
+        .sheet(item: $presentedCoin) { coin in
+            CoinPageView(coin: coin)
+                .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: coin.uid)) }
         }
     }
 
@@ -157,8 +157,9 @@ struct MarketTvlView: View {
                     }
                 case let .fullCoin(fullCoin):
                     let coin = fullCoin.coin
+
                     ClickableRow(action: {
-                        presentedFullCoin = fullCoin
+                        presentedCoin = coin
                     }) {
                         itemContent(
                             coin: coin,

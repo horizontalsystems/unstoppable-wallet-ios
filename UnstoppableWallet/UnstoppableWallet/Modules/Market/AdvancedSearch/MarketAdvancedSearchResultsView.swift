@@ -8,7 +8,7 @@ struct MarketAdvancedSearchResultsView: View {
     @Binding var isParentPresented: Bool
 
     @State private var sortBySelectorPresented = false
-    @State private var presentedFullCoin: FullCoin?
+    @State private var presentedCoin: Coin?
 
     init(marketInfos: [MarketInfo], timePeriod: HsTimePeriod, isParentPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketAdvancedSearchResultsViewModel(marketInfos: marketInfos, timePeriod: timePeriod))
@@ -26,7 +26,7 @@ struct MarketAdvancedSearchResultsView: View {
                         let coin = marketInfo.fullCoin.coin
 
                         ClickableRow(action: {
-                            presentedFullCoin = marketInfo.fullCoin
+                            presentedCoin = coin
                         }) {
                             itemContent(
                                 coin: coin,
@@ -51,9 +51,9 @@ struct MarketAdvancedSearchResultsView: View {
                 }
             }
         }
-        .sheet(item: $presentedFullCoin) { fullCoin in
-            CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
-                .onFirstAppear { stat(page: .advancedSearchResults, event: .openCoin(coinUid: fullCoin.coin.uid)) }
+        .sheet(item: $presentedCoin) { coin in
+            CoinPageView(coin: coin).ignoresSafeArea()
+                .onFirstAppear { stat(page: .advancedSearchResults, event: .openCoin(coinUid: coin.uid)) }
         }
         .alert(
             isPresented: $sortBySelectorPresented,

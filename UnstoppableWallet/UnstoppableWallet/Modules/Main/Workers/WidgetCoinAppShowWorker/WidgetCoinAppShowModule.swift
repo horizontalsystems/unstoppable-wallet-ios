@@ -2,6 +2,7 @@ import UIKit
 
 class WidgetCoinAppShowModule {
     private let parentViewController: UIViewController?
+    private let marketKit = App.shared.marketKit
 
     init(parentViewController: UIViewController?) {
         self.parentViewController = parentViewController
@@ -16,6 +17,7 @@ extension WidgetCoinAppShowModule: IEventHandler {
         }
 
         var coinUid: String?
+
         switch event {
         case let event as String:
             coinUid = event
@@ -26,11 +28,13 @@ extension WidgetCoinAppShowModule: IEventHandler {
         default: ()
         }
 
-        guard let coinUid, let viewController = CoinPageModule.viewController(coinUid: coinUid) else {
+        guard let coinUid, let coin = try? marketKit.fullCoins(coinUids: [coinUid]).first?.coin else {
             throw EventHandler.HandleError.noSuitableHandler
         }
 
+        let viewController = CoinPageView(coin: coin).toViewController()
         parentViewController?.visibleController.present(viewController, animated: true)
+
         stat(page: .widget, event: .openCoin(coinUid: coinUid))
     }
 }

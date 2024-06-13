@@ -59,7 +59,7 @@ class WalletTokenBalanceDataSource: NSObject {
         viewModel.openCoinPagePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.openCoinPage(coinUid: $0.uid)
+                self?.openCoinPage(coin: $0)
             }
             .store(in: &cancellables)
 
@@ -208,11 +208,11 @@ class WalletTokenBalanceDataSource: NSObject {
         stat(page: .tokenPage, event: .openReceive(token: wallet.token))
     }
 
-    private func openCoinPage(coinUid: String) {
-        if let viewController = CoinPageModule.viewController(coinUid: coinUid) {
-            parentViewController?.present(viewController, animated: true)
-            stat(page: .tokenPage, event: .openCoin(coinUid: coinUid))
-        }
+    private func openCoinPage(coin: Coin) {
+        let viewController = CoinPageView(coin: coin).toViewController()
+        parentViewController?.present(viewController, animated: true)
+
+        stat(page: .tokenPage, event: .openCoin(coinUid: coin.uid))
     }
 
     private func openBackupRequired(wallet: Wallet) {
