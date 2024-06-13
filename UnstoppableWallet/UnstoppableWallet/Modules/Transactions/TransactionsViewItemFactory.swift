@@ -423,7 +423,7 @@ class TransactionsViewItemFactory {
                     subTitle = "transactions.multiple".localized
                 }
 
-                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.totalValue), type: type(value: record.totalValue, .outgoing))
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.totalValue, signType: record.sentToSelf ? .never : .always), type: type(value: record.totalValue, condition: record.sentToSelf, .neutral, .outgoing))
             } else {
                 iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
                 subTitle = ""
@@ -432,6 +432,8 @@ class TransactionsViewItemFactory {
             if let currencyValue = item.currencyValue {
                 secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
+            
+            sentToSelf = record.sentToSelf
 
         case is TonTransactionRecord:
             iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)

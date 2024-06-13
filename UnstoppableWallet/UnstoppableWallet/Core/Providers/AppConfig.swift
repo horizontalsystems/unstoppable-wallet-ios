@@ -137,6 +137,10 @@ enum AppConfig {
         Bundle.main.object(forInfoDictionaryKey: "DefaultPassphrase") as? String ?? ""
     }
 
+    static var defaultWatchAddress: String? {
+        Bundle.main.object(forInfoDictionaryKey: "DefaultWatchAddress") as? String
+    }
+
     static var sharedCloudContainer: String? {
         Bundle.main.object(forInfoDictionaryKey: "SharedCloudContainerId") as? String
     }

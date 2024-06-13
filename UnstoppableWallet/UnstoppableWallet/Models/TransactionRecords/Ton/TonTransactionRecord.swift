@@ -1,23 +1,25 @@
 import Foundation
 import MarketKit
-import TonKitKmm
+import TonKit
 
 class TonTransactionRecord: TransactionRecord {
     let fee: TransactionValue?
+    let lt: Int64
     let memo: String?
 
-    init(source: TransactionSource, transaction: TonTransactionWithTransfers, feeToken: Token) {
-        fee = transaction.fee.map { .coinValue(token: feeToken, value: TonAdapter.amount(kitAmount: $0)) }
-        memo = transaction.memo
-
+    init(source: TransactionSource, event: AccountEvent, feeToken: Token) {
+        fee = .coinValue(token: feeToken, value: TonAdapter.amount(kitAmount: Decimal(event.fee)))
+        lt = event.lt
+        memo = event.actions.compactMap { ($0 as? TonTransfer)?.comment }.first
+        
         super.init(
             source: source,
-            uid: transaction.hash,
-            transactionHash: transaction.hash,
+            uid: event.eventId,
+            transactionHash: event.eventId,
             transactionIndex: 0,
             blockHeight: nil,
             confirmationsThreshold: nil,
-            date: Date(timeIntervalSince1970: TimeInterval(transaction.timestamp)),
+            date: Date(timeIntervalSince1970: TimeInterval(event.timestamp)),
             failed: false
         )
     }

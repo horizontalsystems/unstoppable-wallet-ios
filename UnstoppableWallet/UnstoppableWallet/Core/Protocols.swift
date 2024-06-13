@@ -103,7 +103,7 @@ protocol ISendTronAdapter {
 protocol ISendTonAdapter {
     var availableBalance: Decimal { get }
     func validate(address: String) throws
-    func estimateFee() async throws -> Decimal
+    func estimateFee(recipient: String, amount: Decimal, memo: String?) async throws -> Decimal
     func send(recipient: String, amount: Decimal, memo: String?) async throws
 }
 

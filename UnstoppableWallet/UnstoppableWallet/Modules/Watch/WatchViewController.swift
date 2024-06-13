@@ -69,6 +69,11 @@ class WatchViewController: KeyboardAwareViewController {
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0 ?? "") }
 
         watchDataInputCell.set(placeholderText: "watch_address.watch_data.placeholder".localized)
+        if let defaultWatchAddress = AppConfig.defaultWatchAddress {
+            watchDataInputCell.set(text: defaultWatchAddress)
+            viewModel.onChange(text: defaultWatchAddress)
+        }
+
         watchDataInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         watchDataInputCell.onChangeText = { [weak self] in self?.viewModel.onChange(text: $0) }
         watchDataInputCell.onChangeTextViewCaret = { [weak self] in self?.syncContentOffsetIfRequired(textView: $0) }

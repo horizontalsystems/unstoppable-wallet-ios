@@ -1,13 +1,13 @@
 import MarketKit
 import RxSwift
-import TonKitKmm
+import TonKit
 
 class TonAddressParserItem: IAddressParserItem {
     var blockchainType: MarketKit.BlockchainType = .ton
 
     func handle(address: String) -> Single<Address> {
         do {
-            try TonKit.companion.validate(address: address)
+            try TonKit.Kit.validate(address: address)
             return Single.just(Address(raw: address, blockchainType: blockchainType))
         } catch {
             return Single.error(error)
@@ -16,7 +16,7 @@ class TonAddressParserItem: IAddressParserItem {
 
     func isValid(address: String) -> Single<Bool> {
         do {
-            try TonKit.companion.validate(address: address)
+            try TonKit.Kit.validate(address: address)
             return Single.just(true)
         } catch {
             return Single.just(false)

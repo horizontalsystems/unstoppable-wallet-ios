@@ -31,6 +31,7 @@ class SendTonService {
         didSet {
             if !feeState.equalTo(oldValue) {
                 feeStateRelay.accept(feeState)
+                syncState()
             }
         }
     }
@@ -66,14 +67,18 @@ class SendTonService {
 
         subscribe(MainScheduler.instance, disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
             if isReachable {
-                self?.syncState()
+                self?.updateFee()
             }
         }
 
-        subscribe(scheduler, disposeBag, amountService.amountObservable) { [weak self] _ in self?.syncState() }
-        subscribe(scheduler, disposeBag, amountCautionService.amountCautionObservable) { [weak self] _ in self?.syncState() }
-        subscribe(scheduler, disposeBag, addressService.stateObservable) { [weak self] _ in self?.syncState() }
+        subscribe(scheduler, disposeBag, amountService.amountObservable) { [weak self] _ in self?.updateFee() }
+        subscribe(scheduler, disposeBag, amountCautionService.amountCautionObservable) { [weak self] _ in self?.updateFee() }
+        subscribe(scheduler, disposeBag, addressService.stateObservable) { [weak self] _ in self?.updateFee() }
 
+        loadFee()
+    }
+    
+    private func updateFee() {
         loadFee()
     }
 
@@ -101,18 +106,44 @@ class SendTonService {
         state = .ready
     }
 
-    private func loadFee() {
-        Task { [weak self, adapter] in
-            do {
-                let fee = try await adapter.estimateFee()
-                self?.feeState = .completed(fee)
-                self?.availableBalance = .completed(max(0, adapter.availableBalance - fee))
-            } catch {
-                self?.feeState = .failed(error)
-                self?.availableBalance = .completed(adapter.availableBalance)
-            }
+    private func params() throws -> (Address, Decimal, String?) {
+        let address: Address
+        switch addressService.state {
+        case let .success(sendAddress): address = sendAddress
+        case let .fetchError(error): throw error
+        default: throw AppError.addressInvalid
         }
-        .store(in: &tasks)
+        
+        let amount = amountService.amount
+        
+        guard !amount.isZero else {
+            throw SendTransactionError.wrongAmount
+        }
+        
+        let memo = memoService.memo
+        return (address, amount, memo)
+    }
+    
+    private func loadFee() {
+        do {
+            let data = try params()
+            feeState = .loading
+
+            Task { [weak self, adapter] in
+                do {
+                    let fee = try await adapter.estimateFee(recipient: data.0.raw, amount: data.1, memo: data.2)
+                    self?.feeState = .completed(fee)
+                    self?.availableBalance = .completed(max(0, adapter.availableBalance - fee))
+                } catch {
+                    self?.feeState = .failed(error)
+                    self?.availableBalance = .completed(adapter.availableBalance)
+                }
+            }
+            .store(in: &tasks)
+        } catch {
+            feeState = .failed(error)
+            availableBalance = .completed(adapter.availableBalance)
+        }
     }
 }
 
@@ -124,33 +155,24 @@ extension SendTonService: ISendBaseService {
 
 extension SendTonService: ISendService {
     func sendSingle(logger _: HsToolKit.Logger) -> Single<Void> {
-        let address: Address
-        switch addressService.state {
-        case let .success(sendAddress): address = sendAddress
-        case let .fetchError(error): return Single.error(error)
-        default: return Single.error(AppError.addressInvalid)
-        }
+        do {
+            let data = try params()
+            return Single.create { [adapter] observer in
+                let task = Task { [adapter] in
+                    do {
+                        try await adapter.send(recipient: data.0.raw, amount: data.1, memo: data.2)
+                        observer(.success(()))
+                    } catch {
+                        observer(.error(error))
+                    }
+                }
 
-        let amount = amountService.amount
-
-        guard !amount.isZero else {
-            return Single.error(SendTransactionError.wrongAmount)
-        }
-
-        let memo = memoService.memo
-        return Single.create { [adapter] observer in
-            let task = Task { [adapter] in
-                do {
-                    try await adapter.send(recipient: address.raw, amount: amount, memo: memo)
-                    observer(.success(()))
-                } catch {
-                    observer(.error(error))
+                return Disposables.create {
+                    task.cancel()
                 }
             }
-
-            return Disposables.create {
-                task.cancel()
-            }
+        } catch {
+            return Single.error(error)
         }
     }
 }
