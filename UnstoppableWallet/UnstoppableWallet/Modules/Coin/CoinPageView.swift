@@ -2,11 +2,11 @@ import MarketKit
 import SwiftUI
 
 struct CoinPageView: View {
-    @StateObject private var viewModel: CoinPageViewModelNew
+    @StateObject private var viewModel: CoinPageViewModel
 
-    @StateObject private var overviewViewModel: CoinOverviewViewModelNew
+    @StateObject private var overviewViewModel: CoinOverviewViewModel
     @StateObject private var chartViewModel: CoinChartViewModel
-    @StateObject private var analyticsViewModel: CoinAnalyticsViewModelNew
+    @StateObject private var analyticsViewModel: CoinAnalyticsViewModel
     @StateObject private var marketsViewModel: CoinMarketsViewModel
 
     @Environment(\.presentationMode) private var presentationMode
@@ -15,10 +15,10 @@ struct CoinPageView: View {
     @State private var loadedTabs = [Tab]()
 
     init(coin: Coin) {
-        _viewModel = StateObject(wrappedValue: CoinPageViewModelNew(coin: coin))
-        _overviewViewModel = StateObject(wrappedValue: CoinOverviewViewModelNew(coinUid: coin.uid))
+        _viewModel = StateObject(wrappedValue: CoinPageViewModel(coin: coin))
+        _overviewViewModel = StateObject(wrappedValue: CoinOverviewViewModel(coinUid: coin.uid))
         _chartViewModel = StateObject(wrappedValue: CoinChartViewModel.instance(coinUid: coin.uid))
-        _analyticsViewModel = StateObject(wrappedValue: CoinAnalyticsViewModelNew(coin: coin))
+        _analyticsViewModel = StateObject(wrappedValue: CoinAnalyticsViewModel(coin: coin))
         _marketsViewModel = StateObject(wrappedValue: CoinMarketsViewModel(coinUid: coin.uid))
     }
 

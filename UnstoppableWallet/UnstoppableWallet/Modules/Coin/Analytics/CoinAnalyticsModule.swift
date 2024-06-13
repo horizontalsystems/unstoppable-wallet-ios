@@ -3,31 +3,33 @@ import SwiftUI
 import ThemeKit
 import UIKit
 
-enum CoinAnalyticsModule {
-    static func viewController(fullCoin: FullCoin) -> CoinAnalyticsViewController {
-        let service = CoinAnalyticsService(
-            fullCoin: fullCoin,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            subscriptionManager: App.shared.subscriptionManager
-        )
-        let technicalIndicatorService = TechnicalIndicatorService(
-            coinUid: fullCoin.coin.uid,
-            currencyManager: App.shared.currencyManager,
-            marketKit: App.shared.marketKit
-        )
-        let coinIndicatorViewItemFactory = CoinIndicatorViewItemFactory()
-        let viewModel = CoinAnalyticsViewModel(
-            service: service,
-            technicalIndicatorService: technicalIndicatorService,
-            coinIndicatorViewItemFactory: coinIndicatorViewItemFactory
-        )
+enum Previewable<T> {
+    case preview
+    case regular(value: T)
 
-        return CoinAnalyticsViewController(viewModel: viewModel)
+    var isPreview: Bool {
+        switch self {
+        case .preview: return true
+        case .regular: return false
+        }
+    }
+
+    func previewableValue<P>(mapper: (T) -> P) -> Previewable<P> {
+        switch self {
+        case .preview: return .preview
+        case let .regular(value): return .regular(value: mapper(value))
+        }
+    }
+
+    func value<P>(mapper: (T) -> P) -> P? {
+        switch self {
+        case .preview: return nil
+        case let .regular(value): return mapper(value)
+        }
     }
 }
 
-extension CoinAnalyticsModule {
+enum CoinAnalyticsModule {
     enum Rating: String, CaseIterable, Identifiable {
         case excellent
         case good

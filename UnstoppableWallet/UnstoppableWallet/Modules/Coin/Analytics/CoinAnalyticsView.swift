@@ -6,12 +6,12 @@ import SwiftUI
 struct CoinAnalyticsView: View {
     private static let placeholderText = "•••"
 
-    @ObservedObject var viewModel: CoinAnalyticsViewModelNew
+    @ObservedObject var viewModel: CoinAnalyticsViewModel
 
     @State private var presentedInfo: Info?
     @State private var presentedRatingType: RatingType?
     @State private var presentedRankType: RankViewModel.RankType?
-    @State private var presentedAnalysisViewItem: CoinAnalyticsViewModelNew.IssueBlockchainViewItem?
+    @State private var presentedAnalysisViewItem: CoinAnalyticsViewModel.IssueBlockchainViewItem?
     @State private var presentedProChartType: CoinProChartModule.ProChartType?
     @State private var presentedHolderBlockchain: Blockchain?
     @State private var tvlRankPresented = false
@@ -33,7 +33,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func content(viewItem: CoinAnalyticsViewModelNew.ViewItem) -> some View {
+    @ViewBuilder private func content(viewItem: CoinAnalyticsViewModel.ViewItem) -> some View {
         ScrollView {
             VStack(spacing: .margin12) {
                 if let viewItem = viewItem.technicalAdvice {
@@ -109,7 +109,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func technicalAdvice(viewItem: CoinAnalyticsViewModelNew.TechnicalAdviceViewItem) -> some View {
+    @ViewBuilder private func technicalAdvice(viewItem: CoinAnalyticsViewModel.TechnicalAdviceViewItem) -> some View {
         ListSection {
             ListRow {
                 VStack(spacing: .margin12) {
@@ -156,7 +156,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func cexVolume(viewItem: CoinAnalyticsViewModelNew.RankCardViewItem) -> some View {
+    @ViewBuilder private func cexVolume(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> some View {
         ListSection {
             chartRow(
                 title: "coin_analytics.cex_volume".localized,
@@ -190,7 +190,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func dexVolume(viewItem: CoinAnalyticsViewModelNew.RankCardViewItem) -> some View {
+    @ViewBuilder private func dexVolume(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> some View {
         ListSection {
             chartRow(
                 title: "coin_analytics.dex_volume".localized,
@@ -227,7 +227,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func tvl(viewItem: CoinAnalyticsViewModelNew.TvlViewItem) -> some View {
+    @ViewBuilder private func tvl(viewItem: CoinAnalyticsViewModel.TvlViewItem) -> some View {
         ListSection {
             chartRow(
                 title: "coin_analytics.project_tvl".localized,
@@ -266,7 +266,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func dexLiquidity(viewItem: CoinAnalyticsViewModelNew.RankCardViewItem) -> some View {
+    @ViewBuilder private func dexLiquidity(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> some View {
         ListSection {
             chartRow(
                 title: "coin_analytics.dex_liquidity".localized,
@@ -302,7 +302,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func addresses(viewItem: CoinAnalyticsViewModelNew.ActiveAddressesViewItem) -> some View {
+    @ViewBuilder private func addresses(viewItem: CoinAnalyticsViewModel.ActiveAddressesViewItem) -> some View {
         ListSection {
             chartRow(
                 title: "coin_analytics.active_addresses".localized,
@@ -344,7 +344,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func transactionCount(viewItem: CoinAnalyticsViewModelNew.TransactionCountViewItem) -> some View {
+    @ViewBuilder private func transactionCount(viewItem: CoinAnalyticsViewModel.TransactionCountViewItem) -> some View {
         ListSection {
             chartRow(
                 title: "coin_analytics.transaction_count".localized,
@@ -386,7 +386,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func holders(viewItem: Previewable<CoinAnalyticsViewModelNew.HoldersViewItem>, rating: Previewable<CoinAnalyticsModule.Rating>?, rank: Previewable<String>?) -> some View {
+    @ViewBuilder private func holders(viewItem: Previewable<CoinAnalyticsViewModel.HoldersViewItem>, rating: Previewable<CoinAnalyticsModule.Rating>?, rank: Previewable<String>?) -> some View {
         ListSection {
             ListRow {
                 VStack(spacing: .margin12) {
@@ -499,7 +499,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func fee(viewItem: CoinAnalyticsViewModelNew.ValueRankViewItem) -> some View {
+    @ViewBuilder private func fee(viewItem: CoinAnalyticsViewModel.ValueRankViewItem) -> some View {
         valueRank(
             title: "coin_analytics.project_fee".localized,
             rankType: .fee,
@@ -507,7 +507,7 @@ struct CoinAnalyticsView: View {
         )
     }
 
-    @ViewBuilder private func revenue(viewItem: CoinAnalyticsViewModelNew.ValueRankViewItem) -> some View {
+    @ViewBuilder private func revenue(viewItem: CoinAnalyticsViewModel.ValueRankViewItem) -> some View {
         valueRank(
             title: "coin_analytics.project_revenue".localized,
             rankType: .revenue,
@@ -515,7 +515,7 @@ struct CoinAnalyticsView: View {
         )
     }
 
-    @ViewBuilder private func analysis(viewItems: [CoinAnalyticsViewModelNew.IssueBlockchainViewItem]) -> some View {
+    @ViewBuilder private func analysis(viewItems: [CoinAnalyticsViewModel.IssueBlockchainViewItem]) -> some View {
         VStack(spacing: 0) {
             ListSection {
                 ListRow {
@@ -615,7 +615,7 @@ struct CoinAnalyticsView: View {
         .frame(height: 40)
     }
 
-    @ViewBuilder private func analysisRow(viewItem: CoinAnalyticsViewModelNew.IssueBlockchainViewItem) -> some View {
+    @ViewBuilder private func analysisRow(viewItem: CoinAnalyticsViewModel.IssueBlockchainViewItem) -> some View {
         ClickableRow {
             presentedAnalysisViewItem = viewItem
         } content: {
@@ -663,7 +663,7 @@ struct CoinAnalyticsView: View {
         .padding(.vertical, .margin4)
     }
 
-    @ViewBuilder private func chartRow(title: String, info: Info? = nil, valueInfo: String, chartCurveType: ChartConfiguration.CurveType, proChartType: CoinProChartModule.ProChartType, viewItem: Previewable<CoinAnalyticsViewModelNew.ChartViewItem>) -> some View {
+    @ViewBuilder private func chartRow(title: String, info: Info? = nil, valueInfo: String, chartCurveType: ChartConfiguration.CurveType, proChartType: CoinProChartModule.ProChartType, viewItem: Previewable<CoinAnalyticsViewModel.ChartViewItem>) -> some View {
         ListRow {
             VStack(spacing: .margin12) {
                 cardHeader(text: title, info: info)
@@ -711,7 +711,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func valueRank(title: String, rankType: RankViewModel.RankType, viewItem: CoinAnalyticsViewModelNew.ValueRankViewItem) -> some View {
+    @ViewBuilder private func valueRank(title: String, rankType: RankViewModel.RankType, viewItem: CoinAnalyticsViewModel.ValueRankViewItem) -> some View {
         VStack(spacing: 0) {
             ListSection {
                 ListRow {
@@ -924,7 +924,7 @@ struct CoinAnalyticsView: View {
         .frame(width: 240, height: 126)
     }
 
-    private func value(previewableChartViewItem: Previewable<CoinAnalyticsViewModelNew.ChartViewItem>) -> String {
+    private func value(previewableChartViewItem: Previewable<CoinAnalyticsViewModel.ChartViewItem>) -> String {
         switch previewableChartViewItem {
         case .preview: return Self.placeholderText
         case let .regular(viewItem): return viewItem.value
