@@ -135,7 +135,7 @@ class WalletViewItemFactory {
     }
 
     private func headerButtons(account: Account?) -> [WalletModule.Button: ButtonState] {
-        guard let account else {
+        guard let account, !account.watchAccount else {
             return [:]
         }
         switch account.type {
