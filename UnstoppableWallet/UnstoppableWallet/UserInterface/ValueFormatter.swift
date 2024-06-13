@@ -277,7 +277,7 @@ extension ValueFormatter {
         formatFull(currency: currencyValue.currency, value: currencyValue.value, signType: signType)
     }
 
-    func format(percentValue: Decimal, signType: SignType = .never) -> String? {
+    func format(percentValue: Decimal, signType: SignType = .always) -> String? {
         let (transformedValue, digits) = transformedFull(value: percentValue, maxDigits: 2)
 
         let string: String? = rawFormatterQueue.sync {
