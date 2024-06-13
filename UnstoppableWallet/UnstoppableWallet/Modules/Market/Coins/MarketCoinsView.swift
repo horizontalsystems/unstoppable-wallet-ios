@@ -10,7 +10,7 @@ struct MarketCoinsView: View {
     @State private var topSelectorPresented = false
     @State private var timePeriodSelectorPresented = false
 
-    @State private var presentedFullCoin: FullCoin?
+    @State private var presentedCoin: Coin?
 
     var body: some View {
         ThemeView {
@@ -33,9 +33,9 @@ struct MarketCoinsView: View {
                 }
             }
         }
-        .sheet(item: $presentedFullCoin) { fullCoin in
-            CoinPageView(fullCoin: fullCoin)
-                .onFirstAppear { stat(page: .markets, section: .coins, event: .openCoin(coinUid: fullCoin.coin.uid)) }
+        .sheet(item: $presentedCoin) { coin in
+            CoinPageView(coin: coin)
+                .onFirstAppear { stat(page: .markets, section: .coins, event: .openCoin(coinUid: coin.uid)) }
         }
     }
 
@@ -113,7 +113,7 @@ struct MarketCoinsView: View {
                 let coin = marketInfo.fullCoin.coin
 
                 ClickableRow(action: {
-                    presentedFullCoin = marketInfo.fullCoin
+                    presentedCoin = coin
                 }) {
                     itemContent(
                         coin: coin,

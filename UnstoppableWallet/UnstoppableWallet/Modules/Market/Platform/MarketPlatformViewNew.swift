@@ -9,7 +9,7 @@ struct MarketPlatformViewNew: View {
     @Binding var isPresented: Bool
 
     @State private var sortBySelectorPresented = false
-    @State private var presentedFullCoin: FullCoin?
+    @State private var presentedCoin: Coin?
 
     init(isPresented: Binding<Bool>, platform: TopPlatform) {
         _viewModel = StateObject(wrappedValue: MarketPlatformViewModel(platform: platform))
@@ -63,9 +63,9 @@ struct MarketPlatformViewNew: View {
                     }
                 }
             }
-            .sheet(item: $presentedFullCoin) { fullCoin in
-                CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
-                    .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: fullCoin.coin.uid)) }
+            .sheet(item: $presentedCoin) { coin in
+                CoinPageView(coin: coin)
+                    .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: coin.uid)) }
             }
         }
     }
@@ -128,7 +128,7 @@ struct MarketPlatformViewNew: View {
                 let coin = marketInfo.fullCoin.coin
 
                 ClickableRow(action: {
-                    presentedFullCoin = marketInfo.fullCoin
+                    presentedCoin = coin
                 }) {
                     itemContent(
                         coin: coin,

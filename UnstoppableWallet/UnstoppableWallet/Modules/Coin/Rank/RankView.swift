@@ -59,7 +59,7 @@ struct RankView: View {
                 }
             }
             .sheet(item: $presentedCoin) { coin in
-                CoinPageViewNew(coinUid: coin.uid).ignoresSafeArea()
+                CoinPageView(coin: coin)
                     .onFirstAppear { stat(page: viewModel.type.statRankType, event: .openCoin(coinUid: coin.uid)) }
             }
         }

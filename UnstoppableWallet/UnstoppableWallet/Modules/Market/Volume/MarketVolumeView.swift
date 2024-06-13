@@ -8,7 +8,7 @@ struct MarketVolumeView: View {
     @StateObject var watchlistViewModel: WatchlistViewModel
     @Binding var isPresented: Bool
 
-    @State private var presentedFullCoin: FullCoin?
+    @State private var presentedCoin: Coin?
 
     init(isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketVolumeViewModel())
@@ -63,9 +63,9 @@ struct MarketVolumeView: View {
                     }
                 }
             }
-            .sheet(item: $presentedFullCoin) { fullCoin in
-                CoinPageViewNew(coinUid: fullCoin.coin.uid).ignoresSafeArea()
-                    .onFirstAppear { stat(page: .globalMetricsVolume, event: .openCoin(coinUid: fullCoin.coin.uid)) }
+            .sheet(item: $presentedCoin) { coin in
+                CoinPageView(coin: coin)
+                    .onFirstAppear { stat(page: .globalMetricsVolume, event: .openCoin(coinUid: coin.uid)) }
             }
         }
     }
@@ -115,7 +115,7 @@ struct MarketVolumeView: View {
                 let coin = marketInfo.fullCoin.coin
 
                 ClickableRow(action: {
-                    presentedFullCoin = marketInfo.fullCoin
+                    presentedCoin = coin
                 }) {
                     itemContent(
                         coin: coin,

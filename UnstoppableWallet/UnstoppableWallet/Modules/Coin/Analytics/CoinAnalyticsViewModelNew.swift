@@ -5,7 +5,7 @@ import HsExtensions
 import MarketKit
 
 class CoinAnalyticsViewModelNew: ObservableObject {
-    private let fullCoin: FullCoin
+    let coin: Coin
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
     private var tasks = Set<AnyTask>()
@@ -32,8 +32,8 @@ class CoinAnalyticsViewModelNew: ObservableObject {
         return formatter
     }()
 
-    init(fullCoin: FullCoin) {
-        self.fullCoin = fullCoin
+    init(coin: Coin) {
+        self.coin = coin
     }
 
     private func handle(analytics: Analytics) async {
@@ -140,7 +140,7 @@ class CoinAnalyticsViewModelNew: ObservableObject {
             reports: data.reports ? .preview : nil,
             investors: data.fundsInvested ? .preview : nil,
             treasuries: data.treasuries ? .preview : nil,
-            audits: auditAddresses != nil ? .preview : nil,
+            audits: nil,
             issueBlockchains: nil
         )
     }
@@ -186,7 +186,7 @@ class CoinAnalyticsViewModelNew: ObservableObject {
         if let value {
             switch postfix {
             case .currency: valueString = ValueFormatter.instance.formatShort(currency: currency, value: value)
-            case .coin: valueString = ValueFormatter.instance.formatShort(value: value).map { [$0, fullCoin.coin.code].joined(separator: " ") }
+            case .coin: valueString = ValueFormatter.instance.formatShort(value: value).map { [$0, coin.code].joined(separator: " ") }
             case .noPostfix: valueString = ValueFormatter.instance.formatShort(value: value)
             }
         }
@@ -218,7 +218,7 @@ class CoinAnalyticsViewModelNew: ObservableObject {
 
         return TransactionCountViewItem(
             chart: .regular(value: chartViewItem),
-            volume: volume.flatMap { ValueFormatter.instance.formatShort(value: $0) }.map { .regular(value: [$0, fullCoin.coin.code].joined(separator: " ")) },
+            volume: volume.flatMap { ValueFormatter.instance.formatShort(value: $0) }.map { .regular(value: [$0, coin.code].joined(separator: " ")) },
             rank: rank.map { .regular(value: rankString(value: $0)) },
             rating: rating.flatMap { CoinAnalyticsModule.Rating(rawValue: $0) }.map { .regular(value: $0) }
         )
@@ -340,18 +340,6 @@ class CoinAnalyticsViewModelNew: ObservableObject {
             return []
         }
     }
-
-    private var auditAddresses: [String]? {
-        let addresses = fullCoin.tokens.compactMap { token in
-            switch (token.blockchainType, token.type) {
-            case let (.ethereum, .eip20(address)): return address
-            case let (.binanceSmartChain, .eip20(address)): return address
-            default: return nil
-            }
-        }
-
-        return addresses.isEmpty ? nil : addresses
-    }
 }
 
 extension CoinAnalyticsViewModelNew {
@@ -359,22 +347,18 @@ extension CoinAnalyticsViewModelNew {
         currencyManager.baseCurrency
     }
 
-    var coin: Coin {
-        fullCoin.coin
-    }
-
     func load() {
         tasks = Set()
 
         state = .loading
 
-        Task { [weak self, isPurchased, marketKit, fullCoin, currency] in
+        Task { [weak self, isPurchased, marketKit, coin, currency] in
             do {
                 if isPurchased {
-                    let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
+                    let analytics = try await marketKit.analytics(coinUid: coin.uid, currencyCode: currency.code)
                     await self?.handle(analytics: analytics)
                 } else {
-                    let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid)
+                    let analyticsPreview = try await marketKit.analyticsPreview(coinUid: coin.uid)
                     await self?.handle(analyticsPreview: analyticsPreview)
                 }
             } catch {

@@ -1,4 +1,5 @@
 import ComponentKit
+import MarketKit
 import RxSwift
 import SafariServices
 import SectionsTableView
@@ -98,14 +99,11 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
-    private func openCoin(coinUid: String) {
-        guard let module = CoinPageModule.viewController(coinUid: coinUid) else {
-            return
-        }
+    private func open(coin: Coin) {
+        let viewController = CoinPageView(coin: coin).toViewController()
+        present(viewController, animated: true)
 
-        present(module, animated: true)
-
-        stat(page: .transactionInfo, event: .openCoin(coinUid: coinUid))
+        stat(page: .transactionInfo, event: .openCoin(coinUid: coin.uid))
     }
 
     private func openNftAsset(providerCollectionUid: String, nftUid: NftUid) {
@@ -485,12 +483,12 @@ class TransactionInfoViewController: ThemeViewController {
         switch viewItem {
         case let .actionTitle(iconName, iconDimmed, title, subTitle):
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
-        case let .amount(title, subtitle, iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type, coinUid):
+        case let .amount(title, subtitle, iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type, coin):
             var action: (() -> Void)?
 
-            if let coinUid {
+            if let coin {
                 action = { [weak self] in
-                    self?.openCoin(coinUid: coinUid)
+                    self?.open(coin: coin)
                 }
             }
 
