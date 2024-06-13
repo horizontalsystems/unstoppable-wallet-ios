@@ -1,38 +1,38 @@
-"2puq80" = "Coin Price List";
+"2puq80" = "동전 가격표";
 
-"6ebp42" = "Selected Coin";
+"6ebp42" = "선택한 코인";
 
 "8vJheC" = "정렬 기준";
 
-"Iodq3O-Rl3a0T" = "Just to confirm, you wanted ‘Gainers’?";
+"Iodq3O-Rl3a0T" = "확인용으로, '상승자'을 원하셨나요?";
 
-"Iodq3O-qHGyuo" = "Just to confirm, you wanted ‘Highest Cap’?";
+"Iodq3O-qHGyuo" = "확인용으로, '가장 높은 시가총액'을 원하셨나요?";
 
-"Iodq3O-tVjZ7W" = "Just to confirm, you wanted ‘Lowest Cap’?";
+"Iodq3O-tVjZ7W" = "확인용으로, '가장 낮은 시가총액'을 원하셨나요?";
 
-"Iodq3O-x1kK4T" = "Just to confirm, you wanted ‘Losers’?";
+"Iodq3O-x1kK4T" = "확인용으로, '하락자'을 원하셨나요?";
 
-"OkcYOj" = "View coin price for selected coin";
+"OkcYOj" = "선택한 코인의 가격 보기";
 
 "Rl3a0T" = "이득자";
 
-"VXTxGF" = "Widget Coin";
+"VXTxGF" = "위젯 코인";
 
-"ZBHf6A" = "Sort Type";
+"ZBHf6A" = "정렬 유형";
 
-"hrLfmt" = "Single Coin Price";
+"hrLfmt" = "단일 코인 가격";
 
-"nj8Co9-Rl3a0T" = "There are ${count} options matching ‘Gainers’.";
+"nj8Co9-Rl3a0T" = "'상승자'과 일치하는 옵션은 ${count} 개 있습니다.";
 
-"nj8Co9-qHGyuo" = "There are ${count} options matching ‘Highest Cap’.";
+"nj8Co9-qHGyuo" = "'가장 높은 시가총액' 과 일치하는 옵션은 ${count} 개 있습니다.";
 
-"nj8Co9-tVjZ7W" = "There are ${count} options matching ‘Lowest Cap’.";
+"nj8Co9-tVjZ7W" = "'가장 낮은 시가총액'과 일치하는 옵션은 ${count} 개 있습니다.";
 
-"nj8Co9-x1kK4T" = "There are ${count} options matching ‘Losers’.";
+"nj8Co9-x1kK4T" = "'하락자'과 일치하는 옵션은 ${count} 개 있습니다.";
 
 "qHGyuo" = "가장 높은 시가총액";
 
-"rCV9fg" = "See coin prices for coin list";
+"rCV9fg" = "코인 목록의 가격을 확인하세요";
 
 "tVjZ7W" = "가장 낮은 시가총액";
 
