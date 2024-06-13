@@ -559,7 +559,11 @@ class TransactionInfoViewItemFactory {
             }
         case let record as TonOutgoingTransactionRecord:
             for transfer in record.transfers {
-                sections.append(.init(sendSection(source: record.source, transactionValue: transfer.value, to: transfer.address, rates: item.rates, balanceHidden: balanceHidden)))
+                sections.append(.init(sendSection(source: record.source, transactionValue: transfer.value, to: transfer.address, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
+            }
+
+            if record.sentToSelf {
+                sections.append(.init([.sentToSelf]))
             }
 
             if let memo = record.memo, !memo.isEmpty {

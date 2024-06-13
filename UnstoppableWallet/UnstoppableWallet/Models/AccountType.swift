@@ -319,7 +319,7 @@ extension AccountType {
         case .evmAddress:
             return (try? EvmKit.Address(hex: string)).map { AccountType.evmAddress(address: $0) }
         case .tronAddress:
-            let hexData = Data(hex: string)
+            let hexData = string.hs.hexData ?? Data()
 
             let address: TronKit.Address?
             if !hexData.isEmpty { // android convention address

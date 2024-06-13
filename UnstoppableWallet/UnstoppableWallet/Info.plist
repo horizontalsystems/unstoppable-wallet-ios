@@ -49,6 +49,8 @@
 	<string>${default_passphrase}</string>
 	<key>DefaultWords</key>
 	<string>${default_words}</string>
+	<key>DefaultWatchAddress</key>
+	<string>${default_watch_address}</string>
 	<key>DefiYieldApiKey</key>
 	<string>$(defiyield_api_key)</string>
 	<key>DonateEnabled</key>

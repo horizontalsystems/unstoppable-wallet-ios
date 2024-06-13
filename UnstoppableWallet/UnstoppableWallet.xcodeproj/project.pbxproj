@@ -1912,6 +1912,8 @@
 		6BCD531D2A16203F00993F20 /* CloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */; };
 		6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AA29D6F37C003847ED /* ECashKit */; };
 		6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AC29D6F384003847ED /* ECashKit */; };
+		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
+		6BDDB5A12C1AC73D00DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB5A02C1AC73D00DE9D56 /* TonKit */; };
 		6BE8A07B2ADE2F8D0012DE7F /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */; };
 		6BE8A07C2ADE2F8D0012DE7F /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */; };
 		6BE8A07E2ADE2F950012DE7F /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */; };
@@ -2989,9 +2991,6 @@
 		D3BA259F2ADFAF23002B13EA /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3BA25982ADFAF23002B13EA /* HsToolKit */; };
 		D3BA25A02ADFAF23002B13EA /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948F092ADA887300FAE566 /* Intents.framework */; };
 		D3BA25A72ADFB042002B13EA /* IntentExtension Prod.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D3BA25A52ADFAF23002B13EA /* IntentExtension Prod.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D3BC25812B0B5E1E0092F682 /* TonKitKmm.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D3BC25832B0B5E460092F682 /* TonKitKmm.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */; };
-		D3BC25842B0B5E460092F682 /* TonKitKmm.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D3BF1E5C274BC29D00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5B274BC29D00229A00 /* Down */; };
 		D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5D274CAF1C00229A00 /* Down */; };
 		D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E62274CBBCE00229A00 /* DeepDiff */; };
@@ -3153,7 +3152,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D3BC25812B0B5E1E0092F682 /* TonKitKmm.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3164,7 +3162,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D3BC25842B0B5E460092F682 /* TonKitKmm.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4654,7 +4651,6 @@
 		D3B73E2F2BDFC5580067429D /* PriceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRow.swift; sourceTree = "<group>"; };
 		D3BA25912ADFAD7C002B13EA /* WidgetExtension Prod.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WidgetExtension Prod.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BA25A52ADFAF23002B13EA /* IntentExtension Prod.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "IntentExtension Prod.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TonKitKmm.xcframework; sourceTree = "<group>"; };
 		D3C5986D2C1315AF00789D69 /* AttributedStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringView.swift; sourceTree = "<group>"; };
 		D3C598702C16CDB700789D69 /* CoinAnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAnalyticsView.swift; sourceTree = "<group>"; };
 		D3C598732C16CDC400789D69 /* CoinAnalyticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAnalyticsViewModel.swift; sourceTree = "<group>"; };
@@ -4716,6 +4712,7 @@
 				D3AF5A9329FFD87500C1399E /* RxSwift in Frameworks */,
 				D3604E5728F02B280066C366 /* NftKit in Frameworks */,
 				D3C187E0290FD00E00FE1900 /* ThemeKit in Frameworks */,
+				6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */,
 				D0DA7413272A6F180072BE86 /* UnicodeURL in Frameworks */,
 				D38405B8218317DF007D50AD /* LocalAuthentication.framework in Frameworks */,
 				D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */,
@@ -4758,13 +4755,13 @@
 				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */,
-				D3BC25832B0B5E460092F682 /* TonKitKmm.xcframework in Frameworks */,
 				D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */,
 				6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */,
 				D3604E4D28F02AB40066C366 /* NftKit in Frameworks */,
 				D3C187CF290FCF2D00FE1900 /* ThemeKit in Frameworks */,
 				D0DA740F272A6EFC0072BE86 /* UnicodeURL in Frameworks */,
 				D38406A721831B3D007D50AD /* LocalAuthentication.framework in Frameworks */,
+				6BDDB5A12C1AC73D00DE9D56 /* TonKit in Frameworks */,
 				D3BF1E5C274BC29D00229A00 /* Down in Frameworks */,
 				D3604E4A28F02A8C0066C366 /* Eip20Kit in Frameworks */,
 				D3604E4328F02A020066C366 /* EvmKit in Frameworks */,
@@ -7390,7 +7387,6 @@
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D3BC257F2B0B5E1E0092F682 /* TonKitKmm.xcframework */,
 				50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */,
 				D3373D9420BEC7B30082BC4A /* AVFoundation.framework */,
 				D3948EF12ADA846400FAE566 /* WidgetKit.framework */,
@@ -8857,6 +8853,7 @@
 				6B55E33C2AF26D7A00616B60 /* Starscream */,
 				D08C93B02B91E3B400A7D1D5 /* Hodler */,
 				6BBCE4A22BDA419200ABBD55 /* Web3Wallet */,
+				6BDDB59B2C1816B500DE9D56 /* TonKit */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -8919,6 +8916,7 @@
 				6B55E33A2AF26D6400616B60 /* Starscream */,
 				D08C93AE2B91E39E00A7D1D5 /* Hodler */,
 				6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */,
+				6BDDB5A02C1AC73D00DE9D56 /* TonKit */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -9089,6 +9087,7 @@
 				6B55E3392AF26D6400616B60 /* XCRemoteSwiftPackageReference "Starscream" */,
 				D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */,
 				6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */,
+				6BDDB59F2C1AC73200DE9D56 /* XCRemoteSwiftPackageReference "TonKit" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -12866,6 +12865,14 @@
 				version = 2.0.5;
 			};
 		};
+		6BDDB59F2C1AC73200DE9D56 /* XCRemoteSwiftPackageReference "TonKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/TonKit.Swift";
+			requirement = {
+				kind = exactVersion;
+				version = 0.1.0;
+			};
+		};
 		6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tristanhimmelman/ObjectMapper/";
@@ -13196,6 +13203,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */;
 			productName = ECashKit;
+		};
+		6BDDB59B2C1816B500DE9D56 /* TonKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TonKit;
+		};
+		6BDDB5A02C1AC73D00DE9D56 /* TonKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TonKit;
 		};
 		D023D2622A249E59004F65B0 /* TronKit */ = {
 			isa = XCSwiftPackageProductDependency;
