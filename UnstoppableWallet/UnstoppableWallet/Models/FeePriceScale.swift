@@ -21,7 +21,7 @@ enum FeePriceScale {
     }
 
     func description(value: Float, showSymbol: Bool = true) -> String {
-        ValueFormatter.instance.formatFull(value: Decimal(Double(value)), decimalCount: 9, symbol: showSymbol ? unit : nil, showSign: false) ?? value.description
+        ValueFormatter.instance.formatFull(value: Decimal(Double(value)), decimalCount: 9, symbol: showSymbol ? unit : nil, signType: .never) ?? value.description
     }
 
     func wrap(value: Int, step: Int) -> Float {

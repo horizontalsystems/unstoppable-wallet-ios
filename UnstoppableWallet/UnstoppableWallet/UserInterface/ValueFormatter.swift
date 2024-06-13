@@ -226,7 +226,7 @@ extension ValueFormatter {
         return decorated(string: string, suffix: suffix, symbol: symbol, signType: signType, signValue: value, tooSmall: tooSmall)
     }
 
-    func formatFull(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
+    func formatFull(value: Decimal, decimalCount: Int, symbol: String? = nil, signType: SignType = .never) -> String? {
         let (transformedValue, digits) = transformedFull(value: value, maxDigits: decimalCount, minDigits: min(decimalCount, 4))
 
         let string: String? = rawFormatterQueue.sync {
@@ -238,15 +238,15 @@ extension ValueFormatter {
             return nil
         }
 
-        return decorated(string: string, symbol: symbol, signValue: value)
+        return decorated(string: string, symbol: symbol, signType: signType, signValue: value)
     }
 
     func formatShort(coinValue: CoinValue, showCode: Bool = true, signType: SignType = .never) -> String? {
         formatShort(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.symbol : nil, signType: signType)
     }
 
-    func formatFull(coinValue: CoinValue, showCode: Bool = true, showSign: Bool = false) -> String? {
-        formatFull(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.symbol : nil, showSign: showSign)
+    func formatFull(coinValue: CoinValue, showCode: Bool = true, signType: SignType = .never) -> String? {
+        formatFull(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.symbol : nil, signType: signType)
     }
 
     func formatShort(currency: Currency, value: Decimal, signType: SignType = .never) -> String? {
