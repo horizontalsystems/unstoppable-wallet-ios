@@ -230,7 +230,7 @@
 "extended_key.purpose" = "Purpose";
 "extended_key.blockchain" = "Блокчейн";
 "extended_key.account" = "Account";
-"extended_key.account.description" = "This is a setting for advanced users. If you are trying to import wallet (via extended private key )or transactions list (via  extended public key) you need account 0.";
+"extended_key.account.description" = "Это настройка для опытных пользователей. Если вы пытаетесь импортировать кошелек (через расширенный приватный ключ) или список транзакций (через расширенный публичный ключ), вам нужен аккаунт 0.";
 "extended_key.tap_to_show" = "Нажмите, чтобы показать extended private key";
 
 // Backup
@@ -353,8 +353,8 @@
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "Frozen title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
-"balance.token.account.inactive.title" = "Account Not Active";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
+"balance.token.account.inactive.title" = "Аккаунт не активен";
+"balance.token.account.inactive.description" = "Новым кошелькам TRON требуется депозит как минимум 1 TRX для активации. Неактивные кошельки могут принимать и хранить токены, но не будут корректировать балансы до момента активации.";
 
 // Account switcher
 
@@ -473,9 +473,9 @@
 "send.confirmation.sync_failed" = "Ошибка синхронизации";
 "send.confirmation.invalid_data" = "Неверные данные";
 "send.confirmation.refresh" = "Обновить";
-"send.confirmation.please_wait" = "Please Wait";
-"send.confirmation.expires_in" = "Expires in %@";
-"send.confirmation.expired" = "Expired";
+"send.confirmation.please_wait" = "Пожалуйста, подождите";
+"send.confirmation.expires_in" = "Истекает через %@";
+"send.confirmation.expired" = "Истёк";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.sent" = "Отправлено";
@@ -514,7 +514,7 @@
 "send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
+"send.unspent_outputs.description" = "Вручную выбрать UTxO для траты средств";
 "send.unspent_outputs.send_to" = "Отправить";
 "send.unspent_outputs.change" = "Изменить";
 
@@ -653,7 +653,7 @@
 "swap.confirmation.title" = "Подтвердить";
 "swap.confirmation.quoting" = "Котировка...";
 "swap.confirmation.invalid_quote" = "Неверная котировка";
-"swap.confirmation.please_wait" = "Please Wait";
+"swap.confirmation.please_wait" = "Пожалуйста, подождите";
 "swap.confirmation.quote_expires_in" = "Срок действия котировки истекает через %@";
 "swap.confirmation.quote_expired" = "Котировка истекла";
 "swap.confirmation.quote_failed" = "Ошибка при котировании";
@@ -705,18 +705,18 @@
 "market.global.market_cap" = "Общая капитализация";
 "market.global.volume" = "24ч объем";
 "market.global.btc_dominance" = "Доминирование BTC";
-"market.global.etf_inflow" = "ETF Inflow";
+"market.global.etf_inflow" = "ETF приток";
 "market.global.tvl_in_defi" = "TVL в DeFi";
 
 "market.tab.news" = "Новости";
-"market.tab.coins" = "Coins";
+"market.tab.coins" = "Монеты";
 "market.tab.watchlist" = "Избранное";
 "market.tab.platforms" = "Платформы";
-"market.tab.pairs" = "Pairs";
+"market.tab.pairs" = "Пары";
 "market.tab.sectors" = "Секторы";
 
-"market.sort_by.title" = "Sort By";
-"market.sort_by.manual" = "Manual";
+"market.sort_by.title" = "Сортировать";
+"market.sort_by.manual" = "Вручную";
 "market.sort_by.highest_cap" = "Наивысшей кап.";
 "market.sort_by.lowest_cap" = "Наименьшей кап.";
 "market.sort_by.gainers" = "Gainers";
@@ -724,7 +724,7 @@
 "market.sort_by.highest_volume" = "Наивысшему обьему";
 "market.sort_by.lowest_volume" = "Наименьшему объему";
 
-"market.top_coins.title" = "Coins";
+"market.top_coins.title" = "Монеты";
 "market.top_coins" = "Топ %@";
 
 "market.time_period.title" = "Период";
@@ -766,7 +766,7 @@
 
 "market.tvl.platform_field.all" = "Все";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Сортировать";
 
 "market.top.title" = "Лучшие токены";
 "market.top.description" = "Топ токенов по рыночной капитализации";
@@ -807,15 +807,15 @@
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 "market.watchlist.signals" = "Сигналы";
 "market.watchlist.empty" = "Список избранного пуст";
-"market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
-"market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
-"market.watchlist.signals.buy.description" = "Likely price increase in near future";
-"market.watchlist.signals.neutral.description" = "No clear trend, market is in equilibrium";
-"market.watchlist.signals.sell.description" = "Likely price decrease in near future";
-"market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
-"market.watchlist.signals.risky.description" = "Elevated risk level, requires caution";
-"market.watchlist.signals.warning" = "Always remember to apply risk management, and note that this is not financial advice.";
-"market.watchlist.signals.turn_on" = "Turn On";
+"market.watchlist.signals.description" = "Нижеследующие сигналы основаны на технических индикаторах ценового диапазона Боллинджера и RSI за последние приблизительно 30 дней. Эти сигналы алгоритмические и могут часто изменяться.";
+"market.watchlist.signals.strong_buy.description" = "Высокая уверенность в повышении цен";
+"market.watchlist.signals.buy.description" = "Вероятное увеличение цены в ближайшем будущем";
+"market.watchlist.signals.neutral.description" = "Нет чёткого тренда, рынок находится в равновесии";
+"market.watchlist.signals.sell.description" = "Вероятное снижение цен в ближайшем будущем";
+"market.watchlist.signals.strong_sell.description" = "Высокая вероятность снижения цены";
+"market.watchlist.signals.risky.description" = "Повышенный уровень риска, требует осторожности";
+"market.watchlist.signals.warning" = "Всегда помните о применении управления рисками, и обратите внимание, что это не финансовый совет.";
+"market.watchlist.signals.turn_on" = "Включить";
 
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать результаты";
@@ -840,7 +840,7 @@
 
 "market.advanced_search.liquidity" = "Ликвидность DEX";
 "market.advanced_search.blockchains" = "Блокчейны";
-"market.advanced_search.signal" = "Trading Signal";
+"market.advanced_search.signal" = "Торговый сигнал";
 "market.advanced_search.price_period" = "Ценовой период";
 "market.advanced_search.price_change" = "по изменению цены (%)";
 
@@ -899,13 +899,13 @@
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.defi_cap.description" = "Общая рыночная стоимость проектов DeFi";
 
-"market.etf.title" = "Total Net Inflow";
-"market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
-"market.etf.total_net_assets" = "Total Net Assets";
+"market.etf.title" = "Общий чистый приток";
+"market.etf.description" = "Чистый приток (net inflow) ETF равен разнице между поступлениями и оттоками наличных средств.";
+"market.etf.total_net_assets" = "Всего чистых активов";
 "market.etf.sort_by.highest_assets" = "Наивысшие активы";
 "market.etf.sort_by.lowest_assets" = "Наименьшие активы";
-"market.etf.sort_by.inflow" = "Inflow";
-"market.etf.sort_by.outflow" = "Outflow";
+"market.etf.sort_by.inflow" = "Приток";
+"market.etf.sort_by.outflow" = "Расход";
 "market.etf.period.all" = "Все";
 
 "market.market_cap.title" = "Полная рын. кап.";
@@ -915,7 +915,7 @@
 "market.tvl_in_defi.title" = "TVL в DeFi";
 "market.tvl_in_defi.description" = "Всего заблокировано (TVL) в DeFi";
 "market.tvl_in_defi.tvl" = "TVL";
-"market.tvl_in_defi.multi_chain" = "Multi-chain";
+"market.tvl_in_defi.multi_chain" = "Мультичейн";
 "market.tvl_in_defi.filter_by_chain" = "Сортировать по блокчейну";
 "market.tvl_in_defi.filter.all" = "Все";
 
@@ -923,7 +923,7 @@
 "market.volume.description" = "24-часовой объем крипторынка";
 "market.volume.volume" = "Объем";
 
-"market.signal.risky" = "Risky";
+"market.signal.risky" = "Рискованно";
 "market.signal.strong_buy" = "Активно покупать";
 "market.signal.buy" = "Покупать";
 "market.signal.neutral" = "Нейтрально";
@@ -1006,20 +1006,20 @@
 "technical_advice.macd.advice" = "MACD. Оценивает силу тренда, учитывая среднее изменение цены. Ежедневное значение гистограммы составляет %@ (%@). Цена актива в глобальном масштабе может измениться на %@.";
 
 "coin_analytics.indicators.title" = "Технические индикаторы";
-"coin_analytics.indicators.disclaimer" = "Always remember to apply risk management, and note that this is not financial advice.";
+"coin_analytics.indicators.disclaimer" = "Всегда помните о применении управления рисками, и обратите внимание, что это не финансовый совет.";
 "coin_analytics.indicators.info.title" = "Технические индикаторы";
 "coin_analytics.indicators.info.description" = "Мы используем стратегию Bollinger Bands + RSI для определения сигналов торговли. Все расчеты основаны на ежедневных свечах и предоставляют рекомендации на среднесрочный период. Суть стратегии заключается в том, что цена актива должна достичь экстремума, выбиваясь из канала Bollinger Bands, а RSI должен находиться в зоне перекупленности/перепроданности. После того как цена возвращается в канал, существует высокая вероятность того, что цена вернется к средним значениям или попытается пробить канал с другой стороны. Обратите внимание, что стратегия может давать несколько ложных сигналов во время сильных рыночных движений, прежде чем появится правильный сигнал.\n\nПожалуйста, помните, что очень важно применять управление рисками при торговле и помнить о сокращении убытков, если ситуация на рынке изменится!";
 "coin_analytics.indicators.hide_details" = "Скрыть детали";
 "coin_analytics.indicators.show_details" = "Показать детали";
 "coin_analytics.indicators.summary" = "Общая оценка";
 "coin_analytics.indicators.no_data" = "Нет данных";
-"coin_analytics.indicators.oversold" = "Risky";
+"coin_analytics.indicators.oversold" = "Рискованно";
 "coin_analytics.indicators.strong_buy" = "Активно покупать";
 "coin_analytics.indicators.buy" = "Покупать";
 "coin_analytics.indicators.neutral" = "Нейтрально";
 "coin_analytics.indicators.sell" = "Продавать";
 "coin_analytics.indicators.strong_sell" = "Активно продавать";
-"coin_analytics.indicators.overbought" = "Risky";
+"coin_analytics.indicators.overbought" = "Рискованно";
 "coin_analytics.period" = "Период";
 "coin_analytics.period.select_title" = "Выберите период";
 "coin_analytics.period.1h" = "1 час";
@@ -1073,7 +1073,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "Уникальные адреса за 30 дней";
 "coin_analytics.active_addresses_rank" = "Рейтинг активных адресов";
 "coin_analytics.active_addresses_rank.description" = "Список токенов, ранжированных по количеству уникальных адресов транзакций с токеном.";
-"coin_analytics.active_addresses_rank.sorting_field" = "Active";
+"coin_analytics.active_addresses_rank.sorting_field" = "Активно";
 "coin_analytics.active_addresses.info1" = "Общее количество уникальных ежедневных активных адресов за 24 часа.";
 "coin_analytics.active_addresses.info2" = "График, показывающий вариацию количества ежедневных активных адресов в течение 1 года.";
 "coin_analytics.active_addresses.info3" = "Общее количество уникальных адресов блокчейна, с которых проводились транзакции с токеном за 30 дней.";
@@ -1083,7 +1083,7 @@
 "coin_analytics.transaction_count" = "Количество транзакций";
 "coin_analytics.transaction_count_rank" = "Рейтинг кол-ва транзакций";
 "coin_analytics.transaction_count_rank.description" = "Токены ранжируются по количеству транзакций в блокчейне.";
-"coin_analytics.transaction_count_rank.sorting_field" = "Count";
+"coin_analytics.transaction_count_rank.sorting_field" = "Кол-во";
 "coin_analytics.transaction_count.info1" = "Общее количество уникальных транзакций блокчейна с токеном более 30 дней.";
 "coin_analytics.transaction_count.info2" = "График, отражающий колебания количества транзакций за 1 год.";
 "coin_analytics.transaction_count.info3" = "Рейтинг токена основан на количестве транзакций с токеном за 30-дневный период.";
@@ -1118,7 +1118,7 @@
 "coin_analytics.project_revenue" = "Доход от проекта";
 "coin_analytics.project_revenue_rank" = "Рейтинг доходов";
 "coin_analytics.project_revenue_rank.description" = "Токены ранжируются по пассивному доходу владельцев, получаемому через стекинг или сжигание токенов.";
-"coin_analytics.project_revenue_rank.sorting_field" = "Revenue";
+"coin_analytics.project_revenue_rank.sorting_field" = "Доход";
 
 "coin_analytics.other_data" = "Другие данные";
 
@@ -1305,7 +1305,7 @@
 "settings.tell_friends" = "Расскажите друзьям";
 "settings.contact_us" = "Свяжитесь с нами";
 "settings.social_networks.label" = "Be Unstoppable";
-"settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
+"settings.social_networks.footer" = "Изучайте и осваивайте криптовалюты с помощью эксклюзивных видео. Узнавайте о нас неформально. Будьте первыми, кто увидит то, над чем мы работаем.";
 
 // Settings -> Base Currency
 
@@ -1423,7 +1423,7 @@
 "settings_security.duress_mode.description" = "Специализированный режим, разработанный для обеспечения безопасности выбранных кошельков в условиях принуждения.";
 
 "biometry.off" = "Выкл.";
-"biometry.manual" = "Manual";
+"biometry.manual" = "Вручную";
 "biometry.on" = "Вкл.";
 "biometry.off.description" = "Отключено во всех случаях";
 "biometry.manual.description" = "Сканирование с помощью кнопки";
@@ -1535,10 +1535,10 @@
 // Settings -> Privacy
 
 "settings.privacy" = "Приватность";
-"settings.privacy.description" = "%@ doesn't collect personal data that expose your private information i.e. coin balances or addresses. While we gather some UI usage statistics, it's solely for understanding our user base and app usage trends. That can be disabled if you wish.";
+"settings.privacy.description" = "%@ не собирает персональные данные, которые могут раскрывать вашу частную информацию, такую как балансы монет или адреса. Мы собираем некоторую статистику использования интерфейса исключительно для понимания нашей пользовательской базы и тенденций использования приложения. Эта функция может быть отключена по вашему желанию.";
 "settings.privacy.statement.data_usage" = "Кошелек не собирает никаких данных о пользователях.";
-"settings.privacy.statement.data_storage" = "There are no user accounts or databases storing user data.";
-"settings.privacy.statement.user_account" = "If allowed the wallet will share app usage habits with Unstoppable team. This is to understand which features are being used (or not) by our users. Being a privacy focused app we need some way to evaluate our efforts and without this we have no idea whether the features we built are being used or not.";
+"settings.privacy.statement.data_storage" = "Здесь нет пользовательских аккаунтов или баз данных для хранения данных пользователей.";
+"settings.privacy.statement.user_account" = "Если разрешено, кошелек будет делиться с командой Unstoppable информацией о привычках использования приложения. Это необходимо для понимания, какие функции используются (или нет) нашими пользователями. В качестве приложения, ориентированного на конфиденциальность, нам нужен способ оценить наши усилия, и без этого мы не сможем определить, используются ли построенные нами функции или нет.";
 "settings.privacy.allow" = "Поделиться данными UI";
 
 // Settings -> Appearance
@@ -1551,7 +1551,7 @@
 "appearance.theme.light" = "Светлая";
 
 "appearance.markets_tab" = "Вкладка рынки";
-"appearance.hide_markets" = "Hide Markets";
+"appearance.hide_markets" = "Скрыть рынки";
 "appearance.price_change" = "по изменению цены (%)";
 "appearance.price_change.24h" = "24ч";
 "appearance.price_change.1d" = "Полночь по UTC";
@@ -1562,7 +1562,7 @@
 "appearance.launch_screen.market_overview" = "Обзор рынка";
 "appearance.launch_screen.watchlist" = "Избранное";
 
-"appearance.balance_tab" = "Balance Tab";
+"appearance.balance_tab" = "Вкладка баланс";
 "appearance.hide_buttons" = "Скрыть кнопки";
 "appearance.balance_value" = "Значение баланса";
 "appearance.balance_value.coin_fiat" = "Монета / Фиат";
@@ -1939,7 +1939,7 @@
 "fee_settings.errors.transaction_underpriced" = "Низкая комиссия за транзакцию";
 "fee_settings.errors.tips_higher_than_max_fee" = "Слишком низкая макс. комиссия";
 "fee_settings.errors.zero_amount.info" = "Невозможно отправить 0 TRX";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck" = "Рискованно";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Обработка транзакции может отложиться на некоторое время, или транзакцию могут полностью отклонить.";
 "fee_settings.warning.overpricing" = "Слишком высокая комиссия";
 "fee_settings.warning.overpricing.info" = "Установленная комиссия за транзакцию больше чем требуется для обработки этой транзакции.";
