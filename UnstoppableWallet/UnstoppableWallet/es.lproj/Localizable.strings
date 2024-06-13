@@ -726,7 +726,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.top_coins" = "Top %@";
 
 "market.time_period.title" = "Period";
-"market.time_period.24h" = "24 Horas";
 "market.time_period.1d" = "1 Día";
 "market.time_period.1w" = "1 Semana";
 "market.time_period.2w" = "2 Semanas";
@@ -736,7 +735,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.time_period.1y" = "1 Año";
 "market.time_period.2y" = "2 Años";
 "market.time_period.5y" = "5 Años";
-"market.time_period.24h.short" = "24H";
 "market.time_period.1d.short" = "1D";
 "market.time_period.1w.short" = "1S";
 "market.time_period.2w.short" = "2S";
@@ -1013,13 +1011,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.indicators.show_details" = "Mostrar Detalles";
 "coin_analytics.indicators.summary" = "Resumen";
 "coin_analytics.indicators.no_data" = "No hay datos";
-"coin_analytics.indicators.oversold" = "Very Risky to Trade";
-"coin_analytics.indicators.strong_buy" = "Compra fuerte";
+"coin_analytics.indicators.oversold" = "Arriesgado";
+"coin_analytics.indicators.strong_buy" = "Compra Fuerte";
 "coin_analytics.indicators.buy" = "Comprar";
 "coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "Vender";
 "coin_analytics.indicators.strong_sell" = "Vender fuerte";
-"coin_analytics.indicators.overbought" = "Very Risky to Trade";
+"coin_analytics.indicators.overbought" = "Arriesgado";
 "coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "Seleccionar Periodo";
 "coin_analytics.period.1h" = "1 hora";
@@ -1304,8 +1302,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.rate_us" = "Califícanos";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.contact_us" = "Contáctenos";
-"settings.social_networks.label" = "ÚNETE A UNSTOPPABLES";
-"settings.social_networks.footer" = "Mantente al tanto de los acontecimientos de Unstoppable. ¡Sé el primero en enterarte de las nuevas funciones, problemas reportados por los usuarios y en qué estamos trabajando!";
+"settings.social_networks.label" = "Be Unstoppable";
+"settings.social_networks.footer" = "Aprende y domina criptografía a través de vídeos exclusivos. Conozca informalmente. Sé el primero en ver las cosas en las que trabajamos.";
 
 // Settings -> Base Currency
 

@@ -724,7 +724,6 @@
 "market.top_coins" = "상위 %@";
 
 "market.time_period.title" = "기간";
-"market.time_period.24h" = "24 시간";
 "market.time_period.1d" = "1 일";
 "market.time_period.1w" = "1일주";
 "market.time_period.2w" = "2이주";
@@ -734,7 +733,6 @@
 "market.time_period.1y" = "일년";
 "market.time_period.2y" = "2 년";
 "market.time_period.5y" = "5 년";
-"market.time_period.24h.short" = "24시";
 "market.time_period.1d.short" = "1하루";
 "market.time_period.1w.short" = "1주일";
 "market.time_period.2w.short" = "2주일";
@@ -976,17 +974,17 @@
 "technical_advice.up" = "위로";
 
 "technical_advice.over.main" = "해당 자산과 관련된 행동은 위험합니다.";
-"technical_advice.over.indicators.signal_date" = "Starting from the %@";
-"technical_advice.over.indicators" = "The asset is outside the Bollinger Band channel and %@.";
-"technical_advice.over.rsi" = " RSI = %@, This also indicates that the asset is %@.";
-"technical_advice.over.advice" = " There might be a strong %@ward movement, so it's better to wait for the asset price to return to the channel.";
+"technical_advice.over.indicators.signal_date" = "%@부터 시작합니다";
+"technical_advice.over.indicators" = "자산이 볼린저 밴드 채널 밖에 있으며 %@입니다.";
+"technical_advice.over.rsi" = " RSI = %@, 이는 자산이 %@임을 나타냅니다.";
+"technical_advice.over.advice" = " 강한 %@ 방향 움직임이 있을 수 있으므로 자산 가격이 채널로 돌아오기를 기다리는 것이 좋습니다.";
 
-"technical_advice.strong.indicators" = "The asset was %@, but now it has returned to the Bollinger Band channel. This indicates a possible trend reversal.";
+"technical_advice.strong.indicators" = "자산이 %@이었지만 이제 볼린저 밴드 채널로 돌아왔습니다. 이는 추세 반전의 가능성을 나타냅니다.";
 "technical_advice.strong.rsi" = " 한편, RSI는 %@이며, 여전히 %@임을 나타냅니다.";
-"technical_advice.strong.advice" = " This could be a very strong signal to enter the market. Keep in mind that there may be several attempts of %@ward movement after returning to the channel, so do not forget about risk management.";
+"technical_advice.strong.advice" = " 이는 시장에 진입하기 위한 매우 강력한 신호일 수 있습니다. 채널로 돌아온 후 여러 번의 %@ 방향 움직임이 있을 수 있으므로, 리스크 관리에 유의하시기 바랍니다.";
 
 "technical_advice.stable.rsi" = " 한편, RSI는 %@이며, 이는 추세 반전을 나타냅니다 (RSI가 경계선을 넘었습니다. 70%에서).";
-"technical_advice.stable.advice" = "The price is returning to neutral levels, however, there is still potential for upward movement. Keep in mind that RSI = 50 and the middle of the Bollinger Bands are strong resistances and possible trend reversal points. Do not forget about risk management.";
+"technical_advice.stable.advice" = "가격이 중립 수준으로 돌아가고 있지만, 여전히 상승 가능성이 있습니다. RSI = 50과 볼린저 밴드의 중간은 강한 저항선이자 추세 반전 지점일 수 있다는 점을 기억하십시오. 리스크 관리에 유의하시기 바랍니다.";
 
 "technical_advice.neutral.rsi" = "RSI = %@도 강한 추세의 부재를 확인합니다.";
 "technical_advice.neutral.indicators" = "해당 자산은 과매수/과매도 구간에 있었지만, 현재 가격은 중립 구간의 볼린저 밴드 채널로 복귀했습니다. RSI가 %@이며 강한 추세의 부재를 확인합니다. 따라서 전반적으로 자산 가격은 평균화되며 더 이상의 이동은 어느 방향으로든 가능합니다.";
@@ -1012,13 +1010,13 @@
 "coin_analytics.indicators.show_details" = "세부 정보 보기";
 "coin_analytics.indicators.summary" = "요약";
 "coin_analytics.indicators.no_data" = "데이터 없음";
-"coin_analytics.indicators.oversold" = "Very Risky to Trade";
-"coin_analytics.indicators.strong_buy" = "강한 매수";
+"coin_analytics.indicators.oversold" = "위험";
+"coin_analytics.indicators.strong_buy" = "강력한 매수";
 "coin_analytics.indicators.buy" = "매수";
 "coin_analytics.indicators.neutral" = "중립적";
 "coin_analytics.indicators.sell" = "매도";
-"coin_analytics.indicators.strong_sell" = "강한 매도";
-"coin_analytics.indicators.overbought" = "Very Risky to Trade";
+"coin_analytics.indicators.strong_sell" = "강력한 매도";
+"coin_analytics.indicators.overbought" = "위험";
 "coin_analytics.period" = "기간";
 "coin_analytics.period.select_title" = "기간 선택";
 "coin_analytics.period.1h" = "1시간";
@@ -1303,8 +1301,8 @@
 "settings.rate_us" = "앱 평가";
 "settings.tell_friends" = "친구에게 추천하기";
 "settings.contact_us" = "문의하기";
-"settings.social_networks.label" = "JOIN UNSTOPPABLES";
-"settings.social_networks.footer" = "Unstoppable의 소식을 놓치지 마세요. 새로운 기능, 사용자로부터 보고된 문제 및 저희가 작업 중인 사항을 가장 먼저 알아보세요!";
+"settings.social_networks.label" = "Be Unstoppable";
+"settings.social_networks.footer" = "독점 비디오로 암호화폐를 배우고 정복하세요. 비공식적으로 우리를 알아가세요. 우리가 작업하는 것들을 가장 먼저 보실 수 있습니다.";
 
 // Settings -> Base Currency
 

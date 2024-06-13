@@ -726,7 +726,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.top_coins" = "En İyiler %@";
 
 "market.time_period.title" = "Periyot";
-"market.time_period.24h" = "24 Saat";
 "market.time_period.1d" = "1 Gün";
 "market.time_period.1w" = "1 Hafta";
 "market.time_period.2w" = "2 Hafta";
@@ -736,7 +735,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.time_period.1y" = "1 Yıl";
 "market.time_period.2y" = "2 Yıl";
 "market.time_period.5y" = "5 Yıl";
-"market.time_period.24h.short" = "24S";
 "market.time_period.1d.short" = "1G";
 "market.time_period.1w.short" = "1H";
 "market.time_period.2w.short" = "2H";
@@ -1013,13 +1011,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.indicators.show_details" = "Detayları Göster";
 "coin_analytics.indicators.summary" = "Kısa özet";
 "coin_analytics.indicators.no_data" = "Veri Yok";
-"coin_analytics.indicators.oversold" = "Very Risky to Trade";
-"coin_analytics.indicators.strong_buy" = "Strong Buy";
-"coin_analytics.indicators.buy" = "Buy";
+"coin_analytics.indicators.oversold" = "Riskli";
+"coin_analytics.indicators.strong_buy" = "Kuvvetli Al";
+"coin_analytics.indicators.buy" = "Al";
 "coin_analytics.indicators.neutral" = "Tarafsız";
-"coin_analytics.indicators.sell" = "Sell";
-"coin_analytics.indicators.strong_sell" = "Strong Sell";
-"coin_analytics.indicators.overbought" = "Very Risky to Trade";
+"coin_analytics.indicators.sell" = "Sat";
+"coin_analytics.indicators.strong_sell" = "Kuvvetli Satış";
+"coin_analytics.indicators.overbought" = "Riskli";
 "coin_analytics.period" = "Periyot";
 "coin_analytics.period.select_title" = "Periyot Seç";
 "coin_analytics.period.1h" = "1 saat";
@@ -1308,8 +1306,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.rate_us" = "Bizi Değerlendirin";
 "settings.tell_friends" = "Arkadaşlarına bahset";
 "settings.contact_us" = "Bize Ulaşın";
-"settings.social_networks.label" = "KATIL UNSTOPPABLES";
-"settings.social_networks.footer" = "Unstoppable'daki gelişmelerden haberdar olun. Yeni özelliklerden, kullanıcı tarafından bildirilen sorunlardan ve üzerinde çalıştığımız konulardan ilk siz haberdar olun!";
+"settings.social_networks.label" = "Be Unstoppable";
+"settings.social_networks.footer" = "Özel videolar aracılığıyla kripto para birimini öğrenin ve ustalaşın. Bizi resmi olmayan bir şekilde tanıyın. Üzerinde çalıştığımız şeyleri ilk gören siz olun.";
 
 // Settings -> Base Currency
 
