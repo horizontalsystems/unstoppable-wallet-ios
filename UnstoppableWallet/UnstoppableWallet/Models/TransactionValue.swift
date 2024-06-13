@@ -82,12 +82,12 @@ enum TransactionValue {
         }
     }
 
-    func formattedFull(showSign: Bool = false) -> String? {
+    func formattedFull(signType: ValueFormatter.SignType = .never) -> String? {
         switch self {
         case let .coinValue(token, value):
-            return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: token.coin.code, showSign: showSign)
+            return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: token.coin.code, signType: signType)
         case let .tokenValue(_, tokenCode, tokenDecimals, value):
-            return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: tokenCode, showSign: showSign)
+            return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: tokenCode, signType: signType)
         case let .nftValue(_, value, _, tokenSymbol):
             return "\(value.sign == .plus ? "+" : "")\(value) \(tokenSymbol ?? "NFT")"
         case .rawValue:

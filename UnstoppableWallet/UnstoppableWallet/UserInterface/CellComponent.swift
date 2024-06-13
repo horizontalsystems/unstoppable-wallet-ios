@@ -351,10 +351,10 @@ enum AmountType {
     case neutral
     case secondary
 
-    var showSign: Bool {
+    var signType: ValueFormatter.SignType {
         switch self {
-        case .incoming, .outgoing, .secondary: return true
-        case .neutral: return false
+        case .incoming, .outgoing, .secondary: return .always
+        case .neutral: return .never
         }
     }
 

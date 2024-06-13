@@ -44,7 +44,7 @@ class TransactionInfoViewItemFactory {
                 subtitle: subtitle,
                 iconUrl: iconUrl,
                 iconPlaceholderImageName: iconPlaceholderImageName,
-                coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
+                coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(signType: type.signType) ?? "n/a".localized,
                 currencyAmount: balanceHidden ? BalanceHiddenManager.placeholder : currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                 type: type,
                 coinUid: transactionValue.coin?.uid
@@ -56,7 +56,7 @@ class TransactionInfoViewItemFactory {
         .nftAmount(
             iconUrl: metadata?.previewImageUrl,
             iconPlaceholderImageName: "placeholder_nft_32",
-            nftAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
+            nftAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(signType: type.signType) ?? "n/a".localized,
             type: type,
             providerCollectionUid: metadata?.providerCollectionUid,
             nftUid: metadata?.nftUid

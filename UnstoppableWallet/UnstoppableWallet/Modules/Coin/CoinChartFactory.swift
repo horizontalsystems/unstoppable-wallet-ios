@@ -125,7 +125,7 @@ class CoinChartFactory {
             paragraphStyle.alignment = NSTextAlignment.right
 
             for (index, pair) in maPairs.enumerated() {
-                let formatted = ValueFormatter.instance.formatFull(value: pair.0, decimalCount: 8, showSign: pair.0 < 0)
+                let formatted = ValueFormatter.instance.formatFull(value: pair.0, decimalCount: 8, signType: pair.0 < 0 ? .always : .never)
                 topLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: pair.1.withAlphaComponent(1), .paragraphStyle: paragraphStyle]))
                 if index < maPairs.count - 1 {
                     topLineString.append(NSAttributedString(string: " "))
@@ -137,7 +137,7 @@ class CoinChartFactory {
             case let rsi as RsiIndicator:
                 let value = chartItem.indicators[rsi.json]
                 let formatted = value.flatMap {
-                    ValueFormatter.instance.formatFull(value: $0, decimalCount: 2, showSign: $0 < 0)
+                    ValueFormatter.instance.formatFull(value: $0, decimalCount: 2, signType: $0 < 0 ? .always : .never)
                 }
                 bottomLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: rsi.configuration.color.value.withAlphaComponent(1), .paragraphStyle: paragraphStyle]))
             case let macd as MacdIndicator:
@@ -157,7 +157,7 @@ class CoinChartFactory {
                     pairs.append((macdValue, macd.configuration.longColor.value))
                 }
                 for (index, pair) in pairs.enumerated() {
-                    let formatted = ValueFormatter.instance.formatFull(value: pair.0, decimalCount: 8, showSign: pair.0 < 0)
+                    let formatted = ValueFormatter.instance.formatFull(value: pair.0, decimalCount: 8, signType: pair.0 < 0 ? .always : .never)
                     bottomLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: pair.1.withAlphaComponent(1), .paragraphStyle: paragraphStyle]))
                     if index < pairs.count - 1 {
                         bottomLineString.append(NSAttributedString(string: " "))
