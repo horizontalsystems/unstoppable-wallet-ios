@@ -3,7 +3,7 @@ import MarketKit
 import SwiftUI
 
 struct CoinOverviewView: View {
-    @ObservedObject var viewModel: CoinOverviewViewModelNew
+    @ObservedObject var viewModel: CoinOverviewViewModel
     @ObservedObject var chartViewModel: CoinChartViewModel
     private let markdownParser = CoinPageMarkdownParser()
 

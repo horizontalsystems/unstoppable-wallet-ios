@@ -59,16 +59,6 @@ extension MarketModule.Tab {
     }
 }
 
-extension CoinPageModule.Tab {
-    var statTab: StatTab {
-        switch self {
-        case .overview: return .overview
-        case .analytics: return .analytics
-            // case .markets: return .markets
-        }
-    }
-}
-
 extension TransactionTypeFilter {
     var statTab: StatTab {
         switch self {

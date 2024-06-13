@@ -2,7 +2,7 @@ import MarketKit
 import SwiftUI
 
 struct CoinAnalyticsIssuesView: View {
-    let viewItem: CoinAnalyticsViewModelNew.IssueBlockchainViewItem
+    let viewItem: CoinAnalyticsViewModel.IssueBlockchainViewItem
     @Binding var isPresented: Bool
 
     @State private var currentTabIndex: Int = Tab.tokenDetectors.rawValue
@@ -40,7 +40,7 @@ struct CoinAnalyticsIssuesView: View {
 
 extension CoinAnalyticsIssuesView {
     struct DetectorsView: View {
-        let items: [CoinAnalyticsViewModelNew.IssueViewItem]
+        let items: [CoinAnalyticsViewModel.IssueViewItem]
         @Binding var expandedIndices: Set<Int>
 
         var body: some View {
@@ -90,7 +90,7 @@ extension CoinAnalyticsIssuesView {
             }
         }
 
-        @ViewBuilder private func itemContent(item: CoinAnalyticsViewModelNew.IssueViewItem, expanded: Bool) -> some View {
+        @ViewBuilder private func itemContent(item: CoinAnalyticsViewModel.IssueViewItem, expanded: Bool) -> some View {
             HStack(spacing: .margin8) {
                 HStack(spacing: .margin16) {
                     switch item.level {

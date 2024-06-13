@@ -5,7 +5,7 @@ import HsExtensions
 import MarketKit
 import RxSwift
 
-class CoinOverviewViewModelNew: ObservableObject {
+class CoinOverviewViewModel: ObservableObject {
     private let coinUid: String
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
@@ -29,7 +29,7 @@ class CoinOverviewViewModelNew: ObservableObject {
     }
 }
 
-extension CoinOverviewViewModelNew {
+extension CoinOverviewViewModel {
     var currency: Currency {
         currencyManager.baseCurrency
     }
@@ -82,7 +82,7 @@ extension CoinOverviewViewModelNew {
     }
 }
 
-extension CoinOverviewViewModelNew {
+extension CoinOverviewViewModel {
     enum State {
         case loading
         case loaded(overview: MarketInfoOverview)
