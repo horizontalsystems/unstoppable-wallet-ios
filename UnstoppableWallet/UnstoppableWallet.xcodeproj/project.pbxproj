@@ -13263,7 +13263,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.10;
+				version = 3.0.11;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {
@@ -13391,7 +13391,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.17;
+				version = 1.0.18;
 			};
 		};
 		D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */ = {
