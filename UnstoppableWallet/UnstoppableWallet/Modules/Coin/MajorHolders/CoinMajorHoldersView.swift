@@ -1,4 +1,3 @@
-import Kingfisher
 import MarketKit
 import SwiftUI
 
