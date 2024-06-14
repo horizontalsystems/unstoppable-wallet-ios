@@ -546,8 +546,6 @@ struct CoinAnalyticsView: View {
                             value: reports
                         ) {
                             CoinReportsView(coinUid: viewModel.coin.uid)
-                                .navigationTitle("coin_analytics.reports".localized)
-                                .ignoresSafeArea()
                         }
                     }
 
