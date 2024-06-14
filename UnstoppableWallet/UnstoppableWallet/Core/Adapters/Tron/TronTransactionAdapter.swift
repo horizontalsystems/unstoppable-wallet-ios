@@ -78,7 +78,7 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
                 return nil
             }
 
-            return TokenQuery(blockchainType: tronKitWrapper.blockchainType, tokenType: tokenType)
+            return TokenQuery(blockchainType: .tron, tokenType: tokenType)
         }
     }
 

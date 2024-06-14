@@ -55,7 +55,7 @@ class SendViewModel: ObservableObject {
             return false
         }
 
-        guard let service = transactionService, !service.cautions.contains(where: { $0.type == .error }) else {
+        if let service = transactionService, service.cautions.contains(where: { $0.type == .error }) {
             return false
         }
 

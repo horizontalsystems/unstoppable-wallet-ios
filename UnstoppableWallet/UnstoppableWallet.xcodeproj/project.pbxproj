@@ -2644,6 +2644,10 @@
 		D0A6902F2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
 		D0A690342C05D01C00E59296 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690332C05D01C00E59296 /* UIImageView.swift */; };
 		D0A690352C05D01C00E59296 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690332C05D01C00E59296 /* UIImageView.swift */; };
+		D0A690252BFCB51800E59296 /* TronPresendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690242BFCB51800E59296 /* TronPresendHandler.swift */; };
+		D0A690262BFCB51800E59296 /* TronPresendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690242BFCB51800E59296 /* TronPresendHandler.swift */; };
+		D0A690282BFF50D900E59296 /* TronSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690272BFF50D900E59296 /* TronSendData.swift */; };
+		D0A690292BFF50D900E59296 /* TronSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690272BFF50D900E59296 /* TronSendData.swift */; };
 		D0A980A92B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AA2B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AF2B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */; };
@@ -4508,6 +4512,8 @@
 		D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSource.swift; sourceTree = "<group>"; };
 		D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSourceViewModel.swift; sourceTree = "<group>"; };
 		D0A690332C05D01C00E59296 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		D0A690242BFCB51800E59296 /* TronPresendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronPresendHandler.swift; sourceTree = "<group>"; };
+		D0A690272BFF50D900E59296 /* TronSendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendData.swift; sourceTree = "<group>"; };
 		D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepChangeButtonsView.swift; sourceTree = "<group>"; };
 		D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0C2260F2A66A3BC007101F7 /* PersonalSupportModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportModule.swift; sourceTree = "<group>"; };
@@ -8554,6 +8560,8 @@
 				D3A580872BE4DAA2003953F4 /* EvmSendData.swift */,
 				D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */,
 				D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */,
+				D0A690242BFCB51800E59296 /* TronPresendHandler.swift */,
+				D0A690272BFF50D900E59296 /* TronSendData.swift */,
 				D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */,
 				D3A580932BE8AA80003953F4 /* BitcoinSendSettingsView.swift */,
 				D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */,
@@ -9179,6 +9187,7 @@
 				D36DE0FD272FD92F000BC916 /* SwapSelectProviderService.swift in Sources */,
 				D008CA67267C8E1800001E0A /* ApproveTransactionRecord.swift in Sources */,
 				D09D768F2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */,
+				D0A690262BFCB51800E59296 /* TronPresendHandler.swift in Sources */,
 				D384057F218317DF007D50AD /* LaunchService.swift in Sources */,
 				D3840581218317DF007D50AD /* App.swift in Sources */,
 				D3840583218317DF007D50AD /* BlurManager.swift in Sources */,
@@ -10567,6 +10576,7 @@
 				11B35337D37FD03982571DF0 /* ThorChainMultiSwapProvider.swift in Sources */,
 				ABC9AE635D02A4E6DA719787 /* TransactionContactSelectView.swift in Sources */,
 				ABC9AD02AD6340C230AC4F9D /* TransactionContactSelectViewModel.swift in Sources */,
+				D0A690292BFF50D900E59296 /* TronSendData.swift in Sources */,
 				ABC9AC0F2A4A48BB223005EA /* TransactionBlockchainSelectViewModel.swift in Sources */,
 				ABC9A24A0A2F6C7C476D7F69 /* TransactionTokenSelectViewModel.swift in Sources */,
 				11B35EFEEB7F361BD5FCCC3D /* SendView.swift in Sources */,
@@ -10632,6 +10642,7 @@
 				D04D98EA268055A2001A3135 /* TransactionRecord.swift in Sources */,
 				D008CA66267C8E1800001E0A /* ApproveTransactionRecord.swift in Sources */,
 				D384066E21831B3D007D50AD /* LaunchService.swift in Sources */,
+				D0A690252BFCB51800E59296 /* TronPresendHandler.swift in Sources */,
 				D384067021831B3D007D50AD /* App.swift in Sources */,
 				D384067221831B3D007D50AD /* BlurManager.swift in Sources */,
 				D384067421831B3D007D50AD /* MainSettingsModule.swift in Sources */,
@@ -12020,6 +12031,7 @@
 				ABC9AB3C239A182E9B93AFDA /* MultiSwapApproveViewModel.swift in Sources */,
 				ABC9A62E858360A9964084D2 /* Binding.swift in Sources */,
 				ABC9AAF24F259B71E59C247D /* ErrorViewController.swift in Sources */,
+				D0A690282BFF50D900E59296 /* TronSendData.swift in Sources */,
 				11B357696EB7DB1895BF9F23 /* ThorChainMultiSwapProvider.swift in Sources */,
 				ABC9A5B9D81C00155732363C /* TransactionContactSelectView.swift in Sources */,
 				ABC9A6C99739F0AC308F0574 /* TransactionContactSelectViewModel.swift in Sources */,
