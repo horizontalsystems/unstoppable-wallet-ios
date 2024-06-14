@@ -87,4 +87,13 @@ extension EvmLabelManager {
 
         return address.shortened
     }
+
+    func addressLabelMap() -> [String: String] {
+        do {
+            let addressLabels = try storage.allAddressLabels()
+            return addressLabels.reduce(into: [String: String]()) { $0[$1.address] = $1.label }
+        } catch {
+            return [:]
+        }
+    }
 }
