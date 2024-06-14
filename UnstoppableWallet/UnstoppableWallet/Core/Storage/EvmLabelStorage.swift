@@ -25,6 +25,12 @@ extension EvmLabelStorage {
         }
     }
 
+    func allAddressLabels() throws -> [EvmAddressLabel] {
+        try dbPool.read { db in
+            try EvmAddressLabel.fetchAll(db)
+        }
+    }
+
     func evmAddressLabel(address: String) throws -> EvmAddressLabel? {
         try dbPool.read { db in
             try EvmAddressLabel.filter(EvmAddressLabel.Columns.address == address).fetchOne(db)

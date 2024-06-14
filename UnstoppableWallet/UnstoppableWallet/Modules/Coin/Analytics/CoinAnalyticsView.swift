@@ -100,7 +100,7 @@ struct CoinAnalyticsView: View {
             CoinProChartView(coin: viewModel.coin, type: type, isPresented: Binding(get: { presentedProChartType != nil }, set: { if !$0 { presentedProChartType = nil } }))
         }
         .sheet(item: $presentedHolderBlockchain) { blockchain in
-            CoinMajorHoldersView(coin: viewModel.coin, blockchain: blockchain).ignoresSafeArea()
+            CoinMajorHoldersView(coin: viewModel.coin, blockchain: blockchain, isPresented: Binding(get: { presentedHolderBlockchain != nil }, set: { if !$0 { presentedHolderBlockchain = nil } }))
         }
         .sheet(isPresented: $tvlRankPresented) {
             ThemeNavigationView {
@@ -414,7 +414,7 @@ struct CoinAnalyticsView: View {
                         cardValue(text: value, info: viewItem.isPreview ? nil : "coin_analytics.current".localized)
                     }
 
-                    let chartItems: [(CGFloat, Color)] = {
+                    let chartItems: [(Decimal, Color)] = {
                         switch viewItem {
                         case .preview: return [
                                 (0.5, Color.themeGray.opacity(0.8)),
@@ -433,13 +433,13 @@ struct CoinAnalyticsView: View {
                                     alpha = max(alpha - 0.25, 0.25)
                                 }
 
-                                return ((viewItem.percent as NSDecimalNumber).doubleValue, resolvedColor)
+                                return (viewItem.percent, resolvedColor)
                             }
                         }
                     }()
 
                     if !chartItems.isEmpty {
-                        holdersChart(items: chartItems)
+                        CoinHoldersChart(items: chartItems)
                     }
                 }
             }
@@ -595,24 +595,6 @@ struct CoinAnalyticsView: View {
                 }
             }
         }
-    }
-
-    @ViewBuilder private func holdersChart(items: [(CGFloat, Color)]) -> some View {
-        let spacing: CGFloat = 1
-        let count = CGFloat(items.count)
-
-        GeometryReader { proxy in
-            HStack(spacing: spacing) {
-                ForEach(items.indices, id: \.self) { index in
-                    let (percent, color) = items[index]
-
-                    RoundedRectangle(cornerRadius: .cornerRadius2, style: .continuous)
-                        .fill(color)
-                        .frame(width: (proxy.size.width - (count - 1) * spacing) * percent)
-                }
-            }
-        }
-        .frame(height: 40)
     }
 
     @ViewBuilder private func analysisRow(viewItem: CoinAnalyticsViewModel.IssueBlockchainViewItem) -> some View {
