@@ -578,11 +578,9 @@ struct CoinAnalyticsView: View {
                         case let .regular(audits):
                             NavigationLink {
                                 CoinAuditsView(audits: audits)
-                                    .navigationTitle("coin_analytics.audits".localized)
-                                    .ignoresSafeArea()
                             } label: {
                                 ListRow(spacing: .margin8) {
-                                    rowContent(title: title, hasAction: true)
+                                    rowContent(title: title, value: "\(audits.count)", hasAction: true)
                                 }
                             }
                             .buttonStyle(RowButtonStyle())
