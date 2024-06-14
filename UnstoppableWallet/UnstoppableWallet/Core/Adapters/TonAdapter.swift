@@ -1,3 +1,4 @@
+import BigInt
 import Combine
 import Foundation
 import HdWalletKit
@@ -5,9 +6,8 @@ import HsToolKit
 import MarketKit
 import RxSwift
 import TonKit
-import TweetNacl
 import TonSwift
-import BigInt
+import TweetNacl
 
 class TonAdapter {
     private static let coinRate: Decimal = 1_000_000_000
@@ -18,10 +18,14 @@ class TonAdapter {
     private let transactionSource: TransactionSource
     private let baseToken: Token
     private let reachabilityManager = App.shared.reachabilityManager
+    private let appManager = App.shared.appManager
+
     private var cancellables = Set<AnyCancellable>()
 
     private var adapterStarted = false
     private var kitStarted = false
+
+    private let logger: Logger?
 
     private let adapterStateSubject = PublishSubject<AdapterState>()
     private(set) var adapterState: AdapterState {
@@ -43,12 +47,15 @@ class TonAdapter {
         transactionSource = wallet.transactionSource
         self.baseToken = baseToken
 
+//        logger = Logger(minLogLevel: .debug)
+        logger = App.shared.logger.scoped(with: "TonKit")
+
         switch wallet.account.type {
         case .mnemonic:
             guard let seed = wallet.account.type.mnemonicSeed else {
                 throw AdapterError.unsupportedAccount
             }
-            
+
             let hdWallet = HDWallet(seed: seed, coinType: 607, xPrivKey: 0, curve: .ed25519)
             let privateKey = try hdWallet.privateKey(account: 0)
             let privateRaw = Data(privateKey.raw.bytes)
@@ -61,7 +68,7 @@ class TonAdapter {
                 network: .mainNet,
                 walletId: wallet.account.id,
                 apiKey: nil,
-                minLogLevel: .debug
+                logger: logger
             )
 
         case let .tonAddress(address):
@@ -71,7 +78,7 @@ class TonAdapter {
                 network: .mainNet,
                 walletId: wallet.account.id,
                 apiKey: nil,
-                minLogLevel: .debug
+                logger: logger
             )
         default:
             throw AdapterError.unsupportedAccount
@@ -79,7 +86,6 @@ class TonAdapter {
 
         ownAddress = tonKit.address
 
-        
         adapterState = Self.adapterState(kitSyncState: tonKit.syncState)
         balanceData = BalanceData(available: Self.amount(kitAmount: tonKit.balance))
 
@@ -95,23 +101,17 @@ class TonAdapter {
             }
             .store(in: &cancellables)
 
-        reachabilityManager.$isReachable
-            .sink { [weak self] isReachable in
-                self?.handle(isReachable: isReachable)
+        appManager.didEnterBackgroundPublisher
+            .sink { [weak self] in
+                self?.stop()
             }
             .store(in: &cancellables)
-    }
 
-    private func handle(isReachable: Bool) {
-        guard adapterStarted else {
-            return
-        }
-
-        if isReachable, !kitStarted {
-            startKit()
-        } else if !isReachable, kitStarted {
-            stopKit()
-        }
+        appManager.willEnterForegroundPublisher
+            .sink { [weak self] in
+                self?.start()
+            }
+            .store(in: &cancellables)
     }
 
     private func handle(tonTransactions: [TonKit.FullTransaction]) {
@@ -136,7 +136,7 @@ class TonAdapter {
     }
 
     static func amount(kitAmount: Decimal) -> Decimal {
-        return kitAmount / coinRate
+        kitAmount / coinRate
     }
 
     private func transactionRecord(tonTransaction tx: TonKit.FullTransaction) -> TonTransactionRecord {
@@ -159,15 +159,15 @@ class TonAdapter {
             )
 
         default:
-                return TonTransactionRecord(
-                    source: .init(blockchainType: .ton, meta: nil),
-                    event: tx.event,
-                    feeToken: baseToken
-                )
+            return TonTransactionRecord(
+                source: .init(blockchainType: .ton, meta: nil),
+                event: tx.event,
+                feeToken: baseToken
+            )
         }
     }
-    
-    private func tagQuery(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> TransactionTagQuery {
+
+    private func tagQuery(token _: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> TransactionTagQuery {
         var type: TransactionTag.TagType?
 
         switch filter {
@@ -182,11 +182,13 @@ class TonAdapter {
     }
 
     private func startKit() {
+        logger?.log(level: .debug, message: "TonAdapter, start kit.")
         tonKit.start()
         kitStarted = true
     }
 
     private func stopKit() {
+        logger?.log(level: .debug, message: "TonAdapter, stop kit.")
         tonKit.stop()
         kitStarted = false
     }
@@ -220,7 +222,7 @@ extension TonAdapter: IAdapter {
     }
 
     var statusInfo: [(String, Any)] {
-        []
+        [] // tonKit.statusInfo()
     }
 
     var debugInfo: String {
@@ -236,7 +238,7 @@ extension TonAdapter: IBalanceAdapter {
     var balanceDataUpdatedObservable: Observable<BalanceData> {
         balanceDataSubject.asObservable()
     }
-    
+
     var balanceState: AdapterState {
         adapterState
     }
@@ -295,8 +297,8 @@ extension TonAdapter: ITransactionsAdapter {
 
             Task { [weak self] in
                 let address = address.flatMap { try? FriendlyAddress(string: $0) }?.address.toRaw()
-                
-                let beforeLt = (from as? TonTransactionRecord).map { $0.lt }
+
+                let beforeLt = (from as? TonTransactionRecord).map(\.lt)
                 var tagQueries = [TransactionTagQuery]()
                 switch filter {
                 case .all: ()
@@ -304,14 +306,14 @@ extension TonAdapter: ITransactionsAdapter {
                 case .outgoing: tagQueries.append(.init(type: .outgoing, address: address))
                 default: observer(.success([]))
                 }
-                
+
                 let txs = (self?.tonKit
                     .transactions(tagQueries: tagQueries, beforeLt: beforeLt, limit: limit)
                     .compactMap { self?.transactionRecord(tonTransaction: $0) }) ?? []
-                
+
                 observer(.success(txs))
             }
-            
+
             return Disposables.create()
         }
     }
@@ -332,11 +334,11 @@ extension TonAdapter: ISendTonAdapter {
 
     func estimateFee(recipient: String, amount: Decimal, memo: String?) async throws -> Decimal {
         let amount = (amount * Self.coinRate).rounded(decimal: 0)
-        
+
         let kitAmount = try await tonKit.estimateFee(recipient: recipient, amount: amount, comment: memo)
         return Self.amount(kitAmount: kitAmount)
     }
-     
+
     func send(recipient: String, amount: Decimal, memo: String?) async throws {
         let amount = (amount * Self.coinRate).rounded(decimal: 0)
 

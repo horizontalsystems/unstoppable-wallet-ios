@@ -11,7 +11,7 @@ class TonTransactionRecord: TransactionRecord {
         fee = .coinValue(token: feeToken, value: TonAdapter.amount(kitAmount: Decimal(event.fee)))
         lt = event.lt
         memo = event.actions.compactMap { ($0 as? TonTransfer)?.comment }.first
-        
+
         super.init(
             source: source,
             uid: event.eventId,

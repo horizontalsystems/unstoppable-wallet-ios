@@ -420,7 +420,6 @@
 		11B354B5E42290EE934C428E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359697FC3E92D4111ED5D /* String.swift */; };
 		11B354B8BD1C3C036F6DE16A /* LitecoinAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356861F703A5A5C6630B6 /* LitecoinAdapter.swift */; };
 		11B354BC4D954CCDA2E75C68 /* AddEvmSyncSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350B29037572DDAAF9E16 /* AddEvmSyncSourceViewModel.swift */; };
-		11B354C1218C0776499FAA5E /* Kmm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D813B2B43683404CCD6 /* Kmm.swift */; };
 		11B354CAD4BC4FAB3889838D /* EvmSyncSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D9C2409FD9060974F67 /* EvmSyncSourceManager.swift */; };
 		11B354CF393A2EAFDABE1C47 /* WalletTokenListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357D222B4819BE881E182 /* WalletTokenListViewController.swift */; };
 		11B354D628AADF3AFD9123E1 /* SingleCoinPriceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351F5E57874D4517F67B7 /* SingleCoinPriceWidget.swift */; };
@@ -781,7 +780,6 @@
 		11B358C4D4C466ACCEF0E4C7 /* MultiSwapMainField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D0D43137223A01FC2DA /* MultiSwapMainField.swift */; };
 		11B358C72B4E7F70331084AA /* SendEvmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35113CB935A0E54504C1C /* SendEvmViewController.swift */; };
 		11B358D01760F90518DA612F /* SendHandlerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353B02ADF5EC5CC83FB33 /* SendHandlerFactory.swift */; };
-		11B358D0D4AE015DC9FECF29 /* Kmm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D813B2B43683404CCD6 /* Kmm.swift */; };
 		11B358D1687049E5DACEBC96 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
 		11B358D35D2270FD78C6EF82 /* AutoLockPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E41142BD3D2FF59BAE7 /* AutoLockPeriod.swift */; };
 		11B358D519ACFE88A7823C7E /* ApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3531363949F235A210921 /* ApiProvider.swift */; };
@@ -3777,7 +3775,6 @@
 		11B35D6FC62F4797DEE1C419 /* StatStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatStorage.swift; sourceTree = "<group>"; };
 		11B35D747108CE6727D3103D /* HsToolKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HsToolKit.swift; sourceTree = "<group>"; };
 		11B35D805327837A9E81801C /* ManageAccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsViewController.swift; sourceTree = "<group>"; };
-		11B35D813B2B43683404CCD6 /* Kmm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kmm.swift; sourceTree = "<group>"; };
 		11B35D8AF9D337A98530548D /* Auditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auditor.swift; sourceTree = "<group>"; };
 		11B35D8B730D82D948B27210 /* ISendHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISendHandler.swift; sourceTree = "<group>"; };
 		11B35D96B8963CDC30DC5643 /* NftViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftViewModel.swift; sourceTree = "<group>"; };
@@ -5169,7 +5166,6 @@
 				ABC9A9B35C58F6525F3B2D5C /* FullCoin.swift */,
 				ABC9A830FE79DBF62FD63CC4 /* ThemeMode.swift */,
 				ABC9A3DFC1E03CB2E6C12F2C /* Encodable.swift */,
-				11B35D813B2B43683404CCD6 /* Kmm.swift */,
 				D00DAE442B626C2900F48E1D /* GasPrice.swift */,
 				ABC9A448ABC30B93088DE978 /* Binding.swift */,
 				11B35ED0A8819AB7EA27D368 /* StatExtensions.swift */,
@@ -10501,7 +10497,6 @@
 				11B35ACE7B126DCF9F7F1A19 /* SearchBar.swift in Sources */,
 				11B3546CB3C043D22A5F7A88 /* TransactionsViewModel.swift in Sources */,
 				11B35071705455BC25C214D2 /* TonAdapter.swift in Sources */,
-				11B358D0D4AE015DC9FECF29 /* Kmm.swift in Sources */,
 				11B3535D6A72ED1D564A0F7C /* TonOutgoingTransactionRecord.swift in Sources */,
 				11B35C60FE9B94994FCCB0CB /* TonTransactionRecord.swift in Sources */,
 				11B3589CF4D819A0430DE3D9 /* TonIncomingTransactionRecord.swift in Sources */,
@@ -11957,7 +11952,6 @@
 				11B358781EBEFCE7CED000F0 /* SearchBar.swift in Sources */,
 				11B358D91C9D8102C46B97ED /* TransactionsViewModel.swift in Sources */,
 				11B35D88633A14FD13E91702 /* TonAdapter.swift in Sources */,
-				11B354C1218C0776499FAA5E /* Kmm.swift in Sources */,
 				11B3589C124F6BBDDBB144F4 /* TonOutgoingTransactionRecord.swift in Sources */,
 				D389BC4F2C0DEF1800724504 /* MarketAdvancedSearchResultsView.swift in Sources */,
 				11B35EB4CAA93773DF09B479 /* TonTransactionRecord.swift in Sources */,
@@ -12870,7 +12864,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TonKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 0.1.0;
+				version = 0.2.0;
 			};
 		};
 		6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */ = {

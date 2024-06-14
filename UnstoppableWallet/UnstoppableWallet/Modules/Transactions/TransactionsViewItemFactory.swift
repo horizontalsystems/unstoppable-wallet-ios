@@ -432,7 +432,7 @@ class TransactionsViewItemFactory {
             if let currencyValue = item.currencyValue {
                 secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
-            
+
             sentToSelf = record.sentToSelf
 
         case is TonTransactionRecord:

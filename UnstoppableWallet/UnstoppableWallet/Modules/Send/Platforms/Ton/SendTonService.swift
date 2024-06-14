@@ -77,7 +77,7 @@ class SendTonService {
 
         loadFee()
     }
-    
+
     private func updateFee() {
         loadFee()
     }
@@ -113,17 +113,17 @@ class SendTonService {
         case let .fetchError(error): throw error
         default: throw AppError.addressInvalid
         }
-        
+
         let amount = amountService.amount
-        
+
         guard !amount.isZero else {
             throw SendTransactionError.wrongAmount
         }
-        
+
         let memo = memoService.memo
         return (address, amount, memo)
     }
-    
+
     private func loadFee() {
         do {
             let data = try params()
