@@ -555,8 +555,6 @@ struct CoinAnalyticsView: View {
                             value: investors
                         ) {
                             CoinInvestorsView(coinUid: viewModel.coin.uid)
-                                .navigationTitle("coin_analytics.funding".localized)
-                                .ignoresSafeArea()
                         }
                     }
 
