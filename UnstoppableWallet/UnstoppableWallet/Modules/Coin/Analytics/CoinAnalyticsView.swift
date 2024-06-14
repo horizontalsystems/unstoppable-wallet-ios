@@ -668,7 +668,7 @@ struct CoinAnalyticsView: View {
             VStack(spacing: .margin12) {
                 cardHeader(text: title, info: info)
 
-                let value = {
+                let value: String = {
                     switch viewItem {
                     case .preview: return Self.placeholderText
                     case let .regular(viewItem): return viewItem.value
@@ -718,7 +718,7 @@ struct CoinAnalyticsView: View {
                     VStack(spacing: .margin12) {
                         cardHeader(text: title)
 
-                        let value = {
+                        let value: String = {
                             switch viewItem.value {
                             case .preview: return Self.placeholderText
                             case let .regular(value): return value

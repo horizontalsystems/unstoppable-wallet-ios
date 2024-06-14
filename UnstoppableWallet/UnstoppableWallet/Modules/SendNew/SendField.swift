@@ -6,6 +6,7 @@ import SwiftUI
 enum SendField {
     case amount(title: String, token: Token, coinValueType: CoinValueType, currencyValue: CurrencyValue?, type: AmountType)
     case value(title: String, description: ActionSheetView.InfoDescription?, coinValue: CoinValue?, currencyValue: CurrencyValue?, formatFull: Bool)
+    case doubleValue(title: String, description: ActionSheetView.InfoDescription?, value1: String, value2: String?)
     case levelValue(title: String, value: String, level: ValueLevel)
     case address(title: String, value: String, blockchainType: BlockchainType)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
@@ -104,6 +105,31 @@ enum SendField {
                     Image("copy_20").renderingMode(.template)
                 }
                 .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+            }
+        case let .doubleValue(title, description, value1, value2):
+            ListRow(padding: EdgeInsets(top: .margin12, leading: description == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
+                if let description {
+                    Text(title)
+                        .textSubhead2()
+                        .modifier(Informed(description: description))
+                } else {
+                    Text(title)
+                        .textSubhead2()
+                }
+
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 1) {
+                    Text(value1)
+                        .textSubhead1(color: .themeLeah)
+                        .multilineTextAlignment(.trailing)
+
+                    if let value2 {
+                        Text(value2)
+                            .textSubhead1(color: .themeLeah)
+                            .multilineTextAlignment(.trailing)
+                    }
+                }
             }
         }
     }

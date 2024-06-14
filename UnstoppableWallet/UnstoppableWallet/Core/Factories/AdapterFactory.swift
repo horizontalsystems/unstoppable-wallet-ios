@@ -53,7 +53,7 @@ class AdapterFactory {
     }
 
     private func tronAdapter(wallet: Wallet) -> IAdapter? {
-        guard let tronKitWrapper = try? tronKitManager.tronKitWrapper(account: wallet.account, blockchainType: .tron) else {
+        guard let tronKitWrapper = try? tronKitManager.tronKitWrapper(account: wallet.account) else {
             return nil
         }
 
@@ -61,7 +61,7 @@ class AdapterFactory {
     }
 
     private func trc20Adapter(address: String, wallet: Wallet) -> IAdapter? {
-        guard let tronKitWrapper = try? tronKitManager.tronKitWrapper(account: wallet.account, blockchainType: .tron) else {
+        guard let tronKitWrapper = try? tronKitManager.tronKitWrapper(account: wallet.account) else {
             return nil
         }
 

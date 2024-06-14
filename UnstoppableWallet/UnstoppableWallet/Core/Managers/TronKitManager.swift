@@ -20,7 +20,7 @@ class TronKitManager {
         self.testNetManager = testNetManager
     }
 
-    private func _tronKitWrapper(account: Account, blockchainType: BlockchainType) throws -> TronKitWrapper {
+    private func _tronKitWrapper(account: Account) throws -> TronKitWrapper {
         if let _tronKitWrapper, let currentAccount, currentAccount == account {
             return _tronKitWrapper
         }
@@ -52,7 +52,7 @@ class TronKitManager {
 
         tronKit.start()
 
-        let wrapper = TronKitWrapper(blockchainType: blockchainType, tronKit: tronKit, signer: signer)
+        let wrapper = TronKitWrapper(tronKit: tronKit, signer: signer)
 
         _tronKitWrapper = wrapper
         currentAccount = account
@@ -74,20 +74,18 @@ extension TronKitManager {
         }
     }
 
-    func tronKitWrapper(account: Account, blockchainType: BlockchainType) throws -> TronKitWrapper {
+    func tronKitWrapper(account: Account) throws -> TronKitWrapper {
         try queue.sync {
-            try _tronKitWrapper(account: account, blockchainType: blockchainType)
+            try _tronKitWrapper(account: account)
         }
     }
 }
 
 class TronKitWrapper {
-    let blockchainType: BlockchainType
     let tronKit: TronKit.Kit
     let signer: Signer?
 
-    init(blockchainType: BlockchainType, tronKit: TronKit.Kit, signer: Signer?) {
-        self.blockchainType = blockchainType
+    init(tronKit: TronKit.Kit, signer: Signer?) {
         self.tronKit = tronKit
         self.signer = signer
     }

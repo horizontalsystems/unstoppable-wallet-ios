@@ -36,7 +36,7 @@ class TronTransactionConverter {
     }
 
     private func eip20Value(tokenAddress: TronKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: TokenInfo?) -> TransactionValue {
-        let query = TokenQuery(blockchainType: tronKitWrapper.blockchainType, tokenType: .eip20(address: tokenAddress.base58))
+        let query = TokenQuery(blockchainType: .tron, tokenType: .eip20(address: tokenAddress.base58))
 
         if let token = try? coinManager.token(query: query) {
             let value = convertAmount(amount: value, decimals: token.decimals, sign: sign)
