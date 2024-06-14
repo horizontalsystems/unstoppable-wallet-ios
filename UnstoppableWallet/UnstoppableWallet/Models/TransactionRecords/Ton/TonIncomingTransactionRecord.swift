@@ -1,8 +1,8 @@
+import BigInt
 import Foundation
 import MarketKit
 import TonKit
 import TonSwift
-import BigInt
 
 class TonIncomingTransactionRecord: TonTransactionRecord {
     let transfer: Transfer?
@@ -17,7 +17,7 @@ class TonIncomingTransactionRecord: TonTransactionRecord {
                     address: transfer.recipient.address.toString(bounceable: TonAdapter.bounceableDefault),
                     value: .coinValue(token: token, value: TonAdapter.amount(kitAmount: Decimal(transfer.amount)))
                 )
-        }
+            }
 
         super.init(source: source, event: event, feeToken: feeToken)
     }

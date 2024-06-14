@@ -26,6 +26,7 @@ class AppManager {
 
     private let didBecomeActiveSubject = PublishSubject<Void>()
     private let willEnterForegroundSubjectOld = PublishSubject<Void>()
+    private let didEnterBackgroundSubject = PassthroughSubject<Void, Never>()
     private let willEnterForegroundSubject = PassthroughSubject<Void, Never>()
 
     init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
@@ -97,6 +98,8 @@ extension AppManager {
     func didEnterBackground() {
         debugBackgroundLogger?.logEnterBackground()
 
+        didEnterBackgroundSubject.send()
+
         lockManager.didEnterBackground()
         walletConnectSocketConnectionService.didEnterBackground()
         balanceHiddenManager.didEnterBackground()
@@ -133,6 +136,10 @@ extension AppManager {
 }
 
 extension AppManager {
+    var didEnterBackgroundPublisher: AnyPublisher<Void, Never> {
+        didEnterBackgroundSubject.eraseToAnyPublisher()
+    }
+
     var willEnterForegroundPublisher: AnyPublisher<Void, Never> {
         willEnterForegroundSubject.eraseToAnyPublisher()
     }
