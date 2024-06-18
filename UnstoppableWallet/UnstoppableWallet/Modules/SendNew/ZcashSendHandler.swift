@@ -86,7 +86,7 @@ extension ZcashSendHandler {
                 .address(
                     title: "send.confirmation.to".localized,
                     value: recipient.stringEncoded,
-                    blockchainType: .binanceChain
+                    blockchainType: .zcash
                 ),
             ]
 

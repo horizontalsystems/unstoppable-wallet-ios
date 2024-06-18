@@ -2602,6 +2602,10 @@
 		D087627729815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */; };
 		D08C93AF2B91E39E00A7D1D5 /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D08C93AE2B91E39E00A7D1D5 /* Hodler */; };
 		D08C93B12B91E3B400A7D1D5 /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D08C93B02B91E3B400A7D1D5 /* Hodler */; };
+		D08D16812C2164880086E5A5 /* TonPresendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08D16802C2164880086E5A5 /* TonPresendHandler.swift */; };
+		D08D16822C2164880086E5A5 /* TonPresendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08D16802C2164880086E5A5 /* TonPresendHandler.swift */; };
+		D08D16842C2165490086E5A5 /* TonSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08D16832C2165490086E5A5 /* TonSendHandler.swift */; };
+		D08D16852C2165490086E5A5 /* TonSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08D16832C2165490086E5A5 /* TonSendHandler.swift */; };
 		D090AF61297D725D00699916 /* TransparentIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D090AF60297D725D00699916 /* TransparentIconButtonView.swift */; };
 		D090AF62297D725D00699916 /* TransparentIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D090AF60297D725D00699916 /* TransparentIconButtonView.swift */; };
 		D09200B3293F21520091981A /* RestoreMnemonicNonStandardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200AF293F21510091981A /* RestoreMnemonicNonStandardService.swift */; };
@@ -2630,16 +2634,16 @@
 		D09D76942A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */; };
 		D09D76952A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */; };
 		D09D76992A2F3682004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
+		D0A690252BFCB51800E59296 /* TronPresendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690242BFCB51800E59296 /* TronPresendHandler.swift */; };
+		D0A690262BFCB51800E59296 /* TronPresendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690242BFCB51800E59296 /* TronPresendHandler.swift */; };
+		D0A690282BFF50D900E59296 /* TronSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690272BFF50D900E59296 /* TronSendData.swift */; };
+		D0A690292BFF50D900E59296 /* TronSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690272BFF50D900E59296 /* TronSendData.swift */; };
 		D0A6902B2C00ACF600E59296 /* CautionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */; };
 		D0A6902C2C00ACF600E59296 /* CautionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */; };
 		D0A6902E2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
 		D0A6902F2C04969300E59296 /* CautionDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */; };
 		D0A690342C05D01C00E59296 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690332C05D01C00E59296 /* UIImageView.swift */; };
 		D0A690352C05D01C00E59296 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690332C05D01C00E59296 /* UIImageView.swift */; };
-		D0A690252BFCB51800E59296 /* TronPresendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690242BFCB51800E59296 /* TronPresendHandler.swift */; };
-		D0A690262BFCB51800E59296 /* TronPresendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690242BFCB51800E59296 /* TronPresendHandler.swift */; };
-		D0A690282BFF50D900E59296 /* TronSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690272BFF50D900E59296 /* TronSendData.swift */; };
-		D0A690292BFF50D900E59296 /* TronSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A690272BFF50D900E59296 /* TronSendData.swift */; };
 		D0A980A92B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AA2B5E3C0900127AF4 /* StepChangeButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */; };
 		D0A980AF2B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */; };
@@ -4487,6 +4491,8 @@
 		D086A9152BF4D08400462024 /* SendParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendParameters.swift; sourceTree = "<group>"; };
 		D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewController.swift; sourceTree = "<group>"; };
 		D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewModel.swift; sourceTree = "<group>"; };
+		D08D16802C2164880086E5A5 /* TonPresendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonPresendHandler.swift; sourceTree = "<group>"; };
+		D08D16832C2165490086E5A5 /* TonSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonSendHandler.swift; sourceTree = "<group>"; };
 		D090AF60297D725D00699916 /* TransparentIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentIconButtonView.swift; sourceTree = "<group>"; };
 		D09200AF293F21510091981A /* RestoreMnemonicNonStandardService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreMnemonicNonStandardService.swift; sourceTree = "<group>"; };
 		D09200B2293F21520091981A /* RestoreMnemonicNonStandardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreMnemonicNonStandardViewModel.swift; sourceTree = "<group>"; };
@@ -4499,11 +4505,11 @@
 		D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewController.swift; sourceTree = "<group>"; };
 		D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewModel.swift; sourceTree = "<group>"; };
 		D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationService.swift; sourceTree = "<group>"; };
+		D0A690242BFCB51800E59296 /* TronPresendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronPresendHandler.swift; sourceTree = "<group>"; };
+		D0A690272BFF50D900E59296 /* TronSendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendData.swift; sourceTree = "<group>"; };
 		D0A6902A2C00ACF600E59296 /* CautionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSource.swift; sourceTree = "<group>"; };
 		D0A6902D2C04969300E59296 /* CautionDataSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CautionDataSourceViewModel.swift; sourceTree = "<group>"; };
 		D0A690332C05D01C00E59296 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
-		D0A690242BFCB51800E59296 /* TronPresendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronPresendHandler.swift; sourceTree = "<group>"; };
-		D0A690272BFF50D900E59296 /* TronSendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendData.swift; sourceTree = "<group>"; };
 		D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepChangeButtonsView.swift; sourceTree = "<group>"; };
 		D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0C2260F2A66A3BC007101F7 /* PersonalSupportModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSupportModule.swift; sourceTree = "<group>"; };
@@ -8560,6 +8566,8 @@
 				D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */,
 				D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */,
 				D03F74812BF76D0A004FBCFA /* GasPriceData.swift */,
+				D08D16802C2164880086E5A5 /* TonPresendHandler.swift */,
+				D08D16832C2165490086E5A5 /* TonSendHandler.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -9484,6 +9492,7 @@
 				58AAAA71882CB345D56BBA00 /* CoinChartFactory.swift in Sources */,
 				11B351856787DD75A41861B6 /* CoinInvestorsViewModel.swift in Sources */,
 				11B3507F17791BC895872490 /* BrandFooterView.swift in Sources */,
+				D08D16852C2165490086E5A5 /* TonSendHandler.swift in Sources */,
 				6BCD53152A161F4800993F20 /* BackupViewModel.swift in Sources */,
 				11B35D10A6A15EFA47FCE6D0 /* TextCell.swift in Sources */,
 				6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */,
@@ -10332,6 +10341,7 @@
 				11B35D4CF0FBE2496CED70E4 /* EditPasscodeViewModel.swift in Sources */,
 				11B35481F59793CD9C95B324 /* CreatePasscodeViewModel.swift in Sources */,
 				11B3531D97E44DA1D8280C35 /* EditDuressPasscodeViewModel.swift in Sources */,
+				D08D16822C2164880086E5A5 /* TonPresendHandler.swift in Sources */,
 				11B35E04C504E2C268F53B66 /* CreateDuressPasscodeViewModel.swift in Sources */,
 				11B35FFC8C3E4CF638397650 /* UnlockView.swift in Sources */,
 				11B3564236FEF4E5ACC8C838 /* UnlockModule.swift in Sources */,
@@ -10936,6 +10946,7 @@
 				D3833AFF2BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */,
 				D36DE0D8272FD887000BC916 /* OneInchDataSource.swift in Sources */,
 				58AAA2EBAFC1C443C48BA857 /* CoinChartFactory.swift in Sources */,
+				D08D16842C2165490086E5A5 /* TonSendHandler.swift in Sources */,
 				11B35085F61E874613B2B882 /* CoinInvestorsViewModel.swift in Sources */,
 				6BCD53142A161F4800993F20 /* BackupViewModel.swift in Sources */,
 				11B35D7420EF4FB9C4DDF0B9 /* BrandFooterView.swift in Sources */,
@@ -11784,6 +11795,7 @@
 				11B3587D9E89A97F63CD0C5A /* EditPasscodeModule.swift in Sources */,
 				11B35E051C3D3534E88BEB3D /* CreatePasscodeModule.swift in Sources */,
 				11B351E088F87C02C870DDB8 /* SetPasscodeViewModel.swift in Sources */,
+				D08D16812C2164880086E5A5 /* TonPresendHandler.swift in Sources */,
 				11B358006AEB85BBE0BF47A7 /* EditPasscodeViewModel.swift in Sources */,
 				11B35C9570D3C283E9C943D5 /* CreatePasscodeViewModel.swift in Sources */,
 				11B356A5B50D4E6EF2282398 /* EditDuressPasscodeViewModel.swift in Sources */,
