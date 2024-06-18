@@ -11,6 +11,7 @@ enum SendData {
     case binance(token: Token, amount: Decimal, address: String, memo: String?)
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
     case tron(token: Token, contract: Contract)
+    case ton(amount: Decimal, address: String, memo: String?)
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider)
     case walletConnect(request: WalletConnectRequest)
 }
