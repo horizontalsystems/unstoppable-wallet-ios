@@ -1007,6 +1007,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.indicators.disclaimer" = "N'oubliez pas d'appliquer une gestion des risques, et notez que ceci n'est pas un conseil financier.";
 "coin_analytics.indicators.info.title" = "Indicateurs techniques";
 "coin_analytics.indicators.info.description" = "Nous utilisons la stratégie des Bandes de Bollinger + RSI pour déterminer les signaux de trading. Toutes les calculs sont basés sur des chandeliers quotidiens et fournissent des conseils pour un terme modérément long. L'essence de la stratégie est que le prix de l'actif doit atteindre un niveau extrême, en sortant du canal des Bandes de Bollinger, et le RSI doit être dans la zone de surachat/survente. Après que le prix revienne dans le canal, il y a une forte probabilité que le prix revienne vers les valeurs moyennes ou tente de casser le canal de l'autre côté. Notez que la stratégie peut donner plusieurs faux signaux lors de mouvements de marché forts avant qu'un signal correct n'apparaisse.\n\nVeuillez vous rappeler qu'il est très important d'appliquer une gestion des risques au trading et de couper les pertes si la situation du marché change!";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "Masquer les détails";
 "coin_analytics.indicators.show_details" = "Afficher les détails";
 "coin_analytics.indicators.summary" = "Résumé";
@@ -1026,7 +1027,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.period.1w" = "1 semaine";
 "coin_analytics.period.1m" = "1 mois";
 
-"coin_analytics.details" = "Détailles";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "Ce projet n'a pas de données d'analyse";
 
@@ -1658,6 +1659,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "chart.about.read_less" = "Moins d’infos";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1983,7 +1985,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "nft_asset.best_offer" = "Meilleure offre";
 "nft_asset.properties" = "Propriétés";
 "nft_asset.description" = "Libellé";
-"nft_asset.details" = "Détailles";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "Adresse du contrat";
 "nft_asset.details.token_id" = "Identifiant du token";
 "nft_asset.details.token_standard" = "Standard du token";

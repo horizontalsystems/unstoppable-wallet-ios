@@ -1007,6 +1007,7 @@
 "coin_analytics.indicators.disclaimer" = "请记住始终要进行风险管理，并注意这不是财务建议";
 "coin_analytics.indicators.info.title" = "技术指标";
 "coin_analytics.indicators.info.description" = "我们使用布林带 + RSI 策略来确定交易信号。所有计算都基于日线图，并为中长期提供建议。该策略的本质是资产价格应该达到一个极端点，突破布林带通道，并且 RSI 应该处于超买/超卖区域。在价格回到通道后，有很高的概率价格回归到平均值或尝试从另一侧突破通道。请注意，在正确信号出现之前，该策略在市场强劲波动期间可能会出现多个虚假信号。\n\n请记住，在交易中应用风险管理非常重要，如果市场情况发生变化，请记得及时止损！ ";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "隐藏细节";
 "coin_analytics.indicators.show_details" = "显示详细信息";
 "coin_analytics.indicators.summary" = "总结";
@@ -1026,7 +1027,7 @@
 "coin_analytics.period.1w" = "1周";
 "coin_analytics.period.1m" = "1 个月";
 
-"coin_analytics.details" = "详细信息";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "此项目没有分析数据";
 
@@ -1658,6 +1659,7 @@
 "chart.about.read_less" = "关闭";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1983,7 +1985,7 @@
 "nft_asset.best_offer" = "最佳报价";
 "nft_asset.properties" = "属性";
 "nft_asset.description" = "描述";
-"nft_asset.details" = "详细信息";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "智能合约地址";
 "nft_asset.details.token_id" = "代币 ID";
 "nft_asset.details.token_standard" = "代币标准";
