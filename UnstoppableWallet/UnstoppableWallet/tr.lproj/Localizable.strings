@@ -1007,6 +1007,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.indicators.disclaimer" = "Her zaman risk yönetimini uygulamayı unutmayın ve bu finansal tavsiye değildir.";
 "coin_analytics.indicators.info.title" = "Teknik Göstergeleri";
 "coin_analytics.indicators.info.description" = "Bollinger Bantları + RSI stratejisini kullanarak işlem sinyallerini belirliyoruz. Tüm hesaplamalar günlük mum grafiklerine dayanmakta ve ortalama uzun vadeli bir strateji için tavsiyeler sunmaktadır. Stratejinin özü, varlık fiyatının Bollinger Bantları kanalından çıkarak aşırı seviyelere ulaşması ve RSI'nin aşırı alım/aşırı satım bölgesinde olması gerektiğidir. Fiyat kanala geri döndükten sonra, fiyatın ortalama değerlere geri dönme veya kanalı diğer taraftan kırmaya yönelik yüksek bir olasılığı vardır. Stratejinin güçlü piyasa hareketleri sırasında birkaç yanlış sinyal verebileceğini unutmayın, doğru bir sinyal ortaya çıkmadan önce.\n\nLütfen ticarette risk yönetimini uygulamanın çok önemli olduğunu ve piyasa durumu değişirse kayıpları kesmeyi unutmayın! ";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "Detayları Gizle";
 "coin_analytics.indicators.show_details" = "Detayları Göster";
 "coin_analytics.indicators.summary" = "Kısa özet";
@@ -1026,7 +1027,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.period.1w" = "1 hafta";
 "coin_analytics.period.1m" = "1 ay";
 
-"coin_analytics.details" = "Ayrıntılar";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "This project has no analytical data";
 
@@ -1662,6 +1663,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "chart.about.read_less" = "Daha Az Oku";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1987,7 +1989,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "nft_asset.best_offer" = "En İyi Teklif";
 "nft_asset.properties" = "Özellikler";
 "nft_asset.description" = "Açıklama";
-"nft_asset.details" = "Ayrıntılar";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "Sözleşme Adresi";
 "nft_asset.details.token_id" = "Token Kimliği";
 "nft_asset.details.token_standard" = "Token Standardı";
