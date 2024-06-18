@@ -1009,6 +1009,7 @@
 "coin_analytics.indicators.disclaimer" = "Всегда помните о применении управления рисками, и обратите внимание, что это не финансовый совет.";
 "coin_analytics.indicators.info.title" = "Технические индикаторы";
 "coin_analytics.indicators.info.description" = "Мы используем стратегию Bollinger Bands + RSI для определения сигналов торговли. Все расчеты основаны на ежедневных свечах и предоставляют рекомендации на среднесрочный период. Суть стратегии заключается в том, что цена актива должна достичь экстремума, выбиваясь из канала Bollinger Bands, а RSI должен находиться в зоне перекупленности/перепроданности. После того как цена возвращается в канал, существует высокая вероятность того, что цена вернется к средним значениям или попытается пробить канал с другой стороны. Обратите внимание, что стратегия может давать несколько ложных сигналов во время сильных рыночных движений, прежде чем появится правильный сигнал.\n\nПожалуйста, помните, что очень важно применять управление рисками при торговле и помнить о сокращении убытков, если ситуация на рынке изменится!";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "Скрыть детали";
 "coin_analytics.indicators.show_details" = "Показать детали";
 "coin_analytics.indicators.summary" = "Общая оценка";
@@ -1028,7 +1029,7 @@
 "coin_analytics.period.1w" = "1 неделя";
 "coin_analytics.period.1m" = "1 месяц";
 
-"coin_analytics.details" = "Подробности";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "В этом проекте нет аналитических данных";
 
@@ -1660,6 +1661,7 @@
 "chart.about.read_less" = "Скрыть";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1986,7 +1988,7 @@
 "nft_asset.best_offer" = "Лучшее предложение";
 "nft_asset.properties" = "Параметры";
 "nft_asset.description" = "Описание";
-"nft_asset.details" = "Подробности";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "Адрес контракта";
 "nft_asset.details.token_id" = "ID токена";
 "nft_asset.details.token_standard" = "Стандарт Токена";
