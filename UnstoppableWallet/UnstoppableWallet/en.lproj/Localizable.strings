@@ -2160,3 +2160,14 @@
 "transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
 "transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
+
+// Purchases
+
+"purchases.title" = "Premium";
+"purchases.description" = "Select the feature package that best fits your needs";
+"purchases.trading" = "Trading";
+"purchases.trading.description" = "Advanced project metrics";
+"purchases.security" = "Security";
+"purchases.security.description" = "Advanced security features";
+"purchases.vip_support" = "VIP Support";
+"purchases.vip_support.description" = "Advanced personal support";

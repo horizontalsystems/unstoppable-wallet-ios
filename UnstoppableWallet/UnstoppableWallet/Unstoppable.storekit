@@ -1,0 +1,280 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "7B08124D",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "1447619907",
+    "_developerTeamID" : "HC4MCAXJ66",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 753621121.05078197,
+    "_locale" : "en_US",
+    "_storefront" : "KAZ",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21500856",
+      "localizations" : [
+
+      ],
+      "name" : "Security",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "9990.0",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6738338063",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Security for 1 month",
+              "displayName" : "Security - 1 Month",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "security_1m",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Security (1 Month)",
+          "subscriptionGroupID" : "21500856",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "59990.0",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6738338064",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Security for 1 year",
+              "displayName" : "Security - 1 Year",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "security_1y",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Security (1 Year)",
+          "subscriptionGroupID" : "21500856",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "id" : "21494007",
+      "localizations" : [
+
+      ],
+      "name" : "Trading",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4990.0",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6738337828",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Trading for 1 month",
+              "displayName" : "Trading - 1 Month",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Трейдинг на 1 месяц",
+              "displayName" : "Трейдинг - 1 месяц",
+              "locale" : "ru"
+            }
+          ],
+          "productID" : "trading_1m",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Trading (1 Month)",
+          "subscriptionGroupID" : "21494007",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "29990.0",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6738337938",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Trading for 1 year",
+              "displayName" : "Trading - 1 Year",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "trading_1y",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Trading (1 Year)",
+          "subscriptionGroupID" : "21494007",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "id" : "21501047",
+      "localizations" : [
+
+      ],
+      "name" : "VIP Support",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "14990.0",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6738338018",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "VIP Support for 1 month",
+              "displayName" : "VIP Support - 1 Month",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "vip_support_1m",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "VIP Support (1 Month)",
+          "subscriptionGroupID" : "21501047",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "99990.0",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6738338153",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "VIP Support for 1 year",
+              "displayName" : "VIP Support - 1 Year",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "vip_support_1y",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "VIP Support (1 Year)",
+          "subscriptionGroupID" : "21501047",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

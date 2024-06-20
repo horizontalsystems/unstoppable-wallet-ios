@@ -3095,6 +3095,12 @@
 		D3E1E86B2C1C3AD600E07052 /* CoinReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8692C1C3AD600E07052 /* CoinReportsViewModel.swift */; };
 		D3E1E86D2C1C40D800E07052 /* CoinInvestorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E86C2C1C40D800E07052 /* CoinInvestorsView.swift */; };
 		D3E1E86E2C1C40D800E07052 /* CoinInvestorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E86C2C1C40D800E07052 /* CoinInvestorsView.swift */; };
+		D3E1E8702C21851C00E07052 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E86F2C21851C00E07052 /* PurchaseManager.swift */; };
+		D3E1E8712C21851C00E07052 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E86F2C21851C00E07052 /* PurchaseManager.swift */; };
+		D3E1E8742C21859000E07052 /* PurchasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8732C21859000E07052 /* PurchasesView.swift */; };
+		D3E1E8752C21859000E07052 /* PurchasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8732C21859000E07052 /* PurchasesView.swift */; };
+		D3E1E8772C21859900E07052 /* PurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8762C21859900E07052 /* PurchasesViewModel.swift */; };
+		D3E1E8782C21859900E07052 /* PurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8762C21859900E07052 /* PurchasesViewModel.swift */; };
 		D3E323C82AE7B8E400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C72AE7B8E400F73914 /* KeychainAccess */; };
 		D3E323CA2AE7B8F400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C92AE7B8F400F73914 /* KeychainAccess */; };
 		D3F7D6412A94D53500477BB1 /* BaseTransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B106BD8E4DBD67B7700 /* BaseTransactionsService.swift */; };
@@ -4718,6 +4724,10 @@
 		D3E1E8662C1C3ACF00E07052 /* CoinReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinReportsView.swift; sourceTree = "<group>"; };
 		D3E1E8692C1C3AD600E07052 /* CoinReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinReportsViewModel.swift; sourceTree = "<group>"; };
 		D3E1E86C2C1C40D800E07052 /* CoinInvestorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinInvestorsView.swift; sourceTree = "<group>"; };
+		D3E1E86F2C21851C00E07052 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		D3E1E8732C21859000E07052 /* PurchasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesView.swift; sourceTree = "<group>"; };
+		D3E1E8762C21859900E07052 /* PurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesViewModel.swift; sourceTree = "<group>"; };
+		D3E1E8792C21869100E07052 /* Unstoppable.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Unstoppable.storekit; sourceTree = "<group>"; };
 		D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSendView.swift; sourceTree = "<group>"; };
 		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
 		D3F9B0302BE3B39D009FFA95 /* EvmDecoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmDecoration.swift; sourceTree = "<group>"; };
@@ -5408,6 +5418,7 @@
 				D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */,
 				D3384D502C0703B400515664 /* PriceChangeModeManager.swift */,
 				D34338E42C8703F6001FCAD2 /* TonKitManager.swift */,
+				D3E1E86F2C21851C00E07052 /* PurchaseManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -5462,6 +5473,7 @@
 			children = (
 				D3A12E982CC8C6CE008D5F99 /* Education */,
 				D362879D2CA2B32900ADAF3B /* TonConnect */,
+				D3E1E8722C21856000E07052 /* Purchases */,
 				D311DA1A2BCD28C10013DB8F /* SendNew */,
 				11B35344CEA8CF35257A6975 /* Launch */,
 				11B35597F6C8570E3C7ABFBF /* Main */,
@@ -8608,6 +8620,7 @@
 				50AB06B5215A269200A01E4A /* InfoPlist.strings */,
 				D3B62A9C20CA73A0005A9F80 /* Localizable.strings */,
 				11B351DF9138606BCB651646 /* BackCompatibility */,
+				D3E1E8792C21869100E07052 /* Unstoppable.storekit */,
 			);
 			path = UnstoppableWallet;
 			sourceTree = "<group>";
@@ -8781,6 +8794,15 @@
 				D3DB51AA2BD787A00091BBDB /* MarketCoinsViewModel.swift */,
 			);
 			path = Coins;
+			sourceTree = "<group>";
+		};
+		D3E1E8722C21856000E07052 /* Purchases */ = {
+			isa = PBXGroup;
+			children = (
+				D3E1E8732C21859000E07052 /* PurchasesView.swift */,
+				D3E1E8762C21859900E07052 /* PurchasesViewModel.swift */,
+			);
+			path = Purchases;
 			sourceTree = "<group>";
 		};
 		D3EE4A432C0EE43000E40C97 /* Fetchers */ = {
@@ -10368,6 +10390,7 @@
 				11B357F36D1D90B2C54999AE /* BottomGradientWrapper.swift in Sources */,
 				11B359425D03F504ECA51B1A /* BlockchainSettingsView.swift in Sources */,
 				11B35FFD159D864F6D914F08 /* AppearanceView.swift in Sources */,
+				D3E1E8712C21851C00E07052 /* PurchaseManager.swift in Sources */,
 				6BE8A07F2ADE2F950012DE7F /* CurrencyValue.swift in Sources */,
 				D3C598722C16CDB700789D69 /* CoinAnalyticsView.swift in Sources */,
 				11B350CA618DD7BBA452FC33 /* AppearanceViewModel.swift in Sources */,
@@ -10538,6 +10561,7 @@
 				D3384D0A2BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */,
 				11B3591E867F4E701F5458F9 /* TransactionFilterView.swift in Sources */,
 				11B352E8348A715EB537F643 /* TransactionFilterViewModel.swift in Sources */,
+				D3E1E8782C21859900E07052 /* PurchasesViewModel.swift in Sources */,
 				11B35AAD64D68265B2128C25 /* TransactionBlockchainSelectView.swift in Sources */,
 				11B35A4F4A98537CE99B5221 /* TransactionTokenSelectView.swift in Sources */,
 				11B35ACE7B126DCF9F7F1A19 /* SearchBar.swift in Sources */,
@@ -10649,6 +10673,7 @@
 				ABC9A835B49A7BF85F87454D /* AlertButtonTintColor.swift in Sources */,
 				ABC9A6E738C4A3556AD5E767 /* AlertView.swift in Sources */,
 				ABC9AE088EAF3654EBE2E822 /* ActionSheetModifier.swift in Sources */,
+				D3E1E8752C21859000E07052 /* PurchasesView.swift in Sources */,
 				ABC9A7908BE99782BFDC558E /* TransparentFullScreenCover.swift in Sources */,
 				11B3538BF3283868DD8D107F /* MultiSwapModule.swift in Sources */,
 				11B3568ED01B671E6C914EA5 /* StatExtensions.swift in Sources */,
@@ -11834,6 +11859,7 @@
 				11B35C88ACACE26AC40F35BA /* PrimaryButtonStyle.swift in Sources */,
 				11B35F3409AEFC534DC52137 /* View.swift in Sources */,
 				11B359EA8B77C68A8D9BA4CA /* BottomGradientWrapper.swift in Sources */,
+				D3E1E8702C21851C00E07052 /* PurchaseManager.swift in Sources */,
 				11B35B6E11AE440A79D53E0F /* BlockchainSettingsView.swift in Sources */,
 				D3C598712C16CDB700789D69 /* CoinAnalyticsView.swift in Sources */,
 				11B35245CD0D5B0E44E413F4 /* AppearanceView.swift in Sources */,
@@ -12004,6 +12030,7 @@
 				D3384D092BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */,
 				11B3565D4E4EAD663143ED9B /* BaseCurrencySettingsView.swift in Sources */,
 				11B353BAEF83867422611E7B /* TransactionFilterModule.swift in Sources */,
+				D3E1E8772C21859900E07052 /* PurchasesViewModel.swift in Sources */,
 				11B35B09AADB1FBF7DDE765C /* TransactionFilterView.swift in Sources */,
 				11B355A6A5AD88A48B9641CE /* TransactionFilterViewModel.swift in Sources */,
 				11B35E02FF7E8A48B9B69ABB /* TransactionBlockchainSelectView.swift in Sources */,
@@ -12115,6 +12142,7 @@
 				ABC9A190E478402B48410FCC /* AlertButtonTintColor.swift in Sources */,
 				ABC9AE136053B13AFDA1883E /* AlertView.swift in Sources */,
 				ABC9AAAFAC24894452DC5361 /* ActionSheetModifier.swift in Sources */,
+				D3E1E8742C21859000E07052 /* PurchasesView.swift in Sources */,
 				ABC9AF8603F37760F2D40A6E /* TransparentFullScreenCover.swift in Sources */,
 				11B3569338D57D5CCF55E28E /* MultiSwapModule.swift in Sources */,
 				11B359B8A2F9D6DDA45E0931 /* StatExtensions.swift in Sources */,
