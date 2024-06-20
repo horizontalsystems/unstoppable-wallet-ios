@@ -480,6 +480,23 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
+    private var premiumRows: [RowProtocol] {
+        [
+            tableView.universalRow48(
+                id: "premium",
+                image: .local(UIImage(named: "uwt_24")?.withTintColor(.themeJacob)),
+                title: .body("Premium"),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isFirst: true,
+                isLast: true,
+                action: { [weak self] in
+                    self?.present(PurchasesView().toViewController(), animated: true)
+                }
+            ),
+        ]
+    }
+
     private var tokenRows: [RowProtocol] {
         [
             tableView.universalRow48(
@@ -570,7 +587,7 @@ class MainSettingsViewController: ThemeViewController {
 extension MainSettingsViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "token", headerState: .margin(height: AppConfig.donateEnabled ? .margin32 : .margin12), rows: tokenRows),
+            Section(id: "token", headerState: .margin(height: .margin32), rows: tokenRows),
             Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), footerState: .margin(height: .margin24), rows: appearanceRows),
             Section(
@@ -591,8 +608,10 @@ extension MainSettingsViewController: SectionsDataSource {
         ]
 
         if AppConfig.donateEnabled {
-            sections.insert(Section(id: "donate", headerState: .margin(height: .margin12), rows: donateRows), at: 0)
+            sections.insert(Section(id: "donate", headerState: .margin(height: .margin32), rows: donateRows), at: 0)
         }
+
+        sections.insert(Section(id: "premium", headerState: .margin(height: .margin12), rows: premiumRows), at: 0)
 
         if showTestNetSwitcher {
             sections.append(

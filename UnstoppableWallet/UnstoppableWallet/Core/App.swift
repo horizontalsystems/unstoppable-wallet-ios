@@ -101,6 +101,8 @@ class App {
 
     let tonConnectManager: TonConnectManager
 
+    let purchaseManager: PurchaseManager
+
     let kitCleaner: KitCleaner
     let appManager: AppManager
 
@@ -316,6 +318,8 @@ class App {
 
         let tonConnectStorage = try TonConnectStorage(dbPool: dbPool)
         tonConnectManager = TonConnectManager(storage: tonConnectStorage, accountManager: accountManager)
+
+        purchaseManager = PurchaseManager()
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 

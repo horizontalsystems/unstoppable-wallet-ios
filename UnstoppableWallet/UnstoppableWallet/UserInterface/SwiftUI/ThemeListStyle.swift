@@ -6,6 +6,7 @@ enum ThemeListStyle {
     case borderedLawrence
     case transparent
     case transparentInline
+    case blur
 }
 
 struct ThemeListStyleModifier: ViewModifier {
@@ -34,6 +35,10 @@ struct ThemeListStyleModifier: ViewModifier {
                 .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(selected ? Color.themeJacob : Color.themeSteel20, lineWidth: .heightOneDp))
         case .transparent, .transparentInline:
             content
+        case .blur:
+            content
+                .background(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).fill(.ultraThinMaterial))
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         }
     }
 }
@@ -47,6 +52,7 @@ struct ThemeListStyleButtonModifier: ViewModifier {
         case .lawrence, .borderedLawrence: content.background(isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
         case .bordered: content.background(isPressed ? Color.themeLawrencePressed : Color.clear)
         case .transparent, .transparentInline: content.background(isPressed ? Color.themeLawrencePressed : Color.themeTyler)
+        case .blur: content
         }
     }
 }
