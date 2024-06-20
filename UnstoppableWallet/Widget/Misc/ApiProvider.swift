@@ -24,7 +24,7 @@ class ApiProvider {
     func topCoins(limit: Int) async throws -> [Coin] {
         let parameters: Parameters = [
             "limit": limit,
-            "fields": "uid,name,code",
+            "fields": "uid,name,code,image",
             "order_by_rank": "true",
         ]
 
@@ -48,7 +48,7 @@ class ApiProvider {
     func coinWithPrice(uid: String, currencyCode: String) async throws -> Coin {
         let parameters: Parameters = [
             "uids": uid,
-            "fields": "uid,name,code,price,price_change_24h,price_change_1d",
+            "fields": "uid,name,code,price,price_change_24h,price_change_1d,image",
             "currency": currencyCode.lowercased(),
         ]
 
@@ -102,6 +102,7 @@ struct Coin: ImmutableMappable {
     let priceChange1w: Decimal?
     let priceChange1m: Decimal?
     let priceChange3m: Decimal?
+    let imageUrl: String?
 
     init(map: Map) throws {
         uid = try map.value("uid")
@@ -115,6 +116,7 @@ struct Coin: ImmutableMappable {
         priceChange1w = try? map.value("price_change_1w", using: Transform.stringToDecimalTransform)
         priceChange1m = try? map.value("price_change_1m", using: Transform.stringToDecimalTransform)
         priceChange3m = try? map.value("price_change_3m", using: Transform.stringToDecimalTransform)
+        imageUrl = try? map.value("image")
     }
 }
 
