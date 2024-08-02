@@ -104,8 +104,8 @@
 
 "selector.any" = "Любое";
 
-"face_id" = "Face ID";
-"touch_id" = "Touch ID";
+"face_id" = "Идентификатор лица";
+"touch_id" = "Идентификация по отпечатку пальца";
 
 "auto_lock.immediate" = "Немедленно";
 "auto_lock.minute1" = "1 минута";
@@ -193,7 +193,7 @@
 "coin_settings.title" = "Настройки блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендованный)";
-"sync_mode.hybrid" = "Hybrid";
+"sync_mode.hybrid" = "Гибрид";
 "sync_mode.from_blockchain" = "Из блокчейна";
 "blockchain_settings.description" = "Выберите формат адреса для получения средств. Правильный формат должен быть выбран при восстановлении существующего кошелька.";
 
@@ -224,12 +224,12 @@
 
 // Extended Key
 
-"extended_key.bip32_root_key" = "BIP32 Root Key";
-"extended_key.account_extended_private_key" = "Account Extended Private Key";
-"extended_key.account_extended_public_key" = "Account Extended Public Key";
-"extended_key.purpose" = "Purpose";
+"extended_key.bip32_root_key" = "BIP32 Root ключ";
+"extended_key.account_extended_private_key" = "Расширенный приватный ключ аккаунта";
+"extended_key.account_extended_public_key" = "Расширенный публичный ключ аккаунта";
+"extended_key.purpose" = "Цель";
 "extended_key.blockchain" = "Блокчейн";
-"extended_key.account" = "Account";
+"extended_key.account" = "Аккаунт";
 "extended_key.account.description" = "Это настройка для опытных пользователей. Если вы пытаетесь импортировать кошелек (через расширенный приватный ключ) или список транзакций (через расширенный публичный ключ), вам нужен аккаунт 0.";
 "extended_key.tap_to_show" = "Нажмите, чтобы показать extended private key";
 
@@ -380,7 +380,7 @@
 "deposit.address_network" = "Сеть";
 "deposit.qr_code_description" = "Ваш адрес для депозита %@";
 "deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
-"deposit.account" = "Account";
+"deposit.account" = "Аккаунт";
 
 "deposit.amount" = "Сумма";
 "deposit.set_amount" = "Установить сумму";
@@ -460,7 +460,7 @@
 "send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
-"send.confirmation.account" = "Account";
+"send.confirmation.account" = "Аккаунт";
 "send.confirmation.memo" = "Мемо";
 "send.confirmation.memo_placeholder" = "Мемо";
 "send.confirmation.total" = "Итого";
@@ -1327,7 +1327,7 @@
 
 // Settings -> Personal Support
 
-"settings.personal_support.telegram_username.title" = "Account";
+"settings.personal_support.telegram_username.title" = "Аккаунт";
 "settings.personal_support.telegram_username.placeholder" = "@username!";
 "settings.personal_support.description" = "Введите имя аккаунта Telegram, чтобы открыть личный чат поддержки, и мы отправим вам сообщение.";
 "settings.personal_support.request" = "Запрос";
@@ -1842,7 +1842,7 @@
 "public_keys.title" = "Публичные ключи";
 "public_keys.evm_address" = "EVM адрес";
 "public_keys.evm_address.description" = "Позволяет отслеживать кошельки с активами на Ethereum, Binance Smart Chain и других блокчейнах на базе EVM, только для чтения.";
-"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key" = "Расширенный публичный ключ аккаунта";
 "public_keys.account_extended_public_key.description" = "Позволяет осуществлять мониторинг кошельков, содержащих Bitcoin и другие криптовалюты на основе UTXO (например, Litecoin, Bitcoin Cash, Dash и т.д.), только для чтения.";
 
 // Manage Account -> Private Keys
@@ -1850,9 +1850,9 @@
 "private_keys.title" = "Приватные ключи";
 "private_keys.evm_private_key" = "Приватный ключ EVM";
 "private_keys.evm_private_key.description" = "Предоставляет полный контроль над криптовалютами на базе EVM, т.е. Ethereum, Binance Smart Chain и т.д. в пределах соответствующего кошелька.";
-"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key" = "BIP32 Root ключ";
 "private_keys.bip32_root_key.description" = "Предоставляет полный контроль над активами на соответствующем кошельке.";
-"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key" = "Расширенный приватный ключ аккаунта";
 "private_keys.account_extended_private_key.description" = "Предоставляет полный контроль над Bitcoin и другими криптовалютами на базе UTXO, такими как Litecoin, Bitcoin Cash, Dash и т.д. в пределах соответствующего кошелька.";
 
 // Manage Account -> EVM Address
