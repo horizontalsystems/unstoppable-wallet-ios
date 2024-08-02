@@ -347,12 +347,12 @@
 "balance.token.processing" = "В процессе";
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
-"balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Frozen title";
-"balance.token.frozen.info.description" = "Frozen Description Text";
+"balance.token.staked" = "Передано на стейкинг";
+"balance.token.staked.info.title" = "Передано на стейкинг название";
+"balance.token.staked.info.description" = "Передано на стейкинг Текст описания";
+"balance.token.frozen" = "Заморожено";
+"balance.token.frozen.info.title" = "Заморожено название";
+"balance.token.frozen.info.description" = "Заморожено Текст описания";
 "balance.token.account.inactive.title" = "Аккаунт не активен";
 "balance.token.account.inactive.description" = "Новым кошелькам TRON требуется депозит как минимум 1 TRX для активации. Неактивные кошельки могут принимать и хранить токены, но не будут корректировать балансы до момента активации.";
 
@@ -445,9 +445,9 @@
 "send.fee_info.description" = "Блокчейны требуют от пользователей уплачивать сетевые комиссии при отправке транзакций. Комиссии выше, когда в сети происходит больше транзакций.\n\nКошелек %@ оценивает комиссию на основе текущей активности блокчейна и рекомендует оптимальное значение, чтобы транзакция была обработана в разумное время.\n\nРекомендуемая ставка комиссии показана как количество сатоши, которое пользователь должен заплатить за один байт транзакции. Таким образом, общая комиссия зависит от общего размера транзакции, который измеряется в байтах.\n\nПользователи могут использовать предоставленные элементы управления для увеличения или уменьшения значения ставки комиссии. Изменение ставки комиссии влияет на общую комиссию за транзакцию, которую пользователь заплатит.\n\nУстановка ставки комиссии ниже рекомендуемого значения может привести к тому, что транзакция будет ожидать обработки в течение часов или будет отклонена. Чем ниже значение, тем дольше будет проходить подтверждение транзакции. Для транзакций, где важен приоритет, рекомендуется установить более высокую ставку комиссии.";
 "send.transaction_inputs_outputs_info.title" = "Вводы / выводы транзакций";
 "send.transaction_inputs_outputs_info.description" = "Большинство транзакций Bitcoin, а также транзакций в подобных криптовалютах, включая Bitcoin Cash, Dash и Litecoin, создают два выхода. Один выход - это сумма, которая идет получателю, а другой - это выход сдачи, который возвращается отправителю. Способ, которым большинство кошельков строят транзакции, делает легким понимание третьей стороной, какой из выходов отправляется получателю, а какой - сдача, возвращаемая отправителю. Поскольку выход, возвращаемый отправителю, затем используется в будущих транзакциях, становится явным соединение между этими двумя транзакциями.\n\nКошелек %@ реализует меры для усиления защиты от попыток установить, какой выход идет куда.\n\nДля пользователей %@ доступны два варианта:";
-"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Перемешать";
 "send.transaction_inputs_outputs_info.shuffle.description" = "Порядок выхода транзакций меняется случайным образом в каждой транзакции. Иногда изменение может быть первым выводом, иногда - вторым. Если пользователь доверяет разработчику приложения, то рекомендуем использовать этот вариант.";
-"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Детерминированный";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Существует широко признанный стандарт для упорядочивания выходов транзакции, известный как BIP69. В открытых кошельках этот стандарт обеспечивает, чтобы пользователи кошелька не должны были полагаться на то, как разработчики приложения реализуют упорядочивание выходов. Поскольку этот стандарт относительно новый, не многие кошельки его уже реализовали. В результате, на блокчейне в некоторых случаях можно узнать, отправлена ли транзакция из кошелька, который использует этот стандарт или нет.";
 "send.select_all" = "Выбрать все";
 "send.unselect_all" = "Снять выделение";
@@ -719,8 +719,8 @@
 "market.sort_by.manual" = "Вручную";
 "market.sort_by.highest_cap" = "Наивысшей кап.";
 "market.sort_by.lowest_cap" = "Наименьшей кап.";
-"market.sort_by.gainers" = "Gainers";
-"market.sort_by.losers" = "Losers";
+"market.sort_by.gainers" = "Лидеры";
+"market.sort_by.losers" = "Аутсайдеры";
 "market.sort_by.highest_volume" = "Наивысшему обьему";
 "market.sort_by.lowest_volume" = "Наименьшему объему";
 
@@ -1009,7 +1009,7 @@
 "coin_analytics.indicators.disclaimer" = "Всегда помните о применении управления рисками, и обратите внимание, что это не финансовый совет.";
 "coin_analytics.indicators.info.title" = "Технические индикаторы";
 "coin_analytics.indicators.info.description" = "Мы используем стратегию Bollinger Bands + RSI для определения сигналов торговли. Все расчеты основаны на ежедневных свечах и предоставляют рекомендации на среднесрочный период. Суть стратегии заключается в том, что цена актива должна достичь экстремума, выбиваясь из канала Bollinger Bands, а RSI должен находиться в зоне перекупленности/перепроданности. После того как цена возвращается в канал, существует высокая вероятность того, что цена вернется к средним значениям или попытается пробить канал с другой стороны. Обратите внимание, что стратегия может давать несколько ложных сигналов во время сильных рыночных движений, прежде чем появится правильный сигнал.\n\nПожалуйста, помните, что очень важно применять управление рисками при торговле и помнить о сокращении убытков, если ситуация на рынке изменится!";
-"coin_analytics.indicators.details" = "Details";
+"coin_analytics.indicators.details" = "Подробности";
 "coin_analytics.indicators.hide_details" = "Скрыть детали";
 "coin_analytics.indicators.show_details" = "Показать детали";
 "coin_analytics.indicators.summary" = "Общая оценка";
@@ -1029,7 +1029,7 @@
 "coin_analytics.period.1w" = "1 неделя";
 "coin_analytics.period.1m" = "1 месяц";
 
-"coin_analytics.details" = "Details";
+"coin_analytics.details" = "Подробности";
 
 "coin_analytics.not_available" = "В этом проекте нет аналитических данных";
 
@@ -1128,7 +1128,7 @@
 "coin_analytics.funding" = "Финансирование";
 "coin_analytics.funding.lead" = "Лид";
 
-"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries" = "Казначейство";
 "coin_analytics.treasuries.filters" = "Фильтры";
 "coin_analytics.treasuries.filter.all" = "Все";
 "coin_analytics.treasuries.filter.public" = "Публичный";
@@ -1305,7 +1305,7 @@
 "settings.rate_us" = "Оцените нас";
 "settings.tell_friends" = "Расскажите друзьям";
 "settings.contact_us" = "Свяжитесь с нами";
-"settings.social_networks.label" = "Be Unstoppable";
+"settings.social_networks.label" = "Будьте неудержимы";
 "settings.social_networks.footer" = "Изучайте и осваивайте криптовалюты с помощью эксклюзивных видео. Узнавайте о нас неформально. Будьте первыми, кто увидит то, над чем мы работаем.";
 
 // Settings -> Base Currency
@@ -1351,7 +1351,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Unstoppable";
+"settings_tell_friends.text" = "Будьте неудержимы";
 
 // Settings -> Blockchain Settings
 
@@ -1494,9 +1494,9 @@
 "btc_restore_mode.hybrid" = "Медленно, не приватно";
 "btc_restore_mode.blockchain" = "Медленно, приватно";
 
-"btc_transaction_sort_mode.shuffle" = "Shuffle";
+"btc_transaction_sort_mode.shuffle" = "Перемешать";
 "btc_transaction_sort_mode.shuffle.description" = "Случайное индексирование";
-"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
+"btc_transaction_sort_mode.bip69" = "Детерминированный Bip69";
 "btc_transaction_sort_mode.bip69.description" = "Лексикографическая индексация";
 
 "blockchain_settings.info.restore_source" = "Источник восстановления";
@@ -1660,7 +1660,7 @@
 "chart.about.read_more" = "Читать далее";
 "chart.about.read_less" = "Скрыть";
 
-"coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments" = "Доходность";
 "coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
@@ -1918,7 +1918,7 @@
 "fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
 "fee_settings.l1_fee" = "L1 комиссия";
 "fee_settings.l1_fee.info" = "Оценочная стоимость отправки указанной транзакции по сети уровня 1.";
-"fee_settings.gas_limit" = "Gas Limit";
+"fee_settings.gas_limit" = "Лимит газа";
 "fee_settings.gas_limit.info" = "Единица сложности транзакций - газ, она варьирует в зависимости от выполняемого смарт-контракта. Лимит газа - это предполагаемый максимальный размер газа, необходимый для выполнения смарт-контракта. Обычно используется меньшее количество газа.";
 
 "fee_settings.gas_price" = "Gas Price";
@@ -1988,7 +1988,7 @@
 "nft_asset.best_offer" = "Лучшее предложение";
 "nft_asset.properties" = "Параметры";
 "nft_asset.description" = "Описание";
-"nft_asset.details" = "Details";
+"nft_asset.details" = "Подробности";
 "nft_asset.details.contract_address" = "Адрес контракта";
 "nft_asset.details.token_id" = "ID токена";
 "nft_asset.details.token_standard" = "Стандарт Токена";
