@@ -129,6 +129,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "OneInchCommissionAddress") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    static var referralAppServerUrl: String {
+        (Bundle.main.object(forInfoDictionaryKey: "ReferralAppServerUrl") as? String) ?? ""
+    }
+
     static var defaultWords: String {
         Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String ?? ""
     }

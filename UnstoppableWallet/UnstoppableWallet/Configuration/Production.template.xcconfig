@@ -21,3 +21,4 @@ one_inch_commission =
 one_inch_commission_address =
 swap_enabled = true
 donate_enabled = true
+referral_app_server_url =

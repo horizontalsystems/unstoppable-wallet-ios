@@ -12,7 +12,7 @@ enum LaunchModule {
         switch service.launchMode {
         case .passcodeNotSet: return NoPasscodeViewController(mode: .noPasscode)
         case .cannotCheckPasscode: return NoPasscodeViewController(mode: .cannotCheckPasscode)
-        case .intro: return WelcomeScreenViewController()
+        case .intro: return WelcomeScreenViewController.instance()
         case .unlock: return UnlockModule.appUnlockView(appStart: true).toViewController()
         case .main: return MainModule.instance()
         }

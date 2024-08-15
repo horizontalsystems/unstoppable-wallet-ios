@@ -2,13 +2,13 @@ import SwiftUI
 
 extension Coin {
     var image: Image? {
-        let iconUrl = "https://cdn.blocksdecoded.com/coin-icons/32px/\(uid)@3x.png"
-
-        guard let url = URL(string: iconUrl) else { return nil }
-        guard let data = try? Data(contentsOf: url) else { return nil }
-        guard let uiImage = UIImage(data: data) else { return nil }
-
-        return Image(uiImage: uiImage)
+        do {
+            let iconUrl = "https://cdn.blocksdecoded.com/coin-icons/32px/\(uid)@3x.png"
+            return try image(url: iconUrl)
+        } catch {
+            guard let alternativeUrl = imageUrl else { return nil }
+            return try? image(url: alternativeUrl)
+        }
     }
 
     func formattedPrice(currency: Currency) -> String {
@@ -25,6 +25,14 @@ extension Coin {
         }
 
         return priceChange >= 0 ? .up : .down
+    }
+
+    private func image(url: String) throws -> Image? {
+        guard let url = URL(string: url) else { return nil }
+        let data = try Data(contentsOf: url)
+
+        guard let uiImage = UIImage(data: data) else { return nil }
+        return Image(uiImage: uiImage)
     }
 
     private func priceChange(timePeriod: WatchlistTimePeriod) -> Decimal? {

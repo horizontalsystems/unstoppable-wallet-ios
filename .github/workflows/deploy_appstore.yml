@@ -11,10 +11,10 @@ jobs:
     runs-on: macos-14
 
     steps:
-      - name: Setup Xcode to 15.3
+      - name: Setup Xcode to 15.2
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15.3'
+          xcode-version: '15.2'
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -70,3 +70,4 @@ jobs:
           XCCONFIG_PROD_ONE_INCH_API_KEY: ${{ secrets.XCCONFIG_PROD_ONE_INCH_API_KEY }}
           XCCONFIG_PROD_ONE_INCH_COMMISSION: ${{ secrets.XCCONFIG_PROD_ONE_INCH_COMMISSION }}
           XCCONFIG_PROD_ONE_INCH_COMMISSION_ADDRESS: ${{ secrets.XCCONFIG_PROD_ONE_INCH_COMMISSION_ADDRESS }}
+          XCCONFIG_PROD_REFERRAL_APP_SERVER_URL: ${{ secrets.XCCONFIG_PROD_REFERRAL_APP_SERVER_URL }}

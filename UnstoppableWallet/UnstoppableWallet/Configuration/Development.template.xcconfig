@@ -23,3 +23,4 @@ swap_enabled = true
 donate_enabled = true
 
 default_words =
+referral_app_server_url =

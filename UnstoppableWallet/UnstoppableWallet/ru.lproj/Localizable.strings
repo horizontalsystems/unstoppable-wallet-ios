@@ -327,9 +327,9 @@
 "balance.synced_through" = "до %@";
 "balance.invalid_api_key" = "Недействительный ключ API";
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
-"balance.sort.header" = "Сортировать";
-"balance.sort.valueHighToLow" = "Баланс";
-"balance.sort.az" = "Название";
+"balance.sort.header" = "Сортировка";
+"balance.sort.valueHighToLow" = "по балансу";
+"balance.sort.az" = "по названию";
 "balance.sort.price_change" = "по изменению цены (%)";
 
 "balance_error.change_source" = "Изменить источник";
@@ -715,14 +715,14 @@
 "market.tab.pairs" = "Пары";
 "market.tab.sectors" = "Секторы";
 
-"market.sort_by.title" = "Сортировать";
+"market.sort_by.title" = "Сортировка";
 "market.sort_by.manual" = "Вручную";
-"market.sort_by.highest_cap" = "Наивысшей кап.";
-"market.sort_by.lowest_cap" = "Наименьшей кап.";
-"market.sort_by.gainers" = "Gainers";
-"market.sort_by.losers" = "Losers";
-"market.sort_by.highest_volume" = "Наивысшему обьему";
-"market.sort_by.lowest_volume" = "Наименьшему объему";
+"market.sort_by.highest_cap" = "Наивысшая кап.";
+"market.sort_by.lowest_cap" = "Наименьшая кап.";
+"market.sort_by.gainers" = "Показывают рост";
+"market.sort_by.losers" = "Теряют в цене";
+"market.sort_by.highest_volume" = "Наивысший обьем";
+"market.sort_by.lowest_volume" = "Наименьший объем";
 
 "market.top_coins.title" = "Монеты";
 "market.top_coins" = "Топ %@";
@@ -771,10 +771,10 @@
 "market.top.title" = "Лучшие токены";
 "market.top.description" = "Топ токенов по рыночной капитализации";
 
-"market.top.highest_cap" = "Наивысшей кап.";
-"market.top.lowest_cap" = "Наименьшей кап.";
-"market.top.highest_volume" = "Наивысшему обьему";
-"market.top.lowest_volume" = "Наименьшему объему";
+"market.top.highest_cap" = "Наивысшая кап.";
+"market.top.lowest_cap" = "Наименьшая кап.";
+"market.top.highest_volume" = "Наивысший обьем";
+"market.top.lowest_volume" = "Наименьший объем";
 "market.top.top_gainers" = "Показывают рост";
 "market.top.top_losers" = "Теряют в цене";
 "market.top.top_collections" = "Топ NFT коллекции";
@@ -901,7 +901,7 @@
 
 "market.etf.title" = "Общий чистый приток";
 "market.etf.description" = "Чистый приток (net inflow) ETF равен разнице между поступлениями и оттоками наличных средств.";
-"market.etf.total_net_assets" = "Всего чистых активов";
+"market.etf.total_net_assets" = "Общие активы";
 "market.etf.sort_by.highest_assets" = "Наивысшие активы";
 "market.etf.sort_by.lowest_assets" = "Наименьшие активы";
 "market.etf.sort_by.inflow" = "Приток";
@@ -1552,7 +1552,7 @@
 
 "appearance.markets_tab" = "Вкладка рынки";
 "appearance.hide_markets" = "Скрыть рынки";
-"appearance.price_change" = "по изменению цены (%)";
+"appearance.price_change" = "Изменение цены";
 "appearance.price_change.24h" = "24ч";
 "appearance.price_change.1d" = "Полночь по UTC";
 

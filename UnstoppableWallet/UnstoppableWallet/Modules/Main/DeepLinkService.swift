@@ -15,6 +15,6 @@ class DeepLinkService {
     }
 
     func setDeepLinkShown() {
-        deepLink = nil
+        deepLinkManager.setDeepLinkShown()
     }
 }

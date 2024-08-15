@@ -4,6 +4,7 @@ import ThemeKit
 import UIKit
 
 class WelcomeScreenViewController: ThemeViewController {
+    private let viewModel: WelcomeScreenViewModel
     private let scrollView = UIScrollView()
     private var textViews = [WelcomeTextView]()
     private let pageControl: BarPageControl
@@ -19,7 +20,8 @@ class WelcomeScreenViewController: ThemeViewController {
         Slide(title: "intro.stay_private.title".localized, description: "intro.stay_private.description".localized, image: "Intro - Stay Private"),
     ]
 
-    override init() {
+    init(viewModel: WelcomeScreenViewModel) {
+        self.viewModel = viewModel
         pageControl = BarPageControl(barCount: slides.count)
 
         super.init()
@@ -191,6 +193,12 @@ class WelcomeScreenViewController: ThemeViewController {
         logoTitleLabel.font = .title2
         logoTitleLabel.textColor = .themeLeah
         logoTitleLabel.text = AppConfig.appName
+
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+
+    @objc func appDidBecomeActive() {
+        viewModel.handleDeepLink()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -205,6 +213,7 @@ class WelcomeScreenViewController: ThemeViewController {
                 self?.logoWrapperView.removeFromSuperview()
             })
         })
+        viewModel.handleDeepLink()
     }
 
     @objc private func onTapStart() {
@@ -242,6 +251,21 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
                 textViews[i].alpha = 0
             }
         }
+    }
+}
+
+extension WelcomeScreenViewController {
+    static func instance() -> UIViewController {
+        let eventHandler = EventHandler()
+        let deepLinkService = DeepLinkService(deepLinkManager: App.shared.deepLinkManager)
+        let viewModel = WelcomeScreenViewModel(deepLinkService: deepLinkService, eventHandler: eventHandler)
+
+        let viewController = WelcomeScreenViewController(viewModel: viewModel)
+        let telegramUserHandler = TelegramUserHandler.handler(parentViewController: viewController)
+
+        eventHandler.append(handler: telegramUserHandler)
+
+        return viewController
     }
 }
 
