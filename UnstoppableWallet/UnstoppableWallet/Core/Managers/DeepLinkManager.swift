@@ -1,3 +1,4 @@
+import BigInt
 import ComponentKit
 import Foundation
 import RxRelay
@@ -37,6 +38,7 @@ extension DeepLinkManager {
             do {
                 let address = try parser.parse(url: url.absoluteString)
                 newSchemeRelay.accept(.transfer(addressUri: address))
+                return true
             } catch {
                 HudHelper.instance.show(banner: .error(string: error.localizedDescription))
             }
@@ -49,7 +51,23 @@ extension DeepLinkManager {
             return true
         }
 
+        if (scheme == DeepLinkManager.deepLinkScheme && host == "referral") || (scheme == "https" && host == DeepLinkManager.deepLinkScheme && path == "/referral") {
+            guard let queryItems, queryItems.count == 2,
+                  let userId = queryItems[0].value,
+                  let referralCode = queryItems[1].value
+            else {
+                return false
+            }
+
+            newSchemeRelay.accept(.referral(telegramUserId: userId, referralCode: referralCode))
+            return true
+        }
+
         return false
+    }
+
+    func setDeepLinkShown() {
+        newSchemeRelay.accept(nil)
     }
 }
 
@@ -58,5 +76,6 @@ extension DeepLinkManager {
         case walletConnect(url: String)
         case coin(uid: String)
         case transfer(addressUri: AddressUri)
+        case referral(telegramUserId: String, referralCode: String)
     }
 }

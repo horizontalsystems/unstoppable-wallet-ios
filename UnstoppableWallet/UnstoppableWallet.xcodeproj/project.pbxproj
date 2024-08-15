@@ -2680,6 +2680,10 @@
 		D061A5332AA846FA009AAD57 /* SecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */; };
 		D06669022A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
+		D066A45C2C6CB2E100074E35 /* TelegramUserHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */; };
+		D066A45D2C6CB2E100074E35 /* TelegramUserHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */; };
+		D066A45F2C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */; };
+		D066A4602C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */; };
 		D06A171B2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06A171C2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06B302C2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
@@ -4607,6 +4611,8 @@
 		D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTronTokenBlockchainService.swift; sourceTree = "<group>"; };
 		D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsView.swift; sourceTree = "<group>"; };
 		D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronRecipientAddressViewModel.swift; sourceTree = "<group>"; };
+		D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelegramUserHandler.swift; sourceTree = "<group>"; };
+		D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewModel.swift; sourceTree = "<group>"; };
 		D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSettingsViewHelper.swift; sourceTree = "<group>"; };
 		D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsViewModel.swift; sourceTree = "<group>"; };
 		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
@@ -7069,6 +7075,7 @@
 			children = (
 				3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */,
 				11B35A05B93CB243B6404C4A /* WelcomeTextView.swift */,
+				D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -7432,6 +7439,7 @@
 				6B29071C2AF0CB8A006157D6 /* WidgetCoinAppShowWorker */,
 				6B29071E2AF0CB8A006157D6 /* EventHandler.swift */,
 				ABC9A72A3AB621DE379754C8 /* SendAppShowWorker */,
+				D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -9786,6 +9794,7 @@
 				11B355E3AC79508BEDA18CAE /* BirthdayInputViewController.swift in Sources */,
 				1A5643BCDAD7CB0230CBB513 /* GradientClippingView.swift in Sources */,
 				11B3558898EE33B8D6E571CE /* MnemonicPhraseCell.swift in Sources */,
+				D066A4602C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */,
 				11B35A33CB6CA5C4A25ECFC9 /* MnemonicWordCell.swift in Sources */,
 				1A564B1D457A23C7732B76DF /* ReleaseNotesService.swift in Sources */,
 				1A5642F3BA1892109A596B61 /* MarkdownContentProvider.swift in Sources */,
@@ -10202,6 +10211,7 @@
 				11B35DBD3329CD28158E4D6A /* NftHeaderViewModel.swift in Sources */,
 				11B35B36FB559CDEB1B496EC /* NftHeaderView.swift in Sources */,
 				11B358F2CD17616038016E59 /* NftRecord.swift in Sources */,
+				D066A45D2C6CB2E100074E35 /* TelegramUserHandler.swift in Sources */,
 				11B35480CA91E0A62617B83A /* EvmNftRecord.swift in Sources */,
 				11B35D3102B803096B6EE5B6 /* NftMetadataManager.swift in Sources */,
 				11B35E34B9E95819B9EA1764 /* OpenSeaNftProvider.swift in Sources */,
@@ -11276,6 +11286,7 @@
 				11B3553ED96875D0B6E5B5C4 /* BirthdayInputViewController.swift in Sources */,
 				1A564A2FCE3C764029FECB7B /* GradientClippingView.swift in Sources */,
 				11B35E67CDA98E004C9C2011 /* MnemonicPhraseCell.swift in Sources */,
+				D066A45F2C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */,
 				11B35C22A15045197D511BB2 /* MnemonicWordCell.swift in Sources */,
 				1A564C10B9782D53375736C8 /* ReleaseNotesService.swift in Sources */,
 				1A56451ADE50B86E21814347 /* MarkdownContentProvider.swift in Sources */,
@@ -11692,6 +11703,7 @@
 				11B353A07F9259765D90F3BA /* NftService.swift in Sources */,
 				11B35D6C50BA6E928A54EDAC /* NftModule.swift in Sources */,
 				11B356D6A39A05C101B0CB9D /* NftViewModel.swift in Sources */,
+				D066A45C2C6CB2E100074E35 /* TelegramUserHandler.swift in Sources */,
 				11B35AF308141DC4CFA45918 /* NftHeaderViewModel.swift in Sources */,
 				11B351F991634E3E6A0846EF /* NftHeaderView.swift in Sources */,
 				11B35F2F1770FB757E6FDCD8 /* NftRecord.swift in Sources */,

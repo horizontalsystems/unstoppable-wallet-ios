@@ -50,9 +50,11 @@ enum MainModule {
         let deepLinkHandler = WalletConnectAppShowModule.handler(parentViewController: viewController)
         let widgetCoinHandler = WidgetCoinAppShowModule.handler(parentViewController: viewController)
         let sendAddressHandler = AddressAppShowModule.handler(parentViewController: viewController)
+        let telegramUserHandler = TelegramUserHandler.handler(parentViewController: viewController)
         eventHandler.append(handler: deepLinkHandler)
         eventHandler.append(handler: widgetCoinHandler)
         eventHandler.append(handler: sendAddressHandler)
+        eventHandler.append(handler: telegramUserHandler)
 
         App.shared.lockDelegate.viewController = viewController
 

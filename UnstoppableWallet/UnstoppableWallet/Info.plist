@@ -164,5 +164,7 @@
 	<string>${unstoppable_domains_api_key}</string>
 	<key>WallectConnectV2ProjectKey</key>
 	<string>${wallet_connect_v2_project_key}</string>
+	<key>ReferralAppServerUrl</key>
+	<string>${referral_app_server_url}</string>
 </dict>
 </plist>
