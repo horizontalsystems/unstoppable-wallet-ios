@@ -1006,6 +1006,7 @@
 "coin_analytics.indicators.disclaimer" = "언제나 위험 관리를 적용하는 것을 기억하세요. 이것은 금융 조언이 아님을 유의하세요.";
 "coin_analytics.indicators.info.title" = "기술적 지표";
 "coin_analytics.indicators.info.description" = "우리는 볼린저 밴드 + RSI 전략을 사용하여 거래 신호를 결정합니다. 모든 계산은 일일 양봉을 기반으로 하며, 중장기적인 조언을 제공합니다. 이 전략의 본질은 자산 가격이 극단에 도달하여 볼린저 밴드 채널을 벗어나야 하며, RSI가 과매수/과매도 구간에 있어야 한다는 것입니다. 가격이 채널로 복귀한 후, 가격이 평균값으로 복귀하거나 다른 측면에서 채널을 뚫으려는 높은 확률이 있습니다. 강한 시장 움직임 중에는 올바른 신호가 나타나기 전에 여러 가질 수도 있음을 유의하십시오.\n\n거래에 위험 관리를 적용하는 것이 매우 중요하며, 시장 상황이 변할 경우 손실을 줄이는 것을 기억하세요! ";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "세부 사항 숨기기";
 "coin_analytics.indicators.show_details" = "세부 정보 보기";
 "coin_analytics.indicators.summary" = "요약";
@@ -1025,7 +1026,7 @@
 "coin_analytics.period.1w" = "1주일";
 "coin_analytics.period.1m" = "1 개월";
 
-"coin_analytics.details" = "상세 정보";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "이 프로젝트에는 분석 데이터가 없습니다.";
 
@@ -1659,6 +1660,7 @@
 "chart.about.read_less" = "덜 읽기";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1984,7 +1986,7 @@
 "nft_asset.best_offer" = "최고 제안";
 "nft_asset.properties" = "속성";
 "nft_asset.description" = "설명";
-"nft_asset.details" = "상세 정보";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "계약 주소";
 "nft_asset.details.token_id" = "토큰 ID";
 "nft_asset.details.token_standard" = "토큰 표준";
