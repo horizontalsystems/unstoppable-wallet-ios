@@ -1007,6 +1007,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.indicators.disclaimer" = "Sempre lembre-se de aplicar o gerenciamento de risco, e observe que isso não é um conselho financeiro.";
 "coin_analytics.indicators.info.title" = "Technical Indicators";
 "coin_analytics.indicators.info.description" = "Nós utilizamos a estratégia Bollinger Bands + RSI para determinar sinais de negociação. Todas as análises são baseadas em candlesticks diários e fornecem orientação para um prazo moderadamente longo. A essência da estratégia é que o preço do ativo deve atingir um extremo, saindo do canal das Bandas de Bollinger, e o RSI deve estar na zona de sobrecompra/sobrevenda. Após o preço retornar ao canal, há uma alta probabilidade de o preço retornar aos valores médios ou tentar romper o canal pelo outro lado. Note que a estratégia pode fornecer vários sinais falsos durante movimentos fortes do mercado antes de um sinal correto aparecer.\n\nPor favor, lembre-se de que é muito importante aplicar gerenciamento de risco à negociação e lembrar-se de cortar as perdas se a situação de mercado mudar! ";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "Ocultar detalhes";
 "coin_analytics.indicators.show_details" = "Mostrar detalhes";
 "coin_analytics.indicators.summary" = "Resumo";
@@ -1026,7 +1027,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.period.1w" = "1 semana";
 "coin_analytics.period.1m" = "1 mês";
 
-"coin_analytics.details" = "Detalhes";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
 
@@ -1658,6 +1659,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart.about.read_less" = "Ler Menos";
 
 "coin_page.return_of_investments" = "RDI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1983,7 +1985,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "nft_asset.best_offer" = "Melhor Oferta";
 "nft_asset.properties" = "Propriedades";
 "nft_asset.description" = "Descrição";
-"nft_asset.details" = "Detalhes";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "Endereço do Contrato";
 "nft_asset.details.token_id" = "ID do Token";
 "nft_asset.details.token_standard" = "Critérios do Token";
