@@ -1,21 +1,24 @@
 import Foundation
 import MarketKit
 import TonKit
+import TonSwift
 
 class TonTransactionRecord: TransactionRecord {
-    let fee: TransactionValue?
     let lt: Int64
-    let memo: String?
+    let inProgress: Bool
+    let fee: TransactionValue?
+    let actions: [Action]
 
-    init(source: TransactionSource, event: AccountEvent, feeToken: Token) {
-        fee = .coinValue(token: feeToken, value: TonAdapter.amount(kitAmount: Decimal(event.fee)))
+    init(source: TransactionSource, event: Event, baseToken: Token, actions: [Action]) {
         lt = event.lt
-        memo = event.actions.compactMap { ($0 as? TonTransfer)?.comment }.first
+        inProgress = event.inProgress
+        fee = .coinValue(token: baseToken, value: TonAdapter.amount(kitAmount: abs(event.extra)))
+        self.actions = actions
 
         super.init(
             source: source,
-            uid: event.eventId,
-            transactionHash: event.eventId,
+            uid: event.id,
+            transactionHash: event.id,
             transactionIndex: 0,
             blockHeight: nil,
             confirmationsThreshold: nil,
@@ -25,13 +28,31 @@ class TonTransactionRecord: TransactionRecord {
     }
 
     override func status(lastBlockHeight _: Int?) -> TransactionStatus {
-        .completed
+        inProgress ? .pending : .completed
+    }
+
+    override var mainValue: TransactionValue? {
+        if actions.count == 1, let action = actions.first {
+            switch action.type {
+            case let .send(value, _, _, _): return value
+            case let .receive(value, _, _): return value
+            case .unsupported: return nil
+            }
+        }
+
+        return nil
     }
 }
 
 extension TonTransactionRecord {
-    struct Transfer {
-        let address: String
-        let value: TransactionValue
+    struct Action {
+        let type: `Type`
+        let status: TransactionStatus
+
+        enum `Type` {
+            case send(value: TransactionValue, to: String, sentToSelf: Bool, comment: String?)
+            case receive(value: TransactionValue, from: String, comment: String?)
+            case unsupported(type: String)
+        }
     }
 }

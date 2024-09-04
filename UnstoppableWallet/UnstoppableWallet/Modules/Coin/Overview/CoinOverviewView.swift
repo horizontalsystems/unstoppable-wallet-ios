@@ -416,6 +416,7 @@ struct CoinOverviewView: View {
         case let .eip20(address): return address.shortened
         case let .bep2(symbol): return symbol
         case let .spl(address): return address.shortened
+        case let .jetton(address): return address.shortened
         case let .unsupported(_, reference): return reference?.shortened
         }
     }
@@ -425,6 +426,7 @@ struct CoinOverviewView: View {
         case let .eip20(address): return address
         case let .bep2(symbol): return symbol
         case let .spl(address): return address
+        case let .jetton(address): return address
         case let .unsupported(_, reference): return reference
         default: return nil
         }
@@ -435,6 +437,7 @@ struct CoinOverviewView: View {
         case let .eip20(address): return token.blockchain.explorerUrl(reference: address)
         case let .bep2(symbol): return token.blockchain.explorerUrl(reference: symbol)
         case let .spl(address): return token.blockchain.explorerUrl(reference: address)
+        case let .jetton(address): return token.blockchain.explorerUrl(reference: address)
         case let .unsupported(_, reference): return token.blockchain.explorerUrl(reference: reference)
         default: return nil
         }

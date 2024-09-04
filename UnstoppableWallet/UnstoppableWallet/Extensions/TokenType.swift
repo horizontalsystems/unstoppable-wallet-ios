@@ -16,6 +16,7 @@ extension TokenType {
         case .eip20: return .eip20
         case .bep2: return .bep2
         case .spl: return .spl
+        case .jetton: return .jetton
         case .unsupported: return .unsupported
         }
     }

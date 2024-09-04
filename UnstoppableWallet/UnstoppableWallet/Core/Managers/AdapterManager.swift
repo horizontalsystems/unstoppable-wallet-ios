@@ -10,6 +10,7 @@ class AdapterManager {
     private let walletManager: WalletManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let tronKitManager: TronKitManager
+    private let tonKitManager: TonKitManager
 
     private let adapterDataReadyRelay = PublishRelay<AdapterData>()
 
@@ -18,12 +19,13 @@ class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, btcBlockchainManager: BtcBlockchainManager)
+         tronKitManager: TronKitManager, tonKitManager: TonKitManager, btcBlockchainManager: BtcBlockchainManager)
     {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
         self.tronKitManager = tronKitManager
+        self.tonKitManager = tonKitManager
 
         walletManager.activeWalletDataUpdatedObservable
             .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
@@ -146,6 +148,7 @@ extension AdapterManager {
             for blockchain in self.evmBlockchainManager.allBlockchains {
                 self.evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper?.evmKit.refresh()
             }
+
             var binanceKitUpdated = false
 
             for (wallet, adapter) in self._adapterData.adapterMap {
@@ -161,6 +164,7 @@ extension AdapterManager {
             }
 
             self.tronKitManager.tronKitWrapper?.tronKit.refresh()
+            self.tonKitManager.tonKit?.refresh()
         }
     }
 

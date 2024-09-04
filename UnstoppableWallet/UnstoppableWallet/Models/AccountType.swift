@@ -83,7 +83,7 @@ enum AccountType {
             case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
             case (.optimism, .native), (.optimism, .eip20): return true
             case (.tron, .native), (.tron, .eip20): return true
-            case (.ton, .native): return true
+            case (.ton, .native), (.ton, .jetton): return true
             default: return false
             }
         case let .hdExtendedKey(key):
@@ -122,7 +122,7 @@ enum AccountType {
             }
         case .tonAddress:
             switch (token.blockchainType, token.type) {
-            case (.ton, .native): return true
+            case (.ton, .native), (.ton, .jetton): return true
             default: return false
             }
         case let .btcAddress(_, blockchainType, tokenType):

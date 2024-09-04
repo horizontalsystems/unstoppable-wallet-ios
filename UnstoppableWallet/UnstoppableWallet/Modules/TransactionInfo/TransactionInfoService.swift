@@ -77,12 +77,14 @@ class TransactionInfoService {
             tokens.append(tx.fee.token)
             tokens.append(tx.value.token)
 
-        case let tx as TonIncomingTransactionRecord:
-            tokens.append(tx.transfer?.value.token)
-        case let tx as TonOutgoingTransactionRecord:
-            tokens.append(tx.fee?.token)
-            tx.transfers.forEach { tokens.append($0.value.token) }
         case let tx as TonTransactionRecord:
+            for action in tx.actions {
+                switch action.type {
+                case let .send(value, _, _, _): tokens.append(value.token)
+                case let .receive(value, _, _): tokens.append(value.token)
+                case .unsupported: ()
+                }
+            }
             tokens.append(tx.fee?.token)
 
         default: ()

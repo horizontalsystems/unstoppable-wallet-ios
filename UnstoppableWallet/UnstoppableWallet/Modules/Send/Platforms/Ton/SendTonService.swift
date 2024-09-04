@@ -131,7 +131,7 @@ class SendTonService {
 
             Task { [weak self, adapter] in
                 do {
-                    let fee = try await adapter.estimateFee(recipient: data.0.raw, amount: data.1, memo: data.2)
+                    let fee = try await adapter.estimateFee(recipient: data.0.raw, amount: data.1, comment: data.2)
                     self?.feeState = .completed(fee)
                     self?.availableBalance = .completed(max(0, adapter.availableBalance - fee))
                 } catch {
@@ -160,7 +160,7 @@ extension SendTonService: ISendService {
             return Single.create { [adapter] observer in
                 let task = Task { [adapter] in
                     do {
-                        try await adapter.send(recipient: data.0.raw, amount: data.1, memo: data.2)
+                        try await adapter.send(recipient: data.0.raw, amount: data.1, comment: data.2)
                         observer(.success(()))
                     } catch {
                         observer(.error(error))
