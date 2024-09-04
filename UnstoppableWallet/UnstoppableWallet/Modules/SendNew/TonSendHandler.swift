@@ -149,7 +149,7 @@ extension TonSendHandler: ISendHandler {
         let tonBalance = adapter.availableBalance
 
         do {
-            let _fee = try await adapter.estimateFee(recipient: address, amount: amount, memo: memo)
+            let _fee = try await adapter.estimateFee(recipient: address, amount: amount, comment: memo)
             var totalAmount = Decimal.zero
 
             var sentAmount = amount
@@ -197,7 +197,7 @@ extension TonSendHandler: ISendHandler {
         _ = try await adapter.send(
             recipient: address,
             amount: amount,
-            memo: memo
+            comment: memo
         )
     }
 }

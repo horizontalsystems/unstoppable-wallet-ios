@@ -137,7 +137,7 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
+    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false, memo: String? = nil, status: TransactionStatus? = nil, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
         var viewItems = [TransactionInfoModule.ViewItem]()
 
         let burn = to == zeroAddress
@@ -196,6 +196,14 @@ class TransactionInfoViewItemFactory {
             viewItems.append(rateViewItem)
         }
 
+        if let memo {
+            viewItems.append(.memo(text: memo))
+        }
+
+        if let status {
+            viewItems.append(.status(status: status))
+        }
+
         return viewItems
     }
 
@@ -207,7 +215,7 @@ class TransactionInfoViewItemFactory {
         return condition ? trueType : (falseType ?? trueType)
     }
 
-    private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
+    private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], memo: String? = nil, status: TransactionStatus? = nil, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
         var viewItems = [TransactionInfoModule.ViewItem]()
 
         let mint = from == zeroAddress
@@ -263,6 +271,14 @@ class TransactionInfoViewItemFactory {
 
         if let rateViewItem {
             viewItems.append(rateViewItem)
+        }
+
+        if let memo {
+            viewItems.append(.memo(text: memo))
+        }
+
+        if let status {
+            viewItems.append(.status(status: status))
         }
 
         return viewItems
@@ -549,32 +565,20 @@ class TransactionInfoViewItemFactory {
 
             feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: record.fee, rate: _rate(record.fee)))
 
-        case let record as TonIncomingTransactionRecord:
-            if let transfer = record.transfer {
-                sections.append(.init(receiveSection(source: record.source, transactionValue: transfer.value, from: transfer.address, rates: item.rates, balanceHidden: balanceHidden)))
-            }
-
-            if let memo = record.memo, !memo.isEmpty {
-                sections.append(.init([.memo(text: memo)]))
-            }
-        case let record as TonOutgoingTransactionRecord:
-            for transfer in record.transfers {
-                sections.append(.init(sendSection(source: record.source, transactionValue: transfer.value, to: transfer.address, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
-            }
-
-            if record.sentToSelf {
-                sections.append(.init([.sentToSelf]))
-            }
-
-            if let memo = record.memo, !memo.isEmpty {
-                sections.append(.init([.memo(text: memo)]))
-            }
-
-            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: $0, rate: _rate($0))) }
-
         case let record as TonTransactionRecord:
-            if let memo = record.memo, !memo.isEmpty {
-                sections.append(.init([.memo(text: memo)]))
+            for action in record.actions {
+                switch action.type {
+                case let .send(value, to, sentToSelf, comment):
+                    sections.append(.init(sendSection(source: record.source, transactionValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, memo: comment, status: action.status, balanceHidden: balanceHidden)))
+
+                    if sentToSelf {
+                        sections.append(.init([.sentToSelf]))
+                    }
+                case let .receive(value, from, comment):
+                    sections.append(.init(receiveSection(source: record.source, transactionValue: value, from: from, rates: item.rates, memo: comment, status: action.status, balanceHidden: balanceHidden)))
+                case let .unsupported(type):
+                    sections.append(.init([.fee(title: "Action", value: type)]))
+                }
             }
 
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: $0, rate: _rate($0))) }

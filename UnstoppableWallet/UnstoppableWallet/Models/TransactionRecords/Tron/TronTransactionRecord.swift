@@ -64,8 +64,8 @@ class TronTransactionRecord: TransactionRecord {
                 resultValue = .tokenValue(tokenName: tokenName, tokenCode: tokenCode, tokenDecimals: tokenDecimals, value: totalValue)
             case let .nftValue(nftUid, _, tokenName, tokenSymbol):
                 resultValue = .nftValue(nftUid: nftUid, value: totalValue, tokenName: tokenName, tokenSymbol: tokenSymbol)
-            case let .rawValue(value):
-                resultValue = .rawValue(value: value)
+            default:
+                resultValue = value
             }
 
             if totalValue > 0 {

@@ -396,49 +396,39 @@ class TransactionsViewItemFactory {
             title = record.transaction.contract?.label ?? "transactions.unknown_transaction.title".localized
             subTitle = "transactions.unknown_transaction.description".localized()
 
-        case let record as TonIncomingTransactionRecord:
-            title = "transactions.receive".localized
-            if let transfer = record.transfer {
-                iconType = singleValueIconType(source: record.source, value: transfer.value)
-                subTitle = "transactions.from".localized(mapped(address: transfer.address, blockchainType: item.record.source.blockchainType))
-                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: transfer.value), type: type(value: transfer.value, .incoming))
-            } else {
-                iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
-                subTitle = ""
-            }
+        case let record as TonTransactionRecord:
+            if record.actions.count == 1, let action = record.actions.first {
+                switch action.type {
+                case let .send(value, to, _sentToSelf, _):
+                    iconType = singleValueIconType(source: record.source, value: value)
+                    title = "transactions.send".localized
+                    subTitle = "transactions.to".localized(mapped(address: to, blockchainType: item.record.source.blockchainType))
+                    primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value, signType: _sentToSelf ? .never : .always), type: type(value: value, condition: _sentToSelf, .neutral, .outgoing))
 
-            if let currencyValue = item.currencyValue {
-                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
-            }
+                    if let currencyValue = item.currencyValue {
+                        secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    }
 
-        case let record as TonOutgoingTransactionRecord:
-            title = "transactions.send".localized
+                    sentToSelf = _sentToSelf
+                case let .receive(value, from, _):
+                    iconType = singleValueIconType(source: record.source, value: value)
+                    title = "transactions.receive".localized
+                    subTitle = "transactions.from".localized(mapped(address: from, blockchainType: item.record.source.blockchainType))
+                    primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .incoming))
 
-            if !record.transfers.isEmpty {
-                iconType = singleValueIconType(source: record.source, value: record.transfers[0].value)
-
-                if record.transfers.count == 1 {
-                    subTitle = "transactions.to".localized(mapped(address: record.transfers[0].address, blockchainType: item.record.source.blockchainType))
-                } else {
-                    subTitle = "transactions.multiple".localized
+                    if let currencyValue = item.currencyValue {
+                        secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    }
+                case let .unsupported(type):
+                    iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
+                    title = "transactions.ton_transaction.title".localized
+                    subTitle = type
                 }
-
-                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.totalValue, signType: record.sentToSelf ? .never : .always), type: type(value: record.totalValue, condition: record.sentToSelf, .neutral, .outgoing))
             } else {
                 iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
-                subTitle = ""
+                title = "transactions.ton_transaction.title".localized
+                subTitle = "transactions.multiple".localized
             }
-
-            if let currencyValue = item.currencyValue {
-                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
-            }
-
-            sentToSelf = record.sentToSelf
-
-        case is TonTransactionRecord:
-            iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
-            title = "transactions.unknown_transaction.title".localized
-            subTitle = "transactions.unknown_transaction.description".localized()
 
         default:
             iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
