@@ -821,6 +821,12 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Add coinImage to EnabledWallet") { db in
+            try db.alter(table: EnabledWallet.databaseTableName) { t in
+                t.add(column: EnabledWallet.Columns.coinImage.name, .text)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

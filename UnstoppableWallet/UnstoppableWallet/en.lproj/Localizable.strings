@@ -1722,10 +1722,13 @@
 "add_token.already_added" = "This token is already in the Coin Manager list";
 "add_token.invalid_contract_address" = "Invalid contract address";
 "add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.invalid_ton_address" = "Invalid Ton address";
 "add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.jetton_master_not_found" = "Jetton Master not found in %@ blockchain";
 "add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
 "add_token.input_placeholder.contract_address" = "Contract Address";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.input_placeholder.jetton_master_address" = "Jetton Master Address";
 "add_token.coin_name" = "Coin Name";
 "add_token.symbol" = "Symbol";
 "add_token.decimals" = "Decimals";

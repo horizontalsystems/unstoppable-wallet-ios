@@ -7,13 +7,15 @@ class EnabledWallet: Record {
 
     let coinName: String?
     let coinCode: String?
+    let coinImage: String?
     let tokenDecimals: Int?
 
-    init(tokenQueryId: String, accountId: String, coinName: String? = nil, coinCode: String? = nil, tokenDecimals: Int? = nil) {
+    init(tokenQueryId: String, accountId: String, coinName: String? = nil, coinCode: String? = nil, coinImage: String? = nil, tokenDecimals: Int? = nil) {
         self.tokenQueryId = tokenQueryId
         self.accountId = accountId
         self.coinName = coinName
         self.coinCode = coinCode
+        self.coinImage = coinImage
         self.tokenDecimals = tokenDecimals
 
         super.init()
@@ -24,7 +26,7 @@ class EnabledWallet: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case tokenQueryId, accountId, coinName, coinCode, tokenDecimals
+        case tokenQueryId, accountId, coinName, coinCode, coinImage, tokenDecimals
     }
 
     required init(row: Row) throws {
@@ -32,6 +34,7 @@ class EnabledWallet: Record {
         accountId = row[Columns.accountId]
         coinName = row[Columns.coinName]
         coinCode = row[Columns.coinCode]
+        coinImage = row[Columns.coinImage]
         tokenDecimals = row[Columns.tokenDecimals]
 
         try super.init(row: row)
@@ -42,6 +45,7 @@ class EnabledWallet: Record {
         container[Columns.accountId] = accountId
         container[Columns.coinName] = coinName
         container[Columns.coinCode] = coinCode
+        container[Columns.coinImage] = coinImage
         container[Columns.tokenDecimals] = tokenDecimals
     }
 }

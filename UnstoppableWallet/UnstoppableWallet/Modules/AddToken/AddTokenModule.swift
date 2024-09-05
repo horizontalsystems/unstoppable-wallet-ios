@@ -43,6 +43,12 @@ enum AddTokenModule {
             items.append(item)
         }
 
+        if let blockchain = try? App.shared.marketKit.blockchain(uid: BlockchainType.ton.uid), blockchain.type.supports(accountType: account.type) {
+            let service: IAddTokenBlockchainService = AddJettonBlockchainService(blockchain: blockchain)
+            let item = Item(blockchain: blockchain, service: service)
+            items.append(item)
+        }
+
         let service = AddTokenService(account: account, items: items, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
         let viewModel = AddTokenViewModel(service: service)
         let viewController = AddTokenViewController(viewModel: viewModel)
