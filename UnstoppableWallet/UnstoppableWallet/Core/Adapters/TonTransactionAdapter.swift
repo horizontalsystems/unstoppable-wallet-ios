@@ -101,8 +101,6 @@ extension TonTransactionAdapter: ITransactionsAdapter {
                 if let jettonAddress = tagToken.jettonAddress {
                     tokenType = .jetton(address: jettonAddress.toString(bounceable: true))
                 }
-            default:
-                ()
             }
 
             guard let tokenType else {

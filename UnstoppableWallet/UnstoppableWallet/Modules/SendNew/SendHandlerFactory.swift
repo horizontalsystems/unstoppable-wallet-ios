@@ -13,8 +13,8 @@ enum SendHandlerFactory {
             return ZcashSendHandler.instance(amount: amount, recipient: recipient, memo: memo)
         case let .tron(token, contract):
             return TronSendHandler.instance(token: token, contract: contract)
-        case let .ton(amount, address, memo):
-            return TonSendHandler.instance(amount: amount, address: address, memo: memo)
+        case let .ton(token, amount, address, memo):
+            return TonSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .swap(tokenIn, tokenOut, amountIn, provider):
             return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
         case let .walletConnect(request):
@@ -46,7 +46,7 @@ enum SendHandlerFactory {
         }
 
         if let adapter = adapter as? ISendTonAdapter & IBalanceAdapter {
-            return TonPreSendHandler(adapter: adapter)
+            return TonPreSendHandler(token: wallet.token, adapter: adapter)
         }
 
         return nil

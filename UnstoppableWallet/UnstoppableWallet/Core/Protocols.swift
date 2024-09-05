@@ -8,6 +8,7 @@ import HsToolKit
 import MarketKit
 import RxSwift
 import ThemeKit
+import TonSwift
 import TronKit
 import UIKit
 import UniswapKit
@@ -101,10 +102,8 @@ protocol ISendTronAdapter {
 }
 
 protocol ISendTonAdapter {
-    var availableBalance: Decimal { get }
-    func validate(address: String) throws
-    func estimateFee(recipient: String, amount: Decimal, comment: String?) async throws -> Decimal
-    func send(recipient: String, amount: Decimal, comment: String?) async throws
+    func estimateFee(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) async throws -> Decimal
+    func send(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) async throws
 }
 
 protocol IErc20Adapter {

@@ -172,7 +172,7 @@ class WalletTokenBalanceDataSource: NSObject {
             }
         case let .wallet(wallet):
             cell.actions[.send] = { [weak self] in
-                let module = App.shared.localStorage.newSendEnabled ? PreSendView(wallet: wallet, showIcon: true).toNavigationViewController() : SendModule.controller(wallet: wallet).map { ThemeNavigationController(rootViewController: $0) }
+                let module = App.shared.newSendEnabled(wallet: wallet) ? PreSendView(wallet: wallet, showIcon: true).toNavigationViewController() : SendModule.controller(wallet: wallet).map { ThemeNavigationController(rootViewController: $0) }
 
                 if let module {
                     self?.parentViewController?.present(module, animated: true)

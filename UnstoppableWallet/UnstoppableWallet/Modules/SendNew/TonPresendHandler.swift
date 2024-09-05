@@ -1,19 +1,21 @@
-import BigInt
 import Combine
 import Foundation
 import MarketKit
 import RxSwift
 import TonKit
+import TonSwift
 
 class TonPreSendHandler {
-    private let adapter: ISendTonAdapter & IBalanceAdapter
+    private let token: Token
+    private let adapter: IBalanceAdapter
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
 
     private let disposeBag = DisposeBag()
 
-    init(adapter: ISendTonAdapter & IBalanceAdapter) {
+    init(token: Token, adapter: IBalanceAdapter) {
+        self.token = token
         self.adapter = adapter
 
         adapter.balanceStateUpdatedObservable
@@ -55,11 +57,10 @@ extension TonPreSendHandler: IPreSendHandler {
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         do {
-            try TonKit.Kit.validate(address: address)
+            let address = try FriendlyAddress(string: address)
+            return .valid(sendData: .ton(token: token, amount: amount, address: address, memo: memo))
         } catch {
             return .invalid(cautions: [CautionNew(text: error.smartDescription, type: .error)])
         }
-
-        return .valid(sendData: .ton(amount: amount, address: address, memo: memo))
     }
 }

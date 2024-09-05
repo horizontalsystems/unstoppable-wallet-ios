@@ -41,30 +41,6 @@ class TonAdapter {
             .sink { [weak self] in self?.balanceData = BalanceData(available: Self.amount(kitAmount: $0?.balance)) }
             .store(in: &cancellables)
     }
-
-    private static func adapterState(kitSyncState: TonKit.SyncState) -> AdapterState {
-        switch kitSyncState {
-        case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
-        case .synced: return .synced
-        case let .notSynced(error): return .notSynced(error: error)
-        }
-    }
-
-    private static func amount(kitAmount: BigUInt?) -> Decimal {
-        guard let kitAmount, let significand = Decimal(string: kitAmount.description) else {
-            return 0
-        }
-
-        return Decimal(sign: .plus, exponent: -Self.decimals, significand: significand)
-    }
-
-    static func amount(kitAmount: String) -> Decimal {
-        amount(kitAmount: BigUInt(kitAmount))
-    }
-
-    static func amount(kitAmount: Int64) -> Decimal {
-        amount(kitAmount: BigUInt(kitAmount))
-    }
 }
 
 extension TonAdapter: IBaseAdapter {
@@ -112,40 +88,61 @@ extension TonAdapter: IDepositAdapter {
 }
 
 extension TonAdapter: ISendTonAdapter {
-    var availableBalance: Decimal {
-        balanceData.available
-    }
-
-    func validate(address: String) throws {
-        _ = try FriendlyAddress(string: address)
-    }
-
-    func estimateFee(recipient: String, amount: Decimal, comment: String?) async throws -> Decimal {
-        let recipient = try FriendlyAddress(string: recipient)
-        let amount = Decimal(sign: .plus, exponent: Self.decimals, significand: amount).rounded(decimal: 0)
-
-        guard let kitAmount = BigUInt(amount.description) else {
-            throw AmountError.invalidAmount
-        }
-
-        let kitFee = try await tonKit.estimateFee(recipient: recipient, amount: .amount(value: kitAmount), comment: comment)
-
+    func estimateFee(recipient: FriendlyAddress, amount: SendAmount, comment: String?) async throws -> Decimal {
+        let kitFee = try await tonKit.estimateFee(recipient: recipient, amount: sendAmount(amount: amount), comment: comment)
         return Self.amount(kitAmount: kitFee)
     }
 
-    func send(recipient: String, amount: Decimal, comment: String?) async throws {
-        let recipient = try FriendlyAddress(string: recipient)
-        let amount = Decimal(sign: .plus, exponent: Self.decimals, significand: amount).rounded(decimal: 0)
+    func send(recipient: FriendlyAddress, amount: SendAmount, comment: String?) async throws {
+        try await tonKit.send(recipient: recipient, amount: sendAmount(amount: amount), comment: comment)
+    }
 
-        guard let kitAmount = BigUInt(amount.description) else {
-            throw AmountError.invalidAmount
+    private func sendAmount(amount: SendAmount) throws -> Kit.SendAmount {
+        switch amount {
+        case let .amount(value):
+            guard let value = BigUInt(value.hs.roundedString(decimal: Self.decimals)) else {
+                throw AmountError.invalidAmount
+            }
+
+            return .amount(value: value)
+        case .max:
+            return .max
         }
-
-        try await tonKit.send(recipient: recipient, amount: .amount(value: kitAmount), comment: comment)
     }
 }
 
 extension TonAdapter {
+    private static func adapterState(kitSyncState: TonKit.SyncState) -> AdapterState {
+        switch kitSyncState {
+        case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
+        case .synced: return .synced
+        case let .notSynced(error): return .notSynced(error: error)
+        }
+    }
+
+    static func amount(kitAmount: BigUInt?) -> Decimal {
+        guard let kitAmount, let significand = Decimal(string: kitAmount.description) else {
+            return 0
+        }
+
+        return Decimal(sign: .plus, exponent: -Self.decimals, significand: significand)
+    }
+
+    static func amount(kitAmount: String) -> Decimal {
+        amount(kitAmount: BigUInt(kitAmount))
+    }
+
+    static func amount(kitAmount: Int64) -> Decimal {
+        amount(kitAmount: BigUInt(kitAmount))
+    }
+}
+
+extension TonAdapter {
+    enum SendAmount {
+        case amount(value: Decimal)
+        case max
+    }
+
     enum AmountError: Error {
         case invalidAmount
     }

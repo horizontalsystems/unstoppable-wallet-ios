@@ -120,44 +120,34 @@ extension JettonAdapter: IDepositAdapter {
 }
 
 extension JettonAdapter: ISendTonAdapter {
-    var availableBalance: Decimal {
-        balanceData.available
-    }
-
-    func validate(address: String) throws {
-        _ = try FriendlyAddress(string: address)
-    }
-
-    func estimateFee(recipient: String, amount: Decimal, comment: String?) async throws -> Decimal {
+    func estimateFee(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) async throws -> Decimal {
         guard let jettonBalance else {
             throw EstimateError.noWalletAddress
         }
 
-        let recipient = try FriendlyAddress(string: recipient)
-        let amount = Decimal(sign: .plus, exponent: jettonBalance.jetton.decimals, significand: amount).rounded(decimal: 0)
-
-        guard let kitAmount = BigUInt(amount.description) else {
-            throw AmountError.invalidAmount
-        }
-
-        let kitFee = try await tonKit.estimateFee(jettonWallet: jettonBalance.walletAddress, recipient: recipient, amount: kitAmount, comment: comment)
-
-        return Self.amount(kitAmount: kitFee, decimals: jettonBalance.jetton.decimals)
+        let kitFee = try await tonKit.estimateFee(jettonWallet: jettonBalance.walletAddress, recipient: recipient, amount: sendAmount(jettonBalance: jettonBalance, amount: amount), comment: comment)
+        return TonAdapter.amount(kitAmount: kitFee)
     }
 
-    func send(recipient: String, amount: Decimal, comment: String?) async throws {
+    func send(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) async throws {
         guard let jettonBalance else {
             throw EstimateError.noWalletAddress
         }
 
-        let recipient = try FriendlyAddress(string: recipient)
-        let amount = Decimal(sign: .plus, exponent: jettonBalance.jetton.decimals, significand: amount).rounded(decimal: 0)
+        try await tonKit.send(jettonWallet: jettonBalance.walletAddress, recipient: recipient, amount: sendAmount(jettonBalance: jettonBalance, amount: amount), comment: comment)
+    }
 
-        guard let kitAmount = BigUInt(amount.description) else {
+    private func sendAmount(jettonBalance: JettonBalance, amount: TonAdapter.SendAmount) throws -> BigUInt {
+        switch amount {
+        case let .amount(value):
+            guard let value = BigUInt(value.hs.roundedString(decimal: jettonBalance.jetton.decimals)) else {
+                throw AmountError.invalidAmount
+            }
+
+            return value
+        case .max:
             throw AmountError.invalidAmount
         }
-
-        try await tonKit.send(jettonWallet: jettonBalance.walletAddress, recipient: recipient, amount: kitAmount, comment: comment)
     }
 }
 

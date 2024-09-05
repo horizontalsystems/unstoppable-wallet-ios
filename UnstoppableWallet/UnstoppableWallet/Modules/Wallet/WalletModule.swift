@@ -102,7 +102,7 @@ enum WalletModule {
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
         dataSource.viewController = viewController
         dataSource.onSelectWallet = { [weak viewController] wallet in
-            let module = App.shared.localStorage.newSendEnabled ?
+            let module = App.shared.newSendEnabled(wallet: wallet) ?
                 PreSendView(wallet: wallet, mode: mode, onDismiss: { viewController?.dismiss(animated: true) }).toViewController() :
                 SendModule.controller(wallet: wallet, mode: mode)
 
