@@ -2963,6 +2963,8 @@
 		D3A580952BE8AA80003953F4 /* BitcoinSendSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580932BE8AA80003953F4 /* BitcoinSendSettingsView.swift */; };
 		D3A580972BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */; };
 		D3A580982BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */; };
+		D3A87D592C89BEAE00F6F619 /* AddJettonBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A87D582C89BEAE00F6F619 /* AddJettonBlockchainService.swift */; };
+		D3A87D5A2C89BEAE00F6F619 /* AddJettonBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A87D582C89BEAE00F6F619 /* AddJettonBlockchainService.swift */; };
 		D3AF5A8929FFD85800C1399E /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8829FFD85800C1399E /* RxCocoa */; };
 		D3AF5A8B29FFD85800C1399E /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8A29FFD85800C1399E /* RxRelay */; };
 		D3AF5A8D29FFD85800C1399E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8C29FFD85800C1399E /* RxSwift */; };
@@ -4641,6 +4643,7 @@
 		D3A5808A2BE4DB11003953F4 /* WalletConnectSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectSendHandler.swift; sourceTree = "<group>"; };
 		D3A580932BE8AA80003953F4 /* BitcoinSendSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendSettingsView.swift; sourceTree = "<group>"; };
 		D3A580962BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendSettingsViewModel.swift; sourceTree = "<group>"; };
+		D3A87D582C89BEAE00F6F619 /* AddJettonBlockchainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJettonBlockchainService.swift; sourceTree = "<group>"; };
 		D3B476A321D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3B476A421D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B476A521D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -4956,6 +4959,7 @@
 				11B355267E1A6678B7B5FCF1 /* AddTokenModule.swift */,
 				11B35102BB1E66987670CD1F /* AddBep2TokenBlockchainService.swift */,
 				D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */,
+				D3A87D582C89BEAE00F6F619 /* AddJettonBlockchainService.swift */,
 			);
 			path = AddToken;
 			sourceTree = "<group>";
@@ -9793,6 +9797,7 @@
 				11B35AC33360F772120B9562 /* RestoreSettingsStorage.swift in Sources */,
 				11B35729848FDBC47F038553 /* AppVersionRecordStorage.swift in Sources */,
 				D3DB519A2BD63D680091BBDB /* MarketSearchViewModel.swift in Sources */,
+				D3A87D5A2C89BEAE00F6F619 /* AddJettonBlockchainService.swift in Sources */,
 				11B35DB339D0E7CF183760F4 /* EnabledWalletCacheStorage.swift in Sources */,
 				ABC9A80BCDA72347C6619E6C /* SendTimeLockErrorService.swift in Sources */,
 				11B350ADB6D0D0C3E97F73D6 /* NftCollectionViewController.swift in Sources */,
@@ -11248,6 +11253,7 @@
 				ABC9A63B2AABC0414000DEC2 /* SendConfirmationViewModel.swift in Sources */,
 				11B3572E55D689C7414621EE /* SectionsTableView.swift in Sources */,
 				11B350CB4E7C006C26AE5FB3 /* EnabledWalletStorage.swift in Sources */,
+				D3A87D592C89BEAE00F6F619 /* AddJettonBlockchainService.swift in Sources */,
 				11B356C081AC552CBDA9147B /* AccountRecordStorage.swift in Sources */,
 				D3DB51992BD63D680091BBDB /* MarketSearchViewModel.swift in Sources */,
 				11B35727A4950C1E066F2244 /* LogRecordStorage.swift in Sources */,
@@ -12868,7 +12874,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TonKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.1;
+				version = 1.0.2;
 			};
 		};
 		6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */ = {

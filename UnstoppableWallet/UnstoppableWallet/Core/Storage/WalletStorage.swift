@@ -16,6 +16,7 @@ class WalletStorage {
             accountId: wallet.account.id,
             coinName: wallet.coin.name,
             coinCode: wallet.coin.code,
+            coinImage: wallet.coin.image,
             tokenDecimals: wallet.token.decimals
         )
     }
@@ -46,7 +47,7 @@ extension WalletStorage {
                 let coinUid = tokenQuery.customCoinUid
 
                 let token = Token(
-                    coin: Coin(uid: coinUid, name: coinName, code: coinCode),
+                    coin: Coin(uid: coinUid, name: coinName, code: coinCode, image: enabledWallet.coinImage),
                     blockchain: blockchain,
                     type: tokenQuery.tokenType,
                     decimals: tokenDecimals
