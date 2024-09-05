@@ -337,4 +337,11 @@ class App {
             nftMetadataSyncer: nftMetadataSyncer
         )
     }
+
+    func newSendEnabled(wallet: Wallet) -> Bool {
+        switch wallet.token.blockchainType {
+        case .ton: return true
+        default: return localStorage.newSendEnabled
+        }
+    }
 }
