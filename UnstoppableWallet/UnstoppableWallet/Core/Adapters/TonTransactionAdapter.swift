@@ -91,7 +91,26 @@ extension TonTransactionAdapter: ITransactionsAdapter {
     }
 
     var additionalTokenQueries: [TokenQuery] {
-        [] // todo
+        tonKit.tagTokens().compactMap { tagToken in
+            var tokenType: TokenType?
+
+            switch tagToken.platform {
+            case .native:
+                tokenType = .native
+            case .jetton:
+                if let jettonAddress = tagToken.jettonAddress {
+                    tokenType = .jetton(address: jettonAddress.toString(bounceable: true))
+                }
+            default:
+                ()
+            }
+
+            guard let tokenType else {
+                return nil
+            }
+
+            return TokenQuery(blockchainType: .ton, tokenType: tokenType)
+        }
     }
 
     func explorerUrl(transactionHash: String) -> String? {
