@@ -334,7 +334,8 @@ class App {
             balanceHiddenManager: balanceHiddenManager,
             statManager: statManager,
             walletConnectSocketConnectionService: walletConnectSocketConnectionService,
-            nftMetadataSyncer: nftMetadataSyncer
+            nftMetadataSyncer: nftMetadataSyncer,
+            tonKitManager: tonKitManager
         )
     }
 

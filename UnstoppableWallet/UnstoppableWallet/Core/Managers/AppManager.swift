@@ -23,6 +23,7 @@ class AppManager {
     private let statManager: StatManager
     private let walletConnectSocketConnectionService: WalletConnectSocketConnectionService
     private let nftMetadataSyncer: NftMetadataSyncer
+    private let tonKitManager: TonKitManager
 
     private let didBecomeActiveSubject = PublishSubject<Void>()
     private let willEnterForegroundSubjectOld = PublishSubject<Void>()
@@ -35,7 +36,7 @@ class AppManager {
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
          deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
-         walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer)
+         walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager)
     {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -55,6 +56,7 @@ class AppManager {
         self.statManager = statManager
         self.walletConnectSocketConnectionService = walletConnectSocketConnectionService
         self.nftMetadataSyncer = nftMetadataSyncer
+        self.tonKitManager = tonKitManager
     }
 
     private func warmUp() {
@@ -103,6 +105,8 @@ extension AppManager {
         lockManager.didEnterBackground()
         walletConnectSocketConnectionService.didEnterBackground()
         balanceHiddenManager.didEnterBackground()
+
+        tonKitManager.tonKit?.stopListener()
     }
 
     func willEnterForeground() {
@@ -122,6 +126,8 @@ extension AppManager {
         statManager.sendStats()
 
         nftMetadataSyncer.sync()
+
+        tonKitManager.tonKit?.startListener()
 
         AppWidgetConstants.allKinds.forEach { WidgetCenter.shared.reloadTimelines(ofKind: $0) }
     }
