@@ -164,7 +164,7 @@ extension AdapterManager {
             }
 
             self.tronKitManager.tronKitWrapper?.tronKit.refresh()
-            self.tonKitManager.tonKit?.refresh()
+            self.tonKitManager.tonKit?.sync()
         }
     }
 
@@ -174,6 +174,8 @@ extension AdapterManager {
                 self.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit.refresh()
             } else if wallet.token.blockchainType == .tron {
                 self.tronKitManager.tronKitWrapper?.tronKit.refresh()
+            } else if wallet.token.blockchainType == .ton {
+                self.tonKitManager.tonKit?.sync()
             } else {
                 self._adapterData.adapterMap[wallet]?.refresh()
             }

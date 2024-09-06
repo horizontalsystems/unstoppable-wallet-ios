@@ -45,7 +45,8 @@ class TonKitManager {
             minLogLevel: .error
         )
 
-        tonKit.refresh()
+        tonKit.sync()
+        tonKit.startListener()
 
         _tonKit = tonKit
         currentAccount = account
