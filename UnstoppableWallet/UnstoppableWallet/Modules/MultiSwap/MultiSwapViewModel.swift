@@ -253,7 +253,12 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var quotes: [Quote] = [] {
         didSet {
-            bestQuote = quotes.max { $0.quote.amountOut < $1.quote.amountOut }
+            if let featuredQuote = quotes.first(where: { $0.provider is OneInchMultiSwapProvider }) {
+                bestQuote = featuredQuote
+            } else {
+                bestQuote = quotes.max { $0.quote.amountOut < $1.quote.amountOut }
+            }
+
             syncCurrentQuote()
 
             timer?.invalidate()

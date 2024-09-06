@@ -22,9 +22,9 @@ struct MultiSwapQuotesView: View {
                                 VStack(alignment: .leading, spacing: 1) {
                                     Text(quote.provider.name).textSubhead2(color: .themeLeah)
 
-                                    if quote.provider.id == viewModel.bestQuote?.provider.id {
-                                        Text("swap.quotes.best_price".localized).textSubhead2(color: .themeRemus)
-                                    }
+                                    // if quote.provider.id == viewModel.bestQuote?.provider.id {
+                                    //     Text("swap.quotes.best_price".localized).textSubhead2(color: .themeRemus)
+                                    // }
                                 }
 
                                 Spacer()
