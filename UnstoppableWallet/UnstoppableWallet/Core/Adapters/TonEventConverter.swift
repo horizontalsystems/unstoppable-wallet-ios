@@ -69,7 +69,7 @@ class TonEventConverter {
         case let .jettonMint(action):
             return .unsupported(type: "Jetton Mint")
         case let .contractDeploy(action):
-            return .unsupported(type: "Contract Deploy")
+            return .contractDeploy(interfaces: action.interfaces)
         case let .jettonSwap(action):
             return .unsupported(type: "Jetton Swap")
         case let .smartContract(action):

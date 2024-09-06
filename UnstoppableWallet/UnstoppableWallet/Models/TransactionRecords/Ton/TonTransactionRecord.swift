@@ -36,7 +36,7 @@ class TonTransactionRecord: TransactionRecord {
             switch action.type {
             case let .send(value, _, _, _): return value
             case let .receive(value, _, _): return value
-            case .unsupported: return nil
+            default: return nil
             }
         }
 
@@ -52,6 +52,7 @@ extension TonTransactionRecord {
         enum `Type` {
             case send(value: TransactionValue, to: String, sentToSelf: Bool, comment: String?)
             case receive(value: TransactionValue, from: String, comment: String?)
+            case contractDeploy(interfaces: [String])
             case unsupported(type: String)
         }
     }
