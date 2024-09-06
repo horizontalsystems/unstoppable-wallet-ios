@@ -419,6 +419,10 @@ class TransactionsViewItemFactory {
                     if let currencyValue = item.currencyValue {
                         secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                     }
+                case let .contractDeploy(interfaces):
+                    iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
+                    title = "transactions.contract_deploy".localized
+                    subTitle = interfaces.joined(separator: ", ")
                 case let .unsupported(type):
                     iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
                     title = "transactions.ton_transaction.title".localized

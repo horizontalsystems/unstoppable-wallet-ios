@@ -82,7 +82,7 @@ class TransactionInfoService {
                 switch action.type {
                 case let .send(value, _, _, _): tokens.append(value.token)
                 case let .receive(value, _, _): tokens.append(value.token)
-                case .unsupported: ()
+                default: ()
                 }
             }
             tokens.append(tx.fee?.token)

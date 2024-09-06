@@ -576,6 +576,10 @@ class TransactionInfoViewItemFactory {
                     }
                 case let .receive(value, from, comment):
                     sections.append(.init(receiveSection(source: record.source, transactionValue: value, from: from, rates: item.rates, memo: comment, status: action.status, balanceHidden: balanceHidden)))
+                case let .contractDeploy(interfaces):
+                    sections.append(.init([
+                        .actionTitle(iconName: nil, iconDimmed: false, title: "transactions.contract_deploy".localized, subTitle: interfaces.joined(separator: ", "))
+                    ]))
                 case let .unsupported(type):
                     sections.append(.init([.fee(title: "Action", value: type)]))
                 }
