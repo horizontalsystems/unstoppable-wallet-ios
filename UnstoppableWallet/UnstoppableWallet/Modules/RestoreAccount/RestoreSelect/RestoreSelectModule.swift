@@ -17,7 +17,7 @@ enum RestoreSelectModule {
             accountFactory: App.shared.accountFactory,
             accountManager: App.shared.accountManager,
             walletManager: App.shared.walletManager,
-            evmAccountRestoreStateManager: App.shared.evmAccountRestoreStateManager,
+            restoreStateManager: App.shared.restoreStateManager,
             marketKit: App.shared.marketKit,
             blockchainTokensService: blockchainTokensService,
             restoreSettingsService: restoreSettingsService

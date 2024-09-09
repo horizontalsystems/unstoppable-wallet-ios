@@ -119,7 +119,7 @@ extension TonTransactionAdapter: ITransactionsAdapter {
         tonKit.eventPublisher(tagQuery: tagQuery(token: token, filter: filter, address: address))
             .asObservable()
             .map { [converter] in
-                $0.map { converter.transactionRecord(event: $0) }
+                $0.events.map { converter.transactionRecord(event: $0) }
             }
     }
 

@@ -38,7 +38,7 @@ class TonEventConverter {
             return .coinValue(token: token, value: value)
         } else {
             let value = convertAmount(amount: value, decimals: jetton.decimals, sign: sign)
-            return .jettonValue(name: jetton.name, symbol: jetton.symbol, decimals: jetton.decimals, value: value)
+            return .jettonValue(jetton: jetton, value: value)
         }
     }
 

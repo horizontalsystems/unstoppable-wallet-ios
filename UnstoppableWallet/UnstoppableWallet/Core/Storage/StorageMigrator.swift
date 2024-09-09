@@ -827,6 +827,26 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("create restoreState") { db in
+            let oldStates = try EvmAccountRestoreState.fetchAll(db)
+            try db.drop(table: EvmAccountRestoreState.databaseTableName)
+
+            try db.create(table: "restoreState") { t in
+                t.column(RestoreState.Columns.accountId.name, .text).notNull()
+                t.column(RestoreState.Columns.blockchainUid.name, .text).notNull()
+                t.column(RestoreState.Columns.shouldRestore.name, .boolean).notNull()
+                t.column(RestoreState.Columns.initialRestored.name, .boolean).notNull()
+
+                t.primaryKey([RestoreState.Columns.accountId.name, RestoreState.Columns.blockchainUid.name], onConflict: .replace)
+            }
+
+            let states = oldStates.map { RestoreState(accountId: $0.accountId, blockchainUid: $0.blockchainUid, shouldRestore: $0.restored) }
+
+            for state in states {
+                try state.insert(db)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

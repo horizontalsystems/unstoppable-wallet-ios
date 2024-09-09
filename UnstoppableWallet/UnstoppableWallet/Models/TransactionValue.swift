@@ -1,11 +1,12 @@
 import BigInt
 import Foundation
 import MarketKit
+import TonKit
 
 enum TransactionValue {
     case coinValue(token: Token, value: Decimal)
     case tokenValue(tokenName: String, tokenCode: String, tokenDecimals: Int, value: Decimal)
-    case jettonValue(name: String, symbol: String, decimals: Int, value: Decimal)
+    case jettonValue(jetton: Jetton, value: Decimal)
     case nftValue(nftUid: NftUid, value: Decimal, tokenName: String?, tokenSymbol: String?)
     case rawValue(value: BigUInt)
 
@@ -13,7 +14,7 @@ enum TransactionValue {
         switch self {
         case let .coinValue(token, _): return token.coin.name
         case let .tokenValue(tokenName, _, _, _): return tokenName
-        case let .jettonValue(name, _, _, _): return name
+        case let .jettonValue(jetton, _): return jetton.name
         case let .nftValue(nftUid, _, tokenName, _): return tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
         case .rawValue: return ""
         }
@@ -23,7 +24,7 @@ enum TransactionValue {
         switch self {
         case let .coinValue(token, _): return token.coin.code
         case let .tokenValue(_, tokenCode, _, _): return tokenCode
-        case let .jettonValue(_, symbol, _, _): return symbol
+        case let .jettonValue(jetton, _): return jetton.symbol
         case let .nftValue(_, _, _, tokenSymbol): return tokenSymbol ?? "NFT"
         case .rawValue: return ""
         }
@@ -64,7 +65,7 @@ enum TransactionValue {
         switch self {
         case let .coinValue(_, value): return value
         case let .tokenValue(_, _, _, value): return value
-        case let .jettonValue(_, _, _, value): return value
+        case let .jettonValue(_, value): return value
         case let .nftValue(_, value, _, _): return value
         case .rawValue: return nil
         }
@@ -74,7 +75,7 @@ enum TransactionValue {
         switch self {
         case let .coinValue(_, value): return value == 0
         case let .tokenValue(_, _, _, value): return value == 0
-        case let .jettonValue(_, _, _, value): return value == 0
+        case let .jettonValue(_, value): return value == 0
         case let .nftValue(_, value, _, _): return value == 0
         case let .rawValue(value): return value == 0
         }
@@ -84,7 +85,7 @@ enum TransactionValue {
         switch self {
         case let .coinValue(token, value): return value.isMaxValue(decimals: token.decimals)
         case let .tokenValue(_, _, tokenDecimals, value): return value.isMaxValue(decimals: tokenDecimals)
-        case let .jettonValue(_, _, decimals, value): return value.isMaxValue(decimals: decimals)
+        case let .jettonValue(jetton, value): return value.isMaxValue(decimals: jetton.decimals)
         default: return false
         }
     }
@@ -95,8 +96,8 @@ enum TransactionValue {
             return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: token.coin.code, signType: signType)
         case let .tokenValue(_, tokenCode, tokenDecimals, value):
             return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: tokenCode, signType: signType)
-        case let .jettonValue(_, symbol, decimals, value):
-            return ValueFormatter.instance.formatFull(value: value, decimalCount: decimals, symbol: symbol, signType: signType)
+        case let .jettonValue(jetton, value):
+            return ValueFormatter.instance.formatFull(value: value, decimalCount: jetton.decimals, symbol: jetton.symbol, signType: signType)
         case let .nftValue(_, value, _, tokenSymbol):
             return "\(value.sign == .plus ? "+" : "")\(value) \(tokenSymbol ?? "NFT")"
         case .rawValue:
@@ -110,8 +111,8 @@ enum TransactionValue {
             return ValueFormatter.instance.formatShort(value: value, decimalCount: token.decimals, symbol: token.coin.code, signType: signType)
         case let .tokenValue(_, tokenCode, tokenDecimals, value):
             return ValueFormatter.instance.formatShort(value: value, decimalCount: tokenDecimals, symbol: tokenCode, signType: signType)
-        case let .jettonValue(_, symbol, decimals, value):
-            return ValueFormatter.instance.formatShort(value: value, decimalCount: decimals, symbol: symbol, signType: signType)
+        case let .jettonValue(jetton, value):
+            return ValueFormatter.instance.formatShort(value: value, decimalCount: jetton.decimals, symbol: jetton.symbol, signType: signType)
         case let .nftValue(_, value, _, tokenSymbol):
             return "\(value.sign == .plus ? "+" : "")\(value) \(tokenSymbol ?? "NFT")"
         case .rawValue:
@@ -125,7 +126,7 @@ extension TransactionValue: Equatable {
         switch (lhs, rhs) {
         case let (.coinValue(lhsToken, lhsValue), .coinValue(rhsToken, rhsValue)): return lhsToken == rhsToken && lhsValue == rhsValue
         case let (.tokenValue(lhsTokenName, lhsTokenCode, lhsTokenDecimals, lhsValue), .tokenValue(rhsTokenName, rhsTokenCode, rhsTokenDecimals, rhsValue)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals && lhsValue == rhsValue
-        case let (.jettonValue(lhsName, lhsSymbol, lhsDecimals, lhsValue), .tokenValue(rhsName, rhsSymbol, rhsDecimals, rhsValue)): return lhsName == rhsName && lhsSymbol == rhsSymbol && lhsDecimals == rhsDecimals && lhsValue == rhsValue
+        case let (.jettonValue(lhsJetton, lhsValue), .jettonValue(rhsJetton, rhsValue)): return lhsJetton == rhsJetton && lhsValue == rhsValue
         case let (.nftValue(lhsNftUid, lhsValue, _, _), .nftValue(rhsNftUid, rhsValue, _, _)): return lhsNftUid == rhsNftUid && lhsValue == rhsValue
         case let (.rawValue(lhsValue), .rawValue(rhsValue)): return lhsValue == rhsValue
         default: return false
