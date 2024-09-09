@@ -69,7 +69,7 @@ class App {
 
     let btcBlockchainManager: BtcBlockchainManager
     let evmSyncSourceManager: EvmSyncSourceManager
-    let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
+    let restoreStateManager: RestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
     let binanceKitManager: BinanceKitManager
@@ -195,10 +195,10 @@ class App {
         let evmSyncSourceStorage = EvmSyncSourceStorage(dbPool: dbPool)
         evmSyncSourceManager = EvmSyncSourceManager(testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, evmSyncSourceStorage: evmSyncSourceStorage)
 
-        let evmAccountRestoreStateStorage = EvmAccountRestoreStateStorage(dbPool: dbPool)
-        evmAccountRestoreStateManager = EvmAccountRestoreStateManager(storage: evmAccountRestoreStateStorage)
+        let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
+        restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
 
-        let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager, marketKit: marketKit)
+        let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, restoreStateManager: restoreStateManager, marketKit: marketKit)
         evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
         let hsLabelProvider = HsLabelProvider(networkManager: networkManager)
@@ -208,9 +208,9 @@ class App {
 
         binanceKitManager = BinanceKitManager()
         let tronKitManager = TronKitManager(testNetManager: testNetManager)
-        tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager)
+        tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 
-        tonKitManager = TonKitManager()
+        tonKitManager = TonKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)

@@ -16,19 +16,19 @@ class EvmAccountManager {
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
     private let evmKitManager: EvmKitManager
-    private let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
+    private let restoreStateManager: RestoreStateManager
 
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
-    init(blockchainType: BlockchainType, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager) {
+    init(blockchainType: BlockchainType, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, restoreStateManager: RestoreStateManager) {
         self.blockchainType = blockchainType
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.marketKit = marketKit
         self.evmKitManager = evmKitManager
-        self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
+        self.restoreStateManager = restoreStateManager
 
         subscribe(ConcurrentDispatchQueueScheduler(qos: .userInitiated), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
     }
@@ -62,7 +62,7 @@ class EvmAccountManager {
             return
         }
 
-        if initial, account.origin == .restored, !account.watchAccount, !evmAccountRestoreStateManager.isRestored(account: account, blockchainType: blockchainType) {
+        if initial, account.origin == .restored, !account.watchAccount, !restoreStateManager.shouldRestore(account: account, blockchainType: blockchainType) {
             return
         }
 
