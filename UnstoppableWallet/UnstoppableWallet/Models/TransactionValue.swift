@@ -32,7 +32,7 @@ enum TransactionValue {
 
     var coin: Coin? {
         switch self {
-        case let .coinValue(token, _): return token.coin
+        case let .coinValue(token, _): return token.isCustom ? nil : token.coin
         default: return nil
         }
     }

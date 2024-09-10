@@ -51,7 +51,7 @@ class TonTransactionAdapter {
         case .all: ()
         case .incoming: type = .incoming
         case .outgoing: type = .outgoing
-        case .swap: type = .unsupported
+        case .swap: type = .swap
         case .approve: type = .unsupported
         }
 
