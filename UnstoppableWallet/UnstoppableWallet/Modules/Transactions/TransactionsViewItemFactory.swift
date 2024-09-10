@@ -419,10 +419,43 @@ class TransactionsViewItemFactory {
                     if let currencyValue = item.currencyValue {
                         secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                     }
+                case let .burn(value):
+                    iconType = singleValueIconType(source: record.source, value: value)
+                    title = "transactions.burn".localized
+                    subTitle = value.fullName
+                    primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .outgoing))
+
+                    if let currencyValue = item.currencyValue {
+                        secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    }
+                case let .mint(value):
+                    iconType = singleValueIconType(source: record.source, value: value)
+                    title = "transactions.mint".localized
+                    subTitle = value.fullName
+                    primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .incoming))
+
+                    if let currencyValue = item.currencyValue {
+                        secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    }
+                case let .swap(routerName, routerAddress, valueIn, valueOut):
+                    iconType = doubleValueIconType(source: record.source, primaryValue: valueOut, secondaryValue: valueIn)
+                    title = "transactions.swap".localized
+                    subTitle = routerName ?? routerAddress.shortened
+                    primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, .incoming))
+                    secondaryValue = BaseTransactionsViewModel.Value(text: coinString(from: valueIn), type: type(value: valueIn, .outgoing))
                 case let .contractDeploy(interfaces):
                     iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
                     title = "transactions.contract_deploy".localized
                     subTitle = interfaces.joined(separator: ", ")
+                case let .contractCall(address, value, _):
+                    iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
+                    title = "transactions.contract_call".localized
+                    subTitle = address.shortened
+                    primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .outgoing))
+
+                    if let currencyValue = item.currencyValue {
+                        secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    }
                 case let .unsupported(type):
                     iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
                     title = "transactions.ton_transaction.title".localized

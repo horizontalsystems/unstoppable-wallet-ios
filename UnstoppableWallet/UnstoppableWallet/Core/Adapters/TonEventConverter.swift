@@ -65,15 +65,20 @@ class TonEventConverter {
                 return .unsupported(type: "Jetton Transfer")
             }
         case let .jettonBurn(action):
-            return .unsupported(type: "Jetton Burn")
+            return .burn(value: jettonValue(jetton: action.jetton, value: action.amount, sign: .minus))
         case let .jettonMint(action):
-            return .unsupported(type: "Jetton Mint")
+            return .mint(value: jettonValue(jetton: action.jetton, value: action.amount, sign: .plus))
         case let .contractDeploy(action):
             return .contractDeploy(interfaces: action.interfaces)
         case let .jettonSwap(action):
-            return .unsupported(type: "Jetton Swap")
+            return .swap(
+                routerName: action.router.name,
+                routerAddress: format(address: action.router),
+                valueIn: action.jettonMasterIn.map { jettonValue(jetton: $0, value: action.amountIn, sign: .minus) } ?? tonValue(value: action.tonIn ?? 0, sign: .minus),
+                valueOut: action.jettonMasterOut.map { jettonValue(jetton: $0, value: action.amountOut, sign: .plus) } ?? tonValue(value: action.tonOut ?? 0, sign: .plus)
+            )
         case let .smartContract(action):
-            return .unsupported(type: "Smart Contract")
+            return .contractCall(address: format(address: action.contract), value: tonValue(value: action.tonAttached, sign: .minus), operation: action.operation)
         case let .unknown(rawType):
             return .unsupported(type: rawType)
         }

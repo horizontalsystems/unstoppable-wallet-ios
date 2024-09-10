@@ -1247,6 +1247,7 @@
 "transactions.unknown_transaction.description" = "Transaction can not be parsed";
 
 "transactions.ton_transaction.title" = "Ton Transaction";
+"transactions.contract" = "Contract";
 
 // Transaction Info
 
