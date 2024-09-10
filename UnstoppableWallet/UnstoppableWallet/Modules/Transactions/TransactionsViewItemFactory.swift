@@ -59,12 +59,14 @@ class TransactionsViewItemFactory {
         switch value {
         case let .nftValue(nftUid, _, _, _):
             return .icon(
-                imageUrl: nftMetadata[nftUid]?.previewImageUrl,
+                url: nftMetadata[nftUid]?.previewImageUrl,
+                alternativeUrl: nil,
                 placeholderImageName: "placeholder_nft_32"
             )
         default:
             return .icon(
-                imageUrl: value.coin?.imageUrl,
+                url: value.coin?.imageUrl,
+                alternativeUrl: value.coin?.image,
                 placeholderImageName: source.blockchainType.placeholderImageName(tokenProtocol: value.tokenProtocol)
             )
         }
@@ -73,9 +75,11 @@ class TransactionsViewItemFactory {
     private func doubleValueIconType(source: TransactionSource, primaryValue: TransactionValue?, secondaryValue: TransactionValue?, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> BaseTransactionsViewModel.IconType {
         let frontType: TransactionImageComponent.ImageType
         let frontUrl: String?
+        var frontAlternativeUrl: String?
         let frontPlaceholder: String
         let backType: TransactionImageComponent.ImageType
         let backUrl: String?
+        var backAlternativeUrl: String?
         let backPlaceholder: String
 
         if let primaryValue {
@@ -87,6 +91,7 @@ class TransactionsViewItemFactory {
             default:
                 frontType = .circle
                 frontUrl = primaryValue.coin?.imageUrl
+                frontAlternativeUrl = primaryValue.coin?.image
                 frontPlaceholder = source.blockchainType.placeholderImageName(tokenProtocol: primaryValue.tokenProtocol)
             }
         } else {
@@ -104,6 +109,7 @@ class TransactionsViewItemFactory {
             default:
                 backType = .circle
                 backUrl = secondaryValue.coin?.imageUrl
+                backAlternativeUrl = secondaryValue.coin?.image
                 backPlaceholder = source.blockchainType.placeholderImageName(tokenProtocol: secondaryValue.tokenProtocol)
             }
         } else {
@@ -112,7 +118,16 @@ class TransactionsViewItemFactory {
             backPlaceholder = "placeholder_circle_32"
         }
 
-        return .doubleIcon(frontType: frontType, frontUrl: frontUrl, frontPlaceholder: frontPlaceholder, backType: backType, backUrl: backUrl, backPlaceholder: backPlaceholder)
+        return .doubleIcon(
+            frontType: frontType,
+            frontUrl: frontUrl,
+            frontAlternativeUrl: frontAlternativeUrl,
+            frontPlaceholder: frontPlaceholder,
+            backType: backType,
+            backUrl: backUrl,
+            backAlternativeUrl: backAlternativeUrl,
+            backPlaceholder: backPlaceholder
+        )
     }
 
     private func iconType(source: TransactionSource, incomingValues: [TransactionValue], outgoingValues: [TransactionValue], nftMetadata: [NftUid: NftAssetBriefMetadata]) -> BaseTransactionsViewModel.IconType {

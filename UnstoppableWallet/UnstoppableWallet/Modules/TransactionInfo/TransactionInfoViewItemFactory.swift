@@ -19,18 +19,22 @@ class TransactionInfoViewItemFactory {
 
     private func amount(source: TransactionSource, title: String, subtitle: String?, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         let iconUrl = transactionValue.coin?.imageUrl
+        let iconAlternativeUrl = transactionValue.coin?.image
         let iconPlaceholderImageName = source.blockchainType.placeholderImageName(tokenProtocol: transactionValue.tokenProtocol)
+
+        let coin = transactionValue.token.flatMap { $0.isCustom ? nil : $0.coin }
 
         if transactionValue.isMaxValue {
             return .amount(
                 title: title,
                 subtitle: subtitle,
                 iconUrl: iconUrl,
+                iconAlternativeUrl: iconAlternativeUrl,
                 iconPlaceholderImageName: iconPlaceholderImageName,
                 coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : "∞ \(transactionValue.coinCode)",
                 currencyAmount: balanceHidden ? BalanceHiddenManager.placeholder : "transactions.value.unlimited".localized,
                 type: type,
-                coin: transactionValue.coin
+                coin: coin
             )
         } else {
             var currencyValue: CurrencyValue?
@@ -43,11 +47,12 @@ class TransactionInfoViewItemFactory {
                 title: title,
                 subtitle: subtitle,
                 iconUrl: iconUrl,
+                iconAlternativeUrl: iconAlternativeUrl,
                 iconPlaceholderImageName: iconPlaceholderImageName,
                 coinAmount: balanceHidden ? BalanceHiddenManager.placeholder : transactionValue.formattedFull(signType: type.signType) ?? "n/a".localized,
                 currencyAmount: balanceHidden ? BalanceHiddenManager.placeholder : currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                 type: type,
-                coin: transactionValue.coin
+                coin: coin
             )
         }
     }

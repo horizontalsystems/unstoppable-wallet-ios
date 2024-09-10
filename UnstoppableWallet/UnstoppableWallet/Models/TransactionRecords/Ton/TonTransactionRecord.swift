@@ -23,7 +23,8 @@ class TonTransactionRecord: TransactionRecord {
             blockHeight: nil,
             confirmationsThreshold: nil,
             date: Date(timeIntervalSince1970: TimeInterval(event.timestamp)),
-            failed: false
+            failed: false,
+            spam: event.isScam
         )
     }
 
