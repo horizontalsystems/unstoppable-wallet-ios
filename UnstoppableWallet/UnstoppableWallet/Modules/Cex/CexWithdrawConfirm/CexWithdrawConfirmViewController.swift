@@ -123,7 +123,7 @@ extension CexWithdrawConfirmViewController: SectionsDataSource {
     private func row(viewItem: CexWithdrawConfirmViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
         case let .amount(title, iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
-            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, title: title, imageUrl: iconUrl, placeholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, title: title, imageUrl: iconUrl, alternativeImageUrl: nil, placeholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .address(title, value, contactAddress, statSection):
             var onAddToContact: (() -> Void)? = nil
             if let contactAddress {

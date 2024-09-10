@@ -39,11 +39,12 @@ enum CellComponent {
         )
     }
 
-    static func amountRow(tableView: SectionsTableView, rowInfo: RowInfo, title: String, subtitle: String? = nil, imageUrl: String?, placeholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, action: (() -> Void)? = nil) -> RowProtocol {
+    static func amountRow(tableView: SectionsTableView, rowInfo: RowInfo, title: String, subtitle: String? = nil, imageUrl: String?, alternativeImageUrl: String?, placeholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, action: (() -> Void)? = nil) -> RowProtocol {
         CellBuilderNew.row(
             rootElement: .hStack([
                 .image32 { (component: ImageComponent) in
-                    component.setImage(urlString: imageUrl, placeholder: UIImage(named: placeholderImageName))
+                    component.imageView.setImage(url: imageUrl, alternativeUrl: alternativeImageUrl, placeholder: UIImage(named: placeholderImageName))
+                    component.imageView.cornerRadius = CGFloat.iconSize32 / 2
                 },
                 .vStackCentered([
                     .text { (component: TextComponent) in
