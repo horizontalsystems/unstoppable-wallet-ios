@@ -502,6 +502,7 @@ extension ZcashAdapter {
             fsBlockDbRoot: fsBlockDbRootURL(uniqueId: uniqueId, network: network),
             generalStorageURL: generalStorageURL(uniqueId: uniqueId, network: network),
             dataDbURL: dataDbURL(uniqueId: uniqueId, network: network),
+            torDirURL: torDirURL(uniqueId: uniqueId, network: network),
             endpoint: LightWalletEndpoint(address: endPoint, port: 443, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
             network: network,
             spendParamsURL: spendParamsURL(uniqueId: uniqueId),
@@ -548,6 +549,10 @@ extension ZcashAdapter {
 
     private static func dataDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
         try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultDataDbName, isDirectory: false)
+    }
+
+    private static func torDirURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultTorDirName, isDirectory: true)
     }
 
     private static func spendParamsURL(uniqueId: String) throws -> URL {
@@ -741,7 +746,7 @@ extension ZcashAdapter: ISendZcashAdapter {
             switch try Recipient(address, network: network.networkType) {
             case .transparent:
                 return .transparent
-            case .sapling, .unified: // I'm keeping changes to the minimum. Unified Address should be treated as a different address type which will include some shielded pool and possibly others as well.
+            case .sapling, .unified, .tex: // I'm keeping changes to the minimum. Unified Address should be treated as a different address type which will include some shielded pool and possibly others as well.
                 return .shielded
             }
         } catch {
