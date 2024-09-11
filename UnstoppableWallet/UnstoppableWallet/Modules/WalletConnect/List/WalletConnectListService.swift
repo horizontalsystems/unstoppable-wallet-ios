@@ -3,7 +3,6 @@ import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
-import WalletConnectPairing
 import WalletConnectSign
 import WalletConnectUtils
 
@@ -46,10 +45,6 @@ extension WalletConnectListService {
         sessionManager.sessions.isEmpty
     }
 
-    var emptyPairingList: Bool {
-        sessionManager.pairings.isEmpty
-    }
-
     var items: [Item] {
         items(sessions: sessionManager.sessions)
     }
@@ -66,14 +61,6 @@ extension WalletConnectListService {
 
     var pendingRequestsObservable: Observable<[WalletConnectSign.Request]> {
         sessionManager.activePendingRequestsObservable
-    }
-
-    var pairings: [WalletConnectPairing.Pairing] {
-        sessionManager.pairings
-    }
-
-    var pairingsObservable: Observable<[WalletConnectPairing.Pairing]> {
-        sessionManager.pairingsObservable
     }
 
     var showSessionObservable: Observable<WalletConnectSign.Session> {
