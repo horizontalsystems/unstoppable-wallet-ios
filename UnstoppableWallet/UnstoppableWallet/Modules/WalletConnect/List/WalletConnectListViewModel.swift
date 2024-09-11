@@ -2,7 +2,6 @@ import Foundation
 import RxCocoa
 import RxRelay
 import RxSwift
-import WalletConnectPairing
 import WalletConnectSign
 
 class WalletConnectListViewModel {
@@ -17,7 +16,6 @@ class WalletConnectListViewModel {
     private let disableNewConnectionRelay = PublishRelay<Bool>()
 
     private let viewItemsRelay = BehaviorRelay<[WalletConnectListViewModel.ViewItem]>(value: [])
-    private let pairingCountRelay = BehaviorRelay<Int>(value: 0)
     private let showDisconnectingRelay = PublishRelay<Void>()
     private let showSuccessRelay = PublishRelay<Void>()
 
@@ -27,13 +25,11 @@ class WalletConnectListViewModel {
 
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.pendingRequestsObservable) { [weak self] in self?.sync(pendingRequests: $0) }
-        subscribe(disposeBag, service.pairingsObservable) { [weak self] in self?.sync(pairings: $0) }
         subscribe(disposeBag, service.showSessionObservable) { [weak self] in self?.show(session: $0) }
         subscribe(disposeBag, service.sessionKillingObservable) { [weak self] in self?.sync(sessionKillingState: $0) }
 
         sync(items: service.items)
         sync(pendingRequests: service.pendingRequests)
-        sync(pairings: service.pairings)
     }
 
     private func sync(items: [WalletConnectListService.Item]) {
@@ -55,10 +51,6 @@ class WalletConnectListViewModel {
         }
 
         viewItemsRelay.accept(viewItems)
-    }
-
-    private func sync(pairings: [WalletConnectPairing.Pairing]) {
-        pairingCountRelay.accept(pairings.count)
     }
 
     private func sync(pendingRequests _: [WalletConnectSign.Request]) {
@@ -87,10 +79,6 @@ extension WalletConnectListViewModel {
         viewItemsRelay.asDriver()
     }
 
-    var pairingCountDriver: Driver<Int> {
-        pairingCountRelay.asDriver()
-    }
-
     var showDisconnectingSignal: Signal<Void> {
         showDisconnectingRelay.asSignal()
     }
@@ -101,7 +89,7 @@ extension WalletConnectListViewModel {
 
     // NewConnection section
     var emptyList: Bool {
-        service.emptySessionList && service.emptyPairingList
+        service.emptySessionList
     }
 
     var disableNewConnectionSignal: Signal<Bool> {

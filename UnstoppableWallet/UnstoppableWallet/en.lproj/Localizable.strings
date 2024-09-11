@@ -1770,8 +1770,6 @@
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "No active sessions";
 
-"wallet_connect.list.pairings" = "Pairings";
-"wallet_connect.list.version_text" = "Version %@";
 "wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
 "wallet_connect_list.new_connection" = "New Connection";
 "wallet_connect_list.disconnecting" = "Disconnecting";

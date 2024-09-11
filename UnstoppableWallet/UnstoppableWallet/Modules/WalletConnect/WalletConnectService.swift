@@ -8,7 +8,6 @@ import RxSwift
 import Starscream
 import WalletConnectKMS
 import WalletConnectNetworking
-import WalletConnectPairing
 import WalletConnectRelay
 import WalletConnectSign
 import WalletConnectUtils
@@ -32,7 +31,6 @@ class WalletConnectService {
 
     private let sessionsItemUpdatedRelay = PublishRelay<Void>()
     private let pendingRequestsUpdatedRelay = PublishRelay<Void>()
-    private let pairingUpdatedRelay = PublishRelay<Void>()
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectSign.Request>()
 
     private let socketConnectionStatusRelay = PublishRelay<WalletConnectMainModule.ConnectionState>()
@@ -62,7 +60,7 @@ class WalletConnectService {
             description: info.description,
             url: info.url,
             icons: info.icons,
-            redirect: .init(native: DeepLinkManager.deepLinkScheme + "://", universal: nil)
+            redirect: try! .init(native: DeepLinkManager.deepLinkScheme + "://", universal: nil)
         )
 
         Web3Wallet.configure(
@@ -75,7 +73,6 @@ class WalletConnectService {
         connectionService.relayClient = Networking.instance
 
         updateSessions()
-        updatePairings()
     }
 
     func setUpAuthSubscribing() {
@@ -118,10 +115,6 @@ class WalletConnectService {
 
     private func updateSessions() {
         sessionsItemUpdatedRelay.accept(())
-    }
-
-    private func updatePairings() {
-        pairingUpdatedRelay.accept(())
     }
 }
 
@@ -199,31 +192,6 @@ extension WalletConnectService {
         pendingRequestsUpdatedRelay.asObservable()
     }
 
-    // works with pairings
-    public var pairings: [WalletConnectPairing.Pairing] {
-        Web3Wallet.instance.getPairings()
-    }
-
-    public var pairingUpdatedObservable: Observable<Void> {
-        pairingUpdatedRelay.asObservable()
-    }
-
-    public func disconnectPairing(topic: String) -> Single<Void> {
-        Single.create { observer in
-            Task { [weak self] in
-                do {
-                    try await Web3Wallet.instance.disconnectPairing(topic: topic)
-                    self?.updatePairings()
-                    observer(.success(()))
-                } catch {
-                    self?.updatePairings()
-                    observer(.error(error))
-                }
-            }
-            return Disposables.create()
-        }
-    }
-
     // connect/disconnect session
     public var receiveProposalObservable: Observable<WalletConnectSign.Session.Proposal> {
         receiveProposalSubject.asObservable()
@@ -250,10 +218,9 @@ extension WalletConnectService {
     }
 
     public func pair(uri: WalletConnectUtils.WalletConnectURI) async throws {
-        Task.init { [weak self] in
+        Task.init {
             do {
                 try await Web3Wallet.instance.pair(uri: uri)
-                self?.updatePairings()
             } catch {
                 // can't pair with dApp, duplicate pairing or can't parse uri
                 throw error
