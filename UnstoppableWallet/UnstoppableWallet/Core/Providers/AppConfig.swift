@@ -15,6 +15,7 @@ enum AppConfig {
     static let appGitHubRepository = "unstoppable-wallet-ios"
     static let appTwitterAccount = "unstoppablebyhs"
     static let appTelegramAccount = "unstoppable_announcements"
+    static let appTokenTelegramAccount = "BeUnstoppable_bot"
     static let mempoolSpaceUrl = "https://mempool.space"
     static let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.2/index.json")!
     static let faqIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/master/src/faq.json")!

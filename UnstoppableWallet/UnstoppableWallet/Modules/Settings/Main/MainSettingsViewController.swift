@@ -211,6 +211,10 @@ class MainSettingsViewController: ThemeViewController {
         stat(page: .settings, event: .open(page: .donate))
     }
 
+    private func onTokenTapped() {
+        UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)")
+    }
+
     private var accountRows: [RowProtocol] {
         [
             StaticRow(
@@ -453,6 +457,23 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
+    private var tokenRows: [RowProtocol] {
+        [
+            tableView.universalRow48(
+                id: "token",
+                image: .local(UIImage(named: "uwt_24")?.withTintColor(.themeJacob)),
+                title: .body("settings.get_your_tokens".localized),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isFirst: true,
+                isLast: true,
+                action: { [weak self] in
+                    self?.onTokenTapped()
+                }
+            ),
+        ]
+    }
+
     private var footerRows: [RowProtocol] {
         [
             StaticRow(
@@ -522,7 +543,8 @@ class MainSettingsViewController: ThemeViewController {
 extension MainSettingsViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "account", headerState: .margin(height: AppConfig.donateEnabled ? .margin32 : .margin12), rows: accountRows),
+            Section(id: "token", headerState: .margin(height: AppConfig.donateEnabled ? .margin32 : .margin12), rows: tokenRows),
+            Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), footerState: .margin(height: .margin24), rows: appearanceRows),
             Section(
                 id: "social",
