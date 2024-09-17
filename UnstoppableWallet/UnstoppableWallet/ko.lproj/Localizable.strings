@@ -1006,6 +1006,7 @@
 "coin_analytics.indicators.disclaimer" = "언제나 위험 관리를 적용하는 것을 기억하세요. 이것은 금융 조언이 아님을 유의하세요.";
 "coin_analytics.indicators.info.title" = "기술적 지표";
 "coin_analytics.indicators.info.description" = "우리는 볼린저 밴드 + RSI 전략을 사용하여 거래 신호를 결정합니다. 모든 계산은 일일 양봉을 기반으로 하며, 중장기적인 조언을 제공합니다. 이 전략의 본질은 자산 가격이 극단에 도달하여 볼린저 밴드 채널을 벗어나야 하며, RSI가 과매수/과매도 구간에 있어야 한다는 것입니다. 가격이 채널로 복귀한 후, 가격이 평균값으로 복귀하거나 다른 측면에서 채널을 뚫으려는 높은 확률이 있습니다. 강한 시장 움직임 중에는 올바른 신호가 나타나기 전에 여러 가질 수도 있음을 유의하십시오.\n\n거래에 위험 관리를 적용하는 것이 매우 중요하며, 시장 상황이 변할 경우 손실을 줄이는 것을 기억하세요! ";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "세부 사항 숨기기";
 "coin_analytics.indicators.show_details" = "세부 정보 보기";
 "coin_analytics.indicators.summary" = "요약";
@@ -1025,7 +1026,7 @@
 "coin_analytics.period.1w" = "1주일";
 "coin_analytics.period.1m" = "1 개월";
 
-"coin_analytics.details" = "상세 정보";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "이 프로젝트에는 분석 데이터가 없습니다.";
 
@@ -1225,6 +1226,7 @@
 "transactions.contract_call" = "계약 콜";
 "transactions.contract_creation" = "계약 생성";
 "transactions.external_call" = "외부 콜";
+"transactions.contract_deploy" = "Contract Deploy";
 
 "transactions.to" = "%@에게";
 "transactions.from" = "%@부터";
@@ -1244,6 +1246,9 @@
 
 "transactions.unknown_transaction.title" = "알 수 없는 트랜잭션";
 "transactions.unknown_transaction.description" = "트랜잭션을 구문 분석할 수 없습니다";
+
+"transactions.ton_transaction.title" = "Ton Transaction";
+"transactions.contract" = "Contract";
 
 // Transaction Info
 
@@ -1303,6 +1308,7 @@
 "settings.contact_us" = "문의하기";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.social_networks.footer" = "독점 비디오로 암호화폐를 배우고 정복하세요. 비공식적으로 우리를 알아가세요. 우리가 작업하는 것들을 가장 먼저 보실 수 있습니다.";
+"settings.get_your_tokens" = "Get Your Tokens";
 
 // Settings -> Base Currency
 
@@ -1659,6 +1665,7 @@
 "chart.about.read_less" = "덜 읽기";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1721,10 +1728,13 @@
 "add_token.already_added" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
 "add_token.invalid_contract_address" = "잘못된 계약 주소";
 "add_token.invalid_bep2_symbol" = "잘못된 BEP2 기호";
+"add_token.invalid_ton_address" = "Invalid Ton address";
 "add_token.contract_address_not_found" = "%@ 블록체인에서 계약 주소를 찾을 수 없습니다.";
+"add_token.jetton_master_not_found" = "Jetton Master not found in %@ blockchain";
 "add_token.bep2_symbol_not_found" = "BEP2 기호를 찾을 수 없음";
 "add_token.input_placeholder.contract_address" = "계약 주소";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 심볼";
+"add_token.input_placeholder.jetton_master_address" = "Jetton Master Address";
 "add_token.coin_name" = "코인 이름";
 "add_token.symbol" = "기호";
 "add_token.decimals" = "소수점";
@@ -1764,8 +1774,6 @@
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "활성 세션 없음";
 
-"wallet_connect.list.pairings" = "동기화";
-"wallet_connect.list.version_text" = "버전 %@";
 "wallet_connect.list.v1_bottom_text" = "WalletConnect의 첫 번째 버전에서는 요청을 보고 확인하기 위해 세션으로 이동해야 합니다.";
 "wallet_connect_list.new_connection" = "새로운 연결";
 "wallet_connect_list.disconnecting" = "연결을 끊는 중...";
@@ -1984,7 +1992,7 @@
 "nft_asset.best_offer" = "최고 제안";
 "nft_asset.properties" = "속성";
 "nft_asset.description" = "설명";
-"nft_asset.details" = "상세 정보";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "계약 주소";
 "nft_asset.details.token_id" = "토큰 ID";
 "nft_asset.details.token_standard" = "토큰 표준";
