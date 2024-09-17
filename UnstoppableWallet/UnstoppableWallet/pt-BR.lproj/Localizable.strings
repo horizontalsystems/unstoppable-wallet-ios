@@ -1007,6 +1007,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.indicators.disclaimer" = "Sempre lembre-se de aplicar o gerenciamento de risco, e observe que isso não é um conselho financeiro.";
 "coin_analytics.indicators.info.title" = "Technical Indicators";
 "coin_analytics.indicators.info.description" = "Nós utilizamos a estratégia Bollinger Bands + RSI para determinar sinais de negociação. Todas as análises são baseadas em candlesticks diários e fornecem orientação para um prazo moderadamente longo. A essência da estratégia é que o preço do ativo deve atingir um extremo, saindo do canal das Bandas de Bollinger, e o RSI deve estar na zona de sobrecompra/sobrevenda. Após o preço retornar ao canal, há uma alta probabilidade de o preço retornar aos valores médios ou tentar romper o canal pelo outro lado. Note que a estratégia pode fornecer vários sinais falsos durante movimentos fortes do mercado antes de um sinal correto aparecer.\n\nPor favor, lembre-se de que é muito importante aplicar gerenciamento de risco à negociação e lembrar-se de cortar as perdas se a situação de mercado mudar! ";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "Ocultar detalhes";
 "coin_analytics.indicators.show_details" = "Mostrar detalhes";
 "coin_analytics.indicators.summary" = "Resumo";
@@ -1026,7 +1027,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.period.1w" = "1 semana";
 "coin_analytics.period.1m" = "1 mês";
 
-"coin_analytics.details" = "Detalhes";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
 
@@ -1226,6 +1227,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.contract_call" = "Chamada de Contrato";
 "transactions.contract_creation" = "Criação de contrato";
 "transactions.external_call" = "Ligação Externa";
+"transactions.contract_deploy" = "Contract Deploy";
 
 "transactions.to" = "Para %@";
 "transactions.from" = "De %@";
@@ -1245,6 +1247,9 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "transactions.unknown_transaction.title" = "Transação Desconhecida";
 "transactions.unknown_transaction.description" = "Transação não pôde ser analisada";
+
+"transactions.ton_transaction.title" = "Ton Transaction";
+"transactions.contract" = "Contract";
 
 // Transaction Info
 
@@ -1304,6 +1309,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.contact_us" = "Fale Conosco";
 "settings.social_networks.label" = "Seja Unstoppable";
 "settings.social_networks.footer" = "Aprenda e domine cripto através de vídeos exclusivos. Conheça-nos informalmente. Seja o primeiro a ver as coisas em que trabalhamos.";
+"settings.get_your_tokens" = "Get Your Tokens";
 
 // Settings -> Base Currency
 
@@ -1658,6 +1664,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart.about.read_less" = "Ler Menos";
 
 "coin_page.return_of_investments" = "RDI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1720,10 +1727,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "add_token.already_added" = "Este token já está na lista de moedas";
 "add_token.invalid_contract_address" = "Endereço do contrato inválido";
 "add_token.invalid_bep2_symbol" = "Símbolo BEP2 inválido";
+"add_token.invalid_ton_address" = "Invalid Ton address";
 "add_token.contract_address_not_found" = "Endereço do contrato não encontrado em %@ blockchain";
+"add_token.jetton_master_not_found" = "Jetton Master not found in %@ blockchain";
 "add_token.bep2_symbol_not_found" = "Símbolo BEP2 não encontrado";
 "add_token.input_placeholder.contract_address" = "Endereço do Contrato";
 "add_token.input_placeholder.bep2_symbol" = "Símbolo BEP2";
+"add_token.input_placeholder.jetton_master_address" = "Jetton Master Address";
 "add_token.coin_name" = "Nome da Moeda";
 "add_token.symbol" = "Símbolo";
 "add_token.decimals" = "Decimais";
@@ -1763,8 +1773,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Nenhuma sessão ativa";
 
-"wallet_connect.list.pairings" = "Pareamento";
-"wallet_connect.list.version_text" = "Versão %@";
 "wallet_connect.list.v1_bottom_text" = "Na primeira versão do WalletConnect, você deve ir às sessões para ver e confirmar o pedido";
 "wallet_connect_list.new_connection" = "Nova Conexão";
 "wallet_connect_list.disconnecting" = "Desconectando";
@@ -1983,7 +1991,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "nft_asset.best_offer" = "Melhor Oferta";
 "nft_asset.properties" = "Propriedades";
 "nft_asset.description" = "Descrição";
-"nft_asset.details" = "Detalhes";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "Endereço do Contrato";
 "nft_asset.details.token_id" = "ID do Token";
 "nft_asset.details.token_standard" = "Critérios do Token";
