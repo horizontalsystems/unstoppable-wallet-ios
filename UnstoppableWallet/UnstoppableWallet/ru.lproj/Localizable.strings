@@ -328,8 +328,8 @@
 "balance.invalid_api_key" = "Недействительный ключ API";
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
 "balance.sort.header" = "Сортировка";
-"balance.sort.valueHighToLow" = "по балансу";
-"balance.sort.az" = "по названию";
+"balance.sort.valueHighToLow" = "Баланс";
+"balance.sort.az" = "Название";
 "balance.sort.price_change" = "по изменению цены (%)";
 
 "balance_error.change_source" = "Изменить источник";
@@ -766,7 +766,7 @@
 
 "market.tvl.platform_field.all" = "Все";
 
-"market.sort_by" = "Сортировать";
+"market.sort_by" = "Сортировка";
 
 "market.top.title" = "Лучшие токены";
 "market.top.description" = "Топ токенов по рыночной капитализации";
@@ -1009,6 +1009,7 @@
 "coin_analytics.indicators.disclaimer" = "Всегда помните о применении управления рисками, и обратите внимание, что это не финансовый совет.";
 "coin_analytics.indicators.info.title" = "Технические индикаторы";
 "coin_analytics.indicators.info.description" = "Мы используем стратегию Bollinger Bands + RSI для определения сигналов торговли. Все расчеты основаны на ежедневных свечах и предоставляют рекомендации на среднесрочный период. Суть стратегии заключается в том, что цена актива должна достичь экстремума, выбиваясь из канала Bollinger Bands, а RSI должен находиться в зоне перекупленности/перепроданности. После того как цена возвращается в канал, существует высокая вероятность того, что цена вернется к средним значениям или попытается пробить канал с другой стороны. Обратите внимание, что стратегия может давать несколько ложных сигналов во время сильных рыночных движений, прежде чем появится правильный сигнал.\n\nПожалуйста, помните, что очень важно применять управление рисками при торговле и помнить о сокращении убытков, если ситуация на рынке изменится!";
+"coin_analytics.indicators.details" = "Details";
 "coin_analytics.indicators.hide_details" = "Скрыть детали";
 "coin_analytics.indicators.show_details" = "Показать детали";
 "coin_analytics.indicators.summary" = "Общая оценка";
@@ -1028,7 +1029,7 @@
 "coin_analytics.period.1w" = "1 неделя";
 "coin_analytics.period.1m" = "1 месяц";
 
-"coin_analytics.details" = "Подробности";
+"coin_analytics.details" = "Details";
 
 "coin_analytics.not_available" = "В этом проекте нет аналитических данных";
 
@@ -1228,6 +1229,7 @@
 "transactions.contract_call" = "Вызов контракта";
 "transactions.contract_creation" = "Создание контракта";
 "transactions.external_call" = "Внешний вызов";
+"transactions.contract_deploy" = "Contract Deploy";
 
 "transactions.to" = "Кому %@";
 "transactions.from" = "От %@";
@@ -1247,6 +1249,9 @@
 
 "transactions.unknown_transaction.title" = "Неизвестная транзакция";
 "transactions.unknown_transaction.description" = "Транзакция не может быть обработана";
+
+"transactions.ton_transaction.title" = "Ton Transaction";
+"transactions.contract" = "Contract";
 
 // Transaction Info
 
@@ -1306,6 +1311,7 @@
 "settings.contact_us" = "Свяжитесь с нами";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.social_networks.footer" = "Изучайте и осваивайте криптовалюты с помощью эксклюзивных видео. Узнавайте о нас неформально. Будьте первыми, кто увидит то, над чем мы работаем.";
+"settings.get_your_tokens" = "Get Your Tokens";
 
 // Settings -> Base Currency
 
@@ -1552,7 +1558,7 @@
 
 "appearance.markets_tab" = "Вкладка рынки";
 "appearance.hide_markets" = "Скрыть рынки";
-"appearance.price_change" = "Изменение цены";
+"appearance.price_change" = "по изменению цены (%)";
 "appearance.price_change.24h" = "24ч";
 "appearance.price_change.1d" = "Полночь по UTC";
 
@@ -1660,6 +1666,7 @@
 "chart.about.read_less" = "Скрыть";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1722,10 +1729,13 @@
 "add_token.already_added" = "Этот токен уже есть в списке";
 "add_token.invalid_contract_address" = "Недействительный адрес контракта";
 "add_token.invalid_bep2_symbol" = "Неверный символ BEP2";
+"add_token.invalid_ton_address" = "Invalid Ton address";
 "add_token.contract_address_not_found" = "Адрес контракта не найден в %@ блокчейне";
+"add_token.jetton_master_not_found" = "Jetton Master not found in %@ blockchain";
 "add_token.bep2_symbol_not_found" = "Символ BEP2 не найден";
 "add_token.input_placeholder.contract_address" = "Адрес контракта";
 "add_token.input_placeholder.bep2_symbol" = "Символ BEP2";
+"add_token.input_placeholder.jetton_master_address" = "Jetton Master Address";
 "add_token.coin_name" = "Название токена";
 "add_token.symbol" = "Символ";
 "add_token.decimals" = "Десятичные знаки";
@@ -1765,8 +1775,6 @@
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Нет активных сессий";
 
-"wallet_connect.list.pairings" = "Соединения";
-"wallet_connect.list.version_text" = "Версия %@";
 "wallet_connect.list.v1_bottom_text" = "В первой версии WalletConnect вы должны войти в сессии, чтобы увидеть и подтвердить запрос.";
 "wallet_connect_list.new_connection" = "Новое соединение";
 "wallet_connect_list.disconnecting" = "Отсоединение";
@@ -1986,7 +1994,7 @@
 "nft_asset.best_offer" = "Лучшее предложение";
 "nft_asset.properties" = "Параметры";
 "nft_asset.description" = "Описание";
-"nft_asset.details" = "Подробности";
+"nft_asset.details" = "Details";
 "nft_asset.details.contract_address" = "Адрес контракта";
 "nft_asset.details.token_id" = "ID токена";
 "nft_asset.details.token_standard" = "Стандарт Токена";
