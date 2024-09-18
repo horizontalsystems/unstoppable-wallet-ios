@@ -1729,13 +1729,13 @@
 "add_token.already_added" = "Этот токен уже есть в списке";
 "add_token.invalid_contract_address" = "Недействительный адрес контракта";
 "add_token.invalid_bep2_symbol" = "Неверный символ BEP2";
-"add_token.invalid_ton_address" = "Invalid Ton address";
+"add_token.invalid_ton_address" = "Неверный Ton адрес";
 "add_token.contract_address_not_found" = "Адрес контракта не найден в %@ блокчейне";
-"add_token.jetton_master_not_found" = "Jetton Master not found in %@ blockchain";
+"add_token.jetton_master_not_found" = "Jetton Master не найден в блокчейне %@";
 "add_token.bep2_symbol_not_found" = "Символ BEP2 не найден";
 "add_token.input_placeholder.contract_address" = "Адрес контракта";
 "add_token.input_placeholder.bep2_symbol" = "Символ BEP2";
-"add_token.input_placeholder.jetton_master_address" = "Jetton Master Address";
+"add_token.input_placeholder.jetton_master_address" = "Jetton Master адрес";
 "add_token.coin_name" = "Название токена";
 "add_token.symbol" = "Символ";
 "add_token.decimals" = "Десятичные знаки";
