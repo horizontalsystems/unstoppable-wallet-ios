@@ -1227,7 +1227,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transactions.contract_call" = "Vertragsaufruf";
 "transactions.contract_creation" = "Vertragserstellung";
 "transactions.external_call" = "Externe Anrufe";
-"transactions.contract_deploy" = "Contract Deploy";
+"transactions.contract_deploy" = "Vertragsvergabe";
 
 "transactions.to" = "An %@";
 "transactions.from" = "Von %@";
@@ -1248,8 +1248,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transactions.unknown_transaction.title" = "Unbekannte Transaktion";
 "transactions.unknown_transaction.description" = "Transaktion kann nicht analysiert werden";
 
-"transactions.ton_transaction.title" = "Ton Transaction";
-"transactions.contract" = "Contract";
+"transactions.ton_transaction.title" = "Ton Transaktion";
+"transactions.contract" = "Vertrag";
 
 // Transaction Info
 
@@ -1309,7 +1309,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.contact_us" = "Kontaktiere uns";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.social_networks.footer" = "Lernen Sie Kryptographie über exklusive Videos. Lernen Sie uns informell kennen. Sei der Erste, der Dinge sieht, an denen wir arbeiten.";
-"settings.get_your_tokens" = "Get Your Tokens";
+"settings.get_your_tokens" = "Obtenez des jetons UWT";
 
 // Settings -> Base Currency
 
@@ -1727,13 +1727,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "add_token.already_added" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste";
 "add_token.invalid_contract_address" = "Ungültige Vertragsadresse";
 "add_token.invalid_bep2_symbol" = "Ungültiges BEP2-Symbol";
-"add_token.invalid_ton_address" = "Invalid Ton address";
+"add_token.invalid_ton_address" = "Ungültige Ton Adresse";
 "add_token.contract_address_not_found" = "Vertragsadresse in %@ Blockchain nicht gefunden";
-"add_token.jetton_master_not_found" = "Jetton Master not found in %@ blockchain";
+"add_token.jetton_master_not_found" = "Jetton Master nicht in %@ Blockchain gefunden";
 "add_token.bep2_symbol_not_found" = "BEP2-Symbol nicht gefunden";
 "add_token.input_placeholder.contract_address" = "Vertragsadresse";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
-"add_token.input_placeholder.jetton_master_address" = "Jetton Master Address";
+"add_token.input_placeholder.jetton_master_address" = "Jetton Hauptadresse";
 "add_token.coin_name" = "Münzname";
 "add_token.symbol" = "Symbol";
 "add_token.decimals" = "Dezimalen";
