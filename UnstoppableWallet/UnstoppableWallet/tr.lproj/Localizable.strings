@@ -1007,7 +1007,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.indicators.disclaimer" = "Her zaman risk yönetimini uygulamayı unutmayın ve bu finansal tavsiye değildir.";
 "coin_analytics.indicators.info.title" = "Teknik Göstergeleri";
 "coin_analytics.indicators.info.description" = "Bollinger Bantları + RSI stratejisini kullanarak işlem sinyallerini belirliyoruz. Tüm hesaplamalar günlük mum grafiklerine dayanmakta ve ortalama uzun vadeli bir strateji için tavsiyeler sunmaktadır. Stratejinin özü, varlık fiyatının Bollinger Bantları kanalından çıkarak aşırı seviyelere ulaşması ve RSI'nin aşırı alım/aşırı satım bölgesinde olması gerektiğidir. Fiyat kanala geri döndükten sonra, fiyatın ortalama değerlere geri dönme veya kanalı diğer taraftan kırmaya yönelik yüksek bir olasılığı vardır. Stratejinin güçlü piyasa hareketleri sırasında birkaç yanlış sinyal verebileceğini unutmayın, doğru bir sinyal ortaya çıkmadan önce.\n\nLütfen ticarette risk yönetimini uygulamanın çok önemli olduğunu ve piyasa durumu değişirse kayıpları kesmeyi unutmayın! ";
-"coin_analytics.indicators.details" = "Details";
+"coin_analytics.indicators.details" = "Ayrıntılar";
 "coin_analytics.indicators.hide_details" = "Detayları Gizle";
 "coin_analytics.indicators.show_details" = "Detayları Göster";
 "coin_analytics.indicators.summary" = "Kısa özet";
@@ -1027,7 +1027,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.period.1w" = "1 hafta";
 "coin_analytics.period.1m" = "1 ay";
 
-"coin_analytics.details" = "Details";
+"coin_analytics.details" = "Ayrıntılar";
 
 "coin_analytics.not_available" = "This project has no analytical data";
 
@@ -1227,7 +1227,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.contract_call" = "Sözleşme Çağrısı";
 "transactions.contract_creation" = "Sözleşme Oluşturma";
 "transactions.external_call" = "Harici Çağrı";
-"transactions.contract_deploy" = "Contract Deploy";
+"transactions.contract_deploy" = "Sözleşme Dağıtımı";
 
 "transactions.to" = "%@ kişisine";
 "transactions.from" = "%@ kişisinden";
@@ -1248,8 +1248,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.unknown_transaction.title" = "Bilinmeyen İşlem";
 "transactions.unknown_transaction.description" = "İşlem çözümlenemiyor";
 
-"transactions.ton_transaction.title" = "Ton Transaction";
-"transactions.contract" = "Contract";
+"transactions.ton_transaction.title" = "Ton İşlemi";
+"transactions.contract" = "Sözleşme";
 
 // Transaction Info
 
@@ -1313,7 +1313,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.contact_us" = "Bize Ulaşın";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.social_networks.footer" = "Özel videolar aracılığıyla kripto para birimini öğrenin ve ustalaşın. Bizi resmi olmayan bir şekilde tanıyın. Üzerinde çalıştığımız şeyleri ilk gören siz olun.";
-"settings.get_your_tokens" = "Get Your Tokens";
+"settings.get_your_tokens" = "UWT Token'ları Alın";
 
 // Settings -> Base Currency
 
@@ -1731,13 +1731,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "add_token.already_added" = "Bu token zaten kripto para yöneticisi listesindedir";
 "add_token.invalid_contract_address" = "Geçersiz sözleşme adresi";
 "add_token.invalid_bep2_symbol" = "Geçersiz BEP2 symbolu";
-"add_token.invalid_ton_address" = "Invalid Ton address";
+"add_token.invalid_ton_address" = "Geçersiz Ton adresi";
 "add_token.contract_address_not_found" = "Sözleşme adresi %@ blockchain'de bulunamadı";
-"add_token.jetton_master_not_found" = "Jetton Master not found in %@ blockchain";
+"add_token.jetton_master_not_found" = "Jetton Master %@ blockchain'inde bulunamadı";
 "add_token.bep2_symbol_not_found" = "BEP2 sembolü bulunamadı";
 "add_token.input_placeholder.contract_address" = "Sözleşme Adresi";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 sembolü";
-"add_token.input_placeholder.jetton_master_address" = "Jetton Master Address";
+"add_token.input_placeholder.jetton_master_address" = "Jetton Ana Adresi";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.symbol" = "Sembol";
 "add_token.decimals" = "Ondalıklar";
@@ -1995,7 +1995,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "nft_asset.best_offer" = "En İyi Teklif";
 "nft_asset.properties" = "Özellikler";
 "nft_asset.description" = "Açıklama";
-"nft_asset.details" = "Details";
+"nft_asset.details" = "Ayrıntılar";
 "nft_asset.details.contract_address" = "Sözleşme Adresi";
 "nft_asset.details.token_id" = "Token Kimliği";
 "nft_asset.details.token_standard" = "Token Standardı";
