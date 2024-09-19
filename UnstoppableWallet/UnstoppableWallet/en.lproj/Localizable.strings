@@ -1735,7 +1735,7 @@
 "wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Pending Requests";
-"wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
+"wallet_connect.main.no_any_supported_chains" = "No supported chains!";
 "wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
 "wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
 "wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
