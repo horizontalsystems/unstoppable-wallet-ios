@@ -1007,6 +1007,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.indicators.disclaimer" = "N'oubliez pas d'appliquer une gestion des risques, et notez que ceci n'est pas un conseil financier.";
 "coin_analytics.indicators.info.title" = "Indicateurs techniques";
 "coin_analytics.indicators.info.description" = "Nous utilisons la stratégie des Bandes de Bollinger + RSI pour déterminer les signaux de trading. Toutes les calculs sont basés sur des chandeliers quotidiens et fournissent des conseils pour un terme modérément long. L'essence de la stratégie est que le prix de l'actif doit atteindre un niveau extrême, en sortant du canal des Bandes de Bollinger, et le RSI doit être dans la zone de surachat/survente. Après que le prix revienne dans le canal, il y a une forte probabilité que le prix revienne vers les valeurs moyennes ou tente de casser le canal de l'autre côté. Notez que la stratégie peut donner plusieurs faux signaux lors de mouvements de marché forts avant qu'un signal correct n'apparaisse.\n\nVeuillez vous rappeler qu'il est très important d'appliquer une gestion des risques au trading et de couper les pertes si la situation du marché change!";
+"coin_analytics.indicators.details" = "Détailles";
 "coin_analytics.indicators.hide_details" = "Masquer les détails";
 "coin_analytics.indicators.show_details" = "Afficher les détails";
 "coin_analytics.indicators.summary" = "Résumé";
@@ -1226,6 +1227,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "transactions.contract_call" = "Appel de contrat";
 "transactions.contract_creation" = "Création du contrat";
 "transactions.external_call" = "Appel externe";
+"transactions.contract_deploy" = "Déploiement du contrat";
 
 "transactions.to" = "A %@";
 "transactions.from" = "De %@";
@@ -1245,6 +1247,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "transactions.unknown_transaction.title" = "Transaction inconnue";
 "transactions.unknown_transaction.description" = "La transaction ne peut pas être analysée";
+
+"transactions.ton_transaction.title" = "Ton Transaction";
+"transactions.contract" = "Contract";
 
 // Transaction Info
 
@@ -1304,6 +1309,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.contact_us" = "Contactez-nous";
 "settings.social_networks.label" = "Soyez Unstoppable";
 "settings.social_networks.footer" = "Apprenez et maîtrisez les crypto-monnaies grâce à des vidéos exclusives. Faites connaissance avec nous de manière informelle. Soyez les premiers à voir les projets sur lesquels nous travaillons.";
+"settings.get_your_tokens" = "Obtenez des jetons UWT";
 
 // Settings -> Base Currency
 
@@ -1658,6 +1664,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "chart.about.read_less" = "Moins d’infos";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "contre %@";
 
 // Create Wallet
 
@@ -1720,10 +1727,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "add_token.already_added" = "Ce token figure déjà sur la liste du gestionnaire des pièces";
 "add_token.invalid_contract_address" = "Adresse du contrat invalide";
 "add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.invalid_ton_address" = "Adresse [Ton] non valide";
 "add_token.contract_address_not_found" = "Adresse du contrat introuvable dans la blockchain %@";
+"add_token.jetton_master_not_found" = "Jetton Master n'a pas été trouvé dans la blockchain %@";
 "add_token.bep2_symbol_not_found" = "Symbole BEP2 introuvable";
 "add_token.input_placeholder.contract_address" = "Adresse du contrat";
 "add_token.input_placeholder.bep2_symbol" = "Symbole BEP2";
+"add_token.input_placeholder.jetton_master_address" = "Adresse du Jetton Master";
 "add_token.coin_name" = "Nom de la pièce";
 "add_token.symbol" = "Symbole";
 "add_token.decimals" = "Decimales";
@@ -1763,8 +1773,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Aucune session active";
 
-"wallet_connect.list.pairings" = "Pairings";
-"wallet_connect.list.version_text" = "Version %@";
 "wallet_connect.list.v1_bottom_text" = "Dans la première version de WalletConnect, vous devez vous rendre dans les sessions pour voir et confirmer la demande.";
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
 "wallet_connect_list.disconnecting" = "Déconnexion";

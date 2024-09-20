@@ -882,7 +882,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.month6" = "6 Meses";
 "market.advanced_search.year" = "1 Ano";
 
-"market.advanced_search.day.short" = "24H";
+"market.advanced_search.day.short" = "24h";
 "market.advanced_search.week.short" = "7D";
 "market.advanced_search.month.short" = "1M";
 
@@ -1005,8 +1005,9 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "coin_analytics.indicators.title" = "Indicadores Técnicos";
 "coin_analytics.indicators.disclaimer" = "Sempre lembre-se de aplicar o gerenciamento de risco, e observe que isso não é um conselho financeiro.";
-"coin_analytics.indicators.info.title" = "Technical Indicators";
+"coin_analytics.indicators.info.title" = "Indicadores Técnicos";
 "coin_analytics.indicators.info.description" = "Nós utilizamos a estratégia Bollinger Bands + RSI para determinar sinais de negociação. Todas as análises são baseadas em candlesticks diários e fornecem orientação para um prazo moderadamente longo. A essência da estratégia é que o preço do ativo deve atingir um extremo, saindo do canal das Bandas de Bollinger, e o RSI deve estar na zona de sobrecompra/sobrevenda. Após o preço retornar ao canal, há uma alta probabilidade de o preço retornar aos valores médios ou tentar romper o canal pelo outro lado. Note que a estratégia pode fornecer vários sinais falsos durante movimentos fortes do mercado antes de um sinal correto aparecer.\n\nPor favor, lembre-se de que é muito importante aplicar gerenciamento de risco à negociação e lembrar-se de cortar as perdas se a situação de mercado mudar! ";
+"coin_analytics.indicators.details" = "Detalhes";
 "coin_analytics.indicators.hide_details" = "Ocultar detalhes";
 "coin_analytics.indicators.show_details" = "Mostrar detalhes";
 "coin_analytics.indicators.summary" = "Resumo";
@@ -1030,7 +1031,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators" = "Indicadores Técnicos";
 "coin_analytics.technical_indicators.info1" = "Resumo: Esta é uma visão geral das técnicas de um ativo, considerando uma variedade de indicadores técnicos e prazos. Ele fornece uma visão de consenso (Comprar, Vender ou Neutra) com base nestes indicadores.";
 "coin_analytics.technical_indicators.info2" = "Movendo Médias (PMA): Estes são indicadores técnicos usados comumente que suavizam dados de preços para criar um indicador de evolução de seguimento. Eles mostram o preço médio durante um período de tempo específico. Existem vários tipos de MAs:\n\nMédia Simples de Movimento (SMA): Isso calcula a média de uma gama de preços selecionada. usualmente fechando preços, pelo número de períodos desse intervalo.\n\nMédia exponencial em movimento (EMA): Isso dá mais peso aos preços recentes, respondendo assim mais rapidamente às alterações recentes de preços.";
 "coin_analytics.technical_indicators.info3" = "Osciladores: Estes são indicadores técnicos que variam ao longo do tempo em uma banda (acima e abaixo de uma linha centralizada, ou entre os níveis do conjunto). Destinam-se a ajudar a identificar condições sobrecompradas e sobrevendidas num mercado. Aqui estão alguns osciladores comuns:\n\nÍndice de Força Relativa (RSI): Isso mede a velocidade e a mudança de movimentos de preços. Geralmente é utilizada para identificar condições sobrecompradas ou sobrevendidas.\n\nDivergência Média de Convergência (MACD): Isso é usado para identificar sinais potenciais de compra e venda. Ele aciona sinais técnicos quando cruza acima (para comprar) ou abaixo (para vender) sua linha de sinal.";
@@ -1226,6 +1227,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.contract_call" = "Chamada de Contrato";
 "transactions.contract_creation" = "Criação de contrato";
 "transactions.external_call" = "Ligação Externa";
+"transactions.contract_deploy" = "Contrato de implantação";
 
 "transactions.to" = "Para %@";
 "transactions.from" = "De %@";
@@ -1245,6 +1247,9 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "transactions.unknown_transaction.title" = "Transação Desconhecida";
 "transactions.unknown_transaction.description" = "Transação não pôde ser analisada";
+
+"transactions.ton_transaction.title" = "Ton Transação";
+"transactions.contract" = "Contrato";
 
 // Transaction Info
 
@@ -1304,6 +1309,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.contact_us" = "Fale Conosco";
 "settings.social_networks.label" = "Seja Unstoppable";
 "settings.social_networks.footer" = "Aprenda e domine cripto através de vídeos exclusivos. Conheça-nos informalmente. Seja o primeiro a ver as coisas em que trabalhamos.";
+"settings.get_your_tokens" = "Obtenha tokens UWT";
 
 // Settings -> Base Currency
 
@@ -1551,7 +1557,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.markets_tab" = "Guia de Mercados";
 "appearance.hide_markets" = "Esconder Mercados";
 "appearance.price_change" = "Mudança de Preço";
-"appearance.price_change.24h" = "24H";
+"appearance.price_change.24h" = "24h";
 "appearance.price_change.1d" = "Meia-noite UTC";
 
 "appearance.launch_screen" = "Tela Inicial";
@@ -1629,7 +1635,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Key Types
 
-"chart.time_duration.day" = "24H";
+"chart.time_duration.day" = "24h";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1M";
@@ -1658,6 +1664,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart.about.read_less" = "Ler Menos";
 
 "coin_page.return_of_investments" = "RDI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1720,10 +1727,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "add_token.already_added" = "Este token já está na lista de moedas";
 "add_token.invalid_contract_address" = "Endereço do contrato inválido";
 "add_token.invalid_bep2_symbol" = "Símbolo BEP2 inválido";
+"add_token.invalid_ton_address" = "Endereço Ton inválido";
 "add_token.contract_address_not_found" = "Endereço do contrato não encontrado em %@ blockchain";
+"add_token.jetton_master_not_found" = "Jetton Master não encontrado na blockchain %@";
 "add_token.bep2_symbol_not_found" = "Símbolo BEP2 não encontrado";
 "add_token.input_placeholder.contract_address" = "Endereço do Contrato";
 "add_token.input_placeholder.bep2_symbol" = "Símbolo BEP2";
+"add_token.input_placeholder.jetton_master_address" = "Endereço do Mestre Jetton";
 "add_token.coin_name" = "Nome da Moeda";
 "add_token.symbol" = "Símbolo";
 "add_token.decimals" = "Decimais";
@@ -1763,8 +1773,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Nenhuma sessão ativa";
 
-"wallet_connect.list.pairings" = "Pareamento";
-"wallet_connect.list.version_text" = "Versão %@";
 "wallet_connect.list.v1_bottom_text" = "Na primeira versão do WalletConnect, você deve ir às sessões para ver e confirmar o pedido";
 "wallet_connect_list.new_connection" = "Nova Conexão";
 "wallet_connect_list.disconnecting" = "Desconectando";

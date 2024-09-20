@@ -731,8 +731,8 @@
 "market.time_period.2w" = "2周";
 "market.time_period.1m" = "1月";
 "market.time_period.3m" = "3月";
-"market.time_period.6m" = "6 Months";
-"market.time_period.1y" = "1 Year";
+"market.time_period.6m" = "6月";
+"market.time_period.1y" = "1年";
 "market.time_period.2y" = "2 年";
 "market.time_period.5y" = "5 年";
 "market.time_period.1d.short" = "1天";
@@ -879,8 +879,8 @@
 "market.advanced_search.week" = "1周";
 "market.advanced_search.week2" = "2周";
 "market.advanced_search.month" = "1月";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.month6" = "6月";
+"market.advanced_search.year" = "1年";
 
 "market.advanced_search.day.short" = "24时";
 "market.advanced_search.week.short" = "7天";
@@ -953,7 +953,7 @@
 "coin_overview.roi.day14" = "2周";
 "coin_overview.roi.day30" = "1月";
 "coin_overview.roi.day200" = "6月";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.year1" = "1年";
 
 "coin_overview.overview" = "行情";
 "coin_overview.description_warning" = "这是一个基于给定的加密货币所提供的参考材料生成的 AI 描述。它可能包含错误。";
@@ -1007,6 +1007,7 @@
 "coin_analytics.indicators.disclaimer" = "请记住始终要进行风险管理，并注意这不是财务建议";
 "coin_analytics.indicators.info.title" = "技术指标";
 "coin_analytics.indicators.info.description" = "我们使用布林带 + RSI 策略来确定交易信号。所有计算都基于日线图，并为中长期提供建议。该策略的本质是资产价格应该达到一个极端点，突破布林带通道，并且 RSI 应该处于超买/超卖区域。在价格回到通道后，有很高的概率价格回归到平均值或尝试从另一侧突破通道。请注意，在正确信号出现之前，该策略在市场强劲波动期间可能会出现多个虚假信号。\n\n请记住，在交易中应用风险管理非常重要，如果市场情况发生变化，请记得及时止损！ ";
+"coin_analytics.indicators.details" = "详细信息";
 "coin_analytics.indicators.hide_details" = "隐藏细节";
 "coin_analytics.indicators.show_details" = "显示详细信息";
 "coin_analytics.indicators.summary" = "总结";
@@ -1226,6 +1227,7 @@
 "transactions.contract_call" = "合约调用";
 "transactions.contract_creation" = "合约创建";
 "transactions.external_call" = "外部呼叫";
+"transactions.contract_deploy" = "合约部署";
 
 "transactions.to" = "接收人%@";
 "transactions.from" = "发送人%@";
@@ -1245,6 +1247,9 @@
 
 "transactions.unknown_transaction.title" = "未知交易";
 "transactions.unknown_transaction.description" = "无法解析交易";
+
+"transactions.ton_transaction.title" = "Ton 交易";
+"transactions.contract" = "合同";
 
 // Transaction Info
 
@@ -1303,7 +1308,8 @@
 "settings.tell_friends" = "分享给好友";
 "settings.contact_us" = "联系我们";
 "settings.social_networks.label" = "Be Unstoppable";
-"settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
+"settings.social_networks.footer" = "通过独家视频学习和掌握加密。非正式地了解我们。成为第一个看看我们正在工作的事情。";
+"settings.get_your_tokens" = "取得 UWT 代幣";
 
 // Settings -> Base Currency
 
@@ -1658,6 +1664,7 @@
 "chart.about.read_less" = "关闭";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1720,10 +1727,13 @@
 "add_token.already_added" = "该代币已在代币管理列表中";
 "add_token.invalid_contract_address" = "请输入正确的合约地址";
 "add_token.invalid_bep2_symbol" = "无效的 BEP2 符号";
+"add_token.invalid_ton_address" = "无效Ton 地址";
 "add_token.contract_address_not_found" = "在 %@ 区块链中找不到合同地址";
+"add_token.jetton_master_not_found" = "在 %@ 区块链中找不到杰顿大师";
 "add_token.bep2_symbol_not_found" = "找不到 BEP2 符号";
 "add_token.input_placeholder.contract_address" = "智能合约地址";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 符号";
+"add_token.input_placeholder.jetton_master_address" = "Jetton Master 地址";
 "add_token.coin_name" = "代币图片";
 "add_token.symbol" = "标志";
 "add_token.decimals" = "小数";
@@ -1763,8 +1773,6 @@
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
 
-"wallet_connect.list.pairings" = "货币对";
-"wallet_connect.list.version_text" = "版本%@";
 "wallet_connect.list.v1_bottom_text" = "在WalletConnect的第一个版本中，您必须进入会话以查看和确认请求";
 "wallet_connect_list.new_connection" = "新连接";
 "wallet_connect_list.disconnecting" = "正在断开连接";

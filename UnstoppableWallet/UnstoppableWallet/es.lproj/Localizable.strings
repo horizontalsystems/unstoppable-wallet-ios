@@ -810,7 +810,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.watchlist.signals.buy.description" = "Probable aumento del precio en el futuro cercano";
 "market.watchlist.signals.neutral.description" = "No hay una tendencia clara, el mercado está en equilibrio";
 "market.watchlist.signals.sell.description" = "Probable disminución del precio en el futuro cercano";
-"market.watchlist.signals.strong_sell.description" = "High probability of price decrease";
+"market.watchlist.signals.strong_sell.description" = "Alta probabilidad de disminución del precio";
 "market.watchlist.signals.risky.description" = "Nivel de riesgo elevado, requiere precaución";
 "market.watchlist.signals.warning" = "Recuerda siempre aplicar gestión de riesgos, y ten en cuenta que esto no es un consejo financiero.";
 "market.watchlist.signals.turn_on" = "Activar";
@@ -1007,6 +1007,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.indicators.disclaimer" = "Recuerda siempre aplicar gestión de riesgos, y ten en cuenta que esto no es un consejo financiero.";
 "coin_analytics.indicators.info.title" = "Indicadores Técnicos";
 "coin_analytics.indicators.info.description" = "Utilizamos la estrategia de Bollinger Bands + RSI para determinar señales de trading. Todos los cálculos se basan en velas diarias y proporcionan consejos para un término moderadamente largo. La esencia de la estrategia es que el precio del activo debe alcanzar un extremo, saliendo del canal de las Bandas de Bollinger, y el RSI debe estar en la zona de sobrecompra/sobreventa. Después de que el precio regrese al canal, hay una alta probabilidad de que el precio regrese a los valores medios o intente romper el canal desde el otro lado. Ten en cuenta que la estrategia puede dar varias señales falsas durante movimientos fuertes del mercado antes de que aparezca una señal correcta.\n\n¡Recuerda que es muy importante aplicar la gestión del riesgo al trading y recordar cortar pérdidas si la situación del mercado cambia! ";
+"coin_analytics.indicators.details" = "Detalles";
 "coin_analytics.indicators.hide_details" = "Ocultar Detalles";
 "coin_analytics.indicators.show_details" = "Mostrar Detalles";
 "coin_analytics.indicators.summary" = "Resumen";
@@ -1226,6 +1227,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.contract_call" = "Llamada de Contrato";
 "transactions.contract_creation" = "Creación de Contrato";
 "transactions.external_call" = "Llamada externa";
+"transactions.contract_deploy" = "Despliegue del contrato";
 
 "transactions.to" = "A %@";
 "transactions.from" = "Desde %@";
@@ -1245,6 +1247,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "transactions.unknown_transaction.title" = "Transacción desconocida";
 "transactions.unknown_transaction.description" = "La transacción no se puede analizar";
+
+"transactions.ton_transaction.title" = "Transacción Ton";
+"transactions.contract" = "Contrato";
 
 // Transaction Info
 
@@ -1304,6 +1309,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.contact_us" = "Contáctenos";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.social_networks.footer" = "Aprende y domina criptografía a través de vídeos exclusivos. Conozca informalmente. Sé el primero en ver las cosas en las que trabajamos.";
+"settings.get_your_tokens" = "Obtenha tokens UWT";
 
 // Settings -> Base Currency
 
@@ -1659,6 +1665,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "chart.about.read_less" = "Leer menos";
 
 "coin_page.return_of_investments" = "ROI";
+"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1721,10 +1728,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "add_token.already_added" = "Este token ya está en la lista del gestor de monedas";
 "add_token.invalid_contract_address" = "Dirección del contrato inválida";
 "add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.invalid_ton_address" = "Dirección Ton inválida";
 "add_token.contract_address_not_found" = "Dirección del contrato no encontrada en la cadena de bloques %@";
+"add_token.jetton_master_not_found" = "Jetton Master no encontrado en la cadena de bloques %@";
 "add_token.bep2_symbol_not_found" = "Símbolo BEP2 no encontrado";
 "add_token.input_placeholder.contract_address" = "Dirección del contrato";
 "add_token.input_placeholder.bep2_symbol" = "Símbolo BEP2";
+"add_token.input_placeholder.jetton_master_address" = "Dirección principal de Jetton";
 "add_token.coin_name" = "Nombre de moneda";
 "add_token.symbol" = "Símbolo";
 "add_token.decimals" = "Decimales";
@@ -1764,8 +1774,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect_list.title" = "Walletconnect";
 "wallet_connect.list.empty_view_text" = "No hay sesiones activas";
 
-"wallet_connect.list.pairings" = "Pairings";
-"wallet_connect.list.version_text" = "Versión %@";
 "wallet_connect.list.v1_bottom_text" = "En la primera versión de WalletConnect, usted debe entrar en las sesiones para ver y confirmar la solicitud";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
 "wallet_connect_list.disconnecting" = "Desconectando";
