@@ -5,6 +5,9 @@ class Eip155ProposalHandler {
     static let namespace = "eip155"
 
     static let supportedEvents = [
+        "connect",
+        "disconnect",
+        "message",
         "chainChanged",
         "accountsChanged",
     ]
