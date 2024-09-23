@@ -145,7 +145,7 @@ struct ReceiveAddressView: View {
                         .padding(.margin2)
                         .background(Color.white)
 
-                    Image(uiImage: UIImage(named: AppIcon.main.imageName) ?? UIImage())
+                    Image(AppIcon.main.imageName)
                         .resizable()
                         .scaledToFit()
                         .frame(width: appIconSize, height: appIconSize)
