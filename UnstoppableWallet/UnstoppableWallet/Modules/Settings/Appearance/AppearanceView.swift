@@ -136,7 +136,7 @@ struct AppearanceView: View {
                                     viewModel.appIcon = appIcon
                                 }) {
                                     VStack(spacing: .margin12) {
-                                        Image(uiImage: UIImage(named: appIcon.imageName) ?? UIImage())
+                                        Image(appIcon.imageName)
                                             .resizable()
                                             .scaledToFit()
                                             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
