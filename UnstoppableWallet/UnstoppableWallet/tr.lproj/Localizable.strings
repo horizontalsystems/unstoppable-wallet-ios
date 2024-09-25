@@ -1313,7 +1313,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.contact_us" = "Bize Ulaşın";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.social_networks.footer" = "Özel videolar aracılığıyla kripto para birimini öğrenin ve ustalaşın. Bizi resmi olmayan bir şekilde tanıyın. Üzerinde çalıştığımız şeyleri ilk gören siz olun.";
-"settings.get_your_tokens" = "UWT Token'ları Alın";
+"settings.get_your_tokens" = "Get UWT Tokens";
 
 // Settings -> Base Currency
 
