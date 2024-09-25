@@ -1309,7 +1309,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.contact_us" = "Fale Conosco";
 "settings.social_networks.label" = "Seja Unstoppable";
 "settings.social_networks.footer" = "Aprenda e domine cripto através de vídeos exclusivos. Conheça-nos informalmente. Seja o primeiro a ver as coisas em que trabalhamos.";
-"settings.get_your_tokens" = "Obtenha tokens UWT";
+"settings.get_your_tokens" = "Get UWT Tokens";
 
 // Settings -> Base Currency
 
