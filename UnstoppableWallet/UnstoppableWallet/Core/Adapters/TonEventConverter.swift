@@ -31,7 +31,7 @@ class TonEventConverter {
     }
 
     private func jettonValue(jetton: Jetton, value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
-        let query = TokenQuery(blockchainType: .ton, tokenType: .jetton(address: jetton.address.toString(bounceable: true)))
+        let query = TokenQuery(blockchainType: .ton, tokenType: .jetton(address: jetton.address.toString(testOnly: TonKitManager.isTestNet, bounceable: true)))
 
         if let token = try? coinManager.token(query: query) {
             let value = convertAmount(amount: value, decimals: token.decimals, sign: sign)
@@ -43,7 +43,7 @@ class TonEventConverter {
     }
 
     private func format(address: AccountAddress) -> String {
-        address.address.toString(bounceable: !address.isWallet)
+        address.address.toString(testOnly: TonKitManager.isTestNet, bounceable: !address.isWallet)
     }
 
     private func actionType(type: Action.`Type`) -> TonTransactionRecord.Action.`Type` {

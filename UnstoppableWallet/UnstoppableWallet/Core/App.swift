@@ -100,6 +100,8 @@ class App {
 
     let statManager: StatManager
 
+    let tonConnectManager: TonConnectManager
+
     let kitCleaner: KitCleaner
     let appManager: AppManager
 
@@ -313,6 +315,9 @@ class App {
 
         let statStorage = StatStorage(dbPool: dbPool)
         statManager = StatManager(marketKit: marketKit, storage: statStorage, userDefaultsStorage: userDefaultsStorage)
+
+        let tonConnectStorage = try TonConnectStorage(dbPool: dbPool)
+        tonConnectManager = TonConnectManager(storage: tonConnectStorage)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 

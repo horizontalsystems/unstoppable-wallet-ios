@@ -31,7 +31,7 @@ extension AddJettonBlockchainService: IAddTokenBlockchainService {
 
         do {
             let address = try TonSwift.Address.parse(reference)
-            reference = address.toString(bounceable: true)
+            reference = address.toString(testOnly: TonKitManager.isTestNet, bounceable: true)
         } catch {}
 
         return TokenQuery(blockchainType: blockchain.type, tokenType: .jetton(address: reference))

@@ -44,7 +44,7 @@ class TonKitManager {
 
         let tonKit = try TonKit.Kit.instance(
             address: address,
-            network: .mainNet,
+            network: Self.network,
             walletId: account.id,
             minLogLevel: .error
         )
@@ -159,6 +159,18 @@ extension TonKitManager {
 }
 
 extension TonKitManager {
+    static var network: TonKit.Network {
+        // .mainNet
+        .testNet
+    }
+
+    static var isTestNet: Bool {
+        switch network {
+        case .mainNet: return false
+        case .testNet: return true
+        }
+    }
+
     static func contract(publicKey: Data) -> WalletContract {
         WalletV4R2(publicKey: publicKey)
     }
@@ -177,6 +189,6 @@ extension TonKitManager {
 
 extension Jetton {
     var tokenType: TokenType {
-        .jetton(address: address.toString(bounceable: true))
+        .jetton(address: address.toString(testOnly: TonKitManager.isTestNet, bounceable: true))
     }
 }

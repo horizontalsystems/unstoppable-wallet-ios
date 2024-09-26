@@ -19,6 +19,7 @@ class MainSettingsViewController: ThemeViewController {
 
     private let manageAccountsCell = BaseSelectableThemeCell()
     private let walletConnectCell = BaseSelectableThemeCell()
+    private let tonConnectCell = BaseSelectableThemeCell()
     private let securityCell = BaseSelectableThemeCell()
     private let appearanceCell = BaseSelectableThemeCell()
     private let contactBookCell = BaseSelectableThemeCell()
@@ -69,6 +70,9 @@ class MainSettingsViewController: ThemeViewController {
 
         walletConnectCell.set(backgroundStyle: .lawrence)
         syncWalletConnectCell()
+
+        tonConnectCell.set(backgroundStyle: .lawrence)
+        syncTonConnectCell()
 
         securityCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncSecurityCell()
@@ -170,6 +174,16 @@ class MainSettingsViewController: ThemeViewController {
         )
     }
 
+    private func syncTonConnectCell(text: String? = nil, highlighted: Bool = false) {
+        buildTitleValue(
+            cell: tonConnectCell,
+            image: UIImage(named: "ton_connect_24"),
+            title: "TON Connect",
+            value: !highlighted ? text : nil,
+            badge: highlighted ? text : nil
+        )
+    }
+
     private func syncBaseCurrency(value: String? = nil) {
         buildTitleValue(cell: baseCurrencyCell, image: UIImage(named: "usd_24"), title: "settings.base_currency".localized, value: value)
     }
@@ -246,6 +260,15 @@ class MainSettingsViewController: ThemeViewController {
                 autoDeselect: true,
                 action: { [weak self] in
                     self?.viewModel.onTapWalletConnect()
+                }
+            ),
+            StaticRow(
+                cell: tonConnectCell,
+                id: "ton-connect",
+                height: .heightCell48,
+                autoDeselect: true,
+                action: { [weak self] in
+                    self?.onTapTonConnect()
                 }
             ),
             tableView.universalRow48(
@@ -537,6 +560,10 @@ class MainSettingsViewController: ThemeViewController {
         present(viewController, animated: true)
 
         stat(page: .settings, event: .open(page: .contactUs))
+    }
+
+    private func onTapTonConnect() {
+        navigationController?.pushViewController(TonConnectListView().toViewController(title: "TON Connect"), animated: true)
     }
 }
 

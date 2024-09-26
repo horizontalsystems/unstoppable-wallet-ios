@@ -19,6 +19,8 @@ enum SendHandlerFactory {
             return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
         case let .walletConnect(request):
             return WalletConnectSendHandler.instance(request: request)
+        case let .tonConnect(request):
+            return try? TonConnectSendHandler.instance(request: request)
         }
     }
 
