@@ -18,6 +18,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         .unsupported(uid: "moonriver"),
         .unsupported(uid: "okex-chain"),
         .optimism,
+        .base,
         .polygon,
         .unsupported(uid: "solana"),
         .unsupported(uid: "sora"),

@@ -12,6 +12,7 @@ class EvmBlockchainManager {
         .arbitrumOne,
         .gnosis,
         .fantom,
+        .base,
     ]
 
     private let syncSourceManager: EvmSyncSourceManager
@@ -99,6 +100,7 @@ extension EvmBlockchainManager {
         case .arbitrumOne: return .arbitrumOne
         case .gnosis: return .gnosis
         case .fantom: return .fantom
+        case .base: return .base
         default: fatalError("Unsupported blockchain type")
         }
     }

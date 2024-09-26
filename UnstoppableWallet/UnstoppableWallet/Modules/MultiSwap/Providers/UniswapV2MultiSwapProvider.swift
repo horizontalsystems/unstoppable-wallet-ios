@@ -16,6 +16,7 @@ class UniswapV2MultiSwapProvider: BaseUniswapV2MultiSwapProvider {
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
         switch (tokenIn.blockchainType, tokenOut.blockchainType) {
         case (.ethereum, .ethereum): return true
+        case (.base, .base): return true
         default: return false
         }
     }

@@ -32,6 +32,7 @@ enum AppConfig {
         .polygon: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .avalanche: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .optimism: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .base: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .arbitrumOne: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .gnosis: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .fantom: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
@@ -82,6 +83,10 @@ enum AppConfig {
 
     static var optimismEtherscanKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "OptimismEtherscanApiKey") as? String) ?? ""
+    }
+
+    static var basescanKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "BasescanApiKey") as? String) ?? ""
     }
 
     static var bscscanKey: String {
