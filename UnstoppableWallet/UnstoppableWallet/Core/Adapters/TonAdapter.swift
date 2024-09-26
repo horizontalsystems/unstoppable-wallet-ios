@@ -83,7 +83,7 @@ extension TonAdapter: IBalanceAdapter {
 
 extension TonAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
-        DepositAddress(tonKit.receiveAddress.toString(bounceable: false))
+        DepositAddress(tonKit.receiveAddress.toString(testOnly: TonKitManager.isTestNet, bounceable: false))
     }
 }
 

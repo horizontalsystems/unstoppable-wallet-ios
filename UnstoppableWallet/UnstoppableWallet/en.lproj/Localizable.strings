@@ -450,8 +450,10 @@
 
 "send.confirmation.title" = "Confirm";
 "send.confirmation.you_send" = "You Send";
+"send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "Transfer";
 "send.confirmation.to" = "To";
+"send.confirmation.from" = "From";
 "send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "Contact Name";
 "send.confirmation.domain" = "Domain";
@@ -465,6 +467,10 @@
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
 "send.confirmation.input" = "Input";
+"send.confirmation.comment" = "Comment";
+"send.confirmation.action" = "Action";
+"send.confirmation.status" = "Status";
+"send.confirmation.status.failed" = "Failed";
 
 "send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.invalid_data" = "Invalid Data";
@@ -1786,6 +1792,20 @@
 "wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
 "wallet_connect.paired_dapps.disconnect_all" = "Delete All";
 "wallet_connect.pending_requests.nonactive_footer" = "To open a request you must activate the desired wallet";
+
+// Ton Connect
+
+"ton_connect.list.new_connection" = "New Connection";
+"ton_connect.list.no_connected_apps" = "No Connected Apps";
+"ton_connect.list.disconnect_app" = "Disconnect App";
+"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.disconnect_app.disconnect" = "Disconnect";
+"ton_connect.connect.url" = "URL";
+"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.warning" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
+"ton_connect.connect.connect" = "Connect";
+"ton_connect.connect.reject" = "Reject";
 
 // App Status
 

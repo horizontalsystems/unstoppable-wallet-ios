@@ -149,6 +149,13 @@ enum AccountType {
         }
     }
 
+    var supportsTonConnect: Bool {
+        switch self {
+        case .mnemonic: return true
+        default: return false
+        }
+    }
+
     var supportsNft: Bool {
         switch self {
         case .cex: return false

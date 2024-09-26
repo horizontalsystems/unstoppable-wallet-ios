@@ -1,0 +1,93 @@
+openapi: 3.0.2
+info:
+  title: TonConnect
+  version: 1.0.0
+servers:
+  - url: "https://bridge.tonapi.io/bridge"
+paths:
+  /events:
+    get:
+      operationId: events
+      parameters:
+        - $ref: '#/components/parameters/clientIdParameter'
+        - name: last_event_id
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                format: binary
+  /message:
+    post:
+      operationId: message
+      parameters:
+        - name: client_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: ttl
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              contentEncoding: base64
+      responses:
+        '200':
+          $ref: '#/components/responses/Response'
+        'default':
+          $ref: '#/components/responses/Response'
+components:
+  parameters:
+    clientIdParameter:
+      in: query
+      name: client_id
+      required: true
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    toParameter:
+      in: query
+      name: to
+      required: true
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+  responses:
+    Response:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - statusCode
+            properties:
+              message:
+                type: string
+              statusCode:
+                type: integer
+                format: int64

@@ -51,7 +51,10 @@ enum MainModule {
         let widgetCoinHandler = WidgetCoinAppShowModule.handler(parentViewController: viewController)
         let sendAddressHandler = AddressAppShowModule.handler(parentViewController: viewController)
         let telegramUserHandler = TelegramUserHandler.handler(parentViewController: viewController)
+        let tonConnectHandler = TonConnectEventHandler(parentViewController: viewController)
+
         eventHandler.append(handler: deepLinkHandler)
+        eventHandler.append(handler: tonConnectHandler)
         eventHandler.append(handler: widgetCoinHandler)
         eventHandler.append(handler: sendAddressHandler)
         eventHandler.append(handler: telegramUserHandler)

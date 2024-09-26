@@ -15,4 +15,5 @@ enum SendData {
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider)
     case walletConnect(request: WalletConnectRequest)
+    case tonConnect(request: TonConnectSendTransactionRequest)
 }

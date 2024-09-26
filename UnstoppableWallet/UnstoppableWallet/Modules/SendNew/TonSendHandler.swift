@@ -49,7 +49,7 @@ extension TonSendHandler: ISendHandler {
 
         do {
             let _transferData = try adapter.transferData(recipient: address, amount: sendAmount, comment: memo)
-            let result = try await TonKit.Kit.emulate(transferData: _transferData, contract: contract, network: .mainNet)
+            let result = try await TonKit.Kit.emulate(transferData: _transferData, contract: contract, network: TonKitManager.network)
             let estimatedFee = TonAdapter.amount(kitAmount: result.totalFee)
 
             fee = estimatedFee
@@ -93,7 +93,8 @@ extension TonSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        try await TonKit.Kit.send(transferData: transferData, contract: contract, secretKey: secretKey, network: .mainNet)
+        let boc = try await TonKit.Kit.boc(transferData: transferData, contract: contract, secretKey: secretKey, network: TonKitManager.network)
+        try await TonKit.Kit.send(boc: boc, contract: contract, network: TonKitManager.network)
     }
 }
 

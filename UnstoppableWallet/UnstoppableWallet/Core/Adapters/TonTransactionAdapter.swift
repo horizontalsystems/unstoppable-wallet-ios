@@ -99,7 +99,7 @@ extension TonTransactionAdapter: ITransactionsAdapter {
                 tokenType = .native
             case .jetton:
                 if let jettonAddress = tagToken.jettonAddress {
-                    tokenType = .jetton(address: jettonAddress.toString(bounceable: true))
+                    tokenType = .jetton(address: jettonAddress.toString(testOnly: TonKitManager.isTestNet, bounceable: true))
                 }
             }
 
