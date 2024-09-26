@@ -28,6 +28,7 @@ class EvmSyncSourceManager {
         case .arbitrumOne: return .arbiscan(apiKey: AppConfig.arbiscanKey)
         case .gnosis: return .gnosis(apiKey: AppConfig.gnosisscanKey)
         case .fantom: return .fantom(apiKey: AppConfig.ftmscanKey)
+        case .base: return .basescan(apiKey: AppConfig.basescanKey)
         default: fatalError("Non-supported EVM blockchain")
         }
     }
@@ -181,6 +182,24 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                     name: "Ankr",
                     rpcSource: .http(urls: [URL(string: "https://rpc.ankr.com/fantom")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+            ]
+        case .base:
+            return [
+                EvmSyncSource(
+                    name: "Base",
+                    rpcSource: .baseRpcHttp(),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                    name: "LlamaNodes",
+                    rpcSource: .http(urls: [URL(string: "https://base.llamarpc.com")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                    name: "Omnia",
+                    rpcSource: .http(urls: [URL(string: "https://endpoints.omniatech.io/v1/base/mainnet/public")!], auth: nil),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
             ]

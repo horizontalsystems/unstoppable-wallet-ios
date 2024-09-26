@@ -1,6 +1,7 @@
 etherscan_api_key =
 arbiscan_api_key =
 optimism_etherscan_api_key =
+basescan_api_key =
 bscscan_api_key =
 polygonscan_api_key =
 gnosisscan_api_key =

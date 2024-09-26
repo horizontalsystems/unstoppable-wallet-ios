@@ -4,6 +4,8 @@
 <dict>
 	<key>ArbiscanApiKey</key>
 	<string>${arbiscan_api_key}</string>
+	<key>BasescanApiKey</key>
+	<string>${basescan_api_key}</string>
 	<key>BscscanApiKey</key>
 	<string>${bscscan_api_key}</string>
 	<key>CFBundleDevelopmentRegion</key>

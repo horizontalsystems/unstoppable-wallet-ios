@@ -19,7 +19,7 @@ class PancakeV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
         }
 
         switch tokenIn.blockchainType {
-        case .ethereum, .binanceSmartChain: return true
+        case .ethereum, .binanceSmartChain, .base: return true
         default: return false
         }
     }

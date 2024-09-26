@@ -19,7 +19,7 @@ class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
         }
 
         switch tokenIn.blockchainType {
-        case .ethereum, .binanceSmartChain, .polygon, .arbitrumOne: return true
+        case .ethereum, .binanceSmartChain, .polygon, .arbitrumOne, .base: return true
         default: return false
         }
     }

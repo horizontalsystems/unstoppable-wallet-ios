@@ -155,6 +155,7 @@ extension BlockchainType {
         case .arbitrumOne: return [.oneInch, .uniswapV3]
         case .gnosis: return [.oneInch]
         case .fantom: return [.oneInch]
+        case .base: return [.oneInch, .uniswap, .uniswapV3]
         default: return []
         }
     }
@@ -182,9 +183,9 @@ extension SwapModule.Dex {
 
         var allowedBlockchainTypes: [BlockchainType] {
             switch self {
-            case .uniswap: return [.ethereum]
-            case .uniswapV3: return [.ethereum, .binanceSmartChain, .arbitrumOne, .polygon]
-            case .oneInch: return [.ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom]
+            case .uniswap: return [.ethereum, .base]
+            case .uniswapV3: return [.ethereum, .binanceSmartChain, .arbitrumOne, .polygon, .base]
+            case .oneInch: return [.ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .base]
             case .pancake: return [.binanceSmartChain]
             case .pancakeV3: return [.ethereum, .binanceSmartChain]
             case .quickSwap: return [.polygon]
