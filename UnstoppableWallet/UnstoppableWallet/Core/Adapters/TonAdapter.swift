@@ -88,13 +88,8 @@ extension TonAdapter: IDepositAdapter {
 }
 
 extension TonAdapter: ISendTonAdapter {
-    func estimateFee(recipient: FriendlyAddress, amount: SendAmount, comment: String?) async throws -> Decimal {
-        let kitFee = try await tonKit.estimateFee(recipient: recipient, amount: sendAmount(amount: amount), comment: comment)
-        return Self.amount(kitAmount: kitFee)
-    }
-
-    func send(recipient: FriendlyAddress, amount: SendAmount, comment: String?) async throws {
-        try await tonKit.send(recipient: recipient, amount: sendAmount(amount: amount), comment: comment)
+    func transferData(recipient: FriendlyAddress, amount: SendAmount, comment: String?) throws -> TransferData {
+        try tonKit.transferData(recipient: recipient, amount: sendAmount(amount: amount), comment: comment)
     }
 
     private func sendAmount(amount: SendAmount) throws -> Kit.SendAmount {

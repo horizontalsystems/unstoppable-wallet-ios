@@ -6,6 +6,8 @@ import TonSwift
 
 class TonSendHandler {
     private let tonKit: TonKit.Kit
+    private let contract: WalletContract
+    private let secretKey: Data
     private let token: Token
     let baseToken: Token
     private let adapter: ISendTonAdapter & IBalanceAdapter
@@ -13,8 +15,10 @@ class TonSendHandler {
     private let address: FriendlyAddress
     private let memo: String?
 
-    init(tonKit: TonKit.Kit, token: Token, baseToken: Token, adapter: ISendTonAdapter & IBalanceAdapter, amount: Decimal, address: FriendlyAddress, memo: String?) {
+    init(tonKit: TonKit.Kit, contract: WalletContract, secretKey: Data, token: Token, baseToken: Token, adapter: ISendTonAdapter & IBalanceAdapter, amount: Decimal, address: FriendlyAddress, memo: String?) {
         self.tonKit = tonKit
+        self.contract = contract
+        self.secretKey = secretKey
         self.token = token
         self.baseToken = baseToken
         self.adapter = adapter
@@ -32,6 +36,7 @@ extension TonSendHandler: ISendHandler {
     func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
         var fee: Decimal?
         var transactionError: Error?
+        var transferData: TransferData?
         let tonBalance = TonAdapter.amount(kitAmount: tonKit.account?.balance)
 
         var sendAmount: TonAdapter.SendAmount = .amount(value: amount)
@@ -43,8 +48,12 @@ extension TonSendHandler: ISendHandler {
         var finalAmount = amount
 
         do {
-            let estimatedFee = try await adapter.estimateFee(recipient: address, amount: sendAmount, comment: memo)
+            let _transferData = try adapter.transferData(recipient: address, amount: sendAmount, comment: memo)
+            let result = try await TonKit.Kit.emulate(transferData: _transferData, contract: contract, network: .mainNet)
+            let estimatedFee = TonAdapter.amount(kitAmount: result.totalFee)
+
             fee = estimatedFee
+            transferData = _transferData
 
             if token.type.isNative {
                 switch sendAmount {
@@ -75,20 +84,16 @@ extension TonSendHandler: ISendHandler {
             memo: memo,
             fee: fee,
             transactionError: transactionError,
-            sendAmount: sendAmount
+            transferData: transferData
         )
     }
 
     func send(data: ISendData) async throws {
-        guard let data = data as? SendData else {
+        guard let data = data as? SendData, let transferData = data.transferData else {
             throw SendError.invalidData
         }
 
-        _ = try await adapter.send(
-            recipient: data.address,
-            amount: data.sendAmount,
-            comment: data.memo
-        )
+        try await TonKit.Kit.send(transferData: transferData, contract: contract, secretKey: secretKey, network: .mainNet)
     }
 }
 
@@ -100,16 +105,16 @@ extension TonSendHandler {
         let memo: String?
         private let fee: Decimal?
         private let transactionError: Error?
-        let sendAmount: TonAdapter.SendAmount
+        let transferData: TransferData?
 
-        init(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?, fee: Decimal?, transactionError: Error?, sendAmount: TonAdapter.SendAmount) {
+        init(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?, fee: Decimal?, transactionError: Error?, transferData: TransferData?) {
             self.token = token
             self.amount = amount
             self.address = address
             self.memo = memo
             self.fee = fee
             self.transactionError = transactionError
-            self.sendAmount = sendAmount
+            self.transferData = transferData
         }
 
         var feeData: FeeData? {
@@ -233,8 +238,14 @@ extension TonSendHandler {
             return nil
         }
 
+        guard let account = App.shared.accountManager.activeAccount, let (publicKey, secretKey) = try? TonKitManager.keyPair(accountType: account.type) else {
+            return nil
+        }
+
         return TonSendHandler(
             tonKit: tonKit,
+            contract: TonKitManager.contract(publicKey: publicKey),
+            secretKey: secretKey,
             token: token,
             baseToken: baseToken,
             adapter: adapter,
