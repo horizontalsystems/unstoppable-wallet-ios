@@ -29,31 +29,21 @@ class TonKitManager {
             return _tonKit
         }
 
-        let type: TonKit.Kit.WalletType
+        let address: TonSwift.Address
 
         switch account.type {
         case .mnemonic:
-            guard let seed = account.type.mnemonicSeed else {
-                throw AdapterError.unsupportedAccount
-            }
-
-            let hdWallet = HDWallet(seed: seed, coinType: 607, xPrivKey: 0, curve: .ed25519)
-            let privateKey = try hdWallet.privateKey(account: 0)
-            let privateRaw = Data(privateKey.raw.bytes)
-            let pair = try TweetNacl.NaclSign.KeyPair.keyPair(fromSeed: privateRaw)
-            let keyPair = KeyPair(publicKey: .init(data: pair.publicKey), privateKey: .init(data: pair.secretKey))
-
-            type = .full(keyPair)
-        case let .tonAddress(address):
-            let tonAddress = try TonSwift.Address.parse(address)
-            type = .watch(tonAddress)
+            let (publicKey, _) = try Self.keyPair(accountType: account.type)
+            let contract = Self.contract(publicKey: publicKey)
+            address = try contract.address()
+        case let .tonAddress(_address):
+            address = try TonSwift.Address.parse(_address)
         default:
             throw AdapterError.unsupportedAccount
         }
 
         let tonKit = try TonKit.Kit.instance(
-            type: type,
-            walletVersion: .v4,
+            address: address,
             network: .mainNet,
             walletId: account.id,
             minLogLevel: .error
@@ -165,6 +155,23 @@ extension TonKitManager {
 
     func tonKit(account: Account) throws -> TonKit.Kit {
         try queue.sync { try _tonKit(account: account) }
+    }
+}
+
+extension TonKitManager {
+    static func contract(publicKey: Data) -> WalletContract {
+        WalletV4R2(publicKey: publicKey)
+    }
+
+    static func keyPair(accountType: AccountType) throws -> (publicKey: Data, secretKey: Data) {
+        guard let seed = accountType.mnemonicSeed else {
+            throw AdapterError.unsupportedAccount
+        }
+
+        let hdWallet = HDWallet(seed: seed, coinType: 607, xPrivKey: 0, curve: .ed25519)
+        let privateKey = try hdWallet.privateKey(account: 0)
+        let privateRaw = Data(privateKey.raw.bytes)
+        return try TweetNacl.NaclSign.KeyPair.keyPair(fromSeed: privateRaw)
     }
 }
 

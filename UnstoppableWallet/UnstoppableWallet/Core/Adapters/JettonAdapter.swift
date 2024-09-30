@@ -120,21 +120,12 @@ extension JettonAdapter: IDepositAdapter {
 }
 
 extension JettonAdapter: ISendTonAdapter {
-    func estimateFee(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) async throws -> Decimal {
+    func transferData(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) throws -> TransferData {
         guard let jettonBalance else {
-            throw EstimateError.noWalletAddress
+            throw SendError.noJettonBalance
         }
 
-        let kitFee = try await tonKit.estimateFee(jettonWallet: jettonBalance.walletAddress, recipient: recipient, amount: sendAmount(jettonBalance: jettonBalance, amount: amount), comment: comment)
-        return TonAdapter.amount(kitAmount: kitFee)
-    }
-
-    func send(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) async throws {
-        guard let jettonBalance else {
-            throw EstimateError.noWalletAddress
-        }
-
-        try await tonKit.send(jettonWallet: jettonBalance.walletAddress, recipient: recipient, amount: sendAmount(jettonBalance: jettonBalance, amount: amount), comment: comment)
+        return try tonKit.transferData(jettonAddress: jettonBalance.jettonAddress, recipient: recipient, amount: sendAmount(jettonBalance: jettonBalance, amount: amount), comment: comment)
     }
 
     private func sendAmount(jettonBalance: JettonBalance, amount: TonAdapter.SendAmount) throws -> BigUInt {
@@ -152,8 +143,8 @@ extension JettonAdapter: ISendTonAdapter {
 }
 
 extension JettonAdapter {
-    enum EstimateError: Error {
-        case noWalletAddress
+    enum SendError: Error {
+        case noJettonBalance
     }
 
     enum AmountError: Error {
