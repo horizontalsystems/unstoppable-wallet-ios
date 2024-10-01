@@ -107,7 +107,7 @@ enum SendEvmConfirmationModule {
     }
 
     static func resendViewController(adapter: ITransactionsAdapter, type: ResendTransactionType, transactionHash: String) throws -> UIViewController {
-        guard let adapter = adapter as? EvmTransactionsAdapter, let fullTransaction = adapter.evmKit.transaction(hash: Data(hex: transactionHash.hs.stripHexPrefix())) else {
+        guard let adapter = adapter as? EvmTransactionsAdapter, let hash = transactionHash.hs.hexData, let fullTransaction = adapter.evmKit.transaction(hash: hash) else {
             throw CreateModuleError.wrongTransaction
         }
 
