@@ -100,7 +100,7 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
 
     func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         let address = address.flatMap { try? TronKit.Address(address: $0) }?.hex
-        let transactions = tronKit.transactions(tagQueries: [tagQuery(token: token, filter: filter, address: address)], fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
+        let transactions = tronKit.transactions(tagQueries: [tagQuery(token: token, filter: filter, address: address)], fromHash: from.flatMap { $0.transactionHash.hs.hexData }, limit: limit)
 
         return Single.just(transactions.compactMap { transactionConverter.transactionRecord(fromTransaction: $0) })
     }
