@@ -78,7 +78,26 @@ extension TonConnectSendHandler {
         }
 
         var rateCoins: [Coin] {
-            [] // todo
+            var coins = [Coin?]()
+
+            if let record {
+                for action in record.actions {
+                    switch action.type {
+                    case let .send(value, _, _, _): coins.append(value.coin)
+                    case let .receive(value, _, _): coins.append(value.coin)
+                    case let .burn(value): coins.append(value.coin)
+                    case let .mint(value): coins.append(value.coin)
+                    case let .swap(_, _, valueIn, valueOut):
+                        coins.append(valueIn.coin)
+                        coins.append(valueOut.coin)
+                    case .contractDeploy: ()
+                    case let .contractCall(_, value, _): coins.append(value.coin)
+                    case .unsupported: ()
+                    }
+                }
+            }
+
+            return coins.compactMap { $0 }
         }
 
         private func caution(transactionError: Error, feeToken: Token) -> CautionNew {
@@ -143,6 +162,7 @@ extension TonConnectSendHandler {
                         } else {
                             fields = [.levelValue(title: "send.confirmation.action".localized, value: "Send", level: .regular)]
                         }
+
                     case let .receive(value, from, comment):
                         if let token = value.token, let decimalValue = value.decimalValue {
                             fields = [
@@ -166,16 +186,48 @@ extension TonConnectSendHandler {
                         } else {
                             fields = [.levelValue(title: "send.confirmation.action".localized, value: "Receive", level: .regular)]
                         }
+
                     case .burn:
                         fields = [.levelValue(title: "send.confirmation.action".localized, value: "Burn", level: .regular)]
+
                     case .mint:
                         fields = [.levelValue(title: "send.confirmation.action".localized, value: "Mint", level: .regular)]
-                    case .swap:
-                        fields = [.levelValue(title: "send.confirmation.action".localized, value: "Swap", level: .regular)]
+
+                    case let .swap(_, _, valueIn, valueOut):
+                        if let tokenIn = valueIn.token, let decimalValueIn = valueIn.decimalValue, let tokenOut = valueOut.token, let decimalValueOut = valueOut.decimalValue {
+                            fields = [
+                                .amount(
+                                    title: "swap.you_pay".localized,
+                                    token: tokenIn,
+                                    coinValueType: .regular(coinValue: CoinValue(kind: .token(token: tokenIn), value: decimalValueIn)),
+                                    currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: decimalValueIn * $0) },
+                                    type: .neutral
+                                ),
+                                .amount(
+                                    title: "swap.you_get".localized,
+                                    token: tokenOut,
+                                    coinValueType: .regular(coinValue: CoinValue(kind: .token(token: tokenOut), value: decimalValueOut)),
+                                    currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: decimalValueOut * $0) },
+                                    type: .incoming
+                                ),
+                                .price(
+                                    title: "swap.price".localized,
+                                    tokenA: tokenIn,
+                                    tokenB: tokenOut,
+                                    amountA: decimalValueIn,
+                                    amountB: decimalValueOut
+                                ),
+                            ]
+                        } else {
+                            fields = [.levelValue(title: "send.confirmation.action".localized, value: "Swap", level: .regular)]
+                        }
+
                     case .contractDeploy:
                         fields = [.levelValue(title: "send.confirmation.action".localized, value: "Contract- Deploy", level: .regular)]
+
                     case .contractCall:
                         fields = [.levelValue(title: "send.confirmation.action".localized, value: "Contract Call", level: .regular)]
+
                     case let .unsupported(type):
                         fields = [.levelValue(title: "send.confirmation.action".localized, value: type, level: .regular)]
                     }

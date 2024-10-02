@@ -160,8 +160,7 @@ extension TonKitManager {
 
 extension TonKitManager {
     static var network: TonKit.Network {
-        // .mainNet
-        .testNet
+        .mainNet
     }
 
     static var isTestNet: Bool {
