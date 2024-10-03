@@ -237,7 +237,7 @@ enum WalletModule {
                 return
             }
 
-            let module = App.shared.localStorage.newSendEnabled ?
+            let module = App.shared.newSendEnabled(wallet: wallet) ?
                 PreSendView(wallet: wallet, mode: .predefined(address: address), onDismiss: { viewController?.dismiss(animated: true) }).toViewController() :
                 SendModule.controller(wallet: wallet, mode: .predefined(address: address))
 
