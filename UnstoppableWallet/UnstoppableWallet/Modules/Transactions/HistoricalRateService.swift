@@ -13,8 +13,8 @@ class HistoricalRateService {
     private var currency: Currency
     private var rates = [RateKey: CurrencyValue]()
 
-    private let rateUpdatedRelay = PublishRelay<(RateKey, CurrencyValue)>()
-    private let ratesChangedRelay = PublishRelay<Void>()
+    private let rateUpdatedSubject = PassthroughSubject<(RateKey, CurrencyValue), Never>()
+    private let ratesChangedSubject = PassthroughSubject<Void, Never>()
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).transactions-historical-rate-service-queue", qos: .userInitiated)
 
@@ -31,7 +31,7 @@ class HistoricalRateService {
 
     private func handleUpdated(currency: Currency) {
         tasks = Set()
-        ratesChangedRelay.accept(())
+        ratesChangedSubject.send()
 
         queue.async {
             self.currency = currency
@@ -43,7 +43,7 @@ class HistoricalRateService {
         queue.async {
             let rate = CurrencyValue(currency: self.currency, value: rate)
             self.rates[key] = rate
-            self.rateUpdatedRelay.accept((key, rate))
+            self.rateUpdatedSubject.send((key, rate))
         }
     }
 
@@ -56,12 +56,12 @@ class HistoricalRateService {
 }
 
 extension HistoricalRateService {
-    var rateUpdatedObservable: Observable<(RateKey, CurrencyValue)> {
-        rateUpdatedRelay.asObservable()
+    var rateUpdatedPublisher: AnyPublisher<(RateKey, CurrencyValue), Never> {
+        rateUpdatedSubject.eraseToAnyPublisher()
     }
 
-    var ratesChangedObservable: Observable<Void> {
-        ratesChangedRelay.asObservable()
+    var ratesChangedPublisher: AnyPublisher<Void, Never> {
+        ratesChangedSubject.eraseToAnyPublisher()
     }
 
     func rate(key: RateKey) -> CurrencyValue? {

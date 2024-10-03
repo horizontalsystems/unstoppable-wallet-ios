@@ -15,4 +15,22 @@ class BinanceChainIncomingTransactionRecord: BinanceChainTransactionRecord {
     override var mainValue: AppValue? {
         value
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [value.token]
+    }
+
+    override func internalSections(status _: TransactionStatus, lastBlockInfo _: LastBlockInfo?, rates: [Coin: CurrencyValue], nftMetadata _: [NftUid: NftAssetBriefMetadata], hidden: Bool) -> [Section] {
+        var sections: [Section] = [
+            .init(
+                fields: receiveFields(appValue: value, from: from, rates: rates, hidden: hidden)
+            ),
+        ]
+
+        if let memo, !memo.isEmpty {
+            sections.append(.init(fields: [.memo(text: memo)]))
+        }
+
+        return sections
+    }
 }

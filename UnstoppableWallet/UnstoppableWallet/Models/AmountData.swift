@@ -35,6 +35,16 @@ struct AmountData {
     let appValue: AppValue
     let currencyValue: CurrencyValue?
 
+    init(kind: AppValue.Kind, value: Decimal, sign: FloatingPointSign = .plus, currency: Currency?, rate: Decimal?) {
+        appValue = AppValue(kind: kind, value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand))
+        currencyValue = appValue.currencyValue(currency: currency, rate: rate)
+    }
+
+    init(appValue: AppValue, rate: CurrencyValue?) {
+        self.appValue = appValue
+        currencyValue = appValue.currencyValue(currency: rate?.currency, rate: rate?.value)
+    }
+
     var formattedFull: String {
         var parts = [String]()
 

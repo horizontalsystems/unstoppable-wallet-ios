@@ -11,7 +11,6 @@ class BaseTransactionsService {
     private let nftMetadataService: NftMetadataService
     private let balanceHiddenManager: BalanceHiddenManager
     private let poolGroupFactory = PoolGroupFactory()
-
     private var cancellables = Set<AnyCancellable>()
 
     private let disposeBag = DisposeBag()
@@ -62,8 +61,9 @@ class BaseTransactionsService {
         self.nftMetadataService = nftMetadataService
         self.balanceHiddenManager = balanceHiddenManager
 
-        subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
-        subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
+        rateService.ratesChangedPublisher.sink { [weak self] in self?.handleRatesChanged() }.store(in: &cancellables)
+        rateService.rateUpdatedPublisher.sink { [weak self] in self?.handle(rate: $0) }.store(in: &cancellables)
+
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
     }
 

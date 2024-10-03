@@ -42,6 +42,32 @@ class BitcoinTransactionRecord: TransactionRecord {
 
         return TransactionLockState(locked: locked, date: lockInfo.lockedUntil)
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [fee?.token]
+    }
+
+    func fields(lastBlockInfo: LastBlockInfo?) -> [TransactionField] {
+        var fields = [TransactionField]()
+
+        if showRawTransaction {
+            fields.append(.rawTransaction)
+        }
+
+        if let conflictingHash {
+            fields.append(.doubleSpend(txHash: transactionHash, conflictingTxHash: conflictingHash))
+        }
+
+        if let lockState = lockState(lastBlockTimestamp: lastBlockInfo?.timestamp) {
+            fields.append(.lockInfo(lockState: lockState))
+        }
+
+        if let memo {
+            fields.append(.memo(text: memo))
+        }
+
+        return fields
+    }
 }
 
 struct TransactionLockState {

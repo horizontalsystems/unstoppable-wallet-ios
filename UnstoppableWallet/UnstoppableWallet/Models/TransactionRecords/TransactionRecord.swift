@@ -1,4 +1,5 @@
 import Foundation
+import MarketKit
 
 class TransactionRecord {
     let source: TransactionSource
@@ -48,6 +49,233 @@ class TransactionRecord {
         nil
     }
 
+    var rateTokens: [Token?] {
+        []
+    }
+
+    var feeInfo: (AppValue, Bool)? {
+        nil
+    }
+
+    func sections(
+        lastBlockInfo: LastBlockInfo?,
+        rates: [Coin: CurrencyValue],
+        nftMetadata: [NftUid: NftAssetBriefMetadata],
+        explorerTitle: String,
+        explorerUrl: String?,
+        hidden: Bool
+    ) -> [Section] {
+        var sections = [Section]()
+
+        if spam {
+            sections.append(.init(fields: [.warning(text: "tx_info.scam_warning".localized)]))
+        }
+
+        let status = status(lastBlockHeight: lastBlockInfo?.height)
+
+        sections.append(contentsOf: internalSections(status: status, lastBlockInfo: lastBlockInfo, rates: rates, nftMetadata: nftMetadata, hidden: hidden))
+
+        var fields: [TransactionField] = [
+            .date(date: date),
+            .status(status: status),
+        ]
+
+        if let (fee, showEstimate) = feeInfo {
+            fields.append(
+                .levelValue(
+                    title: showEstimate && status.isPending ? "tx_info.fee.estimated".localized : "tx_info.fee".localized,
+                    value: AmountData(appValue: fee, rate: fee.coin.flatMap { rates[$0] }).formattedFull,
+                    level: .regular
+                )
+            )
+        }
+
+        fields.append(.id(value: transactionHash))
+
+        sections.append(.init(fields: fields))
+
+        if source.blockchainType.resendable, isResendable(status: status) {
+            sections.append(.init(
+                fields: [
+                    .option(option: .resend(type: .speedUp)),
+                    .option(option: .resend(type: .cancel)),
+                ],
+                footer: "tx_info.resend_description".localized
+            ))
+        }
+
+        sections.append(.init(fields: [
+            .explorer(title: "tx_info.view_on".localized(explorerTitle), url: explorerUrl),
+        ]))
+
+        return sections
+    }
+
+    func internalSections(status _: TransactionStatus, lastBlockInfo _: LastBlockInfo?, rates _: [Coin: CurrencyValue], nftMetadata _: [NftUid: NftAssetBriefMetadata], hidden _: Bool) -> [Section] {
+        []
+    }
+
+    func isResendable(status _: TransactionStatus) -> Bool {
+        false
+    }
+
+    func type(appValue: AppValue, condition: Bool = true, _ trueType: TransactionField.AmountType, _ falseType: TransactionField.AmountType? = nil) -> TransactionField.AmountType {
+        guard !appValue.zeroValue else {
+            return .neutral
+        }
+
+        return condition ? trueType : (falseType ?? trueType)
+    }
+
+    func rate(rateValue: CurrencyValue?, code: String) -> TransactionField? {
+        guard let rateValue, let formattedValue = ValueFormatter.instance.formatFull(currencyValue: rateValue) else {
+            return nil
+        }
+
+        return .levelValue(title: "tx_info.rate".localized, value: "balance.rate_per_coin".localized(formattedValue, code), level: .regular)
+    }
+
+    private func nftAmount(appValue: AppValue, type: TransactionField.AmountType, metadata: NftAssetBriefMetadata?, hidden: Bool) -> TransactionField {
+        .nftAmount(
+            iconUrl: metadata?.previewImageUrl,
+            iconPlaceholderImageName: "placeholder_nft_32",
+            nftAmount: hidden ? BalanceHiddenManager.placeholder : appValue.formattedFull(signType: type.signType) ?? "n/a".localized,
+            type: type,
+            providerCollectionUid: metadata?.providerCollectionUid,
+            nftUid: metadata?.nftUid
+        )
+    }
+
+    func receiveFields(appValue: AppValue, from: String?, mint: Bool = false, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], memo: String? = nil, status: TransactionStatus? = nil, hidden: Bool) -> [TransactionField] {
+        var fields = [TransactionField]()
+
+        var rateField: TransactionField?
+
+        switch appValue.kind {
+        case let .nft(nftUid, tokenName, _):
+            fields.append(
+                .action(
+                    icon: "arrow_medium_2_down_left_24",
+                    dimmed: true,
+                    title: mint ? "transactions.mint".localized : "transactions.receive".localized,
+                    value: nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+                )
+            )
+
+            fields.append(
+                nftAmount(
+                    appValue: appValue,
+                    type: type(appValue: appValue, .incoming),
+                    metadata: nftMetadata[nftUid],
+                    hidden: hidden
+                )
+            )
+        default:
+            let rateValue = appValue.coin.flatMap { rates[$0] }
+
+            fields.append(
+                .amount(
+                    title: mint ? "transactions.mint".localized : "transactions.receive".localized,
+                    appValue: appValue,
+                    rateValue: rateValue,
+                    type: type(appValue: appValue, .incoming),
+                    hidden: hidden
+                )
+            )
+
+            rateField = rate(rateValue: rateValue, code: appValue.code)
+        }
+
+        if !mint, let from {
+            fields.append(.address(title: "tx_info.from_hash".localized, value: from, blockchainType: source.blockchainType))
+        }
+
+        if let rateField {
+            fields.append(rateField)
+        }
+
+        if let memo {
+            fields.append(.memo(text: memo))
+        }
+
+        if let status {
+            fields.append(.status(status: status))
+        }
+
+        return fields
+    }
+
+    func sendFields(appValue: AppValue, to: String?, burn: Bool = false, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false, hidden: Bool) -> [TransactionField] {
+        var fields = [TransactionField]()
+
+        var rateField: TransactionField?
+
+        switch appValue.kind {
+        case let .nft(nftUid, tokenName, _):
+            fields.append(
+                .action(
+                    icon: burn ? "flame_24" : "arrow_medium_2_up_right_24",
+                    dimmed: true,
+                    title: burn ? "transactions.burn".localized : "transactions.send".localized,
+                    value: nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+                )
+            )
+
+            fields.append(
+                nftAmount(
+                    appValue: appValue,
+                    type: type(appValue: appValue, condition: sentToSelf, .neutral, .outgoing),
+                    metadata: nftMetadata[nftUid],
+                    hidden: hidden
+                )
+            )
+        default:
+            let rateValue = appValue.coin.flatMap { rates[$0] }
+
+            fields.append(
+                .amount(
+                    title: burn ? "transactions.burn".localized : "transactions.send".localized,
+                    appValue: appValue,
+                    rateValue: rateValue,
+                    type: type(appValue: appValue, condition: sentToSelf, .neutral, .outgoing),
+                    hidden: hidden
+                )
+            )
+
+            rateField = rate(rateValue: rateValue, code: appValue.code)
+        }
+
+        if !burn, let to {
+            fields.append(.address(title: "tx_info.to_hash".localized, value: to, blockchainType: source.blockchainType))
+        }
+
+        if let rateField {
+            fields.append(rateField)
+        }
+
+        return fields
+    }
+
+    func sentToSelfField() -> TransactionField {
+        .note(imageName: "arrow_return_24", text: "tx_info.to_self_note".localized)
+    }
+
+    func youPayString(status: TransactionStatus) -> String {
+        if case .completed = status {
+            return "tx_info.you_paid".localized
+        } else {
+            return "tx_info.you_pay".localized
+        }
+    }
+
+    func youGetString(status: TransactionStatus) -> String {
+        if case .completed = status {
+            return "tx_info.you_got".localized
+        } else {
+            return "tx_info.you_get".localized
+        }
+    }
+
     static func isSpam(appValues: [AppValue]) -> Bool {
         let stableCoinUids = ["tether", "usd-coin", "dai", "binance-usd", "binance-peg-busd", "stasis-eurs"]
 
@@ -80,6 +308,18 @@ class TransactionRecord {
         }
 
         return true
+    }
+}
+
+extension TransactionRecord {
+    struct Section {
+        let fields: [TransactionField]
+        let footer: String?
+
+        init(fields: [TransactionField], footer: String? = nil) {
+            self.fields = fields
+            self.footer = footer
+        }
     }
 }
 

@@ -93,27 +93,27 @@ extension MultiSwapSendHandler {
             quote.cautions(baseToken: baseToken)
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
-            var sections: [[SendField]] = [
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[TransactionField]] {
+            var sections: [[TransactionField]] = [
                 [
                     .amount(
                         title: "swap.you_pay".localized,
-                        token: tokenIn,
-                        appValueType: .regular(appValue: AppValue(token: tokenIn, value: amountIn)),
-                        currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: amountIn * $0) },
-                        type: .neutral
+                        appValue: AppValue(token: tokenIn, value: amountIn),
+                        rateValue: CurrencyValue(currency: currency, value: rates[tokenIn.coin.uid]),
+                        type: .neutral,
+                        hidden: false
                     ),
                     .amount(
                         title: "swap.you_get".localized,
-                        token: tokenOut,
-                        appValueType: .regular(appValue: AppValue(token: tokenOut, value: quote.amountOut)),
-                        currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: quote.amountOut * $0) },
-                        type: .incoming
+                        appValue: AppValue(token: tokenOut, value: quote.amountOut),
+                        rateValue: CurrencyValue(currency: currency, value: rates[tokenOut.coin.uid]),
+                        type: .incoming,
+                        hidden: false
                     ),
                 ],
             ]
 
-            var priceSection: [SendField] = [
+            var priceSection: [TransactionField] = [
                 .price(
                     title: "swap.price".localized,
                     tokenA: tokenIn,

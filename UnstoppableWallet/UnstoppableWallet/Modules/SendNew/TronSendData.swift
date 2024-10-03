@@ -36,8 +36,8 @@ class TronSendData: ISendData {
         nil
     }
 
-    private func feeFields(currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
-        var viewItems = [SendField]()
+    private func feeFields(currency: Currency, feeTokenRate: Decimal?) -> [TransactionField] {
+        var viewItems = [TransactionField]()
 
         if let totalFees {
             let decimalAmount = Decimal(totalFees) / pow(10, baseToken.decimals)
@@ -99,7 +99,7 @@ class TronSendData: ISendData {
         return viewItems
     }
 
-    private func decorationSections(currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    private func decorationSections(currency: Currency, rates: [String: Decimal]) -> [[TransactionField]] {
         guard let decoration else {
             return []
         }
@@ -130,16 +130,16 @@ class TronSendData: ISendData {
         }
     }
 
-    private func sendFields(to: TronKit.Address, value: Decimal, currency: Currency, rate: Decimal?) -> [[SendField]] {
+    private func sendFields(to: TronKit.Address, value: Decimal, currency: Currency, rate: Decimal?) -> [[TransactionField]] {
         let appValue = AppValue(token: token, value: Decimal(sign: .plus, exponent: value.exponent, significand: value.significand))
 
         return [[
             .amount(
                 title: "send.confirmation.you_send".localized,
-                token: token,
-                appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
-                currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },
-                type: .neutral
+                appValue: appValue,
+                rateValue: CurrencyValue(currency: currency, value: rate),
+                type: .neutral,
+                hidden: false
             ),
             .address(
                 title: "send.confirmation.to".localized,
@@ -184,7 +184,7 @@ class TronSendData: ISendData {
         return cautions
     }
 
-    func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [[TransactionField]] {
         var sections = decorationSections(currency: currency, rates: rates)
 
         sections.append(feeFields(currency: currency, feeTokenRate: rates[baseToken.coin.uid]))

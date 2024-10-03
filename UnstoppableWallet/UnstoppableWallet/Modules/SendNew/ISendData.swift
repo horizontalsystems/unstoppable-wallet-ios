@@ -7,7 +7,7 @@ protocol ISendData {
     var rateCoins: [Coin] { get }
     var customSendButtonTitle: String? { get }
     func cautions(baseToken: Token) -> [CautionNew]
-    func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]]
+    func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[TransactionField]]
 }
 
 extension ISendData {

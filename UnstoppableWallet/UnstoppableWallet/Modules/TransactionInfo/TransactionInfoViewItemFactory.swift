@@ -309,377 +309,377 @@ class TransactionInfoViewItemFactory {
 
         var sections = [TransactionInfoModule.SectionViewItem]()
 
-        if item.record.spam {
-            sections.append(.init([.warning(text: "tx_info.scam_warning".localized)]))
-        }
+        // if item.record.spam {
+        //     sections.append(.init([.warning(text: "tx_info.scam_warning".localized)]))
+        // }
 
         switch record {
-        case let record as ContractCreationTransactionRecord:
-            sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil),
-            ]))
-
-        case let record as EvmOutgoingTransactionRecord:
-            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
-
-            if record.sentToSelf {
-                sections.append(.init([.sentToSelf]))
-            }
-
-        case let record as EvmIncomingTransactionRecord:
-            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
-
-        case let record as ApproveTransactionRecord:
-            let appValue = record.value
-            let rate = _rate(appValue)
-            let contactData = contactLabelService.contactData(for: record.spender)
-            let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
-
-            var viewItems: [TransactionInfoModule.ViewItem] = [
-                amount(source: record.source, title: "transactions.approve".localized, subtitle: fullBadge(appValue: appValue), appValue: appValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
-                .spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress),
-            ]
-
-            if let name = contactData.name {
-                viewItems.append(.contactName(name: name))
-            }
-
-            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: appValue.coin?.code)))
-
-            sections.append(.init(viewItems))
-
-        case let record as SwapTransactionRecord:
-            var amountViewItems: [TransactionInfoModule.ViewItem] = [
-                amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: record.valueIn), appValue: record.valueIn, rate: _rate(record.valueIn), type: type(appValue: record.valueIn, .outgoing), balanceHidden: balanceHidden),
-            ]
-
-            if let valueOut = record.valueOut {
-                amountViewItems.append(amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, condition: record.recipient == nil, .incoming, .outgoing), balanceHidden: balanceHidden))
-            }
-
-            sections.append(.init(amountViewItems))
-
-            if let recipient = record.recipient {
-                let contactData = contactLabelService.contactData(for: recipient)
-                let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: recipient) : nil
-                var viewItems: [TransactionInfoModule.ViewItem] = [
-                    .recipient(value: recipient, valueTitle: valueTitle, contactAddress: contactData.contactAddress),
-                ]
-
-                if let name = contactData.name {
-                    viewItems.append(.contactName(name: name))
-                }
-
-                sections.append(.init(viewItems))
-            }
-
-            var viewItems: [TransactionInfoModule.ViewItem] = [
-                .service(value: evmLabelManager.mapped(address: record.exchangeAddress)),
-            ]
-
-            if let valueOut = record.valueOut {
-                switch status {
-                case .pending, .processing, .completed:
-                    if let priceString = priceString(valueIn: record.valueIn, valueOut: valueOut, coinPriceIn: _rate(record.valueIn)) {
-                        viewItems.append(.price(price: priceString))
-                    }
-                default: ()
-                }
-            }
-
-            sections.append(.init(viewItems))
-
-        case let record as UnknownSwapTransactionRecord:
-            var amountViewItems = [TransactionInfoModule.ViewItem]()
-
-            if let valueIn = record.valueIn {
-                amountViewItems.append(
-                    amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden)
-                )
-            }
-
-            if let valueOut = record.valueOut {
-                amountViewItems.append(
-                    amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden)
-                )
-            }
-
-            if !amountViewItems.isEmpty {
-                sections.append(.init(amountViewItems))
-            }
-
-            var viewItems: [TransactionInfoModule.ViewItem] = [
-                .service(value: evmLabelManager.mapped(address: record.exchangeAddress)),
-            ]
-
-            if let valueIn = record.valueIn, let valueOut = record.valueOut {
-                switch status {
-                case .pending, .processing, .completed:
-                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn)) {
-                        viewItems.append(.price(price: priceString))
-                    }
-                default: ()
-                }
-            }
-
-            sections.append(.init(viewItems))
-
-        case let record as ContractCallTransactionRecord:
-            sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress)),
-            ]))
-
-            for event in record.outgoingEvents {
-                sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
-            }
-
-            for event in record.incomingEvents {
-                sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
-            }
-
-        case let record as ExternalContractCallTransactionRecord:
-            for event in record.outgoingEvents {
-                sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
-            }
-
-            for event in record.incomingEvents {
-                sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
-            }
-
-        case let record as TronIncomingTransactionRecord:
-            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
-
-        case let record as TronOutgoingTransactionRecord:
-            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
-
-            if record.sentToSelf {
-                sections.append(.init([.sentToSelf]))
-            }
-
-        case let record as TronApproveTransactionRecord:
-            let appValue = record.value
-            let rate = _rate(appValue)
-            let contactData = contactLabelService.contactData(for: record.spender)
-            let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
+        // case let record as ContractCreationTransactionRecord:
+        //     sections.append(.init([
+        //         .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil),
+        //     ]))
+
+        // case let record as EvmOutgoingTransactionRecord:
+        //     sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
+
+        //     if record.sentToSelf {
+        //         sections.append(.init([.sentToSelf]))
+        //     }
+
+        // case let record as EvmIncomingTransactionRecord:
+        //     sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
+
+        // case let record as ApproveTransactionRecord:
+        //     let appValue = record.value
+        //     let rate = _rate(appValue)
+        //     let contactData = contactLabelService.contactData(for: record.spender)
+        //     let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
+
+        //     var viewItems: [TransactionInfoModule.ViewItem] = [
+        //         amount(source: record.source, title: "transactions.approve".localized, subtitle: fullBadge(appValue: appValue), appValue: appValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
+        //         .spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress),
+        //     ]
+
+        //     if let name = contactData.name {
+        //         viewItems.append(.contactName(name: name))
+        //     }
+
+        //     viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: appValue.coin?.code)))
+
+        //     sections.append(.init(viewItems))
+
+        // case let record as SwapTransactionRecord:
+        //     var amountViewItems: [TransactionInfoModule.ViewItem] = [
+        //         amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: record.valueIn), appValue: record.valueIn, rate: _rate(record.valueIn), type: type(appValue: record.valueIn, .outgoing), balanceHidden: balanceHidden),
+        //     ]
+
+        //     if let valueOut = record.valueOut {
+        //         amountViewItems.append(amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, condition: record.recipient == nil, .incoming, .outgoing), balanceHidden: balanceHidden))
+        //     }
+
+        //     sections.append(.init(amountViewItems))
+
+        //     if let recipient = record.recipient {
+        //         let contactData = contactLabelService.contactData(for: recipient)
+        //         let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: recipient) : nil
+        //         var viewItems: [TransactionInfoModule.ViewItem] = [
+        //             .recipient(value: recipient, valueTitle: valueTitle, contactAddress: contactData.contactAddress),
+        //         ]
+
+        //         if let name = contactData.name {
+        //             viewItems.append(.contactName(name: name))
+        //         }
+
+        //         sections.append(.init(viewItems))
+        //     }
+
+        //     var viewItems: [TransactionInfoModule.ViewItem] = [
+        //         .service(value: evmLabelManager.mapped(address: record.exchangeAddress)),
+        //     ]
+
+        //     if let valueOut = record.valueOut {
+        //         switch status {
+        //         case .pending, .processing, .completed:
+        //             if let priceString = priceString(valueIn: record.valueIn, valueOut: valueOut, coinPriceIn: _rate(record.valueIn)) {
+        //                 viewItems.append(.price(price: priceString))
+        //             }
+        //         default: ()
+        //         }
+        //     }
+
+        //     sections.append(.init(viewItems))
+
+        // case let record as UnknownSwapTransactionRecord:
+        //     var amountViewItems = [TransactionInfoModule.ViewItem]()
+
+        //     if let valueIn = record.valueIn {
+        //         amountViewItems.append(
+        //             amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden)
+        //         )
+        //     }
+
+        //     if let valueOut = record.valueOut {
+        //         amountViewItems.append(
+        //             amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden)
+        //         )
+        //     }
+
+        //     if !amountViewItems.isEmpty {
+        //         sections.append(.init(amountViewItems))
+        //     }
+
+        //     var viewItems: [TransactionInfoModule.ViewItem] = [
+        //         .service(value: evmLabelManager.mapped(address: record.exchangeAddress)),
+        //     ]
+
+        //     if let valueIn = record.valueIn, let valueOut = record.valueOut {
+        //         switch status {
+        //         case .pending, .processing, .completed:
+        //             if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn)) {
+        //                 viewItems.append(.price(price: priceString))
+        //             }
+        //         default: ()
+        //         }
+        //     }
+
+        //     sections.append(.init(viewItems))
+
+        // case let record as ContractCallTransactionRecord:
+        //     sections.append(.init([
+        //         .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress)),
+        //     ]))
+
+        //     for event in record.outgoingEvents {
+        //         sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+        //     }
+
+        //     for event in record.incomingEvents {
+        //         sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+        //     }
+
+        // case let record as ExternalContractCallTransactionRecord:
+        //     for event in record.outgoingEvents {
+        //         sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+        //     }
+
+        //     for event in record.incomingEvents {
+        //         sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+        //     }
+
+        // case let record as TronIncomingTransactionRecord:
+        //     sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
+
+        // case let record as TronOutgoingTransactionRecord:
+        //     sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
+
+        //     if record.sentToSelf {
+        //         sections.append(.init([.sentToSelf]))
+        //     }
+
+        // case let record as TronApproveTransactionRecord:
+        //     let appValue = record.value
+        //     let rate = _rate(appValue)
+        //     let contactData = contactLabelService.contactData(for: record.spender)
+        //     let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
 
-            var viewItems: [TransactionInfoModule.ViewItem] = [
-                amount(source: record.source, title: "transactions.approve".localized, subtitle: fullBadge(appValue: appValue), appValue: appValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
-                .spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress),
-            ]
+        //     var viewItems: [TransactionInfoModule.ViewItem] = [
+        //         amount(source: record.source, title: "transactions.approve".localized, subtitle: fullBadge(appValue: appValue), appValue: appValue, rate: rate, type: .neutral, balanceHidden: balanceHidden),
+        //         .spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress),
+        //     ]
 
-            if let name = contactData.name {
-                viewItems.append(.contactName(name: name))
-            }
+        //     if let name = contactData.name {
+        //         viewItems.append(.contactName(name: name))
+        //     }
 
-            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: appValue.coin?.code)))
+        //     viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: appValue.coin?.code)))
 
-            sections.append(.init(viewItems))
+        //     sections.append(.init(viewItems))
 
-        case let record as TronContractCallTransactionRecord:
-            sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress)),
-            ]))
+        // case let record as TronContractCallTransactionRecord:
+        //     sections.append(.init([
+        //         .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress)),
+        //     ]))
 
-            for event in record.outgoingEvents {
-                sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
-            }
+        //     for event in record.outgoingEvents {
+        //         sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+        //     }
 
-            for event in record.incomingEvents {
-                sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
-            }
+        //     for event in record.incomingEvents {
+        //         sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+        //     }
 
-        case let record as TronExternalContractCallTransactionRecord:
-            for event in record.outgoingEvents {
-                sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
-            }
+        // case let record as TronExternalContractCallTransactionRecord:
+        //     for event in record.outgoingEvents {
+        //         sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+        //     }
 
-            for event in record.incomingEvents {
-                sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
-            }
+        //     for event in record.incomingEvents {
+        //         sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+        //     }
 
-        case let record as TronTransactionRecord:
-            sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.transaction.contract?.label ?? "transactions.contract_call".localized, subTitle: ""),
-            ]))
+        // case let record as TronTransactionRecord:
+        //     sections.append(.init([
+        //         .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.transaction.contract?.label ?? "transactions.contract_call".localized, subTitle: ""),
+        //     ]))
 
-        case let record as BitcoinIncomingTransactionRecord:
-            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
-
-            let additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
-            if !additionalViewItems.isEmpty {
-                sections.append(.init(additionalViewItems))
-            }
-
-        case let record as BitcoinOutgoingTransactionRecord:
-            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
-
-            var additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
+        // case let record as BitcoinIncomingTransactionRecord:
+        //     sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
+
+        //     let additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
+        //     if !additionalViewItems.isEmpty {
+        //         sections.append(.init(additionalViewItems))
+        //     }
+
+        // case let record as BitcoinOutgoingTransactionRecord:
+        //     sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
+
+        //     var additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
 
-            if record.sentToSelf {
-                additionalViewItems.insert(.sentToSelf, at: 0)
-            }
+        //     if record.sentToSelf {
+        //         additionalViewItems.insert(.sentToSelf, at: 0)
+        //     }
 
-            if !additionalViewItems.isEmpty {
-                sections.append(.init(additionalViewItems))
-            }
-
-            if let fee = record.fee {
-                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee)))
-            }
+        //     if !additionalViewItems.isEmpty {
+        //         sections.append(.init(additionalViewItems))
+        //     }
+
+        //     if let fee = record.fee {
+        //         feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee)))
+        //     }
 
-            if actionEnabled, record.replaceable {
-                sections.append(.init([
-                    .option(option: .resend(type: .speedUp)),
-                    .option(option: .resend(type: .cancel)),
-                ], footer: "tx_info.resend_description".localized))
-            }
-
-        case let record as BinanceChainIncomingTransactionRecord:
-            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
-
-            if let memo = record.memo, !memo.isEmpty {
-                sections.append(.init([.memo(text: memo)]))
-            }
-
-        case let record as BinanceChainOutgoingTransactionRecord:
-            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
-
-            var additionalViewItems = [TransactionInfoModule.ViewItem]()
-
-            if record.sentToSelf {
-                additionalViewItems.append(.sentToSelf)
-            }
-
-            if let memo = record.memo, !memo.isEmpty {
-                sections.append(.init([.memo(text: memo)]))
-            }
-
-            if !additionalViewItems.isEmpty {
-                sections.append(.init(additionalViewItems))
-            }
-
-            feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: record.fee, rate: _rate(record.fee)))
-
-        case let record as TonTransactionRecord:
-            for action in record.actions {
-                var viewItems: [TransactionInfoModule.ViewItem]
-
-                switch action.type {
-                case let .send(value, to, sentToSelf, comment):
-                    viewItems = sendSection(source: record.source, appValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, balanceHidden: balanceHidden)
-
-                    if let comment {
-                        viewItems.append(.memo(text: comment))
-                    }
-
-                    if sentToSelf {
-                        viewItems.append(.sentToSelf)
-                    }
-
-                case let .receive(value, from, comment):
-                    viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
-
-                    if let comment {
-                        viewItems.append(.memo(text: comment))
-                    }
-
-                case let .burn(value):
-                    viewItems = sendSection(source: record.source, appValue: value, to: zeroAddress, rates: item.rates, balanceHidden: balanceHidden)
-
-                case let .mint(value):
-                    viewItems = receiveSection(source: record.source, appValue: value, from: zeroAddress, rates: item.rates, balanceHidden: balanceHidden)
-
-                case let .swap(routerName, routerAddress, valueIn, valueOut):
-                    viewItems = [
-                        amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden),
-                        amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden),
-                        .service(value: routerName ?? routerAddress.shortened),
-                    ]
-
-                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn)) {
-                        viewItems.append(.price(price: priceString))
-                    }
-
-                case let .contractDeploy(interfaces):
-                    viewItems = [
-                        .actionTitle(iconName: nil, iconDimmed: false, title: "transactions.contract_deploy".localized, subTitle: interfaces.joined(separator: ", ")),
-                    ]
-
-                case let .contractCall(address, value, operation):
-                    viewItems = [
-                        .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: "transactions.contract_call".localized, subTitle: operation),
-                        .to(value: address, valueTitle: nil, contactAddress: nil),
-                    ]
-
-                    viewItems.append(contentsOf: sendSection(source: record.source, appValue: value, to: nil, rates: item.rates, balanceHidden: balanceHidden))
-
-                case let .unsupported(type):
-                    viewItems = [.fee(title: "Action", value: type)]
-                }
-
-                switch action.status {
-                case .failed:
-                    viewItems.append(.status(status: action.status))
-                default: ()
-                }
-
-                sections.append(.init(viewItems))
-            }
-
-            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0))) }
+        //     if actionEnabled, record.replaceable {
+        //         sections.append(.init([
+        //             .option(option: .resend(type: .speedUp)),
+        //             .option(option: .resend(type: .cancel)),
+        //         ], footer: "tx_info.resend_description".localized))
+        //     }
+
+        // case let record as BinanceChainIncomingTransactionRecord:
+        //     sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
+
+        //     if let memo = record.memo, !memo.isEmpty {
+        //         sections.append(.init([.memo(text: memo)]))
+        //     }
+
+        // case let record as BinanceChainOutgoingTransactionRecord:
+        //     sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
+
+        //     var additionalViewItems = [TransactionInfoModule.ViewItem]()
+
+        //     if record.sentToSelf {
+        //         additionalViewItems.append(.sentToSelf)
+        //     }
+
+        //     if let memo = record.memo, !memo.isEmpty {
+        //         sections.append(.init([.memo(text: memo)]))
+        //     }
+
+        //     if !additionalViewItems.isEmpty {
+        //         sections.append(.init(additionalViewItems))
+        //     }
+
+        //     feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: record.fee, rate: _rate(record.fee)))
+
+        // case let record as TonTransactionRecord:
+        //     for action in record.actions {
+        //         var viewItems: [TransactionInfoModule.ViewItem]
+
+        //         switch action.type {
+        //         case let .send(value, to, sentToSelf, comment):
+        //             viewItems = sendSection(source: record.source, appValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, balanceHidden: balanceHidden)
+
+        //             if let comment {
+        //                 viewItems.append(.memo(text: comment))
+        //             }
+
+        //             if sentToSelf {
+        //                 viewItems.append(.sentToSelf)
+        //             }
+
+        //         case let .receive(value, from, comment):
+        //             viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
+
+        //             if let comment {
+        //                 viewItems.append(.memo(text: comment))
+        //             }
+
+        //         case let .burn(value):
+        //             viewItems = sendSection(source: record.source, appValue: value, to: zeroAddress, rates: item.rates, balanceHidden: balanceHidden)
+
+        //         case let .mint(value):
+        //             viewItems = receiveSection(source: record.source, appValue: value, from: zeroAddress, rates: item.rates, balanceHidden: balanceHidden)
+
+        //         case let .swap(routerName, routerAddress, valueIn, valueOut):
+        //             viewItems = [
+        //                 amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden),
+        //                 amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden),
+        //                 .service(value: routerName ?? routerAddress.shortened),
+        //             ]
+
+        //             if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn)) {
+        //                 viewItems.append(.price(price: priceString))
+        //             }
+
+        //         case let .contractDeploy(interfaces):
+        //             viewItems = [
+        //                 .actionTitle(iconName: nil, iconDimmed: false, title: "transactions.contract_deploy".localized, subTitle: interfaces.joined(separator: ", ")),
+        //             ]
+
+        //         case let .contractCall(address, value, operation):
+        //             viewItems = [
+        //                 .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: "transactions.contract_call".localized, subTitle: operation),
+        //                 .to(value: address, valueTitle: nil, contactAddress: nil),
+        //             ]
+
+        //             viewItems.append(contentsOf: sendSection(source: record.source, appValue: value, to: nil, rates: item.rates, balanceHidden: balanceHidden))
+
+        //         case let .unsupported(type):
+        //             viewItems = [.fee(title: "Action", value: type)]
+        //         }
+
+        //         switch action.status {
+        //         case .failed:
+        //             viewItems.append(.status(status: action.status))
+        //         default: ()
+        //         }
+
+        //         sections.append(.init(viewItems))
+        //     }
+
+        //     feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0))) }
 
         default: ()
         }
 
-        var transactionViewItems: [TransactionInfoModule.ViewItem] = [
-            .date(date: record.date),
-            .status(status: status),
-        ]
+        // var transactionViewItems: [TransactionInfoModule.ViewItem] = [
+        //     .date(date: record.date),
+        //     .status(status: status),
+        // ]
 
-        if let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, let appValue = evmRecord.fee {
-            let title: String
-            switch status {
-            case .pending: title = "tx_info.fee.estimated".localized
-            case .processing, .failed, .completed: title = "tx_info.fee".localized
-            }
+        // if let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, let appValue = evmRecord.fee {
+        //     let title: String
+        //     switch status {
+        //     case .pending: title = "tx_info.fee.estimated".localized
+        //     case .processing, .failed, .completed: title = "tx_info.fee".localized
+        //     }
 
-            feeViewItem = .fee(
-                title: title,
-                value: feeString(appValue: appValue, rate: _rate(appValue))
-            )
-        }
+        //     feeViewItem = .fee(
+        //         title: title,
+        //         value: feeString(appValue: appValue, rate: _rate(appValue))
+        //     )
+        // }
 
-        if let tronRecord = record as? TronTransactionRecord, tronRecord.ownTransaction, let appValue = tronRecord.fee {
-            let title: String
-            switch status {
-            case .pending: title = "tx_info.fee.estimated".localized
-            case .processing, .failed, .completed: title = "tx_info.fee".localized
-            }
+        // if let tronRecord = record as? TronTransactionRecord, tronRecord.ownTransaction, let appValue = tronRecord.fee {
+        //     let title: String
+        //     switch status {
+        //     case .pending: title = "tx_info.fee.estimated".localized
+        //     case .processing, .failed, .completed: title = "tx_info.fee".localized
+        //     }
 
-            feeViewItem = .fee(
-                title: title,
-                value: feeString(appValue: appValue, rate: _rate(appValue))
-            )
-        }
+        //     feeViewItem = .fee(
+        //         title: title,
+        //         value: feeString(appValue: appValue, rate: _rate(appValue))
+        //     )
+        // }
 
-        if let feeViewItem {
-            transactionViewItems.append(feeViewItem)
-        }
+        // if let feeViewItem {
+        //     transactionViewItems.append(feeViewItem)
+        // }
 
-        transactionViewItems.append(.id(value: record.transactionHash))
+        // transactionViewItems.append(.id(value: record.transactionHash))
 
-        sections.append(.init(transactionViewItems))
+        // sections.append(.init(transactionViewItems))
 
-        if actionEnabled, let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, status.isPending {
-            sections.append(.init([
-                .option(option: .resend(type: .speedUp)),
-                .option(option: .resend(type: .cancel)),
-            ], footer: "tx_info.resend_description".localized))
-        }
+        // if actionEnabled, let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, status.isPending {
+        //     sections.append(.init([
+        //         .option(option: .resend(type: .speedUp)),
+        //         .option(option: .resend(type: .cancel)),
+        //     ], footer: "tx_info.resend_description".localized))
+        // }
 
-        sections.append(.init([
-            .explorer(title: "tx_info.view_on".localized(item.explorerTitle), url: item.explorerUrl),
-        ]))
+        // sections.append(.init([
+        //     .explorer(title: "tx_info.view_on".localized(item.explorerTitle), url: item.explorerUrl),
+        // ]))
 
         return sections
     }

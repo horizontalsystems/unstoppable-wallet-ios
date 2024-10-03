@@ -25,6 +25,14 @@ class SwapTransactionRecord: EvmTransactionRecord {
     var valueOut: AppValue? {
         amountOut?.value
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [valueIn.token, valueOut?.token]
+    }
+
+    override func internalSections(status: TransactionStatus, lastBlockInfo _: LastBlockInfo?, rates: [Coin: CurrencyValue], nftMetadata _: [NftUid: NftAssetBriefMetadata], hidden: Bool) -> [Section] {
+        swapSections(exchangeAddress: exchangeAddress, valueIn: valueIn, valueOut: valueOut, recipient: recipient, status: status, rates: rates, hidden: hidden)
+    }
 }
 
 extension SwapTransactionRecord {

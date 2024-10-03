@@ -3,6 +3,8 @@ import MarketKit
 import TronKit
 
 class TronTransactionRecord: TransactionRecord {
+    let zeroAddress = "0x0000000000000000000000000000000000000000"
+
     let transaction: Transaction
     let confirmed: Bool
     let ownTransaction: Bool
@@ -32,6 +34,26 @@ class TronTransactionRecord: TransactionRecord {
             failed: transaction.isFailed,
             spam: spam
         )
+    }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [fee?.token]
+    }
+
+    override var feeInfo: (AppValue, Bool)? {
+        guard ownTransaction, let fee else {
+            return nil
+        }
+
+        return (fee, true)
+    }
+
+    override func internalSections(status _: TransactionStatus, lastBlockInfo _: LastBlockInfo?, rates _: [Coin: CurrencyValue], nftMetadata _: [NftUid: NftAssetBriefMetadata], hidden _: Bool) -> [Section] {
+        [
+            .init(fields: [
+                .action(icon: source.blockchainType.iconPlain32, dimmed: false, title: transaction.contract?.label ?? "transactions.contract_call".localized, value: nil),
+            ]),
+        ]
     }
 
     func combined(incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) -> ([AppValue], [AppValue]) {

@@ -8,6 +8,15 @@ struct CurrencyValue {
         self.currency = currency
         self.value = value
     }
+
+    init?(currency: Currency, value: Decimal?) {
+        guard let value else {
+            return nil
+        }
+
+        self.currency = currency
+        self.value = value
+    }
 }
 
 extension CurrencyValue: Equatable {

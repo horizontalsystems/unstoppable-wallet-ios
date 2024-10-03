@@ -24,13 +24,8 @@ class TransactionsTableViewDataSource: NSObject {
     }
 
     private func itemClicked(item: BaseTransactionsViewModel.ViewItem) {
-        if let record = viewModel.record(uid: item.uid) {
-            guard let module = TransactionInfoModule.instance(transactionRecord: record) else {
-                return
-            }
-
-            viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
-
+        if let record = viewModel.record(uid: item.uid), let adapter = App.shared.transactionAdapterManager.adapter(for: record.source) {
+            viewController?.present(TransactionInfoView(record: record, adapter: adapter).toViewController(), animated: true)
             stat(page: statPage, event: .open(page: .transactionInfo))
         }
     }

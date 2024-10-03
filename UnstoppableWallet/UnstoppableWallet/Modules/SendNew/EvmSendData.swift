@@ -41,7 +41,7 @@ class EvmSendData: BaseSendEvmData, ISendData {
         return cautions
     }
 
-    func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[TransactionField]] {
         var sections = decoration.sections(baseToken: baseToken, currency: currency, rates: rates)
 
         if let nonce {

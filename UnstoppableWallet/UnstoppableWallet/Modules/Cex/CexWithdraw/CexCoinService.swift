@@ -48,12 +48,7 @@ extension CexCoinService: ICoinService {
     }
 
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {
-        AmountData(
-            appValue: appValue(value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
-            currencyValue: rate.map {
-                CurrencyValue(currency: $0.currency, value: $0.value * value)
-            }
-        )
+        AmountData(kind: .cexAsset(cexAsset: cexAsset), value: value, sign: sign, currency: rate?.currency, rate: rate?.value)
     }
 
     func amountData(value: BigUInt, sign: FloatingPointSign = .plus) -> AmountData {

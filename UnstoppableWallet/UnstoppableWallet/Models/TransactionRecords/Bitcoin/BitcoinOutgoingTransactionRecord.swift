@@ -36,4 +36,38 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
     override var mainValue: AppValue? {
         value
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [value.token]
+    }
+
+    override var feeInfo: (AppValue, Bool)? {
+        guard let fee else {
+            return nil
+        }
+
+        return (fee, false)
+    }
+
+    override func isResendable(status _: TransactionStatus) -> Bool {
+        replaceable
+    }
+
+    override func internalSections(status _: TransactionStatus, lastBlockInfo: LastBlockInfo?, rates: [Coin: CurrencyValue], nftMetadata _: [NftUid: NftAssetBriefMetadata], hidden: Bool) -> [Section] {
+        var sections: [Section] = [
+            .init(fields: sendFields(appValue: value, to: to, rates: rates, sentToSelf: sentToSelf, hidden: hidden)),
+        ]
+
+        var additionalFields = fields(lastBlockInfo: lastBlockInfo)
+
+        if sentToSelf {
+            additionalFields.insert(sentToSelfField(), at: 0)
+        }
+
+        if !additionalFields.isEmpty {
+            sections.append(.init(fields: additionalFields))
+        }
+
+        return sections
+    }
 }

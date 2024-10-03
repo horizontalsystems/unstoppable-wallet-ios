@@ -220,13 +220,11 @@ class SendEvmTransactionViewModel {
     }
 
     private func amountViewItem(title: String, coinService: CoinService, amountData: AmountData, type: AmountType) -> ViewItem {
-        let appValue = amountData.appValue
-
-        return .amount(
+        .amount(
             title: title,
             token: coinService.token,
-            coinAmount: appValue.isMaxValue ? appValue.infinity : appValue.formattedFull() ?? "n/a".localized,
-            currencyAmount: appValue.isMaxValue ? nil : amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+            coinAmount: amountData.appValue.formattedFull() ?? "n/a".localized,
+            currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
             type: type
         )
     }

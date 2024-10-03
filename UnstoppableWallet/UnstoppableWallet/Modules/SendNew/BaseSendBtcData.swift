@@ -16,13 +16,10 @@ class BaseSendBtcData {
             return nil
         }
 
-        return AmountData(
-            appValue: AppValue(token: feeToken, value: fee),
-            currencyValue: feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
-        )
+        return AmountData(kind: .token(token: feeToken), value: fee, currency: currency, rate: feeTokenRate)
     }
 
-    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [TransactionField] {
         let amountData = amountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
 
         return [

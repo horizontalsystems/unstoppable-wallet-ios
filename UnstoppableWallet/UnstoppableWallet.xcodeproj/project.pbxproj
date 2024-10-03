@@ -2708,6 +2708,14 @@
 		D3402AF22BF5D59D003BF6F8 /* WatchlistModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */; };
 		D3402AF72BF71C11003BF6F8 /* WatchlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */; };
 		D3402AF82BF71C11003BF6F8 /* WatchlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */; };
+		D34296A12CAE9D3A007A6659 /* TransactionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34296A02CAE9D3A007A6659 /* TransactionInfoView.swift */; };
+		D34296A22CAE9D3A007A6659 /* TransactionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34296A02CAE9D3A007A6659 /* TransactionInfoView.swift */; };
+		D34296A42CAE9D45007A6659 /* TransactionInfoViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34296A32CAE9D45007A6659 /* TransactionInfoViewModelNew.swift */; };
+		D34296A52CAE9D45007A6659 /* TransactionInfoViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34296A32CAE9D45007A6659 /* TransactionInfoViewModelNew.swift */; };
+		D34296A72CAEA1C4007A6659 /* TransactionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34296A62CAEA1C4007A6659 /* TransactionField.swift */; };
+		D34296A82CAEA1C4007A6659 /* TransactionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34296A62CAEA1C4007A6659 /* TransactionField.swift */; };
+		D34296AA2CB111A6007A6659 /* TransactionInfoFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34296A92CB111A6007A6659 /* TransactionInfoFactory.swift */; };
+		D34296AB2CB111A6007A6659 /* TransactionInfoFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34296A92CB111A6007A6659 /* TransactionInfoFactory.swift */; };
 		D34338E52C8703F6001FCAD2 /* TonKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34338E42C8703F6001FCAD2 /* TonKitManager.swift */; };
 		D34338E62C8703F6001FCAD2 /* TonKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34338E42C8703F6001FCAD2 /* TonKitManager.swift */; };
 		D34338E82C871344001FCAD2 /* TonTransactionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34338E72C871344001FCAD2 /* TonTransactionAdapter.swift */; };
@@ -4567,6 +4575,10 @@
 		D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistModifier.swift; sourceTree = "<group>"; };
 		D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
+		D34296A02CAE9D3A007A6659 /* TransactionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoView.swift; sourceTree = "<group>"; };
+		D34296A32CAE9D45007A6659 /* TransactionInfoViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoViewModelNew.swift; sourceTree = "<group>"; };
+		D34296A62CAEA1C4007A6659 /* TransactionField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionField.swift; sourceTree = "<group>"; };
+		D34296A92CB111A6007A6659 /* TransactionInfoFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoFactory.swift; sourceTree = "<group>"; };
 		D34338E42C8703F6001FCAD2 /* TonKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonKitManager.swift; sourceTree = "<group>"; };
 		D34338E72C871344001FCAD2 /* TonTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonTransactionAdapter.swift; sourceTree = "<group>"; };
 		D34338EA2C8714A2001FCAD2 /* TonEventConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonEventConverter.swift; sourceTree = "<group>"; };
@@ -6824,6 +6836,9 @@
 				2FA5D657FD86FE9B675B475D /* TransactionInfoViewModel.swift */,
 				2FA5D8490F7D8ACA18DC807A /* TransactionInfoViewController.swift */,
 				2FA5D299198FEF01FB5D06DE /* TransactionInfoViewItemFactory.swift */,
+				D34296A02CAE9D3A007A6659 /* TransactionInfoView.swift */,
+				D34296A32CAE9D45007A6659 /* TransactionInfoViewModelNew.swift */,
+				D34296A92CB111A6007A6659 /* TransactionInfoFactory.swift */,
 			);
 			path = TransactionInfo;
 			sourceTree = "<group>";
@@ -8557,6 +8572,7 @@
 				D03F74812BF76D0A004FBCFA /* GasPriceData.swift */,
 				D08D16802C2164880086E5A5 /* TonPresendHandler.swift */,
 				D08D16832C2165490086E5A5 /* TonSendHandler.swift */,
+				D34296A62CAEA1C4007A6659 /* TransactionField.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -9483,6 +9499,7 @@
 				11B35E13FC5117E8F1829DCB /* RecipientAddressCautionCell.swift in Sources */,
 				11B35E9A5F3FB43FD2F5C718 /* AmountInputCell.swift in Sources */,
 				11B35FD73BCF3DD557FD9783 /* RecipientAddressInputCell.swift in Sources */,
+				D34296A72CAEA1C4007A6659 /* TransactionField.swift in Sources */,
 				11B35E1A30BE0E0432B4A064 /* AmountInputViewModel.swift in Sources */,
 				11B3574A4715D307D9EFCF43 /* SendEvmConfirmationModule.swift in Sources */,
 				11B358C72B4E7F70331084AA /* SendEvmViewController.swift in Sources */,
@@ -9956,6 +9973,7 @@
 				11B357DDBC0536428B997FE5 /* InputSecondaryCircleButtonWrapperView.swift in Sources */,
 				11B35567A098667C9955F1F9 /* RecoveryPhraseModule.swift in Sources */,
 				D3F9B0262BE38AF1009FFA95 /* RegularSendView.swift in Sources */,
+				D34296A52CAE9D45007A6659 /* TransactionInfoViewModelNew.swift in Sources */,
 				11B35289269C634BC9219362 /* RecoveryPhraseViewController.swift in Sources */,
 				11B351D9E1CAF8AA5BCE39F5 /* RecoveryPhraseViewModel.swift in Sources */,
 				11B35F78F82224BE17D612AB /* RecoveryPhraseService.swift in Sources */,
@@ -10122,6 +10140,7 @@
 				D3E1E86B2C1C3AD600E07052 /* CoinReportsViewModel.swift in Sources */,
 				11B356D9182DD8D8ACFC97D5 /* BottomSheetModule.swift in Sources */,
 				11B35197E2FD1BD9E533E967 /* BottomSheetViewController.swift in Sources */,
+				D34296A22CAE9D3A007A6659 /* TransactionInfoView.swift in Sources */,
 				2FA5D20BC28280786A0FC3FE /* DropDownListCell.swift in Sources */,
 				D3C845AA2C1B08E3004F9DD9 /* CoinMajorHoldersViewModel.swift in Sources */,
 				2FA5D707CD9B268FA3CA8D8F /* TimeLockViewModel.swift in Sources */,
@@ -10188,6 +10207,7 @@
 				11B35AC1AA9A34145A010669 /* ActivateSubscriptionService.swift in Sources */,
 				11B35D5C090A1C74C49A8405 /* ActivateSubscriptionModule.swift in Sources */,
 				11B351BB835C2EE7144D8D7E /* ActivateSubscriptionViewController.swift in Sources */,
+				D34296AB2CB111A6007A6659 /* TransactionInfoFactory.swift in Sources */,
 				11B358B55D517A8999843B5F /* ActivateSubscriptionViewModel.swift in Sources */,
 				11B35F8BF4BD6481E6AF72AF /* TestNetManager.swift in Sources */,
 				11B35FB1B7B34756830942DC /* LaunchErrorViewController.swift in Sources */,
@@ -10948,6 +10968,7 @@
 				11B357F22958C3AB3818F20A /* AmountInputCell.swift in Sources */,
 				11B35D05FF90E999110698C0 /* RecipientAddressInputCell.swift in Sources */,
 				11B35FFE6FBDA949184E2BF2 /* AmountInputViewModel.swift in Sources */,
+				D34296A82CAEA1C4007A6659 /* TransactionField.swift in Sources */,
 				11B35DC140F10F631B61581E /* SendEvmConfirmationModule.swift in Sources */,
 				11B3547BF16FF0C22F1D629D /* SendEvmViewController.swift in Sources */,
 				11B355EC1ED6673F7F3E196C /* SendEvmService.swift in Sources */,
@@ -11421,6 +11442,7 @@
 				ABC9A3D46AA7356763213BA6 /* FeePriceScale.swift in Sources */,
 				1A5640DE72AC306799695F48 /* TopPlatformMarketCapFetcher.swift in Sources */,
 				D3F9B0252BE38AF1009FFA95 /* RegularSendView.swift in Sources */,
+				D34296A42CAE9D45007A6659 /* TransactionInfoViewModelNew.swift in Sources */,
 				11B357D1A2BD673DAB7B4C61 /* SecondaryButtonCell.swift in Sources */,
 				11B35B3C7A60FEE011EFBF73 /* InputSecondaryCircleButtonWrapperView.swift in Sources */,
 				11B35C1ACD5B3874921CEFDE /* RecoveryPhraseModule.swift in Sources */,
@@ -11587,6 +11609,7 @@
 				D3E1E86A2C1C3AD600E07052 /* CoinReportsViewModel.swift in Sources */,
 				11B356762C9C6E62706B874B /* BottomSheetModule.swift in Sources */,
 				11B35E99E0D2A095857DDE13 /* BottomSheetViewController.swift in Sources */,
+				D34296A12CAE9D3A007A6659 /* TransactionInfoView.swift in Sources */,
 				2FA5D10D571F6D9E3BECAF9E /* DropDownListCell.swift in Sources */,
 				D3C845A92C1B08E3004F9DD9 /* CoinMajorHoldersViewModel.swift in Sources */,
 				2FA5D62A6A421EEDFE784615 /* TimeLockViewModel.swift in Sources */,
@@ -11653,6 +11676,7 @@
 				11B35953182487E864EB4946 /* ActivateSubscriptionService.swift in Sources */,
 				11B35C2F43F8135F22DD7FDF /* ActivateSubscriptionModule.swift in Sources */,
 				11B356655BCF0A3919AD5120 /* ActivateSubscriptionViewController.swift in Sources */,
+				D34296AA2CB111A6007A6659 /* TransactionInfoFactory.swift in Sources */,
 				11B356D9DACA3E988BEDB3B4 /* ActivateSubscriptionViewModel.swift in Sources */,
 				11B35357032B368120BA1C06 /* TestNetManager.swift in Sources */,
 				11B356CF0D78F2DC6F28B4BD /* LaunchErrorViewController.swift in Sources */,

@@ -16,4 +16,23 @@ class TronApproveTransactionRecord: TronTransactionRecord {
     override var mainValue: AppValue? {
         value
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [value.token]
+    }
+
+    override func internalSections(status _: TransactionStatus, lastBlockInfo _: LastBlockInfo?, rates: [Coin: CurrencyValue], nftMetadata _: [NftUid: NftAssetBriefMetadata], hidden: Bool) -> [Section] {
+        let rateValue = value.coin.flatMap { rates[$0] }
+
+        var fields: [TransactionField] = [
+            .amount(title: "transactions.approve".localized, appValue: value, rateValue: rateValue, type: .neutral, hidden: hidden),
+            .address(title: "tx_info.spender".localized, value: spender, blockchainType: source.blockchainType),
+        ]
+
+        if let rateField = rate(rateValue: rateValue, code: value.code) {
+            fields.append(rateField)
+        }
+
+        return [.init(fields: fields)]
+    }
 }

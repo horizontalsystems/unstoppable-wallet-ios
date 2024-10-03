@@ -20,4 +20,8 @@ class BinanceChainTransactionRecord: TransactionRecord {
             failed: false
         )
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [fee.token]
+    }
 }

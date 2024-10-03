@@ -54,12 +54,7 @@ extension CoinService: ICoinService {
     }
 
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {
-        AmountData(
-            appValue: AppValue(token: token, value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
-            currencyValue: rate.map {
-                CurrencyValue(currency: $0.currency, value: $0.value * value)
-            }
-        )
+        AmountData(kind: .token(token: token), value: value, sign: sign, currency: rate?.currency, rate: rate?.value)
     }
 
     func amountData(value: BigUInt, sign: FloatingPointSign = .plus) -> AmountData {

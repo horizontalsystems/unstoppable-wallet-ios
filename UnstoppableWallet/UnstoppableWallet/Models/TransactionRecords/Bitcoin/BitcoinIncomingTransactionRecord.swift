@@ -32,4 +32,22 @@ class BitcoinIncomingTransactionRecord: BitcoinTransactionRecord {
     override var mainValue: AppValue? {
         value
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [value.token]
+    }
+
+    override func internalSections(status _: TransactionStatus, lastBlockInfo: LastBlockInfo?, rates: [Coin: CurrencyValue], nftMetadata _: [NftUid: NftAssetBriefMetadata], hidden: Bool) -> [Section] {
+        var sections: [Section] = [
+            .init(fields: receiveFields(appValue: value, from: from, rates: rates, hidden: hidden)),
+        ]
+
+        let additionalFields = fields(lastBlockInfo: lastBlockInfo)
+
+        if !additionalFields.isEmpty {
+            sections.append(.init(fields: additionalFields))
+        }
+
+        return sections
+    }
 }

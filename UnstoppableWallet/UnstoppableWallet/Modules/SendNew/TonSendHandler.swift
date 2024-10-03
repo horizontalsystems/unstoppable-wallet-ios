@@ -165,14 +165,14 @@ extension TonSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
-            var fields: [SendField] = [
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[TransactionField]] {
+            var fields: [TransactionField] = [
                 .amount(
                     title: "send.confirmation.you_send".localized,
-                    token: token,
-                    appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
-                    type: .neutral
+                    appValue: AppValue(token: token, value: amount),
+                    rateValue: CurrencyValue(currency: currency, value: rates[token.coin.uid]),
+                    type: .neutral,
+                    hidden: false
                 ),
                 .address(
                     title: "send.confirmation.to".localized,
@@ -191,8 +191,8 @@ extension TonSendHandler {
             ]
         }
 
-        private func feeFields(currency: Currency, feeToken: Token, feeTokenRate: Decimal?) -> [SendField] {
-            var viewItems = [SendField]()
+        private func feeFields(currency: Currency, feeToken: Token, feeTokenRate: Decimal?) -> [TransactionField] {
+            var viewItems = [TransactionField]()
 
             if let fee {
                 let appValue = AppValue(token: feeToken, value: fee)

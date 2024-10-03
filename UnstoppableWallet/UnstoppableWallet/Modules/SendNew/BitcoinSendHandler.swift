@@ -100,7 +100,7 @@ extension BitcoinSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[TransactionField]] {
             guard let toAddress = params.address, let value = params.value else {
                 return []
             }
@@ -113,10 +113,10 @@ extension BitcoinSendHandler {
                 [
                     .amount(
                         title: "send.confirmation.you_send".localized,
-                        token: baseToken,
-                        appValueType: .regular(appValue: appValue),
-                        currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) },
-                        type: .neutral
+                        appValue: appValue,
+                        rateValue: CurrencyValue(currency: currency, value: rate),
+                        type: .neutral,
+                        hidden: false
                     ),
                     .address(
                         title: "send.confirmation.to".localized,

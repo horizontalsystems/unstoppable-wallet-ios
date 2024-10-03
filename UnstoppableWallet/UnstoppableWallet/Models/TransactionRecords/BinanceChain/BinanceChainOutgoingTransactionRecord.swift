@@ -18,4 +18,30 @@ class BinanceChainOutgoingTransactionRecord: BinanceChainTransactionRecord {
     override var mainValue: AppValue? {
         value
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [value.token]
+    }
+
+    override var feeInfo: (AppValue, Bool)? {
+        (fee, false)
+    }
+
+    override func internalSections(status _: TransactionStatus, lastBlockInfo _: LastBlockInfo?, rates: [Coin: CurrencyValue], nftMetadata _: [NftUid: NftAssetBriefMetadata], hidden: Bool) -> [Section] {
+        var sections: [Section] = [
+            .init(
+                fields: sendFields(appValue: value, to: to, rates: rates, sentToSelf: sentToSelf, hidden: hidden)
+            ),
+        ]
+
+        if let memo, !memo.isEmpty {
+            sections.append(.init(fields: [.memo(text: memo)]))
+        }
+
+        if sentToSelf {
+            sections.append(.init(fields: [sentToSelfField()]))
+        }
+
+        return sections
+    }
 }

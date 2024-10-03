@@ -18,4 +18,22 @@ class EvmOutgoingTransactionRecord: EvmTransactionRecord {
     override var mainValue: AppValue? {
         value
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + [value.token]
+    }
+
+    override func internalSections(status _: TransactionStatus, lastBlockInfo _: LastBlockInfo?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata], hidden: Bool) -> [Section] {
+        var sections: [Section] = [
+            .init(
+                fields: sendFields(appValue: value, to: to, burn: to == zeroAddress, rates: rates, nftMetadata: nftMetadata, sentToSelf: sentToSelf, hidden: hidden)
+            ),
+        ]
+
+        if sentToSelf {
+            sections.append(.init(fields: [sentToSelfField()]))
+        }
+
+        return sections
+    }
 }

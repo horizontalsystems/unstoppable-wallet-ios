@@ -48,10 +48,7 @@ struct EvmFeeData {
     }
 
     private func amountData(amount: Decimal, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-        let appValue = AppValue(token: feeToken, value: amount)
-        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
-
-        return AmountData(appValue: appValue, currencyValue: currencyValue)
+        AmountData(kind: .token(token: feeToken), value: amount, currency: currency, rate: feeTokenRate)
     }
 
     private func l1FeeValue(feeToken: Token) -> Decimal? {

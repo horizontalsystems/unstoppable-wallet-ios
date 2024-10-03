@@ -131,12 +131,12 @@ extension TonConnectSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
-            var sections = [[SendField]]()
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[TransactionField]] {
+            var sections = [[TransactionField]]()
 
             if let record {
                 for action in record.actions {
-                    var fields: [SendField]
+                    var fields: [TransactionField]
 
                     switch action.type {
                     case let .send(value, to, _, comment):
@@ -144,10 +144,10 @@ extension TonConnectSendHandler {
                             fields = [
                                 .amount(
                                     title: "send.confirmation.you_send".localized,
-                                    token: token,
-                                    appValueType: .regular(appValue: AppValue(token: token, value: value.value)),
-                                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * value.value) },
-                                    type: .outgoing
+                                    appValue: value,
+                                    rateValue: CurrencyValue(currency: currency, value: rates[token.coin.uid]),
+                                    type: .outgoing,
+                                    hidden: false
                                 ),
                                 .address(
                                     title: "send.confirmation.to".localized,
@@ -168,10 +168,10 @@ extension TonConnectSendHandler {
                             fields = [
                                 .amount(
                                     title: "send.confirmation.you_receive".localized,
-                                    token: token,
-                                    appValueType: .regular(appValue: AppValue(token: token, value: value.value)),
-                                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * value.value) },
-                                    type: .incoming
+                                    appValue: value,
+                                    rateValue: CurrencyValue(currency: currency, value: rates[token.coin.uid]),
+                                    type: .incoming,
+                                    hidden: false
                                 ),
                                 .address(
                                     title: "send.confirmation.from".localized,
@@ -198,17 +198,17 @@ extension TonConnectSendHandler {
                             fields = [
                                 .amount(
                                     title: "swap.you_pay".localized,
-                                    token: tokenIn,
-                                    appValueType: .regular(appValue: AppValue(token: tokenIn, value: valueIn.value)),
-                                    currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: valueIn.value * $0) },
-                                    type: .neutral
+                                    appValue: valueIn,
+                                    rateValue: CurrencyValue(currency: currency, value: rates[tokenIn.coin.uid]),
+                                    type: .neutral,
+                                    hidden: false
                                 ),
                                 .amount(
                                     title: "swap.you_get".localized,
-                                    token: tokenOut,
-                                    appValueType: .regular(appValue: AppValue(token: tokenOut, value: valueOut.value)),
-                                    currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: valueOut.value * $0) },
-                                    type: .incoming
+                                    appValue: valueOut,
+                                    rateValue: CurrencyValue(currency: currency, value: rates[tokenOut.coin.uid]),
+                                    type: .incoming,
+                                    hidden: false
                                 ),
                                 .price(
                                     title: "swap.price".localized,
@@ -247,8 +247,8 @@ extension TonConnectSendHandler {
             return sections
         }
 
-        private func feeFields(currency: Currency, feeToken: Token, feeTokenRate: Decimal?) -> [SendField] {
-            var viewItems = [SendField]()
+        private func feeFields(currency: Currency, feeToken: Token, feeTokenRate: Decimal?) -> [TransactionField] {
+            var viewItems = [TransactionField]()
 
             if let fee {
                 let appValue = AppValue(token: feeToken, value: fee)

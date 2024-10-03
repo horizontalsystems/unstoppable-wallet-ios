@@ -13,7 +13,7 @@ class BaseSendEvmData {
         self.nonce = nonce
     }
 
-    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [TransactionField] {
         let amountData = evmFeeData.flatMap { $0.totalAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) }
 
         return [

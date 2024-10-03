@@ -34,4 +34,26 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
             return nil
         }
     }
+
+    override var rateTokens: [Token?] {
+        super.rateTokens + incomingEvents.map(\.value.token) + outgoingEvents.map(\.value.token)
+    }
+
+    override func internalSections(status _: TransactionStatus, lastBlockInfo _: LastBlockInfo?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata], hidden: Bool) -> [Section] {
+        var sections: [Section] = [
+            .init(fields: [
+                .action(icon: source.blockchainType.iconPlain32, dimmed: false, title: method ?? "transactions.contract_call".localized, value: contractAddress),
+            ]),
+        ]
+
+        for event in outgoingEvents {
+            sections.append(.init(fields: sendFields(appValue: event.value, to: event.address, burn: event.address == zeroAddress, rates: rates, nftMetadata: nftMetadata, hidden: hidden)))
+        }
+
+        for event in incomingEvents {
+            sections.append(.init(fields: receiveFields(appValue: event.value, from: event.address, mint: event.address == zeroAddress, rates: rates, nftMetadata: nftMetadata, hidden: hidden)))
+        }
+
+        return sections
+    }
 }

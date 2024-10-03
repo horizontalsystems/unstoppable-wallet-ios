@@ -41,6 +41,10 @@ struct AppValue {
         self.value = value
     }
 
+    var isMaxValue: Bool {
+        decimals.map { value.isMaxValue(decimals: $0) } ?? false
+    }
+
     var token: Token? {
         kind.token
     }
@@ -62,15 +66,7 @@ struct AppValue {
     }
 
     var code: String {
-        switch kind {
-        case let .token(token): return token.coin.code
-        case let .coin(coin, _): return coin.code
-        case let .eip20Token(_, tokenCode, _): return tokenCode
-        case let .jetton(jetton): return jetton.symbol
-        case let .nft(_, _, tokenSymbol): return tokenSymbol ?? "NFT"
-        case let .cexAsset(cexAsset): return cexAsset.coinCode
-        case .raw: return ""
-        }
+        kind.code
     }
 
     var decimals: Int? {
@@ -83,10 +79,6 @@ struct AppValue {
         case .cexAsset: return CexAsset.decimals
         case .raw: return nil
         }
-    }
-
-    var isMaxValue: Bool {
-        decimals.map { value.isMaxValue(decimals: $0) } ?? false
     }
 
     var tokenProtocol: TokenProtocol? {
@@ -117,11 +109,39 @@ struct AppValue {
         AppValue(kind: kind, value: Decimal(sign: .minus, exponent: value.exponent, significand: value.significand))
     }
 
-    var infinity: String {
-        "∞ \(code)"
+    func currencyValue(currency: Currency?, rate: Decimal?) -> CurrencyValue? {
+        guard !isMaxValue, let currency, let rate else {
+            return nil
+        }
+
+        return CurrencyValue(currency: currency, value: rate * value.magnitude)
     }
 
-    func formattedFull(signType: ValueFormatter.SignType = .never) -> String? {
+    func formattedFullCurrencyValue(rateValue: CurrencyValue?, hidden: Bool = false) -> String? {
+        if hidden {
+            return BalanceHiddenManager.placeholder
+        }
+
+        if isMaxValue {
+            return "transactions.value.unlimited".localized
+        }
+
+        guard let rateValue else {
+            return nil
+        }
+
+        return CurrencyValue(currency: rateValue.currency, value: rateValue.value * value.magnitude).formattedFull
+    }
+
+    func formattedFull(signType: ValueFormatter.SignType = .never, hidden: Bool = false) -> String? {
+        if hidden {
+            return "\(BalanceHiddenManager.placeholder) \(code)"
+        }
+
+        if isMaxValue {
+            return "∞ \(code)"
+        }
+
         switch kind {
         case let .token(token): return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: code, signType: signType)
         case let .coin(_, decimals): return ValueFormatter.instance.formatFull(value: value, decimalCount: decimals, symbol: code, signType: signType)
@@ -134,6 +154,10 @@ struct AppValue {
     }
 
     func formattedShort(signType: ValueFormatter.SignType = .never) -> String? {
+        if isMaxValue {
+            return "∞ \(code)"
+        }
+
         switch kind {
         case let .token(token): return ValueFormatter.instance.formatShort(value: value, decimalCount: token.decimals, symbol: code, signType: signType)
         case let .coin(_, decimals): return ValueFormatter.instance.formatShort(value: value, decimalCount: decimals, symbol: code, signType: signType)
@@ -169,6 +193,18 @@ extension AppValue {
             case let .coin(coin, _): return coin
             case let .cexAsset(cexAsset): return cexAsset.coin
             default: return nil
+            }
+        }
+
+        var code: String {
+            switch self {
+            case let .token(token): return token.coin.code
+            case let .coin(coin, _): return coin.code
+            case let .eip20Token(_, tokenCode, _): return tokenCode
+            case let .jetton(jetton): return jetton.symbol
+            case let .nft(_, _, tokenSymbol): return tokenSymbol ?? "NFT"
+            case let .cexAsset(cexAsset): return cexAsset.coinCode
+            case .raw: return ""
             }
         }
 

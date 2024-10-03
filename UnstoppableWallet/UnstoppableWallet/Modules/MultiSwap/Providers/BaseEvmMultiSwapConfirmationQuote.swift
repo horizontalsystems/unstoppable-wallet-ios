@@ -18,12 +18,12 @@ class BaseEvmMultiSwapConfirmationQuote: BaseSendEvmData, IMultiSwapConfirmation
         []
     }
 
-    func priceSectionFields(tokenIn _: Token, tokenOut _: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
+    func priceSectionFields(tokenIn _: Token, tokenOut _: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [TransactionField] {
         []
     }
 
-    func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [[SendField]] {
-        var sections = [[SendField]]()
+    func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [[TransactionField]] {
+        var sections = [[TransactionField]]()
 
         if let nonce {
             sections.append(
@@ -39,7 +39,7 @@ class BaseEvmMultiSwapConfirmationQuote: BaseSendEvmData, IMultiSwapConfirmation
         return sections
     }
 
-    func additionalFeeFields(tokenIn _: Token, tokenOut _: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
+    func additionalFeeFields(tokenIn _: Token, tokenOut _: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [TransactionField] {
         []
     }
 }
