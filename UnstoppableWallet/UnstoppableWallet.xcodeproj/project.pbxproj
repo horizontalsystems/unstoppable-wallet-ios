@@ -9070,7 +9070,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = "Horizontal Systems";
 				TargetAttributes = {
 					D38404E1218317DF007D50AD = {
@@ -12498,7 +12498,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Development.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
@@ -12517,7 +12516,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Development.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
