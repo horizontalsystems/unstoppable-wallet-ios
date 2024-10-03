@@ -24,13 +24,9 @@ class MainBadgeService {
         self.walletConnectSessionManager = walletConnectSessionManager
         self.contactBookManager = contactBookManager
 
-        accountRestoreWarningManager.hasNonStandardObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .subscribe(onNext: { [weak self] _ in
-                self?.syncSettingsBadge()
-            })
-            .disposed(by: disposeBag)
+        accountRestoreWarningManager.hasNonStandardPublisher
+            .sink { [weak self] _ in self?.syncSettingsBadge() }
+            .store(in: &cancellables)
 
         backupManager.allBackedUpObservable
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -41,15 +37,11 @@ class MainBadgeService {
             .disposed(by: disposeBag)
 
         passcodeManager.$isPasscodeSet
-            .sink { [weak self] _ in
-                self?.syncSettingsBadge()
-            }
+            .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
         termsManager.$termsAccepted
-            .sink { [weak self] _ in
-                self?.syncSettingsBadge()
-            }
+            .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
         walletConnectSessionManager.activePendingRequestsObservable

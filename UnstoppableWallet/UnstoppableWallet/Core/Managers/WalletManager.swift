@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MarketKit
 import RxRelay
@@ -6,7 +7,7 @@ import RxSwift
 class WalletManager {
     private let accountManager: AccountManager
     private let storage: WalletStorage
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let activeWalletDataRelay = PublishRelay<WalletData>()
 
@@ -18,8 +19,13 @@ class WalletManager {
         self.accountManager = accountManager
         self.storage = storage
 
-        subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.reloadWallets() }
-        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDelete(account: $0) }
+        accountManager.activeAccountPublisher
+            .sink { [weak self] _ in self?.reloadWallets() }
+            .store(in: &cancellables)
+
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] in self?.handleDelete(account: $0) }
+            .store(in: &cancellables)
     }
 
     private func handleDelete(account: Account) {

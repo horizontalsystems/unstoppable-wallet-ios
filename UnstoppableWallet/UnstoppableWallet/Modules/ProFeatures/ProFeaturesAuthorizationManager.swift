@@ -1,4 +1,5 @@
 import BigInt
+import Combine
 import EvmKit
 import HsExtensions
 import RxCocoa
@@ -10,7 +11,7 @@ class ProFeaturesAuthorizationManager {
     static let contractAddress = try! EvmKit.Address(hex: "0x495f947276749ce646f68ac8c248420045cb7b5e")
     static let tokenId = BigUInt("77929411300911548602579223184347481465604416464327802926072149574722519040001", radix: 10)!
 
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let accountManager: AccountManager
     private let storage: ProFeaturesStorage
@@ -23,7 +24,9 @@ class ProFeaturesAuthorizationManager {
         self.accountManager = accountManager
         self.evmSyncSourceManager = evmSyncSourceManager
 
-        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.sync(deletedAccount: $0) }
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] in self?.sync(deletedAccount: $0) }
+            .store(in: &cancellables)
     }
 
     private func sync(deletedAccount: Account) {

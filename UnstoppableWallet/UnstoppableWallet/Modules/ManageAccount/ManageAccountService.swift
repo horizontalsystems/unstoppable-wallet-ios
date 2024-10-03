@@ -14,7 +14,6 @@ class ManageAccountService {
     private let accountManager: AccountManager
     private let cloudBackupManager: CloudBackupManager
     private let passcodeManager: PasscodeManager
-    private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
     private let stateRelay = PublishRelay<State>()
@@ -41,13 +40,16 @@ class ManageAccountService {
 
         newName = account.name
 
-        subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in self?.handleUpdated(account: $0) }
-        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDeleted(account: $0) }
+        accountManager.accountUpdatedPublisher
+            .sink { [weak self] in self?.handleUpdated(account: $0) }
+            .store(in: &cancellables)
+
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] in self?.handleDeleted(account: $0) }
+            .store(in: &cancellables)
 
         cloudBackupManager.$oneWalletItems
-            .sink { [weak self] _ in
-                self?.cloudBackedUpRelay.accept(())
-            }
+            .sink { [weak self] _ in self?.cloudBackedUpRelay.accept(()) }
             .store(in: &cancellables)
 
         syncState()

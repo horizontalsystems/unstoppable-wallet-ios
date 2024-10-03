@@ -1,5 +1,5 @@
 import Foundation
-import RxSwift
+import Combine
 
 class AccountRestoreWarningManager {
     private let accountManager: AccountManager
@@ -16,16 +16,12 @@ extension AccountRestoreWarningManager {
         !accountManager.accounts.filter(\.nonStandard).isEmpty
     }
 
-    var hasNonStandardObservable: Observable<Bool> {
-        accountManager.accountsObservable.map { !$0.filter(\.nonStandard).isEmpty }
+    var hasNonStandardPublisher: AnyPublisher<Bool, Never> {
+        accountManager.accountsPublisher.map { !$0.filter(\.nonStandard).isEmpty }.eraseToAnyPublisher()
     }
 
     var hasNonRecommended: Bool {
         !accountManager.accounts.filter(\.nonRecommended).isEmpty
-    }
-
-    var hasNonRecommendedObservable: Observable<Bool> {
-        accountManager.accountsObservable.map { !$0.filter(\.nonStandard).isEmpty }
     }
 
     func removeIgnoreWarning(account: Account) {

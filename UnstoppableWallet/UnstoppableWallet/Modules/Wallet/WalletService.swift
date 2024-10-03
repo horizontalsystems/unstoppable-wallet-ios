@@ -106,20 +106,26 @@ class WalletService {
             sortType = .balance
         }
 
-        subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
-            self?.handleUpdated(activeAccount: $0)
-        }
-        subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in
-            self?.handleUpdated(account: $0)
-        }
-        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in
-            self?.handleDeleted(account: $0)
-        }
-        subscribe(disposeBag, accountManager.accountsLostObservable) { [weak self] isAccountsLost in
-            if isAccountsLost {
-                self?.accountsLostRelay.accept(())
+        accountManager.activeAccountPublisher
+            .sink { [weak self] in self?.handleUpdated(activeAccount: $0) }
+            .store(in: &cancellables)
+
+        accountManager.accountUpdatedPublisher
+            .sink { [weak self] in self?.handleUpdated(account: $0) }
+            .store(in: &cancellables)
+
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] in self?.handleDeleted(account: $0) }
+            .store(in: &cancellables)
+
+        accountManager.accountsLostPublisher
+            .sink { [weak self] isAccountsLost in
+                if isAccountsLost {
+                    self?.accountsLostRelay.accept(())
+                }
             }
-        }
+            .store(in: &cancellables)
+
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
             self?.coinPriceService.refresh()
         }

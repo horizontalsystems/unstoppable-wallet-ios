@@ -1,20 +1,20 @@
+import Combine
 import MarketKit
-import RxSwift
 
 class CexAssetManager {
     private let accountManager: AccountManager
     private let marketKit: MarketKit.Kit
     private let storage: CexAssetRecordStorage
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     init(accountManager: AccountManager, marketKit: MarketKit.Kit, storage: CexAssetRecordStorage) {
         self.accountManager = accountManager
         self.marketKit = marketKit
         self.storage = storage
 
-        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] account in
-            try? self?.storage.clear(accountId: account.id)
-        }
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] account in try? self?.storage.clear(accountId: account.id) }
+            .store(in: &cancellables)
     }
 
     private func mapped(records: [CexAssetRecord]) throws -> [CexAsset] {

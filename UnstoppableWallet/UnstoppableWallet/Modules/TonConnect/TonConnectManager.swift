@@ -11,6 +11,8 @@ import TweetNacl
 class TonConnectManager {
     private let apiClient: TonConnectAPI.Client
     private let storage: TonConnectStorage
+    private let accountManager: AccountManager
+    private var cancellables = Set<AnyCancellable>()
 
     @PostPublished private(set) var tonConnectApps = [TonConnectApp]()
 
@@ -19,7 +21,7 @@ class TonConnectManager {
 
     private let sendTransactionRequestSubject = PassthroughSubject<TonConnectSendTransactionRequest, Never>()
 
-    init(storage: TonConnectStorage) {
+    init(storage: TonConnectStorage, accountManager: AccountManager) {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = TimeInterval(Int.max)
         configuration.timeoutIntervalForResource = TimeInterval(Int.max)
@@ -31,8 +33,27 @@ class TonConnectManager {
         )
 
         self.storage = storage
+        self.accountManager = accountManager
+
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] in self?.handleDeleted(account: $0) }
+            .store(in: &cancellables)
 
         syncTonConnectApps()
+    }
+
+    private func handleDeleted(account: Account) {
+        let apps = tonConnectApps.filter { $0.accountId == account.id }
+
+        guard !apps.isEmpty else {
+            return
+        }
+
+        Task { [weak self] in
+            for app in apps {
+                try await self?.disconnect(tonConnectApp: app)
+            }
+        }
     }
 
     private func syncTonConnectApps() {

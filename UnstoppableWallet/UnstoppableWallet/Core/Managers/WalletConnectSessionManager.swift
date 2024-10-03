@@ -1,3 +1,4 @@
+import Combine
 import MarketKit
 import RxCocoa
 import RxSwift
@@ -6,6 +7,7 @@ import WalletConnectUtils
 
 class WalletConnectSessionManager {
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     let service: WalletConnectService
     private let storage: WalletConnectSessionStorage
@@ -24,12 +26,14 @@ class WalletConnectSessionManager {
         self.requestHandler = requestHandler
         self.currentDateProvider = currentDateProvider
 
-        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in
-            self?.handleDeleted(account: $0)
-        }
-        subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
-            self?.handle(activeAccount: $0)
-        }
+        accountManager.activeAccountPublisher
+            .sink { [weak self] in self?.handle(activeAccount: $0) }
+            .store(in: &cancellables)
+
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] in self?.handleDeleted(account: $0) }
+            .store(in: &cancellables)
+
         subscribe(disposeBag, service.sessionsUpdatedObservable) { [weak self] in
             self?.syncSessions()
         }
