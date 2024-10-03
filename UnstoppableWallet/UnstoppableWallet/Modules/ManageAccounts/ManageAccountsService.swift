@@ -5,7 +5,6 @@ import RxSwift
 class ManageAccountsService {
     private let accountManager: AccountManager
     private let cloudBackupManager: CloudBackupManager
-    private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
     private let itemsRelay = PublishRelay<[Item]>()
@@ -19,13 +18,16 @@ class ManageAccountsService {
         self.accountManager = accountManager
         self.cloudBackupManager = cloudBackupManager
 
-        subscribe(disposeBag, accountManager.accountsObservable) { [weak self] _ in self?.syncItems() }
-        subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.syncItems() }
+        accountManager.activeAccountPublisher
+            .sink { [weak self] _ in self?.syncItems() }
+            .store(in: &cancellables)
+
+        accountManager.accountsPublisher
+            .sink { [weak self] _ in self?.syncItems() }
+            .store(in: &cancellables)
 
         cloudBackupManager.$oneWalletItems
-            .sink { [weak self] _ in
-                self?.syncItems()
-            }
+            .sink { [weak self] _ in self?.syncItems() }
             .store(in: &cancellables)
 
         syncItems()

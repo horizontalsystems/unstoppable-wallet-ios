@@ -317,7 +317,7 @@ class App {
         statManager = StatManager(marketKit: marketKit, storage: statStorage, userDefaultsStorage: userDefaultsStorage)
 
         let tonConnectStorage = try TonConnectStorage(dbPool: dbPool)
-        tonConnectManager = TonConnectManager(storage: tonConnectStorage)
+        tonConnectManager = TonConnectManager(storage: tonConnectStorage, accountManager: accountManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 

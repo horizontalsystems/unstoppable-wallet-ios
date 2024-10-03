@@ -5,14 +5,16 @@ import RxSwift
 
 class BackupManager {
     private let accountManager: AccountManager
-
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let allBackedUpRelay = PublishRelay<Bool>()
 
     init(accountManager: AccountManager) {
         self.accountManager = accountManager
-        subscribe(disposeBag, accountManager.accountsObservable) { [weak self] _ in self?.updateAllBackedUp() }
+
+        accountManager.accountsPublisher
+            .sink { [weak self] _ in self?.updateAllBackedUp() }
+            .store(in: &cancellables)
     }
 
     private func updateAllBackedUp() {

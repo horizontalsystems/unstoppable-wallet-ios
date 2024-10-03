@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import RxRelay
 import RxSwift
@@ -13,6 +14,7 @@ class MainService {
     private let lockManager: LockManager
     private let presetTab: MainModule.Tab?
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let hasAccountsRelay = PublishRelay<Bool>()
     private(set) var hasAccounts: Bool = false {
@@ -46,7 +48,10 @@ class MainService {
         self.lockManager = lockManager
         self.presetTab = presetTab
 
-        subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
+        accountManager.accountsPublisher
+            .sink { [weak self] in self?.sync(accounts: $0) }
+            .store(in: &cancellables)
+
         subscribe(disposeBag, walletManager.activeWalletDataUpdatedObservable) { [weak self] in self?.sync(activeWallets: $0.wallets) }
         subscribe(disposeBag, launchScreenManager.showMarketObservable) { [weak self] in self?.sync(showMarket: $0) }
         subscribe(disposeBag, appManager.didBecomeActiveObservable) { [weak self] in self?.didBecomeActive() }

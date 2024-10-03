@@ -1,13 +1,15 @@
-import RxSwift
+import Combine
 
 class EnabledWalletCacheManager {
     private let storage: EnabledWalletCacheStorage
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     init(storage: EnabledWalletCacheStorage, accountManager: AccountManager) {
         self.storage = storage
 
-        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDelete(account: $0) }
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] in self?.handleDelete(account: $0) }
+            .store(in: &cancellables)
     }
 
     private func handleDelete(account: Account) {

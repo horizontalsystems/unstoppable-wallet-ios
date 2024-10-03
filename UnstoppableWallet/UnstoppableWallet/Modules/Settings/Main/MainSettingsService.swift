@@ -5,6 +5,7 @@ import ThemeKit
 
 class MainSettingsService {
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let backupManager: BackupManager
     private let cloudAccountBackupManager: CloudBackupManager
@@ -47,7 +48,10 @@ class MainSettingsService {
         }
 
         subscribe(disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncWalletRequiredActions() }
-        subscribe(disposeBag, accountRestoreWarningManager.hasNonStandardObservable) { [weak self] _ in self?.syncWalletRequiredActions() }
+
+        accountRestoreWarningManager.hasNonStandardPublisher
+            .sink { [weak self] _ in self?.syncWalletRequiredActions() }
+            .store(in: &cancellables)
 
         syncWalletRequiredActions()
     }
