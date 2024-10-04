@@ -49,7 +49,7 @@ public struct TonConnectSessionCrypto {
 
 private extension TonConnectSessionCrypto {
     func createNonce() throws -> Data {
-        return try TweetNacl.NaclUtil.secureRandomData(count: .nonceLength)
+        try TweetNacl.NaclUtil.secureRandomData(count: .nonceLength)
     }
 }
 

@@ -210,7 +210,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 var fiatBalanceString: String?
 
                 if let balance = balances[token] {
-                    balanceString = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: token), value: balance))
+                    balanceString = AppValue(token: token, value: balance).formattedShort()
 
                     if let fiatBalance = fiatBalances[token] {
                         fiatBalanceString = ValueFormatter.instance.formatShort(currency: currency, value: fiatBalance)

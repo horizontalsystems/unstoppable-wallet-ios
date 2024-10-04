@@ -26,7 +26,7 @@ class CexAmountInputViewModel: AmountInputViewModel {
     private func sync(cexAsset: CexAsset) {
         queue.async { [weak self] in
             self?.coinDecimals = CexAsset.decimals
-            self?.fiatService.set(coinValueKind: .cexAsset(cexAsset: cexAsset))
+            self?.fiatService.set(appValueKind: .cexAsset(cexAsset: cexAsset))
             self?.updateMaxEnabled()
         }
     }

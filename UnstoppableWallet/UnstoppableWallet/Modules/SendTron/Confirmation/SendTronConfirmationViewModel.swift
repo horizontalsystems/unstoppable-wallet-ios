@@ -58,8 +58,8 @@ class SendTronConfirmationViewModel {
                 if let tronError = error as? SendTronConfirmationService.TransactionError {
                     switch tronError {
                     case let .insufficientBalance(balance):
-                        let coinValue = coinServiceFactory.baseCoinService.coinValue(value: balance)
-                        let balanceString = ValueFormatter.instance.formatShort(coinValue: coinValue)
+                        let appValue = coinServiceFactory.baseCoinService.appValue(value: balance)
+                        let balanceString = appValue.formattedShort()
 
                         return TitledCaution(
                             title: "fee_settings.errors.insufficient_balance".localized,
@@ -121,7 +121,7 @@ class SendTronConfirmationViewModel {
                     TronFeeViewItem(
                         title: "tron.send.activation_fee".localized,
                         info: "tron.send.activation_fee.info".localized,
-                        value1: ValueFormatter.instance.formatShort(coinValue: amountData.coinValue) ?? "n/a".localized,
+                        value1: amountData.appValue.formattedShort() ?? "n/a".localized,
                         value2: amountData.currencyValue.flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) },
                         value2IsSecondary: true
                     )
@@ -194,7 +194,7 @@ class SendTronConfirmationViewModel {
         .amount(
             title: title,
             token: coinService.token,
-            coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
+            coinAmount: amountData.appValue.formattedFull() ?? "n/a".localized,
             currencyAmount: amountData.currencyValue.flatMap {
                 ValueFormatter.instance.formatFull(currencyValue: $0)
             },
@@ -204,7 +204,7 @@ class SendTronConfirmationViewModel {
 
     private func estimatedAmountViewItem(title: String, coinService: CoinService, value: Decimal, type: AmountType) -> ViewItem {
         let amountData = coinService.amountData(value: value, sign: type.sign)
-        let coinAmount = ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized
+        let coinAmount = amountData.appValue.formattedFull() ?? "n/a".localized
 
         return .amount(
             title: title,

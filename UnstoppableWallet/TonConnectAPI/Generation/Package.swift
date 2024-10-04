@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "TonAPI",
     platforms: [
-      .macOS(.v12), .iOS(.v13)
+        .macOS(.v12), .iOS(.v13),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMinor(from: "0.3.0")),

@@ -34,49 +34,49 @@ class EvmTransactionConverter {
         return Decimal(sign: sign, exponent: -decimals, significand: significand)
     }
 
-    private func baseCoinValue(value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
+    private func baseAppValue(value: BigUInt, sign: FloatingPointSign) -> AppValue {
         let amount = convertAmount(amount: value, decimals: baseToken.decimals, sign: sign)
-        return .coinValue(token: baseToken, value: amount)
+        return AppValue(token: baseToken, value: amount)
     }
 
-    private func eip20Value(tokenAddress: EvmKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: Eip20Kit.TokenInfo?) -> TransactionValue {
+    private func eip20Value(tokenAddress: EvmKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: Eip20Kit.TokenInfo?) -> AppValue {
         let query = TokenQuery(blockchainType: evmKitWrapper.blockchainType, tokenType: .eip20(address: tokenAddress.hex))
 
         if let token = try? coinManager.token(query: query) {
             let value = convertAmount(amount: value, decimals: token.decimals, sign: sign)
-            return .coinValue(token: token, value: value)
+            return AppValue(token: token, value: value)
         } else if let tokenInfo {
             let value = convertAmount(amount: value, decimals: tokenInfo.tokenDecimal, sign: sign)
-            return .tokenValue(tokenName: tokenInfo.tokenName, tokenCode: tokenInfo.tokenSymbol, tokenDecimals: tokenInfo.tokenDecimal, value: value)
+            return AppValue(tokenName: tokenInfo.tokenName, tokenCode: tokenInfo.tokenSymbol, tokenDecimals: tokenInfo.tokenDecimal, value: value)
         }
 
-        return .rawValue(value: value)
+        return AppValue(value: convertAmount(amount: value, decimals: 0, sign: sign))
     }
 
     private func convertToAmount(token: SwapDecoration.Token, amount: SwapDecoration.Amount, sign: FloatingPointSign) -> SwapTransactionRecord.Amount {
         switch amount {
-        case let .exact(value): return .exact(value: convertToTransactionValue(token: token, value: value, sign: sign))
-        case let .extremum(value): return .extremum(value: convertToTransactionValue(token: token, value: value, sign: sign))
+        case let .exact(value): return .exact(value: convertToAppValue(token: token, value: value, sign: sign))
+        case let .extremum(value): return .extremum(value: convertToAppValue(token: token, value: value, sign: sign))
         }
     }
 
-    private func convertToTransactionValue(token: SwapDecoration.Token, value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
+    private func convertToAppValue(token: SwapDecoration.Token, value: BigUInt, sign: FloatingPointSign) -> AppValue {
         switch token {
-        case .evmCoin: return baseCoinValue(value: value, sign: sign)
+        case .evmCoin: return baseAppValue(value: value, sign: sign)
         case let .eip20Coin(tokenAddress, tokenInfo): return eip20Value(tokenAddress: tokenAddress, value: value, sign: sign, tokenInfo: tokenInfo)
         }
     }
 
     private func convertToAmount(token: OneInchDecoration.Token, amount: OneInchDecoration.Amount, sign: FloatingPointSign) -> SwapTransactionRecord.Amount {
         switch amount {
-        case let .exact(value): return .exact(value: convertToTransactionValue(token: token, value: value, sign: sign))
-        case let .extremum(value): return .extremum(value: convertToTransactionValue(token: token, value: value, sign: sign))
+        case let .exact(value): return .exact(value: convertToAppValue(token: token, value: value, sign: sign))
+        case let .extremum(value): return .extremum(value: convertToAppValue(token: token, value: value, sign: sign))
         }
     }
 
-    private func convertToTransactionValue(token: OneInchDecoration.Token, value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
+    private func convertToAppValue(token: OneInchDecoration.Token, value: BigUInt, sign: FloatingPointSign) -> AppValue {
         switch token {
-        case .evmCoin: return baseCoinValue(value: value, sign: sign)
+        case .evmCoin: return baseAppValue(value: value, sign: sign)
         case let .eip20Coin(tokenAddress, tokenInfo): return eip20Value(tokenAddress: tokenAddress, value: value, sign: sign, tokenInfo: tokenInfo)
         }
     }
@@ -103,11 +103,11 @@ class EvmTransactionConverter {
         incomingEip721Transfers.map { transfer in
             ContractCallTransactionRecord.TransferEvent(
                 address: transfer.from.eip55,
-                value: .nftValue(
+                value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
-                    value: 1,
                     tokenName: transfer.tokenInfo?.tokenName,
-                    tokenSymbol: transfer.tokenInfo?.tokenSymbol
+                    tokenSymbol: transfer.tokenInfo?.tokenSymbol,
+                    value: 1
                 )
             )
         }
@@ -117,11 +117,11 @@ class EvmTransactionConverter {
         outgoingEip721Transfers.map { transfer in
             ContractCallTransactionRecord.TransferEvent(
                 address: transfer.to.eip55,
-                value: .nftValue(
+                value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
-                    value: -1,
                     tokenName: transfer.tokenInfo?.tokenName,
-                    tokenSymbol: transfer.tokenInfo?.tokenSymbol
+                    tokenSymbol: transfer.tokenInfo?.tokenSymbol,
+                    value: -1
                 )
             )
         }
@@ -131,11 +131,11 @@ class EvmTransactionConverter {
         incomingEip1155Transfers.map { transfer in
             ContractCallTransactionRecord.TransferEvent(
                 address: transfer.from.eip55,
-                value: .nftValue(
+                value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
-                    value: convertAmount(amount: transfer.value, decimals: 0, sign: .plus),
                     tokenName: transfer.tokenInfo?.tokenName,
-                    tokenSymbol: transfer.tokenInfo?.tokenSymbol
+                    tokenSymbol: transfer.tokenInfo?.tokenSymbol,
+                    value: convertAmount(amount: transfer.value, decimals: 0, sign: .plus)
                 )
             )
         }
@@ -145,11 +145,11 @@ class EvmTransactionConverter {
         outgoingEip1155Transfers.map { transfer in
             ContractCallTransactionRecord.TransferEvent(
                 address: transfer.to.eip55,
-                value: .nftValue(
+                value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
-                    value: convertAmount(amount: transfer.value, decimals: 0, sign: .minus),
                     tokenName: transfer.tokenInfo?.tokenName,
-                    tokenSymbol: transfer.tokenInfo?.tokenSymbol
+                    tokenSymbol: transfer.tokenInfo?.tokenSymbol,
+                    value: convertAmount(amount: transfer.value, decimals: 0, sign: .minus)
                 )
             )
         }
@@ -159,7 +159,7 @@ class EvmTransactionConverter {
         internalTransactions.map { internalTransaction in
             ContractCallTransactionRecord.TransferEvent(
                 address: internalTransaction.from.eip55,
-                value: baseCoinValue(value: internalTransaction.value, sign: .plus)
+                value: baseAppValue(value: internalTransaction.value, sign: .plus)
             )
         }
     }
@@ -171,7 +171,7 @@ class EvmTransactionConverter {
 
         let event = ContractCallTransactionRecord.TransferEvent(
             address: contractAddress.eip55,
-            value: baseCoinValue(value: value, sign: .minus)
+            value: baseAppValue(value: value, sign: .minus)
         )
 
         return [event]
@@ -196,7 +196,7 @@ extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 from: decoration.from.eip55,
-                value: baseCoinValue(value: decoration.value, sign: .plus)
+                value: baseAppValue(value: decoration.value, sign: .plus)
             )
 
         case let decoration as OutgoingDecoration:
@@ -205,7 +205,7 @@ extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 to: decoration.to.eip55,
-                value: baseCoinValue(value: decoration.value, sign: .minus),
+                value: baseAppValue(value: decoration.value, sign: .minus),
                 sentToSelf: decoration.sentToSelf
             )
 
@@ -245,7 +245,7 @@ extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 exchangeAddress: decoration.contractAddress.eip55,
-                amountIn: .exact(value: convertToTransactionValue(token: decoration.tokenIn, value: decoration.amountIn, sign: .minus)),
+                amountIn: .exact(value: convertToAppValue(token: decoration.tokenIn, value: decoration.amountIn, sign: .minus)),
                 amountOut: convertToAmount(token: decoration.tokenOut, amount: decoration.amountOut, sign: .plus),
                 recipient: decoration.recipient?.eip55
             )
@@ -256,7 +256,7 @@ extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 exchangeAddress: decoration.contractAddress.eip55,
-                amountIn: .exact(value: convertToTransactionValue(token: decoration.tokenIn, value: decoration.amountIn, sign: .minus)),
+                amountIn: .exact(value: convertToAppValue(token: decoration.tokenIn, value: decoration.amountIn, sign: .minus)),
                 amountOut: decoration.tokenOut.map { convertToAmount(token: $0, amount: decoration.amountOut, sign: .plus) },
                 recipient: nil
             )
@@ -267,8 +267,8 @@ extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 exchangeAddress: decoration.contractAddress.eip55,
-                valueIn: decoration.tokenAmountIn.map { convertToTransactionValue(token: $0.token, value: $0.value, sign: .minus) },
-                valueOut: decoration.tokenAmountOut.map { convertToTransactionValue(token: $0.token, value: $0.value, sign: .plus) }
+                valueIn: decoration.tokenAmountIn.map { convertToAppValue(token: $0.token, value: $0.value, sign: .minus) },
+                valueOut: decoration.tokenAmountOut.map { convertToAppValue(token: $0.token, value: $0.value, sign: .plus) }
             )
 
         case let decoration as Eip721SafeTransferFromDecoration:
@@ -277,11 +277,11 @@ extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 to: decoration.to.eip55,
-                value: .nftValue(
+                value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: decoration.contractAddress.hex, tokenId: decoration.tokenId.description),
-                    value: convertAmount(amount: 1, decimals: 0, sign: .minus),
                     tokenName: decoration.tokenInfo?.tokenName,
-                    tokenSymbol: decoration.tokenInfo?.tokenSymbol
+                    tokenSymbol: decoration.tokenInfo?.tokenSymbol,
+                    value: convertAmount(amount: 1, decimals: 0, sign: .minus)
                 ),
                 sentToSelf: decoration.sentToSelf
             )
@@ -292,11 +292,11 @@ extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 to: decoration.to.eip55,
-                value: .nftValue(
+                value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: decoration.contractAddress.hex, tokenId: decoration.tokenId.description),
-                    value: convertAmount(amount: decoration.value, decimals: 0, sign: .minus),
                     tokenName: decoration.tokenInfo?.tokenName,
-                    tokenSymbol: decoration.tokenInfo?.tokenSymbol
+                    tokenSymbol: decoration.tokenInfo?.tokenSymbol,
+                    value: convertAmount(amount: decoration.value, decimals: 0, sign: .minus)
                 ),
                 sentToSelf: decoration.sentToSelf
             )

@@ -79,7 +79,7 @@ extension ZcashSendHandler {
                 .amount(
                     title: "send.confirmation.you_send".localized,
                     token: token,
-                    coinValueType: .regular(coinValue: CoinValue(kind: .token(token: token), value: amount)),
+                    appValueType: .regular(appValue: AppValue(token: token, value: amount)),
                     currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
                     type: .neutral
                 ),
@@ -100,7 +100,7 @@ extension ZcashSendHandler {
                     .value(
                         title: "fee_settings.network_fee".localized,
                         description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
-                        coinValue: CoinValue(kind: .token(token: baseToken), value: fee),
+                        appValue: AppValue(token: baseToken, value: fee),
                         currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
                         formatFull: true
                     ),

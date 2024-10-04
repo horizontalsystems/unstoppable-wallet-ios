@@ -4,10 +4,10 @@ import TronKit
 
 class TronOutgoingTransactionRecord: TronTransactionRecord {
     let to: String
-    let value: TransactionValue
+    let value: AppValue
     let sentToSelf: Bool
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, to: String, value: TransactionValue, sentToSelf: Bool) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, to: String, value: AppValue, sentToSelf: Bool) {
         self.to = to
         self.value = value
         self.sentToSelf = sentToSelf
@@ -15,7 +15,7 @@ class TronOutgoingTransactionRecord: TronTransactionRecord {
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: true)
     }
 
-    override var mainValue: TransactionValue? {
+    override var mainValue: AppValue? {
         value
     }
 }

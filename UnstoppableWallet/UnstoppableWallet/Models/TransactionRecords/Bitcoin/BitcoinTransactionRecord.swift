@@ -3,12 +3,12 @@ import MarketKit
 
 class BitcoinTransactionRecord: TransactionRecord {
     let lockInfo: TransactionLockInfo?
-    let fee: TransactionValue?
+    let fee: AppValue?
     let conflictingHash: String?
     let showRawTransaction: Bool
     let memo: String?
 
-    init(source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: TransactionValue?, failed: Bool,
+    init(source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: AppValue?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool, memo: String?)
     {
         self.lockInfo = lockInfo

@@ -97,8 +97,8 @@ class UniswapViewModel {
             return
         }
 
-        let coinValue = CoinValue(kind: .token(token: token), value: balance)
-        availableBalanceRelay.accept(ValueFormatter.instance.formatFull(coinValue: coinValue))
+        let appValue = AppValue(token: token, value: balance)
+        availableBalanceRelay.accept(appValue.formattedFull())
     }
 
     private func sync(errors: [Error]? = nil) {
@@ -177,7 +177,7 @@ class UniswapViewModel {
 
         for error in service.errors {
             if let allowance = (error as? SwapModule.SwapError)?.revokeAllowance {
-                revokeWarning = "swap.revoke_warning".localized(ValueFormatter.instance.formatFull(coinValue: allowance) ?? "n/a".localized)
+                revokeWarning = "swap.revoke_warning".localized(allowance.formattedFull() ?? "n/a".localized)
             }
         }
         if case .pending = pendingAllowanceService.state {

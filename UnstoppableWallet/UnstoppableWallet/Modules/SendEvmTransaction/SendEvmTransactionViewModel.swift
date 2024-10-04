@@ -220,20 +220,20 @@ class SendEvmTransactionViewModel {
     }
 
     private func amountViewItem(title: String, coinService: CoinService, amountData: AmountData, type: AmountType) -> ViewItem {
-        let value = amountData.coinValue
+        let appValue = amountData.appValue
 
         return .amount(
             title: title,
             token: coinService.token,
-            coinAmount: value.isMaxValue ? value.infinity : value.formattedFull ?? "n/a".localized,
-            currencyAmount: value.isMaxValue ? nil : amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+            coinAmount: appValue.isMaxValue ? appValue.infinity : appValue.formattedFull() ?? "n/a".localized,
+            currencyAmount: appValue.isMaxValue ? nil : amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
             type: type
         )
     }
 
     private func estimatedAmountViewItem(title: String, coinService: CoinService, value: Decimal, type: AmountType) -> ViewItem {
         let amountData = coinService.amountData(value: value, sign: type.sign)
-        let coinAmount = ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized
+        let coinAmount = amountData.appValue.formattedFull() ?? "n/a".localized
 
         return .amount(
             title: title,
@@ -266,7 +266,7 @@ class SendEvmTransactionViewModel {
 
         return .doubleAmount(
             title: title,
-            coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
+            coinAmount: amountData.appValue.formattedFull() ?? "n/a".localized,
             currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
         )
     }
@@ -602,8 +602,8 @@ class SendEvmTransactionViewModel {
             let executionPrice = amountTo / amountFrom
             let reverted = amountTo < amountFrom
 
-            let coinValue = CoinValue(kind: .token(token: reverted ? tokenFrom : tokenTo), value: reverted ? 1 / executionPrice : executionPrice)
-            let fullValue = ValueFormatter.instance.formatFull(coinValue: coinValue).map { "1 " + [(reverted ? tokenTo : tokenFrom).coin.code, $0].joined(separator: " = ") } ?? ""
+            let appValue = AppValue(token: reverted ? tokenFrom : tokenTo, value: reverted ? 1 / executionPrice : executionPrice)
+            let fullValue = appValue.formattedFull().map { "1 " + [(reverted ? tokenTo : tokenFrom).coin.code, $0].joined(separator: " = ") } ?? ""
             return .value(title: "swap.price".localized, value: fullValue, type: .regular)
         }
         return nil

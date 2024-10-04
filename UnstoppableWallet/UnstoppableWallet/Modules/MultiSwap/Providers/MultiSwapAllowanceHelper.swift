@@ -35,7 +35,7 @@ class MultiSwapAllowanceHelper {
                 if pendingAllowance == 0 {
                     return .pendingRevoke
                 } else {
-                    return .pendingAllowance(amount: CoinValue(kind: .token(token: token), value: pendingAllowance))
+                    return .pendingAllowance(appValue: AppValue(token: token, value: pendingAllowance))
                 }
             }
 
@@ -45,7 +45,7 @@ class MultiSwapAllowanceHelper {
                 return .allowed
             } else {
                 return .notEnough(
-                    amount: CoinValue(kind: .token(token: token), value: allowance),
+                    appValue: AppValue(token: token, value: allowance),
                     spenderAddress: spenderAddress,
                     revokeRequired: allowance > 0 && mustBeRevoked(token: token)
                 )
@@ -57,8 +57,8 @@ class MultiSwapAllowanceHelper {
 
     private func pendingAllowance(pendingTransactions: [TransactionRecord], spenderAddress: EvmKit.Address) -> Decimal? {
         for transaction in pendingTransactions {
-            if let record = transaction as? ApproveTransactionRecord, record.spender == spenderAddress.eip55, let value = record.value.decimalValue {
-                return value
+            if let record = transaction as? ApproveTransactionRecord, record.spender == spenderAddress.eip55 {
+                return record.value.value
             }
         }
 
@@ -79,9 +79,9 @@ class MultiSwapAllowanceHelper {
 extension MultiSwapAllowanceHelper {
     enum AllowanceState {
         case notRequired
-        case pendingAllowance(amount: CoinValue)
+        case pendingAllowance(appValue: AppValue)
         case pendingRevoke
-        case notEnough(amount: CoinValue, spenderAddress: EvmKit.Address, revokeRequired: Bool)
+        case notEnough(appValue: AppValue, spenderAddress: EvmKit.Address, revokeRequired: Bool)
         case allowed
         case unknown
 
@@ -99,9 +99,9 @@ extension MultiSwapAllowanceHelper {
             var cautions = [CautionNew]()
 
             switch self {
-            case let .notEnough(amount, _, revokeRequired):
+            case let .notEnough(appValue, _, revokeRequired):
                 if revokeRequired {
-                    cautions.append(.init(text: "swap.revoke_warning".localized(ValueFormatter.instance.formatShort(coinValue: amount) ?? ""), type: .warning))
+                    cautions.append(.init(text: "swap.revoke_warning".localized(appValue.formattedShort() ?? ""), type: .warning))
                 }
             default: ()
             }
@@ -113,8 +113,8 @@ extension MultiSwapAllowanceHelper {
             var fields = [MultiSwapMainField]()
 
             switch self {
-            case let .notEnough(amount, _, _):
-                if let formatted = ValueFormatter.instance.formatShort(coinValue: amount) {
+            case let .notEnough(appValue, _, _):
+                if let formatted = appValue.formattedShort() {
                     fields.append(
                         MultiSwapMainField(
                             title: "swap.allowance".localized,
@@ -124,8 +124,8 @@ extension MultiSwapAllowanceHelper {
                         )
                     )
                 }
-            case let .pendingAllowance(amount):
-                if let formatted = ValueFormatter.instance.formatShort(coinValue: amount) {
+            case let .pendingAllowance(appValue):
+                if let formatted = appValue.formattedShort() {
                     fields.append(
                         MultiSwapMainField(
                             title: "swap.pending_allowance".localized,

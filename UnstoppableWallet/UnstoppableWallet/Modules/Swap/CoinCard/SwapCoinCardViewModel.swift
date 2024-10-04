@@ -69,8 +69,8 @@ class SwapCoinCardViewModel {
             return
         }
 
-        let coinValue = CoinValue(kind: .token(token: token), value: balance)
-        balanceRelay.accept(ValueFormatter.instance.formatFull(coinValue: coinValue))
+        let appValue = AppValue(token: token, value: balance)
+        balanceRelay.accept(appValue.formattedFull())
     }
 
     private func sync(error: Error?) {

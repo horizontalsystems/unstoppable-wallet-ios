@@ -43,7 +43,7 @@ class SendConfirmationViewModel {
                     .amount(
                         title: "send.confirmation.you_send".localized,
                         token: service.token,
-                        coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "n/a".localized,
+                        coinAmount: item.appValue.formattedFull() ?? "n/a".localized,
                         currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                         type: .neutral
                     )
@@ -80,7 +80,7 @@ class SendConfirmationViewModel {
                     )
                 )
             case let item as SendConfirmationFeeViewItem:
-                let value = [ValueFormatter.instance.formatFull(coinValue: item.coinValue), item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }]
+                let value = [item.appValue.formattedFull(), item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }]
                     .compactMap { $0 }
                     .joined(separator: " | ")
 

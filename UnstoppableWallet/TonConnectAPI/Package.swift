@@ -6,10 +6,10 @@ import PackageDescription
 let package = Package(
     name: "TonConnectAPI",
     platforms: [
-        .macOS(.v12), .iOS(.v13)
+        .macOS(.v12), .iOS(.v13),
     ],
     products: [
-        .library(name: "TonConnectAPI", targets: ["TonConnectAPI"])
+        .library(name: "TonConnectAPI", targets: ["TonConnectAPI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMinor(from: "0.3.0")),
@@ -20,10 +20,9 @@ let package = Package(
                     .product(
                         name: "OpenAPIRuntime",
                         package: "swift-openapi-runtime"
-                    )
+                    ),
                 ],
                 path: "Sources",
-                sources: ["TonConnectAPI"]
-               )
+                sources: ["TonConnectAPI"]),
     ]
 )

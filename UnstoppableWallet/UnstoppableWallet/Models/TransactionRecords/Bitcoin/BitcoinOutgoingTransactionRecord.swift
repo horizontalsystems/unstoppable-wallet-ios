@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 
 class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
-    let value: TransactionValue
+    let value: AppValue
     let to: String?
     let sentToSelf: Bool
     let replaceable: Bool
@@ -11,7 +11,7 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
          amount: Decimal, to: String?, sentToSelf: Bool, memo: String? = nil, replaceable: Bool)
     {
-        value = .coinValue(token: token, value: Decimal(sign: .minus, exponent: amount.exponent, significand: amount.significand))
+        value = AppValue(token: token, value: Decimal(sign: .minus, exponent: amount.exponent, significand: amount.significand))
         self.to = to
         self.sentToSelf = sentToSelf
         self.replaceable = replaceable
@@ -24,7 +24,7 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
             blockHeight: blockHeight,
             confirmationsThreshold: confirmationsThreshold,
             date: date,
-            fee: fee.flatMap { .coinValue(token: token, value: $0) },
+            fee: fee.flatMap { AppValue(token: token, value: $0) },
             failed: failed,
             lockInfo: lockInfo,
             conflictingHash: conflictingHash,
@@ -33,7 +33,7 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
         )
     }
 
-    override var mainValue: TransactionValue? {
+    override var mainValue: AppValue? {
         value
     }
 }

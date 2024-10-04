@@ -69,7 +69,7 @@ class SwapAllowanceViewModel {
 
         switch state {
         case let .ready(allowance):
-            return isInsufficientAllowance ? ValueFormatter.instance.formatFull(coinValue: allowance) : nil
+            return isInsufficientAllowance ? allowance.formattedFull() : nil
         default: return nil
         }
     }

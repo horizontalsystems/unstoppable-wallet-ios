@@ -10,16 +10,16 @@ class TronExternalContractCallTransactionRecord: TronTransactionRecord {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
-        let spam = TransactionRecord.isSpam(transactionValues: (incomingEvents + outgoingEvents).map(\.value))
+        let spam = TransactionRecord.isSpam(appValues: (incomingEvents + outgoingEvents).map(\.value))
 
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, spam: spam)
     }
 
-    var combinedValues: ([TransactionValue], [TransactionValue]) {
+    var combinedValues: ([AppValue], [AppValue]) {
         combined(incomingEvents: incomingEvents, outgoingEvents: outgoingEvents)
     }
 
-    override var mainValue: TransactionValue? {
+    override var mainValue: AppValue? {
         let (incomingValues, outgoingValues) = combinedValues
 
         if incomingValues.count == 1, outgoingValues.isEmpty {

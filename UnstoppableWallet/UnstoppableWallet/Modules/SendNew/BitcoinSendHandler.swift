@@ -106,7 +106,7 @@ extension BitcoinSendHandler {
             }
 
             let decimalValue = baseToken.decimalValue(value: value)
-            let coinValue = CoinValue(kind: .token(token: baseToken), value: -decimalValue)
+            let appValue = AppValue(token: baseToken, value: -decimalValue)
             let rate = rates[baseToken.coin.uid]
 
             return [
@@ -114,7 +114,7 @@ extension BitcoinSendHandler {
                     .amount(
                         title: "send.confirmation.you_send".localized,
                         token: baseToken,
-                        coinValueType: .regular(coinValue: coinValue),
+                        appValueType: .regular(appValue: appValue),
                         currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) },
                         type: .neutral
                     ),

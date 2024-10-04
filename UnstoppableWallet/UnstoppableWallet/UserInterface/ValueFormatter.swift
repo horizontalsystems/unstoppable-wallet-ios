@@ -241,14 +241,6 @@ extension ValueFormatter {
         return decorated(string: string, symbol: symbol, signType: signType, signValue: value)
     }
 
-    func formatShort(coinValue: CoinValue, showCode: Bool = true, signType: SignType = .never) -> String? {
-        formatShort(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.symbol : nil, signType: signType)
-    }
-
-    func formatFull(coinValue: CoinValue, showCode: Bool = true, signType: SignType = .never) -> String? {
-        formatFull(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.symbol : nil, signType: signType)
-    }
-
     func formatShort(currency: Currency, value: Decimal, signType: SignType = .never) -> String? {
         let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value)
 

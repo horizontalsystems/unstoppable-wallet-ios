@@ -97,7 +97,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
     }
 
     func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
-        evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())], fromHash: from.flatMap { $0.transactionHash.hs.hexData }, limit: limit)
+        evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())], fromHash: from.flatMap(\.transactionHash.hs.hexData), limit: limit)
             .map { [weak self] transactions -> [TransactionRecord] in
                 transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
             }

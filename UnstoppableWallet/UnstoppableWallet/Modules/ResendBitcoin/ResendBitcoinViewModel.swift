@@ -65,7 +65,7 @@ class ResendBitcoinViewModel {
                     .amount(
                         title: "send.confirmation.you_send".localized,
                         token: service.token,
-                        coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "n/a".localized,
+                        coinAmount: item.appValue.formattedFull() ?? "n/a".localized,
                         currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                         type: .neutral
                     )
@@ -105,7 +105,7 @@ class ResendBitcoinViewModel {
                 secondaryViewItems.append(
                     .fee(
                         title: "send.confirmation.fee".localized,
-                        coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "",
+                        coinAmount: item.appValue.formattedFull() ?? "",
                         currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
                     )
                 )

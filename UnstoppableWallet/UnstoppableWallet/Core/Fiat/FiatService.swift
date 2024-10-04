@@ -13,8 +13,8 @@ class FiatService {
     private let currencyManager: CurrencyManager
     private let marketKit: MarketKit.Kit
 
-    private var coinValueKind: CoinValue.Kind?
-    var token: Token? { coinValueKind?.token }
+    private var appValueKind: AppValue.Kind?
+    var token: Token? { appValueKind?.token }
 
     private var price: Decimal? {
         didSet {
@@ -85,8 +85,8 @@ class FiatService {
 
     private func sync() {
         queue.async {
-            if let coinValueKind = self.coinValueKind {
-                let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: coinValueKind, value: self.coinAmount))
+            if let appValueKind = self.appValueKind {
+                let coinAmountInfo: AmountInfo = .appValue(appValue: AppValue(kind: appValueKind, value: self.coinAmount))
                 let currencyAmountInfo: AmountInfo? = self.currencyAmount.map { .currencyValue(currencyValue: CurrencyValue(currency: self.currency, value: $0)) }
 
                 switch self.switchService.amountType {
@@ -157,23 +157,21 @@ extension FiatService {
     }
 
     func set(token: Token?) {
-        set(coinValueKind: token.flatMap { .token(token: $0) })
+        set(appValueKind: token.flatMap { .token(token: $0) })
     }
 
-    func set(coinValueKind: CoinValue.Kind?) {
-        self.coinValueKind = coinValueKind
+    func set(appValueKind: AppValue.Kind?) {
+        self.appValueKind = appValueKind
 
         cancellables = Set()
         var fetching = true
 
-        if let coinValueKind {
-            switch coinValueKind {
+        if let appValueKind {
+            switch appValueKind {
             case let .token(token):
                 fetchRate(coin: token.coin, subscribe: !token.isCustom)
-            case let .coin(coin, _):
-                fetchRate(coin: coin, subscribe: false)
-            case let .cexAsset(cexAsset):
-                if let coin = cexAsset.coin {
+            default:
+                if let coin = appValueKind.coin {
                     fetchRate(coin: coin, subscribe: false)
                 } else {
                     fetching = false

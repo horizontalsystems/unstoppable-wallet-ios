@@ -59,9 +59,9 @@ class ResendBitcoinService {
 
         var items = [ISendConfirmationViewItemNew]()
 
-        if let address = record.to, case let .coinValue(_, value) = record.value {
+        if let address = record.to {
             items.append(
-                SendConfirmationAmountViewItem(coinValue: .init(kind: .token(token: token), value: value), currencyValue: currencyValue(coinAmount: value), receiver: Address(raw: address), sentToSelf: record.sentToSelf)
+                SendConfirmationAmountViewItem(appValue: record.value, currencyValue: currencyValue(coinAmount: record.value.value), receiver: Address(raw: address), sentToSelf: record.sentToSelf)
             )
         }
 
@@ -73,12 +73,12 @@ class ResendBitcoinService {
             items.append(SendConfirmationLockUntilViewItem(lockValue: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: lockInfo.lockTimeInterval)))
         }
 
-        if case let .coinValue(_, feeValue) = record.fee {
+        if let fee = record.fee {
             items.append(
-                SendConfirmationFeeViewItem(coinValue: .init(kind: .token(token: token), value: feeValue), currencyValue: currencyValue(coinAmount: feeValue))
+                SendConfirmationFeeViewItem(appValue: fee, currencyValue: currencyValue(coinAmount: fee.value))
             )
 
-            if let recommendedFee, feeValue < recommendedFee {
+            if let recommendedFee, fee.value < recommendedFee {
                 caution = TitledCaution(title: "fee_settings.warning.risk_of_getting_stuck".localized, text: "fee_settings.warning.risk_of_getting_stuck.info".localized, type: .warning)
             } else {
                 caution = nil

@@ -17,7 +17,7 @@ class BaseSendBtcData {
         }
 
         return AmountData(
-            coinValue: CoinValue(kind: .token(token: feeToken), value: fee),
+            appValue: AppValue(token: feeToken, value: fee),
             currencyValue: feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
         )
     }
@@ -29,7 +29,7 @@ class BaseSendBtcData {
             .value(
                 title: "fee_settings.network_fee".localized,
                 description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
-                coinValue: amountData?.coinValue,
+                appValue: amountData?.appValue,
                 currencyValue: amountData?.currencyValue,
                 formatFull: true
             ),

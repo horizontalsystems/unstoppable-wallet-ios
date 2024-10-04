@@ -505,7 +505,7 @@ struct MultiSwapView: View {
             return nil
         }
 
-        return ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: tokenIn), value: availableBalance))
+        return AppValue(token: tokenIn, value: availableBalance).formattedFull()
     }
 
     private func buttonState() -> (String, PrimaryButtonStyle.Style, Bool, Bool, MultiSwapPreSwapStep?) {

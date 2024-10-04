@@ -2,11 +2,11 @@ import BinanceChainKit
 import MarketKit
 
 class BinanceChainTransactionRecord: TransactionRecord {
-    let fee: TransactionValue
+    let fee: AppValue
     let memo: String?
 
     init(source: TransactionSource, transaction: TransactionInfo, feeToken: Token) {
-        fee = .coinValue(token: feeToken, value: BinanceAdapter.transferFee)
+        fee = AppValue(token: feeToken, value: BinanceAdapter.transferFee)
         memo = transaction.memo
 
         super.init(

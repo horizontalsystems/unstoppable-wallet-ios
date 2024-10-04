@@ -20,7 +20,7 @@ class BaseSendEvmData {
             .value(
                 title: "fee_settings.network_fee".localized,
                 description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
-                coinValue: amountData?.coinValue,
+                appValue: amountData?.appValue,
                 currencyValue: amountData?.currencyValue,
                 formatFull: true
             ),

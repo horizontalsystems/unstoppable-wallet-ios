@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 class AccountRestoreWarningManager {
     private let accountManager: AccountManager

@@ -28,18 +28,18 @@ extension CexCoinService: ICoinService {
         }
     }
 
-    func coinValue(value: BigUInt) -> CoinValue {
+    func appValue(value: BigUInt) -> AppValue {
         let decimalValue = Decimal(bigUInt: value, decimals: CexAsset.decimals) ?? 0
-        return coinValue(value: decimalValue)
+        return appValue(value: decimalValue)
     }
 
-    func coinValue(value: Decimal) -> CoinValue {
-        CoinValue(kind: .cexAsset(cexAsset: cexAsset), value: value)
+    func appValue(value: Decimal) -> AppValue {
+        AppValue(cexAsset: cexAsset, value: value)
     }
 
     // Example: Dollar, Bitcoin, Ether, etc
     func monetaryValue(value: BigUInt) -> Decimal {
-        coinValue(value: value).value
+        appValue(value: value).value
     }
 
     // Example: Cent, Satoshi, GWei, etc
@@ -49,7 +49,7 @@ extension CexCoinService: ICoinService {
 
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {
         AmountData(
-            coinValue: coinValue(value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
+            appValue: appValue(value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
             currencyValue: rate.map {
                 CurrencyValue(currency: $0.currency, value: $0.value * value)
             }

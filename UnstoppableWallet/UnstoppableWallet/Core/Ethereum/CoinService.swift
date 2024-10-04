@@ -5,8 +5,8 @@ import MarketKit
 
 protocol ICoinService {
     var rate: CurrencyValue? { get }
-    func coinValue(value: BigUInt) -> CoinValue
-    func coinValue(value: Decimal) -> CoinValue
+    func appValue(value: BigUInt) -> AppValue
+    func appValue(value: Decimal) -> AppValue
     func monetaryValue(value: BigUInt) -> Decimal
     func fractionalMonetaryValue(value: Decimal) -> BigUInt
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData
@@ -34,18 +34,18 @@ extension CoinService: ICoinService {
         }
     }
 
-    func coinValue(value: BigUInt) -> CoinValue {
+    func appValue(value: BigUInt) -> AppValue {
         let decimalValue = Decimal(bigUInt: value, decimals: token.decimals) ?? 0
-        return coinValue(value: decimalValue)
+        return appValue(value: decimalValue)
     }
 
-    func coinValue(value: Decimal) -> CoinValue {
-        CoinValue(kind: .token(token: token), value: value)
+    func appValue(value: Decimal) -> AppValue {
+        AppValue(token: token, value: value)
     }
 
     // Example: Dollar, Bitcoin, Ether, etc
     func monetaryValue(value: BigUInt) -> Decimal {
-        coinValue(value: value).value
+        appValue(value: value).value
     }
 
     // Example: Cent, Satoshi, GWei, etc
@@ -55,7 +55,7 @@ extension CoinService: ICoinService {
 
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {
         AmountData(
-            coinValue: CoinValue(kind: .token(token: token), value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
+            appValue: AppValue(token: token, value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
             currencyValue: rate.map {
                 CurrencyValue(currency: $0.currency, value: $0.value * value)
             }

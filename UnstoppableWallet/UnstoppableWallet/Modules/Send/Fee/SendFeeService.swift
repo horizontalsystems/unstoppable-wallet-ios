@@ -56,8 +56,8 @@ class SendFeeService {
     }
 
     private func amountInfo(value: Decimal) -> AmountInfo {
-        let coinValue = CoinValue(kind: .token(token: feeToken), value: value)
-        return AmountInfo.coinValue(coinValue: coinValue)
+        let appValue = AppValue(token: feeToken, value: value)
+        return .appValue(appValue: appValue)
     }
 
     private func sync(primaryInfo: FiatService.PrimaryInfo? = nil, secondaryInfo: AmountInfo? = nil) {

@@ -16,7 +16,7 @@ class TelegramUserHandler {
 
 extension TelegramUserHandler: IEventHandler {
     @MainActor
-    func handle(source: StatPage, event: Any, eventType: EventHandler.EventType) async throws {
+    func handle(source _: StatPage, event: Any, eventType: EventHandler.EventType) async throws {
         if eventType.contains(.deepLink), let event = event as? DeepLinkManager.DeepLink {
             guard case let .referral(userId, referralCode) = event else {
                 throw EventHandler.HandleError.noSuitableHandler
@@ -39,5 +39,5 @@ extension TelegramUserHandler {
 }
 
 struct EmptyResponse: ImmutableMappable {
-    init(map: Map) throws {}
+    init(map _: Map) throws {}
 }
