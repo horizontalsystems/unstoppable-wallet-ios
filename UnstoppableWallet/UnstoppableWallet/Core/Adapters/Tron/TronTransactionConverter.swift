@@ -30,23 +30,23 @@ class TronTransactionConverter {
         return Decimal(sign: sign, exponent: -decimals, significand: significand)
     }
 
-    private func baseCoinValue(value: Int, sign: FloatingPointSign) -> TransactionValue {
+    private func baseAppValue(value: Int, sign: FloatingPointSign) -> AppValue {
         let amount = convertAmount(amount: BigUInt(value), decimals: baseToken.decimals, sign: sign)
-        return .coinValue(token: baseToken, value: amount)
+        return AppValue(token: baseToken, value: amount)
     }
 
-    private func eip20Value(tokenAddress: TronKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: TokenInfo?) -> TransactionValue {
+    private func eip20Value(tokenAddress: TronKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: TokenInfo?) -> AppValue {
         let query = TokenQuery(blockchainType: .tron, tokenType: .eip20(address: tokenAddress.base58))
 
         if let token = try? coinManager.token(query: query) {
             let value = convertAmount(amount: value, decimals: token.decimals, sign: sign)
-            return .coinValue(token: token, value: value)
+            return AppValue(token: token, value: value)
         } else if let tokenInfo {
             let value = convertAmount(amount: value, decimals: tokenInfo.tokenDecimal, sign: sign)
-            return .tokenValue(tokenName: tokenInfo.tokenName, tokenCode: tokenInfo.tokenSymbol, tokenDecimals: tokenInfo.tokenDecimal, value: value)
+            return AppValue(tokenName: tokenInfo.tokenName, tokenCode: tokenInfo.tokenSymbol, tokenDecimals: tokenInfo.tokenDecimal, value: value)
         }
 
-        return .rawValue(value: value)
+        return AppValue(value: convertAmount(amount: value, decimals: 0, sign: sign))
     }
 
     private func transferEvents(incomingTrc20Transfers: [Trc20TransferEvent]) -> [TronContractCallTransactionRecord.TransferEvent] {
@@ -71,7 +71,7 @@ class TronTransactionConverter {
         internalTransactions.map { internalTransaction in
             TronContractCallTransactionRecord.TransferEvent(
                 address: internalTransaction.from.base58,
-                value: baseCoinValue(value: internalTransaction.value, sign: .plus)
+                value: baseAppValue(value: internalTransaction.value, sign: .plus)
             )
         }
     }
@@ -83,7 +83,7 @@ class TronTransactionConverter {
 
         let event = TronContractCallTransactionRecord.TransferEvent(
             address: contractAddress.base58,
-            value: baseCoinValue(value: value, sign: .minus)
+            value: baseAppValue(value: value, sign: .minus)
         )
 
         return [event]
@@ -104,7 +104,7 @@ extension TronTransactionConverter {
                         transaction: transaction,
                         baseToken: baseToken,
                         from: transfer.ownerAddress.base58,
-                        value: baseCoinValue(value: transfer.amount, sign: .plus),
+                        value: baseAppValue(value: transfer.amount, sign: .plus),
                         spam: transfer.amount < 10
                     )
                 } else {
@@ -113,7 +113,7 @@ extension TronTransactionConverter {
                         transaction: transaction,
                         baseToken: baseToken,
                         to: transfer.toAddress.base58,
-                        value: baseCoinValue(value: transfer.amount, sign: .minus),
+                        value: baseAppValue(value: transfer.amount, sign: .minus),
                         sentToSelf: transfer.toAddress == tronKit.address
                     )
                 }

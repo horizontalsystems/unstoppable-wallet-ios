@@ -6,13 +6,13 @@ import TonSwift
 class TonTransactionRecord: TransactionRecord {
     let lt: Int64
     let inProgress: Bool
-    let fee: TransactionValue?
+    let fee: AppValue?
     let actions: [Action]
 
     init(source: TransactionSource, event: Event, baseToken: Token, actions: [Action]) {
         lt = event.lt
         inProgress = event.inProgress
-        fee = .coinValue(token: baseToken, value: TonAdapter.amount(kitAmount: abs(event.extra)))
+        fee = AppValue(token: baseToken, value: TonAdapter.amount(kitAmount: abs(event.extra)))
         self.actions = actions
 
         super.init(
@@ -32,7 +32,7 @@ class TonTransactionRecord: TransactionRecord {
         inProgress ? .pending : .completed
     }
 
-    override var mainValue: TransactionValue? {
+    override var mainValue: AppValue? {
         if actions.count == 1, let action = actions.first {
             switch action.type {
             case let .send(value, _, _, _): return value
@@ -54,13 +54,13 @@ extension TonTransactionRecord {
         let status: TransactionStatus
 
         enum `Type` {
-            case send(value: TransactionValue, to: String, sentToSelf: Bool, comment: String?)
-            case receive(value: TransactionValue, from: String, comment: String?)
-            case burn(value: TransactionValue)
-            case mint(value: TransactionValue)
-            case swap(routerName: String?, routerAddress: String, valueIn: TransactionValue, valueOut: TransactionValue)
+            case send(value: AppValue, to: String, sentToSelf: Bool, comment: String?)
+            case receive(value: AppValue, from: String, comment: String?)
+            case burn(value: AppValue)
+            case mint(value: AppValue)
+            case swap(routerName: String?, routerAddress: String, valueIn: AppValue, valueOut: AppValue)
             case contractDeploy(interfaces: [String])
-            case contractCall(address: String, value: TransactionValue, operation: String)
+            case contractCall(address: String, value: AppValue, operation: String)
             case unsupported(type: String)
         }
     }

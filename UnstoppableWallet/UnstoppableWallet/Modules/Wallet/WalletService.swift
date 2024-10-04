@@ -262,11 +262,11 @@ class WalletService {
             }
         }
 
-        var convertedValue: CoinValue?
+        var convertedValue: AppValue?
         var convertedValueExpired = false
 
         if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.item(coinUid: conversionToken.coin.uid) {
-            convertedValue = CoinValue(kind: .token(token: conversionToken), value: total / priceItem.price.value)
+            convertedValue = AppValue(token: conversionToken, value: total / priceItem.price.value)
             convertedValueExpired = priceItem.expired
         }
 
@@ -566,7 +566,7 @@ extension WalletService {
     struct TotalItem {
         let currencyValue: CurrencyValue
         let expired: Bool
-        let convertedValue: CoinValue?
+        let convertedValue: AppValue?
         let convertedValueExpired: Bool
     }
 }

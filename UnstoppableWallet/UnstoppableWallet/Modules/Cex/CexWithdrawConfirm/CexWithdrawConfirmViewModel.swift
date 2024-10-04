@@ -53,7 +53,7 @@ class CexWithdrawConfirmViewModel {
             SectionViewItem(viewItems: [
                 .feeValue(
                     title: "cex_withdraw.fee".localized,
-                    coinAmount: ValueFormatter.instance.formatFull(coinValue: feeData.coinValue) ?? "n/a".localized,
+                    coinAmount: feeData.appValue.formattedFull() ?? "n/a".localized,
                     currencyAmount: feeData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
                 ),
             ])
@@ -71,7 +71,7 @@ class CexWithdrawConfirmViewModel {
                 title: "cex_withdraw_confirm.you_withdraw".localized,
                 iconUrl: service.cexAsset.coin?.imageUrl,
                 iconPlaceholderImageName: "placeholder_circle_32",
-                coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
+                coinAmount: amountData.appValue.formattedFull() ?? "n/a".localized,
                 currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                 type: .neutral
             ),

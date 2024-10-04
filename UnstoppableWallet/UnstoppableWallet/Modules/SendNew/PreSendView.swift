@@ -249,7 +249,7 @@ struct PreSendView: View {
             return nil
         }
 
-        return ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: viewModel.token), value: availableBalance))
+        return AppValue(token: viewModel.token, value: availableBalance).formattedFull()
     }
 
     private func buttonState() -> (String, Bool, Bool) {

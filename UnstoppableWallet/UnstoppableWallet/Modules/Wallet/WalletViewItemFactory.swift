@@ -170,7 +170,7 @@ extension WalletViewItemFactory {
         let convertedValue: String
         if balanceHidden {
             convertedValue = BalanceHiddenManager.placeholder
-        } else if let value = totalItem.convertedValue, let formattedValue = ValueFormatter.instance.formatShort(coinValue: value) {
+        } else if let value = totalItem.convertedValue, let formattedValue = value.formattedShort() {
             convertedValue = "≈ \(formattedValue)"
         } else {
             convertedValue = "---"

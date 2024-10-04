@@ -93,8 +93,8 @@ class NftAssetOverviewViewModel {
 
     private func coinValue(priceItem: NftAssetOverviewService.PriceItem) -> String {
         let price = priceItem.nftPrice
-        let coinValue = CoinValue(kind: .token(token: price.token), value: price.value)
-        return ValueFormatter.instance.formatShort(coinValue: coinValue) ?? "---"
+        let appValue = AppValue(token: price.token, value: price.value)
+        return appValue.formattedShort() ?? "---"
     }
 
     private func fiatValue(priceItem: NftAssetOverviewService.PriceItem) -> String {

@@ -99,14 +99,14 @@ extension MultiSwapSendHandler {
                     .amount(
                         title: "swap.you_pay".localized,
                         token: tokenIn,
-                        coinValueType: .regular(coinValue: CoinValue(kind: .token(token: tokenIn), value: amountIn)),
+                        appValueType: .regular(appValue: AppValue(token: tokenIn, value: amountIn)),
                         currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: amountIn * $0) },
                         type: .neutral
                     ),
                     .amount(
                         title: "swap.you_get".localized,
                         token: tokenOut,
-                        coinValueType: .regular(coinValue: CoinValue(kind: .token(token: tokenOut), value: quote.amountOut)),
+                        appValueType: .regular(appValue: AppValue(token: tokenOut, value: quote.amountOut)),
                         currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: quote.amountOut * $0) },
                         type: .incoming
                     ),

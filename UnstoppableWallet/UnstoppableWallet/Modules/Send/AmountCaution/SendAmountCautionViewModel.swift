@@ -37,8 +37,8 @@ class SendAmountCautionViewModel {
 
         switch switchService.amountType {
         case .coin:
-            let coinValue = CoinValue(kind: .token(token: coinService.token), value: amountCaution.value)
-            amountInfo = .coinValue(coinValue: coinValue)
+            let appValue = AppValue(token: coinService.token, value: amountCaution.value)
+            amountInfo = .appValue(appValue: appValue)
         case .currency:
             if let rateValue = coinService.rate {
                 let currencyValue = CurrencyValue(currency: rateValue.currency, value: amountCaution.value * rateValue.value)

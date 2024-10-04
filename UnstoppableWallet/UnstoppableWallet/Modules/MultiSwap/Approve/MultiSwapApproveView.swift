@@ -32,8 +32,8 @@ struct MultiSwapApproveView: View {
                                 ClickableRow(action: {
                                     viewModel.set(unlimitedAmount: false)
                                 }) {
-                                    let coinValue = CoinValue(kind: .token(token: viewModel.token), value: viewModel.amount)
-                                    let amountString = ValueFormatter.instance.formatFull(coinValue: coinValue) ?? ""
+                                    let appValue = AppValue(token: viewModel.token, value: viewModel.amount)
+                                    let amountString = appValue.formattedFull() ?? ""
                                     row(text: amountString, selected: !viewModel.unlimitedAmount)
                                 }
                                 ClickableRow(action: {

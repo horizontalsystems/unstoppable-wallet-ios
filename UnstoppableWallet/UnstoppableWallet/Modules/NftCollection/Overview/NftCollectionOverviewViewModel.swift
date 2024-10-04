@@ -132,8 +132,8 @@ class NftCollectionOverviewViewModel {
         }
 
         let averageValue: String? = collection.averagePrice1d.flatMap {
-            let coinValue = CoinValue(kind: .token(token: $0.token), value: $0.value)
-            return ValueFormatter.instance.formatShort(coinValue: coinValue)
+            let appValue = AppValue(token: $0.token, value: $0.value)
+            return appValue.formattedShort()
         }
         let additional = averageValue.map { "~\($0) per NFT" }
 
@@ -158,8 +158,8 @@ class NftCollectionOverviewViewModel {
             return nil
         }
 
-        let coinValue = CoinValue(kind: .token(token: price.token), value: price.value)
-        return ValueFormatter.instance.formatShort(coinValue: coinValue)
+        let appValue = AppValue(token: price.token, value: price.value)
+        return appValue.formattedShort()
     }
 }
 

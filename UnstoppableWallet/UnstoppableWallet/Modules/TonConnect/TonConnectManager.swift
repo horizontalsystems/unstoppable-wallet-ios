@@ -78,7 +78,7 @@ class TonConnectManager {
         // print("Apps: \(tonConnectApps.map { $0.manifest.name })")
 
         let task = Task { [storage, tonConnectApps] in
-            let ids = tonConnectApps.map { $0.keyPair.publicKey.hexString }.joined(separator: ",")
+            let ids = tonConnectApps.map(\.keyPair.publicKey.hexString).joined(separator: ",")
 
             // print("IDS: \(ids)")
 

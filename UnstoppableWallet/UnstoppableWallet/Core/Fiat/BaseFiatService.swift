@@ -14,8 +14,8 @@ class BaseFiatService {
 
     private var price: Decimal?
 
-    private var coinValueKind: CoinValue.Kind?
-    var token: Token? { coinValueKind?.token }
+    private var appValueKind: AppValue.Kind?
+    var token: Token? { appValueKind?.token }
 
     private let updatedSubject = PassthroughSubject<Void, Never>()
 
@@ -64,23 +64,21 @@ class BaseFiatService {
 
 extension BaseFiatService {
     func set(token: Token?) {
-        set(coinValueKind: token.flatMap { .token(token: $0) })
+        set(appValueKind: token.flatMap { .token(token: $0) })
     }
 
-    func set(coinValueKind: CoinValue.Kind?) {
-        self.coinValueKind = coinValueKind
+    func set(appValueKind: AppValue.Kind?) {
+        self.appValueKind = appValueKind
 
         cancellables = Set()
         var fetching = true
 
-        if let coinValueKind {
-            switch coinValueKind {
+        if let appValueKind {
+            switch appValueKind {
             case let .token(token):
                 fetchRate(coin: token.coin, subscribe: !token.isCustom)
-            case let .coin(coin, _):
-                fetchRate(coin: coin, subscribe: false)
-            case let .cexAsset(cexAsset):
-                if let coin = cexAsset.coin {
+            default:
+                if let coin = appValueKind.coin {
                     fetchRate(coin: coin, subscribe: false)
                 } else {
                     fetching = false
@@ -105,7 +103,7 @@ extension BaseFiatService {
     }
 
     private func coinAmountInfo(amount: Decimal) -> AmountInfo? {
-        coinValueKind.map { .coinValue(coinValue: CoinValue(kind: $0, value: amount)) }
+        appValueKind.map { .appValue(appValue: AppValue(kind: $0, value: amount)) }
     }
 
     private func amountInfo(amount: Decimal, type: AmountTypeSwitchService.AmountType) -> AmountInfo? {

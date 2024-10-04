@@ -4,13 +4,13 @@ import RxSwift
 import UIKit
 
 enum AmountInfo {
-    case coinValue(coinValue: CoinValue)
+    case appValue(appValue: AppValue)
     case currencyValue(currencyValue: CurrencyValue)
 
     var formattedFull: String? {
         switch self {
-        case let .coinValue(coinValue):
-            return coinValue.formattedFull
+        case let .appValue(appValue):
+            return appValue.formattedFull()
         case let .currencyValue(currencyValue):
             return currencyValue.formattedFull
         }
@@ -19,26 +19,26 @@ enum AmountInfo {
     var value: Decimal {
         switch self {
         case let .currencyValue(currencyValue): return currencyValue.value
-        case let .coinValue(coinValue): return coinValue.value
+        case let .appValue(appValue): return appValue.value
         }
     }
 
     var decimal: Int {
         switch self {
         case let .currencyValue(currencyValue): return currencyValue.currency.decimal
-        case let .coinValue(coinValue): return coinValue.decimals
+        case let .appValue(appValue): return appValue.decimals ?? 0
         }
     }
 }
 
 struct AmountData {
-    let coinValue: CoinValue
+    let appValue: AppValue
     let currencyValue: CurrencyValue?
 
     var formattedFull: String {
         var parts = [String]()
 
-        if let formatted = coinValue.formattedFull {
+        if let formatted = appValue.formattedFull() {
             parts.append(formatted)
         }
 
@@ -52,7 +52,7 @@ struct AmountData {
     var formattedShort: String {
         var result = ""
 
-        if let formatted = ValueFormatter.instance.formatShort(coinValue: coinValue) {
+        if let formatted = appValue.formattedShort() {
             result += formatted
         }
 

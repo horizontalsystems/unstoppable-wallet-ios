@@ -80,9 +80,9 @@ class LegacyEvmFeeViewModel {
             let gasData = fallibleTransaction.data.gasData
             let amountData = coinService.amountData(value: gasData.estimatedFee)
             let tilda = gasData.isSurcharged
-            if fallibleTransaction.errors.isEmpty, let coinValue = amountData.coinValue.formattedFull {
+            if fallibleTransaction.errors.isEmpty, let appValue = amountData.appValue.formattedFull() {
                 feeValue = .regular(
-                    text: "\(tilda ? "~" : "")\(coinValue)",
+                    text: "\(tilda ? "~" : "")\(appValue)",
                     secondaryText: amountData.currencyValue?.formattedFull.map { "\(tilda ? "~" : "")\($0)" }
                 )
             } else {

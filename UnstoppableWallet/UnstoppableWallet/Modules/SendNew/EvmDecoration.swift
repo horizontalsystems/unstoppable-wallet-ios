@@ -56,7 +56,7 @@ struct EvmDecoration {
             amountField = .amount(
                 title: "approve.confirmation.you_revoke".localized,
                 token: token,
-                coinValueType: .withoutAmount(kind: .token(token: token)),
+                appValueType: .withoutAmount(code: token.coin.code),
                 currencyValue: nil,
                 type: .neutral
             )
@@ -109,13 +109,13 @@ struct EvmDecoration {
     }
 
     private func amountField(title: String, token: Token, value: Decimal, currency: Currency, rate: Decimal?, type: SendField.AmountType) -> SendField {
-        let coinValue = CoinValue(kind: .token(token: token), value: Decimal(sign: type.sign, exponent: value.exponent, significand: value.significand))
+        let appValue = AppValue(token: token, value: Decimal(sign: type.sign, exponent: value.exponent, significand: value.significand))
 
         return .amount(
             title: title,
             token: token,
-            coinValueType: coinValue.isMaxValue ? .infinity(kind: coinValue.kind) : .regular(coinValue: coinValue),
-            currencyValue: coinValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },
+            appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
+            currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },
             type: type
         )
     }

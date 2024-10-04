@@ -20,8 +20,8 @@ class CoinSelectViewModel {
     private func sync(items: [CoinSelectService.Item]) {
         let viewItems = items.map { item -> ViewItem in
             let formatted = item.balance
-                .flatMap { CoinValue(kind: .token(token: item.token), value: $0) }
-                .flatMap { ValueFormatter.instance.formatShort(coinValue: $0) }
+                .flatMap { AppValue(token: item.token, value: $0) }
+                .flatMap { $0.formattedShort() }
 
             let fiatFormatted = item.rate
                 .flatMap { rate in item.balance.map { $0 * rate } }

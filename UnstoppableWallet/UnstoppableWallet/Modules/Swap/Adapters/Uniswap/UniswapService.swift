@@ -104,7 +104,7 @@ class UniswapService {
         syncState()
     }
 
-    private func checkAllowanceError(allowance: CoinValue) -> Error? {
+    private func checkAllowanceError(allowance: AppValue) -> Error? {
         guard let balanceIn,
               balanceIn >= tradeService.amountIn,
               tradeService.amountIn > allowance.value

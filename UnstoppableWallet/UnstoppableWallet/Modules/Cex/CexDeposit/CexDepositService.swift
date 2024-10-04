@@ -31,15 +31,12 @@ class CexDepositService {
             do {
                 let (address, memo) = try await provider.deposit(id: cexAsset.id, network: network?.id)
 
-                let minAmount = network.flatMap { network -> CoinValue? in
+                let minAmount = network.flatMap { network -> AppValue? in
                     guard network.minAmount > 0 else {
                         return nil
                     }
 
-                    return CoinValue(
-                        kind: .cexAsset(cexAsset: cexAsset),
-                        value: network.minAmount
-                    )
+                    return AppValue(cexAsset: cexAsset, value: network.minAmount)
                 }
 
                 let item = DexReceiveAddress(
@@ -89,9 +86,9 @@ extension CexDepositService {
         let address: String
         let memo: String?
         let networkName: String?
-        let minAmount: CoinValue?
+        let minAmount: AppValue?
 
-        init(address: String, coinCode: String, imageUrl: String?, memo: String?, networkName: String?, minAmount: CoinValue?) {
+        init(address: String, coinCode: String, imageUrl: String?, memo: String?, networkName: String?, minAmount: AppValue?) {
             self.address = address
             self.memo = memo
             self.networkName = networkName

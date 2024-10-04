@@ -6,7 +6,7 @@ class TronTransactionRecord: TransactionRecord {
     let transaction: Transaction
     let confirmed: Bool
     let ownTransaction: Bool
-    let fee: TransactionValue?
+    let fee: AppValue?
 
     init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, spam: Bool = false) {
         self.transaction = transaction
@@ -16,7 +16,7 @@ class TronTransactionRecord: TransactionRecord {
 
         if let feeAmount = transaction.fee {
             let feeDecimal = Decimal(sign: .plus, exponent: -baseToken.decimals, significand: Decimal(feeAmount))
-            fee = .coinValue(token: baseToken, value: feeDecimal)
+            fee = AppValue(token: baseToken, value: feeDecimal)
         } else {
             fee = nil
         }
@@ -34,39 +34,19 @@ class TronTransactionRecord: TransactionRecord {
         )
     }
 
-    private func sameType(_ value: TransactionValue, _ value2: TransactionValue) -> Bool {
-        switch (value, value2) {
-        case let (.coinValue(lhsToken, _), .coinValue(rhsToken, _)): return lhsToken == rhsToken
-        case let (.tokenValue(lhsTokenName, lhsTokenCode, lhsTokenDecimals, _), .tokenValue(rhsTokenName, rhsTokenCode, rhsTokenDecimals, _)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals
-        case let (.nftValue(lhsNftUid, _, _, _), .nftValue(rhsNftUid, _, _, _)): return lhsNftUid == rhsNftUid
-        default: return false
-        }
-    }
-
-    func combined(incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) -> ([TransactionValue], [TransactionValue]) {
+    func combined(incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) -> ([AppValue], [AppValue]) {
         let values = (incomingEvents + outgoingEvents).map(\.value)
-        var resultIncoming = [TransactionValue]()
-        var resultOutgoing = [TransactionValue]()
+        var resultIncoming = [AppValue]()
+        var resultOutgoing = [AppValue]()
 
         for value in values {
-            if (resultIncoming + resultOutgoing).contains(where: { sameType(value, $0) }) {
+            if (resultIncoming + resultOutgoing).contains(where: { value.kind == $0.kind }) {
                 continue
             }
 
-            let sameTypeValues = values.filter { sameType(value, $0) }
-            let totalValue = sameTypeValues.map { $0.decimalValue ?? 0 }.reduce(0, +)
-            let resultValue: TransactionValue
-
-            switch value {
-            case let .coinValue(token, _):
-                resultValue = .coinValue(token: token, value: totalValue)
-            case let .tokenValue(tokenName, tokenCode, tokenDecimals, _):
-                resultValue = .tokenValue(tokenName: tokenName, tokenCode: tokenCode, tokenDecimals: tokenDecimals, value: totalValue)
-            case let .nftValue(nftUid, _, tokenName, tokenSymbol):
-                resultValue = .nftValue(nftUid: nftUid, value: totalValue, tokenName: tokenName, tokenSymbol: tokenSymbol)
-            default:
-                resultValue = value
-            }
+            let sameTypeValues = values.filter { value.kind == $0.kind }
+            let totalValue = sameTypeValues.map(\.value).reduce(0, +)
+            let resultValue = AppValue(kind: value.kind, value: totalValue)
 
             if totalValue > 0 {
                 resultIncoming.append(resultValue)
@@ -94,6 +74,6 @@ class TronTransactionRecord: TransactionRecord {
 extension TronTransactionRecord {
     struct TransferEvent {
         let address: String
-        let value: TransactionValue
+        let value: AppValue
     }
 }

@@ -13,8 +13,8 @@ class SwapViewItemHelper {
         let baseCoins = needToInvert ? (tokenOut, tokenIn) : (tokenIn, tokenOut)
         let quoteCoins = needToInvert ? (tokenIn, tokenOut) : (tokenOut, tokenIn)
 
-        let first = PriceCoinValue(baseCoin: baseCoins.0.coin, quoteCoinValue: CoinValue(kind: .token(token: quoteCoins.0), value: prices.0))
-        let second = PriceCoinValue(baseCoin: baseCoins.1.coin, quoteCoinValue: CoinValue(kind: .token(token: quoteCoins.1), value: prices.1))
+        let first = PriceCoinValue(baseCoin: baseCoins.0.coin, quoteAppValue: AppValue(token: quoteCoins.0, value: prices.0))
+        let second = PriceCoinValue(baseCoin: baseCoins.1.coin, quoteAppValue: AppValue(token: quoteCoins.1, value: prices.1))
 
         return (first.formattedFull, second.formattedFull)
     }
@@ -43,10 +43,10 @@ class SwapViewItemHelper {
 extension SwapViewItemHelper {
     struct PriceCoinValue {
         let baseCoin: Coin
-        let quoteCoinValue: CoinValue
+        let quoteAppValue: AppValue
 
         var formattedFull: String {
-            ValueFormatter.instance.formatFull(coinValue: quoteCoinValue).map { "1 " + [baseCoin.code, $0].joined(separator: " = ") } ?? ""
+            quoteAppValue.formattedFull().map { "1 " + [baseCoin.code, $0].joined(separator: " = ") } ?? ""
         }
     }
 }

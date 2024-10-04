@@ -67,7 +67,7 @@ struct MultiSwapQuotesView: View {
             return nil
         }
 
-        return ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: tokenOut), value: quote.quote.amountOut))
+        return AppValue(token: tokenOut, value: quote.quote.amountOut).formattedFull()
     }
 
     private func quoteCurrencyValue(quote: MultiSwapViewModel.Quote) -> String? {

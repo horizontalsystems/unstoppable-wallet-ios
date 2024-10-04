@@ -253,11 +253,11 @@ class BaseTransactionsService {
     }
 
     private func currencyValue(record: TransactionRecord, rate: CurrencyValue?) -> CurrencyValue? {
-        guard let rate, let decimalValue = record.mainValue?.decimalValue else {
+        guard let rate, let mainValue = record.mainValue else {
             return nil
         }
 
-        return CurrencyValue(currency: rate.currency, value: decimalValue * rate.value)
+        return CurrencyValue(currency: rate.currency, value: mainValue.value * rate.value)
     }
 
     private func _reportItemData() {

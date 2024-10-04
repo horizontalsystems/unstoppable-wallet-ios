@@ -53,8 +53,8 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
         )
         var amountString: String?
         if let amount, let decimalValue = Decimal(string: amount) {
-            let coinValue = CoinValue(kind: .token(token: item.token), value: decimalValue)
-            amountString = coinValue.formattedFull
+            let appValue = AppValue(token: item.token, value: decimalValue)
+            amountString = appValue.formattedFull()
         }
 
         var active = true

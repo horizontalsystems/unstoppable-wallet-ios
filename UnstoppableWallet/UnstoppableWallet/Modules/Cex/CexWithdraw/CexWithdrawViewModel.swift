@@ -45,7 +45,7 @@ class CexWithdrawViewModel {
         let feeAmountData = coinService.amountData(value: fee, sign: .plus)
 
         self.fee = FeeAmount(
-            coinAmount: ValueFormatter.instance.formatFull(coinValue: feeAmountData.coinValue) ?? "n/a".localized,
+            coinAmount: feeAmountData.appValue.formattedFull() ?? "n/a".localized,
             currencyAmount: feeAmountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
         )
     }

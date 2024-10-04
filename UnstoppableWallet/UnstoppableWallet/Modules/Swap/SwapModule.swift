@@ -123,7 +123,7 @@ extension SwapModule {
         case noBalanceIn
         case insufficientBalanceIn
         case insufficientAllowance
-        case needRevokeAllowance(allowance: CoinValue)
+        case needRevokeAllowance(allowance: AppValue)
 
         static func == (lhs: SwapError, rhs: SwapError) -> Bool {
             switch (lhs, rhs) {
@@ -135,7 +135,7 @@ extension SwapModule {
             }
         }
 
-        var revokeAllowance: CoinValue? {
+        var revokeAllowance: AppValue? {
             switch self {
             case let .needRevokeAllowance(allowance): return allowance
             default: return nil

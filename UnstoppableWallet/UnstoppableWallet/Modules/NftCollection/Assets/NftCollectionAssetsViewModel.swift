@@ -48,8 +48,8 @@ class NftCollectionAssetsViewModel {
         var fiatPrice: String?
 
         if let price = item.price {
-            let coinValue = CoinValue(kind: .token(token: price.token), value: price.value)
-            if let value = ValueFormatter.instance.formatShort(coinValue: coinValue) {
+            let appValue = AppValue(token: price.token, value: price.value)
+            if let value = appValue.formattedShort() {
                 coinPrice = value
             }
 

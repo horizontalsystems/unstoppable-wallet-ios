@@ -17,7 +17,7 @@ class TonConnectConnectViewModel: ObservableObject {
         parameters = config.parameters
         manifest = config.manifest
 
-        eligibleAccounts = accountManager.accounts.filter { $0.type.supportsTonConnect }.sorted { $0.name < $1.name }
+        eligibleAccounts = accountManager.accounts.filter(\.type.supportsTonConnect).sorted { $0.name < $1.name }
 
         if let activeAccount = accountManager.activeAccount, eligibleAccounts.contains(activeAccount) {
             account = activeAccount

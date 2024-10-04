@@ -73,7 +73,7 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
             .value(
                 title: "swap.confirmation.minimum_received".localized,
                 description: nil,
-                coinValue: CoinValue(kind: .token(token: tokenOut), value: minAmountOut),
+                appValue: AppValue(token: tokenOut, value: minAmountOut),
                 currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
                 formatFull: true
             )

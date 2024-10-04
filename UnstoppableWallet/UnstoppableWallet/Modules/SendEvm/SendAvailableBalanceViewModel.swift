@@ -64,8 +64,8 @@ class SendAvailableBalanceViewModel {
             let currencyValue = CurrencyValue(currency: rate.currency, value: availableBalance * rate.value)
             value = ValueFormatter.instance.formatFull(currencyValue: currencyValue)
         } else {
-            let coinValue = coinService.coinValue(value: availableBalance)
-            value = ValueFormatter.instance.formatFull(coinValue: coinValue)
+            let appValue = coinService.appValue(value: availableBalance)
+            value = appValue.formattedFull()
         }
 
         viewStateRelay.accept(.loaded(value: value))

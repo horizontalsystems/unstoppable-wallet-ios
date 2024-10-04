@@ -25,20 +25,20 @@ class TonEventConverter {
         return Decimal(sign: sign, exponent: -decimals, significand: significand)
     }
 
-    private func tonValue(value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
+    private func tonValue(value: BigUInt, sign: FloatingPointSign) -> AppValue {
         let amount = convertAmount(amount: value, decimals: baseToken.decimals, sign: sign)
-        return .coinValue(token: baseToken, value: amount)
+        return AppValue(token: baseToken, value: amount)
     }
 
-    private func jettonValue(jetton: Jetton, value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
+    private func jettonValue(jetton: Jetton, value: BigUInt, sign: FloatingPointSign) -> AppValue {
         let query = TokenQuery(blockchainType: .ton, tokenType: .jetton(address: jetton.address.toString(testOnly: TonKitManager.isTestNet, bounceable: true)))
 
         if let token = try? coinManager.token(query: query) {
             let value = convertAmount(amount: value, decimals: token.decimals, sign: sign)
-            return .coinValue(token: token, value: value)
+            return AppValue(token: token, value: value)
         } else {
             let value = convertAmount(amount: value, decimals: jetton.decimals, sign: sign)
-            return .jettonValue(jetton: jetton, value: value)
+            return AppValue(jetton: jetton, value: value)
         }
     }
 

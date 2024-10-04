@@ -48,19 +48,19 @@ class OutputSelectorViewModel2: ObservableObject {
         outputsViewItems = all.map { viewItem(unspentOutput: $0) }
         allSelected = all.count == selectedSet.count
 
-        let coinValue = coinValue(satoshiValue: handler.availableBalance)
+        let appValue = appValue(satoshiValue: handler.availableBalance)
         let currencyValue = rate.flatMap {
-            CurrencyValue(currency: App.shared.currencyManager.baseCurrency, value: coinValue.value * $0)
+            CurrencyValue(currency: App.shared.currencyManager.baseCurrency, value: appValue.value * $0)
         }
 
-        availableBalanceCoinValue = coinValue.formattedFull ?? "n/a".localized
+        availableBalanceCoinValue = appValue.formattedFull() ?? "n/a".localized
         availableBalanceFiatValue = currencyValue.flatMap(\.formattedFull)
     }
 
     private func viewItem(unspentOutput: UnspentOutputInfo) -> OutputViewItem {
-        let coinValue = coinValue(satoshiValue: unspentOutput.value)
+        let appValue = appValue(satoshiValue: unspentOutput.value)
         let currencyValue = rate.flatMap {
-            CurrencyValue(currency: App.shared.currencyManager.baseCurrency, value: coinValue.value * $0)
+            CurrencyValue(currency: App.shared.currencyManager.baseCurrency, value: appValue.value * $0)
         }
 
         return OutputViewItem(
@@ -68,15 +68,15 @@ class OutputSelectorViewModel2: ObservableObject {
             transactionHash: unspentOutput.transactionHash,
             date: DateHelper.instance.formatShortDateOnly(date: Date(timeIntervalSince1970: TimeInterval(unspentOutput.timestamp))),
             address: unspentOutput.address?.shortened ?? "n/a".localized,
-            coinValue: coinValue.formattedFull ?? "n/a".localized,
+            coinValue: appValue.formattedFull() ?? "n/a".localized,
             fiatValue: currencyValue.flatMap(\.formattedFull)
         )
     }
 
-    private func coinValue(satoshiValue: Int) -> CoinValue {
+    private func appValue(satoshiValue: Int) -> AppValue {
         let coinRate = pow(10, handler.token.decimals)
         let decimalValue = Decimal(satoshiValue) / coinRate
-        return CoinValue(kind: .token(token: handler.token), value: decimalValue)
+        return AppValue(token: handler.token, value: decimalValue)
     }
 }
 

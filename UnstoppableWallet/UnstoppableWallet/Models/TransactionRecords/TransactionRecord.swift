@@ -44,16 +44,18 @@ class TransactionRecord {
         nil
     }
 
-    open var mainValue: TransactionValue? {
+    open var mainValue: AppValue? {
         nil
     }
 
-    static func isSpam(transactionValues: [TransactionValue]) -> Bool {
-        for value in transactionValues {
-            switch value {
-            case let .coinValue(token, value):
-                let stableCoinUids = ["tether", "usd-coin", "dai", "binance-usd", "binance-peg-busd", "stasis-eurs"]
+    static func isSpam(appValues: [AppValue]) -> Bool {
+        let stableCoinUids = ["tether", "usd-coin", "dai", "binance-usd", "binance-peg-busd", "stasis-eurs"]
 
+        for appValue in appValues {
+            let value = appValue.value
+
+            switch appValue.kind {
+            case let .token(token):
                 if stableCoinUids.contains(token.coin.uid) {
                     if value > 0.01 {
                         return false
@@ -61,7 +63,15 @@ class TransactionRecord {
                 } else if value > 0 {
                     return false
                 }
-            case let .nftValue(_, value, _, _):
+            case let .coin(coin, _):
+                if stableCoinUids.contains(coin.uid) {
+                    if value > 0.01 {
+                        return false
+                    }
+                } else if value > 0 {
+                    return false
+                }
+            case .nft:
                 if value > 0 {
                     return false
                 }

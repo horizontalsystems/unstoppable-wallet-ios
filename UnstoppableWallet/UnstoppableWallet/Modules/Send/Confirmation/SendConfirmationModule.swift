@@ -2,14 +2,14 @@
 protocol ISendConfirmationViewItemNew {}
 
 struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
-    let coinValue: CoinValue
+    let appValue: AppValue
     let currencyValue: CurrencyValue?
     let receiver: Address
     let isAccount: Bool
     let sentToSelf: Bool
 
-    init(coinValue: CoinValue, currencyValue: CurrencyValue?, receiver: Address, isAccount: Bool = false, sentToSelf: Bool = false) {
-        self.coinValue = coinValue
+    init(appValue: AppValue, currencyValue: CurrencyValue?, receiver: Address, isAccount: Bool = false, sentToSelf: Bool = false) {
+        self.appValue = appValue
         self.currencyValue = currencyValue
         self.receiver = receiver
         self.isAccount = isAccount
@@ -18,7 +18,7 @@ struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
 }
 
 struct SendConfirmationFeeViewItem: ISendConfirmationViewItemNew {
-    let coinValue: CoinValue
+    let appValue: AppValue
     let currencyValue: CurrencyValue?
 }
 

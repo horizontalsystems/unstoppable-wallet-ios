@@ -41,14 +41,14 @@ class TronSendData: ISendData {
 
         if let totalFees {
             let decimalAmount = Decimal(totalFees) / pow(10, baseToken.decimals)
-            let coinValue = CoinValue(kind: .token(token: baseToken), value: decimalAmount)
+            let appValue = AppValue(token: baseToken, value: decimalAmount)
             let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: decimalAmount * $0) }
 
             viewItems.append(
                 .value(
                     title: "fee_settings.network_fee".localized,
                     description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
-                    coinValue: coinValue,
+                    appValue: appValue,
                     currencyValue: currencyValue,
                     formatFull: true
                 )
@@ -63,14 +63,14 @@ class TronSendData: ISendData {
                 switch fee {
                 case let .accountActivation(amount):
                     let decimalAmount = Decimal(amount) / pow(10, baseToken.decimals)
-                    let coinValue = CoinValue(kind: .token(token: baseToken), value: decimalAmount)
+                    let appValue = AppValue(token: baseToken, value: decimalAmount)
                     let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: decimalAmount * $0) }
 
                     viewItems.append(
                         .value(
                             title: "tron.send.activation_fee".localized,
                             description: .init(title: "tron.send.activation_fee".localized, description: "tron.send.activation_fee.info".localized),
-                            coinValue: coinValue,
+                            appValue: appValue,
                             currencyValue: currencyValue,
                             formatFull: true
                         )
@@ -131,14 +131,14 @@ class TronSendData: ISendData {
     }
 
     private func sendFields(to: TronKit.Address, value: Decimal, currency: Currency, rate: Decimal?) -> [[SendField]] {
-        let coinValue = CoinValue(kind: .token(token: token), value: Decimal(sign: .plus, exponent: value.exponent, significand: value.significand))
+        let appValue = AppValue(token: token, value: Decimal(sign: .plus, exponent: value.exponent, significand: value.significand))
 
         return [[
             .amount(
                 title: "send.confirmation.you_send".localized,
                 token: token,
-                coinValueType: coinValue.isMaxValue ? .infinity(kind: coinValue.kind) : .regular(coinValue: coinValue),
-                currencyValue: coinValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },
+                appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
+                currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },
                 type: .neutral
             ),
             .address(
@@ -156,8 +156,8 @@ class TronSendData: ISendData {
         if let tronError = transactionError as? TronSendHandler.TransactionError {
             switch tronError {
             case let .insufficientBalance(balance):
-                let coinValue = CoinValue(kind: .token(token: feeToken), value: balance.toDecimal(decimals: feeToken.decimals) ?? 0)
-                let balanceString = ValueFormatter.instance.formatShort(coinValue: coinValue)
+                let appValue = AppValue(token: feeToken, value: balance.toDecimal(decimals: feeToken.decimals) ?? 0)
+                let balanceString = appValue.formattedShort()
 
                 title = "fee_settings.errors.insufficient_balance".localized
                 text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")

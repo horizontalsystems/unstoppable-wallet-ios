@@ -258,7 +258,7 @@ extension TonConnect.Network: CellCodable {
     }
 
     static func loadFrom(slice: Slice) throws -> TonConnect.Network {
-        return try slice.tryLoad { s in
+        try slice.tryLoad { s in
             let rawValue = try Int16(s.loadInt(bits: .rawValueLength))
             guard let network = TonConnect.Network(rawValue: rawValue) else {
                 throw TonSwift.TonError.custom("Invalid network code")

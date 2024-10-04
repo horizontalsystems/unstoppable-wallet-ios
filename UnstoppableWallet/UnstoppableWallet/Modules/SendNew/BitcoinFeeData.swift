@@ -11,9 +11,9 @@ struct BitcoinFeeData {
     }
 
     func amountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-        let coinValue = CoinValue(kind: .token(token: feeToken), value: fee)
+        let appValue = AppValue(token: feeToken, value: fee)
         let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
 
-        return AmountData(coinValue: coinValue, currencyValue: currencyValue)
+        return AmountData(appValue: appValue, currencyValue: currencyValue)
     }
 }

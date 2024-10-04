@@ -68,7 +68,7 @@ class TonKitManager {
         if restoreState.shouldRestore || account.watchAccount, !restoreState.initialRestored {
             jettonBalanceCancellable = tonKit.jettonBalanceMapPublisher
                 .sink { [weak self, restoreStateManager] in
-                    self?.handle(jettons: $0.values.map { $0.jetton }, account: account)
+                    self?.handle(jettons: $0.values.map(\.jetton), account: account)
 
                     restoreStateManager.setInitialRestored(account: account, blockchainType: .ton)
 

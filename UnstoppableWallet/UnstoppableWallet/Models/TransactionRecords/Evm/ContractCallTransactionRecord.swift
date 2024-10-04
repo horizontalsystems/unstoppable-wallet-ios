@@ -19,11 +19,11 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: true)
     }
 
-    var combinedValues: ([TransactionValue], [TransactionValue]) {
+    var combinedValues: ([AppValue], [AppValue]) {
         combined(incomingEvents: incomingEvents, outgoingEvents: outgoingEvents)
     }
 
-    override var mainValue: TransactionValue? {
+    override var mainValue: AppValue? {
         let (incomingValues, outgoingValues) = combinedValues
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
