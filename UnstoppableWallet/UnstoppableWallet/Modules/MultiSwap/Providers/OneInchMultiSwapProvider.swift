@@ -43,101 +43,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     }
 
     override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
-        try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
-    }
-
-    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
-        let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
-
-        let blockchainType = tokenIn.blockchainType
-        let gasPriceData = transactionSettings?.gasPriceData
-        var evmFeeData: EvmFeeData?
-        var resolvedSwap: Swap?
-        var insufficientFeeBalance = false
-
-        if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper,
-           let gasPriceData,
-           let amount = rawAmount(amount: amountIn, token: tokenIn)
-        {
-            let evmKit = evmKitWrapper.evmKit
-            let swap = try await kit.swap(
-                networkManager: networkManager,
-                chain: evmKit.chain,
-                receiveAddress: evmKit.receiveAddress,
-                fromToken: address(token: tokenIn),
-                toToken: address(token: tokenOut),
-                amount: amount,
-                slippage: slippage,
-                referrer: commissionAddress,
-                fee: commission,
-                recipient: storage.recipient(blockchainType: blockchainType).flatMap { try? EvmKit.Address(hex: $0.raw) },
-                gasPrice: gasPriceData.userDefined
-            )
-
-            resolvedSwap = swap
-
-            let evmBalance = evmKit.accountState?.balance ?? 0
-            let txAmount = swap.transaction.value
-            let feeAmount = BigUInt(swap.transaction.gasLimit * gasPriceData.userDefined.max)
-            let totalAmount = txAmount + feeAmount
-
-            insufficientFeeBalance = totalAmount > evmBalance
-
-            evmFeeData = try await evmFeeEstimator.estimateFee(
-                evmKitWrapper: evmKitWrapper,
-                transactionData: swap.transactionData,
-                gasPriceData: gasPriceData,
-                predefinedGasLimit: swap.transaction.gasLimit
-            )
-        }
-
-        return OneInchMultiSwapConfirmationQuote(
-            quote: quote,
-            swap: resolvedSwap,
-            insufficientFeeBalance: insufficientFeeBalance,
-            evmFeeData: evmFeeData,
-            nonce: transactionSettings?.nonce
-        )
-    }
-
-    override func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationView {
-            RecipientAndSlippageMultiSwapSettingsView(tokenIn: tokenIn, storage: storage, onChangeSettings: onChangeSettings)
-        }
-
-        return AnyView(view)
-    }
-
-    override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
-        guard let quote = quote as? OneInchMultiSwapConfirmationQuote else {
-            throw SwapError.invalidQuote
-        }
-
-        guard let swap = quote.swap else {
-            throw SwapError.invalidSwap
-        }
-
-        guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
-            throw SwapError.noGasLimit
-        }
-
-        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
-            throw SwapError.noEvmKitWrapper
-        }
-
-        _ = try await evmKitWrapper.send(
-            transactionData: swap.transactionData,
-            gasPrice: swap.transaction.gasPrice,
-            gasLimit: gasLimit,
-            nonce: quote.nonce
-        )
-    }
-
-    override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
-        try OneInchKit.Kit.routerAddress(chain: chain)
-    }
-
-    private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> OneInchMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -165,6 +70,96 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
+    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+        let blockchainType = tokenIn.blockchainType
+
+        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+            throw SwapError.noEvmKitWrapper
+        }
+
+        guard let gasPriceData = transactionSettings?.gasPriceData else {
+            throw SwapError.noGasPriceData
+        }
+
+        guard let amount = rawAmount(amount: amountIn, token: tokenIn) else {
+            throw SwapError.invalidAmountIn
+        }
+
+        let evmKit = evmKitWrapper.evmKit
+        let recipient = storage.recipient(blockchainType: blockchainType)
+        let slippage = slippage
+
+        let swap = try await kit.swap(
+            networkManager: networkManager,
+            chain: evmKit.chain,
+            receiveAddress: evmKit.receiveAddress,
+            fromToken: address(token: tokenIn),
+            toToken: address(token: tokenOut),
+            amount: amount,
+            slippage: slippage,
+            referrer: commissionAddress,
+            fee: commission,
+            recipient: recipient.flatMap { try? EvmKit.Address(hex: $0.raw) },
+            gasPrice: gasPriceData.userDefined
+        )
+
+        let evmBalance = evmKit.accountState?.balance ?? 0
+        let txAmount = swap.transaction.value
+        let feeAmount = BigUInt(swap.transaction.gasLimit * gasPriceData.userDefined.max)
+        let totalAmount = txAmount + feeAmount
+
+        let insufficientFeeBalance = totalAmount > evmBalance
+
+        let evmFeeData = try await evmFeeEstimator.estimateFee(
+            evmKitWrapper: evmKitWrapper,
+            transactionData: swap.transactionData,
+            gasPriceData: gasPriceData,
+            predefinedGasLimit: swap.transaction.gasLimit
+        )
+
+        return OneInchMultiSwapConfirmationQuote(
+            swap: swap,
+            recipient: recipient,
+            slippage: slippage,
+            insufficientFeeBalance: insufficientFeeBalance,
+            evmFeeData: evmFeeData,
+            nonce: transactionSettings?.nonce
+        )
+    }
+
+    override func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+        let view = ThemeNavigationView {
+            RecipientAndSlippageMultiSwapSettingsView(tokenIn: tokenIn, storage: storage, onChangeSettings: onChangeSettings)
+        }
+
+        return AnyView(view)
+    }
+
+    override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
+        guard let quote = quote as? OneInchMultiSwapConfirmationQuote else {
+            throw SwapError.invalidQuote
+        }
+
+        guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
+            throw SwapError.noGasLimit
+        }
+
+        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
+            throw SwapError.noEvmKitWrapper
+        }
+
+        _ = try await evmKitWrapper.send(
+            transactionData: quote.swap.transactionData,
+            gasPrice: quote.swap.transaction.gasPrice,
+            gasLimit: gasLimit,
+            nonce: quote.nonce
+        )
+    }
+
+    override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
+        try OneInchKit.Kit.routerAddress(chain: chain)
+    }
+
     private func address(token: MarketKit.Token) throws -> EvmKit.Address {
         switch token.type {
         case .native: return try EvmKit.Address(hex: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
@@ -188,9 +183,9 @@ extension OneInchMultiSwapProvider {
         case invalidAddress
         case invalidAmountIn
         case invalidQuote
-        case invalidSwap
         case noEvmKitWrapper
         case noGasLimit
+        case noGasPriceData
     }
 }
 
