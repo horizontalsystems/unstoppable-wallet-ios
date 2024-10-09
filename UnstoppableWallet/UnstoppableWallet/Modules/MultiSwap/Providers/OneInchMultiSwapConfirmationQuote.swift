@@ -4,24 +4,26 @@ import MarketKit
 import OneInchKit
 
 class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
-    let quote: OneInchMultiSwapQuote
-    let swap: Swap?
+    let swap: Swap
+    let recipient: Address?
+    let slippage: Decimal
     let insufficientFeeBalance: Bool
 
-    init(quote: OneInchMultiSwapQuote, swap: Swap?, insufficientFeeBalance: Bool, evmFeeData: EvmFeeData?, nonce: Int?) {
-        self.quote = quote
+    init(swap: Swap, recipient: Address?, slippage: Decimal, insufficientFeeBalance: Bool, evmFeeData: EvmFeeData, nonce: Int?) {
         self.swap = swap
+        self.recipient = recipient
+        self.slippage = slippage
         self.insufficientFeeBalance = insufficientFeeBalance
 
-        super.init(gasPrice: swap?.transaction.gasPrice, evmFeeData: evmFeeData, nonce: nonce)
+        super.init(gasPrice: swap.transaction.gasPrice, evmFeeData: evmFeeData, nonce: nonce)
     }
 
     override var amountOut: Decimal {
-        swap?.amountOut ?? quote.quote.amountOut ?? 0
+        swap.amountOut ?? 0
     }
 
     override var canSwap: Bool {
-        super.canSwap && swap != nil && !insufficientFeeBalance
+        super.canSwap && !insufficientFeeBalance
     }
 
     override func cautions(baseToken: MarketKit.Token) -> [CautionNew] {
@@ -37,7 +39,10 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
             )
         }
 
-        cautions.append(contentsOf: quote.cautions())
+        switch MultiSwapSlippage.validate(slippage: slippage) {
+        case .none: ()
+        case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+        }
 
         return cautions
     }
@@ -45,7 +50,7 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
     override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
         var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
-        if let recipient = quote.recipient {
+        if let recipient {
             fields.append(
                 .address(
                     title: "swap.recipient".localized,
@@ -54,8 +59,6 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
                 )
             )
         }
-
-        let slippage = quote.slippage
 
         if slippage != MultiSwapSlippage.default {
             fields.append(
