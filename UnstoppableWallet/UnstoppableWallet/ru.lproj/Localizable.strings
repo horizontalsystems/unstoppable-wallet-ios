@@ -454,8 +454,10 @@
 
 "send.confirmation.title" = "Подтвердить";
 "send.confirmation.you_send" = "Вы отправляете";
+"send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "Перевод";
 "send.confirmation.to" = "Кому";
+"send.confirmation.from" = "From";
 "send.confirmation.own" = "Свой";
 "send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.domain" = "Домен";
@@ -469,6 +471,10 @@
 "send.confirmation.replace_by_fee" = "Изменить комиссию";
 "send.confirmation.replaced_transactions" = "Замененные транзакции";
 "send.confirmation.input" = "Ввод";
+"send.confirmation.comment" = "Comment";
+"send.confirmation.action" = "Action";
+"send.confirmation.status" = "Статус";
+"send.confirmation.status.failed" = "Failed";
 
 "send.confirmation.sync_failed" = "Ошибка синхронизации";
 "send.confirmation.invalid_data" = "Неверные данные";
@@ -1218,7 +1224,7 @@
 "transactions.pending" = "В обработке";
 "transactions.processing" = "В процессе";
 "transactions.completed" = "Завершено";
-"transactions.failed" = "Не удалось";
+"transactions.failed" = "Failed";
 
 "transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
@@ -1260,8 +1266,8 @@
 "tx_info.title_approval" = "Разрешение обмена";
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.completed" = "Завершено";
-"tx_info.status.failed" = "Не удалось";
-"tx_info.from_hash" = "От";
+"tx_info.status.failed" = "Failed";
+"tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Кому";
 "tx_info.spender" = "Покупатель";
@@ -1791,6 +1797,20 @@
 "wallet_connect.paired_dapps.disconnect_all" = "Удалить всё";
 "wallet_connect.pending_requests.nonactive_footer" = "Чтобы открыть запрос, необходимо активировать желаемый кошелек";
 
+// Ton Connect
+
+"ton_connect.list.new_connection" = "Новое соединение";
+"ton_connect.list.no_connected_apps" = "No Connected Apps";
+"ton_connect.list.disconnect_app" = "Disconnect App";
+"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.disconnect_app.disconnect" = "Отсоединить";
+"ton_connect.connect.url" = "URL";
+"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.warning" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
+"ton_connect.connect.connect" = "Подключиться";
+"ton_connect.connect.reject" = "Отклонить";
+
 // App Status
 
 "app_status.title" = "Статус приложения";
@@ -1812,7 +1832,7 @@
 "status_info.processing.content" = "Транзакция уже включена в блокчейн, но пока не обработана. На данном этапе транзакции считаются завершенными для небольших платежей. Что касается завершения обработки более крупных транзакций, стоит дождаться смены статуса.";
 "status_info.completed.title" = "Завершено";
 "status_info.confirmed.content" = "Транзакция завершена и считается постоянной и необратимой.";
-"status_info.failed.title" = "Не удалось";
+"status_info.failed.title" = "Failed";
 "status_info.failed.content" = "Транзакция не была обработана и передача средств не произошла. В зависимости от причины неудачи, некоторые неудачные транзакции могут использовать комиссию за транзакцию. Транзакции, которые были заменены или отменены другой транзакцией, не потребляют транзакционные сборы и также будут показаны как \"не удалось\". Приложение %@ не может показать причину неудачных транзакций, но пользователи могут посмотреть это в etherscan.io.";
 
 // Onboarding
@@ -2053,7 +2073,7 @@
 // Activate Subscription
 
 "activate_subscription.title" = "Активировать";
-"activate_subscription.wallet" = "Кошелек";
+"activate_subscription.wallet" = "Wallet";
 "activate_subscription.address" = "Адрес";
 "activate_subscription.message" = "Сообщение для подписи";
 "activate_subscription.sign" = "Подписать";
