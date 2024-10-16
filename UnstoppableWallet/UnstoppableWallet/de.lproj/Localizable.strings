@@ -452,8 +452,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "send.confirmation.title" = "Bestätigen";
 "send.confirmation.you_send" = "Sie Senden";
+"send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "Überweisung";
 "send.confirmation.to" = "An";
+"send.confirmation.from" = "From";
 "send.confirmation.own" = "Eigene";
 "send.confirmation.contact_name" = "Kontaktname";
 "send.confirmation.domain" = "Domäne";
@@ -467,6 +469,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.replace_by_fee" = "Ersetzen durch Gebühr";
 "send.confirmation.replaced_transactions" = "Ersetzte Transaktionen";
 "send.confirmation.input" = "Eingabe";
+"send.confirmation.comment" = "Comment";
+"send.confirmation.action" = "Action";
+"send.confirmation.status" = "Status";
+"send.confirmation.status.failed" = "Failed";
 
 "send.confirmation.sync_failed" = "Synchronisation fehlgeschlagen";
 "send.confirmation.invalid_data" = "Ungültige Daten";
@@ -1216,7 +1222,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transactions.pending" = "In Bearbeitung";
 "transactions.processing" = "Verarbeite";
 "transactions.completed" = "Abgeschlossen";
-"transactions.failed" = "Fehlgeschlagen";
+"transactions.failed" = "Failed";
 
 "transactions.receive" = "Empfangen";
 "transactions.send" = "Gesendet";
@@ -1258,8 +1264,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tx_info.title_approval" = "Swap-Genehmigung";
 "tx_info.status.pending" = "In Bearbeitung";
 "tx_info.status.completed" = "Abgeschlossen";
-"tx_info.status.failed" = "Fehlgeschlagen";
-"tx_info.from_hash" = "Von";
+"tx_info.status.failed" = "Failed";
+"tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
 "tx_info.spender" = "Spender";
@@ -1789,6 +1795,20 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "wallet_connect.paired_dapps.disconnect_all" = "Alle löschen";
 "wallet_connect.pending_requests.nonactive_footer" = "Um eine Anfrage zu öffnen, müssen Sie die gewünschte Wallet aktivieren";
 
+// Ton Connect
+
+"ton_connect.list.new_connection" = "Neue Verbindung";
+"ton_connect.list.no_connected_apps" = "No Connected Apps";
+"ton_connect.list.disconnect_app" = "Disconnect App";
+"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.disconnect_app.disconnect" = "Verbindung trennen";
+"ton_connect.connect.url" = "URL";
+"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.warning" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
+"ton_connect.connect.connect" = "Verbinden";
+"ton_connect.connect.reject" = "Verwerfen";
+
 // App Status
 
 "app_status.title" = "App-Status";
@@ -1810,7 +1830,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "status_info.processing.content" = "Die Transaktion wurde bereits in die Blockchain aufgenommen, ist aber noch nicht endgültig abgeschlossen. Zu diesem Zeitpunkt kann die Transaktion für kleinere Zahlungen als abgeschlossen betrachtet werden. Bei größeren Zahlungen wird empfohlen, zu warten, bis der Transaktionsstatus auf abgeschlossen wechselt.";
 "status_info.completed.title" = "Abgeschlossen";
 "status_info.confirmed.content" = "Die Transaktion ist abgeschlossen und gilt als dauerhaft und unumkehrbar.";
-"status_info.failed.title" = "Fehlgeschlagen";
+"status_info.failed.title" = "Failed";
 "status_info.failed.content" = "Die Transaktion wurde nicht verarbeitet und es wurde kein Werttransfer durchgeführt. Abhängig vom Grund des Scheiterns können einige fehlgeschlagene Transaktionen Transaktionsgebühren kosten. Transaktionen, die durch eine andere Transaktion ersetzt oder abgebrochen wurden, verbrauchen keine Transaktionsgebühren und erscheinen auch als fehlgeschlagen. Die %@ App kann den Grund für fehlgeschlagene Transaktionen nicht anzeigen. aber Benutzer können es selbst auf einem öffentlichen Block-Explorer i. e. etherscan.io.";
 
 // Onboarding

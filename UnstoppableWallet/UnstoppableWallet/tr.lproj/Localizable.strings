@@ -452,8 +452,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "send.confirmation.title" = "Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
+"send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "Aktar";
 "send.confirmation.to" = "Alan";
+"send.confirmation.from" = "From";
 "send.confirmation.own" = "Kendi";
 "send.confirmation.contact_name" = "Kişi Adı";
 "send.confirmation.domain" = "Alan adı";
@@ -467,6 +469,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.replace_by_fee" = "Ücretle Değiştir";
 "send.confirmation.replaced_transactions" = "Değiştirilmiş İşlemler";
 "send.confirmation.input" = "Giriş";
+"send.confirmation.comment" = "Comment";
+"send.confirmation.action" = "Action";
+"send.confirmation.status" = "Durum";
+"send.confirmation.status.failed" = "Failed";
 
 "send.confirmation.sync_failed" = "Senkronizasyon Başarısız";
 "send.confirmation.invalid_data" = "Geçersiz Veri";
@@ -1216,7 +1222,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.pending" = "Bekleyen";
 "transactions.processing" = "İşleniyor";
 "transactions.completed" = "Tamamlandı";
-"transactions.failed" = "Başarısız";
+"transactions.failed" = "Failed";
 
 "transactions.receive" = "Al";
 "transactions.send" = "Gönderildi";
@@ -1258,8 +1264,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.title_approval" = "Swap Onaylama";
 "tx_info.status.pending" = "Bekleyen";
 "tx_info.status.completed" = "Tamamlandı";
-"tx_info.status.failed" = "Başarısız";
-"tx_info.from_hash" = "Gönderen";
+"tx_info.status.failed" = "Failed";
+"tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
 "tx_info.spender" = "Harcayan";
@@ -1793,6 +1799,20 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.paired_dapps.disconnect_all" = "Hepsini Sil";
 "wallet_connect.pending_requests.nonactive_footer" = "Bir istek açmak için istenen cüzdanı etkinleştirmelisiniz";
 
+// Ton Connect
+
+"ton_connect.list.new_connection" = "Yeni bağlantı";
+"ton_connect.list.no_connected_apps" = "No Connected Apps";
+"ton_connect.list.disconnect_app" = "Disconnect App";
+"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.disconnect_app.disconnect" = "Bağlantıyı Kes";
+"ton_connect.connect.url" = "URL";
+"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.warning" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
+"ton_connect.connect.connect" = "Bağlan";
+"ton_connect.connect.reject" = "Reddet";
+
 // App Status
 
 "app_status.title" = "Uygulama Durumu";
@@ -1814,7 +1834,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "status_info.processing.content" = "İşlem blok zincirine dahil edildi ama kalıcı bir sonuca ulaşmadı. Bu noktada, küçük ödemeler için işlemin tamamlandığını düşünebilirsiniz. Daha büyük ödemeler için ise, işlem durumu tamamlandı olarak değişene kadar beklemeniz önerilir.";
 "status_info.completed.title" = "Tamamlandı";
 "status_info.confirmed.content" = "İşlem tamamlandı ve bunun kalıcı ve tersine çevrilemez olduğu kabul edilir.";
-"status_info.failed.title" = "Başarısız";
+"status_info.failed.title" = "Failed";
 "status_info.failed.content" = "İşlem gerçekleşmedi ve herhangi bir değer transferi yapılmadı. Başarısız olma nedenine bağlı olarak, bazı başarısız işlemler, işlem ücreti tüketebilir. Başka bir işlemle değiştirilen veya iptal edilen işlemler, işlem ücretini tüketmez ve başarısız olarak görüntülenir. %@ uygulaması başarısız işlemlerin nedenini gösteremez, ancak kullanıcılar bunu örneğin etherscan.io gibi herkese açık bir blok gezgininde kendileri arayabilirler.";
 
 // Onboarding
@@ -2058,7 +2078,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Activate Subscription
 
 "activate_subscription.title" = "Aktiveet";
-"activate_subscription.wallet" = "Cüzdanı";
+"activate_subscription.wallet" = "Wallet";
 "activate_subscription.address" = "Adres";
 "activate_subscription.message" = "İmza için mesaj";
 "activate_subscription.sign" = "kaydol";

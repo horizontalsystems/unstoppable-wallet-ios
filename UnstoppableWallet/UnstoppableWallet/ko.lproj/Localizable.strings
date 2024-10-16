@@ -450,8 +450,10 @@
 
 "send.confirmation.title" = "확인";
 "send.confirmation.you_send" = "보냅니다";
+"send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "전송";
 "send.confirmation.to" = "에게";
+"send.confirmation.from" = "From";
 "send.confirmation.own" = "아군";
 "send.confirmation.contact_name" = "담당자 이름";
 "send.confirmation.domain" = "도메인";
@@ -465,6 +467,10 @@
 "send.confirmation.replace_by_fee" = "수수료로 대체";
 "send.confirmation.replaced_transactions" = "대체된 거래";
 "send.confirmation.input" = "입력";
+"send.confirmation.comment" = "Comment";
+"send.confirmation.action" = "Action";
+"send.confirmation.status" = "상태";
+"send.confirmation.status.failed" = "Failed";
 
 "send.confirmation.sync_failed" = "동기화 실패";
 "send.confirmation.invalid_data" = "유효하지 않은 데이터";
@@ -1215,7 +1221,7 @@
 "transactions.pending" = "보류 중";
 "transactions.processing" = "처리 중";
 "transactions.completed" = "완료됨";
-"transactions.failed" = "실패";
+"transactions.failed" = "Failed";
 
 "transactions.receive" = "수령";
 "transactions.send" = "전송됨";
@@ -1257,8 +1263,8 @@
 "tx_info.title_approval" = "스왑 승인";
 "tx_info.status.pending" = "보류 중";
 "tx_info.status.completed" = "완료됨";
-"tx_info.status.failed" = "실패";
-"tx_info.from_hash" = "로 부터";
+"tx_info.status.failed" = "Failed";
+"tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "거래 ID";
 "tx_info.to_hash" = "에게";
 "tx_info.spender" = "스펜더";
@@ -1790,6 +1796,20 @@
 "wallet_connect.paired_dapps.disconnect_all" = "모두 삭제";
 "wallet_connect.pending_requests.nonactive_footer" = "요청을 열려면 원하는 지갑을 활성화해야 합니다";
 
+// Ton Connect
+
+"ton_connect.list.new_connection" = "새로운 연결";
+"ton_connect.list.no_connected_apps" = "No Connected Apps";
+"ton_connect.list.disconnect_app" = "Disconnect App";
+"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.disconnect_app.disconnect" = "연결 해제";
+"ton_connect.connect.url" = "URL 주소";
+"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.warning" = "승인을 눌러 이 앱이 귀하의 공공 주소를 볼 수 있도록 허용하십시오. 이것은 잠재적인 피싱 위험으로부터 데이터를 보호하기 위한 중요한 보안 단계 입니다.";
+"ton_connect.connect.connect" = "연결";
+"ton_connect.connect.reject" = "거절";
+
 // App Status
 
 "app_status.title" = "앱 상태";
@@ -1811,7 +1831,7 @@
 "status_info.processing.content" = "거래는 이미 블록체인에 포함되었지만 영구적인 완결성에 도달하지 않았습니다. 이 시점에서 소액 결제를 위해 완료된 거래로 간주하는 것이 안전합니다. 더 큰 지불의 경우 거래 상태가 완료로 변경될 때까지 기다리는 것이 좋습니다.";
 "status_info.completed.title" = "완료됨";
 "status_info.confirmed.content" = "거래가 완료되고 영구적이고 되돌릴 수 없는 것으로 간주됩니다.";
-"status_info.failed.title" = "실패";
+"status_info.failed.title" = "Failed";
 "status_info.failed.content" = "거래가 처리되지 않았으며 가치 이전이 발생하지 않았습니다. 실패 원인에 따라 일부 실패한 거래는 거래 수수료를 소모할 수 있습니다. 다른 거래로 대체되거나 취소된 거래는 거래 수수료를 소비하지 않으며 실패한 것으로 표시됩니다. %@ 앱은 거래 실패의 원인을 표시할 수 없지만 사용자는 etherscan.io와 같은 공개 블록 탐색기에서 직접 찾을 수 있습니다.";
 
 // Onboarding
@@ -2051,7 +2071,7 @@
 // Activate Subscription
 
 "activate_subscription.title" = "활성화";
-"activate_subscription.wallet" = "지갑";
+"activate_subscription.wallet" = "Wallet";
 "activate_subscription.address" = "주소";
 "activate_subscription.message" = "서명할 메시지";
 "activate_subscription.sign" = "가입";
