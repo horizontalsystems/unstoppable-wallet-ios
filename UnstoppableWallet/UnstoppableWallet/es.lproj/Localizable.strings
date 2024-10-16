@@ -452,8 +452,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "send.confirmation.title" = "Confirmar";
 "send.confirmation.you_send" = "Usted envía";
+"send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "Transferencia";
 "send.confirmation.to" = "Para";
+"send.confirmation.from" = "From";
 "send.confirmation.own" = "Propio";
 "send.confirmation.contact_name" = "Nombre de contacto";
 "send.confirmation.domain" = "Dominio";
@@ -467,6 +469,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
 "send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
 "send.confirmation.input" = "Entrada";
+"send.confirmation.comment" = "Comment";
+"send.confirmation.action" = "Action";
+"send.confirmation.status" = "Estado";
+"send.confirmation.status.failed" = "Failed";
 
 "send.confirmation.sync_failed" = "Error de sincronización";
 "send.confirmation.invalid_data" = "Datos no válidos";
@@ -1216,7 +1222,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.pending" = "Pendiente";
 "transactions.processing" = "Procesando";
 "transactions.completed" = "Finalizado";
-"transactions.failed" = "Falla";
+"transactions.failed" = "Failed";
 
 "transactions.receive" = "Recibir";
 "transactions.send" = "Enviado";
@@ -1258,8 +1264,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.title_approval" = "Aprobación de intercambio";
 "tx_info.status.pending" = "Pendiente";
 "tx_info.status.completed" = "Finalizado";
-"tx_info.status.failed" = "Falla";
-"tx_info.from_hash" = "Desde ";
+"tx_info.status.failed" = "Failed";
+"tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
 "tx_info.spender" = "Gastador";
@@ -1790,6 +1796,20 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.paired_dapps.disconnect_all" = "Borrar todo";
 "wallet_connect.pending_requests.nonactive_footer" = "Para abrir una solicitud debe activar la cartera deseada";
 
+// Ton Connect
+
+"ton_connect.list.new_connection" = "Nueva Conexión";
+"ton_connect.list.no_connected_apps" = "No Connected Apps";
+"ton_connect.list.disconnect_app" = "Disconnect App";
+"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.disconnect_app.disconnect" = "Desconectar";
+"ton_connect.connect.url" = "URL";
+"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.warning" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
+"ton_connect.connect.connect" = "Conectar";
+"ton_connect.connect.reject" = "Rechazar";
+
 // App Status
 
 "app_status.title" = "Estado de la aplicación";
@@ -1811,7 +1831,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "status_info.processing.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
 "status_info.completed.title" = "Finalizado";
 "status_info.confirmed.content" = "La transacción se completó y se considera permanente e irreversible.";
-"status_info.failed.title" = "Falla";
+"status_info.failed.title" = "Failed";
 "status_info.failed.content" = "La transacción no se procesó y no hubo transferencia de valor. Dependiendo de la razón del fracaso, algunas transacciones fallidas pueden consumir comisiones de transacción. Las transacciones que fueron reemplazadas o canceladas por otra transacción no consumen comisiones de transacción y también aparecerán como fallidas. La aplicación %@ no puede mostrar la razón de las transacciones fallidas, pero los usuarios son capaces de buscarlo ellos mismos en un explorador público de bloques i. e. etherscan.io.";
 
 // Onboarding
@@ -2051,7 +2071,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Activate Subscription
 
 "activate_subscription.title" = "Activar";
-"activate_subscription.wallet" = "Cartera";
+"activate_subscription.wallet" = "Wallet";
 "activate_subscription.address" = "Dirección";
 "activate_subscription.message" = "Mensaje a firmar";
 "activate_subscription.sign" = "Firma";
