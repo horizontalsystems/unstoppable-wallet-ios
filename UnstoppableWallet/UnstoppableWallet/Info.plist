@@ -2,12 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ArbiscanApiKey</key>
-	<string>${arbiscan_api_key}</string>
-	<key>BasescanApiKey</key>
-	<string>${basescan_api_key}</string>
-	<key>BscscanApiKey</key>
-	<string>${bscscan_api_key}</string>
+	<key>ArbiscanApiKeys</key>
+	<string>${arbiscan_api_keys}</string>
+	<key>BasescanApiKeys</key>
+	<string>${basescan_api_keys}</string>
+	<key>BscscanApiKeys</key>
+	<string>${bscscan_api_keys}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -57,12 +57,12 @@
 	<string>$(defiyield_api_key)</string>
 	<key>DonateEnabled</key>
 	<string>${donate_enabled}</string>
-	<key>EtherscanApiKey</key>
-	<string>${etherscan_api_key}</string>
-	<key>FtmscanApiKey</key>
-	<string>${ftmscan_api_key}</string>
-	<key>GnosisscanApiKey</key>
-	<string>${gnosisscan_api_key}</string>
+	<key>EtherscanApiKeys</key>
+	<string>${etherscan_api_keys}</string>
+	<key>FtmscanApiKeys</key>
+	<string>${ftmscan_api_keys}</string>
+	<key>GnosisscanApiKeys</key>
+	<string>${gnosisscan_api_keys}</string>
 	<key>HsProviderApiKey</key>
 	<string>$(hs_provider_api_key)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -121,10 +121,10 @@
 	<string>${one_inch_commission_address}</string>
 	<key>OpenSeaApiKey</key>
 	<string>${open_sea_api_key}</string>
-	<key>OptimismEtherscanApiKey</key>
-	<string>${optimism_etherscan_api_key}</string>
-	<key>PolygonscanApiKey</key>
-	<string>${polygonscan_api_key}</string>
+	<key>OptimismEtherscanApiKeys</key>
+	<string>${optimism_etherscan_api_keys}</string>
+	<key>PolygonscanApiKeys</key>
+	<string>${polygonscan_api_keys}</string>
 	<key>PrivateCloudContainerId</key>
 	<string>${private_cloud_container_id}</string>
 	<key>SharedCloudContainerId</key>
@@ -133,8 +133,8 @@
 	<string>${ShowBuildNumber}</string>
 	<key>ShowTestNetSwitcher</key>
 	<string>${ShowTestNetSwitcher}</string>
-	<key>SnowtraceApiKey</key>
-	<string>${snowtrace_api_key}</string>
+	<key>SnowtraceApiKeys</key>
+	<string>${snowtrace_api_keys}</string>
 	<key>SwapEnabled</key>
 	<string>${swap_enabled}</string>
 	<key>TronGridApiKey</key>

@@ -65,40 +65,40 @@ enum AppConfig {
         Bundle.main.object(forInfoDictionaryKey: "OfficeMode") as? String == "true"
     }
 
-    static var etherscanKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
+    static var etherscanKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
-    static var arbiscanKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "ArbiscanApiKey") as? String) ?? ""
+    static var arbiscanKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "ArbiscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
-    static var gnosisscanKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "GnosisscanApiKey") as? String) ?? ""
+    static var gnosisscanKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "GnosisscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
-    static var ftmscanKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "FtmscanApiKey") as? String) ?? ""
+    static var ftmscanKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "FtmscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
-    static var optimismEtherscanKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "OptimismEtherscanApiKey") as? String) ?? ""
+    static var optimismEtherscanKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "OptimismEtherscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
-    static var basescanKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "BasescanApiKey") as? String) ?? ""
+    static var basescanKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "BasescanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
-    static var bscscanKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "BscscanApiKey") as? String) ?? ""
+    static var bscscanKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "BscscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
-    static var polygonscanKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "PolygonscanApiKey") as? String) ?? ""
+    static var polygonscanKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "PolygonscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
-    static var snowtraceKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "SnowtraceApiKey") as? String) ?? ""
+    static var snowtraceKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "SnowtraceApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
     static var twitterBearerToken: String? {
