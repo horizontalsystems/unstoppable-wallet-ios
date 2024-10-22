@@ -20,15 +20,15 @@ class EvmSyncSourceManager {
 
     private func defaultTransactionSource(blockchainType: BlockchainType) -> EvmKit.TransactionSource {
         switch blockchainType {
-        case .ethereum: return .ethereumEtherscan(apiKey: AppConfig.etherscanKey)
-        case .binanceSmartChain: return .bscscan(apiKey: AppConfig.bscscanKey)
-        case .polygon: return .polygonscan(apiKey: AppConfig.polygonscanKey)
-        case .avalanche: return .snowtrace(apiKey: AppConfig.snowtraceKey)
-        case .optimism: return .optimisticEtherscan(apiKey: AppConfig.optimismEtherscanKey)
-        case .arbitrumOne: return .arbiscan(apiKey: AppConfig.arbiscanKey)
-        case .gnosis: return .gnosis(apiKey: AppConfig.gnosisscanKey)
-        case .fantom: return .fantom(apiKey: AppConfig.ftmscanKey)
-        case .base: return .basescan(apiKey: AppConfig.basescanKey)
+        case .ethereum: return .ethereumEtherscan(apiKeys: AppConfig.etherscanKeys)
+        case .binanceSmartChain: return .bscscan(apiKeys: AppConfig.bscscanKeys)
+        case .polygon: return .polygonscan(apiKeys: AppConfig.polygonscanKeys)
+        case .avalanche: return .snowtrace(apiKeys: AppConfig.snowtraceKeys)
+        case .optimism: return .optimisticEtherscan(apiKeys: AppConfig.optimismEtherscanKeys)
+        case .arbitrumOne: return .arbiscan(apiKeys: AppConfig.arbiscanKeys)
+        case .gnosis: return .gnosis(apiKeys: AppConfig.gnosisscanKeys)
+        case .fantom: return .fantom(apiKeys: AppConfig.ftmscanKeys)
+        case .base: return .basescan(apiKeys: AppConfig.basescanKeys)
         default: fatalError("Non-supported EVM blockchain")
         }
     }
@@ -53,7 +53,7 @@ extension EvmSyncSourceManager {
                         rpcSource: .http(urls: [URL(string: "\(AppConfig.marketApiUrl)/v1/ethereum-rpc/sepolia")!], auth: nil),
                         transactionSource: EvmKit.TransactionSource(
                             name: "sepolia.etherscan.io",
-                            type: .etherscan(apiBaseUrl: "https://api-sepolia.etherscan.io", txBaseUrl: "https://sepiloa.etherscan.io", apiKey: AppConfig.etherscanKey)
+                            type: .etherscan(apiBaseUrl: "https://api-sepolia.etherscan.io", txBaseUrl: "https://sepiloa.etherscan.io", apiKeys: AppConfig.etherscanKeys)
                         )
                     ),
                 ]
@@ -79,7 +79,7 @@ extension EvmSyncSourceManager {
                         rpcSource: .http(urls: [URL(string: "https://data-seed-prebsc-1-s1.binance.org:8545")!], auth: nil),
                         transactionSource: EvmKit.TransactionSource(
                             name: "testnet.bscscan.com",
-                            type: .etherscan(apiBaseUrl: "https://api-testnet.bscscan.com", txBaseUrl: "https://testnet.bscscan.com", apiKey: AppConfig.bscscanKey)
+                            type: .etherscan(apiBaseUrl: "https://api-testnet.bscscan.com", txBaseUrl: "https://testnet.bscscan.com", apiKeys: AppConfig.bscscanKeys)
                         )
                     ),
                 ]
