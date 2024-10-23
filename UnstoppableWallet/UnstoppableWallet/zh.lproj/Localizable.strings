@@ -1721,10 +1721,9 @@
 "intro.stay_private.title" = "保持私密";
 "intro.stay_private.description" = "不要向外界泄漏您的私密和财务数据";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "学院";
-"guides.title" = "学院";
+"education.title" = "Education";
 
 // Add Token
 
