@@ -1723,10 +1723,9 @@
 "intro.stay_private.title" = "Сохраняйте конфиденциальность";
 "intro.stay_private.description" = "Не раскрывайте свои личные и финансовые данные миру";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Академия";
-"guides.title" = "Академия";
+"education.title" = "Education";
 
 // Add Token
 
