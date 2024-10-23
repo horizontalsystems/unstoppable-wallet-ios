@@ -364,15 +364,15 @@ class MainSettingsViewController: ThemeViewController {
                 }
             ),
             tableView.universalRow48(
-                id: "academy",
+                id: "education",
                 image: .local(UIImage(named: "academy_1_24")),
-                title: .body("guides.title".localized),
+                title: .body("education.title".localized),
                 accessoryType: .disclosure,
                 isLast: true,
                 action: { [weak self] in
-                    self?.navigationController?.pushViewController(GuidesModule.instance(), animated: true)
+                    self?.navigationController?.pushViewController(EducationView().toViewController(title: "education.title".localized), animated: true)
 
-                    stat(page: .settings, event: .open(page: .academy))
+                    stat(page: .settings, event: .open(page: .education))
                 }
             ),
         ]

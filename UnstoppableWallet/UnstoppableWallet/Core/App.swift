@@ -51,7 +51,6 @@ class App {
 
     let currencyManager: CurrencyManager
     let networkManager: NetworkManager
-    let guidesManager: GuidesManager
     let termsManager: TermsManager
     let watchlistManager: WatchlistManager
     let contactManager: ContactBookManager
@@ -162,7 +161,6 @@ class App {
 
         currencyManager = CurrencyManager(storage: sharedLocalStorage)
         networkManager = NetworkManager(logger: logger)
-        guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(userDefaultsStorage: userDefaultsStorage)
 
         watchlistManager = WatchlistManager(storage: sharedLocalStorage, priceChangeModeManager: priceChangeModeManager)

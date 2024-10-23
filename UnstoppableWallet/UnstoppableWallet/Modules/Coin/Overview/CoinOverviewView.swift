@@ -305,9 +305,8 @@ struct CoinOverviewView: View {
             if let guideUrl {
                 NavigationRow {
                     ThemeNavigationView {
-                        MarkdownView(url: guideUrl)
+                        MarkdownView(url: guideUrl).ignoresSafeArea()
                     }
-                    .ignoresSafeArea()
                     .onFirstAppear {
                         stat(page: .coinOverview, event: .open(page: .guide))
                     }

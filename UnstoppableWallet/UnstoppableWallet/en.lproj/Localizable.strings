@@ -1719,10 +1719,9 @@
 "intro.stay_private.title" = "Stay Private";
 "intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Academy";
-"guides.title" = "Academy";
+"education.title" = "Education";
 
 // Add Token
 
