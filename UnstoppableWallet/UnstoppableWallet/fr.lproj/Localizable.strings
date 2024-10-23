@@ -1721,10 +1721,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "intro.stay_private.title" = "Maintenez la confidentialité";
 "intro.stay_private.description" = "Ne divulguez pas vos données privées et financières au monde entier";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Académie";
-"guides.title" = "Académie";
+"education.title" = "Education";
 
 // Add Token
 
