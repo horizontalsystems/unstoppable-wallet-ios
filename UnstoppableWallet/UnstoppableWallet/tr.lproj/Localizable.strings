@@ -1725,10 +1725,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "intro.stay_private.title" = "Gizliliğinizi Koruyun";
 "intro.stay_private.description" = "Özel ve finansal bilgilerinizi dünyaya açmayın";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Akademi";
-"guides.title" = "Akademi";
+"education.title" = "Education";
 
 // Add Token
 
