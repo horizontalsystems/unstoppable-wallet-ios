@@ -1722,10 +1722,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "intro.stay_private.title" = "Manténgase en Privado";
 "intro.stay_private.description" = "No filtre sus datos privados y financieros al resto del mundo";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Academia";
-"guides.title" = "Academia";
+"education.title" = "Education";
 
 // Add Token
 
