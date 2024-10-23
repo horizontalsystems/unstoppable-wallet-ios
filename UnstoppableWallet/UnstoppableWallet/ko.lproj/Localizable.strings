@@ -1722,10 +1722,9 @@
 "intro.stay_private.title" = "개인 정보 유지";
 "intro.stay_private.description" = "개인 및 금융 데이터를 세상에 유출하지 마십시오.";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "아카데미";
-"guides.title" = "아카데미";
+"education.title" = "Education";
 
 // Add Token
 
