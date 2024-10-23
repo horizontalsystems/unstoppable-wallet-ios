@@ -1721,10 +1721,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "intro.stay_private.title" = "Mantenha sua Privacidade";
 "intro.stay_private.description" = "Não vaze seus dados privados e financeiros para o mundo";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Treinamento";
-"guides.title" = "Treinamento";
+"education.title" = "Education";
 
 // Add Token
 
