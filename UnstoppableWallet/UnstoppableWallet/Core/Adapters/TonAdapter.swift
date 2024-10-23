@@ -63,7 +63,11 @@ extension TonAdapter: IAdapter {
     }
 
     var statusInfo: [(String, Any)] {
-        []
+        [
+            ("Sync State", "\(tonKit.syncState)"),
+            ("Jetton Sync State", "\(tonKit.jettonSyncState)"),
+            ("Event Sync State", "\(tonKit.eventSyncState)"),
+        ]
     }
 
     var debugInfo: String {
