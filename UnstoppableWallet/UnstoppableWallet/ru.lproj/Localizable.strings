@@ -710,9 +710,8 @@
 
 "market.global.market_cap" = "Общая капитализация";
 "market.global.volume" = "24ч объем";
-"market.global.btc_dominance" = "Доминирование BTC";
-"market.global.etf_inflow" = "ETF приток";
-"market.global.tvl_in_defi" = "TVL в DeFi";
+"market.global.tvl" = "TVL";
+"market.global.etf" = "ETF";
 
 "market.tab.news" = "Новости";
 "market.tab.coins" = "Монеты";
@@ -1723,10 +1722,9 @@
 "intro.stay_private.title" = "Сохраняйте конфиденциальность";
 "intro.stay_private.description" = "Не раскрывайте свои личные и финансовые данные миру";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Академия";
-"guides.title" = "Академия";
+"education.title" = "Education";
 
 // Add Token
 

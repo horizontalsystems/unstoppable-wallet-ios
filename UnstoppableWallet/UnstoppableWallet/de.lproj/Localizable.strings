@@ -708,9 +708,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "market.global.market_cap" = "Total Cap";
 "market.global.volume" = "24 Std. Vol.";
-"market.global.btc_dominance" = "BTC-Dominanz";
-"market.global.etf_inflow" = "ETF Inflow";
-"market.global.tvl_in_defi" = "TVL in DeFi";
+"market.global.tvl" = "TVL";
+"market.global.etf" = "ETF";
 
 "market.tab.news" = "Nachrichten";
 "market.tab.coins" = "Münzen";
@@ -1721,10 +1720,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "intro.stay_private.title" = "Privat bleiben";
 "intro.stay_private.description" = "Geben Sie Ihre privaten und finanziellen Daten nicht an die Welt weiter";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Akademie";
-"guides.title" = "Akademie";
+"education.title" = "Education";
 
 // Add Token
 

@@ -708,9 +708,8 @@
 
 "market.global.market_cap" = "总市值";
 "market.global.volume" = "24小时交易量";
-"market.global.btc_dominance" = "BTC市场占比";
-"market.global.etf_inflow" = "ETF 输入";
-"market.global.tvl_in_defi" = "DeFi中的TVL";
+"market.global.tvl" = "TVL";
+"market.global.etf" = "ETF";
 
 "market.tab.news" = "发现";
 "market.tab.coins" = "币";
@@ -1721,10 +1720,9 @@
 "intro.stay_private.title" = "保持私密";
 "intro.stay_private.description" = "不要向外界泄漏您的私密和财务数据";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "学院";
-"guides.title" = "学院";
+"education.title" = "Education";
 
 // Add Token
 

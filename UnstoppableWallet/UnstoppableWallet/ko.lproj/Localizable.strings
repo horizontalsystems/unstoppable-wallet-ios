@@ -706,9 +706,8 @@
 
 "market.global.market_cap" = "시가 총액";
 "market.global.volume" = "24h 거래량";
-"market.global.btc_dominance" = "BTC 지배력";
-"market.global.etf_inflow" = "ETF 유입액";
-"market.global.tvl_in_defi" = "디파이(DeFi)에서의 총 예치 가치";
+"market.global.tvl" = "TVL";
+"market.global.etf" = "ETF";
 
 "market.tab.news" = "뉴스";
 "market.tab.coins" = "코인";
@@ -1722,10 +1721,9 @@
 "intro.stay_private.title" = "개인 정보 유지";
 "intro.stay_private.description" = "개인 및 금융 데이터를 세상에 유출하지 마십시오.";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "아카데미";
-"guides.title" = "아카데미";
+"education.title" = "Education";
 
 // Add Token
 

@@ -708,9 +708,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.global.market_cap" = "Toplam Piyasa Değeri";
 "market.global.volume" = "24s Hacim";
-"market.global.btc_dominance" = "BTC Hakimiyeti";
-"market.global.etf_inflow" = "ETF Girişi";
-"market.global.tvl_in_defi" = "DeFi'de TVL";
+"market.global.tvl" = "TVL";
+"market.global.etf" = "ETF";
 
 "market.tab.news" = "Haberler";
 "market.tab.coins" = "Coin'ler";
@@ -1725,10 +1724,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "intro.stay_private.title" = "Gizliliğinizi Koruyun";
 "intro.stay_private.description" = "Özel ve finansal bilgilerinizi dünyaya açmayın";
 
-// Guides
+// Education
 
-"guides.tab_bar_item" = "Akademi";
-"guides.title" = "Akademi";
+"education.title" = "Education";
 
 // Add Token
 
