@@ -706,9 +706,8 @@
 
 "market.global.market_cap" = "Total Cap";
 "market.global.volume" = "24h Vol.";
-"market.global.btc_dominance" = "BTC Dominance";
-"market.global.etf_inflow" = "ETF Inflow";
-"market.global.tvl_in_defi" = "TVL in DeFi";
+"market.global.tvl" = "TVL";
+"market.global.etf" = "ETF";
 
 "market.tab.news" = "News";
 "market.tab.coins" = "Coins";
