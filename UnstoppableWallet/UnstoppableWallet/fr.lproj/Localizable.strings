@@ -708,9 +708,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "market.global.market_cap" = "Cap Totale";
 "market.global.volume" = "Vol. 24h";
-"market.global.btc_dominance" = "Dominance du BTC";
-"market.global.etf_inflow" = "Entrées d'ETF";
-"market.global.tvl_in_defi" = "TVL en DeFi";
+"market.global.tvl" = "TVL";
+"market.global.etf" = "ETF";
 
 "market.tab.news" = "Infos";
 "market.tab.coins" = "Pièces";
