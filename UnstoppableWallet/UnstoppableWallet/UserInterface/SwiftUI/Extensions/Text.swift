@@ -34,6 +34,10 @@ extension View {
         foregroundColor(color).font(.themeMicro)
     }
 
+    func textMicroSB(color: Color = .themeGray) -> some View {
+        foregroundColor(color).font(.themeMicroSB)
+    }
+
     func themeBody(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
         textBody(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }

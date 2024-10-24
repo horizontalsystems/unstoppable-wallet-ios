@@ -11,27 +11,49 @@ struct MarketGlobalView: View {
     @State private var tvlPresented = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            if let marketGlobal = viewModel.marketGlobal {
-                MarqueeView(targetVelocity: 30) {
-                    content(marketGlobal: marketGlobal, redacted: marketGlobal)
+        ZStack {
+            HStack(spacing: 0) {
+                itemView(
+                    title: "market.global.market_cap".localized,
+                    amount: viewModel.marketGlobal?.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
+                    diff: viewModel.marketGlobal?.marketCapChange.map { .percent(value: $0) },
+                    redacted: viewModel.marketGlobal
+                ) {
+                    marketCapPresented = true
                 }
-            } else {
-                ZStack {
-                    HStack(spacing: .margin8) {
-                        content(marketGlobal: nil, redacted: nil)
-                    }
-                    .padding(.leading, .margin8)
-                    .fixedSize()
+                divider()
+                itemView(
+                    title: "market.global.volume".localized,
+                    amount: viewModel.marketGlobal?.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
+                    diff: viewModel.marketGlobal?.volumeChange.map { .percent(value: $0) },
+                    redacted: viewModel.marketGlobal
+                ) {
+                    volumePresented = true
                 }
-                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                divider()
+                itemView(
+                    title: "market.global.tvl".localized,
+                    amount: viewModel.marketGlobal?.tvl.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
+                    diff: viewModel.marketGlobal?.tvlChange.map { .percent(value: $0) },
+                    redacted: viewModel.marketGlobal
+                ) {
+                    tvlPresented = true
+                }
+                divider()
+                itemView(
+                    title: "market.global.etf".localized,
+                    amount: viewModel.marketGlobal?.etfTotalInflow.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
+                    diff: viewModel.marketGlobal?.etfDailyInflow.map { .change(value: $0, currency: viewModel.currency) },
+                    redacted: viewModel.marketGlobal
+                ) {
+                    etfPresented = true
+                }
             }
-
-            Rectangle()
-                .fill(Color.themeSteel10)
-                .frame(maxWidth: .infinity)
-                .frame(height: 1)
+            .fixedSize(horizontal: false, vertical: true)
+            .modifier(ThemeListStyleModifier())
         }
+        .padding(.horizontal, .margin16)
+        .padding(.vertical, .margin8)
         .animation(.default, value: viewModel.marketGlobal == nil)
         .sheet(isPresented: $tvlPresented) {
             ThemeNavigationView { MarketTvlView() }
@@ -51,66 +73,31 @@ struct MarketGlobalView: View {
         }
     }
 
-    @ViewBuilder private func content(marketGlobal: MarketGlobal?, redacted: Any?) -> some View {
-        diffView(
-            title: "market.global.market_cap".localized,
-            amount: marketGlobal?.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
-            diff: marketGlobal?.marketCapChange.map { .percent(value: $0) },
-            redacted: redacted
-        ) {
-            marketCapPresented = true
-        }
-
-        diffView(
-            title: "market.global.volume".localized,
-            amount: marketGlobal?.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
-            diff: marketGlobal?.volumeChange.map { .percent(value: $0) },
-            redacted: redacted
-        ) {
-            volumePresented = true
-        }
-
-        diffView(
-            title: "market.global.btc_dominance".localized,
-            amount: marketGlobal?.btcDominance.flatMap { ValueFormatter.instance.format(percentValue: $0, signType: .never) },
-            diff: marketGlobal?.btcDominanceChange.map { .percent(value: $0) },
-            redacted: redacted
-        ) {
-            marketCapPresented = true
-        }
-
-        diffView(
-            title: "market.global.etf_inflow".localized,
-            amount: marketGlobal?.etfTotalInflow.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
-            diff: marketGlobal?.etfDailyInflow.map { .change(value: $0, currency: viewModel.currency) },
-            redacted: redacted
-        ) {
-            etfPresented = true
-        }
-
-        diffView(
-            title: "market.global.tvl_in_defi".localized,
-            amount: marketGlobal?.tvl.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
-            diff: marketGlobal?.tvlChange.map { .percent(value: $0) },
-            redacted: redacted
-        ) {
-            tvlPresented = true
-        }
-    }
-
-    @ViewBuilder private func diffView(title: String, amount: String?, diff: DiffText.Diff?, redacted: Any?, onTap: @escaping () -> Void) -> some View {
-        HStack(spacing: .margin4) {
-            Text(title).textCaption()
+    @ViewBuilder private func itemView(title: String, amount: String?, diff: DiffText.Diff?, redacted: Any?, onTap: @escaping () -> Void) -> some View {
+        VStack(alignment: .leading, spacing: .margin4) {
+            Text(title)
+                .textMicroSB()
+                .lineLimit(1)
+                .truncationMode(.middle)
 
             Text(amount ?? "----")
-                .textCaption(color: .themeBran)
+                .textCaptionSB(color: .themeBran)
+                .lineLimit(1)
+                .truncationMode(.middle)
                 .redacted(value: redacted)
 
             DiffText(diff, font: .themeCaption)
                 .redacted(value: redacted)
         }
-        .padding(.horizontal, .margin8)
-        .padding(.vertical, .margin16)
+        .padding(.margin12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
         .onTapGesture(perform: onTap)
+    }
+
+    @ViewBuilder private func divider() -> some View {
+        Rectangle()
+            .fill(Color.themeSteel20)
+            .frame(width: .heightOneDp)
     }
 }
