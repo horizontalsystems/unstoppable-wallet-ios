@@ -706,9 +706,8 @@
 
 "market.global.market_cap" = "시가 총액";
 "market.global.volume" = "24h 거래량";
-"market.global.btc_dominance" = "BTC 지배력";
-"market.global.etf_inflow" = "ETF 유입액";
-"market.global.tvl_in_defi" = "디파이(DeFi)에서의 총 예치 가치";
+"market.global.tvl" = "TVL";
+"market.global.etf" = "ETF";
 
 "market.tab.news" = "뉴스";
 "market.tab.coins" = "코인";
