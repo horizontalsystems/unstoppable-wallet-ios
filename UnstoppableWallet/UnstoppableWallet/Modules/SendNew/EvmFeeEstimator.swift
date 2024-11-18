@@ -5,14 +5,19 @@ import MarketKit
 struct EvmFeeEstimator {
     private static let surchargePercent: Double = 10
 
-    private func _estimateFee(evmKitWrapper: EvmKitWrapper, transactionData: TransactionData, gasPrice: GasPrice, predefinedGasLimit: Int? = nil) async throws -> EvmFeeData {
+    func estimateFee(evmKitWrapper: EvmKitWrapper, transactionData: TransactionData, gasPriceData: GasPriceData, predefinedGasLimit: Int? = nil) async throws -> EvmFeeData {
         let evmKit = evmKitWrapper.evmKit
         let gasLimit: Int
+        let gasPrice = gasPriceData.userDefined
 
         if let predefinedGasLimit {
             gasLimit = predefinedGasLimit
         } else {
-            gasLimit = try await evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
+            do {
+                gasLimit = try await evmKit.fetchEstimateGas(transactionData: transactionData, gasPrice: gasPrice)
+            } catch {
+                gasLimit = try await evmKit.fetchEstimateGas(transactionData: transactionData)
+            }
         }
 
         let txAmount = transactionData.value
@@ -47,17 +52,5 @@ struct EvmFeeEstimator {
         }
 
         return .init(gasLimit: gasLimit, surchargedGasLimit: surchargedGasLimit, l1Fee: l1Fee)
-    }
-
-    func estimateFee(evmKitWrapper: EvmKitWrapper, transactionData: TransactionData, gasPriceData: GasPriceData, predefinedGasLimit _: Int? = nil) async throws -> EvmFeeData {
-        do {
-            return try await _estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPriceData.userDefined)
-        } catch {
-            if case let AppError.ethereum(reason: ethereumError) = error.convertedError, case .lowerThanBaseGasLimit = ethereumError {
-                return try await _estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPrice: gasPriceData.recommended)
-            } else {
-                throw error
-            }
-        }
     }
 }

@@ -343,9 +343,10 @@ class App {
     }
 
     func newSendEnabled(wallet: Wallet) -> Bool {
-        switch wallet.token.blockchainType {
-        case .ton: return true
-        default: return localStorage.newSendEnabled
-        }
+        true
+        // switch wallet.token.blockchainType {
+        // case .ton: return true
+        // default: return localStorage.newSendEnabled
+        // }
     }
 }
