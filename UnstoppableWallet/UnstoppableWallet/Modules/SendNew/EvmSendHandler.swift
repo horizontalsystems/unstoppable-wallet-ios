@@ -38,8 +38,19 @@ extension EvmSendHandler: ISendHandler {
 
                     evmFeeData = stubFeeData
                     transactionData = TransactionData(to: transactionData.to, value: max(0, transactionData.value - totalFee), input: transactionData.input)
+
+                    if transactionData.value == 0 {
+                        throw AppError.ethereum(reason: .insufficientBalanceWithFee)
+                    }
                 } else {
-                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
+                    let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
+                    let totalFee = _evmFeeData.totalFee(gasPrice: gasPriceData.userDefined)
+
+                    evmFeeData = _evmFeeData
+
+                    if evmBalance < totalFee {
+                        throw AppError.ethereum(reason: .insufficientBalanceWithFee)
+                    }
                 }
             } catch {
                 transactionError = error
