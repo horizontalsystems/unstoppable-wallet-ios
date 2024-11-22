@@ -12359,7 +12359,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.41;
+				MARKETING_VERSION = 0.42;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = true;
@@ -12431,7 +12431,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.41;
+				MARKETING_VERSION = 0.42;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = false;
 				SDKROOT = iphoneos;
