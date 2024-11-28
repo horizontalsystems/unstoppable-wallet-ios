@@ -69,6 +69,7 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>googlechrome</string>
 		<string>tg</string>
 		<string>twitter</string>
 		<string>cydia</string>

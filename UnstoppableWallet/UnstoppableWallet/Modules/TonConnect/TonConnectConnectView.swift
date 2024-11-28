@@ -7,8 +7,8 @@ struct TonConnectConnectView: View {
 
     @State private var selectAccountPresented = false
 
-    init(config: TonConnectConfig) {
-        _viewModel = StateObject(wrappedValue: TonConnectConnectViewModel(config: config))
+    init(config: TonConnectConfig, returnDeepLink: String? = nil) {
+        _viewModel = StateObject(wrappedValue: TonConnectConnectViewModel(config: config, returnDeepLink: returnDeepLink))
     }
 
     var body: some View {
@@ -91,6 +91,10 @@ struct TonConnectConnectView: View {
             }
             .onReceive(viewModel.finishPublisher) {
                 presentationMode.wrappedValue.dismiss()
+
+                if let deeplink = viewModel.returnDeepLink, let url = URL(string: deeplink), UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url)
+                }
             }
             .navigationTitle("TON Connect")
             .navigationBarTitleDisplayMode(.inline)

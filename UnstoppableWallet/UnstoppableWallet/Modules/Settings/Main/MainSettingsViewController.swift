@@ -262,15 +262,15 @@ class MainSettingsViewController: ThemeViewController {
                     self?.viewModel.onTapWalletConnect()
                 }
             ),
-            // StaticRow(
-            //     cell: tonConnectCell,
-            //     id: "ton-connect",
-            //     height: .heightCell48,
-            //     autoDeselect: true,
-            //     action: { [weak self] in
-            //         self?.onTapTonConnect()
-            //     }
-            // ),
+             StaticRow(
+                 cell: tonConnectCell,
+                 id: "ton-connect",
+                 height: .heightCell48,
+                 autoDeselect: true,
+                 action: { [weak self] in
+                     self?.onTapTonConnect()
+                 }
+             ),
             tableView.universalRow48(
                 id: "backup-manager",
                 image: .local(UIImage(named: "icloud_24")),

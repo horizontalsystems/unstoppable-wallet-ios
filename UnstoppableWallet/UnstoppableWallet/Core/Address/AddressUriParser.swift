@@ -72,7 +72,7 @@ class AddressUriParser {
         }
 
         // try to parse ton deeplink
-        if scheme == DeepLinkManager.tonDeepLinkScheme, let tonScheme = BlockchainType.ton.uriScheme {
+        if scheme == DeepLinkManager.deepLinkScheme, let tonScheme = BlockchainType.ton.uriScheme {
             var uri = AddressUri(scheme: tonScheme)
             uri.address = components.path.stripping(prefix: "/")
 

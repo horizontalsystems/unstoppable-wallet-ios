@@ -24,14 +24,25 @@ class TonConnectEventHandler {
 
 extension TonConnectEventHandler: IEventHandler {
     func handle(source _: StatPage, event: Any, eventType _: EventHandler.EventType) async throws {
-        guard let deeplink = event as? String else {
-            throw EventHandler.HandleError.noSuitableHandler
+        var config: TonConnectConfig?
+        let returnDeepLink: String?
+
+        if case let .tonConnect(parameters) = event as? DeepLinkManager.DeepLink {
+            config = try await tonConnectManager.loadTonConnectConfiguration(parameters: parameters)
+            returnDeepLink = parameters.returnDeepLink
+        } else if let deeplink = event as? String {
+            config = try await tonConnectManager.loadTonConnectConfiguration(deeplink: deeplink)
+            returnDeepLink = nil
+        } else {
+            returnDeepLink = nil
         }
 
-        let config = try await tonConnectManager.loadTonConnectConfiguration(deeplink: deeplink)
-
+        guard let config = config else {
+            throw EventHandler.HandleError.noSuitableHandler
+        }
+        
         await MainActor.run { [weak self] in
-            let view = TonConnectConnectView(config: config)
+            let view = TonConnectConnectView(config: config, returnDeepLink: returnDeepLink)
             self?.parentViewController?.visibleController.present(view.toViewController(), animated: true)
         }
     }

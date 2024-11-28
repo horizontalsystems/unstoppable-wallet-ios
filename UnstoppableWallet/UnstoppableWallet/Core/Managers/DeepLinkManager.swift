@@ -7,6 +7,8 @@ import RxSwift
 class DeepLinkManager {
     static let deepLinkScheme = "unstoppable.money"
     static let tonDeepLinkScheme = "ton"
+    static let tonUniversalHost = "ton-connect"
+    static let tonDeepLinkHost = "tc"
 
     private let newSchemeRelay = BehaviorRelay<DeepLink?>(value: nil)
 }
@@ -30,6 +32,13 @@ extension DeepLinkManager {
            let uri = queryItems?.first(where: { $0.name == "uri" })?.value
         {
             newSchemeRelay.accept(.walletConnect(url: uri))
+            return true
+        }
+
+        if ((scheme == DeepLinkManager.deepLinkScheme && (host == Self.tonDeepLinkHost || host == Self.tonUniversalHost)) ||
+            (scheme == "https" && host == Self.deepLinkScheme && path == "/\(Self.tonUniversalHost)")),
+            let parameters = try? TonConnectManager.parseParameters(queryItems: queryItems) {
+            newSchemeRelay.accept(.tonConnect(parameters: parameters))
             return true
         }
 
@@ -74,6 +83,7 @@ extension DeepLinkManager {
 extension DeepLinkManager {
     enum DeepLink {
         case walletConnect(url: String)
+        case tonConnect(parameters: TonConnectParameters)
         case coin(uid: String)
         case transfer(addressUri: AddressUri)
         case referral(telegramUserId: String, referralCode: String)

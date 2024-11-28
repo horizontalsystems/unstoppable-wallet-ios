@@ -14,10 +14,8 @@ enum TonConnect {
 
     struct DeviceInfo: Encodable {
         let platform = "iphone"
-        let appName = "Tonkeeper"
-        let appVersion = "3.4.0"
-        // let appName = AppConfig.appName
-        // let appVersion = AppConfig.appVersion
+        let appName = "Unstoppable Wallet"
+        let appVersion = AppConfig.appVersion
         let maxProtocolVersion = 2
         let features = [
             FeatureCompatible.legacy(Feature()),
