@@ -27,7 +27,7 @@ class TonConnectManager {
         configuration.timeoutIntervalForResource = TimeInterval(Int.max)
 
         apiClient = TonConnectAPI.Client(
-            serverURL: (try? TonConnectAPI.Servers.server1()) ?? URL(string: "https://bridge.tonapi.io/bridge")!,
+            serverURL: URL(string: "https://bridge.unstoppable.money/bridge")!,
             transport: StreamURLSessionTransport(urlSessionConfiguration: configuration),
             middlewares: []
         )
@@ -165,19 +165,12 @@ class TonConnectManager {
         guard
             let url = URL(string: deeplink),
             let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-            components.scheme == .tcScheme,
-            let queryItems = components.queryItems,
-            let versionValue = queryItems.first(where: { $0.name == .versionKey })?.value,
-            let version = TonConnectParameters.Version(rawValue: versionValue),
-            let clientId = queryItems.first(where: { $0.name == .clientIdKey })?.value,
-            let requestPayloadValue = queryItems.first(where: { $0.name == .requestPayloadKey })?.value,
-            let requestPayloadData = requestPayloadValue.data(using: .utf8),
-            let requestPayload = try? JSONDecoder().decode(TonConnectRequestPayload.self, from: requestPayloadData)
+            components.scheme == .httpsScheme || components.scheme == .tcScheme
         else {
             throw ServiceError.incorrectUrl
         }
-
-        return TonConnectParameters(version: version, clientId: clientId, requestPayload: requestPayload)
+         
+        return try TonConnectManager.parseParameters(queryItems: components.queryItems)
     }
 
     private func loadManifest(url: URL) async throws -> TonConnectManifest {
@@ -195,11 +188,11 @@ class TonConnectManager {
 
         let encrypted = try sessionCrypto.encrypt(message: encoded, receiverPublicKey: receiverPublicKey)
 
-        _ = try await apiClient.message(
+        let _ = try await apiClient.message(
             query: .init(client_id: sessionCrypto.sessionId, to: clientId, ttl: 300),
             body: .plainText(.init(stringLiteral: encrypted.base64EncodedString()))
         )
-
+        
         // _ = try resp.ok.body.json
     }
 
@@ -220,15 +213,19 @@ extension TonConnectManager {
         sendTransactionRequestSubject.eraseToAnyPublisher()
     }
 
-    func loadTonConnectConfiguration(deeplink: String) async throws -> TonConnectConfig {
-        let parameters = try parseTonConnect(deeplink: deeplink)
-
+    func loadTonConnectConfiguration(parameters: TonConnectParameters) async throws -> TonConnectConfig {
         do {
             let manifest = try await loadManifest(url: parameters.requestPayload.manifestUrl)
             return TonConnectConfig(parameters: parameters, manifest: manifest)
         } catch {
             throw ServiceError.manifestLoadFailed
         }
+    }
+
+    func loadTonConnectConfiguration(deeplink: String) async throws -> TonConnectConfig {
+        let parameters = try parseTonConnect(deeplink: deeplink)
+
+        return try await loadTonConnectConfiguration(parameters: parameters)
     }
 
     func connect(account: Account, parameters: TonConnectParameters, manifest: TonConnectManifest) async throws {
@@ -272,6 +269,24 @@ extension TonConnectManager {
 }
 
 extension TonConnectManager {
+    static func parseParameters(queryItems: [URLQueryItem]?) throws -> TonConnectParameters {
+        guard let queryItems = queryItems,
+              let versionValue = queryItems.first(where: { $0.name == .versionKey })?.value,
+              let version = TonConnectParameters.Version(rawValue: versionValue),
+              let clientId = queryItems.first(where: { $0.name == .clientIdKey })?.value,
+              let requestPayloadValue = queryItems.first(where: { $0.name == .requestPayloadKey })?.value,
+              let requestPayloadData = requestPayloadValue.data(using: .utf8),
+              let requestPayload = try? JSONDecoder().decode(TonConnectRequestPayload.self, from: requestPayloadData)
+          else {
+              throw ServiceError.incorrectUrl
+          }
+        
+        let returnDeepLink = queryItems.first(where: { $0.name == .returnDeepLink })?.value
+        return TonConnectParameters(version: version, clientId: clientId, requestPayload: requestPayload, ret: returnDeepLink)
+    }
+}
+
+extension TonConnectManager {
     enum ServiceError: Error {
         case incorrectUrl
         case manifestLoadFailed
@@ -291,9 +306,11 @@ extension TonConnectManager {
 
 private extension String {
     static let tcScheme = "tc"
+    static let httpsScheme = "https"
     static let versionKey = "v"
     static let clientIdKey = "id"
     static let requestPayloadKey = "r"
+    static let returnDeepLink = "ret"
 }
 
 struct TonConnectSendTransactionRequest {

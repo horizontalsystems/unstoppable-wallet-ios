@@ -4,6 +4,7 @@ import Foundation
 class TonConnectConnectViewModel: ObservableObject {
     private let parameters: TonConnectParameters
     let manifest: TonConnectManifest
+    let returnDeepLink: String?
 
     private let tonConnectManager = App.shared.tonConnectManager
     private let accountManager = App.shared.accountManager
@@ -13,9 +14,10 @@ class TonConnectConnectViewModel: ObservableObject {
 
     private let finishSubject = PassthroughSubject<Void, Never>()
 
-    init(config: TonConnectConfig) {
+    init(config: TonConnectConfig, returnDeepLink: String?) {
         parameters = config.parameters
         manifest = config.manifest
+        self.returnDeepLink = returnDeepLink
 
         eligibleAccounts = accountManager.accounts.filter(\.type.supportsTonConnect).sorted { $0.name < $1.name }
 
