@@ -134,19 +134,19 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.Response.Body
+                    let bodyPayload: BodyUniversalData
                     if try contentType == nil
                         || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
                     {
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Responses.Response.Body.jsonPayload.self,
+                        bodyPayload = try await converter.getResponseBodyAsJSON(
+                            JsonPayload.self,
                             from: responseBody,
                             transforming: { value in .json(value) }
                         )
                     } else {
                         throw converter.makeUnexpectedContentTypeError(contentType: contentType)
                     }
-                    return .ok(.init(body: body))
+                    return .ok(.init(body: .json(try bodyPayload.json)))
                 default:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
                     let body: Components.Responses.Response.Body
@@ -166,4 +166,42 @@ public struct Client: APIProtocol {
             }
         )
     }
+}
+
+enum BodyUniversalData: Sendable, Hashable {
+    
+    case json(JsonPayload)
+    public var json: Components.Responses.Response.Body.jsonPayload {
+        get throws {
+            switch self {
+            case let .json(body):
+                guard let message = body.message ?? body.status else {
+                    throw ParsingError.cantParseBody
+                }
+                return .init(message: message, statusCode: body.statusCode ?? 200)
+            }
+        }
+    }
+}
+
+public struct JsonPayload: Codable, Hashable, Sendable {
+    public var message: String?
+    public var status: String?
+    public var statusCode: Int64?
+
+    public init(status: Swift.String?, message: String?, statusCode: Int64?) {
+        self.status = status
+        self.message = message
+        self.statusCode = statusCode
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case status
+        case message
+        case statusCode
+    }
+}
+
+public enum ParsingError: Error {
+    case cantParseBody
 }
