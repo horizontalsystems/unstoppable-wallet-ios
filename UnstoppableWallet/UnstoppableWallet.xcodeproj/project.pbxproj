@@ -1821,6 +1821,8 @@
 		6B29072A2AF0CB8A006157D6 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29071E2AF0CB8A006157D6 /* EventHandler.swift */; };
 		6B55E33B2AF26D6400616B60 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6B55E33A2AF26D6400616B60 /* Starscream */; };
 		6B55E33D2AF26D7A00616B60 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6B55E33C2AF26D7A00616B60 /* Starscream */; };
+		6B5F33892D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F33882D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift */; };
+		6B5F338A2D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F33882D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift */; };
 		6B5F5E0E2C0C65F700E03EB2 /* MarketPlatformViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E0D2C0C65F700E03EB2 /* MarketPlatformViewNew.swift */; };
 		6B5F5E0F2C0C65F700E03EB2 /* MarketPlatformViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E0D2C0C65F700E03EB2 /* MarketPlatformViewNew.swift */; };
 		6B5F5E112C0C660900E03EB2 /* MarketPlatformViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E102C0C660900E03EB2 /* MarketPlatformViewModel.swift */; };
@@ -4124,6 +4126,7 @@
 		6B29071B2AF0CB8A006157D6 /* WalletConnectAppShowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectAppShowView.swift; sourceTree = "<group>"; };
 		6B29071D2AF0CB8A006157D6 /* WidgetCoinAppShowModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetCoinAppShowModule.swift; sourceTree = "<group>"; };
 		6B29071E2AF0CB8A006157D6 /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		6B5F33882D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledWallet_v_0_40.swift; sourceTree = "<group>"; };
 		6B5F5E0D2C0C65F700E03EB2 /* MarketPlatformViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformViewNew.swift; sourceTree = "<group>"; };
 		6B5F5E102C0C660900E03EB2 /* MarketPlatformViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformViewModel.swift; sourceTree = "<group>"; };
 		6B5F5E142C0DDD7100E03EB2 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
@@ -5085,6 +5088,7 @@
 				11B356A734526DECD9606A66 /* AccountRecord_v_0_36.swift */,
 				11B35E255F6CA21FFA9E6B42 /* FavoriteCoinRecord_v_0_38.swift */,
 				D3A87D5B2C8EFB1A00F6F619 /* EvmAccountRestoreState.swift */,
+				6B5F33882D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift */,
 			);
 			path = Deprecated;
 			sourceTree = "<group>";
@@ -9509,6 +9513,7 @@
 				58AAAA71882CB345D56BBA00 /* CoinChartFactory.swift in Sources */,
 				11B351856787DD75A41861B6 /* CoinInvestorsViewModel.swift in Sources */,
 				11B3507F17791BC895872490 /* BrandFooterView.swift in Sources */,
+				6B5F338A2D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */,
 				D08D16852C2165490086E5A5 /* TonSendHandler.swift in Sources */,
 				6BCD53152A161F4800993F20 /* BackupViewModel.swift in Sources */,
 				11B35D10A6A15EFA47FCE6D0 /* TextCell.swift in Sources */,
@@ -10974,6 +10979,7 @@
 				D3833AFF2BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */,
 				D36DE0D8272FD887000BC916 /* OneInchDataSource.swift in Sources */,
 				58AAA2EBAFC1C443C48BA857 /* CoinChartFactory.swift in Sources */,
+				6B5F33892D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */,
 				D08D16842C2165490086E5A5 /* TonSendHandler.swift in Sources */,
 				11B35085F61E874613B2B882 /* CoinInvestorsViewModel.swift in Sources */,
 				6BCD53142A161F4800993F20 /* BackupViewModel.swift in Sources */,
@@ -12879,7 +12885,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.1;
+				version = 3.0.2;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */ = {

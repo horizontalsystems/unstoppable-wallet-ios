@@ -21,6 +21,7 @@ class MultiSwapViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let walletManager = App.shared.walletManager
     private let adapterManager = App.shared.adapterManager
+    private let decimalParser = AmountDecimalParser()
 
     @Published var currency: Currency
 
@@ -170,7 +171,7 @@ class MultiSwapViewModel: ObservableObject {
             syncQuotes()
             syncFiatAmountIn()
 
-            let amount = Decimal(string: amountString)
+            let amount = decimalParser.parseAnyDecimal(from: amountString)
 
             if amount != amountIn {
                 amountString = amountIn?.description ?? ""
@@ -180,7 +181,7 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var amountString: String = "" {
         didSet {
-            let amount = Decimal(string: amountString)
+            let amount = decimalParser.parseAnyDecimal(from: amountString)
 
             guard amount != amountIn else {
                 return
@@ -196,7 +197,7 @@ class MultiSwapViewModel: ObservableObject {
         didSet {
             syncAmountIn()
 
-            let amount = Decimal(string: fiatAmountString)?.rounded(decimal: 2)
+            let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             if amount != fiatAmountIn {
                 fiatAmountString = fiatAmountIn?.description ?? ""
@@ -206,7 +207,7 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var fiatAmountString: String = "" {
         didSet {
-            let amount = Decimal(string: fiatAmountString)?.rounded(decimal: 2)
+            let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             guard amount != fiatAmountIn else {
                 return

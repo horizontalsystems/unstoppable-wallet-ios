@@ -103,7 +103,7 @@ extension AddressAppShowModule: IEventHandler {
                 }
                 var uri = AddressUri(scheme: "")
                 uri.address = text
-                return
+                showSendTokenList(source: source, eventType: eventType, uri: uri, allowedBlockchainTypes: types)
             }
         }
     }

@@ -571,8 +571,8 @@
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Эта служба не позволяет wrapping/unwrapping. Пожалуйста, попробуйте другой сервис обмена. Рекомендуется 1inch";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
-"swap.switch_provider.title" = "Служба обмена";
-"swap.amount_type.coin" = "Монета";
+"swap.switch_provider.title" = "Сервис обмена";
+"swap.amount_type.coin" = "Токен";
 
 "swap.price" = "Цена";
 "swap.buy_price" = "Цена покупки";
@@ -2159,7 +2159,7 @@
 
 "transaction_filter.blockchain" = "Блокчейн";
 "transaction_filter.all_blockchains" = "Все блокчейны";
-"transaction_filter.coin" = "Монета";
+"transaction_filter.coin" = "Токен";
 "transaction_filter.all_coins" = "Все токены";
 "transaction_filter.contact" = "Kонтакты";
 "transaction_filter.all_contacts" = "Все контакты";
