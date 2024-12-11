@@ -40,7 +40,7 @@ class Eip155ProposalHandler {
                 continue
             }
 
-            set.items.insert(
+            set.items.append(
                 WalletConnectMainModule.BlockchainItem(
                     namespace: blockchain.namespace,
                     chainId: chainId,
