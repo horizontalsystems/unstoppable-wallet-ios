@@ -260,7 +260,7 @@ platform :ios do
     deploy_production
 
     prepare_environment(true)
-    apply_prod_xcconfig('true', 'true')
+    apply_prod_xcconfig('true', 'false')
 
     deploy_production
 
