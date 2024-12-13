@@ -1829,6 +1829,8 @@
 		6B5F5E162C0DDD7500E03EB2 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E142C0DDD7100E03EB2 /* RankView.swift */; };
 		6B5F5E182C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
 		6B5F5E192C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
+		6B7EB81D2D09255500783F66 /* RadialGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB81C2D09255500783F66 /* RadialGradientView.swift */; };
+		6B7EB81E2D09255500783F66 /* RadialGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB81C2D09255500783F66 /* RadialGradientView.swift */; };
 		6B8BD39E2C11B959003ADE10 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */; };
 		6B8BD39F2C11B959003ADE10 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */; };
 		6BA5117D2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
@@ -1872,6 +1874,8 @@
 		6BCD531A2A161F9200993F20 /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD53182A161F9100993F20 /* BackupService.swift */; };
 		6BCD531C2A16203F00993F20 /* CloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */; };
 		6BCD531D2A16203F00993F20 /* CloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */; };
+		6BD504AE2D06A349008D4645 /* MainSettingsPremiumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD504AD2D06A349008D4645 /* MainSettingsPremiumCell.swift */; };
+		6BD504AF2D06A349008D4645 /* MainSettingsPremiumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD504AD2D06A349008D4645 /* MainSettingsPremiumCell.swift */; };
 		6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AA29D6F37C003847ED /* ECashKit */; };
 		6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AC29D6F384003847ED /* ECashKit */; };
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
@@ -4134,6 +4138,7 @@
 		6B5F5E102C0C660900E03EB2 /* MarketPlatformViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformViewModel.swift; sourceTree = "<group>"; };
 		6B5F5E142C0DDD7100E03EB2 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
+		6B7EB81C2D09255500783F66 /* RadialGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialGradientView.swift; sourceTree = "<group>"; };
 		6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
 		6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppearModifier.swift; sourceTree = "<group>"; };
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
@@ -4156,6 +4161,7 @@
 		6BCD53112A161F4800993F20 /* BackupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupViewController.swift; sourceTree = "<group>"; };
 		6BCD53182A161F9100993F20 /* BackupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
 		6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudBackupManager.swift; sourceTree = "<group>"; };
+		6BD504AD2D06A349008D4645 /* MainSettingsPremiumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsPremiumCell.swift; sourceTree = "<group>"; };
 		6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
 		6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
@@ -5232,6 +5238,7 @@
 				11B35CEEFEC5EE44119DF19D /* ScanQr */,
 				ABC9AE0ADD98BFF412F373F9 /* ActionSheet */,
 				ABC9A7258AE28E4F22B9E8A7 /* ErrorViewController.swift */,
+				6B7EB81C2D09255500783F66 /* RadialGradientView.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -6747,6 +6754,7 @@
 				1A5640528EFD15137E218EA3 /* MainSettingsViewModel.swift */,
 				1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */,
 				11B35BD9A836C953CCF8D077 /* MainSettingsFooterCell.swift */,
+				6BD504AD2D06A349008D4645 /* MainSettingsPremiumCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -9402,6 +9410,7 @@
 				11B3546AC03E6B632D155766 /* MarkdownImageTitleCell.swift in Sources */,
 				11B3542831EAA647A1D16E8A /* MarkdownVisitor.swift in Sources */,
 				11B357D211A75BDFED448AA4 /* MarkdownListItemCell.swift in Sources */,
+				6B7EB81E2D09255500783F66 /* RadialGradientView.swift in Sources */,
 				11B3587EF674C1E8EEE61DE7 /* MarkdownBlockQuoteCell.swift in Sources */,
 				3AF9F621253EF555000626A8 /* ZcashTransactionWrapper.swift in Sources */,
 				6BCD530B2A161F4100993F20 /* ICloudBackupNameViewController.swift in Sources */,
@@ -10625,6 +10634,7 @@
 				ABC9A8A507E8AF95CB00379A /* MultiSwapApproveViewModel.swift in Sources */,
 				ABC9A2F69C11C20F72C2FF63 /* Binding.swift in Sources */,
 				ABC9AC741B546BC96F2E8F3A /* ErrorViewController.swift in Sources */,
+				6BD504AF2D06A349008D4645 /* MainSettingsPremiumCell.swift in Sources */,
 				11B35337D37FD03982571DF0 /* ThorChainMultiSwapProvider.swift in Sources */,
 				ABC9AE635D02A4E6DA719787 /* TransactionContactSelectView.swift in Sources */,
 				ABC9AD02AD6340C230AC4F9D /* TransactionContactSelectViewModel.swift in Sources */,
@@ -10870,6 +10880,7 @@
 				11B356ECE0D41F928FCED96C /* PrimaryButtonCell.swift in Sources */,
 				11B35ABD3F5C19E7FF0DE554 /* HighlightedDescriptionCell.swift in Sources */,
 				11B351B49FF886F8F29EDA26 /* MarkdownImageTitleCell.swift in Sources */,
+				6B7EB81D2D09255500783F66 /* RadialGradientView.swift in Sources */,
 				11B35F4A3EAF8D2C66E8D6E5 /* MarkdownVisitor.swift in Sources */,
 				11B3511B03A70BEA48637907 /* MarkdownListItemCell.swift in Sources */,
 				11B358B90E2D1A8832637F34 /* MarkdownBlockQuoteCell.swift in Sources */,
@@ -12093,6 +12104,7 @@
 				11B35508E26446AC692EBAEF /* RecipientAndSlippageMultiSwapSettingsView.swift in Sources */,
 				11B35019C9DB5A6FDCE6BAE6 /* OneInchMultiSwapProvider.swift in Sources */,
 				ABC9A66F2C6BAAA6CA00FAE6 /* MultiSwapApproveView.swift in Sources */,
+				6BD504AE2D06A349008D4645 /* MainSettingsPremiumCell.swift in Sources */,
 				ABC9AB3C239A182E9B93AFDA /* MultiSwapApproveViewModel.swift in Sources */,
 				ABC9A62E858360A9964084D2 /* Binding.swift in Sources */,
 				ABC9AAF24F259B71E59C247D /* ErrorViewController.swift in Sources */,

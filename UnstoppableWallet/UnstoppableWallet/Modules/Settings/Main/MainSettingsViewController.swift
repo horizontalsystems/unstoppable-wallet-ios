@@ -17,6 +17,7 @@ class MainSettingsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
+    private let premiumCell = MainSettingsPremiumCell()
     private let manageAccountsCell = BaseSelectableThemeCell()
     private let walletConnectCell = BaseSelectableThemeCell()
     private let tonConnectCell = BaseSelectableThemeCell()
@@ -55,6 +56,7 @@ class MainSettingsViewController: ThemeViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
         tableView.registerHeaderFooter(forClass: HighlightedSubtitleHeaderFooterView.self)
+        tableView.registerCell(forClass: MainSettingsPremiumCell.self)
         tableView.sectionDataSource = self
 
         tableView.separatorStyle = .none
@@ -481,22 +483,18 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private var premiumRows: [RowProtocol] {
-        [
-            tableView.universalRow48(
-                id: "premium",
-                image: .local(UIImage(named: "uwt_24")?.withTintColor(.themeJacob)),
-                title: .body("Premium"),
-                accessoryType: .disclosure,
-                autoDeselect: true,
-                isFirst: true,
-                isLast: true,
-                action: { [weak self] in
-                    self?.present(PurchasesView().toViewController(), animated: true)
-                }
-            ),
-        ]
-    }
-
+       [
+           StaticRow(
+               cell: premiumCell,
+               id: "premium",
+               height: MainSettingsPremiumCell.height,
+               action: { [weak self] in
+                   self?.present(PurchasesView().toViewController(), animated: true)
+               }
+           )
+       ]
+   }
+    
     private var tokenRows: [RowProtocol] {
         [
             tableView.universalRow48(
