@@ -32,7 +32,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 networkType: networkType,
-                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: logger
             )
         case let .hdExtendedKey(key):
@@ -41,7 +41,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 networkType: networkType,
-                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: logger
             )
         case let .btcAddress(address, _, _):
@@ -50,7 +50,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 networkType: networkType,
-                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: nil
             )
         default:

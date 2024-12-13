@@ -43,7 +43,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                 syncMode: syncMode,
                 hasher: hasher,
                 networkType: Self.networkType,
-                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: logger
             )
         case let .hdExtendedKey(key):
@@ -58,7 +58,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                 syncMode: syncMode,
                 hasher: hasher,
                 networkType: Self.networkType,
-                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: logger
             )
         case let .btcAddress(address, _, tokenType):
@@ -73,7 +73,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                 syncMode: syncMode,
                 hasher: hasher,
                 networkType: Self.networkType,
-                confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: logger
             )
         default:

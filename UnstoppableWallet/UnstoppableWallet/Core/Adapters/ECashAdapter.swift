@@ -7,7 +7,6 @@ import RxSwift
 
 class ECashAdapter: BitcoinBaseAdapter {
     private static let networkType: ECashKit.Kit.NetworkType = .mainNet
-    private static let eCashConfirmationsThreshold = 1
     override var coinRate: Decimal { 100 } // pow(10,2)
 
     private let eCashKit: ECashKit.Kit
@@ -26,7 +25,7 @@ class ECashAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 networkType: Self.networkType,
-                confirmationsThreshold: Self.eCashConfirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: logger
             )
         case let .hdExtendedKey(key):
@@ -35,7 +34,7 @@ class ECashAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 networkType: Self.networkType,
-                confirmationsThreshold: Self.eCashConfirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: logger
             )
         case let .btcAddress(address, _, _):
@@ -44,7 +43,7 @@ class ECashAdapter: BitcoinBaseAdapter {
                 walletId: wallet.account.id,
                 syncMode: syncMode,
                 networkType: Self.networkType,
-                confirmationsThreshold: Self.eCashConfirmationsThreshold,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 logger: logger
             )
         default:

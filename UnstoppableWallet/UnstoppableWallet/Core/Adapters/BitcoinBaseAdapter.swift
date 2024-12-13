@@ -7,7 +7,8 @@ import MarketKit
 import RxSwift
 
 class BitcoinBaseAdapter {
-    static let confirmationsThreshold = 3
+    static let confirmationsThreshold = 1            // Number of confirmations for coins in transaction to be available for spending
+    static let txStatusConfirmationsThreshold = 3    // Number of confirmations for transaction status displayed
     private let abstractKit: AbstractKit
 
     var coinRate: Decimal { 100_000_000 } // pow(10, 8)
@@ -86,7 +87,7 @@ class BitcoinBaseAdapter {
                 transactionHash: transaction.transactionHash,
                 transactionIndex: transaction.transactionIndex,
                 blockHeight: transaction.blockHeight,
-                confirmationsThreshold: Self.confirmationsThreshold,
+                confirmationsThreshold: Self.txStatusConfirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 fee: transaction.fee.map { Decimal($0) / coinRate },
                 failed: transaction.status == .invalid,
@@ -105,7 +106,7 @@ class BitcoinBaseAdapter {
                 transactionHash: transaction.transactionHash,
                 transactionIndex: transaction.transactionIndex,
                 blockHeight: transaction.blockHeight,
-                confirmationsThreshold: Self.confirmationsThreshold,
+                confirmationsThreshold: Self.txStatusConfirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 fee: transaction.fee.map { Decimal($0) / coinRate },
                 failed: transaction.status == .invalid,
@@ -126,7 +127,7 @@ class BitcoinBaseAdapter {
                 transactionHash: transaction.transactionHash,
                 transactionIndex: transaction.transactionIndex,
                 blockHeight: transaction.blockHeight,
-                confirmationsThreshold: Self.confirmationsThreshold,
+                confirmationsThreshold: Self.txStatusConfirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 fee: transaction.fee.map { Decimal($0) / coinRate },
                 failed: transaction.status == .invalid,
