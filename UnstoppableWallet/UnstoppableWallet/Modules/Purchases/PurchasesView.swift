@@ -2,76 +2,74 @@ import SwiftUI
 
 struct PurchasesView: View {
     @StateObject private var viewModel = PurchasesViewModel()
-
+    
     @Environment(\.presentationMode) private var presentationMode
-
+    
     var body: some View {
         ThemeNavigationView {
-            ThemeRadialView {
-                ScrollView {
-                    VStack(spacing: 0) {
-                        Text("purchases.description".localized).themeBody(color: .themeGray)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, .margin12)
-                            .padding(.horizontal, .margin32)
-                            .padding(.bottom, .margin32)
-
-                        ListSection {
-                            row(
-                                title: "purchases.trading".localized,
-                                description: "purchases.trading.description".localized,
-                                displayPrice: viewModel.products.first { $0.id == "trading_1y" }?.displayPrice,
-                                image: Image("premium_trading")
-                            )
-
-                            row(
-                                title: "purchases.security".localized,
-                                description: "purchases.security.description".localized,
-                                displayPrice: viewModel.products.first { $0.id == "security_1y" }?.displayPrice,
-                                image: Image("premium_security")
-                            )
-
-                            row(
-                                title: "purchases.vip_support".localized,
-                                description: "purchases.vip_support.description".localized,
-                                displayPrice: viewModel.products.first { $0.id == "vip_support_1y" }?.displayPrice,
-                                image: Image("premium_support")
-                            )
+            ZStack {
+                VStack(spacing: 0) {
+                    Text("purchases.description".localized).textBody(color: .themeGray)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, .margin16)
+                        .padding(.horizontal, .margin32)
+                        .padding(.bottom, .margin24)
+                    
+                    PurchaseSegmentView(selection: $viewModel.featuresType)
+                        .onChange(of: viewModel.featuresType) { newValue in
+                            viewModel.setType(newValue)
                         }
-                        .themeListStyle(.blur)
-                        .padding(.horizontal, .margin24)
-
-                        VStack(spacing: .margin16) {
-                            Text("Products")
-
-                            ForEach(viewModel.products) { product in
-                                HStack {
-                                    Button {
-                                        viewModel.purchase(product: product)
-                                    } label: {
-                                        Text("\(product.displayPrice) - \(product.displayName)")
-                                    }
-
-                                    if viewModel.purchasedProductIds.contains(product.id) {
-                                        Text("Purchased")
+                        .clipShape(RoundedCorner(radius: .margin16, corners: [.topLeft, .topRight]))
+                        .padding(.horizontal, .margin16)
+                    
+                    ThemeRadialView {
+                        ScrollView {
+                            VStack(spacing: 0) {
+                                ListSection {
+                                    ForEach(viewModel.viewItems, id: \.self) { feature in
+                                        row(
+                                            title: "purchases.\(feature.title)".localized,
+                                            description: "purchases.\(feature.title).description".localized,
+                                            image: Image(feature.iconName),
+                                            accented: feature.accented
+                                        )
                                     }
                                 }
+                                .themeListStyle(.steelWithBottomCorners)
+                                .padding(.horizontal, .margin16)
                             }
-
-                            Button {
-                                viewModel.restorePurchases()
-                            } label: {
-                                Text("Restore Purchases")
-                            }
-
-                            Button {
-                                viewModel.loadPurchases()
-                            } label: {
-                                Text("Load Purchases")
-                            }
+                            .padding(.bottom, .margin32)
                         }
                     }
-                    .padding(.bottom, .margin32)
+                }
+                
+                VStack {
+                    Spacer()
+                    VStack(spacing: .margin8) {
+                        Button(action: {
+                            // viewModel.onTapSave()
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Text("purchases.button.try".localized)
+                        }
+                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                        // .disabled(!viewModel.saveEnabled)
+                        
+                        Button(action: {
+                            // viewModel.onTapSave()
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Text("purchases.button.restore".localized)
+                        }
+                        .buttonStyle(PrimaryButtonStyle(style: .transparent))
+                        // .disabled(!viewModel.saveEnabled)
+                    }
+                    .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
+                    .background(
+                        CustomBlurView(removeAllFilters: false)
+                            .edgesIgnoringSafeArea(.bottom)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    )
                 }
             }
             .navigationTitle("purchases.title".localized)
@@ -83,24 +81,45 @@ struct PurchasesView: View {
                     }
                 }
             }
-            // .preferredColorScheme(.dark)
         }
     }
+    
 
-    @ViewBuilder private func row(title: String, description: String, displayPrice: String?, image: Image) -> some View {
-        ListRow(padding: EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: .margin16)) {
-            VStack(spacing: .margin16) {
-                Text(title).themeHeadline1()
-                Text(description).themeSubhead2()
-                Spacer()
+    @ViewBuilder private func row(title: String, description: String, image: Image, accented: Bool) -> some View {
+        ListRow(padding: EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16)) {
+            HStack(spacing: .margin16) {
+                image
+                    .renderingMode(.template)
+                    .foregroundColor(accented ? .themeYellow : .themeSteelLight)
+                    .frame(width: 24, height: 24)
 
-                if let displayPrice {
-                    Text("From \(displayPrice) / month").themeSubhead2(color: .themeJacob)
+                VStack(spacing: .heightOneDp) {
+                    Text(title).themeSubhead1(color: .themeLeah)
+                    Text(description).themeCaption()
                 }
             }
+        }
+    }
+}
 
-            image
-                .frame(width: 124, height: 130)
+struct CustomBlurView: UIViewRepresentable {
+    let removeAllFilters: Bool
+    
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
+    }
+    
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        DispatchQueue.main.async {
+            if let backdropLayer = uiView.layer.sublayers?.first {
+                if removeAllFilters {
+                    backdropLayer.filters = []
+                } else {
+                    backdropLayer.filters?.removeAll(where: { filter in
+                        String(describing: filter) != "gaussianBlur"
+                    })
+                }
+            }
         }
     }
 }
