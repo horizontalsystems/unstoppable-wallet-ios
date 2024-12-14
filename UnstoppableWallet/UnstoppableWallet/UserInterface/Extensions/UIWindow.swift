@@ -17,3 +17,12 @@ extension UIWindow {
         return nil
     }
 }
+
+extension UIScreen {
+    static var currentSize: CGSize {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            return windowScene.screen.bounds.size
+        }
+        return UIScreen.main.bounds.size
+    }
+}

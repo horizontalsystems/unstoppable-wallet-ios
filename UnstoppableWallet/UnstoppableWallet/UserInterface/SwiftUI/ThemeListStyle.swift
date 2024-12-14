@@ -7,6 +7,7 @@ enum ThemeListStyle {
     case transparent
     case transparentInline
     case blur
+    case steelWithBottomCorners
 }
 
 struct ThemeListStyleModifier: ViewModifier {
@@ -39,6 +40,10 @@ struct ThemeListStyleModifier: ViewModifier {
             content
                 .background(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).fill(.ultraThinMaterial))
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        case .steelWithBottomCorners:
+            content
+                .background(RoundedCorner(radius: cornerRadius, corners: [.bottomLeft, .bottomRight]).fill(Color.themeSteel20))
+                .clipShape(RoundedCorner(radius: cornerRadius, corners: [.bottomLeft, .bottomRight]))
         }
     }
 }
@@ -52,7 +57,7 @@ struct ThemeListStyleButtonModifier: ViewModifier {
         case .lawrence, .borderedLawrence: content.background(isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
         case .bordered: content.background(isPressed ? Color.themeLawrencePressed : Color.clear)
         case .transparent, .transparentInline: content.background(isPressed ? Color.themeLawrencePressed : Color.themeTyler)
-        case .blur: content
+        case .blur, .steelWithBottomCorners: content
         }
     }
 }

@@ -2169,21 +2169,32 @@
 "premium.cell.try" = "Try for FREE";
 
 "purchases.title" = "Premium";
-"purchases.description" = "Select the feature package that best fits your needs";
-"purchases.trading" = "Trading";
-"purchases.trading.description" = "Advanced project metrics";
-"purchases.security" = "Security";
-"purchases.security.description" = "Advanced security features";
-"purchases.vip_support" = "VIP Support";
-"purchases.vip_support.description" = "Advanced personal support";
+"purchases.description" = "Choose the plan.";
+"purchases.type.pro" = "Pro";
+"purchases.type.vip" = "Vip";
 
-// Purchases
+"purchases.token_insights" = "Token Insights";
+"purchases.token_insights.description" = "Full analytics and data about tokens.";
+"purchases.advanced_search" = "Advanced Search";
+"purchases.advanced_search.description" = "Custom filters for token searches.";
+"purchases.trade_signals" = "Trade Signals";
+"purchases.trade_signals.description" = "Signals for confident trading.";
+"purchases.favorable_swaps" = "Favorable Swaps";
+"purchases.favorable_swaps.description" = "Signals for confident trading.";
+"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
+"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
+"purchases.duress_mode" = "Duress Mode";
+"purchases.duress_mode.description" = "Hides main wallets in case of coercion.";
+"purchases.address_phishing" = "Address Phishing Protection";
+"purchases.address_phishing.description" = "Additional address check for fraud prevention.";
+"purchases.privacy_mode" = "Privacy Mode";
+"purchases.privacy_mode.description" = "Full disconnection from data collection.";
 
-"purchases.title" = "Premium";
-"purchases.description" = "Select the feature package that best fits your needs";
-"purchases.trading" = "Trading";
-"purchases.trading.description" = "Advanced project metrics";
-"purchases.security" = "Security";
-"purchases.security.description" = "Advanced security features";
 "purchases.vip_support" = "VIP Support";
-"purchases.vip_support.description" = "Advanced personal support";
+"purchases.vip_support.description" = "Direct chat.";
+"purchases.vip_club" = "VIP Club";
+"purchases.vip_club.description" = "Private chat with exclusive information.";
+
+"purchases.button.try" = "Try for FREE";
+"purchases.button.restore" = "Restore";
+
