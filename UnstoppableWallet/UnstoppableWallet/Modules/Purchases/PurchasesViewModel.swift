@@ -73,9 +73,17 @@ extension PurchasesViewModel {
         let iconName: String
     }
 
-    enum FeaturesType: String {
+    enum FeaturesType: String, CaseIterable, Identifiable {
         case pro
         case vip
+        
+        var icon: String {
+            switch self {
+                case .pro: return "star_filled_16"
+                case .vip: return "crown_16"
+            }
+        }
+        var id: String { rawValue }
     }
 
     struct ViewItem: Hashable {

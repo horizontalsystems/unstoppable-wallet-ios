@@ -5,20 +5,14 @@ struct PurchaseSegmentView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            segmentButton(
-                title: PurchasesViewModel.FeaturesType.pro.rawValue.uppercased(),
-                icon: Image("star_filled_16"),
-                isSelected: selection == .pro
-            ) {
-                selection = .pro
-            }
-            
-            segmentButton(
-                title: PurchasesViewModel.FeaturesType.vip.rawValue.uppercased(),
-                icon: Image("crown_16"),
-                isSelected: selection == .vip
-            ) {
-                selection = .vip
+            ForEach(PurchasesViewModel.FeaturesType.allCases, id: \.self) { type in
+                segmentButton(
+                    title: type.rawValue.uppercased(),
+                    icon: Image(type.icon),
+                    isSelected: selection == type
+                ) {
+                    selection = type
+                }
             }
         }
         .frame(height: 44)
