@@ -2198,3 +2198,14 @@
 "purchases.button.try" = "Try for FREE";
 "purchases.button.restore" = "Restore";
 
+"purchase.period.annually" = "Annually";
+"purchase.period.monthly" = "Monthly";
+"purchase.period.save" = "save";
+"purchase.period.year" = "year";
+"purchase.period.month" = "month";
+"purchase.period.description1" = "Enjoy the first 7 days FREE.";
+"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
+"purchases.period.button.try" = "Get 7 days for FREE";
+"purchases.period.button.subscribe" = "Subscribe";
+"purchases.period.button.promo" = "Add Promo Code";
+

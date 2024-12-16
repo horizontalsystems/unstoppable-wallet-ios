@@ -27,7 +27,7 @@ struct ThemeRadialView<Content: View>: View {
                     let deltaHeight = (windowSize.height - viewSize.height) / 2
 
                     Circle()
-                        .fill(Color(hex: 0xEDD716, alpha: 0.7))
+                        .fill(Color(hex: 0xEDD716, alpha: 0.6))
                         .frame(width: circleDiameter, height: circleDiameter)
                         .blur(radius: 100)
                         .offset(x: -1 * viewSize.width / 2, y: deltaHeight - circleDiameter / 2)
@@ -35,13 +35,13 @@ struct ThemeRadialView<Content: View>: View {
                     Circle()
                         .fill(Color(hex: 0xFF9B26, alpha: 0.7))
                         .frame(width: circleDiameter, height: circleDiameter)
-                        .blur(radius: 100)
+                        .blur(radius: 150)
                         .offset(x: 0, y: deltaHeight)
 
                     Circle()
                         .fill(Color(hex: 0x003C74))
                         .frame(width: circleDiameter, height: circleDiameter)
-                        .blur(radius: 100)
+                        .blur(radius: 150)
                         .offset(x: viewSize.width / 2, y: deltaHeight + circleDiameter / 2)
                 }
 
