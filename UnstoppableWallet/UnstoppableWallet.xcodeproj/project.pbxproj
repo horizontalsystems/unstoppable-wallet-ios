@@ -1862,6 +1862,10 @@
 		6BBB92B12D10095300112409 /* SubscribePeriodSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92AF2D10095300112409 /* SubscribePeriodSegmentView.swift */; };
 		6BBB92B32D10142900112409 /* PurchaseBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B22D10142900112409 /* PurchaseBottomSheetViewModel.swift */; };
 		6BBB92B42D10142900112409 /* PurchaseBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B22D10142900112409 /* PurchaseBottomSheetViewModel.swift */; };
+		6BBB92B72D11646600112409 /* PromoCodeBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */; };
+		6BBB92B82D11646600112409 /* PromoCodeBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */; };
+		6BBB92BA2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */; };
+		6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */; };
 		6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A22BDA419200ABBD55 /* Web3Wallet */; };
 		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
@@ -4167,6 +4171,8 @@
 		6BBB92AC2D0FD43D00112409 /* PurchaseBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseBottomSheetView.swift; sourceTree = "<group>"; };
 		6BBB92AF2D10095300112409 /* SubscribePeriodSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePeriodSegmentView.swift; sourceTree = "<group>"; };
 		6BBB92B22D10142900112409 /* PurchaseBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetView.swift; sourceTree = "<group>"; };
+		6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -7386,6 +7392,15 @@
 			path = PurchaseBottomSheet;
 			sourceTree = "<group>";
 		};
+		6BBB92B52D11644D00112409 /* PromoCodeBottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */,
+				6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */,
+			);
+			path = PromoCodeBottomSheet;
+			sourceTree = "<group>";
+		};
 		6BCD52F62A161F4100993F20 /* ICloud */ = {
 			isa = PBXGroup;
 			children = (
@@ -8831,6 +8846,7 @@
 		D3E1E8722C21856000E07052 /* Purchases */ = {
 			isa = PBXGroup;
 			children = (
+				6BBB92B52D11644D00112409 /* PromoCodeBottomSheet */,
 				6BBB92AB2D0E889C00112409 /* PurchaseBottomSheet */,
 				D3E1E8732C21859000E07052 /* PurchasesView.swift */,
 				D3E1E8762C21859900E07052 /* PurchasesViewModel.swift */,
@@ -10009,6 +10025,7 @@
 				ABC9A0CEBC41CCE5AB205B3C /* NftAssetOverviewModule.swift in Sources */,
 				ABC9A2462F3F928644435B86 /* NftAssetModule.swift in Sources */,
 				ABC9A9EBBC60A709836DE237 /* NftAssetViewController.swift in Sources */,
+				6BBB92B82D11646600112409 /* PromoCodeBottomSheetView.swift in Sources */,
 				D01517EF2B10A69E00FECCBC /* WatchModule.swift in Sources */,
 				ABC9A89499016C8AC8341238 /* NftCollectionCellFactory.swift in Sources */,
 				ABC9AC73C488F8B1F54929B5 /* NftAssetCellFactory.swift in Sources */,
@@ -10517,6 +10534,7 @@
 				11B35BF002B002DE7B20DB0C /* SharedLocalStorage.swift in Sources */,
 				D350DDB52AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
 				11B359A79743E965870AE8B6 /* AppWidgetConstants.swift in Sources */,
+				6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */,
 				ABC9AA802C533F489EB72FDE /* BackupManagerViewModel.swift in Sources */,
 				11B359F812683F62595AFEE2 /* DateFormatterCache.swift in Sources */,
 				11B35483AFC1088E56BC7F37 /* LanguageHourFormatter.swift in Sources */,
@@ -11484,6 +11502,7 @@
 				ABC9A043F82D9F5945C5FAFA /* PseudoAccessoryView.swift in Sources */,
 				ABC9A90BDA552DFBCB19B226 /* NftAssetOverviewService.swift in Sources */,
 				ABC9A4387AF9D012498DF42B /* NftAssetOverviewViewModel.swift in Sources */,
+				6BBB92B72D11646600112409 /* PromoCodeBottomSheetView.swift in Sources */,
 				ABC9ACDFA2F5F3BD9517723D /* NftAssetOverviewViewController.swift in Sources */,
 				ABC9A66E5775762856F8927D /* NftAssetOverviewModule.swift in Sources */,
 				ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */,
@@ -11992,6 +12011,7 @@
 				11B3522207EA307D94070776 /* CoinPageView.swift in Sources */,
 				11B3550A6826CF513B1A77F0 /* TabHeaderView.swift in Sources */,
 				11B3551F51D987A150C3BC26 /* TabButtonStyle.swift in Sources */,
+				6BBB92BA2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */,
 				11B35D5CEB75CD7626D6A612 /* SharedLocalStorage.swift in Sources */,
 				D350DDB22AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
 				11B35FD593B38EEEE5F18010 /* AppWidgetConstants.swift in Sources */,
@@ -12532,6 +12552,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Development.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
 				PRODUCT_NAME = "Unstoppable D";
@@ -12550,6 +12571,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Development.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
 				PRODUCT_NAME = "Unstoppable D";
@@ -12569,6 +12591,7 @@
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Production.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HC4MCAXJ66;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
@@ -12586,6 +12609,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Production.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
@@ -12612,6 +12636,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12648,6 +12673,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12680,6 +12706,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12714,6 +12741,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12750,6 +12778,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12786,6 +12815,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12818,6 +12848,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12852,6 +12883,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

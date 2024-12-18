@@ -94,14 +94,15 @@ struct PurchasesView: View {
                 }
             }
         }
-        .bottomSheet(item: $presentedSubscriptionType) { type in
-            PurchaseBottomSheetView(type: type, isPresented: Binding(get: { presentedSubscriptionType != nil }, set: { if !$0 { presentedSubscriptionType = nil } })) {
-                print("Selected : \($0)")
+        .bottomSheet(
+            item: $presentedSubscriptionType,
+            configuration: ActionSheetConfiguration(style: .sheet).set(ignoreKeyboard: true),
+            ignoreSafeArea: true) { type in
+                PurchaseBottomSheetView(type: type, isPresented: Binding(get: { presentedSubscriptionType != nil }, set: { if !$0 { presentedSubscriptionType = nil } })) {
+                    print("Selected : \($0)")
+                }
             }
-        }
-
     }
-    
 
     @ViewBuilder private func row(title: String, description: String, image: Image, accented: Bool) -> some View {
         ListRow(padding: EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16)) {

@@ -6,6 +6,7 @@ struct PurchaseBottomSheetView: View {
     @StateObject private var viewModel: PurchaseBottomSheetViewModel
 
     @Binding private var isPresented: Bool
+    @State private var isPresentedPromoCode: Bool = false
 
     private let type: PurchasesViewModel.FeaturesType
     private let onSubscribe: (PurchaseBottomSheetViewModel.Period) -> ()
@@ -52,13 +53,18 @@ struct PurchaseBottomSheetView: View {
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 
                 Button(action: {
-                    print("Add promocode")
+                    isPresentedPromoCode = true
                 }) {
                     Text("purchases.period.button.promo".localized)
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .transparent))
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
+        }
+        .bottomSheet(isPresented: $isPresentedPromoCode, configuration: ActionSheetConfiguration(style: .sheet).set(corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])) {
+            PromoCodeBottomSheetView(isPresented: Binding(get: { isPresentedPromoCode }, set: { isPresented = $0 })) {
+                print("PromoCode!!!")
+            }
         }
     }
 

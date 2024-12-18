@@ -10,10 +10,14 @@ struct ActionSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
 
     private let onDismiss: (() -> Void)?
     private let contentView: (Item) -> ContentView
+    private let configuration: ActionSheetConfiguration
+    private let ignoreSafeArea: Bool
 
     @State private var bottomSheetViewController: UIViewController?
 
     init(item: Binding<Item?>,
+         configuration: ActionSheetConfiguration = ActionSheetConfiguration(style: .sheet),
+         ignoreSafeArea: Bool = false,
          onDismiss: (() -> Void)? = nil,
          @ViewBuilder contentView: @escaping (Item) -> ContentView)
     {
@@ -26,6 +30,8 @@ struct ActionSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
 
         self.onDismiss = onDismiss
         self.contentView = contentView
+        self.ignoreSafeArea = ignoreSafeArea
+        self.configuration = configuration
     }
 
     func body(content: Content) -> some View {
@@ -49,8 +55,9 @@ struct ActionSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
 
             let bottomSheetViewController = ActionSheetWrapperViewController(
                 contentView: hostingViewController.view,
+                ignoreSafeArea: ignoreSafeArea,
                 isPresented: $isPresented
-            ).toBottomSheet
+            ).toActionSheet(configuration: configuration)
 
             self.bottomSheetViewController = bottomSheetViewController
             controllerToPresentFrom.present(bottomSheetViewController, animated: true)
@@ -67,13 +74,20 @@ struct BooleanActionSheetModifier<ContentView: View>: ViewModifier {
     private let onDismiss: (() -> Void)?
     private let contentView: () -> ContentView
 
+    private let configuration: ActionSheetConfiguration
+    private let ignoreSafeArea: Bool
+
     @State private var bottomSheetViewController: UIViewController?
 
     init(isPresented: Binding<Bool>,
+         configuration: ActionSheetConfiguration = ActionSheetConfiguration(style: .sheet),
+         ignoreSafeArea: Bool = false,
          onDismiss: (() -> Void)? = nil,
          @ViewBuilder contentView: @escaping () -> ContentView)
     {
         _isPresented = isPresented
+        self.configuration = configuration
+        self.ignoreSafeArea = ignoreSafeArea
         self.onDismiss = onDismiss
         self.contentView = contentView
     }
@@ -100,7 +114,7 @@ struct BooleanActionSheetModifier<ContentView: View>: ViewModifier {
             let bottomSheetViewController = ActionSheetWrapperViewController(
                 contentView: hostingViewController.view,
                 isPresented: $isPresented
-            ).toBottomSheet
+            ).toActionSheet(configuration: configuration)
 
             self.bottomSheetViewController = bottomSheetViewController
             controllerToPresentFrom.present(bottomSheetViewController, animated: true)
@@ -114,12 +128,16 @@ struct BooleanActionSheetModifier<ContentView: View>: ViewModifier {
 public extension View {
     func bottomSheet(
         isPresented: Binding<Bool>,
+        configuration: ActionSheetConfiguration = ActionSheetConfiguration(style: .sheet),
+        ignoreSafeArea: Bool = false,
         onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> some View
     ) -> some View {
         modifier(
             BooleanActionSheetModifier(
                 isPresented: isPresented,
+                configuration: configuration,
+                ignoreSafeArea: ignoreSafeArea,
                 onDismiss: onDismiss,
                 contentView: content
             )
@@ -128,12 +146,16 @@ public extension View {
 
     func bottomSheet<Item>(
         item: Binding<Item?>,
+        configuration: ActionSheetConfiguration = ActionSheetConfiguration(style: .sheet),
+        ignoreSafeArea: Bool = false,
         onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping (Item) -> some View
     ) -> some View where Item: Identifiable {
         modifier(
             ActionSheetModifier(
                 item: item,
+                configuration: configuration,
+                ignoreSafeArea: ignoreSafeArea,
                 onDismiss: onDismiss,
                 contentView: content
             )
@@ -143,10 +165,12 @@ public extension View {
 
 class ActionSheetWrapperViewController: UIViewController {
     private let contentView: UIView
+    private let ignoreSafeArea: Bool
     @Binding private var isPresented: Bool
 
-    init(contentView: UIView, isPresented: Binding<Bool>) {
+    init(contentView: UIView, ignoreSafeArea: Bool = true, isPresented: Binding<Bool>) {
         self.contentView = contentView
+        self.ignoreSafeArea = ignoreSafeArea
         _isPresented = isPresented
 
         super.init(nibName: nil, bundle: nil)
@@ -164,7 +188,11 @@ class ActionSheetWrapperViewController: UIViewController {
 
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            if ignoreSafeArea {
+                make.edges.equalToSuperview()
+            } else {
+                make.edges.equalTo(view.safeAreaLayoutGuide)
+            }
         }
 
         contentView.backgroundColor = .clear

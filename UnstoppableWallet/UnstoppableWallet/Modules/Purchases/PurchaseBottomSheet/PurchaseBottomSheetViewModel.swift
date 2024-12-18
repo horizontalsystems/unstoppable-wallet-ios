@@ -1,5 +1,5 @@
 import Combine
-import StoreKit
+import Foundation
 
 class PurchaseBottomSheetViewModel: ObservableObject {
     @Published var selectedPeriod: Period = .annually
