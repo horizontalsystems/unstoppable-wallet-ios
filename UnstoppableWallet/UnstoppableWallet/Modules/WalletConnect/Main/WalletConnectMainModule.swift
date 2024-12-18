@@ -63,14 +63,14 @@ extension WalletConnectMainModule {
     }
 
     struct BlockchainSet {
-        static var empty: BlockchainSet = .init(items: Set(), methods: Set(), events: Set())
+        static var empty: BlockchainSet = .init(items: [], methods: Set(), events: Set())
 
-        var items: Set<BlockchainItem>
+        var items: [BlockchainItem]
         var methods: Set<String>
         var events: Set<String>
 
         mutating func formUnion(_ set: Self) {
-            items.formUnion(set.items)
+            items.append(contentsOf: set.items)
             methods.formUnion(set.methods)
             events.formUnion(set.events)
         }

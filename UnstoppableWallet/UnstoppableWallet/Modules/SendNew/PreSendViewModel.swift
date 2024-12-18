@@ -9,6 +9,7 @@ class PreSendViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let walletManager = App.shared.walletManager
     private let adapterManager = App.shared.adapterManager
+    private let decimalParser = AmountDecimalParser()
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -19,7 +20,7 @@ class PreSendViewModel: ObservableObject {
             syncFiatAmount()
             syncSendData()
 
-            let amount = Decimal(string: amountString)
+            let amount = decimalParser.parseAnyDecimal(from: amountString)
 
             if amount != self.amount {
                 amountString = self.amount?.description ?? ""
@@ -29,7 +30,7 @@ class PreSendViewModel: ObservableObject {
 
     @Published var amountString: String = "" {
         didSet {
-            var amount = Decimal(string: amountString)
+            var amount = decimalParser.parseAnyDecimal(from: amountString)
 
             if amount == 0 {
                 amount = nil
@@ -49,7 +50,7 @@ class PreSendViewModel: ObservableObject {
         didSet {
             syncAmount()
 
-            let amount = Decimal(string: fiatAmountString)?.rounded(decimal: 2)
+            let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             if amount != fiatAmount {
                 fiatAmountString = fiatAmount?.description ?? ""
@@ -59,7 +60,7 @@ class PreSendViewModel: ObservableObject {
 
     @Published var fiatAmountString: String = "" {
         didSet {
-            let amount = Decimal(string: fiatAmountString)?.rounded(decimal: 2)
+            let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             guard amount != fiatAmount else {
                 return
