@@ -156,6 +156,7 @@ extension ActionSheetControllerNew {
         view.addSubview(content.view)
         setContentViewPosition(animated: false)
         content.view.clipsToBounds = true
+        content.view.layer.maskedCorners = configuration.corners
         content.view.cornerRadius = configuration.cornerRadius
     }
 
@@ -168,16 +169,18 @@ extension ActionSheetControllerNew {
         guard !dismissing, content.view.superview != nil else {
             return
         }
+        
+        let keyboardHeight = configuration.ignoreKeyboard ? 0 : keyboardHeightRelay.value
 
         content.view.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(configuration.sideMargin)
             if configuration.style == .sheet { // content controller from bottom of superview
                 maker.top.equalToSuperview()
-                maker.bottom.equalToSuperview().inset(configuration.sideMargin + keyboardHeightRelay.value).priority(.required)
+                maker.bottom.equalToSuperview().inset(configuration.sideMargin + keyboardHeight).priority(.required)
             } else { // content controller by center of superview
                 maker.centerX.equalToSuperview()
                 maker.centerY.equalToSuperview().priority(.low)
-                maker.bottom.lessThanOrEqualTo(view.snp.bottom).inset(keyboardHeightRelay.value + 16)
+                maker.bottom.lessThanOrEqualTo(view.snp.bottom).inset(keyboardHeight + 16)
             }
             if let height = viewDelegate?.height {
                 maker.height.equalTo(height)
