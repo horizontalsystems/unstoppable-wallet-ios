@@ -16,3 +16,19 @@ extension View {
         UIHostingController(rootView: ThemeNavigationView { self })
     }
 }
+
+extension UIView {
+    static func firstSubview<T>(in view: UIView) -> T? {
+        if let viewT = view as? T {
+            return viewT
+        }
+        
+        for subview in view.subviews {
+            if let viewT: T = firstSubview(in: subview) {
+                return viewT
+            }
+        }
+        
+        return nil
+    }
+}

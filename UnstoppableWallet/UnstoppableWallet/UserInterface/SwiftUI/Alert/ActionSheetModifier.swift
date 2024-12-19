@@ -56,6 +56,7 @@ struct ActionSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
             let bottomSheetViewController = ActionSheetWrapperViewController(
                 contentView: hostingViewController.view,
                 ignoreSafeArea: ignoreSafeArea,
+                focusFirstTextField: configuration.focusFirstTextField,
                 isPresented: $isPresented
             ).toActionSheet(configuration: configuration)
 
@@ -110,9 +111,9 @@ struct BooleanActionSheetModifier<ContentView: View>: ViewModifier {
 
         if isPresented {
             let hostingViewController = UIHostingController(rootView: contentView())
-
             let bottomSheetViewController = ActionSheetWrapperViewController(
                 contentView: hostingViewController.view,
+                focusFirstTextField: configuration.focusFirstTextField,
                 isPresented: $isPresented
             ).toActionSheet(configuration: configuration)
 
@@ -166,11 +167,13 @@ public extension View {
 class ActionSheetWrapperViewController: UIViewController {
     private let contentView: UIView
     private let ignoreSafeArea: Bool
+    private let focusFirstTextField: Bool
     @Binding private var isPresented: Bool
 
-    init(contentView: UIView, ignoreSafeArea: Bool = true, isPresented: Binding<Bool>) {
+    init(contentView: UIView, ignoreSafeArea: Bool = true, focusFirstTextField: Bool = false, isPresented: Binding<Bool>) {
         self.contentView = contentView
         self.ignoreSafeArea = ignoreSafeArea
+        self.focusFirstTextField = focusFirstTextField
         _isPresented = isPresented
 
         super.init(nibName: nil, bundle: nil)
@@ -197,7 +200,21 @@ class ActionSheetWrapperViewController: UIViewController {
 
         contentView.backgroundColor = .clear
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if focusFirstTextField, let textField: UITextField = UIView.firstSubview(in: self.view) {
+            textField.becomeFirstResponder()
+        }
+    }
 
+    override var canBecomeFirstResponder: Bool {
+        return contentView.canBecomeFirstResponder
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return contentView.becomeFirstResponder()
+    }
+ 
     override public func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isPresented = false
