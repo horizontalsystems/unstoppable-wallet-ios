@@ -2210,3 +2210,4 @@
 "purchases.period.button.promo" = "Add Promo Code";
 
 "purchases.promocode.title" = "Enter Promo Code";
+"purchases.promocode.placeholder" = "";

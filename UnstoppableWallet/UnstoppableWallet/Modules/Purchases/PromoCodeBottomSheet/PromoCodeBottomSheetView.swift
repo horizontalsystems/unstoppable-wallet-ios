@@ -6,7 +6,7 @@ struct PromoCodeBottomSheetView: View {
     @StateObject private var viewModel: PromoCodeBottomSheetViewModel
 
     @Binding private var isPresented: Bool
-    @FocusState private var isFocused: Bool
+    @FocusState private var focusField: FocusField?
 
     init(isPresented: Binding<Bool>, onSubscribe: @escaping () -> ()) {
         _viewModel = StateObject(wrappedValue: PromoCodeBottomSheetViewModel(onSubscribe: onSubscribe))
@@ -33,13 +33,14 @@ struct PromoCodeBottomSheetView: View {
             InputTextRow(vertical: .margin8) {
                 ShortcutButtonsView(
                     content: {
-                        InputTextView(
-                            placeholder: "backup.cloud.name.placeholder".localized,
+                        TextField(
+                            "purchases.promocode.placeholder".localized,
                             text: $viewModel.promocode
                         )
+                        .focused($focusField, equals: .promocode)
+                        .accentColor(.themeYellow)
                         .autocapitalization(.none)
                         .autocorrectionDisabled()
-                        .focused($isFocused)
                         .font(.themeBody)
                     },
                     showDelete: .init(get: { !viewModel.promocode.isEmpty }, set: { _ in }),
@@ -65,9 +66,15 @@ struct PromoCodeBottomSheetView: View {
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: 0, trailing: .margin24))
         }
-        .onAppear {
-            isFocused = true
+        .onFirstAppear {
+            focusField = .promocode
         }
     }
 
+}
+
+extension PromoCodeBottomSheetView {
+    private enum FocusField: Int, Hashable {
+        case promocode
+    }
 }

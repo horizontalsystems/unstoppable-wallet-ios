@@ -128,6 +128,14 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
 
         didAppear = false
     }
+    
+    override public var canBecomeFirstResponder: Bool {
+        return content.canBecomeFirstResponder
+    }
+
+    override public func becomeFirstResponder() -> Bool {
+        return content.becomeFirstResponder()
+    }
 
     @objc private func keyboardNotification(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
@@ -154,6 +162,12 @@ extension ActionSheetControllerNew {
     private func addChildController() {
         addChild(content)
         view.addSubview(content.view)
+
+        view.backgroundColor = configuration.contentBackgroundColor
+        view.clipsToBounds = true
+        view.layer.maskedCorners = configuration.corners
+        view.cornerRadius = configuration.cornerRadius
+
         setContentViewPosition(animated: false)
         content.view.clipsToBounds = true
         content.view.layer.maskedCorners = configuration.corners

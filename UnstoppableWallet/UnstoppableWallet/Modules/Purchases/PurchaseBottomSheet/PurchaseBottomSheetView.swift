@@ -61,7 +61,13 @@ struct PurchaseBottomSheetView: View {
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
         }
-        .bottomSheet(isPresented: $isPresentedPromoCode, configuration: ActionSheetConfiguration(style: .sheet).set(corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])) {
+        .bottomSheet(
+            isPresented: $isPresentedPromoCode,
+            configuration: ActionSheetConfiguration(style: .sheet)
+                .set(corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+                .set(focusFirstTextField: true)
+                .set(contentBackgroundColor: .themeLawrence)
+        ) {
             PromoCodeBottomSheetView(isPresented: Binding(get: { isPresentedPromoCode }, set: { isPresented = $0 })) {
                 print("PromoCode!!!")
             }
