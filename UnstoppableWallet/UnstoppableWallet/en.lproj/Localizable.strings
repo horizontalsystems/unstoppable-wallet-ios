@@ -2211,3 +2211,5 @@
 
 "purchases.promocode.title" = "Enter Promo Code";
 "purchases.promocode.placeholder" = "";
+"purchases.promocode.button.invalid" = "Invalid Promo Code";
+"purchases.promocode.button.already_used" = "Promo Code Already Used";

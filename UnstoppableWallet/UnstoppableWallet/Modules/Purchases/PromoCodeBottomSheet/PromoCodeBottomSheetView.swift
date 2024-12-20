@@ -8,8 +8,8 @@ struct PromoCodeBottomSheetView: View {
     @Binding private var isPresented: Bool
     @FocusState private var focusField: FocusField?
 
-    init(isPresented: Binding<Bool>, onSubscribe: @escaping () -> ()) {
-        _viewModel = StateObject(wrappedValue: PromoCodeBottomSheetViewModel(onSubscribe: onSubscribe))
+    init(isPresented: Binding<Bool>, onApplyPromo: @escaping ((PurchaseManager.PromoData) -> ())) {
+        _viewModel = StateObject(wrappedValue: PromoCodeBottomSheetViewModel(onApplyPromo: onApplyPromo))
 
         _isPresented = isPresented
     }
@@ -38,6 +38,7 @@ struct PromoCodeBottomSheetView: View {
                             text: $viewModel.promocode
                         )
                         .focused($focusField, equals: .promocode)
+                        
                         .accentColor(.themeYellow)
                         .autocapitalization(.none)
                         .autocorrectionDisabled()
@@ -53,22 +54,55 @@ struct PromoCodeBottomSheetView: View {
                 )
             }
             .modifier(CautionBorder(cautionState: $viewModel.promocodeCautionState))
-            .modifier(CautionPrompt(cautionState: $viewModel.promocodeCautionState))
             .padding(EdgeInsets(top: .margin24, leading: .margin16, bottom: 0, trailing: .margin16))
             
             VStack(spacing: .margin12) {
-                Button(action: {
-                    print("Tap apply")
-                }) {
-                    Text("button.apply".localized)
-                }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                buttonView()
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: 0, trailing: .margin24))
         }
         .onFirstAppear {
             focusField = .promocode
         }
+    }
+    
+    @ViewBuilder private func buttonView() -> some View {
+        let (title, disabled, showProgress) = buttonState()
+
+        Button(action: {
+            viewModel.applyPromo()
+            isPresented = false
+        }) {
+            HStack(spacing: .margin8) {
+                if showProgress {
+                    ProgressView()
+                }
+
+                Text(title)
+            }
+        }
+        .disabled(disabled)
+        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+    }
+
+    private func buttonState() -> (String, Bool, Bool) {
+        var title: String = "button.apply".localized
+        var disabled = true
+        var showProgress = false
+
+        switch viewModel.buttonState {
+        case .idle: ()
+        case .loading:
+            showProgress = true
+        case .apply:
+            disabled = false
+        case .invalid:
+            title = "purchases.promocode.button.invalid".localized
+        case .alreadyUsed:
+            title = "purchases.promocode.button.already_used".localized
+        }
+
+        return (title, disabled, showProgress)
     }
 
 }
