@@ -68,8 +68,8 @@ struct PurchaseBottomSheetView: View {
                 .set(focusFirstTextField: true)
                 .set(contentBackgroundColor: .themeLawrence)
         ) {
-            PromoCodeBottomSheetView(isPresented: Binding(get: { isPresentedPromoCode }, set: { isPresented = $0 })) {
-                print("PromoCode!!!")
+            PromoCodeBottomSheetView(isPresented: Binding(get: { isPresentedPromoCode }, set: { isPresented = $0 })) { data in
+                print("PromoCode with discount \(data.discount)!!!")
             }
         }
     }

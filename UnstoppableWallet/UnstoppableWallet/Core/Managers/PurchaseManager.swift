@@ -112,3 +112,26 @@ extension PurchaseManager: SKPaymentTransactionObserver {
         return true
     }
 }
+
+extension PurchaseManager {
+    func check(promocode: String) async throws -> PromoData {
+        try await Task.sleep(for: .seconds(2))
+
+        if promocode == "promo" {
+            return PromoData(discount: 10)
+        } else {
+            throw PromoCodeError.invalid
+        }
+    }
+}
+
+extension PurchaseManager {
+    enum PromoCodeError: Error {
+        case invalid
+        case used
+    }
+    
+    struct PromoData {
+        let discount: Int
+    }
+}
