@@ -1829,6 +1829,8 @@
 		6B5F5E162C0DDD7500E03EB2 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E142C0DDD7100E03EB2 /* RankView.swift */; };
 		6B5F5E182C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
 		6B5F5E192C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
+		6B67F0F22D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
+		6B67F0F32D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B7EB81D2D09255500783F66 /* RadialGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB81C2D09255500783F66 /* RadialGradientView.swift */; };
 		6B7EB81E2D09255500783F66 /* RadialGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB81C2D09255500783F66 /* RadialGradientView.swift */; };
 		6B7EB8202D0C164C00783F66 /* PurchaseSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB81F2D0C164C00783F66 /* PurchaseSegmentView.swift */; };
@@ -4154,6 +4156,7 @@
 		6B5F5E102C0C660900E03EB2 /* MarketPlatformViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformViewModel.swift; sourceTree = "<group>"; };
 		6B5F5E142C0DDD7100E03EB2 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
+		6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulSubscriptionView.swift; sourceTree = "<group>"; };
 		6B7EB81C2D09255500783F66 /* RadialGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialGradientView.swift; sourceTree = "<group>"; };
 		6B7EB81F2D0C164C00783F66 /* PurchaseSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseSegmentView.swift; sourceTree = "<group>"; };
 		6B7EB8252D0D11E900783F66 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
@@ -7373,6 +7376,14 @@
 			path = Rank;
 			sourceTree = "<group>";
 		};
+		6B67F0F02D1C06D8003452DC /* SuccessfulSubscription */ = {
+			isa = PBXGroup;
+			children = (
+				6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */,
+			);
+			path = SuccessfulSubscription;
+			sourceTree = "<group>";
+		};
 		6BB14F782C05FAA600E879B2 /* Tvl */ = {
 			isa = PBXGroup;
 			children = (
@@ -8846,6 +8857,7 @@
 		D3E1E8722C21856000E07052 /* Purchases */ = {
 			isa = PBXGroup;
 			children = (
+				6B67F0F02D1C06D8003452DC /* SuccessfulSubscription */,
 				6BBB92B52D11644D00112409 /* PromoCodeBottomSheet */,
 				6BBB92AB2D0E889C00112409 /* PurchaseBottomSheet */,
 				D3E1E8732C21859000E07052 /* PurchasesView.swift */,
@@ -9705,6 +9717,7 @@
 				11B3517F94025A2390B8FF15 /* EvmNetworkModule.swift in Sources */,
 				11B352D006136B42D2705778 /* BalanceData.swift in Sources */,
 				D36DE0DF272FD887000BC916 /* OneInchViewModel.swift in Sources */,
+				6B67F0F32D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */,
 				6BB14F732BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */,
 				D30D7E692CAACD0400B8CAA7 /* TonConnectSendHandler.swift in Sources */,
 				D09200C6293F21720091981A /* RestoreNonStandardViewModel.swift in Sources */,
@@ -11182,6 +11195,7 @@
 				11B35EA3CBC8B198C3A71382 /* EvmNetworkModule.swift in Sources */,
 				D36DE0C0272FD864000BC916 /* UniswapService.swift in Sources */,
 				11B35ED22837284580055F0A /* BalanceData.swift in Sources */,
+				6B67F0F22D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */,
 				11B3534B567884E30A871F32 /* AddTokenModule.swift in Sources */,
 				D30D7E682CAACD0400B8CAA7 /* TonConnectSendHandler.swift in Sources */,
 				6BB14F722BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */,

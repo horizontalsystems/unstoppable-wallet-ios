@@ -101,6 +101,10 @@ extension PurchaseManager {
             print("UNKNOWN")
         }
     }
+    
+    func purchase(period: String) async throws {    // STUB
+        try await Task.sleep(for: .seconds(2))
+    }
 }
 
 extension PurchaseManager: SKPaymentTransactionObserver {
@@ -114,7 +118,7 @@ extension PurchaseManager: SKPaymentTransactionObserver {
 }
 
 extension PurchaseManager {
-    func check(promocode: String) async throws -> PromoData {
+    func check(promocode: String) async throws -> PromoData { // STUB
         if promocode == "" {
             return .empty
         }

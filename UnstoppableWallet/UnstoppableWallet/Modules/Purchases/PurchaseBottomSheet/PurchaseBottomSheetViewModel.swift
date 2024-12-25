@@ -4,14 +4,34 @@ import Foundation
 class PurchaseBottomSheetViewModel: ObservableObject {
     @Published var selectedPeriod: Period = .annually
     @Published var promoData: PurchaseManager.PromoData = .empty
+    @Published var buttonState: ButtonState = .idle
 
+    private let purchaseManager = App.shared.purchaseManager
     private let onSubscribe: ((Period) -> ())
-    
+
     init(onSubscribe: @escaping ((Period) -> ())) {
         self.onSubscribe = onSubscribe
     }
 
-    func onSelect() {
+    @MainActor private func update(state: ButtonState) async {
+        await MainActor.run { [weak self] in
+            self?.buttonState = state
+        }
+    }
+
+    func subscribe() {
+        Task {
+            await update(state: .loading)
+            
+            do {
+                try await purchaseManager.purchase(period: selectedPeriod.rawValue)
+                await update(state: .idle)
+                onSubscribe(selectedPeriod)
+            } catch {
+                print("ERROR: \(error)") // TODO: Handle error
+                await update(state: .idle)
+            }
+        }
     }
     
     func set(period: Period) {
@@ -24,6 +44,11 @@ class PurchaseBottomSheetViewModel: ObservableObject {
 }
 
 extension PurchaseBottomSheetViewModel {
+    enum ButtonState {
+        case idle
+        case loading
+    }
+
     enum Period: String, CaseIterable, Identifiable {
         case annually
         case monthly

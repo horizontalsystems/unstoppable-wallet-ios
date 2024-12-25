@@ -46,17 +46,24 @@ struct PurchaseBottomSheetView: View {
             
             VStack(spacing: .margin12) {
                 Button(action: {
-                    onSubscribe(viewModel.selectedPeriod)
+                    viewModel.subscribe()
                 }) {
-                    Text("purchases.period.button.try".localized)
+                    HStack(spacing: .margin8) {
+                        if viewModel.buttonState == .loading {
+                            ProgressView()
+                        }
+                        Text("purchases.period.button.try".localized)
+                    }
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .disabled(viewModel.buttonState == .loading)
+                .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
                 
                 Button(action: {
                     isPresentedPromoCode = true
                 }) {
                     Text("purchases.period.button.promo".localized)
                 }
+                .disabled(viewModel.buttonState == .loading)
                 .buttonStyle(PrimaryButtonStyle(style: .transparent))
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
