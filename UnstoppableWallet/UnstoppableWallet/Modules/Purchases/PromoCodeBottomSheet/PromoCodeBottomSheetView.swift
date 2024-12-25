@@ -8,9 +8,9 @@ struct PromoCodeBottomSheetView: View {
     @Binding private var isPresented: Bool
     @FocusState private var focusField: FocusField?
 
-    init(isPresented: Binding<Bool>, onApplyPromo: @escaping ((PurchaseManager.PromoData) -> ())) {
-        _viewModel = StateObject(wrappedValue: PromoCodeBottomSheetViewModel(onApplyPromo: onApplyPromo))
-
+    init(promo: String, isPresented: Binding<Bool>, onApplyPromo: @escaping ((PurchaseManager.PromoData) -> ())) {
+        _viewModel = StateObject(wrappedValue: PromoCodeBottomSheetViewModel(promo: promo, onApplyPromo: onApplyPromo))
+        
         _isPresented = isPresented
     }
 
