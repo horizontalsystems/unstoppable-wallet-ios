@@ -2213,3 +2213,9 @@
 "purchases.promocode.placeholder" = "";
 "purchases.promocode.button.invalid" = "Invalid Promo Code";
 "purchases.promocode.button.already_used" = "Promo Code Already Used";
+
+"purchases.successful_subscription.title" = "Premium";
+"purchases.successful_subscription.description" = "Thank you for your subscription!";
+"purchases.successful_subscription.subscribed_to_1" = "You have activated the";
+"purchases.successful_subscription.subscribed_to_2" = "plan.";
+"purchases.successful_subscription.button.go_app" = "Go to App";

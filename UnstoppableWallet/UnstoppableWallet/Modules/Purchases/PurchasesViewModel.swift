@@ -1,28 +1,29 @@
 import Combine
 import StoreKit
 
-private let proFeatures: [PurchasesViewModel.Feature]  = [
-    .init(title: "token_insights", iconName: "circle_portfolio_24"),
-    .init(title: "advanced_search", iconName: "search_discovery_24"),
-    .init(title: "trade_signals", iconName: "bell_ring_24"),
-    .init(title: "favorable_swaps", iconName: "precent_24"),
-    .init(title: "tx_speed_up", iconName: "outgoing_raw_24"),
-    .init(title: "duress_mode", iconName: "switch_wallet_24"),
-    .init(title: "address_phishing", iconName: "shield_24"),
-    .init(title: "privacy_mode", iconName: "fraud_24"),
-]
-
-private let vipFeatures: [PurchasesViewModel.Feature]  = [
-    .init(title: "vip_support", iconName: "support_2_24"),
-    .init(title: "vip_club", iconName: "support_24"),
-]
-
 class PurchasesViewModel: ObservableObject {
+    private static let proFeatures: [PurchasesViewModel.Feature]  = [
+        .init(title: "token_insights", iconName: "circle_portfolio_24"),
+        .init(title: "advanced_search", iconName: "search_discovery_24"),
+        .init(title: "trade_signals", iconName: "bell_ring_24"),
+        .init(title: "favorable_swaps", iconName: "precent_24"),
+        .init(title: "tx_speed_up", iconName: "outgoing_raw_24"),
+        .init(title: "duress_mode", iconName: "switch_wallet_24"),
+        .init(title: "address_phishing", iconName: "shield_24"),
+        .init(title: "privacy_mode", iconName: "fraud_24"),
+    ]
+
+    static let vipFeatures: [PurchasesViewModel.Feature]  = [
+        .init(title: "vip_support", iconName: "support_2_24"),
+        .init(title: "vip_club", iconName: "support_24"),
+    ]
+
     private let purchaseManager = App.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var viewItems: [ViewItem]
     @Published var featuresType: FeaturesType = .pro
+    var subscribedSuccessful = false
     
     @Published private(set) var products: [Product]
     @Published private(set) var purchasedProductIds = Set<String>()
@@ -30,7 +31,7 @@ class PurchasesViewModel: ObservableObject {
     init() {
         products = purchaseManager.products
         purchasedProductIds = purchaseManager.purchasedProductIds
-        viewItems = proFeatures.map { ViewItem(feature: $0) }
+        viewItems = Self.proFeatures.map { ViewItem(feature: $0) }
 
         purchaseManager.$products
             .receive(on: DispatchQueue.main)
@@ -63,7 +64,11 @@ class PurchasesViewModel: ObservableObject {
     
     func setType(_ type: FeaturesType) {
         featuresType = type
-        viewItems = (type == .vip ? vipFeatures.map { ViewItem(feature: $0, accented: true) } : []) + proFeatures.map { ViewItem(feature: $0) }
+        viewItems = (type == .vip ? Self.vipFeatures.map { ViewItem(feature: $0, accented: true) } : []) + Self.proFeatures.map { ViewItem(feature: $0) }
+    }
+    
+    func onSubscribe() {
+        subscribedSuccessful = true
     }
 }
 

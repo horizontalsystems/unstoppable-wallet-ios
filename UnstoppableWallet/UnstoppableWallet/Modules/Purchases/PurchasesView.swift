@@ -3,10 +3,11 @@ import SwiftUI
 struct PurchasesView: View {
     @StateObject private var viewModel = PurchasesViewModel()
     
-    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.dismiss) private var dismiss
     @State private var bottomHeight: CGFloat = 0
     
     @State private var presentedSubscriptionType: PurchasesViewModel.FeaturesType?
+    @State private var successfulSubscriptionPresented = false
 
     var body: some View {
         ThemeNavigationView {
@@ -39,7 +40,7 @@ struct PurchasesView: View {
                                             )
                                         }
                                     }
-                                    .themeListStyle(.white5WithBottomCorners)
+                                    .themeListStyle(.steel10WithBottomCorners([.bottomLeft, .bottomRight]))
                                     .padding(.horizontal, .margin16)
                                 }
                                 .padding(.bottom, .margin24)
@@ -58,17 +59,14 @@ struct PurchasesView: View {
                             }) {
                                 Text("purchases.button.try".localized)
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                            // .disabled(!viewModel.saveEnabled)
+                            .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
                             
                             Button(action: {
-                                // viewModel.onTapSave()
-                                presentationMode.wrappedValue.dismiss()
+                                successfulSubscriptionPresented = true
                             }) {
                                 Text("purchases.button.restore".localized)
                             }
                             .buttonStyle(PrimaryButtonStyle(style: .transparent))
-                            // .disabled(!viewModel.saveEnabled)
                         }
                         .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
                         .background(
@@ -88,7 +86,7 @@ struct PurchasesView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("button.close".localized) {
-                            presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }
                     }
                 }
@@ -97,11 +95,22 @@ struct PurchasesView: View {
         .bottomSheet(
             item: $presentedSubscriptionType,
             configuration: ActionSheetConfiguration(style: .sheet).set(ignoreKeyboard: true),
-            ignoreSafeArea: true) { type in
-                PurchaseBottomSheetView(type: type, isPresented: Binding(get: { presentedSubscriptionType != nil }, set: { if !$0 { presentedSubscriptionType = nil } })) {
-                    print("Selected : \($0)")
+            ignoreSafeArea: true,
+            onDismiss: {
+                if viewModel.subscribedSuccessful {
+                    successfulSubscriptionPresented = true
+                }
+            }) { type in
+                PurchaseBottomSheetView(type: type, isPresented: Binding(get: { presentedSubscriptionType != nil }, set: { if !$0 { presentedSubscriptionType = nil } })) { _ in
+                    viewModel.onSubscribe()
+                    presentedSubscriptionType = nil
                 }
             }
+        .sheet(isPresented: $successfulSubscriptionPresented) {
+            SuccessfulSubscriptionView(type: viewModel.featuresType) {
+                dismiss()
+            }
+        }
     }
 
     @ViewBuilder private func row(title: String, description: String, image: Image, accented: Bool) -> some View {
