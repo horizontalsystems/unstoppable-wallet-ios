@@ -35,11 +35,11 @@ class TonConnectManager {
         self.storage = storage
         self.accountManager = accountManager
 
-        accountManager.accountDeletedPublisher
-            .sink { [weak self] in self?.handleDeleted(account: $0) }
-            .store(in: &cancellables)
-
-        syncTonConnectApps()
+//        accountManager.accountDeletedPublisher
+//            .sink { [weak self] in self?.handleDeleted(account: $0) }
+//            .store(in: &cancellables)
+//
+//        syncTonConnectApps()
     }
 
     private func handleDeleted(account: Account) {
@@ -63,7 +63,7 @@ class TonConnectManager {
             tonConnectApps = []
         }
 
-        start()
+//        start()
     }
 
     public func start() {
@@ -204,7 +204,7 @@ class TonConnectManager {
     private func delete(tonConnectApp: TonConnectApp) throws {
         try storage.delete(tonConnectApp: tonConnectApp)
 
-        syncTonConnectApps()
+//        syncTonConnectApps()
     }
 }
 
@@ -243,7 +243,7 @@ extension TonConnectManager {
         try await send(message: message, clientId: parameters.clientId, sessionCrypto: sessionCrypto)
         try storeConnectedApp(account: account, sessionCrypto: sessionCrypto, parameters: parameters, manifest: manifest)
 
-        syncTonConnectApps()
+//        syncTonConnectApps()
     }
 
     func disconnect(tonConnectApp: TonConnectApp) async throws {
