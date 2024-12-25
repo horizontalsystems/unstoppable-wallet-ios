@@ -54,7 +54,7 @@ enum MainModule {
         let tonConnectHandler = TonConnectEventHandler(parentViewController: viewController)
 
         eventHandler.append(handler: deepLinkHandler)
-        eventHandler.append(handler: tonConnectHandler)
+//        eventHandler.append(handler: tonConnectHandler)
         eventHandler.append(handler: widgetCoinHandler)
         eventHandler.append(handler: sendAddressHandler)
         eventHandler.append(handler: telegramUserHandler)
