@@ -3,6 +3,7 @@ import Foundation
 
 class PurchaseBottomSheetViewModel: ObservableObject {
     @Published var selectedPeriod: Period = .annually
+    @Published var promoData: PurchaseManager.PromoData = .empty
 
     private let onSubscribe: ((Period) -> ())
     
@@ -13,8 +14,12 @@ class PurchaseBottomSheetViewModel: ObservableObject {
     func onSelect() {
     }
     
-    func setPeriod(_ period: Period) {
+    func set(period: Period) {
         selectedPeriod = period
+    }
+    
+    func set(promoData: PurchaseManager.PromoData) {
+        self.promoData = promoData
     }
 }
 

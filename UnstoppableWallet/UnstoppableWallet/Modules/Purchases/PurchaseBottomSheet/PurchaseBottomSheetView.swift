@@ -36,7 +36,7 @@ struct PurchaseBottomSheetView: View {
             
             SubscribePeriodSegmentView(selection: $viewModel.selectedPeriod)
                 .onChange(of: viewModel.selectedPeriod) { newValue in
-                    viewModel.setPeriod(newValue)
+                    viewModel.set(period: newValue)
                 }
                 .padding(.top, .margin12)
                 .padding(.horizontal, .margin16)
@@ -68,8 +68,8 @@ struct PurchaseBottomSheetView: View {
                 .set(focusFirstTextField: true)
                 .set(contentBackgroundColor: .themeLawrence)
         ) {
-            PromoCodeBottomSheetView(isPresented: Binding(get: { isPresentedPromoCode }, set: { isPresented = $0 })) { data in
-                print("PromoCode with discount \(data.discount)!!!")
+            PromoCodeBottomSheetView(promo: viewModel.promoData.promocode, isPresented: Binding(get: { isPresentedPromoCode }, set: { isPresentedPromoCode = $0 })) { data in
+                viewModel.set(promoData: data)
             }
         }
     }
