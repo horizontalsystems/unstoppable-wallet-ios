@@ -13029,7 +13029,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/LitecoinKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.0;
+				version = 3.0.1;
 			};
 		};
 		D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit" */ = {
@@ -13165,7 +13165,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.19;
+				version = 1.0.20;
 			};
 		};
 		D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */ = {
