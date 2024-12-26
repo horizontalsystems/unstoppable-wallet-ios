@@ -7,9 +7,9 @@ struct SuccessfulSubscriptionView: View {
     let onDismissPurchases: () -> ()
     
     var body: some View {
-        ThemeRadialView {
-            ThemeNavigationView {
-                ThemeView {
+        ThemeNavigationView {
+            ThemeView {
+                ThemeRadialView {
                     VStack {
                         Image("box_2")
                             .padding(.vertical, .margin24)

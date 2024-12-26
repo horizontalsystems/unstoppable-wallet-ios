@@ -17,6 +17,8 @@ class PurchasesViewModel: ObservableObject {
         .init(title: "vip_support", iconName: "support_2_24"),
         .init(title: "vip_club", iconName: "support_24"),
     ]
+    
+    let approvedIcons: [String] = ["bitcoin", "wallet_scrutiny", "certik"]
 
     private let purchaseManager = App.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
