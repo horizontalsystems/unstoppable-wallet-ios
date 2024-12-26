@@ -8,7 +8,7 @@ struct PurchasesView: View {
     
     @State private var presentedSubscriptionType: PurchasesViewModel.FeaturesType?
     @State private var successfulSubscriptionPresented = false
-
+    
     var body: some View {
         ThemeNavigationView {
             ThemeView {
@@ -42,6 +42,8 @@ struct PurchasesView: View {
                                     }
                                     .themeListStyle(.steel10WithBottomCorners([.bottomLeft, .bottomRight]))
                                     .padding(.horizontal, .margin16)
+                                    
+                                    walletDescription()
                                 }
                                 .padding(.bottom, .margin24)
                             }
@@ -106,26 +108,58 @@ struct PurchasesView: View {
                     presentedSubscriptionType = nil
                 }
             }
-        .sheet(isPresented: $successfulSubscriptionPresented) {
-            SuccessfulSubscriptionView(type: viewModel.featuresType) {
-                dismiss()
+            .sheet(isPresented: $successfulSubscriptionPresented) {
+                SuccessfulSubscriptionView(type: viewModel.featuresType) {
+                    dismiss()
+                }
             }
-        }
     }
-
+    
     @ViewBuilder private func row(title: String, description: String, image: Image, accented: Bool) -> some View {
         ListRow(padding: EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16)) {
             HStack(spacing: .margin16) {
                 image
                     .renderingMode(.template)
-                    .foregroundColor(accented ? .themeYellow : .themeSteelLight)
+                    .foregroundColor(accented ? .themeYellow : .themeLeah)
                     .frame(width: 24, height: 24)
-
+                
                 VStack(spacing: .heightOneDp) {
                     Text(title).themeSubhead1(color: .themeLeah)
                     Text(description).themeCaption()
                 }
             }
+        }
+    }
+
+    @ViewBuilder private func walletDescription() -> some View {
+        VStack {
+            Text("purchases.wallet_description.title".localized)
+                .themeHeadline2()
+                .multilineTextAlignment(.center)
+                .padding(EdgeInsets(top: .margin32, leading: .margin32, bottom: .margin24, trailing: .margin32))
+            
+            Image("premium_security")
+            
+            approvedBy()
+        }
+    }
+
+    @ViewBuilder private func approvedBy() -> some View {
+        VStack {
+            Text("purchases.wallet_description.approved".localized)
+                .textSubhead2()
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, .margin16)
+                .padding(.vertical, .margin16)
+
+            LazyVGrid(columns: viewModel.approvedIcons.map { _ in GridItem(.flexible(), alignment: .center) }, spacing: .margin8) {
+                ForEach(viewModel.approvedIcons, id: \.self) { icon in
+                    Image(icon)
+                        .renderingMode(.template)
+                        .foregroundColor(.themeLeah)
+                }
+            }
+            .padding(.horizontal, .margin16)
         }
     }
 }

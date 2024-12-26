@@ -52,7 +52,7 @@ class MainSettingsPremiumCell: UITableViewCell {
 
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
         titleLabel.font = .headline1
-        titleLabel.textColor = .themeWhite
+        titleLabel.textColor = .themeLeah
         titleLabel.text = "premium.cell.title".localized
 
         cardView.contentView.addSubview(tryForFreeLabel)
@@ -74,11 +74,11 @@ class MainSettingsPremiumCell: UITableViewCell {
 
         titleDescription.setContentHuggingPriority(.required, for: .horizontal)
         titleDescription.font = .headline2
-        titleDescription.textColor = .themeWhite
+        titleDescription.textColor = .themeLeah
 
         let description = NSMutableAttributedString()
         description.append(
-            NSAttributedString(string: "premium.cell.description1".localized + " ", attributes: [.font: UIFont.headline2, .foregroundColor: UIColor.themeWhite])
+            NSAttributedString(string: "premium.cell.description1".localized + " ", attributes: [.font: UIFont.headline2, .foregroundColor: UIColor.themeLeah])
         )
         description.append(
             NSAttributedString(string: "premium.cell.description2".localized, attributes: [.font: UIFont.headline2, .foregroundColor: UIColor.themeYellowD])

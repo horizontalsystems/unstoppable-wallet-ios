@@ -2195,6 +2195,9 @@
 "purchases.vip_club" = "VIP Club";
 "purchases.vip_club.description" = "Private chat with exclusive information.";
 
+"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
+"purchases.wallet_description.approved" = "Approved and Audited By:";
+
 "purchases.button.try" = "Try for FREE";
 "purchases.button.restore" = "Restore";
 
