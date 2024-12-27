@@ -18,6 +18,7 @@ class MainSettingsService {
     private let currencyManager: CurrencyManager
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let subscriptionManager: SubscriptionManager
+    private let purchaseManager = App.shared.purchaseManager
     private let rateAppManager: RateAppManager
 
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
@@ -132,6 +133,14 @@ extension MainSettingsService {
 
     var isAuthenticated: Bool {
         subscriptionManager.isAuthenticated
+    }
+    
+    var subscriptionPublisher: AnyPublisher<PurchaseManager.Subscription?, Never> {
+        purchaseManager.$subscription
+    }
+    
+    var subscription: PurchaseManager.Subscription? {
+        purchaseManager.subscription
     }
 
     var walletConnectState: WalletConnectState {

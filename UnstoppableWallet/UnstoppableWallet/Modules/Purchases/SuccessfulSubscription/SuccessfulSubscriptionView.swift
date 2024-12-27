@@ -3,7 +3,7 @@ import SwiftUI
 struct SuccessfulSubscriptionView: View {
     @StateObject private var viewModel = PurchasesViewModel()
     
-    let type: PurchasesViewModel.FeaturesType
+    let type: PurchaseManager.SubscriptionType
     let onDismissPurchases: () -> ()
     
     var body: some View {
@@ -61,7 +61,7 @@ struct SuccessfulSubscriptionView: View {
         .interactiveDismissDisabled(true)
     }
     
-    private func activatedDescription(type: PurchasesViewModel.FeaturesType) -> some View {
+    private func activatedDescription(type: PurchaseManager.SubscriptionType) -> some View {
         (
             Text("purchases.successful_subscription.subscribed_to_1".localized + " ").foregroundColor(.themeGray).font(.themeSubhead2) +
             Text(type.rawValue.uppercased() + " ").foregroundColor(.themeJacob).font(.themeSubhead2) +

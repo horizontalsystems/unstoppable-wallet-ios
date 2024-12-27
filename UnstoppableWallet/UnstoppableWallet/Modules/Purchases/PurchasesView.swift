@@ -6,7 +6,8 @@ struct PurchasesView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var bottomHeight: CGFloat = 0
     
-    @State private var presentedSubscriptionType: PurchasesViewModel.FeaturesType?
+    @State private var presentedInfoViewItem: PurchasesViewModel.ViewItem?
+    @State private var presentedSubscriptionType: PurchaseManager.SubscriptionType?
     @State private var successfulSubscriptionPresented = false
     
     var body: some View {
@@ -36,7 +37,10 @@ struct PurchasesView: View {
                                                 title: "purchases.\(feature.title)".localized,
                                                 description: "purchases.\(feature.title).description".localized,
                                                 image: Image(feature.iconName),
-                                                accented: feature.accented
+                                                accented: feature.accented,
+                                                action: {
+                                                    presentedInfoViewItem = feature
+                                                }
                                             )
                                         }
                                     }
@@ -56,13 +60,8 @@ struct PurchasesView: View {
                     VStack {
                         Spacer()
                         VStack(spacing: .margin8) {
-                            Button(action: {
-                                presentedSubscriptionType = viewModel.featuresType
-                            }) {
-                                Text("purchases.button.try".localized)
-                            }
-                            .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
-                            
+                            actionButtonView()
+
                             Button(action: {
                                 successfulSubscriptionPresented = true
                             }) {
@@ -94,6 +93,17 @@ struct PurchasesView: View {
                 }
             }
         }
+        .bottomSheet(item: $presentedInfoViewItem) { viewItem in
+            ActionSheetView(
+                image: .local(name: viewItem.iconName, tint: .warning),
+                title: "purchases.\(viewItem.title)".localized,
+                titleColor: .themeJacob,
+                items: [
+                    .description(text: "purchases.\(viewItem.title).info".localized),
+                ],
+                onDismiss: { presentedInfoViewItem = nil }
+            )
+        }
         .bottomSheet(
             item: $presentedSubscriptionType,
             configuration: ActionSheetConfiguration(style: .sheet).set(ignoreKeyboard: true),
@@ -115,8 +125,8 @@ struct PurchasesView: View {
             }
     }
     
-    @ViewBuilder private func row(title: String, description: String, image: Image, accented: Bool) -> some View {
-        ListRow(padding: EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16)) {
+    @ViewBuilder private func row(title: String, description: String, image: Image, accented: Bool, action: @escaping () -> Void) -> some View {
+        ClickableRow(padding: EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16), action: action) {
             HStack(spacing: .margin16) {
                 image
                     .renderingMode(.template)
@@ -162,6 +172,36 @@ struct PurchasesView: View {
             .padding(.horizontal, .margin16)
         }
     }
+    
+    @ViewBuilder private func actionButtonView() -> some View {
+        let (title, disabled) = buttonState()
+
+        Button(action: {
+            presentedSubscriptionType = viewModel.featuresType
+        }) {
+            Text(title)
+        }
+        .disabled(disabled)
+        .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
+    }
+
+    private func buttonState() -> (String, Bool) {
+        var title: String = "purchases.button.try".localized
+        var disabled = false
+
+        switch viewModel.buttonState {
+        case .tryForFree: ()
+        case .activated:
+            title = "purchases.button.activated".localized
+            disabled = true
+        case .upgrade:
+            title = "purchases.button.upgrade".localized
+            disabled = false
+        }
+
+        return (title, disabled)
+    }
+
 }
 
 struct CustomBlurView: UIViewRepresentable {

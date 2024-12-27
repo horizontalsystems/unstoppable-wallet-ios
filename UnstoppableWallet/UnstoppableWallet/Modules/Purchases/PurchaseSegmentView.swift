@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct PurchaseSegmentView: View {
-    @Binding var selection: PurchasesViewModel.FeaturesType
+    @Binding var selection: PurchaseManager.SubscriptionType
     
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(PurchasesViewModel.FeaturesType.allCases, id: \.self) { type in
+            ForEach(PurchaseManager.SubscriptionType.allCases, id: \.self) { type in
                 segmentButton(
                     title: type.rawValue.uppercased(),
                     icon: Image(type.icon),

@@ -11,6 +11,7 @@ class MainSettingsViewModel {
 
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
+    private let hasSubscriptionRelay: BehaviorRelay<Bool>
     private let iCloudSyncAlertRelay: BehaviorRelay<Bool>
     private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool, text: String)?>
     private let baseCurrencyRelay: BehaviorRelay<String>
@@ -23,6 +24,7 @@ class MainSettingsViewModel {
 
         manageWalletsAlertRelay = BehaviorRelay(value: !service.noWalletRequiredActions)
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPasscodeSet)
+        hasSubscriptionRelay = BehaviorRelay(value: service.subscription != nil)
         iCloudSyncAlertRelay = BehaviorRelay(value: service.isCloudAvailableError)
         walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
@@ -38,6 +40,12 @@ class MainSettingsViewModel {
         service.isPasscodeSetPublisher
             .sink { [weak self] isPinSet in
                 self?.securityCenterAlertRelay.accept(!isPinSet)
+            }
+            .store(in: &cancellables)
+
+        service.subscriptionPublisher
+            .sink { [weak self] subscription in
+                self?.hasSubscriptionRelay.accept(subscription != nil)
             }
             .store(in: &cancellables)
 
@@ -100,6 +108,10 @@ extension MainSettingsViewModel {
         securityCenterAlertRelay.asDriver()
     }
 
+    var hasSubscriptionDriver: Driver<Bool> {
+        hasSubscriptionRelay.asDriver()
+    }
+
     var iCloudSyncAlertDriver: Driver<Bool> {
         iCloudSyncAlertRelay.asDriver()
     }
@@ -130,6 +142,14 @@ extension MainSettingsViewModel {
 
     var isAuthenticated: Bool {
         service.isAuthenticated
+    }
+
+    var hasSubscription: Bool {
+        service.subscription != nil
+    }
+    
+    var premiumSubscription: Bool {
+        service.subscription?.type == .vip
     }
 
     func onTapWalletConnect() {

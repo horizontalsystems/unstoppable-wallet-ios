@@ -10,6 +10,7 @@ class PurchasesViewModel: ObservableObject {
         .init(title: "tx_speed_up", iconName: "outgoing_raw_24"),
         .init(title: "duress_mode", iconName: "switch_wallet_24"),
         .init(title: "address_phishing", iconName: "shield_24"),
+        .init(title: "address_checker", iconName: "warning_2_24"),
         .init(title: "privacy_mode", iconName: "fraud_24"),
     ]
 
@@ -24,7 +25,9 @@ class PurchasesViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var viewItems: [ViewItem]
-    @Published var featuresType: FeaturesType = .pro
+    @Published var buttonState: ButtonState = .tryForFree
+
+    @Published var featuresType: PurchaseManager.SubscriptionType = .pro
     var subscribedSuccessful = false
     
     @Published private(set) var products: [Product]
@@ -44,6 +47,8 @@ class PurchasesViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.purchasedProductIds = $0 }
             .store(in: &cancellables)
+        
+        syncButtonState()
     }
 
     func purchase(product: Product) {
@@ -64,9 +69,24 @@ class PurchasesViewModel: ObservableObject {
         purchaseManager.loadPurchases()
     }
     
-    func setType(_ type: FeaturesType) {
+    func setType(_ type: PurchaseManager.SubscriptionType) {
         featuresType = type
         viewItems = (type == .vip ? Self.vipFeatures.map { ViewItem(feature: $0, accented: true) } : []) + Self.proFeatures.map { ViewItem(feature: $0) }
+        syncButtonState()
+    }
+    
+    private func syncButtonState() {
+        guard let subscription = purchaseManager.subscription else {
+            buttonState = .tryForFree
+            return
+        }
+        
+        switch subscription.type {
+        case .pro:
+            buttonState = featuresType == .pro ? .activated : .upgrade
+        case .vip:
+            buttonState = .activated    // TODO: if vip activated and selected pro which button title will be?
+        }
     }
     
     func onSubscribe() {
@@ -80,28 +100,33 @@ extension PurchasesViewModel {
         let iconName: String
     }
 
-    enum FeaturesType: String, CaseIterable, Identifiable {
-        case pro
-        case vip
-        
-        var icon: String {
-            switch self {
-                case .pro: return "star_filled_16"
-                case .vip: return "crown_16"
-            }
-        }
-        var id: String { rawValue }
-    }
-
-    struct ViewItem: Hashable {
+    struct ViewItem: Identifiable, Hashable {
         let title: String
         let iconName: String
         let accented: Bool
         
+        var id: String { title }
+
         init(feature: Feature, accented: Bool = false) {
             self.title = feature.title
             self.iconName = feature.iconName
             self.accented = accented
         }
     }
+    
+    enum ButtonState {
+        case tryForFree
+        case activated
+        case upgrade
+    }
+}
+
+extension PurchaseManager.SubscriptionType: Identifiable {
+    var icon: String {
+        switch self {
+            case .pro: return "star_filled_16"
+            case .vip: return "crown_16"
+        }
+    }
+    var id: String { rawValue }
 }

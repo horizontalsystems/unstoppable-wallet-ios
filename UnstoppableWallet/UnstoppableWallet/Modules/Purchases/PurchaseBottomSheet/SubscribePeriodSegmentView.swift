@@ -1,12 +1,14 @@
 import SwiftUI
 
 struct SubscribePeriodSegmentView: View {
-    @Binding var selection: PurchaseBottomSheetViewModel.Period
+    let type: PurchaseManager.SubscriptionType
+
+    @Binding var selection: PurchaseManager.SubscriptionPeriod
     
     var body: some View {
         VStack(spacing: 12) {
-            ForEach(PurchaseBottomSheetViewModel.Period.allCases, id: \.self) { period in
-                let viewItem = PurchaseBottomSheetViewModel.ViewItem(period: period)
+            ForEach(PurchaseManager.SubscriptionPeriod.allCases, id: \.self) { period in
+                let viewItem = PurchaseBottomSheetViewModel.ViewItem(type: type, period: period)
                 
                 segmentButton(
                     title: viewItem.title,

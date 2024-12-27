@@ -4,6 +4,7 @@ import SwiftUI
 struct ActionSheetView: View {
     private let image: BottomSheetTitleView.Image?
     private let title: String
+    private let titleColor: Color?
     private let subtitle: String?
 
     private let items: [BottomSheetModule.Item]
@@ -11,9 +12,10 @@ struct ActionSheetView: View {
 
     var onDismiss: (() -> Void)?
 
-    init(image: BottomSheetTitleView.Image? = nil, title: String, subtitle: String? = nil, items: [BottomSheetModule.Item] = [], buttons: [BottomSheetModule.Button] = [], onDismiss: (() -> Void)?) {
+    init(image: BottomSheetTitleView.Image? = nil, title: String, titleColor: Color? = nil, subtitle: String? = nil, items: [BottomSheetModule.Item] = [], buttons: [BottomSheetModule.Button] = [], onDismiss: (() -> Void)?) {
         self.image = image
         self.title = title
+        self.titleColor = titleColor
         self.subtitle = subtitle
         self.items = items
         self.buttons = buttons
@@ -29,10 +31,10 @@ struct ActionSheetView: View {
 
                 VStack(spacing: 1) {
                     if let subtitle {
-                        Text(title).themeBody()
+                        Text(title).themeBody(color: titleColor ?? .themeLeah)
                         Text(subtitle).themeSubhead2()
                     } else {
-                        Text(title).themeHeadline2()
+                        Text(title).themeHeadline2(color: titleColor ?? .themeLeah)
                     }
                 }
 
