@@ -23,6 +23,7 @@ class MainSettingsViewController: ThemeViewController {
     private let tonConnectCell = BaseSelectableThemeCell()
     private let securityCell = BaseSelectableThemeCell()
     private let appearanceCell = BaseSelectableThemeCell()
+    private let subscriptionCell = BaseSelectableThemeCell()
     private let contactBookCell = BaseSelectableThemeCell()
     private let baseCurrencyCell = BaseSelectableThemeCell()
     private let languageCell = BaseSelectableThemeCell()
@@ -56,6 +57,7 @@ class MainSettingsViewController: ThemeViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
         tableView.registerHeaderFooter(forClass: HighlightedSubtitleHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: PremiumHeaderFooterView.self)
         tableView.registerCell(forClass: MainSettingsPremiumCell.self)
         tableView.sectionDataSource = self
 
@@ -82,6 +84,9 @@ class MainSettingsViewController: ThemeViewController {
         appearanceCell.set(backgroundStyle: .lawrence)
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
+        subscriptionCell.set(backgroundStyle: .lawrence)
+        buildTitleValue(cell: subscriptionCell, image: UIImage(named: "star_24"), title: "subscription.title".localized)
+
         contactBookCell.set(backgroundStyle: .lawrence)
         syncContactBookCell()
 
@@ -104,6 +109,7 @@ class MainSettingsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] in self?.syncManageAccountCell(alert: $0) }
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] in self?.syncSecurityCell(alert: $0) }
         subscribe(disposeBag, viewModel.iCloudSyncAlertDriver) { [weak self] in self?.syncContactBookCell(alert: $0) }
+        subscribe(disposeBag, viewModel.hasSubscriptionDriver) { [weak self] in self?.syncSubscription(hasSubscription: $0) }
 
         subscribe(disposeBag, viewModel.walletConnectCountDriver) { [weak self] tuple in
             self?.syncWalletConnectCell(text: tuple?.text, highlighted: tuple?.highlighted ?? false)
@@ -230,6 +236,19 @@ class MainSettingsViewController: ThemeViewController {
     private func onTokenTapped() {
         UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)")
     }
+    
+    private func syncSubscription(hasSubscription: Bool) {
+        tableView.reload()
+    }
+
+    private func onSubscriptionTapped() {
+        if viewModel.hasSubscription {
+            let viewController = PurchaseListView().toViewController(title: "subscription.title".localized)
+            navigationController?.pushViewController(viewController, animated: true)
+        } else {
+            present(PurchasesView().toViewController(), animated: true)
+        }
+    }
 
     private var accountRows: [RowProtocol] {
         [
@@ -328,6 +347,15 @@ class MainSettingsViewController: ThemeViewController {
                 }
             ),
             StaticRow(
+                cell: subscriptionCell,
+                id: "subscription",
+                height: .heightCell48,
+                autoDeselect: true,
+                action: { [weak self] in
+                    self?.onSubscriptionTapped()
+                }
+            ),
+            StaticRow(
                 cell: baseCurrencyCell,
                 id: "base-currency",
                 height: .heightCell48,
@@ -380,11 +408,42 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
+    private var premiumSupportRows: [RowProtocol] {
+        [
+            tableView.universalRow48(
+                id: "support",
+                image: .local(UIImage(named: "support_2_24")?.withTintColor(.themeJacob)),
+                title: .body("purchases.vip_support".localized),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isFirst: true,
+                action: {
+                    UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
+
+                    stat(page: .settings, event: .open(page: .externalTelegram))
+                }
+            ),
+            tableView.universalRow48(
+                id: "club",
+                image: .local(UIImage(named: "support_24")?.withTintColor(.themeJacob)),
+                title: .body("purchases.vip_club".localized),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isLast: true,
+                action: {
+                    UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
+
+                    stat(page: .settings, event: .open(page: .externalTelegram))
+                }
+            ),
+        ]
+    }
+
     private var socialRows: [RowProtocol] {
         [
             tableView.universalRow48(
                 id: "telegram",
-                image: .local(UIImage(named: "filled_telegram_24")?.withTintColor(.themeJacob)),
+                image: .local(UIImage(named: "filled_telegram_24")),
                 title: .body("Telegram"),
                 accessoryType: .disclosure,
                 autoDeselect: true,
@@ -397,7 +456,7 @@ class MainSettingsViewController: ThemeViewController {
             ),
             tableView.universalRow48(
                 id: "twitter",
-                image: .local(UIImage(named: "filled_twitter_24")?.withTintColor(.themeJacob)),
+                image: .local(UIImage(named: "filled_twitter_24")),
                 title: .body("Twitter"),
                 accessoryType: .disclosure,
                 autoDeselect: true,
@@ -587,13 +646,33 @@ extension MainSettingsViewController: SectionsDataSource {
         var sections: [SectionProtocol] = [
             Section(id: "token", headerState: .margin(height: .margin32), rows: tokenRows),
             Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
-            Section(id: "appearance_settings", headerState: .margin(height: .margin32), footerState: .margin(height: .margin24), rows: appearanceRows),
+            Section(id: "appearance_settings", headerState: .margin(height: .margin32), footerState: .margin(height: .margin24), rows: appearanceRows)
+        ]
+        
+        if viewModel.hasSubscription, viewModel.premiumSubscription {
+            sections.append(
+                Section(
+                    id: "premium",
+                    headerState: .cellType(
+                        hash: "subscription.premium.label".localized,
+                        binder: { (view: PremiumHeaderFooterView) in
+                            view.bind(iconName: "crown_16", text: "subscription.premium.label".localized, color: .themeJacob, backgroundColor: UIColor.clear)
+                        },
+                        dynamicHeight: { _ in .margin32 }
+                    ),
+                    rows: premiumSupportRows
+                )
+            )
+        }
+
+        let infoSections: [SectionProtocol] = [
+            Section(id: "about", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: aboutRows),
             Section(
                 id: "social",
                 headerState: .cellType(
                     hash: "settings.social_networks.label".localized,
                     binder: { (view: HighlightedSubtitleHeaderFooterView) in
-                        view.bind(text: "settings.social_networks.label".localized, color: .themeJacob, backgroundColor: UIColor.clear)
+                        view.bind(text: "settings.social_networks.label".localized, color: .themeGray, backgroundColor: UIColor.clear)
                     },
                     dynamicHeight: { _ in .margin32 }
                 ),
@@ -601,15 +680,18 @@ extension MainSettingsViewController: SectionsDataSource {
                 rows: socialRows
             ),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
-            Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
+        
+        sections.append(contentsOf: infoSections)
 
         if AppConfig.donateEnabled {
             sections.insert(Section(id: "donate", headerState: .margin(height: .margin32), rows: donateRows), at: 0)
         }
 
-        sections.insert(Section(id: "premium", headerState: .margin(height: .margin12), rows: premiumRows), at: 0)
+        if !viewModel.hasSubscription {
+            sections.insert(Section(id: "premium", headerState: .margin(height: .margin12), rows: premiumRows), at: 0)
+        }
 
         if showTestNetSwitcher {
             sections.append(
@@ -680,6 +762,49 @@ class HighlightedSubtitleHeaderFooterView: UITableViewHeaderFooterView {
     func bind(text: String?, color: UIColor = .clear, backgroundColor: UIColor = .clear) {
         label.text = text?.uppercased()
         label.textColor = color
+        backgroundView?.backgroundColor = backgroundColor
+    }
+}
+
+class PremiumHeaderFooterView: UITableViewHeaderFooterView {
+    private let iconView = UIImageView()
+    private let label = UILabel()
+
+    override public init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+
+        backgroundView = UIView()
+
+        addSubview(iconView)
+        iconView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin32)
+            maker.top.equalToSuperview().inset(CGFloat.margin6)
+            maker.size.equalTo(CGFloat.iconSize16)
+        }
+        
+        addSubview(label)
+        label.snp.makeConstraints { maker in
+            maker.leading.equalTo(iconView.snp.trailing).offset(CGFloat.margin6)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin32)
+            maker.top.equalToSuperview().inset(CGFloat.margin6)
+        }
+
+        label.font = .subhead1
+        label.textColor = .themeJacob
+    }
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func bind(iconName: String, text: String?, color: UIColor = .themeJacob, backgroundColor: UIColor = .clear) {
+        label.text = text
+        label.textColor = color
+
+        iconView.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
+        iconView.tintColor = color
+
         backgroundView?.backgroundColor = backgroundColor
     }
 }

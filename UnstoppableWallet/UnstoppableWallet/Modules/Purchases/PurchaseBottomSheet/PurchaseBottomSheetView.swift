@@ -8,12 +8,10 @@ struct PurchaseBottomSheetView: View {
     @Binding private var isPresented: Bool
     @State private var isPresentedPromoCode: Bool = false
 
-    private let type: PurchasesViewModel.FeaturesType
-    private let onSubscribe: (PurchaseBottomSheetViewModel.Period) -> ()
+    private let onSubscribe: (PurchaseManager.SubscriptionPeriod) -> ()
 
-    init(type: PurchasesViewModel.FeaturesType, isPresented: Binding<Bool>, onSubscribe: @escaping (PurchaseBottomSheetViewModel.Period) -> ()) {
-        _viewModel = StateObject(wrappedValue: PurchaseBottomSheetViewModel(onSubscribe: onSubscribe))
-        self.type = type
+    init(type: PurchaseManager.SubscriptionType, isPresented: Binding<Bool>, onSubscribe: @escaping (PurchaseManager.SubscriptionPeriod) -> ()) {
+        _viewModel = StateObject(wrappedValue: PurchaseBottomSheetViewModel(type: type, onSubscribe: onSubscribe))
         self.onSubscribe = onSubscribe
         _isPresented = isPresented
     }
@@ -21,8 +19,8 @@ struct PurchaseBottomSheetView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
-                Image(type.icon).themeIcon(color: .themeJacob)
-                Text(type.rawValue.uppercased()).themeHeadline2()
+                Image(viewModel.type.icon).themeIcon(color: .themeJacob)
+                Text(viewModel.type.rawValue.uppercased()).themeHeadline2()
                 
                 Button(action: {
                     isPresented = false
@@ -34,7 +32,7 @@ struct PurchaseBottomSheetView: View {
             .padding(.top, .margin24)
             .padding(.bottom, .margin12)
             
-            SubscribePeriodSegmentView(selection: $viewModel.selectedPeriod)
+            SubscribePeriodSegmentView(type: viewModel.type, selection: $viewModel.selectedPeriod)
                 .onChange(of: viewModel.selectedPeriod) { newValue in
                     viewModel.set(period: newValue)
                 }

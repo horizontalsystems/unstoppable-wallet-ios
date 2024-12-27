@@ -1577,6 +1577,16 @@
 
 "appearance.app_icon" = "App Icon";
 
+// Settings -> Subsription
+
+"subscription.title" = "Subscription";
+"subscription.plan" = "Subscription Plan";
+"subscription.footer_description_1" = "Next payment date: %@. You can manage your subscription in the ";
+"subscription.footer_description_2" = "Manage Subscription";
+"subscription.footer_description_3" = " section.";
+"subscription.no_purchases" = "You don't have any subscriptions. Try to go and purchase new subscription.";
+"subscription.premium.label" = "Premium";
+
 // Settings -> Contacts
 
 "contacts.title" = "Contacts";
@@ -2175,30 +2185,54 @@
 
 "purchases.token_insights" = "Token Insights";
 "purchases.token_insights.description" = "Full analytics and data about tokens.";
+"purchases.token_insights.info" = "Token Insights provides a comprehensive view of a token’s activity and performance metrics. This includes trading volume, liquidity levels, holder behavior, total value locked (TVL), and transaction activity. By offering detailed analytics, the feature enables users to evaluate token potential, monitor market trends, and make data-driven investment decisions. It’s a powerful tool for those who seek to understand token ecosystems and market dynamics in-depth.";
+
 "purchases.advanced_search" = "Advanced Search";
 "purchases.advanced_search.description" = "Custom filters for token searches.";
+"purchases.advanced_search.info" = "Advanced Search offers robust filtering options to find tokens based on specific criteria, such as trading volume, liquidity, security audits, and other relevant metrics. This feature streamlines the discovery process, making it easier to identify tokens that match individual preferences or investment strategies. It also includes customization options to save time and focus on what matters most to the user.";
+
 "purchases.trade_signals" = "Trade Signals";
 "purchases.trade_signals.description" = "Signals for confident trading.";
+"purchases.trade_signals.info" = "Trade Signals provide real-time notifications about potential trading opportunities and market risks. Using advanced algorithms, this feature analyzes market conditions, trends, and indicators to highlight profitable opportunities or warn against potential losses. Ideal for active traders, it ensures users stay informed and ready to act in a fast-moving market.";
+
 "purchases.favorable_swaps" = "Favorable Swaps";
 "purchases.favorable_swaps.description" = "Signals for confident trading.";
+"purchases.favorable_swaps.info" = "This feature ensures optimal trade conditions by offering reduced fees and competitive exchange rates. By leveraging favorable liquidity pools and minimizing unnecessary charges, users can maximize their transaction value while saving on costs. It’s designed for those who prioritize efficiency and cost-effectiveness in their trades.";
+
 "purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
 "purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
+"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
+
 "purchases.duress_mode" = "Duress Mode";
 "purchases.duress_mode.description" = "Hides main wallets in case of coercion.";
+"purchases.duress_mode.info" = "Duress Mode is a security feature designed to protect sensitive wallets in high-risk situations. It allows users to set up a secondary wallet with a separate PIN code. When under coercion, users can safely open the alternate wallet while keeping their primary wallets hidden. This feature provides peace of mind and protection for critical assets in emergencies.";
+
 "purchases.address_phishing" = "Address Phishing Protection";
 "purchases.address_phishing.description" = "Additional address check for fraud prevention.";
+"purchases.address_phishing.info" = "Address Phishing Protection safeguards users from sending funds to fraudulent addresses. Before each transaction, the recipient’s address is scanned for patterns associated with phishing scams. If flagged, the feature alerts the user, reducing the risk of accidental transfers to malicious actors.";
+
+"purchases.address_checker" = "Blacklist Address Checker";
+"purchases.address_checker.description" = "Alerts if the recipient address is blacklisted.";
+"purchases.address_checker.info" = "The Blacklist Address Checker cross-references recipient addresses against databases of known high-risk or flagged addresses. It prevents transactions from being sent to entities involved in fraud, scams, or other illicit activities. This feature is essential for maintaining security and compliance during transfers.";
+
 "purchases.privacy_mode" = "Privacy Mode";
 "purchases.privacy_mode.description" = "Full disconnection from data collection.";
+"purchases.privacy_mode.info" = "Privacy Mode enhances user confidentiality by masking wallet balances, transaction history, and other sensitive details. This feature ensures that third parties cannot view or track user activity, providing a discreet and secure experience for those who value privacy.";
 
 "purchases.vip_support" = "VIP Support";
 "purchases.vip_support.description" = "Direct chat.";
+"purchases.vip_support.info" = "VIP Support connects users with a dedicated support team available for priority assistance. This feature ensures prompt responses and personalized solutions for inquiries or issues. It’s tailored for users who require expert help and faster service.";
+
 "purchases.vip_club" = "VIP Club";
 "purchases.vip_club.description" = "Private chat with exclusive information.";
+"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
 
 "purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
 "purchases.wallet_description.approved" = "Approved and Audited By:";
 
 "purchases.button.try" = "Try for FREE";
+"purchases.button.activated" = "Activated";
+"purchases.button.upgrade" = "Upgrade";
 "purchases.button.restore" = "Restore";
 
 "purchase.period.annually" = "Annually";
