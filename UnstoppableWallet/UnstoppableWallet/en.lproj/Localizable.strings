@@ -103,6 +103,7 @@
 "number.quadrillion" = "%@Q";
 
 "selector.any" = "Any";
+"selector.none" = "None";
 
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
@@ -848,8 +849,9 @@
 "market.advanced_search.outperformed_btc" = "Outperformed BTC";
 "market.advanced_search.outperformed_eth" = "Outperformed ETH";
 "market.advanced_search.outperformed_bnb" = "Outperformed BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.price_close_to" = "Price Close To";
+"market.advanced_search.price_close_to_ath" = "ATH(All Time High)";
+"market.advanced_search.price_close_to_atl" = "ATL(All Time Low)";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
