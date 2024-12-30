@@ -12,12 +12,15 @@ class Eip20Adapter: BaseEvmAdapter {
     private let contractAddress: EvmKit.Address
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token, coinManager: CoinManager, evmLabelManager: EvmLabelManager) throws {
+    init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token, coinManager: CoinManager, evmLabelManager: EvmLabelManager, spamAddressManager: SpamAddressManager) throws {
         let address = try EvmKit.Address(hex: contractAddress)
         eip20Kit = try Eip20Kit.Kit.instance(evmKit: evmKitWrapper.evmKit, contractAddress: address)
         self.contractAddress = address
 
-        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseToken: baseToken, coinManager: coinManager, evmKitWrapper: evmKitWrapper, evmLabelManager: evmLabelManager)
+        transactionConverter = EvmTransactionConverter(
+            source: wallet.transactionSource, baseToken: baseToken, coinManager: coinManager, blockchainType: evmKitWrapper.blockchainType,
+            userAddress: evmKitWrapper.evmKit.address, evmLabelManager: evmLabelManager, spamAddressManager: spamAddressManager
+        )
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: wallet.decimals)
     }

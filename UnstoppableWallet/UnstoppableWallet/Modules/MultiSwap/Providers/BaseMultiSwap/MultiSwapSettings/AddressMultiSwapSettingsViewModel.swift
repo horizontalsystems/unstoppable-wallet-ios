@@ -35,7 +35,7 @@ class AddressMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFie
 
         if let initialAddress {
             address = initialAddress.title
-            addressResult = .valid(.init(address: initialAddress, uri: nil))
+            addressResult = .valid(.init(address: initialAddress, uri: nil, securityCheckResults: []))
         }
     }
 

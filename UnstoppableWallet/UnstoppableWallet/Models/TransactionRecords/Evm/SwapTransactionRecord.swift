@@ -12,7 +12,6 @@ class SwapTransactionRecord: EvmTransactionRecord {
         self.exchangeAddress = exchangeAddress
         self.amountIn = amountIn
         self.amountOut = amountOut
-
         self.recipient = recipient
 
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: true)

@@ -41,6 +41,14 @@ enum AppConfig {
         .tron: "TQzANCd363w5CjRWDtswm8Y5nFPAdnwekF",
         .solana: "5gattKnvu5f1NDHBuZ6VfDXjRrJa9UcAArkZ3ys3e82F",
     ]
+    static var spamCoinValueLimits: [String: Decimal] = [
+        "tether": 0.01,
+        "usd-coin": 0.01,
+        "dai": 0.01,
+        "binance-usd": 0.01,
+        "binance-peg-busd": 0.01,
+        "stasis-eurs": 0.01,
+    ]
 
     static var appVersion: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String

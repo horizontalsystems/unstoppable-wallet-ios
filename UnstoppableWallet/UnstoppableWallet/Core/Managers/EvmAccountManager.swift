@@ -45,8 +45,6 @@ class EvmAccountManager {
             return
         }
 
-//        print("Subscribe: \(evmKitWrapper.evmKit.networkType)")
-
         evmKitWrapper.evmKit.allTransactionsPublisher
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self] fullTransactions, initial in
@@ -56,8 +54,6 @@ class EvmAccountManager {
     }
 
     private func handle(fullTransactions: [FullTransaction], initial: Bool) {
-//        print("Tx Sync: \(blockchainType): full transactions: \(fullTransactions.count); initial: \(initial)")
-
         guard let account = accountManager.activeAccount else {
             return
         }

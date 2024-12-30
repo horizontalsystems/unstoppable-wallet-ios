@@ -24,6 +24,7 @@ class AppManager {
     private let walletConnectSocketConnectionService: WalletConnectSocketConnectionService
     private let nftMetadataSyncer: NftMetadataSyncer
     private let tonKitManager: TonKitManager
+    private let spamAddressManager: SpamAddressManager
 
     private let didBecomeActiveSubject = PublishSubject<Void>()
     private let willEnterForegroundSubjectOld = PublishSubject<Void>()
@@ -36,7 +37,8 @@ class AppManager {
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
          deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
-         walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager)
+         walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
+         spamAddressManager: SpamAddressManager)
     {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -57,6 +59,7 @@ class AppManager {
         self.walletConnectSocketConnectionService = walletConnectSocketConnectionService
         self.nftMetadataSyncer = nftMetadataSyncer
         self.tonKitManager = tonKitManager
+        self.spamAddressManager = spamAddressManager
     }
 
     private func warmUp() {

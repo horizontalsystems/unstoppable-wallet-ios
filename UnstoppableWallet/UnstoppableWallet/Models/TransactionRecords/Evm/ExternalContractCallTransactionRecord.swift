@@ -6,11 +6,9 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool) {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
-
-        let spam = TransactionRecord.isSpam(appValues: (incomingEvents + outgoingEvents).map(\.value))
 
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, spam: spam)
     }

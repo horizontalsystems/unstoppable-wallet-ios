@@ -47,40 +47,6 @@ class TransactionRecord {
     open var mainValue: AppValue? {
         nil
     }
-
-    static func isSpam(appValues: [AppValue]) -> Bool {
-        let stableCoinUids = ["tether", "usd-coin", "dai", "binance-usd", "binance-peg-busd", "stasis-eurs"]
-
-        for appValue in appValues {
-            let value = appValue.value
-
-            switch appValue.kind {
-            case let .token(token):
-                if stableCoinUids.contains(token.coin.uid) {
-                    if value > 0.01 {
-                        return false
-                    }
-                } else if value > 0 {
-                    return false
-                }
-            case let .coin(coin, _):
-                if stableCoinUids.contains(coin.uid) {
-                    if value > 0.01 {
-                        return false
-                    }
-                } else if value > 0 {
-                    return false
-                }
-            case .nft:
-                if value > 0 {
-                    return false
-                }
-            default: ()
-            }
-        }
-
-        return true
-    }
 }
 
 extension TransactionRecord: Comparable {
