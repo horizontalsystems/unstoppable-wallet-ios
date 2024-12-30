@@ -78,6 +78,24 @@ extension InputTextView {
     }
 }
 
+struct ColoredBorder: ViewModifier {
+    let cornerRadius: CGFloat
+    let color: Color
+
+    init(cornerRadius: CGFloat = InputView.cornerRadius, color: Color = .themeJacob) {
+        self.cornerRadius = cornerRadius
+        self.color = color
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(color, lineWidth: .heightOneDp)
+            )
+    }
+}
+
 struct CautionBorder: ViewModifier {
     let cornerRadius: CGFloat
     @Binding var cautionState: CautionState

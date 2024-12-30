@@ -30,6 +30,8 @@ class MarketAdvancedSearchViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
     private let priceChangeModeManager = App.shared.priceChangeModeManager
+    private let purchaseManager = App.shared.purchaseManager
+        
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
@@ -40,6 +42,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
     }
 
     @Published private(set) var state: State = .loading
+    @Published private(set) var premiumEnabled: Bool = false
 
     @Published var top: MarketModule.Top = .top250 {
         didSet {
@@ -48,12 +51,6 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             }
 
             syncMarketInfos()
-        }
-    }
-
-    @Published var marketCap: ValueFilter = .none {
-        didSet {
-            syncState()
         }
     }
 
@@ -99,6 +96,12 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         }
     }
 
+    @Published var priceCloseTo: PriceCloseToFilter = .none {
+        didSet {
+            syncState()
+        }
+    }
+
     @Published var priceChange: PriceChangeFilter = .none {
         didSet {
             syncState()
@@ -129,18 +132,6 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         }
     }
 
-    @Published var priceCloseToAth = false {
-        didSet {
-            syncState()
-        }
-    }
-
-    @Published var priceCloseToAtl = false {
-        didSet {
-            syncState()
-        }
-    }
-
     @Published var canReset = false
 
     let allBlockchains: [Blockchain]
@@ -165,6 +156,13 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        premiumEnabled = purchaseManager.subscription != nil
+        purchaseManager.$subscription
+            .sink { [weak self] subscription in
+                self?.premiumEnabled = subscription != nil
+            }
+            .store(in: &cancellables)
+
         syncMarketInfos()
     }
 
@@ -183,7 +181,6 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         }
 
         canReset = top != .top250
-            || marketCap != .none
             || volume != .none
             || listedOnTopExchanges != false
             || goodCexVolume != false
@@ -196,15 +193,14 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             || outperformedBtc != false
             || outperformedEth != false
             || outperformedBnb != false
-            || priceCloseToAtl != false
-            || priceCloseToAth != false
+            || priceCloseTo != .none
     }
 
     private func filtered(marketInfos: [MarketInfo]) -> [MarketInfo] {
         marketInfos.filter { marketInfo in
             let priceChangeValue = marketInfo.priceChangeValue(timePeriod: priceChangePeriod)
 
-            return inBounds(value: marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
+            return
                 inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
                 (!listedOnTopExchanges || marketInfo.listedOnTopExchanges == true) &&
                 (!goodCexVolume || marketInfo.solidCex == true) &&
@@ -216,8 +212,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
                 (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
                 (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
                 (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binancecoin")) &&
-                (!priceCloseToAth || closedToAllTime(value: marketInfo.athPercentage)) &&
-                (!priceCloseToAtl || closedToAllTime(value: marketInfo.atlPercentage))
+                (closedToAllTime(closedTo: priceCloseTo, ath: marketInfo.athPercentage, atl: marketInfo.atlPercentage))
         }
     }
 
@@ -282,7 +277,14 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         return marketInfos.first { $0.fullCoin.coin.uid == coinUid }
     }
 
-    private func closedToAllTime(value: Decimal?) -> Bool {
+    private func closedToAllTime(closedTo: PriceCloseToFilter, ath: Decimal?, atl: Decimal?) -> Bool {
+        var value: Decimal?
+        switch closedTo {
+        case .none: return true
+        case .ath: value = ath
+        case .atl: value = atl
+        }
+
         guard let value else {
             return false
         }
@@ -347,7 +349,6 @@ extension MarketAdvancedSearchViewModel {
         syncStateEnabled = false
 
         top = .top250
-        marketCap = .none
         volume = .none
         listedOnTopExchanges = false
         goodDexVolume = false
@@ -360,8 +361,7 @@ extension MarketAdvancedSearchViewModel {
         outperformedBtc = false
         outperformedEth = false
         outperformedBnb = false
-        priceCloseToAtl = false
-        priceCloseToAth = false
+        priceCloseTo = .none
 
         syncStateEnabled = true
         syncState()
@@ -478,6 +478,24 @@ extension MarketAdvancedSearchViewModel {
         }
     }
 
+    enum PriceCloseToFilter: CaseIterable, Identifiable {
+        case none
+        case ath
+        case atl
+
+        var id: Self {
+            self
+        }
+
+        var title: String {
+            switch self {
+            case .none: return "selector.none".localized
+            case .ath: return "market.advanced_search.price_close_to_ath".localized
+            case .atl: return "market.advanced_search.price_close_to_atl".localized
+            }
+        }
+    }
+
     enum PriceChangeFilter: CaseIterable, Identifiable {
         case none
         case plus10
@@ -536,3 +554,4 @@ extension MarketAdvancedSearchViewModel {
         }
     }
 }
+

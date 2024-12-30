@@ -415,6 +415,7 @@ class MainSettingsViewController: ThemeViewController {
                 image: .local(UIImage(named: "support_2_24")?.withTintColor(.themeJacob)),
                 title: .body("purchases.vip_support".localized),
                 accessoryType: .disclosure,
+                backgroundStyle: .borderedLawrence(.themeJacob),
                 autoDeselect: true,
                 isFirst: true,
                 action: {
@@ -428,6 +429,7 @@ class MainSettingsViewController: ThemeViewController {
                 image: .local(UIImage(named: "support_24")?.withTintColor(.themeJacob)),
                 title: .body("purchases.vip_club".localized),
                 accessoryType: .disclosure,
+                backgroundStyle: .borderedLawrence(.themeJacob),
                 autoDeselect: true,
                 isLast: true,
                 action: {
@@ -655,9 +657,7 @@ extension MainSettingsViewController: SectionsDataSource {
                     id: "premium",
                     headerState: .cellType(
                         hash: "subscription.premium.label".localized,
-                        binder: { (view: PremiumHeaderFooterView) in
-                            view.bind(iconName: "crown_16", text: "subscription.premium.label".localized, color: .themeJacob, backgroundColor: UIColor.clear)
-                        },
+                        binder: { _ in },
                         dynamicHeight: { _ in .margin32 }
                     ),
                     rows: premiumSupportRows
@@ -790,7 +790,8 @@ class PremiumHeaderFooterView: UITableViewHeaderFooterView {
         }
 
         label.font = .subhead1
-        label.textColor = .themeJacob
+
+        bind()
     }
 
     @available(*, unavailable)
@@ -798,7 +799,7 @@ class PremiumHeaderFooterView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(iconName: String, text: String?, color: UIColor = .themeJacob, backgroundColor: UIColor = .clear) {
+    func bind(iconName: String = "crown_16", text: String? = "subscription.premium.label".localized, color: UIColor = .themeJacob, backgroundColor: UIColor = .clear) {
         label.text = text
         label.textColor = color
 
