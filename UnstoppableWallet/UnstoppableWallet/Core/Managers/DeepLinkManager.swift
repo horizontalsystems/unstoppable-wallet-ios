@@ -35,9 +35,10 @@ extension DeepLinkManager {
             return true
         }
 
-        if ((scheme == DeepLinkManager.deepLinkScheme && (host == Self.tonDeepLinkHost || host == Self.tonUniversalHost)) ||
-            (scheme == "https" && host == Self.deepLinkScheme && path == "/\(Self.tonUniversalHost)")),
-            let parameters = try? TonConnectManager.parseParameters(queryItems: queryItems) {
+        if (scheme == DeepLinkManager.deepLinkScheme && (host == Self.tonDeepLinkHost || host == Self.tonUniversalHost)) ||
+            (scheme == "https" && host == Self.deepLinkScheme && path == "/\(Self.tonUniversalHost)"),
+            let parameters = try? TonConnectManager.parseParameters(queryItems: queryItems)
+        {
             newSchemeRelay.accept(.tonConnect(parameters: parameters))
             return true
         }

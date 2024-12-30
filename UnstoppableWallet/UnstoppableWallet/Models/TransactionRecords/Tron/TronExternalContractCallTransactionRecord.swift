@@ -10,7 +10,7 @@ class TronExternalContractCallTransactionRecord: TronTransactionRecord {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
-        let spam = TransactionRecord.isSpam(appValues: (incomingEvents + outgoingEvents).map(\.value))
+        let spam = SpamAddressManager.isSpam(appValues: (incomingEvents + outgoingEvents).map(\.value))
 
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, spam: spam)
     }

@@ -1,3 +1,4 @@
+import BigInt
 import Eip20Kit
 import EvmKit
 import Foundation
@@ -18,7 +19,7 @@ class EvmKitManager {
 
     private let evmKitCreatedRelay = PublishRelay<Void>()
     private let evmKitUpdatedRelay = PublishRelay<Void>()
-    private var currentAccount: Account?
+    private(set) var currentAccount: Account?
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).ethereum-kit-manager", qos: .userInitiated)
 

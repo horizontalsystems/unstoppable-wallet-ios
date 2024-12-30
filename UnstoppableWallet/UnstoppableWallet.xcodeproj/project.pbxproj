@@ -2514,6 +2514,8 @@
 		D0118E492B7C9A5200D55CE6 /* ResendBitcoinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0118E472B7C9A5200D55CE6 /* ResendBitcoinModule.swift */; };
 		D0118E4B2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0118E4A2B7CC63300D55CE6 /* ResendBitcoinViewController.swift */; };
 		D0118E4C2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0118E4A2B7CC63300D55CE6 /* ResendBitcoinViewController.swift */; };
+		D01513D12D1EA6A400FD9816 /* SpamScanState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01513D02D1EA6A400FD9816 /* SpamScanState.swift */; };
+		D01513D22D1EA6A400FD9816 /* SpamScanState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01513D02D1EA6A400FD9816 /* SpamScanState.swift */; };
 		D01517EE2B10A69E00FECCBC /* WatchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01517ED2B10A69E00FECCBC /* WatchModule.swift */; };
 		D01517EF2B10A69E00FECCBC /* WatchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01517ED2B10A69E00FECCBC /* WatchModule.swift */; };
 		D023D2632A249E59004F65B0 /* TronKit in Frameworks */ = {isa = PBXBuildFile; productRef = D023D2622A249E59004F65B0 /* TronKit */; };
@@ -2528,6 +2530,12 @@
 		D023D2722A25CF61004F65B0 /* TronAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D023D2702A25CF61004F65B0 /* TronAdapter.swift */; };
 		D02447D92C09FA5200A04BBC /* CoinTreasuriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02447D82C09FA5200A04BBC /* CoinTreasuriesView.swift */; };
 		D02447DA2C09FA5200A04BBC /* CoinTreasuriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02447D82C09FA5200A04BBC /* CoinTreasuriesView.swift */; };
+		D02C85A82D1A93A60096A84D /* SpamAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85A72D1A93A60096A84D /* SpamAddress.swift */; };
+		D02C85A92D1A93A60096A84D /* SpamAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85A72D1A93A60096A84D /* SpamAddress.swift */; };
+		D02C85AB2D1A94410096A84D /* SpamAddressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AA2D1A94410096A84D /* SpamAddressManager.swift */; };
+		D02C85AC2D1A94410096A84D /* SpamAddressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AA2D1A94410096A84D /* SpamAddressManager.swift */; };
+		D02C85AE2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */; };
+		D02C85AF2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */; };
 		D033289F2BF6199600BBB364 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoView.swift */; };
 		D03328A02BF6199600BBB364 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoView.swift */; };
 		D03F74822BF76D0A004FBCFA /* GasPriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03F74812BF76D0A004FBCFA /* GasPriceData.swift */; };
@@ -2578,6 +2586,10 @@
 		D06A171C2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06B302C2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
 		D06B302D2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
+		D06F60032D195FBC0033A288 /* AddressSecurityCheckerChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */; };
+		D06F60052D195FBC0033A288 /* AddressSecurityCheckerChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */; };
+		D06F60082D195FE90033A288 /* AddressSecurityCheckerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60072D195FE90033A288 /* AddressSecurityCheckerFactory.swift */; };
+		D06F60092D195FE90033A288 /* AddressSecurityCheckerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60072D195FE90033A288 /* AddressSecurityCheckerFactory.swift */; };
 		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DE2A2DDA09006F141F /* SendTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DD2A2DDA09006F141F /* SendTronService.swift */; };
@@ -2682,6 +2694,8 @@
 		D0F132A52B6B98F500C7310E /* RbfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A32B6B98F500C7310E /* RbfViewModel.swift */; };
 		D0F132A72B6B990500C7310E /* RbfDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A62B6B990500C7310E /* RbfDataSource.swift */; };
 		D0F132A82B6B990500C7310E /* RbfDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A62B6B990500C7310E /* RbfDataSource.swift */; };
+		D0F766CF2D1AD36200E409AD /* SpamAddressDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */; };
+		D0F766D02D1AD36200E409AD /* SpamAddressDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */; };
 		D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9F5162B99857700C3190A /* FeeSettings.swift */; };
 		D0F9F5182B99857700C3190A /* FeeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9F5162B99857700C3190A /* FeeSettings.swift */; };
 		D30D7E5F2CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
@@ -4504,12 +4518,16 @@
 		D00DAE442B626C2900F48E1D /* GasPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPrice.swift; sourceTree = "<group>"; };
 		D0118E472B7C9A5200D55CE6 /* ResendBitcoinModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinModule.swift; sourceTree = "<group>"; };
 		D0118E4A2B7CC63300D55CE6 /* ResendBitcoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinViewController.swift; sourceTree = "<group>"; };
+		D01513D02D1EA6A400FD9816 /* SpamScanState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamScanState.swift; sourceTree = "<group>"; };
 		D01517ED2B10A69E00FECCBC /* WatchModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchModule.swift; sourceTree = "<group>"; };
 		D023D2662A24BBC6004F65B0 /* TronAddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronAddressParser.swift; sourceTree = "<group>"; };
 		D023D2692A24CD16004F65B0 /* BaseTronAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTronAdapter.swift; sourceTree = "<group>"; };
 		D023D26C2A24CD4F004F65B0 /* TronKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronKitManager.swift; sourceTree = "<group>"; };
 		D023D2702A25CF61004F65B0 /* TronAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronAdapter.swift; sourceTree = "<group>"; };
 		D02447D82C09FA5200A04BBC /* CoinTreasuriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTreasuriesView.swift; sourceTree = "<group>"; };
+		D02C85A72D1A93A60096A84D /* SpamAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddress.swift; sourceTree = "<group>"; };
+		D02C85AA2D1A94410096A84D /* SpamAddressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressManager.swift; sourceTree = "<group>"; };
+		D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressStorage.swift; sourceTree = "<group>"; };
 		D033289E2BF6199600BBB364 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		D03F74812BF76D0A004FBCFA /* GasPriceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceData.swift; sourceTree = "<group>"; };
 		D04D98E9268055A2001A3135 /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
@@ -4535,6 +4553,8 @@
 		D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewModel.swift; sourceTree = "<group>"; };
 		D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSettingsViewHelper.swift; sourceTree = "<group>"; };
 		D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsViewModel.swift; sourceTree = "<group>"; };
+		D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSecurityCheckerChain.swift; sourceTree = "<group>"; };
+		D06F60072D195FE90033A288 /* AddressSecurityCheckerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSecurityCheckerFactory.swift; sourceTree = "<group>"; };
 		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
 		D07157DD2A2DDA09006F141F /* SendTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronService.swift; sourceTree = "<group>"; };
 		D07157E02A2DDA17006F141F /* SendTronViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewModel.swift; sourceTree = "<group>"; };
@@ -4585,6 +4605,7 @@
 		D0F132A02B6B98E100C7310E /* RbfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfService.swift; sourceTree = "<group>"; };
 		D0F132A32B6B98F500C7310E /* RbfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfViewModel.swift; sourceTree = "<group>"; };
 		D0F132A62B6B990500C7310E /* RbfDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfDataSource.swift; sourceTree = "<group>"; };
+		D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressDetector.swift; sourceTree = "<group>"; };
 		D0F9F5162B99857700C3190A /* FeeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeSettings.swift; sourceTree = "<group>"; };
 		D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectEventHandler.swift; sourceTree = "<group>"; };
 		D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendView.swift; sourceTree = "<group>"; };
@@ -5404,6 +5425,7 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				D02C85AA2D1A94410096A84D /* SpamAddressManager.swift */,
 				6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */,
 				1A564BB88BF3ED779F8C21DC /* BlurManager.swift */,
 				11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */,
@@ -5756,6 +5778,8 @@
 		11B356605394189E9B5EBEE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D01513D02D1EA6A400FD9816 /* SpamScanState.swift */,
+				D02C85A72D1A93A60096A84D /* SpamAddress.swift */,
 				6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */,
 				6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */,
 				11B3526E3BCED7FF55C3CAD2 /* Deprecated */,
@@ -5928,6 +5952,7 @@
 		11B35703146B7401E5D5170E /* Factories */ = {
 			isa = PBXGroup;
 			children = (
+				D06F60072D195FE90033A288 /* AddressSecurityCheckerFactory.swift */,
 				11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */,
 				11B353450DED12F9F024BAD0 /* AddressParserFactory.swift */,
 				11B359D88585F2BBFA56CB77 /* FeeRateProviderFactory.swift */,
@@ -5971,6 +5996,7 @@
 		11B3573D2F4B70997D4BBAD3 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */,
 				11B352044BCE494491257933 /* LocalStorage.swift */,
 				11B35A1AE56A94BEB52AC4D1 /* StorageMigrator.swift */,
 				11B35E87C15A3AE82F471007 /* AccountStorage.swift */,
@@ -7076,6 +7102,8 @@
 		58AAA0C31F14444C22ACF393 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */,
+				D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */,
 				58AAA7305EF2A12D3DC82B32 /* AddressParserChain.swift */,
 				58AAAAC62C5B05463D339BCC /* EvmAddressParserItem.swift */,
 				58AAA9A4761030BE9F60C85E /* UdnAddressParserItem.swift */,
@@ -9406,6 +9434,7 @@
 				D3833AF32BF20B8600ACECFB /* MarketPairsView.swift in Sources */,
 				11B350B22CCCFCD466BEB808 /* FeeRateProvider.swift in Sources */,
 				6BCD53172A161F4800993F20 /* BackupViewController.swift in Sources */,
+				D01513D12D1EA6A400FD9816 /* SpamScanState.swift in Sources */,
 				11B35B3F384758B223A7218C /* MainSettingsFooterCell.swift in Sources */,
 				58AAAA6AF87DE0EE337BB8AA /* GradientLayer.swift in Sources */,
 				58AAA82CE1738BCC5B426CB8 /* DebugModule.swift in Sources */,
@@ -9459,6 +9488,7 @@
 				6BBB92B12D10095300112409 /* SubscribePeriodSegmentView.swift in Sources */,
 				D023D2682A24BBC6004F65B0 /* TronAddressParser.swift in Sources */,
 				D36DE0C1272FD864000BC916 /* UniswapService.swift in Sources */,
+				D0F766D02D1AD36200E409AD /* SpamAddressDetector.swift in Sources */,
 				11B35CB5A90FCD0B53D59140 /* AlertViewController.swift in Sources */,
 				11B35C8A76BB5C69263E9757 /* AlertModule.swift in Sources */,
 				11B35383F24853BDDB27618A /* AlertPresenter.swift in Sources */,
@@ -9736,6 +9766,7 @@
 				D36DE0B4272FD689000BC916 /* SwapProviderManager.swift in Sources */,
 				11B357118379A537844A83D0 /* EvmSyncSource.swift in Sources */,
 				11B354CAD4BC4FAB3889838D /* EvmSyncSourceManager.swift in Sources */,
+				D02C85A82D1A93A60096A84D /* SpamAddress.swift in Sources */,
 				D36287B62CA2CC8600ADAF3B /* TonConnectConnectViewModel.swift in Sources */,
 				11B3573B8B8DA5C1DE332EB6 /* EvmNetworkViewController.swift in Sources */,
 				11B3558589D57B3EAD53919F /* EvmNetworkViewModel.swift in Sources */,
@@ -9824,6 +9855,7 @@
 				2FA5D095A83D18DE2E21B580 /* EvmTransactionsAdapter.swift in Sources */,
 				2FA5D4BE55E8AB193EA61411 /* BinanceChainIncomingTransactionRecord.swift in Sources */,
 				2FA5DC0EF03C92C2125D433E /* BinanceChainOutgoingTransactionRecord.swift in Sources */,
+				D06F60082D195FE90033A288 /* AddressSecurityCheckerFactory.swift in Sources */,
 				2FA5DC95B68FC21FD48CCB13 /* BinanceChainTransactionRecord.swift in Sources */,
 				2FA5D6BCACDEB0BF06310354 /* TransactionAdapterManager.swift in Sources */,
 				2FA5DB5E2D23E973286979E8 /* HistoricalRateService.swift in Sources */,
@@ -9851,6 +9883,7 @@
 				D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */,
 				11B35A82532EC55909EFBAD8 /* LaunchScreen.swift in Sources */,
 				6BB14F762C01D04200E879B2 /* CheckBoxUiView.swift in Sources */,
+				D06F60052D195FBC0033A288 /* AddressSecurityCheckerChain.swift in Sources */,
 				6BCD53052A161F4100993F20 /* ICloudBackupTermsViewController.swift in Sources */,
 				11B354FA6F6BF59F64560590 /* CoinTreasuriesViewModel.swift in Sources */,
 				11B35F6092E0950714E277E4 /* PostCell.swift in Sources */,
@@ -10663,6 +10696,7 @@
 				11B35AAD64D68265B2128C25 /* TransactionBlockchainSelectView.swift in Sources */,
 				11B35A4F4A98537CE99B5221 /* TransactionTokenSelectView.swift in Sources */,
 				11B35ACE7B126DCF9F7F1A19 /* SearchBar.swift in Sources */,
+				D02C85AB2D1A94410096A84D /* SpamAddressManager.swift in Sources */,
 				11B3546CB3C043D22A5F7A88 /* TransactionsViewModel.swift in Sources */,
 				11B35071705455BC25C214D2 /* TonAdapter.swift in Sources */,
 				11B35C60FE9B94994FCCB0CB /* TonTransactionRecord.swift in Sources */,
@@ -10743,6 +10777,7 @@
 				11B35C943710774694282388 /* IMultiSwapQuote.swift in Sources */,
 				11B35772618CDA2F19CCDB2C /* IMultiSwapConfirmationQuote.swift in Sources */,
 				11B354B484C4785A27216BEC /* ISendData.swift in Sources */,
+				D02C85AE2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */,
 				11B35A4428B94FF4E4F01AA9 /* SendData.swift in Sources */,
 				11B358C4D4C466ACCEF0E4C7 /* MultiSwapMainField.swift in Sources */,
 				11B353D4BC292465358979D3 /* ValueLevel.swift in Sources */,
@@ -10888,6 +10923,7 @@
 				11B3540F182F3EDE74245EC7 /* MainSettingsFooterCell.swift in Sources */,
 				6BCD53162A161F4800993F20 /* BackupViewController.swift in Sources */,
 				D3833AF22BF20B8600ACECFB /* MarketPairsView.swift in Sources */,
+				D01513D22D1EA6A400FD9816 /* SpamScanState.swift in Sources */,
 				58AAAD33B32694AFA2E954D6 /* GradientLayer.swift in Sources */,
 				58AAAE430A2184D5A12202EA /* DebugModule.swift in Sources */,
 				58AAA54CF2169C04A4A38817 /* DebugRouter.swift in Sources */,
@@ -10941,6 +10977,7 @@
 				6BBB92B02D10095300112409 /* SubscribePeriodSegmentView.swift in Sources */,
 				11B3557D484786A0D41E16AF /* AlertViewController.swift in Sources */,
 				D023D2672A24BBC6004F65B0 /* TronAddressParser.swift in Sources */,
+				D0F766CF2D1AD36200E409AD /* SpamAddressDetector.swift in Sources */,
 				11B35C16BE16B6AEEA0690EC /* AlertModule.swift in Sources */,
 				11B3557E460F3BA25ED9F6CC /* AlertPresenter.swift in Sources */,
 				11B35E81542268ACDC17502A /* AlertRouter.swift in Sources */,
@@ -11218,6 +11255,7 @@
 				1A564032D3C011BCAA7D44A8 /* DeepLinkService.swift in Sources */,
 				11B35804545D048C0EDB8089 /* EvmSyncSource.swift in Sources */,
 				11B352F14D96C26D946E3877 /* EvmSyncSourceManager.swift in Sources */,
+				D02C85A92D1A93A60096A84D /* SpamAddress.swift in Sources */,
 				D36287B52CA2CC8600ADAF3B /* TonConnectConnectViewModel.swift in Sources */,
 				11B35F73153DEE805DD539CE /* EvmNetworkViewController.swift in Sources */,
 				11B35B507F2F843A5B3E4C7C /* EvmNetworkViewModel.swift in Sources */,
@@ -11306,6 +11344,7 @@
 				D003297626CD2C67002EC21D /* TransactionLockInfo.swift in Sources */,
 				11B35989090E4AD4E3EB8D72 /* CoinAuditsViewModel.swift in Sources */,
 				11B350C265D84964DCB0B317 /* CoinAuditsView.swift in Sources */,
+				D06F60092D195FE90033A288 /* AddressSecurityCheckerFactory.swift in Sources */,
 				2FA5DB27EB552BF53BC3E829 /* EvmTransactionsAdapter.swift in Sources */,
 				2FA5D7283FA3C72FDFECF26D /* BinanceChainIncomingTransactionRecord.swift in Sources */,
 				2FA5D5A690F5473920996095 /* BinanceChainOutgoingTransactionRecord.swift in Sources */,
@@ -11333,6 +11372,7 @@
 				D087627629815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */,
 				11B35ED9D5F95988E9335440 /* CoinAnalyticsModule.swift in Sources */,
 				D389BC4C2C0DDCF500724504 /* MarketAdvancedSearchBlockchainsView.swift in Sources */,
+				D06F60032D195FBC0033A288 /* AddressSecurityCheckerChain.swift in Sources */,
 				D0118E4B2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */,
 				6BB14F752C01D04200E879B2 /* CheckBoxUiView.swift in Sources */,
 				11B3551E5E9A6D167F7BA078 /* LaunchScreenManager.swift in Sources */,
@@ -12145,6 +12185,7 @@
 				11B35B09AADB1FBF7DDE765C /* TransactionFilterView.swift in Sources */,
 				11B355A6A5AD88A48B9641CE /* TransactionFilterViewModel.swift in Sources */,
 				11B35E02FF7E8A48B9B69ABB /* TransactionBlockchainSelectView.swift in Sources */,
+				D02C85AC2D1A94410096A84D /* SpamAddressManager.swift in Sources */,
 				11B355FC0E3DE029EB3F95D5 /* TransactionTokenSelectView.swift in Sources */,
 				11B358781EBEFCE7CED000F0 /* SearchBar.swift in Sources */,
 				11B358D91C9D8102C46B97ED /* TransactionsViewModel.swift in Sources */,
@@ -12225,6 +12266,7 @@
 				11B3550846F2DD60D3778FE5 /* EvmSendHandler.swift in Sources */,
 				11B350B33F891A2720420697 /* ISendHandler.swift in Sources */,
 				11B35A3B506EDD1EFB7D913E /* BaseSendEvmData.swift in Sources */,
+				D02C85AF2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */,
 				11B3546D0D2F891FC9AE372C /* IMultiSwapQuote.swift in Sources */,
 				11B3584A053BC5DAE6E434F8 /* IMultiSwapConfirmationQuote.swift in Sources */,
 				11B3557AF8D64E9897965526 /* ISendData.swift in Sources */,
@@ -13127,7 +13169,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.1.2;
+				version = 2.2.0;
 			};
 		};
 		D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit" */ = {

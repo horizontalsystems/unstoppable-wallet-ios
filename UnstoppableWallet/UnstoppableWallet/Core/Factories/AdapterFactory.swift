@@ -14,10 +14,10 @@ class AdapterFactory {
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
     private let evmLabelManager: EvmLabelManager
-
+    private let spamAddressManager: SpamAddressManager
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, binanceKitManager: BinanceKitManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager,
-         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager)
+         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager, spamAddressManager: SpamAddressManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
@@ -28,6 +28,7 @@ class AdapterFactory {
         self.restoreSettingsManager = restoreSettingsManager
         self.coinManager = coinManager
         self.evmLabelManager = evmLabelManager
+        self.spamAddressManager = spamAddressManager
     }
 
     private func evmAdapter(wallet: Wallet) -> IAdapter? {
@@ -52,7 +53,7 @@ class AdapterFactory {
             return nil
         }
 
-        return try? Eip20Adapter(evmKitWrapper: evmKitWrapper, contractAddress: address, wallet: wallet, baseToken: baseToken, coinManager: coinManager, evmLabelManager: evmLabelManager)
+        return try? Eip20Adapter(evmKitWrapper: evmKitWrapper, contractAddress: address, wallet: wallet, baseToken: baseToken, coinManager: coinManager, evmLabelManager: evmLabelManager, spamAddressManager: spamAddressManager)
     }
 
     private func tronAdapter(wallet: Wallet) -> IAdapter? {
@@ -80,7 +81,7 @@ extension AdapterFactory {
            let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType)
         {
             let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchainType)
-            return EvmTransactionsAdapter(evmKitWrapper: evmKitWrapper, source: transactionSource, baseToken: baseToken, evmTransactionSource: syncSource.transactionSource, coinManager: coinManager, evmLabelManager: evmLabelManager)
+            return EvmTransactionsAdapter(evmKitWrapper: evmKitWrapper, source: transactionSource, baseToken: baseToken, evmTransactionSource: syncSource.transactionSource, coinManager: coinManager, evmLabelManager: evmLabelManager, spamAddressManager: spamAddressManager)
         }
 
         return nil
@@ -154,11 +155,13 @@ extension AdapterFactory {
             if let tonKit = try? tonKitManager.tonKit(account: wallet.account) {
                 return TonAdapter(tonKit: tonKit)
             }
+
         case let (.jetton(address), .ton):
             do {
                 let tonKit = try tonKitManager.tonKit(account: wallet.account)
                 return try JettonAdapter(tonKit: tonKit, address: address)
             } catch {}
+
         default: ()
         }
 

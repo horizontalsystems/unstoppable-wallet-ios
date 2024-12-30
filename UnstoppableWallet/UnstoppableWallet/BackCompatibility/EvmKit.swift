@@ -24,10 +24,6 @@ public extension Kit {
         accountStatePublisher.asObservable()
     }
 
-    var allTransactionsObservable: Observable<([FullTransaction], Bool)> {
-        allTransactionsPublisher.asObservable()
-    }
-
     func transactionSingle(hash: Data) -> Single<FullTransaction> {
         Single<FullTransaction>.create { [weak self] observer in
             guard let strongSelf = self else {

@@ -19,6 +19,7 @@ class EvmBlockchainManager {
     private let testNetManager: TestNetManager
     private let marketKit: MarketKit.Kit
     private let accountManagerFactory: EvmAccountManagerFactory
+    private let spamAddressManager: SpamAddressManager
 
     private var evmKitManagerMap = [BlockchainType: EvmKitManager]()
     private var evmAccountManagerMap = [BlockchainType: EvmAccountManager]()
@@ -31,11 +32,12 @@ class EvmBlockchainManager {
         }
     }
 
-    init(syncSourceManager: EvmSyncSourceManager, testNetManager: TestNetManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
+    init(syncSourceManager: EvmSyncSourceManager, testNetManager: TestNetManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory, spamAddressManager: SpamAddressManager) {
         self.syncSourceManager = syncSourceManager
         self.testNetManager = testNetManager
         self.marketKit = marketKit
         self.accountManagerFactory = accountManagerFactory
+        self.spamAddressManager = spamAddressManager
     }
 
     private func evmManagers(blockchainType: BlockchainType) -> (EvmKitManager, EvmAccountManager) {
@@ -48,6 +50,8 @@ class EvmBlockchainManager {
 
         evmKitManagerMap[blockchainType] = evmKitManager
         evmAccountManagerMap[blockchainType] = evmAccountManager
+
+        spamAddressManager.subscribeToKitCreation(evmKitManager: evmKitManager, blockchainType: blockchainType)
 
         return (evmKitManager, evmAccountManager)
     }

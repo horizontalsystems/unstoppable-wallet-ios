@@ -100,6 +100,7 @@ class App {
     let statManager: StatManager
 
     let tonConnectManager: TonConnectManager
+    let spamAddressManager: SpamAddressManager
 
     let purchaseManager: PurchaseManager
 
@@ -200,8 +201,11 @@ class App {
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
 
+        let spamAddressStorage = try SpamAddressStorage(dbPool: dbPool)
+        spamAddressManager = SpamAddressManager(storage: spamAddressStorage, marketKit: marketKit, coinManager: coinManager)
+
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, restoreStateManager: restoreStateManager, marketKit: marketKit)
-        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
+        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory, spamAddressManager: spamAddressManager)
 
         let hsLabelProvider = HsLabelProvider(networkManager: networkManager)
         let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)
@@ -266,7 +270,8 @@ class App {
             tonKitManager: tonKitManager,
             restoreSettingsManager: restoreSettingsManager,
             coinManager: coinManager,
-            evmLabelManager: evmLabelManager
+            evmLabelManager: evmLabelManager,
+            spamAddressManager: spamAddressManager
         )
         adapterManager = AdapterManager(
             adapterFactory: adapterFactory,
@@ -342,11 +347,12 @@ class App {
             statManager: statManager,
             walletConnectSocketConnectionService: walletConnectSocketConnectionService,
             nftMetadataSyncer: nftMetadataSyncer,
-            tonKitManager: tonKitManager
+            tonKitManager: tonKitManager,
+            spamAddressManager: spamAddressManager
         )
     }
 
-    func newSendEnabled(wallet: Wallet) -> Bool {
+    func newSendEnabled(wallet _: Wallet) -> Bool {
         true
         // switch wallet.token.blockchainType {
         // case .ton: return true

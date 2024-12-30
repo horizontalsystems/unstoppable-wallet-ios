@@ -136,7 +136,6 @@ class ResendBitcoinViewModel {
                         type: .regular
                     )
                 )
-
             default: ()
             }
         }
