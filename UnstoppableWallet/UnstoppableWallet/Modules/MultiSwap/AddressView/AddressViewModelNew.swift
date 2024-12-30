@@ -85,7 +85,7 @@ class AddressViewModelNew: ObservableObject {
                 .handle(address: address)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
-                .flatMap { [weak self] parsedAddress -> Single<(Address?, [AddressSecurityCheckerChain.SecurityCheckResult])> in
+                .flatMap { [weak self] parsedAddress -> Single<(Address?, [AddressSecurityCheckerChain.SecurityIssue])> in
                     guard let _address = parsedAddress, let securityCheckerChain = self?.securityCheckerChain else {
                         return .just((parsedAddress, []))
                     }
@@ -93,9 +93,9 @@ class AddressViewModelNew: ObservableObject {
                     return securityCheckerChain.handle(address: _address).map { (_address, $0) }
                 }
                 .subscribe(
-                    onSuccess: { [weak self] parsedAddress, securityCheckResults in
-                        print("securityCheckResults: \(securityCheckResults)")
-                        self?.sync(parsedAddress, uri: uri, securityCheckResults: securityCheckResults)
+                    onSuccess: { [weak self] parsedAddress, securityIssues in
+                        print("securityIssues: \(securityIssues)")
+                        self?.sync(parsedAddress, uri: uri, securityIssues: securityIssues)
                     },
                     onError: { [weak self] in self?.sync($0, text: text) }
                 )
@@ -113,13 +113,13 @@ class AddressViewModelNew: ObservableObject {
         }
     }
 
-    private func sync(_ address: Address?, uri: AddressUri?, securityCheckResults: [AddressSecurityCheckerChain.SecurityCheckResult]) {
+    private func sync(_ address: Address?, uri: AddressUri?, securityIssues: [AddressSecurityCheckerChain.SecurityIssue]) {
         guard let address else {
             result = .idle
             return
         }
 
-        result = .valid(.init(address: address, uri: uri, securityCheckResults: securityCheckResults))
+        result = .valid(.init(address: address, uri: uri, securityIssues: securityIssues))
     }
 
     private func sync(_ error: Error, text: String) {
@@ -191,7 +191,7 @@ enum AddressInput {
     struct Success: Equatable {
         let address: Address
         let uri: AddressUri?
-        let securityCheckResults: [AddressSecurityCheckerChain.SecurityCheckResult]
+        let securityIssues: [AddressSecurityCheckerChain.SecurityIssue]
 
         static func == (lhs: AddressInput.Success, rhs: AddressInput.Success) -> Bool {
             lhs.address == rhs.address && lhs.uri == rhs.uri

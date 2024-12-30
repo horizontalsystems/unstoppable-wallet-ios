@@ -2552,6 +2552,8 @@
 		D0532CC52B149E450015DF40 /* WatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0532CC32B149E450015DF40 /* WatchService.swift */; };
 		D054DAE32BE5123F0040B7C9 /* InitialTransactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */; };
 		D054DAE42BE5123F0040B7C9 /* InitialTransactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */; };
+		D05C8E8A2D22931A006EE778 /* ChainalysisAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05C8E892D22931A006EE778 /* ChainalysisAddressValidator.swift */; };
+		D05C8E8B2D22931A006EE778 /* ChainalysisAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05C8E892D22931A006EE778 /* ChainalysisAddressValidator.swift */; };
 		D05E968D2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E968C2A25D6C6002CCD71 /* Trc20Adapter.swift */; };
 		D05E968E2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E968C2A25D6C6002CCD71 /* Trc20Adapter.swift */; };
 		D05E96902A261D82002CCD71 /* TronTransactionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E968F2A261D82002CCD71 /* TronTransactionAdapter.swift */; };
@@ -4536,6 +4538,7 @@
 		D0532CC02B149E110015DF40 /* WatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewController.swift; sourceTree = "<group>"; };
 		D0532CC32B149E450015DF40 /* WatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchService.swift; sourceTree = "<group>"; };
 		D054DAE22BE5123F0040B7C9 /* InitialTransactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialTransactionSettings.swift; sourceTree = "<group>"; };
+		D05C8E892D22931A006EE778 /* ChainalysisAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainalysisAddressValidator.swift; sourceTree = "<group>"; };
 		D05E968C2A25D6C6002CCD71 /* Trc20Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trc20Adapter.swift; sourceTree = "<group>"; };
 		D05E968F2A261D82002CCD71 /* TronTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronTransactionAdapter.swift; sourceTree = "<group>"; };
 		D05E96922A261DC1002CCD71 /* TronTransactionConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronTransactionConverter.swift; sourceTree = "<group>"; };
@@ -7102,6 +7105,7 @@
 		58AAA0C31F14444C22ACF393 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				D05C8E892D22931A006EE778 /* ChainalysisAddressValidator.swift */,
 				D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */,
 				D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */,
 				58AAA7305EF2A12D3DC82B32 /* AddressParserChain.swift */,
@@ -9878,6 +9882,7 @@
 				D087627729815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */,
 				11B35FBC1AFDCF0DB8362C88 /* CoinAnalyticsModule.swift in Sources */,
 				D0118E4C2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */,
+				D05C8E8A2D22931A006EE778 /* ChainalysisAddressValidator.swift in Sources */,
 				D389BC4D2C0DDCF500724504 /* MarketAdvancedSearchBlockchainsView.swift in Sources */,
 				11B3518BEA8865CADA5DA684 /* LaunchScreenManager.swift in Sources */,
 				D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */,
@@ -11367,6 +11372,7 @@
 				D36DE0E4272FD887000BC916 /* OneInchService.swift in Sources */,
 				D05E969A2A26278D002CCD71 /* TronApproveTransactionRecord.swift in Sources */,
 				D05E969D2A2627AF002CCD71 /* TronContractCallTransactionRecord.swift in Sources */,
+				D05C8E8B2D22931A006EE778 /* ChainalysisAddressValidator.swift in Sources */,
 				D36DE0C9272FD864000BC916 /* UniswapProvider.swift in Sources */,
 				D00DAE452B626C2900F48E1D /* GasPrice.swift in Sources */,
 				D087627629815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */,
