@@ -115,7 +115,7 @@ struct MarketAdvancedSearchView: View {
             }
         }
     }
-    
+
     private func openPremiumSubscription() {
         subscriptionPresented = true
     }
@@ -198,7 +198,6 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    
     @ViewBuilder private func premiumRow(_ view: some View) -> some View {
         if viewModel.premiumEnabled {
             ListRow {
@@ -212,7 +211,7 @@ struct MarketAdvancedSearchView: View {
             }
         }
     }
-    
+
     @ViewBuilder private func listedOnTopExchangesRow() -> some View {
         Toggle(isOn: $viewModel.listedOnTopExchanges) {
             Text("market.advanced_search.listed_on_top_exchanges".localized).themeBody()

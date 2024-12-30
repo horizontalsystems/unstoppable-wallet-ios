@@ -31,7 +31,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
     private let currencyManager = App.shared.currencyManager
     private let priceChangeModeManager = App.shared.priceChangeModeManager
     private let purchaseManager = App.shared.purchaseManager
-        
+
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
@@ -212,7 +212,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
                 (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
                 (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
                 (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binancecoin")) &&
-                (closedToAllTime(closedTo: priceCloseTo, ath: marketInfo.athPercentage, atl: marketInfo.atlPercentage))
+                closedToAllTime(closedTo: priceCloseTo, ath: marketInfo.athPercentage, atl: marketInfo.atlPercentage)
         }
     }
 
@@ -554,4 +554,3 @@ extension MarketAdvancedSearchViewModel {
         }
     }
 }
-

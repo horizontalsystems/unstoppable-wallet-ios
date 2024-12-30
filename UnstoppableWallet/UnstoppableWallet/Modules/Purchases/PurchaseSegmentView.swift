@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PurchaseSegmentView: View {
     @Binding var selection: PurchaseManager.SubscriptionType
-    
+
     var body: some View {
         HStack(spacing: 0) {
             ForEach(PurchaseManager.SubscriptionType.allCases, id: \.self) { type in
@@ -18,7 +18,7 @@ struct PurchaseSegmentView: View {
         .frame(height: 44)
         .background(Color(hex: 0x6E7899).opacity(0.2))
     }
-    
+
     private func segmentButton(title: String, icon: Image, isSelected: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: .margin6) {
@@ -37,7 +37,7 @@ struct PurchaseSegmentView: View {
                     LinearGradient(
                         gradient: Gradient(colors: [
                             Color(hex: 0xFFD000),
-                            Color(hex: 0xFFA800)
+                            Color(hex: 0xFFA800),
                         ]),
                         startPoint: .leading,
                         endPoint: .trailing
@@ -48,5 +48,4 @@ struct PurchaseSegmentView: View {
             }
         )
     }
-
 }

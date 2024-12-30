@@ -8,9 +8,9 @@ struct PurchaseBottomSheetView: View {
     @Binding private var isPresented: Bool
     @State private var isPresentedPromoCode: Bool = false
 
-    private let onSubscribe: (PurchaseManager.SubscriptionPeriod) -> ()
+    private let onSubscribe: (PurchaseManager.SubscriptionPeriod) -> Void
 
-    init(type: PurchaseManager.SubscriptionType, isPresented: Binding<Bool>, onSubscribe: @escaping (PurchaseManager.SubscriptionPeriod) -> ()) {
+    init(type: PurchaseManager.SubscriptionType, isPresented: Binding<Bool>, onSubscribe: @escaping (PurchaseManager.SubscriptionPeriod) -> Void) {
         _viewModel = StateObject(wrappedValue: PurchaseBottomSheetViewModel(type: type, onSubscribe: onSubscribe))
         self.onSubscribe = onSubscribe
         _isPresented = isPresented
@@ -21,7 +21,7 @@ struct PurchaseBottomSheetView: View {
             HStack(spacing: .margin16) {
                 Image(viewModel.type.icon).themeIcon(color: .themeJacob)
                 Text(viewModel.type.rawValue.uppercased()).themeHeadline2()
-                
+
                 Button(action: {
                     isPresented = false
                 }) {
@@ -31,17 +31,17 @@ struct PurchaseBottomSheetView: View {
             .padding(.horizontal, .margin32)
             .padding(.top, .margin24)
             .padding(.bottom, .margin12)
-            
+
             SubscribePeriodSegmentView(type: viewModel.type, selection: $viewModel.selectedPeriod)
                 .onChange(of: viewModel.selectedPeriod) { newValue in
                     viewModel.set(period: newValue)
                 }
                 .padding(.top, .margin12)
                 .padding(.horizontal, .margin16)
-            
+
             tryFreeDescription()
                 .padding(.horizontal, .margin16)
-            
+
             VStack(spacing: .margin12) {
                 Button(action: {
                     viewModel.subscribe()
@@ -55,7 +55,7 @@ struct PurchaseBottomSheetView: View {
                 }
                 .disabled(viewModel.buttonState == .loading)
                 .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
-                
+
                 Button(action: {
                     isPresentedPromoCode = true
                 }) {
@@ -82,11 +82,10 @@ struct PurchaseBottomSheetView: View {
     private func tryFreeDescription() -> some View {
         (
             Text("purchase.period.description1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +
-            Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
+                Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
         )
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, .margin16)
-            .padding(.vertical, .margin12)
+        .multilineTextAlignment(.center)
+        .padding(.horizontal, .margin16)
+        .padding(.vertical, .margin12)
     }
-
 }

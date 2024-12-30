@@ -146,7 +146,7 @@ public struct Client: APIProtocol {
                     } else {
                         throw converter.makeUnexpectedContentTypeError(contentType: contentType)
                     }
-                    return .ok(.init(body: .json(try bodyPayload.json)))
+                    return try .ok(.init(body: .json(bodyPayload.json)))
                 default:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
                     let body: Components.Responses.Response.Body
@@ -169,7 +169,6 @@ public struct Client: APIProtocol {
 }
 
 enum BodyUniversalData: Sendable, Hashable {
-    
     case json(JsonPayload)
     public var json: Components.Responses.Response.Body.jsonPayload {
         get throws {

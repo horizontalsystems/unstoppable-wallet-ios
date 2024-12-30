@@ -128,13 +128,13 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
 
         didAppear = false
     }
-    
+
     override public var canBecomeFirstResponder: Bool {
-        return content.canBecomeFirstResponder
+        content.canBecomeFirstResponder
     }
 
     override public func becomeFirstResponder() -> Bool {
-        return content.becomeFirstResponder()
+        content.becomeFirstResponder()
     }
 
     @objc private func keyboardNotification(notification: NSNotification) {
@@ -183,7 +183,7 @@ extension ActionSheetControllerNew {
         guard !dismissing, content.view.superview != nil else {
             return
         }
-        
+
         let keyboardHeight = configuration.ignoreKeyboard ? 0 : keyboardHeightRelay.value
 
         content.view.snp.remakeConstraints { maker in

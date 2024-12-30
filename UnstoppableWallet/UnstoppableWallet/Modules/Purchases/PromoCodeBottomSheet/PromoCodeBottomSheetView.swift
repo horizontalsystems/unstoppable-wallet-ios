@@ -8,9 +8,9 @@ struct PromoCodeBottomSheetView: View {
     @Binding private var isPresented: Bool
     @FocusState private var focusField: FocusField?
 
-    init(promo: String, isPresented: Binding<Bool>, onApplyPromo: @escaping ((PurchaseManager.PromoData) -> ())) {
+    init(promo: String, isPresented: Binding<Bool>, onApplyPromo: @escaping ((PurchaseManager.PromoData) -> Void)) {
         _viewModel = StateObject(wrappedValue: PromoCodeBottomSheetViewModel(promo: promo, onApplyPromo: onApplyPromo))
-        
+
         _isPresented = isPresented
     }
 
@@ -19,7 +19,7 @@ struct PromoCodeBottomSheetView: View {
             HStack(spacing: .margin16) {
                 Image("percent_24").themeIcon(color: .themeJacob)
                 Text("purchases.promocode.title".localized).themeHeadline2()
-                
+
                 Button(action: {
                     isPresented = false
                 }) {
@@ -29,7 +29,7 @@ struct PromoCodeBottomSheetView: View {
             .padding(.horizontal, .margin32)
             .padding(.top, .margin24)
             .padding(.bottom, .margin12)
-            
+
             InputTextRow(vertical: .margin8) {
                 ShortcutButtonsView(
                     content: {
@@ -38,7 +38,6 @@ struct PromoCodeBottomSheetView: View {
                             text: $viewModel.promocode
                         )
                         .focused($focusField, equals: .promocode)
-                        
                         .accentColor(.themeYellow)
                         .autocapitalization(.none)
                         .autocorrectionDisabled()
@@ -55,7 +54,7 @@ struct PromoCodeBottomSheetView: View {
             }
             .modifier(CautionBorder(cautionState: $viewModel.promocodeCautionState))
             .padding(EdgeInsets(top: .margin24, leading: .margin16, bottom: 0, trailing: .margin16))
-            
+
             VStack(spacing: .margin12) {
                 buttonView()
             }
@@ -65,7 +64,7 @@ struct PromoCodeBottomSheetView: View {
             focusField = .promocode
         }
     }
-    
+
     @ViewBuilder private func buttonView() -> some View {
         let (title, disabled, showProgress) = buttonState()
 
@@ -86,7 +85,7 @@ struct PromoCodeBottomSheetView: View {
     }
 
     private func buttonState() -> (String, Bool, Bool) {
-        var title: String = "button.apply".localized
+        var title = "button.apply".localized
         var disabled = true
         var showProgress = false
 
@@ -104,7 +103,6 @@ struct PromoCodeBottomSheetView: View {
 
         return (title, disabled, showProgress)
     }
-
 }
 
 extension PromoCodeBottomSheetView {

@@ -110,7 +110,6 @@ class SendConfirmationViewModel {
                         type: .regular
                     )
                 )
-
             default: ()
             }
         }

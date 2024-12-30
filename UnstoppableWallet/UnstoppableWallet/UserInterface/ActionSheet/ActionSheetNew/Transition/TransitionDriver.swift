@@ -59,10 +59,12 @@ extension TransitionDriver { // Gesture Handling
         case .began:
             pause()
             interactiveTransitionDelegate?.start(direction: .present)
+
         case .changed:
             let increment = -recognizer.incrementToBottom(maxTranslation: maxTranslation)
             update(percentComplete + increment)
             interactiveTransitionDelegate?.move(direction: .present, percent: percentComplete + increment)
+
         case .ended, .cancelled:
             speedMultiplier = recognizer.swipeMultiplier(maxTranslation: maxTranslation)
             if speedMultiplier < 0.5 {
@@ -97,6 +99,7 @@ extension TransitionDriver { // Gesture Handling
             let newValue = percentComplete + recognizer.incrementToBottom(maxTranslation: maxTranslation)
             update(newValue)
             interactiveTransitionDelegate?.move(direction: .dismiss, percent: newValue)
+
         case .ended, .cancelled:
             speedMultiplier = recognizer.swipeMultiplier(maxTranslation: maxTranslation)
             if speedMultiplier < 0.5 {
@@ -112,6 +115,7 @@ extension TransitionDriver { // Gesture Handling
             speedMultiplier = 1
             cancel()
             interactiveTransitionDelegate?.fail(direction: .dismiss)
+
         default:
             break
         }

@@ -3,11 +3,11 @@ import UIKit
 
 class PromoCodeBottomSheetViewModel: ObservableObject {
     private let purchaseManager = App.shared.purchaseManager
-    
+
     private let initialPromo: String
-    private let onApplyPromo: ((PurchaseManager.PromoData) -> ())
+    private let onApplyPromo: (PurchaseManager.PromoData) -> Void
     private var currentTask: Task<Void, Never>?
-    
+
     @Published var buttonState: ButtonState = .idle
     @Published var promocodeCautionState: CautionState = .none
     @Published var promocode: String {
@@ -18,33 +18,33 @@ class PromoCodeBottomSheetViewModel: ObservableObject {
             }
         }
     }
-    
+
     var promoData: PurchaseManager.PromoData?
-    
-    init(promo: String, onApplyPromo: @escaping ((PurchaseManager.PromoData) -> ())) {
-        self.initialPromo = promo
+
+    init(promo: String, onApplyPromo: @escaping ((PurchaseManager.PromoData) -> Void)) {
+        initialPromo = promo
         self.onApplyPromo = onApplyPromo
-        
+
         promocode = promo
     }
-    
+
     @MainActor private func update(state: ButtonState, caution: CautionState) async {
         await MainActor.run { [weak self] in
             self?.buttonState = state
             self?.promocodeCautionState = caution
         }
     }
-    
+
     private func validatePromo() async {
         currentTask?.cancel()
         currentTask = nil
-        
+
         let promo = promocode.trimmingCharacters(in: .whitespacesAndNewlines)
         if promo == initialPromo {
             await update(state: .idle, caution: .none)
             return
         }
-        
+
         currentTask = Task {
             do {
                 await update(state: .loading, caution: .none)
@@ -68,17 +68,16 @@ class PromoCodeBottomSheetViewModel: ObservableObject {
             }
         }
     }
-    
+
     func applyPromo() {
         if let promoData {
             onApplyPromo(promoData)
         }
     }
-    
+
     deinit {
         currentTask?.cancel()
     }
-    
 }
 
 extension PromoCodeBottomSheetViewModel {
@@ -89,10 +88,10 @@ extension PromoCodeBottomSheetViewModel {
 
     func onTap(index _: Int) {
         if let text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
-            self.promocode = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            promocode = text.trimmingCharacters(in: .whitespacesAndNewlines)
         }
     }
-    
+
     func onTapDelete() {
         promocode = ""
     }

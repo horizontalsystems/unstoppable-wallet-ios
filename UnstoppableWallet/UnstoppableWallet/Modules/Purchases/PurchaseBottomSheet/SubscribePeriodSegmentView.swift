@@ -4,12 +4,12 @@ struct SubscribePeriodSegmentView: View {
     let type: PurchaseManager.SubscriptionType
 
     @Binding var selection: PurchaseManager.SubscriptionPeriod
-    
+
     var body: some View {
         VStack(spacing: 12) {
             ForEach(PurchaseManager.SubscriptionPeriod.allCases, id: \.self) { period in
                 let viewItem = PurchaseBottomSheetViewModel.ViewItem(type: type, period: period)
-                
+
                 segmentButton(
                     title: viewItem.title,
                     badge: viewItem.discountBadge,
@@ -19,16 +19,17 @@ struct SubscribePeriodSegmentView: View {
                     action: {
                         selection = period
                         print("TAP on \(period.rawValue)")
-                    })
+                    }
+                )
             }
         }
     }
-    
+
     private func segmentButton(title: String, badge: String?, price: String, priceDescription: String?, isSelected: Bool, action: @escaping () -> Void) -> some View {
         VStack(spacing: .heightOneDp) {
             HStack(spacing: .margin8) {
                 Text(title).textHeadline1()
-                if let badge = badge {
+                if let badge {
                     Text(badge)
                         .textMicroSB(color: .themeClaude)
                         .padding(.horizontal, .margin6)
@@ -41,7 +42,7 @@ struct SubscribePeriodSegmentView: View {
             HStack(spacing: .margin4) {
                 Text(price).textSubhead2(color: .themeJacob)
 
-                if let priceDescription = priceDescription {
+                if let priceDescription {
                     Text(priceDescription)
                         .textSubhead2(color: .themeRemus)
                 }
@@ -57,5 +58,4 @@ struct SubscribePeriodSegmentView: View {
         )
         .onTapGesture(perform: action)
     }
-
 }

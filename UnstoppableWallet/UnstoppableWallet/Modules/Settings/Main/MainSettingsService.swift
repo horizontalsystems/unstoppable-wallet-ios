@@ -134,11 +134,11 @@ extension MainSettingsService {
     var isAuthenticated: Bool {
         subscriptionManager.isAuthenticated
     }
-    
+
     var subscriptionPublisher: AnyPublisher<PurchaseManager.Subscription?, Never> {
         purchaseManager.$subscription
     }
-    
+
     var subscription: PurchaseManager.Subscription? {
         purchaseManager.subscription
     }

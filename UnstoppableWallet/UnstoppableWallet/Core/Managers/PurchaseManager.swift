@@ -7,7 +7,7 @@ class PurchaseManager: NSObject {
     @PostPublished private(set) var products: [Product] = []
     @PostPublished private(set) var purchasedProductIds = Set<String>()
 
-    @PostPublished private(set) var subscription: Subscription? //STUB
+    @PostPublished private(set) var subscription: Subscription? // STUB
 
     private var updatesTask: Task<Void, Never>?
 
@@ -112,7 +112,7 @@ extension PurchaseManager: SKPaymentTransactionObserver {
     }
 
     func paymentQueue(_: SKPaymentQueue, shouldAddStorePayment _: SKPayment, for _: SKProduct) -> Bool {
-        return true
+        true
     }
 }
 
@@ -121,7 +121,7 @@ extension PurchaseManager {
     private static let subscriptionTypeKey = "subscription_type"
     private static let subscriptionPeriodKey = "subscription_period"
     private static let subscriptionTimeKey = "subscription_time"
-    
+
     func check(promocode: String) async throws -> PromoData {
         if promocode == "" {
             return .empty
@@ -135,7 +135,7 @@ extension PurchaseManager {
             throw PromoCodeError.invalid
         }
     }
-    
+
     func purchase(type: SubscriptionType, period: SubscriptionPeriod) async throws {
         let storage = App.shared.userDefaultsStorage
         let current = Date().timeIntervalSince1970
@@ -146,16 +146,16 @@ extension PurchaseManager {
         subscription = Subscription(type: type, period: period, timestamp: current)
         try await Task.sleep(for: .seconds(2))
     }
-    
+
     func deactivate() {
         let storage = App.shared.userDefaultsStorage
         storage.set(value: String?._createNil, for: Self.subscriptionTypeKey)
         storage.set(value: String?._createNil, for: Self.subscriptionPeriodKey)
         storage.set(value: String?._createNil, for: Self.subscriptionTimeKey)
-        
+
         subscription = nil
     }
-    
+
     func loadSubscription() {
         let storage = UserDefaultsStorage()
         if let subscriptionType: String = storage.value(for: Self.subscriptionTypeKey),
@@ -163,8 +163,8 @@ extension PurchaseManager {
            let subscriptionTimeString: String = storage.value(for: Self.subscriptionTimeKey),
            let featureType = SubscriptionType(rawValue: subscriptionType),
            let featurePeriod = SubscriptionPeriod(rawValue: subscriptionPeriod),
-           let subscriptionTime = TimeInterval(subscriptionTimeString) {
-            
+           let subscriptionTime = TimeInterval(subscriptionTimeString)
+        {
             subscription = Subscription(type: featureType, period: featurePeriod, timestamp: subscriptionTime)
         } else {
             subscription = nil
@@ -178,17 +178,17 @@ extension PurchaseManager {
         case pro
         case vip
     }
-    
+
     enum SubscriptionPeriod: String, CaseIterable {
         case annually
         case monthly
     }
-    
+
     struct Subscription: Identifiable {
         let type: SubscriptionType
         let period: SubscriptionPeriod
         let timestamp: TimeInterval
-        
+
         var id: String {
             [type.rawValue, period.rawValue].joined(separator: "|")
         }
@@ -198,9 +198,9 @@ extension PurchaseManager {
         case invalid
         case used
     }
-    
+
     struct PromoData {
-        static let empty = Self.init(promocode: "", discount: 0)
+        static let empty = Self(promocode: "", discount: 0)
 
         let promocode: String
         let discount: Int

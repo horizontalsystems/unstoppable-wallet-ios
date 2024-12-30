@@ -6,7 +6,7 @@ struct PremiumListSectionHeader: View {
             Image("crown_16")
                 .renderingMode(.template)
                 .foregroundColor(.themeJacob)
-            
+
             Text("subscription.premium.label".localized)
                 .themeSubhead1(color: .themeJacob)
         }

@@ -169,7 +169,7 @@ class TonConnectManager {
         else {
             throw ServiceError.incorrectUrl
         }
-         
+
         return try TonConnectManager.parseParameters(queryItems: components.queryItems)
     }
 
@@ -188,11 +188,11 @@ class TonConnectManager {
 
         let encrypted = try sessionCrypto.encrypt(message: encoded, receiverPublicKey: receiverPublicKey)
 
-        let _ = try await apiClient.message(
+        _ = try await apiClient.message(
             query: .init(client_id: sessionCrypto.sessionId, to: clientId, ttl: 300),
             body: .plainText(.init(stringLiteral: encrypted.base64EncodedString()))
         )
-        
+
         // _ = try resp.ok.body.json
     }
 
@@ -270,17 +270,17 @@ extension TonConnectManager {
 
 extension TonConnectManager {
     static func parseParameters(queryItems: [URLQueryItem]?) throws -> TonConnectParameters {
-        guard let queryItems = queryItems,
+        guard let queryItems,
               let versionValue = queryItems.first(where: { $0.name == .versionKey })?.value,
               let version = TonConnectParameters.Version(rawValue: versionValue),
               let clientId = queryItems.first(where: { $0.name == .clientIdKey })?.value,
               let requestPayloadValue = queryItems.first(where: { $0.name == .requestPayloadKey })?.value,
               let requestPayloadData = requestPayloadValue.data(using: .utf8),
               let requestPayload = try? JSONDecoder().decode(TonConnectRequestPayload.self, from: requestPayloadData)
-          else {
-              throw ServiceError.incorrectUrl
-          }
-        
+        else {
+            throw ServiceError.incorrectUrl
+        }
+
         let returnDeepLink = queryItems.first(where: { $0.name == .returnDeepLink })?.value
         return TonConnectParameters(version: version, clientId: clientId, requestPayload: requestPayload, ret: returnDeepLink)
     }

@@ -16,7 +16,7 @@ struct PurchaseListView: View {
                             presentedSubscription = subscription
                         }
                     }
-                    
+
                     footerDescription(timestamp: subscription.timestamp)
                 } else {
                     Text("subscription.no_purchases".localized)
@@ -28,7 +28,7 @@ struct PurchaseListView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .sheet(item: $presentedSubscription) { blockchain in
+        .sheet(item: $presentedSubscription) { _ in
             PurchasesView()
         }
         .navigationTitle("subscription.title".localized)
@@ -42,23 +42,22 @@ struct PurchaseListView: View {
                     Spacer()
                     Text(value).textSubhead1(color: .themeJacob)
                 }
-                
+
                 Image.disclosureIcon
             }
         }
     }
 
-    
     private func footerDescription(timestamp: TimeInterval) -> some View {
         let date = DateHelper.instance.formatShortDateOnly(date: Date(timeIntervalSince1970: timestamp))
 
         return (
             Text("subscription.footer_description_1".localized(date)).foregroundColor(.themeGray).font(.themeSubhead2) +
-            Text("subscription.footer_description_2".localized)
+                Text("subscription.footer_description_2".localized)
                 .foregroundColor(.themeJacob)
                 .font(.themeSubhead2)
                 .underline(color: .themeJacob) +
-            Text("subscription.footer_description_3".localized).foregroundColor(.themeGray).font(.themeSubhead2)
+                Text("subscription.footer_description_3".localized).foregroundColor(.themeGray).font(.themeSubhead2)
         )
         .multilineTextAlignment(.leading)
         .onTapGesture(perform: {
@@ -67,5 +66,4 @@ struct PurchaseListView: View {
         .padding(.horizontal, .margin32)
         .padding(.vertical, .margin12)
     }
-
 }

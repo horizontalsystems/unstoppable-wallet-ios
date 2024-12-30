@@ -734,9 +734,9 @@ enum StorageMigrator {
 
                 let updatedWallet = EnabledWallet_v_0_40(
                     tokenQueryId: tokenQueryId,
-                    accountId: row["accountId"], 
+                    accountId: row["accountId"],
                     coinName: row["coinName"],
-                    coinCode: row["coinCode"], 
+                    coinCode: row["coinCode"],
                     tokenDecimals: row["tokenDecimals"]
                 )
 

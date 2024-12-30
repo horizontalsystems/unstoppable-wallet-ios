@@ -37,10 +37,10 @@ extension TonConnectEventHandler: IEventHandler {
             returnDeepLink = nil
         }
 
-        guard let config = config else {
+        guard let config else {
             throw EventHandler.HandleError.noSuitableHandler
         }
-        
+
         await MainActor.run { [weak self] in
             let view = TonConnectConnectView(config: config, returnDeepLink: returnDeepLink)
             self?.parentViewController?.visibleController.present(view.toViewController(), animated: true)

@@ -150,7 +150,7 @@ struct RankView: View {
 
     @ViewBuilder private func loadingList() -> some View {
         Section {
-            ListForEach(Array(0 ... 10)) { index in
+            ListForEach(Array(0 ... 10)) { _ in
                 ListRow {
                     itemContent(
                         index: 1,

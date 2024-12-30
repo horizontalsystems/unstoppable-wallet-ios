@@ -4,17 +4,17 @@ import ThemeKit
 import UIKit
 
 class MainSettingsPremiumCell: UITableViewCell {
-    static public let height: CGFloat = 130
-    
+    public static let height: CGFloat = 130
+
     private let cardView = CardView(insets: .zero)
 
     private let titleLabel = UILabel()
     private let titleDescription = UILabel()
     private let tryForFreeLabel = UILabel()
     private let boxImageView = UIImageView()
-    
+
     private let radialBackgroundView = RadialBackgroundView()
- 
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -34,7 +34,7 @@ class MainSettingsPremiumCell: UITableViewCell {
         radialBackgroundView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-        
+
         cardView.contentView.addSubview(boxImageView)
         boxImageView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin6)
@@ -93,9 +93,5 @@ class MainSettingsPremiumCell: UITableViewCell {
 }
 
 extension MainSettingsPremiumCell {
-    func bind(onTap: @escaping () -> Void) {
-    }
+    func bind(onTap _: @escaping () -> Void) {}
 }
-
-
-
