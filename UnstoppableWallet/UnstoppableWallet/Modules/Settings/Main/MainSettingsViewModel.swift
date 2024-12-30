@@ -147,7 +147,7 @@ extension MainSettingsViewModel {
     var hasSubscription: Bool {
         service.subscription != nil
     }
-    
+
     var premiumSubscription: Bool {
         service.subscription?.type == .vip
     }

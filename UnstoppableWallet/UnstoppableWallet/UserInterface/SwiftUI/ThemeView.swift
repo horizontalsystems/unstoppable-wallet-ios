@@ -23,7 +23,7 @@ struct ThemeRadialView<Content: View>: View {
                 ZStack {
                     let windowSize = UIScreen.currentSize
                     let viewSize = proxy.size
-                    
+
                     let deltaHeight = (windowSize.height - viewSize.height) / 2
 
                     Circle()

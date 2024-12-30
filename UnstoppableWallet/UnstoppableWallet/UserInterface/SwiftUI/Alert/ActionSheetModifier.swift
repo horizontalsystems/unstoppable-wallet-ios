@@ -200,21 +200,21 @@ class ActionSheetWrapperViewController: UIViewController {
 
         contentView.backgroundColor = .clear
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if focusFirstTextField, let textField: UITextField = UIView.firstSubview(in: self.view) {
+
+    override func viewDidAppear(_: Bool) {
+        if focusFirstTextField, let textField: UITextField = UIView.firstSubview(in: view) {
             textField.becomeFirstResponder()
         }
     }
 
     override var canBecomeFirstResponder: Bool {
-        return contentView.canBecomeFirstResponder
+        contentView.canBecomeFirstResponder
     }
-    
+
     override func becomeFirstResponder() -> Bool {
-        return contentView.becomeFirstResponder()
+        contentView.becomeFirstResponder()
     }
- 
+
     override public func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isPresented = false

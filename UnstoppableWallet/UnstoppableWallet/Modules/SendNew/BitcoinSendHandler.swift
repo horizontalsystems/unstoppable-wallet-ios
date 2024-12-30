@@ -59,7 +59,7 @@ extension BitcoinSendHandler: ISendHandler {
         guard let data = data as? SendData else {
             throw SendError.invalidData
         }
-        
+
         try adapter.send(params: data.params)
     }
 }

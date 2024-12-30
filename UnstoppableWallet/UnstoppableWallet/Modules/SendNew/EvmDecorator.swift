@@ -38,6 +38,7 @@ struct EvmDecorator {
 
                 customSendButtonTitle = isRevoke ? "send.confirmation.slide_to_revoke".localized : "send.confirmation.slide_to_approve".localized
             }
+
         default:
             ()
         }

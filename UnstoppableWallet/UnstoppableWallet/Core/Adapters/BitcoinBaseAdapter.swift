@@ -7,8 +7,8 @@ import MarketKit
 import RxSwift
 
 class BitcoinBaseAdapter {
-    static let confirmationsThreshold = 1            // Number of confirmations for coins in transaction to be available for spending
-    static let txStatusConfirmationsThreshold = 3    // Number of confirmations for transaction status displayed
+    static let confirmationsThreshold = 1 // Number of confirmations for coins in transaction to be available for spending
+    static let txStatusConfirmationsThreshold = 3 // Number of confirmations for transaction status displayed
     private let abstractKit: AbstractKit
 
     var coinRate: Decimal { 100_000_000 } // pow(10, 8)

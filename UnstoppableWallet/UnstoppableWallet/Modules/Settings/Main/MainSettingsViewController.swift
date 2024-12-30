@@ -236,8 +236,8 @@ class MainSettingsViewController: ThemeViewController {
     private func onTokenTapped() {
         UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)")
     }
-    
-    private func syncSubscription(hasSubscription: Bool) {
+
+    private func syncSubscription(hasSubscription _: Bool) {
         tableView.reload()
     }
 
@@ -544,18 +544,18 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private var premiumRows: [RowProtocol] {
-       [
-           StaticRow(
-               cell: premiumCell,
-               id: "premium",
-               height: MainSettingsPremiumCell.height,
-               action: { [weak self] in
-                   self?.present(PurchasesView().toViewController(), animated: true)
-               }
-           )
-       ]
-   }
-    
+        [
+            StaticRow(
+                cell: premiumCell,
+                id: "premium",
+                height: MainSettingsPremiumCell.height,
+                action: { [weak self] in
+                    self?.present(PurchasesView().toViewController(), animated: true)
+                }
+            ),
+        ]
+    }
+
     private var tokenRows: [RowProtocol] {
         [
             tableView.universalRow48(
@@ -648,9 +648,9 @@ extension MainSettingsViewController: SectionsDataSource {
         var sections: [SectionProtocol] = [
             Section(id: "token", headerState: .margin(height: .margin32), rows: tokenRows),
             Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
-            Section(id: "appearance_settings", headerState: .margin(height: .margin32), footerState: .margin(height: .margin24), rows: appearanceRows)
+            Section(id: "appearance_settings", headerState: .margin(height: .margin32), footerState: .margin(height: .margin24), rows: appearanceRows),
         ]
-        
+
         if viewModel.hasSubscription, viewModel.premiumSubscription {
             sections.append(
                 Section(
@@ -682,7 +682,7 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
-        
+
         sections.append(contentsOf: infoSections)
 
         if AppConfig.donateEnabled {
@@ -781,7 +781,7 @@ class PremiumHeaderFooterView: UITableViewHeaderFooterView {
             maker.top.equalToSuperview().inset(CGFloat.margin6)
             maker.size.equalTo(CGFloat.iconSize16)
         }
-        
+
         addSubview(label)
         label.snp.makeConstraints { maker in
             maker.leading.equalTo(iconView.snp.trailing).offset(CGFloat.margin6)

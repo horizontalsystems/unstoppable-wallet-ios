@@ -48,6 +48,7 @@ class BitcoinAddressParserItem {
             case .p2tr: return .derived(derivation: .bip86)
             default: return nil
             }
+
         default: return nil
         }
     }

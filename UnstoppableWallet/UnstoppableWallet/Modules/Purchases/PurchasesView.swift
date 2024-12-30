@@ -2,14 +2,14 @@ import SwiftUI
 
 struct PurchasesView: View {
     @StateObject private var viewModel = PurchasesViewModel()
-    
+
     @Environment(\.dismiss) private var dismiss
     @State private var bottomHeight: CGFloat = 0
-    
+
     @State private var presentedInfoViewItem: PurchasesViewModel.ViewItem?
     @State private var presentedSubscriptionType: PurchaseManager.SubscriptionType?
     @State private var successfulSubscriptionPresented = false
-    
+
     var body: some View {
         ThemeNavigationView {
             ThemeView {
@@ -20,14 +20,14 @@ struct PurchasesView: View {
                             .padding(.top, .margin16)
                             .padding(.horizontal, .margin32)
                             .padding(.bottom, .margin24)
-                        
+
                         PurchaseSegmentView(selection: $viewModel.featuresType)
                             .onChange(of: viewModel.featuresType) { newValue in
                                 viewModel.setType(newValue)
                             }
                             .clipShape(RoundedCorner(radius: .margin16, corners: [.topLeft, .topRight]))
                             .padding(.horizontal, .margin16)
-                        
+
                         ThemeRadialView {
                             ScrollView {
                                 VStack(spacing: 0) {
@@ -46,7 +46,7 @@ struct PurchasesView: View {
                                     }
                                     .themeListStyle(.steel10WithBottomCorners([.bottomLeft, .bottomRight]))
                                     .padding(.horizontal, .margin16)
-                                    
+
                                     walletDescription()
                                 }
                                 .padding(.bottom, .margin24)
@@ -56,7 +56,7 @@ struct PurchasesView: View {
                             }
                         }
                     }
-                    
+
                     VStack {
                         Spacer()
                         VStack(spacing: .margin8) {
@@ -112,19 +112,20 @@ struct PurchasesView: View {
                 if viewModel.subscribedSuccessful {
                     successfulSubscriptionPresented = true
                 }
-            }) { type in
-                PurchaseBottomSheetView(type: type, isPresented: Binding(get: { presentedSubscriptionType != nil }, set: { if !$0 { presentedSubscriptionType = nil } })) { _ in
-                    viewModel.onSubscribe()
-                    presentedSubscriptionType = nil
-                }
             }
-            .sheet(isPresented: $successfulSubscriptionPresented) {
-                SuccessfulSubscriptionView(type: viewModel.featuresType) {
-                    dismiss()
-                }
+        ) { type in
+            PurchaseBottomSheetView(type: type, isPresented: Binding(get: { presentedSubscriptionType != nil }, set: { if !$0 { presentedSubscriptionType = nil } })) { _ in
+                viewModel.onSubscribe()
+                presentedSubscriptionType = nil
             }
+        }
+        .sheet(isPresented: $successfulSubscriptionPresented) {
+            SuccessfulSubscriptionView(type: viewModel.featuresType) {
+                dismiss()
+            }
+        }
     }
-    
+
     @ViewBuilder private func row(title: String, description: String, image: Image, accented: Bool, action: @escaping () -> Void) -> some View {
         ClickableRow(padding: EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16), action: action) {
             HStack(spacing: .margin16) {
@@ -132,7 +133,7 @@ struct PurchasesView: View {
                     .renderingMode(.template)
                     .foregroundColor(accented ? .themeYellow : .themeLeah)
                     .frame(width: 24, height: 24)
-                
+
                 VStack(spacing: .heightOneDp) {
                     Text(title).themeSubhead1(color: .themeLeah)
                     Text(description).themeCaption()
@@ -147,9 +148,9 @@ struct PurchasesView: View {
                 .themeHeadline2()
                 .multilineTextAlignment(.center)
                 .padding(EdgeInsets(top: .margin32, leading: .margin32, bottom: .margin24, trailing: .margin32))
-            
+
             Image("premium_security")
-            
+
             approvedBy()
         }
     }
@@ -172,7 +173,7 @@ struct PurchasesView: View {
             .padding(.horizontal, .margin16)
         }
     }
-    
+
     @ViewBuilder private func actionButtonView() -> some View {
         let (title, disabled) = buttonState()
 
@@ -186,7 +187,7 @@ struct PurchasesView: View {
     }
 
     private func buttonState() -> (String, Bool) {
-        var title: String = "purchases.button.try".localized
+        var title = "purchases.button.try".localized
         var disabled = false
 
         switch viewModel.buttonState {
@@ -201,17 +202,16 @@ struct PurchasesView: View {
 
         return (title, disabled)
     }
-
 }
 
 struct CustomBlurView: UIViewRepresentable {
     let removeAllFilters: Bool
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
+
+    func makeUIView(context _: Context) -> UIVisualEffectView {
         UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
     }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+
+    func updateUIView(_ uiView: UIVisualEffectView, context _: Context) {
         DispatchQueue.main.async {
             if let backdropLayer = uiView.layer.sublayers?.first {
                 if removeAllFilters {

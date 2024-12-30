@@ -22,13 +22,13 @@ extension UIView {
         if let viewT = view as? T {
             return viewT
         }
-        
+
         for subview in view.subviews {
             if let viewT: T = firstSubview(in: subview) {
                 return viewT
             }
         }
-        
+
         return nil
     }
 }

@@ -43,20 +43,16 @@ class TransactionInfoService {
         case let tx as SwapTransactionRecord:
             tokens.append(tx.valueIn.token)
             tx.valueOut.flatMap { tokens.append($0.token) }
-
         case let tx as UnknownSwapTransactionRecord:
             tx.valueIn.flatMap { tokens.append($0.token) }
             tx.valueOut.flatMap { tokens.append($0.token) }
-
         case let tx as ApproveTransactionRecord: tokens.append(tx.value.token)
         case let tx as ContractCallTransactionRecord:
             tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
             tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
-
         case let tx as ExternalContractCallTransactionRecord:
             tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
             tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
-
         case let tx as TronIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as TronOutgoingTransactionRecord: tokens.append(tx.value.token)
         case let tx as TronApproveTransactionRecord: tokens.append(tx.value.token)
@@ -66,17 +62,14 @@ class TransactionInfoService {
         case let tx as TronExternalContractCallTransactionRecord:
             tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
             tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
-
         case let tx as BitcoinIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BitcoinOutgoingTransactionRecord:
             tx.fee.flatMap { tokens.append($0.token) }
             tokens.append(tx.value.token)
-
         case let tx as BinanceChainIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BinanceChainOutgoingTransactionRecord:
             tokens.append(tx.fee.token)
             tokens.append(tx.value.token)
-
         case let tx as TonTransactionRecord:
             for action in tx.actions {
                 switch action.type {
@@ -86,7 +79,6 @@ class TransactionInfoService {
                 }
             }
             tokens.append(tx.fee?.token)
-
         default: ()
         }
 

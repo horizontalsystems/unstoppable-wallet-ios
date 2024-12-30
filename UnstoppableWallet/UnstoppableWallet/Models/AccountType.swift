@@ -129,7 +129,6 @@ enum AccountType {
             }
         case let .btcAddress(_, blockchainType, tokenType):
             return token.blockchainType == blockchainType && token.type == tokenType
-
         default:
             return false
         }

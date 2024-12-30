@@ -59,7 +59,7 @@ private extension View {
         switch style {
         case .yellowGradient:
             if isEnabled {
-                self.background(                        
+                background(
                     LinearGradient(
                         gradient: Gradient(colors: [Color(hex: 0xFFD000), Color(hex: 0xFFA800)]),
                         startPoint: UnitPoint(x: -0.5181, y: 0.5),
@@ -67,11 +67,10 @@ private extension View {
                     )
                 ).opacity(isPressed ? 0.5 : 1)
             } else {
-                self.background(Color.themeSteel20)
+                background(Color.themeSteel20)
             }
         default:
-            self.background(style.backgroundColor(isEnabled: isEnabled, isPressed: isPressed))
+            background(style.backgroundColor(isEnabled: isEnabled, isPressed: isPressed))
         }
     }
 }
-

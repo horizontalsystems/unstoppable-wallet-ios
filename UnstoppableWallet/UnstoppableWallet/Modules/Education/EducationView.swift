@@ -14,7 +14,7 @@ struct EducationView: View {
             case let .loaded(categories):
                 VStack(spacing: 0) {
                     ScrollableTabHeaderView(
-                        tabs: categories.map { $0.title },
+                        tabs: categories.map(\.title),
                         currentTabIndex: $currentTabIndex
                     )
 

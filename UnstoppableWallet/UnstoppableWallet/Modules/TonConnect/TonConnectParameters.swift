@@ -8,7 +8,7 @@ struct TonConnectParameters {
         self.version = version
         self.clientId = clientId
         self.requestPayload = requestPayload
-        self.returnDeepLink = ret
+        returnDeepLink = ret
     }
 }
 
