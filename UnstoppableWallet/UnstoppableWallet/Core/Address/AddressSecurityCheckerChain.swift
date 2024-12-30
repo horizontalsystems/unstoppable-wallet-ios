@@ -5,7 +5,7 @@ import RxRelay
 import RxSwift
 
 protocol IAddressSecurityCheckerItem: AnyObject {
-    func handle(address: Address) -> Single<AddressSecurityCheckerChain.SecurityCheckResult>
+    func handle(address: Address) -> Single<AddressSecurityCheckerChain.SecurityIssue?>
 }
 
 class AddressSecurityCheckerChain {
@@ -24,22 +24,21 @@ extension AddressSecurityCheckerChain {
         return self
     }
 
-    func handle(address: Address) -> Single<[SecurityCheckResult]> {
-        Single.zip(handlers.map { handler -> Single<SecurityCheckResult> in
+    func handle(address: Address) -> Single<[SecurityIssue]> {
+        Single.zip(handlers.map { handler -> Single<SecurityIssue?> in
             handler.handle(address: address)
         })
+        .map { $0.compactMap { $0 } }
     }
 }
 
 extension AddressSecurityCheckerChain {
-    public enum SecurityCheckResult {
-        case valid
+    public enum SecurityIssue {
         case spam(transactionHash: String)
         case sanctioned(description: String)
 
         public var description: String? {
             switch self {
-            case .valid: return nil
             case let .spam(transactionHash): return "Possibly phishing address. Transaction hash: \(transactionHash)"
             case let .sanctioned(description): return description
             }

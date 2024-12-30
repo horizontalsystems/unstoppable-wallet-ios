@@ -172,6 +172,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "OpenSeaApiKey") as? String) ?? ""
     }
 
+    static var chainalysisApiKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "ChainalysisApiKey") as? String) ?? ""
+    }
+
     static var swapEnabled: Bool {
         Bundle.main.object(forInfoDictionaryKey: "SwapEnabled") as? String == "true"
     }

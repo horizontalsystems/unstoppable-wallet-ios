@@ -5,9 +5,11 @@ enum AddressSecurityCheckerFactory {
         switch blockchainType {
         case .ethereum, .gnosis, .fantom, .polygon, .arbitrumOne, .avalanche, .optimism, .binanceSmartChain, .base:
             let evmAddressSecurityCheckerItem = SpamAddressDetector()
+            let chainalysisAddressValidator = ChainalysisAddressValidator(networkManager: App.shared.networkManager)
 
             var handlers = [IAddressSecurityCheckerItem]()
             handlers.append(evmAddressSecurityCheckerItem)
+            handlers.append(chainalysisAddressValidator)
 
             return handlers
         default:

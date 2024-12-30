@@ -17,6 +17,7 @@ shared_cloud_container_id = iCloud.io.horizontalsystems.bank-wallet.shared
 private_cloud_container_id = iCloud.io.horizontalsystems.bank-wallet
 open_sea_api_key =
 unstoppable_domains_api_key =
+chainalysis_api_key = 
 one_inch_api_key =
 one_inch_commission =
 one_inch_commission_address =
