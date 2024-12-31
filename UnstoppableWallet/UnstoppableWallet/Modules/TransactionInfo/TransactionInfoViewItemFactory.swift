@@ -531,7 +531,7 @@ class TransactionInfoViewItemFactory {
                 sections.append(.init([
                     .option(option: .resend(type: .speedUp)),
                     .option(option: .resend(type: .cancel)),
-                ], footer: "tx_info.resend_description".localized))
+                ], header: .premium, footer: "tx_info.resend_description".localized))
             }
 
         case let record as BinanceChainIncomingTransactionRecord:
@@ -674,7 +674,7 @@ class TransactionInfoViewItemFactory {
             sections.append(.init([
                 .option(option: .resend(type: .speedUp)),
                 .option(option: .resend(type: .cancel)),
-            ], footer: "tx_info.resend_description".localized))
+            ], header: .premium, footer: "tx_info.resend_description".localized))
         }
 
         sections.append(.init([

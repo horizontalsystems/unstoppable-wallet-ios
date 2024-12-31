@@ -158,6 +158,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
 
         premiumEnabled = purchaseManager.subscription != nil
         purchaseManager.$subscription
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] subscription in
                 self?.premiumEnabled = subscription != nil
             }
@@ -328,9 +329,11 @@ extension MarketAdvancedSearchViewModel {
     func syncMarketInfos() {
         tasks = Set()
 
-        internalState = .loading
-
         Task { [weak self, marketKit, top, currencyManager] in
+            await MainActor.run { [weak self] in
+                self?.internalState = .loading
+            }
+
             do {
                 let marketInfos = try await marketKit.advancedMarketInfos(top: top.rawValue, currencyCode: currencyManager.baseCurrency.code)
 

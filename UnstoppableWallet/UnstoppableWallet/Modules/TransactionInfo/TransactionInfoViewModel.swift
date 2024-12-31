@@ -1,3 +1,4 @@
+import Combine
 import MarketKit
 import RxCocoa
 import RxSwift
@@ -49,6 +50,10 @@ extension TransactionInfoViewModel {
 
     var transactionRecord: TransactionRecord {
         service.item.record
+    }
+
+    var hasSubscription: Bool {
+        service.subscription != nil
     }
 
     func togglePrice() {

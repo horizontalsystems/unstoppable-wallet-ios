@@ -13,7 +13,7 @@ class MainSettingsPremiumCell: UITableViewCell {
     private let tryForFreeLabel = UILabel()
     private let boxImageView = UIImageView()
 
-    private let radialBackgroundView = RadialBackgroundView()
+    private let radialBackgroundView = RadialBackgroundView(background: .themeHelsing)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

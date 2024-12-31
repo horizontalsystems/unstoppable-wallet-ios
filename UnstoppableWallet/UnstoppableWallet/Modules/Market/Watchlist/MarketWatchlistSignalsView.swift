@@ -2,7 +2,7 @@ import MarketKit
 import SwiftUI
 
 struct MarketWatchlistSignalsView: View {
-    @ObservedObject var viewModel: MarketWatchlistViewModel
+    var setShowSignals: (Bool) -> Void
     @Binding var isPresented: Bool
 
     @State private var maxBadgeWidth: CGFloat = .zero
@@ -36,7 +36,7 @@ struct MarketWatchlistSignalsView: View {
                     }
                 } bottomContent: {
                     Button(action: {
-                        viewModel.showSignals = true
+                        setShowSignals(true)
                         isPresented = false
                     }) {
                         Text("market.watchlist.signals.turn_on".localized)

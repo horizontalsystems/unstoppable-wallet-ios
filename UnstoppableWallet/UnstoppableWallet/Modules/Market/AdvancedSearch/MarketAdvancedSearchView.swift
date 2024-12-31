@@ -12,7 +12,7 @@ struct MarketAdvancedSearchView: View {
     @State var priceCloseToPresented = false
     @State var priceChangePresented = false
     @State var pricePeriodPresented = false
-    @State private var subscriptionPresented = false
+    @State var subscriptionPresented = false
     @State var resultsPresented = false
 
     var body: some View {
@@ -114,10 +114,6 @@ struct MarketAdvancedSearchView: View {
                 PurchasesView()
             }
         }
-    }
-
-    private func openPremiumSubscription() {
-        subscriptionPresented = true
     }
 
     @ViewBuilder private func topRow() -> some View {

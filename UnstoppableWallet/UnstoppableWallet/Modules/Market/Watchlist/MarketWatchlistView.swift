@@ -9,6 +9,7 @@ struct MarketWatchlistView: View {
     @State private var timePeriodSelectorPresented = false
     @State private var presentedCoin: Coin?
     @State private var signalsPresented = false
+    @State private var subscriptionPresented = false
 
     @State private var editMode: EditMode = .inactive
 
@@ -78,11 +79,16 @@ struct MarketWatchlistView: View {
 
                 if viewModel.showSignals {
                     signalsButton()
-                        .buttonStyle(SecondaryActiveButtonStyle())
+                        .buttonStyle(SecondaryActiveButtonStyle(leftAccessory:
+                            .custom(icon: "crown_20", enabledColor: .themeDark, disabledColor: .themeDark)
+                        ))
                         .disabled(disabled)
                 } else {
                     signalsButton()
-                        .buttonStyle(SecondaryButtonStyle())
+                        .buttonStyle(
+                            SecondaryButtonStyle(leftAccessory:
+                                .custom(image: Image("crown_20"), pressedColor: .themeJacob, activeColor: .themeJacob, disabledColor: .themeJacob)
+                            ))
                         .disabled(disabled)
                 }
             }
@@ -114,14 +120,24 @@ struct MarketWatchlistView: View {
             }
         )
         .sheet(isPresented: $signalsPresented) {
-            MarketWatchlistSignalsView(viewModel: viewModel, isPresented: $signalsPresented)
+            MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
+                viewModel?.set(showSignals: $0)
+            }, isPresented: $signalsPresented)
+        }
+        .sheet(isPresented: $subscriptionPresented) {
+            PurchasesView()
         }
     }
 
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
+            guard viewModel.premiumEnabled else {
+                subscriptionPresented = true
+                return
+            }
+
             if viewModel.showSignals {
-                viewModel.showSignals = false
+                viewModel.set(showSignals: false)
             } else {
                 signalsPresented = true
             }

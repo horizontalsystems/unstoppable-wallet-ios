@@ -4,15 +4,22 @@ import UIKit
 final class RadialBackgroundView: UIView {
     private let hostingController: UIHostingController<MainSettingsPremiumBackgroundView>
 
+    init(background: UIColor) {
+        hostingController = UIHostingController(rootView: MainSettingsPremiumBackgroundView(backgroundColor: Color(uiColor: background)))
+
+        super.init(frame: .zero)
+        setupView()
+    }
+
     override init(frame: CGRect) {
-        hostingController = UIHostingController(rootView: MainSettingsPremiumBackgroundView())
+        hostingController = UIHostingController(rootView: MainSettingsPremiumBackgroundView(backgroundColor: .themeTyler))
 
         super.init(frame: frame)
         setupView()
     }
 
     required init?(coder: NSCoder) {
-        hostingController = UIHostingController(rootView: MainSettingsPremiumBackgroundView())
+        hostingController = UIHostingController(rootView: MainSettingsPremiumBackgroundView(backgroundColor: .themeTyler))
 
         super.init(coder: coder)
         setupView()
@@ -31,10 +38,12 @@ final class RadialBackgroundView: UIView {
 }
 
 struct MainSettingsPremiumBackgroundView: View {
+    let backgroundColor: Color
+
     var body: some View {
         GeometryReader { proxy in
             ZStack {
-                Color.themeTyler.ignoresSafeArea()
+                backgroundColor.ignoresSafeArea()
 
                 ZStack {
                     Circle()

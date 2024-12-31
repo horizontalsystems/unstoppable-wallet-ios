@@ -9,6 +9,8 @@ struct MarketAdvancedSearchResultsView: View {
 
     @State private var sortBySelectorPresented = false
     @State private var presentedCoin: Coin?
+    @State private var signalsPresented = false
+    @State private var subscriptionPresented = false
 
     init(marketInfos: [MarketInfo], timePeriod: HsTimePeriod, isParentPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketAdvancedSearchResultsViewModel(marketInfos: marketInfos, timePeriod: timePeriod))
@@ -30,6 +32,7 @@ struct MarketAdvancedSearchResultsView: View {
                         }) {
                             itemContent(
                                 coin: coin,
+                                indicatorResult: marketInfo.indicatorsResult,
                                 marketCap: marketInfo.marketCap,
                                 price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
                                 rank: marketInfo.marketCapRank,
@@ -67,6 +70,14 @@ struct MarketAdvancedSearchResultsView: View {
                 viewModel.sortBy = viewModel.sortBys[index]
             }
         )
+        .sheet(isPresented: $signalsPresented) {
+            MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
+                viewModel?.set(showSignals: $0)
+            }, isPresented: $signalsPresented)
+        }
+        .sheet(isPresented: $subscriptionPresented) {
+            PurchasesView()
+        }
     }
 
     @ViewBuilder private func header() -> some View {
@@ -78,6 +89,19 @@ struct MarketAdvancedSearchResultsView: View {
                     Text(viewModel.sortBy.title)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+
+                if viewModel.showSignals {
+                    signalsButton()
+                        .buttonStyle(SecondaryActiveButtonStyle(leftAccessory:
+                            .custom(icon: "crown_20", enabledColor: .themeDark, disabledColor: .themeDark)
+                        ))
+                } else {
+                    signalsButton()
+                        .buttonStyle(
+                            SecondaryButtonStyle(leftAccessory:
+                                .custom(image: Image("crown_20"), pressedColor: .themeJacob, activeColor: .themeJacob, disabledColor: .themeJacob)
+                            ))
+                }
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
@@ -96,12 +120,34 @@ struct MarketAdvancedSearchResultsView: View {
         )
     }
 
-    @ViewBuilder private func itemContent(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
+    @ViewBuilder private func signalsButton() -> some View {
+        Button(action: {
+            guard viewModel.premiumEnabled else {
+                subscriptionPresented = true
+                return
+            }
+
+            if viewModel.showSignals {
+                viewModel.set(showSignals: false)
+            } else {
+                signalsPresented = true
+            }
+        }) {
+            Text("market.watchlist.signals".localized)
+        }
+    }
+
+    @ViewBuilder private func itemContent(coin: Coin?, indicatorResult: TechnicalAdvice.Advice?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
         CoinIconView(coin: coin)
 
         VStack(spacing: 1) {
             HStack(spacing: .margin8) {
                 Text(coin?.code ?? "CODE").textBody()
+
+                if viewModel.showSignals, let signal = indicatorResult {
+                    MarketWatchlistSignalBadge(signal: signal)
+                }
+
                 Spacer()
                 Text(price).textBody()
             }

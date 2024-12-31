@@ -9,6 +9,7 @@ class MarketWatchlistViewModel: ObservableObject {
     private let watchlistManager = App.shared.watchlistManager
     private let userDefaultsStorage = App.shared.userDefaultsStorage
     private let appManager = App.shared.appManager
+    private let purchaseManager = App.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
@@ -20,6 +21,7 @@ class MarketWatchlistViewModel: ObservableObject {
         }
     }
 
+    @Published private(set) var premiumEnabled: Bool = false
     @Published var state: State = .loading
 
     @Published var sortBy: WatchlistSortBy {
@@ -41,24 +43,33 @@ class MarketWatchlistViewModel: ObservableObject {
         }
     }
 
-    @Published var showSignals: Bool {
-        didSet {
-            stat(page: .markets, section: .watchlist, event: .showSignals(shown: showSignals))
-            syncState()
-            watchlistManager.showSignals = showSignals
-        }
-    }
+    @Published var showSignals: Bool
 
     init() {
+        let premiumEnabled = purchaseManager.subscription != nil
+
         sortBy = watchlistManager.sortBy
         timePeriod = watchlistManager.timePeriod
-        showSignals = watchlistManager.showSignals
+        showSignals = premiumEnabled && watchlistManager.showSignals
+        self.premiumEnabled = premiumEnabled
 
         watchlistManager.$timePeriod
             .sink { [weak self] timePeriod in
                 self?.timePeriod = timePeriod
             }
             .store(in: &cancellables)
+
+        purchaseManager.$subscription
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] subscription in
+                self?.premiumEnabled = subscription != nil
+                self?.syncShowSignals()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func syncShowSignals() {
+        showSignals = premiumEnabled && watchlistManager.showSignals
     }
 
     private func syncCoinUids() {
@@ -166,6 +177,14 @@ extension MarketWatchlistViewModel {
 
     func refresh() async {
         await _syncMarketInfos()
+    }
+
+    func set(showSignals: Bool) {
+        stat(page: .markets, section: .watchlist, event: .showSignals(shown: showSignals))
+        syncState()
+        watchlistManager.showSignals = showSignals
+
+        syncShowSignals()
     }
 
     func remove(coinUid: String) {
